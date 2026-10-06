@@ -274,7 +274,7 @@ function ShoppingOut() {
                 return (
                   <tr key={i.id}>
                     <td>{i.label}{i.quantity > 1 ? ` × ${i.quantity}` : ''}</td>
-                    <td className="small">{i.at.kind === 'vehicle' ? 'In The Car' : 'In Your Arms'}</td>
+                    <td className="small">{i.at.kind === 'vehicle' ? 'In The Car' : i.at.kind === 'home' ? 'Inside The Door' : 'In Your Arms'}</td>
                     <td className="small">{SPOT_LABEL[i.storeIn!]}{left !== undefined ? <div className="xs dim">{left > 0 ? `${left} minutes of the two hours left` : 'Out past the two hours'}</div> : null}</td>
                     <td>
                       <select aria-label={`Where To Put ${i.label}`} value={spot} onChange={(e) => setSpots((x) => ({ ...x, [i.id]: e.target.value as Spot }))}>

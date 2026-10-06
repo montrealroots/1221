@@ -25,7 +25,8 @@ import type { Instant } from '../core/time';
 import { careFor, type Care, type Slot } from '../content/garmentcare';
 import { fitOf } from './tailoring';
 import { stopped } from './watches';
-import { itemsOf, reachable, type Item, homeKeyOf, type Spot } from './items';
+import { itemsOf, reachable, type Item, homeKeyOf, type Spot, usedL, volumeOf } from './items';
+import { bagsGoing, stayName } from './luggage';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
 export interface Garment {
@@ -132,14 +133,29 @@ export const wornNow = (person: Person): (Item & { garment: Garment })[] => {
 /**
  * What comes off at a change, the master plan's §32e (from 2026-10-06; until then a change only said what was on, and
  * nothing came off): each piece not put back on, at home, goes in the laundry basket where its wears have made it due a
- * wash, and back where it's kept where not. Away from home it stays with what they have there.
+ * wash, and back where it's kept where not. Away from home it stayed, until later on 2026-10-06, wherever it was; from
+ * then it goes into the room where they're staying in the town (`stay`, the place a suitcase is unpacked into), and
+ * with no room there, into the suitcase they travel with while it holds it (`bagsGoing`). Away there's no basket: what's
+ * due a wash keeps its count and is washed at home, as before.
  */
 export function takeOff(person: Person, keep: ReadonlySet<string>): void {
   const home = homeKeyOf(person.home);
   const atHomeNow = Boolean(home) && person.home!.cityId === person.currentLocationId;
+  const here = person.currentLocationId;
+  const room = person.stay && person.stay.cityId === here ? stayName(person) : undefined;
   for (const g of wornNow(person)) {
-    if (keep.has(g.id) || !atHomeNow || g.at.kind !== 'home' || g.at.home !== home) continue;
-    g.at = { ...g.at, spot: g.garment.dirty ? 'hamper' : keptIn(g.garment.slot) };
+    if (keep.has(g.id)) continue;
+    if (atHomeNow) {
+      if (g.at.kind === 'home' && g.at.home === home) g.at = { ...g.at, spot: g.garment.dirty ? 'hamper' : keptIn(g.garment.slot) };
+      continue;
+    }
+    // Only what's with them away: carried, in a bag, or out in the room here.
+    if (g.at.kind !== 'person' && g.at.kind !== 'inside' && !(g.at.kind === 'stay' && g.at.cityId === here)) continue;
+    if (person.stay && person.stay.cityId === here) { g.at = { kind: 'stay', cityId: here, ...(room ? { by: room } : {}) }; continue; }
+    if (g.at.kind === 'inside') continue;
+    const v = volumeOf(g) * g.quantity;
+    const bag = bagsGoing(person).find((b) => b.at.kind === 'person' && (b.holdsL ?? 0) - usedL(person, b.id) >= v - 1e-9);
+    if (bag) g.at = { kind: 'inside', itemId: bag.id };
   }
 }
 

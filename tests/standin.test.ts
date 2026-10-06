@@ -100,6 +100,44 @@ describe('a stand-in', () => {
     expect(standInFor(sim.player, v)).toBeUndefined();
   });
 
+  // From 2026-10-06 (§38i): until then only a repair's stand-in was tested.
+  it('is had while the car is at a wrap shop or an upholsterer, a rental from the town’s desk, neither lending a car', () => {
+    const wrapped = (() => {
+      const sim = life('si-wrap');
+      documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us-ny', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+      sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+      const v = vehiclesOf(sim.player)[0]!;
+      sim.must({ kind: 'vehicle.wrap', payload: { vehicleId: v.id, shopId: 'wrp', color: 'Red', finish: 'matte' } });
+      return { sim, v };
+    })();
+    const upholstered = (() => {
+      const sim = life('si-interior');
+      documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us-ny', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+      sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+      const v = vehiclesOf(sim.player)[0]!;
+      sim.must({ kind: 'vehicle.interior', payload: { vehicleId: v.id, shopId: 'ivan-car-upholstery-bronx', design: [{ part: 'seats', material: 'leather', color: 'Black', stitching: 'Black' }] } });
+      return { sim, v };
+    })();
+    for (const { sim, v } of [wrapped, upholstered]) {
+      expect(tripRefusal(sim, sim.player, 'car', v.id)).toMatch(/^It’s at (WRP|Ivan)/);
+      const q = standInQuote(sim, sim.player, v, sim.now);
+      if (typeof q === 'string') throw new Error(q);
+      // Neither shop is a dealer that lends a car: it's the airport desk's rental, its days to the hour the car is ready.
+      expect(q.loaner).toBeUndefined();
+      expect(q.what).toMatch(/JFK/);
+      expect(q.total).toBeGreaterThan(0);
+      sim.must({ kind: 'vehicle.stand_in', payload: { vehicleId: v.id } });
+      expect(standInFor(sim.player, v)?.returnAt).toBe(v.inShop!.until);
+      // Errands go in it while the car is in.
+      expect(tripRefusal(sim, sim.player, 'car', v.id)).toBeUndefined();
+      sim.must({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: v.id } });
+      expect(sim.player.trip?.standInId).toBe(standInFor(sim.player, v)!.id);
+      sim.must({ kind: 'errand.go', payload: { to: 'home' } });
+      sim.advanceTo(v.inShop!.until + 60_000);
+      expect(standInFor(sim.player, v)).toBeUndefined();
+    }
+  });
+
   it('isn’t had for a car that isn’t in, or away from its town, or without a license', () => {
     const { sim, v } = inTheShop('si-no', 'toyota-of-manhattan');
     expect(standInQuote(sim, sim.player, { ...v, inShop: undefined }, sim.now)).toBe('It isn’t in a shop.');

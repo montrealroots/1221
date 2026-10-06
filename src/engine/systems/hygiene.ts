@@ -295,7 +295,7 @@ export function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?
   // A toothbrush is one brush a count; anything else is its size.
   // Carried, or in the car, until a trip out is home (`stow`).
   const home = person.home && person.home.cityId === person.currentLocationId ? homeKeyOf(person.home) : undefined;
-  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: home ? { kind: 'home', home, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' } : { kind: 'person' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
+  stow(sim, person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: home ? { kind: 'home', home, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' } : { kind: 'person' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
 }
 
 /** The cheapest of a kind, a gram or a brush: in a store in reach of the town, or anywhere in its market. Nothing where SLATE keeps none. */

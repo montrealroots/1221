@@ -14,7 +14,7 @@ import { exchange } from '@/engine/content/currency';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, SPLIT_FEES, closingLines } from '@/engine/content/land';
 import { homeOf } from '@/engine/systems/earnings';
 import { marketAt } from '@/engine/systems/homes';
-import { landAnswer, landBuyingOf, landFloor, landQuote, landValue, listingsFor, marketsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, taxedValue, type Listing } from '@/engine/systems/land';
+import { landAnswer, landBuyingOf, landFloor, landQuote, landValue, listingSource, listingsFor, marketsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, taxedValue, type Listing } from '@/engine/systems/land';
 
 const idx = (label: RegExp) => LAND_MARKETS.findIndex((m) => label.test(m.label));
 /** The first day of a figure's year, when its value is the figure itself. */
@@ -327,5 +327,17 @@ describe('owning it', () => {
     expect(splitRefusal({ ...base, market: idx(/Hackney/), acres: 200 / 4_046.8564224 })).toMatch(/planning permission/);
     expect(splitRefusal({ ...base, market: idx(/Upstate/), acres: 1.5 })).toMatch(/acre SLATE keeps/);
     expect(splitRefusal({ ...base, market: idx(/Upstate/), acres: 10 })).toBeUndefined();
+  });
+});
+
+// From 2026-10-06 (§41l): until then the Land screen said "None is a real listing" whatever a listing's source held.
+describe('a listing’s source', () => {
+  it('is what the Land screen says of it: each listed one simulated, and one whose source wasn’t kept said so', () => {
+    const sim = save('us-ny-newyork', 'land-source');
+    const all = listed(sim);
+    expect(all.length).toBeGreaterThan(0);
+    for (const l of all) expect(listingSource(l)).toEqual({ label: 'Simulated', sentence: 'This is a simulated listing, SLATE’s own, not a real one.' });
+    const { source: _kept, ...older } = all[0]!;
+    expect(listingSource(older)).toEqual({ label: 'Not Kept', sentence: 'Where this listing came from wasn’t kept.' });
   });
 });

@@ -10,6 +10,7 @@ import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/
 import { checkOutHourOf, depositFor, hotelById, hotelParking, hotelsIn, namedStayQuote, namedStayRefusal, roomRate } from '@/engine/systems/hotels';
 import { documentsOf } from '@/engine/systems/documents';
 import { nightRateFor } from '@/engine/systems/stays';
+import { stayTotal } from '@/engine/systems/hotelbreakfast';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const night = (y: number, m: number, d: number, zone: string) => instantFromZoned({ year: y, month: m, day: d, hour: 21, minute: 0 }, zone);
@@ -125,5 +126,32 @@ describe('the stay at a named hotel', () => {
     expect(depositFor(sim, 'omni-new-haven-at-yale', 3)).toBe(3 * 100_00);
     expect(depositFor(sim, 'ace-hotel-brooklyn', 3)).toBe(300_00);
     expect(depositFor(sim, 'the-plaza-nyc', 3)).toBe(0);
+  });
+});
+
+// From 2026-10-06 (§48c): until then hotels were compared on the room, its tax and fee alone.
+describe('a stay’s whole cost, side by side', () => {
+  it('adds the hotel’s parking for a car, your breakfast each morning and holds its deposit apart', () => {
+    const sim = life('us-ny-newyork', 'ht-total');
+    const from = sim.now + 10 * MS_DAY;
+    const omni = hotelById('omni-new-haven-at-yale')!;
+    const plan = namedStayQuote(sim, omni.id, omni.rooms[0]!.name, 'flexible', from, 3) ? 'flexible' : 'prepaid';
+    const room = namedStayQuote(sim, omni.id, omni.rooms[0]!.name, plan, from, 3)!.price;
+    const t = stayTotal(sim, omni.id, omni.rooms[0]!.name, plan, from, 3, { rooms: 2, car: true })!;
+    // Two rooms; its lot at $28.75 a night; its $25 breakfast three mornings; $100 a night held for each room.
+    expect(t).toMatchObject({ room: 2 * room, parking: 8625, breakfast: 7500, deposit: 2 * 3 * 100_00 });
+    expect(t.paid).toBe(2 * room + 8625 + 7500);
+    // Without a car, no parking; the deposit isn't in what's paid.
+    expect(stayTotal(sim, omni.id, omni.rooms[0]!.name, plan, from, 3)!.paid).toBe(room + 7500);
+    // La Quinta's breakfast comes with the room; the Plaza publishes none, so none is counted.
+    const lq = hotelById('la-quinta-new-haven')!;
+    const lqPlan = namedStayQuote(sim, lq.id, lq.rooms[0]!.name, 'flexible', from, 3) ? 'flexible' : 'prepaid';
+    expect(stayTotal(sim, lq.id, lq.rooms[0]!.name, lqPlan, from, 3)!.breakfast).toBe(0);
+    const plaza = hotelById('the-plaza-nyc')!;
+    const pPlan = namedStayQuote(sim, plaza.id, plaza.rooms[0]!.name, 'flexible', from, 3) ? 'flexible' : 'prepaid';
+    const p = stayTotal(sim, plaza.id, plaza.rooms[0]!.name, pPlan, from, 3, { car: true })!;
+    expect(p.breakfast).toBeUndefined();
+    expect(p.parking).toBe(110 * 3 * 100);
+    expect(p.paid).toBe(p.room + p.parking);
   });
 });

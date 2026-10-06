@@ -35,7 +35,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
-import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
+import { breakfastPrice, breakfastRefusal, stayTotal } from '@/engine/systems/hotelbreakfast';
 import { byCar, byCarRefusal, byParatransit, byTransit, paratransitOffered, parkingAt, parkingFee, stepFreeRefusal, transitOffered, type GroundWay } from '@/engine/systems/airportground';
 import { usesWheelchair } from '@/engine/systems/access';
 import { HOTEL_WANT_LABEL, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas, hotelsIn, namedStayQuote, type HotelWant } from '@/engine/systems/hotels';
@@ -294,6 +294,26 @@ export function TravelWorkspace() {
                   </select>
                 </div>
               </div>
+            )}
+            {rooms.length > 0 && (
+              // The whole stay side by side (§48c, from 2026-10-06): until then the list above, the room with its tax and fee, was all there was to compare.
+              <LookRegion className="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Hotel And Room</th><th scope="col" className="num">Room, Tax And Fees</th><th scope="col" className="num">Parking</th><th scope="col" className="num">Your Breakfast</th><th scope="col" className="num">Paid</th><th scope="col" className="num">Deposit Held</th></tr></thead>
+                  <tbody>
+                    {rooms.map((x) => ({ x, t: stayTotal(sim, x.hotel.id, x.room.name, ratePlan, arrival, stayNights, { rooms: roomsBooked, car: Boolean(car) }) })).filter((r) => r.t).sort((a, b) => a.t!.paid - b.t!.paid).map(({ x, t }) => (
+                      <tr key={x.key}>
+                        <td className="small"><Open subject={at('hotel', x.hotel.id)}>{x.hotel.name}</Open><div className="xs dim">{x.room.name}</div></td>
+                        <td className="num mono">{money(t!.room)}{t!.estimated ? <div className="xs dim">Estimate</div> : null}</td>
+                        <td className="num mono">{car ? money(t!.parking) : 'No Car'}</td>
+                        <td className="num mono">{t!.breakfast === undefined ? 'Not Published' : t!.breakfast === 0 ? 'Included' : money(t!.breakfast)}</td>
+                        <td className="num mono">{money(t!.paid)}</td>
+                        <td className="num mono">{t!.deposit ? money(t!.deposit) : 'None'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </LookRegion>
             )}
             {picked && (
               <div className="xs dim">{amenityLine(picked.hotel.id)}{ratePlan === 'flexible' ? ` Free to call off until ${formatDateTime(freeCancelUntil(picked.hotel.id, arrival), CITIES.require(picked.hotel.cityId).timeZone)}.` : ''}</div>

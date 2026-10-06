@@ -79,6 +79,18 @@ export interface Parcel {
 /** A parcel for sale; `source` says it's the game's own, drawn at the market's published value, not a real listing (from 2026-10-03). */
 export interface Listing { id: string; market: number; acres: number; asking: Money; listedAt: Instant; source?: 'simulated' }
 
+/**
+ * Where a listing came from, as the Land screen says it (from 2026-10-06;
+ * until then the screen said "None is a real listing" whatever `source`
+ * held, and nothing read it): a label for its row, and a sentence for the
+ * fine print. A listing without one, an accepted offer's kept from a save
+ * before 2026-10-03, says its source wasn't kept.
+ */
+export function listingSource(l: Listing): { label: string; sentence: string } {
+  if (l.source === 'simulated') return { label: 'Simulated', sentence: 'This is a simulated listing, SLATE’s own, not a real one.' };
+  return { label: 'Not Kept', sentence: 'Where this listing came from wasn’t kept.' };
+}
+
 /** An offer accepted, on its way to the closing. */
 export interface LandDeal {
   listing: Listing;

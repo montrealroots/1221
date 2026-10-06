@@ -158,7 +158,7 @@ export function deliverGroceries(sim: Simulation, person: Person, p: NonNullable
   const home = homeKeyOf(person.home)!;
   for (let i = 0; i < quantity; i += 1) {
     // Carried, or in the car, until a trip out is home (`stow`).
-    stow(person, addItem(sim, person, {
+    stow(sim, person, addItem(sim, person, {
       kind: p.id, label: p.name, quantity: 1, condition: 1, at: { kind: 'home', home, spot: SPOT[p.storage] }, acquiredAt: sim.now, paid: Math.round(paid / quantity),
       food: { key: p.food, unit: p.sizeUnit, left: p.sizeQty, ...(p.abv !== undefined ? { abv: p.abv } : {}), ...(p.keepsDays === null ? {} : { expiresAt: sim.now + p.keepsDays * MS_DAY }) },
     }), sim.now);

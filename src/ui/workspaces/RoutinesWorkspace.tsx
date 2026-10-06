@@ -14,7 +14,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { gymById } from '@/engine/content/gyms';
 import { gymsIn, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
 import { arrange } from '@/engine/systems/catalog';
-import { groceryCatalog } from '@/engine/systems/kitchen';
+import { groceryCatalog, recipeById, servingsRange } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
@@ -97,6 +97,10 @@ export function RoutinesWorkspace() {
     ...outfits.map((o) => ({ key: `wear:${o.id}`, label: `Wear ${o.name}`, step: { kind: 'clothes.wear_outfit', payload: { outfitId: o.id } } })),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0]!;
+  // A cook step's servings, one to three times what the recipe makes (from 2026-10-06).
+  const [servings, setServings] = useState<number | undefined>(undefined);
+  const recipe = picked.step.kind === 'food.cook' ? recipeById(String(picked.step.payload.recipeId)) : undefined;
+  const pickedStep: RoutineStep = recipe ? { kind: 'food.cook', payload: { recipeId: recipe.id, servings: servings ?? recipe.servings } } : picked.step;
   const no = routineRefusal(name, steps);
   const go = (routineId: string, routineName: string) => {
     const result = runRoutine(sim, routineId, (kind, payload) => run(kind, payload, { silent: true }));
@@ -139,17 +143,25 @@ export function RoutinesWorkspace() {
             <div className="field-row field-row-tight">
               <div className="field">
                 <label htmlFor="routine-step">Step</label>
-                <select id="routine-step" value={picked.key} onChange={(e) => setChoice(e.target.value)}>
+                <select id="routine-step" value={picked.key} onChange={(e) => { setChoice(e.target.value); setServings(undefined); }}>
                   {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                 </select>
               </div>
+              {recipe && (
+                <div className="field">
+                  <label htmlFor="routine-servings">Servings</label>
+                  <select id="routine-servings" value={servings ?? recipe.servings} onChange={(e) => setServings(Number(e.target.value))}>
+                    {Array.from({ length: servingsRange(recipe).most - servingsRange(recipe).least + 1 }, (_, i) => servingsRange(recipe).least + i).map((k) => <option key={k} value={k}>{k}</option>)}
+                  </select>
+                </div>
+              )}
               <div className="field">
                 <label htmlFor="routine-name">Name</label>
                 <input id="routine-name" value={name} placeholder="Weekday Morning" onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
             <div className="row gap-1">
-              <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length >= MAX_STEPS} onClick={() => setSteps([...steps, picked.step])}>Add The Step</button>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length >= MAX_STEPS} onClick={() => setSteps([...steps, pickedStep])}>Add The Step</button>
               <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length === 0} onClick={() => setSteps(steps.slice(0, -1))}>Take The Last Off</button>
               <button type="button" className="btn btn-sm" disabled={!save.open || Boolean(no)} title={no ?? save.reason} onClick={() => { if (run('routine.save', { name, steps }).ok) { toast(`${name.trim()}, saved.`, 'positive'); setSteps([]); setName(''); } }}>Save It</button>
             </div>

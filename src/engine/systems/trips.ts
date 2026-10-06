@@ -199,10 +199,41 @@ export const COLD_CHAIN_HOURS = 2;
  */
 export const CARRY_KG = 23;
 
-/** What the trip's shopping carried by hand weighs, kilograms. */
-export const carriedKg = (person: Person): number => (person.trip?.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i)).reduce((kg, i) => kg + weightG(i) / 1000, 0);
+/** What the trip's shopping carried by hand weighs, kilograms: what's in their arms, not a load taken home on a second trip (from 2026-10-06). */
+export const carriedKg = (person: Person): number => (person.trip?.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i) && i!.at.kind === 'person').reduce((kg, i) => kg + weightG(i) / 1000, 0);
 
-export function stow(person: Person, item: Item, at: Instant): void {
+/**
+ * A second trip (from 2026-10-06; until then what was past a carry wasn't
+ * bought): shopping more than one carry, the load in hand is taken home and
+ * they come back for the rest, the shopping leg walked or ridden twice more,
+ * as long as the one already timed (`leg`), its kilometers and on transit its
+ * two fares. The load taken home waits inside the door, not put away
+ * (`waitingShopping`), as it would in their arms; how long bringing things in
+ * takes isn't published, so it takes none. Only where they live: away, or
+ * staying out of the house, there's nowhere to take a load.
+ */
+function secondTripRefusal(person: Person, itemKg: number): string | undefined {
+  if (itemKg > CARRY_KG + 1e-9) return `That’s more than you can carry: about ${Math.round(itemKg * 10) / 10} kg, of about ${CARRY_KG}.`;
+  if (!person.home || person.home.cityId !== person.currentLocationId || person.stay) return `That’s more than you can carry home: ${Math.round(carriedKg(person) * 10) / 10} kg in hand already, of about ${CARRY_KG}.`;
+  return undefined;
+}
+
+function secondTrip(sim: Simulation, person: Person, trip: Trip): void {
+  const here = person.currentLocationId;
+  const l = leg(here, trip.by, 'shopping');
+  if (trip.by === 'transit') {
+    const fare = transitFare(sim, here) ?? 0;
+    if (fare > 0 && !spend(sim, person, fare * 2, `${CITIES.get(here)?.name ?? 'The town'}’s transit, home and back with the shopping`, 'personal')) throw new CommandError('The fares home and back can’t be paid.');
+  }
+  const home = homeKeyOf(person.home)!;
+  const load = (trip.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i) && i!.at.kind === 'person');
+  for (const i of load) i.at = { kind: 'home', home };
+  trip.km += 2 * l.km;
+  sim.advanceTo(sim.now + Math.round(2 * l.minutes * 60_000));
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Second Trip', body: `More than you can carry at once: ${load.length} ${load.length === 1 ? 'thing' : 'things'} taken home and left inside the door, and back for the rest, ${Math.round(2 * l.minutes)} minutes.`, importance: 25, route: '/workspace/belongings' });
+}
+
+export function stow(sim: Simulation, person: Person, item: Item, at: Instant): void {
   const trip = person.trip;
   if (!trip || item.at.kind !== 'home') return;
   const inCar = trip.by === 'car' && trip.vehicleId && !trip.standInId;
@@ -218,18 +249,24 @@ export function stow(person: Person, item: Item, at: Instant): void {
       if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);
     }
   }
-  // Carried by hand, up to what a person carries home (`CARRY_KG`); a car's cargo is its own.
+  // Carried by hand, up to what a person carries home (`CARRY_KG`); a car's cargo is its own. Past it, a second trip
+  // where they live (`secondTrip`, from 2026-10-06); until then, and still elsewhere, it isn't bought.
   if (!inCar) {
     const kg = carriedKg(person);
-    if (kg + weightG(item) / 1000 > CARRY_KG + 1e-9) throw new CommandError(`That’s more than you can carry home: ${Math.round(kg * 10) / 10} kg in hand already, of about ${CARRY_KG}.`);
+    const itemKg = weightG(item) / 1000;
+    if (kg + itemKg > CARRY_KG + 1e-9) {
+      const no = secondTripRefusal(person, itemKg);
+      if (no) throw new CommandError(no);
+      secondTrip(sim, person, trip);
+    }
   }
   (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
   if (item.at.spot) item.storeIn = item.at.spot;
   item.at = inCar ? { kind: 'vehicle', vehicleId: trip.vehicleId! } : { kind: 'person' };
 }
 
-/** Shopping not yet put away: bought on a trip, in a car or in their arms. */
-export const waitingShopping = (person: Person): Item[] => itemsOf(person).filter((i) => i.storeIn !== undefined && (i.at.kind === 'vehicle' || i.at.kind === 'person'));
+/** Shopping not yet put away: bought on a trip, in a car or in their arms, or from 2026-10-06 taken home on a second trip and left inside the door. */
+export const waitingShopping = (person: Person): Item[] => itemsOf(person).filter((i) => i.storeIn !== undefined && (i.at.kind === 'vehicle' || i.at.kind === 'person' || (i.at.kind === 'home' && i.at.spot === undefined)));
 
 /** Out of the cold too long to keep: food that needs the fridge or freezer, bought more than USDA's two hours ago. */
 export const outTooLong = (item: Item, now: Instant): boolean => (item.storeIn === 'fridge' || item.storeIn === 'freezer') && now - item.acquiredAt > COLD_CHAIN_HOURS * 3_600_000;
