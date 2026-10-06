@@ -1,0 +1,746 @@
+{
+  "read": "2026-10-06",
+  "category": "appliances",
+  "products": [
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BW1O3841B",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Currys",
+          "price": 229,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.currys.co.uk/products/beko-bw1o3841w-8-kg-1400-spin-washing-machine-white-10290254.html",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.currys.co.uk/products/beko-bw1o3841w-8-kg-1400-spin-washing-machine-white-10290254.html",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BWC7121",
+      "kind": "washer",
+      "capacity": 7,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 249,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/beko-bwc7121w-freestanding-7kg-1200rpm-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/beko-bwc7121w-freestanding-7kg-1200rpm-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BWC8121",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Gerald Giles (Euronics)",
+          "price": 249,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.geraldgiles.co.uk/store/beko/euronics/laundry/washing-machines/freestanding-washing-machines/beko-bwc8121w-washing-machine-1200-spin-8kg-load/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.geraldgiles.co.uk/store/beko/euronics/laundry/washing-machines/freestanding-washing-machines/beko-bwc8121w-washing-machine-1200-spin-8kg-load/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "WTIK741511",
+      "kind": "washer",
+      "capacity": 7,
+      "capacityUnit": "kg",
+      "loading": "integrated",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 389,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/integrated-washing-machine/beko-wtik741511-7kg-1400-spin-integrated-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/integrated-washing-machine/beko-wtik741511-7kg-1400-spin-integrated-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BM3WT1241I",
+      "kind": "washer",
+      "capacity": 12,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Currys",
+          "price": 449,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.currys.co.uk/products/beko-pro-energyspin-bm3wt1241iw-12-kg-1400-spin-washing-machine-white-10272146.html",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.currys.co.uk/products/beko-pro-energyspin-bm3wt1241iw-12-kg-1400-spin-washing-machine-white-10272146.html",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BM3WT4104I",
+      "kind": "washer",
+      "capacity": 10,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Currys",
+          "price": 369,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.currys.co.uk/products/beko-pro-energyspin-ironfast-bm3wt4104iw-10-kg-1400-spin-washing-machine-white-10263715.html",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.currys.co.uk/products/beko-pro-energyspin-ironfast-bm3wt4104iw-10-kg-1400-spin-washing-machine-white-10263715.html",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BM3WT4841I",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Currys",
+          "price": 329,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://business.currys.co.uk/catalogue/domestic-appliances/laundry/washing-machines-free-standing/beko-pro-energyspin-ironfast-bm3wt4841iw-8-kg-1400-spin-washing-machine-white/B635134B",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://business.currys.co.uk/catalogue/domestic-appliances/laundry/washing-machines-free-standing/beko-pro-energyspin-ironfast-bm3wt4841iw-8-kg-1400-spin-washing-machine-white/B635134B",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Beko",
+      "family": null,
+      "model": "BM3WT4941I",
+      "kind": "washer",
+      "capacity": 9,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Currys",
+          "price": 349,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://business.currys.co.uk/catalogue/domestic-appliances/laundry/washing-machines-free-standing/beko-pro-energyspin-ironfast-bm3wt4941iw-8-kg-1400-spin-washing-machine-white/B635134B",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://business.currys.co.uk/catalogue/domestic-appliances/laundry/washing-machines-free-standing/beko-pro-energyspin-ironfast-bm3wt4941iw-8-kg-1400-spin-washing-machine-white/B635134B",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "TC5003WN",
+      "kind": "washer",
+      "capacity": 3.2,
+      "capacityUnit": "cu ft",
+      "loading": "top",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1649,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/top-load-washers/tc5003wn/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/top-load-washers/tc5003wn/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "TR5006WN",
+      "kind": "washer",
+      "capacity": 3.2,
+      "capacityUnit": "cu ft",
+      "loading": "top",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1549,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/top-load-washers/tr5006wn/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/top-load-washers/tr5006wn/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "TR3006WN",
+      "kind": "washer",
+      "capacity": 3.2,
+      "capacityUnit": "cu ft",
+      "loading": "top",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1449,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/top-load-washers/tr3006wn/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/top-load-washers/tr3006wn/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "FF7011WN",
+      "kind": "washer",
+      "capacity": 3.5,
+      "capacityUnit": "cu ft",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 2449,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/front-load-washers/ff7011wn/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/front-load-washers/ff7011wn/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DR7004WE",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "electric",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1749,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/electric-dryers/dr7004we/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/electric-dryers/dr7004we/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DC5004WE",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "electric",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1649,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/electric-dryers/dc5004we/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/electric-dryers/dc5004we/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DC5004WG",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "gas",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1749,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/gas-dryers/dc5004wg/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/gas-dryers/dc5004wg/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DR5004WE",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "electric",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1549,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/electric-dryers/dr5004we/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/electric-dryers/dr5004we/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DR5004WG",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "gas",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1649,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/gas-dryers/dr5004wg/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/gas-dryers/dr5004wg/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DR3004WG",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": null,
+      "fuel": "gas",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 1549,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/gas-dryers/dr3004wg/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/gas-dryers/dr3004wg/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": null,
+      "model": "DF7004WE",
+      "kind": "dryer",
+      "capacity": 7,
+      "capacityUnit": "cu ft",
+      "loading": "front",
+      "fuel": "electric",
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 2449,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/front-load-electric-dryers/df7004we/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/front-load-electric-dryers/df7004we/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Speed Queen",
+      "family": "SF7 stacked washer-dryer",
+      "model": "SF7008WE",
+      "kind": "washer",
+      "capacity": 3.5,
+      "capacityUnit": "cu ft",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Speed Queen",
+          "price": 4849,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://speedqueen.com/products/stacked-washer-dryers/sf7008we/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://speedqueen.com/products/stacked-washer-dryers/sf7008we/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWA210461",
+      "kind": "washer",
+      "capacity": 10,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 469.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa210461w-10kg-1400-spin-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa210461w-10kg-1400-spin-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWI284421",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "integrated",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 499.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/integrated-washing-machine/blomberg-lwi284421-8kg-1400-spin-integrated-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/integrated-washing-machine/blomberg-lwi284421-8kg-1400-spin-integrated-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWA29461",
+      "kind": "washer",
+      "capacity": 9,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 429.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa29461w-9kg-1400-spin-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa29461w-9kg-1400-spin-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWA18461",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Appliances Direct",
+          "price": 399.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.appliancesdirect.co.uk/p/lwa18461w/blomberg-lwa18461w-freestanding-washing-machine",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.appliancesdirect.co.uk/p/lwa18461w/blomberg-lwa18461w-freestanding-washing-machine",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWA27461",
+      "kind": "washer",
+      "capacity": 7,
+      "capacityUnit": "kg",
+      "loading": "front",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Herne Bay Domestics",
+          "price": 379.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa27461w-7kg-1400-spin-washing-machine-white/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://hernebaydomestics.co.uk/product/washing-machines/freestanding-washing-machines/blomberg-lwa27461w-7kg-1400-spin-washing-machine-white/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Blomberg",
+      "family": null,
+      "model": "LWI284420",
+      "kind": "washer",
+      "capacity": 8,
+      "capacityUnit": "kg",
+      "loading": "integrated",
+      "fuel": null,
+      "energyLabel": null,
+      "kwhPer100Cycles": null,
+      "kwhPerYear": null,
+      "widthCm": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Adams and Jarrett",
+          "price": 499.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.adamsandjarrett.com/product/blomberg-lwi284420-integrated-8kg-washing-machine/",
+          "status": "secondhand"
+        }
+      ],
+      "url": "https://www.adamsandjarrett.com/product/blomberg-lwi284420-integrated-8kg-washing-machine/",
+      "status": "secondhand"
+    }
+  ],
+  "notFound": [
+    {
+      "brand": "Beko",
+      "model": "BW1O3842",
+      "where": "currys.co.uk / ao.com: no exact listing found, only neighbouring model numbers (BW1O3841BW, BW1O3821W)"
+    },
+    {
+      "brand": "Beko",
+      "model": "BM5WT61141T",
+      "where": "currys.co.uk / ao.com: exact model not found; closest listed is BM5WT61141TA"
+    }
+  ]
+}

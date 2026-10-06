@@ -1190,62 +1190,62 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Phones
 
-53 brands, 2 deep enough, 51 short.
+53 brands, 13 deep enough, 40 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | Samsung | 18 | Short: 82 to go |
 | Google | 10 | Short: 90 to go |
+| Alcatel | 8 | Whole range in US (6) |
 | Apple | 7 | Whole range in US (7) |
+| OnePlus | 7 | Whole range in GB (5) |
+| ASUS | 6 | Whole range in US (6) |
+| Cubot | 6 | Short: 5 of its 5 in US to go |
 | Motorola | 6 | Short: 6 of its 9 in US to go |
-| Cubot | 4 | Short: 5 of its 5 in US to go |
-| OnePlus | 4 | Short: 3 of its 5 in GB to go |
+| Nubia | 6 | Whole range in US (6) |
+| Lively | 5 | Whole range in US (5) |
+| Xiaomi | 5 | Whole range in GB (5) |
 | OPPO | 4 | Short: 96 to go |
-| Alcatel | 3 | Short: 3 of its 6 in US to go |
+| Sony | 4 | Whole range in GB (4) |
+| CMF by Nothing | 3 | Whole range in GB (2) |
+| Consumer Cellular | 3 | Whole range in US (2) |
 | Doro | 3 | Short: 8 of its 11 in GB to go |
 | Hammer | 3 | Short: 20 of its 20 in IE to go |
+| Kyocera | 3 | Whole range in US (2) |
 | Nothing | 3 | Short: 5 of its 8 in GB to go |
 | Oukitel | 3 | Short: 9 of its 12 in US to go |
+| Punkt | 3 | Whole range in GB (3) |
+| realme | 3 | Short: 97 to go |
 | Unihertz | 3 | Short: 9 of its 12 in US to go |
 | vivo | 3 | Short: 13 of its 15 in MX to go |
 | Volla | 3 | Short: 3 of its 3 in GB to go |
 | Blackview | 2 | Short: 7 of its 9 in US to go |
-| CMF by Nothing | 2 | Whole range in GB (2) |
+| Fairphone | 2 | Whole range in GB (2) |
 | Gigaset | 2 | Short: 12 of its 12 in GB to go |
 | Honor | 2 | Short: 98 to go |
 | Huawei | 2 | Short: 19 of its 21 in GB to go |
 | Infinix | 2 | Short: 18 of its 18 in GB to go |
-| Lively | 2 | Short: 3 of its 5 in US to go |
 | POCO | 2 | Short: 10 of its 12 in GB to go |
-| realme | 2 | Short: 98 to go |
 | Redmi | 2 | Short: 10 of its 12 in GB to go |
-| Sony | 2 | Short: 2 of its 4 in GB to go |
 | TCL | 2 | Short: 9 of its 10 in US to go |
 | AGM | 1 | Short: 8 of its 9 in US to go |
 | Artfone | 1 | Short: 7 of its 8 in US to go |
-| ASUS | 1 | Short: 5 of its 6 in US to go |
 | BLU | 1 | Short: 99 to go |
-| Consumer Cellular | 1 | Short: 1 of its 2 in US to go |
 | Doogee | 1 | Short: 14 of its 15 in US to go |
-| Fairphone | 1 | Short: 1 of its 2 in GB to go |
 | FOSSIBOT | 1 | Short: 7 of its 8 in US to go |
 | HMD | 1 | Short: 19 of its 20 in GB to go |
 | HOTWAV | 1 | Short: 35 of its 36 in US to go |
 | IIIF150 | 1 | Short: 99 to go |
-| Kyocera | 1 | Short: 1 of its 2 in US to go |
 | Murena | 1 | Short: 5 of its 6 in US to go |
 | Nokia | 1 | Short: 99 to go |
-| Nubia | 1 | Short: 5 of its 6 in US to go |
 | Orbic | 1 | Short: 10 of its 11 in US to go |
 | OSCAL | 1 | Short: 28 of its 29 in US to go |
-| Punkt | 1 | Short: 2 of its 3 in GB to go |
 | Sonim | 1 | Short: 8 of its 9 in US to go |
 | Tecno | 1 | Short: 99 to go |
 | Teracube | 1 | Short: 99 to go |
 | Ulefone | 1 | Short: 55 of its 56 in US to go |
 | UMIDIGI | 1 | Short: 33 of its 34 in US to go |
 | Wiko | 1 | Short: 99 to go |
-| Xiaomi | 1 | Short: 4 of its 5 in GB to go |
 | ZTE | 1 | Short: 5 of its 6 in US to go |
 
 ## Electronics: Game Consoles
@@ -1260,61 +1260,61 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Computers
 
-56 brands, 2 deep enough, 54 short.
+56 brands, 14 deep enough, 42 short.
 
 | Brand | Products | Status |
 |---|---|---|
+| Apple | 17 | Whole range in US (10) |
 | Asus | 15 | Short: 85 to go |
+| Corsair | 14 | Whole range in US (14) |
 | Acer | 13 | Short: 87 to go |
 | Samsung | 13 | Short: 21 of its 22 in US to go |
 | HP | 12 | Short: 88 to go |
 | Lenovo | 12 | Short: 88 to go |
 | Microsoft | 11 | Short: 1 of its 4 in US to go |
-| Apple | 10 | Short: 7 of its 10 in US to go |
 | MSI | 9 | Short: 91 to go |
+| Stormforce | 9 | Short: 91 to go |
 | Dell | 8 | Short: 92 to go |
+| Doogee | 8 | Whole range in US (8) |
+| Gateway | 7 | Whole range in US (7) |
 | Gigabyte | 7 | Short: 93 to go |
+| Minisforum | 7 | Whole range in US (6) |
+| Framework | 6 | Whole range in US (5) |
+| Huawei | 6 | Short: 1 of its 7 in GB to go |
+| NZXT | 6 | Whole range in US (6) |
+| Panasonic | 6 | Whole range in US (6) |
+| System76 | 6 | Whole range in US (6) |
+| ABS | 5 | Whole range in US (5) |
+| Purism | 5 | Whole range in US (5) |
+| Raspberry Pi | 5 | Whole range in US (5) |
 | LG | 4 | Short: 96 to go |
 | Razer | 4 | Whole range in US (3) |
 | Alienware | 3 | Short: 97 to go |
 | Amazon | 2 | Short: 98 to go |
 | Beelink | 2 | Short: 18 of its 19 in US to go |
 | Fujitsu | 2 | Short: 98 to go |
-| Gateway | 2 | Short: 5 of its 7 in US to go |
 | GEEKOM | 2 | Short: 27 of its 28 in US to go |
 | Google | 2 | Short: 98 to go |
-| Minisforum | 2 | Short: 5 of its 6 in US to go |
 | OnePlus | 2 | Whole range in US (1) |
 | Yeyian | 2 | Short: 10 of its 12 in MX to go |
-| ABS | 1 | Short: 4 of its 5 in US to go |
 | Alldocube | 1 | Short: 20 of its 21 in US to go |
 | ASRock | 1 | Short: 99 to go |
 | Avita | 1 | Short: 99 to go |
 | Chillblast | 1 | Short: 99 to go |
 | Chuwi | 1 | Short: 20 of its 21 in US to go |
-| Corsair | 1 | Short: 13 of its 14 in US to go |
 | CyberPower | 1 | Short: 44 of its 44 in US to go |
 | CyberPowerPC | 1 | Short: 43 of its 44 in US to go |
-| Doogee | 1 | Short: 7 of its 8 in US to go |
 | Dynabook | 1 | Short: 17 of its 17 in US to go |
 | Fierce PC | 1 | Short: 99 to go |
-| Framework | 1 | Short: 5 of its 5 in US to go |
 | Ghia | 1 | Short: 99 to go |
 | GMKtec | 1 | Short: 25 of its 26 in US to go |
 | Honor | 1 | Short: 41 of its 41 in GB (GLOBAL.HONOR.COM) to go |
-| Huawei | 1 | Short: 6 of its 7 in GB to go |
 | iBUYPOWER | 1 | Short: 99 to go |
 | Lanix | 1 | Short: 99 to go |
 | Mele | 1 | Short: 16 of its 16 in US (STORE.MELE.CN SHIPS INTERNATIONALLY) to go |
-| NZXT | 1 | Short: 5 of its 6 in US to go |
 | Overclockers UK | 1 | Short: 99 to go |
-| Panasonic | 1 | Short: 5 of its 6 in US to go |
 | PCSpecialist | 1 | Short: 99 to go |
-| Purism | 1 | Short: 4 of its 5 in US to go |
-| Raspberry Pi | 1 | Short: 4 of its 5 in US to go |
 | Skytech | 1 | Short: 99 to go |
-| Stormforce | 1 | Short: 11 of its 12 in GB to go |
-| System76 | 1 | Short: 5 of its 6 in US to go |
 | Teclast | 1 | Short: 23 of its 23 in US (EN.TECLAST.COM, INTERNATIONAL STOREFRONT) to go |
 | Trigkey | 1 | Short: 99 to go |
 | Vorago | 1 | Short: 14 of its 15 in MX to go |
@@ -1323,7 +1323,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Televisions
 
-51 brands, 4 deep enough, 47 short.
+51 brands, 15 deep enough, 36 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -1331,31 +1331,35 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Cello | 8 | Whole range in GB (7) |
 | Sony | 8 | Short: 92 to go |
 | Samsung | 7 | Short: 93 to go |
+| Sharp | 7 | Whole range in US (5) |
 | Hisense | 6 | Short: 94 to go |
+| Majestic | 6 | Whole range in US (3) |
 | Bush | 5 | Short: 95 to go |
-| Ghia | 4 | Short: 1 of its 5 in MX to go |
+| Ghia | 5 | Whole range in MX (5) |
+| iFFALCON | 5 | Whole range in GB (4) |
+| Supersonic | 5 | Whole range in US (5) |
+| Amazon | 4 | Whole range in US (3) |
+| Avtex | 4 | Whole range in GB (4) |
+| JVC | 4 | Whole range in US (3) |
 | LG | 4 | Short: 96 to go |
+| Sceptre | 4 | Whole range in US (4) |
+| Vizio | 4 | Whole range in US (4) |
 | Bang & Olufsen | 3 | Whole range in US (3) |
 | Element | 3 | Short: 8 of its 11 in US to go |
 | Haier | 3 | Whole range in GB (3) |
 | Loewe | 3 | Short: 97 to go |
 | Magnavox | 3 | Short: 97 to go |
-| Majestic | 3 | Short: 3 of its 3 in US to go |
 | RCA | 3 | Short: 97 to go |
-| Sceptre | 3 | Short: 1 of its 4 in US to go |
 | Toshiba | 3 | Short: 97 to go |
 | Akai | 2 | Short: 98 to go |
-| Amazon | 2 | Short: 2 of its 3 in US to go |
-| Avtex | 2 | Short: 2 of its 4 in GB to go |
 | Finlux | 2 | Short: 98 to go |
 | Hitachi | 2 | Short: 98 to go |
 | Hyundai | 2 | Short: 98 to go |
 | Polaroid | 2 | Short: 98 to go |
+| Pyle | 2 | Whole range in US (2) |
 | Roku | 2 | Short: 98 to go |
 | Seiki | 2 | Short: 98 to go |
-| Sharp | 2 | Short: 5 of its 5 in US to go |
 | Skyworth | 2 | Short: 18 of its 20 in US to go |
-| Vizio | 2 | Short: 2 of its 4 in US to go |
 | Xiaomi | 2 | Short: 98 to go |
 | Atyme | 1 | Short: 8 of its 9 in US to go |
 | Caixun | 1 | Short: 99 to go |
@@ -1364,85 +1368,82 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Funai | 1 | Short: 99 to go |
 | Furrion | 1 | Short: 99 to go |
 | Grundig | 1 | Short: 99 to go |
-| iFFALCON | 1 | Short: 4 of its 4 in GB to go |
-| JVC | 1 | Short: 3 of its 3 in US to go |
 | Konka | 1 | Short: 2 of its 3 in US to go |
 | Logik | 1 | Short: 99 to go |
 | Metz | 1 | Short: 99 to go |
 | Naxa | 1 | Short: 99 to go |
 | Onn | 1 | Short: 99 to go |
 | Proscan | 1 | Short: 99 to go |
-| Pyle | 1 | Short: 1 of its 2 in US to go |
 | Sansui | 1 | Short: 99 to go |
 | Sanyo | 1 | Short: 99 to go |
-| Supersonic | 1 | Short: 4 of its 5 in US to go |
 | Telefunken | 1 | Short: 99 to go |
 | Thomson | 1 | Short: 99 to go |
 
 ## Electronics: Audio Equipment
 
-68 brands, 0 deep enough, 68 short.
+68 brands, 13 deep enough, 55 short.
 
 | Brand | Products | Status |
 |---|---|---|
-| Marshall | 18 | Short: 15 of its 21 in US to go |
+| Marshall | 21 | Short: 12 of its 21 in US to go |
+| Sonos | 17 | Whole range in US (17) |
 | Anker Soundcore | 13 | Short: 13 of its 26 in US to go |
-| Sonos | 12 | Short: 5 of its 17 in US to go |
+| Audio Pro | 13 | Whole range in US (13) |
+| LG | 12 | Whole range in US (10) |
+| Hisense | 11 | Whole range in US (10) |
 | JBL | 11 | Short: 89 to go |
 | Polk Audio | 11 | Short: 9 of its 16 in US to go |
+| PSB | 10 | Short: 3 of its 11 in CA to go |
+| Ultimate Ears | 10 | Whole range in US (10) |
+| Beats | 9 | Whole range in US (9) |
 | Bose | 9 | Short: 9 of its 18 in US to go |
+| Logitech | 9 | Whole range in US (9) |
+| TCL | 8 | Whole range in US (7) |
 | Bowers & Wilkins | 6 | Short: 11 of its 17 in US to go |
+| Philips | 6 | Whole range in US (5) |
 | Q Acoustics | 6 | Short: 94 to go |
-| Ultimate Ears | 6 | Short: 4 of its 10 in US to go |
+| Apple | 5 | Whole range in US (5) |
 | Audioengine | 5 | Short: 95 to go |
 | Cambridge Audio | 5 | Short: 7 of its 12 in US to go |
 | Denon | 5 | Short: 23 of its 28 in US to go |
 | KEF | 5 | Short: 10 of its 14 in US to go |
 | Klipsch | 5 | Short: 13 of its 17 in US to go |
+| Majority | 5 | Whole range in GB (5) |
+| Naim | 5 | Whole range in GB (4) |
 | Samsung | 5 | Short: 95 to go |
 | Amazon Echo | 4 | Short: 96 to go |
 | Bang & Olufsen | 4 | Short: 18 of its 21 in US to go |
+| Bluesound | 4 | Whole range in US (3) |
 | Edifier | 4 | Short: 56 of its 59 in US to go |
 | Harman Kardon | 4 | Short: 96 to go |
 | Sony | 4 | Short: 96 to go |
 | Yamaha | 4 | Short: 96 to go |
-| Audio Pro | 3 | Short: 10 of its 13 in US to go |
 | Dali | 3 | Short: 24 of its 27 in US to go |
 | Devialet | 3 | Short: 97 to go |
 | Focal | 3 | Short: 97 to go |
 | Google Nest | 3 | Short: 97 to go |
 | Kanto | 3 | Short: 15 of its 18 in US to go |
-| LG | 3 | Short: 8 of its 10 in US to go |
 | Tribit | 3 | Short: 32 of its 35 in US to go |
 | Vizio | 3 | Short: 1 of its 4 in US to go |
-| Apple | 2 | Short: 3 of its 5 in US to go |
 | Elac | 2 | Short: 23 of its 25 in US to go |
 | Steren | 2 | Short: 20 of its 22 in MX to go |
 | Wharfedale | 2 | Short: 71 of its 71 in GB to go |
 | Acoustic Energy | 1 | Short: 19 of its 20 in GB to go |
 | Altec Lansing | 1 | Short: 15 of its 16 in US to go |
-| Beats | 1 | Short: 8 of its 9 in US to go |
-| Bluesound | 1 | Short: 2 of its 3 in US to go |
 | Cabasse | 1 | Short: 34 of its 34 in US to go |
 | Canton | 1 | Short: 15 of its 15 in US to go |
 | Creative | 1 | Short: 19 of its 20 in US to go |
 | Definitive Technology | 1 | Short: 99 to go |
 | Fluance | 1 | Short: 20 of its 21 in US to go |
-| Hisense | 1 | Short: 9 of its 10 in US to go |
 | Jamo | 1 | Short: 26 of its 27 in US to go |
 | Lenco | 1 | Short: 13 of its 14 in GB to go |
-| Logitech | 1 | Short: 8 of its 9 in US to go |
-| Majority | 1 | Short: 4 of its 5 in GB to go |
 | MartinLogan | 1 | Short: 39 of its 40 in US to go |
 | Mission | 1 | Short: 39 of its 40 in GB to go |
 | Monitor Audio | 1 | Short: 10 of its 11 in US to go |
-| Naim | 1 | Short: 3 of its 4 in GB to go |
 | Panasonic | 1 | Short: 99 to go |
 | Paradigm | 1 | Short: 38 of its 38 in CA to go |
-| Philips | 1 | Short: 4 of its 5 in US to go |
 | Pro-Ject | 1 | Short: 33 of its 34 in US to go |
 | ProAc | 1 | Short: 14 of its 15 in GB to go |
-| PSB | 1 | Short: 11 of its 11 in CA to go |
 | Rega | 1 | Short: 20 of its 21 in GB to go |
 | Roku | 1 | Short: 99 to go |
 | Ruark Audio | 1 | Short: 14 of its 15 in GB to go |
@@ -1450,7 +1451,6 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Sharp | 1 | Short: 99 to go |
 | Steljes Audio | 1 | Short: 99 to go |
 | SVS | 1 | Short: 30 of its 31 in US to go |
-| TCL | 1 | Short: 6 of its 7 in US to go |
 | Teufel | 1 | Short: 17 of its 17 in DE to go |
 | Triangle | 1 | Short: 99 to go |
 
@@ -1529,27 +1529,37 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Home: Mattresses And Beds
 
-55 brands, 7 deep enough, 48 short.
+55 brands, 20 deep enough, 35 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | IKEA | 29 | Short: 3 of its 18 in US to go |
+| Saatva | 13 | Whole range in US (12) |
+| Nectar | 12 | Whole range in US (9) |
+| Casper | 11 | Whole range in US (7) |
 | Purple | 11 | Whole range in US (11) |
-| Saatva | 11 | Short: 1 of its 12 in US to go |
-| Nectar | 9 | Whole range in US (9) |
-| Casper | 8 | Whole range in US (7) |
-| Simba | 6 | Whole range in GB (6) |
-| Emma | 4 | Short: 3 of its 6 in GB to go |
+| Emma | 10 | Whole range in GB (6) |
+| Simba | 9 | Whole range in GB (6) |
+| Tuft & Needle | 8 | Whole range in US (4) |
+| Amerisleep | 7 | Whole range in US (7) |
+| Restonic | 7 | Short: 2 of its 6 in US to go |
+| Douglas | 6 | Whole range in CA (6) |
+| eve | 6 | Whole range in GB (6) |
+| Birch | 5 | Whole range in US (5) |
+| Endy | 5 | Whole range in CA (3) |
+| Nest Bedding | 5 | Whole range in US (5) |
 | Helix | 4 | Short: 96 to go |
 | Hypnos | 4 | Short: 96 to go |
+| Lucid | 4 | Whole range in US (3) |
 | Silentnight | 4 | Short: 96 to go |
-| Tuft & Needle | 4 | Whole range in US (4) |
-| Amerisleep | 3 | Short: 4 of its 7 in US to go |
+| Tempur-Pedic | 4 | Whole range in US (4) |
+| WinkBeds | 4 | Whole range in US (3) |
+| Big Fig | 3 | Whole range in US (3) |
 | Dormeo | 3 | Short: 97 to go |
-| Endy | 3 | Whole range in CA (3) |
 | Leesa | 3 | Short: 14 of its 17 in US to go |
-| Restonic | 3 | Short: 6 of its 6 in US to go |
+| Origin | 3 | Whole range in US (2) |
 | Sealy | 3 | Short: 97 to go |
+| Silk & Snow | 3 | Whole range in CA (3) |
 | Sognare | 3 | Short: 7 of its 7 in GB to go |
 | Spring Air | 3 | Short: 14 of its 14 in US to go |
 | King Koil | 2 | Short: 11 of its 11 in US to go |
@@ -1557,36 +1567,26 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | América | 1 | Short: 99 to go |
 | Avocado | 1 | Short: 10 of its 11 in US to go |
 | Bear | 1 | Short: 8 of its 9 in US to go |
-| Big Fig | 1 | Short: 2 of its 3 in US to go |
-| Birch | 1 | Short: 4 of its 5 in US to go |
 | Brooklyn Bedding | 1 | Short: 19 of its 20 in US to go |
-| Douglas | 1 | Short: 5 of its 6 in CA to go |
 | DreamCloud | 1 | Short: 8 of its 9 in US to go |
 | Dunlopillo | 1 | Short: 8 of its 9 in GB to go |
-| eve | 1 | Short: 5 of its 6 in GB to go |
 | Eve | 1 | Short: 5 of its 6 in GB to go |
 | Harrison Spinks | 1 | Short: 99 to go |
 | Hush | 1 | Short: 99 to go |
 | Kaymed | 1 | Short: 99 to go |
-| Lucid | 1 | Short: 2 of its 3 in US to go |
 | Luuna | 1 | Short: 5 of its 6 in MX to go |
 | Molecule | 1 | Short: 19 of its 20 in US to go |
-| Nest Bedding | 1 | Short: 4 of its 5 in US to go |
 | Nolah | 1 | Short: 6 of its 7 in US to go |
 | Novosbed | 1 | Whole range in CA (1) |
 | Odearest | 1 | Short: 99 to go |
-| Origin | 1 | Short: 2 of its 2 in US to go |
 | Otty | 1 | Short: 8 of its 9 in GB to go |
 | PlushBeds | 1 | Short: 14 of its 15 in US to go |
 | Polysleep | 1 | Short: 7 of its 8 in CA to go |
 | Respa | 1 | Short: 99 to go |
 | Rest Assured | 1 | Short: 99 to go |
-| Silk & Snow | 1 | Short: 2 of its 3 in CA to go |
 | Sleep Number | 1 | Short: 9 of its 10 in US to go |
 | Sleepeezee | 1 | Short: 14 of its 15 in GB to go |
-| Tempur-Pedic | 1 | Short: 3 of its 4 in US to go |
 | Vispring | 1 | Short: 13 of its 14 in GB to go |
-| WinkBeds | 1 | Short: 2 of its 3 in US to go |
 | Zinus | 1 | Short: 5 of its 6 in US to go |
 
 ## Home: Bedding And Towels
@@ -1661,32 +1661,33 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Home: Appliances
 
-59 brands, 1 deep enough, 58 short.
+59 brands, 4 deep enough, 55 short.
 
 | Brand | Products | Status |
 |---|---|---|
+| Speed Queen | 15 | Whole range in US (15) |
+| Beko | 12 | Whole range in GB (12) |
+| Blomberg | 7 | Whole range in GB (6) |
 | Bosch | 7 | Short: 93 to go |
 | Whirlpool | 6 | Short: 94 to go |
 | LG | 5 | Short: 95 to go |
 | Miele | 5 | Short: 95 to go |
-| Beko | 4 | Short: 8 of its 12 in GB to go |
 | Electrolux | 4 | Short: 96 to go |
 | Frigidaire | 4 | Short: 96 to go |
 | GE | 4 | Short: 96 to go |
-| Hisense | 4 | Short: 8 of its 8 in US to go |
-| Midea | 4 | Short: 1 of its 5 in US to go |
+| Hisense | 4 | Short: 96 to go |
+| Midea | 4 | Short: 96 to go |
 | Samsung | 4 | Short: 96 to go |
 | Amana | 3 | Short: 97 to go |
 | Haier | 3 | Short: 97 to go |
 | Hotpoint | 3 | Whole range in GB (3) |
 | Maytag | 3 | Short: 97 to go |
-| Speed Queen | 3 | Short: 12 of its 15 in US to go |
 | Acros | 2 | Short: 98 to go |
 | AEG | 2 | Short: 98 to go |
 | Atvio | 2 | Short: 98 to go |
 | Avanti | 2 | Short: 98 to go |
 | Belling | 2 | Short: 98 to go |
-| Bertazzoni | 2 | Short: 34 of its 35 in US to go |
+| Bertazzoni | 2 | Short: 98 to go |
 | Black+Decker | 2 | Short: 98 to go |
 | Cafe | 2 | Short: 98 to go |
 | Caple | 2 | Short: 98 to go |
@@ -1702,17 +1703,16 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Mabe | 2 | Short: 98 to go |
 | Magic Chef | 2 | Short: 98 to go |
 | Neff | 2 | Short: 98 to go |
-| Sharp | 2 | Short: 9 of its 9 in US to go |
+| Sharp | 2 | Short: 98 to go |
 | Siemens | 2 | Short: 98 to go |
 | Statesman | 2 | Short: 98 to go |
 | Swan | 2 | Short: 98 to go |
 | Viking | 2 | Short: 98 to go |
 | Asko | 1 | Short: 99 to go |
-| Blomberg | 1 | Short: 5 of its 6 in GB to go |
 | CDA | 1 | Short: 99 to go |
 | Daewoo | 1 | Short: 99 to go |
-| Fisher & Paykel | 1 | Short: 11 of its 12 in US to go |
-| Gaggenau | 1 | Short: 3 of its 4 in US to go |
+| Fisher & Paykel | 1 | Short: 99 to go |
+| Gaggenau | 1 | Short: 99 to go |
 | Grundig | 1 | Short: 99 to go |
 | Hoover | 1 | Short: 99 to go |
 | Insignia | 1 | Short: 99 to go |
@@ -2357,7 +2357,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Cars, Pickups And Vans
 
-74 brands, 18 deep enough, 56 short.
+74 brands, 24 deep enough, 50 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -2370,23 +2370,24 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Hyundai | 17 | Whole range in US (11) |
 | Mercedes-Benz | 16 | Short: 6 of its 18 in US to go |
 | Volkswagen | 16 | Whole range in US (8) |
+| Audi | 15 | Whole range in US (14) |
 | Kia | 15 | Short: 85 to go |
-| Audi | 14 | Short: 2 of its 14 in US to go |
 | Jeep | 13 | Whole range in US (8) |
 | Mazda | 13 | Whole range in US (7) |
-| Lexus | 11 | Short: 2 of its 13 in US to go |
+| Lexus | 11 | Short: 89 to go |
 | Land Rover | 10 | Whole range in US (7) |
 | Subaru | 10 | Whole range in US (8) |
 | Volvo | 10 | Short: 90 to go |
 | Cadillac | 9 | Short: 91 to go |
 | GMC | 9 | Whole range in US (6) |
 | Porsche | 9 | Whole range in US (6) |
+| BYD | 8 | Whole range in GB (6) |
 | Genesis | 8 | Whole range in US (6) |
 | MINI | 8 | Whole range in US (3) |
+| Mitsubishi | 7 | Whole range in US (5) |
 | Škoda | 7 | Short: 4 of its 11 in GB to go |
-| BYD | 6 | Short: 2 of its 6 in GB to go |
+| Changan | 6 | Whole range in GB (2) |
 | Citroën | 6 | Short: 94 to go |
-| Mitsubishi | 6 | Short: 1 of its 5 in US to go |
 | Polestar | 6 | Whole range in US (3) |
 | Ram | 6 | Short: 94 to go |
 | Renault | 6 | Short: 8 of its 12 in GB to go |
@@ -2394,12 +2395,12 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Bentley | 5 | Short: 95 to go |
 | Lincoln | 5 | Whole range in US (4) |
 | MG | 5 | Short: 95 to go |
+| SEAT | 5 | Whole range in GB (5) |
 | Suzuki | 5 | Short: 4 of its 8 in GB to go |
 | Tesla | 5 | Short: 4 of its 5 in US to go |
 | Alfa Romeo | 4 | Short: 96 to go |
 | Aston Martin | 4 | Short: 6 of its 9 in GB to go |
 | Buick | 4 | Short: 96 to go |
-| Changan | 4 | Short: 2 of its 2 in GB to go |
 | Chrysler | 4 | Short: 96 to go |
 | Cupra | 4 | Short: 3 of its 7 in GB to go |
 | Ferrari | 4 | Short: 96 to go |
@@ -2419,7 +2420,6 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | McLaren | 3 | Short: 97 to go |
 | Opel | 3 | Short: 97 to go |
 | Rivian | 3 | Whole range in US (2) |
-| SEAT | 3 | Short: 2 of its 5 in GB to go |
 | Smart | 3 | Short: 97 to go |
 | Abarth | 2 | Short: 98 to go |
 | BAIC | 2 | Short: 2 of its 4 in MX to go |
@@ -2431,14 +2431,14 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Omoda | 2 | Short: 2 of its 4 in GB to go |
 | Skoda | 2 | Short: 11 of its 11 in GB to go |
 | VinFast | 2 | Whole range in US (2) |
+| Xpeng | 2 | Whole range in GB (2) |
 | Alpine | 1 | Short: 2 of its 3 in GB to go |
 | GWM Ora | 1 | Short: 2 of its 3 in GB to go |
 | Jaecoo | 1 | Short: 2 of its 3 in GB to go |
-| Xpeng | 1 | Short: 1 of its 2 in GB to go |
 
 ## Vehicles: Motorcycles And Scooters
 
-66 brands, 3 deep enough, 63 short.
+66 brands, 5 deep enough, 61 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -2488,8 +2488,10 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Janus | 5 | Short: 95 to go |
 | Niu | 5 | Short: 95 to go |
 | Royal Alloy | 5 | Short: 95 to go |
+| Can-Am | 4 | Whole range in US (4) |
 | Energica | 4 | Short: 4 of its 4 in US to go |
 | Islo | 4 | Short: 96 to go |
+| LiveWire | 4 | Whole range in US (4) |
 | Super Soco | 4 | Short: 96 to go |
 | Cake | 3 | Short: 97 to go |
 | Evoke | 3 | Short: 97 to go |
@@ -2498,12 +2500,10 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Norton | 3 | Short: 97 to go |
 | BSA | 2 | Short: 98 to go |
 | Buell | 2 | Short: 98 to go |
-| Can-Am | 2 | Short: 2 of its 4 in US to go |
 | GasGas | 2 | Short: 98 to go |
 | Hanway | 2 | Short: 98 to go |
 | ItalJet | 2 | Short: 98 to go |
 | Kove | 2 | Short: 98 to go |
-| LiveWire | 2 | Short: 2 of its 4 in US to go |
 | Genuine | 1 | Short: 99 to go |
 | Peugeot | 1 | Short: 99 to go |
 | Ryvid | 1 | Short: 99 to go |
@@ -2590,26 +2590,26 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Motorhomes And Campervans
 
-53 brands, 0 deep enough, 53 short.
+53 brands, 4 deep enough, 49 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | Thor | 31 | Short: 7 of its 38 in US to go |
 | Winnebago | 16 | Short: 2 of its 18 in US to go |
-| Mercedes-Benz | 4 | Short: 1 of its 2 in GB to go |
+| Mercedes-Benz | 6 | Whole range in GB (2) |
+| Elddis | 4 | Whole range in GB (4) |
+| Airstream | 3 | Whole range in US (3) |
+| Bailey | 3 | Whole range in GB (3) |
 | Ford | 3 | Short: 97 to go |
 | Benimar | 2 | Short: 98 to go |
 | Carado | 2 | Short: 98 to go |
-| Elddis | 2 | Short: 2 of its 4 in GB to go |
 | Midwest Automotive Designs | 2 | Short: 98 to go |
 | Rapido | 2 | Short: 16 of its 17 in GB to go |
 | Roller Team | 2 | Short: 98 to go |
 | Storyteller Overland | 2 | Short: 98 to go |
 | Westfalia | 2 | Short: 98 to go |
-| Airstream | 1 | Short: 2 of its 3 in US to go |
 | Auto-Sleeper | 1 | Short: 99 to go |
 | Auto-Trail | 1 | Short: 5 of its 6 in GB to go |
-| Bailey | 1 | Short: 2 of its 3 in GB to go |
 | Bürstner | 1 | Short: 99 to go |
 | Chausson | 1 | Short: 99 to go |
 | Coach House | 1 | Short: 99 to go |
@@ -2720,38 +2720,47 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Tires And Wheels
 
-53 brands, 0 deep enough, 53 short.
+53 brands, 14 deep enough, 39 short.
 
 | Brand | Products | Status |
 |---|---|---|
-| Michelin | 40 | Short: 6 of its 43 in US to go |
-| Pirelli | 38 | Short: 4 of its 39 in US to go |
+| Michelin | 46 | Whole range in US (43) |
+| Pirelli | 43 | Whole range in US (39) |
 | Continental | 17 | Short: 33 of its 44 in US to go |
+| BFGoodrich | 13 | Short: 3 of its 15 in US to go |
+| Vredestein | 13 | Short: 1 of its 13 in US to go |
+| Fortune | 11 | Whole range in US (10) |
+| General Tire | 11 | Short: 27 of its 38 in US to go |
+| Tornel | 11 | Whole range in MX (11) |
+| Kleber | 10 | Whole range in GB (10) |
+| Thunderer | 10 | Whole range in US (10) |
 | Goodyear | 9 | Short: 91 to go |
+| Lexani | 9 | Whole range in US (9) |
 | Bridgestone | 8 | Short: 92 to go |
+| Euzkadi | 8 | Whole range in MX (8) |
 | Hankook | 8 | Short: 44 of its 47 in US to go |
+| Dunlop | 7 | Whole range in US (3) |
+| Laufenn | 7 | Short: 1 of its 8 in US to go |
 | Toyo | 6 | Short: 94 to go |
+| Westlake | 6 | Whole range in US (6) |
+| Achilles | 5 | Whole range in US (5) |
 | Kumho | 5 | Short: 19 of its 21 in US to go |
-| Dunlop | 4 | Short: 2 of its 3 in US to go |
-| BFGoodrich | 3 | Short: 13 of its 15 in US to go |
+| Prinx | 5 | Short: 5 of its 10 in US to go |
+| Uniroyal | 5 | Whole range in US (4) |
+| Ohtsu | 4 | Whole range in US (4) |
+| Primewell | 4 | Whole range in US (4) |
 | Cooper | 3 | Short: 97 to go |
 | Firestone | 3 | Short: 97 to go |
 | Maxxis | 3 | Short: 24 of its 25 in US to go |
-| Vredestein | 3 | Short: 12 of its 13 in US to go |
 | Falken | 2 | Short: 98 to go |
-| General Tire | 2 | Short: 36 of its 38 in US to go |
 | Linglong | 2 | Short: 98 to go |
 | Nexen | 2 | Short: 30 of its 31 in US to go |
 | Nokian | 2 | Short: 16 of its 18 in US to go |
-| Uniroyal | 2 | Short: 3 of its 4 in US to go |
 | Accelera | 1 | Short: 99 to go |
-| Achilles | 1 | Short: 4 of its 5 in US to go |
 | Arroyo | 1 | Short: 16 of its 17 in US to go |
 | Barum | 1 | Short: 99 to go |
 | Delinte | 1 | Short: 17 of its 18 in US to go |
-| Euzkadi | 1 | Short: 7 of its 8 in MX to go |
 | Federal | 1 | Short: 31 of its 32 in US to go |
-| Fortune | 1 | Short: 9 of its 10 in US to go |
 | Fulda | 1 | Short: 16 of its 17 in GB to go |
 | General | 1 | Short: 15 of its 15 in US to go |
 | GT Radial | 1 | Short: 23 of its 24 in US to go |
@@ -2760,31 +2769,24 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Joyroad | 1 | Short: 99 to go |
 | Kelly | 1 | Short: 99 to go |
 | Kenda | 1 | Short: 99 to go |
-| Kleber | 1 | Short: 9 of its 10 in GB to go |
 | Landsail | 1 | Short: 99 to go |
-| Laufenn | 1 | Short: 7 of its 8 in US to go |
-| Lexani | 1 | Short: 8 of its 9 in US to go |
 | Mastercraft | 1 | Short: 14 of its 15 in US to go |
 | Matador | 1 | Short: 99 to go |
 | Milestar | 1 | Short: 18 of its 19 in US to go |
 | Nitto | 1 | Short: 16 of its 17 in US to go |
-| Ohtsu | 1 | Short: 3 of its 4 in US to go |
-| Primewell | 1 | Short: 3 of its 4 in US to go |
-| Prinx | 1 | Short: 9 of its 10 in US to go |
 | Sailun | 1 | Short: 22 of its 22 in CA to go |
-| Thunderer | 1 | Short: 9 of its 10 in US to go |
-| Tornel | 1 | Short: 10 of its 11 in MX to go |
 | Triangle | 1 | Short: 32 of its 32 in CA to go |
-| Westlake | 1 | Short: 5 of its 6 in US to go |
 | Yokohama | 1 | Short: 99 to go |
 
 ## Vehicles: Car Audio
 
-55 brands, 0 deep enough, 55 short.
+55 brands, 2 deep enough, 53 short.
 
 | Brand | Products | Status |
 |---|---|---|
+| Polk Audio | 13 | Whole range in US (12) |
 | Pioneer | 12 | Short: 24 of its 25 in US to go |
+| American Bass | 11 | Whole range in US (11) |
 | Kenwood | 11 | Short: 89 to go |
 | Alpine | 10 | Short: 90 to go |
 | JVC | 10 | Short: 55 of its 62 in US to go |
@@ -2804,13 +2806,11 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Hertz | 2 | Short: 15 of its 16 in US to go |
 | Hifonics | 2 | Short: 98 to go |
 | In Phase | 2 | Short: 47 of its 48 in GB to go |
-| Polk Audio | 2 | Short: 11 of its 12 in US to go |
 | Power Acoustik | 2 | Short: 32 of its 33 in US to go |
 | Soundstream | 2 | Short: 29 of its 30 in US to go |
 | Taramps | 2 | Short: 19 of its 20 in US to go |
 | Vibe | 2 | Short: 98 to go |
 | Xtrons | 2 | Short: 13 of its 14 in US to go |
-| American Bass | 1 | Short: 10 of its 11 in US to go |
 | Blaupunkt | 1 | Short: 37 of its 37 in US to go |
 | Cerwin-Vega | 1 | Short: 15 of its 16 in US to go |
 | Crunch | 1 | Short: 99 to go |

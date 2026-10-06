@@ -1,0 +1,261 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing the smallest depth gaps of docs/CATALOG-DEPTH.md's cars category: Mitsubishi, Audi and Lexus in the US, SEAT, Changan, BYD and Xpeng in Great Britain, each against the brand's whole range as counted in docs/research/catalog-ranges.json. Prices read live on 2026-10-06 from the makers' own pages where they rendered as fetchable text (changaneurope.com/uk, xpengcars.co.uk); where a maker's own US site refused the fetch (audiusa.com, mitsubishicars.com), from a press release on the maker's own newswire account (prnewswire) or a trusted secondary (kbb.com, autocar.co.uk, parkers.co.uk, fleetnews.co.uk, theevreport.com, karmactive.com, evspecifications.com), each recorded as sourceType secondary with its URL. US economy from the EPA's fueleconomy.gov by vehicle id (primary). An EV's own kWh per 100 miles is computed from its maker's own battery capacity over its own WLTP range, both published together on the one page cited. Audi's A7 nameplate for 2026 in the US is the RS 7 performance alone (A7 and S7 both discontinued there); Lexus RC (discontinued after MY2025) and LBX (never sold in the US) have no current US price and are therefore left out of this tranche, not guessed.",
+  "catalog": {
+    "US": [
+      {
+        "make": "Mitsubishi",
+        "model": "Eclipse Sportback EV",
+        "basePrice": {
+          "amount": 37745,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "Eclipse Sportback EV",
+          "includesTax": false,
+          "url": "https://www.prnewswire.com/news-releases/2027-mitsubishi-eclipse-sportback-priced-from-37-745--302899074.html",
+          "retrieved": "2026-10-06",
+          "sourceType": "secondary"
+        },
+        "body": "suv",
+        "fuel": "electric",
+        "economy": {
+          "value": null,
+          "unit": "MPGe (EPA combined)",
+          "url": "https://www.fueleconomy.gov/",
+          "sourceType": "primary",
+          "config": "not yet rated: the EPA had not published a figure for the newly launched 2027 model as of 2026-10-06"
+        },
+        "kerbWeightKg": null,
+        "notes": "75 kWh battery; Mitsubishi's own claim is up to 282 miles of range, but no EPA range or MPGe is published yet"
+      },
+      {
+        "make": "Audi",
+        "model": "A7",
+        "basePrice": {
+          "amount": 130700,
+          "currency": "USD",
+          "modelYear": 2026,
+          "trim": "RS 7 performance (the only A7-line trim Audi still sells in the US for 2026)",
+          "includesTax": false,
+          "url": "https://www.audiusa.com/en/models/a7/rs7/2026/overview/",
+          "retrieved": "2026-10-06",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "petrol",
+        "economy": {
+          "value": 16,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/49271.shtml",
+          "sourceType": "primary",
+          "config": "2026 Audi RS 7, Auto (S8), 8 cyl, 4.0 L, Turbo"
+        },
+        "co2gkm": { "value": 339 },
+        "kerbWeightKg": null,
+        "notes": "Audi discontinued the base A7 and S7 for the US for 2026, replaced by the new A6 TFSI; only the RS 7 performance still carries the A7 nameplate on audiusa.com. CO2 converted from the EPA's 545 g/mile"
+      },
+      {
+        "make": "Audi",
+        "model": "Q8",
+        "basePrice": {
+          "amount": 76895,
+          "currency": "USD",
+          "modelYear": 2026,
+          "trim": "55 TFSI Premium",
+          "includesTax": false,
+          "url": "https://www.kbb.com/audi/q8/2026/",
+          "retrieved": "2026-10-06",
+          "sourceType": "secondary"
+        },
+        "body": "suv",
+        "fuel": "petrol",
+        "economy": {
+          "value": 19,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/49897.shtml",
+          "sourceType": "primary",
+          "config": "2026 Audi Q8 quattro, Automatic (S8), 6 cyl, 3.0 L, Turbo"
+        },
+        "kerbWeightKg": null,
+        "notes": "audiusa.com refused the fetch; price read from KBB's 2026 Audi Q8 page instead"
+      }
+    ],
+    "GB": [
+      {
+        "make": "SEAT",
+        "model": "Ateca",
+        "basePrice": {
+          "amount": 26395,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "SE, 1.0 TSI 115PS",
+          "includesTax": true,
+          "url": "https://www.seat.co.uk/content/dam/countries/gb/seat-website/car-shopping-tools/price-lists/ateca/v1-cars-models-seat-ateca-pricelist-KHP-NA-04-2025.pdf",
+          "retrieved": "2026-10-06",
+          "sourceType": "primary"
+        },
+        "body": "suv",
+        "fuel": "petrol",
+        "economy": {
+          "value": 44.1,
+          "unit": "mpg (WLTP combined)",
+          "url": "https://www.seat.co.uk/content/dam/countries/gb/seat-website/car-shopping-tools/price-lists/ateca/v1-cars-models-seat-ateca-pricelist-KHP-NA-04-2025.pdf",
+          "sourceType": "primary",
+          "config": "1.0 TSI 115PS manual, low end of SEAT's own WLTP range for the trim"
+        },
+        "kerbWeightKg": null,
+        "notes": null
+      },
+      {
+        "make": "SEAT",
+        "model": "Tarraco",
+        "basePrice": {
+          "amount": 28320,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "SE, 1.5 TSI 150PS",
+          "includesTax": true,
+          "url": "https://www.autocar.co.uk/car-news/motor-shows-paris-motor-show/new-seat-taracco-uk-prices-announced-seven-seat-suv",
+          "retrieved": "2026-10-06",
+          "sourceType": "secondary"
+        },
+        "body": "suv",
+        "fuel": "petrol",
+        "economy": {
+          "value": 37.2,
+          "unit": "mpg (WLTP combined)",
+          "url": "https://www.parkers.co.uk/seat/tarraco/review/mpg-running-costs/",
+          "sourceType": "secondary",
+          "config": "1.5 TSI 150PS, low end of the published WLTP range"
+        },
+        "kerbWeightKg": null,
+        "notes": "seat.co.uk's own Tarraco price list wasn't fetchable as text; price and economy read from Autocar's and Parkers' coverage"
+      },
+      {
+        "make": "Changan",
+        "model": "Deepal S05",
+        "basePrice": {
+          "amount": 37990,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "RWD MAX",
+          "includesTax": true,
+          "url": "https://www.changaneurope.com/uk/models/changan-deepal-s05",
+          "retrieved": "2026-10-06",
+          "sourceType": "primary"
+        },
+        "body": "suv",
+        "fuel": "electric",
+        "economy": {
+          "value": 22.72,
+          "unit": "kWh/100mi",
+          "url": "https://www.changaneurope.com/uk/models/changan-deepal-s05",
+          "sourceType": "primary",
+          "config": "68.8 kWh battery over Changan's own 303-mile WLTP range, RWD MAX"
+        },
+        "kerbWeightKg": null,
+        "notes": null
+      },
+      {
+        "make": "Changan",
+        "model": "Deepal S07",
+        "basePrice": {
+          "amount": 39990,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "base (one price for every colour and interior)",
+          "includesTax": true,
+          "url": "https://www.changaneurope.com/uk/models/changan-deepal-s07",
+          "retrieved": "2026-10-06",
+          "sourceType": "primary"
+        },
+        "body": "suv",
+        "fuel": "electric",
+        "economy": {
+          "value": 27.11,
+          "unit": "kWh/100mi",
+          "url": "https://www.changaneurope.com/uk/models/changan-deepal-s07",
+          "sourceType": "primary",
+          "config": "79.97 kWh battery over Changan's own 475 km (295-mile) WLTP range"
+        },
+        "kerbWeightKg": null,
+        "notes": null
+      },
+      {
+        "make": "BYD",
+        "model": "Dolphin Surf",
+        "basePrice": {
+          "amount": 18650,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "Active",
+          "includesTax": true,
+          "url": "https://www.karmactive.com/byd-dolphin-surf-arrives-in-uk-at-18650-137-200-mile-range-with-premium-features-challenges-ev-market/",
+          "retrieved": "2026-10-06",
+          "sourceType": "secondary"
+        },
+        "body": "hatchback",
+        "fuel": "electric",
+        "economy": {
+          "value": 21.9,
+          "unit": "kWh/100mi",
+          "url": "https://www.evspecifications.com/en/model/8db43a0",
+          "sourceType": "secondary",
+          "config": "30 kWh battery over BYD's own 137-mile WLTP range, Active"
+        },
+        "kerbWeightKg": null,
+        "notes": "byd.com's own UK configurator wasn't fetchable as text; price read from Karmactive's launch coverage"
+      },
+      {
+        "make": "BYD",
+        "model": "Atto 2",
+        "basePrice": {
+          "amount": 30850,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "Boost",
+          "includesTax": true,
+          "url": "https://theevreport.com/byd-atto-2-uk-pricing-revealed",
+          "retrieved": "2026-10-06",
+          "sourceType": "secondary"
+        },
+        "body": "suv",
+        "fuel": "electric",
+        "economy": {
+          "value": 23.9,
+          "unit": "kWh/100mi",
+          "url": "https://www.fleetnews.co.uk/electric-fleet/electric-car-and-van-data/byd/atto-2-3268",
+          "sourceType": "secondary",
+          "config": "51.1 kWh battery over BYD's own 214-mile WLTP range, Boost"
+        },
+        "kerbWeightKg": null,
+        "notes": "byd.com's own UK configurator wasn't fetchable as text; price read from The EV Report's coverage of BYD's UK pricing announcement"
+      },
+      {
+        "make": "Xpeng",
+        "model": "X9",
+        "basePrice": {
+          "amount": 74990,
+          "currency": "GBP",
+          "modelYear": 2026,
+          "trim": "Standard Range",
+          "includesTax": true,
+          "url": "https://xpengcars.co.uk/models/x9/",
+          "retrieved": "2026-10-06",
+          "sourceType": "primary"
+        },
+        "body": "mpv",
+        "fuel": "electric",
+        "economy": {
+          "value": 28.64,
+          "unit": "kWh/100mi",
+          "url": "https://xpengcars.co.uk/models/x9/",
+          "sourceType": "primary",
+          "config": "94.8 kWh battery over Xpeng's own 331-mile WLTP range, Standard Range"
+        },
+        "kerbWeightKg": null,
+        "notes": null
+      }
+    ]
+  }
+}

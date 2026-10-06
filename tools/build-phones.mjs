@@ -13,7 +13,10 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 // Names one plain space apart: the sources mix in non-breaking spaces, which never match a plain one.
 const r = JSON.parse(readFileSync('docs/research/world/research-phones.json', 'utf8').replaceAll(String.fromCharCode(160), ' '));
-const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+// '+' carries a model apart from its non-Plus sibling (realme 16 Pro+ 5G vs realme 16 Pro 5G, Fairphone
+// Gen. 6+ vs Gen. 6): stripped as punctuation like any other, both slugged to the same id and the uniq-by-id
+// step below silently dropped one. Spelled out before the strip so it survives.
+const slug = (s) => String(s).toLowerCase().replace(/\+/g, 'plus').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // And from 2026-10-05 the other makers' phones, a tranche a file (docs/research/catalog/phones-*.json), in the same shape.
 const TRANCHES = existsSync('docs/research/catalog') ? readdirSync('docs/research/catalog').filter((f) => /^phones-.*.json$/.test(f)).sort().flatMap((f) => JSON.parse(readFileSync(`docs/research/catalog/${f}`, 'utf8').replaceAll(String.fromCharCode(160), ' ')).devices ?? []) : [];

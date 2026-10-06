@@ -11298,6 +11298,28 @@ export const MOTO_MODELS: readonly CarModel[] = [
     "sourceType": "read on a dealer’s or the trade press’s page"
   },
   {
+    "id": "us-can-am-ryker",
+    "market": "US",
+    "kind": "motorcycle",
+    "make": "Can-Am",
+    "model": "Ryker",
+    "trim": "base, Rotax 600 ACE",
+    "rank": null,
+    "price": 969900,
+    "currency": "USD",
+    "taxIncluded": false,
+    "delivery": 0,
+    "deliveryBasis": "no destination or delivery charge was published with it",
+    "fuel": "petrol",
+    "per100km": null,
+    "economyBasis": "not published by its maker",
+    "co2": null,
+    "kerbKg": null,
+    "cc": 599,
+    "source": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles/ryker.html",
+    "sourceType": "read on the maker’s page"
+  },
+  {
     "id": "us-can-am-pulse",
     "market": "US",
     "kind": "motorcycle",
@@ -11341,6 +11363,28 @@ export const MOTO_MODELS: readonly CarModel[] = [
     "co2": null,
     "kerbKg": null,
     "source": "https://can-am.brp.com/on-road/us/en/models/motorcycles/dual-sport/origin.html",
+    "sourceType": "read on the maker’s page"
+  },
+  {
+    "id": "us-can-am-spyder-f3",
+    "market": "US",
+    "kind": "motorcycle",
+    "make": "Can-Am",
+    "model": "Spyder F3",
+    "trim": "F3-S, Rotax 1330 ACE",
+    "rank": null,
+    "price": 2229900,
+    "currency": "USD",
+    "taxIncluded": false,
+    "delivery": 0,
+    "deliveryBasis": "no destination or delivery charge was published with it",
+    "fuel": "petrol",
+    "per100km": null,
+    "economyBasis": "not published by its maker",
+    "co2": null,
+    "kerbKg": null,
+    "cc": 1330,
+    "source": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles/cruiser/spyder-f3.html",
     "sourceType": "read on the maker’s page"
   },
   {
@@ -13436,6 +13480,29 @@ export const MOTO_MODELS: readonly CarModel[] = [
     "sourceType": "read on a dealer’s or the trade press’s page"
   },
   {
+    "id": "us-livewire-s2-mulholland",
+    "market": "US",
+    "kind": "motorcycle",
+    "make": "LiveWire",
+    "model": "S2 Mulholland",
+    "trim": "",
+    "rank": null,
+    "price": 1199900,
+    "currency": "USD",
+    "taxIncluded": false,
+    "delivery": 0,
+    "deliveryBasis": "no destination or delivery charge was published with it",
+    "fuel": "ev",
+    "per100km": null,
+    "kwhPer100km": 7.17,
+    "kw": 30,
+    "economyBasis": "its 10.5 kWh battery over its 146.4 km combined range, its maker’s figures",
+    "co2": null,
+    "kerbKg": null,
+    "source": "https://www.livewire.com/s2-mulholland-electric-motorcycle",
+    "sourceType": "read on the maker’s page"
+  },
+  {
     "id": "us-livewire-s2-del-mar",
     "market": "US",
     "kind": "motorcycle",
@@ -13478,6 +13545,29 @@ export const MOTO_MODELS: readonly CarModel[] = [
     "kerbKg": null,
     "source": "https://www.topspeed.com/livewire-s2-alpinista-breaks-cover/",
     "sourceType": "read on a dealer’s or the trade press’s page"
+  },
+  {
+    "id": "us-livewire-livewire-one",
+    "market": "US",
+    "kind": "motorcycle",
+    "make": "LiveWire",
+    "model": "LiveWire ONE",
+    "trim": "",
+    "rank": null,
+    "price": 1399900,
+    "currency": "USD",
+    "taxIncluded": false,
+    "delivery": 0,
+    "deliveryBasis": "no destination or delivery charge was published with it",
+    "fuel": "ev",
+    "per100km": null,
+    "kwhPer100km": 6.56,
+    "kw": 75,
+    "economyBasis": "its 15.4 kWh battery over its 234.9 km city range, its maker’s figures",
+    "co2": null,
+    "kerbKg": null,
+    "source": "https://www.livewire.com/livewire-one-electric-motorcycle",
+    "sourceType": "read on the maker’s page"
   },
   {
     "id": "us-moto-guzzi-v7-stone",
@@ -15273,6 +15363,12 @@ export const MOTO_MODELS: readonly CarModel[] = [
 
 /** The tanks the makers state, liters. */
 export const MOTO_TANKS: Readonly<Record<string, Capacity>> = {
+  "us-livewire-livewire-one": {
+    "batteryKwh": 15.4
+  },
+  "us-livewire-s2-mulholland": {
+    "batteryKwh": 10.5
+  },
   "gb-honda-vision": {
     "tankL": 4.9
   },

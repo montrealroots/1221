@@ -161,14 +161,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-vehicles-tires.json"
   },
-  "cars|Lexus": {
-   "range": 13,
-   "market": "US",
-   "url": "https://www.lexus.com/models",
-   "counted": "ES, IS, LS, LC, RC, LBX, UX, NX, RX, TX, GX, LX, RZ",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json"
-  },
   "cars|Land Rover": {
    "range": 7,
    "market": "US",
@@ -955,14 +947,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
   },
-  "computers|Stormforce": {
-   "range": 12,
-   "market": "GB",
-   "url": "https://www.stormforcegaming.co.uk/category/pre-built-gaming-pcs/",
-   "counted": "Carbon Pro AMD, Carbon Pulse AMD, Carbon Origin AMD, Rogue Core AMD, Rogue Prime Intel, Zenith Pulse AMD, Zenith Edge AMD, Zenith Core Intel, Zenith Xtreme AMD, Aether Elite Intel, Zenith Core AMD, Void Pro AMD",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
   "computers|Huawei": {
    "range": 7,
    "market": "GB",
@@ -1403,22 +1387,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
   },
-  "appliances|Hisense": {
-   "range": 8,
-   "market": "US",
-   "url": "https://www.hisense-usa.com/category/refrigerators",
-   "counted": "Hisense 18 cu.ft. Counter-Depth Top-Mount Refrigerator, Hisense 21.2 cu.ft. Top-Mount Refrigerator, Hisense 14 cu.ft. Convertible Upright Freezer, Hisense 10.2 cu.ft. Garage Ready Convertible Upright Freezer, Hisense 29.1 cu.ft. Side by Side Refrigerator, Hisense 18 cu.ft. Top Mount Garage Ready Refrigerator, Hisense 3.3 cu.ft. Compact Refrigerator, Hisense 5.4 cu.ft. Wine Cooler",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
-  "appliances|Midea": {
-   "range": 5,
-   "market": "US",
-   "url": "https://www.midea.com/us/store",
-   "counted": "Midea 0.7 cu.ft. Countertop Microwave, Midea 0.9 cu.ft. Countertop Microwave, Midea 1.1 cu.ft. Countertop Microwave, Midea Flexify French Door Air Fryer Oven, Midea 11qt 8-in-1 Smart Dual-Zone Air Fryer Oven",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
   "appliances|Speed Queen": {
    "range": 15,
    "market": "US",
@@ -1435,43 +1403,11 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
   },
-  "appliances|Fisher & Paykel": {
-   "range": 12,
-   "market": "US",
-   "url": "https://www.fisherpaykel.com/us/cooling/refrigeration/all-refrigeration/",
-   "counted": "RS3084SRHE1, RS3084FRJE1, RS2484FRJE1, RS2484SRHE1, RS2484WRUK1, RS2484VL2K1, RS3084WRUE1, RS2484WRUE1, RS1884FRJE1, RS3084WRUK1, RS36W80RJ1N, RF178WRNX1",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
-  "appliances|Bertazzoni": {
-   "range": 35,
-   "market": "US",
-   "url": "https://us.bertazzoni.com/products/ranges",
-   "counted": "Professional Series (11 SKUs: 48/36/30/24in induction/gas/dual-fuel), Master Series (18 SKUs incl gold-accent variants), Heritage Series (6 SKUs incl gold-accent variants)",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
   "appliances|Blomberg": {
    "range": 6,
    "market": "GB",
    "url": "https://www.blomberg.co.uk/appliances/laundry/washing-machines",
    "counted": "LWA210461, LWI284421, LWA29461, LWA18461, LWA27461, LWI284420",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
-  "appliances|Gaggenau": {
-   "range": 4,
-   "market": "US",
-   "url": "https://www.gaggenau.com/us/products/ovens",
-   "counted": "Expressive Series Ovens, EB 333, Expressive Series Combi-Steam Ovens, Expressive Series Combi-Microwave Ovens (200 Series excluded, discontinued Dec 2025 per page)",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
-  },
-  "appliances|Sharp": {
-   "range": 9,
-   "market": "US",
-   "url": "https://shop.sharpusa.com/products/microwave-ovens/",
-   "counted": "SMD2420MS, SMD2430MS, SMD2479 (Deco Series, color variants merged), SMC1174KS, SMC0985KS, SMC2266KS, SMC1662KS, SMC1585 (color variants merged), SMC1469KS",
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
   },
@@ -2689,6 +2625,14 @@
   "appliances|Russell Hobbs": "its own notes say the page read wasn't the whole range: Everyday Kettle, Everyday 2 Slice Toaster, Everyday 4 Slice Toaster, Calm 2 Slice Toaster (color variants merged) -- page shown was a subset/subcategory listing",
   "appliances|Indesit": "its own notes say the page read wasn't the whole range: Push&Go BI WMIL 71252 UK N (integrated), My Time MTWC 91495 W UK N (freestanding) -- page rendered only 2 featured models, not the full catalog",
   "televisions|Furrion": "its own notes say the page read wasn't the whole range: Aurora Full-Sun Pro Series, Aurora Partial-Sun Series, Aurora Partial-Sun Premier Series, Aurora Full-Shade Series",
-  "televisions|Metz": "the page said 18 sets and named 15, so the count and its list disagree"
+  "televisions|Metz": "the page said 18 sets and named 15, so the count and its list disagree",
+  "appliances|Hisense": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Midea": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Fisher & Paykel": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Bertazzoni": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Gaggenau": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Sharp": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "computers|Stormforce": "four of the models it counted aren’t on Stormforce’s own site, so the count can’t be trusted",
+  "cars|Lexus": "it counted the RC, discontinued in America after 2025, and the LBX, never sold there (lexus.com, read 2026-10-06), so the count isn’t America’s current lineup"
  }
 }

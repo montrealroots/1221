@@ -31,15 +31,15 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Accessories | Watches | 55 | 100% | 167 | 1 / 2 / 12 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 50 | 100% | 136 | 1 / 2 / 15 | 0 | 197 | 139 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 53 | 100% | 1344 | 1 / 18 / 95 | 0 | 4257 | 3241 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Phones | 53 | 100% | 127 | 1 / 2 / 18 | 2 | 253 | 414 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Phones | 53 | 100% | 165 | 1 / 2 / 18 | 13 | 319 | 464 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 9 | 2 / 3 / 4 | 3 | 9 | 39 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
-| Electronics | Computers | 56 | 100% | 173 | 1 / 1 / 15 | 2 | 173 | 174 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Televisions | 51 | 100% | 130 | 1 / 2 / 14 | 4 | 130 | 339 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Computers | 56 | 100% | 255 | 1 / 2 / 17 | 14 | 255 | 256 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Televisions | 51 | 100% | 158 | 1 / 2 / 14 | 15 | 158 | 367 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Audio Equipment | 68 | 100% | 307 | 1 / 3 / 21 | 13 | 389 | 351 | 0 | CA, GB, IE, MX, US | No |
 | Home | Furniture | 66 | 100% | 229 | 1 / 2 / 56 | 0 | 229 | 341 | 0 | CA, GB, IE, MX, US | No |
-| Home | Mattresses And Beds | 55 | 100% | 156 | 1 / 1 / 29 | 7 | 156 | 413 | 0 | CA, GB, IE, MX, US | No |
+| Home | Mattresses And Beds | 55 | 100% | 220 | 1 / 3 / 29 | 20 | 220 | 602 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 63 | 100% | 114 | 1 / 2 / 5 | 0 | 146 | 114 | 0 | CA, GB, IE, MX, US | No |
-| Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 1 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
+| Home | Appliances | 59 | 100% | 161 | 1 / 2 / 15 | 4 | 163 | 161 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 76 | 100% | 273 | 1 / 3 / 23 | 0 | 330 | 283 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 85 | 100% | 315 | 1 / 2 / 26 | 0 | 315 | 322 | 1 | CA, GB, IE, MX, US | No |
@@ -47,15 +47,15 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Household | Cleaning Products And Consumables | 64 | 100% | 245 | 1 / 3 / 14 | 0 | 245 | 268 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 176 | 100% | 556 | 1 / 1 / 58 | 0 | 556 | 574 | 40 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 74 | 100% | 139 | 1 / 1 / 8 | 0 | 139 | 148 | 1 | CA, GB, IE, MX, US | No |
-| Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 18 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorcycles And Scooters | 66 | 100% | 610 | 1 / 7 / 63 | 3 | 610 | 728 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Cars, Pickups And Vans | 74 | 100% | 490 | 1 / 5 / 22 | 24 | 490 | 839 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorcycles And Scooters | 66 | 100% | 614 | 1 / 7 / 63 | 5 | 614 | 732 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorhomes And Campervans | 53 | 100% | 111 | 1 / 1 / 31 | 0 | 111 | 127 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorhomes And Campervans | 53 | 100% | 119 | 1 / 1 / 31 | 4 | 119 | 135 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Tires And Wheels | 53 | 100% | 195 | 1 / 1 / 40 | 0 | 195 | 266 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Car Audio | 55 | 100% | 149 | 1 / 1 / 12 | 0 | 149 | 156 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Tires And Wheels | 53 | 100% | 319 | 1 / 3 / 46 | 14 | 319 | 392 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Car Audio | 55 | 100% | 170 | 1 / 1 / 13 | 2 | 170 | 177 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 187 | 1 / 2 / 27 | 0 | 187 | 187 | 0 | CA, GB, IE, MX, US | No |
