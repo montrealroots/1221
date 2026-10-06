@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-385 commands; 385 named by a test, 0 not.
+386 commands; 386 named by a test, 0 not.
 
 ## aircraft
 
@@ -447,6 +447,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `journey-travel.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 | `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+
+## orders
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `orders.collect` | `src/engine/systems/orders.ts` | `BelongingsWorkspace.tsx` | `missed-delivery.test.ts` | Rent And A Roof |
 
 ## pawn
 

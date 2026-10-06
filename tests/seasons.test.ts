@@ -54,10 +54,13 @@ describe('the bills', () => {
   });
 
   it('are paid on the 1st for the month just gone, at the home', () => {
-    // A home whose water isn't heated electrically: an electric heater's showers are metered (`systems/hotwater.ts`), and this life takes none.
+    // A home whose water isn't heated electrically or by gas: an electric heater's showers are metered (`systems/hotwater.ts`), from
+    // 2026-10-06 a gas heater's too, and this life takes none.
     const share = HEATER_SHARE.us!;
     const was = share.electric;
+    const wasGas = share.gas;
     (share as { electric: number }).electric = 0;
+    (share as { gas: number }).gas = 0;
     // And no lighting (`systems/lighting.ts`, from 2026-10-05), whose January's long nights bill past the typical month's.
     const lights = LIGHTING_NORM.us!;
     const lit = lights.share;
@@ -73,7 +76,7 @@ describe('the bills', () => {
       expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
       sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
       expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
-    } finally { (share as { electric: number }).electric = was; (lights as { share: number }).share = lit; }
+    } finally { (share as { electric: number }).electric = was; (share as { gas: number }).gas = wasGas; (lights as { share: number }).share = lit; }
   });
 });
 

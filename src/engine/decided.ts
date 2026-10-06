@@ -32,7 +32,8 @@ import { accountNumber } from './systems/banknumber';
 import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
-import { MS_DAY, startOfDay } from './core/time';
+import { MS_DAY, MS_HOUR, startOfDay } from './core/time';
+import { internetDown } from './systems/telecom';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
@@ -554,6 +555,18 @@ defineDecider<{ sim: Simulation; home: number; country: number }, string>({
     sim.player.home = { ...sim.player.home!, cityId, since: home * MS_DAY };
     return waterHeaterOf(sim, sim.player) ?? 'none';
   },
+});
+
+defineDecider<{ sim: Simulation; hour: number }, string>({
+  id: 'home.internet_outage',
+  decides: 'Whether the internet at home is down in an hour, at its offer’s published outage hours a year, ComReg’s 16 for fiber (OUTAGE_HOURS); swept at even odds.',
+  drawnIn: 'src/engine/systems/telecom.ts',
+  reads: {
+    hour: (o, t) => ({ ...o, hour: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), hour: seed }),
+  decide: ({ sim, hour }) => (internetDown(sim, sim.player, hour * MS_HOUR, 0.5) ? 'down' : 'up'),
 });
 
 defineDecider<{ sim: Simulation; claim: number }, string>({

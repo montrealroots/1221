@@ -75,6 +75,7 @@ import { extraSupplyRefusal, longestFillOf } from './health';
 import { walletOf, withdrawalQuote } from './cash';
 import { menuCatalog } from './dining';
 import { clubById, membershipsOf } from './clubs';
+import { heldRefusal, ordersOf } from './orders';
 
 export type TripMode = 'car' | 'foot' | 'transit';
 
@@ -474,7 +475,8 @@ export interface StopOffer extends Stop { key: string; label: string }
  * then the screen built its own list, of groceries, toiletries, a salon, the dry cleaner's, a station and a club):
  * besides those, a clothes shop (an order collected, the basket paid for at the till, a purchase taken back), the
  * pharmacy (a longer supply of their medicine, where they live), the bank's counter and, where their bank lets it, the
- * Post Office (cash taken out or paid in, of `cash`), a purchase posted back, and a meal at a restaurant. A stop
+ * Post Office (cash taken out or paid in, of `cash`), a purchase posted back, a meal at a restaurant and, from
+ * 2026-10-06, a parcel missed for want of a signature collected from its carrier (`orders.collect`). A stop
  * offered can still be refused when it's made, by the command's own rules.
  */
 export function errandStops(sim: Simulation, person: Person, by: TripMode, cash: Money = 0): StopOffer[] {
@@ -501,6 +503,8 @@ export function errandStops(sim: Simulation, person: Person, by: TripMode, cash:
     ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'store')).map((b) => ({ key: `r:${b.id}`, label: `Take Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'store' }, leg: shopping })),
     ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'mail')).map((b) => ({ key: `m:${b.id}`, label: `Post Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'mail' }, leg: errand })),
     ...supply,
+    // A parcel missed for want of a signature, collected from its carrier (`systems/orders.ts`, from 2026-10-06).
+    ...ordersOf(person).filter((o) => o.held && !heldRefusal(person, o.id, sim.now)).map((o) => ({ key: `h:${o.id}`, label: `Collect Your ${o.from} Parcel From ${o.held!.carrier}`, kind: 'orders.collect', payload: { orderId: o.id }, leg: errand })),
     ...(cash > 0 && current ? [
       { key: 'bank-out', label: `Take Out ${amount} At The Bank’s Counter`, kind: 'cash.withdraw', payload: { amount: cash, from: 'counter' }, leg: errand },
       ...(wallet >= cash ? [{ key: 'bank-in', label: `Pay In ${amount} At The Bank’s Counter`, kind: 'cash.deposit', payload: { amount: cash, toId: current.id, at: 'counter' }, leg: errand }] : []),

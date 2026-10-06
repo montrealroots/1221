@@ -13,7 +13,8 @@ import { CLEANING } from '@/engine/content/cleaning';
 import { DISHWASHER_CYCLES_A_DAY, SPRAY_G, dishwasherRuns, keepsCleaning, restock, shortfallBuy, sprayUsed, starterCleaning, suppliesOf, toiletryCatalog } from '@/engine/systems/hygiene';
 import { doLaundry, homePlace } from '@/engine/systems/dwelling';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { LA_SOLID_RESOURCES, wasteFeeOf } from '@/engine/systems/waste';
+import { LA_SOLID_RESOURCES, dublinBinEur, dublinBlackBinKg, wasteFeeOf } from '@/engine/systems/waste';
+import { contactsOf, newContact } from '@/engine/systems/people';
 import { GARMENTS_PER_LOAD, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -137,6 +138,19 @@ describe('the bins', () => {
     expect(fee(van)).toBe(inSaveMoney(van, Math.round(((117 + 189) / 12) * 100), 'CAD'));
     const dub = inHouse('ie-lei-dublin', 'bins-dub', 'house');
     expect(fee(dub)).toBe(inSaveMoney(dub, 2400, 'EUR'));
+  });
+
+  it('a Dublin household’s black bin is weighed: four people pay City Essential and its kg over', () => {
+    expect(dublinBlackBinKg(1)).toBeCloseTo((372 * 0.39) / 12, 9);
+    expect(dublinBinEur(dublinBlackBinKg(2))).toBe(24);
+    expect(dublinBinEur(dublinBlackBinKg(4))).toBeCloseTo(26.49 + (dublinBlackBinKg(4) - 42) * 0.3, 9);
+    const dub = inHouse('ie-lei-dublin', 'bins-dub4', 'house');
+    for (const seed of ['a', 'b', 'c']) {
+      const c = newContact(dub, dub.player, 'ie-lei-dublin', `bins-${seed}`, { at: dub.now, how: 'school' });
+      c.livesWith = dub.now;
+      contactsOf(dub.player).push(c);
+    }
+    expect(fee(dub)).toBe(inSaveMoney(dub, Math.round((26.49 + (dublinBlackBinKg(4) - 42) * 0.3) * 100), 'EUR'));
   });
 });
 

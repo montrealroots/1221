@@ -25,7 +25,7 @@ import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commiss
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
-import { orderStage, ordersOf } from '@/engine/systems/orders';
+import { heldRefusal, orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
 import { batteryOptions, batteryRefusal, batteryYears, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
@@ -342,7 +342,13 @@ export function BelongingsWorkspace() {
           {coming.length > 0 && (
             <div className="col gap-1 small" style={{ marginTop: '0.5rem' }}>
               {/* Each order's stage as the carrier's tracking says it (`orderStage`). */}
-              {coming.map((o) => <div key={o.id}>{`${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</div>)}
+              {/* Missed for want of a signature, it's held by its carrier and collected (`orders.collect`, from 2026-10-06). */}
+              {coming.map((o) => (
+                <div key={o.id} className="row gap-2" style={{ alignItems: 'center' }}>
+                  <span>{o.held ? `${o.from}: ${orderStage(person, o, sim.now)} at ${o.held.carrier}, until ${formatDate(o.held.until, sim.zone)}` : `${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</span>
+                  {o.held && <Gated feature="orders.collect" className="btn btn-sm btn-ghost" title={heldRefusal(person, o.id, sim.now)} disabled={Boolean(heldRefusal(person, o.id, sim.now))} onClick={() => { if (run('orders.collect', { orderId: o.id }).ok) toast('Collected.', 'positive'); }}>Collect It</Gated>}
+                </div>
+              ))}
             </div>
           )}
         </Panel>

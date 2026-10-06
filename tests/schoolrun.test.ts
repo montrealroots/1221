@@ -19,7 +19,25 @@ describe('the school run', () => {
     expect(schoolDay('us-ct-newhaven', day(2027, 4, 13))).toBe(false);
     expect(schoolDay('us-ct-newhaven', day(2027, 7, 14))).toBe(false);
     expect(schoolDay('us-ct-newhaven', day(2026, 12, 29))).toBe(false);
-    expect(schoolDay('uk-eng-london', day(2027, 3, 3))).toBe(false);
+    expect(schoolDay('ca-bc-vancouver', day(2027, 3, 3))).toBe(false);
+  });
+
+  it('London, Dublin and Toronto keep their own years and bells; Vancouver none', () => {
+    expect(schoolDay('uk-eng-london', day(2027, 3, 3))).toBe(true);
+    expect(schoolDay('uk-eng-london', day(2027, 4, 7))).toBe(false);
+    expect(schoolDay('ie-lei-dublin', day(2026, 10, 28))).toBe(false);
+    expect(schoolDay('ie-lei-dublin', day(2026, 10, 21))).toBe(true);
+    expect(schoolDay('ie-lei-dublin', day(2027, 6, 30))).toBe(false);
+    expect(schoolDay('ca-on-toronto', day(2026, 9, 9))).toBe(true);
+    expect(schoolDay('ca-on-toronto', day(2026, 9, 4))).toBe(false);
+    for (const [city, zone, at] of [['uk-eng-london', 'Europe/London', ['9:0', '15:30']], ['ie-lei-dublin', 'Europe/Dublin', ['9:0', '14:40']], ['ca-on-toronto', 'America/Toronto', ['8:45', '15:20']]] as const) {
+      const sim = life(city, `school-${city}`);
+      const wed = instantFromZoned({ year: 2027, month: 3, day: 3, hour: 1 }, zone);
+      childrenOf(sim.player).push({ id: 'k1', name: 'Sam', born: wed - 7 * 365.2425 * MS_DAY });
+      expect(bookSchoolRun(sim, sim.player, wed)).toBe(2);
+      const runs = sim.universe.scheduled.filter((i) => i.kind === SCHOOL_RUN_KIND && i.status === 'pending');
+      expect(runs.map((r) => { const p = zonedParts(r.at, zone); return `${p.hour}:${p.minute}`; })).toEqual(at);
+    }
   });
 
   it('books the drop-off and the fetch at New Haven’s bell for a child of primary age', () => {

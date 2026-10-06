@@ -99,6 +99,26 @@ describe('a charger', () => {
     expect(chargeMinutes(m, size, 0.1, 0.8, 50)).toBeGreaterThan(fast);
     expect(chargeMinutes(m, size, 0.8, 1, 320)).toBeGreaterThan(chargeMinutes(m, size, 0.1, 0.3, 320));
   });
+
+  it('left plugged in past its grace, charges an idle fee: Electrify America’s 40 cents a minute after ten, a Supercharger’s 50 after five', () => {
+    const la = life('us-ca-losangeles', 'ch-idle');
+    const chevy = withCar(la, 'us-chevrolet-equinox-ev', 'us-ca');
+    chevy.fuelLevel = 0.5;
+    const start = la.now;
+    const a = la.must<{ idle: number; minutes: number }>({ kind: 'vehicle.refuel', payload: { vehicleId: chevy.id, chargerId: 'us-ca-losangeles-2', amount: { by: 'level', value: 0.6 }, leaveMinutes: 10 } });
+    expect(a.idle).toBe(0);
+    chevy.fuelLevel = 0.5;
+    const b = la.must<{ idle: number; minutes: number }>({ kind: 'vehicle.refuel', payload: { vehicleId: chevy.id, chargerId: 'us-ca-losangeles-2', amount: { by: 'level', value: 0.6 }, leaveMinutes: 25 } });
+    expect(b.idle).toBe(inSave(la, 15 * 40, 'USD'));
+    // The time left plugged in passes too.
+    expect(la.now - start).toBeGreaterThanOrEqual((a.minutes + 10 + b.minutes + 25) * 60_000);
+    const y = withCar(la, 'us-tesla-model-y', 'us-ca');
+    y.fuelLevel = 0.5;
+    expect(la.must<{ idle: number }>({ kind: 'vehicle.refuel', payload: { vehicleId: y.id, chargerId: 'us-ca-losangeles-1', amount: { by: 'level', value: 0.6 }, leaveMinutes: 15 } }).idle).toBe(inSave(la, 10 * 50, 'USD'));
+    // Charged at no named charger, there's nothing to idle at.
+    y.fuelLevel = 0.5;
+    expect(la.must<{ idle: number }>({ kind: 'vehicle.refuel', payload: { vehicleId: y.id, amount: { by: 'level', value: 0.6 }, leaveMinutes: 60 } }).idle).toBe(0);
+  });
 });
 
 describe('a spending limit', () => {

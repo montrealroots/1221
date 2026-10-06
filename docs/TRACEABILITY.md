@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 381
-- Implemented But Unverified: 4
+- Implemented But Unverified: 5
 - Partially Implemented: 0
-- Commands in all: 385
+- Commands in all: 386
 
 ## Commands
 
@@ -292,6 +292,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `luggage.save_list` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | Give the list a name.; That isn’t a bag of yours.; The bag is empty: pack it first, then keep what’s in it. | packingLists | — | — | 2 | journey-belongings.test.ts |
 | `luggage.take` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | That isn’t a bag of yours.; Which bags go is chosen at home.; At least one bag goes. | goingBags; luggageId | — | — | 3 | journey-belongings.test.ts; journey-travel.test.ts |
 | `luggage.unpack` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | That isn’t a bag of yours.; The suitcase isn’t to hand.; The suitcase is empty. (also luggageRefusal) | — | — | — | 6 | journey-acting-travel.test.ts; journey-belongings.test.ts; journeys.test.ts |
+| `orders.collect` | Implemented But Unverified | Rent And A Roof | BelongingsWorkspace.tsx | `systems/orders.ts` | — | — | — | — | 1 | — |
 | `pawn.pledge` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pawn.ts` | It wouldn’t bring a loan. (also pledgeRefusal) | pawnsOf (added to) | Yes | loan; service; pawn.due | 2 | journey-belongings.test.ts |
 | `pawn.redeem` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pawn.ts` | There’s no such pledge.; A pledge is redeemed where it was made.; The bank can’t pay what’s owed. | at; pawns | Yes | home; person | 2 | journey-belongings.test.ts |
 | `pension.bienestar` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/homepensions.ts` | — (also bienestarRefusal) | bienestarFrom | Yes | pension.bienestar_payment | 2 | journey-health.test.ts |
@@ -508,6 +509,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `items.bulky_collected` | `systems/bulky.ts` | systems/bulky.ts | items | — | — | 0 |
 | `items.held_ends` | `systems/luggage.ts` | systems/luggage.ts | items; luggageId; packingLists | Yes | home | 0 |
 | `items.order_arrives` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
+| `items.order_held_due` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `items.out_for_delivery` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `jewelry.ready` | `systems/commissions.ts` | systems/commissions.ts | commissions; engraved | Yes | home; person; accessory | 0 |
 | `kind` | `systems/adoption.ts` | — | — | — | — | 5 |

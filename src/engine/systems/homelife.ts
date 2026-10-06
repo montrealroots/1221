@@ -42,6 +42,7 @@ import { addItem, homeKeyOf, itemsOf } from './items';
 import { bareHome, owns } from './furniture';
 import { computerForGames } from './computers';
 import { phonesOf } from './phones';
+import { homeInternetPlan, internetDown } from './telecom';
 
 export const SUBSCRIPTION_MONTH_KIND = 'home.subscription_month';
 const YEAR_MS = 365 * MS_DAY;
@@ -123,9 +124,11 @@ export function watchRefusal(sim: Simulation, person: Person, how: string): stri
   if (how === 'live' && !tv) return 'There’s no TV here to watch it on.';
   if (how !== 'live' && !tv && !computerForGames(person) && phonesOf(person).length === 0) return 'There’s nothing here to watch it on: a TV, a computer, a tablet or a phone.';
   // Ireland's license is for the TV set itself; Britain's for live TV and iPlayer.
-  if ((how === 'live' && m === 'uk') || (m === 'ie' && how !== 'games')) return licensed(person, sim.now) ? undefined : `You need a TV license for that${m === 'ie' ? ': any TV at home needs one in Ireland' : ''}.`;
+  if (((how === 'live' && m === 'uk') || (m === 'ie' && how !== 'games')) && !licensed(person, sim.now)) return `You need a TV license for that${m === 'ie' ? ': any TV at home needs one in Ireland' : ''}.`;
   if (how === 'live') return undefined;
   if (!subscriptionsOf(person).some((s) => s.id === how)) return 'You don’t subscribe to it.';
+  // The internet at home down, where its outages are published (`internetDown`, from 2026-10-06); the phone's data isn't streamed on.
+  if (internetDown(sim, person, sim.now)) return `The internet at home is down (${homeInternetPlan(person)!.provider}), and how much of the phone’s data a stream takes isn’t known, so it isn’t streamed on that.`;
   return undefined;
 }
 

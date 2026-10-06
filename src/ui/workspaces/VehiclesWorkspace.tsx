@@ -46,7 +46,7 @@ import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
 import { optionsFor, optionsQuote, orderWeeksOf, specOf } from '@/engine/systems/caroptions';
 import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
-import { GRADE_LABEL, capacityOf, chargersIn, fillRefusal, fillingOf, gradesFor, levelOf, lowAt, planFill, priceAt, rangeKm, type FillAmount, type FillAt, type UnitPrice } from '@/engine/systems/fueltank';
+import { GRADE_LABEL, capacityOf, chargersIn, fillRefusal, fillingOf, gradesFor, idleFee, idleRuleOf, levelOf, lowAt, planFill, priceAt, rangeKm, type FillAmount, type FillAt, type UnitPrice } from '@/engine/systems/fueltank';
 import type { Grade } from '@/engine/content/fuelcharging';
 import { STATIONS } from '@/engine/content/errandtrips';
 import { homeShareOf } from '@/engine/systems/charging';
@@ -619,6 +619,9 @@ function FillForm({ v }: { v: OwnedVehicle }) {
   const [value, setValue] = useState('');
   const home = place === 'home';
   const at: FillAt = ev ? (home ? { home: true } : place === 'public' ? {} : { chargerId: place }) : { station: Number(place), grade };
+  const charger = ev ? chargers.find((c) => c.id === place) : undefined;
+  const idleRule = charger ? idleRuleOf(charger) : undefined;
+  const [leave, setLeave] = useState('0');
   const amount: FillAmount = by === 'full' ? { by: 'full' } : by === 'level' ? { by: 'level', value: Number(value) / 100 } : by === 'spend' ? { by: 'spend', value: Math.round(Number(value) * 100) } : { by: 'quantity', value: Number(value) };
   const no = fillRefusal(person, v.id, home);
   const plan = no ? no : by !== 'full' && !(Number(value) > 0) ? 'Enter an amount.' : planFill(sim, v, amount, at);
@@ -666,13 +669,22 @@ function FillForm({ v }: { v: OwnedVehicle }) {
             <input id={`fill-n-${v.id}`} type="number" min={0} step={by === 'level' ? 5 : 1} value={value} onChange={(e) => setValue(e.target.value)} />
           </div>
         )}
+        {/* Left plugged in once it's done, where the network charges for it (`IDLE_FEES`, from 2026-10-06). */}
+        {idleRule && (
+          <div className="field">
+            <label htmlFor={`fill-leave-${v.id}`}>Left Plugged In, Minutes</label>
+            <input id={`fill-leave-${v.id}`} type="number" min={0} step={5} value={leave} onChange={(e) => setLeave(e.target.value)} />
+          </div>
+        )}
       </div>
       <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        {/* Until 2026-10-06 the chosen charger and grade weren't sent, so a named charger charged at the area's average. */}
         <Gated feature="vehicle.refuel" className="btn btn-sm btn-primary" disabled={typeof plan === 'string'} title={typeof plan === 'string' ? plan : undefined} onClick={() => {
-          const a = run<{ amount: number; paid: number; minutes: number }>('vehicle.refuel', { vehicleId: v.id, ...(home ? { home: true } : ev ? {} : { station: Number(place) }), amount });
-          if (a.ok) toast(`${a.value!.amount.toFixed(1)} ${cap.unit === 'kWh' ? 'kWh' : 'liters'} for ${money(a.value!.paid)}${a.value!.minutes ? `, ${a.value!.minutes} minutes` : ''}.`, 'positive');
+          const a = run<{ amount: number; paid: number; minutes: number; idle: number }>('vehicle.refuel', { vehicleId: v.id, ...at, amount, ...(idleRule ? { leaveMinutes: Number(leave) || 0 } : {}) });
+          if (a.ok) toast(`${a.value!.amount.toFixed(1)} ${cap.unit === 'kWh' ? 'kWh' : 'liters'} for ${money(a.value!.paid)}${a.value!.minutes ? `, ${a.value!.minutes} minutes` : ''}${a.value!.idle ? `, ${money(a.value!.idle)} of it the idle fee` : ''}.`, 'positive');
         }}>{ev ? 'Charge It' : 'Fill It'}</Gated>
         <span className="small">{typeof plan === 'string' ? plan : `${plan.amount.toFixed(1)} ${cap.unit === 'kWh' ? 'kWh' : 'liters'} for ${money(plan.cost)}${plan.minutes ? `, ${plan.minutes} minutes` : ', overnight'}, at ${unitPrice(plan.price)}: ${plan.price.why}.`}</span>
+        {idleRule && <span className="xs dim">{`${idleRule.network} charges ${formatMoney(Math.round(idleRule.perMinute * 100), idleRule.currency)} a minute left plugged in past ${idleRule.graceMinutes} minutes${charger && Number(leave) > 0 ? `: ${money(idleFee(sim, charger, Number(leave)))} for ${Number(leave)}` : ''}.`}</span>}
       </div>
       <label className="small row gap-1" style={{ alignItems: 'center' }}>
         <Gated feature="vehicle.set_filling" className="btn btn-sm btn-ghost" onClick={() => { if (run('vehicle.set_filling', { vehicleId: v.id, auto: fillingOf(v) !== 'auto' }).ok) toast(fillingOf(v) === 'auto' ? 'It’s filled as it’s driven now.' : 'Only you fill it now.', 'positive'); }}>{fillingOf(v) === 'auto' ? 'Fill It Only When I Do' : 'Fill It As It’s Driven'}</Gated>
