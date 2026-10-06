@@ -1250,13 +1250,13 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Game Consoles
 
-3 brands, 1 deep enough, 2 short.
+3 brands, 3 deep enough, 0 short.
 
 | Brand | Products | Status |
 |---|---|---|
+| Nintendo | 4 | Whole range in US (4) |
 | Microsoft | 3 | Whole range in US (2) |
-| Sony | 2 | Short: 1 of its 3 in US to go |
-| Nintendo | 1 | Short: 3 of its 4 in US to go |
+| Sony | 2 | Whole range in US (2) |
 
 ## Electronics: Computers
 
@@ -1323,16 +1323,16 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Televisions
 
-51 brands, 0 deep enough, 51 short.
+51 brands, 1 deep enough, 50 short.
 
 | Brand | Products | Status |
 |---|---|---|
+| TCL | 14 | Whole range in US (14) |
 | Cello | 8 | Short: 92 to go |
 | Sony | 8 | Short: 92 to go |
 | Samsung | 7 | Short: 93 to go |
 | Hisense | 6 | Short: 94 to go |
 | Bush | 5 | Short: 95 to go |
-| TCL | 5 | Short: 10 of its 14 in US to go |
 | Ghia | 4 | Short: 96 to go |
 | LG | 4 | Short: 96 to go |
 | Bang & Olufsen | 3 | Short: 97 to go |
@@ -1529,20 +1529,20 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Home: Mattresses And Beds
 
-55 brands, 0 deep enough, 55 short.
+55 brands, 4 deep enough, 51 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | IKEA | 29 | Short: 71 to go |
-| Casper | 5 | Short: 2 of its 7 in US to go |
-| Purple | 5 | Short: 6 of its 11 in US to go |
+| Purple | 11 | Whole range in US (11) |
+| Saatva | 11 | Short: 1 of its 12 in US to go |
+| Nectar | 9 | Whole range in US (9) |
+| Casper | 8 | Whole range in US (7) |
+| Simba | 6 | Whole range in GB (6) |
 | Emma | 4 | Short: 96 to go |
 | Helix | 4 | Short: 96 to go |
 | Hypnos | 4 | Short: 96 to go |
-| Nectar | 4 | Short: 5 of its 9 in US to go |
-| Saatva | 4 | Short: 8 of its 12 in US to go |
 | Silentnight | 4 | Short: 96 to go |
-| Simba | 4 | Short: 2 of its 6 in GB to go |
 | Tuft & Needle | 4 | Short: 96 to go |
 | Amerisleep | 3 | Short: 97 to go |
 | Dormeo | 3 | Short: 97 to go |
@@ -2724,12 +2724,12 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
+| Michelin | 40 | Short: 6 of its 43 in US to go |
+| Pirelli | 38 | Short: 4 of its 39 in US to go |
+| Continental | 17 | Short: 33 of its 44 in US to go |
 | Goodyear | 9 | Short: 91 to go |
 | Bridgestone | 8 | Short: 92 to go |
-| Continental | 8 | Short: 42 of its 44 in US to go |
 | Hankook | 8 | Short: 92 to go |
-| Pirelli | 7 | Short: 37 of its 39 in US to go |
-| Michelin | 6 | Short: 41 of its 43 in US to go |
 | Toyo | 6 | Short: 94 to go |
 | Kumho | 5 | Short: 95 to go |
 | Dunlop | 4 | Short: 96 to go |

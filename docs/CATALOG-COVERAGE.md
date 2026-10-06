@@ -32,12 +32,12 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Accessories | Jewelry | 50 | 100% | 136 | 1 / 2 / 15 | 0 | 197 | 139 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 53 | 100% | 1344 | 1 / 18 / 95 | 0 | 4257 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 127 | 1 / 2 / 18 | 1 | 253 | 414 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 1 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
+| Electronics | Game Consoles | 3 | 6% | 9 | 2 / 3 / 4 | 3 | 9 | 39 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 56 | 100% | 173 | 1 / 1 / 15 | 0 | 173 | 174 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Televisions | 51 | 100% | 121 | 1 / 2 / 8 | 0 | 121 | 328 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Televisions | 51 | 100% | 130 | 1 / 2 / 14 | 1 | 130 | 339 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
 | Home | Furniture | 66 | 100% | 229 | 1 / 2 / 56 | 0 | 229 | 341 | 0 | CA, GB, IE, MX, US | No |
-| Home | Mattresses And Beds | 55 | 100% | 133 | 1 / 1 / 29 | 0 | 133 | 350 | 0 | CA, GB, IE, MX, US | No |
+| Home | Mattresses And Beds | 55 | 100% | 156 | 1 / 1 / 29 | 4 | 156 | 413 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 63 | 100% | 114 | 1 / 2 / 5 | 0 | 146 | 114 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 0 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 76 | 100% | 273 | 1 / 3 / 23 | 0 | 330 | 283 | 0 | CA, GB, IE, MX, US | No |
@@ -54,7 +54,7 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Tires And Wheels | 53 | 100% | 121 | 1 / 1 / 9 | 0 | 121 | 189 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Tires And Wheels | 53 | 100% | 195 | 1 / 1 / 40 | 0 | 195 | 266 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Car Audio | 55 | 100% | 149 | 1 / 1 / 12 | 0 | 149 | 156 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |

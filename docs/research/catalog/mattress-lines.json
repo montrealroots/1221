@@ -1,0 +1,946 @@
+{
+ "read": "2026-10-06",
+ "category": "mattresses",
+ "products": [
+  {
+   "brand": "Casper",
+   "model": "Cloud One",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-soft",
+   "heightIn": 11,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1124,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 1224,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1324,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1374,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://casper.com/products/casper-cloud-one-foam",
+   "status": "verified",
+   "note": "Site currently shows a ~20% sale (e.g. queen $1,099 sale); regular/comp. value prices recorded above."
+  },
+  {
+   "brand": "Casper",
+   "model": "Snug",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 8,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 599,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 749,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://casper.com/products/snug-v2",
+   "status": "verified",
+   "note": "Kids mattress; only twin and full offered. Site currently shows a $100-off sale (twin $499, full $649); regular prices recorded above. Includes two waterproof protectors (1-year protector warranty; mattress warranty 10 years)."
+  },
+  {
+   "brand": "Casper",
+   "model": "Snow Max",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-soft",
+   "heightIn": 14,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin xl",
+     "price": 3370,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 3870,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 4120,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 5120,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 5120,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://casper.com/products/casper-snow-max-hybrid-v3",
+   "status": "verified",
+   "note": "Standard twin not offered (twin XL and up only). Site currently shows a 25% sale (e.g. queen $3,090 sale); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "PurpleFlex",
+   "market": "us",
+   "type": "foam",
+   "firmness": "firm",
+   "heightIn": 8,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 699,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 849,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1199,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1599,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/purple-flex",
+   "status": "verified",
+   "note": "Cal King not offered as a discrete size on this model's page (King and Split King offered instead). Site sale prices run lower (e.g. queen $999); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "PurpleRenew",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "queen",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2399,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 2399,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/renew",
+   "status": "verified",
+   "note": "Only queen, king, cal king offered (no twin/twin xl/full). Site currently shows a sale (e.g. queen $1,599); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "Rejuvenate",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "firm",
+   "heightIn": 14.5,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin xl",
+     "price": 4899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 5499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 7099,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 7099,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/rejuvenate",
+   "status": "verified",
+   "note": "Full and standard twin not offered. Site currently shows a sale (e.g. queen $5,199); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "RejuvenatePlus",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 15.5,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin xl",
+     "price": 5999,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 6599,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 8199,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 8199,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/rejuvenate-plus",
+   "status": "verified",
+   "note": "Full and standard twin not offered. Site currently shows a sale (e.g. queen $6,299); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "RejuvenatePremier",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-soft",
+   "heightIn": 15.5,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin xl",
+     "price": 7099,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 7699,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 9299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 9299,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/rejuvenate-premier",
+   "status": "verified",
+   "note": "Full and standard twin not offered. Site currently shows a sale (e.g. queen $7,399); regular prices recorded above."
+  },
+  {
+   "brand": "Purple",
+   "model": "RejuvenateUltimate",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "soft",
+   "heightIn": 17.5,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin xl",
+     "price": 8199,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 8799,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 10399,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 10399,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://purple.com/mattresses/rejuvenate-ultimate",
+   "status": "verified",
+   "note": "Full and standard twin not offered. Site currently shows a sale (e.g. queen $8,499); regular prices recorded above."
+  },
+  {
+   "brand": "Simba",
+   "model": "Ultra",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 13.4,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 1749,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 2399,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 2599,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super king",
+     "price": 2999,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://simbasleep.com/products/simba-hybrid-ultra-mattress",
+   "status": "verified",
+   "note": "Full name on-site is 'Hybrid Ultra Mattress'. Prices are Simba's standard per-size prices (from the product's Shopify variant data, no storewide compare_at discount active); the live page also shows a separate 'Community hero price' eligibility discount, which is not the regular price. No small double size offered."
+  },
+  {
+   "brand": "Simba",
+   "model": "Apex",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "plush",
+   "heightIn": 12.6,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 1499,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 2199,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 2399,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super king",
+     "price": 2699,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://simbasleep.com/products/simba-natural-hybrid-apex-mattress",
+   "status": "verified",
+   "note": "Full name on-site is 'Natural Hybrid Apex Mattress'. Prices are Simba's standard per-size prices (Shopify variant data, no storewide compare_at discount active); the live page also shows a separate 'Community hero price' eligibility discount, which is not the regular price. No small double size offered."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Luxe",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 14,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1149,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 1249,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1349,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1399,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1649,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 1649,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress",
+   "status": "verified",
+   "note": "Site badges this with a lifetime 'Forever Warranty', so no numeric warranty years is stated. A sitewide promo banner was showing on every size page with no separate crossed-out regular price visible per size, so these may reflect a promotional rather than strict MSRP figure."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Ultra",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-soft",
+   "heightIn": 15,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 1799,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1999,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 2299,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nectarsleep.com/mattresses/ultra-memory-foam-mattress",
+   "status": "verified",
+   "note": "Lifetime 'Forever Warranty'; no numeric years stated. Same sitewide-promo-banner caveat as Luxe."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Luxe Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-soft",
+   "heightIn": 14,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1199,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 1399,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1649,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 1899,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nectarsleep.com/mattresses/luxe-hybrid-mattress",
+   "status": "verified",
+   "note": "Lifetime 'Forever Warranty'; no numeric years stated. Same sitewide-promo-banner caveat."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Ultra Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "soft",
+   "heightIn": 15,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1749,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 2049,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 2149,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2249,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal king",
+     "price": 2549,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nectarsleep.com/mattresses/ultra-hybrid-mattress",
+   "status": "verified",
+   "note": "Lifetime 'Forever Warranty'; no numeric years stated. Same sitewide-promo-banner caveat."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Kids",
+   "market": "us",
+   "type": "foam",
+   "firmness": "dual-sided (firmer side for younger kids, softer for older)",
+   "heightIn": 8,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 399,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nectarsleep.com/kids/dual-sided-kids-memory-foam-mattress",
+   "status": "verified",
+   "note": "Full product name is 'Nectar Kids Dual-Sided Memory Foam Mattress'. Only twin and full offered (no twin xl/queen/king). Lifetime 'Forever Warranty'; no numeric years stated."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Rx",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "supportive plush",
+   "heightIn": 15,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1995,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 2195,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 3295,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 3795,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/saatva-rx",
+   "status": "secondhand",
+   "note": "Saatva's size/price picker is client-rendered JS, so a direct WebFetch could not reliably read true per-size prices (it returned a generic sale-banner figure shared across unrelated products). Twin/twin xl/queen/king confirmed via search-engine snippets explicitly quoting saatva.com's own pricing for the Rx; full and cal king are carried over at the same ratio seen on Saatva's other lines (full between twin xl and queen; cal king = king) and not independently confirmed - treat those two with caution. Warranty is Saatva's lifetime policy (free replacement first 2 years, $149 fee for repair/re-cover after); no flat numeric year figure published."
+  },
+  {
+   "brand": "Saatva",
+   "model": "HD",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 15.5,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1495,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2845,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 3295,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/saatva-hd",
+   "status": "secondhand",
+   "note": "Same JS-rendering limitation as Rx. Twin ($1,495), queen ($2,845) and king ($3,295) confirmed via search-engine snippets explicitly quoting saatva.com's own pricing for the HD; twin xl, full and cal king filled in from the matching secondary table and not independently confirmed. Saatva runs frequent promotions so exact figures likely drift. Warranty is Saatva's lifetime policy; no flat numeric year figure published."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Zenhaven",
+   "market": "us",
+   "type": "latex",
+   "firmness": "dual-sided: luxury plush (medium) / gentle firm (firm)",
+   "heightIn": 10,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 2049,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 2299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 3499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 4099,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/zenhaven",
+   "status": "secondhand",
+   "note": "Same JS-rendering limitation; direct fetch returned an unreliable duplicated figure, disregarded. Twin ($2,049), twin xl ($2,299), queen ($3,499) and king ($4,099) confirmed via search-engine snippets explicitly quoting saatva.com's own MSRP for Zenhaven; full and cal king filled in from the matching secondary table and not independently confirmed. A live page view separately showed queen at $3,699 regular/$3,274 sale, which conflicts with the $3,499 MSRP figure - flagging this discrepancy rather than resolving it. Lifetime warranty (same 2-year-free-replace / $149-fee-after policy); no flat numeric year figure."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Solaire",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "adjustable (50 settings per side, air chambers)",
+   "heightIn": 13,
+   "trialNights": 365,
+   "warrantyYears": 25,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "king",
+     "price": 5399,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://saatva.com/solaire",
+   "status": "secondhand",
+   "note": "No standard twin offered (twin xl is the smallest size). King ($5,399) confirmed via a search-engine snippet explicitly quoting current saatva.com pricing; queen is contested between two search-derived figures ($4,599 'before discounts' vs. $4,789 MSRP cited elsewhere) - recorded the lower, more recently-cited figure and flagging the conflict. Twin xl/full/cal king are not independently confirmed. '25 years normal usage, full parts coverage first 5 years, labor coverage first 15 years' per Saatva's own warranty language; recorded warrantyYears as 25 (the stated top-line figure) though actual coverage steps down over time."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Youth",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "dual-sided: plush soft (ages 3-7) / medium-firm (ages 8-12)",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 795,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/saatva-youth",
+   "status": "secondhand",
+   "note": "Twin ($795) confirmed via multiple search-engine snippets citing saatva.com's own pricing for the Youth line. Twin xl and full are carried over from a secondary table at the same ratio and not independently confirmed. A direct page fetch separately showed a Twin sale of $864 off an $1,089 regular, which conflicts with the $795 figure - flagging rather than resolving this discrepancy. Height and warranty years not stated anywhere found."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Murphy Bed Mattress",
+   "market": "us",
+   "type": "innerspring",
+   "firmness": "medium (5-7/10)",
+   "heightIn": 10,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1399,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1499,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/murphy-bed-mattress",
+   "status": "secondhand",
+   "note": "Twin ($899), full ($1,399) and queen ($1,499) all confirmed via search-engine snippets explicitly quoting saatva.com's own pricing for this model (a direct page fetch returned an implausible flat $1,499/$1,274 figure for every size, which was disregarded). Only twin, full, queen offered - no king/cal king (frame-width limited); foam-encased coil construction, not compatible with adjustable bases. No numeric warranty years stated."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Bunk & Trundle Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium (5-7/10)",
+   "heightIn": 7,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin xl",
+     "price": 549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 549,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/bunk-trundle-youth",
+   "status": "secondhand",
+   "note": "Flat $549 across twin/twin xl/full confirmed by multiple independent search-engine snippets quoting saatva.com's own pricing, and by a direct page fetch. Low-profile (7in) hybrid coil+foam build for bunk/trundle frames; no king/cal king offered. No numeric warranty years stated."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Crib Mattress",
+   "market": "us",
+   "type": "innerspring",
+   "firmness": "dual-sided: extra firm (baby) / firm (toddler)",
+   "heightIn": null,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "crib (28in x 52in)",
+     "price": 359,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.saatva.com/mattresses/crib-mattress",
+   "status": "verified",
+   "note": "Directly fetched from saatva.com; $359 confirmed as the standard (non-sale) price for the single standard crib size (28in x 52in). GREENGUARD Gold certified. Height, trial nights and warranty years were not stated on the page."
+  }
+ ],
+ "notFound": [
+  "Saatva's current lineup also lists a 'Memory Foam Hybrid' line, distinct from the already-held 'Loom & Leaf' (confirmed by cross-referencing multiple independent mattress-review sites: Memory Foam Hybrid adds pocketed coils, has a lifetime warranty vs. Loom & Leaf's 15-year warranty, and is priced lower - these are two different, concurrently-sold products, not a rename). 'Memory Foam Hybrid' itself was not researched in this pass and remains a gap if it should be added alongside Loom & Leaf."
+ ],
+ "corrections": [
+  "Saatva Rx: kept only the sizes confirmed against saatva.com (twin, twin xl, queen, king); dropped full, cal king, carried over from a secondary table (review, 2026-10-06).",
+  "Saatva HD: kept only the sizes confirmed against saatva.com (twin, queen, king); dropped twin xl, full, cal king, carried over from a secondary table (review, 2026-10-06).",
+  "Saatva Zenhaven: kept only the sizes confirmed against saatva.com (twin, twin xl, queen, king); dropped full, cal king, carried over from a secondary table (review, 2026-10-06).",
+  "Saatva Solaire: kept only the sizes confirmed against saatva.com (king); dropped twin xl, full, queen, cal king, carried over from a secondary table (review, 2026-10-06).",
+  "Saatva Youth: kept only the sizes confirmed against saatva.com (twin); dropped twin xl, full, carried over from a secondary table (review, 2026-10-06)."
+ ]
+}

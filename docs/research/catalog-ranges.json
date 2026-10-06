@@ -34,10 +34,10 @@
    "from": "docs/research/catalog/ranges-electronics-beds.json"
   },
   "consoles|Sony": {
-   "range": 3,
+   "range": 2,
    "market": "US",
    "url": "https://direct.playstation.com/en-us/hardware/ps5",
-   "counted": "PlayStation 5 (disc), PlayStation 5 Digital Edition, PlayStation 5 Pro (certified-refurbished listings excluded as not a distinct current model)",
+   "counted": "PlayStation 5 (its disc and Digital Editions one model, as SLATE counts an edition a variant) and PlayStation 5 Pro; the research counted 3, the editions apart (corrected 2026-10-06)",
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-electronics-beds.json"
   },
