@@ -98,6 +98,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A piece bought with IKEA's refund card sold back for less, or nothing | the holdings journey | its price was kept as what the bank paid | its price as new kept, as IKEA's tiers are of it (`systems/furnishings.ts`); the journey's case |
 | The preferences took anything, and kept it | the holdings journey | `Object.assign` of the payload | only the clock's speed, as one of its four (`world/world.ts`); the journey's case |
 | A question was dismissed twice, the day its keeping counts from moved | the holdings journey | no check | refused (`world/world.ts`); the journey's case |
+| A life played to 60 held 463 pairs of underwear among its 490 things, and its Belongings took 8.9 seconds to open | the screens check | the Replace Worn-Out Clothes shortcut bought a whole pack for each pair worn out, and threw away only the one | bought back up to the starting wardrobe's count for the kind, one for one where it keeps none, and a worn-out pair with enough left thrown away (`replaceWornOut`, `systems/clothing.ts`); `tests/clothes-replace.test.ts`, eighty pairs worn through never a pack over the count |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -124,6 +125,16 @@ fixed, played in foreground chunks of eight minutes: New York to 89 on 2091-11-0
 the same days; 0 errors and 0 anomalies each; every law held at all eight snapshots; New York's save 19.5 MB at the
 end with 68,365 transactions and 1,483 scheduled items, London's 6.1 MB, 21,345 and 1,215; no notice twice among either's
 last 500. `main` was merged from it as `45bbc415`.
+
+## The screens
+
+`tools/screens-check.mjs` opens the built app in Chromium on a played life's save, continues it, reads the guide
+through where the life is guided, and opens every destination from Home and every tab on it. A screen fails on an
+uncaught error, an error in the console, the app's "Something went wrong.", or no heading; the exit is the number
+that failed. On 2026-10-06, at `c94c7b33`'s build, on New York at 25 and at 60 and London at 40: 37 screens and 40
+tabs opened, none failed. Every screen opened in under a second but one: Belongings on the New York life at 60, 8.9
+seconds, which is how the underwear above was found. This checks that each screen opens and draws, not that every
+button on it does what it says; that is what the journeys check, through the same commands.
 
 ## The command sweep
 

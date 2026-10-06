@@ -321,7 +321,7 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
     const home = homeKeyOf(person.home);
     const at: Place = home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' };
     // The wardrobe full, they go in the rooms (`systems/rooms.ts`, from 2026-10-03).
-    for (const m of made) for (let i = 0; i < m.count; i += 1) stow(person, overflow(sim, person, addItem(sim, person, { ...m.line, garment: { ...m.line.garment }, at, acquiredAt: sim.now })), sim.now);
+    for (const m of made) for (let i = 0; i < m.count; i += 1) stow(sim, person, overflow(sim, person, addItem(sim, person, { ...m.line, garment: { ...m.line.garment }, at, acquiredAt: sim.now })), sim.now);
   }
   (person.clothesBought ??= []).push(...made.map((m) => m.purchase));
   return made.map((m) => m.purchase);
@@ -689,10 +689,24 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
   let replaced = 0;
   for (const list of groups.values()) {
     const { kind, slot } = list[0]!.garment;
+    // Bought back up to the wardrobe's own count for the kind (`STARTER`), one for one where it keeps none (from
+    // 2026-10-06; until then each pair worn out was bought again as a whole pack and only the one thrown away, and a
+    // life played to 60 held 463 pairs of underwear among its 490 things). Worn out with enough left, it goes.
+    const wearable = garmentsOf(person).filter((g) => g.garment.slot === slot && g.garment.kind === kind && g.condition > 0 && fitOf(person, g.garment) === 'fits').length;
+    const counted = STARTER.filter((x) => x.slot === slot && x.kind === kind).reduce((n, x) => n + x.count, 0);
+    const need = Math.max(0, (counted || wearable + list.length) - wearable);
+    if (need === 0) {
+      const rags = new Set(list.filter((g) => g.condition <= 0).map((g) => g.id));
+      if (rags.size === 0) continue;
+      person.items = itemsOf(person).filter((i) => !rags.has(i.id));
+      forget(person, rags);
+      replaced += rags.size;
+      continue;
+    }
     const pick = cheapestOf(sim, person, kind, slot);
     let got = 0;
     if (pick) {
-      const quantity = Math.min(10, Math.ceil(list.length / pick.product.pack));
+      const quantity = Math.min(10, Math.ceil(need / pick.product.pack));
       try {
         buyClothes(sim, person, { productId: pick.product.id, how: pick.how, size: pick.size, color: pick.color, quantity });
         got = quantity * pick.product.pack;
@@ -704,9 +718,9 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
       const home = homeKeyOf(person.home);
       if (us !== undefined && home) {
         const each = atTown(sim, person.home!.cityId, us);
-        if (spend(sim, person, each * list.length, `Clothes: ${list[0]!.label}`, 'clothing')) {
-          for (const g of list) addItem(sim, person, { kind: g.kind, label: g.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: g.at.kind === 'home' ? g.at.spot ?? 'wardrobe' : 'wardrobe' }, acquiredAt: sim.now, paid: each, garment: { kind, slot, care: g.garment.care, wears: 0, washes: 0, fitKg: bodyOf(sim, person).weightKg } });
-          got = list.length;
+        if (spend(sim, person, each * Math.min(need, list.length), `Clothes: ${list[0]!.label}`, 'clothing')) {
+          for (const g of list.slice(0, need)) addItem(sim, person, { kind: g.kind, label: g.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: g.at.kind === 'home' ? g.at.spot ?? 'wardrobe' : 'wardrobe' }, acquiredAt: sim.now, paid: each, garment: { kind, slot, care: g.garment.care, wears: 0, washes: 0, fitKg: bodyOf(sim, person).weightKg } });
+          got = Math.min(need, list.length);
         }
       }
     }
@@ -762,7 +776,7 @@ export function registerClothing(sim: Simulation): void {
     const ids = new Set((person.clothesBought ?? []).filter((b) => b.orderId === p.orderId).map((b) => b.id));
     const home = homeKeyOf(person.home);
     const waiting = itemsOf(person).filter((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:') && ids.has(String(i.spec?.purchase)));
-    for (const i of waiting) stow(person, Object.assign(i, { at: home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' } }) as Item, s.now);
+    for (const i of waiting) stow(s, person, Object.assign(i, { at: home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' } }) as Item, s.now);
     return { collected: waiting.length };
   });
   // Uncollected past its hold, it goes back, and the goods are refunded.
