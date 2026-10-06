@@ -96,6 +96,18 @@ describe('proposals by role, by real offer, and in sequence (from 2026-10-06)', 
     expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
   });
 
+  it('reads a plan the calendar declines as refused, checked or taken (from 2026-10-06)', () => {
+    const sim = life('asst-calendar');
+    // A plan in the past: the calendar answers with its own refusal rather than throwing.
+    const past = { kind: 'calendar.schedule', payload: { title: 'Lunch', at: sim.now - 86_400_000, durationMinutes: 60 }, why: 'x' };
+    const before = serialise(sim.universe);
+    const [checked] = checkSequence(sim, [past], 'play');
+    expect(checked!.ok).toBe(false);
+    expect(checked!.refusal).toBeTruthy();
+    expect(takeSequence(sim, [past], 'play').ok).toBe(false);
+    expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
+  });
+
   it('takes a sequence all or none: one refused puts back the ones before it', () => {
     const sim = life('asst-take');
     sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });

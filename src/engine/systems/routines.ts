@@ -134,6 +134,8 @@ export function registerRoutines(sim: Simulation): void {
   });
   sim.onCommand<{ routineId: string }, { routines: number }>('routine.delete', (p, { sim: s }) => {
     const gone = routinesOf(s.player).find((r) => r.id === p?.routineId);
+    // One that isn't there is refused, not reported deleted (from 2026-10-06).
+    if (!gone) throw new CommandError('There’s no routine of yours by that name.');
     if (gone) { delete gone.at; scheduleNext(s, gone, s.now); }
     s.player.routines = routinesOf(s.player).filter((r) => r.id !== p?.routineId);
     return { routines: s.player.routines.length };

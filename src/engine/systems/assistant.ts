@@ -24,7 +24,7 @@
  * changes.
  */
 
-import type { Simulation } from '../core/simulation';
+import { refusedIn, type Simulation } from '../core/simulation';
 import { saveCurrency } from '../core/money';
 import { formatDate } from '../core/time';
 import { CITIES } from '../content/geography';
@@ -163,7 +163,9 @@ export function checkSequence(sim: Simulation, proposals: readonly Proposal[], r
     const no = barred(p);
     if (no) return { ...p, ok: false, refusal: no, notices: [] };
     const r = results[k++]!;
-    return r.ok ? { ...p, ok: true, costs: Math.max(0, r.before - (r.after ?? r.before)), notices: r.notices } : { ...p, ok: false, refusal: r.error, notices: r.notices };
+    // A command that answers with its own refusal (the calendar's) is refused, as one that throws is.
+    const answered = r.ok ? refusedIn(r.value) : undefined;
+    return r.ok && answered === undefined ? { ...p, ok: true, costs: Math.max(0, r.before - (r.after ?? r.before)), notices: r.notices } : { ...p, ok: false, refusal: r.error ?? answered, notices: r.notices };
   });
 }
 
