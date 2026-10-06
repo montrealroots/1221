@@ -231,7 +231,8 @@ describe('keeping a license', () => {
     const before = bank(sim);
     const a = sim.execute<{ expiresAt: number; fee: number }>({ kind: 'documents.renew_license', payload: {} });
     expect(a.ok).toBe(true);
-    expect(before - bank(sim)).toBe(64_50);
+    // New York City is inside the MCTD: $80.50, its $16 on an 8-year license (until 2026-10-06 the $64.50 outside it).
+    expect(before - bank(sim)).toBe(80_50);
     expect(a.value!.expiresAt).toBe(addYears(was, 8));
     expect(old.status).toBe('cancelled');
     expect(licenseOf(sim.player, sim.now)!.expiresAt).toBe(a.value!.expiresAt);

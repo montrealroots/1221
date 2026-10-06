@@ -109,7 +109,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
+| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
 | `career.buy_kit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.class` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.coach` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
@@ -126,7 +126,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.publicist` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
 | `career.query_agencies` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `mxbusiness.test.ts` | The Business |
 | `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
-| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
+| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
 | `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `school.test.ts` | The Business |
 | `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `skills.test.ts` | The Business |
@@ -221,25 +221,25 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` | Passports And Licenses |
-| `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `boardingid.test.ts` `identity.test.ts` | Passports And Licenses |
+| `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `boardingid.test.ts` `identity.test.ts` `journey-residence.test.ts` | Passports And Licenses |
 | `documents.apply_idp` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `journey-papers.test.ts` `licensing.test.ts` | Passports And Licenses |
-| `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And Licenses |
+| `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `journey-residence.test.ts` `permission.test.ts` | Passports And Licenses |
 | `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `documents.test.ts` `journey-papers.test.ts` | Passports And Licenses |
-| `documents.apply_visa` | `src/engine/systems/documents.ts` | `Documents.tsx` | `visas.test.ts` | Passports And Licenses |
-| `documents.apply_work_permit` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And Licenses |
-| `documents.exchange_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` | Passports And Licenses |
-| `documents.license_step` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
-| `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `naturalize.test.ts` | Passports And Licenses |
-| `documents.petition_o1` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | — |
+| `documents.apply_visa` | `src/engine/systems/documents.ts` | `Documents.tsx` | `journey-residence.test.ts` `visas.test.ts` | Passports And Licenses |
+| `documents.apply_work_permit` | `src/engine/systems/permission.ts` | `Documents.tsx` | `journey-residence.test.ts` `permission.test.ts` | Passports And Licenses |
+| `documents.exchange_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `journey-residence.test.ts` `licensing.test.ts` | Passports And Licenses |
+| `documents.license_step` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `journey-residence.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
+| `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `journey-residence.test.ts` `naturalize.test.ts` | Passports And Licenses |
+| `documents.petition_o1` | `src/engine/systems/permission.ts` | `Documents.tsx` | `journey-residence.test.ts` `permission.test.ts` | — |
 | `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `journey-papers.test.ts` `policereport.test.ts` | Between Jobs |
-| `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `identity.test.ts` | Passports And Licenses |
-| `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
-| `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `residence.test.ts` | Passports And Licenses |
-| `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `away.test.ts` `idreplace.test.ts` | Passports And Licenses |
+| `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `identity.test.ts` `journey-residence.test.ts` | Passports And Licenses |
+| `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `journey-residence.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
+| `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `journey-residence.test.ts` `residence.test.ts` | Passports And Licenses |
+| `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `away.test.ts` `idreplace.test.ts` `journey-residence.test.ts` | Passports And Licenses |
 | `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
-| `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
-| `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey-residence.test.ts` `journey-travel.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `journey-residence.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
+| `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `journey-residence.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 
 ## errand
 
@@ -420,7 +420,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `journey-health.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
-| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
+| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey-residence.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## lighting
 
