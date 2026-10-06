@@ -160,6 +160,9 @@ export function showerUses(sim: Simulation, person: Person): number {
  * there's no shave. Razors and cream are bought again as the rest are, for
  * someone who shaves.
  */
+/** Why a shower can't be that long: whole minutes, one to sixty. */
+export const showerMinutesRefusal = (m: unknown): string | undefined => (typeof m === 'number' && Number.isInteger(m) && m >= 1 && m <= 60 ? undefined : 'A shower is a whole number of minutes, from one to sixty.');
+
 export type ShaveEvery = 'daily' | 'alternate' | 'twice-weekly' | 'weekly';
 export const SHAVE_DAYS: Readonly<Record<ShaveEvery, number>> = { daily: 1, alternate: 2, 'twice-weekly': 3.5, weekly: 7 };
 export const SHAVE = { creamG: 2, minutes: 5 } as const;
@@ -381,6 +384,15 @@ export function registerShaving(sim: Simulation): void {
     if (!(every in SHAVE_DAYS)) throw new CommandError('Choose how often.');
     s.player.styles = every;
     return { styles: every };
+  });
+  // How long a shower is, as a habit (from 2026-10-06): its water and the energy heating it are metered by it (`countWash`).
+  sim.onCommand<{ minutes?: number | null }, { minutes?: number }>('hygiene.shower_minutes', (p, { sim: s }) => {
+    const m = p?.minutes;
+    if (m === null || m === undefined) { delete s.player.showerMinutes; return {}; }
+    const refused = showerMinutesRefusal(m);
+    if (refused) throw new CommandError(refused);
+    s.player.showerMinutes = Number(m);
+    return { minutes: Number(m) };
   });
   sim.onCommand<{ every?: ShaveEvery | null }, { shaves?: ShaveEvery }>('hygiene.shave_every', (p, { sim: s }) => {
     const every = p?.every;

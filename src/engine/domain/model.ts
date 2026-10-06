@@ -324,6 +324,8 @@ export interface Person {
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;
+  /** How long they shower, minutes, chosen (`hygiene.shower_minutes`, from 2026-10-06); the country's average where unset. */
+  showerMinutes?: number;
   /** Makeup worn at home, how often and which (from 2026-10-05); hair styled, how often. Neither where unset. */
   makeup?: { every: import('../systems/hygiene').ShaveEvery; kinds: import('../systems/hygiene').MakeupKind[] };
   lastMakeup?: number;
