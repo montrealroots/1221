@@ -1551,6 +1551,9 @@ export function registerSchool(sim: Simulation): void {
     school.classmates.forEach((mate, i) => {
       if (inClass[i]) for (const course of courses) for (const skill of course.skills) grow(mate.craft, skill, ESTIMATE.classmateFocus * (mate.drive ?? 1));
     });
+    // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day
+    // counted only for someone absent anyway, and a student who called in was counted in class).
+    if (school.sickDay === keyOf(day)) { item.status = 'missed'; school.tally.excused += 1; return; }
     if (present(person, item.at)) {
       school.tally.attended += 1;
       const focus = focusOf(person);
@@ -1560,7 +1563,7 @@ export function registerSchool(sim: Simulation): void {
     }
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
-    if (school.sickDay === keyOf(day) || offSick(person, item.at)) { school.tally.excused += 1; return; }
+    if (offSick(person, item.at)) { school.tally.excused += 1; return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
