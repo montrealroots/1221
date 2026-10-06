@@ -31,8 +31,11 @@ export interface LicenseRule {
   steps: LicenseStep[];
   validityYears: number | null;
   renewalFee: number | null;
-  /** Where a district adds its own surcharge, its towns and the renewal there (New York’s MCTD, from 2026-10-06). */
-  renewalInside?: { cityIds: readonly string[]; fee: number };
+  /**
+   * A district's own surcharge on a license, by the half-years it runs, for someone living in its towns (New York's
+   * MCTD, from 2026-10-06: "$1 per 6 months of validity", on a first license, an exchange and a renewal).
+   */
+  district?: { cityIds: readonly string[]; perHalfYear: number };
   renewalNote: string;
   graduated: unknown;
   visitor: VisitorRule;
@@ -91,7 +94,7 @@ export const LICENSES: Readonly<Record<string, LicenseRule>> = {
     ],
     "validityYears": 8,
     "renewalFee": 64.5,
-    "renewalInside": { "cityIds": ["us-ny-newyork"], "fee": 80.5 },
+    "district": { "cityIds": ["us-ny-newyork"], "perHalfYear": 1 },
     "renewalNote": "Renewal of a Class D license: $64.50 outside the MCTD, $80.50 inside it (includes $16 MCTD for an 8-year license). A vision test by DMV or an approved provider (MV-619) is required. The first license is issued for up to 5 years to the birthday; renewals are 8-year.",
     "graduated": {
       "exists": true,

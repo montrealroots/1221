@@ -110,7 +110,7 @@ describe('residence: an American makes a home in Mexico City', () => {
     let b0 = banked(sim);
     const renewed = sim.must<{ expiresAt: number; fee: number }>({ kind: 'documents.renew_license', payload: {} });
     expect(b0 - banked(sim)).toBe(renewed.fee);
-    expect(renewed.fee).toBe(inSave(sim, Math.round(LICENSES['us-ny']!.renewalInside!.fee * 100), 'USD'));
+    expect(renewed.fee).toBe(inSave(sim, Math.round((LICENSES['us-ny']!.renewalFee! + 16) * 100), 'USD'));
     expect(renewed.expiresAt).toBe(addYears(sim.now + 120 * MS_DAY, 8));
     const nyLicense = licenseOf(p(), sim.now)!;
     expect(nyLicense).toMatchObject({ issuer: 'us-ny', realId: true, expiresAt: renewed.expiresAt });
@@ -272,8 +272,7 @@ describe('residence: an American makes a home in Mexico City', () => {
   }, 120_000);
 
   // Found by this journey on 2026-10-06 and fixed: a New York City license renewed at $64.50, the price outside the
-  // MCTD; it's $80.50 for someone living inside it (`renewalInside`). A first license and an exchange there still
-  // aren't charged the MCTD's part, whose 8-year figure isn't published (the path's note says so).
+  // MCTD; it's $80.50 for someone living inside it, the MCTD's $1 a half-year on eight years (`district`).
   it('renews a New York City license at the MCTD’s price', () => {
     const sim = quickSave({ startLocationId: NYC, homeRegionId: NYC, livesWhereBorn: true, wealth: 'wealthy' }, 'journey-residence-mctd');
     sim.player.documents = [{ id: 'lic', kind: 'license', issuer: 'us-ny', name: 'Class D Driver License', number: 'D1', status: 'valid', issuedAt: sim.now - 8 * YEAR + 120 * MS_DAY, expiresAt: sim.now + 120 * MS_DAY }];
@@ -453,7 +452,8 @@ describe('residence: a Connecticut native moves to New York', () => {
     expect(sim.execute({ kind: 'documents.license_step', payload: { step: 'permit' } }).error).toMatch(/exchanges here without the tests: Exchange It\.$/);
     b0 = banked(sim);
     const swapped = sim.must<{ expiresAt: number; fee: number }>({ kind: 'documents.exchange_license', payload: {} });
-    expect(swapped.fee).toBe(inSave(sim, 64_25, 'USD'));
+    // The exchange’s fee and the MCTD’s $1 a half-year on its eight years: they live in New York City.
+    expect(swapped.fee).toBe(inSave(sim, 80_25, 'USD'));
     expect(b0 - banked(sim)).toBe(swapped.fee);
     expect(swapped.expiresAt).toBe(addYears(sim.now, 8));
     expect(documentsOf(p()).find((d) => d.id === 'ct')!.status).toBe('cancelled');
