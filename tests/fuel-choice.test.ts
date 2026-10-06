@@ -66,7 +66,8 @@ describe('a fill chosen', () => {
     for (let d = 0; d < 62; d += 1) {
       sim.advanceBy(MS_DAY);
       // Left a few days below the mark before it's filled: low is said once each time.
-      if (levelOf(v) < 0.12) { sim.must({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, amount: { by: 'full' } } }); fills += 1; }
+      // Read as it's filled, as a player reads them: an unread notice said again is one notice (from 2026-10-06).
+      if (levelOf(v) < 0.12) { sim.must({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, amount: { by: 'full' } } }); fills += 1; for (const n of sim.universe.notifications) n.read = true; }
     }
     expect(fills).toBeGreaterThanOrEqual(2);
     expect(sim.universe.notifications.some((n) => n.title === 'Ran Dry')).toBe(false);
@@ -91,7 +92,8 @@ describe('filling as the month goes', () => {
     expect(levelOf(v)).toBeCloseTo(0, 6);
     expect((v.km ?? 0) - km).toBeLessThan(month / 2);
     expect(sim.universe.notifications.some((n) => n.title === 'Ran Dry')).toBe(true);
-    // Filled, it goes again, and run dry again it says so again.
+    // Filled, it goes again, and run dry again it says so again, the first read.
+    for (const n of sim.universe.notifications) n.read = true;
     sim.must({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, amount: { by: 'quantity', value: 5 } } });
     expect(v.dry).toBeUndefined();
     sim.advanceBy(3 * MS_DAY);

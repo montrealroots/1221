@@ -2971,6 +2971,42 @@
    "source": "https://www.nintendo.com/en-gb/Hardware/Nintendo-Switch-2/Nintendo-Switch-2-bundles/Nintendo-Switch-2-Bundles-2785628.html",
    "read": "2026-10-02",
    "note": "As for the UK"
+  },
+  {
+   "maker": "Nintendo",
+   "model": "Nintendo Switch OLED Model",
+   "edition": "White",
+   "market": "US",
+   "price": 399.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "source": "https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/",
+   "read": "2026-10-06",
+   "note": "Nintendo’s own store, read directly."
+  },
+  {
+   "maker": "Nintendo",
+   "model": "Nintendo Switch Lite",
+   "edition": "Turquoise",
+   "market": "US",
+   "price": 229.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "source": "https://www.nintendo.com/us/store/products/nintendo-switch-lite-turquoise/",
+   "read": "2026-10-06",
+   "note": "Nintendo’s own store, read directly."
+  },
+  {
+   "maker": "Nintendo",
+   "model": "Nintendo Switch",
+   "edition": "Neon Blue and Neon Red Joy-Con",
+   "market": "US",
+   "price": 339.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "source": "https://www.bestbuy.com/site/switch-with-neon-blue-and-neon-red-joycon-nintendo-switch/6522225.p?skuId=6522225",
+   "read": "2026-10-06",
+   "note": "Best Buy’s listed price, from a search result quoting it; Nintendo’s own page lists it with no price that could be read."
   }
  ],
  "gameSubscriptions": [

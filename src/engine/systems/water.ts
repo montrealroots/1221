@@ -46,6 +46,12 @@
  * liters, and its 11.1 gallons a person a day comes to 0.70 showers; Britain's
  * is the Energy Saving Trust's 60 liters, 4.4 a week, and a bath 80 liters, 1.3
  * a week. A bath elsewhere isn't metered: no volume for one was read there.
+ *
+ * From 2026-10-06 a shower is as long as the player takes it (`hygiene.shower_minutes`), and counts as that share of
+ * the country's average shower: REU2016's 7.8 minutes in America and Canada, the Energy Saving Trust's seven and a
+ * half in Britain (At Home with Water, 2013, p. 19: "approximately eight liters/min", 60 liters). Until then every
+ * shower was the average's, however long. Ireland meters no home's water (its domestic charges were abolished), and
+ * no shower's volume was read in Mexico, so there a shower's length changes no bill.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -130,11 +136,19 @@ export function litersUsed(person: Person, cityId: string, month: number): numbe
   return average + showers + baths;
 }
 
-/** A shower or a bath at home, counted toward the month's water. Until 2026-10-04 one taken before the home's record was first kept wasn't counted. */
-export function countWash(person: Person, bath: boolean): void {
+/** The country's average shower, minutes, from the same studies as its liters (`WASHING`). */
+export const SHOWER_MINUTES: Readonly<Record<string, number>> = { us: 7.8, ca: 7.8, gb: 7.5 };
+
+/**
+ * A shower or a bath at home, counted toward the month's water: a shower as its share of the country's average one,
+ * by its minutes where they're given. Until 2026-10-04 one taken before the home's record was first kept wasn't counted.
+ */
+export function countWash(person: Person, bath: boolean, minutes?: number): void {
   const l = livingOf(person);
-  if (bath) l.baths = (l.baths ?? 0) + 1;
-  else l.showers = (l.showers ?? 0) + 1;
+  if (bath) { l.baths = (l.baths ?? 0) + 1; return; }
+  const c = CITIES.get(person.home?.cityId ?? '')?.countryId;
+  const typical = SHOWER_MINUTES[c === 'uk' ? 'gb' : c ?? ''];
+  l.showers = (l.showers ?? 0) + (minutes !== undefined && typical ? minutes / typical : 1);
 }
 
 /** The month's water and sewer, in the save's money; nothing where the town doesn't bill this home. */

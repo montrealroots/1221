@@ -110,6 +110,10 @@ function medianOf(match: (m: CarModel) => boolean, field: 'tankL' | 'batteryKwh'
 export function burnOf(m: CarModel, km: number, v?: OwnedVehicle): number | undefined {
   // And a roof box's drag where one's on (`systems/roofbox.ts`).
   const tint = v ? tintFuelFactor(v) * roofFuelFactor(v) : 1;
+  // A car of a model year burns as that year's configuration was rated (`systems/modelyears.ts`, from 2026-10-05).
+  const b = v?.build;
+  if (b && b.fuel === 'ev' && b.kwhPer100km) return ((km * b.kwhPer100km) / 100) * tint;
+  if (b && b.fuel !== 'ev' && b.per100km) return ((km * b.per100km) / 100) * tint;
   if (m.fuel === 'ev') return m.kwhPer100km ? ((km * m.kwhPer100km) / 100) * tint : undefined;
   const per = per100Of(m);
   return per ? ((km * per) / 100) * tint : undefined;

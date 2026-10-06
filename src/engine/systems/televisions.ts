@@ -17,7 +17,7 @@ import { TV_PRODUCTS } from '../content/tvcatalog';
 import { GENERIC_TV_WATTS } from '../content/tvuse';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
 import { homeKeyOf, itemsOf } from './items';
-import { buyDevice, deviceCatalog, devicePrice, deviceRefusal } from './devices';
+import { buyDevice, deviceCatalog, devicePrice, deviceRefusal, ownedProduct } from './devices';
 import { livingOf } from './dwelling';
 
 /** The typical set's draw (`content/tvuse.ts`): what a TV with no model draws. */
@@ -35,7 +35,8 @@ export function tvAtHome(person: Person): { label: string; watts: number | undef
   const home = homeKeyOf(person.home);
   const tv = itemsOf(person).find((i) => i.kind === 'furniture:tv' && i.at.kind === 'home' && i.at.home === home);
   if (!tv) return undefined;
-  const product = tv.spec?.product ? tvProduct(tv.spec.product) : undefined;
+  // Its listing's, or what was kept of it when bought (from 2026-10-05).
+  const product = ownedProduct(tv, TV_PRODUCTS);
   const watts = typeof product?.attrs.onModeWatts === 'number' ? product.attrs.onModeWatts : GENERIC_TV_WATTS;
   return { label: tv.label, watts, ...(product ? { product } : {}) };
 }

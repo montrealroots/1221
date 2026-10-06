@@ -36,6 +36,8 @@ export interface GameContextValue {
   version: number;
   /** Runs a command and refreshes the UI. Failures surface as a toast. */
   run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { silent?: boolean }) => CommandResult<R>;
+  /** Runs a command sequence all or none (`Simulation.executeAll`, from 2026-10-06) and refreshes the UI; a refusal surfaces as a toast. */
+  runAll: (run: (sim: Simulation) => { ok: true } | { ok: false; at: number; error: string }) => boolean;
   /** Advances world time through the one advancement path. */
   advance: (ms: number) => AdvanceResult | undefined;
   /** `resumes` carries on a jump a stop broke off: where that jump was sent from. */
@@ -162,6 +164,14 @@ export function GameProvider({
     if (result.ok) dirty.current = true;
     refresh();
     return result;
+  }, [sim, toast, refresh]);
+
+  const runAll = useCallback((go: (s: Simulation) => { ok: true } | { ok: false; at: number; error: string }): boolean => {
+    const result = go(sim);
+    if (!result.ok) toast(`Number ${result.at + 1} would be refused, so none of them was done. ${result.error}`, 'negative');
+    else dirty.current = true;
+    refresh();
+    return result.ok;
   }, [sim, toast, refresh]);
 
   /**
@@ -390,7 +400,7 @@ export function GameProvider({
   }, [saveNow, onExit]);
 
   const value: GameContextValue = {
-    sim, version, run, advance, advanceTo, refresh,
+    sim, version, run, runAll, advance, advanceTo, refresh,
     standingAt, clearStandingAt: () => setStandingAt(null),
     route, navigate, back, breadcrumbs, recent, favourites, toggleFavourite,
     toasts, toast,

@@ -25,6 +25,10 @@ export interface CatalogOffer {
   price: number; currency: string; taxIncluded: boolean; url: string | null; read: string; status: ReadStatus;
   /** The model code this market sells it under, where it isn't the product's own (from 2026-10-05: a British QE65QN90F for an American QN65QN90F). */
   code?: string;
+  /** The size this offer is of, where the product comes in sizes: a tire's, from 2026-10-05. */
+  size?: string;
+  /** Its price includes fitting (a tire's, from 2026-10-05; until then marked in `code`). */
+  fitted?: true;
 }
 export interface CatalogVariant { id: string; attrs: Readonly<Record<string, string>> }
 export interface CatalogProduct {

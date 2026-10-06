@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { documentsOf } from '@/engine/systems/documents';
-import { modelById, quote, vehiclesOf } from '@/engine/systems/vehicles';
+import { kept, modelById, quote, tradeInValue, valueOf, vehiclesOf } from '@/engine/systems/vehicles';
 import { optionsFor, optionsRefusal, orderWeeksOf } from '@/engine/systems/caroptions';
 import { tripRefusal } from '@/engine/systems/trips';
 
@@ -55,6 +55,20 @@ describe('a new car’s options', () => {
     expect(v.km ?? 0).toBe(0);
     sim.advanceTo(v.deliveredAt! + MS_DAY);
     expect(tripRefusal(sim, sim.player, 'car', v.id)).toBeUndefined();
+  });
+
+  it('are worth something on the car, losing value with it: its value, so its trade-in, take them in (from 2026-10-06)', () => {
+    const plain = life('us-ny-newyork', 'opts-value-plain');
+    const built = life('us-ny-newyork', 'opts-value-built');
+    const pack = optionsFor(F150).find((o) => o.category === 'package' && o.price > 0)!;
+    plain.must({ kind: 'vehicle.buy', payload: { modelId: F150 } });
+    built.must({ kind: 'vehicle.buy', payload: { modelId: F150, options: [pack.key] } });
+    const a = vehiclesOf(plain.player)[0]!;
+    const b = vehiclesOf(built.player)[0]!;
+    const at = b.boughtAt + 3 * 365.2425 * MS_DAY;
+    expect(valueOf(b, at) - valueOf({ ...b, options: undefined }, at)).toBe(Math.round((b.listPrice + pack.price * 100) * kept(3)) - Math.round(b.listPrice * kept(3)));
+    expect(valueOf(b, at)).toBeGreaterThan(valueOf(a, at));
+    expect(tradeInValue(built, b)).toBeGreaterThan(tradeInValue(plain, a));
   });
 
   it('as it comes, or in a paint at no charge, is bought from stock and driven away', () => {

@@ -61,6 +61,7 @@ import type { Jurisdiction } from '../content/vehiclefees';
 import { CITIES } from '../content/geography';
 import { payFromBank } from './household';
 import { reliabilityOf, repairUsd, type Fault } from './repairs';
+import { drawBuild, hasModelYears, yearAt, type Build } from './modelyears';
 
 export const FAULTY_USED = 0.7;
 
@@ -103,7 +104,7 @@ export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; bef
   'US-CA': { days: 10, lateUsd: 15 }, 'CA-BC': { days: 10, blocksAfter: true, feeCad: 28 }, 'CA-ON': { days: 6, blocksAfter: true, feeCad: 32 }, 'MX-CMX': { days: 21 },
 };
 
-export interface UsedListing { modelId: string; age: number; odometerKm: number; seller: 'dealer' | 'private' }
+export interface UsedListing { modelId: string; age: number; odometerKm: number; seller: 'dealer' | 'private'; /** Its model year and configuration where the model's are kept (`systems/modelyears.ts`, from 2026-10-05). */ modelYear?: number; build?: Build }
 
 /** This month's three used cars on offer of a model where they live (decider `vehicle.listing`). */
 export function usedListings(sim: Simulation, person: Person, modelId: string, cityId: string, j: Jurisdiction, at: Instant = sim.now): UsedListing[] {
@@ -116,7 +117,14 @@ export function usedListings(sim: Simulation, person: Person, modelId: string, c
     else if (j.startsWith('US-')) km = NHTSA_MILES.slice(0, age).reduce((n, x) => n + x, 0) * MILE_KM;
     else km = KM_A_YEAR[j] * age;
     return { modelId, age, odometerKm: Math.round(km), seller: rng.next() < 0.5 ? 'dealer' as const : 'private' as const };
-  });
+  })
+    // Of its model year, built as that year was; none where the model had no configuration rated that year (from 2026-10-05).
+    .flatMap((l) => {
+      const modelYear = yearAt(cityId, at) - l.age;
+      if (!hasModelYears(modelId)) return [{ ...l, modelYear }];
+      const build = drawBuild(sim, person, modelId, modelYear, `${monthOf(cityId, at)}-${l.age}`);
+      return build ? [{ ...l, modelYear, build }] : [];
+    });
 }
 
 export interface Driven { modelId: string; age: number; month: string; showed: boolean; severe?: boolean }

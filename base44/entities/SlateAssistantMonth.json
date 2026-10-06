@@ -1,0 +1,15 @@
+{
+  "name": "SlateAssistantMonth",
+  "type": "object",
+  "description": "The tokens the built-in assistant used in a month across every player, so the owner's Claude API spend stops at a monthly allowance (SLATE_ASSISTANT_MONTHLY_TOKENS). Written and read only by the askAssistant function, as the service role.",
+  "properties": {
+    "month": { "type": "string", "description": "The UTC month, YYYY-MM." },
+    "tokens": { "type": "number", "description": "Input, output and cache tokens used that month, as the Messages API reported them." },
+    "requests": { "type": "number", "description": "Questions answered that month." }
+  },
+  "required": ["month", "tokens", "requests"],
+  "rls": {
+    "read": false,
+    "write": false
+  }
+}

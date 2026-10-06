@@ -71,6 +71,11 @@ export interface Item {
   paid?: Money;
   /** Its chosen options (a size, a color, a fabric), where it has any. */
   spec?: Readonly<Record<string, string>>;
+  /**
+   * The product as it was sold, kept with what was bought (from 2026-10-05): its make, model, category and
+   * attributes, so a thing owned keeps working when its listing is replaced or taken out of the catalog.
+   */
+  made?: { brand: string; model: string; category: string; attrs: Readonly<Record<string, string | number | boolean | null>> };
   /** A book's words read so far, and whether it's been read through (`systems/reading.ts`, from 2026-10-03). */
   readWords?: number;
   readThrough?: true;

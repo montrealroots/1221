@@ -106,7 +106,8 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
  * The DGA's title for the junior assistant director really is Second Second
  * Assistant Director. "Correcting" that is editing a source, not fixing a typo.
  */
-const NOT_OURS = ['docs/research'];
+// And from 2026-10-05 the depth report, a generated list of makers' own names ("Simply Vera Vera Wang" is Kohl's label).
+const NOT_OURS = ['docs/research', 'docs/CATALOG-DEPTH.md'];
 const oursToCheck = (path) => !NOT_OURS.some((dir) => path.replace(/\\/g, '/').startsWith(dir));
 /** The two files that are lists of wrong words, and so are full of them. */
 const SKIP_FILES = new Set(['tools/typos.mjs', 'tools/spelling.mjs']);

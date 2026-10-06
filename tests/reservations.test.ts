@@ -66,3 +66,18 @@ describe('a table booked ahead', () => {
     expect(charged).toBe(Math.max(0, q.total - r.prepaid));
   });
 });
+
+describe('more restaurants’ own terms (from 2026-10-05)', () => {
+  it('hold Kanada-Ya to walk-ins, The Brazen Head to parties of eight, Richmond Station to 45 days, and Providence to its $375 inside a week', () => {
+    const sim = life('uk-eng-london', 'tables-more');
+    expect(reserveRefusal(sim, 'kanada-ya-covent-garden-london', at(sim, 'uk-eng-london', 3, 19), 2, dish('kanada-ya-covent-garden-london'))).toMatch(/takes no reservations/);
+    const dub = life('ie-lei-dublin', 'tables-dub');
+    expect(reserveRefusal(dub, 'the-brazen-head-dublin', at(dub, 'ie-lei-dublin', 3, 19), 4, dish('the-brazen-head-dublin'))).toMatch(/8/);
+    const tor = life('ca-on-toronto', 'tables-tor');
+    expect(reserveRefusal(tor, 'richmond-station-toronto', at(tor, 'ca-on-toronto', 50, 19), 2, dish('richmond-station-toronto'))).toMatch(/45 days ahead/);
+    expect(reserveRefusal(tor, 'richmond-station-toronto', at(tor, 'ca-on-toronto', 10, 19), 2, dish('richmond-station-toronto'))).toBeUndefined();
+    const la = life('us-ca-losangeles', 'tables-la');
+    const when = at(la, 'us-ca-losangeles', 3, 19);
+    expect(lateFee(la, 'providence-la', when, 2)).toBe(inSaveMoney(la, 375_00 * 2, 'USD'));
+  });
+});

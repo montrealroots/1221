@@ -48,7 +48,7 @@ import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
 import { bookInHand, readFor } from './reading';
 import { cutNow } from './utilities';
-import { SHAVE, makeUp, shave, shaveReady, sprayUsed } from './hygiene';
+import { SHAVE, makeUp, shave, shaveReady, sprayUsed, showerMinutesRefusal } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -457,13 +457,16 @@ export function registerLife(sim: Simulation): void {
 
   // --- Looking after yourself ---------------------------------------------
 
-  sim.onCommand<{ action: LookAfter; how?: string }, { doneAt: number; changed: Partial<Wellbeing> }>(
+  sim.onCommand<{ action: LookAfter; how?: string; minutes?: number }, { doneAt: number; changed: Partial<Wellbeing> }>(
     'life.look_after',
     (p, { sim: s }) => {
       const action = LOOKING_AFTER[p.action] ? p.action : undefined;
       if (!action) throw new CommandError('That isn’t something you can do for yourself here.');
       const refused = lookAfterRefusal(s, action);
       if (refused) throw new CommandError(refused);
+      // This shower's length, where given, for this one only; the habit's otherwise (from 2026-10-06).
+      if (action === 'wash' && p.minutes !== undefined) { const no = showerMinutesRefusal(p.minutes); if (no) throw new CommandError(no); }
+      const showerOf = action === 'wash' ? (p.minutes ?? s.player.showerMinutes) : undefined;
       // Unwinding in front of the TV or a game, at home, by what the place's law and what you pay for allow (`systems/homelife.ts`).
       if (action === 'unwind' && p.how) {
         if (!atHome(s.player)) throw new CommandError('That’s at home.');
@@ -487,7 +490,7 @@ export function registerLife(sim: Simulation): void {
         }
         return { doneAt: s.now, changed };
       }
-      s.advanceTo(s.now + minutesFor(s, action) * 60_000);
+      s.advanceTo(s.now + minutesFor(s, action, showerOf) * 60_000);
       const person = s.player;
       // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
       // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
@@ -527,7 +530,7 @@ export function registerLife(sim: Simulation): void {
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
       // Metered at home, against the average (`systems/water.ts`, from 2026-10-03).
-      if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
+      if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe', showerOf);
       // A shave with it on its day, where the razor and cream are to hand (from 2026-10-03).
       if (action === 'wash') shave(s, person);
       // Makeup and hair styling with the morning's wash on their days, where chosen (from 2026-10-05).
@@ -580,6 +583,9 @@ export function registerLife(sim: Simulation): void {
  * waking before the action pays out.
  */
 export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow' | 'sauna' | 'paint';
+
+/** Of a shower's 20 minutes in the list, what isn't under the water, an average shower being 8 (from 2026-10-06). */
+export const SHOWER_AROUND = 12;
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -660,14 +666,16 @@ export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefi
  * How long it takes them now: laundry by the home's way of doing it, and
  * cleaning by the size of the place; the rest what the list says.
  */
-export function minutesFor(sim: Simulation, action: LookAfter): number {
+export function minutesFor(sim: Simulation, action: LookAfter, shower = action === 'wash' ? sim.player.showerMinutes : undefined): number {
   if (action === 'laundry') return LAUNDRY.minutes[laundryWay(sim, sim.player)];
   if (action === 'charter') return Math.round((charterAt(sim.player.currentLocationId)?.hours ?? 3) * 60);
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
   if (action === 'washup') return Math.max(1, Math.round(WASH_UP.minutesADay * (livingOf(sim.player).dishes ?? 1)));
   // In a flat-share, waiting for the bathroom first (`bathroomWait` in `systems/rooms.ts`, from 2026-10-03).
   if (action === 'wash' || action === 'bathe') {
-    const own = LOOKING_AFTER[action].minutes + (action === 'wash' && shaveReady(sim, sim.player) ? SHAVE.minutes : 0);
+    // A shower's own minutes where chosen, with the undressing and drying the list's 20 allow beside an average 8.
+    const base = action === 'wash' && shower !== undefined ? SHOWER_AROUND + shower : LOOKING_AFTER[action].minutes;
+    const own = base + (action === 'wash' && shaveReady(sim, sim.player) ? SHAVE.minutes : 0);
     return own + bathroomWait(sim, sim.player, sim.now, own);
   }
   return LOOKING_AFTER[action].minutes;

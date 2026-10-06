@@ -157,7 +157,7 @@ export function registerImss(sim: Simulation): void {
     const due = cur === 'MXN' ? r.monthly : exchange(r.monthly, 'MXN', cur) ?? r.monthly;
     const account = payeeAccount(s, person);
     s.post({ memo: 'IMSS pension, the month', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'IMSS Pension').id, amount: -due }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'IMSS Pension Paid', body: `${formatMoney(due, cur)} for the month, since ${formatDate(r.claimedAt, s.zone)}.`, importance: 25, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'IMSS Pension Paid', body: `${formatMoney(due, cur)} paid ${formatDate(s.now, s.zone)}, as every month since ${formatDate(r.claimedAt, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     s.schedule({ at: monthOn(item.at), kind: IMSS_KIND, label: 'IMSS Pension', category: 'system', priority: 20, payload: { personId: person.id } });
   });
 }

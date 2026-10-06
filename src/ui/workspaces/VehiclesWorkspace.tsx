@@ -52,6 +52,7 @@ import { STATIONS } from '@/engine/content/errandtrips';
 import { homeShareOf } from '@/engine/systems/charging';
 import { audioQuote, stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, drivenOn, inspectionPrice, reportOn, testDriveMinutes, usedListings } from '@/engine/systems/usedcars';
+import { buildLabel } from '@/engine/systems/modelyears';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
@@ -120,7 +121,7 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} /><CarSpecs modelId={v.modelId} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
+                        <td><Open subject={at('vehicle', v.id)}>{v.modelYear ? `${v.modelYear} ` : ''}{m.make} {m.model}</Open>{v.build ? <div className="xs dim">{buildLabel(v.build)}</div> : null}{v.options?.length ? <div className="xs dim">{optionsQuote(m, v.options).chosen.map((o) => o.name).join(' · ')}</div> : null}<FuelGauge v={v} /><CarSpecs modelId={v.modelId} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
                         <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
@@ -215,7 +216,7 @@ export function VehiclesWorkspace() {
                 <select id="car-age" value={age} onChange={(e) => setAge(Number(e.target.value))}>
                   <option value={0}>New</option>
                   {/* This month's used cars on offer: each its own age, odometer and seller (`usedListings`). */}
-                  {(model && j ? usedListings(sim, person, model.id, homeOf(person), j) : []).map((l) => <option key={l.age} value={l.age}>{`${l.age} ${l.age === 1 ? 'Year' : 'Years'} Old, ${l.odometerKm.toLocaleString('en-US')} Km, ${l.seller === 'private' ? 'Privately' : 'At A Dealer'}`}</option>)}
+                  {(model && j ? usedListings(sim, person, model.id, homeOf(person), j) : []).map((l) => <option key={l.age} value={l.age}>{`${l.modelYear ? `A ${l.modelYear}, ` : ''}${l.age} ${l.age === 1 ? 'Year' : 'Years'} Old, ${l.odometerKm.toLocaleString('en-US')} Km, ${l.seller === 'private' ? 'Privately' : 'At A Dealer'}${l.build ? `: ${buildLabel(l.build).split(', ').slice(1).join(', ')}` : ''}`}</option>)}
                 </select>
               </div>
               <div className="field">
@@ -317,7 +318,8 @@ export function VehiclesWorkspace() {
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
               )}
-              {!leaseMonths && model && age > 0 && <><TestDriveControl modelId={model.id} age={age} /><InspectControl modelId={model.id} age={age} /></>}
+              {/* A new car is test-driven too (from 2026-10-06; the engine always allowed it); only a used one is inspected. */}
+              {!leaseMonths && model && <><TestDriveControl modelId={model.id} age={age} />{age > 0 && <InspectControl modelId={model.id} age={age} />}</>}
             </div>
             <Fine>{lq && typeof lq !== 'string' ? `${lq.basis} ` : ''}{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
           </div>
@@ -703,7 +705,7 @@ function TestDriveControl({ modelId, age }: { modelId: string; age: number }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const j = jurisdictionOf(homeOf(person));
-  if (!j || age <= 0) return null;
+  if (!j || age < 0) return null;
   const driven = drivenOn(sim, person, modelId, age, homeOf(person));
   if (driven) return <span className="small">{driven.showed ? (driven.severe ? 'On the test drive it wouldn’t go.' : 'On the test drive a warning light came on.') : 'The test drive showed nothing wrong.'}</span>;
   return <Gated feature="vehicle.test_drive" className="btn btn-sm btn-ghost" title={`${testDriveMinutes(j)} minutes at the dealer, with a license that lets you drive here`} onClick={() => { const a = run<{ showed: boolean }>('vehicle.test_drive', { modelId, age }); if (a.ok) toast(a.value!.showed ? 'Something showed on the drive.' : 'It drove fine.', a.value!.showed ? 'neutral' : 'positive'); }}>Test Drive It</Gated>;
@@ -925,7 +927,8 @@ function TireShop() {
             columns={[
               { head: 'Season', cell: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },
               { head: 'Lasts', num: true, cell: life },
-              { head: 'Fitted', cell: (r) => (r.offer.code === 'fitted' ? 'Yes' : r.offer.market === 'us' ? 'Fitting Added' : 'Not Read') },
+              { head: 'Size', cell: (r) => r.offer.size ?? '—' },
+              { head: 'Fitted', cell: (r) => (r.offer.fitted ? 'Yes' : r.offer.market === 'us' ? 'Fitting Added' : 'Not Read') },
             ]}
             compare={[
               { label: 'Season', value: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },

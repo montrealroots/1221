@@ -1,0 +1,1681 @@
+{
+ "read": "2026-10-06",
+ "method": "Base MSRP, destination charge, cc, tank capacity and curb weight read from the makers' own US pages (powersports.honda.com, yamahamotorsports.com) via web search, because direct WebFetch to both domains returned HTTP 403 Forbidden for every attempt made during this task (confirmed independently). All figures were taken from search-result text quoting those pages' own spec/pricing tables, not from a directly rendered page, so basePrice.sourceType is 'secondary' throughout (matching the convention already used in moto-na.json for the same 403 reason). Tank gallons converted to litres at 1 gal = 3.785 L; curb/wet weight lbs converted to kg at 1 lb = 0.453592 kg, each rounded to 1 decimal. Honda and Yamaha both post 'wet weight' (full fluids and fuel) rather than a dry curb weight; wet weight is recorded in kerbKg as the closest equivalent. No economy or battery figures apply (no EV models in this set). Where a brand's site listed no model-year-specific destination charge in the text found (all Yamaha street-bike pages found only the generic 'does not include... destination charges' disclaimer with no dollar figure), delivery is null. Where Honda's own current lineup no longer carries a given nameplate for the model year on sale now (Fury), or a figure was not stated anywhere in the pages found (tank/weight for both Montesa Cota trials bikes, tank for CRF125F), it is recorded as null or listed in notFound.",
+ "models": [
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Gold Wing",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 1833,
+   "basePrice": {
+    "amount": 26500,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "Automatic DCT",
+    "url": "https://powersports.honda.com/motorcycle/touring/gold-wing/2026/gold-wing-automatic-dct",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 775,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 20.8,
+   "batteryKwh": null,
+   "kerbKg": 366.5
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "NT1100",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 1084,
+   "basePrice": {
+    "amount": 11999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "DCT",
+    "url": "https://powersports.honda.com/motorcycle/touring/nt1100/2026/nt1100-dct",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 775,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 20.4,
+   "batteryKwh": null,
+   "kerbKg": 248.2
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Shadow Phantom",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 745,
+   "basePrice": {
+    "amount": 8699,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "ABS",
+    "url": "https://powersports.honda.com/motorcycle/cruiser/shadow-phantom/2025/shadow-phantom-abs",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 14.8,
+   "batteryKwh": null,
+   "kerbKg": 250.8
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Rebel 300",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 286,
+   "basePrice": {
+    "amount": 5349,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "E-Clutch",
+    "url": "https://powersports.honda.com/motorcycle/cruiser/rebel-300/2026/rebel-300-e-clutch",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 11.4,
+   "batteryKwh": null,
+   "kerbKg": 171.9
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Rebel 500",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 471,
+   "basePrice": {
+    "amount": 6799,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/cruiser/rebel-500/2026/rebel-500",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 11.4,
+   "batteryKwh": null,
+   "kerbKg": 187.8
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB1000 Hornet",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 1000,
+   "basePrice": {
+    "amount": 10999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "SP",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb1000-hornet-sp/2026/cb1000-hornet-sp",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 775,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 17,
+   "batteryKwh": null,
+   "kerbKg": 210.9
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB1000F",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 1000,
+   "basePrice": {
+    "amount": 10599,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb1000f/2026/cb1000f",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 775,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 15.9,
+   "batteryKwh": null,
+   "kerbKg": 214.1
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB750 Hornet",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 755,
+   "basePrice": {
+    "amount": 7999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "E-Clutch",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb750-hornet/2026/cb750-hornet-e-clutch",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 15.1,
+   "batteryKwh": null,
+   "kerbKg": 196
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "SCL500",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 471,
+   "basePrice": {
+    "amount": 6999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/standard/scl500/2026/scl500",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 12.1,
+   "batteryKwh": null,
+   "kerbKg": 192.8
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB650R",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 649,
+   "basePrice": {
+    "amount": 8699,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "E-Clutch",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb650r/2026/cb650r-e-clutch",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 15.5,
+   "batteryKwh": null,
+   "kerbKg": 206.8
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB500 Hornet",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 471,
+   "basePrice": {
+    "amount": 5899,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb500f/2026/cb500-hornet",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 17,
+   "batteryKwh": null,
+   "kerbKg": 187.8
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CB300R",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 286,
+   "basePrice": {
+    "amount": 4499,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/standard/cb300r/2026/cb300r",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 9.8,
+   "batteryKwh": null,
+   "kerbKg": 143.3
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Grom",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 124,
+   "basePrice": {
+    "amount": 3599,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/minimoto/grom/2026/grom",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 6.1,
+   "batteryKwh": null,
+   "kerbKg": 101.6
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Dax125",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 124,
+   "basePrice": {
+    "amount": 4199,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/minimoto/dax-125/2026/dax-125",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 3.8,
+   "batteryKwh": null,
+   "kerbKg": 107
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Monkey",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 124,
+   "basePrice": {
+    "amount": 4399,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/minimoto/monkey/2026/monkey",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 5.7,
+   "batteryKwh": null,
+   "kerbKg": 104.7
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Trail125",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 124,
+   "basePrice": {
+    "amount": 4199,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/minimoto/trail125/2026/trail125",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 5.3,
+   "batteryKwh": null,
+   "kerbKg": 116.1
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Navi",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 109,
+   "basePrice": {
+    "amount": 2199,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/minimoto/navi/2026/navi",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 3.4,
+   "batteryKwh": null,
+   "kerbKg": 106.1
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Metropolitan",
+   "kind": "scooter",
+   "fuel": "petrol",
+   "cc": 49,
+   "basePrice": {
+    "amount": 2649,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/scooter/metropolitan/2026/metropolitan",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 4.5,
+   "batteryKwh": null,
+   "kerbKg": null
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Transalp",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 755,
+   "basePrice": {
+    "amount": 10199,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "E-Clutch",
+    "url": "https://powersports.honda.com/motorcycle/adventure/transalp/2026/transalp-e-clutch",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 16.7,
+   "batteryKwh": null,
+   "kerbKg": 212.3
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "NC750X",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 745,
+   "basePrice": {
+    "amount": 9499,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "DCT",
+    "url": "https://powersports.honda.com/motorcycle/adventure/nc750x/2026/nc750x-dct",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 14,
+   "batteryKwh": null,
+   "kerbKg": 225.5
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "NX500",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 471,
+   "basePrice": {
+    "amount": 6899,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/adventure/nx500/2026/nx500",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 17.8,
+   "batteryKwh": null,
+   "kerbKg": 196
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "XR650L",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 644,
+   "basePrice": {
+    "amount": 6999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/dual-sport/xr650l",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 10.6,
+   "batteryKwh": null,
+   "kerbKg": 157
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CRF450RL",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 450,
+   "basePrice": {
+    "amount": 10199,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/dual-sport/crf450rl/2026/crf450rl",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 7.6,
+   "batteryKwh": null,
+   "kerbKg": 131.1
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CRF300L",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 286,
+   "basePrice": {
+    "amount": 5749,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/dual-sport/crf300l",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 12.9,
+   "batteryKwh": null,
+   "kerbKg": 151
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "XR150L",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 149,
+   "basePrice": {
+    "amount": 3399,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/dual-sport/xr150l/2026/xr150l",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 300,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 10.6,
+   "batteryKwh": null,
+   "kerbKg": 127.9
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "ADV160",
+   "kind": "scooter",
+   "fuel": "petrol",
+   "cc": 157,
+   "basePrice": {
+    "amount": 4499,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/scooter/adv160/2026/adv160",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 600,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 7.9,
+   "batteryKwh": null,
+   "kerbKg": 133.4
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CBR1000RR",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 999,
+   "basePrice": {
+    "amount": 17099,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://powersports.honda.com/motorcycle/supersport/cbr1000rr/2026/cbr1000rr",
+    "sourceType": "secondary"
+   },
+   "delivery": {
+    "amount": 775,
+    "basis": "the destination charge Honda states"
+   },
+   "economy": null,
+   "tankL": 16.3,
+   "batteryKwh": null,
+   "kerbKg": 196
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-10 SP",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 998,
+   "basePrice": {
+    "amount": 17499,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "SP",
+    "url": "https://yamahamotorsports.com/models/mt-10-sp/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 17,
+   "batteryKwh": null,
+   "kerbKg": 214.1
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-09 SP",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 890,
+   "basePrice": {
+    "amount": 12699,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "SP",
+    "url": "https://yamahamotorsports.com/models/mt-09-sp/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 14,
+   "batteryKwh": null,
+   "kerbKg": 194.1
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "BOLT R-SPEC",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 942,
+   "basePrice": {
+    "amount": 8999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "R-Spec",
+    "url": "https://www.yamahamotorsports.com/models/bolt-r-spec/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 12.9,
+   "batteryKwh": null,
+   "kerbKg": 245.9
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "XSR900",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 890,
+   "basePrice": {
+    "amount": 10599,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/xsr900/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 14,
+   "batteryKwh": null,
+   "kerbKg": 192.8
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "XSR700",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 689,
+   "basePrice": {
+    "amount": 8599,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/xsr700/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 14,
+   "batteryKwh": null,
+   "kerbKg": 186
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "FJR1300ES",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 1298,
+   "basePrice": {
+    "amount": 18299,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "ES",
+    "url": "https://www.yamahamotorsports.com/models/fjr1300es/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 25,
+   "batteryKwh": null,
+   "kerbKg": 291.3
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "Tenere 700",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 689,
+   "basePrice": {
+    "amount": 10999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/tenere-700/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 15.9,
+   "batteryKwh": null,
+   "kerbKg": 208.2
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "Tenere 700 World Raid",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 689,
+   "basePrice": {
+    "amount": 12999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "World Raid",
+    "url": "https://yamahamotorsports.com/models/26-tenere-700-world-raid/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 23.1,
+   "batteryKwh": null,
+   "kerbKg": 220
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "Tracer 9",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 890,
+   "basePrice": {
+    "amount": 12599,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/tracer-9/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 18.9,
+   "batteryKwh": null,
+   "kerbKg": 219.1
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "XT250",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 249,
+   "basePrice": {
+    "amount": 5499,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/xt250/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 9.5,
+   "batteryKwh": null,
+   "kerbKg": 132
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "TW200",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 196,
+   "basePrice": {
+    "amount": 4999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/tw200/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 6.8,
+   "batteryKwh": null,
+   "kerbKg": 126.1
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "WR125R",
+   "kind": "motorcycle",
+   "fuel": "petrol",
+   "cc": 125,
+   "basePrice": {
+    "amount": 3999,
+    "currency": "USD",
+    "includesTax": false,
+    "trim": "base",
+    "url": "https://yamahamotorsports.com/models/wr125r/specs",
+    "sourceType": "secondary"
+   },
+   "delivery": null,
+   "economy": null,
+   "tankL": 7.9,
+   "batteryKwh": null,
+   "kerbKg": 137.9
+  }
+ ],
+ "notFound": [
+  "Honda Fury: no 2026 model-year page found on powersports.honda.com, only a 2025 page (fury, $11,499 + $775 dest); Honda has not posted a current-model-year price for this nameplate, so it is omitted rather than using a prior model year.",
+  "Honda CB1000 Hornet (plain, non-SP trim): Honda US currently sells only the 'CB1000 Hornet SP' trim; no separate non-SP US page exists, so the SP trim and its MSRP were used for this entry instead of a true base trim.",
+  "Honda Metropolitan curb weight: not stated on powersports.honda.com's 2026 Metropolitan page or spec sheet found.",
+  "Honda CRF125F fuel tank capacity: not stated on powersports.honda.com's 2026 CRF125F page or spec sheet found.",
+  "Honda Montesa Cota 301RR tank capacity and curb weight: not stated on powersports.honda.com's Montesa/Trials page found.",
+  "Honda Montesa Cota 4RT tank capacity and curb weight: not stated; also note the fill-target name 'Montesa Cota 4RT' maps to Honda's current US lineup entry 'Montesa Cota 4RT 260R' ($9,849 + $600 dest, 259cc), a different, lower-displacement trim from 'Montesa Cota 301RR' (298cc, full name 'Montesa Cota 4RT 301RR') which was entered separately."
+ ],
+ "offRoadHeld": {
+  "note": "Off-road-only models (motocross, enduro, trials, kids' and trail bikes) that can't be registered for the road in the US. Held back on review 2026-10-06 until SLATE has an off-road rule (ridden where an ATV is, not on roads); not read by tools/build-motorcycles.mjs.",
+  "models": [
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF450X",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 9999,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf450x/2026/crf450x",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 7.6,
+    "batteryKwh": null,
+    "kerbKg": 124.7
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF450RX",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 10399,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf450rx/2026/crf450rx",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 7.9,
+    "batteryKwh": null,
+    "kerbKg": 116.1
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF300F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 294,
+    "basePrice": {
+     "amount": 5099,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf300f/2026/crf300f",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 6.1,
+    "batteryKwh": null,
+    "kerbKg": 122.9
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF250RX",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 249,
+    "basePrice": {
+     "amount": 8699,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf250rx/2026/crf250rx",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 7.9,
+    "batteryKwh": null,
+    "kerbKg": 109.8
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF125F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 125,
+    "basePrice": {
+     "amount": 3599,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf125f/2026/crf125f",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": null,
+    "batteryKwh": null,
+    "kerbKg": 88
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF110F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 109,
+    "basePrice": {
+     "amount": 2799,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf110f/2026/crf110f",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 3.8,
+    "batteryKwh": null,
+    "kerbKg": 76.7
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF50F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 50,
+    "basePrice": {
+     "amount": 1899,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/trail/crf50f/2026/crf50f",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 2.6,
+    "batteryKwh": null,
+    "kerbKg": 50.3
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF450R",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 10099,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/motocross/crf450r/2026/crf450r",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 6.4,
+    "batteryKwh": null,
+    "kerbKg": 113
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF250R",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 249,
+    "basePrice": {
+     "amount": 8599,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/motocross/crf250r/2026/crf250r",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 6.4,
+    "batteryKwh": null,
+    "kerbKg": 106.1
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "CRF150R",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 150,
+    "basePrice": {
+     "amount": 5499,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/motocross/crf150r/2026/crf150r",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": 4.2,
+    "batteryKwh": null,
+    "kerbKg": 83.9
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "Montesa Cota 301RR",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 298,
+    "basePrice": {
+     "amount": 12949,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://powersports.honda.com/motorcycle/montesatrials/montesa-cota-301rr/2026/montesa-cota-301rr",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": null,
+    "batteryKwh": null,
+    "kerbKg": null
+   },
+   {
+    "market": "US",
+    "make": "Honda",
+    "model": "Montesa Cota 4RT",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 259,
+    "basePrice": {
+     "amount": 9849,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "260R",
+     "url": "https://powersports.honda.com/motorcycle/montesatrials/montesa-cota-4rt",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 600,
+     "basis": "the destination charge Honda states"
+    },
+    "economy": null,
+    "tankL": null,
+    "batteryKwh": null,
+    "kerbKg": null
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZF-R9",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 890,
+    "basePrice": {
+     "amount": 12499,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/yzf-r9/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": null,
+    "economy": null,
+    "tankL": 14,
+    "batteryKwh": null,
+    "kerbKg": 195
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZF-R1M",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 998,
+    "basePrice": {
+     "amount": 27899,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "R1M",
+     "url": "https://yamahamotorsports.com/models/yzf-r1m/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": null,
+    "economy": null,
+    "tankL": 17,
+    "batteryKwh": null,
+    "kerbKg": 205.1
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ450F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 10299,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Team Yamaha Blue",
+     "url": "https://yamahamotorsports.com/models/yz450f/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.1,
+    "batteryKwh": null,
+    "kerbKg": 110.2
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ250F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 250,
+    "basePrice": {
+     "amount": 9099,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Team Yamaha Blue",
+     "url": "https://yamahamotorsports.com/models/yz250f/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.1,
+    "batteryKwh": null,
+    "kerbKg": 107
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ250",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 249,
+    "basePrice": {
+     "amount": 8099,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Team Yamaha Blue",
+     "url": "https://yamahamotorsports.com/models/yz250/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.8,
+    "batteryKwh": null,
+    "kerbKg": 103
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ125",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 125,
+    "basePrice": {
+     "amount": 7199,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Team Yamaha Blue",
+     "url": "https://yamahamotorsports.com/models/yz125/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.8,
+    "batteryKwh": null,
+    "kerbKg": 96.2
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ85LW",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 85,
+    "basePrice": {
+     "amount": 5399,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Youth",
+     "url": "https://yamahamotorsports.com/models/yz85lw/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 320,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 4.9,
+    "batteryKwh": null,
+    "kerbKg": 74.8
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ85",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 85,
+    "basePrice": {
+     "amount": 5199,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Youth",
+     "url": "https://yamahamotorsports.com/models/yz85/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 320,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 4.9,
+    "batteryKwh": null,
+    "kerbKg": 73
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ65",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 65,
+    "basePrice": {
+     "amount": 4499,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "Youth",
+     "url": "https://yamahamotorsports.com/models/yz65/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 320,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 3.4,
+    "batteryKwh": null,
+    "kerbKg": 60.8
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ450FX",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 10499,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/yz450fx/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 7.9,
+    "batteryKwh": null,
+    "kerbKg": 113
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ250FX",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 250,
+    "basePrice": {
+     "amount": 9099,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/yz250fx/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 7.9,
+    "batteryKwh": null,
+    "kerbKg": 110.2
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ250X",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 249,
+    "basePrice": {
+     "amount": 8199,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/yz250x/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.8,
+    "batteryKwh": null,
+    "kerbKg": 103.9
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "YZ125X",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 125,
+    "basePrice": {
+     "amount": 7299,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/yz125x/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.8,
+    "batteryKwh": null,
+    "kerbKg": 96.2
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "WR450F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 450,
+    "basePrice": {
+     "amount": 10499,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/wr450f/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 7.6,
+    "batteryKwh": null,
+    "kerbKg": 116.1
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "WR250F",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 250,
+    "basePrice": {
+     "amount": 9199,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/wr250f/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 675,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 7.6,
+    "batteryKwh": null,
+    "kerbKg": 113
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "TT-R230",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 223,
+    "basePrice": {
+     "amount": 4699,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/tt-r230/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 340,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 7.9,
+    "batteryKwh": null,
+    "kerbKg": 113.9
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "TT-R125LE",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 124,
+    "basePrice": {
+     "amount": 3599,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/tt-r125le/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 340,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 6.1,
+    "batteryKwh": null,
+    "kerbKg": 89.8
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "TT-R110E",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 110,
+    "basePrice": {
+     "amount": 2449,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/tt-r110e/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 300,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 3.8,
+    "batteryKwh": null,
+    "kerbKg": 72.1
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "TT-R50E",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 49,
+    "basePrice": {
+     "amount": 1899,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/tt-r50e/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 250,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 3,
+    "batteryKwh": null,
+    "kerbKg": 58.1
+   },
+   {
+    "market": "US",
+    "make": "Yamaha",
+    "model": "PW50",
+    "kind": "motorcycle",
+    "fuel": "petrol",
+    "cc": 49,
+    "basePrice": {
+     "amount": 1899,
+     "currency": "USD",
+     "includesTax": false,
+     "trim": "base",
+     "url": "https://yamahamotorsports.com/models/pw50/specs",
+     "sourceType": "secondary"
+    },
+    "delivery": {
+     "amount": 215,
+     "basis": "Yamaha destination charge as stated"
+    },
+    "economy": null,
+    "tankL": 1.9,
+    "batteryKwh": null,
+    "kerbKg": 40.8
+   }
+  ]
+ }
+}

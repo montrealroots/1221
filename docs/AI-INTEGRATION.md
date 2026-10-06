@@ -87,5 +87,35 @@ Nothing is sent to Anthropic until all three are done.
   was; refusals and the allowlist hold; the function sends nothing without
   the key, returns only listed commands, and stops a player at the cap.
 
-Not built yet: the customization builder and the development assistant
-roles. They need the customization system and a review workflow first.
+Until 2026-10-06 this page closed by saying the customization and
+development roles weren't built. They were, on 2026-10-05, as the Roles
+paragraph above says, and the line was struck.
+
+**From 2026-10-06** (module 8 of the owner's directive of 2026-10-05):
+
+- A proposal is checked against the role that asked (`checkProposal(sim, p,
+  role)`): a customizing assistant can't propose a move, whatever the server
+  returned.
+- The summary carries `offers`: for each car, the tires that fit it and the
+  car audio that goes in it; for the home, paint and lamps; each by its real
+  offer id, cheapest first, twelve of each, only those the engine would take
+  (`offersFor`). The development role is told none.
+- Proposals are a sequence. `checkSequence` tries them in order with
+  `Simulation.previewAll`, each against the world the ones before it leave,
+  and puts everything back, the pending events included. Do All In Order
+  takes them all or none (`takeSequence`, `Simulation.executeAll`): one
+  refused puts back the ones before it, and the toast says which.
+- Usage controls, item 4 above, had only the daily cap per player. The
+  monthly ceiling is now a token allowance for every player together,
+  `SLATE_ASSISTANT_MONTHLY_TOKENS` (10,000,000 unless set; 0 for none),
+  counted from the usage the Messages API reports into `SlateAssistantMonth`
+  by the service role, which no player can read. It counts tokens because
+  that is what the server can measure without a price list; the dollar limit
+  is the Console's spend limit, step 1 above.
+- Tests (`tests/assistant.test.ts`): role refusals, offers that all fit the
+  car, a sequence where the second set of speakers is refused after the
+  first, all-or-none rollback leaving the save byte-for-byte as it was, and
+  the month's allowance stopping a second player without sending anything.
+
+Still off: nothing is sent until the owner sets `ANTHROPIC_API_KEY`, and
+building this authorizes no activation, spending or deployment.

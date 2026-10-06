@@ -7,7 +7,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { TIRE_PRODUCTS } from '@/engine/content/tirecatalog';
-import { FIT_SET, TIRE_LIFE_KM, WINTER_TIRES, lifeOfTire, odometerOf, setPrice, tireCatalog, tireLifeOf, tireOfferRefusal, tiresWorn } from '@/engine/systems/tires';
+import { FIT_SET, TIRE_LIFE_KM, TREAD_LIFE, WINTER_TIRES, lifeOfTire, treadCredit, odometerOf, setPrice, tireCatalog, tireLifeOf, tireOfferRefusal, sizesFor, tiresWorn } from '@/engine/systems/tires';
 import { devicePrice } from '@/engine/systems/devices';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { vehiclesOf } from '@/engine/systems/vehicles';
@@ -21,7 +21,7 @@ const balance = (sim: ReturnType<typeof bought>['sim']) => sim.universe.accounts
 
 describe('tires by make and model', () => {
   it('sells a set of four where the car is, cheapest first, America’s with BJ’s fitting', () => {
-    const { sim, v } = bought('us-ny-newyork', 'us-toyota-camry', 'tirecat-us');
+    const { sim, v } = bought('us-ny-newyork', 'us-honda-accord', 'tirecat-us');
     const shop = tireCatalog(sim, v, false);
     expect(shop.length).toBeGreaterThan(0);
     expect(shop.every((r) => r.offer.market === 'us' && r.product.attrs.season !== 'winter')).toBe(true);
@@ -36,7 +36,7 @@ describe('tires by make and model', () => {
   });
 
   it('fits the chosen set, paid, lasting its warranty or the CrossClimate 2’s', () => {
-    const { sim, v } = bought('us-ny-newyork', 'us-toyota-camry', 'tirecat-fit');
+    const { sim, v } = bought('us-ny-newyork', 'us-honda-accord', 'tirecat-fit');
     const shop = tireCatalog(sim, v, false);
     const rated = shop.find((r) => typeof r.product.attrs.warrantyKm === 'number');
     const pick = rated ?? shop[0]!;
@@ -44,8 +44,12 @@ describe('tires by make and model', () => {
     const r = sim.must<{ paid: number }>({ kind: 'vehicle.replace_tires', payload: { vehicleId: v.id, offerId: pick.offer.id } });
     expect(r.paid).toBe(pick.price);
     expect(before - balance(sim)).toBe(pick.price);
-    expect(v.tires).toEqual({ product: pick.product.id, lifeKm: lifeOfTire(pick.product) });
-    expect(tireLifeOf(v)).toBe(typeof pick.product.attrs.warrantyKm === 'number' ? pick.product.attrs.warrantyKm : TIRE_LIFE_KM);
+    // A warranty is a promise, not a lifespan: the set's own life is 85% to 115% of it (from 2026-10-05).
+    expect(v.tires).toMatchObject({ product: pick.product.id, brand: pick.product.brand, paid: pick.price });
+    const promised = lifeOfTire(pick.product);
+    expect(tireLifeOf(v)).toBeGreaterThanOrEqual(Math.round(promised * TREAD_LIFE.least));
+    expect(tireLifeOf(v)).toBeLessThanOrEqual(Math.round(promised * TREAD_LIFE.most));
+    expect(promised).toBe(typeof pick.product.attrs.warrantyKm === 'number' ? pick.product.attrs.warrantyKm : TIRE_LIFE_KM);
     // Worn at its own life from when it went on.
     v.km = (v.km ?? 0) + tireLifeOf(v) - 1;
     expect(tiresWorn(v)).toBe(false);
@@ -55,6 +59,24 @@ describe('tires by make and model', () => {
     sim.must({ kind: 'vehicle.replace_tires', payload: { vehicleId: v.id } });
     expect(v.tires).toBeUndefined();
     expect(v.tiresAtKm).toBe(odometerOf(v));
+  });
+
+  it('credits a set worn out before its warranty, pro rata, toward the same brand', () => {
+    const { sim, v } = bought('us-ny-newyork', 'us-honda-accord', 'tirecat-credit');
+    const rated = tireCatalog(sim, v, false).find((r) => typeof r.product.attrs.warrantyKm === 'number')!;
+    expect(rated).toBeDefined();
+    sim.must({ kind: 'vehicle.replace_tires', payload: { vehicleId: v.id, offerId: rated.offer.id } });
+    // Worn out at 90% of its warranty.
+    v.tires = { ...v.tires!, lifeKm: Math.round(v.tires!.warrantyKm! * 0.9) };
+    v.km = (v.km ?? 0) + v.tires.lifeKm;
+    expect(tiresWorn(v)).toBe(true);
+    const credit = treadCredit(v, rated.product.brand);
+    expect(credit).toBe(Math.round(rated.price * (1 - v.tires.lifeKm / v.tires.warrantyKm!)));
+    expect(treadCredit(v, 'Another Brand')).toBe(0);
+    const before = balance(sim);
+    const r = sim.must<{ paid: number; credit?: number }>({ kind: 'vehicle.replace_tires', payload: { vehicleId: v.id, offerId: rated.offer.id } });
+    expect(r.credit).toBe(credit);
+    expect(before - balance(sim)).toBe(rated.price - credit);
   });
 
   it('a set whose warranty is longer lasts longer', () => {
@@ -74,5 +96,17 @@ describe('tires by make and model', () => {
     expect(r.paid).toBe(pick.price);
     expect(v.winterTires).toMatchObject({ product: pick.product.id, wearKm: lifeOfTire(pick.product) });
     expect(lifeOfTire(pick.product)).toBe(typeof pick.product.attrs.warrantyKm === 'number' ? pick.product.attrs.warrantyKm : WINTER_TIRES.wearKm);
+  });
+});
+
+describe('what fits a car (from 2026-10-05)', () => {
+  it('sells a car only its own factory size where its fitment was read, and says so', () => {
+    const { sim, v } = bought('us-ny-newyork', 'us-toyota-camry', 'tirecat-fitment');
+    expect(sizesFor(v)).toEqual(['205/65R16']);
+    expect(tireCatalog(sim, v, false).every((r) => !r.offer.size || r.offer.size === '205/65R16')).toBe(true);
+    const wrong = TIRE_PRODUCTS.flatMap((p) => p.offers).find((o) => o.market === 'us' && o.size === '215/55R17')!;
+    expect(tireOfferRefusal(v, wrong.id, false)).toBe('It doesn’t fit: the Toyota Camry takes 205/65R16.');
+    // A car of another model year isn't held to this one's fitment.
+    expect(sizesFor({ ...v, modelYear: 2015 })).toBeUndefined();
   });
 });

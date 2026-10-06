@@ -13,6 +13,13 @@
  * finished work, because nothing here can: every proposal is an ordinary
  * command the engine already validates.
  *
+ * From 2026-10-06 a proposal is checked against the role that asked (a
+ * customizing assistant can't propose a move), the life it is told about
+ * carries the offers it may name, those that fit what the player owns, by
+ * their real ids (`offers`), and proposals are tried in order as a sequence,
+ * each against the world the ones before it leave (`checkSequence`); taken
+ * together, they are all taken or none are (`takeSequence`).
+ *
  * Ordinary play never needs it. Off, the game says so and nothing else
  * changes.
  */
@@ -23,6 +30,10 @@ import { formatDate } from '../core/time';
 import { CITIES } from '../content/geography';
 import { netWorth } from './finance';
 import { levelOf, rangeKm } from './fueltank';
+import { tireCatalog } from './tires';
+import { carAudioCatalog, chosenRefusal } from './caraudio';
+import { paintCatalog, paintRefusal } from './paint';
+import { lampCatalog } from './lighting';
 
 /** What the assistant may propose, and the payload each takes, as the engine reads it. */
 export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload: string }>> = {
@@ -98,17 +109,67 @@ export function assistantState(sim: Simulation, role: AssistantRole = 'play') {
     vehicles: (p.vehicles ?? []).filter((v) => v.soldAt === undefined).map((v) => ({ id: v.id, modelId: v.modelId, cityId: v.cityId, full: Math.round(levelOf(v) * 100) / 100, rangeKm: rangeKm(v) })),
     homes: (p.homes ?? []).map((h) => ({ id: h.id, cityId: h.cityId, address: h.facts.address })),
     contacts: (p.contacts ?? []).slice(0, 40).map((c) => ({ id: c.id, name: c.name, cityId: c.cityId })),
+    offers: offersFor(sim, role),
     commands: commandsFor(role),
   };
 }
 
+/** How many of each kind of offer the assistant is told about, cheapest first: enough to choose from, few enough to read. */
+export const OFFERS_SHOWN = 12;
+
+/**
+ * The offers the assistant may name, by their real ids, cheapest first (from 2026-10-06): for each car, the tires
+ * that fit it and the car audio that goes in it; for the home, paint and lamps. Only those the engine would take,
+ * so a proposal names something that exists and fits. None for the development role, which proposes no command.
+ */
+export function offersFor(sim: Simulation, role: AssistantRole = 'play') {
+  if (role === 'develop') return undefined;
+  const p = sim.player;
+  const row = (r: { product: { brand: string; model: string }; offer: { id: string; size?: string }; price: number }) => ({ offerId: r.offer.id, label: `${r.product.brand} ${r.product.model}${r.offer.size ? `, ${r.offer.size}` : ''}`, price: r.price });
+  return sim.peek((s) => ({
+    vehicles: (p.vehicles ?? []).filter((v) => v.soldAt === undefined).map((v) => ({
+      vehicleId: v.id,
+      tires: tireCatalog(s, v, false).slice(0, OFFERS_SHOWN).map(row),
+      audio: carAudioCatalog(s, v).filter((r) => !chosenRefusal(v, r.offer.id)).slice(0, OFFERS_SHOWN).map(row),
+    })),
+    paint: paintCatalog(s, p).filter((r) => !paintRefusal(p, r.offer.id)).slice(0, OFFERS_SHOWN).map(row),
+    lamps: lampCatalog(s, p).slice(0, OFFERS_SHOWN).map(row),
+  }));
+}
+
 /** A proposal tried and put back: whether the world takes it, what it would cost, and what it would say. */
-export function checkProposal(sim: Simulation, proposal: Proposal): CheckedProposal {
-  if (!ASSISTANT_COMMANDS[proposal.kind]) return { ...proposal, ok: false, refusal: 'That isn’t something the assistant may propose.', notices: [] };
+export function checkProposal(sim: Simulation, proposal: Proposal, role: AssistantRole = 'play'): CheckedProposal {
+  if (!commandsFor(role)[proposal.kind]) return { ...proposal, ok: false, refusal: 'That isn’t something the assistant may propose.', notices: [] };
   if (typeof proposal.payload !== 'object' || proposal.payload === null || Array.isArray(proposal.payload)) return { ...proposal, ok: false, refusal: 'The proposal didn’t say what to do it with.', notices: [] };
   const cash = (s: Simulation) => netWorth(s, s.player.id).cash;
   const before = sim.peek(cash);
   const tried = sim.preview({ kind: proposal.kind, payload: proposal.payload }, cash);
   if (!tried.ok) return { ...proposal, ok: false, refusal: tried.error, notices: tried.notices };
   return { ...proposal, ok: true, costs: Math.max(0, before - (tried.read ?? before)), notices: tried.notices };
+}
+
+/**
+ * Proposals tried in order, each against the world the ones before it leave, and all put back (from 2026-10-06,
+ * `Simulation.previewAll`): whether each would be taken after those before it, and what it would cost. One
+ * refused, or not the role's to propose, leaves the world as it was for the ones after, as taking them in order would.
+ */
+export function checkSequence(sim: Simulation, proposals: readonly Proposal[], role: AssistantRole = 'play'): CheckedProposal[] {
+  const barred = (p: Proposal) => (!commandsFor(role)[p.kind] ? 'That isn’t something the assistant may propose.' : typeof p.payload !== 'object' || p.payload === null || Array.isArray(p.payload) ? 'The proposal didn’t say what to do it with.' : undefined);
+  const tried = proposals.filter((p) => !barred(p));
+  const cash = (s: Simulation) => netWorth(s, s.player.id).cash;
+  const results = sim.previewAll(tried.map((p) => ({ kind: p.kind, payload: p.payload })), cash);
+  let k = 0;
+  return proposals.map((p) => {
+    const no = barred(p);
+    if (no) return { ...p, ok: false, refusal: no, notices: [] };
+    const r = results[k++]!;
+    return r.ok ? { ...p, ok: true, costs: Math.max(0, r.before - (r.after ?? r.before)), notices: r.notices } : { ...p, ok: false, refusal: r.error, notices: r.notices };
+  });
+}
+
+/** Proposals taken in order, all or none (from 2026-10-06), each one the role may propose (`Simulation.executeAll`). */
+export function takeSequence(sim: Simulation, proposals: readonly Proposal[], role: AssistantRole = 'play'): { ok: true } | { ok: false; at: number; error: string } {
+  const barred = proposals.findIndex((p) => !commandsFor(role)[p.kind]);
+  if (barred >= 0) return { ok: false, at: barred, error: 'That isn’t something the assistant may propose.' };
+  return sim.executeAll(proposals.map((p) => ({ kind: p.kind, payload: p.payload })));
 }

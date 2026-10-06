@@ -29,7 +29,7 @@ import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/
 import { buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { buySpeakerRefusal, speakerCatalog } from '@/engine/systems/speakers';
 import { litersFor, nextRoom, paintCatalog, paintRefusal } from '@/engine/systems/paint';
-import { computerCatalog, computerRefusal, gamingComputer } from '@/engine/systems/computers';
+import { computerCatalog, computerRefusal, computerForGames } from '@/engine/systems/computers';
 import { handMower, lawnM2, mowerCatalog, mowerRefusal, robotFor } from '@/engine/systems/mowers';
 import { bulbCatalog, bulbRefusal, darkSockets, fitRefusal as bulbFitRefusal, lampCatalog, lampRefusal, lightsOf, spareBulbs } from '@/engine/systems/lighting';
 import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
@@ -755,7 +755,7 @@ function Computers() {
   const gate = useFeature('computer.buy');
   const gpu = (r: DeviceRow) => `${r.product.attrs.discrete ? 'Its Own Card' : 'Built In'}${r.product.attrs.gpu ? `: ${r.product.attrs.gpu}` : ''}`;
   return (
-    <DeviceShop list="computers" title={`Computers${gamingComputer(person) ? ' · Yours Plays Games' : ''}`} shop={computerCatalog(sim, person)} refusal={(id) => computerRefusal(person, id)} command="computer.buy" gate={gate} bought={(label) => `${label}, bought and brought home.`}
+    <DeviceShop list="computers" title={`Computers${computerForGames(person) ? ' · Yours Plays Games' : ''}`} shop={computerCatalog(sim, person)} refusal={(id) => computerRefusal(person, id)} command="computer.buy" gate={gate} bought={(label) => `${label}, bought and brought home.`}
       facets={{ brand: 'Maker', kind: 'Kind', graphics: 'Graphics' }}
       facetsOf={(r) => ({ brand: r.product.brand, kind: PC_KIND[String(r.product.attrs.kind)] ?? 'Computer', graphics: r.product.attrs.discrete ? 'Its Own Card' : 'Built In' })}
       columns={[
@@ -772,7 +772,7 @@ function Computers() {
         { label: 'Screen', value: (r) => (r.product.attrs.screenIn ? `${r.product.attrs.screenIn}"` : '—') },
         { label: 'System', value: (r) => String(r.product.attrs.os ?? '—') },
       ]}
-      fine="Each at its seller’s own page in the configuration read, America’s and Canada’s prices with the place’s sales tax added. One whose graphics are a card of their own plays a games lover’s games at home, as a console does." />
+      fine="Each at its seller’s own page in the configuration read, America’s and Canada’s prices with the place’s sales tax added. Any computer or tablet plays a games lover’s games at home, as a console does; its graphics are shown for comparing." />
   );
 }
 

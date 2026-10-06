@@ -320,6 +320,8 @@ describe('renovating', () => {
     give(sim, 100_000_00);
     const value = homeValue(sim, owned);
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
+    // The same work isn't started twice while it's under way (requirement 59).
+    expect(sim.execute({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } }).error).toBe('That work is under way.');
     finish(sim, owned);
     expect(owned.facts.parts.roof).toBeGreaterThanOrEqual(year);
     expect(homeValue(sim, owned) - value).toBeGreaterThanOrEqual(worn * 0.99);

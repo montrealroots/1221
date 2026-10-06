@@ -12,7 +12,7 @@
 import { useState } from 'react';
 import { useGame } from '@/app/game-context';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { ASSISTANT_COMMANDS, assistantState, checkProposal, type AssistantRole, type CheckedProposal, type MechanicProposal, type Proposal } from '@/engine/systems/assistant';
+import { ASSISTANT_COMMANDS, assistantState, checkSequence, takeSequence, type AssistantRole, type CheckedProposal, type MechanicProposal, type Proposal } from '@/engine/systems/assistant';
 import { Modal } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 
@@ -41,7 +41,7 @@ export function AssistantButton() {
 }
 
 function AssistantDialog({ onClose }: { onClose: () => void }) {
-  const { sim, run, toast } = useGame();
+  const { sim, run, runAll, toast } = useGame();
   const [request, setRequest] = useState('');
   const [busy, setBusy] = useState(false);
   const [answer, setAnswer] = useState<string | undefined>();
@@ -59,7 +59,8 @@ function AssistantDialog({ onClose }: { onClose: () => void }) {
     if (!got.ok) { setError(got.error); setAnswer(undefined); setProposals([]); setMechanics([]); return; }
     setAnswer(got.answer);
     setMechanics(got.mechanics ?? []);
-    setProposals((got.proposals ?? []).map((p) => checkProposal(sim, p)));
+    // Tried in order, each against the world the ones before it leave (`checkSequence`).
+    setProposals(checkSequence(sim, got.proposals ?? [], role));
   };
 
   const take = (p: CheckedProposal, i: number) => {
@@ -67,8 +68,13 @@ function AssistantDialog({ onClose }: { onClose: () => void }) {
     if (done.ok) {
       toast('Done.', 'positive');
       // What's left is tried again against the world as it is now.
-      setProposals((list) => list.filter((_, j) => j !== i).map((q) => checkProposal(sim, q)));
+      setProposals((list) => checkSequence(sim, list.filter((_, j) => j !== i), role));
     }
+  };
+
+  // All of them in order, all or none.
+  const takeAll = () => {
+    if (runAll((s) => takeSequence(s, proposals, role))) { toast('Done, all of them.', 'positive'); setProposals([]); }
   };
 
   return (
@@ -96,6 +102,7 @@ function AssistantDialog({ onClose }: { onClose: () => void }) {
             <div className="xs dim">Kept for the owner’s review; nothing in your game changes.{m.sources.length ? ` Sources: ${m.sources.join('; ')}.` : ''}</div>
           </div>
         ))}
+        {proposals.length > 1 && <div className="row gap-2" style={{ alignItems: 'center' }}><button type="button" className="btn btn-sm" disabled={!proposals.every((p) => p.ok)} onClick={takeAll}>Do All In Order</button><span className="xs dim">Each is checked after the ones above it; all are done, or none.</span></div>}
         {proposals.map((p, i) => (
           <div key={`${p.kind}-${i}`} className="card card-tight col gap-1">
             <div className="strong small">{ASSISTANT_COMMANDS[p.kind]?.does ?? p.kind}</div>

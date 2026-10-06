@@ -1,0 +1,83 @@
+{
+  "read": "2026-10-06",
+  "countries": {
+    "ie": {
+      "dishwasher": {
+        "fee": 30,
+        "currency": "EUR",
+        "retailer": "Power City",
+        "url": "https://www.powercity.ie/groups/site/installation",
+        "quote": "Washers, Dishwashers, Dryers, Fridge & Fridge Freezer - €30.00",
+        "includes": "Freestanding appliance only (excluding gas). Driver disconnects the old appliance, connects the new one, and removes the old appliance and packaging for recycling. Any additional parts/works (cabling, fixings) are quoted separately. A separate 'Integrated' rate of €70.00 applies to built-in dishwashers/washers (includes door reversal and drilling if required)."
+      },
+      "washer": {
+        "fee": 30,
+        "currency": "EUR",
+        "retailer": "Power City",
+        "url": "https://www.powercity.ie/groups/site/installation",
+        "quote": "Washers, Dishwashers, Dryers, Fridge & Fridge Freezer - €30.00",
+        "includes": "Freestanding appliance only (excluding gas). Driver disconnects the old appliance, connects the new one, and removes the old appliance and packaging for recycling. Integrated washers are €70.00 (includes door reversal/drilling if required)."
+      },
+      "dryer": {
+        "fee": 30,
+        "currency": "EUR",
+        "retailer": "Power City",
+        "url": "https://www.powercity.ie/groups/site/installation",
+        "quote": "Washers, Dishwashers, Dryers, Fridge & Fridge Freezer - €30.00",
+        "includes": "Freestanding appliance only (excluding gas). Driver disconnects the old appliance, connects the new one, and removes the old appliance and packaging for recycling."
+      }
+    },
+    "ca": {
+      "dishwasher": {
+        "fee": 199.00,
+        "currency": "CAD",
+        "retailer": "Leon's",
+        "url": "https://www.leons.ca/pages/installations",
+        "quote": "Dishwasher with Hose Installation Service - $199.00",
+        "includes": "Installation with supply hose; a separate 'Dishwasher with Hose Delivery, Installation and Haul Away Service' is $299.00 (adds delivery + old-unit haul-away). Best Buy Canada's comparable 'Dishwasher Installation' service (bestbuy.ca, product 13304353) is published at $209.99 and includes shut-off valve, supply line, and minor plumbing/electrical, within 10 feet of the water source."
+      },
+      "washer": {
+        "fee": 139.00,
+        "currency": "CAD",
+        "retailer": "Leon's",
+        "url": "https://www.leons.ca/pages/installations",
+        "quote": "Washer Installation Service - $139.00",
+        "includes": "Basic single-unit washer hook-up (not stacking/pedestal, which are separately priced at $215-$279). Does not include haul-away of the old unit or new electrical/plumbing hookups."
+      },
+      "dryer": {
+        "fee": 139.00,
+        "currency": "CAD",
+        "retailer": "Leon's",
+        "url": "https://www.leons.ca/pages/installations",
+        "quote": "Dryer Installation Service - $139.00",
+        "includes": "Basic single-unit electric dryer hook-up. Gas Dryer Installation Service with New Flexible Hose is a separate line at $224.00. Does not include haul-away of the old unit."
+      },
+      "ac-units": {
+        "fee": 199.99,
+        "currency": "CAD",
+        "retailer": "Best Buy Canada (Geek Squad)",
+        "url": "https://www.bestbuy.ca/en-ca/product/geek-squad-air-conditioner-installation-service-misc/10167398",
+        "quote": "Installation of window ACs with less than 12,000BTUs; plus Installation of any and all necessary sealants, brackets, fabrication of additional filler boards, and any other modifications; Thorough testing of AC unit.",
+        "includes": "Window air conditioner under 12,000 BTU, sealants/brackets/filler boards and testing. Price shown on product page as $199.99 CAD. Excludes municipal permits or non-manufacturer-supplied parts."
+      }
+    },
+    "mx": {
+      "dishwasher": {
+        "fee": 999.00,
+        "currency": "MXN",
+        "retailer": "LG México (manufacturer installation service)",
+        "url": "https://www.lg.com/mx/soporte/instalacion-basica/",
+        "quote": "Lavavajillas: $999.00 - Incluye configuración del equipo y explicación de uso",
+        "includes": "Basic installation plus equipment setup and usage explanation, performed by an LG-authorized technician. An additional $4.00 MXN/km round-trip travel fee applies beyond 50 km from the authorized service center."
+      },
+      "washer": {
+        "fee": 399.00,
+        "currency": "MXN",
+        "retailer": "LG México (manufacturer installation service)",
+        "url": "https://www.lg.com/mx/soporte/instalacion-basica/",
+        "quote": "Lavadora: $399.00 - Incluye configuración del equipo y explicación de uso",
+        "includes": "Basic installation plus equipment setup and usage explanation, performed by an LG-authorized technician. An additional $4.00 MXN/km round-trip travel fee applies beyond 50 km from the authorized service center. Note: Whirlpool México separately advertises a bundle promotion ('En la compra de lavadora, secadora, y pedestal, se incluye instalación y conexión de mangueras, luz y secado' - whirlpool.mx/promocion-de-servicios) giving $0 installation, but only when washer+dryer+pedestal are purchased together, not as a standalone washer fee."
+      }
+    }
+  }
+}

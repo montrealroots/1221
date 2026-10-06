@@ -112,6 +112,25 @@ describe('a home’s lights', () => {
     expect(fitRefusal(sim.player, 'nothing')).toBe('You have none of those spare.');
   });
 
+  it('puts the same kind of bulb back where one of it died, as a life of years of restocking leaves every socket (from 2026-10-06)', () => {
+    const sim = life('us-ny-newyork', 'light-same');
+    const lights = lightsOf(sim.player)!;
+    const first = lights.sockets.find((s) => !s.built && !s.lamp)!;
+    const cheapest = bulbCatalog(sim, sim.player).find((r) => r.product.attrs.socket === first.socket && !r.product.attrs.smart && (first.maxWatts === undefined || Number(r.product.attrs.watts) <= first.maxWatts))!;
+    // Every socket of its kind already lit by the cheapest bulb, as decades of the shortcut leave it; then one dies.
+    for (const s of lights.sockets.filter((x) => x.socket === first.socket && !x.built)) Object.assign(s, { bulb: cheapest.product.id, watts: Number(cheapest.product.attrs.watts) });
+    first.hours = first.life - 0.001;
+    sim.universe.now = at(2026, 12, 15, 'us-ny-newyork');
+    lightingDay(sim, sim.player);
+    expect(first.watts).toBeUndefined();
+    expect(first.bulb).toBe(cheapest.product.id);
+    // Until 2026-10-06 this threw 'No socket here takes it.' and failed the whole New Day.
+    expect(replaceBulbs(sim, sim.player)).toBe(1);
+    expect(first.watts).toBe(Number(cheapest.product.attrs.watts));
+    // A socket lit by the same kind still isn't refitted with it.
+    expect(fitRefusal(sim.player, cheapest.product.id)).toBe('No socket here takes it.');
+  });
+
   it('sells bulbs and lamps where they live, and a lamp brings its sockets, taking nothing over its watts', () => {
     const sim = life('us-ny-newyork', 'light-lamp');
     expect(BULBS.length).toBeGreaterThan(0);

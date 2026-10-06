@@ -21,7 +21,10 @@
  * home; playing at home needs one.
  *
  * Unwinding at home can be any of it: live TV, a service you pay for, or a
- * game. It does what unwinding does, no more. Until 2026-10-03 nothing
+ * game. From 2026-10-06 it needs a screen: live TV a TV, which a let or a
+ * home owned before 2026-09-29 is taken to come with (`bareHome`), and a
+ * service a TV, a computer, a tablet or a phone. Until then a bare house
+ * with nothing in it showed live TV. It does what unwinding does, no more. Until 2026-10-03 nothing
  * was watched; now a program is, episode by episode (`systems/programmes.ts`).
  */
 
@@ -36,6 +39,9 @@ import { CONSOLES, GAME_SERVICES, SERVICES, TV_LICENSES, type Console } from '..
 import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { addItem, homeKeyOf, itemsOf } from './items';
+import { bareHome, owns } from './furniture';
+import { computerForGames } from './computers';
+import { phonesOf } from './phones';
 
 export const SUBSCRIPTION_MONTH_KIND = 'home.subscription_month';
 const YEAR_MS = 365 * MS_DAY;
@@ -112,6 +118,10 @@ export function playable(person: Person): boolean {
 export function watchRefusal(sim: Simulation, person: Person, how: string): string | undefined {
   const m = marketOf(person);
   if (how === 'games') return consolesOwned(person).length === 0 ? 'You have no console.' : playable(person) ? undefined : 'It needs a game of its own to play, or its maker’s subscription.';
+  // A screen to watch on: a TV for live TV; for a service, a TV, a computer, a tablet or a phone.
+  const tv = !bareHome(person) || owns(person, 'tv');
+  if (how === 'live' && !tv) return 'There’s no TV here to watch it on.';
+  if (how !== 'live' && !tv && !computerForGames(person) && phonesOf(person).length === 0) return 'There’s nothing here to watch it on: a TV, a computer, a tablet or a phone.';
   // Ireland's license is for the TV set itself; Britain's for live TV and iPlayer.
   if ((how === 'live' && m === 'uk') || (m === 'ie' && how !== 'games')) return licensed(person, sim.now) ? undefined : `You need a TV license for that${m === 'ie' ? ': any TV at home needs one in Ireland' : ''}.`;
   if (how === 'live') return undefined;

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-374 commands; 368 named by a test, 6 not.
+375 commands; 369 named by a test, 6 not.
 
 ## aircraft
 
@@ -207,7 +207,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `computer.buy` | `src/engine/systems/computers.ts` | `HomesWorkspace.tsx` | `computers.test.ts` | Rent And A Roof |
+| `computer.buy` | `src/engine/systems/computers.ts` | `HomesWorkspace.tsx` | `computers.test.ts` `owned-past-listing.test.ts` | Rent And A Roof |
 
 ## dating
 
@@ -342,7 +342,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `telecom.test.ts` | Rent And A Roof |
 | `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `livelihood.test.ts` | Rent And A Roof |
+| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `assistant.test.ts` `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `livelihood.test.ts` | Rent And A Roof |
 | `home.move_by` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `motorhomes.test.ts` | Rent And A Roof |
 | `home.move_in` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` | Rent And A Roof |
 | `home.offer` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `homes.test.ts` | Rent And A Roof |
@@ -377,6 +377,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `hygiene.groom` | `src/engine/systems/life.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `hygiene.test.ts` `trips.test.ts` | Rent And A Roof |
 | `hygiene.makeup_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `makeup.test.ts` | Rent And A Roof |
 | `hygiene.shave_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `shaving.test.ts` | Rent And A Roof |
+| `hygiene.shower_minutes` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `shower-length.test.ts` | Rent And A Roof |
 | `hygiene.style_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `makeup.test.ts` | Rent And A Roof |
 | `hygiene.use_first` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `usefirst.test.ts` | Rent And A Roof |
 
@@ -414,7 +415,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `kitchen.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `kitchen.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
@@ -596,7 +597,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tv.buy` | `src/engine/systems/televisions.ts` | `HomesWorkspace.tsx` | `televisions.test.ts` | Rent And A Roof |
+| `tv.buy` | `src/engine/systems/televisions.ts` | `HomesWorkspace.tsx` | `owned-past-listing.test.ts` `televisions.test.ts` | Rent And A Roof |
 | `tv.watch` | `src/engine/systems/programmes.ts` | `BelongingsWorkspace.tsx` | `partway.test.ts` `programmes.test.ts` `televisions.test.ts` | Rent And A Roof |
 
 ## valuables
@@ -612,8 +613,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `vehicle.audio` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `car-audio-catalog.test.ts` `caraudio-parts.test.ts` | A Car Of Your Own |
-| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `car-audio-catalog.test.ts` `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `carmarket.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tire-catalog.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.audio` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` | A Car Of Your Own |
+| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `carmarket.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `landlease.test.ts` `leasing.test.ts` `modelyears.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tire-catalog.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
 | `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
@@ -627,7 +628,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `vehicle.redeem` | `src/engine/systems/repossession.ts` | `VehiclesWorkspace.tsx` | `repossession.test.ts` | A Car Of Your Own |
 | `vehicle.refuel` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `journeys.test.ts` | A Car Of Your Own |
 | `vehicle.repair` | `src/engine/systems/repairs.ts` | `VehiclesWorkspace.tsx` | `repairs.test.ts` `roadside.test.ts` `standin.test.ts` | A Car Of Your Own |
-| `vehicle.replace_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `tire-catalog.test.ts` `tirewear.test.ts` | A Car Of Your Own |
+| `vehicle.replace_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `tire-catalog.test.ts` `tirewear.test.ts` | A Car Of Your Own |
 | `vehicle.roof_box` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
 | `vehicle.roof_box_fit` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
 | `vehicle.roof_rack` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |

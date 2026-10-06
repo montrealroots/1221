@@ -14,7 +14,7 @@ import type { PayWith } from '@/engine/systems/household';
 import { livingIn } from '@/engine/systems/homes';
 import { atHome } from '@/engine/systems/dwelling';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, useCatalogView, useCompare } from '@/ui/components/Catalog';
+import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -296,7 +296,7 @@ function Recipes() {
         <table>
           <thead><tr><th scope="col">Recipe</th><th scope="col" className="num">Serves</th><th scope="col" className="num">Minutes</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
-            {rows.slice(0, 12).map(({ r, n, no }) => (
+            {rows.map(({ r, n, no }) => (
               <tr key={r.id}>
                 <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}{no && /short of/.test(no) ? (() => { const need = shortfall(sim, person, r.id, n); if (!need || need.unbuyable.length || need.buys.length === 0) return need?.unbuyable.length ? <div className="xs dim">{`No store here sells ${need.unbuyable.join(', ')}.`}</div> : null; const cost = need.buys.reduce((a, b) => a + b.cost, 0); return <div><button type="button" className="btn btn-sm btn-ghost" disabled={!shopFor.open} title={shopFor.reason} onClick={() => { if (run('food.buy_short', { recipeId: r.id, servings: n }).ok) toast('Bought what was short; it can be cooked now.', 'positive'); }}>{`Buy What’s Short, ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}`}</button></div>; })() : null}</td>
                 <td className="num mono">
@@ -326,7 +326,10 @@ function KitchenAppliances() {
   const cur = saveCurrency(sim.universe);
   const entries = useWorld((s) => gearOffers(s, s.player).map((g) => ({ id: g.id!, label: g.name, value: g, basis: 'Tax In', price: g.cost, priceKind: 'advertised' as const, facets: { gear: GEAR_LABEL[g.gear], brand: g.brand ?? g.name.split(' ')[0]!, retailer: g.retailer } })));
   const [view, setView] = useCatalogView('kitchen-gear');
-  const shown = arrange(entries, view).slice(0, 12);
+  // A page at a time, the rest a click away (from 2026-10-06; until then the first 12 and no more).
+  const [count, more] = usePaged('kitchen-gear', 12);
+  const arranged = arrange(entries, view);
+  const shown = arranged.slice(0, count);
   return (
     <div className="col gap-2" style={{ marginBottom: '0.75rem' }}>
       <div className="strong small">Kitchen Appliances</div>
@@ -350,6 +353,7 @@ function KitchenAppliances() {
           </tbody>
         </table>
       </div>
+      <ShowMore shown={shown.length} total={arranged.length} onMore={more} />
     </div>
   );
 }

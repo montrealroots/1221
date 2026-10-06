@@ -610,12 +610,20 @@ function Bathroom() {
   const [way, setWay] = useState<PayWith>('debit');
   const useFirst = useFeature('hygiene.use_first');
   const shaveEvery = useFeature('hygiene.shave_every');
+  const showerLength = useFeature('hygiene.shower_minutes');
   const makeupEvery = useFeature('hygiene.makeup_every');
   const styleEvery = useFeature('hygiene.style_every');
   const [kinds, setKinds] = useState<string[]>(person.makeup?.kinds ?? ['mascara', 'lipstick']);
   return (
     <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
       <LookRegion className="col gap-3">
+        <div className="field" style={{ maxWidth: '18rem' }}>
+          <label htmlFor="shower-minutes">Shower Length</label>
+          <select id="shower-minutes" disabled={!showerLength.open} title={showerLength.reason} value={person.showerMinutes ?? ''} onChange={(e) => { if (run('hygiene.shower_minutes', { minutes: e.target.value ? Number(e.target.value) : null }).ok) toast(e.target.value ? `${e.target.value} minutes under the water: the water bill, and the heating of it, by the minute.` : 'An average shower.', 'positive'); }}>
+            <option value="">An Average Shower</option>
+            {[3, 5, 8, 10, 15, 20, 30].map((n) => <option key={n} value={n}>{`${n} Minutes`}</option>)}
+          </select>
+        </div>
         <div className="field" style={{ maxWidth: '18rem' }}>
           <label htmlFor="shave-every">Shave At Home</label>
           <select id="shave-every" disabled={!shaveEvery.open} title={shaveEvery.reason} value={person.shaves ?? ''} onChange={(e) => { if (run('hygiene.shave_every', { every: e.target.value || null }).ok) toast(e.target.value ? 'With the shower on its days: a razor’s share and 2 g of cream, five more minutes.' : 'No shaving at home.', 'positive'); }}>

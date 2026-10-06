@@ -1,0 +1,598 @@
+{
+  "read": "2026-10-05",
+  "vehicles": {
+    "us-ford-f-series": {
+      "modelYear": 2026,
+      "trim": "XL Regular Cab 4x2",
+      "tires": { "front": "245/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x135",
+      "centerBoreMm": 87.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/ford/f-150/2026/xl-4x2/",
+        "https://www.wheel-size.com/size/ford/f-150/2026/",
+        "https://www.sdwheel.com/blogs/1347/2021-2022-ford-f-150-fitment-guide",
+        "https://www.davearbogast.com/ford-f-150-technology/"
+      ],
+      "confirmed": true
+    },
+    "us-chevrolet-silverado": {
+      "modelYear": 2026,
+      "trim": "Silverado 1500 Work Truck",
+      "tires": { "front": "255/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x139.7",
+      "centerBoreMm": 78.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/chevrolet/silverado-1500/2026/wt/",
+        "https://www.chevroletwallawalla.com/2026-chevy-silverado-1500-specs/",
+        "https://www.terachevygmc.com/inside-the-2026-silverado-1500-infotainment-safety-tech-and-modern-conveniences/"
+      ],
+      "confirmed": true,
+      "notes": "cab/drive not stated in ranked-models.txt; WT is steel-wheel base trim, 255/70R17 standard, 265/70R17 and 275/65R18 optional."
+    },
+    "us-toyota-rav4": {
+      "modelYear": 2026,
+      "trim": "LE Hybrid FWD",
+      "tires": { "front": "225/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/toyota/rav4/2026/hybrid-le/",
+        "https://tiresize411.com/toyota/rav4/2026/",
+        "https://rav4life.com/2026-toyota-rav4-wheel-size-guide-every-trim-tire-size-bolt-pattern-and-best-upgrade-options/",
+        "https://www.hotcars.com/2026-rav4-toyota-newest-best-infotainment-system/"
+      ],
+      "confirmed": true,
+      "notes": "LE trim gets 10.5-in touchscreen standard per search synthesis of Toyota press material; not independently fetched from toyota.com."
+    },
+    "us-honda-cr-v": {
+      "modelYear": 2026,
+      "trim": "LX 2WD 1.5T CVT",
+      "tires": { "front": "235/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 64.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/honda/cr-v/2026/",
+        "https://crvguide.com/honda-cr-v-bolt-pattern/",
+        "https://www.hondainfocenter.com/2026/CR-V/Feature-Guide/Interior-Features/9-Inch-CTS-with-HondaLink-plus-Wireless-Apple-CP-and-AA-Comp-LX-EX-SportH-EX-L-TrailSportH-Sport-LH/"
+      ],
+      "confirmed": true,
+      "notes": "LX gets 9-in color touchscreen (Honda dropped the old 7-in unit for MY2026, per hondainfocenter.com feature page)."
+    },
+    "us-ram-pickup-1500-heavy-duty": {
+      "modelYear": 2026,
+      "trim": "1500 Tradesman",
+      "tires": { "front": "P265/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x139.7",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://truckguider.com/ram-1500-tire-size-chart-by-year/",
+        "https://www.wheel-size.com/size/ram/1500/2026/",
+        "https://www.sdwheel.com/blogs/1328/4th-gen-ram-fitment-guide",
+        "https://www.go-parts.com/garage/stereo-receiver-ram-1500-2025-2026"
+      ],
+      "confirmed": true,
+      "notes": "Tradesman standard screen is the 8.4-in Uconnect 5 touchscreen (12-in/14.5-in are upgrades on higher trims)."
+    },
+    "us-gmc-sierra": {
+      "modelYear": 2026,
+      "trim": "Sierra 1500 Pro 4WD Crew Cab",
+      "tires": { "front": "255/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x139.7",
+      "centerBoreMm": 78.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.iseecars.com/car/gmc-sierra-1500-wheel-rim-size",
+        "https://www.wheel-size.com/size/gmc/sierra-1500/2026/",
+        "https://www.weldcountygarage.com/2026-gmc-sierra-1500-technology-features-guide/"
+      ],
+      "confirmed": false,
+      "notes": "Pro-trim screen size conflicted between sources (7-in vs 8-in); recorded as not confirmed rather than guessed."
+    },
+    "us-chevrolet-equinox": {
+      "modelYear": 2026,
+      "trim": "LT FWD 1.5L turbo",
+      "tires": { "front": "235/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x115",
+      "centerBoreMm": 70.3,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/chevrolet/equinox/2026/",
+        "https://opplehouse.com/chevrolet-equinox-bolt-pattern-explained/",
+        "https://www.ttownchevy.com/research-2026-chevrolet-equinox-faq"
+      ],
+      "confirmed": true,
+      "notes": "11.3-in Google Built-In touchscreen standard across all 2026 Equinox trims including LT."
+    },
+    "us-toyota-camry": {
+      "modelYear": 2026,
+      "trim": "LE FWD Hybrid",
+      "tires": { "front": "205/65R16", "rear": null, "wheelIn": 16 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/toyota/camry/2026/hybrid-le-fwd/",
+        "https://limitlesstire.com/vehicles/toyota/camry/2026/",
+        "https://www.glentoyota.com/blog/2026/july/16/how-the-2026-toyota-camrys-available-12-3-in-touchscreen-helps-paramus-nj-drivers-stay-organized.htm"
+      ],
+      "confirmed": true,
+      "notes": "LE standard screen is 8-in Toyota Audio Multimedia; 12.3-in is an XLE/XSE upgrade."
+    },
+    "ca-ford-f-series": {
+      "modelYear": 2026,
+      "trim": "F-150 XL 2WD Regular Cab 8 ft box",
+      "tires": { "front": "245/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x135",
+      "centerBoreMm": 87.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://tiresize.com/tires/Ford/F150/2026/",
+        "https://www.sdwheel.com/blogs/1347/2021-2022-ford-f-150-fitment-guide"
+      ],
+      "confirmed": true,
+      "notes": "Same North American spec as us-ford-f-series; Canadian-market fitment is unified with US."
+    },
+    "ca-toyota-rav4": {
+      "modelYear": 2026,
+      "trim": "LE AWD Hybrid",
+      "tires": { "front": "235/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/toyota/rav4/2026/hybrid-le/",
+        "https://www.wheel-size.com/size/toyota/rav4/2026/",
+        "https://taylortire.ca/tires/vehicle/toyota/rav4/2026"
+      ],
+      "confirmed": true,
+      "notes": "AWD Hybrid LE trim size differs from FWD Hybrid LE (235/65R17 vs 225/65R17 found for US FWD trim)."
+    },
+    "ca-gmc-sierra": {
+      "modelYear": 2026,
+      "trim": "Sierra 1500 Pro",
+      "tires": { "front": "255/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x139.7",
+      "centerBoreMm": 78.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/gmc/sierra-1500/2026/",
+        "https://www.discounttire.com/vehicle-wheels/gmc/sierra-1500/2026"
+      ],
+      "confirmed": false,
+      "notes": "Screen size for Pro trim not independently confirmed (see us-gmc-sierra note)."
+    },
+    "ca-honda-cr-v": {
+      "modelYear": 2026,
+      "trim": "LX 2WD",
+      "tires": { "front": "235/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 64.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/honda/cr-v/2026/",
+        "https://www.hondainfocenter.com/2026/CR-V/Feature-Guide/Interior-Features/9-Inch-CTS-with-HondaLink-plus-Wireless-Apple-CP-and-AA-Comp-LX-EX-SportH-EX-L-TrailSportH-Sport-LH/"
+      ],
+      "confirmed": true,
+      "notes": "Same spec as us-honda-cr-v; North American CR-V fitment is unified."
+    },
+    "ca-chevrolet-silverado": {
+      "modelYear": 2026,
+      "trim": "Silverado 1500 WT",
+      "tires": { "front": "255/70R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "6x139.7",
+      "centerBoreMm": 78.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mavis.com/vehicle/chevrolet/silverado-1500/2026/wt/",
+        "https://www.bigotires.com/tires/by-vehicle/2026/chevrolet/silverado-1500/wt/2657017",
+        "https://www.monumentchevrolet.com/blog/what-size-tires-are-on-a-2026-chevy-silverado-1500"
+      ],
+      "confirmed": true
+    },
+    "ca-ram-pickup-1500-heavy-duty": {
+      "modelYear": null,
+      "trim": "Preferred AWD 2.5L",
+      "tires": { "front": null, "rear": null, "wheelIn": null },
+      "boltPattern": null,
+      "centerBoreMm": null,
+      "headUnit": { "opening": null, "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://www.ramtruck.ca/en/1500/models",
+        "https://journeychryslerdodgejeepram.com/the-2026-ram-1500-trim-lineup-canada-cant-stop-talking-about"
+      ],
+      "confirmed": false
+    },
+    "ca-nissan-rogue": {
+      "modelYear": 2026,
+      "trim": "S AWD",
+      "tires": { "front": "225/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": null,
+      "headUnit": { "opening": null, "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://www.mossynissanoceanside.com/2026/04/03/nissan-rogue-tire-wheel-options/",
+        "https://opplehouse.com/nissan-rogue-bolt-patterns-a-comprehensive-overview/"
+      ],
+      "confirmed": true
+    },
+    "mx-nissan-versa": {
+      "modelYear": 2026,
+      "trim": "Sense TM",
+      "tires": { "front": "185/65R15", "rear": null, "wheelIn": 15 },
+      "boltPattern": null,
+      "centerBoreMm": null,
+      "headUnit": { "opening": null, "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://tullanta.com.mx/llantas/vehiculo/nissan/versa-sense-auto/2023",
+        "https://www.opinautos.com/mx/nissan/versa/temas/2b28b61f28/medidas-de-llantas",
+        "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/aftersales/llantas/nissan-2026-llantas-catalogo_d.pdf"
+      ],
+      "confirmed": true,
+      "notes": "Official Nissan MX 2026 tire catalog PDF exists (cited) but could not be parsed as text; figure taken from retailer fitment page instead."
+    },
+    "mx-chevrolet-aveo": {
+      "modelYear": 2026,
+      "trim": "Aveo Sedán LS TM",
+      "tires": { "front": "175/65R14", "rear": null, "wheelIn": 14 },
+      "boltPattern": "4x100",
+      "centerBoreMm": 56.6,
+      "headUnit": { "opening": "single-din", "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://www.keysanmx.com/blog/llantas-chevrolet-aveo",
+        "https://wheel-sizes.com/bolt-pattern/chevrolet/aveo/",
+        "https://my-car.mx/auto/chevrolet-aveo"
+      ],
+      "confirmed": false,
+      "notes": "LS manual trim has a 4-speaker audio system with no touchscreen (touchscreen starts at LT); treated as single-DIN by inference, not an observed dash-opening spec, so marked unconfirmed. Bolt pattern/center bore sourced from older-generation Aveo pages, not the current T300 Aveo sold in Mexico; may not apply."
+    },
+    "mx-nissan-np300": {
+      "modelYear": 2026,
+      "trim": "Chasis TM AC VDC 2.5L gasolina",
+      "tires": { "front": "205R16C", "rear": null, "wheelIn": 16 },
+      "boltPattern": "6x114.3",
+      "centerBoreMm": 66.0,
+      "headUnit": { "opening": null, "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://www.xataka.com.mx/automovil/nissan-np300-2026-llega-a-mexico-166-hp-capacidad-carga-1-4-toneladas-3-anos-garantia-precio-lanzamiento",
+        "https://www.wheel-size.com/pcd/6x114.3/nissan/np300/2020-2024/",
+        "https://tirewheelguide.com/sizes/nissan/np300/2022/"
+      ],
+      "confirmed": true,
+      "notes": "Chasis trim has a 7-inch display per autocosmos pricing search but exact DIN opening not found."
+    },
+    "mx-kia-k3-sedan": {
+      "modelYear": 2026,
+      "trim": "L TM",
+      "tires": { "front": "185/65R15", "rear": null, "wheelIn": 15 },
+      "boltPattern": "4x100",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.michelin.com.mx/auto/browse-tyres/by-vehicle/kia/k3/2026/185---65R15-H",
+        "https://www.wheel-size.com/pcd/5x4.5/kia/k3/2012-2022/",
+        "https://www.mercadolibre.com.mx/blog/mo-kia-k3-sedan-2026"
+      ],
+      "confirmed": true,
+      "notes": "Current BL7-generation K3 (2023-2026) uses 4x100; older K3 generations used 5x114.3. L trim has an 8-in touchscreen standard."
+    },
+    "mx-nissan-march": {
+      "modelYear": 2026,
+      "trim": "Sense TM",
+      "tires": { "front": "165/70R14", "rear": null, "wheelIn": 14 },
+      "boltPattern": "4x100",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "single-din", "kit": null, "kitAllowsDoubleDin": null },
+      "sources": [
+        "https://www.opinautos.com/mx/nissan/march/defectos/203728/medidas-de-llantas",
+        "https://sizemywheels.com/pcd/nissan/march/16i-iv-k13-restyling",
+        "https://www.informador.mx/mexico/nissan-march-2026-versiones-y-precios-del-auto-en-mexico-20260427-0164.html"
+      ],
+      "confirmed": false,
+      "notes": "Sense TM has basic AM/FM/MP3/AUX audio with no touchscreen (touchscreen is Advance-trim only); inferred single-DIN opening, not directly observed, so unconfirmed."
+    },
+    "mx-mazda-cx-30": {
+      "modelYear": 2026,
+      "trim": "i (automatic)",
+      "tires": { "front": "215/55R18", "rear": null, "wheelIn": 18 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 67.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.mazda.mx/siteassets/descargables-2026/mazda-cx-30/ficha-tecnica/ficha-tecnica-mazda-cx-30-2026-v01.pdf?vehicleCode=MAZDA+CX-30+2026&trimCode=i",
+        "https://www.wheel-size.com/pcd/5x114.3/mazda/cx-30/2019-2024/"
+      ],
+      "confirmed": true,
+      "notes": "10-in touchscreen, integrated, standard on the i trim."
+    },
+    "mx-nissan-kicks": {
+      "modelYear": 2026,
+      "trim": "Advance CVT",
+      "tires": { "front": "215/60R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 66.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://tullanta.com.mx/llantas/vehiculo/nissan/kicks-advance/2024",
+        "https://llantasneumaticos.com/size/nissan/kicks/2026/",
+        "https://www.go-parts.com/garage/wheel-nissan-kicks-2021-2026",
+        "https://www.nissancentral.com.mx/nuevo-Cuidad+de+M%C3%A9xico-2026-Nissan-Kicks-Advance+CVT-24197NSSN0100010281"
+      ],
+      "confirmed": true,
+      "notes": "Advance trim has the 'Monolith Display': 12.3-in infotainment + 7-in TFT cluster, fully integrated."
+    },
+    "mx-volkswagen-virtus": {
+      "modelYear": 2026,
+      "trim": "Trendline Manual 5",
+      "tires": { "front": "195/65R15", "rear": null, "wheelIn": 15 },
+      "boltPattern": "5x100",
+      "centerBoreMm": 57.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.vw.com.mx/idhub/content/dam/onehub_pkw/importers/mx/fichas-tecnicas/producto/2026/vw-ficha-tecnica-virtus-2026.pdf",
+        "https://www.wheel-size.com/pcd/5x100/volkswagen/virtus/2017-2026/",
+        "https://www.tuvolkswagen.com.mx/product/22142287/virtus-trendline-2026"
+      ],
+      "confirmed": true,
+      "notes": "Trendline comes with a 7-in integrated touchscreen (App-Connect)."
+    },
+    "gb-ford-puma": {
+      "modelYear": 2026,
+      "trim": "Titanium 1.0 EcoBoost Hybrid (mHEV) 125PS 6-speed manual",
+      "tires": { "front": "215/55R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x108",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/ford/puma/2026/",
+        "https://www.wheel-size.com/size/ford/puma/j2k-2024-now/",
+        "https://www.autoexpress.co.uk/ford/puma/362219/new-facelifted-ford-puma-gets-big-screens-small-price-increase"
+      ],
+      "confirmed": true,
+      "notes": "Facelifted Puma has 12.0-in SYNC 4 touchscreen standard, fully integrated."
+    },
+    "gb-kia-sportage": {
+      "modelYear": 2026,
+      "trim": "Pure 1.6 T-GDi 150PS 6-speed manual 2WD",
+      "tires": { "front": "225/60R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 67.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://tdxltd.co.uk/blogs/blogs/kia-sportage-tyre-size-guide",
+        "https://www.wheel-size.com/size/kia/sportage/2026/",
+        "https://www.mattblattkiatr.com/blog/the-24-inch-dual-panoramic-display-in-the-2026-kia-sportage-a-smarter-drive-for-howell-nj"
+      ],
+      "confirmed": true,
+      "notes": "Pure trim has 12.3-in touchscreen standard, integrated."
+    },
+    "gb-nissan-qashqai": {
+      "modelYear": 2026,
+      "trim": "Acenta Premium Mild Hybrid 1.3 DIG-T 158PS 6-speed manual 2WD",
+      "tires": { "front": "215/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 66.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://tdxltd.co.uk/blogs/blogs/nissan-qashqai-tyre-size-guide",
+        "https://www.wheel-size.com/size/nissan/qashqai/2026/",
+        "https://www.whatcar.com/nissan/qashqai/hatchback/review/n7"
+      ],
+      "confirmed": true,
+      "notes": "All Qashqai trims including Acenta get the 12.3-in touchscreen standard."
+    },
+    "gb-vauxhall-corsa": {
+      "modelYear": 2026,
+      "trim": "Yes 1.2 Turbo 100PS 6-speed manual, 5-door",
+      "tires": { "front": "195/55R16", "rear": null, "wheelIn": 16 },
+      "boltPattern": "4x108",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/vauxhall/corsa/2026/",
+        "https://www.parkers.co.uk/vauxhall/corsa/review/interior/"
+      ],
+      "confirmed": false,
+      "notes": "10-in display is standard on most trims, but one source says the base Design trim drops to a 7-in screen; 'Yes' trim's exact screen size not independently confirmed."
+    },
+    "gb-nissan-juke": {
+      "modelYear": 2026,
+      "trim": "Acenta Premium 1.0 DIG-T 114PS 6-speed manual 2WD",
+      "tires": { "front": "215/60R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.jukeownersclub.co.uk/threads/what-tyre-size-is-on-the-juke.279/",
+        "https://autofiles.com/wheels/nissan/juke/",
+        "https://www.whatcar.com/nissan/juke/hatchback/review/n45"
+      ],
+      "confirmed": true,
+      "notes": "12.3-in TFT touchscreen standard across trims including Acenta."
+    },
+    "gb-volkswagen-golf": {
+      "modelYear": 2026,
+      "trim": "Life 1.5 TSI 115PS 6-speed manual, 5-door",
+      "tires": { "front": "205/55R16", "rear": null, "wheelIn": 16 },
+      "boltPattern": "5x112",
+      "centerBoreMm": 57.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.buycarparts.co.uk/tyres/205-55-r16/vw-golf",
+        "https://www.kipardoracing.com/vw-bolt-pattern-guide-2026-chart-pcd-fitment-strategy-for-wheel-businesses/",
+        "https://www.carexpert.co.nz/volkswagen/golf/2026/life/features-and-specs"
+      ],
+      "confirmed": true,
+      "notes": "Golf Life standard screen is 8.0-in central touchscreen per carexpert spec page."
+    },
+    "gb-volvo-xc40": {
+      "modelYear": 2026,
+      "trim": "Core B3 2.0 petrol mild hybrid 163hp auto",
+      "tires": { "front": "235/60R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x108",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.volvocars.com/uk/support/car/xc40/article/0656ff943696e333c0a801513df594a3/",
+        "https://www.wheel-size.com/pcd/5x108/volvo/xc40/2017-2024/",
+        "https://www.jdpower.com/cars/expert-reviews/2026-volvo-xc40-review"
+      ],
+      "confirmed": true,
+      "notes": "9-in touchscreen standard on all MY26 XC40 trims including Core."
+    },
+    "gb-mg-hs": {
+      "modelYear": 2026,
+      "trim": "SE 1.5T GS6 169PS 6-speed manual",
+      "tires": { "front": "225/55R19", "rear": null, "wheelIn": 19 },
+      "boltPattern": "5x112",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/mg/hs/2026/",
+        "https://www.wheel-size.com/pcd/5x112/mg/hs/2018-2025/",
+        "https://heycar.com/uk/reviews/mg_motor_uk/hs"
+      ],
+      "confirmed": true,
+      "notes": "SE entry trim has 12.3-in touchscreen standard, integrated."
+    },
+    "ie-hyundai-tucson": {
+      "modelYear": 2026,
+      "trim": "Comfort Plus Diesel",
+      "tires": { "front": "235/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 67.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://limitlesstire.com/vehicles/hyundai/tucson/2026/",
+        "https://autotk.co.uk/wheels/hyundai/tucson/",
+        "https://www.wolfchasehyundai.com/helpful-resources/2026-tucson-specifications/"
+      ],
+      "confirmed": false,
+      "notes": "Tire size taken from US-market SE-equivalent trim; Irish-market Comfort Plus-specific tyre size not independently found, so marked unconfirmed."
+    },
+    "ie-skoda-octavia": {
+      "modelYear": 2026,
+      "trim": "Selection 1.5 TSI 115hp 6-speed manual (liftback)",
+      "tires": { "front": "205/55R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x112",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/skoda/octavia/2026/",
+        "https://www.skoda-storyboard.com/en/press-kits/skoda-octavia-press-kit-2/digital-technology-modern-infotainment-and-supreme-connectivity/"
+      ],
+      "confirmed": false,
+      "notes": "Selection-trim-specific wheel size and the facelift's base screen size (10-in vs 13-in) were not resolved to a single confirmed figure for this exact trim."
+    },
+    "ie-toyota-yaris-cross": {
+      "modelYear": 2026,
+      "trim": "Luna Hybrid 115",
+      "tires": { "front": "205/65R16", "rear": null, "wheelIn": 16 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/toyota/yaris-cross/2026/",
+        "https://avtoreference.com/en/auto/toyota/yaris-cross/2025/",
+        "https://carwikihub.com/blogs/2026-toyota-yaris-cross-facelift-bigger-screen/"
+      ],
+      "confirmed": true,
+      "notes": "Official Toyota Ireland product-guide PDF was located and fetched but returned as unreadable binary data, not usable text; figures taken from wheel-size.com and carwikihub instead. Luna trim has a 9-in Toyota Touch 3 display, integrated."
+    },
+    "ie-kia-sportage": {
+      "modelYear": 2026,
+      "trim": "1.6 CRDi 136ps diesel mild hybrid 2WD",
+      "tires": { "front": "215/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 67.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.auto-data.net/en/kia-sportage-v-1.6-crdi-136hp-mild-hybrid-dct-45237",
+        "https://www.wheel-size.com/size/kia/sportage/2026/",
+        "https://www.kia.com/content/dam/kwcms/kme/uk/en/assets/vehicles/New%20Sportage/Specification/sportage-specification.pdf"
+      ],
+      "confirmed": true,
+      "notes": "12.3-in touchscreen standard across the Sportage range."
+    },
+    "ie-toyota-rav4": {
+      "modelYear": 2026,
+      "trim": "Sol 2.5 Plug-in Hybrid 2WD (all-new 6th generation)",
+      "tires": { "front": "245/45R20", "rear": null, "wheelIn": 20 },
+      "boltPattern": "5x114.3",
+      "centerBoreMm": 60.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/toyota/rav4/2026/",
+        "https://rav4life.com/2026-toyota-rav4-wheel-size-guide-every-trim-tire-size-bolt-pattern-and-best-upgrade-options/",
+        "https://www.hotcars.com/2026-rav4-toyota-newest-best-infotainment-system/"
+      ],
+      "confirmed": false,
+      "notes": "PHEV-specific/Irish 'Sol' trim tyre size not independently confirmed; figure is for RAV4 Plug-In Hybrid generally. Screen size (10.5-in standard, 12.9-in optional) for 'Sol' trim specifically not confirmed."
+    },
+    "ie-toyota-corolla": {
+      "modelYear": 2026,
+      "trim": "Hatchback Luna 1.8 Hybrid 140hp",
+      "tires": { "front": "205/55R16", "rear": null, "wheelIn": 16 },
+      "boltPattern": "5x100",
+      "centerBoreMm": 54.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/toyota/corolla/2026/",
+        "https://www.kipardoracing.com/toyota-corolla-bolt-pattern-by-year-1966-2026-wheel-size-offset-fitment-guide/"
+      ],
+      "confirmed": false,
+      "notes": "'Luna' trim is Ireland/UK-market naming not found in the US-centric spec sources used; tire/bolt-pattern figures are for Corolla Hybrid generally, not confirmed Luna-specific. Screen size (8-in standard, 10.5-in optional) also not confirmed for Luna specifically."
+    },
+    "ie-skoda-kodiaq": {
+      "modelYear": 2026,
+      "trim": "Selection 1.5 TSI 204hp DSG plug-in hybrid (5 seats)",
+      "tires": { "front": "215/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x112",
+      "centerBoreMm": 57.1,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/skoda/kodiaq/2026/",
+        "https://www.wheel-size.com/pcd/5x112/skoda/kodiaq/2024-2025/",
+        "https://www.whatcar.com/skoda/kodiaq/estate/review/n17362"
+      ],
+      "confirmed": false,
+      "notes": "Selection-specific tyre size not confirmed; 13-in touchscreen is standard range-wide, confirmed for the model generally but not Selection PHEV specifically."
+    },
+    "ie-volkswagen-tiguan": {
+      "modelYear": 2026,
+      "trim": "Life 1.5 eHybrid 204hp DSG (plug-in hybrid)",
+      "tires": { "front": "215/65R17", "rear": null, "wheelIn": 17 },
+      "boltPattern": "5x112",
+      "centerBoreMm": null,
+      "headUnit": { "opening": "integrated", "kit": null, "kitAllowsDoubleDin": false },
+      "sources": [
+        "https://www.wheel-size.com/size/volkswagen/tiguan/2026/",
+        "https://www.wheel-size.com/size/volkswagen/tiguan/2024-now/",
+        "https://www.anciravolkswagen.com/what-infotainment-screen-sizes-and-smartphone-features-come-on-the-2026-volkswagen-tiguan-for-san-antonio-tx-drivers/"
+      ],
+      "confirmed": false,
+      "notes": "Life-trim-specific tyre size and the Irish-market eHybrid screen size not independently confirmed; figures are generic Tiguan III specs from US-centric sources."
+    }
+  },
+  "notFound": [
+    "ca-ram-pickup-1500-heavy-duty: no 'Preferred AWD 2.5L' configuration exists in any 2026 Ram 1500 Canada trim/engine lineup found (engines are 3.6L Pentastar, 3.0L Hurricane x2, 5.7L HEMI; no 2.5L); tires, bolt pattern, center bore and head-unit all unresolved.",
+    "mx-chevrolet-aveo: head-unit dash opening not confirmed from a retailer/maker fitment source; bolt pattern/center bore sourced from an older (2004-2011) Aveo generation, may not match the current T300-based Mexican Aveo.",
+    "mx-nissan-np300: head-unit DIN opening/kit not found.",
+    "mx-nissan-versa: bolt pattern and center bore not found.",
+    "mx-nissan-march: head-unit opening inferred, not directly confirmed; a kit-allows-double-din determination not found.",
+    "ca-nissan-rogue: center bore and head-unit info not found.",
+    "gb-vauxhall-corsa: exact screen size for 'Yes' trim specifically not confirmed (conflicting 7-in/10-in reports); center bore not found.",
+    "gb-ford-puma, gb-nissan-juke, gb-mg-hs, gb-volvo-xc40: center bore not found/stated by sources consulted.",
+    "ie-hyundai-tucson: Comfort Plus (Irish-market trim) tyre size not independently confirmed; US SE-trim figure used as a proxy.",
+    "ie-skoda-octavia: Selection-trim wheel size and current facelift's base screen size not resolved to a single confirmed figure.",
+    "ie-toyota-rav4: 'Sol' trim (Irish-market PHEV trim) tyre size and screen size not independently confirmed; generic RAV4 PHEV figures used as proxy.",
+    "ie-toyota-corolla: 'Luna' trim (Ireland/UK-market naming) not found in sources used; generic Corolla Hybrid figures used as proxy, unconfirmed for Luna specifically.",
+    "ie-skoda-kodiaq: Selection-trim tyre size not confirmed; center bore for UK/Irish-spec PHEV not separately confirmed.",
+    "ie-volkswagen-tiguan: Life-trim tyre size and Irish-market eHybrid screen size not independently confirmed; center bore not found.",
+    "us-gmc-sierra / ca-gmc-sierra: Pro-trim infotainment screen size conflicted between sources (7-in vs 8-in) and was left unconfirmed rather than guessed."
+  ]
+}
