@@ -3,8 +3,10 @@
  * expansion of 2026-10-03, §E3). Departments hold categories; a category is
  * the unit the target applies to, never a department or the whole game.
  *
- * The target for a brand-based category: at least 50 real brands, and up to
- * 100 distinct real products from each where the brand makes that many. A
+ * The target for a brand-based category: at least 50 real brands, each with
+ * at least 100 distinct real products where the brand's range reaches that
+ * many (a floor, not a ceiling: until 2026-10-05 this said "up to 100"), or
+ * its whole researched range where that's smaller. A
  * service category (hotels, restaurants, clubs, clinics, stores) is counted
  * by providers, branches and bookable offerings instead, and a category whose
  * real market is narrow (aircraft, boats, a town's utilities) keeps its real

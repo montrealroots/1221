@@ -22,7 +22,7 @@ import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
 import { GARDEN_PRODUCTS } from '../content/gardencatalog';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
-import { buyDevice, deviceCatalog, deviceRefusal } from './devices';
+import { buyDevice, deviceCatalog, deviceRefusal, ownedProduct } from './devices';
 import { homeKeyOf, itemsOf, type Item } from './items';
 import type { OwnedHome } from './homes';
 
@@ -35,11 +35,15 @@ export const mowerProduct = (id: string | undefined): CatalogProduct | undefined
 export const mowerCatalog = (sim: Simulation, person: Person): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] => deviceCatalog(sim, person, GARDEN_PRODUCTS);
 export const mowerRefusal = (person: Person, offerId: string): string | undefined => deviceRefusal(person, GARDEN_PRODUCTS, offerId, 'A mower');
 
-/** The mowers at a home: each item with its model. */
+/**
+ * The mowers at a home: each item with its model, its listing's or what was kept of it when bought. One bought
+ * before that was kept, whose listing is gone, is taken for a mower pushed by hand drawing nothing, SLATE's reading:
+ * until 2026-10-05 it was dropped, and a mower owned could stop being one.
+ */
 export function mowersAt(person: Person, homeKey: string | undefined): { item: Item; product: CatalogProduct }[] {
   if (!homeKey) return [];
   return itemsOf(person).filter((i) => i.kind === 'furniture:mower' && i.at.kind === 'home' && i.at.home === homeKey)
-    .map((item) => ({ item, product: mowerProduct(item.spec?.product)! })).filter((x) => x.product);
+    .map((item) => ({ item, product: ownedProduct(item, GARDEN_PRODUCTS) ?? { id: item.kind, category: 'mower', brand: '', family: null, model: item.label, attrs: { kind: 'reel' }, variants: [], offers: [], url: null, status: 'secondhand' as const } }));
 }
 
 /** The mower they'd push at the home they're in: the first that isn't a robot. */

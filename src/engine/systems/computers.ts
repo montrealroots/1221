@@ -16,7 +16,7 @@ import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
 import { COMPUTER_PRODUCTS } from '../content/computercatalog';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
-import { buyDevice, deviceCatalog, deviceRefusal } from './devices';
+import { buyDevice, deviceCatalog, deviceRefusal, ownedProduct } from './devices';
 import { homeKeyOf, type Item } from './items';
 
 export { COMPUTER_PRODUCTS };
@@ -27,7 +27,7 @@ export const computerRefusal = (person: Person, offerId: string): string | undef
 /** Whether a home has a computer with a graphics card of its own. */
 export function gamingComputer(person: Partial<Pick<Person, 'items' | 'home'>>): boolean {
   const home = homeKeyOf(person.home);
-  return (person.items ?? []).some((i: Item) => i.kind === 'furniture:computer' && i.at.kind === 'home' && i.at.home === home && computerProduct(i.spec?.product)?.attrs.discrete === true);
+  return (person.items ?? []).some((i: Item) => i.kind === 'furniture:computer' && i.at.kind === 'home' && i.at.home === home && ownedProduct(i, COMPUTER_PRODUCTS)?.attrs.discrete === true);
 }
 
 export function registerComputers(sim: Simulation): void {

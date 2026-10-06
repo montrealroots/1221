@@ -33,7 +33,7 @@ import { CITIES } from '../content/geography';
 import { LIGHTING_NORM, WAKING_HOURS } from '../content/lighting';
 import { LIGHTING_PRODUCTS } from '../content/lightingcatalog';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
-import { buyDevice, deviceCatalog, devicePrice, deviceRefusal, marketWhere, offerIn } from './devices';
+import { buyDevice, deviceCatalog, devicePrice, deviceRefusal, madeOf, marketWhere, offerIn, ownedProduct } from './devices';
 import { addItem, homeKeyOf, itemsOf, type Item } from './items';
 import { payFromBank } from './household';
 import { someoneHome } from './away';
@@ -189,7 +189,7 @@ export const darkSockets = (person: Person): Socket[] => (lightsOf(person)?.sock
 export function spareBulbs(person: Person): { item: Item; product: CatalogProduct }[] {
   const home = homeKeyOf(person.home);
   return itemsOf(person).filter((i) => i.kind.startsWith('bulb:') && i.at.kind === 'home' && i.at.home === home && i.quantity > 0)
-    .map((item) => ({ item, product: BULBS.find((p) => p.id === item.kind.slice(5))! })).filter((x) => x.product);
+    .map((item) => ({ item, product: BULBS.find((p) => p.id === item.kind.slice(5)) ?? ownedProduct(item, BULBS)! })).filter((x) => x.product);
 }
 
 export const bulbCatalog = (sim: Simulation, person: Person): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] => deviceCatalog(sim, person, BULBS);
@@ -204,7 +204,7 @@ export function buyBulbs(sim: Simulation, person: Person, offerId: string): { pa
   const { product, offer } = offerIn(BULBS, offerId)!;
   const paid = devicePrice(sim, person.home!.cityId, offer);
   if (!payFromBank(sim, person, paid, `${offer.seller}: ${product.model}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
-  const item = addItem(sim, person, { kind: `bulb:${product.id}`, label: `${product.brand} ${product.model}`, quantity: Number(product.attrs.pack) || 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'storage' }, acquiredAt: sim.now, paid });
+  const item = addItem(sim, person, { kind: `bulb:${product.id}`, label: `${product.brand} ${product.model}`, quantity: Number(product.attrs.pack) || 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'storage' }, acquiredAt: sim.now, paid, spec: { product: product.id }, made: madeOf(product) });
   return { paid, item };
 }
 

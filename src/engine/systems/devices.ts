@@ -50,6 +50,21 @@ export function deviceRefusal(person: Person, products: readonly CatalogProduct[
   return undefined;
 }
 
+/** What's kept of a product with the thing bought (`Item.made`, from 2026-10-05). */
+export const madeOf = (p: CatalogProduct): NonNullable<Item['made']> => ({ brand: p.brand, model: p.model, category: p.category, attrs: p.attrs });
+
+/**
+ * The product an owned thing is: its catalog entry where it's still listed, else what was kept of it when it
+ * was bought, so a listing taken out never takes the thing's use with it; nothing for a thing bought before
+ * products were kept with it whose listing is gone.
+ */
+export function ownedProduct(item: Item, products: readonly CatalogProduct[]): CatalogProduct | undefined {
+  const listed = products.find((p) => p.id === item.spec?.product);
+  if (listed) return listed;
+  const m = item.made;
+  return m ? { id: item.spec?.product ?? item.kind, category: m.category, brand: m.brand, family: null, model: m.model, attrs: m.attrs, variants: [], offers: [], url: null, status: 'secondhand' } : undefined;
+}
+
 /** The colors a product is offered in. */
 export const colorsOfProduct = (product: CatalogProduct): string[] => product.variants.map((v) => v.attrs.color).filter((c): c is string => Boolean(c));
 
@@ -64,6 +79,6 @@ export function buyDevice(sim: Simulation, person: Person, products: readonly Ca
   const paid = devicePrice(sim, person.home!.cityId, offer);
   const name = `${label(product, offer)}${chosen ? `, ${chosen}` : ''}`;
   if (!payFromBank(sim, person, paid, `${offer.seller}: ${name}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
-  const item = addItem(sim, person, { kind: `furniture:${piece}`, label: name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: sim.now, paid, bulky: true, spec: { product: product.id, offer: offer.id, ...(chosen ? { color: chosen } : {}) } });
+  const item = addItem(sim, person, { kind: `furniture:${piece}`, label: name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: sim.now, paid, bulky: true, spec: { product: product.id, offer: offer.id, ...(chosen ? { color: chosen } : {}) }, made: madeOf(product) });
   return { paid, item };
 }

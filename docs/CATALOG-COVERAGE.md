@@ -2,15 +2,18 @@
 
 Written by `tools/catalog-coverage.mjs` from the catalogs themselves; don't edit by hand. The hierarchy is
 `src/engine/content/catalogtaxonomy.ts`. The target for a brand category is at least
-50 real brands and up to 100 distinct real products from each where the brand makes
-that many (the owner, 2026-10-03). Brands, products, variants and offers are counted
-apart: a product sold by several sellers is one product with several offers. A
-category none of whose catalogs records a brand counts its products as unbranded,
-which never counts toward the target.
+50 real brands, each with at least 100 distinct real products where the brand's range reaches that
+many (the owner, 2026-10-03, corrected 2026-10-05: a hundred is a floor, not a ceiling). A brand whose researched
+real range is smaller meets it with its whole range held (`docs/research/catalog-ranges.json`). Brands, distinct
+products, variants and offers are counted apart: a product sold by several sellers is one product with several
+offers, and its sizes, colors, storage tiers, configurations and pack counts are its variants, never products of
+their own. Owned items are counted in each save, on Belongings. A category none of whose catalogs records a brand
+counts its products as unbranded, which never counts toward the target. Each brand's own count is in
+`docs/CATALOG-DEPTH.md`.
 
 ## Brand categories
 
-| Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands at 100 | Variants | Offers | Unbranded | Markets | Met |
+| Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands Deep Enough | Variants | Offers | Unbranded | Markets | Met |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Apparel | Everyday Clothing | 136 | 100% | 1409 | 1 / 2 / 114 | 1 | 33496 | 1559 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Formalwear | 78 | 100% | 308 | 1 / 2 / 34 | 0 | 5340 | 334 | 0 | CA, GB, IE, MX, US | No |
@@ -27,23 +30,23 @@ which never counts toward the target.
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 55 | 100% | 167 | 1 / 2 / 12 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 50 | 100% | 136 | 1 / 2 / 15 | 0 | 197 | 139 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Luggage | 53 | 100% | 1344 | 1 / 18 / 95 | 0 | 4257 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 127 | 1 / 2 / 18 | 0 | 253 | 414 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 56 | 100% | 173 | 1 / 1 / 15 | 0 | 173 | 174 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Televisions | 51 | 100% | 271 | 1 / 2 / 40 | 0 | 273 | 328 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Televisions | 51 | 100% | 121 | 1 / 2 / 8 | 0 | 121 | 328 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
-| Home | Furniture | 66 | 100% | 268 | 1 / 2 / 90 | 0 | 268 | 341 | 0 | CA, GB, IE, MX, US | No |
+| Home | Furniture | 66 | 100% | 229 | 1 / 2 / 56 | 0 | 229 | 341 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 55 | 100% | 133 | 1 / 1 / 29 | 0 | 133 | 350 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 63 | 100% | 114 | 1 / 2 / 5 | 0 | 146 | 114 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 0 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
-| Home | Lighting | 76 | 100% | 283 | 1 / 3 / 24 | 0 | 340 | 283 | 0 | CA, GB, IE, MX, US | No |
+| Home | Lighting | 76 | 100% | 273 | 1 / 3 / 23 | 0 | 330 | 283 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
-| Personal Care | Toiletries And Grooming | 85 | 100% | 320 | 1 / 2 / 27 | 0 | 320 | 322 | 1 | CA, GB, IE, MX, US | No |
-| Personal Care | Cosmetics And Haircare | 52 | 100% | 132 | 1 / 1 / 15 | 0 | 132 | 134 | 0 | CA, GB, IE, MX, US | No |
-| Household | Cleaning Products And Consumables | 64 | 100% | 263 | 1 / 3 / 15 | 0 | 263 | 268 | 0 | CA, GB, IE, MX, US | No |
-| Food | Groceries | 176 | 100% | 562 | 1 / 1 / 59 | 0 | 562 | 574 | 41 | CA, GB, IE, MX, US | No |
-| Food | Beverages | 74 | 100% | 145 | 1 / 1 / 9 | 0 | 145 | 148 | 1 | CA, GB, IE, MX, US | No |
+| Personal Care | Toiletries And Grooming | 85 | 100% | 315 | 1 / 2 / 26 | 0 | 315 | 322 | 1 | CA, GB, IE, MX, US | No |
+| Personal Care | Cosmetics And Haircare | 52 | 100% | 128 | 1 / 1 / 15 | 0 | 128 | 134 | 0 | CA, GB, IE, MX, US | No |
+| Household | Cleaning Products And Consumables | 64 | 100% | 245 | 1 / 3 / 14 | 0 | 245 | 268 | 0 | CA, GB, IE, MX, US | No |
+| Food | Groceries | 176 | 100% | 556 | 1 / 1 / 58 | 0 | 556 | 574 | 40 | CA, GB, IE, MX, US | No |
+| Food | Beverages | 74 | 100% | 139 | 1 / 1 / 8 | 0 | 139 | 148 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
@@ -53,10 +56,10 @@ which never counts toward the target.
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Tires And Wheels | 52 | 100% | 120 | 1 / 1 / 9 | 0 | 120 | 143 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Car Audio | 55 | 100% | 149 | 1 / 1 / 12 | 0 | 149 | 156 | 0 | CA, GB, IE, MX, US | No |
-| Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 128 | 1 / 1 / 11 | 0 | 128 | 134 | 0 | CA, GB, IE, MX, US | No |
+| Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 187 | 1 / 2 / 27 | 0 | 187 | 187 | 0 | CA, GB, IE, MX, US | No |
-| Pets | Pet Supplies | 61 | 100% | 141 | 1 / 1 / 10 | 0 | 141 | 144 | 11 | CA, GB, IE, MX, US | No |
+| Pets | Pet Supplies | 61 | 100% | 140 | 1 / 1 / 9 | 0 | 140 | 144 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.
 
