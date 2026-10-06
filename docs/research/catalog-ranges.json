@@ -1,4 +1,397 @@
 {
- "note": "A brand's whole real range in a category, where research found it under 100 distinct products: key \"<category id>|<brand>\". Only a brand's own published lineup counts as its range; a failed search does not.",
- "ranges": {}
+ "note": "A brand's whole real range in a category, where research found it under 100 distinct products: key \"<category id>|<brand>\". Only a brand's own published lineup counts as its range; a failed search does not. A range read in one market is held against the products SLATE sells in that market (`tools/catalog-coverage.mjs`, from 2026-10-06). Ranges the review of 2026-10-06 didn't take are under `rejected`, with why.",
+ "ranges": {
+  "phones|Apple": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.apple.com/shop/buy-iphone",
+   "counted": "iPhone 18 Pro, iPhone 18 Pro Max, iPhone Air, iPhone 17, iPhone 17e, iPhone Duo, iPhone 16",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "phones|Motorola": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.motorola.com/us/smartphones",
+   "counted": "Razr Fold, Razr Ultra 2026, Razr+ 2026, Razr 2026, Edge 2026, Edge 2025, Edge 2024, Moto G Stylus 2026, Moto G Power 2026",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "televisions|TCL": {
+   "range": 14,
+   "market": "US",
+   "url": "https://us.tcl.com/",
+   "counted": "QM7L, QM8L, QM6K, X11L, QM9K, QM7K, QM8K, RM9L, X11K, A400U, A300W, Q3K, Q651G, A300L",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "consoles|Microsoft": {
+   "range": 2,
+   "market": "US",
+   "url": "https://www.xbox.com/en-US/consoles",
+   "counted": "Xbox Series X, Xbox Series S (storage tiers are not distinct models)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "consoles|Sony": {
+   "range": 3,
+   "market": "US",
+   "url": "https://direct.playstation.com/en-us/hardware/ps5",
+   "counted": "PlayStation 5 (disc), PlayStation 5 Digital Edition, PlayStation 5 Pro (certified-refurbished listings excluded as not a distinct current model)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "consoles|Nintendo": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.nintendo.com/us/store/hardware",
+   "counted": "Nintendo Switch 2, Nintendo Switch, Nintendo Switch OLED Model, Nintendo Switch Lite",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "mattresses|Casper": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.casper.com/mattresses/",
+   "counted": "The One, Cloud One, Snug (kids), Dream, Snow, Dream Max, Snow Max",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "mattresses|Purple": {
+   "range": 11,
+   "market": "US",
+   "url": "https://purple.com/mattresses",
+   "counted": "Purple Mattress, PurpleFlex, PurplePlus, PurpleRenew, Restore Hybrid, RestorePlus Hybrid, RestorePremier Hybrid, Rejuvenate, RejuvenatePlus, RejuvenatePremier, RejuvenateUltimate",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "mattresses|Nectar": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.nectarsleep.com/mattresses",
+   "counted": "Classic, Premier, Luxe, Ultra, Classic Hybrid, Premier Hybrid, Luxe Hybrid, Ultra Hybrid, Kids",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "mattresses|Saatva": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.saatva.com/mattresses",
+   "counted": "Classic, Rx, Latex Hybrid, HD, Memory Foam Hybrid, Contour5, Zenhaven, Solaire, Youth, Murphy Bed Mattress, Bunk & Trundle Mattress, Crib Mattress (pet bed listing excluded as not a human mattress/bed)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "mattresses|Simba": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://simbasleep.com/collections/mattresses",
+   "counted": "Essential, Hybrid (Original), Pro, Luxe, Ultra, Apex (Natural Hybrid range)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-electronics-beds.json"
+  },
+  "cars|Honda": {
+   "range": 10,
+   "market": "CA",
+   "url": "https://www.honda.ca/vehicles",
+   "counted": "Prologue, Civic, Accord, HR-V, CR-V, Passport, Pilot, Odyssey, Ridgeline, Prelude",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Nissan": {
+   "range": 10,
+   "market": "US",
+   "url": "https://www.nissanusa.com/vehicles/",
+   "counted": "Rogue, Pathfinder, Frontier, Armada, Kicks, Murano, LEAF, Sentra, Altima, Z",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|BMW": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.bmwusa.com/all-bmws.html",
+   "counted": "2/3/4/5/7 Series, X1, X2, X3, X5, X6, X7, XM, Z4, i4, i5, i7, iX, iX3",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Hyundai": {
+   "range": 11,
+   "market": "US",
+   "url": "https://www.hyundaiusa.com/us/en/vehicles",
+   "counted": "Elantra, Sonata, Venue, Kona, Tucson, Santa Fe, Palisade, Santa Cruz, Ioniq 5, Ioniq 6, Ioniq 9",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Mercedes-Benz": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.mbusa.com/en/all-vehicles",
+   "counted": "GLA, GLB, GLC, GLE, GLS, G-Class, Maybach GLS, CLA, EQB, EQE, EQS, Maybach S-Class, C-Class, E-Class, S-Class, AMG GT, CLE, SL",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Volkswagen": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.vw.com/en/models.html",
+   "counted": "Atlas, Atlas Cross Sport, Tiguan, Taos, Golf, Jetta, ID.4, ID.Buzz",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Audi": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.audiusa.com/en/models/",
+   "counted": "A3, A5, A6, A7, A8, Q3, Q5, Q7, Q8, Q4 e-tron, Q6 e-tron, e-tron GT, TT, R8",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Jeep": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.jeep.com/all-vehicles.html",
+   "counted": "Wrangler, Grand Cherokee, Gladiator, Grand Wagoneer, Wagoneer S, Compass, Cherokee, Recon",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Mazda": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.mazdausa.com/vehicles",
+   "counted": "CX-30, CX-50, CX-5, CX-70, CX-90, Mazda3, MX-5 Miata",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Lexus": {
+   "range": 13,
+   "market": "US",
+   "url": "https://www.lexus.com/models",
+   "counted": "ES, IS, LS, LC, RC, LBX, UX, NX, RX, TX, GX, LX, RZ",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Land Rover": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.landroverusa.com/vehicles/index",
+   "counted": "Defender, Discovery Sport, Discovery, Range Rover, Range Rover Sport, Range Rover Velar, Range Rover Evoque",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Subaru": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.subaru.com/vehicles/all-vehicles.html",
+   "counted": "Impreza, Crosstrek, Forester, Outback, Ascent, WRX, BRZ, Solterra",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|GMC": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.gmc.com/help-me-find/vehicle-lineup",
+   "counted": "Terrain, Acadia, Yukon, Sierra, Canyon, Hummer EV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Porsche": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.porsche.com/usa/models/",
+   "counted": "718, 911, Taycan, Macan, Cayenne, Panamera",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Genesis": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.genesis.com/us/en/shopping-tools/compare-vehicles.html",
+   "counted": "G70, G80, G90, GV60, GV70, GV80",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|MINI": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.miniusa.com/model.html",
+   "counted": "Cooper, Convertible, Countryman",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "cars|Tesla": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.tesla.com/",
+   "counted": "Model 3, Model Y, Model S, Model X, Cybertruck",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "motorcycles|Honda": {
+   "range": 46,
+   "market": "US",
+   "url": "https://powersports.honda.com/motorcycle",
+   "counted": "Gold Wing (incl. Tour), NT1100, Fury, Shadow Phantom, Rebel (300/500/1100), CBR1000RR-R Fireblade, CBR1000RR, CBR600RR, CBR650R, CBR500R, CB1000 Hornet, CB1000F, CB750 Hornet, SCL500, CB650R, CB500 Hornet, CB300R, Grom, Dax125, Monkey, Trail125, Navi, Africa Twin, Transalp, NC750X, NX500, XR650L, CRF450RL, CRF300L, XR150L, ADV160, PCX, Ruckus, Metropolitan, CRF450X, CRF450RX, CRF300F, CRF250RX, CRF125F, CRF110F, CRF50F, CRF450R, CRF250R, CRF150R, Montesa Cota 301RR, Montesa Cota 4RT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "motorcycles|Yamaha": {
+   "range": 45,
+   "market": "US",
+   "url": "https://www.yamahamotorsports.com/motorcycles",
+   "counted": "YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3, MT-10, MT-10 SP, MT-09, MT-09 SP, MT-07, MT-03, BOLT R-SPEC, XSR900, XSR700, V STAR 250, FJR1300ES, TENERE 700, TENERE 700 World Raid, Tracer 9, XT250, TW200, WR125R, XMAX, Zuma 125, YZ450F, YZ250F, YZ250, YZ125, YZ85LW, YZ85, YZ65, YZ450FX, YZ250FX, YZ250X, YZ125X, WR450F, WR250F, TT-R230, TT-R125LE, TT-R110E, TT-R50E, PW50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "motorcycles|Suzuki": {
+   "range": 30,
+   "market": "US",
+   "url": "https://suzukicycles.com/motorcycles",
+   "counted": "Hayabusa, GSX-R1000, GSX-R750, GSX-R600, GSX250R, GSX-8R, GSX-8T, GSX-8TT, GSX-8S, GSX-S1000, SV650, DR-Z4S, DR-Z400S, DR650S, DR-Z4SM, DR-Z400SM, Boulevard M109R, Boulevard C50, V-STROM 1050, V-STROM 800, V-Strom 650, GSX-S1000GX, SV-7GX, RM-Z450, RM-Z250, DR-Z125L, DR-Z50, RM85, Burgman 400, GSX-S1000GT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "motorcycles|KTM": {
+   "range": 19,
+   "market": "US",
+   "url": "https://www.ktm.com/en-us/models.html",
+   "counted": "SX-F, SX, SX-E, XCF-W, XC-W, XC-F, XC, FREERIDE E, Enduro R, EXC-F, Super Adventure S/R, Adventure R/X, Rally, Super Duke GT, SMC R, SMR, Duke, Super Duke R, RC/RC R",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "motorcycles|Ducati": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.ducati.com/us/en/bikes",
+   "counted": "DesertX, Diavel, XDiavel, Monster, Streetfighter, Superleggera, Multistrada, Panigale, Hypermotard, Scrambler, Formula 73, Desmo450 MX, Desmo250 MX, Desmo450 SM",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Mercedes-Benz": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://www.mercedes-benz.co.uk/passengercars/models/van/new/v-class.html",
+   "counted": "Marco Polo, Marco Polo Horizon",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Thor": {
+   "range": 38,
+   "market": "US",
+   "url": "https://www.thormotorcoach.com/motorhomes/class-a",
+   "counted": "Class A: Outlaw Class A, Resonate, Riviera, Vegas, Windsport, Indigo, Axis, Luminate, Palazzo, Hurricane, Aria; Class B: Talavera, Palladium, Rize, Sanctuary, Scope, Tellaro, Tranquility, Sequence; Class C: Scope-Plus, Rize-Plus, Magnitude Super C, Omni Super C, Pasadena SV, Four Winds, Inception HD, Chateau Sprinter, Tiburon, Outlaw Class C, Four Winds Sprinter, Compass AWD, Quantum, Gemini AWD, Echelon, Delano, Chateau, Pasadena, Inception",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Winnebago": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.winnebago.com/models/class-a",
+   "counted": "Class A: Adventurer, Vista, Sunstar, Forza; Class C: Elora, Resa, Sunflyer, Suncruiser, View, Navion, EKKO, EKKO Sprinter, Minnie Winnie; Camper van: Solis, Solis Pocket, Revel, Revel Sport, Travato",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Elddis": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://elddis.co.uk/motorhomes",
+   "counted": "Whirlwind GT, Whirlwind GTS, Autoquest GT, Autoquest GTS",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Airstream": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.airstream.com/touring-coaches",
+   "counted": "Atlas, Interstate, Rangeline",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Jayco": {
+   "range": 13,
+   "market": "US",
+   "url": "https://www.jayco.com/rvs/",
+   "counted": "Alante, Precept, Comet, Swift, Solstice, Terrain, Redhawk, Greyhawk, Greyhawk XL, Melbourne, Granite Ridge, Seneca, Seneca XT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Newmar": {
+   "range": 16,
+   "market": "US",
+   "url": "https://www.newmarcorp.com/models/by-category",
+   "counted": "King Aire, Essex, London Aire, Mountain Aire, New Aire, Dutch Star, Ventana, Northern Star, Canyon Star, Bay Star, Bay Star Sport, Summit Aire, Supreme Aire, Super Star, Grand Star, Freedom Aire",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Tiffin": {
+   "range": 12,
+   "market": "US",
+   "url": "https://tiffinmotorhomes.com/models/",
+   "counted": "Class A: Open Road Allegro, Allegro RED, Phaeton, Allegro Bus, Zephyr; Class B: GH1, GH2, GT1, GT2; Class C: Open Trail, Wayfarer, Allegro Bay Super C",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Entegra Coach": {
+   "range": 13,
+   "market": "US",
+   "url": "https://www.entegracoach.com/compare-models/",
+   "counted": "Vision, Emblem, Accolade, Centurion, Qwest, Odyssey, Condor, Esteem, Insignia, Launch, Arc, Ethos, Expanse",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "tires|Continental": {
+   "range": 44,
+   "market": "US",
+   "url": "https://continentaltire.com/tires",
+   "counted": "SecureContact AW, TrueContact Tour54, TerrainContact A/T2, TerrainContact A/T, TerrainContact H/T, ExtremeContact DWS06 Plus, ExtremeContact Sport02, ExtremeContact Force, CrossContact LX25, VikingContact 7, VikingContact 8 (brand's own All Tires page states 44 total results; remaining lines not individually itemized)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "tires|Pirelli": {
+   "range": 39,
+   "market": "US",
+   "url": "https://www.pirelli.com/tires/en-us/car/catalog",
+   "counted": "Scorpion AS Plus 3, Scorpion AS 4, P Zero AS Plus 3, P7 AS Plus 3, P4 Persist AS Plus, Scorpion Zero AS Plus 3, Scorpion WeatherActive, Cinturato WeatherActive, Scorpion XTM AT, Cinturato P7 All Season, Scorpion Verde All Season, Scorpion Zero All Season, P Zero All Season, Scorpion MS, Scorpion STR, Scorpion All Terrain Plus, Scorpion ATR, P Zero Nero All Season, Scorpion Zero, Cinturato P7 All Season Plus II, Scorpion Zero Asimmetrico, Winter SnowControl Serie 3, P Zero MS, P Zero (PZ5), P Zero (PZ4), P Zero, Cinturato P7, P Zero R, Scorpion Verde, Cinturato P7 (P7C2), P Zero Corsa (PZC4), P Zero Rosso, P Zero Corsa System, Scorpion Winter 2, P Zero Winter, Cinturato Winter 2, Winter Sottozero 3, Scorpion Winter, Winter Sottozero Serie II",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "tires|General Tire": {
+   "range": 38,
+   "market": "US",
+   "url": "https://generaltire.com/tires",
+   "counted": "Grabber Arctic X, AltiMAX Arctic X, AltiMAX365 AW, AltiMAX RT45, G-MAX AS07, G-MAX RS, Grabber A/TX, Grabber APT, Grabber H/T, Grabber HTS60 (brand's own All Tires page states 38 total results; remaining lines not individually itemized)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "tires|Nexen": {
+   "range": 31,
+   "market": "US",
+   "url": "https://www.nexentireusa.com/tires/",
+   "counted": "N Priz S, N Fera Primus AS T1, CP672, N5000 Platinum, SB802, N Priz AH5, Aria AH7, N Priz AH8, N5000 Plus, N Fera Sport, N Fera Sport R, N Fera SUR4G, N Fera AU7, N Fera SU1, Roadian ATX, Roadian HTX2, Roadian GTX, Roadian CT8 HL, Roadian CT8, Roadian MT, Roadian MTX, Roadian AT Pro, Roadian HTX, Roadian HP, N Blue 4 Season 2, Winguard Winspike 3, Winguard Sport 2 (31 total per page)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "tires|Michelin": {
+   "range": 43,
+   "market": "US",
+   "url": "https://www.michelinman.com/tires",
+   "counted": "Defender2, CrossClimate2, Defender LTX M/S2, X-Ice Snow+, X-Ice Snow, Pilot Alpin 5, Defender LTX Platinum, e.Primacy All Season, Primacy MXM4, Pilot Sport All-Season 4, Pilot Sport 4 S, Defender LTX M/S, Primacy All Season, Defender T+H, Pilot Sport Cup 2 Connect, Pilot Sport Cup 2 R, Pilot Sport Cup 2, LTX A/T2, Primacy Tour A/S, Pilot Sport EV, Pilot Sport S 5, Agilis CrossClimate 2, Agilis CrossClimate, LTX M/S2, Primacy LTX, Latitude Tour HP, Pilot Super Sport, Pilot Sport PS2, Energy Saver All-Season, Pilot Sport 5, Pilot Alpin PA4, Pilot Sport 4, Pilot Sport 4 SUV, Latitude Sport 3, Pilot Sport 3, Latitude Sport, Premier LTX, Latitude Alpin LA2, Primacy XC, Latitude Alpin, LTX Trail, Primacy 3, Latitude Tour",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  }
+ },
+ "rejected": {
+  "phones|Google": "counted from a launch announcement, which lists the new phones and not the older ones still sold",
+  "televisions|Samsung": "counted from a press release that may leave out the Crystal UHD sets, and lists monitors",
+  "televisions|Hisense": "four series is a page’s featured set, not Hisense’s whole American lineup",
+  "mattresses|Sealy": "counted lines, not the models within them",
+  "mattresses|Serta": "the research itself flagged firmness tiers counted as models",
+  "cars|Toyota": "the names listed (21) didn’t match the count (23), from a what’s-new page",
+  "cars|Ford": "counted from the home page, not an all-vehicles page",
+  "cars|Chevrolet": "counted from the home page, not an all-vehicles page",
+  "cars|Kia": "counted from the home page, not an all-vehicles page",
+  "cars|Volvo": "counted from the home page, not an all-vehicles page",
+  "cars|Acura": "counted from the home page, not an all-vehicles page",
+  "cars|Cadillac": "counted from the SUVs page only, leaving out its cars",
+  "motorcycles|Kawasaki": "counted from the home page, not a models page",
+  "tires|Toyo": "counted from a tire finder, at the research’s own moderate confidence"
+ }
 }

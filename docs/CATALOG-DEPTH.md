@@ -1190,14 +1190,14 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Phones
 
-53 brands, 0 deep enough, 53 short.
+53 brands, 1 deep enough, 52 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | Samsung | 18 | Short: 82 to go |
 | Google | 10 | Short: 90 to go |
-| Apple | 7 | Short: 93 to go |
-| Motorola | 6 | Short: 94 to go |
+| Apple | 7 | Whole range in US (7) |
+| Motorola | 6 | Short: 6 of its 9 in US to go |
 | Cubot | 4 | Short: 96 to go |
 | OnePlus | 4 | Short: 96 to go |
 | OPPO | 4 | Short: 96 to go |
@@ -1250,13 +1250,13 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Game Consoles
 
-3 brands, 0 deep enough, 3 short.
+3 brands, 1 deep enough, 2 short.
 
 | Brand | Products | Status |
 |---|---|---|
-| Microsoft | 3 | Short: 97 to go |
-| Sony | 2 | Short: 98 to go |
-| Nintendo | 1 | Short: 99 to go |
+| Microsoft | 3 | Whole range in US (2) |
+| Sony | 2 | Short: 1 of its 3 in US to go |
+| Nintendo | 1 | Short: 3 of its 4 in US to go |
 
 ## Electronics: Computers
 
@@ -1332,7 +1332,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Samsung | 7 | Short: 93 to go |
 | Hisense | 6 | Short: 94 to go |
 | Bush | 5 | Short: 95 to go |
-| TCL | 5 | Short: 95 to go |
+| TCL | 5 | Short: 10 of its 14 in US to go |
 | Ghia | 4 | Short: 96 to go |
 | LG | 4 | Short: 96 to go |
 | Bang & Olufsen | 3 | Short: 97 to go |
@@ -1534,15 +1534,15 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Brand | Products | Status |
 |---|---|---|
 | IKEA | 29 | Short: 71 to go |
-| Casper | 5 | Short: 95 to go |
-| Purple | 5 | Short: 95 to go |
+| Casper | 5 | Short: 2 of its 7 in US to go |
+| Purple | 5 | Short: 6 of its 11 in US to go |
 | Emma | 4 | Short: 96 to go |
 | Helix | 4 | Short: 96 to go |
 | Hypnos | 4 | Short: 96 to go |
-| Nectar | 4 | Short: 96 to go |
-| Saatva | 4 | Short: 96 to go |
+| Nectar | 4 | Short: 5 of its 9 in US to go |
+| Saatva | 4 | Short: 8 of its 12 in US to go |
 | Silentnight | 4 | Short: 96 to go |
-| Simba | 4 | Short: 96 to go |
+| Simba | 4 | Short: 2 of its 6 in GB to go |
 | Tuft & Needle | 4 | Short: 96 to go |
 | Amerisleep | 3 | Short: 97 to go |
 | Dormeo | 3 | Short: 97 to go |
@@ -2357,32 +2357,32 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Cars, Pickups And Vans
 
-74 brands, 0 deep enough, 74 short.
+74 brands, 12 deep enough, 62 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | Toyota | 22 | Short: 78 to go |
 | Ford | 18 | Short: 82 to go |
-| Honda | 18 | Short: 82 to go |
-| Nissan | 18 | Short: 82 to go |
-| BMW | 17 | Short: 83 to go |
+| Honda | 18 | Whole range in CA (10) |
+| Nissan | 18 | Whole range in US (10) |
+| BMW | 17 | Short: 4 of its 18 in US to go |
 | Chevrolet | 17 | Short: 83 to go |
-| Hyundai | 17 | Short: 83 to go |
-| Mercedes-Benz | 16 | Short: 84 to go |
-| Volkswagen | 16 | Short: 84 to go |
+| Hyundai | 17 | Whole range in US (11) |
+| Mercedes-Benz | 16 | Short: 6 of its 18 in US to go |
+| Volkswagen | 16 | Whole range in US (8) |
 | Kia | 15 | Short: 85 to go |
-| Audi | 14 | Short: 86 to go |
-| Jeep | 13 | Short: 87 to go |
-| Mazda | 13 | Short: 87 to go |
-| Lexus | 11 | Short: 89 to go |
-| Land Rover | 10 | Short: 90 to go |
-| Subaru | 10 | Short: 90 to go |
+| Audi | 14 | Short: 2 of its 14 in US to go |
+| Jeep | 13 | Whole range in US (8) |
+| Mazda | 13 | Whole range in US (7) |
+| Lexus | 11 | Short: 2 of its 13 in US to go |
+| Land Rover | 10 | Whole range in US (7) |
+| Subaru | 10 | Whole range in US (8) |
 | Volvo | 10 | Short: 90 to go |
 | Cadillac | 9 | Short: 91 to go |
-| GMC | 9 | Short: 91 to go |
-| Porsche | 9 | Short: 91 to go |
-| Genesis | 8 | Short: 92 to go |
-| MINI | 8 | Short: 92 to go |
+| GMC | 9 | Whole range in US (6) |
+| Porsche | 9 | Whole range in US (6) |
+| Genesis | 8 | Whole range in US (6) |
+| MINI | 8 | Whole range in US (3) |
 | Škoda | 7 | Short: 93 to go |
 | BYD | 6 | Short: 94 to go |
 | Citroën | 6 | Short: 94 to go |
@@ -2395,7 +2395,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Lincoln | 5 | Short: 95 to go |
 | MG | 5 | Short: 95 to go |
 | Suzuki | 5 | Short: 95 to go |
-| Tesla | 5 | Short: 95 to go |
+| Tesla | 5 | Short: 4 of its 5 in US to go |
 | Alfa Romeo | 4 | Short: 96 to go |
 | Aston Martin | 4 | Short: 96 to go |
 | Buick | 4 | Short: 96 to go |
@@ -2442,16 +2442,16 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
-| Honda | 44 | Short: 56 to go |
-| Yamaha | 31 | Short: 69 to go |
+| Honda | 44 | Short: 36 of its 46 in US to go |
+| Yamaha | 31 | Short: 35 of its 45 in US to go |
 | Kawasaki | 24 | Short: 76 to go |
-| Suzuki | 21 | Short: 79 to go |
+| Suzuki | 21 | Short: 21 of its 30 in US to go |
 | CFMoto | 18 | Short: 82 to go |
 | Kymco | 18 | Short: 82 to go |
 | Triumph | 18 | Short: 82 to go |
 | BMW Motorrad | 17 | Short: 83 to go |
-| KTM | 17 | Short: 83 to go |
-| Ducati | 16 | Short: 84 to go |
+| KTM | 17 | Short: 12 of its 19 in US to go |
+| Ducati | 16 | Short: 7 of its 14 in US to go |
 | Harley-Davidson | 16 | Short: 84 to go |
 | Aprilia | 15 | Short: 85 to go |
 | Benelli | 14 | Short: 86 to go |
@@ -2594,20 +2594,20 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
-| Mercedes-Benz | 4 | Short: 96 to go |
-| Thor | 4 | Short: 96 to go |
-| Winnebago | 4 | Short: 96 to go |
-| Elddis | 3 | Short: 97 to go |
+| Mercedes-Benz | 4 | Short: 1 of its 2 in GB to go |
+| Thor | 4 | Short: 35 of its 38 in US to go |
+| Winnebago | 4 | Short: 14 of its 18 in US to go |
+| Elddis | 3 | Short: 2 of its 4 in GB to go |
 | Ford | 3 | Short: 97 to go |
-| Airstream | 2 | Short: 98 to go |
+| Airstream | 2 | Short: 1 of its 3 in US to go |
 | Benimar | 2 | Short: 98 to go |
 | Carado | 2 | Short: 98 to go |
 | Coachmen | 2 | Short: 98 to go |
 | Fleetwood | 2 | Short: 98 to go |
-| Jayco | 2 | Short: 98 to go |
+| Jayco | 2 | Short: 11 of its 13 in US to go |
 | Leisure Travel Vans | 2 | Short: 98 to go |
 | Midwest Automotive Designs | 2 | Short: 98 to go |
-| Newmar | 2 | Short: 98 to go |
+| Newmar | 2 | Short: 14 of its 16 in US to go |
 | Rapido | 2 | Short: 98 to go |
 | Roller Team | 2 | Short: 98 to go |
 | Storyteller Overland | 2 | Short: 98 to go |
@@ -2621,7 +2621,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Coach House | 1 | Short: 99 to go |
 | Dynamax | 1 | Short: 99 to go |
 | East To West | 1 | Short: 99 to go |
-| Entegra Coach | 1 | Short: 99 to go |
+| Entegra Coach | 1 | Short: 12 of its 13 in US to go |
 | Eura Mobil | 1 | Short: 99 to go |
 | Forest River | 1 | Short: 99 to go |
 | Frankia | 1 | Short: 99 to go |
@@ -2643,7 +2643,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Rimor | 1 | Short: 99 to go |
 | Roadtrek | 1 | Short: 99 to go |
 | Sunlight | 1 | Short: 99 to go |
-| Tiffin | 1 | Short: 99 to go |
+| Tiffin | 1 | Short: 11 of its 12 in US to go |
 | Toyota | 1 | Short: 99 to go |
 | Volkswagen | 1 | Short: 99 to go |
 | Weinsberg | 1 | Short: 99 to go |
@@ -2726,10 +2726,10 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 |---|---|---|
 | Goodyear | 9 | Short: 91 to go |
 | Bridgestone | 8 | Short: 92 to go |
-| Continental | 8 | Short: 92 to go |
+| Continental | 8 | Short: 42 of its 44 in US to go |
 | Hankook | 8 | Short: 92 to go |
-| Pirelli | 7 | Short: 93 to go |
-| Michelin | 6 | Short: 94 to go |
+| Pirelli | 7 | Short: 37 of its 39 in US to go |
+| Michelin | 6 | Short: 41 of its 43 in US to go |
 | Toyo | 6 | Short: 94 to go |
 | Kumho | 5 | Short: 95 to go |
 | Dunlop | 4 | Short: 96 to go |
@@ -2739,9 +2739,9 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Maxxis | 3 | Short: 97 to go |
 | Vredestein | 3 | Short: 97 to go |
 | Falken | 2 | Short: 98 to go |
-| General Tire | 2 | Short: 98 to go |
+| General Tire | 2 | Short: 36 of its 38 in US to go |
 | Linglong | 2 | Short: 98 to go |
-| Nexen | 2 | Short: 98 to go |
+| Nexen | 2 | Short: 30 of its 31 in US to go |
 | Nokian | 2 | Short: 98 to go |
 | Uniroyal | 2 | Short: 98 to go |
 | Accelera | 1 | Short: 99 to go |

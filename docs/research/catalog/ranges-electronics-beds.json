@@ -1,0 +1,128 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "phones|Apple": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.apple.com/shop/buy-iphone",
+      "counted": "iPhone 18 Pro, iPhone 18 Pro Max, iPhone Air, iPhone 17, iPhone 17e, iPhone Duo, iPhone 16",
+      "market": "US"
+    },
+    "phones|Google": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://blog.google/products-and-platforms/devices/pixel/google-pixel-11-pro-xl/",
+      "counted": "Pixel 11, Pixel 11 Pro, Pixel 11 Pro XL, Pixel 11 Pro Fold, Pixel 10a (Fold and 10a confirmed as still-sold current models via store.google.com listing referenced in the same announcement coverage)",
+      "market": "US"
+    },
+    "phones|Motorola": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.motorola.com/us/smartphones",
+      "counted": "Razr Fold, Razr Ultra 2026, Razr+ 2026, Razr 2026, Edge 2026, Edge 2025, Edge 2024, Moto G Stylus 2026, Moto G Power 2026",
+      "market": "US"
+    },
+    "televisions|Samsung": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://news.samsung.com/uk/samsung-launches-full-2026-tv-lineup-today",
+      "counted": "R95H, R85H, S99H, S95H, S90H, S85H, The Frame Pro (LS03HW), The Frame (LS03HA), The Frame built-in (LS03HE), QN80H, QN70H, M80H, M70H",
+      "market": "GB"
+    },
+    "televisions|Hisense": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.hisense-usa.com/tvs",
+      "counted": "U7 Series, UR8 Series, UR9 Series, M7 Series",
+      "market": "US"
+    },
+    "televisions|TCL": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://us.tcl.com/",
+      "counted": "QM7L, QM8L, QM6K, X11L, QM9K, QM7K, QM8K, RM9L, X11K, A400U, A300W, Q3K, Q651G, A300L",
+      "market": "US"
+    },
+    "consoles|Microsoft": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.xbox.com/en-US/consoles",
+      "counted": "Xbox Series X, Xbox Series S (storage tiers are not distinct models)",
+      "market": "US"
+    },
+    "consoles|Sony": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://direct.playstation.com/en-us/hardware/ps5",
+      "counted": "PlayStation 5 (disc), PlayStation 5 Digital Edition, PlayStation 5 Pro (certified-refurbished listings excluded as not a distinct current model)",
+      "market": "US"
+    },
+    "consoles|Nintendo": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.nintendo.com/us/store/hardware",
+      "counted": "Nintendo Switch 2, Nintendo Switch, Nintendo Switch OLED Model, Nintendo Switch Lite",
+      "market": "US"
+    },
+    "mattresses|Casper": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.casper.com/mattresses/",
+      "counted": "The One, Cloud One, Snug (kids), Dream, Snow, Dream Max, Snow Max",
+      "market": "US"
+    },
+    "mattresses|Purple": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://purple.com/mattresses",
+      "counted": "Purple Mattress, PurpleFlex, PurplePlus, PurpleRenew, Restore Hybrid, RestorePlus Hybrid, RestorePremier Hybrid, Rejuvenate, RejuvenatePlus, RejuvenatePremier, RejuvenateUltimate",
+      "market": "US"
+    },
+    "mattresses|Sealy": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.sealy.com/mattresses/",
+      "counted": "Posturepedic Spring, Icon, Posturepedic Hybrid, Posturepedic Elite, Cocoon by Sealy",
+      "market": "US"
+    },
+    "mattresses|Nectar": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.nectarsleep.com/mattresses",
+      "counted": "Classic, Premier, Luxe, Ultra, Classic Hybrid, Premier Hybrid, Luxe Hybrid, Ultra Hybrid, Kids",
+      "market": "US"
+    },
+    "mattresses|Saatva": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.saatva.com/mattresses",
+      "counted": "Classic, Rx, Latex Hybrid, HD, Memory Foam Hybrid, Contour5, Zenhaven, Solaire, Youth, Murphy Bed Mattress, Bunk & Trundle Mattress, Crib Mattress (pet bed listing excluded as not a human mattress/bed)",
+      "market": "US"
+    },
+    "mattresses|Simba": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://simbasleep.com/collections/mattresses",
+      "counted": "Essential, Hybrid (Original), Pro, Luxe, Ultra, Apex (Natural Hybrid range)",
+      "market": "GB"
+    },
+    "mattresses|Serta": {
+      "range": 19,
+      "meetsHundred": false,
+      "url": "https://www.serta.com/mattresses",
+      "counted": "Perfect Sleeper (Cascade Ridge Plush, Cascade Canyon, Cascade Range, Hybrid, 2023 Innerspring, 2023 Hybrid), Perfect Sleeper X Quilted Hybrid (Level One, Level Two), Classic (Standard, Enhanced), iSeries NXG (3500 Medium Foam, 4500 Ultra Plush Foam, 1500 Hybrid Firm, 2500 Hybrid, 3500 Hybrid), iComfort (Standard), iComfortPro (Level Two, Level Three), Five Star -- note: several of these are named firmness/comfort tiers within one product line rather than unambiguously separate models, so this count carries more uncertainty than the others in this file",
+      "market": "US"
+    }
+  },
+  "notEstablished": {
+    "phones|Samsung": "Samsung's official all-phones listing pages (US and UK) are JavaScript-rendered; repeated fetches only returned homepage/navigation banner content (5 or fewer featured models: Z Fold8, Z Fold8 Ultra, Z Flip8, S26 Ultra, S26 FE) rather than the full current catalogue, which also includes the A-series. Could not obtain an exhaustive count from Samsung's own page within this session.",
+    "televisions|Samsung full OLED+MicroRGB cross-check": "handled under televisions|Samsung using the UK newsroom 'full 2026 TV lineup' press release as the authoritative source instead.",
+    "televisions|LG": "Directly confirmed only the 2026 QNED evo Mini LED lineup (6 series: QNED90, QNED85, QNED82, QNED8M, QNED80, QNED70) from LG's own newsroom press release. Could not get the OLED series (G6/C6/C6H/W6/B6) or UHD/Micro RGB lines confirmed from an LG-owned page in this session -- those came only from secondary outlets (tbreak.com, techradar.com), which the task rules exclude.",
+    "televisions|Sony": "electronics.sony.com and sony.co.uk could not be fetched (fetch error / HTTP 403). Only secondary-source coverage (whathifi.com, techradar.com) of the Bravia 9 II/8 II/7 II/6/3 II/2 II lineup was available, which does not qualify as the brand's own page.",
+    "mattresses|Tempur-Pedic": "Fetch of tempurpedic.com/shop-mattresses/ returned an inconsistent/incomplete read (named TEMPUR-Adapt, TEMPUR-Cloud, TEMPUR-Breeze, TEMPUR-ActiveBreeze plus an unrelated 'previous generation closeout' line), and appears to have missed collections such as TEMPUR-ProAdapt/LuxeAdapt that the brand has sold in the same era. Not reliable enough to record a count.",
+    "mattresses|IKEA": "Could only confirm the US spring-mattress subcategory directly (VALEVÅG, VESTERÖY, ÅNNELAND, VÅGSTRANDA, VANNAREID = 5). The foam-mattress subcategory page returned empty/unrelated content on fetch, and kids'/children's mattress names were only found via secondary search results, not read directly from ikea.com. Total current range not established.",
+    "mattresses|Helix": "helixsleep.com returned HTTP 403 on direct fetch (both /pages/mattresses and /collections/all). Only secondary review-site summaries (core Sunset/Moonlight/Midnight/Dusk/Twilight/Dawn plus Plus/Luxe/Birch/Kids variants) were available, not the brand's own page.",
+    "mattresses|Emma": "emma-mattress.co.uk redirected to emma-sleep.co.uk, and the fetched page returned only navigation/promotional text with no product model names visible.",
+    "televisions|Google (Nest/Chromecast or similar) and consoles beyond Microsoft/Sony/Nintendo": "Not applicable -- the Game Consoles list only contains Microsoft, Sony, and Nintendo, all of which were established above; noted here only to confirm no brand in that category was skipped."
+  }
+}

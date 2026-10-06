@@ -103,4 +103,4 @@ exists, this file says so, and the item stays out.
 
 ## A catalog trim that doesn't exist (2026-10-05)
 
-The fitment research found no 2026 Ram 1500 in Canada as SLATE lists it, "Preferred AWD 2.5L": the 1500's engines are the 3.6 L Pentastar, two 3.0 L Hurricanes and the 5.7 L HEMI, and no "Preferred" trim was found (`docs/research/catalog/vehicle-fitment.json`, notFound). The model's Canadian trim is to be read again from Stellantis Canada's own page.
+The fitment research of 2026-10-05 found no 2026 Ram 1500 in Canada as "Preferred AWD 2.5L" (`docs/research/catalog/vehicle-fitment.json`, notFound). That trim was never SLATE's: it is the Canadian Hyundai Tucson's, put against the Ram in the research brief by mistake, as found on 2026-10-06. SLATE lists the Ram as the 1500 Tradesman 4x4 Quad Cab with a 6'4" box, and its tire size and dash are still to be read for that trim.

@@ -1,0 +1,412 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "cars|Toyota": {
+      "range": 23,
+      "meetsHundred": false,
+      "url": "https://pressroom.toyota.com/whats-new-for-2026/",
+      "counted": "Camry, Corolla, Crown, Mirai, Prius, Sienna, 4Runner, bZ, C-HR, Corolla Cross, Crown Signia, Grand Highlander, Highlander, Land Cruiser, RAV4, Sequoia, GR86, GR Corolla, GR Supra, Tacoma, Tundra",
+      "market": "US"
+    },
+    "cars|Ford": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.ford.com/",
+      "counted": "Mustang, Bronco Sport, Bronco, Explorer, Expedition, Mustang Mach-E, Maverick, Ranger, F-150, Super Duty, Transit, E-Transit",
+      "market": "US"
+    },
+    "cars|Honda": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.honda.ca/vehicles",
+      "counted": "Prologue, Civic, Accord, HR-V, CR-V, Passport, Pilot, Odyssey, Ridgeline, Prelude",
+      "market": "CA"
+    },
+    "cars|Nissan": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.nissanusa.com/vehicles/",
+      "counted": "Rogue, Pathfinder, Frontier, Armada, Kicks, Murano, LEAF, Sentra, Altima, Z",
+      "market": "US"
+    },
+    "cars|BMW": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.bmwusa.com/all-bmws.html",
+      "counted": "2/3/4/5/7 Series, X1, X2, X3, X5, X6, X7, XM, Z4, i4, i5, i7, iX, iX3",
+      "market": "US"
+    },
+    "cars|Chevrolet": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.chevrolet.com/",
+      "counted": "Trax, Trailblazer, Equinox, Equinox EV, Blazer, Blazer EV, Traverse, Tahoe, Suburban, Silverado, Silverado EV, Colorado, Corvette, Malibu, Bolt",
+      "market": "US"
+    },
+    "cars|Hyundai": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.hyundaiusa.com/us/en/vehicles",
+      "counted": "Elantra, Sonata, Venue, Kona, Tucson, Santa Fe, Palisade, Santa Cruz, Ioniq 5, Ioniq 6, Ioniq 9",
+      "market": "US"
+    },
+    "cars|Mercedes-Benz": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.mbusa.com/en/all-vehicles",
+      "counted": "GLA, GLB, GLC, GLE, GLS, G-Class, Maybach GLS, CLA, EQB, EQE, EQS, Maybach S-Class, C-Class, E-Class, S-Class, AMG GT, CLE, SL",
+      "market": "US"
+    },
+    "cars|Volkswagen": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.vw.com/en/models.html",
+      "counted": "Atlas, Atlas Cross Sport, Tiguan, Taos, Golf, Jetta, ID.4, ID.Buzz",
+      "market": "US"
+    },
+    "cars|Kia": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.kia.com/us",
+      "counted": "Telluride, Sportage, Sorento, Seltos, EV6, EV9, Niro, K4, K5, Carnival",
+      "market": "US"
+    },
+    "cars|Audi": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.audiusa.com/en/models/",
+      "counted": "A3, A5, A6, A7, A8, Q3, Q5, Q7, Q8, Q4 e-tron, Q6 e-tron, e-tron GT, TT, R8",
+      "market": "US"
+    },
+    "cars|Jeep": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.jeep.com/all-vehicles.html",
+      "counted": "Wrangler, Grand Cherokee, Gladiator, Grand Wagoneer, Wagoneer S, Compass, Cherokee, Recon",
+      "market": "US"
+    },
+    "cars|Mazda": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.mazdausa.com/vehicles",
+      "counted": "CX-30, CX-50, CX-5, CX-70, CX-90, Mazda3, MX-5 Miata",
+      "market": "US"
+    },
+    "cars|Lexus": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://www.lexus.com/models",
+      "counted": "ES, IS, LS, LC, RC, LBX, UX, NX, RX, TX, GX, LX, RZ",
+      "market": "US"
+    },
+    "cars|Land Rover": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.landroverusa.com/vehicles/index",
+      "counted": "Defender, Discovery Sport, Discovery, Range Rover, Range Rover Sport, Range Rover Velar, Range Rover Evoque",
+      "market": "US"
+    },
+    "cars|Subaru": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.subaru.com/vehicles/all-vehicles.html",
+      "counted": "Impreza, Crosstrek, Forester, Outback, Ascent, WRX, BRZ, Solterra",
+      "market": "US"
+    },
+    "cars|Volvo": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.volvocars.com/us/",
+      "counted": "EX90, EX60, EX40, EX30, XC90, XC60, XC40, V60 Cross Country",
+      "market": "US"
+    },
+    "cars|Cadillac": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.cadillac.com/suvs",
+      "counted": "CT4, CT5, Escalade, XT4, XT5, XT6, Optiq, Lyriq, Vistiq",
+      "market": "US"
+    },
+    "cars|GMC": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.gmc.com/help-me-find/vehicle-lineup",
+      "counted": "Terrain, Acadia, Yukon, Sierra, Canyon, Hummer EV",
+      "market": "US"
+    },
+    "cars|Porsche": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.porsche.com/usa/models/",
+      "counted": "718, 911, Taycan, Macan, Cayenne, Panamera",
+      "market": "US"
+    },
+    "cars|Genesis": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.genesis.com/us/en/shopping-tools/compare-vehicles.html",
+      "counted": "G70, G80, G90, GV60, GV70, GV80",
+      "market": "US"
+    },
+    "cars|MINI": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.miniusa.com/model.html",
+      "counted": "Cooper, Convertible, Countryman",
+      "market": "US"
+    },
+    "cars|Tesla": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.tesla.com/",
+      "counted": "Model 3, Model Y, Model S, Model X, Cybertruck",
+      "market": "US"
+    },
+    "cars|Acura": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.acura.com/",
+      "counted": "Integra, ADX, RDX, MDX",
+      "market": "US"
+    },
+    "motorcycles|Honda": {
+      "range": 46,
+      "meetsHundred": false,
+      "url": "https://powersports.honda.com/motorcycle",
+      "counted": "Gold Wing (incl. Tour), NT1100, Fury, Shadow Phantom, Rebel (300/500/1100), CBR1000RR-R Fireblade, CBR1000RR, CBR600RR, CBR650R, CBR500R, CB1000 Hornet, CB1000F, CB750 Hornet, SCL500, CB650R, CB500 Hornet, CB300R, Grom, Dax125, Monkey, Trail125, Navi, Africa Twin, Transalp, NC750X, NX500, XR650L, CRF450RL, CRF300L, XR150L, ADV160, PCX, Ruckus, Metropolitan, CRF450X, CRF450RX, CRF300F, CRF250RX, CRF125F, CRF110F, CRF50F, CRF450R, CRF250R, CRF150R, Montesa Cota 301RR, Montesa Cota 4RT",
+      "market": "US"
+    },
+    "motorcycles|Yamaha": {
+      "range": 45,
+      "meetsHundred": false,
+      "url": "https://www.yamahamotorsports.com/motorcycles",
+      "counted": "YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3, MT-10, MT-10 SP, MT-09, MT-09 SP, MT-07, MT-03, BOLT R-SPEC, XSR900, XSR700, V STAR 250, FJR1300ES, TENERE 700, TENERE 700 World Raid, Tracer 9, XT250, TW200, WR125R, XMAX, Zuma 125, YZ450F, YZ250F, YZ250, YZ125, YZ85LW, YZ85, YZ65, YZ450FX, YZ250FX, YZ250X, YZ125X, WR450F, WR250F, TT-R230, TT-R125LE, TT-R110E, TT-R50E, PW50",
+      "market": "US"
+    },
+    "motorcycles|Suzuki": {
+      "range": 30,
+      "meetsHundred": false,
+      "url": "https://suzukicycles.com/motorcycles",
+      "counted": "Hayabusa, GSX-R1000, GSX-R750, GSX-R600, GSX250R, GSX-8R, GSX-8T, GSX-8TT, GSX-8S, GSX-S1000, SV650, DR-Z4S, DR-Z400S, DR650S, DR-Z4SM, DR-Z400SM, Boulevard M109R, Boulevard C50, V-STROM 1050, V-STROM 800, V-Strom 650, GSX-S1000GX, SV-7GX, RM-Z450, RM-Z250, DR-Z125L, DR-Z50, RM85, Burgman 400, GSX-S1000GT",
+      "market": "US"
+    },
+    "motorcycles|Kawasaki": {
+      "range": 30,
+      "meetsHundred": false,
+      "url": "https://www.kawasaki.com/en-us",
+      "counted": "Z H2 SE, Z500, Ninja ZX-6R, Ninja ZX-4RR, Ninja ZX-25RR, Ninja ZX-25R, Ninja 650, Ninja 500, Z900, Z650, Z650RS, W230, W800, Vulcan S, Vulcan 900 Classic, Vulcan 900 Custom, Vulcan 1700 Vaquero, Eliminator, Versys 1100, Versys 650, KLX300, KLX230 Sherpa, KLX230 DF, KLR650, KX450, KX250, KX65, KLX230R, KLX140R, KLX110R",
+      "market": "US"
+    },
+    "motorcycles|KTM": {
+      "range": 19,
+      "meetsHundred": false,
+      "url": "https://www.ktm.com/en-us/models.html",
+      "counted": "SX-F, SX, SX-E, XCF-W, XC-W, XC-F, XC, FREERIDE E, Enduro R, EXC-F, Super Adventure S/R, Adventure R/X, Rally, Super Duke GT, SMC R, SMR, Duke, Super Duke R, RC/RC R",
+      "market": "US"
+    },
+    "motorcycles|Ducati": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.ducati.com/us/en/bikes",
+      "counted": "DesertX, Diavel, XDiavel, Monster, Streetfighter, Superleggera, Multistrada, Panigale, Hypermotard, Scrambler, Formula 73, Desmo450 MX, Desmo250 MX, Desmo450 SM",
+      "market": "US"
+    },
+    "rvs|Mercedes-Benz": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.mercedes-benz.co.uk/passengercars/models/van/new/v-class.html",
+      "counted": "Marco Polo, Marco Polo Horizon",
+      "market": "GB"
+    },
+    "rvs|Thor": {
+      "range": 38,
+      "meetsHundred": false,
+      "url": "https://www.thormotorcoach.com/motorhomes/class-a",
+      "counted": "Class A: Outlaw Class A, Resonate, Riviera, Vegas, Windsport, Indigo, Axis, Luminate, Palazzo, Hurricane, Aria; Class B: Talavera, Palladium, Rize, Sanctuary, Scope, Tellaro, Tranquility, Sequence; Class C: Scope-Plus, Rize-Plus, Magnitude Super C, Omni Super C, Pasadena SV, Four Winds, Inception HD, Chateau Sprinter, Tiburon, Outlaw Class C, Four Winds Sprinter, Compass AWD, Quantum, Gemini AWD, Echelon, Delano, Chateau, Pasadena, Inception",
+      "market": "US"
+    },
+    "rvs|Winnebago": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.winnebago.com/models/class-a",
+      "counted": "Class A: Adventurer, Vista, Sunstar, Forza; Class C: Elora, Resa, Sunflyer, Suncruiser, View, Navion, EKKO, EKKO Sprinter, Minnie Winnie; Camper van: Solis, Solis Pocket, Revel, Revel Sport, Travato",
+      "market": "US"
+    },
+    "rvs|Elddis": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://elddis.co.uk/motorhomes",
+      "counted": "Whirlwind GT, Whirlwind GTS, Autoquest GT, Autoquest GTS",
+      "market": "GB"
+    },
+    "rvs|Airstream": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.airstream.com/touring-coaches",
+      "counted": "Atlas, Interstate, Rangeline",
+      "market": "US"
+    },
+    "rvs|Jayco": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://www.jayco.com/rvs/",
+      "counted": "Alante, Precept, Comet, Swift, Solstice, Terrain, Redhawk, Greyhawk, Greyhawk XL, Melbourne, Granite Ridge, Seneca, Seneca XT",
+      "market": "US"
+    },
+    "rvs|Newmar": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://www.newmarcorp.com/models/by-category",
+      "counted": "King Aire, Essex, London Aire, Mountain Aire, New Aire, Dutch Star, Ventana, Northern Star, Canyon Star, Bay Star, Bay Star Sport, Summit Aire, Supreme Aire, Super Star, Grand Star, Freedom Aire",
+      "market": "US"
+    },
+    "rvs|Tiffin": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://tiffinmotorhomes.com/models/",
+      "counted": "Class A: Open Road Allegro, Allegro RED, Phaeton, Allegro Bus, Zephyr; Class B: GH1, GH2, GT1, GT2; Class C: Open Trail, Wayfarer, Allegro Bay Super C",
+      "market": "US"
+    },
+    "rvs|Entegra Coach": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://www.entegracoach.com/compare-models/",
+      "counted": "Vision, Emblem, Accolade, Centurion, Qwest, Odyssey, Condor, Esteem, Insignia, Launch, Arc, Ethos, Expanse",
+      "market": "US"
+    },
+    "tires|Continental": {
+      "range": 44,
+      "meetsHundred": false,
+      "url": "https://continentaltire.com/tires",
+      "counted": "SecureContact AW, TrueContact Tour54, TerrainContact A/T2, TerrainContact A/T, TerrainContact H/T, ExtremeContact DWS06 Plus, ExtremeContact Sport02, ExtremeContact Force, CrossContact LX25, VikingContact 7, VikingContact 8 (brand's own All Tires page states 44 total results; remaining lines not individually itemized)",
+      "market": "US"
+    },
+    "tires|Pirelli": {
+      "range": 39,
+      "meetsHundred": false,
+      "url": "https://www.pirelli.com/tires/en-us/car/catalog",
+      "counted": "Scorpion AS Plus 3, Scorpion AS 4, P Zero AS Plus 3, P7 AS Plus 3, P4 Persist AS Plus, Scorpion Zero AS Plus 3, Scorpion WeatherActive, Cinturato WeatherActive, Scorpion XTM AT, Cinturato P7 All Season, Scorpion Verde All Season, Scorpion Zero All Season, P Zero All Season, Scorpion MS, Scorpion STR, Scorpion All Terrain Plus, Scorpion ATR, P Zero Nero All Season, Scorpion Zero, Cinturato P7 All Season Plus II, Scorpion Zero Asimmetrico, Winter SnowControl Serie 3, P Zero MS, P Zero (PZ5), P Zero (PZ4), P Zero, Cinturato P7, P Zero R, Scorpion Verde, Cinturato P7 (P7C2), P Zero Corsa (PZC4), P Zero Rosso, P Zero Corsa System, Scorpion Winter 2, P Zero Winter, Cinturato Winter 2, Winter Sottozero 3, Scorpion Winter, Winter Sottozero Serie II",
+      "market": "US"
+    },
+    "tires|General Tire": {
+      "range": 38,
+      "meetsHundred": false,
+      "url": "https://generaltire.com/tires",
+      "counted": "Grabber Arctic X, AltiMAX Arctic X, AltiMAX365 AW, AltiMAX RT45, G-MAX AS07, G-MAX RS, Grabber A/TX, Grabber APT, Grabber H/T, Grabber HTS60 (brand's own All Tires page states 38 total results; remaining lines not individually itemized)",
+      "market": "US"
+    },
+    "tires|Nexen": {
+      "range": 31,
+      "meetsHundred": false,
+      "url": "https://www.nexentireusa.com/tires/",
+      "counted": "N Priz S, N Fera Primus AS T1, CP672, N5000 Platinum, SB802, N Priz AH5, Aria AH7, N Priz AH8, N5000 Plus, N Fera Sport, N Fera Sport R, N Fera SUR4G, N Fera AU7, N Fera SU1, Roadian ATX, Roadian HTX2, Roadian GTX, Roadian CT8 HL, Roadian CT8, Roadian MT, Roadian MTX, Roadian AT Pro, Roadian HTX, Roadian HP, N Blue 4 Season 2, Winguard Winspike 3, Winguard Sport 2 (31 total per page)",
+      "market": "US"
+    },
+    "tires|Toyo": {
+      "range": 38,
+      "meetsHundred": false,
+      "url": "https://www.toyotires.com/tire-finder",
+      "counted": "Open Country M/T, R/T Pro, R/T, R/T Trail, A/T III, A/T III EV, H/T II, Q/T, C/T, WLT1, SxS, M/T-R, Proxes G-Tour, Sport A/S+, Sport A/S, Sport 2, Sport, R1R, ST III, R888R, R, RR, Sport R, RA1, TQ, Extensa A/S II, HP II, Celsius Sport, Celsius II, Celsius, Celsius CUV, Celsius Cargo, Observe GSi-6, Observe G3-Ice, M-Line M165, M-55, M655, H-Line H08+",
+      "market": "US"
+    },
+    "tires|Michelin": {
+      "range": 43,
+      "meetsHundred": false,
+      "url": "https://www.michelinman.com/tires",
+      "counted": "Defender2, CrossClimate2, Defender LTX M/S2, X-Ice Snow+, X-Ice Snow, Pilot Alpin 5, Defender LTX Platinum, e.Primacy All Season, Primacy MXM4, Pilot Sport All-Season 4, Pilot Sport 4 S, Defender LTX M/S, Primacy All Season, Defender T+H, Pilot Sport Cup 2 Connect, Pilot Sport Cup 2 R, Pilot Sport Cup 2, LTX A/T2, Primacy Tour A/S, Pilot Sport EV, Pilot Sport S 5, Agilis CrossClimate 2, Agilis CrossClimate, LTX M/S2, Primacy LTX, Latitude Tour HP, Pilot Super Sport, Pilot Sport PS2, Energy Saver All-Season, Pilot Sport 5, Pilot Alpin PA4, Pilot Sport 4, Pilot Sport 4 SUV, Latitude Sport 3, Pilot Sport 3, Latitude Sport, Premier LTX, Latitude Alpin LA2, Primacy XC, Latitude Alpin, LTX Trail, Primacy 3, Latitude Tour",
+      "market": "US"
+    }
+  },
+  "notEstablished": {
+    "cars|Škoda": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|BYD": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Citroën": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Mitsubishi": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Polestar": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Ram": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Renault": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Bentley": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Lincoln": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|MG": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "cars|Suzuki": "Not attempted (research budget prioritised the 24 largest car brands).",
+    "motorcycles|Triumph": "triumphmotorcycles.com and triumphmotorcycles.co.uk model-range pages are JS-rendered/configurator pages; repeated fetches returned only top-level category labels (Adventure, Classic, Roadsters, Sport, Rocket 3) or 404s, not a full nameplate list.",
+    "motorcycles|BMW Motorrad": "bmw-motorrad.com/en/models.html returned 404 on fetch; no working full-lineup URL found within the time available.",
+    "motorcycles|Harley-Davidson": "harley-davidson.com/us/en/motorcycles.html returned 404 on fetch; no working full-lineup URL found within the time available.",
+    "motorcycles|CFMoto": "Not attempted (research budget).",
+    "motorcycles|Kymco": "Not attempted (research budget).",
+    "motorcycles|Aprilia": "Not attempted (research budget).",
+    "motorcycles|Benelli": "Not attempted (research budget).",
+    "motorcycles|Royal Enfield": "Not attempted (research budget).",
+    "motorcycles|Zontes": "Not attempted (research budget).",
+    "motorcycles|Vespa": "Not attempted (research budget).",
+    "motorcycles|Indian": "Not attempted (research budget).",
+    "motorcycles|Husqvarna": "Not attempted (research budget).",
+    "motorcycles|Italika": "Not attempted (research budget).",
+    "motorcycles|Moto Guzzi": "Not attempted (research budget).",
+    "motorcycles|Zero": "Not attempted (research budget).",
+    "motorcycles|Beta": "Not attempted (research budget).",
+    "motorcycles|Carabela": "Not attempted (research budget).",
+    "motorcycles|Keeway": "Not attempted (research budget).",
+    "motorcycles|Moto Morini": "Not attempted (research budget).",
+    "motorcycles|MV Agusta": "Not attempted (research budget).",
+    "motorcycles|QJMOTOR": "Not attempted (research budget).",
+    "motorcycles|Sinnis": "Not attempted (research budget).",
+    "motorcycles|Veloci": "Not attempted (research budget).",
+    "motorcycles|Vento": "Not attempted (research budget).",
+    "motorcycles|Voge": "Not attempted (research budget).",
+    "rvs|Ford": "Ford is a chassis supplier (e.g. Transit) used by other RV builders in this list, not a retail motorhome brand with its own model lineup page.",
+    "rvs|Coachmen": "Official site (coachmenrv.com) returned HTTP 403 to fetch tooling; only secondhand/dealer-aggregator summaries were available, which the brief disallows as a source.",
+    "rvs|Benimar": "Not attempted (research budget).",
+    "rvs|Carado": "Not attempted (research budget).",
+    "rvs|Fleetwood": "Not attempted (research budget).",
+    "rvs|Leisure Travel Vans": "Not attempted (research budget).",
+    "rvs|Midwest Automotive Designs": "Not attempted (research budget).",
+    "rvs|Rapido": "Not attempted (research budget).",
+    "rvs|Roller Team": "Not attempted (research budget).",
+    "rvs|Storyteller Overland": "Not attempted (research budget).",
+    "rvs|Swift": "Not attempted (research budget).",
+    "rvs|Westfalia": "Not attempted (research budget).",
+    "rvs|Auto-Sleeper": "Not attempted (research budget).",
+    "rvs|Auto-Trail": "Not attempted (research budget).",
+    "rvs|Bailey": "Not attempted (research budget).",
+    "rvs|Bürstner": "Not attempted (research budget).",
+    "rvs|Chausson": "Not attempted (research budget).",
+    "rvs|Coach House": "Not attempted (research budget).",
+    "rvs|Dynamax": "Not attempted (research budget).",
+    "rvs|East To West": "Not attempted (research budget).",
+    "rvs|Eura Mobil": "Not attempted (research budget).",
+    "rvs|Forest River": "Not attempted (research budget).",
+    "rvs|Frankia": "Not attempted (research budget).",
+    "rvs|Globecar": "Not attempted (research budget).",
+    "rvs|Grech RV": "Not attempted (research budget).",
+    "rvs|Hobby": "Not attempted (research budget).",
+    "rvs|Hymer": "Not attempted (research budget).",
+    "rvs|Itineo": "Not attempted (research budget).",
+    "rvs|Knaus": "Not attempted (research budget).",
+    "rvs|Malibu": "Not attempted (research budget).",
+    "rvs|McLouis": "Not attempted (research budget).",
+    "rvs|Mobilvetta": "Not attempted (research budget).",
+    "rvs|Murvi": "Not attempted (research budget).",
+    "rvs|Pilote": "Not attempted (research budget).",
+    "rvs|Pleasure-Way": "Not attempted (research budget).",
+    "rvs|Regency RV": "Not attempted (research budget).",
+    "rvs|Rimor": "Not attempted (research budget).",
+    "rvs|Roadtrek": "Not attempted (research budget).",
+    "rvs|Sunlight": "Not attempted (research budget).",
+    "rvs|Weinsberg": "Not attempted (research budget).",
+    "tires|Goodyear": "goodyear.com/en-us/tires/all-tires reports '136 Results', but on inspection many entries are technology-variant SKUs of the same base line (e.g. suffixed 'w/SoundComfort Technology', 'w/SealTech') rather than clearly distinct tire lines; the full list could not be deduplicated to a reliable distinct-line count, so this was left unestablished rather than risk overcounting.",
+    "tires|Bridgestone": "bridgestonetire.com/tires and tires.bridgestone.com returned HTTP 403 on direct fetch; only top-level family names (Turanza, Potenza, Dueler, Blizzak, etc.) surfaced via search, not a complete per-line list or total.",
+    "tires|Hankook": "Page redirected unexpectedly (to an EV-tire page); only ~14 names for the passenger-car subsection were found, no confirmed total across all vehicle types.",
+    "tires|Kumho": "kumhotireusa.com/tires/ returned 404; only an unconfirmed partial list from search snippets.",
+    "tires|Dunlop": "dunloptires.com/tires fetch returned only 3 items, indicating JS-rendering truncation; true total not established.",
+    "tires|BFGoodrich": "No consolidated catalog page could be fetched; only partial family names found.",
+    "tires|Cooper": "Only product-family level data (Discoverer, Evolution, Endeavor) found; no distinct-line total.",
+    "tires|Firestone": "Only category/brand-name lists found; no distinct-model total.",
+    "tires|Maxxis": "Only partial lists (e.g. Passenger 5, Light Truck/SUV 9-10) found; other ranges unconfirmed.",
+    "tires|Vredestein": "Only family names and some sub-variants found; no full count.",
+    "tires|Falken": "Only family names with partial variants found; no confirmed total.",
+    "tires|Linglong": "Not attempted (research budget).",
+    "tires|Nokian": "Only a partial list found; total not confirmed.",
+    "tires|Uniroyal": "Only a handful of names found; full catalog page not fetched."
+  }
+}

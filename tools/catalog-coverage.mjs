@@ -166,13 +166,26 @@ const SERVICES = {
   salons: () => ({ providers: new Set(SALONS.map((s) => s.name.replace(/\s*\(.*\)$/, ''))).size, branches: SALONS.length, towns: new Set(SALONS.map((s) => s.cityId)).size }),
 };
 
+const marketOf = (m) => { const u = String(m).toUpperCase(); return u === 'UK' ? 'GB' : u; };
+
 function count(rows) {
   const products = new Map();
   for (const r of rows) if (!products.has(r.product)) products.set(r.product, r);
   const byBrand = new Map();
   for (const r of products.values()) if (r.brand) byBrand.set(r.brand, (byBrand.get(r.brand) ?? 0) + 1);
   const per = [...byBrand.values()].sort((a, b) => a - b);
+  // Each brand's distinct products in each market (from 2026-10-06), for a range read in one market.
+  const byBrandMarket = new Map();
+  for (const r of rows) {
+    if (!r.brand || !r.market) continue;
+    const m = marketOf(r.market);
+    if (!byBrandMarket.has(r.brand)) byBrandMarket.set(r.brand, new Map());
+    const at = byBrandMarket.get(r.brand);
+    if (!at.has(m)) at.set(m, new Set());
+    at.get(m).add(r.product);
+  }
   return {
+    byBrandMarket,
     offers: rows.length,
     products: products.size,
     variants: [...products.values()].reduce((n, r) => n + r.variants, 0),
@@ -181,7 +194,7 @@ function count(rows) {
     perBrand: per.length ? { least: per[0], median: per[Math.floor(per.length / 2)], most: per[per.length - 1] } : null,
     brandsAtTarget: per.filter((n) => n >= BRAND_TARGET.productsPerBrand).length,
     byBrand,
-    markets: [...new Set(rows.map((r) => r.market).filter(Boolean).map((m) => { const u = String(m).toUpperCase(); return u === 'UK' ? 'GB' : u; }))].sort(),
+    markets: [...new Set(rows.map((r) => r.market).filter(Boolean).map(marketOf))].sort(),
   };
 }
 
@@ -194,19 +207,26 @@ lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|');
 let met = 0;
 let brandCats = 0;
 const depth = ['# Catalog depth', '', 'Written by `tools/catalog-coverage.mjs`; don\'t edit by hand. Every brand in every brand category, with its distinct', `products in SLATE and whether it meets the depth target: at least ${BRAND_TARGET.productsPerBrand}, or its whole researched range`, '(`docs/research/catalog-ranges.json`). Short means more of its real range is to be researched and added.', ''];
+/**
+ * What a brand holds against its recorded range: where the range was read in one market (from 2026-10-06), only its
+ * products sold in that market, so one market's lineup never stands in for the brand's whole range.
+ */
+const heldFor = (k, r, brand, n) => (r?.market ? k.byBrandMarket.get(brand)?.get(marketOf(r.market))?.size ?? 0 : n);
 /** Whether a brand is deep enough: a hundred products, or its whole recorded range. */
-const deepEnough = (cat, brand, n) => n >= BRAND_TARGET.productsPerBrand || (RANGES[`${cat}|${brand}`] !== undefined && n >= RANGES[`${cat}|${brand}`].range);
+const deepEnough = (cat, brand, n, k) => { const r = RANGES[`${cat}|${brand}`]; return n >= BRAND_TARGET.productsPerBrand || (r !== undefined && heldFor(k, r, brand, n) >= r.range); };
 for (const c of CATEGORIES.filter((x) => x.structure !== 'service')) {
   brandCats += 1;
   const read = READ[c.id];
   const k = count(read ? read() : []);
-  const deep = [...k.byBrand.entries()].filter(([b, n]) => deepEnough(c.id, b, n)).length;
+  const deep = [...k.byBrand.entries()].filter(([b, n]) => deepEnough(c.id, b, n, k)).length;
   const ok = c.structure === 'brand' && k.brands >= BRAND_TARGET.brands && deep >= BRAND_TARGET.brands;
   if (k.byBrand.size) {
     depth.push(`## ${c.department}: ${c.label}`, '', `${k.byBrand.size} brands, ${deep} deep enough, ${k.byBrand.size - deep} short.`, '', '| Brand | Products | Status |', '|---|---|---|');
     for (const [b, n] of [...k.byBrand.entries()].sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]))) {
       const r = RANGES[`${c.id}|${b}`];
-      depth.push(`| ${b.replace(/\|/g, '/')} | ${n} | ${n >= BRAND_TARGET.productsPerBrand ? 'Meets 100' : r && n >= r.range ? `Whole range (${r.range})` : r ? `Short: ${r.range - n} of its ${r.range} to go` : `Short: ${BRAND_TARGET.productsPerBrand - n} to go`} |`);
+      const held = heldFor(k, r, b, n);
+      const where = r?.market ? ` in ${marketOf(r.market)}` : '';
+      depth.push(`| ${b.replace(/\|/g, '/')} | ${n} | ${n >= BRAND_TARGET.productsPerBrand ? 'Meets 100' : r && held >= r.range ? `Whole range${where} (${r.range})` : r ? `Short: ${r.range - held} of its ${r.range}${where} to go` : `Short: ${BRAND_TARGET.productsPerBrand - n} to go`} |`);
     }
     depth.push('');
   }
