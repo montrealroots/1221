@@ -23,17 +23,17 @@ which never counts toward the target.
 | Apparel | Cultural Clothing | 52 | 100% | 104 | 1 / 2 / 3 | 0 | 530 | 104 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Shoes, Boots And Sandals | 61 | 100% | 148 | 1 / 2 / 12 | 0 | 1535 | 155 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 60 | 100% | 198 | 1 / 2 / 32 | 0 | 1110 | 219 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Bags | 54 | 100% | 123 | 1 / 2 / 9 | 0 | 185 | 128 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 56 | 100% | 171 | 1 / 2 / 15 | 0 | 233 | 176 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Watches | 54 | 100% | 125 | 1 / 2 / 8 | 0 | 126 | 125 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Jewelry | 50 | 100% | 105 | 1 / 2 / 15 | 0 | 166 | 106 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Watches | 55 | 100% | 167 | 1 / 2 / 12 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Jewelry | 50 | 100% | 136 | 1 / 2 / 15 | 0 | 197 | 139 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 110 | 1 / 1 / 10 | 0 | 236 | 377 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 56 | 100% | 106 | 1 / 1 / 6 | 0 | 106 | 107 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Televisions | 50 | 100% | 263 | 1 / 2 / 40 | 0 | 265 | 307 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Audio Equipment | 68 | 100% | 199 | 1 / 2 / 13 | 0 | 260 | 212 | 0 | CA, GB, IE, MX, US | No |
-| Home | Furniture | 65 | 100% | 221 | 1 / 2 / 90 | 0 | 221 | 294 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Televisions | 51 | 100% | 271 | 1 / 2 / 40 | 0 | 273 | 328 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
+| Home | Furniture | 66 | 100% | 268 | 1 / 2 / 90 | 0 | 268 | 341 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 53 | 100% | 88 | 1 / 1 / 29 | 0 | 88 | 249 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 61 | 100% | 102 | 1 / 2 / 5 | 0 | 117 | 102 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 110 | 1 / 2 / 5 | 0 | 112 | 110 | 0 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 534 | 145 | 8 |
+| Stores And Chains | 554 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 
