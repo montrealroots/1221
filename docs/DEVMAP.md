@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-380 commands; 376 named by a test, 4 not.
+380 commands; 379 named by a test, 1 not.
 
 ## aircraft
 
@@ -322,47 +322,47 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `home.alarm` | `src/engine/systems/alarm.ts` | `Home.tsx` | `alarm.test.ts` | Rent And A Roof |
-| `home.borrow` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
+| `home.borrow` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.buy_game` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
-| `home.buy_paint` | `src/engine/systems/paint.ts` | `HomesWorkspace.tsx` | `paint.test.ts` | Rent And A Roof |
+| `home.buy_paint` | `src/engine/systems/paint.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` `paint.test.ts` | Rent And A Roof |
 | `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `furniture-makers.test.ts` `hosting.test.ts` `journey-belongings.test.ts` `journeys.test.ts` | Rent And A Roof |
-| `home.buy_portable` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
-| `home.buy_units` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
-| `home.cancel` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.cancel_works` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homeworks.test.ts` | Rent And A Roof |
+| `home.buy_portable` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.buy_units` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.cancel` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.cancel_works` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homeworks.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.charger` | `src/engine/systems/charging.ts` | `Home.tsx` | `evs.test.ts` | Rent And A Roof |
-| `home.cleaner` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `away.test.ts` `dwelling.test.ts` | Rent And A Roof |
-| `home.cleaner_key` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `dwelling.test.ts` | Rent And A Roof |
+| `home.cleaner` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `away.test.ts` `dwelling.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.cleaner_key` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `dwelling.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.console` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
-| `home.end_hold` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
-| `home.end_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
-| `home.end_sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
-| `home.end_tenancy` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | **none** | Rent And A Roof |
-| `home.fit` | `src/engine/systems/appliances.ts` | `HomesWorkspace.tsx` | `appliance-models.test.ts` `appliances.test.ts` | Rent And A Roof |
-| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` | Rent And A Roof |
-| `home.gardener` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | **none** | Rent And A Roof |
-| `home.hold_mail` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-acting-travel.test.ts` | Rent And A Roof |
-| `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `telecom.test.ts` | Rent And A Roof |
-| `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `assistant.test.ts` `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `livelihood.test.ts` | Rent And A Roof |
+| `home.end_hold` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.end_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` `lodgers.test.ts` | Rent And A Roof |
+| `home.end_sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.end_tenancy` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
+| `home.fit` | `src/engine/systems/appliances.ts` | `HomesWorkspace.tsx` | `appliance-models.test.ts` `appliances.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.gardener` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
+| `home.hold_mail` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-acting-travel.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `journey-homes.test.ts` `telecom.test.ts` | Rent And A Roof |
+| `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `assistant.test.ts` `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `journey-homes.test.ts` `livelihood.test.ts` | Rent And A Roof |
 | `home.move_by` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `motorhomes.test.ts` | Rent And A Roof |
-| `home.move_in` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `journey-housing-construction.test.ts` | Rent And A Roof |
-| `home.offer` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `homes.test.ts` | Rent And A Roof |
-| `home.pay_landlord` | `src/engine/systems/household.ts` | `Home.tsx` | `homes-cohesion.test.ts` `payments.test.ts` | Rent And A Roof |
-| `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` | Rent And A Roof |
-| `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `homeworks.test.ts` `journey-housing-construction.test.ts` `permits.test.ts` | Rent And A Roof |
-| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
+| `home.move_in` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `journey-homes.test.ts` `journey-housing-construction.test.ts` | Rent And A Roof |
+| `home.offer` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.pay_landlord` | `src/engine/systems/household.ts` | `Home.tsx` | `homes-cohesion.test.ts` `journey-homes.test.ts` `payments.test.ts` | Rent And A Roof |
+| `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `homeworks.test.ts` `journey-homes.test.ts` `journey-housing-construction.test.ts` `permits.test.ts` | Rent And A Roof |
+| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `journey-belongings.test.ts` `journey-homes.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
 | `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `houseguests.test.ts` `room-list.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
-| `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
+| `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `journey-homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
-| `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journeys.test.ts` `pet-care.test.ts` | Rent And A Roof |
+| `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-homes.test.ts` `journeys.test.ts` `pet-care.test.ts` | Rent And A Roof |
 | `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` `partway.test.ts` `programmes.test.ts` `shortfalls.test.ts` `televisions.test.ts` | Rent And A Roof |
-| `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
+| `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` `lodgers.test.ts` | Rent And A Roof |
 | `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` `programmes.test.ts` | Rent And A Roof |
 | `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 
@@ -662,6 +662,6 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `world.dismiss_decision` | `src/engine/world/world.ts` | `Home.tsx` | `smoke.test.ts` | What Needs You |
-| `world.mark_read` | `src/engine/world/world.ts` | `Home.tsx` | **none** | What Needs You |
+| `world.mark_read` | `src/engine/world/world.ts` | `Home.tsx` | `journey-homes.test.ts` | What Needs You |
 | `world.set_preferences` | `src/engine/world/world.ts` | `TimeControls.tsx` `game-context.tsx` | `plans.test.ts` `tutorial.test.ts` | The Clock |
-| `world.take_decision_action` | `src/engine/world/world.ts` | `Home.tsx` | `assistant.test.ts` `smoke.test.ts` | What Needs You |
+| `world.take_decision_action` | `src/engine/world/world.ts` | `Home.tsx` | `assistant.test.ts` `journey-homes.test.ts` `smoke.test.ts` | What Needs You |

@@ -53,6 +53,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Belongings | `tests/journey-belongings.test.ts` | a phone protected, cracked, claimed and its battery replaced; a TV and a subscription billed and stopped; Britain's license; a dog fed, walked and walked for; a ring commissioned, engraved, pawned and redeemed at New York's 4%; luggage and packing lists; a flat-pack chair |
 | Cars | `tests/journey-cars.test.ts` | a used Camry from forecourt to buyer through a breakdown, a stand-in, fuel to the cent and a sale; a London private sale's transfer and Britain's premium loadings; leases bought out and returned; a repossession redeemed; a caravan towed only by what's rated to |
 | The career and the school | `tests/journey-career.test.ts` | headshots, a reel, agencies queried and signed, an offer countered 12.45% higher, a guest part's checks less the agent's and the manager's commissions and tax to the cent, union fees and dues, a play's replacement for a missed call, the school's shifts and Cabaret, a pension and Social Security at 62, Toronto's T1287 withholding |
+| Homes | `tests/journey-homes.test.ts` | a renter moved to a one-bedroom, its deposits to the cent, rent paid ahead and taken on the day, internet, insurance and a cleaner billed and stopped, a portable washer taking the wash home, the post held and a sitter; a buyer's earnest, mortgage, escrow and principal to the cent, central air's 72.1% of its cost in the value, works with California's capped deposit, a lodger, a refinance and an equity loan, the home let through a manager and the tenancy ended, and the sale paying both loans off |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -116,8 +117,8 @@ incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: homes, clothes, people, travel, food and routines are next; the bank, papers,
-  belongings, cars and the career are done.
+- The domain journeys continue: clothes, people, travel, food and routines are next; the bank, papers, belongings,
+  cars, the career and homes are done.
 - The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
 - No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.

@@ -16,9 +16,9 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 200
-- Implemented But Unverified: 176
-- Partially Implemented: 4
+- Verified (journey): 227
+- Implemented But Unverified: 152
+- Partially Implemented: 1
 - Commands in all: 380
 
 ## Commands
@@ -207,47 +207,47 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.therapy` | Implemented But Unverified | Between Jobs | PapersWorkspace.tsx | `systems/therapy.ts` | — (also therapyRefusal) | therapy; status | Yes | — | 1 | — |
 | `health.treat` | Implemented But Unverified | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | You don’t have that. | — | — | — | 1 | — |
 | `home.alarm` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/alarm.ts` | Your home has none.; … is more than the bank can cover. (also alarmRefusal) | alarm; living | Yes | — | 1 | — |
-| `home.borrow` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also borrowRefusal) | equity | Yes | mortgage | 1 | — |
+| `home.borrow` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also borrowRefusal) | equity | Yes | mortgage | 2 | journey-homes.test.ts |
 | `home.buy_game` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | That isn’t sold where you live.; It plays on a … console, and you have none.; A game is kept in a home of your own.; It comes to …, more than you can pay. | subscriptions | Yes | home | 2 | journey-belongings.test.ts |
-| `home.buy_paint` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/paint.ts` | — | — | — | — | 1 | — |
+| `home.buy_paint` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/paint.ts` | — | — | — | — | 2 | journey-homes.test.ts |
 | `home.buy_piece` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/furnishings.ts` | The bank couldn’t pay for it. (also pieceRefusal) | ikeaCredit | Yes | home | 5 | journey-belongings.test.ts; journeys.test.ts |
-| `home.buy_portable` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/appliances.ts` | No such machine.; The bank couldn’t pay for it. (also portableRefusal) | portables | Yes | home.portable_out | 1 | — |
-| `home.buy_units` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/appliances.ts` | The bank couldn’t pay for them. (also unitsRefusal, portableRefusal) | acUnits | Yes | home.units_out | 1 | — |
-| `home.cancel` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | It isn’t listed.; There’s no purchase under way to call off. | — | — | — | 1 | — |
-| `home.cancel_works` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | There’s no such work under way.; No cooling-off law was read where the home is, and the contract stands.; The cooling-off period ended …, and the contract stands. | works | Yes | — | 1 | — |
+| `home.buy_portable` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/appliances.ts` | No such machine.; The bank couldn’t pay for it. (also portableRefusal) | portables | Yes | home.portable_out | 2 | journey-homes.test.ts |
+| `home.buy_units` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/appliances.ts` | The bank couldn’t pay for them. (also unitsRefusal, portableRefusal) | acUnits | Yes | home.units_out | 2 | journey-homes.test.ts |
+| `home.cancel` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | It isn’t listed.; There’s no purchase under way to call off. | — | — | — | 2 | journey-homes.test.ts |
+| `home.cancel_works` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | There’s no such work under way.; No cooling-off law was read where the home is, and the contract stands.; The cooling-off period ended …, and the contract stands. | works | Yes | — | 2 | journey-homes.test.ts |
 | `home.charger` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/charging.ts` | … is more than the bank can cover. | — | Yes | — | 1 | — |
-| `home.cleaner` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | It isn’t your place to have cleaned. | — | — | — | 2 | — |
-| `home.cleaner_key` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | You have no cleaner. | — | — | — | 1 | — |
+| `home.cleaner` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | It isn’t your place to have cleaned. | — | — | — | 3 | journey-homes.test.ts |
+| `home.cleaner_key` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | You have no cleaner. | — | — | — | 2 | journey-homes.test.ts |
 | `home.console` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | That isn’t sold where you live.; A console goes in a home of your own.; It comes to …, more than you can pay. | — | Yes | home | 2 | journey-belongings.test.ts |
-| `home.end_hold` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/away.ts` | The post isn’t held. | — | — | — | 1 | — |
-| `home.end_lodger` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | No lodger lives there. | lodgers | — | — | 1 | — |
-| `home.end_sitter` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/away.ts` | No sitter’s staying. | — | — | — | 1 | — |
-| `home.end_tenancy` | Partially Implemented | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | It isn’t let or offered. | tenancies | — | — | 0 | — |
-| `home.fit` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/appliances.ts` | You don’t own that home.; No such appliance.; It isn’t offered in that color.; It costs …)}, fitted.; and 1 more (also fitRefusal, unitsRefusal) | applianceModels; laundryBefore; appliances; improvements; improvements (added to) | Yes | home.appliance_out | 2 | — |
-| `home.furnish` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/furniture.ts` | No such piece.; The bank couldn’t pay for it. (also furnishRefusal, fitRefusal, mattressRefusal) | — | Yes | home | 5 | — |
-| `home.gardener` | Partially Implemented | Rent And A Roof | HomesWorkspace.tsx | `systems/lawns.ts` | You don’t own that home.; It has no lawn of yours to keep. | — | — | — | 0 | — |
-| `home.hold_mail` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | … is more than the bank can cover. (also holdRefusal) | mailHold | Yes | — | 2 | journey-acting-travel.test.ts |
-| `home.internet` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/telecom.ts` | … is more than the bank can cover. (also switchRefusal) | — | — | — | 1 | — |
-| `home.let` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also letRefusal) | tenancies (added to) | — | — | 1 | — |
-| `home.manager` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/propertymanagers.ts` | You don’t own that home.; No agent manages it.; No agent there publishes its fees.; … manages it already. | manager | — | — | 1 | — |
-| `home.move` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/household.ts` | A room in a shared flat, or a place of your own.; You’re away: a home is found back in …. | — | — | — | 5 | — |
+| `home.end_hold` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | The post isn’t held. | — | — | — | 2 | journey-homes.test.ts |
+| `home.end_lodger` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | No lodger lives there. | lodgers | — | — | 2 | journey-homes.test.ts |
+| `home.end_sitter` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | No sitter’s staying. | — | — | — | 2 | journey-homes.test.ts |
+| `home.end_tenancy` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | It isn’t let or offered. | tenancies | — | — | 1 | journey-homes.test.ts |
+| `home.fit` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/appliances.ts` | You don’t own that home.; No such appliance.; It isn’t offered in that color.; It costs …)}, fitted.; and 1 more (also fitRefusal, unitsRefusal) | applianceModels; laundryBefore; appliances; improvements; improvements (added to) | Yes | home.appliance_out | 3 | journey-homes.test.ts |
+| `home.furnish` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/furniture.ts` | No such piece.; The bank couldn’t pay for it. (also furnishRefusal, fitRefusal, mattressRefusal) | — | Yes | home | 6 | journey-homes.test.ts |
+| `home.gardener` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lawns.ts` | You don’t own that home.; It has no lawn of yours to keep. | — | — | — | 1 | journey-homes.test.ts |
+| `home.hold_mail` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | … is more than the bank can cover. (also holdRefusal) | mailHold | Yes | — | 3 | journey-acting-travel.test.ts; journey-homes.test.ts |
+| `home.internet` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/telecom.ts` | … is more than the bank can cover. (also switchRefusal) | — | — | — | 2 | journey-homes.test.ts |
+| `home.let` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also letRefusal) | tenancies (added to) | — | — | 2 | journey-homes.test.ts |
+| `home.manager` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/propertymanagers.ts` | You don’t own that home.; No agent manages it.; No agent there publishes its fees.; … manages it already. | manager | — | — | 2 | journey-homes.test.ts |
+| `home.move` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/household.ts` | A room in a shared flat, or a place of your own.; You’re away: a home is found back in …. | — | — | — | 6 | journey-homes.test.ts |
 | `home.move_by` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/furniture.ts` | — | moveBy | — | — | 1 | — |
-| `home.move_in` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also moveInRefusal) | — | — | — | 2 | journey-housing-construction.test.ts |
-| `home.offer` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | — (also offerRefusal) | offersMade; counter | — | — | 2 | — |
-| `home.pay_landlord` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/household.ts` | You have no landlord to pay.; Say how much.; … holds ….; You owe …; there's no rent to pay ahead. | payments | Yes | — | 2 | — |
-| `home.pay_mortgage` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | There’s no loan on it to pay.; Say how much.; The bank can’t cover it. | — | Yes | — | 1 | — |
-| `home.refinance` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also refinanceRefusal) | mortgage | Yes | mortgage | 1 | — |
-| `home.renovate` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home.; No such work. (also projectRefusal) | works (added to) | Yes | home.planning_refused; WORKS_KIND | 5 | journey-housing-construction.test.ts |
-| `home.renters_insurance` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | Renters insurance is for somebody renting. | — | — | — | 3 | journey-belongings.test.ts |
+| `home.move_in` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also moveInRefusal) | — | — | — | 3 | journey-homes.test.ts; journey-housing-construction.test.ts |
+| `home.offer` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | — (also offerRefusal) | offersMade; counter | — | — | 3 | journey-homes.test.ts |
+| `home.pay_landlord` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/household.ts` | You have no landlord to pay.; Say how much.; … holds ….; You owe …; there's no rent to pay ahead. | payments | Yes | — | 3 | journey-homes.test.ts |
+| `home.pay_mortgage` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | There’s no loan on it to pay.; Say how much.; The bank can’t cover it. | — | Yes | — | 2 | journey-homes.test.ts |
+| `home.refinance` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also refinanceRefusal) | mortgage | Yes | mortgage | 2 | journey-homes.test.ts |
+| `home.renovate` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home.; No such work. (also projectRefusal) | works (added to) | Yes | home.planning_refused; WORKS_KIND | 6 | journey-homes.test.ts; journey-housing-construction.test.ts |
+| `home.renters_insurance` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/dwelling.ts` | Renters insurance is for somebody renting. | — | — | — | 4 | journey-belongings.test.ts; journey-homes.test.ts |
 | `home.repair_machine` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/appliancefaults.ts` | No such machine. (also repairRefusal) | — | Yes | — | 1 | — |
 | `home.replace_mattress` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/furniture.ts` | You have no bed of your own.; SLATE keeps no mattress price where you live yet.; The bank couldn’t pay for it. (also mattressRefusal) | mattressAt | Yes | — | 2 | — |
 | `home.room_use` | Implemented But Unverified | Rent And A Roof | BelongingsWorkspace.tsx | `systems/rooms.ts` | A room’s use is chosen in a home you own and live in.; That isn’t a spare bedroom.; A guest is staying in it, or coming to.; What’s stored wouldn’t fit the closets without it: move some of it out first. | roomUses | — | — | 2 | — |
 | `home.security` | Implemented But Unverified | Rent And A Roof | Home.tsx | `systems/homesecurity.ts` | No such device.; … is more than the bank can cover. (also securityRefusal) | security | Yes | — | 1 | — |
-| `home.sell` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home.; A room in a shared flat, or a place of your own, after. (also sellRefusal) | selling; tenancies | — | SALE_KIND | 3 | — |
+| `home.sell` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home.; A room in a shared flat, or a place of your own, after. (also sellRefusal) | selling; tenancies | — | SALE_KIND | 4 | journey-homes.test.ts |
 | `home.sell_back` | Implemented But Unverified | Rent And A Roof | BelongingsWorkspace.tsx | `systems/furnishings.ts` | — (also buybackRefusal) | items; ikeaCredit | — | — | 1 | — |
-| `home.sitter` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | … is more than the bank can cover. (also sitterRefusal) | sitter | Yes | — | 3 | journeys.test.ts |
+| `home.sitter` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/away.ts` | … is more than the bank can cover. (also sitterRefusal) | sitter | Yes | — | 4 | journey-homes.test.ts; journeys.test.ts |
 | `home.subscribe` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | That isn’t offered where you live.; You subscribe to it already.; It comes to …, more than you can pay. | subscriptionsOf (added to) | Yes | — | 6 | journey-belongings.test.ts |
-| `home.take_lodger` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | You don’t own that home. (also lodgerRefusal) | lodgersIn (added to) | — | — | 1 | — |
+| `home.take_lodger` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | You don’t own that home. (also lodgerRefusal) | lodgersIn (added to) | — | — | 2 | journey-homes.test.ts |
 | `home.tv_licence` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | No TV license is needed where you live.; Yours runs more than another month.; It comes to …, more than you can pay. | tvLicence | Yes | — | 3 | journey-belongings.test.ts |
 | `home.unsubscribe` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | You don’t subscribe to it. | subscriptions | — | — | 2 | journey-belongings.test.ts |
 | `hotel.breakfast` | Implemented But Unverified | Getting Around | TravelWorkspace.tsx | `systems/hotelbreakfast.ts` | The payment didn’t go through. (also breakfastRefusal) | — | Yes | — | 1 | — |
@@ -402,9 +402,9 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `watch.battery` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/watches.ts` | The bank can’t pay for it. (also batteryRefusal) | at; batteryAt | Yes | service; watch.back | 2 | journey-belongings.test.ts |
 | `watch.service` | Implemented But Unverified | Rent And A Roof | BelongingsWorkspace.tsx | `systems/watches.ts` | Only a mechanical watch whose maker’s service SLATE keeps is serviced here.; The … isn’t to hand.; … prices no service where you are.; The bank can’t pay for it. | at; servicedAt | Yes | service; watch.back; home; person | 1 | — |
 | `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision. | — | — | — | 1 | — |
-| `world.mark_read` | Partially Implemented | What Needs You | Home.tsx | `world/world.ts` | — | — | — | — | 0 | — |
+| `world.mark_read` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | — | — | — | — | 1 | journey-homes.test.ts |
 | `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | — | — | — | — | 2 | — |
-| `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; That action isn’t available on this item. | — | — | — | 2 | — |
+| `world.take_decision_action` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | No such decision.; That action isn’t available on this item. | — | — | — | 3 | journey-homes.test.ts |
 
 ## Scheduled kinds
 
