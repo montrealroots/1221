@@ -21,7 +21,11 @@
  * over, read secondhand), Facebook Marketplace free in Ireland and Mercado
  * Libre free in Mexico (both read secondhand). It sells for its value in
  * about 30 days, AutoTrader.ca's average private sale and the only one any
- * publisher gives, SLATE's estimate elsewhere. The buyer comes to see it,
+ * publisher gives, SLATE's estimate elsewhere; from 2026-10-05 in Britain in
+ * Auto Trader's days to sell for May 2026 by fuel, 29 for petrol, 32 for
+ * diesel and 24 for an electric car (its retailers' stock: no private
+ * figure is published, so Britain's measured pace stands in for it; a
+ * hybrid takes the 30). The buyer comes to see it,
  * so it's sold when they're in its town; away, the sale waits a day at a
  * time. Taken down, the fee isn't given back. Sold to a dealer meanwhile,
  * the listing ends.
@@ -43,6 +47,10 @@ export interface Listing { platform: string; sellsAt: Instant }
 export const PRIVATE_SALE_KIND = 'vehicle.private_sale';
 /** Days a private listing takes to sell: AutoTrader.ca's average. */
 export const PRIVATE_DAYS = 30;
+/** Britain's by fuel: Auto Trader's days to sell, May 2026. */
+export const GB_DAYS_TO_SELL: Readonly<Partial<Record<string, number>>> = { petrol: 29, diesel: 32, ev: 24 };
+/** The days a car listed privately takes to sell where it's registered. */
+export const privateDaysOf = (v: OwnedVehicle): number => (v.jurisdiction === 'GB' ? GB_DAYS_TO_SELL[modelById(v.modelId)?.fuel ?? ''] : undefined) ?? PRIVATE_DAYS;
 /** Britain's private premium over a dealer, the middle of Autotrader's 10 to 15%. */
 export const PRIVATE_PREMIUM = 1.125;
 /** KBB's one worked example: its trade-in under its private-party value, and their ratio. */
@@ -118,7 +126,7 @@ export function registerCarSale(sim: Simulation): void {
     const v = vehiclesOf(person).find((x) => x.id === p.vehicleId)!;
     const q = listingQuote(s, v)!;
     if (q.fee > 0 && !payFromBank(s, person, q.fee, `${q.platform}, the ${nameOf(v)} listed`, 'vehicle')) throw new CommandError(`${formatMoney(q.fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    v.listed = { platform: q.platform, sellsAt: s.now + PRIVATE_DAYS * MS_DAY };
+    v.listed = { platform: q.platform, sellsAt: s.now + privateDaysOf(v) * MS_DAY };
     s.schedule({ at: v.listed.sellsAt, kind: PRIVATE_SALE_KIND, label: `A Buyer For The ${nameOf(v)}`, category: 'vehicle', priority: 40, payload: { personId: person.id, vehicleId: v.id } });
     return { ...v.listed, fee: q.fee };
   });

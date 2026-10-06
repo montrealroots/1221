@@ -8,8 +8,8 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { valueOf, vehiclesOf } from '@/engine/systems/vehicles';
-import { KBB_EXAMPLE, PRIVATE_DAYS, PRIVATE_PREMIUM, dealerOffer, listingQuote, privateValue } from '@/engine/systems/carsale';
+import { modelById, valueOf, vehiclesOf } from '@/engine/systems/vehicles';
+import { GB_DAYS_TO_SELL, KBB_EXAMPLE, PRIVATE_DAYS, PRIVATE_PREMIUM, dealerOffer, listingQuote, privateDaysOf, privateValue } from '@/engine/systems/carsale';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const inSave = (sim: ReturnType<typeof life>, cents: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur)!; };
@@ -86,5 +86,17 @@ describe('a private listing', () => {
     sim.advanceTo(l.sellsAt + 60_000);
     expect(v.soldAt).toBeUndefined();
     expect(v.listed).toBeUndefined();
+  });
+});
+
+describe('a private sale in Britain (from 2026-10-05)', () => {
+  it('takes Auto Trader’s days to sell for the car’s fuel', () => {
+    expect(GB_DAYS_TO_SELL).toEqual({ petrol: 29, diesel: 32, ev: 24 });
+    const { sim, v } = bought('uk-eng-london', 'gb-volkswagen-polo', 'sale-gb-days');
+    const days = GB_DAYS_TO_SELL[modelById(v.modelId)!.fuel] ?? PRIVATE_DAYS;
+    expect(privateDaysOf(v)).toBe(days);
+    const l = sim.must<{ sellsAt: number }>({ kind: 'vehicle.list', payload: { vehicleId: v.id } });
+    expect(l.sellsAt - sim.now).toBe(days * MS_DAY);
+    expect(days).not.toBe(PRIVATE_DAYS);
   });
 });
