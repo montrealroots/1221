@@ -1,0 +1,118 @@
+{
+  "topic": "Tesla NACS/J1772/CCS adapter prices, GM NACS adapter price, and idle fees at Tesla Superchargers and Electrify America",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "Third-party (Lectron) J1772-to-Tesla(NACS) AC adapter price range",
+      "value": "40-160",
+      "unit": "USD",
+      "market": "us",
+      "source": "https://evdigest.org/resources/nacs-adapter-guide",
+      "quote": "AC adapters (NACS<->J1772) handle 40-80 A at home or destination chargers and cost $40-$160.",
+      "confidence": "low"
+    },
+    {
+      "what": "Specific Lectron J1772-to-Tesla(NACS) adapter, 80A/240V",
+      "value": 36.99,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://ev-lectron.com/products/lectron-vortex-plug-tesla-supercharger-nacs-to-ccs-adapter",
+      "quote": "Lectron J1772 to Tesla (NACS) EV Adapter at 240V | 80 Amp costs $36.99",
+      "confidence": "low"
+    },
+    {
+      "what": "Specific Lectron Tesla(NACS)-to-J1772 adapter, 48A/240V (for Tesla vehicles to use J1772 stations)",
+      "value": 112.99,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://ev-lectron.com/products/lectron-tesla-to-j1772-adapter-max-48a-250v-for-tesla-high-powered-connectors-destination-chargers-and-mobile-connectors-black",
+      "quote": "Lectron Tesla (NACS) to J1772 EV Adapter at 240V | 48 Amp is priced at $112.99",
+      "confidence": "low"
+    },
+    {
+      "what": "Third-party NACS-to-CCS DC fast-charging adapter price range",
+      "value": "175-240",
+      "unit": "USD",
+      "market": "us",
+      "source": "https://evdigest.org/resources/nacs-adapter-guide",
+      "quote": "DC adapters (CCS<->NACS) handle 150-250 kW at public fast chargers and cost $175-$240.",
+      "confidence": "low"
+    },
+    {
+      "what": "Lectron Vortex Plug NACS-to-CCS adapter, specific price",
+      "value": 169.99,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://ev-lectron.com/products/lectron-vortex-plug-tesla-supercharger-nacs-to-ccs-adapter",
+      "quote": "Lectron Vortex Plug NACS to CCS Adapter is priced at $169.99 with free shipping",
+      "confidence": "low"
+    },
+    {
+      "what": "GM official NACS DC fast-charging adapter MSRP (post-2026 model year pricing)",
+      "value": 299.00,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://accessories.chevrolet.com/product/gm-nacs-dc-adapter-85836744",
+      "quote": "the official MSRP for the GM NACS DC Adapter is $299.00",
+      "confidence": "medium"
+    },
+    {
+      "what": "GM NACS DC adapter price for pre-2026 EVs (Bolt, Silverado EV, Hummer EV)",
+      "value": 225,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.teslarati.com/gm-announces-nacs-access-but-charges-225-per-adapter/",
+      "quote": "GM's pre-2026 EVs (Bolt, Silverado EV, and Hummer EV) require a $225 NACS adapter",
+      "confidence": "medium"
+    },
+    {
+      "what": "GM NACS Level 2 (AC only) adapter MSRP",
+      "value": 195,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://accessories.gmc.com/product/gm-nacs-level-2-adapter-86380864",
+      "quote": "The GM NACS Level 2 adapter has an MSRP of $195, which provides charging at NACS home/AC chargers only, not DC fast chargers.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Tesla Supercharger idle fee, station >=50% occupied",
+      "value": 0.50,
+      "unit": "USD/minute",
+      "market": "us",
+      "source": "https://tslna.com/en/tesla-supercharger-idle-congestion-fees-guide/",
+      "quote": "When a Tesla Supercharger station is more than half full, the idle fee rate is about $0.50 per minute.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Tesla Supercharger idle fee, station 100% occupied",
+      "value": 1.00,
+      "unit": "USD/minute",
+      "market": "us",
+      "source": "https://tslna.com/en/tesla-supercharger-idle-congestion-fees-guide/",
+      "quote": "When the station is 100% full, the rate doubles to about $1.00 per minute.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Tesla Supercharger idle fee grace period before charging starts",
+      "value": 5,
+      "unit": "minutes",
+      "market": "us",
+      "source": "https://tslna.com/en/tesla-supercharger-idle-congestion-fees-guide/",
+      "quote": "You get a five-minute grace period to unplug and drive away before any idle fee is charged.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Electrify America idle fee (post charging-complete)",
+      "value": 0.40,
+      "unit": "USD/minute",
+      "market": "us",
+      "source": "https://chargecostlab.com/blog/ev-charging-idle-congestion-fees-2026",
+      "quote": "Electrify America's idle fee is $0.40 per minute as of 2026. The idle fee starts when charging is complete... drivers who do not unplug and move their vehicle ten minutes after their charging session is complete will be charged a $0.40 per-minute idle fee.",
+      "confidence": "medium"
+    }
+  ],
+  "notFound": [
+    { "what": "Tesla's own official current price for a NACS-to-CCS (or CCS-to-NACS) adapter sold directly by Tesla (vs third-party Lectron prices found above)", "looked": ["Tesla NACS to J1772 adapter price CCS adapter price 2026 — search surfaced mainly third-party Lectron/aftermarket products, not Tesla's own shop listing"] },
+    { "what": "UK, Ireland, Canada, or Mexico equivalent adapter pricing or idle-fee policy (topic is US-specific by nature, since NACS/J1772/CCS adapters and these specific networks are primarily a US phenomenon)", "looked": ["Not separately searched; all sources found were US-market"] }
+  ]
+}

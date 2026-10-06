@@ -1,0 +1,118 @@
+{
+  "topic": "Mainstream hair clipper kit prices by market, blade/guard life, and fingernail/toenail growth and trim frequency",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "Wahl Chrome Pro corded hair clipper kit (basic mainstream kit) price at Walmart",
+      "value": 19.99,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.walmart.com/ip/Wahl-Chrome-Pro-Corded-Hair-Clipper-Kit-for-Men-or-Women-Black-Chrome-9670-1201/893293089",
+      "quote": "Wahl Chrome Pro, Corded Hair Clipper Kit: $19.99 USD",
+      "confidence": "medium"
+    },
+    {
+      "what": "Wahl ProSeries Elite home haircutting kit price at Walmart (fuller kit)",
+      "value": 63.62,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.walmart.com/ip/Wahl-Pro-Series-Elite-Haircutting-Hair-Clipper-Kit-for-Men-Woman-and-Children-79775/988799074",
+      "quote": "Wahl Pro Series Elite Haircutting Hair Clipper Kit: $63.62 USD",
+      "confidence": "medium"
+    },
+    {
+      "what": "Remington Quick Cut hair clipper + 9 comb attachments price at Argos (basic mainstream kit)",
+      "value": 35.00,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.argos.co.uk/product/4123770",
+      "quote": "The Remington Quick Cut Hair Clipper + 9 Comb Attachments HC4250 is priced at £35.00",
+      "confidence": "medium"
+    },
+    {
+      "what": "Remington BuzCut cordless hair and beard clipper price at Argos",
+      "value": 59.99,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.argos.co.uk/product/8518831",
+      "quote": "Remington BuzCut Hair and Beard Cordless Clipper HC8005 at £59.99",
+      "confidence": "medium"
+    },
+    {
+      "what": "Wahl Deluxe Groom Pro complete haircutting kit (20 pieces, basic mainstream kit) price at Walmart.ca",
+      "value": 29.98,
+      "unit": "CAD",
+      "market": "ca",
+      "source": "https://www.walmart.ca/en/c/kp/wahl-hair-clippers",
+      "quote": "Wahl Deluxe Groom PRO Complete Haircutting And Touch up Kit (20 Pieces) is $29.98",
+      "confidence": "low"
+    },
+    {
+      "what": "Wahl Lithium Ion Cordless Pro hair clipper kit with 12 guide combs price at Walmart.ca",
+      "value": 69.97,
+      "unit": "CAD",
+      "market": "ca",
+      "source": "https://www.walmart.ca/en/c/kp/wahl-hair-clippers",
+      "quote": "Wahl Lithium Ion Cordless Pro Hair Clipper Kit with 12 Guide Combs is priced at $69.97",
+      "confidence": "low"
+    },
+    {
+      "what": "Home-user Wahl-type clipper blade replacement interval",
+      "value": "12-24 months home use (vs 6-12 months professional daily use)",
+      "unit": "months",
+      "market": "us",
+      "source": "https://barbersets.com/blogs/blogs/how-often-should-i-replace-clipper-blades",
+      "quote": "Home users usually replace blades every 12 to 24 months, while professionals running clippers daily should swap them out every 6 to 12 months.",
+      "confidence": "low"
+    },
+    {
+      "what": "Clipper guard/comb attachment lifespan (qualitative, before becoming brittle and breaking)",
+      "value": "several years",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.shaver-spares.co.uk/Article/Wahl-Clipper-Replacement-Blades",
+      "quote": "Regarding the guards and combs, they become brittle in time (several years). The tab will break off and no longer keep the guide fixed to the clipper.",
+      "confidence": "low"
+    },
+    {
+      "what": "Average human fingernail growth rate, healthy American young adults study",
+      "value": 3.47,
+      "unit": "mm/month",
+      "market": "us",
+      "source": "https://pubmed.ncbi.nlm.nih.gov/19744178/",
+      "quote": "Average fingernail growth rate was 3.47 mm/month, according to a study of healthy American young adults. Normal fingernail growth is assumed to vary from less than 1.8 and to more than 4.5 mm per month.",
+      "confidence": "high"
+    },
+    {
+      "what": "Average human toenail growth rate, same study",
+      "value": 1.62,
+      "unit": "mm/month",
+      "market": "us",
+      "source": "https://pubmed.ncbi.nlm.nih.gov/19744178/",
+      "quote": "fingernail growth rate of 3.47 mm/month and toenails 1.62 mm/month",
+      "confidence": "high"
+    },
+    {
+      "what": "Recommended/typical fingernail trimming interval (consumer health advice, not a formal survey)",
+      "value": "every 1-2 weeks",
+      "unit": "text",
+      "market": "us",
+      "source": "https://mirelleinspo.com/nail-faqs/how-often-should-you-trim-your-nails-for-health",
+      "quote": "Most people benefit from trimming fingernails every one to two weeks to prevent snagging and manage length consistently.",
+      "confidence": "low"
+    },
+    {
+      "what": "Recommended/typical toenail trimming interval (consumer health advice, not a formal survey)",
+      "value": "every 4-6 weeks",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.signaturefoot.com/blog/how-often-should-i-trim-my-toenails-and-whats-the-proper-technique",
+      "quote": "trimming every four to six weeks is usually plenty for most people",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "Mainstream clipper kit retail price in Ireland and Mexico at a named big retailer", "looked": ["WebSearch attempts focused on US/UK/CA retailers; did not search Boots/Currys Ireland or Walmart/Liverpool Mexico for clipper kits in the time available"] },
+    { "what": "A genuine population survey (not advice-site editorial) on how often people trim their nails", "looked": ["survey how often people trim fingernails toenails frequency — results returned only advice/FAQ pages (mirelleinspo, signaturefoot, innovativefootandankle), no citable survey with a sample"] }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "topic": "Food share of total child-rearing cost, US/UK/Canada/Ireland/Mexico",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "USDA Expenditures on Children by Families 2015 report: food share of total child-rearing cost range across family types (last year USDA published this report)",
+      "value": "17-25",
+      "unit": "%",
+      "market": "us",
+      "source": "https://fns-prod.azureedge.us/sites/default/files/resource-files/crc2015-march2017.pdf",
+      "quote": "the shares of the food budget spent on children ranged between 17 to 25 percent per child for a child in a two-child, married-couple family",
+      "confidence": "medium"
+    },
+    {
+      "what": "USDA 2015 report: food share of child-rearing expenses for middle-income married-couple families specifically",
+      "value": 18,
+      "unit": "%",
+      "market": "us",
+      "source": "https://fns-prod.azureedge.us/sites/default/files/resource-files/crc2015-march2017.pdf",
+      "quote": "food accounts for 18 percent of child-rearing expenses for middle-income, married-couple families",
+      "confidence": "medium"
+    },
+    {
+      "what": "USDA report year/vintage (last edition produced; USDA discontinued the annual series after this)",
+      "value": "2015 (released Jan 2017); projected lifetime cost $233,610 for a child born 2015",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.usda.gov/about-usda/news/press-releases/2017/01/09/families-projected-spend-average-233610-raising-child-born-2015",
+      "quote": "Families Projected to Spend an Average of $233,610 Raising a Child Born in 2015",
+      "confidence": "medium"
+    },
+    {
+      "what": "Statistics Canada 'Estimating Expenditures on Children by Families in Canada, 2014 to 2017': food share of total child-rearing expenditure by family type (birth to age 22)",
+      "value": "15.8-19.8",
+      "unit": "%",
+      "market": "ca",
+      "source": "https://www150.statcan.gc.ca/n1/pub/11f0019m/11f0019m2023007-eng.htm",
+      "quote": "Food was the second-largest expense for one-parent families (18% to 20%) and the third-largest expense for two-parent families (16% to 18%). Two-parent higher-income families: 15.8%; two-parent medium-income families: 17.0%; two-parent lower-income families: 18.4%; one-parent lower-income families: 19.8%; one-parent medium-high-income families: 17.6%",
+      "confidence": "high"
+    },
+    {
+      "what": "Canada total cost of raising a child to 17, middle-income two-parent family (for context on the percentages above)",
+      "value": 293000,
+      "unit": "CAD",
+      "market": "ca",
+      "source": "https://globalnews.ca/news/10001146/canada-family-spending-children-statcan",
+      "quote": "a middle-income family with two parents and two children spends on average $293,000 to raise one child till the age of 17",
+      "confidence": "medium"
+    },
+    {
+      "what": "CPAG 'Cost of a Child' UK: annual food cost estimate rising with age (not expressed as a % share, but an absolute figure)",
+      "value": "£1,200/year (young child) to over £2,500/year (teenager)",
+      "unit": "GBP/year",
+      "market": "uk",
+      "source": "https://cpag.org.uk/news/cost-child-2025",
+      "quote": "CPAG estimates suggest food costs rise from around £1,200 per year for a young child to over £2,500 per year for a teenager.",
+      "confidence": "low"
+    },
+    {
+      "what": "CPAG total cost of a child to age 18, 2025 report",
+      "value": "£250,000 (couple) / £290,000 (lone parent)",
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://cpag.org.uk/news/cost-child-2025",
+      "quote": "the cost of raising a child to age 18 is £250,000 for a couple and £290,000 for a lone parent",
+      "confidence": "medium"
+    },
+    {
+      "what": "Mexico: household (not child-specific) share of spending on food, beverages and tobacco, INEGI ENIGH 2024",
+      "value": 37.9,
+      "unit": "%",
+      "market": "mx",
+      "source": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/enigh/ENIGH2024_RR.pdf",
+      "quote": "food, beverages and tobacco corresponded to 24,674 pesos, representing 37.9 percent of household spending",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "A Mexico-specific percentage of total child-rearing cost (not whole-household spending) attributable to food, from INEGI or an equivalent official source", "looked": ["Mexico costo de crianza de un hijo gasto en alimentación porcentaje INEGI — only whole-household ENIGH food-spending shares found, and unsourced blog estimates of lifetime totals (e.g. '3.2 million pesos on food over 18 years'), none presented as an official % breakdown of child-rearing cost"] },
+    { "what": "An Ireland-specific percentage figure for food's share of total child-rearing cost (VPSJ Minimum Essential Standard of Living or Barnardos)", "looked": ["Ireland cost of raising a child food share Barnardos VPSJ — found absolute food-cost figures (e.g. €780-910 to feed a baby over 6 months) and food-poverty survey stats, but no published % share of total child cost"] }
+  ]
+}
