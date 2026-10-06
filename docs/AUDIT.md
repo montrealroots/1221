@@ -56,6 +56,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Homes | `tests/journey-homes.test.ts` | a renter moved to a one-bedroom, its deposits to the cent, rent paid ahead and taken on the day, internet, insurance and a cleaner billed and stopped, a portable washer taking the wash home, the post held and a sitter; a buyer's earnest, mortgage, escrow and principal to the cent, central air's 72.1% of its cost in the value, works with California's capped deposit, a lodger, a refinance and an equity loan, the home let through a manager and the tenancy ended, and the sale paying both loans off |
 | People | `tests/journey-people.test.ts` | a meal out with a friend paid and remembered, a second ask over the same hour refused; Tinder Plus paid, its matches, and stopped; a classmate dated to a couple, moved in, the rent and bills halved; a wedding refused then paid; a child born, raised and given a passport; a divorce's fees once, the rent whole again; a kickball season and parkrun joined, gone to, renewed and left, the dues stopping; a mother's care given, paid and left to the state; a house bought and a friend from New York to stay in its guest room; an adoption |
 | Clothes, grooming and routines | `tests/journey-clothes.test.ts` | sizes from measurements; a basket checked out online, delivered and returned by mail less its fee, once; a tee taken in by a tailor and collected; a dry-clean-only sweater worn dirty, cleaned and collected; a wash dried on a rack or in the dryer; outfits worn and deleted, and a routine that dressed them stopping where its outfit went; used sneakers bought and sold at GOAT's fees; London's orders cancelled under its law, collected, returned and left past their hold, each refunded once; a watch serviced; shampoo, razors, hairspray and makeup used by what's set and stopped when cleared; a shower's minutes metered; a salon visit and its tip; plans skipped and cancelled |
+| Travel | `tests/journey-travel.test.ts` | a round trip insured, moved a day, a car rented, the room and car held for deposits and paid, made longer with the way home, the car and the check-out following, a late check-out, and the deposits back once; a hotel made a let with a friend along, a baby on a lap; a canceled flight's refund once; a desk asking for ID after a license replaced; London's breakfast once a morning; a delayed bag's claim; a hotel booked in town; a pilot trained, tested and retested, a plane bought, flown to Boston on its fuel and sold |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -75,6 +76,9 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A sick day called in kept no student home: they were counted in class, grew and tired | the career journey | the class day read the sick day only after finding them absent | read first; the journey's case |
 | A home held one bed at most, so a guest room's bed had to be the host's own, and the host slept on the floor | the people journey | `home.furnish` refused any second bed | a bed for each bedroom of theirs, and a guest room's bed not counted as theirs to sleep in (`bedsAtHome`, `ownBed` in `systems/furniture.ts`); the journey's case and `tests/furniture.test.ts` |
 | A tailor took in a garment still on its way, paid, and the order came without it; one at a home they weren't at was taken too | the clothes journey | `alterRefusal` never asked whether it was to hand | refused as not come yet, or not to hand (`systems/tailoring.ts`); the journey's case, with a hotel stay in town |
+| A room held for a deposit forgot its hotel and its hour: paid, its breakfast, gym and pool were the town's | the travel journey | `holdForDeposit` replaced the stay | the stay kept, set out until paid (`systems/journey.ts`); the journey's case |
+| A hotel made a let left a friend's share at half the hotel, and the player paid the rest | the travel journey | `travel.stay_let` and `travel.extend` never settled the share again | `settleRoomShare`, whenever the room's price changes; the journey's case |
+| A stay made longer ran past its insurance, the way home uncovered | the travel journey | `extendQuote` never read the policy | the cover carried to the new homecoming at what each market's pricing adds, America's share of the longer stay, Canada's weeks, a single trip's price elsewhere (`coverLonger` in `systems/travelinsurance.ts`); the journey's case |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -116,15 +120,16 @@ birthday on the day the law counts it, in New York and in London.
 | 2026-10-06 | `bfd4dd7b` | `npm run gate` with `VITEST_MAX_FORKS=2` | the full suite and every check | 3,228 tests passed; the voice check failed on five law names, fixed, and every check after it run and passed |
 | 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
 | 2026-10-06 | `49c5d3b3` | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
-| 2026-10-06 | the clothes journey's commit | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | `abda6d4e` | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | the travel journey's commit | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: travel, food and the garden, health and benefits, residence papers, and land and the
-  home's extras are next; the bank, papers, belongings, cars, the career, homes, people and clothes are done. 280 of
+- The domain journeys continue: food and the garden, health and benefits, residence papers, and land and the home's
+  extras are next; the bank, papers, belongings, cars, the career, homes, people, clothes and travel are done. 297 of
   381 commands are now in a connected journey.
 - The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.

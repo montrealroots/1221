@@ -10,8 +10,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `aircraft.buy` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` | Getting Around |
-| `aircraft.sell` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` | Getting Around |
+| `aircraft.buy` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` `journey-travel.test.ts` | Getting Around |
+| `aircraft.sell` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` `journey-travel.test.ts` | Getting Around |
 
 ## bank
 
@@ -175,7 +175,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.alter` | `src/engine/systems/tailoring.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `tailoring.test.ts` | Rent And A Roof |
 | `clothes.basket_add` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.basket_remove` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` | Rent And A Roof |
-| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journey-bank.test.ts` `journey-belongings.test.ts` `journey-clothes.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journey-bank.test.ts` `journey-belongings.test.ts` `journey-clothes.test.ts` `journey-travel.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.cancel` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` | Rent And A Roof |
 | `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `take-off.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.checkout` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` `paywith.test.ts` | Rent And A Roof |
@@ -220,7 +220,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey-papers.test.ts` | Passports And Licenses |
+| `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` | Passports And Licenses |
 | `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `boardingid.test.ts` `identity.test.ts` | Passports And Licenses |
 | `documents.apply_idp` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `journey-papers.test.ts` `licensing.test.ts` | Passports And Licenses |
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And Licenses |
@@ -236,8 +236,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `residence.test.ts` | Passports And Licenses |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `away.test.ts` `idreplace.test.ts` | Passports And Licenses |
-| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey-travel.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 
@@ -370,7 +370,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `hotel.breakfast` | `src/engine/systems/hotelbreakfast.ts` | `TravelWorkspace.tsx` | `hotelbreakfast.test.ts` | Getting Around |
+| `hotel.breakfast` | `src/engine/systems/hotelbreakfast.ts` | `TravelWorkspace.tsx` | `hotelbreakfast.test.ts` `journey-travel.test.ts` | Getting Around |
 
 ## hygiene
 
@@ -434,14 +434,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
-| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `journey-travel.test.ts` `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `journey-travel.test.ts` `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
 | `luggage.delete_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journey-travel.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.pack_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.repack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 | `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
+| `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `journey-travel.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 | `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 
 ## pawn
@@ -494,7 +494,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pilot.train` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` `partway.test.ts` | Getting Around |
+| `pilot.train` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` `journey-travel.test.ts` `partway.test.ts` | Getting Around |
 
 ## reading
 
@@ -575,23 +575,23 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `travel.bag_claim` | `src/engine/systems/baggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` | Rent And A Roof |
-| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
+| `travel.bag_claim` | `src/engine/systems/baggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-travel.test.ts` | Rent And A Roof |
+| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey-travel.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
-| `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `travelchange.test.ts` | Getting Around |
-| `travel.check_out` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `local-stay.test.ts` | Getting Around |
-| `travel.child` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `childtravel.test.ts` | Getting Around |
-| `travel.companion` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `companions.test.ts` | Getting Around |
-| `travel.extend` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` | Getting Around |
-| `travel.insure` | `src/engine/systems/travelinsurance.ts` | `TravelWorkspace.tsx` | `travelinsurance.test.ts` | Getting Around |
-| `travel.late_checkout` | `src/engine/systems/latecheckout.ts` | `TravelWorkspace.tsx` | `latecheckout.test.ts` | Getting Around |
-| `travel.pay_deposit` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `checkin.test.ts` `deposits.test.ts` | Getting Around |
-| `travel.pay_rental_deposit` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` | Getting Around |
-| `travel.rent_car` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` `extend.test.ts` `rentals.test.ts` `travelchange.test.ts` | Getting Around |
-| `travel.show_id` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `hotelid.test.ts` | Getting Around |
-| `travel.stay_here` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `local-stay.test.ts` | Getting Around |
-| `travel.stay_let` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` `lets.test.ts` `staytypes.test.ts` | Getting Around |
-| `travel.take_refund` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` | Getting Around |
+| `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `journey-travel.test.ts` `travelchange.test.ts` | Getting Around |
+| `travel.check_out` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `journey-travel.test.ts` `local-stay.test.ts` | Getting Around |
+| `travel.child` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `childtravel.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.companion` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `companions.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.extend` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.insure` | `src/engine/systems/travelinsurance.ts` | `TravelWorkspace.tsx` | `journey-travel.test.ts` `travelinsurance.test.ts` | Getting Around |
+| `travel.late_checkout` | `src/engine/systems/latecheckout.ts` | `TravelWorkspace.tsx` | `journey-travel.test.ts` `latecheckout.test.ts` | Getting Around |
+| `travel.pay_deposit` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `checkin.test.ts` `deposits.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.pay_rental_deposit` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.rent_car` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` `extend.test.ts` `journey-travel.test.ts` `rentals.test.ts` `travelchange.test.ts` | Getting Around |
+| `travel.show_id` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `hotelid.test.ts` `journey-travel.test.ts` | Getting Around |
+| `travel.stay_here` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `journey-travel.test.ts` `local-stay.test.ts` | Getting Around |
+| `travel.stay_let` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` `journey-travel.test.ts` `lets.test.ts` `staytypes.test.ts` | Getting Around |
+| `travel.take_refund` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `journey-travel.test.ts` | Getting Around |
 
 ## tutorial
 

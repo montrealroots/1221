@@ -628,7 +628,7 @@ function StayLonger({ j }: { j: Journey }) {
       <select id={`longer-${j.id}`} value={days} onChange={(e) => setDays(Number(e.target.value))}>
         {Array.from({ length: 14 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n} {n === 1 ? 'Day' : 'Days'}</option>)}
       </select>
-      <Gated feature="travel.extend" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : undefined} onClick={() => {
+      <Gated feature="travel.extend" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : q.cover > 0 ? `The insurance carried on, ${formatMoney(q.cover, cur)} of it` : undefined} onClick={() => {
         if (run('travel.extend', { journeyId: j.id, day: j.leaveAt + days * MS_DAY, slot: slotOf(j) }).ok) toast(`Staying ${days} ${days === 1 ? 'day' : 'days'} longer.`, 'positive');
       }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>

@@ -137,6 +137,20 @@ export function careAway(sim: Simulation, person: Person, care: 'visit' | 'urgen
   const limit = inSave(sim, terms.medical, terms.currency);
   return Math.min(owed, inSave(sim, terms.excess, terms.currency)) + Math.max(0, owed - limit);
 }
+/**
+ * A policy carried to a later homecoming, a stay made longer (from 2026-10-06; until then the stay ran past its cover
+ * and the way home was uninsured): what more it costs, by how each market prices it. America's is a share of what was
+ * paid, so of what the longer stay adds; Canada's is by the week, so the weeks added; Britain's, Ireland's and
+ * Mexico's are a single trip's price whatever its days, so nothing more, inside the policy's longest trip.
+ */
+export function coverLonger(sim: Simulation, policy: TripPolicy, to: Instant, extra: Money): Money | string {
+  const terms = TRAVEL_POLICY[policy.market];
+  const days = Math.max(1, Math.ceil((to - policy.from) / MS_DAY));
+  if (terms.maxDays && days > terms.maxDays) return `${terms.insurer} covers ${terms.maxDays} days a trip at most.`;
+  if (policy.market === 'us') return Math.max(0, Math.round(extra * US_PREMIUM_SHARE));
+  if (policy.market === 'ca') return inSave(sim, CA_PREMIUM_WEEK * (Math.ceil(days / 7) - Math.ceil(Math.max(1, Math.ceil((policy.to - policy.from) / MS_DAY)) / 7)), 'CAD');
+  return 0;
+}
 
 export function registerTravelInsurance(sim: Simulation): void {
   sim.onCommand<{ journeyId: string }, { premium: Money }>('travel.insure', (p, { sim: s }) => {
