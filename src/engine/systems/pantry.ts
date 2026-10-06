@@ -29,6 +29,9 @@ export interface Food {
   recipeId?: string;
   /** A beer's or a wine's strength, its label's (from 2026-10-05): the pint's or a glass's standard where not read. */
   abv?: number;
+  /** Frozen at home (`food.freeze`, from 2026-10-06): when; and thawing in the fridge, until when. Neither while it's usable. */
+  frozenAt?: Instant;
+  thawsAt?: Instant;
 }
 
 export type Stocked = Item & { food: Food };
@@ -38,9 +41,12 @@ export const foodOf = (person: Person): Stocked[] => itemsOf(person).filter((i):
 /** Fresh where it is now: not gone off. */
 export const fresh = (item: Stocked, at: Instant): boolean => item.food.expiresAt === undefined || item.food.expiresAt > at;
 
+/** To be used as it is: not frozen at home, and thawed where it was (from 2026-10-06). What's bought frozen is cooked from frozen. */
+export const usable = (item: Stocked, at: Instant): boolean => item.food.frozenAt === undefined && (item.food.thawsAt === undefined || item.food.thawsAt <= at);
+
 /** What's to hand and fresh of a food, the soonest to go off first; food still in the car isn't, until it's brought in (from 2026-10-03). */
 export function stockOf(sim: Simulation, person: Person, key: string, at: Instant = sim.now): Stocked[] {
-  return foodOf(person).filter((i) => i.food.key === key && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
+  return foodOf(person).filter((i) => i.food.key === key && i.food.left > 0 && fresh(i, at) && usable(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
     .sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity) || a.id.localeCompare(b.id));
 }
 
@@ -49,7 +55,7 @@ export const MEAL_KEYS = new Set(['dish', 'ready-meal', 'pizza']);
 
 /** Meals ready to eat at home: a portion each. */
 export function mealsReady(sim: Simulation, person: Person, at: Instant = sim.now): Stocked[] {
-  return foodOf(person).filter((i) => MEAL_KEYS.has(i.food.key) && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
+  return foodOf(person).filter((i) => MEAL_KEYS.has(i.food.key) && i.food.left > 0 && fresh(i, at) && usable(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
     .sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity) || a.id.localeCompare(b.id));
 }
 

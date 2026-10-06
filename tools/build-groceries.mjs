@@ -126,6 +126,15 @@ const rowFor = (key) => (SHELF_ROW[key] ? g.shelfLife.find((s) => s.food.startsW
  */
 const ESTIMATE = { dairy: 7, meat: 2, seafood: 2, produce: 7, bakery: 7, frozen: 90, pantry: 365, beverage: 365, 'ready-meal': 3, alcohol: null };
 
+/** How long it keeps frozen at home, FoodKeeper's freezer time, its least; none where FoodKeeper gives none (from 2026-10-06). */
+function freezeDaysFor(key) {
+  const row = rowFor(key);
+  const d = row?.freezerFromPurchase?.minDays ?? row?.freezer?.minDays;
+  return typeof d === 'number' ? d : null;
+}
+/** Leftovers with meat, fish or egg, frozen: FoodKeeper's sheet 173, two to three months, its least. */
+const LEFTOVERS = g.shelfLife.find((s) => s.foodkeeperId === 173);
+
 function keepsFor(key, category, storage) {
   const row = rowFor(key);
   const pick = (...fields) => fields.map((f) => row?.[f]?.minDays).find((d) => typeof d === 'number');
@@ -160,7 +169,7 @@ for (const p of [...g.products, ...(more.products ?? []), ...(drinks.products ??
   products.push({
     id, chain: p.chain, market: p.market, name: p.name, brand: brandOf(p), category: p.category, food: key,
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
-    storage, ...keepsFor(key, p.category, storage),
+    storage, ...keepsFor(key, p.category, storage), freezeDays: freezeDaysFor(key),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
     ...((key === 'beer' || key === 'wine') && typeof p.abv === 'number' && p.abv > 0 && p.abv < 1 ? { abv: p.abv } : {}),
   });
@@ -216,6 +225,8 @@ export interface GroceryProduct {
   category: string; food: string;
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
+  /** How long it keeps frozen at home, FoodKeeper's freezer time; none where FoodKeeper gives none (from 2026-10-06). */
+  freezeDays: number | null;
   url: string | null; date: string | null; confirmed: boolean;
   /** A beer's or a wine's alcohol by volume as its label states it, a fraction (from 2026-10-05). */
   abv?: number;
@@ -230,6 +241,9 @@ export interface Recipe {
 }
 
 export const GROCERY_CHAINS: readonly GroceryChain[] = ${JSON.stringify(chains)};
+
+/** A cooked dish frozen keeps this many days: leftovers with meat, fish or egg, FoodKeeper's sheet 173, its least. */
+export const LEFTOVERS_FREEZE_DAYS = ${LEFTOVERS?.freezer?.minDays ?? 'null'};
 
 // Parsed from strings: as literals, the lists are more than the typechecker will hold comfortably.
 export const GROCERY_PRODUCTS: readonly GroceryProduct[] = JSON.parse(${JSON.stringify(JSON.stringify(products))});

@@ -59,7 +59,7 @@ import { handMower, mowKwh } from './mowers';
 import { PAINT_SESSION_MINUTES, paintRoom, paintSessionRefusal } from './paint';
 import { livingIn } from './homes';
 import {
-  DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
+  DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, dryRefusal, heatLoss, laundryCost, laundryLoad, laundryWay, type LaundryChoice, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET, WASH_UP, washUp,
 } from './dwelling';
 
@@ -457,16 +457,25 @@ export function registerLife(sim: Simulation): void {
 
   // --- Looking after yourself ---------------------------------------------
 
-  sim.onCommand<{ action: LookAfter; how?: string; minutes?: number }, { doneAt: number; changed: Partial<Wellbeing> }>(
+  sim.onCommand<{ action: LookAfter; how?: string; minutes?: number; itemIds?: string[]; dry?: 'tumble' | 'rack' }, { doneAt: number; changed: Partial<Wellbeing> }>(
     'life.look_after',
     (p, { sim: s }) => {
       const action = LOOKING_AFTER[p.action] ? p.action : undefined;
       if (!action) throw new CommandError('That isn’t something you can do for yourself here.');
-      const refused = lookAfterRefusal(s, action);
+      // The wash chosen: which clothes, and how dried (from 2026-10-06).
+      const choice: LaundryChoice = { ...(Array.isArray(p.itemIds) ? { itemIds: p.itemIds.map(String) } : {}), ...(p.dry === 'rack' || p.dry === 'tumble' ? { dry: p.dry } : {}) };
+      const refused = lookAfterRefusal(s, action, choice);
       if (refused) throw new CommandError(refused);
       // This shower's length, where given, for this one only; the habit's otherwise (from 2026-10-06).
       if (action === 'wash' && p.minutes !== undefined) { const no = showerMinutesRefusal(p.minutes); if (no) throw new CommandError(no); }
       const showerOf = action === 'wash' ? (p.minutes ?? s.player.showerMinutes) : undefined;
+      if (action === 'laundry') {
+        const load = laundryLoad(s, s.player, choice);
+        if (typeof load === 'string') throw new CommandError(load);
+        if (load.length === 0) throw new CommandError('Your clothes are all clean.');
+        const no = dryRefusal(s, s.player, choice);
+        if (no) throw new CommandError(no);
+      }
       // Unwinding in front of the TV or a game, at home, by what the place's law and what you pay for allow (`systems/homelife.ts`).
       if (action === 'unwind' && p.how) {
         if (!atHome(s.player)) throw new CommandError('That’s at home.');
@@ -498,8 +507,8 @@ export function registerLife(sim: Simulation): void {
       else if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       // The washing's own reason where it fails after the time is spent (from 2026-10-02; until then every failure read as a payment's).
-      if (action === 'laundry' && !detergentFor(s, person, Math.ceil(washableDirty(s, person).length / GARMENTS_PER_LOAD))) throw new CommandError('There isn’t enough laundry detergent at home for it.');
-      if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
+      if (action === 'laundry' && !detergentFor(s, person, laundryCost(s, person, choice).loads)) throw new CommandError('There isn’t enough laundry detergent at home for it.');
+      if (action === 'laundry' && !doLaundry(s, person, s.now, choice)) throw new CommandError('The payment didn’t go through.');
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
@@ -700,7 +709,7 @@ export function costFor(sim: Simulation, action: LookAfter): number {
 /** The lawn of the home they live in, where it has one. */
 const homeLawn = (person: Person) => { const home = livingIn(person); return home ? lawnOf(home) : undefined; };
 
-export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
+export function lookAfterRefusal(sim: Simulation, action: LookAfter, laundry: LaundryChoice = {}): string | undefined {
   const w = sim.player.wellbeing;
   const person = sim.player;
   const place = placeOf(sim, person);
@@ -733,7 +742,8 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'outside') { const no = outsideRefusal(sim, person, LOOKING_AFTER.outside.minutes); if (no) return no; }
   if (action === 'boat') { const no = outingRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water', SITTING_MET, LOOKING_AFTER.boat.minutes); if (no) return no; }
   if (action === 'charter') { const no = charterRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water', SITTING_MET, LOOKING_AFTER.charter.minutes); if (no) return no; }
-  if (action === 'laundry' && washableDirty(sim, person).length === 0) return 'Your clothes are all clean.';
+  // A wash of chosen garments needn't wait for them to be dirty (from 2026-10-06).
+  if (action === 'laundry' && !laundry.itemIds && washableDirty(sim, person).length === 0) return 'Your clothes are all clean.';
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
   if (action === 'laundry' && !detergentFor(sim, person, Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD))) return 'There isn’t enough laundry detergent at home for it.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
