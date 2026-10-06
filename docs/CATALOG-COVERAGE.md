@@ -54,8 +54,8 @@ which never counts toward the target.
 | Vehicles | Tires And Wheels | 52 | 100% | 96 | 1 / 1 / 6 | 0 | 96 | 103 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Car Audio | 55 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 102 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 83 | 1 / 1 / 4 | 0 | 83 | 84 | 0 | CA, GB, IE, MX, US | No |
-| Building And Garden | Garden Equipment | 52 | 100% | 117 | 1 / 2 / 6 | 0 | 117 | 118 | 0 | CA, GB, IE, MX, US | No |
-| Sport | Sports Equipment | 54 | 100% | 130 | 1 / 2 / 19 | 0 | 130 | 130 | 0 | CA, GB, IE, MX, US | No |
+| Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
+| Sport | Sports Equipment | 54 | 100% | 187 | 1 / 2 / 27 | 0 | 187 | 187 | 0 | CA, GB, IE, MX, US | No |
 | Pets | Pet Supplies | 61 | 100% | 141 | 1 / 1 / 10 | 0 | 141 | 144 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.

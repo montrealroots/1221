@@ -49,7 +49,7 @@ import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { payWith, payWithRefusal, spend, type PayWith } from './household';
-import { addItem, homeKeyOf, itemById } from './items';
+import { addItem, coldRoomL, coldUsedL, homeKeyOf, itemById, SPOT_LABEL } from './items';
 import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
 import { GEAR_LINEUP } from '../content/kitchengearlineup';
 import { exerts } from './body';
@@ -126,6 +126,15 @@ export function groceryRefusal(sim: Simulation, person: Person, productId: strin
   if (shut) return shut;
   if (!(person.home && person.home.kind !== 'sofa' && person.home.cityId === person.currentLocationId)) return 'Groceries go home to your kitchen, here.';
   if (p.category === 'alcohol' && yearsOld(person, sim.now) < drinkingAge(person.currentLocationId)) return `You have to be ${drinkingAge(person.currentLocationId)} to buy it here.`;
+  // What keeps cold has to fit the fridge or freezer at home (from 2026-10-05), as a thing moved there does
+  // (`moveRefusal`); until then a purchase went in whatever was already there.
+  const spot = SPOT[p.storage];
+  if (spot !== 'pantry') {
+    const holds = coldRoomL(person, spot);
+    const left = holds === undefined ? Infinity : holds - coldUsedL(person, homeKeyOf(person.home)!, spot);
+    const need = (p.sizeUnit === 'ct' ? p.sizeQty * 0.25 : p.sizeQty / 1000) * quantity;
+    if (need > left + 1e-9) return `${SPOT_LABEL[spot]} is full: ${Math.max(0, Math.floor(left))} liters of its ${Math.round(holds!)} are free, and ${quantity === 1 ? 'it needs' : 'they need'} ${Math.ceil(need)}.`;
+  }
   return undefined;
 }
 
