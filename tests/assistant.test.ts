@@ -8,8 +8,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { quickSave } from '@/engine';
 import { serialise } from '@/engine/persistence/adapter';
-import { ASSISTANT_COMMANDS, CUSTOMIZE_COMMANDS, assistantState, checkProposal } from '@/engine/systems/assistant';
-import { resetWorld, rowsFor, world } from './fakes/base44-sdk';
+import { ASSISTANT_COMMANDS, CUSTOMIZE_COMMANDS, OFFERS_SHOWN, assistantState, checkProposal, checkSequence, takeSequence } from '@/engine/systems/assistant';
+import { vehiclesOf } from '@/engine/systems/vehicles';
+import { tireOfferRefusal } from '@/engine/systems/tires';
+import { SERVICE, resetWorld, rowsFor, signIn, world } from './fakes/base44-sdk';
 import askAssistant from '../base44/functions/askAssistant/entry.js';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -45,6 +47,69 @@ describe('a proposal, tried and put back', () => {
     expect(state.commands).toBe(ASSISTANT_COMMANDS);
     expect(state.garments.length).toBeGreaterThanOrEqual(0);
     expect(state.where.cityId).toBe('us-ny-newyork');
+  });
+});
+
+describe('proposals by role, by real offer, and in sequence (from 2026-10-06)', () => {
+  it('refuses a proposal that isn’t the asking role’s to make', () => {
+    const sim = life('asst-role');
+    const move = { kind: 'home.move', payload: { kind: 'shared' }, why: 'x' };
+    expect(checkProposal(sim, move, 'customize').refusal).toBe('That isn’t something the assistant may propose.');
+    expect(checkProposal(sim, move, 'develop').refusal).toBe('That isn’t something the assistant may propose.');
+    expect(checkProposal(sim, move, 'play').refusal).not.toBe('That isn’t something the assistant may propose.');
+  });
+
+  it('tells the assistant the offers that fit what the player owns, by their real ids, and none to the development role', () => {
+    const sim = life('asst-offers');
+    sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+    const v = vehiclesOf(sim.player)[0]!;
+    const before = serialise(sim.universe);
+    const offers = assistantState(sim, 'customize').offers!;
+    expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
+    const car = offers.vehicles.find((x) => x.vehicleId === v.id)!;
+    expect(car.tires.length).toBeGreaterThan(0);
+    expect(car.tires.length).toBeLessThanOrEqual(OFFERS_SHOWN);
+    // Every tire offered is one the engine would fit to this car: its own size.
+    expect(car.tires.filter((t) => tireOfferRefusal(v, t.offerId, false) !== undefined)).toEqual([]);
+    expect(car.tires.map((t) => t.price)).toEqual([...car.tires.map((t) => t.price)].sort((a, b) => a - b));
+    expect(assistantState(sim, 'develop').offers).toBeUndefined();
+  });
+
+  it('checks each proposal after the ones before it, and puts the world back', () => {
+    const sim = life('asst-seq');
+    sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+    const v = vehiclesOf(sim.player)[0]!;
+    const offerId = assistantState(sim).offers!.vehicles[0]!.tires[0]!.offerId;
+    const tires = { kind: 'vehicle.replace_tires', payload: { vehicleId: v.id, offerId }, why: 'x' };
+    const speakers = { kind: 'vehicle.audio', payload: { vehicleId: v.id, part: 'speakers' }, why: 'x' };
+    const before = serialise(sim.universe);
+    // Alone, speakers go in; after a first set, a second is refused, as it would be taken in order.
+    expect(checkSequence(sim, [speakers], 'play')[0]!.ok).toBe(true);
+    const [first, second] = checkSequence(sim, [speakers, speakers], 'play');
+    expect(first!.ok).toBe(true);
+    expect(second).toMatchObject({ ok: false, refusal: 'It has them.' });
+    // One refused leaves the world as it was for the next: tires after it are still taken, and cost what they cost alone.
+    const [, refused, after] = checkSequence(sim, [speakers, speakers, tires], 'play');
+    expect(refused!.ok).toBe(false);
+    expect(after!.ok).toBe(true);
+    expect(after!.costs).toBe(checkProposal(sim, tires).costs);
+    expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
+  });
+
+  it('takes a sequence all or none: one refused puts back the ones before it', () => {
+    const sim = life('asst-take');
+    sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+    const v = vehiclesOf(sim.player)[0]!;
+    const offerId = assistantState(sim).offers!.vehicles[0]!.tires[0]!.offerId;
+    const tires = { kind: 'vehicle.replace_tires', payload: { vehicleId: v.id, offerId }, why: 'x' };
+    const bad = { kind: 'home.renovate', payload: { homeId: 'nope', projectId: 'roof-asphalt' }, why: 'x' };
+    const before = serialise(sim.universe);
+    expect(takeSequence(sim, [tires, bad], 'play')).toEqual({ ok: false, at: 1, error: 'You don’t own that home.' });
+    expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
+    expect(takeSequence(sim, [tires, { kind: 'home.move', payload: { kind: 'shared' }, why: 'x' }], 'customize')).toMatchObject({ ok: false, at: 1 });
+    expect(JSON.parse(serialise(sim.universe))).toEqual(JSON.parse(before));
+    expect(takeSequence(sim, [tires], 'customize')).toEqual({ ok: true });
+    expect(v.tires?.product).toBeDefined();
   });
 });
 
@@ -108,6 +173,23 @@ describe('the server function', () => {
     expect(Object.keys(assistantState(sim, 'customize').commands)).toEqual([...CUSTOMIZE_COMMANDS]);
     expect(assistantState(sim, 'develop').commands).toEqual({});
     expect(CUSTOMIZE_COMMANDS.every((k) => ASSISTANT_COMMANDS[k])).toBe(true);
+  });
+
+  it('stops every player at the month’s token allowance, counted from what the API reports (from 2026-10-06)', async () => {
+    vi.stubEnv('ANTHROPIC_API_KEY', 'test-key');
+    vi.stubEnv('SLATE_ASSISTANT_MONTHLY_TOKENS', '1000');
+    const fetched = vi.fn(async () => new Response(JSON.stringify({ content: [], usage: { input_tokens: 600, output_tokens: 300, cache_read_input_tokens: 200 } }), { status: 200 }));
+    vi.stubGlobal('fetch', fetched);
+    expect((await askAssistant(post({ request: 'one', state: {} }))).status).toBe(200);
+    expect(rowsFor(SERVICE, 'SlateAssistantMonth')[0]).toMatchObject({ tokens: 1_100, requests: 1 });
+    // Another player, the same month: over the allowance, nothing is sent, and their day isn't counted.
+    signIn('u2');
+    const res = await askAssistant(post({ request: 'two', state: {} }));
+    expect(res.status).toBe(429);
+    expect(fetched).toHaveBeenCalledTimes(1);
+    expect(rowsFor('u2', 'SlateAssistantUsage')).toEqual([]);
+    // Players never see the month's row.
+    expect(rowsFor('u1', 'SlateAssistantMonth')).toEqual([]);
   });
 
   it('stops a player at the day’s cap', async () => {

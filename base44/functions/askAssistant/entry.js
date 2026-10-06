@@ -14,6 +14,10 @@
  *  - nothing is sent anywhere unless the owner has set ANTHROPIC_API_KEY;
  *  - a player's requests are capped a day (SLATE_ASSISTANT_DAILY, 40 unless
  *    set), counted in SlateAssistantUsage;
+ *  - every player's together stop at a month's tokens (from 2026-10-06;
+ *    SLATE_ASSISTANT_MONTHLY_TOKENS, 10,000,000 unless set, 0 for none),
+ *    counted from the API's own usage in SlateAssistantMonth by the service
+ *    role; the Console's spend limit stays the owner's own backstop;
  *  - the request and the summary are size-limited;
  *  - only proposals whose command is in the summary's list come back.
  *
@@ -42,6 +46,8 @@ const SYSTEM = [
   'You are the assistant inside SLATE, a text-based life simulation where the player lives one life as an actor.',
   'You plan; you never act. Answer with the propose_actions tool: a short answer to the player, and proposals, each a command from the list you are given, its payload, and one sentence on why.',
   'Use only the commands and payload shapes listed in the state. Use ids that appear in the state; never invent an id, a price, an item the player does not own, money, a qualification or finished work.',
+  'The offers in the state are the ones on sale where the player is that fit what they own, cheapest first; name a product only by an offerId listed there.',
+  'Proposals are checked and may be taken in the order you give them, each after the ones before it; order them so each can follow the last.',
   'If what they ask cannot be done with the listed commands, say so plainly in the answer and propose nothing for it.',
   'The game checks every proposal and the player decides; keep proposals few and specific.',
 ].join(' ');
@@ -129,6 +135,12 @@ export default async function (req) {
     const cap = Number(env('SLATE_ASSISTANT_DAILY') ?? 40);
     const [usage] = await base44.entities.SlateAssistantUsage.filter({ user_id: user.id, day });
     if ((usage?.requests ?? 0) >= cap) return reply({ ok: false, status: 429, error: `That’s today’s ${cap} questions; it answers again tomorrow.` }, 429);
+    // Every player's this month, stopped at the allowance before anything is sent.
+    const month = day.slice(0, 7);
+    const allowance = Number(env('SLATE_ASSISTANT_MONTHLY_TOKENS') ?? 10_000_000);
+    const months = base44.asServiceRole.entities.SlateAssistantMonth;
+    const [spent] = await months.filter({ month });
+    if (allowance > 0 && (spent?.tokens ?? 0) >= allowance) return reply({ ok: false, status: 429, error: 'The assistant has used this month’s allowance; it answers again next month.' }, 429);
     if (usage) await base44.entities.SlateAssistantUsage.update(usage.id, { requests: usage.requests + 1 });
     else await base44.entities.SlateAssistantUsage.create({ user_id: user.id, day, requests: 1 });
 
@@ -146,6 +158,12 @@ export default async function (req) {
     });
     if (!res.ok) return reply({ ok: false, status: 502, error: 'The assistant didn’t answer; try again in a moment.' }, 502);
     const data = await res.json();
+    // What it used, as the API reports it, counted against the month.
+    const u = data.usage ?? {};
+    const tokens = [u.input_tokens, u.output_tokens, u.cache_creation_input_tokens, u.cache_read_input_tokens].reduce((a, n) => a + (Number.isFinite(n) ? n : 0), 0);
+    const [now] = await months.filter({ month });
+    if (now) await months.update(now.id, { tokens: now.tokens + tokens, requests: now.requests + 1 });
+    else await months.create({ month, tokens, requests: 1 });
     // The development role's mechanics, stored for the owner's review and returned; never a command.
     if (role === 'develop') {
       const dev = (data.content ?? []).find((c) => c.type === 'tool_use' && c.name === 'propose_mechanics')?.input ?? {};

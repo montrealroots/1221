@@ -576,6 +576,49 @@ export class Simulation {
     return { ...result, notices, ...(seen !== undefined ? { read: seen } : {}) };
   }
 
+  /**
+   * Commands tried in order and all put back (from 2026-10-06): each by `execute`'s own rules against the world the
+   * ones before it leave, a refused one leaving it as it was; with what each said, and what the caller reads before
+   * and after each.
+   */
+  previewAll<T>(commands: readonly Command<Record<string, unknown>>[], read: (sim: Simulation) => T): (CommandResult & { notices: string[]; before: T; after?: T })[] {
+    if (this.depth > 0 || this.advancing) return commands.map(() => ({ ok: false, error: 'A proposal is tried only while the clock is still.', notices: [], before: read(this) }));
+    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
+    const eventsBefore = this.pendingEvents.length;
+    try {
+      return commands.map((command) => {
+        const noticesBefore = this.universe.notifications.length;
+        const before = read(this);
+        const result = this.execute(command);
+        const notices = this.universe.notifications.slice(noticesBefore).map((n) => n.title);
+        return { ...result, notices, before, ...(result.ok ? { after: read(this) } : {}) };
+      });
+    } finally {
+      restoreUniverse(this.universe, snapshot);
+      this.pendingEvents.length = eventsBefore;
+    }
+  }
+
+  /**
+   * Commands run in order, all or none (from 2026-10-06, for the assistant's proposals taken together): each by
+   * `execute`'s own rules, and if one is refused, the world goes back to before the first, and which one and why
+   * is said.
+   */
+  executeAll(commands: readonly Command<Record<string, unknown>>[]): { ok: true } | { ok: false; at: number; error: string } {
+    if (this.depth > 0 || this.advancing) return { ok: false, at: 0, error: 'These are taken only while the clock is still.' };
+    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
+    const eventsBefore = this.pendingEvents.length;
+    for (const [at, command] of commands.entries()) {
+      const done = this.execute(command);
+      if (!done.ok) {
+        restoreUniverse(this.universe, snapshot);
+        this.pendingEvents.length = eventsBefore;
+        return { ok: false, at, error: done.error ?? `${command.kind} failed` };
+      }
+    }
+    return { ok: true };
+  }
+
   /** A reading of the world that leaves it untouched, whatever the reading's helpers set up on the way (from 2026-10-02). */
   peek<T>(read: (sim: Simulation) => T): T {
     const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);

@@ -30,7 +30,10 @@ export interface FakeWorld {
   calls: string[];
 }
 
-const COLLECTIONS = ['SlateSave', 'SlateCommandReceipt', 'SlateOfficialResult', 'SlateAssistantUsage', 'SlateMechanicProposal'] as const;
+const COLLECTIONS = ['SlateSave', 'SlateCommandReceipt', 'SlateOfficialResult', 'SlateAssistantUsage', 'SlateMechanicProposal', 'SlateAssistantMonth'] as const;
+
+/** The store the service role reads and writes, which no signed-in player's query sees (from 2026-10-06). */
+export const SERVICE = '__service__';
 
 export const world: FakeWorld = { user: { id: 'u1', email: 'one@example.test' }, stores: new Map(), calls: [] };
 
@@ -103,5 +106,9 @@ export function createClientFromRequest(_req: unknown) {
     entities: Object.fromEntries(
       COLLECTIONS.map((name) => [name, entityApi(user?.id ?? 'anonymous', name)]),
     ) as Record<(typeof COLLECTIONS)[number], ReturnType<typeof entityApi>>,
+    // The service role: every player's, kept apart from any one player's rows.
+    asServiceRole: {
+      entities: Object.fromEntries(COLLECTIONS.map((name) => [name, entityApi(SERVICE, name)])) as Record<(typeof COLLECTIONS)[number], ReturnType<typeof entityApi>>,
+    },
   };
 }
