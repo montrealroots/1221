@@ -85,6 +85,7 @@ import { planningRefused } from './systems/homes';
 import { interestsOf } from './systems/enjoyment';
 import { usedFault, usedListings } from './systems/usedcars';
 import { drawBuild } from './systems/modelyears';
+import { treadLife } from './systems/tires';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
 import { AGENCIES, ROLES, SERIES } from './content/career';
@@ -714,6 +715,19 @@ defineDecider<{ sim: Simulation; model: number; year: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), model: seed % 3, year: 2016 + (seed % 10) }),
   decide: ({ sim, model, year }) => { const b = drawBuild(sim, sim.player, ['us-toyota-camry', 'us-ford-f-series', 'us-honda-cr-v'][model]!, year, 'decider'); return b ? `${b.liters}:${b.transmission}:${b.drive}` : 'none'; },
+});
+
+defineDecider<{ sim: Simulation; km: number; odo: number }, number>({
+  id: 'vehicle.treadlife',
+  decides: 'How far a set of tires really lasts (from 2026-10-05): between 85% and 115% of its warranted or typical km, evenly, SLATE\u2019s assumption.',
+  drawnIn: 'src/engine/systems/tires.ts',
+  reads: {
+    km: (o, t) => ({ ...o, km: 60_000 + Math.round(t * 60_000) }),
+    odo: (o, t) => ({ ...o, odo: Math.round(t * 100_000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), km: 80_000 + (seed % 5) * 10_000, odo: (seed % 7) * 10_000 }),
+  decide: ({ sim, km, odo }) => treadLife(sim, sim.player, { id: 'v-decider', ageAtPurchase: 0, jurisdiction: 'US-NY', odometerAtPurchase: odo } as never, km),
 });
 
 defineDecider<{ sim: Simulation; job: number; days: number }, string>({
