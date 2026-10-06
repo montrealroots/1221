@@ -21,8 +21,8 @@ which never counts toward the target.
 | Apparel | Swimwear | 53 | 100% | 201 | 1 / 3 / 11 | 0 | 611 | 206 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 52 | 100% | 122 | 1 / 3 / 4 | 0 | 629 | 122 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Shoes, Boots And Sandals | 61 | 100% | 148 | 1 / 2 / 12 | 0 | 1535 | 155 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Sneakers | 60 | 100% | 198 | 1 / 2 / 32 | 0 | 1110 | 219 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Shoes, Boots And Sandals | 61 | 100% | 157 | 1 / 2 / 12 | 0 | 1547 | 169 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Sneakers | 61 | 100% | 217 | 1 / 2 / 32 | 0 | 1248 | 240 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Bags | 56 | 100% | 171 | 1 / 2 / 15 | 0 | 233 | 176 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 55 | 100% | 167 | 1 / 2 / 12 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
@@ -37,7 +37,7 @@ which never counts toward the target.
 | Home | Mattresses And Beds | 55 | 100% | 133 | 1 / 1 / 29 | 0 | 133 | 350 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 63 | 100% | 114 | 1 / 2 / 5 | 0 | 146 | 114 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 0 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
-| Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
+| Home | Lighting | 76 | 100% | 283 | 1 / 3 / 24 | 0 | 340 | 283 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 85 | 100% | 320 | 1 / 2 / 27 | 0 | 320 | 322 | 1 | CA, GB, IE, MX, US | No |
 | Personal Care | Cosmetics And Haircare | 52 | 100% | 132 | 1 / 1 / 15 | 0 | 132 | 134 | 0 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 582 | 145 | 8 |
+| Stores And Chains | 596 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

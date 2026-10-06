@@ -181,3 +181,14 @@ describe('layers', () => {
     expect(CLOTHING_PRODUCTS.filter((p) => p.subtype === 'slips').every((p) => p.slot === 'base')).toBe(true);
   });
 });
+
+describe('a hat and mittens (from 2026-10-05)', () => {
+  it('count Kuklane and Toma’s measured clo, a warm cap more than a cap, mittens more than gloves', () => {
+    expect(cloOf('accessory', 'accessory', 'Wool Beanie')).toBe(CLO.warmCap);
+    expect(cloOf('accessory', 'accessory', 'Baseball Cap')).toBe(CLO.hat);
+    expect(cloOf('accessory', 'accessory', 'Ski Mittens')).toBe(CLO.mittens);
+    expect(cloOf('accessory', 'accessory', 'Leather Gloves')).toBe(CLO.gloves);
+    expect(cloOf('accessory', 'accessory', 'Cashmere Scarf')).toBe(0);
+    expect([CLO.warmCap, CLO.hat, CLO.mittens]).toEqual([0.03, 0.01, 0.06]);
+  });
+});

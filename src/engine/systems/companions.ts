@@ -40,6 +40,7 @@ import { contactsOf, type Contact } from './people';
 import { journeysOf, type Journey } from './journey';
 import { hotelById } from './hotels';
 import { childrenOf, livesWithYou, type Child } from './children';
+import { childBorderRefusal } from './childpassports';
 import { airportByCode } from './airports';
 import { railRouteById } from './rail';
 import { MS_DAY } from '../core/time';
@@ -109,6 +110,9 @@ export function childRefusal(sim: Simulation, person: Person, journeyId: string,
   if (!livesWithYou(child)) return `${child.name.split(' ')[0]} lives with their other parent.`;
   if (childrenAlong(out).includes(childId)) return 'They’re coming already.';
   if (ageOn(child, out.leaveAt) >= LAP_CHILD.underYears && bedsTaken(person, out) + 2 > sleepsIn(out)) return 'The room sleeps no more.';
+  // Abroad, their own passport in force out and back (`systems/childpassports.ts`, from 2026-10-05).
+  const border = childBorderRefusal(child, out.fromCity, out.toCity, out.leaveAt, wayBack(person, out)?.leaveAt);
+  if (border) return border;
   for (const j of [out, wayBack(person, out)].filter((x): x is Journey => x !== undefined)) {
     const fare = childFare(sim, j, child);
     if (typeof fare === 'string') return fare;

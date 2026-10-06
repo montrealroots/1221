@@ -62,6 +62,7 @@ import { registerLighting } from './systems/lighting';
 import { registerMowers } from './systems/mowers';
 import { registerComputers } from './systems/computers';
 import { registerPaint } from './systems/paint';
+import { registerChildPassports } from './systems/childpassports';
 import { registerSpeakers } from './systems/speakers';
 import { registerBaggage } from './systems/baggage';
 import { registerCatalog } from './systems/catalog';
@@ -271,6 +272,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerMowers(sim);
   registerComputers(sim);
   registerPaint(sim);
+  registerChildPassports(sim);
   registerSpeakers(sim);
   registerBaggage(sim);
   registerCatalog(sim);
