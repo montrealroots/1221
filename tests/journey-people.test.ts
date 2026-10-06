@@ -45,9 +45,10 @@
  * raised at the whole cost, nobody sharing it.
  *
  * Every law of the world holds at the end of each. Money comes into the
- * bank by a posting, never by setting a balance. One step the game gets
- * wrong is kept apart, skipped, as a defect: a guest room's bed is the
- * host's own, a second never sold.
+ * bank by a posting, never by setting a balance. The journey found one
+ * step the game got wrong, kept apart as its own case: a guest room's bed
+ * was the host's own, a second never sold, until it was fixed on
+ * 2026-10-06.
  */
 import { describe, expect, it } from 'vitest';
 import { loadSave, quickSave } from '@/engine';
