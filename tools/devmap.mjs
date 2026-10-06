@@ -50,7 +50,10 @@ for (const m of tutorial.matchAll(/title: '((?:[^'\\]|\\.)*)',[\s\S]*?opens: \[(
 }
 
 const quoted = (kind) => new RegExp(`['"\`]${kind.replace(/\./g, '\\.')}['"\`]`);
-const usedIn = (files, kind) => files.filter((f) => quoted(kind).test(read(f))).map((f) => f.split('/').pop()).sort();
+// By the kind's own words, or by the constant that holds it (from 2026-10-06; until then the guide's `READ_KIND` in
+// `Guide.tsx` went uncounted and `tutorial.read` was listed as on no screen).
+const constOf = (kind) => [...named].filter(([, v]) => v === kind).map(([c]) => new RegExp(`\\b${c}\\b`));
+const usedIn = (files, kind) => files.filter((f) => { const s = read(f); return quoted(kind).test(s) || constOf(kind).some((re) => re.test(s)); }).map((f) => f.split('/').pop()).sort();
 
 const groups = new Map();
 for (const [kind, file] of [...commands.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {

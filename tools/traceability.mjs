@@ -16,7 +16,7 @@
  * - **Partially Implemented**: handled, but no screen offers it, or no test
  *   runs it.
  *
- *   node tools/traceability.mjs --write    write the document
+ *   node tools/traceability.mjs --write    writes the document
  *   node tools/traceability.mjs            check it's current
  */
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
@@ -73,7 +73,9 @@ function facts(body) {
   return { refusals, checks, changes: uniq([...changes, ...pushes.map((x) => `${x} (added to)`)]), money, later };
 }
 
-const named = (kind) => tests.filter(([, s]) => s.includes(`'${kind}'`)).map(([f]) => f);
+// A test names a kind by its words or by the constant that holds it.
+const constsOf = (kind) => [...kindConsts].filter(([, v]) => v === kind).map(([c]) => new RegExp(`\\b${c}\\b`));
+const named = (kind) => tests.filter(([, s]) => s.includes(`'${kind}'`) || constsOf(kind).some((re) => re.test(s))).map(([f]) => f);
 const rows = [];
 let tally = { 'Verified (journey)': 0, 'Implemented But Unverified': 0, 'Partially Implemented': 0 };
 for (const kind of [...commands.keys()].sort()) {

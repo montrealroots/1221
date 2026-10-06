@@ -1,0 +1,121 @@
+# The Implementation, Playthrough And Reliability Audit
+
+The owner's directive of 2026-10-06: inspect, build, test, repair and verify the game itself, with every result
+reproducible. This page is the audit's record: what was checked, how, what was found, what was repaired, and what
+remains. It's written as the work goes, and each section says the commit it stands at.
+
+## Where it began
+
+On 2026-10-06 the working branch `claude/slate-cleanup-e4apmx` stood at `beb2b027`, its tree clean but for the
+owner's own untracked files; `main` at `86e63dc7`, merged after a clean replay; the stash and the `slate-lives`
+worktree kept. Nothing is deployed: deployment is on hold at the owner's word, so no version runs live to verify.
+The assistant stays off until the owner sets its key.
+
+## What the audit built to check with
+
+- **The laws of a save** (`src/engine/core/invariants.ts`): money balanced to the cent and every balance the sum of
+  its postings; every thing's id its own, its quantity a count, its condition on its scale, its place something that
+  exists; tanks and wellbeing on their scales; nothing pending left in the past. Each law is broken by hand in
+  `tests/invariants.test.ts` to prove it's reported. Every connected journey ends by asking them, and the replay
+  probe asks them monthly.
+- **`tools/breaches.mjs`** checks any save or a folder of them against the laws.
+- **`tools/traceability.mjs`** writes `docs/TRACEABILITY.md`, the inventory of every command and scheduled kind, read
+  from the code and checked by the gate, with a status worked out from the evidence.
+- **`tools/unread.mjs`** finds properties declared and never read.
+- **`tests/commands-robust.test.ts`** gives every command nothing and nonsense.
+
+## The inventory and its statuses
+
+`docs/TRACEABILITY.md` lists all 375 commands and 166 scheduled kinds: how each is found (its guide chapter), where
+it's reached (its screens), what it refuses, what it changes, whether it moves money, what it sets going later, and
+its tests and journeys. The statuses are the owner's, worked out from the evidence:
+
+| Status | Commands at `4ff55077` |
+|---|---|
+| Verified (journey): on a screen and run in a connected journey that saves, loads and checks every law | 35 |
+| Implemented But Unverified: on a screen and tested, in no connected journey | 334 |
+| Partially Implemented: no screen offers it, or no test runs it | 6 |
+
+No status claims a screen was checked in the running app: SLATE has no tests of its screens. The requirements, in
+`docs/REQUIREMENTS.md`, carry their own statuses in the same vocabulary, audited row by row on 2026-10-06.
+
+## The journeys
+
+| Journey | File | What it proves |
+|---|---|---|
+| A day at home | `tests/journey-day-at-home.test.ts` | a shower of a chosen length uses its soap, a towel and its share of the water; dressed from what's to hand; a walk to the shops and back; cooked from what was bought; the dishes the home's way; unwound; asleep; saved and loaded |
+| The connected day | `tests/connected-day.test.ts` | driving on the tank, shopping, refuelling, cooking for two, leftovers eaten, saved and loaded |
+| Driving, fuel, shopping, ownership | `tests/journeys.test.ts`, `tests/journeys-edges.test.ts` | a station fill, groceries put away, clothes bought and sold, a hotel stay packed and unpacked, a club, a flat-pack piece, a closed shop, a refusal at the till |
+| Acting on location | `tests/journey-acting-travel.test.ts` | a job accepted, the post held, packed, flown on the production's ticket, saved and loaded at the hotel, the calls worked and paid, home, rent charged while away |
+| A house built | `tests/journey-housing-construction.test.ts` | a lot bought, a house built through a stopped bill and failed inspections, moved into, a pool refused on a flat |
+| Papers | `tests/journey-papers.test.ts` | an ETA refused then granted; a lost passport cancelling what was issued on it; a new one in its 42 days; a stolen licence replaced free with a police report; Medicaid changing a visit's price; cover dropped; a medical debt paid down; benefits paid and taxed; a return filed and paid |
+| The bank | `tests/journey-bank.test.ts` | New York and Dublin: savings, transfers, standing orders and scheduled payments run and cancelled, cash, a fraud disputed under Regulation E, a card statement's balance as the sum of its postings, autopay, interest, a loan and a CD broken to the cent, an overdraft, a direct debit reclaimed |
+| Belongings | `tests/journey-belongings.test.ts` | a phone protected, cracked, claimed and its battery replaced; a TV and a subscription billed and stopped; Britain's license; a dog fed, walked and walked for; a ring commissioned, engraved, pawned and redeemed at New York's 4%; luggage and packing lists; a flat-pack chair |
+| Cars | `tests/journey-cars.test.ts` | a used Camry from forecourt to buyer through a breakdown, a stand-in, fuel to the cent and a sale; a London private sale's transfer and Britain's premium loadings; leases bought out and returned; a repossession redeemed; a caravan towed only by what's rated to |
+| Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
+
+## Defects found, their causes, and their repairs
+
+| What was wrong | Found by | Cause | Repair and its test |
+|---|---|---|---|
+| The day's bulb restock threw and failed a whole New Day where every socket held the same bulb | the played life to 89 | a dark socket kept the id of the bulb that died in it, and the fit check refused the same kind back | `takes()` in `systems/lighting.ts`; `tests/lighting.test.ts` |
+| The replay called that life clean | reading its notices | the probe counted only throws, never a failed scheduled event | the probe counts them (it's local, untracked) |
+| One towel notice was 354 of the last 500 | the played life to 89 | a notice said again word for word stacked | an unread one is brought up to now; `tests/notice-freshness.test.ts` |
+| The location-shoot test passed with no call worked | the acting journey | its actor had no craft, and a call is never worked without it | the test gives craft and asserts the calls |
+| A calendar plan the world declined was checked as done by the assistant, and taken | the command sweep | the calendar answers `{ ok: false }` rather than throwing | `refusedIn` read in `executeAll` and `checkSequence`; `tests/assistant.test.ts` |
+| Deleting an outfit or routine that wasn't there, and an errand to nowhere, were done | the command sweep | no check | refused; `tests/commands-robust.test.ts` |
+| Cancelling a subscription and taking it up again before its month came billed twice a month | the belongings journey | unsubscribing left its month on the calendar, and the month found the new subscription by its plan | the month cancelled with it; the journey's case |
+| A car sold kept what was in or on it, a roof box stranded in a car no longer theirs | the cars journey | `sellVehicle` moved nothing out | emptied home to storage first; the journey's case |
+| A British private sale was driven every day before its transfer, though refused for an errand | the cars journey | `drivenThen` didn't ask `laidUp` | the one rule for both; the journey's case |
+| A fill nobody could pay for went through into arrears, and its refusal never came | the cars journey | `vehicle.refuel` paid with `spend(..., true)` | paid or refused; the journey's case. Every other purchase run into arrears was read: each pays for something already used (fuel burned, a class taken, a meal eaten) |
+| A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
+
+## The long runs
+
+The two played lives at `8eb0da03` (`probe/play-to-death.ts`, seeds `death-1` in New York and `death-ldn` in London,
+modest means), replayed after the probe came to count failed scheduled events:
+
+| | New York, to 89 (2091-11-06) | London, to 50 (2052-09-08) |
+|---|---|---|
+| Errors and anomalies | 0 and 0 | 0 and 0 |
+| Laws of a save, at each snapshot | all held | all held |
+| Save size at the end | 18.6 MB (about 0.2 MB a year) | 6.2 MB |
+| Transactions | 68,364 | 21,866 |
+| Scheduled items, at 25, 40, 60, 80 and the end | 1,254 to 1,571, not growing | 1,147 to 1,255 |
+| Notices kept | the last 500 | the last 500 |
+| The same notice twice among the last 500 | never, at any age | never |
+
+Reproduce: check out the commit in the `slate-lives` worktree, copy `probe/play-to-death.ts` and `probe/chunk.sh`
+into it, and run `bash probe/chunk.sh <out> <snaps> "death-1:us-ny-newyork:modest:" "death-ldn:uk-eng-london:modest:"`
+until it prints `ALL DONE`; then `npx vite-node tools/breaches.mjs <snaps>`.
+
+## The command sweep
+
+`tests/commands-robust.test.ts` gives every one of the 375 commands an empty payload and a payload of nonsense (ids
+naming nothing, negative amounts, words where numbers go), each from a new life: 750 calls. None crashed; no refused
+call changed the save. 79 calls were done; each was read, and all but the three above were right to be: a toggle, a
+setting cleared when it isn't given, or a purchase with only one thing to buy.
+
+## The calendar
+
+`tests/calendar-year.test.ts` lives New York through 2028 into 2029, across February's 29th, both clock changes,
+every month's end and the year's: the rent once a month, every law held at each month's end, and a leapling's
+birthday on the day the law counts it, in New York and in London.
+
+## Validation runs
+
+| When | Commit | Command | Scenario | Result |
+|---|---|---|---|---|
+| 2026-10-06 | `bfd4dd7b` | `npm run gate` with `VITEST_MAX_FORKS=2` | the full suite and every check | 3,228 tests passed; the voice check failed on five law names, fixed, and every check after it run and passed |
+| 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
+
+Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
+incomplete, never as passed, and was rerun with fewer workers.
+
+## What remains
+
+- The domain journeys continue: the career, homes, clothes, people, travel, food and routines are next; the bank,
+  papers, belongings and cars are done.
+- The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
+- `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
+- No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.

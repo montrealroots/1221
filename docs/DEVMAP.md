@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-375 commands; 369 named by a test, 6 not.
+378 commands; 374 named by a test, 4 not.
 
 ## aircraft
 
@@ -17,40 +17,40 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `bank.add_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `payments.test.ts` | Your Bank |
-| `bank.arrange_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `bank-fees.test.ts` `lending.test.ts` | Your Bank |
-| `bank.borrow` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
-| `bank.break_term` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `arrears.test.ts` | Your Bank |
-| `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.cancel_scheduled` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `payments.test.ts` | Your Bank |
-| `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `payments.test.ts` | Your Bank |
-| `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `lending.test.ts` | Your Bank |
-| `bank.debit_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
-| `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
-| `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` | Your Bank |
-| `bank.open_term` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `accountlife.test.ts` `arrears.test.ts` `lending.test.ts` | Your Bank |
-| `bank.pay_collections` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `lending.test.ts` | Your Bank |
-| `bank.reactivate` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.reclaim_debit` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `payments.test.ts` | Your Bank |
-| `bank.repay_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
-| `bank.schedule_payment` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `payments.test.ts` | Your Bank |
-| `bank.set_alerts` | `src/engine/systems/statements.ts` | `BankStatements.tsx` | `playthrough-fixes.test.ts` `statements.test.ts` | Your Bank |
-| `bank.set_payments` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `arrears.test.ts` `cardlife.test.ts` `cardoffers.test.ts` `cash.test.ts` `livelihood.test.ts` `payments.test.ts` `pending.test.ts` `security.test.ts` | Your Bank |
+| `bank.add_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `journey-bank.test.ts` `payments.test.ts` | Your Bank |
+| `bank.arrange_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `bank-fees.test.ts` `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.borrow` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.break_term` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.cancel_scheduled` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-bank.test.ts` `payments.test.ts` | Your Bank |
+| `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-bank.test.ts` `payments.test.ts` | Your Bank |
+| `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.debit_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-bank.test.ts` `security.test.ts` | Your Bank |
+| `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.open_term` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.pay_collections` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.reactivate` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.reclaim_debit` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-bank.test.ts` `payments.test.ts` | Your Bank |
+| `bank.repay_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `journey-bank.test.ts` `lending.test.ts` | Your Bank |
+| `bank.schedule_payment` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-bank.test.ts` `payments.test.ts` | Your Bank |
+| `bank.set_alerts` | `src/engine/systems/statements.ts` | `BankStatements.tsx` | `journey-bank.test.ts` `playthrough-fixes.test.ts` `statements.test.ts` | Your Bank |
+| `bank.set_payments` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `arrears.test.ts` `cardlife.test.ts` `cardoffers.test.ts` `cash.test.ts` `journey-bank.test.ts` `livelihood.test.ts` `payments.test.ts` `pending.test.ts` `security.test.ts` | Your Bank |
 | `bank.set_round_ups` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.set_term_end` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.stop_check` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `payments.test.ts` | Your Bank |
+| `bank.set_term_end` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.stop_check` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-bank.test.ts` `payments.test.ts` | Your Bank |
 | `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `cardoffers.test.ts` `cards.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
 | `bank.take_overrun_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` | Your Bank |
-| `bank.take_term_interest` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `assistant.test.ts` `banking.test.ts` `cash.test.ts` | Your Bank |
+| `bank.take_term_interest` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `assistant.test.ts` `banking.test.ts` `cash.test.ts` `journey-bank.test.ts` | Your Bank |
 
 ## benefits
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `benefits.assistance` | `src/engine/systems/assistance.ts` | `PapersWorkspace.tsx` | `assistance.test.ts` | Between Jobs |
-| `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` `safetynet.test.ts` `universalcredit.test.ts` | Between Jobs |
+| `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` `journey-papers.test.ts` `safetynet.test.ts` `universalcredit.test.ts` | Between Jobs |
 | `benefits.ei_register` | `src/engine/systems/eiself.ts` | `PapersWorkspace.tsx` | `cabenefits.test.ts` | Between Jobs |
 | `benefits.hap` | `src/engine/systems/homebenefits.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` | Between Jobs |
 
@@ -58,9 +58,9 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `boat.buy` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` | A Car Of Your Own |
-| `boat.certify` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` | A Car Of Your Own |
-| `boat.sell` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` | A Car Of Your Own |
+| `boat.buy` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `boat.certify` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `boat.sell` | `src/engine/systems/boats.ts` | `VehiclesWorkspace.tsx` | `boats.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
 
 ## build
 
@@ -74,36 +74,36 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `calendar.cancel` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `plans.test.ts` `smoke.test.ts` | Your Own Plans |
-| `calendar.schedule` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `day-bounds.test.ts` `journey.test.ts` `livelihood.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `plans.test.ts` `simulation.test.ts` `smoke.test.ts` | Your Own Plans |
+| `calendar.schedule` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `assistant.test.ts` `day-bounds.test.ts` `journey.test.ts` `livelihood.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `plans.test.ts` `simulation.test.ts` `smoke.test.ts` | Your Own Plans |
 | `calendar.skip` | `src/engine/world/plans.ts` | `TimeControls.tsx` | `plans.test.ts` | What’s Coming |
 
 ## caravan
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `caravan.buy` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
-| `caravan.sell` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
+| `caravan.buy` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `journey-cars.test.ts` | Rent And A Roof |
+| `caravan.sell` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `journey-cars.test.ts` | Rent And A Roof |
 
 ## card
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `card.apply` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cardoffers.test.ts` `cards.test.ts` `paywith.test.ts` `several-cards.test.ts` | Your Bank |
-| `card.close` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `several-cards.test.ts` | Your Bank |
-| `card.dispute` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
-| `card.lock` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
+| `card.apply` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cardoffers.test.ts` `cards.test.ts` `journey-bank.test.ts` `paywith.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.close` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `journey-bank.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.dispute` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-bank.test.ts` `security.test.ts` | Your Bank |
+| `card.lock` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-bank.test.ts` `security.test.ts` | Your Bank |
 | `card.money_transfer` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` | Your Bank |
 | `card.plan` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` | Your Bank |
-| `card.redeem_rewards` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` | Your Bank |
-| `card.refund_credit` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `interest.test.ts` | Your Bank |
-| `card.report` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
+| `card.redeem_rewards` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` `journey-bank.test.ts` | Your Bank |
+| `card.refund_credit` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `interest.test.ts` `journey-bank.test.ts` | Your Bank |
+| `card.report` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-bank.test.ts` `security.test.ts` | Your Bank |
 | `card.request_hardship` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.request_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_auto_raise` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_everyday` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `several-cards.test.ts` | Your Bank |
-| `card.set_over_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `several-cards.test.ts` | Your Bank |
-| `card.update_billers` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
+| `card.request_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `card.set_auto_raise` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `card.set_everyday` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `journey-bank.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.set_over_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-bank.test.ts` | Your Bank |
+| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-bank.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.update_billers` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-bank.test.ts` `security.test.ts` | Your Bank |
 
 ## career
 
@@ -147,8 +147,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `cash.deposit` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cash.test.ts` | Your Bank |
-| `cash.withdraw` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cardoffers.test.ts` `cash.test.ts` `security.test.ts` `several-cards.test.ts` | Your Bank |
+| `cash.deposit` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cash.test.ts` `journey-bank.test.ts` | Your Bank |
+| `cash.withdraw` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cardoffers.test.ts` `cash.test.ts` `journey-bank.test.ts` `security.test.ts` `several-cards.test.ts` | Your Bank |
 
 ## catalog
 
@@ -175,14 +175,15 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.alter` | `src/engine/systems/tailoring.ts` | `ClothesWorkspace.tsx` | `tailoring.test.ts` | Rent And A Roof |
 | `clothes.basket_add` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.basket_remove` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
-| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journey-bank.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.cancel` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
-| `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `journey-day-at-home.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `journey-day-at-home.test.ts` `take-off.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.checkout` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.collect` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` `tailoring.test.ts` `trips.test.ts` | Rent And A Roof |
 | `clothes.collect_order` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` | Rent And A Roof |
-| `clothes.delete_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
+| `clothes.delete_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `commands-robust.test.ts` | Rent And A Roof |
 | `clothes.dress` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.dry_by` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `laundry-choice.test.ts` | Rent And A Roof |
 | `clothes.dry_clean` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.measures` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `sizecharts.test.ts` | Rent And A Roof |
 | `clothes.return` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
@@ -219,24 +220,24 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` | Passports And Licenses |
+| `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey-papers.test.ts` | Passports And Licenses |
 | `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `boardingid.test.ts` `identity.test.ts` | Passports And Licenses |
-| `documents.apply_idp` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `licensing.test.ts` | Passports And Licenses |
+| `documents.apply_idp` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `journey-papers.test.ts` `licensing.test.ts` | Passports And Licenses |
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And Licenses |
-| `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `documents.test.ts` | Passports And Licenses |
+| `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `documents.test.ts` `journey-papers.test.ts` | Passports And Licenses |
 | `documents.apply_visa` | `src/engine/systems/documents.ts` | `Documents.tsx` | `visas.test.ts` | Passports And Licenses |
 | `documents.apply_work_permit` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And Licenses |
 | `documents.exchange_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` | Passports And Licenses |
 | `documents.license_step` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `naturalize.test.ts` | Passports And Licenses |
 | `documents.petition_o1` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | — |
-| `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `policereport.test.ts` | Between Jobs |
+| `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `journey-papers.test.ts` `policereport.test.ts` | Between Jobs |
 | `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `identity.test.ts` | Passports And Licenses |
 | `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `residence.test.ts` | Passports And Licenses |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `away.test.ts` `idreplace.test.ts` | Passports And Licenses |
-| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-cars.test.ts` `journey-papers.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 
@@ -245,7 +246,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `errand.fuel` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `connected-day.test.ts` `fueltank.test.ts` `journeys.test.ts` | Rent And A Roof |
-| `errand.go` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` `fuel-choice.test.ts` `fueltank.test.ts` `journeys.test.ts` `standin.test.ts` `trips.test.ts` | Rent And A Roof |
+| `errand.go` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` `commands-robust.test.ts` `fuel-choice.test.ts` `fueltank.test.ts` `journey-cars.test.ts` `journeys.test.ts` `standin.test.ts` `trips.test.ts` | Rent And A Roof |
 | `errand.park` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `garages.test.ts` | Rent And A Roof |
 
 ## family
@@ -258,8 +259,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `finance.pay_card` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `household.test.ts` `interest.test.ts` | Your Bank |
-| `finance.set_autopay` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cards.test.ts` `household.test.ts` `several-cards.test.ts` | Your Bank |
+| `finance.pay_card` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `household.test.ts` `interest.test.ts` `journey-bank.test.ts` | Your Bank |
+| `finance.set_autopay` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cards.test.ts` `household.test.ts` `journey-bank.test.ts` `several-cards.test.ts` | Your Bank |
 
 ## food
 
@@ -274,7 +275,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | `food.drink` | `src/engine/systems/alcohol.ts` | `FoodWorkspace.tsx` | `alcohol.test.ts` | Rent And A Roof |
 | `food.drink_home` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `cups.test.ts` `kitchen.test.ts` | Rent And A Roof |
 | `food.eat_ready` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `kitchen.test.ts` `looks.test.ts` | Rent And A Roof |
+| `food.freeze` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `freezing.test.ts` | Rent And A Roof |
 | `food.reserve` | `src/engine/systems/reservations.ts` | `FoodWorkspace.tsx` | `reservations.test.ts` | Rent And A Roof |
+| `food.thaw` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `freezing.test.ts` | Rent And A Roof |
 
 ## garden
 
@@ -298,18 +301,18 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `health.appeal` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `claims.test.ts` | Between Jobs |
 | `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Between Jobs |
-| `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `referrals.test.ts` | Between Jobs |
-| `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `referrals.test.ts` | Between Jobs |
-| `health.choose_clinic` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `clinics.test.ts` | Between Jobs |
+| `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `journey-papers.test.ts` `referrals.test.ts` | Between Jobs |
+| `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `journey-papers.test.ts` `referrals.test.ts` | Between Jobs |
+| `health.choose_clinic` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `clinics.test.ts` `journey-papers.test.ts` | Between Jobs |
 | `health.choose_pharmacy` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carevisits.test.ts` | Between Jobs |
 | `health.dental` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `costs.test.ts` | Between Jobs |
-| `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | **none** | Between Jobs |
+| `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` | Between Jobs |
 | `health.elect_cobra` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
-| `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicaluis.test.ts` `safetynet.test.ts` `worklife.test.ts` | Between Jobs |
+| `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `medicaluis.test.ts` `safetynet.test.ts` `worklife.test.ts` | Between Jobs |
 | `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicine.test.ts` | Between Jobs |
 | `health.mobility` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
 | `health.parking_permit` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
-| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
+| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `worklife.test.ts` | Between Jobs |
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
 | `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Between Jobs |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Between Jobs |
@@ -320,9 +323,9 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `home.alarm` | `src/engine/systems/alarm.ts` | `Home.tsx` | `alarm.test.ts` | Rent And A Roof |
 | `home.borrow` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
-| `home.buy_game` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+| `home.buy_game` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 | `home.buy_paint` | `src/engine/systems/paint.ts` | `HomesWorkspace.tsx` | `paint.test.ts` | Rent And A Roof |
-| `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `furniture-makers.test.ts` `hosting.test.ts` `journeys.test.ts` | Rent And A Roof |
+| `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `furniture-makers.test.ts` `hosting.test.ts` `journey-belongings.test.ts` `journeys.test.ts` | Rent And A Roof |
 | `home.buy_portable` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.buy_units` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.cancel` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
@@ -330,7 +333,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.charger` | `src/engine/systems/charging.ts` | `Home.tsx` | `evs.test.ts` | Rent And A Roof |
 | `home.cleaner` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `away.test.ts` `dwelling.test.ts` | Rent And A Roof |
 | `home.cleaner_key` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `dwelling.test.ts` | Rent And A Roof |
-| `home.console` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+| `home.console` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 | `home.end_hold` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
 | `home.end_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
 | `home.end_sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
@@ -350,7 +353,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` | Rent And A Roof |
 | `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `homeworks.test.ts` `journey-housing-construction.test.ts` `permits.test.ts` | Rent And A Roof |
-| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `valuables.test.ts` | Rent And A Roof |
+| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
 | `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `houseguests.test.ts` `room-list.test.ts` | Rent And A Roof |
@@ -358,10 +361,10 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
 | `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journeys.test.ts` `pet-care.test.ts` | Rent And A Roof |
-| `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `partway.test.ts` `programmes.test.ts` `shortfalls.test.ts` `televisions.test.ts` | Rent And A Roof |
+| `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` `partway.test.ts` `programmes.test.ts` `shortfalls.test.ts` `televisions.test.ts` | Rent And A Roof |
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
-| `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `programmes.test.ts` | Rent And A Roof |
-| `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+| `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` `programmes.test.ts` | Rent And A Roof |
+| `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 
 ## hotel
 
@@ -385,10 +388,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `items.assemble` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` `journeys.test.ts` | Rent And A Roof |
-| `items.discard` | `src/engine/systems/bulky.ts` | `BelongingsWorkspace.tsx` | `bulky.test.ts` | Rent And A Roof |
-| `items.give` | `src/engine/systems/gifts.ts` | `BelongingsWorkspace.tsx` | `gifts.test.ts` | Rent And A Roof |
-| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `room-list.test.ts` `special-rooms.test.ts` | Rent And A Roof |
+| `items.assemble` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` `journey-belongings.test.ts` `journeys.test.ts` | Rent And A Roof |
+| `items.discard` | `src/engine/systems/bulky.ts` | `BelongingsWorkspace.tsx` | `bulky.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
+| `items.give` | `src/engine/systems/gifts.ts` | `BelongingsWorkspace.tsx` | `gifts.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
+| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `journey-belongings.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `room-list.test.ts` `special-rooms.test.ts` | Rent And A Roof |
 | `items.put_away` | `src/engine/systems/trips.ts` | `BelongingsWorkspace.tsx` | `connected-day.test.ts` `journey-day-at-home.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `trips.test.ts` | Rent And A Roof |
 | `items.recover` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 
@@ -396,8 +399,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `jewelry.commission` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` | Rent And A Roof |
-| `jewelry.engrave` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` | Rent And A Roof |
+| `jewelry.commission` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
+| `jewelry.engrave` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 
 ## land
 
@@ -415,8 +418,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-day-at-home.test.ts` `kitchen.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
-| `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
+| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-day-at-home.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## lighting
@@ -431,22 +434,22 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
-| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
-| `luggage.delete_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-acting-travel.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.pack_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-belongings.test.ts` `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.delete_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.repack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
-| `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggage-choice.test.ts` | Rent And A Roof |
-| `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
+| `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journey-acting-travel.test.ts` `journey-belongings.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 
 ## pawn
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pawn.pledge` | `src/engine/systems/pawn.ts` | `BelongingsWorkspace.tsx` | `pawn.test.ts` | Rent And A Roof |
-| `pawn.redeem` | `src/engine/systems/pawn.ts` | `BelongingsWorkspace.tsx` | `pawn.test.ts` | Rent And A Roof |
+| `pawn.pledge` | `src/engine/systems/pawn.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pawn.test.ts` | Rent And A Roof |
+| `pawn.redeem` | `src/engine/systems/pawn.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pawn.test.ts` | Rent And A Roof |
 
 ## pension
 
@@ -465,27 +468,27 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-grooming.test.ts` `pet-papers.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
-| `pets.buy` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
-| `pets.certificate` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
-| `pets.chip` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
-| `pets.feed` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
-| `pets.groom` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-grooming.test.ts` | Rent And A Roof |
-| `pets.import_form` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
-| `pets.tapeworm` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
-| `pets.vet` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
-| `pets.walk` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
-| `pets.walker` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
+| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journey-belongings.test.ts` `journeys.test.ts` `pet-care.test.ts` `pet-grooming.test.ts` `pet-papers.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
+| `pets.buy` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` | Rent And A Roof |
+| `pets.certificate` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-papers.test.ts` | Rent And A Roof |
+| `pets.chip` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-papers.test.ts` | Rent And A Roof |
+| `pets.feed` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` | Rent And A Roof |
+| `pets.groom` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-grooming.test.ts` | Rent And A Roof |
+| `pets.import_form` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-papers.test.ts` | Rent And A Roof |
+| `pets.tapeworm` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-papers.test.ts` | Rent And A Roof |
+| `pets.vet` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` | Rent And A Roof |
+| `pets.walk` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` | Rent And A Roof |
+| `pets.walker` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` | Rent And A Roof |
 
 ## phone
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
-| `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
-| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
-| `phone.claim` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` | Rent And A Roof |
-| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.claim` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` | Rent And A Roof |
+| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 
 ## pilot
 
@@ -497,21 +500,21 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `reading.buy` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` | `reading.test.ts` | Rent And A Roof |
-| `reading.library_card` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` | `reading.test.ts` | Rent And A Roof |
+| `reading.buy` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `reading.test.ts` | Rent And A Roof |
+| `reading.library_card` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `reading.test.ts` | Rent And A Roof |
 
 ## roadside
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `roadside.join` | `src/engine/systems/roadside.ts` | `VehiclesWorkspace.tsx` | `roadside.test.ts` | A Car Of Your Own |
-| `roadside.leave` | `src/engine/systems/roadside.ts` | `VehiclesWorkspace.tsx` | `roadside.test.ts` | A Car Of Your Own |
+| `roadside.join` | `src/engine/systems/roadside.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `roadside.test.ts` | A Car Of Your Own |
+| `roadside.leave` | `src/engine/systems/roadside.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `roadside.test.ts` | A Car Of Your Own |
 
 ## routine
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `routine.delete` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
+| `routine.delete` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `commands-robust.test.ts` `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
 | `routine.save` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
 | `routine.set_time` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `routinetime.test.ts` | Rent And A Roof |
 
@@ -558,14 +561,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `sport.buy` | `src/engine/systems/sportsgear.ts` | `BelongingsWorkspace.tsx` | `sportsgear.test.ts` | Rent And A Roof |
+| `sport.buy` | `src/engine/systems/sportsgear.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `sportsgear.test.ts` | Rent And A Roof |
 
 ## tax
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `retirement.test.ts` `safetynet.test.ts` | Between Jobs |
-| `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Between Jobs |
+| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `retirement.test.ts` `safetynet.test.ts` | Between Jobs |
+| `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `safetynet.test.ts` | Between Jobs |
 
 ## travel
 
@@ -591,65 +594,65 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tutorial.read` | `src/engine/world/tutorial.ts` | — | **none** | — |
+| `tutorial.read` | `src/engine/world/tutorial.ts` | `Guide.tsx` | `tutorial.test.ts` | — |
 
 ## tv
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tv.buy` | `src/engine/systems/televisions.ts` | `HomesWorkspace.tsx` | `owned-past-listing.test.ts` `televisions.test.ts` | Rent And A Roof |
-| `tv.watch` | `src/engine/systems/programmes.ts` | `BelongingsWorkspace.tsx` | `partway.test.ts` `programmes.test.ts` `televisions.test.ts` | Rent And A Roof |
+| `tv.buy` | `src/engine/systems/televisions.ts` | `HomesWorkspace.tsx` | `journey-belongings.test.ts` `owned-past-listing.test.ts` `televisions.test.ts` | Rent And A Roof |
+| `tv.watch` | `src/engine/systems/programmes.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `partway.test.ts` `programmes.test.ts` `televisions.test.ts` | Rent And A Roof |
 
 ## valuables
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `valuables.buy_safe` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
-| `valuables.lock_up` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
-| `valuables.schedule` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
-| `valuables.take_out` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
+| `valuables.buy_safe` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
+| `valuables.lock_up` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
+| `valuables.schedule` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
+| `valuables.take_out` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `valuables.test.ts` | Rent And A Roof |
 
 ## vehicle
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `vehicle.audio` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` | A Car Of Your Own |
-| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `carmarket.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `landlease.test.ts` `leasing.test.ts` `modelyears.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tire-catalog.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
-| `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `wraps.test.ts` | A Car Of Your Own |
-| `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
-| `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
-| `vehicle.interior` | `src/engine/systems/interiors.ts` | `VehiclesWorkspace.tsx` | `interiors.test.ts` | A Car Of Your Own |
-| `vehicle.keep_in` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `parking.test.ts` | A Car Of Your Own |
-| `vehicle.lease` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `leasesabroad.test.ts` `leasing.test.ts` `mods.test.ts` | A Car Of Your Own |
-| `vehicle.lease_buyout` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `leasing.test.ts` | A Car Of Your Own |
-| `vehicle.lease_return` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `leasesabroad.test.ts` `leasing.test.ts` | A Car Of Your Own |
-| `vehicle.list` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` | A Car Of Your Own |
-| `vehicle.modify` | `src/engine/systems/mods.ts` | `VehiclesWorkspace.tsx` | `journeys.test.ts` `mods.test.ts` `tirewear.test.ts` | A Car Of Your Own |
-| `vehicle.redeem` | `src/engine/systems/repossession.ts` | `VehiclesWorkspace.tsx` | `repossession.test.ts` | A Car Of Your Own |
-| `vehicle.refuel` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `journeys.test.ts` | A Car Of Your Own |
-| `vehicle.repair` | `src/engine/systems/repairs.ts` | `VehiclesWorkspace.tsx` | `repairs.test.ts` `roadside.test.ts` `standin.test.ts` | A Car Of Your Own |
-| `vehicle.replace_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `tire-catalog.test.ts` `tirewear.test.ts` | A Car Of Your Own |
-| `vehicle.roof_box` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
-| `vehicle.roof_box_fit` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
-| `vehicle.roof_rack` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
-| `vehicle.sell` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` `leasing.test.ts` `repossession.test.ts` `theft.test.ts` `vehicles.test.ts` | A Car Of Your Own |
-| `vehicle.service` | `src/engine/systems/carcare.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` | A Car Of Your Own |
-| `vehicle.set_filling` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fuel-choice.test.ts` | A Car Of Your Own |
-| `vehicle.stand_in` | `src/engine/systems/standin.ts` | `VehiclesWorkspace.tsx` | `standin.test.ts` | A Car Of Your Own |
-| `vehicle.stereo` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `caraudio-parts.test.ts` `usedcars.test.ts` | A Car Of Your Own |
-| `vehicle.test_drive` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedlistings.test.ts` | A Car Of Your Own |
-| `vehicle.tint` | `src/engine/systems/tint.ts` | `VehiclesWorkspace.tsx` | `mods.test.ts` `tint.test.ts` | A Car Of Your Own |
-| `vehicle.transfer` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedlistings.test.ts` | A Car Of Your Own |
-| `vehicle.unlist` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` | A Car Of Your Own |
-| `vehicle.unwrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.audio` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `car-audio-catalog.test.ts` `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `carmarket.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `journey-cars.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `landlease.test.ts` `leasing.test.ts` `modelyears.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tire-catalog.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `journey-cars.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `journey-cars.test.ts` | Rent And A Roof |
+| `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `usedcars.test.ts` | A Car Of Your Own |
+| `vehicle.interior` | `src/engine/systems/interiors.ts` | `VehiclesWorkspace.tsx` | `interiors.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.keep_in` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `parking.test.ts` | A Car Of Your Own |
+| `vehicle.lease` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `leasesabroad.test.ts` `leasing.test.ts` `mods.test.ts` | A Car Of Your Own |
+| `vehicle.lease_buyout` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `leasing.test.ts` | A Car Of Your Own |
+| `vehicle.lease_return` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `leasesabroad.test.ts` `leasing.test.ts` | A Car Of Your Own |
+| `vehicle.list` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.modify` | `src/engine/systems/mods.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `journeys.test.ts` `mods.test.ts` `tirewear.test.ts` | A Car Of Your Own |
+| `vehicle.redeem` | `src/engine/systems/repossession.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `repossession.test.ts` | A Car Of Your Own |
+| `vehicle.refuel` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fuel-choice.test.ts` `fuel-stations.test.ts` `fueltank.test.ts` `journey-cars.test.ts` `journeys.test.ts` | A Car Of Your Own |
+| `vehicle.repair` | `src/engine/systems/repairs.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `repairs.test.ts` `roadside.test.ts` `standin.test.ts` | A Car Of Your Own |
+| `vehicle.replace_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `assistant.test.ts` `journey-cars.test.ts` `tire-catalog.test.ts` `tirewear.test.ts` | A Car Of Your Own |
+| `vehicle.roof_box` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `roofbox.test.ts` | A Car Of Your Own |
+| `vehicle.roof_box_fit` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `roofbox.test.ts` | A Car Of Your Own |
+| `vehicle.roof_rack` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `roofbox.test.ts` | A Car Of Your Own |
+| `vehicle.sell` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` `journey-cars.test.ts` `leasing.test.ts` `repossession.test.ts` `theft.test.ts` `vehicles.test.ts` | A Car Of Your Own |
+| `vehicle.service` | `src/engine/systems/carcare.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.set_filling` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fuel-choice.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.stand_in` | `src/engine/systems/standin.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `standin.test.ts` | A Car Of Your Own |
+| `vehicle.stereo` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `caraudio-parts.test.ts` `journey-cars.test.ts` `usedcars.test.ts` | A Car Of Your Own |
+| `vehicle.test_drive` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `usedlistings.test.ts` | A Car Of Your Own |
+| `vehicle.tint` | `src/engine/systems/tint.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `mods.test.ts` `tint.test.ts` | A Car Of Your Own |
+| `vehicle.transfer` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `usedlistings.test.ts` | A Car Of Your Own |
+| `vehicle.unlist` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` `journey-cars.test.ts` | A Car Of Your Own |
+| `vehicle.unwrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.winter_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `tire-catalog.test.ts` `tires.test.ts` | A Car Of Your Own |
-| `vehicle.wrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.wrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `journey-cars.test.ts` `wraps.test.ts` | A Car Of Your Own |
 
 ## watch
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `watch.battery` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `watches.test.ts` | Rent And A Roof |
+| `watch.battery` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `watches.test.ts` | Rent And A Roof |
 | `watch.service` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `watches.test.ts` | Rent And A Roof |
 
 ## world
