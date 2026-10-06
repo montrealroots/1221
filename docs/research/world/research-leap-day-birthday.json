@@ -1,0 +1,103 @@
+{
+  "read": "2026-10-06",
+  "places": [
+    {
+      "place": "England and Wales",
+      "birthday": "1 March",
+      "law": "Family Law Reform Act 1969, s.9(1)-(2) (sets the rule that age is attained at the commencement of the 'relevant anniversary' of birth, but contains no express words for 29 February births); applied to leaplings in Electoral Commission statutory guidance to Electoral Registration Officers",
+      "url": "https://www.legislation.gov.uk/ukpga/1969/46/section/9",
+      "quote": "9 Time at which a person attains a particular age (1) The time at which a person attains a particular age expressed in years shall be the commencement of the relevant anniversary of the date of his birth. (2) This section applies only where the relevant anniversary falls on a date after that on which this section comes into force, and, in relation to any enactment, deed, will or other instrument, has effect subject to any provision therein. -- and, as quoted in D Pollard, 'Some Oddities of the Law on Age' (2020) 34 Trust Law International 21, from the Electoral Commission's 'Managing electoral registration in Great Britain: Guidance for Electoral Registration Officers' (Part B, p.27, para 8.3): 'Any person who was born on 29 February in a leap year will attain the age of 18 on 1 March in a non-leap year.'",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Scotland",
+      "birthday": "1 March",
+      "law": "Age of Legal Capacity (Scotland) Act 1991, s.6(1)-(2)",
+      "url": "https://www.legislation.gov.uk/ukpga/1991/50/section/6/1991-09-25?view=plain",
+      "quote": "The time at which a person attains a particular age expressed in years shall be taken to be the beginning of the relevant anniversary of the date of his birth. ... Where a person has been born on 29th February in a leap year, the relevant anniversary in any year other than a leap year shall be taken to be 1st March.",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Ireland",
+      "birthday": "not settled in law",
+      "law": "Age of Majority Act 1985, s.2 (fixes full age at 18) and the Interpretation Act 2005 (general rules of construction); neither contains an express leap-year/29 February rule, unlike the equivalent UK statutes",
+      "url": "https://www.irishstatutebook.ie/eli/1985/act/2/enacted/en/html",
+      "quote": "No provision found in the Age of Majority Act 1985 or the Interpretation Act 2005 addressing a person born on 29 February; searches of the Irish Statute Book text for these Acts returned only the general 'full age...eighteen years' rule with no leap-year clause (contrast Family Law Reform Act 1969 s.9 for England and Wales and Age of Legal Capacity (Scotland) Act 1991 s.6(2), neither of which extends to Ireland).",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Canada (federal)",
+      "birthday": "not settled in law",
+      "law": "Interpretation Act, R.S.C. 1985, c. I-21, s.30",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-21/FullText.html",
+      "quote": "A person is deemed not to have attained a specified number of years of age until the commencement of the anniversary, of the same number, of the day of that person's birth. -- The Act contains no further words addressing what the 'anniversary' of 29 February is in a non-leap year.",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Canada - British Columbia",
+      "birthday": "28 February",
+      "law": "Interpretation Act, R.S.B.C. 1996, c. 238, s.25.1 (age-attainment rule, no leap-year clause) read with s.25(3) (general rule for periods that would fall on 29 February)",
+      "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96238_01",
+      "quote": "s.25.1: 'A person reaches a particular age expressed in years at the beginning of the relevant anniversary of the person's birth date.' s.25(3): 'If the beginning or end of a period determined under subsection (1) or subsections (1) and (2), as applicable, would be February 29 and February 29 does not occur in the year in which the period begins or ends, the period begins or ends, as the case may be, on February 28.'",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Canada - Ontario",
+      "birthday": "not settled in law",
+      "law": "Not located; Ontario's Legislation Act, 2006 could not be confirmed (within this session's web access) to contain a leap-year/29 February clause comparable to British Columbia's s.25(3)",
+      "url": null,
+      "quote": null,
+      "licenceExpiry": null
+    },
+    {
+      "place": "Mexico",
+      "birthday": "not settled in law",
+      "law": "Código Civil Federal, art. 646 (mayoría de edad a los dieciocho años cumplidos) and arts. 1176-1180 (cómputo de plazos); none of these articles mentions 29 de febrero or años bisiestos",
+      "url": "https://www.codigocivil.mx/federal/libro-1-personas/titulo-10-emancipacion-mayor-edad/capitulo-2-mayor-edad",
+      "quote": "Artículo 646: 'La mayor edad comienza a los dieciocho años cumplidos.' Capítulo VI (cómputo del tiempo), arts. 1176-1180, define counting by years/months/days but contain no clause for 29 February; secondary sources (e.g. El Universal, 29 de febrero: ¿Qué pasa con las personas que nacieron en año bisiesto?) report that Registro Civil practice varies by state between registering/treating the date as 28 February or 1 March, as a matter of administrative practice rather than codified law.",
+      "licenceExpiry": null
+    },
+    {
+      "place": "United States (federal)",
+      "birthday": "not settled in law",
+      "law": "No federal statute found fixing a general rule for when a person 'attains an age'; age of majority and age-based entitlements in the United States are overwhelmingly matters of state law (contrast the Canadian and UK federal/national Interpretation Acts, which do legislate on this)",
+      "url": null,
+      "quote": null,
+      "licenceExpiry": null
+    },
+    {
+      "place": "New York",
+      "birthday": "28 February",
+      "law": "N.Y. General Construction Law § 58 (defines 'year' for the purpose of computing a statutory, contractual or instrument-based year; no separate statute was found expressly titled as an age-attainment rule)",
+      "url": "https://www.nysenate.gov/legislation/laws/GCN/58",
+      "quote": "The term year in a statute, contract, or any public or private instrument, means three hundred and sixty-five days, but the added day of a leap year and the day immediately preceding shall for the purpose of such computation be counted as one day.",
+      "licenceExpiry": null
+    },
+    {
+      "place": "California",
+      "birthday": "28 February",
+      "law": "Cal. Government Code § 6803 (defines 'year' for computation of periods of time; no separate statute was found expressly titled as an age-attainment rule). Driver's licence expiry is set by Cal. Vehicle Code § 12816 (expiry tied to the applicant's birthday); the exact text of § 12816 could not be retrieved in this session (source blocked the fetch), so its treatment of 29 February specifically is not confirmed.",
+      "url": "https://law.justia.com/codes/california/code-gov/title-1/division-7/chapter-8/section-6803/",
+      "quote": "'Year' means a period of 365 days; 'half year,' 182 days; 'quarter of a year,' 91 days. The added day of a leap year, and the day immediately preceding, if they occur in any such period, shall be reckoned together as one day.",
+      "licenceExpiry": null
+    },
+    {
+      "place": "Connecticut",
+      "birthday": "not settled in law",
+      "law": "Conn. Gen. Stat. § 1-1 (words and phrases; construction of statutes) and § 1-1d (age of majority, fixing it at 18); neither provision located in this session contains a leap-year/29 February clause comparable to N.Y. Gen. Constr. Law § 58 or Cal. Gov't Code § 6803",
+      "url": "https://www.cga.ct.gov/current/pub/chap_001.htm",
+      "quote": null,
+      "licenceExpiry": null
+    }
+  ],
+  "notFound": [
+    "England and Wales / Scotland (DVLA) driver's licence expiry for a leapling: no DVLA statute, regulation or official guidance was located in this session stating whether the renewal date in a non-leap year is set to 28 February or 1 March.",
+    "Ireland: no case law, statute, or official guidance located addressing which date (28 Feb or 1 Mar) is used for attaining an age; only the general 'full age at 18' rule in the Age of Majority Act 1985 was found.",
+    "Canada - Ontario: could not locate the text of Ontario's Legislation Act, 2006 (or any predecessor Interpretation Act provision) specifically addressing 29 February births, within this session's web access.",
+    "Canada (federal and BC): no source found for a federal or BC driver's licence rule specific to 29 February birthdays (driver licensing is provincial, so the federal Interpretation Act s.30 would not govern licence expiry directly).",
+    "Mexico: no federal statute or case law found fixing 28 February or 1 March for mayoría de edad or for driver's licence (licencia de conducir) expiry; available secondary sources describe only inconsistent Registro Civil and state-licensing administrative practice, not codified law.",
+    "United States (federal): no federal statute found addressing age attainment for persons born 29 February; this is consistent with age of majority generally being state, not federal, law in the US.",
+    "Connecticut: no statute, regulation or DMV rule located addressing whether a person born 29 February attains a new age, or has a driving licence expire, on 28 February or 1 March in a non-leap year.",
+    "New York and California driver's licence (DMV) expiry for a leapling: the general 'year' computation statutes (N.Y. Gen. Constr. Law §58; Cal. Gov't Code §6803) point to 28 February, but no DMV regulation, form instruction, or case law was retrieved in this session confirming that the DMV itself follows that date for licence expiry (the relevant California Vehicle Code §12816 text could not be fetched; several blocked/403 sources prevented full verification)."
+  ]
+}
