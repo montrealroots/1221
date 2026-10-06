@@ -111,6 +111,7 @@ export function modelFitCost(sim: Simulation, owned: OwnedHome, kind: ApplianceK
   if (!found || found.product.attrs.kind !== kind) return `That isn’t a ${APPLIANCE_LABEL[kind].toLowerCase()} on sale.`;
   if (found.offer.market !== marketWhere(owned.cityId)) return 'It’s sold in another country.';
   const table = appliancesIn(owned.cityId);
+  // Every kind fitted has its fitting (`content/appliances.ts`); with no table, fitRefusal has already refused it.
   const install = table?.items[kind]?.install ?? 0;
   return devicePrice(sim, owned.cityId, found.offer) + inSave(sim, Math.round(install * 100), table?.currency ?? found.offer.currency);
 }

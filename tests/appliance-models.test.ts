@@ -46,6 +46,20 @@ describe('an appliance by make and model', () => {
     expect(fittedModel(home, 'washer')).toBeUndefined();
   });
 
+  it('charges a printed fitting everywhere, and a fitting of nothing only where the basis says it’s plugged in (from 2026-10-06)', () => {
+    for (const [country, table] of Object.entries(APPLIANCES)) {
+      for (const [kind, item] of Object.entries(table.items)) {
+        if (item!.install === 0) expect(item!.basis, `${country} ${kind}`).toMatch(/plugged in/);
+      }
+    }
+    const sim = save('ie-lei-dublin', 'appl-ie-fit');
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 100_000_00;
+    const home = ownBuilt(sim, sim.player, { cityId: 'ie-lei-dublin', facts: facts('house'), price: 400_000_00, closing: 0 });
+    const r = sim.must<{ cost: number }>({ kind: 'home.fit', payload: { homeId: home.id, kind: 'washer' } });
+    expect(APPLIANCES.ie!.items.washer!.install).toBe(30);
+    expect(r.cost).toBe(inSave(sim, (APPLIANCES.ie!.items.washer!.price + 30) * 100, 'EUR'));
+  });
+
   it('is refused as another kind or another country’s, and a machine with no model bills the typical figure', () => {
     const sim = save('us-ny-newyork', 'appl-refuse');
     const home = ownBuilt(sim, sim.player, { cityId: 'us-ny-newyork', facts: facts('house'), price: 400_000_00, closing: 0 });
