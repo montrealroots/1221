@@ -13,7 +13,7 @@
 // clearance price; a Philips Hue bulb read at MXN 2,809, the same maker's bigger bulb MXN 909 on the same page; and the
 // lamps priced from a range, a "from" price or a neighbouring listing.
 // Run: node tools/build-lighting.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = 'src/engine/content/lightingcatalog.ts';
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
@@ -24,8 +24,10 @@ const FAMILY = { E26: 'edison', E27: 'edison', B22: 'bayonet', GU10: 'gu10', E14
 const EQUIVALENT_LM = { 40: 450, 60: 800, 75: 1100, 100: 1600 };
 export const ENERGY_STAR_LIFE = 15000;
 
-const B = JSON.parse(readFileSync('docs/research/world/research-lighting-bulbs.json', 'utf8'));
-const L = JSON.parse(readFileSync('docs/research/world/research-lighting-lamps.json', 'utf8'));
+// And from 2026-10-05 the depth passes' files (`research-lighting-bulbs-2.json`, `research-lighting-lamps-2.json`), merged in.
+const readMerged = (base, list) => { const files = [base, base.replace('.json', '-2.json')].filter((x) => existsSync(x)).map((x) => JSON.parse(readFileSync(x, 'utf8'))); return { ...files[0], retailers: files.flatMap((x) => x.retailers ?? []), [list]: files.flatMap((x) => x[list] ?? []) }; };
+const B = readMerged('docs/research/world/research-lighting-bulbs.json', 'bulbs');
+const L = readMerged('docs/research/world/research-lighting-lamps.json', 'lamps');
 const sellerOf = (list, id) => list.find((r) => r.id === id)?.name ?? id;
 
 const bulbDropped = (b) => b.tech !== 'led' || !FAMILY[b.base] || (b.brand === 'Tesco' && b.price < 1) || (b.brand === 'Philips Hue' && b.market === 'MX' && b.price > 2000);
