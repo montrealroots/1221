@@ -394,7 +394,8 @@ export function registerFuelTank(sim: Simulation): void {
     if (typeof q === 'string') throw new CommandError(q);
     const charger = p.chargerId ? chargersIn(person.currentLocationId).find((c) => c.id === p.chargerId) : undefined;
     const where = home ? 'at home' : m.fuel === 'ev' ? (charger ? `at ${charger.network}, ${charger.name}` : 'at a public charger') : `at ${stationAt(person.currentLocationId, at.station ?? 0)?.name ?? 'a station'}`;
-    if (!spend(s, person, q.cost, `${m.fuel === 'ev' ? 'Charging' : 'Fuel'} ${where}, the ${m.make} ${m.model}`, 'vehicle', true)) throw new CommandError(`It comes to ${formatMoney(q.cost, saveCurrency(s.universe))}, more than you can pay.`);
+    // Paid at the pump or refused (from 2026-10-06; until then a fill nobody could pay for went through into arrears, and this refusal never came).
+    if (!spend(s, person, q.cost, `${m.fuel === 'ev' ? 'Charging' : 'Fuel'} ${where}, the ${m.make} ${m.model}`, 'vehicle')) throw new CommandError(`It comes to ${formatMoney(q.cost, saveCurrency(s.universe))}, more than you can pay.`);
     v.fuelLevel = q.to;
     delete v.dry;
     if (q.minutes > 0) s.advanceTo(s.now + q.minutes * 60_000);

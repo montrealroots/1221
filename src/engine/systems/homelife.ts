@@ -150,6 +150,9 @@ export function registerHomeLife(sim: Simulation): void {
     const person = s.player;
     if (!subscriptionsOf(person).some((x) => x.id === p?.id)) throw new CommandError('You don’t subscribe to it.');
     person.subscriptions = subscriptionsOf(person).filter((x) => x.id !== p.id);
+    // Its month off the calendar too (from 2026-10-06): until then it stayed, and a plan taken up again before it came
+    // was billed by both months, the old and the new, twice a month.
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === SUBSCRIPTION_MONTH_KIND && item.payload.personId === person.id && item.payload.id === p.id) s.timeline.cancel(item.id, s.now);
     return { left: person.subscriptions.length };
   });
   sim.onCommand<Record<string, never>, { paid: Money; until: Instant }>('home.tv_licence', (_p, { sim: s }) => {

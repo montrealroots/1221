@@ -82,7 +82,8 @@ import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
 import { TRANSFER, registerUsedCars, usedFault, usedListings, type UsedListing } from './usedcars';
 import { buildsFor, hasModelYears, newModelYear, type Build } from './modelyears';
-import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
+import { faultCost, laidUp, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
+import { homeKeyOf } from './items';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
@@ -221,9 +222,14 @@ export const monthKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 12;
 /** A day's share of the year's everyday driving. */
 export const dayKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 365;
 
-/** Driven about its owner's town then: theirs, not stolen, broken or in the shop, delivered, where they live, and theirs to drive. */
+/**
+ * Driven about its owner's town then: theirs, not stolen, off the road for none of `laidUp`'s reasons (in the shop,
+ * broken down, a private sale's transfer not done where the law keeps it off the road until it is), delivered, where
+ * they live, and theirs to drive. Until 2026-10-06 the transfer was checked for an errand but not here, and a British
+ * private sale was driven every day before it was transferred.
+ */
 function drivenThen(sim: Simulation, person: Person, v: OwnedVehicle, m: CarModel, at: Instant): boolean {
-  return !v.repossessed && !stolenNow(v, at) && !forOutings(m) && !v.fault?.severe && !inShopNow(v, at) && !(v.deliveredAt !== undefined && v.deliveredAt > at)
+  return !v.repossessed && !stolenNow(v, at) && !forOutings(m) && laidUp(v, at) === undefined && !(v.deliveredAt !== undefined && v.deliveredAt > at)
     && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, sim.now, sim.now, classFor(m), m.cc).ok;
 }
 
@@ -606,6 +612,11 @@ export function sellVehicle(sim: Simulation, person: Person, v: OwnedVehicle, va
   v.soldAt = sim.now;
   delete v.loan;
   delete v.listed;
+  // Emptied before it goes (from 2026-10-06; until then what was in or on it, a roof box or the shopping, went with it
+  // and couldn't be had back): home to storage where they have a home, else with them.
+  const home = homeKeyOf(person.home);
+  for (const item of person.items ?? []) if (item.at.kind === 'vehicle' && item.at.vehicleId === v.id) item.at = home ? { kind: 'home', home, spot: 'storage' } : { kind: 'person' };
+  delete v.roofBoxL;
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) sim.timeline.cancel(item.id, sim.now);
   return value - payoff;
 }
