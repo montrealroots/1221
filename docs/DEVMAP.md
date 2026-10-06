@@ -49,10 +49,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `benefits.assistance` | `src/engine/systems/assistance.ts` | `PapersWorkspace.tsx` | `assistance.test.ts` | Between Jobs |
+| `benefits.assistance` | `src/engine/systems/assistance.ts` | `PapersWorkspace.tsx` | `assistance.test.ts` `journey-health.test.ts` | Between Jobs |
 | `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` `journey-papers.test.ts` `safetynet.test.ts` `universalcredit.test.ts` | Between Jobs |
-| `benefits.ei_register` | `src/engine/systems/eiself.ts` | `PapersWorkspace.tsx` | `cabenefits.test.ts` | Between Jobs |
-| `benefits.hap` | `src/engine/systems/homebenefits.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` | Between Jobs |
+| `benefits.ei_register` | `src/engine/systems/eiself.ts` | `PapersWorkspace.tsx` | `cabenefits.test.ts` `journey-health.test.ts` | Between Jobs |
+| `benefits.hap` | `src/engine/systems/homebenefits.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` `journey-health.test.ts` | Between Jobs |
 
 ## boat
 
@@ -291,31 +291,31 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `gym.join` | `src/engine/systems/gyms.ts` | `HomesWorkspace.tsx` `RoutinesWorkspace.tsx` | `gyms.test.ts` | Looking After Yourself |
-| `gym.leave` | `src/engine/systems/gyms.ts` | `RoutinesWorkspace.tsx` | `gyms.test.ts` | Looking After Yourself |
-| `gym.trainer` | `src/engine/systems/trainers.ts` | `RoutinesWorkspace.tsx` | `trainers.test.ts` | Looking After Yourself |
+| `gym.join` | `src/engine/systems/gyms.ts` | `HomesWorkspace.tsx` `RoutinesWorkspace.tsx` | `gyms.test.ts` `journey-health.test.ts` | Looking After Yourself |
+| `gym.leave` | `src/engine/systems/gyms.ts` | `RoutinesWorkspace.tsx` | `gyms.test.ts` `journey-health.test.ts` | Looking After Yourself |
+| `gym.trainer` | `src/engine/systems/trainers.ts` | `RoutinesWorkspace.tsx` | `journey-health.test.ts` `trainers.test.ts` | Looking After Yourself |
 
 ## health
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `health.appeal` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `claims.test.ts` | Between Jobs |
-| `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Between Jobs |
+| `health.appeal` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `claims.test.ts` `journey-health.test.ts` | Between Jobs |
+| `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `safetynet.test.ts` | Between Jobs |
 | `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `journey-papers.test.ts` `referrals.test.ts` | Between Jobs |
 | `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `journey-papers.test.ts` `referrals.test.ts` | Between Jobs |
 | `health.choose_clinic` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `clinics.test.ts` `journey-papers.test.ts` | Between Jobs |
-| `health.choose_pharmacy` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carevisits.test.ts` | Between Jobs |
-| `health.dental` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `costs.test.ts` | Between Jobs |
-| `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` | Between Jobs |
-| `health.elect_cobra` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
-| `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `medicaluis.test.ts` `safetynet.test.ts` `worklife.test.ts` | Between Jobs |
-| `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicine.test.ts` | Between Jobs |
-| `health.mobility` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
-| `health.parking_permit` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
+| `health.choose_pharmacy` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carevisits.test.ts` `journey-health.test.ts` | Between Jobs |
+| `health.dental` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `costs.test.ts` `journey-health.test.ts` | Between Jobs |
+| `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `journey-papers.test.ts` | Between Jobs |
+| `health.elect_cobra` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `worklife.test.ts` | Between Jobs |
+| `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `journey-papers.test.ts` `medicaluis.test.ts` `safetynet.test.ts` `worklife.test.ts` | Between Jobs |
+| `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `medicine.test.ts` | Between Jobs |
+| `health.mobility` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` `journey-health.test.ts` | Between Jobs |
+| `health.parking_permit` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` `journey-health.test.ts` | Between Jobs |
 | `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `journey-papers.test.ts` `worklife.test.ts` | Between Jobs |
-| `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
-| `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Between Jobs |
-| `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Between Jobs |
+| `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `journey-health.test.ts` | Between Jobs |
+| `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `journey-health.test.ts` `therapy.test.ts` | Between Jobs |
+| `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` `journey-health.test.ts` | Between Jobs |
 
 ## home
 
@@ -418,7 +418,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `journey-health.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
@@ -455,14 +455,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pension.bienestar` | `src/engine/systems/homepensions.ts` | `CareerWorkspace.tsx` | `homepensions.test.ts` | The Business |
-| `pension.ca_oas` | `src/engine/systems/capensions.ts` | `CareerWorkspace.tsx` | `capensions.test.ts` | The Business |
-| `pension.cpp` | `src/engine/systems/capensions.ts` | `CareerWorkspace.tsx` | `capensions.test.ts` | The Business |
-| `pension.ie_state` | `src/engine/systems/homepensions.ts` | `CareerWorkspace.tsx` | `homepensions.test.ts` | The Business |
-| `pension.imss` | `src/engine/systems/imss.ts` | `CareerWorkspace.tsx` | `imss.test.ts` | The Business |
+| `pension.bienestar` | `src/engine/systems/homepensions.ts` | `CareerWorkspace.tsx` | `homepensions.test.ts` `journey-health.test.ts` | The Business |
+| `pension.ca_oas` | `src/engine/systems/capensions.ts` | `CareerWorkspace.tsx` | `capensions.test.ts` `journey-health.test.ts` | The Business |
+| `pension.cpp` | `src/engine/systems/capensions.ts` | `CareerWorkspace.tsx` | `capensions.test.ts` `journey-health.test.ts` | The Business |
+| `pension.ie_state` | `src/engine/systems/homepensions.ts` | `CareerWorkspace.tsx` | `homepensions.test.ts` `journey-health.test.ts` | The Business |
+| `pension.imss` | `src/engine/systems/imss.ts` | `CareerWorkspace.tsx` | `imss.test.ts` `journey-health.test.ts` | The Business |
 | `pension.social_security` | `src/engine/systems/socialsecurity.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `socialsecurity.test.ts` | The Business |
 | `pension.start` | `src/engine/systems/pension.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `pension.test.ts` | The Business |
-| `pension.state` | `src/engine/systems/statepension.ts` | `CareerWorkspace.tsx` | `statepension.test.ts` | The Business |
+| `pension.state` | `src/engine/systems/statepension.ts` | `CareerWorkspace.tsx` | `journey-health.test.ts` `statepension.test.ts` | The Business |
 
 ## pets
 

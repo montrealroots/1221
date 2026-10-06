@@ -58,6 +58,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Clothes, grooming and routines | `tests/journey-clothes.test.ts` | sizes from measurements; a basket checked out online, delivered and returned by mail less its fee, once; a tee taken in by a tailor and collected; a dry-clean-only sweater worn dirty, cleaned and collected; a wash dried on a rack or in the dryer; outfits worn and deleted, and a routine that dressed them stopping where its outfit went; used sneakers bought and sold at GOAT's fees; London's orders cancelled under its law, collected, returned and left past their hold, each refunded once; a watch serviced; shampoo, razors, hairspray and makeup used by what's set and stopped when cleared; a shower's minutes metered; a salon visit and its tip; plans skipped and cancelled |
 | Travel | `tests/journey-travel.test.ts` | a round trip insured, moved a day, a car rented, the room and car held for deposits and paid, made longer with the way home, the car and the check-out following, a late check-out, and the deposits back once; a hotel made a let with a friend along, a baby on a lap; a canceled flight's refund once; a desk asking for ID after a license replaced; London's breakfast once a morning; a delayed bag's claim; a hotel booked in town; a pilot trained, tested and retested, a plane bought, flown to Boston on its fuel and sold |
 | Food, the garden and the lights | `tests/journey-food.test.ts` | kitchen gear bought, a recipe's shortfall bought in place, a ready meal eaten, food frozen and unusable until thawed; a cup of coffee; a cart filled, emptied and checked out once; favorites; a lamp and bulbs bought and fitted; a house's raised bed and greenhouse planted in season and picked into the kitchen, and a mower; in Los Angeles a car parked at a garage and a meter, beer and wine at home and a pint out, a meal out, a table reserved, cancelled and missed |
+| Health, gyms, benefits and pensions | `tests/journey-health.test.ts` | a dental plan bought, used and dropped; a prescription filled at Walmart's price; a course of CBT; a disabled parking permit; a marketplace claim denied, appealed and overturned, the overpayment back once; charity care; COBRA elected back to the plan's end and dropped; a gym joined, trained in with a trainer and left with its fee; SNAP to its limit, Ontario Works paid and stopped, EI registered, HAP's share of the rent; Britain's, Ireland's, Mexico's and Canada's pensions claimed and paid at their rates and on their days |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -82,6 +83,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A stay made longer ran past its insurance, the way home uncovered | the travel journey | `extendQuote` never read the policy | the cover carried to the new homecoming at what each market's pricing adds, America's share of the longer stay, Canada's weeks, a single trip's price elsewhere (`coverLonger` in `systems/travelinsurance.ts`); the journey's case |
 | A table was never missed for being somewhere else in town: the meal charged as eaten under a plan that held them | the food journey | `occupiedAt`, asked from the table's own handler, found the table itself, marked done before it runs | it leaves out the item asking (`systems/life.ts`, `systems/reservations.ts`); the journey's case. A club meeting asks the same and was read: it isn't a thing that holds them, so never finds itself; `tests/clubs-going.test.ts` holds that |
 | A drink at home was poured from a can still in the car at the shops; a coffee the same | the food journey | `drinkAtHome` never asked where it was | refused unless at the home they're in (`systems/kitchen.ts`); the journey's case |
+| A monthly dental plan covered from the day it was bought, and its first premium came on the next 1st: the days to it covered and never paid for | the health journey | `health.dental` took nothing for a monthly plan | the first month paid as it starts covering, as a gym's is (`systems/health.ts`); the journey's case |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -125,16 +127,17 @@ birthday on the day the law counts it, in New York and in London.
 | 2026-10-06 | `49c5d3b3` | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `abda6d4e` | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `8b4f3328` | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
-| 2026-10-06 | the food journey's commit | the same, five batches | the full suite and every check, with the two food fixes | 363 files and 3,310 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | `40c9dccb` | the same, five batches | the full suite and every check, with the two food fixes | 363 files and 3,310 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | the health journey's commit | the same, five batches | the full suite and every check, with the dental plan's fix | 364 files and 3,323 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: health and benefits, residence papers, and land and the home's extras are next; the
-  bank, papers, belongings, cars, the career, homes, people, clothes, travel and food are done. 318 of 381 commands
-  are now in a connected journey.
+- The domain journeys continue: residence papers, and land and the home's extras are next; the bank, papers,
+  belongings, cars, the career, homes, people, clothes, travel, food and health are done. 341 of 381 commands are now
+  in a connected journey.
 - The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
 - No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.
