@@ -20,6 +20,8 @@ const more = existsSync('docs/research/world/research-groceries2.json') ? read('
 const drinks = existsSync('docs/research/world/research-groceries3.json') ? read('research-groceries3.json') : { products: [] };
 // And more products from the same drink brands (part four, from 2026-10-05).
 const drinksMore = existsSync('docs/research/world/research-groceries4.json') ? read('research-groceries4.json') : { products: [] };
+// And staples from the same food brands (part five, from 2026-10-05).
+const staples = existsSync('docs/research/world/research-groceries5.json') ? read('research-groceries5.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
 /** Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together. */
@@ -145,7 +147,7 @@ const products = [];
 // name names none, as fresh produce mostly doesn't.
 const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-from-names.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
 const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? p.brand ?? null;
-for (const p of [...g.products, ...(more.products ?? []), ...(drinks.products ?? []), ...(drinksMore.products ?? [])]) {
+for (const p of [...g.products, ...(more.products ?? []), ...(drinks.products ?? []), ...(drinksMore.products ?? []), ...(staples.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
   const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
   if (!key) continue;
