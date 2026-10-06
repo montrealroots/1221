@@ -55,6 +55,7 @@ import { payFromBank, owe } from './household';
 import { forOutings, kindOf, modelById, onTwoWheels, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { KM_A_YEAR, type Jurisdiction } from '../content/vehiclefees';
 import { TIRE_PRODUCTS } from '../content/tirecatalog';
+import { FITMENT, tireSize } from '../content/vehiclefitment';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
 import { devicePrice, marketWhere, offerIn } from './devices';
 
@@ -122,16 +123,30 @@ export const lifeOfTire = (p: CatalogProduct): number => (typeof p.attrs.warrant
 export const FIT_SET = { us: { price: 80, currency: 'USD' } } as Readonly<Record<string, { price: number; currency: string }>>;
 
 /** The tires on sale where the car is, a set's price each, cheapest first: winter tires, or the rest. */
+/**
+ * The tire sizes a car takes, where its fitment was read for its model year (`content/vehiclefitment.ts`, from
+ * 2026-10-05): its factory front and rear sizes. None where it wasn't read, or the car is of another model year, and
+ * then nothing is refused for its size: SLATE says the fit isn't read.
+ */
+export function sizesFor(v: OwnedVehicle): string[] | undefined {
+  const f = FITMENT[v.modelId];
+  if (!f?.front) return undefined;
+  if (f.modelYear !== null && v.modelYear !== undefined && v.modelYear !== f.modelYear) return undefined;
+  return [...new Set([f.front, f.rear].filter((s): s is string => Boolean(s)))];
+}
+
+/** The tires on sale where the car is that fit it, a set's price each, cheapest first: winter tires, or the rest. */
 export function tireCatalog(sim: Simulation, v: OwnedVehicle, winter: boolean): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] {
   const city = v.at ?? v.cityId;
   const market = marketWhere(city);
-  return TIRE_PRODUCTS.filter((p) => (p.attrs.season === 'winter') === winter).flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: setPrice(sim, city, offer) })))
+  const sizes = sizesFor(v);
+  return TIRE_PRODUCTS.filter((p) => (p.attrs.season === 'winter') === winter).flatMap((product) => product.offers.filter((o) => o.market === market && (!sizes || !o.size || sizes.includes(tireSize(o.size)!))).map((offer) => ({ product, offer, price: setPrice(sim, city, offer) })))
     .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id));
 }
 
 /** Four of an offer, with the place's tax, and the fitting where the price isn't fitted. */
 export function setPrice(sim: Simulation, cityId: string, offer: CatalogOffer): Money {
-  const fit = offer.code === 'fitted' ? undefined : FIT_SET[offer.market];
+  const fit = offer.fitted ? undefined : FIT_SET[offer.market];
   return devicePrice(sim, cityId, offer) * 4 + (fit ? inSave(sim, Math.round(fit.price * 100), fit.currency) : 0);
 }
 
@@ -141,6 +156,9 @@ export function tireOfferRefusal(v: OwnedVehicle, offerId: string, winter: boole
   if (!found) return 'That tire isn’t on sale.';
   if (found.offer.market !== marketWhere(v.at ?? v.cityId)) return 'It’s sold in another country.';
   if ((found.product.attrs.season === 'winter') !== winter) return winter ? 'That isn’t a winter tire.' : 'That’s a winter tire; fit it as one.';
+  // Its size must be the car's (from 2026-10-05), where the car's fitment was read.
+  const sizes = sizesFor(v);
+  if (sizes && found.offer.size && !sizes.includes(tireSize(found.offer.size)!)) return `It doesn’t fit: the ${modelById(v.modelId)!.make} ${modelById(v.modelId)!.model} takes ${sizes.join(' or ')}.`;
   return undefined;
 }
 

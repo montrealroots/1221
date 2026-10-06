@@ -54,7 +54,7 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Tires And Wheels | 52 | 100% | 120 | 1 / 1 / 9 | 0 | 120 | 143 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Tires And Wheels | 53 | 100% | 121 | 1 / 1 / 9 | 0 | 121 | 144 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Car Audio | 55 | 100% | 149 | 1 / 1 / 12 | 0 | 149 | 156 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |

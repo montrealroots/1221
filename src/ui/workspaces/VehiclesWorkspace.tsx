@@ -926,7 +926,8 @@ function TireShop() {
             columns={[
               { head: 'Season', cell: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },
               { head: 'Lasts', num: true, cell: life },
-              { head: 'Fitted', cell: (r) => (r.offer.code === 'fitted' ? 'Yes' : r.offer.market === 'us' ? 'Fitting Added' : 'Not Read') },
+              { head: 'Size', cell: (r) => r.offer.size ?? '—' },
+              { head: 'Fitted', cell: (r) => (r.offer.fitted ? 'Yes' : r.offer.market === 'us' ? 'Fitting Added' : 'Not Read') },
             ]}
             compare={[
               { label: 'Season', value: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },

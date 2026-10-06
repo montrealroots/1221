@@ -17,7 +17,8 @@ const SEASONS = new Set(['all-season', 'all-weather', 'summer', 'winter']);
 const MI = 1.609344;
 // And any price read as "from" or a range, across several sellers, off a category page or approximately, and any size outside the three asked for
 // (Barum's, read at 215/50 R17).
-const SIZES = new Set(['215/55R17', '205/55R16', '225/45R17', '225/55R17', '215/55R16']);
+// From 2026-10-05 any passenger or light-truck size read, as each car's own factory size is (`content/vehiclefitment.ts`).
+const SIZES = { has: (s) => /^P?\d{3}\/\d{2}Z?R\d{2}C?$|^\d{3}R\d{2}C$/.test(s) };
 const dropped = (t) => (t.brand === 'Continental' && t.model === 'WinterContact SI' && t.market === 'US') || (t.brand === 'Sumitomo' && /HTR Enhance/.test(t.model)) || (t.brand === 'Yokohama' && /Avid Ascend/.test(t.model)) || t.brand === 'Nankang'
   || /prices? from|from £|starting from|aggregat|multi-retailer|range|category|~/i.test(String(t.source)) || !SIZES.has(String(t.size ?? '215/55R17').replace(/\s+/g, ''));
 const misread = (t) => t.brand === 'Goodyear' && t.market === 'CA' && t.warranty === 60000 && t.warrantyUnit === 'km';
@@ -46,7 +47,7 @@ for (const f of files) {
     let id = `${market}-${p.id}`.slice(0, 90);
     for (let n = 2; offerIds.has(id); n += 1) id = `${`${market}-${p.id}`.slice(0, 86)}-${n}`;
     offerIds.add(id);
-    p.offers.push({ id, market, seller: seller(t.retailer), channel: 'online', price: t.price, currency: t.currency, taxIncluded: market !== 'us' && market !== 'ca', url: t.url ?? null, read: j.read ?? '2026-10-05', status: t.confirmed ? 'verified' : 'secondhand', ...(t.installed === true ? { code: 'fitted' } : {}) });
+    p.offers.push({ id, market, seller: seller(t.retailer), channel: 'online', price: t.price, currency: t.currency, taxIncluded: market !== 'us' && market !== 'ca', url: t.url ?? null, read: j.read ?? '2026-10-05', status: t.confirmed ? 'verified' : 'secondhand', size: String(t.size ?? '215/55R17').toUpperCase().replace(/\s+/g, '').replace(/^P(?=\d)/, ''), ...(t.installed === true ? { fitted: true } : {}) });
   }
 }
 const list = [...products.values()];
@@ -57,7 +58,8 @@ writeFileSync(OUT, `/**
  *
  * Each offer is one tire at 215/55 R17 or the nearest size its maker sells,
  * the size SLATE prices every car's set at; its treadwear warranty in km where
- * stated, and an offer whose price is fitted is marked \`code: 'fitted'\`.
+ * stated; each offer its size (\`size\`) and whether its price is fitted (\`fitted\`). A model is one product
+ * across its sizes, each size its own offers.
  */
 
 import type { CatalogProduct } from './products';

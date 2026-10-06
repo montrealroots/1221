@@ -59,6 +59,7 @@ import type { OwnedVehicle } from './vehicles';
 import { CAR_AUDIO_PRODUCTS } from '../content/caraudiocatalog';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
 import { devicePrice, marketWhere, offerIn } from './devices';
+import { FITMENT } from '../content/vehiclefitment';
 
 type Market = 'us' | 'gb' | 'ie';
 const marketOf = (j: Jurisdiction): Market | undefined => (j.startsWith('US-') ? 'us' : j === 'GB' ? 'gb' : j === 'IE' ? 'ie' : undefined);
@@ -119,6 +120,10 @@ export function chosenRefusal(v: OwnedVehicle, offerId: string): string | undefi
   if (found.offer.market !== marketWhere(v.at ?? v.cityId)) return 'It’s sold in another country.';
   const slot = slotOf(found.product);
   if (slot === 'stereo' ? v.stereo : v.audio?.includes(slot)) return slot === 'stereo' ? 'It has one.' : 'It has them.';
+  // A dash that's the maker's own screen takes no aftermarket stereo where no kit fits one (from 2026-10-05,
+  // `content/vehiclefitment.ts`, for the model year read). Speakers and an amplifier still fit.
+  const f = FITMENT[v.modelId];
+  if (slot === 'stereo' && f?.opening === 'integrated' && !f.doubleDinKit && (f.modelYear === null || v.modelYear === undefined || v.modelYear === f.modelYear)) return 'Its dash is the maker’s own screen, and no kit fits an aftermarket stereo to it.';
   return undefined;
 }
 

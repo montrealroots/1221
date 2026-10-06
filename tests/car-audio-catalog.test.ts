@@ -29,7 +29,7 @@ describe('car audio by make and model', () => {
   });
 
   it('sells what’s sold where the car is, with its fitting, and fits it once', () => {
-    const { sim, v } = bought('us-ny-newyork', 'us-toyota-camry', 'audiocat-us');
+    const { sim, v } = bought('us-ny-newyork', 'us-honda-accord', 'audiocat-us');
     v.coverage = 'full';
     const shop = carAudioCatalog(sim, v);
     expect(shop.length).toBeGreaterThan(0);
@@ -56,5 +56,16 @@ describe('car audio by make and model', () => {
     const one = shop[0]!;
     expect(one.price).toBe(devicePrice(sim, 'mx-cmx-mexicocity', one.offer));
     sim.must({ kind: 'vehicle.audio', payload: { vehicleId: v.id, offerId: one.offer.id } });
+  });
+});
+
+describe('a stereo and a car’s dash (from 2026-10-05)', () => {
+  it('isn’t fitted to a maker’s own screen with no kit, though speakers are', () => {
+    const { sim, v } = bought('us-ny-newyork', 'us-toyota-camry', 'audiocat-dash');
+    const shop = carAudioCatalog(sim, v);
+    const unit = shop.find((r) => r.product.attrs.part === 'head-unit')!;
+    expect(chosenRefusal(v, unit.offer.id)).toBe('Its dash is the maker’s own screen, and no kit fits an aftermarket stereo to it.');
+    const speakers = shop.find((r) => r.product.attrs.part === 'speakers')!;
+    expect(chosenRefusal(v, speakers.offer.id)).toBeUndefined();
   });
 });

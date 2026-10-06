@@ -2720,7 +2720,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Tires And Wheels
 
-52 brands, 0 deep enough, 52 short.
+53 brands, 0 deep enough, 53 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -2747,6 +2747,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Accelera | 1 | Short: 99 to go |
 | Achilles | 1 | Short: 99 to go |
 | Arroyo | 1 | Short: 99 to go |
+| Barum | 1 | Short: 99 to go |
 | Delinte | 1 | Short: 99 to go |
 | Euzkadi | 1 | Short: 99 to go |
 | Federal | 1 | Short: 99 to go |
