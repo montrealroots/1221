@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-378 commands; 374 named by a test, 4 not.
+380 commands; 376 named by a test, 4 not.
 
 ## aircraft
 
@@ -109,31 +109,31 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
-| `career.buy_kit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.class` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.coach` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.commercial_leave` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` | The Business |
-| `career.commercial_meet` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` | The Business |
-| `career.counter` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `counter.test.ts` | The Business |
-| `career.enter_award` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `awards.test.ts` | The Business |
-| `career.furnish_wardrobe` | `src/engine/systems/fittings.ts` | `CareerWorkspace.tsx` | `fittings.test.ts` | The Business |
-| `career.headshots` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.improv` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` | The Business |
-| `career.leave` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` | The Business |
-| `career.leave_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `safetynet.test.ts` | The Business |
-| `career.pass` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `playthrough-fixes.test.ts` | The Business |
-| `career.publicist` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` | The Business |
-| `career.query_agencies` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `mxbusiness.test.ts` | The Business |
-| `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
-| `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` | The Business |
-| `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `school.test.ts` | The Business |
-| `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `skills.test.ts` | The Business |
-| `career.sign_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `safetynet.test.ts` | The Business |
-| `career.subscribe` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
-| `career.t1287` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `carried.test.ts` | — |
-| `career.workshop` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` | The Business |
+| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
+| `career.buy_kit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.class` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.coach` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.commercial_leave` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` `journey-career.test.ts` | The Business |
+| `career.commercial_meet` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` `journey-career.test.ts` | The Business |
+| `career.counter` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `counter.test.ts` `journey-career.test.ts` | The Business |
+| `career.enter_award` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `awards.test.ts` `journey-career.test.ts` | The Business |
+| `career.furnish_wardrobe` | `src/engine/systems/fittings.ts` | `CareerWorkspace.tsx` | `fittings.test.ts` `journey-career.test.ts` | The Business |
+| `career.headshots` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.improv` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
+| `career.leave` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
+| `career.leave_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
+| `career.pass` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `playthrough-fixes.test.ts` | The Business |
+| `career.publicist` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
+| `career.query_agencies` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `mxbusiness.test.ts` | The Business |
+| `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
+| `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
+| `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `school.test.ts` | The Business |
+| `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `skills.test.ts` | The Business |
+| `career.sign_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
+| `career.subscribe` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
+| `career.t1287` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `carried.test.ts` `journey-career.test.ts` | — |
+| `career.workshop` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
 
 ## cart
 
@@ -166,7 +166,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `class.take` | `src/engine/systems/life.ts` | `PeopleWorkspace.tsx` | `dropins.test.ts` | People |
+| `class.take` | `src/engine/systems/life.ts` | `HomesWorkspace.tsx` `PeopleWorkspace.tsx` | `dropins.test.ts` | People |
 
 ## clothes
 
@@ -187,7 +187,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.dry_clean` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.measures` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `sizecharts.test.ts` | Rent And A Roof |
 | `clothes.return` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
-| `clothes.save_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `fittings.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.save_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `fittings.test.ts` `journey-career.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.sell` | `src/engine/systems/resale.ts` | `ClothesWorkspace.tsx` | `journeys.test.ts` `resale.test.ts` | Rent And A Roof |
 | `clothes.to_basket` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `hamper.test.ts` | Rent And A Roof |
 | `clothes.wear_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` `wardrobe.test.ts` | Rent And A Roof |
@@ -198,7 +198,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `club.check_in` | `src/engine/systems/clubs.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` | People |
 | `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
-| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `clubs.test.ts` `journeys.test.ts` | People |
+| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` `HomesWorkspace.tsx` | `clubs-going.test.ts` `clubs.test.ts` `journeys.test.ts` | People |
 | `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | **none** | People |
 | `club.renew` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
 | `club.rsvp` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
@@ -291,7 +291,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `gym.join` | `src/engine/systems/gyms.ts` | `RoutinesWorkspace.tsx` | `gyms.test.ts` | Looking After Yourself |
+| `gym.join` | `src/engine/systems/gyms.ts` | `HomesWorkspace.tsx` `RoutinesWorkspace.tsx` | `gyms.test.ts` | Looking After Yourself |
 | `gym.leave` | `src/engine/systems/gyms.ts` | `RoutinesWorkspace.tsx` | `gyms.test.ts` | Looking After Yourself |
 | `gym.trainer` | `src/engine/systems/trainers.ts` | `RoutinesWorkspace.tsx` | `trainers.test.ts` | Looking After Yourself |
 
@@ -418,7 +418,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-day-at-home.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-day-at-home.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `journey-belongings.test.ts` `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
@@ -460,8 +460,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pension.cpp` | `src/engine/systems/capensions.ts` | `CareerWorkspace.tsx` | `capensions.test.ts` | The Business |
 | `pension.ie_state` | `src/engine/systems/homepensions.ts` | `CareerWorkspace.tsx` | `homepensions.test.ts` | The Business |
 | `pension.imss` | `src/engine/systems/imss.ts` | `CareerWorkspace.tsx` | `imss.test.ts` | The Business |
-| `pension.social_security` | `src/engine/systems/socialsecurity.ts` | `CareerWorkspace.tsx` | `socialsecurity.test.ts` | The Business |
-| `pension.start` | `src/engine/systems/pension.ts` | `CareerWorkspace.tsx` | `pension.test.ts` | The Business |
+| `pension.social_security` | `src/engine/systems/socialsecurity.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `socialsecurity.test.ts` | The Business |
+| `pension.start` | `src/engine/systems/pension.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `pension.test.ts` | The Business |
 | `pension.state` | `src/engine/systems/statepension.ts` | `CareerWorkspace.tsx` | `statepension.test.ts` | The Business |
 
 ## pets
@@ -522,10 +522,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `school.test.ts` | Drama School |
-| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
-| `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
-| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
+| `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
+| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
+| `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
+| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
 
 ## sneakers
 
@@ -578,6 +578,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `travelchange.test.ts` | Getting Around |
+| `travel.check_out` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `local-stay.test.ts` | Getting Around |
 | `travel.child` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `childtravel.test.ts` | Getting Around |
 | `travel.companion` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `companions.test.ts` | Getting Around |
 | `travel.extend` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` | Getting Around |
@@ -587,6 +588,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `travel.pay_rental_deposit` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` | Getting Around |
 | `travel.rent_car` | `src/engine/systems/rentals.ts` | `TravelWorkspace.tsx` | `deposits.test.ts` `extend.test.ts` `rentals.test.ts` `travelchange.test.ts` | Getting Around |
 | `travel.show_id` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `hotelid.test.ts` | Getting Around |
+| `travel.stay_here` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `local-stay.test.ts` | Getting Around |
 | `travel.stay_let` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `extend.test.ts` `lets.test.ts` `staytypes.test.ts` | Getting Around |
 | `travel.take_refund` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` | Getting Around |
 

@@ -52,6 +52,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | The bank | `tests/journey-bank.test.ts` | New York and Dublin: savings, transfers, standing orders and scheduled payments run and cancelled, cash, a fraud disputed under Regulation E, a card statement's balance as the sum of its postings, autopay, interest, a loan and a CD broken to the cent, an overdraft, a direct debit reclaimed |
 | Belongings | `tests/journey-belongings.test.ts` | a phone protected, cracked, claimed and its battery replaced; a TV and a subscription billed and stopped; Britain's license; a dog fed, walked and walked for; a ring commissioned, engraved, pawned and redeemed at New York's 4%; luggage and packing lists; a flat-pack chair |
 | Cars | `tests/journey-cars.test.ts` | a used Camry from forecourt to buyer through a breakdown, a stand-in, fuel to the cent and a sale; a London private sale's transfer and Britain's premium loadings; leases bought out and returned; a repossession redeemed; a caravan towed only by what's rated to |
+| The career and the school | `tests/journey-career.test.ts` | headshots, a reel, agencies queried and signed, an offer countered 12.45% higher, a guest part's checks less the agent's and the manager's commissions and tax to the cent, union fees and dues, a play's replacement for a missed call, the school's shifts and Cabaret, a pension and Social Security at 62, Toronto's T1287 withholding |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -68,6 +69,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A car sold kept what was in or on it, a roof box stranded in a car no longer theirs | the cars journey | `sellVehicle` moved nothing out | emptied home to storage first; the journey's case |
 | A British private sale was driven every day before its transfer, though refused for an errand | the cars journey | `drivenThen` didn't ask `laidUp` | the one rule for both; the journey's case |
 | A fill nobody could pay for went through into arrears, and its refusal never came | the cars journey | `vehicle.refuel` paid with `spend(..., true)` | paid or refused; the journey's case. Every other purchase run into arrears was read: each pays for something already used (fuel burned, a class taken, a meal eaten) |
+| A sick day called in kept no student home: they were counted in class, grew and tired | the career journey | the class day read the sick day only after finding them absent | read first; the journey's case |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -114,8 +116,8 @@ incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: the career, homes, clothes, people, travel, food and routines are next; the bank,
-  papers, belongings and cars are done.
+- The domain journeys continue: homes, clothes, people, travel, food and routines are next; the bank, papers,
+  belongings, cars and the career are done.
 - The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
 - No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.
