@@ -1,0 +1,122 @@
+{
+  "read": "2026-10-06",
+  "method": "Each entry below was read directly from the carrier's/retailer's own site via WebFetch on 2026-10-06, with the quote taken from that fetch. Entries where the official page could not be fetched (403/Access Denied, JS-only Lightning page, blocked certificate, or the fetch returned no relevant text) are listed in notFound with the reason, and are NOT guessed from memory.",
+  "carriers": [
+    {
+      "carrier": "FedEx",
+      "market": "US",
+      "attempts": null,
+      "noticeLeft": true,
+      "holdDays": 7,
+      "heldAt": "nearby FedEx location (e.g. FedEx Office, Walgreens, FedEx OnSite) or FedEx facility",
+      "after": "returned to the nearest FedEx facility or shipper",
+      "url": "https://www.fedex.com/en-us/customer-support/faqs/receiving/tracking-questions/missed-delivery.html",
+      "quote": "If a package can't be left at a residential address (e.g., it requires a signature or the driver can't find a secure spot), we'll deliver it to a nearby FedEx location. ... It will be held for pickup as early as the same day of your missed delivery attempt. Packages not picked up within 7 days will be returned to the nearest FedEx facility or shipper."
+    },
+    {
+      "carrier": "FedEx",
+      "market": "CA",
+      "attempts": null,
+      "noticeLeft": null,
+      "holdDays": 5,
+      "heldAt": "nearby FedEx or FedEx OnSite location",
+      "after": "returned to the shipper",
+      "url": "https://www.fedex.com/en-ca/contact-us/faq/track-packages/doortags-missed-deliveries/reattempt-delivery.html",
+      "quote": "FedEx might make additional attempts to deliver your package, or for residential addresses; it may be redirected to a nearby FedEx or FedEx OnSite location for customer pickup. FedEx will hold your package for up to 5 business days for FedEx Ground or FedEx Express before it is returned to the shipper."
+    },
+    {
+      "carrier": "Canada Post",
+      "market": "CA",
+      "attempts": 1,
+      "noticeLeft": true,
+      "holdDays": 15,
+      "heldAt": "nearby post office",
+      "after": "returned to the sender",
+      "url": "https://www.canadapost-postescanada.ca/cpc/en/support/articles/parcel-services-shipping-in-canada/delivery-options.page",
+      "quote": "We'll make a delivery attempt at the addressee's door. If no one is available, we'll leave a Delivery Notice Card at the door. ... We use a Delivery Notice Card to show that the item is available for pickup at a nearby post office. ... We'll hold the item at the post office for 15 calendar days, after which time we'll return it to the sender."
+    },
+    {
+      "carrier": "An Post",
+      "market": "IE",
+      "attempts": 1,
+      "noticeLeft": true,
+      "holdDays": 5,
+      "heldAt": "local Delivery Service Unit",
+      "after": "returned to the sender if there is a legible return address",
+      "url": "https://www.anpost.com/Help-Support/Delivery",
+      "quote": "'Sorry we missed you' notice (also called a 'Docket In Box or DIB notice'). An Post retains missed deliveries for: 5 working days for Standard and Express Post, 3 working days for registered post, 16 working days for items received from abroad. After the holding period expires, the postal service attempts to return the item to the sender if there's a legible address on the outside. When returned, a sticker explaining why we couldn't deliver it is attached to the package.",
+      "note": "holdDays given (5) is for Standard/Express Post; registered post is 3 days, items from abroad 16 days."
+    },
+    {
+      "carrier": "Estafeta",
+      "market": "MX",
+      "attempts": 2,
+      "noticeLeft": null,
+      "holdDays": null,
+      "heldAt": "Estafeta branch (sucursal) chosen by the customer",
+      "after": "held at the branch as a pickup service; no hold-day figure found on this page",
+      "url": "https://www.estafeta.com/en/preguntas-frecuentes",
+      "quote": "We will make a second delivery attempt the next business day according to the frequency of your zip code. ... If it is not possible to complete the delivery, you can generate a report to coordinate your shipment to the Estafeta branch of your preference."
+    }
+  ],
+  "bulky": [
+    {
+      "retailer": "IKEA",
+      "market": "US",
+      "ifNobodyHome": "A second delivery attempt is scheduled for the next available date; if that second attempt also fails, the order is cancelled and refunded.",
+      "redeliveryFee": "unspecified amount; may apply",
+      "currency": "USD",
+      "url": "https://www.ikea.com/us/en/customer-service/terms-conditions/delivery-terms-and-conditions-pub7aa7b291/",
+      "quote": "if you are not present during the scheduled delivery time, you may be subject to a re-delivery fee. ... If the TSP is unable to complete the Delivery Services due to you or your representative not being home or due to you providing us with incomplete or incorrect delivery information, a second attempt will be made for the next available date. We will inform you of the new delivery date. ... If the second attempt to deliver is also unsuccessful, your order will be cancelled, and the cost of the associated IKEA product(s) will be refunded to you, using your original payment method."
+    },
+    {
+      "retailer": "John Lewis",
+      "market": "UK",
+      "ifNobodyHome": "John Lewis contacts the customer to reschedule for a more convenient time; no fee mentioned on the fetched page.",
+      "redeliveryFee": null,
+      "currency": "GBP",
+      "url": "https://www.johnlewis.com/customer-services/delivery-information/uk-delivery",
+      "quote": "If no one is available at the provided address to accept the delivery, we will contact you to reschedule."
+    },
+    {
+      "retailer": "Best Buy",
+      "market": "US",
+      "ifNobodyHome": "Best Buy calls ahead of scheduled appliance/TV/furniture delivery; if there's no one at home the delivery is rescheduled rather than left unattended, since someone must sign.",
+      "redeliveryFee": null,
+      "currency": "USD",
+      "url": "https://www.bestbuy.com/site/help-topics/home-and-business-delivery/pcmcat204400050032.c?id=pcmcat204400050032",
+      "quote": "If you need to reschedule for a different day, you can do that online.",
+      "note": "This exact sentence is the only directly-fetched quote from the official help page; the no-one-home mechanics (call ahead, must reschedule, must be 18+) came from a Best Buy community Q&A page rather than the policy page itself, so is not included as an official quote."
+    }
+  ],
+  "signatureRequired": [
+    {
+      "retailer": "Apple",
+      "market": "US",
+      "what": "Most online store shipments (including iPhone/Mac)",
+      "url": "https://www.apple.com/shop/shipping-pickup",
+      "quote": "Most shipments require a signature for delivery."
+    }
+  ],
+  "notFound": [
+    "USPS (US) official policy page could not be read: usps.com signature-services/missed-delivery URLs 404/403, and faq.usps.com is a Salesforce Lightning community page that returns only a client-rendered shell (no article text) to WebFetch; PS Form 3849 / 15-day hold / return-to-sender figures that circulate online could not be confirmed against USPS's own page in this session, so they are omitted rather than reported as read.",
+    "UPS (US, GB) official policy pages (ups.com/us/en/support/... and ups.com/gb/en/support/...) all returned 'Access Denied' (bot-blocked) to WebFetch; the commonly cited '3 attempts, held 5 business days at Customer Center, then return to sender' figures could not be verified on ups.com itself in this session.",
+    "Royal Mail (UK) help.royalmail.com pages returned a TLS certificate error ('unable to verify the first certificate') on every attempt; the 18-day hold figure and 'Something for you' card details could not be confirmed directly from royalmail.com or help.royalmail.com in this session.",
+    "Evri (UK) evri.com FAQ pages returned 404 or stub content with no article body to WebFetch; could not confirm attempts/hold-days/return-to-sender wording from evri.com itself.",
+    "DPD UK (dpd.co.uk) help page returned only navigation text, no article body, to WebFetch; could not confirm hold-days or return-to-sender wording from dpd.co.uk itself.",
+    "Purolator (CA) purolator.com FAQ page returned 403 Forbidden to WebFetch; could not confirm the 5-business-day hold / return-to-sender wording from purolator.com itself.",
+    "Correos de México (MX) official site was not successfully fetched in this session (only secondary sources were searched); no direct quote obtained.",
+    "Wayfair (US, CA, UK) no official wayfair.com policy page with missed-delivery/white-glove wording was found or fetched; search returned only product listing pages and unrelated help links.",
+    "Home Depot (US, CA) ampservices.homedepot.com (appliance delivery FAQ host) failed DNS resolution (ENOTFOUND) from this environment; homedepot.com/c/Appliance_Delivery_Installation was not fetched; no official quote obtained for missed-delivery handling, only third-party aggregator text.",
+    "Lowe's (US) no lowes.com page with an explicit 'nobody home' / redelivery-fee policy for truck delivery was located; only same-day contactless delivery wording was found, which is a different service.",
+    "Currys (UK) currys.co.uk/terms-conditions.html returned 403 Forbidden to WebFetch; could not confirm exact redelivery-charge wording from currys.co.uk itself.",
+    "Argos (UK) help.argos.co.uk/help/delivery-&-collection-guide returned 403 Forbidden to WebFetch; could not confirm redelivery/failed-delivery fee wording from argos.co.uk itself.",
+    "Harvey Norman (IE) harveynorman.ie/pages/delivery-information returned 403 Forbidden to WebFetch; the 'charged for storage, transport and re-delivery costs' wording found by search was not confirmed by a direct, successful fetch of the harveynorman.ie page itself in this session.",
+    "Liverpool (MX) no liverpool.com.mx policy page was successfully fetched in this session; the '3 delivery attempts, returns to nearest warehouse' claim is from secondary/aggregator search summaries only, not a direct read of liverpool.com.mx.",
+    "Coppel (MX) no coppel.com policy page with an explicit nobody-home/reprogramming-fee clause was fetched directly; search only surfaced general delivery-cost figures and a secondary (Coppel Argentina, different market) neighbour-delivery clause.",
+    "IKEA (CA, UK, IE, MX) delivery-terms-and-conditions pages for ca/en, gb/en were fetched but contained only index/navigation content (links to 'General Terms and Conditions' sub-pages) with no missed-delivery clause text; the IE and MX equivalents were not attempted. Only the US IKEA delivery-terms page yielded a direct, readable missed-delivery clause.",
+    "Best Buy (CA) no bestbuy.ca-specific policy page was fetched; only bestbuy.com (US) pages were examined.",
+    "Best Buy high-value / signature-required order policy: no official bestbuy.com policy page stating a signature threshold by order value was found; the only concrete sentence found ('Where order value or risk of theft is high, Best Buy may request Vendor Partners to ship with the Signature Required service level') came from a Best Buy supplier/partner portal page that was not independently re-fetched and confirmed in this session, so it is omitted from signatureRequired.",
+    "Alcohol signature requirement: the quote in signatureRequired-adjacent research ('It is the law. Shipments containing alcohol require an adult (21+) signature...') came from a wine retailer's (SommSelect) support page, not from USPS/UPS/FedEx's own carrier policy page stating this; no carrier's own page explicitly stating the 21+ signature rule for alcohol was successfully fetched in this session (ReserveBar/dewinespot pages returned 403)."
+  ]
+}
