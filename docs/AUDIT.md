@@ -136,6 +136,12 @@ tabs opened, none failed. Every screen opened in under a second but one: Belongi
 seconds, which is how the underwear above was found. This checks that each screen opens and draws, not that every
 button on it does what it says; that is what the journeys check, through the same commands.
 
+The 8.9 seconds wasn’t only the underwear. A profile of opening Belongings put SLATE’s own work at about a second
+and the engine’s checks at 16 ms; each of its 490 rows had drawn a list of the 339 people in town it could be handed to.
+That list is now drawn when a row’s Give To is pressed. At `dd83e877`’s build the same three lives opened 45 screens
+and 59 tabs, none failing, and Belongings at 60 in 0.4 seconds. A second 8.7-second reading along the way was a
+preview server still handing out the build it started with, and was thrown out.
+
 ## The command sweep
 
 `tests/commands-robust.test.ts` gives every one of the 375 commands an empty payload and a payload of nonsense (ids
