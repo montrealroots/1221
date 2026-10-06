@@ -1,0 +1,1007 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "tires|Hankook": {
+      "range": 47,
+      "meetsHundred": false,
+      "url": "https://www.hankooktire.com/us/en/tirelist/brand-family.html",
+      "counted": "Kinergy (6), Ventus (11), iON (9), Dynapro (9), Vantra (1), Winter i*cept (7), Winter i*pike (3), Weatherflex (1) - consumer passenger/LT/SUV families only, Smart (commercial truck/bus, 33) excluded",
+      "market": "US"
+    },
+    "tires|Kumho": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://kumhotireusa.com/",
+      "counted": "CRUGEN EV HP71, MAJESTY 9 EV TA91, SOLUS EV TA31, SOLUS TA71, ECSTA V730, ECSTA Sport S, ECSTA Sport, ECSTA Sport A/S, ECSTA 4X II, SOLUS 4S HA32, SOLUS TA51a, SOLUS TA31, SOLUS 4S HA32 SUV, CRUGEN GT Pro, CRUGEN HP71, CRUGEN Premium, CRUGEN HT51, ROAD VENTURE HT, ROAD VENTURE AT52, ROAD VENTURE RT, ROAD VENTURE MT71",
+      "market": "US"
+    },
+    "tires|BFGoodrich": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.bfgoodrichtires.com/auto/tires",
+      "counted": "All-Terrain T/A KO3, All-Terrain T/A KO2, G-Force Phenom T/A, Mud-Terrain T/A KM3, HD-Terrain T/A KT, Trail-Terrain T/A +, Advantage Control, Elite-Force T/A, Silvertown Radial Blackwalls, Silvertown Radial Redlines and Goldlines, Silvertown Radial White Wall, Silvertown Bias Ply Vintage Car and Truck, Silvertown Bias Ply Redlines/Goldlines/Bluelines, Silvertown Bias Ply Black Walls, Silvertown Bias Ply White Walls",
+      "market": "US"
+    },
+    "tires|Dunlop": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.dunloptires.com/tires",
+      "counted": "Blue Response A/S, Winter Maxx SJ8, Winter Maxx WM02",
+      "market": "US"
+    },
+    "tires|Maxxis": {
+      "range": 25,
+      "meetsHundred": false,
+      "url": "https://www.maxxis.com/us/tires/autolt/",
+      "counted": "Victra Sport AS, Victra Sport EV, Bravo HP-M3, MA-P1, MA-202, Escapade MA-T1, Victra VR-1, Victra VR2, RAZR AT, RAZR AT-S, RAZR HT, RAZR MT, Bravo Series AT-771, Bravo HT-770, Buckshot Mudder II MT-764, Bighorn MT-762, Trepador Radial M8060, Bravo UE-168, Creepy Crawler M8090, Trepador M8060, RAZR MT Competition, Trepador Competition M8060, Victra RC-1, M8008 Plus ST Radial, UR-275 ST Radial",
+      "market": "US"
+    },
+    "tires|Vredestein": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://www.vredestein.com/car-suv-tires/",
+      "counted": "Hitrac, Hypertrac, Vredestein Pinza AT, Vredestein Pinza HT, Comtrac Cargo A/S, Ultrac Pro, Quatrac 5, Wintrac, Wintrac Pro, Quatrac, Sprint+, Sprint Classic, Ultrac Vorti",
+      "market": "US"
+    },
+    "tires|Nokian": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://na.nokiantyres.com/tires/",
+      "counted": "Hakkapeliitta 01, Surpass AS01, Remedy WRG5, Outpost nAT, Outpost APT, Hakkapeliitta R5, Hakkapeliitta R5 SUV, Hakkapeliitta 10, Hakkapeliitta 10 SUV, Hakkapeliitta R5 EV, Hakkapeliitta 10 EV, Hakkapeliitta C4, Hakkapeliitta CR4, Hakkapeliitta LT3, One, One HT, WR C3, Encompass AW02",
+      "market": "US"
+    },
+    "tires|Uniroyal": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.uniroyaltires.com/homepage/our-tires",
+      "counted": "Laredo HT, Laredo AT, Power Paw A/S, Tiger Paw Touring A/S",
+      "market": "US"
+    },
+    "tires|Nitto": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.nittotire.com/light-truck-tires/",
+      "counted": "Mud Grappler, Trail Grappler, Ridge Grappler, Recon Grappler, Terra Grappler G3, Dura Grappler, Nomad Grappler, NT420V, Motivo 365, NT05, NT555 G2, Invo, Neo Gen, NT555RII, NT01, Trail Grappler SxS, Exo Grappler",
+      "market": "US"
+    },
+    "tires|GT Radial": {
+      "range": 24,
+      "meetsHundred": false,
+      "url": "https://www.gtradial.com/products",
+      "counted": "SportActive, SportActive 2, SportActive RunFlat, FE2, CHAMPIRO VP1, CHAMPIRO FE1, CHAMPIRO ECO, CHAMPIRO UHP AS, CHAMPIRO HPY, CHAMPIRO SX2, MAXTOUR, MAXTOUR LX, SAVERO HT PLUS, SAVERO HT2, SAVERO HT-S, SAVERO AT-S, SAVERO A/T PRO, ADVENTURO M/T, ADVENTURO AT3, ADVENTURO A/T, MAXMILER-X, MAXMILER PRO, MAXMILER Pro2, SUPER TRAVELER 668",
+      "market": "US"
+    },
+    "tires|Sailun": {
+      "range": 22,
+      "meetsHundred": false,
+      "url": "https://sailuntire.ca/en/plt/tires/",
+      "counted": "Ice Blazer WSL2, Ice Blazer WSTX, Ice Blazer WST2 LT, Ice Blazer WST1 C-Type, TERRAMAX RT, TERRAMAX AT2, TERRAMAX HT2, TERRAMAX HLT-C, TERRAMAX CVR, TERRAMAX HLT, TERRAMAX M/T, Atrezzo 4S, Inspire, Atrezzo SH408, Atrezzo Touring WR, Atrezzo ZSR, Atrezzo ZSR SUV, Atrezzo R01, Atrezzo SVA2, Atrezzo TCON, Atrezzo SVR LX+, ERANGE EV",
+      "market": "CA"
+    },
+    "tires|General": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://generaltire.com/tires",
+      "counted": "Grabber Arctic X, AltiMAX Arctic X, AltiMAX365 AW, AltiMAX RT45, G-MAX AS07, G-MAX RS, Grabber A/TX, Grabber APT, Grabber H/T, Grabber HTS60, ReliaTrek, Grabber X3, Grabber Arctic LT, Grabber Arctic, AltiMAX Arctic12. Note: 'General' is the same company/site as 'General Tire' - no separate lineup exists, same URL used.",
+      "market": "US"
+    },
+    "tires|Mastercraft": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.mastercrafttires.com/tires",
+      "counted": "Courser All Weather, Courser CXT, Courser Trail RT, Glacier Trex, Avenger G/T, SRT Touring, Courser MXT, Courser HXT, Courser Trail, Avenger, Glacier MSR, Stratus AP, Avenger M8, Stratus HT, Stratus AS",
+      "market": "US"
+    },
+    "tires|Hercules": {
+      "range": 24,
+      "meetsHundred": false,
+      "url": "https://www.herculestire.com/treads",
+      "counted": "RAPTIS R-T6, RAPTIS R-T6X, RAPTIS R-T5, H/P 4000, ROADTOUR CONNECT PCV, ROADTOUR CONNECT AS, TERRA TRAC A/T, TERRA TRAC CROSS-V AW, TERRA TRAC HPT, TERRA TRAC AT X-JOURNEY, TERRA TRAC AT X-VENTURE, TIS RT1, TIS TT1, TERRA TRAC T/G MAX, TERRA TRAC CH4, STRONG GUARD ST, STRONG GUARD C-ST, H-901 ST, H-901 LT, AVALANCHE RT, AVALANCHE XUV, AVALANCHE TT, TIS UT1, TERRA TRAC TURF",
+      "market": "US"
+    },
+    "tires|Milestar": {
+      "range": 19,
+      "meetsHundred": false,
+      "url": "https://milestar.com/products",
+      "counted": "MS932 Sport, Weatherguard AS710 Sport, Weatherguard AW365, Interceptor AS810, Interceptor RS-1, Streetsteel, MS775 Touring SLE, Winterguard, Patagonia M/T Pro, Patagonia M/T-02, Patagonia X/T, Patagonia A/T Pro, Patagonia A/T R, Patagonia H/T, Steelpro MS597, Steelpro MS597S, Steelpro AST, Patagonia SXT, Patagonia SXS",
+      "market": "US"
+    },
+    "tires|Primewell": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://primewelltires.com/home/",
+      "counted": "Valera Sport AS, Valera All Season, Valera HT, Valera AT2",
+      "market": "US"
+    },
+    "tires|Westlake": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://westlaketireusa.com/passenger-tires/",
+      "counted": "Foray RP218, SA07 Sport, SU318 Radial H/T, SL309 Radial A/P, SL369 Radial A/T, SL376 Radial M/T",
+      "market": "US"
+    },
+    "tires|Federal": {
+      "range": 32,
+      "meetsHundred": false,
+      "url": "https://www.federaltire.com/en/tires.html",
+      "counted": "FZ-101, FZ-101W, Federally G-10, Federally T-10, Federally G-11, FZ-201, Evoluzion F60, Evoluzion ST-1, 595RS-PRO, 595RS-RR, SS595, Formoza AZ01, Formoza FD2, Formoza GIO, Xtramile XR03, SS657, Xplora M/T, Xplora R/T, Xplora A/T, Xplora A/P, Xplora MTS, Couragia F/X, Couragia XUV, Couragia XUV II, Couragia M/T, Ecovan ER02, Himalaya K1 PC, Himalaya WS3 Nordic, Himalaya Inverno, Himalaya SUV, Himalaya K1 LT, Glacier GC01",
+      "market": "US"
+    },
+    "tires|Ironman": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.ironmantires.com/tire-details",
+      "counted": "iMOVE SPORT G2, iMOVE GEN 3 AS, GR906, iMOVE GEN 2 AS, iMOVE PT PLUS, RB-12, RB-12 NWS, ALL COUNTRY AT-X, iMOVE GEN 2 SUV, RB-SUV, ALL COUNTRY AT2, ALL COUNTRY A/T, ALL COUNTRY HT, ALL COUNTRY HT 4S, ALL COUNTRY MT-X, RB-LT, ALL COUNTRY CHT, RADIAL A/P, ALL STEEL HD, STR, POLAR TRAX GEN 2",
+      "market": "US"
+    },
+    "tires|Triangle": {
+      "range": 32,
+      "meetsHundred": false,
+      "url": "https://triangletire.ca/en/plt/tires/",
+      "counted": "TA01, TA702, TC101, TE301, TE307, TH201, TH202, TR652, TR918, TR928, TR968, TS601, TR257, TR259, TR281, TR292, LL01, PL01, PL02, TI501, TR777, TR797, TW401, TR653, TRT01S (page's own stated total was 32 distinct models)",
+      "market": "CA"
+    },
+    "tires|Fulda": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.fulda.com/en_gb/consumer/tires/car.html",
+      "counted": "SportControl, EcoControl, EcoControl HP2, EcoControl HP, SportControl 2, MultiControl, Kristall Control HP2, Kristall Montero 2 MS, Kristall Control HP, Kristall Montero MS, Kristall Montero 3, 4x4 Road, EcoControl SUV, MultiControl SUV, Kristall Control SUV, Conveo Trac 3, Conveo Tour 2",
+      "market": "GB"
+    },
+    "tires|Kleber": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.kleber-tyres.com/",
+      "counted": "Krisalp HP3 SUV, Quadraxer 3, Transalp 2+, Quadraxer SUV, Dynaxer HP5, Dynaxer HP4, Krisalp HP3, Dynaxer HP5 SUV, Transpro 4S, Transpro 2",
+      "market": "GB"
+    },
+    "tires|Lexani": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://lexanitires.com/en/products",
+      "counted": "LXUHP-207, LX-Twenty, LX-Thirty, LX-Six II, LX-Nine, Volt-EC, Freccia GT-S, Terrain Beast AT, LXST-105",
+      "market": "US"
+    },
+    "tires|Thunderer": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://thunderertireusa.com/",
+      "counted": "Mach I Plus, Mach I, Mach IV, Mach V, City, Ranger 007, Ranger A/T, Ranger A/TR, Trac Grip M/T, Commercial L/T (heavy-duty truck/bus and trailer lines excluded)",
+      "market": "US"
+    },
+    "tires|Achilles": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.achillestires.com/tires",
+      "counted": "Touring Sport A/S, Street Hawk Sport, Desert Hawk HT3, Desert Hawk AT3, Rugged Hawk (page explicitly notes ATR Sport 2 is no longer part of the current US portfolio)",
+      "market": "US"
+    },
+    "tires|Arroyo": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.arroyotires.com/collections/passenger-tires",
+      "counted": "Eco Pro A/S, Eco Pro Plus, Grand Sport A/S, Ultra Sport A/S, Razzo Sport A/S, Grand Sport Plus, Extreme Sport RR, Eco Pro H/T, Van Pro Plus, Eco Pro H/T Plus, Van Pro, Corso UHT, Tamarock A/T, Tamarock M/T, Tamarock R/T, Tamarock XR/T, Tamarock X-A/T (ST trailer and TBR truck/bus lines excluded)",
+      "market": "US"
+    },
+    "tires|Delinte": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://delintetires.com/tires",
+      "counted": "Centurion 365, Centurion 365 LMD, Centurion A/T, Centurion H/T, Centurion X/T, D7, DH2, DH7, DS2, DS8, DST1, DST2, DX9 Bandit M/T, DX10 Bandit A/T, DX11 Bandit H/T, DX12 Bandit R/T, DX20 Bandit X/T Crossover-Terrain, DV3 LMD AS (DL-prefixed commercial/TBR codes excluded)",
+      "market": "US"
+    },
+    "tires|Fortune": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://fortunetireusa.com/consumer-tires/",
+      "counted": "ClimaFlex 4S, Perfectus, Viento, Tormenta A/T2, Tormenta H/T, Tormenta R/T, Tormenta M/T, Tormenta LMD, ST01, FST02",
+      "market": "US"
+    },
+    "tires|Prinx": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.prinxtire.com/product/",
+      "counted": "HiRACE HZ2, HiCITY HH2, HiRACE HZ1, HiRACE HU1, HiCOUNTRY HT2, HiCOUNTRY HA2, HiCOUNTRY HM1, HiCITY HT1, HiFREE HV1, HiiCY HW1",
+      "market": "US"
+    },
+    "tires|Tornel": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://jktornel.com.mx/auto-suv/",
+      "counted": "Real, Classic, Selecta, Direccional, Astral, Selecta Plus, Deportiva, America Cargo, America AT 909, Corona, AT 09 (JK-branded lines on the same page excluded as a different brand)",
+      "market": "MX"
+    },
+    "tires|Ohtsu": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://ohtsu-tire.com/",
+      "counted": "FP8000, FP7000, ST5000, AT4000",
+      "market": "US"
+    },
+    "tires|Laufenn": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.laufenn.com/",
+      "counted": "S FIT AS, G FIT AS, X FIT AT2, X FIT AT, X FIT HP, X FIT HT, X FIT Van, I FIT Ice",
+      "market": "US"
+    },
+    "tires|Euzkadi": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.euzkadi.mx/llantas/",
+      "counted": "EuroDrive 2, EuroDrive 3, Overlander AT, Overlander AT2, Overlander HT, Overlander HT2, Campera LT2, All Terrain (compiled from individual euzkadi.mx product pages found via site search - the index page at /llantas/ is JS-rendered and did not return a product list on direct fetch)",
+      "market": "MX"
+    },
+    "mattresses|IKEA": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.ikea.com/us/en/cat/mattresses-bm002/",
+      "counted": "VALEVÅG, VESTERÖY, ÅNNELAND, ÅSBYGDA, ÅGOTNES, VÅGSTRANDA, ÅSVANG, ÅBROTTEN, ÅKREHAMN, UNDERLIG, KRUMMELUR, INNERLIG, VIMSIG, PELLEPLUTT, ÖMSINT, JÄTTETRÖTT, SKÖNAST, VANNAREID",
+      "market": "US"
+    },
+    "mattresses|Emma": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.emma-sleep.co.uk/mattresses-comparison-table/",
+      "counted": "Original Lite, Original, Original Pro, Original Elite, NextGen Premium, Performance",
+      "market": "GB"
+    },
+    "mattresses|Tuft & Needle": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.tuftandneedle.com/collections/all",
+      "counted": "2024 Original Mattress, 2024 Original Hybrid Mattress, 2024 Mint Mattress, 2024 Mint Hybrid Mattress",
+      "market": "US"
+    },
+    "mattresses|Amerisleep": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://amerisleep.com/mattresses/compare/",
+      "counted": "AS2, AS3, AS3 Hybrid, AS5, AS5 Hybrid, AS6 Black Series, Organica",
+      "market": "US"
+    },
+    "mattresses|Endy": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.endy.com/",
+      "counted": "Endy Mattress, Endy Elevate Hybrid Mattress, Endy Kids Mattress",
+      "market": "CA"
+    },
+    "mattresses|Leesa": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.leesa.com/collections/all",
+      "counted": "Original, Original Hybrid, Oasis Chill, Sapira Hybrid, Sapira Chill, Legend Hybrid, Legend Chill, Reserve, Plus, Natural Essential, Natural Luxe, Studio, Studio Chill, Crib, Kids, Youth, Trundle",
+      "market": "US"
+    },
+    "mattresses|Restonic": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://restonic.com/explore",
+      "counted": "Signature, HealthRest, ComfortCare, Grand Palais, Scott Living, Drew & Jonathan Home",
+      "market": "US"
+    },
+    "mattresses|Sognare": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.sognarebeds.co.uk/collections/mattresses",
+      "counted": "Memory Pocket 1000, Memory Pocket 2000, Orthopaedic, Cool Gel Memory 2000, Memory Pillow Top, PillowTop 3000, Memory Spring",
+      "market": "GB"
+    },
+    "mattresses|Spring Air": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.springair.com/collections/all",
+      "counted": "Back Supporter Amelia, Back Supporter Francesca, Back Supporter Grace, Back Supporter Hannah, Back Supporter Kaylee, Back Supporter Makayla, Chattam & Wells Palermo, Chattam & Wells Contour Pillow, Copper Foam, Copper Hybrid, Four Seasons, Grand Hybrid, Reserve, Nature's Rest",
+      "market": "US"
+    },
+    "mattresses|King Koil": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.kingkoil.com/collections/all-mattresses",
+      "counted": "iBed, Scott Living, FLOWT, Intimate, Xtended Life, SmartLife, Re-Spun, Natural, Modern Luxury, Reserve Luxury, PureBliss",
+      "market": "US"
+    },
+    "mattresses|Avocado": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.avocadogreenmattress.com/collections/mattresses",
+      "counted": "Avocado Green Mattress, Eco Organic Mattress, Luxury Organic Mattress, Grand Luxe Mattress, Avocado Green Ultra Plush Mattress, Extra Firm Mattress, Avocado Wool Mattress, Avocado Vegan Mattress, Avocado Latex Mattress, Organic 11 Hybrid Mattress, Organic 13 Pillow-Top Hybrid Mattress",
+      "market": "US"
+    },
+    "mattresses|Bear": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.bearmattress.com/collections/mattresses",
+      "counted": "Elite Ultra Hybrid, Elite Hybrid, Pro Hybrid, Pro Foam, Original Hybrid, Bear Original, Bear Natural, Bear Cub, Bear Trundle",
+      "market": "US"
+    },
+    "mattresses|Big Fig": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.bigfigmattress.com/blog/big-fig-mattress-comparisons",
+      "counted": "Classic, Firm, Luxe",
+      "market": "US"
+    },
+    "mattresses|Birch": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://birchliving.com/pages/all-mattresses",
+      "counted": "Birch Natural, Birch Luxe Natural, Birch Elite Natural, Birch Essential, Birch Kids Natural",
+      "market": "US"
+    },
+    "mattresses|Brooklyn Bedding": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://brooklynbedding.com/collections/mattresses",
+      "counted": "Signature Hybrid, Aurora Luxe Cooling, BB Kids, CopperFlex, CopperFlex Pro, CopperFlex Essential, Plank Firm Luxe, Plank Firm, Titan Plus Elite, Titan Plus Luxe, Titan Plus Core, ThermoBalance, ThermoBalance Elite, ThermoBalance LX, ThermoBalance LX Elite, Sedona, Sedona Elite, Sedona LX, Sedona LX Elite, Spartan",
+      "market": "US"
+    },
+    "mattresses|Douglas": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.douglas.ca/en/mattresses/",
+      "counted": "Douglas Original, Douglas Alpine, Douglas Summit, Douglas Original Hybrid, Douglas Alpine Hybrid, Douglas Summit Hybrid",
+      "market": "CA"
+    },
+    "mattresses|DreamCloud": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.dreamcloudsleep.com/mattresses",
+      "counted": "Classic Hybrid, Premier Hybrid, Luxe Hybrid, Ultra Hybrid, Classic Memory Foam, Premier Memory Foam, Luxe Memory Foam, Ultra Memory Foam, PressureSmart",
+      "market": "US"
+    },
+    "mattresses|Dunlopillo": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.dunlopillo.co.uk/elite",
+      "counted": "Elite Comfort, Elite Luxury, Elite Supreme, Elite Relax, Firmrest, Sovereign, Millennium, Meya, Kareena",
+      "market": "GB"
+    },
+    "mattresses|eve": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.evesleep.co.uk/collections/all",
+      "counted": "Premium Hybrid, Original Hybrid, Original, Premium, Wunderflip Premium Hybrid, Wunderflip Ultimate Hybrid",
+      "market": "GB"
+    },
+    "mattresses|Eve": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.evesleep.co.uk/collections/all",
+      "counted": "Premium Hybrid, Original Hybrid, Original, Premium, Wunderflip Premium Hybrid, Wunderflip Ultimate Hybrid",
+      "market": "GB"
+    },
+    "mattresses|Luuna": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://luuna.mx/colchones",
+      "counted": "Luuna Original, Luuna One, Luuna Signature, Luuna Blue, Luuna Air, Luuna Basics",
+      "market": "MX"
+    },
+    "mattresses|Lucid": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://lucidmattress.com/collections/all",
+      "counted": "The Original Memory Foam Mattress, Premium Memory Foam Mattress, Low Profile Memory Foam Mattress",
+      "market": "US"
+    },
+    "mattresses|Molecule": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://moleculesleep.com/collections/mattresses",
+      "counted": "Core 10, Core Hybrid 10, CopperWELL 12, CopperWELL Hybrid 13, Reflex 11, Reflex Hybrid 11, Reflex Pro 12, Reflex Pro Hybrid 12, Reflex Elite 14, Reflex Elite Hybrid 14, Engage 12, Engage Hybrid 12, Engage Pro 12 Hybrid, Engage Pro 13, Engage Pro Hybrid 13, Engage Elite 14, Engage Elite Hybrid 14",
+      "market": "US"
+    },
+    "mattresses|Nest Bedding": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.nestbedding.com/collections/shop-mattresses",
+      "counted": "Sparrow, Owl, Starling, Raven, Puffin",
+      "market": "US"
+    },
+    "mattresses|Nolah": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://nolahsleep.com/collections/mattresses",
+      "counted": "Nolah Evolution, Nolah Signature Hybrid, Nolah Signature All-Foam, Nolah Original, Nolah Evo Comfort+, Nolah Natural, Nolah Nurture",
+      "market": "US"
+    },
+    "mattresses|Novosbed": {
+      "range": 1,
+      "meetsHundred": false,
+      "url": "https://www.novosbed.com/shop/mattress/novosbed-memory-foam/",
+      "counted": "Novosbed Memory Foam Mattress",
+      "market": "CA"
+    },
+    "mattresses|Origin": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://originmattress.com/shop/",
+      "counted": "Adapt Hybrid Mattress, LumbarCloud Mattress",
+      "market": "US"
+    },
+    "mattresses|Otty": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://otty.com/collections/all",
+      "counted": "Pure Hybrid Bamboo, Pure+ Hybrid 4000 Pocket Sprung, Pure Pro Hybrid Bamboo & Charcoal, Extra Firm Hybrid, Aura Hybrid, Original Hybrid, Original Ice Hybrid, Natural Origin, Natural Evolve",
+      "market": "GB"
+    },
+    "mattresses|PlushBeds": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.plushbeds.com/collections/",
+      "counted": "Botanical Bliss, Organic Bliss, Eco Bliss, Luxury Bliss, Signature Bliss, Royal Bliss, Kathy Ireland Hybrid, Healthy Child Organic Latex, Healthy Child Hybrid, Cool Bliss Luxury Memory Foam, Memory Foam Sofa Bed Mattress, Cool Bliss Gel Sofa Mattress, Slice of Heaven Eco-Green Sofa Mattress, MobilePlush 6 Classic RV Mattress, MobilePlush Eco-Green 8 RV Mattress",
+      "market": "US"
+    },
+    "mattresses|Polysleep": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://polysleep.ca/collections/mattresses",
+      "counted": "Luna, Sierra, Origin, Polycouch, Baby Mattress, Polysleep, Aura, Zephyr",
+      "market": "CA"
+    },
+    "mattresses|Silk & Snow": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.silkandsnow.com/en-us/mattresses/",
+      "counted": "Original, Hybrid, Organic",
+      "market": "CA"
+    },
+    "mattresses|Sleepeezee": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://sleepeezee.com/mattresses/",
+      "counted": "ActivFlex Response, Campaign for Wool, Centurial, Cool Refresh, Fusion Pro, Graphite Echo, Hotel Collection, InMotion, Jack Mattress, Jessica, Little Bedz, Majestic, Memory Ultimate, Ortho Bespoke, Travelodge Dreamer",
+      "market": "GB"
+    },
+    "mattresses|Tempur-Pedic": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.tempurpedic.com/shop-mattresses/",
+      "counted": "TEMPUR-Cloud, TEMPUR-Adapt, TEMPUR-Breeze, TEMPUR-ActiveBreeze",
+      "market": "US"
+    },
+    "mattresses|Vispring": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.vispring.com/collections/",
+      "counted": "Devonshire, Baronet Superb, Elite, Renaissance, Kingsbridge, Regal Superb, Shetland, Dartington, Herald Superb, Diamond Majesty, Magnificence, Signatory, Sublime Superb, Tiara Superb",
+      "market": "GB"
+    },
+    "mattresses|WinkBeds": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.winkbeds.com/collections/all",
+      "counted": "The WinkBed, The GravityLux, The EcoCloud",
+      "market": "US"
+    },
+    "mattresses|Zinus": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.zinus.com/collections/mattress",
+      "counted": "Core Memory Foam, Signature Memory Foam, Luxe Memory Foam, Core Hybrid, Signature Hybrid, Luxe Hybrid",
+      "market": "US"
+    },
+    "mattresses|Sleep Number": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://support.sleepnumber.com/hc/en-us/articles/360050729394-Get-to-Know-Your-Sleep-Number-360-Smart-Bed",
+      "counted": "c2, c4, cSE, p5, p6, pSE, m7, iLE, i8, i10",
+      "market": "US"
+    },
+    "televisions|Cello": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://celloelectronics.com/collections/televisions",
+      "counted": "CTrav series, C-series (16/19/22/24 Pitch Perfect TZH), C1926TZ-UC Kitchen TV, C2224SH, C2424SH, VOYAGER (C-TZR-VOY), C2426TZF (TV/DVD)",
+      "market": "GB"
+    },
+    "televisions|Hisense": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.hisense-usa.com/category/televisions",
+      "counted": "S6 RoamView, QD4 Series, E7 Series, E8 Series, U6 Pro Series, U7 Series, UR8 Series, UR9 Series",
+      "market": "US"
+    },
+    "televisions|Bang & Olufsen": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.bang-olufsen.com/en/us/televisions",
+      "counted": "Beovision Harmony, Beovision Theatre, Beovision Contour",
+      "market": "US"
+    },
+    "televisions|Element": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://elementelectronics.com/shop/tvs/",
+      "counted": "E300AE_C (Xumo 720p/1080p), E300AG_R (Roku 720p/1080p), E300AF32PBG (portable Google), EBG300AG_R (Building Block green Roku), EBB300AG_R (Building Block blue Roku), E550AE_C (4K UHD Xumo), E550AF_T (4K UHD TiVo), E550AG_R (4K UHD Roku), EMQ650AE_C (Mini-LED QLED Xumo), EQ550AG_R (QLED Roku), EQ550AF_C (QLED Xumo)",
+      "market": "US"
+    },
+    "televisions|Haier": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.haier-europe.com/en_GB/collections/tv",
+      "counted": "S90, S80, K85",
+      "market": "GB"
+    },
+    "televisions|Majestic": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://majesticelectronics.us/",
+      "counted": "Smart 12V LED TV - Google/Android (GTV series), Smart 12V LED TV - webOS (SLT series), Non-Smart 12V LED TV (L-DA/global tuner series)",
+      "market": "US"
+    },
+    "televisions|Sceptre": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.sceptre.com/product/search.html?search=tv",
+      "counted": "U-series (4K UHD, e.g. U515CV/U517CV/U557CV/U860CV), X-series (LED HDTV/Edgeless, e.g. X322BV/X405BV/X435BV/X437BV), A-series (Smart Android TV, e.g. A517CV/A557CV/A658CV), E-series (HD/Full HD LED, e.g. E246BV/E247BD)",
+      "market": "US"
+    },
+    "televisions|Vizio": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.vizio.com/en/shop/tv",
+      "counted": "Mini LED Quantum 4K, Quantum 4K, Quantum Full HD, Quantum HD",
+      "market": "US"
+    },
+    "televisions|Sharp": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://shop.sharpusa.com/home-entertainment/televisions/",
+      "counted": "AQUOS QLED (Xumo), AQUOS QLED TiVo Edition, Sharp Roku TV (4K), AQUOS XLED (Mini LED Google TV), Sharp Roku TV OLED",
+      "market": "US"
+    },
+    "televisions|Skyworth": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://www.skyworthusa.com/pages/compare",
+      "counted": "Clarus Outdoor PS1, Clarus Outdoor S1, UE7600, UD7300, UD6300, UD6200, XC9300, XC9000, UC7500, UC6200, TD7300, TC6200, C1 Canvas Art, G6400A, Q6500A, E5500A, CE1 Canvas Elite, G6500B, Q6500B, C2 Canvas Art",
+      "market": "US"
+    },
+    "televisions|JVC": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://jvcproducts.com/",
+      "counted": "Select Series, Premier Series, Quantum Series",
+      "market": "US"
+    },
+    "televisions|Amazon": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.aboutamazon.com/news/devices/amazon-updates-the-fire-tv-lineup-with-new-qled-sizes-a-200-smart-tv-and-availability-in-new-countries",
+      "counted": "Fire TV Omni QLED Series, Fire TV 4-Series, Fire TV 2-Series",
+      "market": "US"
+    },
+    "televisions|Konka": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.konka-usa.com/televisions/",
+      "counted": "812 Series (OLED), 809 Series (Mini QD-LED), 684 Series (Frameless LED)",
+      "market": "US"
+    },
+    "televisions|Furrion": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://furrion.com/collections/outdoor-tvs",
+      "counted": "Aurora Full-Sun Pro Series, Aurora Partial-Sun Series, Aurora Partial-Sun Premier Series, Aurora Full-Shade Series",
+      "market": "US"
+    },
+    "televisions|iFFALCON": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.iffalcon.com/uk/en/tvs",
+      "counted": "F510B, K610B, S52K, U62K",
+      "market": "GB"
+    },
+    "televisions|Supersonic": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.supersonicinc.com/collections/tv-home-theater",
+      "counted": "SC-2426SDVD, SC-4350GTV, SC-3250GTV, SC-2816, SC-2416STV",
+      "market": "US"
+    },
+    "televisions|Daewoo": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://www.daewooelectronics.com/collections/tv",
+      "counted": "DE15HL, DM65QV, DM65FV, DM65HV, DM85HV, DM64HA, DM62FA, DM72QA, DM56QV, DM55UV, DM95QV, DM85FV, DM95FV, DE74HLI, DM75QV, DM65UV (size digit stripped from each model number family)",
+      "market": "GB"
+    },
+    "televisions|Emerson": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://emersonaudio.com/collections/televisions",
+      "counted": "ET-7000, ET-1300, ESTD-2400, ET-2400, ETD-4050A, ETD-2450, ET-5000K, ET-3200, ETD-4050, ETD-3250, ET-4000",
+      "market": "US"
+    },
+    "televisions|Metz": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://metzblue.com/",
+      "counted": "MOD9500, MQE8500, MQE7600, MQE8000, MQD7500, MNE9000, MUD8500, MUD7000, MTE6000, MTD7000, MTD8500, MTE2000, MQH3001, MRD6000, MTD6000 (note: 15 listed here; page summary stated total 18 but enumerated 15 by name - recorded as fetched)",
+      "market": "GB"
+    },
+    "televisions|Avtex": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://avtex.co.uk/television/",
+      "counted": "Vidaa Smart TV Range (AV195TS/AV215TS/AV249TS/AV270TS/AV320TS/AV390TS), Freely-DVD-Combi Range (AV21DS/AV24DS), SmartPRO Range, Smart DVD-Combi Series (V219DS/V249DS)",
+      "market": "GB"
+    },
+    "televisions|Pyle": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://pyleusa.com/collections/tv-screens-and-monitors",
+      "counted": "RV TV with DVD Combo series (PLTLD16/19/22/24, size-only variants of one series), WebOS Smart TV series (PTVWEB50UHD)",
+      "market": "US"
+    },
+    "televisions|Ghia": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://tienda.ghia.com.mx/categoria-producto/tv-video/televisiones/",
+      "counted": "Netflix Series, Android TV Series, Whale Series QLED 4K, Whale Series Full HD, Google TV Series",
+      "market": "MX"
+    },
+    "televisions|Atyme": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.atymetv.com/",
+      "counted": "Class F Series, Class N Series, D55 Series, Class F3 Series, Class A Series, Class F2 Series, Class F Series Mini LED, Class S Series, Class S7 Series",
+      "market": "US"
+    },
+    "phones|Google": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://store.google.com/category/phones",
+      "counted": "Pixel 11, Pixel 11 Pro, Pixel 11 Pro XL, Pixel 11 Pro Fold, Pixel 10, Pixel 10 Pro, Pixel 10 Pro XL, Pixel 10 Pro Fold, Pixel 10a",
+      "market": "US"
+    },
+    "phones|OnePlus": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.oneplus.com/uk/store/phone",
+      "counted": "OnePlus 15, OnePlus 15R, OnePlus 13, OnePlus Nord 5, OnePlus Nord CE5",
+      "market": "GB"
+    },
+    "phones|Nothing": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://intl.nothing.tech/collections/phones",
+      "counted": "Phone (4a), Phone (4a) Pro, Phone (4b), Phone (3), Phone (3a) Lite, Phone (3a) Pro, Phone (3a), Phone (2a)",
+      "market": "GB"
+    },
+    "phones|CMF by Nothing": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://intl.nothing.tech/collections/phones",
+      "counted": "CMF Phone 2 Pro, CMF Phone 1",
+      "market": "GB"
+    },
+    "phones|vivo": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://vivoshop.mx/collections/serie-t",
+      "counted": "X300, X300 Pro, V70, V70 FE, V60 Lite 4G, V50, T5, T5 Pro 5G, Y21d, Y28, Y04, Y05, Y31d, Y11d, Y19s",
+      "market": "MX"
+    },
+    "phones|Oukitel": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://oukitel.com/collections/all",
+      "counted": "WP68 Air, WP100 Plus, WP500, WP500 Ultra, WP66, WP61 Series, C17 Mini, C26 Mini, P2 Plus, C72, C17, C62 GT",
+      "market": "US"
+    },
+    "phones|Unihertz": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.unihertz.com/collections/smartphones",
+      "counted": "Titan 2, Jelly Star, Jelly Max, Jelly 2, Jelly 2E, Tank 4 Pro, Tank 3 Pro, Tank Mini, Atom, Atom L, Titan Slim, Tank 2 Pro",
+      "market": "US"
+    },
+    "phones|Blackview": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://store.blackview.hk/en-us/collections/smartphone",
+      "counted": "FORT 5, BL9000 Pro, ROCK 3, XPLORE X1, XPLORE 1, XPLORE 1 Pro, XPLORE 2, WAVE 10, COLOR 6",
+      "market": "US"
+    },
+    "phones|Gigaset": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.gigaset.com/hq_en/smartphones/",
+      "counted": "GX30, GX50, GS6, GX6 PRO, GX4 PRO, GL40, GL30, GL795, GL695, GLX8 PLUS, GL595, GL395",
+      "market": "GB"
+    },
+    "phones|Alcatel": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://us.alcatelmobile.com/",
+      "counted": "GO FLIP 4, LUMOS, AXEL, APPRISE, INSIGHT, GLIMPSE",
+      "market": "US"
+    },
+    "phones|Doro": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://uk.doro.com/en-gb/collections/smartphones",
+      "counted": "Aurora A30, Aurora A20, Aurora A10, Leva X10, Leva E10, Leva E20, Leva E22, Leva E30, Leva L10, Leva L20, Leva L30",
+      "market": "GB"
+    },
+    "phones|Hammer": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://hammerphones.com/en/category/store-smartphones",
+      "counted": "VENTUS 5G, CONSTRUCTION 2 THERMAL 5G, CONSTRUCTION 2 5G, BLADE V 5G, IRON 6 5G, IRON V, ENERGY X2 5G, RANGER, IRON Va, Power Plus LTE, Power Plus, Forge LTE, Forge, HORIZON LTE, BOW LTE, Boost 2 LTE, 6 LTE, ROCK LTE, Boost, Rock (excludes items explicitly marked out of stock)",
+      "market": "IE"
+    },
+    "phones|Volla": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://volla.online/en/devices/",
+      "counted": "Volla Phone Quintus, Volla Phone Plinius, Volla Phone X23",
+      "market": "GB"
+    },
+    "phones|Huawei": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://consumer.huawei.com/en/phones/",
+      "counted": "Pura 90s Pro Max, Pura 90s Pro, Pura 80 Pro, Pura 80 Ultra, Pura 80, Mate 80 Pro, Mate X7, Mate XT Ultimate Design, Mate X6, nova 16s Pro, nova 16s, nova 15 Max, nova Y74, nova 15 Pro, nova 15, nova 14 Pro, nova 14, nova Y73, nova 13 Pro, nova 13",
+      "market": "GB"
+    },
+    "phones|Infinix": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://wap.infinixmobility.com/smartphones",
+      "counted": "HOT 70 Pro 5G+, SMART 20 HD, HOT 70, GT 50 Pro, SMART 20, NOTE 60 Pro, NOTE 60, NOTE Edge, HOT 60 Pro FREE FIRE, HOT 60i 5G, GT 30, HOT 60 Pro+ FREE FIRE, HOT 60 Pro+, NOTE 50S 5G, ZERO FLIP, HOT 60 5G, GT 30 Pro, HOT 60i",
+      "market": "GB"
+    },
+    "phones|Lively": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://shop.lively.com/",
+      "counted": "Jitterbug Flip3, Jitterbug Smart5, Jitterbug Flip2, Jitterbug Smart4, RAZ",
+      "market": "US"
+    },
+    "phones|POCO": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.mi.com/global/product-list/phone/poco/",
+      "counted": "POCO C95 Pro, POCO F9 Ultra, POCO F9 Pro, POCO X8, POCO M8s 5G, POCO C81 Pro, POCO X8 Pro Max, POCO X8 Pro, POCO M8 Pro 5G, POCO M8 5G, POCO F8 Ultra, POCO F8 Pro",
+      "market": "GB"
+    },
+    "phones|Redmi": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.mi.com/global/product-list/phone/redmi/",
+      "counted": "REDMI 17C 5G, REDMI Note 17 Pro Max 5G, REDMI Note 17 Pro 5G, REDMI Note 17 5G, REDMI Note 17, REDMI 17 5G, REDMI 17, REDMI A7, REDMI A7 Pro, REDMI Note 15, REDMI Note 15 5G, REDMI Note 15 Pro",
+      "market": "GB"
+    },
+    "phones|Xiaomi": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.mi.com/global/product-list/phone/",
+      "counted": "Xiaomi 17T Pro, Xiaomi 17T, Xiaomi 17 Ultra, Leica Leitzphone powered by Xiaomi, Xiaomi 17",
+      "market": "GB"
+    },
+    "phones|Sony": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.sony.co.uk/electronics/smartphones",
+      "counted": "Xperia 10 VIII, Xperia 1 VIII, Xperia 10 VII, Xperia 1 VII",
+      "market": "GB"
+    },
+    "phones|Cubot": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://shop.cubot.net/collections/phones",
+      "counted": "Note 60, P90, X100, A40, A50",
+      "market": "US"
+    },
+    "phones|TCL": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://us.tcl.com/collections/mobile-for-sale",
+      "counted": "NXTPAPER 70 PRO, 60 XE NXTPAPER 5G, 50 XL NXTPAPER 5G, K70, K33, K32, FLIP PRO, CLASSIC, FLIP 3, FLIP 4 5G",
+      "market": "US"
+    },
+    "phones|AGM": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.agmmobile.com/collections/smartphone",
+      "counted": "G2 Guardian, G3 PRO, G3, Glory Pro, X7 Pro, M7, H6, H6 LITE, H Max",
+      "market": "US"
+    },
+    "phones|ASUS": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://rog.asus.com/phones-group/allmodels/",
+      "counted": "ROG Phone 9, ROG Phone 9 Pro Edition, ROG Phone 9 Pro, ROG Phone 8 Pro Edition, ROG Phone 8 Pro, ROG Phone 8",
+      "market": "US"
+    },
+    "phones|Consumer Cellular": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.consumercellular.com/shop/phones/",
+      "counted": "SpeakEasy Flip, SpeakEasy Smart",
+      "market": "US"
+    },
+    "phones|Doogee": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.doogee.com/collections/smart-phones",
+      "counted": "Note56 X, Note57 Plus, Note57 Pro, Note 57, Note57 Lite, Note56 X Lite, Note56 Lite, Note60, V Max Play Projector, V50 Pro, V50, V Max 2 Pro, S300 Pro, S200X, S200 Ultra",
+      "market": "US"
+    },
+    "phones|Fairphone": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.fairphone.com/en/shop/",
+      "counted": "Fairphone (Gen. 6+), Fairphone (Gen. 6)",
+      "market": "GB"
+    },
+    "phones|Sonim": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.sonimtech.com/products/",
+      "counted": "XP Pro, XP Pro Thermal, XP Pro E, XP10, XP5plus 5G, XP5plus, XP3plus 5G, XP3plus, XP100",
+      "market": "US"
+    },
+    "phones|FOSSIBOT": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.fossibot.com/collections/all",
+      "counted": "F106 Plus, F116 Pro, F115 Ultra, F110L, F113, F109S, F107 Pro, F110 Pro",
+      "market": "US"
+    },
+    "phones|HOTWAV": {
+      "range": 36,
+      "meetsHundred": false,
+      "url": "https://www.hotwav.com/collections/all",
+      "counted": "W11 Pro, A16 Pro Max, A17 Pro Max, A18 Pro Max, A25 Ultra, A26 Ultra, A36, A56, Cyber 13 Pro, Cyber 13, Cyber 16 Pro, Cyber 17, Cyber 18, Cyber 7, Cyber 8, Cyber 9 Pro, Cyber X Pro, Cyber X, Hyper 7 Pro, Hyper 7, Hyper 7S, Hyper 8 Pro, Hyper 8 Ultra, Hyper 8E, Note 12 2024, Note 12 EF, Note 12, Note 13 Max, Note 13 Pro, Note 15 Pro, Note 15, Note 16 Pro, Note 16, Note 17 Max, Note 18 GT, Note 18 Pro",
+      "market": "US"
+    },
+    "phones|Artfone": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://theartfone.com/",
+      "counted": "CS182, CF241A, C1, M2, CB3, U3, G6 Pro, G3 Pro",
+      "market": "US"
+    },
+    "phones|Kyocera": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.kyoceramobile.com/",
+      "counted": "DuraForce PRO 3, DuraXA Equip",
+      "market": "US"
+    },
+    "phones|HMD": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://www.hmd.com/en_gb/all-phones",
+      "counted": "HMD 3210, HMD 215 4G 2nd Edition, HMD 235 4G 2nd Edition, HMD 105 4G School Edition, HMD Barca 3210 4G, HMD 2660 Flip 4G, HMD 110 4G, HMD 105 4G, HMD Barbie Phone 4G, HMD Aura2, HMD Fuse, HMD Fusion X1, HMD Barca Fusion, HMD Key, HMD Fusion, HMD Skyline, HMD XR21, HMD Pulse+, HMD Pulse, HMD Pulse Pro",
+      "market": "GB"
+    },
+    "phones|Murena": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://murena.com/america/products/smartphones/",
+      "counted": "Fairphone (Gen. 6+) with Murena's /e/OS, Fairphone (Gen. 6) with Murena's /e/OS, HIROH Phone powered by Murena, Murena Pixel 8 (Refurbished), Murena Teracube 2s, Murena Pixel 7 (Refurbished)",
+      "market": "US"
+    },
+    "phones|Nubia": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://global.redmagic.gg/collections/phones",
+      "counted": "REDMAGIC 11S Pro, REDMAGIC 11 Air, REDMAGIC 11 Pro, REDMAGIC 10S Pro, REDMAGIC 10 Air, REDMAGIC 10 Pro",
+      "market": "US"
+    },
+    "phones|Orbic": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://orbic.us/collections/phones",
+      "counted": "Trophy 5G, Myra 5G UW, Maui 4G LTE Prepaid, Journey V 4G, Maui+ 4G LTE Prepaid, Joy 4G Prepaid, Fun 4G Unlocked Bundle, Journey R 4G, JOY 2, JOURNEY Pro, JOURNEY Pro Lite",
+      "market": "US"
+    },
+    "phones|OSCAL": {
+      "range": 29,
+      "meetsHundred": false,
+      "url": "https://www.oscal.hk/series/11",
+      "counted": "PILOT8, MARINE 3, PILOT 6, PILOT 5, TANK 1, PILOT 3, PILOT 1, MARINE 2, MARINE 1, PILOT 2, S70, S80, S60 Pro Night Vision, S60 Pro, Flat 3C Mini, FLAT 3C, TIGER 8, TIGER 12, FLAT 2, FLAT 2C, TIGER 13, TIGER 10, FLAT 1C, MODERN 8, C60, C80, C30 Pro, C70, C30",
+      "market": "US"
+    },
+    "phones|Punkt": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.punkt.ch/en/products/",
+      "counted": "MC03, MP02, MC02",
+      "market": "GB"
+    },
+    "phones|Ulefone": {
+      "range": 56,
+      "meetsHundred": false,
+      "url": "https://www.ulefone.com/collections/smartphones",
+      "counted": "Armor 24 Pro, Armor 22 Pro, Armor 27T Pro+, Armor 27T+, Armor 34 Pro+, Armor 34+, Armor 29 Pro Thermal Version, Armor 28 Ultra Thermal Version, Armor 33 Pro, Armor 33, Armor 29 Ultra, Armor 29 Pro, Armor 28 Pro, Armor 30 Pro, Armor 28 Ultra, Armor 34 Pro, Armor 34, Armor 30, Armor 27T, Armor 27, Armor 27T Pro, Armor 27 Pro, Armor 25T, Armor 25T Pro, Armor 26 Ultra, Armor 26 Ultra Walkie-Talkie, Armor 24, Armor 22, Armor 21, Armor X32 Pro, Armor X32, Armor X31 Pro, Armor X31, Armor X16 Pro, Armor X16, Armor X13, Armor X12 Pro, Armor X12, RugKing 5 Pro, RugKing 4 Pro, RugKing 3 Pro, RugKing 2 Pro, RugKing, Armor Mini 5, Armor Mini 4, Armor Mini 20T Pro, Armor Mini 20 Pro, Armor Mini 20, Note 23, Note 22, Note 21, Note 20 Pro, Note 18 Ultra, Note 18 Pro, Power Armor 18T Ultra Version, Power Armor 18 Ultra Version",
+      "market": "US"
+    },
+    "phones|UMIDIGI": {
+      "range": 34,
+      "meetsHundred": false,
+      "url": "https://www.umidigi.com/page-phones.html",
+      "counted": "G9x, G100x 5G, G100x, G100 5G, G100A, G100, G9 5G, G9T, G9C, G9A, Note 100x 5G, Note 100x, Note 100 5G, Note 100A, Note 100, Note 90, BISON X20, BISON GT2 5G, BISON GT2 PRO 5G, A75x, A15 | A15C, A15 Pro 5G, A13 Pro Max 5G, A13 Pro, Power 7S, Power 7, Power 7 Max, Power 5S, Power 5, F3 Pro 5G, F3 5G, F3, F3S, F3 SE",
+      "market": "US"
+    },
+    "phones|ZTE": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://global.ztedevices.com/collections/all-smartphones",
+      "counted": "Axon 60 Ultra 5G, Axon 40 Pro, Axon 40 Ultra, Axon 30, Axon 30 Ultra, Axon 20 5G",
+      "market": "US"
+    }
+  },
+  "notFound": {
+    "tires|Goodyear": "Tried https://www.goodyear.com/en-us/tires, /tires/by-brand/goodyear, /tires/by-category/all-terrain, en-ca/tires, en_gb consumer site, goodyear.eu/en_gb/consumer.html (landing-page-only, not full catalog) and goodyear.eu sitemap (incomplete partial list only). All goodyear.com domain fetches returned 'Parse Error: Header overflow' regardless of path/locale - looks like a WAF/bot-protection issue that this fetch tool cannot get past. The .eu pages that did load were marketing landing pages, not the full lineup, so could not get a verified complete count.",
+    "tires|Bridgestone": "Tried https://www.bridgestonetire.com/tires, /tires/, /our-tires/, https://tires.bridgestone.com/en-us/automotive and /tire-brand, https://www.bridgestone.co.uk/our-products/car-tyres and /car-tyres - every bridgestonetire.com, tires.bridgestone.com, and bridgestone.co.uk URL returned HTTP 403 Forbidden (bot protection). Could not get a fetchable full lineup page.",
+    "tires|Cooper": "Tried https://www.coopertire.com/, https://us.coopertire.com/tires and /, https://www.coopertire.com/en_US/tires/by-type/all-season and /en_US/tires.html - all returned 403 Forbidden or 523 (Cloudflare origin unreachable). Cooper is now Goodyear-owned and appears to share the same bot-protected infrastructure as goodyear.com/bridgestonetire.com. Could not get a fetchable full lineup page.",
+    "tires|Falken": "Tried https://www.falkentire.com/tires, /azenis, /wildpeak, /ziex, /sincera - all returned empty content via WebFetch (fully JS-rendered page, no server-side HTML with product data). WebSearch found individual model pages confirming families Azenis, Wildpeak, Sincera, Pro Series, Ziex, Aklimate exist, but no single fetchable page gave a verified complete count of distinct lines.",
+    "tires|Firestone": "Tried https://www.firestonetire.com/catalog/, /our-tires/, /our-tires/brands/ - all returned 403 Forbidden (same Bridgestone-family bot protection, Firestone is a Bridgestone brand). Could not get a fetchable full lineup page.",
+    "tires|Yokohama": "Tried https://www.yokohamatire.com/tires-101/how-to-select-a-tire-1/the-yokohama-tire-family (family descriptions only, no model list), /tires/geolandar, /tires/avid, /tires/advan, /tires/iceguard (all 404), mobile.yokohamatire.com (connection refused/DNS failure). Could not reach a page listing the full current model lineup.",
+    "tires|Linglong": "Linglong does not appear to sell passenger tires under its own 'Linglong' brand name in the US/GB/IE/CA/MX markets - in North America it sells under Atlas, Crosswind, Leao, Gritmaster, Green Max and Evoluxx brand names instead. Its own-name catalog lives on linglongtire.com (global/Chinese site), which is outside the five markets SLATE sells in, so no qualifying own-brand lineup page was found.",
+    "tires|Kenda": "Tried https://www.kendatire.com/en-us/ (homepage, only 1 featured product), https://automotive.kendatire.com/en-us/find-a-tire/ (navigation only, no product list), and guessed category subpaths (404). Could not find a fetchable page with the full automotive lineup; shop.kendatire.com is bicycle tires only.",
+    "tires|Kelly": "Tried https://www.kellytires.com/ and http://www.kellytires.com/ - both returned 'certificate has expired' errors, so the page could not be fetched at all. The site itself says the complete lineup lives on Goodyear.com instead of a dedicated Kelly catalog page.",
+    "tires|Barum": "Tried https://www.barum-tyres.com/car/tyres/ and /car/ - page returned only navigation/category headings ('Car, 4x4 & Van tyres'), no actual product model names (JS-rendered results grid not present in fetched HTML). Could not get a verified complete count.",
+    "tires|Matador": "Tried https://www.matador-tyres.com/ (connection refused - wrong domain), then found correct domain matador.tires; tried /car/, /car/tyres/, /car/search-results/, and query-param category variants (?cartype=car/van/4x4) - all returned only navigation chrome or at most 2 featured models (Hectorra 5, Hectorra Van), with the actual results grid rendered client-side via JS and not present in fetched HTML. Could not get a verified complete count.",
+    "tires|Landsail": "Tried https://landsailtires.com/ (homepage - only 3 stray model references, page said 'under construction'), /tires, /tires/passenger-car, /tires/cuv-suv (404s), /tires/light-truck ('No tires found', category page with no results rendered server-side). Could not get a verified complete count.",
+    "tires|Accelera": "Official domain accelera.co.id failed DNS resolution (ENOTFOUND); acceleratires.com resolved but failed TLS certificate validation (cert registered to *.odoo.com, not the brand's own domain) over both https and http. No fetchable official lineup page found.",
+    "tires|Joyroad": "Tried https://www.joyroadtire.com/ and https://joyroadtire.com/ - both failed DNS resolution (ENOTFOUND). WebSearch only surfaced third-party retailer listings (eBay, Walmart), never the brand's own site. No fetchable official lineup page found.",
+    "mattresses|Helix": "Both helixsleep.com/collections/mattresses and shop.helixsleep.com returned HTTP 403 Forbidden on direct fetch; WebSearch snippets only gave partial/inconsistent model names (Sunset, Moonlight, Midnight, Twilight, Dawn) without a verifiable complete lineup from the brand's own fetched page.",
+    "mattresses|Hypnos": "Fetched hypnosbeds.com/us/mattresses and /us/collections; both only surfaced a 'Popular Choices' subset (3 models: Wool Origins 8, Luxury No Turn 9, Cotton Origins 6) or a single collection description, not a complete current lineup list.",
+    "mattresses|Silentnight": "Fetched silentnight.co.uk/all-mattresses.html and /mattresses; both returned only best-seller/promo snippets (3-4 named models) with the rest of the product grid not rendering in fetch, so a complete current count could not be verified.",
+    "mattresses|Dormeo": "Fetched dormeo.co.uk/mattress-collections and /mattress-collections/memory; content was truncated to nav/promo elements both times, no product list rendered.",
+    "mattresses|América": "Tried america.com.mx/colchones (404) and america.com.mx/ homepage; homepage fetch returned feature/technology names (Nano X4, Nano X2, Baggy System, Body Gel, Body Care, Memory) rather than a clear distinct-model product catalog, so could not verify a reliable model count from the brand's own page.",
+    "mattresses|Harrison Spinks": "harrisonspinks.co.uk/collections returned HTTP 403 Forbidden on two separate direct-fetch attempts; WebSearch only surfaced collection-level names (Somnus, Wildwood, Bed Tailor) without individual model names, so a verified count could not be obtained from the brand's own page.",
+    "mattresses|Hush": "hush.ca/collections/mattress and /collections/all only rendered one adult mattress model (Graph-Iced Mattress) plus a separately-pathed crib mattress (hushblankets.com/products/crib-mattress); could not confirm whether this is the complete current lineup or if content was truncated in fetch, so left as low-confidence and excluded rather than guessed.",
+    "mattresses|Kaymed": "kaymed.co.uk blog/news pages gave inconsistent, conflicting lists of collection and model names across different search snippets (Silver, Therma-Phase, Regulatex, K3, Mighty Bed, Energize, V85, Response Gel, iKool roll-up range) with no single current official lineup page successfully fetched to reconcile them into a verified count.",
+    "mattresses|Respa": "respa.com is an unrelated enterprise software company, not the mattress brand; respa.es returned HTTP 404 on the /colchones/ path and WebSearch with site: filters returned no results from respa.es at all, so the brand's own current lineup page could not be located or fetched.",
+    "mattresses|Rest Assured": "restassured.co.uk fetch failed with 'certificate has expired' on two attempts (both https:// root and /mattresses path), and WebSearch with site:restassured.co.uk returned no results from the brand's own domain, so no lineup page could be verified.",
+    "mattresses|Odearest": "odearest.ie/all-products/ fetch failed with 'connect ECONNREFUSED' (site appears to block this fetch tool's IP/UA); WebSearch site:odearest.ie snippets suggested a large range across Songbird/Woodland/Parklands/Value families (Ash, Aspen, Avondale, Birch, Farmleigh, Hazel, Nightingale, Oak Ortho, Osprey, Poplar, Powerscourt, Skylark, Whitethorn, Willow, Monte Carlo Deluxe, St. Moritz, Caress Pocket Comfort, Posture Firm, Elba, Moonlight - roughly 20 names) but none of this could be confirmed by actually fetching the brand's own page, so no verified count is reported.",
+    "televisions|Sony": "Tried electronics.sony.com and sony.com/electronics/televisions directly - both fetch-blocked/403. Only found third-party press coverage (TechRadar, Digital Trends, FlatpanelsHD) of 2026 lineup, not Sony's own lineup page, so not counted per instructions.",
+    "televisions|Samsung": "Fetched samsung.com/us/televisions-home-theater/tvs/all-tvs/ and samsung.com/us/tvs/all-tvs/ directly - both are JS-rendered nav/category pages (Micro RGB, OLED, Neo QLED, Mini LED, QLED, Crystal UHD, Frame, Terrace categories) with only one example SKU (S95D) rendered server-side; no full model grid available via fetch.",
+    "televisions|LG": "Fetched lg.com/us/tvs directly - page is nav/category-based (OLED evo, Micro RGB evo, QNED evo Mini LED, QNED Mini LED, UHD) with only 4 incidental full model numbers rendered, not a complete series list.",
+    "televisions|Bush": "Bush is an Argos (UK retailer) in-house/owned brand with no independent maker-owned lineup website; only Argos retailer category pages found (bushtivotvs, argos.co.uk/brands/bush-technology), which do not count as a maker's own page.",
+    "televisions|Loewe": "Found loewe.tv/int/en/loewe/tv/all-tv-modells (brand's own 'all TV models' page) but WebFetch got HTTP 403 Forbidden on it. No alternate working fetch of a Loewe-owned full lineup page was found.",
+    "televisions|Magnavox": "No current Magnavox-branded owned retail/lineup site found; Magnavox TVs appear to be legacy/licensed (Funai, now reportedly transferred) and sold only through third-party retailers/parts sites, not a maker-owned current lineup page.",
+    "televisions|RCA": "rcaaudiovideo.com connection refused (ECONNREFUSED) on fetch; television.rca.com/collections/tvs returned HTTP 402 Payment Required. Could not load either RCA-owned lineup page directly.",
+    "televisions|Toshiba": "toshiba-tv.com fetch returned empty content; toshibatv-usa.com homepage only surfaced 2 series (C350, V35) without a full shop/lineup listing page found.",
+    "televisions|Akai": "Searched akai.com (global), akaiindia.in, akai-products.com.au - no single current full-lineup page identified/fetched; only fragmentary retailer/regional mentions found, insufficient to verify a complete distinct-series count from the brand's own page.",
+    "televisions|Finlux": "finlux.co.uk DNS lookup failed (ENOTFOUND) on repeated attempts (with and without www). No working fetch of the brand's own site was achieved.",
+    "televisions|Hitachi": "No independent Hitachi-owned TV lineup site found; UK search results show only third-party retailers (Argos, Amazon, ACE TECH, DealDoodle, PriceSpy) selling Hitachi-badged TVs, not a maker-owned current lineup page.",
+    "televisions|Hyundai": "Hyundai TVs are confirmed (SlashGear) not sold in the US; the own-brand lineup page found (hyundai-appliances.com) serves MENA markets (Tunisia, Morocco, Yemen, Sudan), none of which are in SLATE's US/GB/IE/CA/MX market list, so excluded.",
+    "televisions|Polaroid": "Searched polaroid.com, polaroidtv.com, shop.polaroid.com - only found Polaroid's own support/FAQ pages and third-party retailer/reseller listings (eBay, Best Buy), no current maker-owned shop/lineup page with a distinct-series list was located.",
+    "televisions|Roku": "roku.com/products/roku-tv/roku-made-tvs and the en-ca variant are JS-rendered; WebFetch repeatedly returned only the word 'Roku' with no product content after 3 attempts across different URLs (including the tv-25 blog post). Could not verify count from a fetched page.",
+    "televisions|Seiki": "No current official seiki.com shop/lineup page could be located via search; only legacy press coverage (2016 lineup) and third-party reseller sites (tvsled.com, televisionsi.com) were found.",
+    "televisions|Xiaomi": "mi.com/us product-list/tv-media does not currently sell full-size Xiaomi TVs (only streaming sticks/boxes) per search. mi.com/in/tv-smart-home/ (India) is not one of SLATE's target markets (US/GB/IE/CA/MX) and the page also returned HTTP 403 on fetch.",
+    "televisions|Caixun": "caixun-global.com/us/ and /us/all-products-us both returned errors (template directory missing / 404) on fetch. Could not load a working Caixun US (or other target-market) lineup page.",
+    "televisions|Funai": "Funai does not sell under its own brand name (it licenses Philips/Magnavox names in North America, and per search results went bankrupt in 2025 with the license reportedly transferred to Skyworth); no current Funai-branded lineup page exists to count.",
+    "televisions|Grundig": "grundig.com/en-en/qled-tv and /en-en/led-tv both returned HTTP 403 Forbidden on fetch. Could not load a working Grundig-owned lineup page despite the site existing.",
+    "televisions|Logik": "Logik is a Currys (UK retailer) exclusive own-brand with no independent maker-owned site; only Currys/press coverage of the Logik Roku TV launch was found, which does not count as a maker's own lineup page.",
+    "televisions|Naxa": "naxa.com/products/televisions/ page listed only a handful of individual SKUs (NT-1300, NTD-2457B, NT-5501, NT-701, NMT-1100) without consistent named series across the catalog; could not confirm a reliable distinct-series count from the page content returned.",
+    "televisions|Onn": "onn.com fetch failed with 'certificate has expired'. onn-tv.com is explicitly a non-official third-party informational site (confirmed by its own content). walmart.com/cp/onn/3004279 (the Walmart-hosted own-brand page) returned only a bot-verification page, blocking content retrieval.",
+    "televisions|Proscan": "proscanvideo.com/shop page returned only broad category links (Roku Smart TV, WEBOS Smart TV, Smart TVs, Ultra HD TVs, LED TVs, TV/DVD Combos) without named model series consistent enough to count distinct current series.",
+    "televisions|Sansui": "No official sansui.com/sansuiamerica.com site with a lineup page was found; all search results point only to Walmart retailer listings, which don't count as a maker-owned page.",
+    "televisions|Sanyo": "No official sanyotv.com (or similar) site with a lineup page was found; all search results point only to Walmart retailer listings, which don't count as a maker-owned page.",
+    "televisions|Telefunken": "telefunken.com/en/tv-sets/ and telefunken.com/products/tv/ both fetched but rendered only 1-2 example models (not a full lineup grid), likely JS-rendered; insufficient to verify a complete distinct-series count.",
+    "televisions|Thomson": "tv.mythomson.com (and its sub-pages /collections/smart-tvs, root) returned connection refused (ECONNREFUSED) on every fetch attempt. Could not load the brand's own lineup page.",
+    "phones|Samsung": "Tried samsung.com/us/mobile/phones/all-phones/, /all-phones/buy/, samsung.com/us/business/mobile/smartphones/, samsung.com/ca/smartphones/all-smartphones/, samsung.com/us/common/sitemap/, samsung.com/us/mobile/compare/ (404), and the UK site via a text-extraction proxy (blocked 403). All direct fetches of the real catalog grid return only the top JS-rendered promo banner (5-10 headline models) and never the full A/M/XCover catalog, which loads via client-side JS/API calls WebFetch cannot execute. Could not verify a complete current lineup from Samsung's own page.",
+    "phones|OPPO": "Fetched oppo.com/uk/smartphones/ (OPPO's own UK catalog page). It returned ~23 model tiles but every single one was marked 'Out of Stock', and the mix includes clearly multi-year-old models (A57, A77 5G, A96, A38, A17) alongside brand-new ones (Find X9) - looks like an unfiltered historical archive page rather than a true current-for-sale lineup, so the count could not be trusted.",
+    "phones|realme": "realme has exited the UK market (confirmed via press coverage) and does not officially sell in the US either; found no evidence of official sales in GB, IE, CA, or MX. Fetched realme.com/global/ which showed ~43 models across GT/P/C/Note/Narzo/number series, but that is realme's global nav (likely spanning markets like India/SEA/EU) not a market SLATE sells phones in, so per the task's market constraint this could not be counted.",
+    "phones|Honor": "Fetched honor.com/global/phones/ (redirected from hihonor.com). It returned 50+ model tiles spanning Magic3 (2021) through Magic8 Pro / HONOR 600 series (2026) all mixed together with no in-stock/current indicator - looks like an unfiltered historical archive of every model ever released globally rather than a current-for-sale lineup for one market, so the count could not be trusted.",
+    "phones|BLU": "bluproducts.com homepage banner only showed 3 models (G96, Bold N4, G75); the site's own /sitemap/ page lists dozens of models back to 2019 (C5/C6/G5/G6/J-series/View-series) explicitly flagged by the page itself as containing 'extensive legacy device listings'; and the /android-phones catalog page's product tiles did not render names via automated fetch (image alt text empty). Could not get a trustworthy current-only count from BLU's own site.",
+    "phones|Nokia": "HMD (Nokia's licensee) page hmd.com/en_int/nokia-smartphones-and-tablets lists 16 phone models, but independent reporting confirms the Nokia-HMD brand license expired around March 2026 and Nokia-branded phones have 'almost completely disappeared' from HMD's site, with most of the models shown (Nokia 5.4, 8.3, G10/G20/G21, C20 etc.) being discontinued 2020-2023 devices still left on the page. Could not get a reliable current-for-sale count.",
+    "phones|Wiko": "Fetched world.wikomobile.com/f-wiko-smartphones which listed 54 model tiles, but many (VIEW2, JERRY3, LENNY4 PLUS, SUNNY2 PLUS, TOMMY3, KENNY, ROBBY2) are clearly discontinued devices from ~2017-2019 mixed in with current ones with no way to distinguish currently-sold vs legacy on the page, so the count could not be trusted.",
+    "phones|Tecno": "tecno-mobile.com's regional phone listing pages (e.g. /ae/phones/product-list/) load their product grid dynamically via JS (page source showed unrendered template placeholders like '{{item.title}}'); only a non-exhaustive 'recommended' set of 4 models (SPARK 50 5G, CAMON 50 Ultra 5G, POVA Curve 2 5G, POVA Slim 5G) was visible, not the full current lineup.",
+    "phones|Teracube": "teracube.com is now a parked/for-sale domain (redirects to a GoDaddy 'this domain is for sale' page), so no current official lineup page could be found; Teracube phones are also sold via Murena's shop but that is Murena's own storefront, not Teracube's.",
+    "phones|IIIF150": "Fetched iiif150.com/collections/all - all 12 listed phone models (ACTION 15, ACTION A5Pro, Air2 Ultra 5G, Air3, Air3S, B2 Pro, B2 Ultra 2026, B3 4G, B3 Pro 5G, B3C 4G, Raptor 4G Thermal, Raptor 5G Thermal) were simultaneously marked 'Sold out', suggesting the storefront itself may be inactive rather than each model being individually discontinued; could not get a trustworthy current-for-sale count."
+  }
+}

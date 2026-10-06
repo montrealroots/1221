@@ -1190,7 +1190,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Phones
 
-53 brands, 1 deep enough, 52 short.
+53 brands, 2 deep enough, 51 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -1198,55 +1198,55 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Google | 10 | Short: 90 to go |
 | Apple | 7 | Whole range in US (7) |
 | Motorola | 6 | Short: 6 of its 9 in US to go |
-| Cubot | 4 | Short: 96 to go |
-| OnePlus | 4 | Short: 96 to go |
+| Cubot | 4 | Short: 5 of its 5 in US to go |
+| OnePlus | 4 | Short: 3 of its 5 in GB to go |
 | OPPO | 4 | Short: 96 to go |
-| Alcatel | 3 | Short: 97 to go |
-| Doro | 3 | Short: 97 to go |
-| Hammer | 3 | Short: 97 to go |
-| Nothing | 3 | Short: 97 to go |
-| Oukitel | 3 | Short: 97 to go |
-| Unihertz | 3 | Short: 97 to go |
-| vivo | 3 | Short: 97 to go |
-| Volla | 3 | Short: 97 to go |
-| Blackview | 2 | Short: 98 to go |
-| CMF by Nothing | 2 | Short: 98 to go |
-| Gigaset | 2 | Short: 98 to go |
+| Alcatel | 3 | Short: 3 of its 6 in US to go |
+| Doro | 3 | Short: 8 of its 11 in GB to go |
+| Hammer | 3 | Short: 20 of its 20 in IE to go |
+| Nothing | 3 | Short: 5 of its 8 in GB to go |
+| Oukitel | 3 | Short: 9 of its 12 in US to go |
+| Unihertz | 3 | Short: 9 of its 12 in US to go |
+| vivo | 3 | Short: 13 of its 15 in MX to go |
+| Volla | 3 | Short: 3 of its 3 in GB to go |
+| Blackview | 2 | Short: 7 of its 9 in US to go |
+| CMF by Nothing | 2 | Whole range in GB (2) |
+| Gigaset | 2 | Short: 12 of its 12 in GB to go |
 | Honor | 2 | Short: 98 to go |
-| Huawei | 2 | Short: 98 to go |
-| Infinix | 2 | Short: 98 to go |
-| Lively | 2 | Short: 98 to go |
-| POCO | 2 | Short: 98 to go |
+| Huawei | 2 | Short: 19 of its 21 in GB to go |
+| Infinix | 2 | Short: 18 of its 18 in GB to go |
+| Lively | 2 | Short: 3 of its 5 in US to go |
+| POCO | 2 | Short: 10 of its 12 in GB to go |
 | realme | 2 | Short: 98 to go |
-| Redmi | 2 | Short: 98 to go |
-| Sony | 2 | Short: 98 to go |
-| TCL | 2 | Short: 98 to go |
-| AGM | 1 | Short: 99 to go |
-| Artfone | 1 | Short: 99 to go |
-| ASUS | 1 | Short: 99 to go |
+| Redmi | 2 | Short: 10 of its 12 in GB to go |
+| Sony | 2 | Short: 2 of its 4 in GB to go |
+| TCL | 2 | Short: 9 of its 10 in US to go |
+| AGM | 1 | Short: 8 of its 9 in US to go |
+| Artfone | 1 | Short: 7 of its 8 in US to go |
+| ASUS | 1 | Short: 5 of its 6 in US to go |
 | BLU | 1 | Short: 99 to go |
-| Consumer Cellular | 1 | Short: 99 to go |
-| Doogee | 1 | Short: 99 to go |
-| Fairphone | 1 | Short: 99 to go |
-| FOSSIBOT | 1 | Short: 99 to go |
-| HMD | 1 | Short: 99 to go |
-| HOTWAV | 1 | Short: 99 to go |
+| Consumer Cellular | 1 | Short: 1 of its 2 in US to go |
+| Doogee | 1 | Short: 14 of its 15 in US to go |
+| Fairphone | 1 | Short: 1 of its 2 in GB to go |
+| FOSSIBOT | 1 | Short: 7 of its 8 in US to go |
+| HMD | 1 | Short: 19 of its 20 in GB to go |
+| HOTWAV | 1 | Short: 35 of its 36 in US to go |
 | IIIF150 | 1 | Short: 99 to go |
-| Kyocera | 1 | Short: 99 to go |
-| Murena | 1 | Short: 99 to go |
+| Kyocera | 1 | Short: 1 of its 2 in US to go |
+| Murena | 1 | Short: 5 of its 6 in US to go |
 | Nokia | 1 | Short: 99 to go |
-| Nubia | 1 | Short: 99 to go |
-| Orbic | 1 | Short: 99 to go |
-| OSCAL | 1 | Short: 99 to go |
-| Punkt | 1 | Short: 99 to go |
-| Sonim | 1 | Short: 99 to go |
+| Nubia | 1 | Short: 5 of its 6 in US to go |
+| Orbic | 1 | Short: 10 of its 11 in US to go |
+| OSCAL | 1 | Short: 28 of its 29 in US to go |
+| Punkt | 1 | Short: 2 of its 3 in GB to go |
+| Sonim | 1 | Short: 8 of its 9 in US to go |
 | Tecno | 1 | Short: 99 to go |
 | Teracube | 1 | Short: 99 to go |
-| Ulefone | 1 | Short: 99 to go |
-| UMIDIGI | 1 | Short: 99 to go |
+| Ulefone | 1 | Short: 55 of its 56 in US to go |
+| UMIDIGI | 1 | Short: 33 of its 34 in US to go |
 | Wiko | 1 | Short: 99 to go |
-| Xiaomi | 1 | Short: 99 to go |
-| ZTE | 1 | Short: 99 to go |
+| Xiaomi | 1 | Short: 4 of its 5 in GB to go |
+| ZTE | 1 | Short: 5 of its 6 in US to go |
 
 ## Electronics: Game Consoles
 
@@ -1323,59 +1323,59 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Televisions
 
-51 brands, 1 deep enough, 50 short.
+51 brands, 4 deep enough, 47 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | TCL | 14 | Whole range in US (14) |
-| Cello | 8 | Short: 92 to go |
+| Cello | 8 | Whole range in GB (7) |
 | Sony | 8 | Short: 92 to go |
 | Samsung | 7 | Short: 93 to go |
 | Hisense | 6 | Short: 94 to go |
 | Bush | 5 | Short: 95 to go |
-| Ghia | 4 | Short: 96 to go |
+| Ghia | 4 | Short: 1 of its 5 in MX to go |
 | LG | 4 | Short: 96 to go |
-| Bang & Olufsen | 3 | Short: 97 to go |
-| Element | 3 | Short: 97 to go |
-| Haier | 3 | Short: 97 to go |
+| Bang & Olufsen | 3 | Whole range in US (3) |
+| Element | 3 | Short: 8 of its 11 in US to go |
+| Haier | 3 | Whole range in GB (3) |
 | Loewe | 3 | Short: 97 to go |
 | Magnavox | 3 | Short: 97 to go |
-| Majestic | 3 | Short: 97 to go |
+| Majestic | 3 | Short: 3 of its 3 in US to go |
 | RCA | 3 | Short: 97 to go |
-| Sceptre | 3 | Short: 97 to go |
+| Sceptre | 3 | Short: 1 of its 4 in US to go |
 | Toshiba | 3 | Short: 97 to go |
 | Akai | 2 | Short: 98 to go |
-| Amazon | 2 | Short: 98 to go |
-| Avtex | 2 | Short: 98 to go |
+| Amazon | 2 | Short: 2 of its 3 in US to go |
+| Avtex | 2 | Short: 2 of its 4 in GB to go |
 | Finlux | 2 | Short: 98 to go |
 | Hitachi | 2 | Short: 98 to go |
 | Hyundai | 2 | Short: 98 to go |
 | Polaroid | 2 | Short: 98 to go |
 | Roku | 2 | Short: 98 to go |
 | Seiki | 2 | Short: 98 to go |
-| Sharp | 2 | Short: 98 to go |
-| Skyworth | 2 | Short: 98 to go |
-| Vizio | 2 | Short: 98 to go |
+| Sharp | 2 | Short: 5 of its 5 in US to go |
+| Skyworth | 2 | Short: 18 of its 20 in US to go |
+| Vizio | 2 | Short: 2 of its 4 in US to go |
 | Xiaomi | 2 | Short: 98 to go |
-| Atyme | 1 | Short: 99 to go |
+| Atyme | 1 | Short: 8 of its 9 in US to go |
 | Caixun | 1 | Short: 99 to go |
-| Daewoo | 1 | Short: 99 to go |
-| Emerson | 1 | Short: 99 to go |
+| Daewoo | 1 | Short: 15 of its 16 in GB to go |
+| Emerson | 1 | Short: 10 of its 11 in US to go |
 | Funai | 1 | Short: 99 to go |
 | Furrion | 1 | Short: 99 to go |
 | Grundig | 1 | Short: 99 to go |
-| iFFALCON | 1 | Short: 99 to go |
-| JVC | 1 | Short: 99 to go |
-| Konka | 1 | Short: 99 to go |
+| iFFALCON | 1 | Short: 4 of its 4 in GB to go |
+| JVC | 1 | Short: 3 of its 3 in US to go |
+| Konka | 1 | Short: 2 of its 3 in US to go |
 | Logik | 1 | Short: 99 to go |
 | Metz | 1 | Short: 99 to go |
 | Naxa | 1 | Short: 99 to go |
 | Onn | 1 | Short: 99 to go |
 | Proscan | 1 | Short: 99 to go |
-| Pyle | 1 | Short: 99 to go |
+| Pyle | 1 | Short: 1 of its 2 in US to go |
 | Sansui | 1 | Short: 99 to go |
 | Sanyo | 1 | Short: 99 to go |
-| Supersonic | 1 | Short: 99 to go |
+| Supersonic | 1 | Short: 4 of its 5 in US to go |
 | Telefunken | 1 | Short: 99 to go |
 | Thomson | 1 | Short: 99 to go |
 
@@ -1529,65 +1529,65 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Home: Mattresses And Beds
 
-55 brands, 4 deep enough, 51 short.
+55 brands, 7 deep enough, 48 short.
 
 | Brand | Products | Status |
 |---|---|---|
-| IKEA | 29 | Short: 71 to go |
+| IKEA | 29 | Short: 3 of its 18 in US to go |
 | Purple | 11 | Whole range in US (11) |
 | Saatva | 11 | Short: 1 of its 12 in US to go |
 | Nectar | 9 | Whole range in US (9) |
 | Casper | 8 | Whole range in US (7) |
 | Simba | 6 | Whole range in GB (6) |
-| Emma | 4 | Short: 96 to go |
+| Emma | 4 | Short: 3 of its 6 in GB to go |
 | Helix | 4 | Short: 96 to go |
 | Hypnos | 4 | Short: 96 to go |
 | Silentnight | 4 | Short: 96 to go |
-| Tuft & Needle | 4 | Short: 96 to go |
-| Amerisleep | 3 | Short: 97 to go |
+| Tuft & Needle | 4 | Whole range in US (4) |
+| Amerisleep | 3 | Short: 4 of its 7 in US to go |
 | Dormeo | 3 | Short: 97 to go |
-| Endy | 3 | Short: 97 to go |
-| Leesa | 3 | Short: 97 to go |
-| Restonic | 3 | Short: 97 to go |
+| Endy | 3 | Whole range in CA (3) |
+| Leesa | 3 | Short: 14 of its 17 in US to go |
+| Restonic | 3 | Short: 6 of its 6 in US to go |
 | Sealy | 3 | Short: 97 to go |
-| Sognare | 3 | Short: 97 to go |
-| Spring Air | 3 | Short: 97 to go |
-| King Koil | 2 | Short: 98 to go |
+| Sognare | 3 | Short: 7 of its 7 in GB to go |
+| Spring Air | 3 | Short: 14 of its 14 in US to go |
+| King Koil | 2 | Short: 11 of its 11 in US to go |
 | Serta | 2 | Short: 98 to go |
 | América | 1 | Short: 99 to go |
-| Avocado | 1 | Short: 99 to go |
-| Bear | 1 | Short: 99 to go |
-| Big Fig | 1 | Short: 99 to go |
-| Birch | 1 | Short: 99 to go |
-| Brooklyn Bedding | 1 | Short: 99 to go |
-| Douglas | 1 | Short: 99 to go |
-| DreamCloud | 1 | Short: 99 to go |
-| Dunlopillo | 1 | Short: 99 to go |
-| eve | 1 | Short: 99 to go |
-| Eve | 1 | Short: 99 to go |
+| Avocado | 1 | Short: 10 of its 11 in US to go |
+| Bear | 1 | Short: 8 of its 9 in US to go |
+| Big Fig | 1 | Short: 2 of its 3 in US to go |
+| Birch | 1 | Short: 4 of its 5 in US to go |
+| Brooklyn Bedding | 1 | Short: 19 of its 20 in US to go |
+| Douglas | 1 | Short: 5 of its 6 in CA to go |
+| DreamCloud | 1 | Short: 8 of its 9 in US to go |
+| Dunlopillo | 1 | Short: 8 of its 9 in GB to go |
+| eve | 1 | Short: 5 of its 6 in GB to go |
+| Eve | 1 | Short: 5 of its 6 in GB to go |
 | Harrison Spinks | 1 | Short: 99 to go |
 | Hush | 1 | Short: 99 to go |
 | Kaymed | 1 | Short: 99 to go |
-| Lucid | 1 | Short: 99 to go |
-| Luuna | 1 | Short: 99 to go |
-| Molecule | 1 | Short: 99 to go |
-| Nest Bedding | 1 | Short: 99 to go |
-| Nolah | 1 | Short: 99 to go |
-| Novosbed | 1 | Short: 99 to go |
+| Lucid | 1 | Short: 2 of its 3 in US to go |
+| Luuna | 1 | Short: 5 of its 6 in MX to go |
+| Molecule | 1 | Short: 19 of its 20 in US to go |
+| Nest Bedding | 1 | Short: 4 of its 5 in US to go |
+| Nolah | 1 | Short: 6 of its 7 in US to go |
+| Novosbed | 1 | Whole range in CA (1) |
 | Odearest | 1 | Short: 99 to go |
-| Origin | 1 | Short: 99 to go |
-| Otty | 1 | Short: 99 to go |
-| PlushBeds | 1 | Short: 99 to go |
-| Polysleep | 1 | Short: 99 to go |
+| Origin | 1 | Short: 2 of its 2 in US to go |
+| Otty | 1 | Short: 8 of its 9 in GB to go |
+| PlushBeds | 1 | Short: 14 of its 15 in US to go |
+| Polysleep | 1 | Short: 7 of its 8 in CA to go |
 | Respa | 1 | Short: 99 to go |
 | Rest Assured | 1 | Short: 99 to go |
-| Silk & Snow | 1 | Short: 99 to go |
-| Sleep Number | 1 | Short: 99 to go |
-| Sleepeezee | 1 | Short: 99 to go |
-| Tempur-Pedic | 1 | Short: 99 to go |
-| Vispring | 1 | Short: 99 to go |
-| WinkBeds | 1 | Short: 99 to go |
-| Zinus | 1 | Short: 99 to go |
+| Silk & Snow | 1 | Short: 2 of its 3 in CA to go |
+| Sleep Number | 1 | Short: 9 of its 10 in US to go |
+| Sleepeezee | 1 | Short: 14 of its 15 in GB to go |
+| Tempur-Pedic | 1 | Short: 3 of its 4 in US to go |
+| Vispring | 1 | Short: 13 of its 14 in GB to go |
+| WinkBeds | 1 | Short: 2 of its 3 in US to go |
+| Zinus | 1 | Short: 5 of its 6 in US to go |
 
 ## Home: Bedding And Towels
 
@@ -2729,53 +2729,53 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Continental | 17 | Short: 33 of its 44 in US to go |
 | Goodyear | 9 | Short: 91 to go |
 | Bridgestone | 8 | Short: 92 to go |
-| Hankook | 8 | Short: 92 to go |
+| Hankook | 8 | Short: 44 of its 47 in US to go |
 | Toyo | 6 | Short: 94 to go |
-| Kumho | 5 | Short: 95 to go |
-| Dunlop | 4 | Short: 96 to go |
-| BFGoodrich | 3 | Short: 97 to go |
+| Kumho | 5 | Short: 19 of its 21 in US to go |
+| Dunlop | 4 | Short: 2 of its 3 in US to go |
+| BFGoodrich | 3 | Short: 13 of its 15 in US to go |
 | Cooper | 3 | Short: 97 to go |
 | Firestone | 3 | Short: 97 to go |
-| Maxxis | 3 | Short: 97 to go |
-| Vredestein | 3 | Short: 97 to go |
+| Maxxis | 3 | Short: 24 of its 25 in US to go |
+| Vredestein | 3 | Short: 12 of its 13 in US to go |
 | Falken | 2 | Short: 98 to go |
 | General Tire | 2 | Short: 36 of its 38 in US to go |
 | Linglong | 2 | Short: 98 to go |
 | Nexen | 2 | Short: 30 of its 31 in US to go |
-| Nokian | 2 | Short: 98 to go |
-| Uniroyal | 2 | Short: 98 to go |
+| Nokian | 2 | Short: 16 of its 18 in US to go |
+| Uniroyal | 2 | Short: 3 of its 4 in US to go |
 | Accelera | 1 | Short: 99 to go |
-| Achilles | 1 | Short: 99 to go |
-| Arroyo | 1 | Short: 99 to go |
+| Achilles | 1 | Short: 4 of its 5 in US to go |
+| Arroyo | 1 | Short: 16 of its 17 in US to go |
 | Barum | 1 | Short: 99 to go |
-| Delinte | 1 | Short: 99 to go |
-| Euzkadi | 1 | Short: 99 to go |
-| Federal | 1 | Short: 99 to go |
-| Fortune | 1 | Short: 99 to go |
-| Fulda | 1 | Short: 99 to go |
-| General | 1 | Short: 99 to go |
-| GT Radial | 1 | Short: 99 to go |
-| Hercules | 1 | Short: 99 to go |
-| Ironman | 1 | Short: 99 to go |
+| Delinte | 1 | Short: 17 of its 18 in US to go |
+| Euzkadi | 1 | Short: 7 of its 8 in MX to go |
+| Federal | 1 | Short: 31 of its 32 in US to go |
+| Fortune | 1 | Short: 9 of its 10 in US to go |
+| Fulda | 1 | Short: 16 of its 17 in GB to go |
+| General | 1 | Short: 15 of its 15 in US to go |
+| GT Radial | 1 | Short: 23 of its 24 in US to go |
+| Hercules | 1 | Short: 23 of its 24 in US to go |
+| Ironman | 1 | Short: 20 of its 21 in US to go |
 | Joyroad | 1 | Short: 99 to go |
 | Kelly | 1 | Short: 99 to go |
 | Kenda | 1 | Short: 99 to go |
-| Kleber | 1 | Short: 99 to go |
+| Kleber | 1 | Short: 9 of its 10 in GB to go |
 | Landsail | 1 | Short: 99 to go |
-| Laufenn | 1 | Short: 99 to go |
-| Lexani | 1 | Short: 99 to go |
-| Mastercraft | 1 | Short: 99 to go |
+| Laufenn | 1 | Short: 7 of its 8 in US to go |
+| Lexani | 1 | Short: 8 of its 9 in US to go |
+| Mastercraft | 1 | Short: 14 of its 15 in US to go |
 | Matador | 1 | Short: 99 to go |
-| Milestar | 1 | Short: 99 to go |
-| Nitto | 1 | Short: 99 to go |
-| Ohtsu | 1 | Short: 99 to go |
-| Primewell | 1 | Short: 99 to go |
-| Prinx | 1 | Short: 99 to go |
-| Sailun | 1 | Short: 99 to go |
-| Thunderer | 1 | Short: 99 to go |
-| Tornel | 1 | Short: 99 to go |
-| Triangle | 1 | Short: 99 to go |
-| Westlake | 1 | Short: 99 to go |
+| Milestar | 1 | Short: 18 of its 19 in US to go |
+| Nitto | 1 | Short: 16 of its 17 in US to go |
+| Ohtsu | 1 | Short: 3 of its 4 in US to go |
+| Primewell | 1 | Short: 3 of its 4 in US to go |
+| Prinx | 1 | Short: 9 of its 10 in US to go |
+| Sailun | 1 | Short: 22 of its 22 in CA to go |
+| Thunderer | 1 | Short: 9 of its 10 in US to go |
+| Tornel | 1 | Short: 10 of its 11 in MX to go |
+| Triangle | 1 | Short: 32 of its 32 in CA to go |
+| Westlake | 1 | Short: 5 of its 6 in US to go |
 | Yokohama | 1 | Short: 99 to go |
 
 ## Vehicles: Car Audio
