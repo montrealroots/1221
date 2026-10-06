@@ -88,6 +88,7 @@ import { MS_DAY, dateKey, formatDate, startOfDay, zonedParts, type Instant } fro
 import { usBankHoliday } from '../content/usholidays';
 import { CLUBS } from '../content/clubs';
 import { DROP_INS } from '../content/dropins';
+import { gymsIn } from './gyms';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
@@ -1100,7 +1101,7 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 }
 
 /** The projects a home can take now, and the ones it can't, with why. */
-export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string; instead?: string[] }[] {
+export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string; instead?: Alternative[] }[] {
   // Every project, those this kind of home doesn't take shown refused with the kinds that do (from 2026-10-02; until then they were left off unseen).
   const country = CITIES.get(owned.cityId)?.countryId ?? 'us';
   const kind = (t: HomeType) => typeLabel(t, country).toLowerCase();
@@ -1122,19 +1123,29 @@ export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): 
  * drop-in class, a spare room's lodger for a cottage or a suite. Each is
  * something SLATE keeps in that town, so what's offered can be done.
  */
-const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string }[] = [
-  { projects: /^(pool|hot-tub)$/, names: /swim/i },
+const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string; gyms?: 'pool' | 'any' }[] = [
+  // A pool's swimming, or a gym that has one (from 2026-10-06).
+  { projects: /^(pool|hot-tub)$/, names: /swim/i, gyms: 'pool' },
+  // A home gym's training at the town's gyms (from 2026-10-06; until then a refused home gym offered nothing).
+  { projects: /^home-gym$/, names: /$^/, gyms: 'any' },
   { projects: /^(tennis-|pickleball)/, names: /tennis|pickleball/i },
   { projects: /^(basketball-|pitch-)/, names: /soccer|football|fútbol|five-a-side|kickball|netball/i },
   { projects: /^dance-studio$/, names: /dance/i },
   { projects: /^(adu|suite|suite-upscale|bath-add)/, names: /$^/, also: 'Take a lodger into a spare room you have, at the town’s rent for one.' },
 ];
-export function projectAlternatives(cityId: string, projectId: string): string[] {
+/**
+ * An alternative, with what to do it by (from 2026-10-06; until then words with no button): a club to join, a drop-in
+ * class to take, a gym to join, or a lodger to take, where the home's work is refused.
+ */
+export interface Alternative { label: string; clubId?: string; classId?: string; gymId?: string; lodger?: true }
+
+export function projectAlternatives(cityId: string, projectId: string): Alternative[] {
   const rule = INSTEAD.find((r) => r.projects.test(projectId));
   if (!rule) return [];
-  const clubs = CLUBS.filter((c) => c.cityId === cityId && rule.names.test(`${c.name} ${c.place}`)).map((c) => `${c.name} at ${c.place}`);
-  const classes = DROP_INS.filter((d) => d.cityId === cityId && rule.names.test(`${d.kind} ${d.label}`)).map((d) => `${d.label} at ${d.studio}`);
-  return [...clubs, ...classes, ...(rule.also ? [rule.also] : [])];
+  const clubs = CLUBS.filter((c) => c.cityId === cityId && rule.names.test(`${c.name} ${c.place}`)).map((c) => ({ label: `${c.name} at ${c.place}`, clubId: c.id }));
+  const classes = DROP_INS.filter((d) => d.cityId === cityId && rule.names.test(`${d.kind} ${d.label}`)).map((d) => ({ label: `${d.label} at ${d.studio}`, classId: d.id }));
+  const gyms = rule.gyms ? gymsIn(cityId).filter((g) => rule.gyms === 'any' || g.pool).map((g) => ({ label: `${g.name}${g.pool ? ', with a pool' : ''}`, gymId: g.id })) : [];
+  return [...clubs, ...classes, ...gyms, ...(rule.also ? [{ label: rule.also, lodger: true as const }] : [])];
 }
 
 /** Work this long, where they live, weighs on them every day of it: SLATE's estimate. */
