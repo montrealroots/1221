@@ -708,6 +708,15 @@ export class Simulation {
   // the only thing it wrote, every night, without end, and its timeline had no caller.
 
   notify(spec: { category: string; title: string; body: string; importance?: number; route?: string; refType?: string; refId?: Id }): void {
+    // Said again word for word while the last is unread (from 2026-10-06): that one is brought up to now, not said twice.
+    // A played life to 89 had one towel notice as 354 of its last 500.
+    const notes = this.universe.notifications;
+    const same = notes.findIndex((n) => !n.read && n.title === spec.title && n.body === spec.body && n.category === spec.category);
+    if (same >= 0) {
+      const [again] = notes.splice(same, 1);
+      notes.push({ ...again!, at: this.now });
+      return;
+    }
     this.universe.notifications.push({
       id: this.nextId('notice'),
       saveId: this.universe.meta.id,

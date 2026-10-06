@@ -213,10 +213,17 @@ export function fitRefusal(person: Person, productId: string): string | undefine
   const spare = spareBulbs(person).find((x) => x.product.id === productId);
   if (!spare) return 'You have none of those spare.';
   const lights = lightsOf(person);
-  const watts = Number(spare.product.attrs.watts);
-  if (!lights?.sockets.some((s) => !s.built && s.socket === spare.product.attrs.socket && (s.maxWatts === undefined || watts <= s.maxWatts) && s.bulb !== productId)) return 'No socket here takes it.';
+  if (!lights?.sockets.some((s) => takes(s, spare.product, productId))) return 'No socket here takes it.';
   return undefined;
 }
+
+/**
+ * Whether a socket takes a kind of bulb: its own socket, within its watts, and not lit by the same kind already. A dark
+ * socket keeps the id of the bulb that died in it, and until 2026-10-06 that refused the same kind going back in, which
+ * threw in the day's restock and failed the whole New Day (found in a played life at 89).
+ */
+const takes = (s: Socket, product: CatalogProduct, productId: string): boolean =>
+  !s.built && s.socket === product.attrs.socket && (s.maxWatts === undefined || Number(product.attrs.watts) <= s.maxWatts) && (s.watts === undefined || s.bulb !== productId);
 
 /** Fits spare bulbs of a kind: into the dark sockets that take it first, then the ones drawing most; how many went in. */
 export function fitBulbs(person: Person, productId: string, onlyDark = false): number {
@@ -224,7 +231,7 @@ export function fitBulbs(person: Person, productId: string, onlyDark = false): n
   if (no) throw new CommandError(no);
   const spare = spareBulbs(person).find((x) => x.product.id === productId)!;
   const watts = Number(spare.product.attrs.watts);
-  const into = lightsOf(person)!.sockets.filter((s) => !s.built && s.socket === spare.product.attrs.socket && (s.maxWatts === undefined || watts <= s.maxWatts) && s.bulb !== productId && (!onlyDark || s.watts === undefined))
+  const into = lightsOf(person)!.sockets.filter((s) => takes(s, spare.product, productId) && (!onlyDark || s.watts === undefined))
     .sort((a, b) => (a.watts === undefined ? -1 : 0) - (b.watts === undefined ? -1 : 0) || (b.watts ?? 0) - (a.watts ?? 0));
   let fitted = 0;
   for (const s of into) {
@@ -243,10 +250,11 @@ export function replaceBulbs(sim: Simulation, person: Person): number {
   for (const socket of [...new Set(darkSockets(person).map((s) => s.socket))]) {
     for (const spare of spareBulbs(person).filter((x) => x.product.attrs.socket === socket)) if (!fitRefusal(person, spare.product.id)) fitted += fitBulbs(person, spare.product.id, true);
     if (!darkSockets(person).some((s) => s.socket === socket)) continue;
-    const cheapest = bulbCatalog(sim, person).find((r) => r.product.attrs.socket === socket && !r.product.attrs.smart && !bulbRefusal(person, r.offer.id));
+    // The cheapest a dark socket of this kind takes, its watts within the socket's.
+    const cheapest = bulbCatalog(sim, person).find((r) => !r.product.attrs.smart && !bulbRefusal(person, r.offer.id) && darkSockets(person).some((s) => takes(s, r.product, r.product.id)));
     if (!cheapest) continue;
     try { buyBulbs(sim, person, cheapest.offer.id); } catch { continue; }
-    fitted += fitBulbs(person, cheapest.product.id, true);
+    if (!fitRefusal(person, cheapest.product.id)) fitted += fitBulbs(person, cheapest.product.id, true);
   }
   return fitted;
 }

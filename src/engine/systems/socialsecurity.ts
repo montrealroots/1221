@@ -139,7 +139,7 @@ export function registerSocialSecurity(sim: Simulation): void {
     if (due > 0) {
       const account = payeeAccount(s, person);
       s.post({ memo: 'Social Security, the month', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'Social Security').id, amount: -due }] });
-      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Social Security Paid', body: `${formatMoney(due, cur)} for the month, since ${formatDate(ss.from, s.zone)}.`, importance: 25, route: '/workspace/bank' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Social Security Paid', body: `${formatMoney(due, cur)} paid ${formatDate(s.now, s.zone)}, as every month since ${formatDate(ss.from, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     }
     s.schedule({ at: monthOn(item.at), kind: SOCIAL_SECURITY_KIND, label: 'Social Security', category: 'system', priority: 20, payload: { personId: person.id } });
   });
