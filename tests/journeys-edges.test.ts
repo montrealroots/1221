@@ -6,6 +6,7 @@
  * or held twice.
  */
 import { describe, expect, it } from 'vitest';
+import { breaches } from '@/engine/core/invariants';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
@@ -39,6 +40,8 @@ describe('a business found closed on the way', () => {
     expect(runErrands(sim, { by: 'foot', stops: groceries() })).toEqual({ done: 1 });
     expect(waitingShopping(sim.player).length + bags(sim) - before).toBeGreaterThan(0);
     expect(memos(sim, /Fresh Grocer/)).toBe(1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -62,6 +65,8 @@ describe('a journey with too little money', () => {
     for (const a of Object.values(sim.universe.accounts)) if (kept.has(a.id)) a.balance = kept.get(a.id)!;
     expect(runErrands(sim, { by: 'foot', stops: groceries() }).done).toBe(1);
     expect(memos(sim, /Fresh Grocer/)).toBe(1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -90,5 +95,7 @@ describe('a change of town with the shopping waiting', () => {
     expect(put.ok, put.error).toBe(true);
     expect(waitingShopping(sim.player)).toHaveLength(0);
     expect(memos(sim, /Fresh Grocer/)).toBe(1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
