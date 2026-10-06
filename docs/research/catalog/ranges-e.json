@@ -1,0 +1,179 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "motorcycles|Moto Morini": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.motomoriniusa.com/",
+      "counted": "X-Cape 1200, X-Cape 700, X-Cape 650, Vettore 450, Calibro 700, Calibro 700 Bagger, SCR, STR, STR Sport",
+      "market": "US"
+    },
+    "motorcycles|QJMOTOR": {
+      "range": 26,
+      "meetsHundred": false,
+      "url": "https://qjmotor.co.uk/new-bikes",
+      "counted": "SRK 125 R, SRV 125, TRX 125, COV 125 X, COV 125 S, SRK 125 E, SRK 125 J, SRK 125 S, SRT 600 S, SVT 650, SVT 650 X, SRT 900 S, SRT 900 SX, SRT 450 RX, SRT 125 DX, SRT 600 SX, SRV 600 V4, SRV 600 V2, SRK 800, SRK 900, SRK 921, LTS 50 S, LTS 125 S, ATR 125, SRK 800 RR, SRK 921 RR",
+      "market": "GB"
+    },
+    "motorcycles|Islo": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.islo.com.mx/",
+      "counted": "Rabbit Rush, Trip 150, Freedom, Mutant 250R, Blackwing, Montana ADV250",
+      "market": "MX"
+    },
+    "motorcycles|GasGas": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.gasgas.com/en-us/models/motorcycles.html",
+      "counted": "MC 125, MC 85 19/16, MC 85 17/14, MC 65, MC 50, MC 450F, MC 250F, MC-E 5, MC-E 2, EC 300, EX 300, TXT GP 250, TXT GP 300, TXT RACING 250, TXT RACING 300",
+      "market": "US"
+    },
+    "motorcycles|Kove": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.kovemotousa.com/models-current",
+      "counted": "800X Rally, 800X Pro, 450 Rally, 450 Rally Street Legal, MX450, MX250",
+      "market": "US"
+    },
+    "motorcycles|ItalJet": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://italjet.com/",
+      "counted": "Dragster 125-300, Dragster 459, Roadster 400, Dragster 700, Dragster 700 Twin",
+      "market": "US"
+    },
+    "rvs|Chausson": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.motorhomes-chausson.co.uk/ranges/",
+      "counted": "V594, S614, S697, S514, X640, X550, 798, 660, 640, 650, 630, 777, 788, 627, 720, C727, C656, C514",
+      "market": "GB"
+    },
+    "rvs|East To West": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.easttowestrv.com/motorhomes",
+      "counted": "College Avenue, Alita, Bravado, Entrada, Entrada M-Class",
+      "market": "US"
+    },
+    "rvs|Leisure Travel Vans": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://leisurevans.com/products/",
+      "counted": "Unity, Wonder",
+      "market": "US"
+    },
+    "rvs|Volkswagen": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.volkswagen-vans.co.uk/en/california-world/california-camper-van-range.html",
+      "counted": "California, Grand California (Beach/Coast/Ocean trims and 600/680 length variants collapsed into each base nameplate)",
+      "market": "GB"
+    },
+    "rvs|Weinsberg": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://weinsberg.com/en-uk/motorhomes/",
+      "counted": "CaraCompact, CaraSuite, CaraHome, CaraCore, Competence (EDITION [PEPPER]/[SPICY] trims collapsed into base nameplates)",
+      "market": "GB"
+    },
+    "bicycles|Trek": {
+      "range": 237,
+      "meetsHundred": true,
+      "url": "https://www.trekbikes.com/us/en_US/bikes/c/B100/",
+      "counted": "Page's own filter states 237 Results across Trek's current road, mountain, electric, hybrid, gravel and kids bikes; not itemized name-by-name because of the size of the lineup",
+      "market": "US"
+    },
+    "bicycles|Riese & Müller": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.r-m.de/en-us/bikes/",
+      "counted": "Nevo, Charger, Load, Multitinker, Swing, Carrie, Multicharger, Homage, Delite, Superdelite, UBN, Culture, Packster, Transporter",
+      "market": "US"
+    },
+    "bicycles|MiRider": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://mirider.co.uk/shop/",
+      "counted": "MiRiDER 16, MiRiDER 20, MiRiDER 24 (Single Speed/GB3 three-speed gearbox drivetrain variants collapsed into each base nameplate)",
+      "market": "GB"
+    },
+    "bicycles|Aventon": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.aventon.com/collections/all-products",
+      "counted": "Current, Aventure, Level, Ramblas, Pace, Abound, Soltera",
+      "market": "US"
+    },
+    "bicycles|Whyte": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://whytebikes.com/collections/bikes",
+      "counted": "909 X, 905, 629, E-160, E-180, ELyte 140, ELyte 150, ELyte EVO, RHeO 1, RHeO 2, RHeO 3, T-140, T-160, Kado (RSX/S/RS spec-tier and ST step-through suffixes collapsed into each base nameplate)",
+      "market": "GB"
+    },
+    "bicycles|Lectric": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://lectricebikes.com/pages/compare-lectric-ebikes",
+      "counted": "XP4, XP Lite2, XP Trike2, XPedition2, XPeak2, XPress2",
+      "market": "US"
+    },
+    "bicycles|Fiido": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://fiido.com/pages/compare",
+      "counted": "D3 Pro, Titan, T2, M1 Pro, Air, C11, C21, C11 Pro, Nomads, Nomads Pro, T3, T3 Max",
+      "market": "US"
+    },
+    "bicycles|Himiway": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://himiwaybike.com/collections/ebikes",
+      "counted": "D5 2.0, D5 Pro, D7, D7 Pro, A7, A7 Pro, C1, C3, C5 (ST step-through, Camo and Zebra colour/size variants collapsed into each base nameplate)",
+      "market": "US"
+    },
+    "bicycles|Electra": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://electra.trekbikes.com/us/en_US/bikes/c/B100/",
+      "counted": "Townie Go!, Townie Go! S, Townie Go! 7D EQ, Ponto Go!, Ponto Go! S, Townie 7D, Townie 7D EQ, Cruiser 7D, Cruiser 1, Sprocket 1 20\" (Step-Thru/Step-Over frame-style variants collapsed into each base nameplate)",
+      "market": "US"
+    }
+  },
+  "notFound": {
+    "rvs|Benimar": "benimar.es/en/new-motorhomes/ lists 7 ranges (Kaleo, Benivan, Sport, Yrteo, Tessoro, Mileo, Amphitryon) but each shows multiple numeric codes (e.g. K625/K640/K663/K695) and it's unclear whether these are distinct models or floorplan/length/chassis variants of each range",
+    "rvs|Roller Team": "rollerteam.com/tipologia/motorhome/ returned HTTP 403 Forbidden; no other readable official full-lineup page found",
+    "rvs|Auto-Sleeper": "auto-sleepers.com's homepage lists ~22 model names but no dedicated complete range/models page was reached to confirm this is the whole current lineup (as opposed to a features showcase)",
+    "rvs|Bürstner": "buerstner.com/gb/models rendered only 5 models (Signature SMT/SFT, Habiton HM, B66 600C, B66 TD690), but other official pages reference further current lines (Lyseo, Elegance, Eliseo C, Campeo C/TD, Lineo C 4x4) not shown on the fetched page, so it isn't the complete lineup",
+    "rvs|Coach House": "coachhouserv.com/models 404'd; only partial model info (Platinum/Platinum II/III/IV, Arriva) available via indirect search, not a fetched official complete-lineup page",
+    "rvs|Dynamax": "dynamaxcorp.com's homepage mentions models only inside customer testimonials (Dynaquest XL, Force HD, Isata 5, Isata 3, Europa), not a dedicated models overview; no complete lineup page was fetched",
+    "rvs|Fleetwood": "fleetwoodrv.com/models/ 404'd; only partial/inconsistent model names available via indirect search (Discovery, Discovery LXE, Frontier GTX, Flair, Bounder, Fortis, Palisade), not a fetched official complete-lineup page",
+    "rvs|Hobby": "hobby-caravan.de's motorhome ranges (PRESTIGE T, MAXIA T, PRESTIGE VAN) were only found via indirect search summary, not a directly fetched enumerable models page, and may be incomplete",
+    "rvs|Murvi": "www.murvi.co.uk failed to resolve (DNS ENOTFOUND); no other readable official full-lineup page found",
+    "rvs|Pilote": "pilote-motorhome.uk/motorhomes/ rendered only 8 models while the brand's own marketing text says it offers 20 low-profile models alone, so the fetched page is a partial subset, not the complete lineup",
+    "rvs|Ram": "Ram does not sell a motorhome under its own brand; it is a chassis supplier (ProMaster/3500) that other RV makers (Thor, Winnebago, Jayco, Regency) build their own-branded motorhomes on",
+    "rvs|Regency RV": "regencyrv.com returned a certificate-expired error; no other readable official full-lineup page found",
+    "rvs|Toyota": "Toyota does not currently manufacture or sell a motorhome under its own brand in any SLATE market; the Toyota-chassis Sunrader/Chinook/Dolphin models found are decades-discontinued",
+    "motorcycles|Beta": "betausa.com/models/ and /motorcycles/ 404'd; /models-1 rendered only category blurbs (RS, RR, RX lines by displacement), not an enumerated model list",
+    "motorcycles|BMW": "bmw-motorrad.ca/en/models/modeloverview.html and bmwmotorcycles.com/.../modeloverview.html and bmw-motorrad.com equivalents all timed out or 404'd; no readable official full-lineup page fetched",
+    "motorcycles|Veloci": "velocimotors.com.mx (official MX site) shows only one representative model per category (9 categories) rather than an enumerated complete lineup",
+    "motorcycles|Voge": "vogeuk.co.uk returned a certificate-expired error; no other readable official full-lineup page found in the time available",
+    "motorcycles|Hero": "heromotocorp.com/en-in.html is Hero's India-market page, not a page for a SLATE market (US/GB/IE/CA/MX); no Hero lineup page for a SLATE market was found",
+    "motorcycles|Fantic": "fantic.com's category pages (moto/enduro etc.) were not directly fetched to a clean enumerable list in this session; only indirect search-summary information was obtained, which the task rules exclude",
+    "motorcycles|Niu": "niu.com/us redirected to global.niu.com (non-market page); shop.niu.com/collections/electric-scooter showed only kick-scooter (KQi) models, not confirmed as NIU's complete US current lineup (seated NQi/MQi-type models not shown on that page)",
+    "motorcycles|Evoke": "evokemotorcycles.com/models and /shop both 404'd; the homepage's own listing was inconsistent/partial (series named without a clear enumerated model count)",
+    "motorcycles|Peugeot": "peugeot-motocycles.com/en returned a connection error (ECONNREFUSED); no readable official lineup page fetched",
+    "motorcycles|SSR": "m.ssrmotorsports.com/model/ mixes motorcycles/scooters/mopeds with UTVs and what appear to be mobility e-bikes/scooters (Sprinter, Neon, EA10, Stride, Sand Viper, Trail Viper) in a way that can't be reliably separated into just the motorcycles-and-scooters category",
+    "bicycles|Canyon": "canyon.com/en-us/lp/bicycle/ shows 79 items total but the fetched content mixes model-year duplicates (e.g. 'Aeroad CFR Di2 (2027 model)' vs '(2026 model)') and spec-tier variants without a clean enumerable full list, so a reliable distinct count can't be read",
+    "bicycles|Giant": "giant-bicycles.com/us/bikes shows category navigation only (no SKU-level list or total count); the road-bikes subcategory alone showed roughly 18 names, so the full across-category total couldn't be reliably read in the time available",
+    "bicycles|Specialized": "specialized.com/us/en/shop/bikes and /us/en/bike-archive both returned HTTP 403 Forbidden; no readable official full-lineup page fetched",
+    "bicycles|Orbea": "only indirect search-summary information was obtained for orbea.com's model families (around 14 names); no official page was directly fetched to confirm completeness",
+    "bicycles|Scott": "only indirect search-summary information was obtained for scott-sports.com's model families; no official page was directly fetched to confirm completeness",
+    "bicycles|Gocycle": "gocycle.com/fullpage-section/models/ and /us/webstore/gocycles/ both 404'd; no other readable official full-lineup page found",
+    "bicycles|Frog": "frogbikes.com/collections/bikes redirects (301) to evanscycles.com, an unrelated retailer, not Frog's own current lineup page",
+    "bicycles|Devinci": "devinci.com's model families were only found via indirect search summary (Chainsaw, Spartan, Troy, Kobain, Minus, E-Spartan, Hatchet, Ewoc, Marshall etc.); no official page was directly fetched to confirm a complete, non-overlapping model count",
+    "bicycles|Juiced": "juicedbikes.com/collections/all rendered only 3 Scrambler variants despite the collection being paginated to at least 55 pages per search results, so this is a small partial subset, not the complete lineup"
+  }
+}

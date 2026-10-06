@@ -1,0 +1,14 @@
+{
+  "read": "2026-10-06",
+  "catalog": {
+    "MX": [
+      { "make": "Chirey", "model": "Tiggo 2 Pro", "basePrice": { "amount": 286900, "currency": "MXN", "modelYear": 2026, "trim": "Desde (base)", "includesTax": true, "url": "https://www.chirey.mx/", "retrieved": "2026-10-06", "sourceType": "primary" }, "body": "suv", "fuel": "petrol", "economy": { "value": null, "unit": "km/L", "url": null, "sourceType": "secondary", "config": null }, "kerbWeightKg": null, "co2gkm": { "value": null }, "notes": null },
+      { "make": "Chirey", "model": "Arrizo 8", "basePrice": { "amount": 569900, "currency": "MXN", "modelYear": 2026, "trim": "Desde (base)", "includesTax": true, "url": "https://www.chirey.mx/", "retrieved": "2026-10-06", "sourceType": "primary" }, "body": "sedan", "fuel": "petrol", "economy": { "value": null, "unit": "km/L", "url": null, "sourceType": "secondary", "config": null }, "kerbWeightKg": null, "co2gkm": { "value": null }, "notes": null },
+      { "make": "Chirey", "model": "Tiggo 7 PHEV CSH", "basePrice": { "amount": 601900, "currency": "MXN", "modelYear": 2026, "trim": "Desde (base)", "includesTax": true, "url": "https://www.chirey.mx/", "retrieved": "2026-10-06", "sourceType": "primary" }, "body": "suv", "fuel": "phev", "economy": { "value": null, "unit": "km/L", "url": null, "sourceType": "secondary", "config": null }, "kerbWeightKg": null, "co2gkm": { "value": null }, "notes": null },
+      { "make": "Chirey", "model": "Tiggo 8 PHEV CSH", "basePrice": { "amount": 739900, "currency": "MXN", "modelYear": 2026, "trim": "Desde (base)", "includesTax": true, "url": "https://www.chirey.mx/", "retrieved": "2026-10-06", "sourceType": "primary" }, "body": "suv", "fuel": "phev", "economy": { "value": null, "unit": "km/L", "url": null, "sourceType": "secondary", "config": null }, "kerbWeightKg": null, "co2gkm": { "value": null }, "notes": null }
+    ]
+  },
+  "economy": [],
+  "notFound": [],
+  "method": "Closing Chirey's CATALOG-DEPTH.md gap (Short: 4 of its 7 in MX) against the whole range counted in docs/research/catalog-ranges.json: Tiggo 2 Pro, Arrizo 8, Tiggo 7 PHEV CSH and Tiggo 8 PHEV CSH, all four read live on chirey.mx's own homepage on 2026-10-06 ('Desde' starting prices, MXN, tax-inclusive as Mexican retail prices are shown). SLATE already held Tiggo 4 Pro, Tiggo 7 Pro and Tiggo 8 Pro; with these four added, Chirey's counted MX range of 7 is complete."
+}

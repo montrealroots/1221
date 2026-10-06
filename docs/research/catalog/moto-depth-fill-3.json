@@ -1,0 +1,627 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing the smallest CATALOG-DEPTH.md motorcycle gaps named for this pass, against each brand's whole range as counted in docs/research/catalog-ranges.json (from docs/research/catalog/ranges-d.json): Buell (US), Mash, Zontes, Sinnis, Lambretta and AJS (GB), and Genuine Scooter Co / Genuine (US, the same genuinescooters.com lineup carried under two separate brand names in CATALOG-DEPTH.md). Prices read live on 2026-10-06 from each maker's own page (buellmotorcycle.com, mashmotors.co.uk, zontes.co.uk, lambrettauk.co.uk, ajsmotorcycles.co.uk) where it rendered a visible price; Sinnis's own product pages 403'd on direct fetch, so its four prices are each maker-quoted '+OTR' figures read secondhand off sinnismotorcycles.com's own page text via search-engine cache. Genuine's own genuinescooters.com product pages state engine cc but not price (dealer-network pricing); its USD prices are MSRP figures read secondhand from powersports.com/motorcycle.com dealer listings, except Buddy 50 and Buddy 170i, whose figures are the ones SLATE already recorded for the 'Genuine Scooter Co' brand entry (same cycletrader.com source), reused for the 'Genuine' duplicate because it is the identical product.",
+  "models": [
+    {
+      "market": "US",
+      "make": "Buell",
+      "model": "SuperTouring",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 1190,
+      "basePrice": {
+        "amount": 23995,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base",
+        "url": "https://www.buellmotorcycle.com/models",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Buell",
+      "model": "1190SX",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 1190,
+      "basePrice": {
+        "amount": 19995,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base",
+        "url": "https://www.buellmotorcycle.com/models",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Mash",
+      "model": "X-Ride 50",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 50,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "base",
+        "url": "https://mashmotors.co.uk/models/",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Mash",
+      "model": "Six Hundred 650",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 650,
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "base",
+        "url": "https://mashmotors.co.uk/models/",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Mash",
+      "model": "X-Ride 650 Trail",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 650,
+      "basePrice": {
+        "amount": 5599,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "base",
+        "url": "https://mashmotors.co.uk/models/",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Zontes",
+      "model": "ZT125-G1",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "Alloy Wheel, +OTR",
+        "url": "https://zontes.co.uk/zt125-g1/",
+        "sourceType": "primary"
+      },
+      "delivery": 150,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Zontes",
+      "model": "ZT125-U1 LCD",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 3299,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://zontes.co.uk/zt125-u1-lcd/",
+        "sourceType": "primary"
+      },
+      "delivery": 150,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Zontes",
+      "model": "ZT125-C2",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://zontes.co.uk/zt125-c2/",
+        "sourceType": "primary"
+      },
+      "delivery": 150,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Zontes",
+      "model": "ZT125-Z2",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://zontes.co.uk/zt125-z2/",
+        "sourceType": "primary"
+      },
+      "delivery": 150,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Sinnis",
+      "model": "Connect",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2299,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://sinnismotorcycles.com/sinnis-connect-125cc/",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Sinnis",
+      "model": "Hero-X",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://sinnismotorcycles.com/sinnis-hero-x-125cc/",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Sinnis",
+      "model": "Shuttle",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://sinnismotorcycles.com/sinnis-shuttle-125cc/",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Sinnis",
+      "model": "Encanto",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 50,
+      "basePrice": {
+        "amount": 1699,
+        "currency": "GBP",
+        "includesTax": false,
+        "trim": "+OTR",
+        "url": "https://sinnismotorcycles.com/sinnis-encanto-50cc/",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Lambretta",
+      "model": "X125",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 3999,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "OTR",
+        "url": "https://lambrettauk.co.uk/gallery",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Lambretta",
+      "model": "X300 GP",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 300,
+      "basePrice": {
+        "amount": 4499,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "OTR",
+        "url": "https://lambrettauk.co.uk/gallery",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Lambretta",
+      "model": "X300 SR",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 300,
+      "basePrice": {
+        "amount": 4499,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "OTR",
+        "url": "https://lambrettauk.co.uk/gallery",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Lambretta",
+      "model": "G350 Series II",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 350,
+      "basePrice": {
+        "amount": 5699,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "OTR",
+        "url": "https://lambrettauk.co.uk/gallery",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "'71 Desert Scrambler",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/motorcycles",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "Firefox 50",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 50,
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "Barletta 50",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 50,
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "Modena 125",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2295,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "Barletta 125",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2099,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "Firefox 125",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "AJS",
+      "model": "ADV-S 125",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 2849,
+        "currency": "GBP",
+        "includesTax": true,
+        "trim": "from",
+        "url": "https://www.ajsmotorcycles.co.uk/scooters",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Genuine Scooter Co",
+      "model": "Buddy Kick 125i",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 125,
+      "basePrice": {
+        "amount": 3499,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base",
+        "url": "https://www.genuinescooters.com/",
+        "sourceType": "primary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Genuine Scooter Co",
+      "model": "Hooligan 170i",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 169,
+      "basePrice": {
+        "amount": 3699,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "MSRP",
+        "url": "https://www.powersports.com/genuine+scooter/hooligan+170i/scooters-for-sale",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Genuine Scooter Co",
+      "model": "Roughhouse 50",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 50,
+      "basePrice": {
+        "amount": 2499,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "MSRP",
+        "url": "https://www.genuinescooters.com/products/roughhouse-50",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Genuine Scooter Co",
+      "model": "G400C",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 397,
+      "basePrice": {
+        "amount": 3999,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "MSRP",
+        "url": "https://www.genuinescooters.com/products/g400c",
+        "sourceType": "secondary"
+      },
+      "delivery": 0,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    }
+  ],
+  "notFound": [
+    {
+      "brand": "AJS",
+      "market": "GB",
+      "model": "Digita 50",
+      "where": "ajsmotorcycles.co.uk/scooters shows the Digita 50 among its models but renders no price for it in the fetched page"
+    },
+    {
+      "brand": "Genuine Scooter Co",
+      "market": "US",
+      "model": "Rattler",
+      "where": "genuinescooters.com/products/rattler 404'd; no dealer listing with a current price was found in this session"
+    },
+    {
+      "brand": "Genuine Scooter Co",
+      "market": "US",
+      "model": "Urbano",
+      "where": "genuinescooters.com's own product page for Urbano shows no price; the only figure found ($1,899) was for a 2020 model year, too old to use as the current price"
+    },
+    {
+      "brand": "Genuine",
+      "market": "US",
+      "model": "Rattler",
+      "where": "same as Genuine Scooter Co|Rattler, above"
+    },
+    {
+      "brand": "Genuine",
+      "market": "US",
+      "model": "Urbano",
+      "where": "same as Genuine Scooter Co|Urbano, above"
+    }
+  ],
+  "rangeProblems": []
+}

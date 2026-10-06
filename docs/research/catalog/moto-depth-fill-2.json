@@ -1,0 +1,57 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing Yamaha's US depth gap in docs/CATALOG-DEPTH.md against its whole range as counted in docs/research/catalog-ranges.json (motorcycles|Yamaha, range 25). Yamaha's own current US road-motorcycle lineup page (yamahamotorsports.com/motorcycles) lists exactly 24 models across Supersport, Hyper Naked, Sport Heritage, Touring, Dual Sport and Scooter, matching the 24 non-off-road names already enumerated in catalog-ranges.json's 'counted' field before its off-road YZ/WR/TT-R/PW50 entries begin. SLATE already held 22 of those 24; the 2 missing (YZF-R9, YZF-R1M) are added here with 2026 MSRPs read from Yamaha's own site. See rangeProblems: the recorded range of 25 appears to be off by one against Yamaha's own current lineup page.",
+  "models": [
+    {
+      "market": "US",
+      "make": "Yamaha",
+      "model": "YZF-R9",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 890,
+      "basePrice": {
+        "amount": 12499,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base",
+        "url": "https://yamahamotorsports.com/models/26-yzf-r9",
+        "sourceType": "primary"
+      },
+      "delivery": 700,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Yamaha",
+      "model": "YZF-R1M",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 998,
+      "basePrice": {
+        "amount": 27899,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base",
+        "url": "https://www.yamahamotorsports.com/models/yzf-r1m",
+        "sourceType": "primary"
+      },
+      "delivery": 775,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    }
+  ],
+  "notFound": [],
+  "rangeProblems": [
+    {
+      "brand": "Yamaha",
+      "category": "motorcycles",
+      "market": "US",
+      "issue": "catalog-ranges.json records a road-registerable range of 25 for Yamaha US, but Yamaha's own current motorcycles (road) lineup page at https://www.yamahamotorsports.com/motorcycles lists exactly 24 models: YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3 (Supersport); MT-10 SP, MT-10, MT-09 SP, MT-09, MT-07, MT-03 (Hyper Naked); BOLT R-SPEC, XSR900, XSR700, V STAR 250 (Sport Heritage); FJR1300ES, TENERE 700, TENERE 700 World Raid, TRACER 9 (Touring); XT250, TW200, WR125R (Dual Sport); XMAX, ZUMA 125 (Scooter). No 25th road model was found on this page or Yamaha's press materials read on 2026-10-06; the range should likely read 24, not 25."
+    }
+  ]
+}

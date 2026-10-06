@@ -226,15 +226,6 @@
    "from": "docs/research/catalog/ranges-vehicles-tires.json",
    "roadOnly": "The lineup counted 46 with 12 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 34 can be registered for the road (2026-10-06)."
   },
-  "motorcycles|Yamaha": {
-   "range": 25,
-   "market": "US",
-   "url": "https://www.yamahamotorsports.com/motorcycles",
-   "counted": "YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3, MT-10, MT-10 SP, MT-09, MT-09 SP, MT-07, MT-03, BOLT R-SPEC, XSR900, XSR700, V STAR 250, FJR1300ES, TENERE 700, TENERE 700 World Raid, Tracer 9, XT250, TW200, WR125R, XMAX, Zuma 125, YZ450F, YZ250F, YZ250, YZ125, YZ85LW, YZ85, YZ65, YZ450FX, YZ250FX, YZ250X, YZ125X, WR450F, WR250F, TT-R230, TT-R125LE, TT-R110E, TT-R50E, PW50",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json",
-   "roadOnly": "The lineup counted 45 with 20 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 25 can be registered for the road (2026-10-06)."
-  },
   "motorcycles|Suzuki": {
    "range": 30,
    "market": "US",
@@ -1875,14 +1866,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-tires-beds-screens.json"
   },
-  "mattresses|Restonic": {
-   "range": 6,
-   "market": "US",
-   "url": "https://restonic.com/explore",
-   "counted": "Signature, HealthRest, ComfortCare, Grand Palais, Scott Living, Drew & Jonathan Home",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
-  },
   "mattresses|Sognare": {
    "range": 7,
    "market": "GB",
@@ -2602,6 +2585,430 @@
    "counted": "Axon 60 Ultra 5G, Axon 40 Pro, Axon 40 Ultra, Axon 30, Axon 30 Ultra, Axon 20 5G",
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "luggage|BÉIS": {
+   "range": 8,
+   "market": "US",
+   "url": "https://beistravel.com/collections/luggage",
+   "counted": "The Carry-On Roller, The Small Carry-On Roller, The Medium Check-In Roller, The Large Check-In Roller, The Hybrid Carry-On Roller, The Hybrid Check-In Roller, The Pro Rolling Backpack, The Pro-Rolling Duffle Check-In",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Arlo Skye": {
+   "range": 9,
+   "market": "US",
+   "url": "https://arloskye.com/collections/all",
+   "counted": "Expandable Carry-On Max, Expandable Carry-On Max - Front Pocket, Expandable Check-In - Medium, Top-Load Expandable Trunk - Large, Original Carry-On Max, Original Carry-On Max - Front Pocket, Original Check-In - Large, Original Check-In - Medium, Original Frame Carry-On Max (the sold-out Aluminum Edition excluded as not currently sold)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Eagle Creek": {
+   "range": 5,
+   "market": "US",
+   "url": "https://eaglecreek.com/collections/luggage",
+   "counted": "Cargo Hauler XT, Expanse, Tarmac, Gear Warrior XE, ORV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|NOMATIC": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.nomatic.com/collections/travel-bags",
+   "counted": "Travel Pack, Travel Duffel Bag 40L, Travel Duffel Bag 30L, McKinnon Camera Pack 35L, Navigator Travel Backpack 32L, Messenger Bag, Navigator Pack 15L, Navigator RS Pack 15L, Navigator Collapsible Duffel 42L, Laptop Bag, Navigator Collapsible Pack 16L, McKinnon Camera Pack 35L V2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Roam Luggage": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.roamluggage.com/collections/all",
+   "counted": "Americana Carry-On, Americana Carry-On Expandable, Americana Check-In, Americana Check-In Expandable, Americana Large Carry-On, Americana Large Carry-On Expandable, Americana Large Check-In, Americana Large Check-In Expandable, Carry-On, Carry-On Expandable, Check-In, Large Check-In",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|July": {
+   "range": 14,
+   "market": "US",
+   "url": "https://july.com/products",
+   "counted": "American Airlines Checked Expandable CaseSafe, American Airlines Carry On CaseSafe, Carry On Trunk, Checked Plus Expandable CaseSafe, Capsule Carry On Pro, Checked 80/20 CaseSafe, Carry On Max Expandable CaseSafe, Checked Trunk, Checked Plus CaseSafe, Checked CaseSafe, Checked Trunk Set, Carry On Pro, Carry On Light Expandable, Carry On Essential",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Monos": {
+   "range": 9,
+   "market": "CA",
+   "url": "https://monos.com/collections/all",
+   "counted": "Carry-On, Carry-On Pro, Expandable Carry-On, Expandable Carry-On Pro, Carry-On Plus, Carry-On Pro Plus, Check-In Medium, Check-In Large, Expandable Check-In Medium",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Cannondale": {
+   "range": 34,
+   "market": "US",
+   "url": "https://www.cannondale.com/en-us/bikes",
+   "counted": "CAAD14, SuperSix EVO, SuperSix EVO CX, SuperSix EVO SE, SuperSlice, SuperX, Synapse, Topstone Alloy, Topstone Carbon, Bad Habit, Habit, Habit HT, Jekyll, Scalpel, Scalpel HT, Trail, Adventure, Bad Boy, Quick, Quick CX, Treadwell, Habit Neo, Moterra, Moterra LT, Moterra SL, Synapse Neo, Synapse Neo Allroad, Adventure Neo Allroad, FlyingV, Mavaro, Tesoro Carbon, Tesoro X, Treadwell Neo, Cargowagen Neo",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Kona": {
+   "range": 23,
+   "market": "US",
+   "url": "https://konaworld.com/collections/bikes",
+   "counted": "Process 134, Hei Hei, Cinder Cone, Fire Mountain, Honzo, Honzo 20, Honzo 24, Honzo ESD, Lava Dome, Unity, LBF, Libre, Ouroboros, Ouroboros Supreme, Coco, Dew, Dr Dew, Hula, Humu, Makena, Dew-E, Ecoco, El Kahuna (CR/DL component-spec suffixes collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Marin": {
+   "range": 36,
+   "market": "US",
+   "url": "https://www.marinbikes.com/bikes",
+   "counted": "Alpine Trail, Alpine Trail Electric, Bear Valley, Bobcat Trail, Bolinas Ridge, Bayview Trail, Coast Trail, DSX, DSX Electric, Donky Jr., Fairfax, Fairfax Electric, Four Corners, Gestalt, Gestalt X, Headlands, Kentfield, Larkspur, Larkspur Electric, Lombard Electric, Madrone Trail, Muirwoods, Nicasio, Pine Mountain, Presidio, Quake, Rift Zone, Rift Zone Electric, Rift Zone Jr, San Quentin, Sausalito, Stinson, Stinson Electric, Tam, Team Marin, Alcatraz",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Brompton": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.brompton.com/bikes",
+   "counted": "A Line, C Line, P Line, G Line, T Line",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Brompton Electric": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.brompton.com/bikes",
+   "counted": "Electric C Line, Electric P Line, Electric T Line, Electric G Line",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Knaus": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://www.knaus.com/en/motorhomes/models",
+   "counted": "VAN TI VANSATION, VAN TI VW VANSATION, VAN TI PLUS, L!VE TI PLATINUM SELECTION, L!VE WAVE PLATINUM SELECTION, SKY TI VW, L!VE I, BOXLIFE PLATINUM SELECTION, BOXTIME",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Westfalia": {
+   "range": 10,
+   "market": "GB",
+   "url": "https://www.westfalia-mobil.com/modelle/modelluebersicht.php and https://westfalia-mobil.com/de/neue-westfalia-kollektion/",
+   "counted": "Nansen, Columbus Liner, Columbus, James Cook, Sven Hedin, Meridian, Club Joker Urban, Jules Verne, Kelsey, Kipling (length/drivetrain/edition suffixes like 600L/640LS/540D/600E/600D/640E/50 Jahre Edition collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Grech RV": {
+   "range": 6,
+   "market": "US",
+   "url": "https://grechrv.com/models/",
+   "counted": "STRADA-ion, VACANZA-ion, TURISMO-ion, TERRENO-ion, LUSSO-ion Lounge, LUSSO Tour (AWD/length variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Storyteller Overland": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.storytelleroverland.com/pages/adventurevehicles",
+   "counted": "Beast Mode, Dark Mode, Classic Mode, Crew Mode, GXV Hilt, GXV Epic (OG/XO/XL configurations collapsed into each base nameplate; 2027 Grand Bohemian and GXV Wild excluded as not yet available)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Buell": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.buellmotorcycle.com/models",
+   "counted": "Super Cruiser, SuperTouring, Hammerhead 1190, 1190SX",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Genuine Scooter Co": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.genuinescooters.com/",
+   "counted": "Buddy 50, Buddy 125, Buddy 170i, Buddy Kick 125i, Hooligan 170i, Rattler, Roughhouse 50, Urbano, G400C (the Genuine-brand products on genuinescooters.com; NIU, Royal Alloy and Chicago Scooter Co. models the same site distributes are catalogued under their own brand names, not here)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Janus": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.janusmotorcycles.com/",
+   "counted": "Halcyon 450, Halcyon 250, Gryffin 450 Scrambler, Gryffin 250 (Origin trim collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Dinamo": {
+   "range": 32,
+   "market": "MX",
+   "url": "https://www.dinamotos.mx/catalogo-motos/",
+   "counted": "U2, U5, U5 175, Metro, Adventure Elite, Alien R, Custom, Rayo, Custom Black, Renegada, Rayo Elite, B-52, Bandid, DNM 2.5, DNM 3.0, Scorpion, Scorpion XT, Rocky, Xtreme RLX, Goliat, R4, Super Sport, Comando, R2 GT, SpeedFire, DNM-4, Skeleton, Heavy Cab B, Heavy Cab R, Heavy Cab 300, Heavy MAX, MOTO TX",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Mash": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://mashmotors.co.uk/models/",
+   "counted": "X-Ride 50, Fifty 50, Seventy 125, Black Seven LC 125, Two Fifty 250, Five Hundred 400, Six Hundred 650, X-Ride 650, X-Ride 650 Trail",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|AJS": {
+   "range": 15,
+   "market": "GB",
+   "url": "https://www.ajsmotorcycles.co.uk/motorcycles and https://www.ajsmotorcycles.co.uk/scooters",
+   "counted": "Ridgeway, Sedona, '71 Desert Scrambler, Cadwell, JFT-125, Bilston, JS125-X, Leten LT190, Firefox 50, Barletta 50, Modena 125, Barletta 125, Firefox 125, ADV-S 125, Digita 50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Lambretta": {
+   "range": 10,
+   "market": "GB",
+   "url": "https://lambrettauk.co.uk/gallery",
+   "counted": "V50 Special, V125 Special, J125, V200 Special, X125, X300 GP, X300 SR, X300 GT, G350 Series II, G350",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Zontes": {
+   "range": 11,
+   "market": "GB",
+   "url": "https://zontes.co.uk/new-bikes/",
+   "counted": "ZT125-G1, ZT125-X, ZT125-U1 LCD, ZT125-C, ZT125-GK, ZT125-C2, ZT125-Z2, ZT368T-G, ZT703-RR, ZT703-T, ZT703-F",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Keeway": {
+   "range": 20,
+   "market": "GB",
+   "url": "https://keeway.co.uk/new-bikes",
+   "counted": "RKS 125cc, X-Light 125cc, RKF 125cc, Morbidelli T125X, ICON 125i, Fact X 125cc, Morbidelli SC125RE, XDV 125 Evo Pro, Fact X 50cc, K-Light 125cc, Superlight Ltd 125cc, Superlight SE 125cc, RKV125C, V-Cruise 125C, V-Cruise 302C, E-Zi Mini, Blueshark 45 Lite, Blueshark 80 Lite, Blueshark 80, Morbidelli F125",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Hanway": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://hanwaymotor.co.uk/new-bikes",
+   "counted": "NK 125cc, SC 125cc",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Sinnis": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://sinnismotorcycles.com/",
+   "counted": "Terrain, GPX, Outlaw, SM-R, SM-XE, Akuma, Hoodlum, Connect, Hero-X, Shuttle, Twist, Encanto",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Royal Alloy": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://royalalloy.co.uk/scooters",
+   "counted": "GT 125 AC, TG 125 AC, TG 125 LC, TG 300 LC, GP 300 LC",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "cars|Chirey": {
+   "range": 7,
+   "market": "MX",
+   "url": "https://www.chirey.mx/",
+   "counted": "Tiggo 2 Pro, Tiggo 4 Pro, Tiggo 7 Pro, Tiggo 8 Pro, Arrizo 8, Tiggo 7 PHEV CSH, Tiggo 8 PHEV CSH",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Moto Morini": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.motomoriniusa.com/",
+   "counted": "X-Cape 1200, X-Cape 700, X-Cape 650, Vettore 450, Calibro 700, Calibro 700 Bagger, SCR, STR, STR Sport",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|QJMOTOR": {
+   "range": 26,
+   "market": "GB",
+   "url": "https://qjmotor.co.uk/new-bikes",
+   "counted": "SRK 125 R, SRV 125, TRX 125, COV 125 X, COV 125 S, SRK 125 E, SRK 125 J, SRK 125 S, SRT 600 S, SVT 650, SVT 650 X, SRT 900 S, SRT 900 SX, SRT 450 RX, SRT 125 DX, SRT 600 SX, SRV 600 V4, SRV 600 V2, SRK 800, SRK 900, SRK 921, LTS 50 S, LTS 125 S, ATR 125, SRK 800 RR, SRK 921 RR",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|Islo": {
+   "range": 6,
+   "market": "MX",
+   "url": "https://www.islo.com.mx/",
+   "counted": "Rabbit Rush, Trip 150, Freedom, Mutant 250R, Blackwing, Montana ADV250",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|GasGas": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.gasgas.com/en-us/models/motorcycles.html",
+   "counted": "MC 125, MC 85 19/16, MC 85 17/14, MC 65, MC 50, MC 450F, MC 250F, MC-E 5, MC-E 2, EC 300, EX 300, TXT GP 250, TXT GP 300, TXT RACING 250, TXT RACING 300",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|Kove": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.kovemotousa.com/models-current",
+   "counted": "800X Rally, 800X Pro, 450 Rally, 450 Rally Street Legal, MX450, MX250",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|ItalJet": {
+   "range": 5,
+   "market": "US",
+   "url": "https://italjet.com/",
+   "counted": "Dragster 125-300, Dragster 459, Roadster 400, Dragster 700, Dragster 700 Twin",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Chausson": {
+   "range": 18,
+   "market": "GB",
+   "url": "https://www.motorhomes-chausson.co.uk/ranges/",
+   "counted": "V594, S614, S697, S514, X640, X550, 798, 660, 640, 650, 630, 777, 788, 627, 720, C727, C656, C514",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|East To West": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.easttowestrv.com/motorhomes",
+   "counted": "College Avenue, Alita, Bravado, Entrada, Entrada M-Class",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Leisure Travel Vans": {
+   "range": 2,
+   "market": "US",
+   "url": "https://leisurevans.com/products/",
+   "counted": "Unity, Wonder",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Volkswagen": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://www.volkswagen-vans.co.uk/en/california-world/california-camper-van-range.html",
+   "counted": "California, Grand California (Beach/Coast/Ocean trims and 600/680 length variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Weinsberg": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://weinsberg.com/en-uk/motorhomes/",
+   "counted": "CaraCompact, CaraSuite, CaraHome, CaraCore, Competence (EDITION [PEPPER]/[SPICY] trims collapsed into base nameplates)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Riese & Müller": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.r-m.de/en-us/bikes/",
+   "counted": "Nevo, Charger, Load, Multitinker, Swing, Carrie, Multicharger, Homage, Delite, Superdelite, UBN, Culture, Packster, Transporter",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|MiRider": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://mirider.co.uk/shop/",
+   "counted": "MiRiDER 16, MiRiDER 20, MiRiDER 24 (Single Speed/GB3 three-speed gearbox drivetrain variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Aventon": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.aventon.com/collections/all-products",
+   "counted": "Current, Aventure, Level, Ramblas, Pace, Abound, Soltera",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Whyte": {
+   "range": 14,
+   "market": "GB",
+   "url": "https://whytebikes.com/collections/bikes",
+   "counted": "909 X, 905, 629, E-160, E-180, ELyte 140, ELyte 150, ELyte EVO, RHeO 1, RHeO 2, RHeO 3, T-140, T-160, Kado (RSX/S/RS spec-tier and ST step-through suffixes collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Lectric": {
+   "range": 6,
+   "market": "US",
+   "url": "https://lectricebikes.com/pages/compare-lectric-ebikes",
+   "counted": "XP4, XP Lite2, XP Trike2, XPedition2, XPeak2, XPress2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Fiido": {
+   "range": 12,
+   "market": "US",
+   "url": "https://fiido.com/pages/compare",
+   "counted": "D3 Pro, Titan, T2, M1 Pro, Air, C11, C21, C11 Pro, Nomads, Nomads Pro, T3, T3 Max",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Himiway": {
+   "range": 9,
+   "market": "US",
+   "url": "https://himiwaybike.com/collections/ebikes",
+   "counted": "D5 2.0, D5 Pro, D7, D7 Pro, A7, A7 Pro, C1, C3, C5 (ST step-through, Camo and Zebra colour/size variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Electra": {
+   "range": 10,
+   "market": "US",
+   "url": "https://electra.trekbikes.com/us/en_US/bikes/c/B100/",
+   "counted": "Townie Go!, Townie Go! S, Townie Go! 7D EQ, Ponto Go!, Ponto Go! S, Townie 7D, Townie 7D EQ, Cruiser 7D, Cruiser 1, Sprocket 1 20\" (Step-Thru/Step-Over frame-style variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Suzuki": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.suzukicycles.com/atvs",
+   "counted": "KingQuad 750AXi, KingQuad 500AXi, KingQuad 400ASi, KingQuad 400FSi, QuadSport Z90, QuadSport Z50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Kawasaki": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.kawasaki.com/en-us/category/atv/kfx",
+   "counted": "KFX50, KFX90, Brute Force 300, Brute Force 450, Brute Force 750",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Yamaha": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.yamahamotorsports.com/models.php",
+   "counted": "YFZ450R, Raptor 700R, Raptor 700, Raptor 110, Grizzly, Grizzly 110, Kodiak 700, Kodiak 450",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Kymco": {
+   "range": 9,
+   "market": "US",
+   "url": "https://kymcousa.com/atvs/",
+   "counted": "Mongoose 110i, MXU 150X, Mongoose 270i, MXU 270i EURO, MXU 450i, Maxxer 450i, MXU 450i LE, MXU 550i EPS, MXU 700i EURO",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|CFMoto": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.cfmotousa.com/cforce-series",
+   "counted": "CFORCE 1000 OVERLAND, CFORCE 1000 TOURING, CFORCE 800 TOURING, CFORCE C6 PRO TOURING, CFORCE C6 PRO, CFORCE C6, CFORCE C5, CFORCE C4",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
   }
  },
  "rejected": {
@@ -2633,6 +3040,9 @@
   "appliances|Gaggenau": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
   "appliances|Sharp": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
   "computers|Stormforce": "four of the models it counted aren’t on Stormforce’s own site, so the count can’t be trusted",
-  "cars|Lexus": "it counted the RC, discontinued in America after 2025, and the LBX, never sold there (lexus.com, read 2026-10-06), so the count isn’t America’s current lineup"
+  "cars|Lexus": "it counted the RC, discontinued in America after 2025, and the LBX, never sold there (lexus.com, read 2026-10-06), so the count isn’t America’s current lineup",
+  "motorcycles|Yamaha": "Yamaha’s own current road lineup page lists 24 models against the 25 counted (moto-depth-fill-2.json), so the count is in doubt",
+  "mattresses|Restonic": "one of its six counted lines, Grand Palais, is discontinued (mattress-depth-fill-2.json), so the count isn’t the current lineup",
+  "motorcycles|Genuine": "the same company as Genuine Scooter Co (genuinescooters.com), counted twice under two names; its models are kept under that one"
  }
 }

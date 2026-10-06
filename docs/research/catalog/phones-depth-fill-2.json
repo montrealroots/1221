@@ -1,0 +1,11 @@
+{
+ "read": "2026-10-06",
+ "devices": [],
+ "notFound": [
+  { "maker": "Cubot", "model": "Note 60", "market": "us", "where": "shop.cubot.net ships only to Europe and Mexico (confirmed on the X100 product page's shipping note); no price fetched from any US retailer's own product page (Amazon.com search and product pages returned 500/503 errors on fetch; third-party price-tracker sites like Kimovil/GSMArena give conflicting, unsourced figures, not a retailer's own page)." },
+  { "maker": "Cubot", "model": "P90", "market": "us", "where": "Same as Note 60: Cubot's own store doesn't sell to the US; an Amazon.com US listing exists (B0FJ2GW54T) but its live price page could not be fetched to confirm (500/503 errors), and the $199.99 figure in search snippets isn't from a directly-read retailer page." },
+  { "maker": "Cubot", "model": "X100", "market": "us", "where": "shop.cubot.net's own X100 page states shipping only to Europe (10-15 days from Hong Kong) and Mexico (3-5 days); no US retail listing found." },
+  { "maker": "Cubot", "model": "A40", "market": "us", "where": "Amazon.com listing exists (B0FJ2GYD52) but price could not be read from a fetched page (500 error); cubot.net's own US-locale spec page (cubot.net/phone/smartphones/A40?l=en-us) lists colors and storage but no price." },
+  { "maker": "Cubot", "model": "A50", "market": "us", "where": "No US retailer product page found; cubot.net's own US-locale spec page lists colors but no price, and no Amazon.com US listing was located." }
+ ]
+}

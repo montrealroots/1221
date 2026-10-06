@@ -1,0 +1,10 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing Brompton Electric's CATALOG-DEPTH.md gap (Short: 2 of its 4 in GB to go) against the whole range counted in docs/research/catalog-ranges.json. SLATE already held the Electric C Line and Electric P Line (as '... e-Motiq (4-speed)' trims); the Electric T Line's GB price was read live on brompton.com (the 1-speed e-Motiq model's own product page, which the depth-fill-2 moto research also used as its UK list-price basis); the Electric G Line's GB price was read secondhand, via search, off brompton.com's own 4-speed Roller Frame product page, since the page did not render in a direct fetch.",
+  "models": [
+    { "market": "GB", "make": "Brompton Electric", "model": "Electric T Line", "kind": "ebike", "basePrice": { "amount": 5799, "currency": "GBP", "includesTax": true, "url": "https://www.brompton.com/p/1763/electric-t-line-e-motiq-system-1-speed-uk", "sourceType": "primary" }, "motorW": 250, "assistKmh": 25, "cc": null, "kerbKg": null },
+    { "market": "GB", "make": "Brompton Electric", "model": "Electric G Line", "kind": "ebike", "basePrice": { "amount": 3699, "currency": "GBP", "includesTax": true, "url": "https://www.brompton.com/p/1757/electric-g-line-with-roller-frame-and-handlebar-control-4-speed-uk", "sourceType": "secondary" }, "motorW": 250, "assistKmh": 25, "cc": null, "kerbKg": null }
+  ],
+  "notFound": [],
+  "rangeProblems": []
+}
