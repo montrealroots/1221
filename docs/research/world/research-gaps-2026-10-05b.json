@@ -1,0 +1,449 @@
+{
+  "read": "2026-10-05",
+  "tablePolicies": {
+    "peter-luger-brooklyn-newyork": {
+      "currency": "USD",
+      "confirmed": false
+    },
+    "union-league-newhaven": {
+      "currency": "USD",
+      "confirmed": false
+    },
+    "mecha-noodle-bar-newhaven": {
+      "walkInOnly": true,
+      "currency": "USD",
+      "confirmed": false,
+      "source": "https://www.yelp.com/biz/mecha-noodle-bar-new-haven (via search synthesis; mechanoodlebar.com itself states no policy)",
+      "quote": "Mecha Noodle Bar does not take reservations, operating on a first come, first serve basis."
+    },
+    "republique-la": {
+      "currency": "USD",
+      "confirmed": false,
+      "source": "https://www.opentable.com/republique (via search synthesis)",
+      "quote": "They only accept reservations for dinner, while during the day they offer a more casual counter-style service with no reservations."
+    },
+    "osteria-mozza-la": {
+      "currency": "USD",
+      "confirmed": false
+    },
+    "providence-la": {
+      "fee": { "lunch": 375, "dinner": 375, "noticeHours": 168 },
+      "currency": "USD",
+      "confirmed": true,
+      "source": "https://providencela.com/reservations/",
+      "quote": "Should your plans change, we ask that you cancel no less than 7 days before your reservation time. Late cancellations and no-shows will incur a $375 per person charge; this policy applies to same-day reservations as well. We require a credit card to hold your reservation."
+    },
+    "night-market-song-la": {
+      "currency": "USD",
+      "confirmed": true,
+      "source": "http://www.nightmarketsong.com/nm-song",
+      "quote": "Y-E-S. Visit Resy to book now. We do not seat incomplete parties."
+    },
+    "the-ivy-west-street-london": {
+      "currency": "GBP",
+      "confirmed": false,
+      "source": "https://private-dining.co.uk/venues/ivy/ (secondhand; the-ivy.co.uk itself gave no terms)",
+      "quote": "A deposit of £20 per person is required to confirm the booking."
+    },
+    "hawksmoor-air-street-london": {
+      "fee": { "lunch": 25, "dinner": 25, "noticeHours": 48 },
+      "currency": "GBP",
+      "confirmed": true,
+      "source": "https://thehawksmoor.com/wp-content/uploads/2020/10/Before-you-Come-to-Hawksmoor-Tier-2.pdf (dated October 2020; no newer Hawksmoor UK cancellation-terms page could be reached to confirm this is still current)",
+      "quote": "We require 48hrs notice for cancellations - if you cancel within 48hrs of your reservation, we charge a fee of £25 per head. If you are booking a table for 5 or more guests, some of our sites kindly request credit card details for your reservation."
+    },
+    "rules-covent-garden-london": {
+      "currency": "GBP",
+      "confirmed": false
+    },
+    "flat-iron-covent-garden-london": {
+      "currency": "GBP",
+      "confirmed": true,
+      "source": "https://flatironsteak.co.uk/faqs/",
+      "quote": "We always allow plenty of room for walk-in guests, so you are welcome to come to the restaurant and we'll do our best to accommodate you. We allow 90 minutes for tables of 1-4 guests, and 2 hours for tables of 5 guests or more."
+    },
+    "pizza-pilgrims-dean-street-london": {
+      "currency": "GBP",
+      "confirmed": true,
+      "source": "https://www.pizzapilgrims.co.uk/pizzerias/soho/",
+      "quote": "Secure your spot! But remember, walk-ins are always available - just rock up!"
+    },
+    "kanada-ya-covent-garden-london": {
+      "walkInOnly": true,
+      "currency": "GBP",
+      "confirmed": true,
+      "source": "https://www.kanada-ya.com/stgilespress/",
+      "quote": "As is the London trend, there's no reservations, but it's worth the 20 or so minute queue on a lunch time when you fancy a good feed."
+    },
+    "the-winding-stair-dublin": {
+      "currency": "EUR",
+      "confirmed": false
+    },
+    "gotham-cafe-dublin": {
+      "fee": { "lunch": 10, "dinner": 10, "noticeHours": 48 },
+      "currency": "EUR",
+      "confirmed": true,
+      "source": "https://gothamcafe.ie/table-booking-terms-and-conditions/",
+      "quote": "No charge is applied to your bank card unless there is a no show or late cancellation, in which case a €10.00 charge per person booked applies. [notice] 48 hours in advance of the booked date. For parties of 13 or more, they require a €10.00 non-refundable deposit per person. Table bookings are held for 15 minutes from the time a table is booked, after which tables will be released to other diners."
+    },
+    "the-brazen-head-dublin": {
+      "minParty": 8,
+      "currency": "EUR",
+      "confirmed": true,
+      "source": "https://brazenhead.com/contact/",
+      "quote": "We do not take reservations for groups of under 8 people. Please come by on the day and we will accommodate you."
+    },
+    "the-senator-toronto": {
+      "currency": "CAD",
+      "confirmed": false
+    },
+    "pai-northern-thai-toronto": {
+      "windowDays": 30,
+      "currency": "CAD",
+      "confirmed": true,
+      "source": "https://www.paitoronto.com/reservations",
+      "quote": "Reservations only open 30 days in advance. A minimum of 72 hours' notice is required for all email requests. If you need to cancel, we ask that you do so at least 24 hours in advance."
+    },
+    "richmond-station-toronto": {
+      "windowDays": 45,
+      "maxParty": 20,
+      "fee": { "lunch": 40, "dinner": 40, "noticeHours": 24 },
+      "currency": "CAD",
+      "confirmed": true,
+      "source": "https://richmondstation.ca/reservations/",
+      "quote": "We take reservations for groups of 20 or less 45 days in advance. All cancellations or reductions in party size less than 24 hours in advance are subject to a charge of $40 per guest plus applicable taxes."
+    },
+    "alo-toronto": {
+      "fee": { "lunch": 115, "dinner": 115, "noticeHours": 72 },
+      "currency": "CAD",
+      "confirmed": true,
+      "source": "https://alorestaurant.com/reservations/",
+      "quote": "Reservations for Alo's Dining Room, Parlour Room, and Private Dining Room are released on the first Tuesday of each month at 10 AM. 72 hours notice to cancel or reschedule a dining room, kitchen counter or parlour room reservation without penalty. Cancellations and/or party size decreases made less than 72 hours in advance of the reservation will be charged the price of the tasting menu per guest. (The fee figure of $115 used here is the 4-Course Tasting Menu's published per-person price, found separately on Alo's menu page, not the page's own stated dollar amount — the page itself names no fixed sum, only 'the price of the tasting menu per guest,' which varies by the menu chosen.)"
+    },
+    "miku-vancouver": {
+      "currency": "CAD",
+      "confirmed": false
+    },
+    "the-naam-vancouver": {
+      "walkInOnly": true,
+      "currency": "CAD",
+      "confirmed": true,
+      "source": "https://thenaam.com/",
+      "quote": "We don't take reservations and operate on a first come, first served basis."
+    },
+    "earls-robson-vancouver": {
+      "currency": "CAD",
+      "confirmed": false
+    },
+    "rosetta-roma-cdmx": {
+      "fee": { "lunch": 700, "dinner": 700, "noticeHours": 5 },
+      "currency": "MXN",
+      "confirmed": true,
+      "source": "https://rosetta.com.mx/politica-privacidad/politica-de-reservaciones",
+      "quote": "Para reservaciones de 5 a 12 personas se solicita una tarjeta de crédito como garantía, que solo se usará en caso de no presentarse, con un cargo de $700 MXN por persona ausente. Modificaciones o cancelaciones sin cargo hasta 5 horas antes de la hora reservada. Margen de cortesía de 10 minutos."
+    },
+    "azul-historico-cdmx": {
+      "currency": "MXN",
+      "confirmed": false
+    },
+    "el-cardenal-palma-cdmx": {
+      "currency": "MXN",
+      "confirmed": false
+    },
+    "cafe-de-tacuba-cdmx": {
+      "currency": "MXN",
+      "confirmed": false
+    },
+    "sanborns-humboldt-cdmx": {
+      "currency": "MXN",
+      "confirmed": false
+    }
+  },
+  "figures": [
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "Tesla Supercharger idle fee, site under 50% busy",
+      "value": 0,
+      "unit": "USD/minute",
+      "source": "search synthesis citing tesla.com/support/charging/supercharger/fees (page itself returned HTTP 403 to direct fetch)",
+      "url": "https://www.tesla.com/support/charging/supercharger/fees",
+      "quote": "Idle fees only apply when a Supercharger station is at 50% capacity or more.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "Tesla Supercharger idle fee, site 50-99% busy",
+      "value": 0.5,
+      "unit": "USD/minute",
+      "source": "search synthesis citing tesla.com/support/charging/supercharger/fees (page itself returned HTTP 403 to direct fetch)",
+      "url": "https://www.tesla.com/support/charging/supercharger/fees",
+      "quote": "$0.50 per minute when the station is at least 50% occupied; a 5-minute grace period to move your vehicle before fees begin.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "Tesla Supercharger idle fee, site at 100% capacity",
+      "value": 1.0,
+      "unit": "USD/minute",
+      "source": "search synthesis citing tesla.com/support/charging/supercharger/fees (page itself returned HTTP 403 to direct fetch)",
+      "url": "https://www.tesla.com/support/charging/supercharger/fees",
+      "quote": "Idle fees double to $1.00 per minute when the station is at 100% capacity.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "CA",
+      "measure": "Tesla Supercharger idle fee, site busy / at capacity",
+      "value": "0.50 busy / 1.00 at 100% capacity",
+      "unit": "CAD/minute",
+      "source": "search synthesis citing tesla.com/en_CA/support/supercharger-idle-fee (page returned HTTP 403 to direct fetch)",
+      "url": "https://www.tesla.com/en_CA/support/supercharger-idle-fee",
+      "quote": "In Canada, the idle fee for Tesla Superchargers is $0.50 per minute. This fee doubles to $1.00 per minute when the station is at 100% capacity.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "GB",
+      "measure": "Tesla Supercharger idle fee, site busy / at capacity",
+      "value": "0.50 busy / 1.00 at 100% capacity",
+      "unit": "GBP/minute",
+      "source": "search synthesis citing tesla.com/en_gb/support/charging/supercharger/fees (page returned HTTP 403 to direct fetch)",
+      "url": "https://www.tesla.com/en_gb/support/charging/supercharger/fees",
+      "quote": "The idle fee of 50p per minute applies if you leave your car at a Supercharger after it has finished charging ... waived if the car is moved within the first five minutes ... at 100% capacity, the fee doubles to £1 per minute.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "IE",
+      "measure": "Tesla Supercharger idle fee",
+      "value": null,
+      "unit": "EUR/minute",
+      "source": "not found in this session",
+      "url": "",
+      "quote": "",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "MX",
+      "measure": "Tesla Supercharger idle fee",
+      "value": null,
+      "unit": "MXN/minute",
+      "source": "not found in this session",
+      "url": "",
+      "quote": "",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "Tesla CCS1-to-NACS adapter, official price",
+      "value": 200,
+      "unit": "USD",
+      "source": "search synthesis citing shop.tesla.com/product/ccs1-to-nacs-adapter (page returned HTTP 403 to direct fetch; search result also notes the item was listed out of stock)",
+      "url": "https://shop.tesla.com/product/ccs1-to-nacs-adapter",
+      "quote": "The CCS1 to NACS Adapter is priced at $200.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "GM NACS DC fast-charging adapter, official price",
+      "value": 299,
+      "unit": "USD",
+      "source": "search synthesis citing accessories.gmc.com/product/gm-nacs-dc-adapter-85836744 (page returned HTTP 403 to direct fetch)",
+      "url": "https://accessories.gmc.com/product/gm-nacs-dc-adapter-85836744",
+      "quote": "The GM NACS DC Adapter costs $299 and connects to NACS DC fast chargers.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "GM NACS Level 2 (AC) adapter, official price",
+      "value": 205,
+      "unit": "USD",
+      "source": "search synthesis citing accessories.gmc.com/product/gm-nacs-level-2-adapter-86380864 (page returned HTTP 403 to direct fetch)",
+      "url": "https://accessories.gmc.com/product/gm-nacs-level-2-adapter-86380864",
+      "quote": "The GM NACS Level 2 Adapter is $205 and connects to NACS home chargers only.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "Electrify America idle fee",
+      "value": 0.40,
+      "unit": "USD/minute",
+      "source": "Electrify America glossary",
+      "url": "https://www.electrifyamerica.com/glossary/",
+      "quote": "$0.40 per-minute idle fee starting ten minutes after your charging session is complete, if you have not unplugged and moved your vehicle.",
+      "confirmed": true
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "EVgo idle fee",
+      "value": null,
+      "unit": "USD/minute",
+      "source": "not found: EVgo publishes no single network-wide idle fee",
+      "url": "",
+      "quote": "EVgo does not publish a single nationwide idle figure ... fees vary by station and typically range from $0.30-$0.50/minute after a grace period ... visible in the app before you plug in.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "EU",
+      "measure": "Ionity idle fee",
+      "value": 0,
+      "unit": "EUR/minute",
+      "source": "search synthesis, not directly fetched from ionity.eu",
+      "url": "https://www.evcourse.com/network/ionity",
+      "quote": "Ionity does not currently charge connection or idle fees - you only pay per kWh used when charging.",
+      "confirmed": false
+    },
+    {
+      "topic": "charging",
+      "market": "US",
+      "measure": "ChargePoint idle fee",
+      "value": null,
+      "unit": "USD/minute",
+      "source": "not found: ChargePoint sets no company-wide idle fee; each station owner configures its own \"Overstay Rate\"",
+      "url": "",
+      "quote": "ChargePoint leaves idle fee policies to individual stations ... Individual businesses and property owners can configure what ChargePoint calls an 'Overstay Rate.'",
+      "confirmed": false
+    },
+    {
+      "topic": "roadside",
+      "market": "US",
+      "measure": "AAA roadside calls, total and share for battery/tire/lockout combined, 2015",
+      "value": "17,000,000 of 29,000,000 (~59%)",
+      "unit": "calls/year",
+      "source": "AutoGuide, citing AAA",
+      "url": "https://www.autoguide.com/auto-news/2015/10/most-roadside-breakdowns-can-be-prevented-with-proper-maintenance-aaa.html",
+      "quote": "AAA responded to over 29 million roadside assistance calls, with 17 million of them due to battery failure, flat tires and keys locked inside the vehicle.",
+      "confirmed": true
+    },
+    {
+      "topic": "roadside",
+      "market": "US",
+      "measure": "AAA roadside calls by type, 2019 (dead battery / flat tire / lockout)",
+      "value": "dead battery 23.8%, flat tire 13.1%, lockout 11.2%",
+      "unit": "percent of calls",
+      "source": "search synthesis; the AAA original page carrying this exact breakdown could not be located or directly fetched in this session",
+      "url": "",
+      "quote": "Dead batteries accounted for 23.8% of calls, flat tires for 13.1% of calls, and lockouts for 11.2% of calls.",
+      "confirmed": false
+    },
+    {
+      "topic": "roadside",
+      "market": "US",
+      "measure": "AAA electric-vehicle roadside calls, 2023",
+      "value": 160000,
+      "unit": "calls/year",
+      "source": "TIME",
+      "url": "https://time.com/6556242/electric-vehicle-aaa-roadside-calls/",
+      "quote": "In 2023, AAA provided roadside assistance to 160,000 EVs in the U.S., representing a 180% increase from 2019. Overall last year in the U.S., the organization serviced more than 32 million vehicles at the roadside. ... the majority of those cases involved tire damage ... only 4% of the EV service calls AAA gets are for vehicles that have run out of power.",
+      "confirmed": true
+    },
+    {
+      "topic": "roadside",
+      "market": "CA",
+      "measure": "CAA-Quebec roadside calls by type",
+      "value": "battery 41%, towing 37%, lockout 9%, flat tire 7%, winching 4%",
+      "unit": "percent of calls",
+      "source": "CAA-Quebec press release",
+      "url": "https://www.caaquebec.com/en/press-room/press-releases/caa-quebec-roadside-assistance-a-priority-service-ready-when-our-members-need-us",
+      "quote": "Battery services: 41%. Towing: 37%. Lockout: 9%. Flat tire assistance: 7%. Winching: 4%.",
+      "confirmed": true
+    },
+    {
+      "topic": "roadside",
+      "market": "GB",
+      "measure": "RAC battery-related call-outs, 2015",
+      "value": 445000,
+      "unit": "members assisted/year",
+      "source": "RAC",
+      "url": "https://www.rac.co.uk/business/news-advice/news/flat-or-not-battery-issues-are-our-number-one-call-out",
+      "quote": "Breakdowns involving batteries are the number one cause of RAC call-outs with patrols attending more than 445,000 members in 2015.",
+      "confirmed": true
+    },
+    {
+      "topic": "roadside",
+      "market": "GB",
+      "measure": "AA/RAC average response time and roadside fix rate",
+      "value": "30 minutes; 80% fixed at roadside",
+      "unit": "minutes / percent",
+      "source": "search synthesis, not directly fetched from theaa.com or rac.co.uk",
+      "url": "https://www.finder.com/uk/breakdown-cover/aa-vs-rac",
+      "quote": "Both the AA and RAC aim for a 30-minute response time on average and have an 80% roadside fix rate.",
+      "confirmed": false
+    },
+    {
+      "topic": "roadside",
+      "market": "GB",
+      "measure": "UK electric-vehicle roadside call-outs by type, Oct 2022-Oct 2023",
+      "value": "tyres 21.5%, driving-battery charging problems 19.8%, 12V battery 16.8%",
+      "unit": "percent of 83,000 EV calls",
+      "source": "search synthesis of RAC/AA reporting, not directly fetched",
+      "url": "https://www.rac.co.uk/business/news-advice/news/flat-or-not-battery-issues-are-our-number-one-call-out",
+      "quote": "Among 83,000 callouts between October 2022 and 2023, the most common issues were related to tires (21.5%), problems with charging the driving battery (19.8%), and the 12v battery (16.8%).",
+      "confirmed": false
+    },
+    {
+      "topic": "roadside",
+      "market": "IE",
+      "measure": "AA Ireland flat-battery share of annual call-outs",
+      "value": 30,
+      "unit": "percent of calls/year",
+      "source": "AA Ireland",
+      "url": "https://www.theaa.ie/motoring-advice/breakdown-advice/",
+      "quote": "Flat batteries account for approximately 30% of all AA breakdown call outs per annum.",
+      "confirmed": true
+    },
+    {
+      "topic": "roadside",
+      "market": "IE",
+      "measure": "AA Ireland roadside fix rate and market share",
+      "value": "80% fixed at roadside; 85% of recovery/towing market",
+      "unit": "percent",
+      "source": "search synthesis, not directly fetched",
+      "url": "https://www.theaa.ie/motoring-advice/breakdown-advice/",
+      "quote": "AA Patrols fix 8 out of 10 cars at the roadside, and AA Roadside Assistance and Recovery currently accounts for 85% of the Irish car recovery and towing market.",
+      "confirmed": false
+    },
+    {
+      "topic": "roadside",
+      "market": "MX",
+      "measure": "Ángeles Verdes services provided, 2025",
+      "value": 221000,
+      "unit": "services/year (serving 665,000 travelers)",
+      "source": "search synthesis of Mexican news coverage, not directly fetched from a primary government page; no breakdown by service type (battery/tire/lockout/fuel/tow) was published in any source found",
+      "url": "https://www.hoytamaulipas.net/notas/609216/Angeles-Verdes-auxilio-a-mas-de-665-mil-turistas-de-75-paises-en-carreteras-de-Mexico-durante-2025.html",
+      "quote": "Durante 2025, Ángeles Verdes brindó más de 221 mil servicios en carreteras del país, apoyando a 665 mil turistas nacionales y extranjeros con asistencia mecánica, orientación y auxilio vial.",
+      "confirmed": false
+    }
+  ],
+  "notFound": [
+    "Peter Luger Brooklyn: a $40-per-person/24-hour no-show fee is repeated across secondary sources (Tripadvisor FAQ, aggregator summaries) but the restaurant's own site (peterluger.com) says reservations for parties of 10 or fewer are taken only by phone, with no published fee; its Resy listing page could not be rendered for WebFetch (JS-only), so this figure is not confirmed.",
+    "Junior's Restaurant Brooklyn: OpenTable's own listing could not be fetched (timeout); whether it is walk-in-only or takes phone reservations is stated inconsistently across secondary sources, so no table policy field was recorded.",
+    "Union League Cafe New Haven: only its dress code was confirmed; no published booking window, party-size limit, deposit or cancellation fee was found.",
+    "République LA: dinner-only reservations via OpenTable confirmed by secondary source only; no cancellation fee, deposit or credit-card-hold policy is published anywhere found.",
+    "Osteria Mozza LA: its own site (osteriamozza.com) and reservations page (404) show no cancellation or fee terms; a $20pp/24hr fee found in search results belongs to its sister restaurant Pizzeria Mozza, not Osteria Mozza, and was excluded as misattributed.",
+    "The Ivy (West Street), London: a £20-per-person deposit is quoted by a third-party private-dining directory, not by ivycollection.com itself, which could not be reached with that detail; not confirmed.",
+    "Hawksmoor Air Street: the £25-per-head/48-hour cancellation fee is from a PDF dated October 2020 (a Covid-era 'before you come' notice); no newer official page with current terms could be reached to verify it still applies.",
+    "Rules (Covent Garden): rules.co.uk/reservations/ returned 404; a £25-per-person cancellation charge appears only in one customer review, not on any official page, so nothing was recorded.",
+    "The Winding Stair, Dublin: no published cancellation or deposit policy was found; reservations are described only as 'strongly recommended.'",
+    "The Senator Restaurant, Toronto: no cancellation policy was found; a 'parties of 5+ only' rule for brunch reservations was reported secondhand only.",
+    "Miku Vancouver: only a private-events cancellation fee ($500/48hr) was found; no standard table-reservation terms are published.",
+    "Earls Kitchen + Bar (Robson), Vancouver: bookable via OpenTable with no stated window, fee or deposit.",
+    "Azul Histórico, Mexico City: its CoverManager legal/terms page (which names a 'POLÍTICA DE CANCELACIÓN' section) returned HTTP 403 and could not be read; reservations above a threshold require a reconfirmed credit-card guarantee, but no fee amount is published anywhere found.",
+    "El Cardenal (Palma), Mexico City: reservations are by phone/email only; no published cancellation or fee policy exists.",
+    "Café de Tacuba, Mexico City: reservations by phone/online weekdays, walk-in only on weekends per secondary sources; no cancellation fee or deposit policy found, and this was not confirmed on the restaurant's own site.",
+    "Sanborns (Humboldt), Mexico City: no formal reservation policy published; sources suggest a sign-in/wait-list system rather than timed bookings.",
+    "Tesla Supercharger idle fee for Ireland and Mexico specifically: no published regional figure found (tesla.com fee pages return HTTP 403 to automated fetch, and no secondary source quoted IE/MX rates).",
+    "Tesla and GM adapter prices: shop.tesla.com and accessories.gmc.com both return HTTP 403 to WebFetch; prices recorded under figures come from search-result synthesis of those same pages, not a directly fetched and read page, so are marked unconfirmed.",
+    "A single published AAA percentage breakdown of dead-battery/flat-tire/lockout/fuel-delivery/tow share of total calls for a recent year could not be located as a primary, directly-fetchable AAA page; the 2019 23.8%/13.1%/11.2% figures are repeated by multiple secondary sources without a reachable original."
+  ]
+}

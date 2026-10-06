@@ -19,6 +19,20 @@
  * - Pujol: MX$2,565 a person inside 24 hours (2022, secondhand).
  * - Quintonil: a MX$3,000 deposit a person, prepaid, not refunded
  *   (secondhand).
+ * From 2026-10-05 (`research-gaps-2026-10-05b.json`, each read on the
+ * restaurant's own page or its booking platform's):
+ * - Providence: $375 a person inside seven days.
+ * - Night + Market Song, Flat Iron Covent Garden, Pizza Pilgrims Dean Street:
+ *   booked, no window or fee stated.
+ * - Kanada-Ya Covent Garden and The Naam: walk-in only.
+ * - Gotham Cafe: €10 a person inside 48 hours.
+ * - The Brazen Head: parties of eight or more only.
+ * - PAI Northern Thai: 30 days ahead.
+ * - Richmond Station: 45 days ahead, parties to 20, C$40 a person inside
+ *   24 hours.
+ * - Rosetta: booked; its MX$700 a person applies to parties of five to
+ *   twelve, which a single fee can't say, so none is charged.
+ * Hawksmoor Air Street's £25 a head is from a 2020 notice and isn't taken.
  * Alo releases its tables on the first Tuesday of the month and charges its
  * tasting menu a guest inside 72 hours, but SLATE keeps no price for that
  * menu, so it isn't booked here.
@@ -69,6 +83,17 @@ export const TABLE_POLICIES: Readonly<Record<string, TablePolicy>> = {
   'contramar-cdmx': { maxParty: 7, currency: 'MXN', confirmed: true },
   'pujol-polanco-cdmx': { fee: { lunch: 2_565, dinner: 2_565, noticeHours: 24 }, currency: 'MXN', confirmed: false },
   'quintonil-polanco-cdmx': { prepaid: 3_000, currency: 'MXN', confirmed: false },
+  'providence-la': { fee: { lunch: 375, dinner: 375, noticeHours: 168 }, currency: 'USD', confirmed: true },
+  'night-market-song-la': { currency: 'USD', confirmed: true },
+  'flat-iron-covent-garden-london': { currency: 'GBP', confirmed: true },
+  'pizza-pilgrims-dean-street-london': { currency: 'GBP', confirmed: true },
+  'kanada-ya-covent-garden-london': { walkInOnly: true, currency: 'GBP', confirmed: true },
+  'gotham-cafe-dublin': { fee: { lunch: 10, dinner: 10, noticeHours: 48 }, currency: 'EUR', confirmed: true },
+  'the-brazen-head-dublin': { minParty: 8, currency: 'EUR', confirmed: true },
+  'pai-northern-thai-toronto': { windowDays: 30, currency: 'CAD', confirmed: true },
+  'richmond-station-toronto': { windowDays: 45, maxParty: 20, fee: { lunch: 40, dinner: 40, noticeHours: 24 }, currency: 'CAD', confirmed: true },
+  'the-naam-vancouver': { walkInOnly: true, currency: 'CAD', confirmed: true },
+  'rosetta-roma-cdmx': { currency: 'MXN', confirmed: true },
 };
 
 export interface Reservation { id: string; restaurantId: string; at: Instant; party: number; item: string; prepaid: Money }
