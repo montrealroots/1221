@@ -36,6 +36,9 @@ its tests and journeys. The statuses are the owner's, worked out from the eviden
 | Implemented But Unverified: on a screen and tested, in no connected journey | 334 |
 | Partially Implemented: no screen offers it, or no test runs it | 6 |
 
+After the last journey below: 381 Verified (journey) of 381, none Implemented But Unverified,
+none Partially Implemented.
+
 No status claims a screen was checked in the running app: SLATE has no tests of its screens. The requirements, in
 `docs/REQUIREMENTS.md`, carry their own statuses in the same vocabulary, audited row by row on 2026-10-06.
 
@@ -60,6 +63,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Food, the garden and the lights | `tests/journey-food.test.ts` | kitchen gear bought, a recipe's shortfall bought in place, a ready meal eaten, food frozen and unusable until thawed; a cup of coffee; a cart filled, emptied and checked out once; favorites; a lamp and bulbs bought and fitted; a house's raised bed and greenhouse planted in season and picked into the kitchen, and a mower; in Los Angeles a car parked at a garage and a meter, beer and wine at home and a pint out, a meal out, a table reserved, cancelled and missed |
 | Health, gyms, benefits and pensions | `tests/journey-health.test.ts` | a dental plan bought, used and dropped; a prescription filled at Walmart's price; a course of CBT; a disabled parking permit; a marketplace claim denied, appealed and overturned, the overpayment back once; charity care; COBRA elected back to the plan's end and dropped; a gym joined, trained in with a trainer and left with its fee; SNAP to its limit, Ontario Works paid and stopped, EI registered, HAP's share of the rent; Britain's, Ireland's, Mexico's and Canada's pensions claimed and paid at their rates and on their days |
 | Residence and licenses | `tests/journey-residence.test.ts` | a New York license renewed as REAL ID; Mexican temporary residence, renewed in its window, settled and naturalized on, and the INE after; a Mexico City license earned; a graduate's OPT and an O-1, a Canadian visa and work permit for a Toronto job; an ID card lost and replaced; a Connecticut license made REAL ID and exchanged in New York |
+| Land, the home's extras, the last of the bank | `tests/journey-holdings.test.ts` | farmland withdrawn from, bought, let to a farmer and the lease ended, split, joined and sold; an alarm and its monitoring, window locks and timers; a mattress replaced; a washer mended; a computer and a speaker; moving by truck and by movers; a friend's ask said yes to; an electric car's home charger; Toronto's winter tires and the insurance they lower; IKEA's buyback in London; round-ups, a switch of bank, a card's plan, money transfer and hardship, an overdraft's loan; the guide read; the clock's speed; a question dismissed |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -89,6 +93,11 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Temporary residence given up for permanent was renewed and paid for | the residence journey | the renewal read a cancelled card | only a valid one (`systems/residence.ts`); the journey's case |
 | A New York City license renewed at $64.50, the price outside the MCTD | the residence journey | the renewal charged one fee wherever they lived | $80.50 for someone living inside it, as the DMV's own figure in `content/licenses.ts` says (`renewalInside`); the journey's case and `tests/licensing.test.ts`, which had asserted $64.50. A first license and an exchange there still aren't charged the MCTD's part: its 8-year figure isn't published |
 | A second ID card was issued and charged for while a lost one's replacement was in the post | the residence journey | `idCardRefusal` refused only a card in force | one on its way refused too (`systems/identity.ts`); the journey's case |
+| Splitting land on a loan gave each half the whole loan | the holdings journey | `land.split` copied the parcel, loan and all | refused while a loan's on it: the lender's lien is on the whole, and SLATE takes no partial release (`splitRefusal`); the journey's case |
+| Joining a parcel on a loan into another dropped the loan, owed on the books and never paid | the holdings journey | `land.combine` cancelled its payments and kept nothing | the loan and its next payment carried to the joined parcel; two loans aren't joined (`systems/land.ts`); the journey's case |
+| A piece bought with IKEA's refund card sold back for less, or nothing | the holdings journey | its price was kept as what the bank paid | its price as new kept, as IKEA's tiers are of it (`systems/furnishings.ts`); the journey's case |
+| The preferences took anything, and kept it | the holdings journey | `Object.assign` of the payload | only the clock's speed, as one of its four (`world/world.ts`); the journey's case |
+| A question was dismissed twice, the day its keeping counts from moved | the holdings journey | no check | refused (`world/world.ts`); the journey's case |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -134,16 +143,16 @@ birthday on the day the law counts it, in New York and in London.
 | 2026-10-06 | `8b4f3328` | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `40c9dccb` | the same, five batches | the full suite and every check, with the two food fixes | 363 files and 3,310 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `28c8d33a` | the same, five batches | the full suite and every check, with the dental plan's fix | 364 files and 3,323 tests passed; typecheck, lint and every check exited 0 |
-| 2026-10-06 | the residence journey's commit | the same, five batches | the full suite and every check, with the four papers fixes | 365 files and 3,330 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | `f9cf1fe1` | the same, five batches | the full suite and every check, with the four papers fixes | 365 files and 3,330 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | the holdings journey's commit | the same, five batches | the full suite and every check, with the five holdings fixes | 366 files and 3,346 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: land, the home's extras and the last of the bank are next; the bank, papers,
-  belongings, cars, the career, homes, people, clothes, travel, food, health and residence are done. 355 of 381
-  commands are now in a connected journey.
-- The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
+- Every one of the 381 commands is in a connected journey, saved and loaded with every law held. That is the engine's
+  word for it, not a screen's: no screen is machine-tested.
+- The six commands that had no test or screen at `4ff55077` each have both now; `docs/TRACEABILITY.md` lists none.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
 - No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.

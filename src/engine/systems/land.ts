@@ -247,6 +247,9 @@ export function splitRefusal(p: Parcel, person?: Person): string | undefined {
   const m = LAND_MARKETS[p.market]!;
   if (p.selling || p.soldAt !== undefined) return 'It’s being sold.';
   if (buildingOn(person, p)) return 'A house is being built on it.';
+  // The lender's lien is on the whole parcel, and a part released needs its consent, which SLATE doesn't take (from
+  // 2026-10-06; until then each half was given the whole loan, and owed it twice).
+  if (p.loan) return 'The lender holds the whole parcel: pay the land loan off to split it.';
   const least = m.kind === 'lot' ? m.zoning?.minAcres ?? 0 : 1;
   if (m.place === 'london') return 'A plot with planning permission is split by a new permission, which SLATE doesn’t take.';
   if (p.acres / 2 < least) return `Each half would be under the ${m.zoning ? `${m.zoning.name} minimum, ${areaWords(least, m.place)}` : 'acre SLATE keeps'}.`;
@@ -409,11 +412,20 @@ export function registerLand(sim: Simulation): void {
     if (!a || !b) throw new CommandError('Two parcels you own, neither for sale.');
     if (buildingOn(person, a) || buildingOn(person, b)) throw new CommandError('A house is being built on it.');
     if (a.lease || b.lease) throw new CommandError('Let land isn’t joined: end the lease first.');
+    // One loan goes with the land it's on; two aren't made one (from 2026-10-06; until then the second's was dropped,
+    // owed on the books and never paid).
+    if (a.loan && b.loan) throw new CommandError('Each is on its own loan: pay one off to join them.');
     if (LAND_MARKETS[a.market]!.place !== LAND_MARKETS[b.market]!.place || LAND_MARKETS[a.market]!.label !== LAND_MARKETS[b.market]!.label) throw new CommandError('Parcels combine only where they’re the same place.');
     a.acres += b.acres;
     a.paid += b.paid;
     b.soldAt = s.now;
+    const payment = s.universe.scheduled.find((x) => x.status === 'pending' && x.kind === LAND_LOAN_KIND && x.payload.parcelId === b.id);
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.parcelId === b.id) s.timeline.cancel(item.id, s.now);
+    if (b.loan) {
+      a.loan = b.loan;
+      delete b.loan;
+      if (payment) s.schedule({ at: payment.at, kind: LAND_LOAN_KIND, label: payment.label, category: payment.category, priority: payment.priority, payload: { ...payment.payload, parcelId: a.id } });
+    }
     return { parcelId: a.id };
   });
 
