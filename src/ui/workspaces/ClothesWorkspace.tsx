@@ -840,7 +840,7 @@ function Fit() {
           </select>
         )}
         {off.map((g) => {
-          const no = t ? alterRefusal(person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
+          const no = t ? alterRefusal(sim, person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
           return (
             <div key={g.id} className="row-between small">
               <span><Open subject={at('garment', g.id)}>{g.label}</Open><span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>
