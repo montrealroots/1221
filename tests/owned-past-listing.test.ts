@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { itemsOf } from '@/engine/systems/items';
-import { computerCatalog, gamingComputer } from '@/engine/systems/computers';
+import { computerCatalog, computerForGames } from '@/engine/systems/computers';
 import { tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { handMower, mowersAt } from '@/engine/systems/mowers';
 import { homeKeyOf } from '@/engine/systems/items';
@@ -24,7 +24,7 @@ describe('a thing owned, its listing gone', () => {
     const item = itemsOf(sim.player).find((i) => i.id === itemId)!;
     expect(item.made).toMatchObject({ brand: pc.product.brand, model: pc.product.model });
     delist(item);
-    expect(gamingComputer(sim.player)).toBe(true);
+    expect(computerForGames(sim.player)).toBe(true);
     const tv = tvCatalog(sim, sim.player).find((r) => typeof r.product.attrs.onModeWatts === 'number')!;
     const bought = sim.must<{ itemId: string }>({ kind: 'tv.buy', payload: { offerId: tv.offer.id } });
     delist(itemsOf(sim.player).find((i) => i.id === bought.itemId)!);
