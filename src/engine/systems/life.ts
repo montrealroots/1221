@@ -660,11 +660,13 @@ const SPENT = 25;
  * morning of a twelve-hour shoot the player could sleep for eight hours and
  * the day still counted as worked.
  */
-export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefined {
+export function occupiedAt(sim: Simulation, at: Instant, except?: string): ScheduledItem | undefined {
   const list = sim.universe.scheduled;
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const one = list[i]!;
-    if (one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
+    // `except`: the item asking, from its own handler, which is marked done before it runs (from 2026-10-06; until
+    // then a table asking what held them found itself, and nothing else ever kept them from it).
+    if (one.id === except || one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
     if (one.payload.personId !== undefined && one.payload.personId !== sim.player.id) continue;
     if (at < one.at + one.durationMinutes * 60_000) return one;
   }

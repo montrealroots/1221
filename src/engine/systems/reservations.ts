@@ -165,7 +165,7 @@ export function registerReservations(sim: Simulation): void {
     if (!person || !res) return;
     person.reservations = reservationsOf(person).filter((x) => x.id !== res.id);
     const r = restaurantById(res.restaurantId)!;
-    const busy = occupiedAt(s, item.at);
+    const busy = occupiedAt(s, item.at, item.id);
     const there = present(person, item.at, r.cityId) && (!busy || busy.kind === RESERVATION_KIND);
     const mine = person.id === s.universe.playerId;
     if (!there) {

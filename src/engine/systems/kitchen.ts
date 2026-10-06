@@ -49,7 +49,7 @@ import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { payWith, payWithRefusal, spend, type PayWith } from './household';
-import { addItem, coldRoomL, coldUsedL, homeKeyOf, itemById, moveRefusal, SPOT_LABEL, type Item } from './items';
+import { addItem, coldRoomL, coldUsedL, homeKeyOf, itemById, moveRefusal, reachable, SPOT_LABEL, type Item } from './items';
 import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
 import { GEAR_LINEUP } from '../content/kitchengearlineup';
 import { exerts } from './body';
@@ -399,6 +399,8 @@ export function cupOf(item: Stocked): number | undefined {
 
 export function drinkAtHome(sim: Simulation, person: Person, itemId: string): number {
   const item = itemById(person, itemId) as Stocked | undefined;
+  // At the home they're in, put away (from 2026-10-06; until then a can still in the car at the shops was poured).
+  if (item?.food && !(item.at.kind === 'home' && reachable(sim, person, item.at))) throw new CommandError('It isn’t at home with you.');
   const cup = item?.food ? cupOf(item) : undefined;
   if (item && cup !== undefined) {
     if (!fresh(item, sim.now)) throw new CommandError('It’s gone off.');
