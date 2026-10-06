@@ -46,7 +46,7 @@ export const BIRTH_KIND = 'child.birth';
 const YEAR_MS = 365.2425 * MS_DAY;
 const MONTH_MS = YEAR_MS / 12;
 
-export interface Child { id: string; name: string; born: Instant; otherParentId?: string; /** Living with their other parent, after a separation (`systems/support.ts`, from 2026-10-02). */ livesWith?: 'them' }
+export interface Child { id: string; name: string; born: Instant; otherParentId?: string; /** Living with their other parent, after a separation (`systems/support.ts`, from 2026-10-02). */ livesWith?: 'them'; /** Their own passport (`systems/childpassports.ts`, from 2026-10-05). */ passport?: import('./childpassports').ChildPassport }
 
 /** A child lives with you unless they stayed with their other parent. */
 export const livesWithYou = (k: Child): boolean => k.livesWith !== 'them';

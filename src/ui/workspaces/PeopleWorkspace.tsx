@@ -17,6 +17,7 @@ import { RESTAURANTS } from '@/engine/content/restaurants';
 import { diningQuote } from '@/engine/systems/dining';
 import { billShare, divorceTerms, marriageCost, marryRefusal } from '@/engine/systems/marriage';
 import { childBenefit, childrenOf, raisingMonth, tryRefusal } from '@/engine/systems/children';
+import { childPassportRefusal, childPassportTerms } from '@/engine/systems/childpassports';
 import { APPS, MATCHES, appPrice } from '@/engine/systems/dating';
 import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption';
 import { Gated } from '@/ui/guide/Guide';
@@ -415,7 +416,18 @@ function Family() {
     <Panel title="Your Family" subtitle={`Raising them, your share: ${money(raisingMonth(sim, person, sim.now))} A Month; the State’s Child Benefit: ${money(childBenefit(sim, person, sim.now))} A Month`}>
       <LookRegion className="col gap-1 small">
         {person.pregnancy && <div>A Baby Due <Open subject={at('day', dateKey(person.pregnancy.due, sim.homeZone))}>{formatDate(person.pregnancy.due, sim.zone)}</Open></div>}
-        {kids.map((k) => <div key={k.id}><Open subject={at('child', k.id)}>{k.name}</Open>{`, ${age(k.born)}${k.livesWith === 'them' ? ', Living With Their Other Parent' : ''}`}</div>)}
+        {kids.map((k) => {
+          // Their own passport (`systems/childpassports.ts`, from 2026-10-05).
+          const noPass = childPassportRefusal(sim, person, k.id);
+          const terms = childPassportTerms(person, k, sim.now);
+          const pass = k.passport ? (k.passport.readyAt > sim.now ? `, A Passport Ready ${formatDate(k.passport.readyAt, sim.zone)}` : k.passport.expiresAt > sim.now ? `, A Passport To ${formatDate(k.passport.expiresAt, sim.zone)}` : ', Their Passport Expired') : '';
+          return (
+            <div key={k.id} className="field-row">
+              <span><Open subject={at('child', k.id)}>{k.name}</Open>{`, ${age(k.born)}${k.livesWith === 'them' ? ', Living With Their Other Parent' : ''}${pass}`}</span>
+              {!noPass && typeof terms !== 'string' && <Gated feature="children.passport" className="btn btn-sm btn-ghost" title={`${terms.adult ? 'An adult’s passport' : 'A child’s passport'}, ${terms.years} years, ready in ${terms.days} days`} onClick={() => { if (run('children.passport', { childId: k.id }).ok) toast('Applied for.', 'positive'); }}>Apply For Their Passport</Gated>}
+            </div>
+          );
+        })}
         {supportLines(sim, person, sim.now).map((l) => <div key={l.contact.id}>{l.amount < 0 ? 'Child Support To ' : 'Child Support From '}<Open subject={at('contact', l.contact.id)}>{l.contact.name}</Open>{`: ${money(Math.abs(l.amount))} A Month`}</div>)}
         {person.familyPath && <div>{`${person.familyPath.kind === 'adoption' ? 'Adopting: A Child Expected' : 'A Surrogacy: The Baby Due'} `}<Open subject={at('day', dateKey(person.familyPath.arrives, sim.homeZone))}>{formatDate(person.familyPath.arrives, sim.zone)}</Open></div>}
       </LookRegion>

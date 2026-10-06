@@ -11,7 +11,9 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { journeysOf, planJourney, type Journey } from '@/engine/systems/journey';
 import { LAP_CHILD, childFare, childRefusal, companionRefusal } from '@/engine/systems/companions';
-import { childrenOf } from '@/engine/systems/children';
+import { childrenOf, type Child } from '@/engine/systems/children';
+import { childBorderRefusal, childPassportTerms } from '@/engine/systems/childpassports';
+import { CHILD_PASSPORTS } from '@/engine/content/childpassports';
 import { contactsOf } from '@/engine/systems/people';
 
 const YEAR = 365.2425 * MS_DAY;
@@ -38,7 +40,7 @@ const book = (sim: Simulation, toCity: string, extra: Record<string, unknown> = 
 };
 const flights = (j: Journey) => j.legs.filter((l) => l.mode === 'flight');
 const kid = (sim: Simulation, years: number, extra: Record<string, unknown> = {}) => {
-  const k = { id: `k${years}`, name: `Kit ${years}`, born: sim.now - years * YEAR, ...extra };
+  const k: Child = { id: `k${years}`, name: `Kit ${years}`, born: sim.now - years * YEAR, ...extra };
   childrenOf(sim.player).push(k);
   return k;
 };
@@ -105,5 +107,33 @@ describe('a child along', () => {
     // A train's child fare wasn't read; a car takes them for nothing.
     expect(childFare(sim, { ...out, by: 'nec-nyp-was-acela' }, theirs)).toBe('SLATE keeps no child’s fare for the train, so a child goes by air or by road.');
     expect(childFare(sim, { ...out, by: 'car:v1' }, theirs)).toBe(0);
+  });
+});
+
+describe('a child’s passport (requirement 47m, from 2026-10-05)', () => {
+  it('is needed to cross a border, applied for at the child fee, and ready after its office’s days', () => {
+    const sim = life('us-ny-newyork', 'kid-passport');
+    const child = kid(sim, 8);
+    const { out } = book(sim, 'ca-on-toronto');
+    expect(childRefusal(sim, sim.player, out.id, child.id)).toBe('Kit has no passport for crossing a border.');
+    const terms = childPassportTerms(sim.player, child, sim.now) as { fee: number; days: number; years: number; adult: boolean };
+    expect(terms).toMatchObject({ fee: 135, currency: 'USD', years: 5, days: 42, adult: false });
+    const r = sim.must<{ paid: number; readyAt: number }>({ kind: 'children.passport', payload: { childId: child.id } });
+    expect(r.paid).toBe(inSave(sim, 135_00, 'USD'));
+    expect(r.readyAt - sim.now).toBe(42 * MS_DAY);
+    // Booked for two weeks out, it won't be ready by then.
+    expect(childRefusal(sim, sim.player, out.id, child.id)).toBe('Kit’s passport won’t be ready by then.');
+    // Ready in time for a trip two months out, it goes.
+    child.passport!.readyAt = sim.now;
+    expect(childRefusal(sim, sim.player, out.id, child.id)).toBeUndefined();
+    // Within the country, none is asked for.
+    expect(childBorderRefusal(kid(sim, 9), 'us-ny-newyork', 'us-ca-losangeles', out.leaveAt, undefined)).toBeUndefined();
+  });
+
+  it('is the adult’s past the child’s ages, and Mexico’s one-year passport under three', () => {
+    const sim = life('us-ny-newyork', 'kid-passport-ages');
+    expect(childPassportTerms(sim.player, kid(sim, 17), sim.now)).toMatchObject({ adult: true, years: 10 });
+    expect(CHILD_PASSPORTS.MX!.infant).toEqual({ under: 3, fee: 920, years: 1 });
+    expect(CHILD_PASSPORTS.GB!.fee).toBe(66.5);
   });
 });
