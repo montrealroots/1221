@@ -54,6 +54,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | Cars | `tests/journey-cars.test.ts` | a used Camry from forecourt to buyer through a breakdown, a stand-in, fuel to the cent and a sale; a London private sale's transfer and Britain's premium loadings; leases bought out and returned; a repossession redeemed; a caravan towed only by what's rated to |
 | The career and the school | `tests/journey-career.test.ts` | headshots, a reel, agencies queried and signed, an offer countered 12.45% higher, a guest part's checks less the agent's and the manager's commissions and tax to the cent, union fees and dues, a play's replacement for a missed call, the school's shifts and Cabaret, a pension and Social Security at 62, Toronto's T1287 withholding |
 | Homes | `tests/journey-homes.test.ts` | a renter moved to a one-bedroom, its deposits to the cent, rent paid ahead and taken on the day, internet, insurance and a cleaner billed and stopped, a portable washer taking the wash home, the post held and a sitter; a buyer's earnest, mortgage, escrow and principal to the cent, central air's 72.1% of its cost in the value, works with California's capped deposit, a lodger, a refinance and an equity loan, the home let through a manager and the tenancy ended, and the sale paying both loans off |
+| People | `tests/journey-people.test.ts` | a meal out with a friend paid and remembered, a second ask over the same hour refused; Tinder Plus paid, its matches, and stopped; a classmate dated to a couple, moved in, the rent and bills halved; a wedding refused then paid; a child born, raised and given a passport; a divorce's fees once, the rent whole again; a kickball season and parkrun joined, gone to, renewed and left, the dues stopping; a mother's care given, paid and left to the state; a house bought and a friend from New York to stay in its guest room; an adoption |
 | Air travel | `tests/journey.test.ts` | flights, hotels, refunds, delays, a lost passport at check-in |
 
 ## Defects found, their causes, and their repairs
@@ -71,6 +72,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A British private sale was driven every day before its transfer, though refused for an errand | the cars journey | `drivenThen` didn't ask `laidUp` | the one rule for both; the journey's case |
 | A fill nobody could pay for went through into arrears, and its refusal never came | the cars journey | `vehicle.refuel` paid with `spend(..., true)` | paid or refused; the journey's case. Every other purchase run into arrears was read: each pays for something already used (fuel burned, a class taken, a meal eaten) |
 | A sick day called in kept no student home: they were counted in class, grew and tired | the career journey | the class day read the sick day only after finding them absent | read first; the journey's case |
+| A home held one bed at most, so a guest room's bed had to be the host's own, and the host slept on the floor | the people journey | `home.furnish` refused any second bed | a bed for each bedroom of theirs, and a guest room's bed not counted as theirs to sleep in (`bedsAtHome`, `ownBed` in `systems/furniture.ts`); the journey's case and `tests/furniture.test.ts` |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -111,14 +113,15 @@ birthday on the day the law counts it, in New York and in London.
 |---|---|---|---|---|
 | 2026-10-06 | `bfd4dd7b` | `npm run gate` with `VITEST_MAX_FORKS=2` | the full suite and every check | 3,228 tests passed; the voice check failed on five law names, fixed, and every check after it run and passed |
 | 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
+| 2026-10-06 | the people journey's commit | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.
 
 ## What remains
 
-- The domain journeys continue: clothes, people, travel, food and routines are next; the bank, papers, belongings,
-  cars, the career and homes are done.
+- The domain journeys continue: clothes, travel, food and routines are next; the bank, papers, belongings, cars,
+  the career, homes and people are done. 248 of 380 commands are now in a connected journey.
 - The six commands with no test or screen are named in `docs/TRACEABILITY.md`.
 - `docs/REQUIREMENTS.md` keeps the rows still partial, each with what's missing.
 - No screen is machine-tested, and nothing is deployed: no requirement is marked verified in the running app.

@@ -33,8 +33,9 @@ import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
 import { jurisdictionOf, isPickup, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { mayDrive } from './documents';
-import { addItem, followTheMove, hasAtHome, homeKeyOf, itemsOf } from './items';
-import { KIVIK_M2, fitRefusal } from './rooms';
+import { addItem, followTheMove, hasAtHome, homeKeyOf, itemsOf, type Item } from './items';
+import { KIVIK_M2, fitRefusal, roomList } from './rooms';
+import { pieceById } from './furnishings';
 import { byRoad, roadKm } from './driving';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -50,8 +51,23 @@ export const owns = (person: Person, piece: Piece): boolean => hasAtHome(person,
 /** Whether a piece was at a home, by the home's key. */
 const hadAt = (person: Person, home: string | undefined, piece: Piece): boolean => Boolean(home) && itemsOf(person).some((i) => i.kind === `furniture:${piece}` && i.at.kind === 'home' && i.at.home === home);
 
+/**
+ * The beds at the home they live in, and whether one is a guest room's (from 2026-10-06): a bed put in a room made a
+ * guest room (`home.room_use`) is the guest's, not theirs to sleep in. Until then a home held one bed at most, so a
+ * guest room's bed had to be the host's own.
+ */
+export function bedsAtHome(person: Person): { item: Item; guest: boolean }[] {
+  const home = homeKeyOf(person.home);
+  const uses = person.home?.kind === 'owned' ? (person.homes ?? []).find((h) => h.id === (person.home as { homeId?: string }).homeId)?.roomUses ?? {} : {};
+  return itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && isBedKind(i.kind))
+    .map((item) => ({ item, guest: item.at.kind === 'home' && item.at.room !== undefined && uses[item.at.room] === 'guest' }));
+}
+const isBedKind = (kind: string): boolean => kind === 'furniture:bed' || /bed/i.test(pieceById(kind.slice(5))?.type ?? '');
+/** A bed of their own to sleep in at home: one not in a guest room. */
+export const ownBed = (person: Person): boolean => bedsAtHome(person).some((b) => !b.guest);
+
 /** Sleeping at home on the floor: an empty home and no bed of their own. */
-export const onTheFloor = (person: Person): boolean => bareHome(person) && !owns(person, 'bed');
+export const onTheFloor = (person: Person): boolean => bareHome(person) && !ownBed(person);
 
 /** What an hour unwinding at home takes off, of the usual: half in an empty home with no sofa. */
 export const unwindComfort = (person: Person): number => (bareHome(person) && !owns(person, 'sofa') ? WITHOUT.unwindBare : 1);
@@ -70,7 +86,11 @@ export function pieceCost(sim: Simulation, cityId: string, piece: Piece): { amou
 }
 
 export function furnishRefusal(sim: Simulation, person: Person, piece: Piece): string | undefined {
-  if (owns(person, piece)) return 'You have one.';
+  // A bed for each bedroom of theirs (from 2026-10-06), a guest room's too; one sofa.
+  if (piece === 'bed') {
+    const rooms = roomList(sim, person).filter((r) => r.kind === 'bedroom' && r.access === 'yours').length;
+    if (bedsAtHome(person).length >= Math.max(1, rooms)) return rooms > 1 ? 'Every bedroom of yours has a bed.' : 'You have one.';
+  } else if (owns(person, piece)) return 'You have one.';
   // A bed or a sofa has to fit in the rooms (`systems/rooms.ts`, from 2026-10-03): a bed its country's usual double, a sofa the KIVIK.
   const country = CITIES.get(person.home?.cityId ?? '')?.countryId ?? '';
   const usual = BED_MARKET[country] ? bedSize(BED_MARKET[country]!, DEFAULT_BED_SIZE[country]!) : undefined;

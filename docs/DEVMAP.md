@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-380 commands; 379 named by a test, 1 not.
+380 commands; 380 named by a test, 0 not.
 
 ## aircraft
 
@@ -160,13 +160,13 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `children.passport` | `src/engine/systems/childpassports.ts` | `PeopleWorkspace.tsx` | `childtravel.test.ts` | Rent And A Roof |
+| `children.passport` | `src/engine/systems/childpassports.ts` | `PeopleWorkspace.tsx` | `childtravel.test.ts` `journey-people.test.ts` | Rent And A Roof |
 
 ## class
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `class.take` | `src/engine/systems/life.ts` | `HomesWorkspace.tsx` `PeopleWorkspace.tsx` | `dropins.test.ts` | People |
+| `class.take` | `src/engine/systems/life.ts` | `HomesWorkspace.tsx` `PeopleWorkspace.tsx` | `dropins.test.ts` `journey-people.test.ts` | People |
 
 ## clothes
 
@@ -196,13 +196,13 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `club.check_in` | `src/engine/systems/clubs.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` | People |
-| `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
-| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` `HomesWorkspace.tsx` | `clubs-going.test.ts` `clubs.test.ts` `journeys.test.ts` | People |
-| `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | **none** | People |
-| `club.renew` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
-| `club.rsvp` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
-| `club.set` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
+| `club.check_in` | `src/engine/systems/clubs.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` `journey-people.test.ts` | People |
+| `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journey-people.test.ts` `journeys.test.ts` | People |
+| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` `HomesWorkspace.tsx` | `clubs-going.test.ts` `clubs.test.ts` `journey-people.test.ts` `journeys.test.ts` | People |
+| `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `journey-people.test.ts` | People |
+| `club.renew` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journey-people.test.ts` | People |
+| `club.rsvp` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journey-people.test.ts` `journeys.test.ts` | People |
+| `club.set` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journey-people.test.ts` | People |
 
 ## computer
 
@@ -214,7 +214,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `dating.app` | `src/engine/systems/dating.ts` | `PeopleWorkspace.tsx` | `dating.test.ts` | People |
+| `dating.app` | `src/engine/systems/dating.ts` | `PeopleWorkspace.tsx` | `dating.test.ts` `journey-people.test.ts` | People |
 
 ## documents
 
@@ -253,7 +253,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `family.care` | `src/engine/systems/parents.ts` | `PeopleWorkspace.tsx` | `parents.test.ts` | People |
+| `family.care` | `src/engine/systems/parents.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `parents.test.ts` | People |
 
 ## finance
 
@@ -339,16 +339,16 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.end_sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.end_tenancy` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
 | `home.fit` | `src/engine/systems/appliances.ts` | `HomesWorkspace.tsx` | `appliance-models.test.ts` `appliances.test.ts` `journey-homes.test.ts` | Rent And A Roof |
-| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` `journey-homes.test.ts` `journey-people.test.ts` | Rent And A Roof |
 | `home.gardener` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
 | `home.hold_mail` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-acting-travel.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `journey-homes.test.ts` `telecom.test.ts` | Rent And A Roof |
 | `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
-| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `assistant.test.ts` `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `journey-homes.test.ts` `livelihood.test.ts` | Rent And A Roof |
+| `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `assistant.test.ts` `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `journey-homes.test.ts` `journey-people.test.ts` `livelihood.test.ts` | Rent And A Roof |
 | `home.move_by` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `motorhomes.test.ts` | Rent And A Roof |
 | `home.move_in` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `journey-homes.test.ts` `journey-housing-construction.test.ts` | Rent And A Roof |
-| `home.offer` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
+| `home.offer` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `homes.test.ts` `journey-homes.test.ts` `journey-people.test.ts` | Rent And A Roof |
 | `home.pay_landlord` | `src/engine/systems/household.ts` | `Home.tsx` | `homes-cohesion.test.ts` `journey-homes.test.ts` `payments.test.ts` | Rent And A Roof |
 | `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` `journey-homes.test.ts` | Rent And A Roof |
@@ -356,7 +356,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `journey-belongings.test.ts` `journey-homes.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
-| `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `houseguests.test.ts` `room-list.test.ts` | Rent And A Roof |
+| `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` `room-list.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `journey-homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
@@ -391,7 +391,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `items.assemble` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` `journey-belongings.test.ts` `journeys.test.ts` | Rent And A Roof |
 | `items.discard` | `src/engine/systems/bulky.ts` | `BelongingsWorkspace.tsx` | `bulky.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 | `items.give` | `src/engine/systems/gifts.ts` | `BelongingsWorkspace.tsx` | `gifts.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
-| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `journey-belongings.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `room-list.test.ts` `special-rooms.test.ts` | Rent And A Roof |
+| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `journey-belongings.test.ts` `journey-people.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `room-list.test.ts` `special-rooms.test.ts` | Rent And A Roof |
 | `items.put_away` | `src/engine/systems/trips.ts` | `BelongingsWorkspace.tsx` | `connected-day.test.ts` `journey-day-at-home.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `trips.test.ts` | Rent And A Roof |
 | `items.recover` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 
@@ -538,18 +538,18 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `social.adopt` | `src/engine/systems/adoption.ts` | `PeopleWorkspace.tsx` | `adoption.test.ts` | People |
-| `social.ask_out` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `people.test.ts` | People |
-| `social.ask_to_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` | People |
-| `social.break_up` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` `people.test.ts` | People |
-| `social.cancel_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` | People |
-| `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
-| `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `people.test.ts` `together.test.ts` | People |
-| `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
-| `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `people.test.ts` | People |
-| `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
-| `social.try_for_child` | `src/engine/systems/children.ts` | `PeopleWorkspace.tsx` | `children.test.ts` | People |
+| `social.adopt` | `src/engine/systems/adoption.ts` | `PeopleWorkspace.tsx` | `adoption.test.ts` `journey-people.test.ts` | People |
+| `social.ask_out` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
+| `social.ask_to_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
+| `social.break_up` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` `people.test.ts` | People |
+| `social.cancel_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
+| `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
+| `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` `journey-people.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `people.test.ts` `together.test.ts` | People |
+| `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
+| `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
+| `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
+| `social.try_for_child` | `src/engine/systems/children.ts` | `PeopleWorkspace.tsx` | `children.test.ts` `journey-people.test.ts` | People |
 
 ## speaker
 
