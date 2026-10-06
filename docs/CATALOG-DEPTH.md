@@ -1260,64 +1260,64 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Electronics: Computers
 
-56 brands, 0 deep enough, 56 short.
+56 brands, 2 deep enough, 54 short.
 
 | Brand | Products | Status |
 |---|---|---|
 | Asus | 15 | Short: 85 to go |
 | Acer | 13 | Short: 87 to go |
-| Samsung | 13 | Short: 87 to go |
+| Samsung | 13 | Short: 21 of its 22 in US to go |
 | HP | 12 | Short: 88 to go |
 | Lenovo | 12 | Short: 88 to go |
-| Microsoft | 11 | Short: 89 to go |
-| Apple | 10 | Short: 90 to go |
+| Microsoft | 11 | Short: 1 of its 4 in US to go |
+| Apple | 10 | Short: 7 of its 10 in US to go |
 | MSI | 9 | Short: 91 to go |
 | Dell | 8 | Short: 92 to go |
 | Gigabyte | 7 | Short: 93 to go |
 | LG | 4 | Short: 96 to go |
-| Razer | 4 | Short: 96 to go |
+| Razer | 4 | Whole range in US (3) |
 | Alienware | 3 | Short: 97 to go |
 | Amazon | 2 | Short: 98 to go |
-| Beelink | 2 | Short: 98 to go |
+| Beelink | 2 | Short: 18 of its 19 in US to go |
 | Fujitsu | 2 | Short: 98 to go |
-| Gateway | 2 | Short: 98 to go |
-| GEEKOM | 2 | Short: 98 to go |
+| Gateway | 2 | Short: 5 of its 7 in US to go |
+| GEEKOM | 2 | Short: 27 of its 28 in US to go |
 | Google | 2 | Short: 98 to go |
-| Minisforum | 2 | Short: 98 to go |
-| OnePlus | 2 | Short: 98 to go |
-| Yeyian | 2 | Short: 98 to go |
-| ABS | 1 | Short: 99 to go |
-| Alldocube | 1 | Short: 99 to go |
+| Minisforum | 2 | Short: 5 of its 6 in US to go |
+| OnePlus | 2 | Whole range in US (1) |
+| Yeyian | 2 | Short: 10 of its 12 in MX to go |
+| ABS | 1 | Short: 4 of its 5 in US to go |
+| Alldocube | 1 | Short: 20 of its 21 in US to go |
 | ASRock | 1 | Short: 99 to go |
 | Avita | 1 | Short: 99 to go |
 | Chillblast | 1 | Short: 99 to go |
-| Chuwi | 1 | Short: 99 to go |
-| Corsair | 1 | Short: 99 to go |
-| CyberPower | 1 | Short: 99 to go |
-| CyberPowerPC | 1 | Short: 99 to go |
-| Doogee | 1 | Short: 99 to go |
-| Dynabook | 1 | Short: 99 to go |
+| Chuwi | 1 | Short: 20 of its 21 in US to go |
+| Corsair | 1 | Short: 13 of its 14 in US to go |
+| CyberPower | 1 | Short: 44 of its 44 in US to go |
+| CyberPowerPC | 1 | Short: 43 of its 44 in US to go |
+| Doogee | 1 | Short: 7 of its 8 in US to go |
+| Dynabook | 1 | Short: 17 of its 17 in US to go |
 | Fierce PC | 1 | Short: 99 to go |
-| Framework | 1 | Short: 99 to go |
+| Framework | 1 | Short: 5 of its 5 in US to go |
 | Ghia | 1 | Short: 99 to go |
-| GMKtec | 1 | Short: 99 to go |
-| Honor | 1 | Short: 99 to go |
-| Huawei | 1 | Short: 99 to go |
+| GMKtec | 1 | Short: 25 of its 26 in US to go |
+| Honor | 1 | Short: 41 of its 41 in GB (GLOBAL.HONOR.COM) to go |
+| Huawei | 1 | Short: 6 of its 7 in GB to go |
 | iBUYPOWER | 1 | Short: 99 to go |
 | Lanix | 1 | Short: 99 to go |
-| Mele | 1 | Short: 99 to go |
-| NZXT | 1 | Short: 99 to go |
+| Mele | 1 | Short: 16 of its 16 in US (STORE.MELE.CN SHIPS INTERNATIONALLY) to go |
+| NZXT | 1 | Short: 5 of its 6 in US to go |
 | Overclockers UK | 1 | Short: 99 to go |
-| Panasonic | 1 | Short: 99 to go |
+| Panasonic | 1 | Short: 5 of its 6 in US to go |
 | PCSpecialist | 1 | Short: 99 to go |
-| Purism | 1 | Short: 99 to go |
-| Raspberry Pi | 1 | Short: 99 to go |
+| Purism | 1 | Short: 4 of its 5 in US to go |
+| Raspberry Pi | 1 | Short: 4 of its 5 in US to go |
 | Skytech | 1 | Short: 99 to go |
-| Stormforce | 1 | Short: 99 to go |
-| System76 | 1 | Short: 99 to go |
-| Teclast | 1 | Short: 99 to go |
+| Stormforce | 1 | Short: 11 of its 12 in GB to go |
+| System76 | 1 | Short: 5 of its 6 in US to go |
+| Teclast | 1 | Short: 23 of its 23 in US (EN.TECLAST.COM, INTERNATIONAL STOREFRONT) to go |
 | Trigkey | 1 | Short: 99 to go |
-| Vorago | 1 | Short: 99 to go |
+| Vorago | 1 | Short: 14 of its 15 in MX to go |
 | Xiaomi | 1 | Short: 99 to go |
 | Zotac | 1 | Short: 99 to go |
 
@@ -1385,73 +1385,73 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
-| Marshall | 18 | Short: 82 to go |
-| Anker Soundcore | 13 | Short: 87 to go |
-| Sonos | 12 | Short: 88 to go |
+| Marshall | 18 | Short: 15 of its 21 in US to go |
+| Anker Soundcore | 13 | Short: 13 of its 26 in US to go |
+| Sonos | 12 | Short: 5 of its 17 in US to go |
 | JBL | 11 | Short: 89 to go |
-| Polk Audio | 11 | Short: 89 to go |
-| Bose | 9 | Short: 91 to go |
-| Bowers & Wilkins | 6 | Short: 94 to go |
+| Polk Audio | 11 | Short: 9 of its 16 in US to go |
+| Bose | 9 | Short: 9 of its 18 in US to go |
+| Bowers & Wilkins | 6 | Short: 11 of its 17 in US to go |
 | Q Acoustics | 6 | Short: 94 to go |
-| Ultimate Ears | 6 | Short: 94 to go |
+| Ultimate Ears | 6 | Short: 4 of its 10 in US to go |
 | Audioengine | 5 | Short: 95 to go |
-| Cambridge Audio | 5 | Short: 95 to go |
-| Denon | 5 | Short: 95 to go |
-| KEF | 5 | Short: 95 to go |
-| Klipsch | 5 | Short: 95 to go |
+| Cambridge Audio | 5 | Short: 7 of its 12 in US to go |
+| Denon | 5 | Short: 23 of its 28 in US to go |
+| KEF | 5 | Short: 10 of its 14 in US to go |
+| Klipsch | 5 | Short: 13 of its 17 in US to go |
 | Samsung | 5 | Short: 95 to go |
 | Amazon Echo | 4 | Short: 96 to go |
-| Bang & Olufsen | 4 | Short: 96 to go |
-| Edifier | 4 | Short: 96 to go |
+| Bang & Olufsen | 4 | Short: 18 of its 21 in US to go |
+| Edifier | 4 | Short: 56 of its 59 in US to go |
 | Harman Kardon | 4 | Short: 96 to go |
 | Sony | 4 | Short: 96 to go |
 | Yamaha | 4 | Short: 96 to go |
-| Audio Pro | 3 | Short: 97 to go |
-| Dali | 3 | Short: 97 to go |
+| Audio Pro | 3 | Short: 10 of its 13 in US to go |
+| Dali | 3 | Short: 24 of its 27 in US to go |
 | Devialet | 3 | Short: 97 to go |
 | Focal | 3 | Short: 97 to go |
 | Google Nest | 3 | Short: 97 to go |
-| Kanto | 3 | Short: 97 to go |
-| LG | 3 | Short: 97 to go |
-| Tribit | 3 | Short: 97 to go |
-| Vizio | 3 | Short: 97 to go |
-| Apple | 2 | Short: 98 to go |
-| Elac | 2 | Short: 98 to go |
-| Steren | 2 | Short: 98 to go |
-| Wharfedale | 2 | Short: 98 to go |
-| Acoustic Energy | 1 | Short: 99 to go |
-| Altec Lansing | 1 | Short: 99 to go |
-| Beats | 1 | Short: 99 to go |
-| Bluesound | 1 | Short: 99 to go |
-| Cabasse | 1 | Short: 99 to go |
-| Canton | 1 | Short: 99 to go |
-| Creative | 1 | Short: 99 to go |
+| Kanto | 3 | Short: 15 of its 18 in US to go |
+| LG | 3 | Short: 8 of its 10 in US to go |
+| Tribit | 3 | Short: 32 of its 35 in US to go |
+| Vizio | 3 | Short: 1 of its 4 in US to go |
+| Apple | 2 | Short: 3 of its 5 in US to go |
+| Elac | 2 | Short: 23 of its 25 in US to go |
+| Steren | 2 | Short: 20 of its 22 in MX to go |
+| Wharfedale | 2 | Short: 71 of its 71 in GB to go |
+| Acoustic Energy | 1 | Short: 19 of its 20 in GB to go |
+| Altec Lansing | 1 | Short: 15 of its 16 in US to go |
+| Beats | 1 | Short: 8 of its 9 in US to go |
+| Bluesound | 1 | Short: 2 of its 3 in US to go |
+| Cabasse | 1 | Short: 34 of its 34 in US to go |
+| Canton | 1 | Short: 15 of its 15 in US to go |
+| Creative | 1 | Short: 19 of its 20 in US to go |
 | Definitive Technology | 1 | Short: 99 to go |
-| Fluance | 1 | Short: 99 to go |
-| Hisense | 1 | Short: 99 to go |
-| Jamo | 1 | Short: 99 to go |
-| Lenco | 1 | Short: 99 to go |
-| Logitech | 1 | Short: 99 to go |
-| Majority | 1 | Short: 99 to go |
-| MartinLogan | 1 | Short: 99 to go |
-| Mission | 1 | Short: 99 to go |
-| Monitor Audio | 1 | Short: 99 to go |
-| Naim | 1 | Short: 99 to go |
+| Fluance | 1 | Short: 20 of its 21 in US to go |
+| Hisense | 1 | Short: 9 of its 10 in US to go |
+| Jamo | 1 | Short: 26 of its 27 in US to go |
+| Lenco | 1 | Short: 13 of its 14 in GB to go |
+| Logitech | 1 | Short: 8 of its 9 in US to go |
+| Majority | 1 | Short: 4 of its 5 in GB to go |
+| MartinLogan | 1 | Short: 39 of its 40 in US to go |
+| Mission | 1 | Short: 39 of its 40 in GB to go |
+| Monitor Audio | 1 | Short: 10 of its 11 in US to go |
+| Naim | 1 | Short: 3 of its 4 in GB to go |
 | Panasonic | 1 | Short: 99 to go |
-| Paradigm | 1 | Short: 99 to go |
-| Philips | 1 | Short: 99 to go |
-| Pro-Ject | 1 | Short: 99 to go |
-| ProAc | 1 | Short: 99 to go |
-| PSB | 1 | Short: 99 to go |
-| Rega | 1 | Short: 99 to go |
+| Paradigm | 1 | Short: 38 of its 38 in CA to go |
+| Philips | 1 | Short: 4 of its 5 in US to go |
+| Pro-Ject | 1 | Short: 33 of its 34 in US to go |
+| ProAc | 1 | Short: 14 of its 15 in GB to go |
+| PSB | 1 | Short: 11 of its 11 in CA to go |
+| Rega | 1 | Short: 20 of its 21 in GB to go |
 | Roku | 1 | Short: 99 to go |
-| Ruark Audio | 1 | Short: 99 to go |
-| Sennheiser | 1 | Short: 99 to go |
+| Ruark Audio | 1 | Short: 14 of its 15 in GB to go |
+| Sennheiser | 1 | Short: 28 of its 29 in US to go |
 | Sharp | 1 | Short: 99 to go |
 | Steljes Audio | 1 | Short: 99 to go |
-| SVS | 1 | Short: 99 to go |
-| TCL | 1 | Short: 99 to go |
-| Teufel | 1 | Short: 99 to go |
+| SVS | 1 | Short: 30 of its 31 in US to go |
+| TCL | 1 | Short: 6 of its 7 in US to go |
+| Teufel | 1 | Short: 17 of its 17 in DE to go |
 | Triangle | 1 | Short: 99 to go |
 
 ## Home: Furniture
@@ -1661,7 +1661,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Home: Appliances
 
-59 brands, 0 deep enough, 59 short.
+59 brands, 1 deep enough, 58 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -1669,24 +1669,24 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Whirlpool | 6 | Short: 94 to go |
 | LG | 5 | Short: 95 to go |
 | Miele | 5 | Short: 95 to go |
-| Beko | 4 | Short: 96 to go |
+| Beko | 4 | Short: 8 of its 12 in GB to go |
 | Electrolux | 4 | Short: 96 to go |
 | Frigidaire | 4 | Short: 96 to go |
 | GE | 4 | Short: 96 to go |
-| Hisense | 4 | Short: 96 to go |
-| Midea | 4 | Short: 96 to go |
+| Hisense | 4 | Short: 8 of its 8 in US to go |
+| Midea | 4 | Short: 1 of its 5 in US to go |
 | Samsung | 4 | Short: 96 to go |
 | Amana | 3 | Short: 97 to go |
 | Haier | 3 | Short: 97 to go |
-| Hotpoint | 3 | Short: 97 to go |
+| Hotpoint | 3 | Whole range in GB (3) |
 | Maytag | 3 | Short: 97 to go |
-| Speed Queen | 3 | Short: 97 to go |
+| Speed Queen | 3 | Short: 12 of its 15 in US to go |
 | Acros | 2 | Short: 98 to go |
 | AEG | 2 | Short: 98 to go |
 | Atvio | 2 | Short: 98 to go |
 | Avanti | 2 | Short: 98 to go |
 | Belling | 2 | Short: 98 to go |
-| Bertazzoni | 2 | Short: 98 to go |
+| Bertazzoni | 2 | Short: 34 of its 35 in US to go |
 | Black+Decker | 2 | Short: 98 to go |
 | Cafe | 2 | Short: 98 to go |
 | Caple | 2 | Short: 98 to go |
@@ -1702,17 +1702,17 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Mabe | 2 | Short: 98 to go |
 | Magic Chef | 2 | Short: 98 to go |
 | Neff | 2 | Short: 98 to go |
-| Sharp | 2 | Short: 98 to go |
+| Sharp | 2 | Short: 9 of its 9 in US to go |
 | Siemens | 2 | Short: 98 to go |
 | Statesman | 2 | Short: 98 to go |
 | Swan | 2 | Short: 98 to go |
 | Viking | 2 | Short: 98 to go |
 | Asko | 1 | Short: 99 to go |
-| Blomberg | 1 | Short: 99 to go |
+| Blomberg | 1 | Short: 5 of its 6 in GB to go |
 | CDA | 1 | Short: 99 to go |
 | Daewoo | 1 | Short: 99 to go |
-| Fisher & Paykel | 1 | Short: 99 to go |
-| Gaggenau | 1 | Short: 99 to go |
+| Fisher & Paykel | 1 | Short: 11 of its 12 in US to go |
+| Gaggenau | 1 | Short: 3 of its 4 in US to go |
 | Grundig | 1 | Short: 99 to go |
 | Hoover | 1 | Short: 99 to go |
 | Insignia | 1 | Short: 99 to go |
@@ -2357,7 +2357,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Cars, Pickups And Vans
 
-74 brands, 12 deep enough, 62 short.
+74 brands, 18 deep enough, 56 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -2383,62 +2383,62 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Porsche | 9 | Whole range in US (6) |
 | Genesis | 8 | Whole range in US (6) |
 | MINI | 8 | Whole range in US (3) |
-| Škoda | 7 | Short: 93 to go |
-| BYD | 6 | Short: 94 to go |
+| Škoda | 7 | Short: 4 of its 11 in GB to go |
+| BYD | 6 | Short: 2 of its 6 in GB to go |
 | Citroën | 6 | Short: 94 to go |
-| Mitsubishi | 6 | Short: 94 to go |
-| Polestar | 6 | Short: 94 to go |
+| Mitsubishi | 6 | Short: 1 of its 5 in US to go |
+| Polestar | 6 | Whole range in US (3) |
 | Ram | 6 | Short: 94 to go |
-| Renault | 6 | Short: 94 to go |
+| Renault | 6 | Short: 8 of its 12 in GB to go |
 | Acura | 5 | Short: 95 to go |
 | Bentley | 5 | Short: 95 to go |
-| Lincoln | 5 | Short: 95 to go |
+| Lincoln | 5 | Whole range in US (4) |
 | MG | 5 | Short: 95 to go |
-| Suzuki | 5 | Short: 95 to go |
+| Suzuki | 5 | Short: 4 of its 8 in GB to go |
 | Tesla | 5 | Short: 4 of its 5 in US to go |
 | Alfa Romeo | 4 | Short: 96 to go |
-| Aston Martin | 4 | Short: 96 to go |
+| Aston Martin | 4 | Short: 6 of its 9 in GB to go |
 | Buick | 4 | Short: 96 to go |
-| Changan | 4 | Short: 96 to go |
+| Changan | 4 | Short: 2 of its 2 in GB to go |
 | Chrysler | 4 | Short: 96 to go |
-| Cupra | 4 | Short: 96 to go |
+| Cupra | 4 | Short: 3 of its 7 in GB to go |
 | Ferrari | 4 | Short: 96 to go |
 | Fiat | 4 | Short: 96 to go |
 | Peugeot | 4 | Short: 96 to go |
 | Rolls-Royce | 4 | Short: 96 to go |
 | Vauxhall | 4 | Short: 96 to go |
 | Chirey | 3 | Short: 97 to go |
-| Dacia | 3 | Short: 97 to go |
+| Dacia | 3 | Short: 3 of its 6 in GB to go |
 | Dodge | 3 | Short: 97 to go |
 | DS | 3 | Short: 97 to go |
-| Infiniti | 3 | Short: 97 to go |
-| Jaguar | 3 | Short: 97 to go |
+| Infiniti | 3 | Whole range in US (3) |
+| Jaguar | 3 | Short: 5 of its 6 in GB to go |
 | Lamborghini | 3 | Short: 97 to go |
-| Lotus | 3 | Short: 97 to go |
+| Lotus | 3 | Short: 2 of its 4 in GB to go |
 | Maserati | 3 | Short: 97 to go |
 | McLaren | 3 | Short: 97 to go |
 | Opel | 3 | Short: 97 to go |
-| Rivian | 3 | Short: 97 to go |
-| SEAT | 3 | Short: 97 to go |
+| Rivian | 3 | Whole range in US (2) |
+| SEAT | 3 | Short: 2 of its 5 in GB to go |
 | Smart | 3 | Short: 97 to go |
 | Abarth | 2 | Short: 98 to go |
-| BAIC | 2 | Short: 98 to go |
-| GAC | 2 | Short: 98 to go |
-| Geely | 2 | Short: 98 to go |
+| BAIC | 2 | Short: 2 of its 4 in MX to go |
+| GAC | 2 | Short: 7 of its 9 in MX to go |
+| Geely | 2 | Short: 3 of its 3 in GB to go |
 | JAC | 2 | Short: 98 to go |
-| Leapmotor | 2 | Short: 98 to go |
-| Lucid | 2 | Short: 98 to go |
-| Omoda | 2 | Short: 98 to go |
-| Skoda | 2 | Short: 98 to go |
-| VinFast | 2 | Short: 98 to go |
-| Alpine | 1 | Short: 99 to go |
-| GWM Ora | 1 | Short: 99 to go |
-| Jaecoo | 1 | Short: 99 to go |
-| Xpeng | 1 | Short: 99 to go |
+| Leapmotor | 2 | Short: 3 of its 5 in GB to go |
+| Lucid | 2 | Whole range in US (2) |
+| Omoda | 2 | Short: 2 of its 4 in GB to go |
+| Skoda | 2 | Short: 11 of its 11 in GB to go |
+| VinFast | 2 | Whole range in US (2) |
+| Alpine | 1 | Short: 2 of its 3 in GB to go |
+| GWM Ora | 1 | Short: 2 of its 3 in GB to go |
+| Jaecoo | 1 | Short: 2 of its 3 in GB to go |
+| Xpeng | 1 | Short: 1 of its 2 in GB to go |
 
 ## Vehicles: Motorcycles And Scooters
 
-66 brands, 1 deep enough, 65 short.
+66 brands, 3 deep enough, 63 short.
 
 | Brand | Products | Status |
 |---|---|---|
@@ -2447,19 +2447,19 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Kawasaki | 24 | Short: 76 to go |
 | Suzuki | 21 | Short: 21 of its 30 in US to go |
 | CFMoto | 18 | Short: 82 to go |
-| Kymco | 18 | Short: 82 to go |
+| Kymco | 18 | Short: 12 of its 17 in US to go |
 | Triumph | 18 | Short: 82 to go |
 | BMW Motorrad | 17 | Short: 83 to go |
 | KTM | 17 | Short: 12 of its 19 in US to go |
 | Ducati | 16 | Short: 7 of its 14 in US to go |
-| Harley-Davidson | 16 | Short: 84 to go |
+| Harley-Davidson | 16 | Short: 18 of its 25 in US to go |
 | Aprilia | 15 | Short: 85 to go |
-| Benelli | 14 | Short: 86 to go |
-| Royal Enfield | 14 | Short: 86 to go |
+| Benelli | 14 | Whole range in GB (8) |
+| Royal Enfield | 14 | Short: 7 of its 14 in US to go |
 | Zontes | 14 | Short: 86 to go |
-| Vespa | 13 | Short: 87 to go |
+| Vespa | 13 | Whole range in US (5) |
 | Indian | 12 | Short: 88 to go |
-| Husqvarna | 9 | Short: 91 to go |
+| Husqvarna | 9 | Short: 27 of its 30 in US to go |
 | Italika | 9 | Short: 91 to go |
 | Moto Guzzi | 9 | Short: 91 to go |
 | Zero | 9 | Short: 91 to go |
@@ -2468,7 +2468,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Carabela | 8 | Short: 92 to go |
 | Keeway | 8 | Short: 92 to go |
 | Moto Morini | 8 | Short: 92 to go |
-| MV Agusta | 8 | Short: 92 to go |
+| MV Agusta | 8 | Short: 4 of its 7 in GB to go |
 | QJMOTOR | 8 | Short: 92 to go |
 | Sinnis | 8 | Short: 92 to go |
 | Veloci | 8 | Short: 92 to go |
@@ -2488,7 +2488,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Janus | 5 | Short: 95 to go |
 | Niu | 5 | Short: 95 to go |
 | Royal Alloy | 5 | Short: 95 to go |
-| Energica | 4 | Short: 96 to go |
+| Energica | 4 | Short: 4 of its 4 in US to go |
 | Islo | 4 | Short: 96 to go |
 | Super Soco | 4 | Short: 96 to go |
 | Cake | 3 | Short: 97 to go |
@@ -2498,12 +2498,12 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Norton | 3 | Short: 97 to go |
 | BSA | 2 | Short: 98 to go |
 | Buell | 2 | Short: 98 to go |
-| Can-Am | 2 | Short: 98 to go |
+| Can-Am | 2 | Short: 2 of its 4 in US to go |
 | GasGas | 2 | Short: 98 to go |
 | Hanway | 2 | Short: 98 to go |
 | ItalJet | 2 | Short: 98 to go |
 | Kove | 2 | Short: 98 to go |
-| LiveWire | 2 | Short: 98 to go |
+| LiveWire | 2 | Short: 2 of its 4 in US to go |
 | Genuine | 1 | Short: 99 to go |
 | Peugeot | 1 | Short: 99 to go |
 | Ryvid | 1 | Short: 99 to go |
@@ -2602,14 +2602,14 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Carado | 2 | Short: 98 to go |
 | Elddis | 2 | Short: 2 of its 4 in GB to go |
 | Midwest Automotive Designs | 2 | Short: 98 to go |
-| Rapido | 2 | Short: 98 to go |
+| Rapido | 2 | Short: 16 of its 17 in GB to go |
 | Roller Team | 2 | Short: 98 to go |
 | Storyteller Overland | 2 | Short: 98 to go |
 | Westfalia | 2 | Short: 98 to go |
 | Airstream | 1 | Short: 2 of its 3 in US to go |
 | Auto-Sleeper | 1 | Short: 99 to go |
-| Auto-Trail | 1 | Short: 99 to go |
-| Bailey | 1 | Short: 99 to go |
+| Auto-Trail | 1 | Short: 5 of its 6 in GB to go |
+| Bailey | 1 | Short: 2 of its 3 in GB to go |
 | Bürstner | 1 | Short: 99 to go |
 | Chausson | 1 | Short: 99 to go |
 | Coach House | 1 | Short: 99 to go |
@@ -2624,7 +2624,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Globecar | 1 | Short: 99 to go |
 | Grech RV | 1 | Short: 99 to go |
 | Hobby | 1 | Short: 99 to go |
-| Hymer | 1 | Short: 99 to go |
+| Hymer | 1 | Short: 8 of its 9 in GB to go |
 | Itineo | 1 | Short: 99 to go |
 | Jayco | 1 | Short: 12 of its 13 in US to go |
 | Knaus | 1 | Short: 99 to go |
@@ -2636,13 +2636,13 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Newmar | 1 | Short: 15 of its 16 in US to go |
 | Nissan | 1 | Short: 99 to go |
 | Pilote | 1 | Short: 99 to go |
-| Pleasure-Way | 1 | Short: 99 to go |
+| Pleasure-Way | 1 | Short: 5 of its 5 in CA to go |
 | Ram | 1 | Short: 99 to go |
 | Regency RV | 1 | Short: 99 to go |
 | Rimor | 1 | Short: 99 to go |
-| Roadtrek | 1 | Short: 99 to go |
+| Roadtrek | 1 | Short: 5 of its 5 in CA to go |
 | Sunlight | 1 | Short: 99 to go |
-| Swift | 1 | Short: 99 to go |
+| Swift | 1 | Short: 3 of its 4 in GB to go |
 | Tiffin | 1 | Short: 11 of its 12 in US to go |
 | Toyota | 1 | Short: 99 to go |
 | Volkswagen | 1 | Short: 99 to go |
@@ -2784,35 +2784,35 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
-| Pioneer | 12 | Short: 88 to go |
+| Pioneer | 12 | Short: 24 of its 25 in US to go |
 | Kenwood | 11 | Short: 89 to go |
 | Alpine | 10 | Short: 90 to go |
-| JVC | 10 | Short: 90 to go |
+| JVC | 10 | Short: 55 of its 62 in US to go |
 | JBL | 8 | Short: 92 to go |
-| Kicker | 7 | Short: 93 to go |
-| Boss Audio | 6 | Short: 94 to go |
+| Kicker | 7 | Short: 21 of its 25 in US to go |
+| Boss Audio | 6 | Short: 69 of its 74 in US to go |
 | Infinity | 6 | Short: 94 to go |
-| Skar Audio | 6 | Short: 94 to go |
-| Rockville | 5 | Short: 95 to go |
+| Skar Audio | 6 | Short: 16 of its 22 in US to go |
+| Rockville | 5 | Short: 12 of its 16 in US to go |
 | Sony | 5 | Short: 95 to go |
 | Focal | 4 | Short: 96 to go |
 | Rockford Fosgate | 4 | Short: 96 to go |
-| Atoto | 2 | Short: 98 to go |
+| Atoto | 2 | Short: 39 of its 40 in US to go |
 | Audison | 2 | Short: 98 to go |
 | Clarion | 2 | Short: 98 to go |
 | DS18 | 2 | Short: 98 to go |
-| Hertz | 2 | Short: 98 to go |
+| Hertz | 2 | Short: 15 of its 16 in US to go |
 | Hifonics | 2 | Short: 98 to go |
-| In Phase | 2 | Short: 98 to go |
-| Polk Audio | 2 | Short: 98 to go |
-| Power Acoustik | 2 | Short: 98 to go |
-| Soundstream | 2 | Short: 98 to go |
-| Taramps | 2 | Short: 98 to go |
+| In Phase | 2 | Short: 47 of its 48 in GB to go |
+| Polk Audio | 2 | Short: 11 of its 12 in US to go |
+| Power Acoustik | 2 | Short: 32 of its 33 in US to go |
+| Soundstream | 2 | Short: 29 of its 30 in US to go |
+| Taramps | 2 | Short: 19 of its 20 in US to go |
 | Vibe | 2 | Short: 98 to go |
-| Xtrons | 2 | Short: 98 to go |
-| American Bass | 1 | Short: 99 to go |
-| Blaupunkt | 1 | Short: 99 to go |
-| Cerwin-Vega | 1 | Short: 99 to go |
+| Xtrons | 2 | Short: 13 of its 14 in US to go |
+| American Bass | 1 | Short: 10 of its 11 in US to go |
+| Blaupunkt | 1 | Short: 37 of its 37 in US to go |
+| Cerwin-Vega | 1 | Short: 15 of its 16 in US to go |
 | Crunch | 1 | Short: 99 to go |
 | DD Audio | 1 | Short: 99 to go |
 | Diamond Audio | 1 | Short: 99 to go |
@@ -2825,7 +2825,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Helix | 1 | Short: 99 to go |
 | Image Dynamics | 1 | Short: 99 to go |
 | JL Audio | 1 | Short: 99 to go |
-| Massive Audio | 1 | Short: 99 to go |
+| Massive Audio | 1 | Short: 27 of its 28 in US to go |
 | Memphis Car Audio | 1 | Short: 99 to go |
 | Morel | 1 | Short: 99 to go |
 | Mosconi | 1 | Short: 99 to go |
@@ -2837,7 +2837,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Planet Audio | 1 | Short: 99 to go |
 | RE Audio | 1 | Short: 99 to go |
 | SoundQubed | 1 | Short: 99 to go |
-| Sundown Audio | 1 | Short: 99 to go |
+| Sundown Audio | 1 | Short: 17 of its 18 in US to go |
 | Zapco | 1 | Short: 99 to go |
 
 ## Building And Garden: Building Materials, Fixtures And Finishes
