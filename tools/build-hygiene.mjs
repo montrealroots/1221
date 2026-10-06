@@ -20,7 +20,9 @@ const COSMETIC_KINDS = ['foundation', 'lipstick', 'mascara', 'eye-shadow', 'eyel
 const cosmeticUse = Object.fromEntries((COSMETICS.usage ?? []).filter((u) => COSMETIC_KINDS.includes(u.kind) && u.gPerDay > 0).map((u) => [u.kind, u.gPerDay]));
 
 const seen = new Set();
-const toiletries = [...j.products, ...(COSMETICS.products ?? []).filter((p) => COSMETIC_KINDS.includes(p.kind) && cosmeticUse[p.kind] && p.sizeQty > 0 && (p.sizeUnit === 'g' || p.sizeUnit === 'ml'))].filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
+// And more everyday toiletries from the same brands (`research-toiletries-2.json`, from 2026-10-05), each with its brand.
+const MORE_TOILETRIES = existsSync('docs/research/world/research-toiletries-2.json') ? JSON.parse(readFileSync('docs/research/world/research-toiletries-2.json', 'utf8')).products ?? [] : [];
+const toiletries = [...j.products, ...MORE_TOILETRIES, ...(COSMETICS.products ?? []).filter((p) => COSMETIC_KINDS.includes(p.kind) && cosmeticUse[p.kind] && p.sizeQty > 0 && (p.sizeUnit === 'g' || p.sizeUnit === 'ml'))].filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
   seen.add(id);

@@ -39,10 +39,10 @@ which never counts toward the target.
 | Home | Appliances | 59 | 100% | 110 | 1 / 2 / 5 | 0 | 112 | 110 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
-| Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
+| Personal Care | Toiletries And Grooming | 85 | 100% | 320 | 1 / 2 / 27 | 0 | 320 | 322 | 1 | CA, GB, IE, MX, US | No |
 | Personal Care | Cosmetics And Haircare | 52 | 100% | 132 | 1 / 1 / 15 | 0 | 132 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 64 | 100% | 263 | 1 / 3 / 15 | 0 | 263 | 268 | 0 | CA, GB, IE, MX, US | No |
-| Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
+| Food | Groceries | 176 | 100% | 562 | 1 / 1 / 59 | 0 | 562 | 574 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 74 | 100% | 145 | 1 / 1 / 9 | 0 | 145 | 148 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
