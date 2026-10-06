@@ -52,6 +52,7 @@ import { STATIONS } from '@/engine/content/errandtrips';
 import { homeShareOf } from '@/engine/systems/charging';
 import { audioQuote, stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, drivenOn, inspectionPrice, reportOn, testDriveMinutes, usedListings } from '@/engine/systems/usedcars';
+import { buildLabel } from '@/engine/systems/modelyears';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
@@ -120,7 +121,7 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} /><CarSpecs modelId={v.modelId} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
+                        <td><Open subject={at('vehicle', v.id)}>{v.modelYear ? `${v.modelYear} ` : ''}{m.make} {m.model}</Open>{v.build ? <div className="xs dim">{buildLabel(v.build)}</div> : null}<FuelGauge v={v} /><CarSpecs modelId={v.modelId} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
                         <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
@@ -215,7 +216,7 @@ export function VehiclesWorkspace() {
                 <select id="car-age" value={age} onChange={(e) => setAge(Number(e.target.value))}>
                   <option value={0}>New</option>
                   {/* This month's used cars on offer: each its own age, odometer and seller (`usedListings`). */}
-                  {(model && j ? usedListings(sim, person, model.id, homeOf(person), j) : []).map((l) => <option key={l.age} value={l.age}>{`${l.age} ${l.age === 1 ? 'Year' : 'Years'} Old, ${l.odometerKm.toLocaleString('en-US')} Km, ${l.seller === 'private' ? 'Privately' : 'At A Dealer'}`}</option>)}
+                  {(model && j ? usedListings(sim, person, model.id, homeOf(person), j) : []).map((l) => <option key={l.age} value={l.age}>{`${l.modelYear ? `A ${l.modelYear}, ` : ''}${l.age} ${l.age === 1 ? 'Year' : 'Years'} Old, ${l.odometerKm.toLocaleString('en-US')} Km, ${l.seller === 'private' ? 'Privately' : 'At A Dealer'}${l.build ? `: ${buildLabel(l.build).split(', ').slice(1).join(', ')}` : ''}`}</option>)}
                 </select>
               </div>
               <div className="field">

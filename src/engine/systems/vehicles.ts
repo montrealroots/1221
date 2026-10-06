@@ -81,6 +81,7 @@ import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
 import { TRANSFER, registerUsedCars, usedFault, usedListings, type UsedListing } from './usedcars';
+import { buildsFor, hasModelYears, newModelYear, type Build } from './modelyears';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -116,6 +117,9 @@ export interface OwnedVehicle {
   /** Modifications fitted and declared (`systems/mods.ts`). */
   mods?: import('./mods').Mod[];
   modelId: string;
+  /** Its model year and its configuration as rated for that year, where its model's are kept (`systems/modelyears.ts`, from 2026-10-05). */
+  modelYear?: number;
+  build?: import('./modelyears').Build;
   /** When it was bought, and how old it was then: a used one's years. */
   boughtAt: Instant;
   ageAtPurchase: number;
@@ -743,6 +747,8 @@ export function buyRefusal(sim: Simulation, person: Person, modelId: string, opt
   if (opts.financed && opts.coverage === 'liability') return 'A lender asks for full cover on a car it finances.';
   if (opts.financed && loanRate(j, person.credit?.score ?? 0, (opts.age ?? 0) > 0) === undefined) return 'SLATE doesn’t have a published car loan rate there yet: buy it outright.';
   if ((opts.age ?? 0) < 0 || (opts.age ?? 0) > 15) return 'A used car of up to fifteen years.';
+  // A new car isn't sold before its first model year is out (`systems/modelyears.ts`, from 2026-10-05).
+  if ((opts.age ?? 0) === 0 && hasModelYears(model.id) && newModelYear(model.id, homeOf(person), sim.now) === undefined) return `The ${model.make} ${model.model} isn’t on sale yet: its first model year goes on sale on 1 July of the year before it.`;
   // A used car is one on offer this month (`usedListings`, from 2026-10-03; until then any age at all).
   if ((opts.age ?? 0) > 0 && !listingFor(sim, person, modelId, opts.age!)) return `No ${model.make} ${model.model} of ${opts.age} years is on offer this month: ${usedListings(sim, person, modelId, homeOf(person), j).map((l) => l.age).join(', ')} years old are.`;
   return undefined;
@@ -784,6 +790,21 @@ export function registerVehicles(sim: Simulation): void {
     const id = s.nextId('vehicle');
     const seller = age === 0 ? dealerFor(cityId, model.make) : undefined;
     const v: OwnedVehicle = { id, modelId: model.id, fillUp: p.fillUp === 'auto' ? 'auto' : 'self', ...(seller ? { seller } : {}), boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    // Its model year and configuration: the listing's, or for a new car the model year on sale, built as the trim's
+    // rating is nearest (`systems/modelyears.ts`, from 2026-10-05).
+    if (listing?.modelYear !== undefined) { v.modelYear = listing.modelYear; if (listing.build) v.build = listing.build; }
+    else if (age === 0) {
+      const my = newModelYear(model.id, cityId, s.now);
+      if (my !== undefined) {
+        v.modelYear = my;
+        const builds = buildsFor(model.id, my).filter((b) => b.fuel === model.fuel);
+        const rating = (b: Build): number | null => (b.fuel === 'ev' ? b.kwhPer100km : b.per100km);
+        const target = (model.fuel === 'ev' ? model.kwhPer100km : model.per100km) ?? null;
+        const gap = (b: Build): number => (target === null || rating(b) === null ? Infinity : Math.abs(rating(b)! - target));
+        const best = [...builds].sort((a, b) => gap(a) - gap(b))[0];
+        if (best) v.build = best;
+      }
+    }
     // The listing's odometer, and a private sale's transfer to do (`systems/usedcars.ts`).
     if (listing) {
       v.odometerAtPurchase = listing.odometerKm;

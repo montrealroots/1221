@@ -39,8 +39,11 @@ describe('the tank', () => {
     expect(cap.unit).toBe('L');
     expect(cap.estimated).toBe(false);
     expect(levelOf(v)).toBe(1);
-    expect(rangeKm(v)).toBeCloseTo((cap.size * 100) / m.per100km!, 6);
+    // A car of a model year burns as that year was rated (`systems/modelyears.ts`, from 2026-10-05); the model without one, its catalog figure.
+    const per = v.build?.per100km ?? m.per100km!;
+    expect(rangeKm(v)).toBeCloseTo((cap.size * 100) / per, 6);
     expect(burnOf(m, 100)).toBeCloseTo(m.per100km!, 9);
+    expect(burnOf(m, 100, v)).toBeCloseTo(per, 9);
   });
 
   it('fills at a station to full at the pump price, and won’t when full', () => {
@@ -112,7 +115,7 @@ describe('the tank', () => {
     expect(levelOf(v)).toBeCloseTo(expected.fuelLevel!, 9);
     expect(levelOf(v)).toBeLessThan(1);
     // Tint keeps the cabin cool, and the air conditioning burns less (`systems/tint.ts`).
-    expect(burnOf(m, 100, { ...v, tint: { kind: 'full' } } as never)!).toBeCloseTo(m.per100km! * tintFuelFactor({ tint: { kind: 'full' } } as never), 9);
+    expect(burnOf(m, 100, { ...v, tint: { kind: 'full' } } as never)!).toBeCloseTo((v.build?.per100km ?? m.per100km!) * tintFuelFactor({ tint: { kind: 'full' } } as never), 9);
     expect(tintFuelFactor({ tint: { kind: 'full' } } as never)).toBeLessThan(1);
     v.fuelLevel = 0.5;
     sim.player.currentLocationId = 'us-ct-newhaven';
