@@ -28,7 +28,7 @@ which never counts toward the target.
 | Accessories | Watches | 55 | 100% | 167 | 1 / 2 / 12 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 50 | 100% | 136 | 1 / 2 / 15 | 0 | 197 | 139 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Phones | 53 | 100% | 110 | 1 / 1 / 10 | 0 | 236 | 377 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Phones | 53 | 100% | 127 | 1 / 2 / 18 | 0 | 253 | 414 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 56 | 100% | 106 | 1 / 1 / 6 | 0 | 106 | 107 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Televisions | 51 | 100% | 271 | 1 / 2 / 40 | 0 | 273 | 328 | 0 | CA, GB, IE, MX, US | No |
