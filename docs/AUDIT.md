@@ -119,6 +119,12 @@ Reproduce: check out the commit in the `slate-lives` worktree, copy `probe/play-
 into it, and run `bash probe/chunk.sh <out> <snaps> "death-1:us-ny-newyork:modest:" "death-ldn:uk-eng-london:modest:"`
 until it prints `ALL DONE`; then `npx vite-node tools/breaches.mjs <snaps>`.
 
+The same two lives at `c94c7b33`, with all 381 commands in a journey and the twenty-nine defects in the table above
+fixed, played in foreground chunks of eight minutes: New York to 89 on 2091-11-06 and London to 50 on 2052-09-08,
+the same days; 0 errors and 0 anomalies each; every law held at all eight snapshots; New York's save 19.5 MB at the
+end with 68,365 transactions and 1,483 scheduled items, London's 6.1 MB, 21,345 and 1,215; no notice twice among either's
+last 500. `main` was merged from it as `45bbc415`.
+
 ## The command sweep
 
 `tests/commands-robust.test.ts` gives every one of the 375 commands an empty payload and a payload of nonsense (ids
@@ -138,13 +144,14 @@ birthday on the day the law counts it, in New York and in London.
 |---|---|---|---|---|
 | 2026-10-06 | `bfd4dd7b` | `npm run gate` with `VITEST_MAX_FORKS=2` | the full suite and every check | 3,228 tests passed; the voice check failed on five law names, fixed, and every check after it run and passed |
 | 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
+| 2026-10-06 | `c94c7b33` | the replay above, in foreground chunks | two lives | clean; `main` merged as `45bbc415` |
 | 2026-10-06 | `49c5d3b3` | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `abda6d4e` | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `8b4f3328` | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `40c9dccb` | the same, five batches | the full suite and every check, with the two food fixes | 363 files and 3,310 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `28c8d33a` | the same, five batches | the full suite and every check, with the dental plan's fix | 364 files and 3,323 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `f9cf1fe1` | the same, five batches | the full suite and every check, with the four papers fixes | 365 files and 3,330 tests passed; typecheck, lint and every check exited 0 |
-| 2026-10-06 | the holdings journey's commit | the same, five batches | the full suite and every check, with the five holdings fixes | 366 files and 3,346 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | `c94c7b33` | the same, five batches | the full suite and every check, with the five holdings fixes | 366 files and 3,346 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.
