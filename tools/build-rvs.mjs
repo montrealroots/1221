@@ -52,9 +52,9 @@ for (const f of existsSync(DIR) ? readdirSync(DIR).filter((x) => /^rv-.*\.json$/
       delivery: 0, deliveryBasis: 'no destination or delivery charge was published with it',
       fuel: m.fuel === 'diesel' ? 'diesel' : 'petrol',
       per100km: read ?? UNRATED[m.kind][0],
-      economyBasis: read !== null ? `${m.economy.value} ${m.economy.unit}, ${m.make}’s figure` : `${m.make} publishes none: ${UNRATED[m.kind][1]}`,
+      economyBasis: read !== null ? `${m.economy.value} ${m.economy.unit}, ${m.make}’s figure` : `none published by ${m.make}: ${UNRATED[m.kind][1]}`,
       co2: null, kerbKg: null,
-      source: p.url, sourceType: p.sourceType === 'primary' ? 'read on the maker’s page' : 'read on a dealer’s page',
+      source: p.url, sourceType: p.sourceType === 'primary' ? 'read on the maker’s page' : 'read on a dealer’s page or a guide’s (RVUSA)',
     });
   }
 }

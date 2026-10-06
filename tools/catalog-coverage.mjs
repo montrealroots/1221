@@ -70,6 +70,11 @@ const isSneaker = (p) => p.category === 'footwear' && !/\b(slides?|sandals?|chan
   && (/sneaker|trainer/i.test(p.subcategory ?? '') || /\b(sneakers?|trainers?|tenis|runners?|running shoes?|chuck 70|samba|air force 1)\b/i.test(p.name));
 const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.category] ?? p.category) === cat && !(cat === 'footwear' && isSneaker(p)))
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
+const rvLine = (model) => {
+  const words = String(model).split(/\s+/);
+  const at = words.findIndex((w, i) => i > 0 && /\d/.test(w));
+  return (at < 0 ? words : words.slice(0, at)).join(' ');
+};
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
 /**
@@ -152,7 +157,9 @@ const READ = {
   // Rackets, paddles and balls for a home's court or pitch, from 2026-10-05.
   sports: () => SPORT_GEAR.map((g) => row(g.brand, `${g.brand}|${g.name}`, 1, g.market.toUpperCase())),
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
-  rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
+  // By model line, its floorplans its variants (from 2026-10-06), as the makers' ranges are counted: the name up to its
+  // first token with a figure in it, keeping a leading one ("Greyhawk 27U" is Greyhawk; Rapido's "6 Series 696F" is 6 Series).
+  rvs: () => [...RV_MODELS, ...RV_LINEUP].map((m) => row(m.make, `${m.make}|${rvLine(m.model)}`, 1, m.market)),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },
 };
 

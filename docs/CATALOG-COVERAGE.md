@@ -48,9 +48,9 @@ counts its products as unbranded, which never counts toward the target. Each bra
 | Food | Groceries | 176 | 100% | 556 | 1 / 1 / 58 | 0 | 556 | 574 | 40 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 74 | 100% | 139 | 1 / 1 / 8 | 0 | 139 | 148 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 12 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorcycles And Scooters | 66 | 100% | 610 | 1 / 7 / 63 | 1 | 610 | 728 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorhomes And Campervans | 53 | 100% | 80 | 1 / 1 / 4 | 0 | 80 | 82 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorhomes And Campervans | 53 | 100% | 111 | 1 / 1 / 31 | 0 | 111 | 127 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |

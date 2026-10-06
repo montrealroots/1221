@@ -226,20 +226,22 @@
    "from": "docs/research/catalog/ranges-vehicles-tires.json"
   },
   "motorcycles|Honda": {
-   "range": 46,
+   "range": 34,
    "market": "US",
    "url": "https://powersports.honda.com/motorcycle",
    "counted": "Gold Wing (incl. Tour), NT1100, Fury, Shadow Phantom, Rebel (300/500/1100), CBR1000RR-R Fireblade, CBR1000RR, CBR600RR, CBR650R, CBR500R, CB1000 Hornet, CB1000F, CB750 Hornet, SCL500, CB650R, CB500 Hornet, CB300R, Grom, Dax125, Monkey, Trail125, Navi, Africa Twin, Transalp, NC750X, NX500, XR650L, CRF450RL, CRF300L, XR150L, ADV160, PCX, Ruckus, Metropolitan, CRF450X, CRF450RX, CRF300F, CRF250RX, CRF125F, CRF110F, CRF50F, CRF450R, CRF250R, CRF150R, Montesa Cota 301RR, Montesa Cota 4RT",
    "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+   "from": "docs/research/catalog/ranges-vehicles-tires.json",
+   "roadOnly": "The lineup counted 46 with 12 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 34 can be registered for the road (2026-10-06)."
   },
   "motorcycles|Yamaha": {
-   "range": 45,
+   "range": 25,
    "market": "US",
    "url": "https://www.yamahamotorsports.com/motorcycles",
    "counted": "YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3, MT-10, MT-10 SP, MT-09, MT-09 SP, MT-07, MT-03, BOLT R-SPEC, XSR900, XSR700, V STAR 250, FJR1300ES, TENERE 700, TENERE 700 World Raid, Tracer 9, XT250, TW200, WR125R, XMAX, Zuma 125, YZ450F, YZ250F, YZ250, YZ125, YZ85LW, YZ85, YZ65, YZ450FX, YZ250FX, YZ250X, YZ125X, WR450F, WR250F, TT-R230, TT-R125LE, TT-R110E, TT-R50E, PW50",
    "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json"
+   "from": "docs/research/catalog/ranges-vehicles-tires.json",
+   "roadOnly": "The lineup counted 45 with 20 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 25 can be registered for the road (2026-10-06)."
   },
   "motorcycles|Suzuki": {
    "range": 30,

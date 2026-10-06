@@ -2438,12 +2438,12 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 ## Vehicles: Motorcycles And Scooters
 
-66 brands, 0 deep enough, 66 short.
+66 brands, 1 deep enough, 65 short.
 
 | Brand | Products | Status |
 |---|---|---|
-| Honda | 44 | Short: 36 of its 46 in US to go |
-| Yamaha | 31 | Short: 35 of its 45 in US to go |
+| Honda | 63 | Whole range in US (34) |
+| Yamaha | 42 | Short: 3 of its 25 in US to go |
 | Kawasaki | 24 | Short: 76 to go |
 | Suzuki | 21 | Short: 21 of its 30 in US to go |
 | CFMoto | 18 | Short: 82 to go |
@@ -2594,35 +2594,31 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
+| Thor | 31 | Short: 7 of its 38 in US to go |
+| Winnebago | 16 | Short: 2 of its 18 in US to go |
 | Mercedes-Benz | 4 | Short: 1 of its 2 in GB to go |
-| Thor | 4 | Short: 35 of its 38 in US to go |
-| Winnebago | 4 | Short: 14 of its 18 in US to go |
-| Elddis | 3 | Short: 2 of its 4 in GB to go |
 | Ford | 3 | Short: 97 to go |
-| Airstream | 2 | Short: 1 of its 3 in US to go |
 | Benimar | 2 | Short: 98 to go |
 | Carado | 2 | Short: 98 to go |
-| Coachmen | 2 | Short: 98 to go |
-| Fleetwood | 2 | Short: 98 to go |
-| Jayco | 2 | Short: 11 of its 13 in US to go |
-| Leisure Travel Vans | 2 | Short: 98 to go |
+| Elddis | 2 | Short: 2 of its 4 in GB to go |
 | Midwest Automotive Designs | 2 | Short: 98 to go |
-| Newmar | 2 | Short: 14 of its 16 in US to go |
 | Rapido | 2 | Short: 98 to go |
 | Roller Team | 2 | Short: 98 to go |
 | Storyteller Overland | 2 | Short: 98 to go |
-| Swift | 2 | Short: 98 to go |
 | Westfalia | 2 | Short: 98 to go |
+| Airstream | 1 | Short: 2 of its 3 in US to go |
 | Auto-Sleeper | 1 | Short: 99 to go |
 | Auto-Trail | 1 | Short: 99 to go |
 | Bailey | 1 | Short: 99 to go |
 | Bürstner | 1 | Short: 99 to go |
 | Chausson | 1 | Short: 99 to go |
 | Coach House | 1 | Short: 99 to go |
+| Coachmen | 1 | Short: 99 to go |
 | Dynamax | 1 | Short: 99 to go |
 | East To West | 1 | Short: 99 to go |
 | Entegra Coach | 1 | Short: 12 of its 13 in US to go |
 | Eura Mobil | 1 | Short: 99 to go |
+| Fleetwood | 1 | Short: 99 to go |
 | Forest River | 1 | Short: 99 to go |
 | Frankia | 1 | Short: 99 to go |
 | Globecar | 1 | Short: 99 to go |
@@ -2630,11 +2626,14 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Hobby | 1 | Short: 99 to go |
 | Hymer | 1 | Short: 99 to go |
 | Itineo | 1 | Short: 99 to go |
+| Jayco | 1 | Short: 12 of its 13 in US to go |
 | Knaus | 1 | Short: 99 to go |
+| Leisure Travel Vans | 1 | Short: 99 to go |
 | Malibu | 1 | Short: 99 to go |
 | McLouis | 1 | Short: 99 to go |
 | Mobilvetta | 1 | Short: 99 to go |
 | Murvi | 1 | Short: 99 to go |
+| Newmar | 1 | Short: 15 of its 16 in US to go |
 | Nissan | 1 | Short: 99 to go |
 | Pilote | 1 | Short: 99 to go |
 | Pleasure-Way | 1 | Short: 99 to go |
@@ -2643,6 +2642,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Rimor | 1 | Short: 99 to go |
 | Roadtrek | 1 | Short: 99 to go |
 | Sunlight | 1 | Short: 99 to go |
+| Swift | 1 | Short: 99 to go |
 | Tiffin | 1 | Short: 11 of its 12 in US to go |
 | Toyota | 1 | Short: 99 to go |
 | Volkswagen | 1 | Short: 99 to go |
