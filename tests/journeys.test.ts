@@ -5,6 +5,7 @@
  * twice or held twice; with the edge cases a life meets on the way.
  */
 import { describe, expect, it } from 'vitest';
+import { breaches } from '@/engine/core/invariants';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
@@ -56,6 +57,8 @@ describe('a drive to the shops and back', () => {
     // Edge: a fill bigger than the tank holds, and diesel in a petrol car, refused.
     expect(sim.execute({ kind: 'vehicle.refuel', payload: { vehicleId: car, amount: { by: 'quantity', value: 999 } } }).error).toMatch(/^It holds/);
     expect(sim.execute({ kind: 'vehicle.refuel', payload: { vehicleId: car, grade: 'diesel', amount: { by: 'quantity', value: 1 } } }).error).toBe('A petrol car can’t take diesel.');
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -75,6 +78,8 @@ describe('clothes bought through to resale', () => {
     // Edge: sold, it can't be sold again; nothing chosen is refused.
     expect(sim.execute({ kind: 'clothes.sell', payload: { itemIds: [bought!.id] } }).ok).toBe(false);
     expect(sim.execute({ kind: 'clothes.sell', payload: { itemIds: [] } }).error).toBe('Choose what to sell.');
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -100,6 +105,8 @@ describe('a hotel stay', () => {
     expect(sim.player.currentLocationId).toBe(NY);
     expect(itemsOf(sim.player).some((i) => i.at.kind === 'held')).toBe(false);
     expect(packedIn(sim.player, suitcaseOf(sim.player)!)).toHaveLength(packed);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('left without repacking, its things are held there; collected on a later stay', () => {
@@ -115,6 +122,8 @@ describe('a hotel stay', () => {
     expect(itemsOf(sim.player).filter((i) => i.at.kind === 'held')).toHaveLength(n);
     sim = reload(sim);
     expect(sim.execute({ kind: 'items.recover', payload: { cityId: 'us-ca-losangeles' } }).error).toBe('It’s collected in Los Angeles.');
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -137,6 +146,8 @@ describe('pet care before a trip', () => {
     expect(sim.player.currentLocationId).toBe(NY);
     expect(petsOf(sim.player)).toHaveLength(1);
     expect(memos(sim, /sitter/i)).toBe(1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -156,6 +167,8 @@ describe('a car modified, and the way about meanwhile', () => {
     sim.must({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: car } });
     sim.must({ kind: 'errand.go', payload: { to: 'home' } });
     expect(memos(sim, /^A Full Respray, fitted$/)).toBe(1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -177,6 +190,8 @@ describe('a club meeting', () => {
     expect(m.missed).toBeUndefined();
     expect(m.met?.length).toBe(1);
     expect(memos(sim, /transit, a ride$/)).toBe(2);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -193,6 +208,8 @@ describe('a room furnished and used', () => {
     expect(seatsAtHome(sim.player).seats).toBeGreaterThan(seats);
     // Edge: away from home it can't be put together, and put together it can't be again.
     expect(sim.execute({ kind: 'items.assemble', payload: { itemId: chair.id } }).error).toBe('It’s put together.');
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -201,5 +218,7 @@ describe('the edges a life meets', () => {
     const sim = life('j-edges');
     sim.player.documents = (sim.player.documents ?? []).filter((d) => d.kind !== 'passport');
     expect(sim.execute({ kind: 'travel.book', payload: { toCity: 'uk-eng-london', day: noon(sim, 10), slot: 1, nights: 2 } }).ok).toBe(false);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });

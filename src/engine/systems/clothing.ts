@@ -155,6 +155,14 @@ const FIT_LABEL: Readonly<Record<string, string>> = { maternity: 'Maternity', pe
 /** Every cut a product is sold in, where its retailer files it under more than one: a legging in petite, tall and plus is all three. */
 export const fitsOf = (p: ClothingProduct): string[] => [...new Set([...(p.fitLines ?? []).map((l) => FIT_LABEL[l] ?? l), ...(p.dept ? [p.dept] : [])])];
 
+/** The fibers a garment's material names, as a shop's filter offers them (from 2026-10-06): "60% Cotton, 40% Polyester" is Cotton and Polyester. */
+const FIBRES: readonly [RegExp, string][] = [
+  [/\bcotton\b/i, 'Cotton'], [/\bpolyester\b/i, 'Polyester'], [/\bmerino\b/i, 'Merino Wool'], [/\bwool\b/i, 'Wool'], [/\bcashmere\b/i, 'Cashmere'],
+  [/\blinen\b/i, 'Linen'], [/\bsilk\b/i, 'Silk'], [/\bnylon|polyamide\b/i, 'Nylon'], [/\b(?:spandex|elastane|lycra)\b/i, 'Elastane'], [/\b(?:rayon|viscose)\b/i, 'Viscose'],
+  [/\b(?:lyocell|tencel)\b/i, 'Lyocell'], [/\bmodal\b/i, 'Modal'], [/\bacrylic\b/i, 'Acrylic'], [/\bleather\b/i, 'Leather'], [/\bsuede\b/i, 'Suede'], [/\bdown\b/i, 'Down'], [/\bfleece\b/i, 'Fleece'], [/\bbamboo\b/i, 'Bamboo'], [/\bhemp\b/i, 'Hemp'],
+];
+export const fibresOf = (material: string | null): string[] => (material ? [...new Set(FIBRES.filter(([re]) => re.test(material)).map(([, name]) => name))] : []);
+
 export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<ClothingProduct>[] {
   const market = marketOf(cityId);
   if (!market) return [];
@@ -164,7 +172,8 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
       // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
       facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, cut: cutOf(p), type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
-      also: { cut: fitsOf(p) },
+      // Every size, color and fiber it comes in, each a filter's choice (from 2026-10-06; until then size couldn't be chosen, and color and fiber only searched for).
+      also: { cut: fitsOf(p), size: [...p.sizes], color: [...p.colors], material: fibresOf(p.material) },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });
@@ -720,6 +729,12 @@ export function registerClothing(sim: Simulation): void {
     for (const id of ids) toBasket(person, itemById(person, id) as never);
     return { moved: ids.length };
   });
+  // How a wash is dried at home, as a habit (from 2026-10-06): on the rack, or in the dryer.
+  sim.onCommand<{ by: 'rack' | 'tumble' }, { by: 'rack' | 'tumble' }>('clothes.dry_by', (p, { sim: s }) => {
+    if (p?.by !== 'rack' && p?.by !== 'tumble') throw new CommandError('On the rack or in the dryer.');
+    if (p.by === 'rack') s.player.laundryDry = 'rack'; else delete s.player.laundryDry;
+    return { by: p.by };
+  });
   // Your measurements, for the retailers' own charts (`chartSize` in `systems/tailoring.ts`, from 2026-10-02).
   sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
     const person = s.player;
@@ -825,6 +840,8 @@ export function registerClothing(sim: Simulation): void {
     return { dressed: s.player.dressed };
   });
   sim.onCommand<{ outfitId: string }, { outfits: number }>('clothes.delete_outfit', (p, { sim: s }) => {
+    // One that isn't there is refused, not reported deleted (from 2026-10-06).
+    if (!(s.player.outfits ?? []).some((o) => o.id === p?.outfitId)) throw new CommandError('There’s no outfit of yours by that name.');
     s.player.outfits = (s.player.outfits ?? []).filter((o) => o.id !== p?.outfitId);
     return { outfits: s.player.outfits.length };
   });

@@ -37,7 +37,7 @@ import type { Person } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { HALL } from '../content/people';
 import { contactsOf, type Contact } from './people';
-import { journeysOf, type Journey } from './journey';
+import { journeysOf, settleRoomShare, type Journey } from './journey';
 import { hotelById } from './hotels';
 import { childrenOf, livesWithYou, type Child } from './children';
 import { childBorderRefusal } from './childpassports';
@@ -157,11 +157,7 @@ export function registerCompanions(sim: Simulation): void {
     out.companionIds = [...companionsOf(out), c.id];
     delete out.companionId;
     // Their share of a room booked for the journey, the room split again among everyone, paid back to you.
-    const room = out.hotel?.price ?? out.let?.price ?? 0;
-    const n = out.companionIds.length;
-    const repaid = Math.floor((room * n) / (n + 1)) - (out.companionRepaid ?? 0);
-    out.companionRepaid = (out.companionRepaid ?? 0) + repaid;
-    if (repaid > 0) s.post({ memo: `${c.name}: their share of the room in ${where}`, category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: repaid }, { accountId: s.nominalAccount('expense', 'Travel').id, amount: -repaid }] });
+    const repaid = settleRoomShare(s, person, out, c.name);
     const end = (wayBack(person, out) ?? out).arriveAt;
     s.schedule({ at: end, kind: COMPANION_HOME_KIND, label: `Home With ${c.name.split(' ')[0]}`, category: 'relationship', priority: 30, payload: { personId: person.id, journeyId: out.id, contactId: c.id } });
     return { accepted: true, ...(repaid ? { repaid } : {}) };

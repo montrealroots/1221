@@ -20,6 +20,7 @@
 
 import { drawRental } from './dwelling';
 import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
+import { coverLonger } from './travelinsurance';
 import { RENTAL_RETURN_KIND, planRentalDrive, rentalDays, rentalDriven, rentalQuote, rentalsOf } from './rentals';
 import { ownFlown, planCharterJet, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
@@ -498,6 +499,23 @@ export function letRefund(l: NonNullable<Journey['let']>, arriveAt: Instant, at:
   return l.nights > 1 ? Math.round(nightsCost * (l.nights - 1) / l.nights / 2) : 0;
 }
 
+/**
+ * The friends along pay back their share of the room, split again among everyone (`travel.companion`), settled again
+ * when the room's price changes (from 2026-10-06; until then a hotel made a let, or a stay made longer, left their
+ * share at what the first room cost, and you paid the rest). A room grown cheaper gives them back the difference.
+ */
+export function settleRoomShare(sim: Simulation, person: Person, out: Journey, who?: string): Money {
+  const n = out.companionIds?.length ?? (out.companionId ? 1 : 0);
+  if (n === 0) return 0;
+  const room = out.hotel?.price ?? out.let?.price ?? 0;
+  const owed = Math.floor((room * n) / (n + 1)) - (out.companionRepaid ?? 0);
+  if (owed === 0) return 0;
+  out.companionRepaid = (out.companionRepaid ?? 0) + owed;
+  const where = CITIES.require(out.toCity).name;
+  sim.post({ memo: who ? `${who}: their share of the room in ${where}` : owed > 0 ? `Their share of the room in ${where}` : `Their share of the room in ${where}, the difference given back`, category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: owed }, { accountId: sim.nominalAccount('expense', 'Travel').id, amount: -owed }] });
+  return owed;
+}
+
 export function registerJourneys(sim: Simulation): void {
   sim.onCommand<{ journeyId: string }, { price: Money; hotelBack: Money }>('travel.stay_let', (p, { sim: s }) => {
     const person = s.player;
@@ -514,6 +532,7 @@ export function registerJourneys(sim: Simulation): void {
     j.let = { nights: j.hotel.nights, price: q.price, fee: q.fee, basis: q.basis, checkOutAt: j.hotel.checkOutAt };
     j.total += q.price - hotelBack;
     delete j.hotel;
+    settleRoomShare(s, person, j);
     return { price: q.price, hotelBack };
   });
 
@@ -668,6 +687,7 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: checkOutAt, kind: CHECKOUT_KIND, label: out.let ? 'Holiday Let Check-Out' : 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: out.id, cityId: back.fromCity } });
     }
     out.total += q.stay;
+    settleRoomShare(s, person, out);
     // The rental car kept to the new day.
     const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'held' || r.status === 'out'));
     if (car) {
@@ -682,6 +702,8 @@ export function registerJourneys(sim: Simulation): void {
     back.leaveAt = leaveAt;
     back.arriveAt = q.legs[q.legs.length - 1]!.arriveAt;
     back.total += q.travel;
+    // The policy, on both halves, to the new homecoming.
+    for (const h of [out, back]) if (h.insured) h.insured = { ...h.insured, to: back.arriveAt, premium: h.insured.premium + q.cover };
     cancelKind(LEAVE_KIND, 'journeyId', back.id);
     s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(back.toCity).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((back.arriveAt - leaveAt) / 60_000), locationId: back.fromCity, payload: { personId: person.id, journeyId: back.id } });
     return { total: q.total, leaveAt };
@@ -996,7 +1018,9 @@ function holdForDeposit(sim: Simulation, person: Person, j: Journey, deposit: Mo
   j.hotel!.depositDue = deposit;
   // Until the day ends, or the next one for an arrival in its last six hours, so a late flight is not given up in minutes.
   j.hotel!.heldUntil = startOfNextDay(sim.now + 6 * MS_HOUR, zone);
-  person.stay = { kind: 'hotel', cityId: j.toCity, out: true };
+  // The stay given at arrival, kept: its hotel and the hour its room is ready (from 2026-10-06; until then it was
+  // replaced, so a stay paid for once held was the town's, and its key could come before the check-in hour).
+  person.stay = { ...person.stay, kind: 'hotel', cityId: j.toCity, out: true };
   sim.schedule({ at: j.hotel!.heldUntil, kind: DEPOSIT_DUE_KIND, label: 'Hotel Deposit Due', category: 'personal', priority: 25, payload: { personId: person.id, journeyId: j.id } });
   if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: 'Room Held For A Deposit', body: `${hotelById(j.hotel!.named!.hotelId)?.name ?? 'The hotel'} needs a deposit of ${formatMoney(deposit, saveCurrency(sim.universe))} that the bank can’t cover. The room is held until the end of the day; pay it on Travel, or the stay is given up.`, importance: 85, route: '/workspace/travel' });
 }
@@ -1090,7 +1114,7 @@ export function restay(sim: Simulation, person: Person, cityId: string, h: NonNu
   return q ? q.price * (h.rooms ?? 1) : undefined;
 }
 
-export interface Extension { legs: JourneyLeg[]; travel: Money; stay: Money; rental: Money; total: Money; nights: number }
+export interface Extension { legs: JourneyLeg[]; travel: Money; stay: Money; rental: Money; cover: Money; total: Money; nights: number }
 
 export function extendQuote(sim: Simulation, person: Person, backId: string, day: Instant, slot: number): Extension | string {
   const back = journeysOf(person).find((x) => x.id === backId);
@@ -1130,7 +1154,11 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
     if (typeof q === 'string') return q;
     rental = q.total - car.paid;
   }
-  return { legs, travel, stay, rental, total: travel + stay + rental, nights };
+  // The trip's insurance carried to the new homecoming, at what that adds (`coverLonger`, from 2026-10-06).
+  const insured = out.insured ?? back.insured;
+  const cover = insured ? coverLonger(sim, insured, legs[legs.length - 1]!.arriveAt, travel + stay + rental) : 0;
+  if (typeof cover === 'string') return cover;
+  return { legs, travel, stay, rental, cover, total: travel + stay + rental + cover, nights };
 }
 
 /**

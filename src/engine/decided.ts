@@ -47,6 +47,7 @@ import { onTheRoad } from './systems/roadside';
 import { machinesDay } from './systems/appliancefaults';
 import { mayRefer } from './systems/appointments';
 import { atWork, works } from './systems/availability';
+import { asksToday } from './systems/reachingout';
 import { passesPilotTest } from './systems/aviation';
 import type { Contact } from './systems/people';
 import type { Journey } from './systems/journey';
@@ -605,6 +606,18 @@ defineDecider<{ sim: Simulation; who: number }, string>({
     const w = works(sim, c, sim.now);
     return !w.employed ? 'not working' : !w.daytime ? 'works other hours' : atWork(sim, c, sim.now - (sim.now % 86_400_000) + 15 * 3_600_000, 60) ? 'at work' : 'off today';
   },
+});
+
+defineDecider<{ sim: Simulation; who: number; day: number }, string>({
+  id: 'social.asks',
+  decides: 'Whether a friend asks you to a meal on a given day, at about one a fortnight from a close friend, one a month from a friend and one in ten weeks from a casual one (ASKS, SLATE’s estimates by Pew’s 29%), and where and when they ask you to; swept at even odds.',
+  drawnIn: 'src/engine/systems/reachingout.ts',
+  reads: {
+    who: (o, t) => ({ ...o, who: Math.round(t * 400) }),
+    day: (o, t) => ({ ...o, day: Math.round(t * 400) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), who: seed, day: seed }),
+  decide: ({ sim, who, day }) => (asksToday(sim, { id: `c${who}` } as Contact, `d${day}`, 0.5) ? 'asks' : 'not'),
 });
 
 defineDecider<{ sim: Simulation; attempt: number }, string>({

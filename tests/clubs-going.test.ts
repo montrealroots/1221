@@ -128,6 +128,22 @@ describe('going to a club by hand', () => {
     expect(paid.postings.filter((x) => x.amount > 0).reduce((n, x) => n + x.amount, 0)).toBe(2 * transitFare(sim, 'us-ny-newyork')!);
   });
 
+  // A meeting isn't a thing that holds them (no `requiresPlayer`), so asking what does, it never finds itself.
+  it('set to go on its own, isn’t gone to over a plan that holds them, and is missed', () => {
+    let sim = life('us-ny-newyork', 'club-auto-clash');
+    sim.must({ kind: 'club.join', payload: { clubId: 'parkrun-brooklyn-bridge', attend: 'always', by: 'transit' } });
+    const club = clubById('parkrun-brooklyn-bridge')!;
+    const meeting = nextMeeting(club, sim.now);
+    sim.must({ kind: 'calendar.schedule', payload: { title: 'Work Late', at: meeting - 60 * 60_000, durationMinutes: 240 } });
+    sim = loadSave(deserialise(serialise(sim.universe)) as never);
+    sim.advanceTo(meeting + 6 * 60 * 60_000);
+    const m = membershipsOf(sim.player)[0]!;
+    expect(sim.universe.scheduled.find((s) => s.label === 'Work Late')!.status).toBe('done');
+    expect(m.went).toBe(0);
+    expect(m.missed).toBe(1);
+    expect(memoCount(sim, 'New York’s transit, there and back')).toBe(0);
+  });
+
   it('an outdoor club doesn’t meet in a thunderstorm, and an indoor one does', () => {
     const sim = life('us-ny-newyork', 'club-storm');
     const kickball = clubById('volo-ny-kickball')!;

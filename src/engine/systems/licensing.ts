@@ -436,7 +436,10 @@ export function registerLicensing(sim: Simulation): void {
     const held = renewable(person, s.now)!;
     const rule = LICENSES[held.issuer]!;
     const currency = LICENSE_PATHS[held.issuer]?.currency ?? 'USD';
-    const fee = inSave(s, rule.renewalFee!, currency);
+    // Inside a district that adds its own, at its price, by where they live (New York City’s MCTD, from 2026-10-06; until
+    // then every New York renewal was charged the price outside it).
+    const inside = rule.renewalInside && person.home && rule.renewalInside.cityIds.includes(person.home.cityId);
+    const fee = inSave(s, inside ? rule.renewalInside!.fee : rule.renewalFee!, currency);
     if (!payFromBank(s, person, fee, `${rule.name}, renewed`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     const from = Math.max(s.now, held.expiresAt!);
     held.status = 'cancelled';

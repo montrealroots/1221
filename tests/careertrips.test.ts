@@ -11,12 +11,15 @@ import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { documentsOf, passportOf } from '@/engine/systems/documents';
 import { earningsOf } from '@/engine/systems/earnings';
 import { careerTrip, journeysOf } from '@/engine/systems/journey';
+import { evenCraft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  // An actor's craft, as drama school leaves every new life with; without it no call is worked (until 2026-10-06 these trips were tested with none).
+  sim.player.craft = evenCraft(70);
   beginCareer(sim, sim.player);
   if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
   return sim;
@@ -69,6 +72,8 @@ describe('a job’s trip, flown', () => {
     const home = journeysOf(sim.player).find((x) => x.bookingId === 'tor' && x.toCity === 'us-ny-newyork')!;
     expect(home.status).toBe('arrived');
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+    // The calls were worked there, not only flown to.
+    expect(careerOf(sim.player).bookings.find((x) => x.id === 'tor')!.worked).toBe(2);
   }, 60_000);
 
   it('has an actor from Los Angeles pay their own fare to a job in New York, a cost of the work, and home again', () => {

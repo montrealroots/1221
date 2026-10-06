@@ -9,6 +9,7 @@
  * outfit is what the day put on.
  */
 import { describe, expect, it } from 'vitest';
+import { breaches } from '@/engine/core/invariants';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
@@ -95,5 +96,7 @@ describe('a connected day', () => {
     must(sim, 'life.sleep', { hours: 8 });
     sim.advanceTo(at(12, 14) + MS_HOUR);
     expect(sim.player.wornNow!.since).toBeGreaterThan(at(23));
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });

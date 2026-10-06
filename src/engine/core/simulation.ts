@@ -610,10 +610,12 @@ export class Simulation {
     const eventsBefore = this.pendingEvents.length;
     for (const [at, command] of commands.entries()) {
       const done = this.execute(command);
-      if (!done.ok) {
+      // A command that answers with a refusal of its own (the calendar's `{ ok: false, error }`) wasn't done either.
+      const answered = refusedIn(done.value);
+      if (!done.ok || answered !== undefined) {
         restoreUniverse(this.universe, snapshot);
         this.pendingEvents.length = eventsBefore;
-        return { ok: false, at, error: done.error ?? `${command.kind} failed` };
+        return { ok: false, at, error: done.error ?? answered ?? `${command.kind} failed` };
       }
     }
     return { ok: true };
@@ -807,6 +809,18 @@ const APPEND_ONLY_LOGS = ['transactions', 'notifications'] as const;
 export interface UniverseSnapshot {
   clone: SaveUniverse;
   logLengths: Record<string, number>;
+}
+
+/**
+ * The refusal a command answered with instead of throwing, or nothing (from 2026-10-06). The calendar's commands
+ * answer `{ ok: false, error }` so the screen can print it beside the field; a sequence taken all or none, and the
+ * assistant's check of one, read that as the refusal it is. Until then a calendar plan the world declined was
+ * checked as done.
+ */
+export function refusedIn(value: unknown): string | undefined {
+  if (typeof value !== 'object' || value === null || (value as { ok?: unknown }).ok !== false) return undefined;
+  const error = (value as { error?: unknown }).error;
+  return typeof error === 'string' && error ? error : 'It wasn’t done.';
 }
 
 export function snapshotUniverse(u: SaveUniverse): UniverseSnapshot {

@@ -106,11 +106,15 @@ describe('a planning application', () => {
 });
 
 describe('a project the home can’t take', () => {
-  it('names what in town does its job instead', () => {
-    expect(projectAlternatives('us-ny-newyork', 'pool')).toContain('Adult Swimming, Stage 1 at Cross Island YMCA');
-    expect(projectAlternatives('uk-eng-london', 'tennis-clay')).toContain('Adult Tennis, Level 1 at Islington Tennis Center');
-    expect(projectAlternatives('us-ny-newyork', 'dance-studio').some((x) => x.includes('Broadway Dance Center'))).toBe(true);
-    expect(projectAlternatives('us-ny-newyork', 'adu')).toEqual(['Take a lodger into a spare room you have, at the town’s rent for one.']);
+  it('names what in town does its job instead, each with what to do it by', () => {
+    const labels = (city: string, id: string) => projectAlternatives(city, id).map((x) => x.label);
+    expect(labels('us-ny-newyork', 'pool')).toContain('Adult Swimming, Stage 1 at Cross Island YMCA');
+    expect(labels('uk-eng-london', 'tennis-clay')).toContain('Adult Tennis, Level 1 at Islington Tennis Center');
+    expect(labels('us-ny-newyork', 'dance-studio').some((x) => x.includes('Broadway Dance Center'))).toBe(true);
+    expect(projectAlternatives('us-ny-newyork', 'adu')).toEqual([{ label: 'Take a lodger into a spare room you have, at the town’s rent for one.', lodger: true }]);
+    // Each a club, a class or a gym to act on (from 2026-10-06), and a home gym's job at the town's gyms.
+    expect(projectAlternatives('us-ny-newyork', 'pool').every((x) => x.clubId || x.classId || x.gymId)).toBe(true);
+    expect(projectAlternatives('us-ny-newyork', 'home-gym').some((x) => x.gymId)).toBe(true);
     expect(projectAlternatives('us-ny-newyork', 'paint')).toEqual([]);
   });
 });

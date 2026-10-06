@@ -44,12 +44,12 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatTime, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { salesTaxRate } from '../content/tax';
-import { GROCERY_CHAINS, GROCERY_PRODUCTS, RECIPES, type FoodUnit, type GroceryProduct, type Ingredient, type Recipe, type Storage } from '../content/groceries';
+import { GROCERY_CHAINS, GROCERY_PRODUCTS, LEFTOVERS_FREEZE_DAYS, RECIPES, type FoodUnit, type GroceryProduct, type Ingredient, type Recipe, type Storage } from '../content/groceries';
 import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { payWith, payWithRefusal, spend, type PayWith } from './household';
-import { addItem, coldRoomL, coldUsedL, homeKeyOf, itemById, SPOT_LABEL } from './items';
+import { addItem, coldRoomL, coldUsedL, homeKeyOf, itemById, moveRefusal, reachable, SPOT_LABEL, type Item } from './items';
 import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
 import { GEAR_LINEUP } from '../content/kitchengearlineup';
 import { exerts } from './body';
@@ -63,7 +63,7 @@ import { contactsOf } from './people';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
 import { stow } from './trips';
-import { foodOf, fresh, mealsReady, stockOf, takePortion, throwOutSpoiled, type Stocked } from './pantry';
+import { foodOf, fresh, mealsReady, stockOf, takePortion, throwOutSpoiled, type Food, type Stocked } from './pantry';
 
 const MARKET: Readonly<Record<string, string>> = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
 export const groceryMarketOf = (cityId: string): string | undefined => MARKET[cityId.split('-')[0] ?? ''];
@@ -399,6 +399,8 @@ export function cupOf(item: Stocked): number | undefined {
 
 export function drinkAtHome(sim: Simulation, person: Person, itemId: string): number {
   const item = itemById(person, itemId) as Stocked | undefined;
+  // At the home they're in, put away (from 2026-10-06; until then a can still in the car at the shops was poured).
+  if (item?.food && !(item.at.kind === 'home' && reachable(sim, person, item.at))) throw new CommandError('It isn’t at home with you.');
   const cup = item?.food ? cupOf(item) : undefined;
   if (item && cup !== undefined) {
     if (!fresh(item, sim.now)) throw new CommandError('It’s gone off.');
@@ -420,7 +422,66 @@ export function drinkAtHome(sim: Simulation, person: Person, itemId: string): nu
   return ml;
 }
 
+/**
+ * Freezing and thawing at home, the master plan's §33h (from 2026-10-06; until then food moved to the freezer kept as
+ * long as it did in the fridge). Frozen, a grocery keeps its FoodKeeper freezer time and a cooked dish the leftovers'
+ * (`LEFTOVERS_FREEZE_DAYS`); what FoodKeeper gives no freezer time for isn't frozen. Thawed in the fridge it takes a full
+ * day, as USDA's The Big Thaw says even a pound of ground meat does, and isn't cooked or eaten until then; then meat
+ * and seafood keep "an additional day or two", the day kept here, and the rest their own time in the fridge. Thawed in
+ * the fridge it may be frozen again, as the same page allows.
+ */
+export const THAW = { hours: 24, meatDays: 1 } as const;
+
+/** How long a thing keeps frozen, days; none where FoodKeeper gives no freezer time. */
+export function freezeDaysOf(item: Item & { food: Food }): number | null {
+  if (item.food.key === 'dish') return LEFTOVERS_FREEZE_DAYS;
+  return GROCERY_PRODUCTS.find((p) => p.id === item.kind)?.freezeDays ?? null;
+}
+
+/** Why a thing can't be frozen now, or nothing. */
+export function freezeRefusal(sim: Simulation, person: Person, item: (Item & { food?: Food }) | undefined): string | undefined {
+  if (!item?.food) return 'That isn’t food of yours.';
+  if (!atHome(person)) return 'Food is frozen at home.';
+  if (item.food.frozenAt !== undefined) return 'It’s frozen already.';
+  if (item.food.expiresAt !== undefined && item.food.expiresAt <= sim.now) return 'It’s gone off.';
+  if (freezeDaysOf(item as Item & { food: Food }) === null) return `FoodKeeper gives no freezer time for ${item.label}.`;
+  return moveRefusal(sim, person, item, { kind: 'home', home: homeKeyOf(person.home)!, spot: 'freezer' });
+}
+
+/** Why a thing can't be thawed now, or nothing. */
+export function thawRefusal(sim: Simulation, person: Person, item: (Item & { food?: Food }) | undefined): string | undefined {
+  if (!item?.food) return 'That isn’t food of yours.';
+  if (!atHome(person)) return 'Food is thawed at home.';
+  if (item.food.frozenAt === undefined) return 'It isn’t frozen.';
+  return moveRefusal(sim, person, item, { kind: 'home', home: homeKeyOf(person.home)!, spot: 'fridge' });
+}
+
 export function registerKitchen(sim: Simulation): void {
+  sim.onCommand<{ itemId: string }, { keepsUntil: Instant }>('food.freeze', (p, { sim: s }) => {
+    const person = s.player;
+    const item = itemById(person, String(p?.itemId)) as (Item & { food: Food }) | undefined;
+    const no = freezeRefusal(s, person, item);
+    if (no) throw new CommandError(no);
+    item!.at = { kind: 'home', home: homeKeyOf(person.home)!, spot: 'freezer' };
+    item!.food.frozenAt = s.now;
+    delete item!.food.thawsAt;
+    item!.food.expiresAt = s.now + freezeDaysOf(item!)! * MS_DAY;
+    return { keepsUntil: item!.food.expiresAt };
+  });
+  sim.onCommand<{ itemId: string }, { thawsAt: Instant; keepsUntil: Instant }>('food.thaw', (p, { sim: s }) => {
+    const person = s.player;
+    const item = itemById(person, String(p?.itemId)) as (Item & { food: Food }) | undefined;
+    const no = thawRefusal(s, person, item);
+    if (no) throw new CommandError(no);
+    const product = GROCERY_PRODUCTS.find((x) => x.id === item!.kind);
+    const thawsAt = s.now + THAW.hours * 3_600_000;
+    const keep = product && (product.category === 'meat' || product.category === 'seafood') ? THAW.meatDays : item!.food.key === 'dish' ? KITCHEN.leftoverDays : product?.storage === 'fridge' && product.keepsDays !== null ? product.keepsDays : product?.keepsDays ?? KITCHEN.leftoverDays;
+    item!.at = { kind: 'home', home: homeKeyOf(person.home)!, spot: 'fridge' };
+    delete item!.food.frozenAt;
+    item!.food.thawsAt = thawsAt;
+    item!.food.expiresAt = thawsAt + keep * MS_DAY;
+    return { thawsAt, keepsUntil: item!.food.expiresAt };
+  });
   sim.onEvent('world.day_rollover', 'kitchen.spoil', (_e, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
       const n = throwOutSpoiled(person, s.now);

@@ -5,6 +5,7 @@
  * without a sofa, and the pieces moving with their owner.
  */
 import { describe, expect, it } from 'vitest';
+import { roomList } from '@/engine/systems/rooms';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
@@ -64,7 +65,10 @@ describe('an empty home', () => {
     expect(r.ok, r.error).toBe(true);
     expect(onTheFloor(sim.player)).toBe(false);
     expect(sleepQuality(sim, sim.player)).toBeCloseTo(furnished, 6);
-    expect(sim.execute({ kind: 'home.furnish', payload: { piece: 'bed' } }).error).toMatch(/You have one/);
+    // A bed for each bedroom of theirs (from 2026-10-06; until then one at most), then refused.
+    const rooms = roomList(sim, sim.player).filter((x) => x.kind === 'bedroom' && x.access === 'yours').length;
+    for (let n = 1; n < rooms; n += 1) expect(sim.execute({ kind: 'home.furnish', payload: { piece: 'bed' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'home.furnish', payload: { piece: 'bed' } }).error).toMatch(rooms > 1 ? /Every bedroom of yours has a bed/ : /You have one/);
   });
 
   it('takes half the stress off unwinding with no sofa, and all of it with one', () => {

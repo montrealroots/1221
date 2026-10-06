@@ -5,6 +5,7 @@
  * then; out and back across a border, and saved and opened on the way.
  */
 import { describe, expect, it } from 'vitest';
+import { breaches } from '@/engine/core/invariants';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
@@ -104,6 +105,8 @@ describe('a journey out and back', () => {
     expect(flight.fare).toBe(Math.round(pair.usd * 100));
     expect(legs.find((l) => l.mode === 'check-in')!.fare).toBe(45_00);
     expect(legs[1]!.arriveAt - legs[1]!.departAt).toBe(AIR.arriveBeforeDomesticMinutes * 60_000);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -121,6 +124,8 @@ describe('what a journey refuses', () => {
     const was = bank(poor);
     expect(book(poor, { toCity: 'us-ca-losangeles', day: saturday(poor, 10), nights: 2 }).error).toMatch(/more than the bank/);
     expect(bank(poor)).toBe(was);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('turns a passenger away at check-in when the passport was lost after booking, and the fare is gone', () => {
@@ -153,6 +158,8 @@ describe('what a journey refuses', () => {
     sim.advanceBy(2 * MS_DAY);
     const b = sim.execute<{ refund: number }>({ kind: 'travel.cancel', payload: { journeyId: later.value!.journeyId } });
     expect(b.value!.refund).toBe(journey(sim, later.value!.journeyId).hotel!.price);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -174,6 +181,8 @@ describe('the flight itself', () => {
     expect(late / n).toBeLessThan(AIR.lateShare + 0.01);
     expect(minutes / late).toBeGreaterThan(AIR.lateMinutesAverage * 0.9);
     expect(minutes / late).toBeLessThan(AIR.lateMinutesAverage * 1.1);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('keeps a hotel night on at check-out for a guest still in town, at the rate', () => {
@@ -211,6 +220,8 @@ describe('the rest of the rules', () => {
     const plan = sim.execute({ kind: 'calendar.schedule', payload: { title: 'Dinner', at: day + 2 * MS_HOUR, durationMinutes: 120 } });
     expect(plan.ok, plan.error).toBe(true);
     expect(book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, nights: 2 }).error).toMatch(/runs into Dinner/);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('books the way home ahead, from the town the outbound journey takes you to', () => {
@@ -221,11 +232,15 @@ describe('the rest of the rules', () => {
     expect(journey(sim, home.value!.journeyId).fromCity).toBe('us-ca-losangeles');
     expect(journey(sim, home.value!.journeyId).legs[2]!.from).toBe('LAX');
     expect(out.ok).toBe(true);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('prices a New York night at its average rate with its taxes on top: $333.71, 14.75% and $3.50', () => {
     const sim = life('ny-night');
     expect(stayPrice(sim, 'us-ny-newyork', 1)!.price).toBe(Math.round((333.71 * 1.1475 + 3.5) * 100));
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -248,6 +263,8 @@ describe('a round trip', () => {
     // Lands Saturday evening, flies home Wednesday afternoon: four nights.
     expect(out.hotel!.nights).toBe(4);
     expect(out.hotel!.price).toBe(stayPrice(sim, 'us-ca-losangeles', 4)!.price);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('charges no night more on the day it goes home, whether it leaves before check-out or after', () => {
@@ -274,6 +291,8 @@ describe('a round trip', () => {
     expect(c.value!.refund).toBe(a.value!.total);
     expect(bank(sim)).toBe(before);
     expect(journeysOf(sim.player).every((j) => j.status === 'canceled')).toBe(true);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('loses the way home when the way out goes unflown, as an airline cancels the rest of the ticket', () => {
@@ -312,6 +331,8 @@ describe('a cabin other than economy', () => {
     const t = book(other, { toCity: 'us-dc-washington', day, slot: 4, nights: 1, by: 'nec-nyp-was-acela', cabin: 'premium' });
     expect(t.ok, t.error).toBe(true);
     expect(journey(other, t.value!.journeyId).cabin).toBeUndefined();
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });
 
@@ -331,6 +352,8 @@ describe('a car and driver', () => {
     expect(chauffeurUnits(CHAUFFEURS['mx-cmx-mexicocity']!, 11.5)).toBe(5_400 + 2 * 450);
     expect(planChauffeur(sim, 'us-ca-losangeles', 'us-ca-sandiego', day, 2)).toMatch(/no company’s car and driver/);
     expect(planChauffeur(sim, 'us-ny-newyork', 'uk-eng-london', day, 2)).toMatch(/No road/);
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('is booked as a journey, the car’s driver not the player’s', () => {
@@ -338,5 +361,7 @@ describe('a car and driver', () => {
     const r = book(sim, { toCity: 'us-ct-newhaven', day: saturday(sim, 10), slot: 2, by: 'chauffeur', nights: 1 });
     expect(r.ok, r.error).toBe(true);
     expect(journey(sim, r.value!.journeyId).legs[0]!.routeId).toBe('chauffeur');
+    // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
+    expect(breaches(sim.universe)).toEqual([]);
   });
 });

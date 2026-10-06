@@ -386,6 +386,8 @@ export interface Person {
   mattressAt?: number;
   /** A move made in a rented truck they drive, not by movers (`truckFor` in `systems/furniture.ts`). */
   moveBy?: 'truck';
+  /** How their own machines' washes are dried, chosen (`clothes.dry_by`, from 2026-10-06): on the rack; in the dryer where unset. */
+  laundryDry?: 'rack';
   /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
   acUnits?: number;
   /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */

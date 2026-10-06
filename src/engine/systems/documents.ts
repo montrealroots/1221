@@ -603,8 +603,12 @@ const EU_EEA = new Set(['ie', 'is', 'de', 'fr', 'es', 'lv']);
 export type VehicleClass = 'car' | 'motorcycle';
 export const classOf = (d: PersonDocument): VehicleClass => d.vehicleClass ?? 'car';
 
-export function licenseOf(person: Person, at: Instant, cls: VehicleClass = 'car'): PersonDocument | undefined {
-  return documentsOf(person).filter((d) => d.kind === 'license' && classOf(d) === cls && inForce(d, at)).sort((a, b) => Number(b.alone !== false) - Number(a.alone !== false))[0];
+export function licenseOf(person: Person, at: Instant, cls: VehicleClass = 'car', here?: string): PersonDocument | undefined {
+  // A full license before a learner's; and where `here` is given, the one its authority issued first (from 2026-10-06;
+  // until then the first in force was read, so a license from where they'd lived before was asked about where they now
+  // held the place's own, and they were refused).
+  const rank = (d: PersonDocument) => (d.alone !== false ? 2 : 0) + (here !== undefined && d.issuer === here ? 1 : 0);
+  return documentsOf(person).filter((d) => d.kind === 'license' && classOf(d) === cls && inForce(d, at)).sort((a, b) => rank(b) - rank(a))[0];
 }
 
 /**
@@ -636,7 +640,7 @@ export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt 
   const car = cls === 'motorcycle' && cc !== undefined && cc <= (MOPED_ON_CAR[here] ?? 0) ? licenseOf(person, at, 'car') : undefined;
   // Its own: a car license from elsewhere carries no moped. A learner's is refused below as for a car.
   if (car && car.issuer === here) cls = 'car';
-  const license = licenseOf(person, at, cls);
+  const license = licenseOf(person, at, cls, here);
   if (!license) return { ok: false, why: cls === 'motorcycle' ? `You don’t hold a motorcycle license in force: earn one on the Papers screen.` : `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
   // Points that suspended it (`systems/driving.ts`, from 2026-09-29).
   if ((person.driving?.suspendedUntil ?? 0) > at) return { ok: false, why: `Your license is suspended until ${new Date(person.driving!.suspendedUntil!).toISOString().slice(0, 10)}.` };

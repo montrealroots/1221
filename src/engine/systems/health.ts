@@ -1355,6 +1355,10 @@ export function registerHealth(sim: Simulation): void {
       const t = zonedParts(s.now, HOME);
       until = firstOf(t.month >= 10 ? t.year + 1 : t.year, 10);
       if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`The year is ${formatMoney(usd(d.premium, cur), cur)}, which the bank can’t cover.`);
+    } else if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label} premium`, 'health')) {
+      // A monthly plan's first month, paid as it starts covering (from 2026-10-06; until then its first premium came on
+      // the 1st of the next month, and the days to it were covered and never paid for).
+      throw new CommandError(`The month is ${formatMoney(usd(d.premium, cur), cur)}, which the bank can’t cover.`);
     }
     h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
     armHealth(s, person);

@@ -7,15 +7,16 @@
  * player's birthday is on it every year, at nine in the morning where they
  * live, and the day says the age they've turned.
  *
- * Somebody born on the 29th of February has it on the 28th in other years.
- * Countries differ on which day the law counts; the 28th is a common one.
+ * Somebody born on the 29th of February has it, in other years, on the day the
+ * law counts where they live (`birthdayIn`): the 1st of March in the United
+ * Kingdom, the 28th elsewhere. Until 2026-10-06 it was the 28th everywhere.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { END_KIND, ageOn, decideStretch, frailty } from './mortality';
+import { END_KIND, ageOn, birthdayIn, decideStretch, frailty } from './mortality';
 import { healthOf } from './health';
 
 export { ageOn };
@@ -30,9 +31,8 @@ export function nextBirthday(sim: Simulation, person: Person, after: Instant): I
   const born = zonedParts(person.birthInstant, sim.homeZone);
   const now = zonedParts(after, zone);
   for (let year = now.year; year <= now.year + 2; year += 1) {
-    const leap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-    const day = born.month === 2 && born.day === 29 && !leap ? 28 : born.day;
-    const at = instantFromZoned({ year, month: born.month, day, hour: 9 }, zone);
+    const day = birthdayIn(year, born, CITIES.get(person.currentLocationId)?.countryId);
+    const at = instantFromZoned({ year, month: day.month, day: day.day, hour: 9 }, zone);
     if (at > after) return at;
   }
   return after + 365 * 86_400_000;

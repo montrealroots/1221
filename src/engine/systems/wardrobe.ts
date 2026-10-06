@@ -129,8 +129,23 @@ export const wornNow = (person: Person): (Item & { garment: Garment })[] => {
   return (person.wornNow?.itemIds ?? []).map((id) => mine.find((g) => g.id === id)).filter((g): g is Item & { garment: Garment } => Boolean(g));
 };
 
-/** Changed into these, now: each a wear toward its wash, and what they have on. The caller has checked them and taken the time. */
+/**
+ * What comes off at a change, the master plan's §32e (from 2026-10-06; until then a change only said what was on, and
+ * nothing came off): each piece not put back on, at home, goes in the laundry basket where its wears have made it due a
+ * wash, and back where it's kept where not. Away from home it stays with what they have there.
+ */
+export function takeOff(person: Person, keep: ReadonlySet<string>): void {
+  const home = homeKeyOf(person.home);
+  const atHomeNow = Boolean(home) && person.home!.cityId === person.currentLocationId;
+  for (const g of wornNow(person)) {
+    if (keep.has(g.id) || !atHomeNow || g.at.kind !== 'home' || g.at.home !== home) continue;
+    g.at = { ...g.at, spot: g.garment.dirty ? 'hamper' : keptIn(g.garment.slot) };
+  }
+}
+
+/** Changed into these, now: what came off taken off (`takeOff`), each a wear toward its wash, and what they have on. The caller has checked them and taken the time. */
 export function changeInto(sim: Simulation, person: Person, items: readonly (Item & { garment: Garment })[]): void {
+  takeOff(person, new Set(items.map((g) => g.id)));
   for (const g of items) wearOnce(g);
   person.wornNow = { itemIds: items.map((g) => g.id), since: sim.now };
 }
@@ -174,6 +189,7 @@ export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.no
   if (!outfit) return false;
   const missing = tell && person.id === sim.universe.playerId ? chosenMissing(sim, person, at) : [];
   for (const g of outfit) wearOnce(g);
+  takeOff(person, new Set(outfit.map((g) => g.id)));
   person.wornNow = { itemIds: outfit.map((g) => g.id), since: at };
   if (missing.length) {
     // A dress or a suit is stood in for by a top and a bottom, and they by either.

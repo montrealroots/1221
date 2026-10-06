@@ -22,6 +22,9 @@ import type { ClothingProduct } from '@/engine/content/clothingcatalog';
 import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
 import type { Item } from '@/engine/systems/items';
 import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment, toBasketRefusal } from '@/engine/systems/wardrobe';
+import { reachable } from '@/engine/systems/items';
+import { dryRefusal } from '@/engine/systems/dwelling';
+import { lookAfterRefusal } from '@/engine/systems/life';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn, chartFor } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
@@ -84,6 +87,7 @@ export function ClothesWorkspace() {
           </div>
         </Panel>
         <WhatToWear />
+        <WashThese />
         <SellThem />
         <Fit />
         <YourMeasurements />
@@ -98,6 +102,45 @@ export function ClothesWorkspace() {
         </Fine>
       </div>
     </>
+  );
+}
+
+/**
+ * A wash chosen (the master plan's §27c, from 2026-10-06): the garments ticked, clean or not, washed in a load of
+ * their own, dried in the dryer or on the rack, the rack kept as the habit (`clothes.dry_by`).
+ */
+function WashThese() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const washable = useWorld((s) => garmentsOf(s.player).filter((g) => g.garment.care !== 'dry-clean' && reachable(s, s.player, g.at)));
+  const [picked, setPicked] = useState<string[]>([]);
+  const laundry = useFeature('life.look_after');
+  const dryBy = useFeature('clothes.dry_by');
+  if (washable.length === 0) return null;
+  const dry = person.laundryDry ?? 'tumble';
+  const no = dryRefusal(sim, person, { dry }) ?? lookAfterRefusal(sim, 'laundry', { itemIds: picked });
+  return (
+    <Panel title="Wash Chosen Clothes" subtitle={picked.length ? `${picked.length} chosen, in a load of their own` : 'Choose what goes in, clean or not'}>
+      <LookRegion className="col gap-2">
+        <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+          {washable.map((g) => (
+            <span key={g.id} className="row gap-1 small" style={{ alignItems: 'center' }}>
+              <input type="checkbox" aria-label={`Wash the ${named(g)}`} checked={picked.includes(g.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, g.id] : picked.filter((x) => x !== g.id))} /> <Open subject={at('garment', g.id)}>{named(g)}</Open>
+            </span>
+          ))}
+        </div>
+        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
+            <label htmlFor="dry-by">Drying</label>
+            <select id="dry-by" disabled={!dryBy.open} title={dryBy.reason} value={dry} onChange={(e) => { if (run('clothes.dry_by', { by: e.target.value }).ok) toast(e.target.value === 'rack' ? 'On the rack: dry by the next day, and no dryer run.' : 'In the dryer.', 'positive'); }}>
+              <option value="tumble">In The Dryer</option>
+              <option value="rack">On The Rack</option>
+            </select>
+          </div>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!laundry.open || picked.length === 0 || Boolean(no)} title={no ?? laundry.reason} onClick={() => { if (run('life.look_after', { action: 'laundry', itemIds: picked, dry }).ok) { setPicked([]); toast('Washed.', 'positive'); } }}>Wash These</button>
+        </div>
+      </LookRegion>
+    </Panel>
   );
 }
 
@@ -256,7 +299,7 @@ function Shop() {
   return (
     <Panel title={`Shops In ${town}`} subtitle={`${shown.length < entries.length ? `${shown.length} of ` : ''}${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
-        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', cut: 'Cut And Fit', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
+        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', cut: 'Cut And Fit', type: 'Type', kind: 'Kind', special: 'Special Kinds', size: 'Size', color: 'Color', material: 'Material', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Retailer</th><th scope="col">Where</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -797,7 +840,7 @@ function Fit() {
           </select>
         )}
         {off.map((g) => {
-          const no = t ? alterRefusal(person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
+          const no = t ? alterRefusal(sim, person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
           return (
             <div key={g.id} className="row-between small">
               <span><Open subject={at('garment', g.id)}>{g.label}</Open><span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>

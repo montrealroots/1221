@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, restaurantsIn, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf } from '@/engine/systems/kitchen';
+import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf, freezeDaysOf, freezeRefusal, thawRefusal } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -242,6 +242,9 @@ function Kitchen() {
   const stock = useWorld((s) => [...kitchenStock(s, s.player)].sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity)));
   const eat = useFeature('food.eat_ready');
   const drink = useFeature('food.drink_home');
+  const person = useWorld((s) => s.player);
+  const freeze = useFeature('food.freeze');
+  const thaw = useFeature('food.thaw');
   // What the kitchen has, and the small appliances a recipe may ask for (`kitchenHas`, `gearOffers`).
   const has = useWorld((s) => [...kitchenHas(s.player)]);
   const gear = useWorld((s) => gearOffers(s, s.player).map((g) => ({ ...g, no: gearRefusal(s, s.player, g.gear) })));
@@ -266,6 +269,9 @@ function Kitchen() {
                   <td className="small">{i.food.expiresAt ? formatDate(i.food.expiresAt, sim.zone) : 'Keeps'}</td>
                   <td>
                     {MEAL_KEYS.has(i.food.key) && <button type="button" className="btn btn-sm btn-ghost" disabled={!eat.open} title={eat.reason} onClick={() => { if (run('food.eat_ready', { itemId: i.id }).ok) toast(`${i.label}, eaten.`, 'positive'); }}>Heat And Eat</button>}
+                    {/* Frozen at home for FoodKeeper's freezer time, and thawed in the fridge in a day (from 2026-10-06, `food.freeze`). */}
+                    {i.food.frozenAt === undefined && freezeDaysOf(i) !== null && (() => { const no = freezeRefusal(sim, person, i); return <button type="button" className="btn btn-sm btn-ghost" disabled={!freeze.open || Boolean(no)} title={no ?? freeze.reason} onClick={() => { if (run('food.freeze', { itemId: i.id }).ok) toast(`${i.label}, frozen.`, 'positive'); }}>Freeze</button>; })()}
+                    {i.food.frozenAt !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!thaw.open || Boolean(thawRefusal(sim, person, i))} title={thawRefusal(sim, person, i) ?? thaw.reason} onClick={() => { if (run('food.thaw', { itemId: i.id }).ok) toast(`${i.label}, thawing in the fridge: ready tomorrow.`, 'positive'); }}>Thaw</button>}
                     {cupOf(i) !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(`A cup of ${i.label.split(',')[0]}.`, 'positive'); }}>Have A Cup</button>}
                     {(i.food.key === 'beer' || i.food.key === 'wine') && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(i.food.key === 'beer' ? 'A pint, at home.' : 'A glass, at home.', 'positive'); }}>{i.food.key === 'beer' ? 'Have A Pint' : 'Have A Glass'}</button>}
                   </td>

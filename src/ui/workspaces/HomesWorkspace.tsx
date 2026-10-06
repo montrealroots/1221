@@ -15,6 +15,8 @@ import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore,
 import { arrange } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
+import type { Alternative } from '@/engine/systems/homes';
+import { GYMS } from '@/engine/content/gyms';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
@@ -468,7 +470,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
               <tbody>
                 {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, bids, adds, permit, refusal, instead }) => (
                   <tr key={project.id}>
-                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}{instead && <div className="xs dim">{`Instead: ${instead.join('; ')}.`}</div>}</td>
+                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}{instead && <Instead options={instead} />}</td>
                     <td className="num mono"><select aria-label={`The Bid For ${project.label}`} value={bidPick[project.id] ?? 0} onChange={(e) => setBidPick({ ...bidPick, [project.id]: Number(e.target.value) })}>{bids.map((b, i) => <option key={i} value={i}>{money(b)}</option>)}</select></td>
                     <td className="num mono">{permit ? money(permit.lines.reduce((a, l) => a + l.amount, 0)) : '—'}</td>
                     <td className="num mono">{project.days + (permit?.waitDays ?? 0)} {project.days + (permit?.waitDays ?? 0) === 1 ? 'day' : 'days'}</td>
@@ -613,6 +615,24 @@ function Letting({ owned, unit }: { owned: OwnedHome; unit: Tenancy['unit'] }) {
           <div className="xs dim">{refusal ?? `It lets for about ${money(market)} a month here; nearer that, a tenant comes sooner. A year’s lease, a month’s deposit, and the repairs are yours.`}</div>
         </>
       )}
+    </div>
+  );
+}
+
+/** What in town does a refused project's job, each with its button: a club joined, a class taken, a gym joined (from 2026-10-06; until then words alone). */
+function Instead({ options }: { options: readonly Alternative[] }) {
+  const { run, toast } = useGame();
+  return (
+    <div className="col gap-1">
+      <span className="xs dim">Instead:</span>
+      {options.map((o) => (
+        <div key={o.label} className="row gap-1 xs" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="dim">{o.label}</span>
+          {o.clubId && <Gated feature="club.join" className="btn btn-sm btn-ghost" onClick={() => { if (run('club.join', { clubId: o.clubId }).ok) toast('Joined.', 'positive'); }}>Join</Gated>}
+          {o.classId && <Gated feature="class.take" className="btn btn-sm btn-ghost" onClick={() => { if (run('class.take', { classId: o.classId }).ok) toast('Taken.', 'positive'); }}>Take A Class</Gated>}
+          {o.gymId && <Gated feature="gym.join" className="btn btn-sm btn-ghost" onClick={() => { const tier = GYMS.find((g) => g.id === o.gymId)!.tiers[0]!.name; if (run('gym.join', { gymId: o.gymId, tier }).ok) toast('Joined.', 'positive'); }}>Join The Gym</Gated>}
+        </div>
+      ))}
     </div>
   );
 }

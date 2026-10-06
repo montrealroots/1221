@@ -195,13 +195,15 @@ export function registerFurnishings(sim: Simulation): void {
     const credit = Math.min(total, person.ikeaCredit ?? 0);
     if (credit > 0) person.ikeaCredit = (person.ikeaCredit ?? 0) - credit;
     const paid = total - credit;
+    // Each piece keeps its price as new, however it was paid, as IKEA's buyback tiers are of it (from 2026-10-06; until
+    // then what the card paid was taken off, and a piece bought on credit went back for less, or nothing).
     if (paid > 0 && !payFromBank(s, person, paid, `${piece.retailer}, ${piece.brand === 'IKEA' ? '' : `${piece.brand} `}${piece.name}${quantity > 1 ? ` × ${quantity}` : ''}, delivered${fee ? ' and put together' : ''}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
     const [w, d, h] = piece.cm;
     const volumeL = w && d && h ? (w * d * h) / 1000 : undefined;
     // Each one its own, so each can be filled; chairs come as many as were bought.
     const each = STORAGE.has(piece.kind) ? quantity : 1;
     for (let n = 0; n < each; n += 1) {
-      addItem(s, person, { kind: `${piece.brand === 'IKEA' ? 'ikea' : 'furn'}:${piece.id}`, label: `${makerOf(piece)}${piece.name} ${KIND_LABEL[piece.kind]}`, quantity: STORAGE.has(piece.kind) ? 1 : quantity, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: Math.round(paid / each), bulky: true,
+      addItem(s, person, { kind: `${piece.brand === 'IKEA' ? 'ikea' : 'furn'}:${piece.id}`, label: `${makerOf(piece)}${piece.name} ${KIND_LABEL[piece.kind]}`, quantity: STORAGE.has(piece.kind) ? 1 : quantity, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: Math.round(total / each), bulky: true,
         ...(volumeL !== undefined ? { volumeL } : {}), ...(STORAGE.has(piece.kind) && piece.holdsL ? { holdsL: piece.holdsL } : {}), ...(fee || !piece.flatPack ? {} : { flatPacked: true as const }) });
     }
     return { paid };

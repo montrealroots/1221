@@ -49,7 +49,7 @@ import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { SITTING_MET, coldRefusal } from './coldstress';
 import { BODY } from '../content/body';
-import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, garmentsOf, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay, type Garment } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { isOn } from './automation';
 import { fittedModel } from './appliances';
@@ -62,7 +62,7 @@ import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
 import { personalityOf } from './personality';
 import { burgleValuables, scheduledMonth } from './valuables';
-import { homeKeyOf } from './items';
+import { homeKeyOf, reachable, type Item } from './items';
 import { gearRefusal, type Game } from './sportsgear';
 import { someoneHome } from './away';
 
@@ -105,6 +105,9 @@ export interface Stay {
   readyAt?: number;
   /** The day breakfast was had at the hotel (`systems/hotelbreakfast.ts`, from 2026-10-02). */
   breakfastOn?: string;
+  /** A hotel booked on its own where they are (`systems/localstay.ts`, from 2026-10-06), and when it ends. */
+  local?: true;
+  until?: number;
 }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
@@ -230,7 +233,8 @@ const withFaults = (person: Person, f: Fixtures): Fixtures => {
 };
 
 /** Whether they're at home now: in its town. */
-export const atHome = (person: Person): boolean => Boolean(person.home && person.home.cityId === person.currentLocationId);
+/** At home: in their home's town, and not in a hotel booked there on its own (`systems/localstay.ts`, from 2026-10-06). */
+export const atHome = (person: Person): boolean => Boolean(person.home && person.home.cityId === person.currentLocationId && !(person.stay?.local && person.stay.cityId === person.currentLocationId));
 
 // ---------------------------------------------------------------------------
 // Clothes and the place's state
@@ -398,29 +402,64 @@ export function laundryWay(sim: Simulation, person: Person): Fixtures['laundry']
   return placeOf(sim, person)?.fixtures.laundry ?? 'none';
 }
 
+/**
+ * A wash chosen, the master plan's §27c (from 2026-10-06; until then every wash was everything dirty, dried the one way
+ * the home dries): the garments named, clean or not, or else everything due a wash and to hand; and dried in the
+ * home's own dryer or on the rack. On the rack a load's dry by the next day, as a washer without a dryer's is
+ * (`LAUNDRY.readyHours`), and the dryer's electricity isn't run. A laundry room or a laundromat prices a wash and a dry
+ * together, and its loads are dried there.
+ */
+export interface LaundryChoice { itemIds?: readonly string[]; dry?: 'tumble' | 'rack' }
+
+/** The garments a wash takes, by the choice made; or why it can't take them. */
+export function laundryLoad(sim: Simulation, person: Person, choice: LaundryChoice = {}): (Item & { garment: Garment })[] | string {
+  if (!choice.itemIds) return washableDirty(sim, person);
+  if (choice.itemIds.length === 0) return 'Choose what goes in the wash.';
+  const out: (Item & { garment: Garment })[] = [];
+  for (const id of choice.itemIds) {
+    const g = garmentsOf(person).find((x) => x.id === id);
+    if (!g || !reachable(sim, person, g.at)) return 'That isn’t a garment of yours to hand.';
+    if (g.garment.care === 'dry-clean') return `${g.label} is dry-clean only.`;
+    out.push(g);
+  }
+  return out;
+}
+
+/** Why a wash can't be dried the way chosen, or nothing: on the rack only where the dryer's the home's own. */
+export function dryRefusal(sim: Simulation, person: Person, choice: LaundryChoice = {}): string | undefined {
+  const dry = choice.dry ?? person.laundryDry ?? 'tumble';
+  if (dry !== 'rack') return undefined;
+  const way = laundryWay(sim, person);
+  return way === 'building' || way === 'none' ? 'A laundry room or a laundromat prices a wash and a dry together, and dries it there.' : undefined;
+}
+
 /** What a laundry costs now, in loads and money. */
-export function laundryCost(sim: Simulation, person: Person): { loads: number; cost: Money } {
-  const loads = Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD);
+export function laundryCost(sim: Simulation, person: Person, choice: LaundryChoice = {}): { loads: number; cost: Money } {
+  const load = laundryLoad(sim, person, choice);
+  const loads = Math.ceil((typeof load === 'string' ? 0 : load.length) / GARMENTS_PER_LOAD);
   const way = laundryWay(sim, person);
   const usd = way === 'building' ? LAUNDRY.buildingUsd : way === 'none' ? LAUNDRY.laundromatUsd : 0;
   // At the prices where it's done: home, or the laundromat where a job has them.
   return { loads, cost: usd > 0 ? loads * atTown(sim, atHome(person) ? person.home!.cityId : person.currentLocationId, usd) : 0 };
 }
 
-/** Does the laundry: the clothes into the wash, paid for where it's paid, and wearable when they're dry. */
-export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant): boolean {
+/** Does the laundry: the clothes chosen, or else what's due, into the wash, paid for where it's paid, and wearable when they're dry. */
+export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant, choice: LaundryChoice = {}): boolean {
   const l = livingOf(person);
   const way = laundryWay(sim, person);
-  const { cost } = laundryCost(sim, person);
-  // What's dirty and to hand goes in, dry-clean-only kept out (`systems/wardrobe.ts`), and a load's detergent each (from 2026-10-02).
-  const washed = washableDirty(sim, person);
+  const { cost } = laundryCost(sim, person, choice);
+  // What's chosen, or what's dirty and to hand, goes in, dry-clean-only kept out (`systems/wardrobe.ts`), and a load's detergent each (from 2026-10-02).
+  const load = laundryLoad(sim, person, choice);
+  const washed = typeof load === 'string' ? [] : load;
+  const rack = (way === 'in-unit') && (choice.dry ?? person.laundryDry) === 'rack';
   const loads = Math.ceil(washed.length / GARMENTS_PER_LOAD);
   if (!detergentFor(sim, person, loads)) return false;
   if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
   laundryDetergent(sim, person, loads);
   // A home's own machines run on its electricity, billed with the month.
-  if (way === 'in-unit' || way === 'washer-only') l.loads = { ...l.loads, washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
-  washGarments(washed, finishedAt + LAUNDRY.readyHours[way] * MS_HOUR);
+  // On the rack the dryer isn't run, and the load's dry when a washer-only home's is.
+  if (way === 'in-unit' || way === 'washer-only') l.loads = { ...l.loads, washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' && !rack ? loads : 0) };
+  washGarments(washed, finishedAt + LAUNDRY.readyHours[rack ? 'washer-only' : way] * MS_HOUR);
   return true;
 }
 

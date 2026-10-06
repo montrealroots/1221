@@ -35,6 +35,8 @@ export function registerWorld(sim: Simulation): void {
     (p, { sim: s }) => {
       const decision = s.universe.decisions[p.decisionId];
       if (!decision) throw new CommandError('No such decision.');
+      // Once: a second press moved the day its keeping is counted from (until 2026-10-06).
+      if (decision.dismissedAt !== undefined) throw new CommandError('It’s dismissed already.');
       decision.dismissedAt = s.now;
       return { dismissed: true };
     },
@@ -72,6 +74,11 @@ export function registerWorld(sim: Simulation): void {
   sim.onCommand<Partial<typeof sim.universe.preferences>, { ok: boolean }>(
     'world.set_preferences',
     (p, { sim: s }) => {
+      // Only what's a preference, as one of its values (until 2026-10-06 anything given was kept).
+      const speeds = ['paused', 'live', 'fast', 'faster'] as const;
+      const keys = Object.keys(p ?? {});
+      if (keys.some((k) => k !== 'timeSpeed')) throw new CommandError(`${keys.find((k) => k !== 'timeSpeed')} isn’t a preference.`);
+      if (p?.timeSpeed !== undefined && !speeds.includes(p.timeSpeed)) throw new CommandError('The clock runs paused, live, fast or faster.');
       Object.assign(s.universe.preferences, p);
       return { ok: true };
     },

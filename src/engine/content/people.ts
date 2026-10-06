@@ -86,3 +86,18 @@ export const LIVING_ALONE = { oddsRatio: 1.32, share: 38.5 / 262 } as const;
  * - `breakup`: the stress a parting adds, and the mood it takes.
  */
 export const SOCIAL = { notBefore: 10, notAfter: 22, rest: 3, morale: 4, stress: 3, visitMinutes: 120, interested: 0.5, breakup: 10 } as const;
+
+/**
+ * A friend asking first (`systems/reachingout.ts`, from 2026-10-06). Pew
+ * found 29% of American adults with close friends see one in person at
+ * least a few times a week (July 2023, 5,057 adults; reported January
+ * 2025). Nobody publishes who of two friends asks, nor how often one friend
+ * does, so the rest are SLATE's estimates, a friendship taken as asked for
+ * from both sides:
+ * - `weekly`: the asks a week from a close friend, a friend and a casual one,
+ *   about one a fortnight, one a month and one in ten weeks;
+ * - `ahead`: the days on it's for, two to six;
+ * - `hour`: seven in the evening, theirs and yours;
+ * - `pause`: the days after asking, or after being answered, before they ask again.
+ */
+export const ASKS = { weekly: { close: 0.5, friend: 0.25, casual: 0.1 }, ahead: { least: 2, most: 6 }, hour: 19, pause: 14 } as const;

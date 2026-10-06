@@ -106,6 +106,9 @@ export interface Contact {
   interests?: string[];
   /** Coming to stay, or staying, in a guest room (`systems/houseguests.ts`, from 2026-10-05). */
   stay?: import('./houseguests').Stay;
+  /** A meal they've asked you to, unanswered, and when they last asked (`systems/reachingout.ts`, from 2026-10-06). */
+  ask?: import('./reachingout').Ask;
+  askedAt?: Instant;
 }
 
 /** A meal out, a visit home, a game on your own court or pitch (`play`, from 2026-10-02), or a class taken together (`class`, from 2026-10-03). */
@@ -207,6 +210,14 @@ const minutesOf = (inv: Invitation): number => {
   return r ? DINING_MINUTES[r.tier] : SOCIAL.visitMinutes;
 };
 
+/** A meeting said yes to, on the calendar: asked by you (`social.invite`) or by them (`social.answer`, from 2026-10-06). */
+export function arrange(sim: Simulation, person: Person, c: Contact, inv: Invitation): void {
+  const r = inv.restaurantId ? restaurantById(inv.restaurantId) : undefined;
+  const klass = inv.what === 'class' ? DROP_INS.find((d) => d.id === inv.classId) : undefined;
+  const first = c.name.split(' ')[0];
+  sim.schedule({ at: inv.at, kind: MEET_KIND, label: r ? `${r.name} With ${first}` : klass ? `${klass.studio} With ${first}` : inv.what === 'play' ? `${first} Comes Over To Play` : `${first} Comes Over`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: minutesOf(inv), locationId: c.cityId, payload: { personId: person.id, ...inv } });
+}
+
 export function registerPeople(sim: Simulation): void {
   sim.onCommand<Invitation, { accepted: boolean; reason?: string }>('social.invite', (p, { sim: s }) => {
     const person = s.player;
@@ -221,8 +232,7 @@ export function registerPeople(sim: Simulation): void {
     const what = r ? `a meal at ${r.name}` : klass ? `${klass.label.toLowerCase()} at ${klass.studio}` : inv.what === 'play' ? `a game of ${COURT_WORD[inv.court!]} at yours` : 'a visit to your home';
     c.memory.unshift({ at: s.now, what: reason ? `Said no to ${what}: ${reason}` : `Said yes to ${what}` });
     if (reason) return { accepted: false, reason };
-    const first = c.name.split(' ')[0];
-    s.schedule({ at: inv.at, kind: MEET_KIND, label: r ? `${r.name} With ${first}` : klass ? `${klass.studio} With ${first}` : inv.what === 'play' ? `${first} Comes Over To Play` : `${first} Comes Over`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: minutesOf(inv), locationId: c.cityId, payload: { personId: person.id, ...inv } });
+    arrange(s, person, c, inv);
     return { accepted: true };
   });
 

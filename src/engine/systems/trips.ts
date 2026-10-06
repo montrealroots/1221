@@ -290,6 +290,8 @@ export function registerTrips(sim: Simulation): void {
     let trip = person.trip;
     if (!trip) {
       if (p?.to === 'home') throw new CommandError('You’re home already.');
+      // Somewhere errands go: the shops or an errand (from 2026-10-06; until then any word set out).
+      if (p?.to !== 'shopping' && p?.to !== 'errand') throw new CommandError('Say where you’re going: the shops or an errand.');
       const by: TripMode = p?.by === 'car' ? 'car' : p?.by === 'transit' ? 'transit' : 'foot';
       const driven = by === 'car' && p?.driven === true;
       const along = p?.passengerIds?.map(String) ?? (p?.passengerId ? [String(p.passengerId)] : []);

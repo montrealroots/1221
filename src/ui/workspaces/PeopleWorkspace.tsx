@@ -38,6 +38,8 @@ const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'P
 import { HALL } from '@/engine/content/people';
 import { STAY_NIGHTS, stayRefusal } from '@/engine/systems/houseguests';
 import { foodOf } from '@/engine/systems/household';
+import { answerRefusal, askedBy } from '@/engine/systems/reachingout';
+import { restaurantById } from '@/engine/systems/dining';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
 const standing = (c: Contact, spouse?: string): string => (c.id === spouse ? 'Your Spouse' : c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
@@ -77,6 +79,7 @@ export function PeopleWorkspace() {
             </LookRegion>
           )}
         </Panel>
+        <AskedYou />
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
         {person.home && person.home.kind !== 'sofa' && contacts.some((c) => c.cityId === person.home!.cityId) && <HaveFriendsOver />}
         <ClubsPanel />
@@ -89,6 +92,32 @@ export function PeopleWorkspace() {
   );
 }
 
+
+/** Meals friends have asked you to (`social.answer`, from 2026-10-06): yes, and it's on the calendar; no; or left, and it lapses. */
+function AskedYou() {
+  const { sim, run, toast } = useGame();
+  const asked = useWorld((s) => askedBy(s.player));
+  const answer = useFeature('social.answer');
+  if (asked.length === 0) return null;
+  return (
+    <Panel title="Asked You Out" subtitle="Friends who asked first; unanswered, it lapses at its hour">
+      <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+        {asked.map((c) => {
+          const a = c.ask!;
+          const first = c.name.split(' ')[0];
+          const no = answerRefusal(sim, sim.player, c.id, true);
+          return (
+            <li key={c.id} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+              <span>{c.name}: {restaurantById(a.restaurantId)?.name}, {formatDate(a.at, CITIES.require(c.cityId).timeZone)} at seven, {a.item}</span>
+              <Gated feature="social.answer" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: true }).ok) toast(`It’s on the calendar with ${first}.`, 'positive'); }}>Say Yes</Gated>
+              <Gated feature="social.answer" className="btn btn-sm btn-ghost" title={answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: false }).ok) toast(`You told ${first} another time.`, 'neutral'); }}>Say No</Gated>
+            </li>
+          );
+        })}
+      </ul>
+    </Panel>
+  );
+}
 
 /** Yoga and dance classes in the town you're in, taken one at a time at each studio's single price (`content/dropins.ts`). */
 function Classes() {

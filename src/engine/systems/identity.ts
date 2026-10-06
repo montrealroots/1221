@@ -94,6 +94,9 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
   if (card.passportBook && !documentsOf(person).some((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, at))) return 'The passport card is issued to a holder of an Irish passport book in force.';
   if (!card.citizens && documentsOf(person).some((d) => d.kind === 'license' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold a license here. It serves as your ID.';
   if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold one in force.';
+  // One on its way, applied for or replacing a lost one (from 2026-10-06; until then a second was issued and charged for,
+  // and they held two when the first came).
+  if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && d.status === 'pending')) return 'One is on its way.';
   return undefined;
 }
 
