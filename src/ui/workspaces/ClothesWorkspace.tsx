@@ -26,6 +26,9 @@ import { reachable } from '@/engine/systems/items';
 import { dryRefusal } from '@/engine/systems/dwelling';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
+import { clipperOffer, clipperRefusal, hasClippers, homeCutRefusal, nailsDue } from '@/engine/systems/homegrooming';
+import { beddingDue, beddingOf, beddingOffers, beddingRefusal, onTheBed } from '@/engine/systems/bedding';
+import { BEDDING_NIGHTS } from '@/engine/content/bedding';
 import { alterCost, alterRefusal, fitOf, tailorsIn, chartFor } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -93,6 +96,8 @@ export function ClothesWorkspace() {
         <YourMeasurements />
         <Bathroom />
         <Salons />
+        <GroomingAtHome />
+        <Bedding />
         <Shop />
         <Basket />
         <Sneakers />
@@ -778,6 +783,52 @@ function Salons() {
         </table>
       </div>
       <Fine>Each place is real and each price its own list’s, read on the date it was; one not found is never shown as nothing. The tip is the custom’s middle: 15 to 20% in America and Canada (Emily Post), 10% in Britain (Debrett’s), 5 to 10% in Ireland, 10 to 20% in Mexico. A service with no time on its list takes 45 minutes, SLATE’s estimate.</Fine>
+    </Panel>
+  );
+}
+
+/** A haircut at home with clippers, and nails trimmed (`systems/homegrooming.ts`, from 2026-10-06). */
+function GroomingAtHome() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const offer = clipperOffer(sim, person);
+  const buyNo = clipperRefusal(sim, person);
+  const cutNo = homeCutRefusal(person);
+  const zone = CITIES.get(person.home?.cityId ?? person.currentLocationId)?.timeZone ?? sim.zone;
+  const due = (which: 'fingers' | 'toes') => { const at = nailsDue(person, which); return at <= sim.now ? 'Due Now' : `Due ${formatDate(at, zone)}`; };
+  return (
+    <Panel title="Grooming At Home" subtitle={hasClippers(person) ? 'Your own clippers, and your nails' : offer ? `${offer.kit.name} at ${offer.kit.retailer}, ${formatMoney(offer.cost, cur)}` : 'SLATE has no published price for a clipper kit here'}>
+      <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+        {!hasClippers(person) && <Gated feature="hygiene.buy_clippers" className="btn btn-sm btn-ghost" disabled={Boolean(buyNo)} title={buyNo} onClick={() => { if (run('hygiene.buy_clippers', {}).ok) toast('Clippers of your own, kept in the bathroom.', 'positive'); }}>Buy Clippers</Gated>}
+        <Gated feature="hygiene.cut_hair" className="btn btn-sm btn-ghost" disabled={Boolean(cutNo)} title={cutNo} onClick={() => { if (run('hygiene.cut_hair', {}).ok) toast('You cut your own hair.', 'positive'); }}>Cut Your Hair</Gated>
+        <Gated feature="hygiene.trim_nails" className="btn btn-sm btn-ghost" onClick={() => { if (run('hygiene.trim_nails', { which: 'fingers' }).ok) toast('Fingernails trimmed.', 'positive'); }}>{`Trim Fingernails, ${due('fingers')}`}</Gated>
+        <Gated feature="hygiene.trim_nails" className="btn btn-sm btn-ghost" onClick={() => { if (run('hygiene.trim_nails', { which: 'toes' }).ok) toast('Toenails trimmed.', 'positive'); }}>{`Trim Toenails, ${due('toes')}`}</Gated>
+      </div>
+      <Fine>A haircut at home is a haircut as a barber’s is, in the 45 minutes SLATE gives a service whose list names none. Nails grow 3.47 mm a month on the fingers and 1.62 on the toes (Yaemsiri and others, 2010); a trim takes 1 mm and 2 mm off, SLATE’s estimate, so they’re due about every nine days and every five and a half weeks.</Fine>
+    </Panel>
+  );
+}
+
+/** Bedding for the bed at home, due its wash weekly (`systems/bedding.ts`, from 2026-10-06). */
+function Bedding() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const offers = beddingOffers(sim, person);
+  const sets = beddingOf(person);
+  const on = onTheBed(person);
+  if (!person.home || person.home.kind === 'sofa') return null;
+  return (
+    <Panel title="Bedding" subtitle={sets.length === 0 ? 'No bedding of your own' : beddingDue(person) ? 'Every set is due a wash: put a load on' : on ? `On the bed, ${on.bedding.nights} of ${BEDDING_NIGHTS} nights to its wash` : 'None of your sets fits the bed'}>
+      <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+        {offers.length === 0 && <span className="small muted">SLATE has no published price here for a set to fit your bed.</span>}
+        {offers.map(({ set, cost }) => {
+          const no = beddingRefusal(sim, person, set.id);
+          return <Gated key={set.id} feature="home.buy_bedding" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_bedding', { setId: set.id }).ok) toast(`${set.name}, in the drawers.`, 'positive'); }}>{`Buy ${set.name}, ${formatMoney(cost, cur)}`}</Gated>;
+        })}
+      </div>
+      <Fine>IKEA’s cheapest duvet cover with its pillowcases for the bed’s size, where a price was read; none in Ireland, and no fitted sheet anywhere, none having been priced. A set is due its wash after seven nights, the Sleep Foundation’s weekly change, and goes in the next load at home.</Fine>
     </Panel>
   );
 }

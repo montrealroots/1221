@@ -376,6 +376,8 @@ export interface Person {
   parkingPermit?: { cityId: string; at: number };
   applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;
+  /** When their fingernails and toenails were last trimmed at home (`systems/homegrooming.ts`, from 2026-10-06). */
+  nailsAt?: { fingers?: number; toes?: number };
   /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
   utilitiesAt?: string;
   /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */

@@ -101,3 +101,20 @@ export const SOCIAL = { notBefore: 10, notAfter: 22, rest: 3, morale: 4, stress:
  * - `pause`: the days after asking, or after being answered, before they ask again.
  */
 export const ASKS = { weekly: { close: 0.5, friend: 0.25, casual: 0.1 }, ahead: { least: 2, most: 6 }, hour: 19, pause: 14 } as const;
+
+/**
+ * Going out together (from 2026-10-06; until then the only outing was a meal):
+ * - `walkMinutes`: a walk in the park, the American Time Use Survey 2025's 0.96 hours a day of walking for those
+ *   who walked (Table A-1, `research-atus-household.json`); free.
+ * - `film`: the average cinema ticket, by country, where a trade body publishes one (`research-outings.json`):
+ *   America's $10.75 (the theater owners' national association, now Cinema United, as reported) and Britain's £8.01 (the UK Cinema
+ *   Association, 2025). Ireland's, Canada's and Mexico's are only Numbeo's, so no film is seen together there. A film
+ *   is taken as a visit's two hours, SLATE's estimate: no average running time was read.
+ * - a pint at a bar, at the town's own bar price (`pintPrice` in `systems/alcohol.ts`), the one a pint alone costs.
+ *   For a few hours on 2026-10-06 it was Britain's alone, at the ONS's national £4.83, while a pint alone in London
+ *   cost Numbeo's £7: one pint, two prices. London's is now the reported £6.10 for its pubs.
+ */
+export const OUTINGS = {
+  walkMinutes: 0.96 * 60,
+  film: { us: { price: 10.75, currency: 'USD' }, uk: { price: 8.01, currency: 'GBP' } } as Readonly<Record<string, { price: number; currency: string }>>,
+} as const;

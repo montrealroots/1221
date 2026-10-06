@@ -27,7 +27,8 @@ import { salesTaxRate } from '../content/tax';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { dateKey, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { beddingNight } from './bedding';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
@@ -384,6 +385,8 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(wakeAt);
 
       applySleep(person, hours, quality, s.now, before);
+      // A night on the bedding, at home (`systems/bedding.ts`, from 2026-10-06).
+      beddingNight(person, dateKey(s.now, s.zone));
       person.wokeWithDebt = person.wellbeing.sleepDebt;
       const recovered = person.wellbeing.energy - before.energy;
 
@@ -1310,6 +1313,7 @@ function creditNightAlone(sim: Simulation, person: Person, bedtime: number): voi
   // A night they did not plan. Shorter, poorer, and it does not clear debt
   // the way a deliberate one does.
   applySleep(person, unattendedNight(person).hours, sleepQuality(sim, person, bedtime) * 0.95, bedtime);
+  beddingNight(person, dateKey(sim.now, sim.zone));
   person.wokeWithDebt = w.sleepDebt;
   person.lastSleptAt = bedtime;
   // A night from midnight is the one the day's meals come after, when it is

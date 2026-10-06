@@ -23,7 +23,7 @@ import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption
 import { Gated } from '@/ui/guide/Guide';
 import { supportLines } from '@/engine/systems/support';
 import { careHours, careRefusal, formatCare, needsCare, parentsOf, type Parent } from '@/engine/systems/parents';
-import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
+import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, outingPrice, type Contact, type Invitation, type InvitationKind } from '@/engine/systems/people';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { dateKey } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -38,8 +38,7 @@ const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'P
 import { HALL } from '@/engine/content/people';
 import { STAY_NIGHTS, stayRefusal } from '@/engine/systems/houseguests';
 import { foodOf } from '@/engine/systems/household';
-import { answerRefusal, askedBy } from '@/engine/systems/reachingout';
-import { restaurantById } from '@/engine/systems/dining';
+import { answerRefusal, askWords, askedBy } from '@/engine/systems/reachingout';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
 const standing = (c: Contact, spouse?: string): string => (c.id === spouse ? 'Your Spouse' : c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
@@ -93,7 +92,7 @@ export function PeopleWorkspace() {
 }
 
 
-/** Meals friends have asked you to (`social.answer`, from 2026-10-06): yes, and it's on the calendar; no; or left, and it lapses. */
+/** What friends have asked you to, a meal, a visit, a game or a class (`social.answer`, from 2026-10-06): yes, and it's on the calendar; no; or left, and it lapses. */
 function AskedYou() {
   const { sim, run, toast } = useGame();
   const asked = useWorld((s) => askedBy(s.player));
@@ -108,7 +107,7 @@ function AskedYou() {
           const no = answerRefusal(sim, sim.player, c.id, true);
           return (
             <li key={c.id} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-              <span>{c.name}: {restaurantById(a.restaurantId)?.name}, {formatDate(a.at, CITIES.require(c.cityId).timeZone)} at seven, {a.item}</span>
+              <span>{c.name}: {askWords(a)}, {formatDate(a.at, CITIES.require(c.cityId).timeZone)} at seven{a.item ? `, ${a.item}` : ''}</span>
               <Gated feature="social.answer" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: true }).ok) toast(`It’s on the calendar with ${first}.`, 'positive'); }}>Say Yes</Gated>
               <Gated feature="social.answer" className="btn btn-sm btn-ghost" title={answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: false }).ok) toast(`You told ${first} another time.`, 'neutral'); }}>Say No</Gated>
             </li>
@@ -216,7 +215,7 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
   const invite = useFeature('social.invite');
   const zone = CITIES.require(contact.cityId).timeZone;
   const places = RESTAURANTS.filter((r) => r.cityId === contact.cityId && r.menu.some((m) => m.price !== null));
-  const [what, setWhat] = useState<'meal' | 'visit' | 'play' | 'class'>(places.length ? 'meal' : 'visit');
+  const [what, setWhat] = useState<InvitationKind>(places.length ? 'meal' : 'visit');
   const classes = DROP_INS.filter((d) => d.cityId === contact.cityId);
   const [classId, setClassId] = useState(classes[0]?.id ?? '');
   const courts = homeCourts(sim.player);
@@ -241,11 +240,14 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
         <div className="field-row">
           <div className="field">
             <label htmlFor="people-what">To</label>
-            <select id="people-what" value={what} onChange={(e) => setWhat(e.target.value as 'meal' | 'visit' | 'play' | 'class')}>
+            <select id="people-what" value={what} onChange={(e) => setWhat(e.target.value as InvitationKind)}>
               <option value="visit" disabled={!homeCity}>Come Over</option>
               {places.length > 0 && <option value="meal">A Meal Out</option>}
               {courts.length > 0 && <option value="play" disabled={!homeCity}>Come Over To Play</option>}
               {classes.length > 0 && <option value="class">A Class Together</option>}
+              <option value="walk" disabled={!homeCity}>A Walk In The Park</option>
+              {homeCity && outingPrice(sim, homeCity, 'film') !== undefined && <option value="film">A Film At The Cinema</option>}
+              {homeCity && outingPrice(sim, homeCity, 'pint') !== undefined && <option value="pint">A Pint At A Bar</option>}
             </select>
           </div>
           {what === 'class' && (

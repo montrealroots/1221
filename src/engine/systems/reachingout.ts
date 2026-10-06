@@ -15,6 +15,11 @@
  *   fortnight of asking or being answered;
  * - for an evening they're at work.
  *
+ * Until 2026-10-06 a meal was all they asked to; from then it may be a visit
+ * to yours, a game on your court or a class at a studio in their town, each
+ * only where they'd say yes to it themselves (`declines`), as likely as any
+ * other of them (`whatTheyAsk`).
+ *
  * You say yes, and it's on the calendar as your own invitation would be,
  * kept or missed the same (`arrange`); or no; or nothing, and it lapses at
  * its hour. Each is remembered, and either answer starts the fortnight.
@@ -30,12 +35,17 @@ import type { Tier } from '../content/restaurants';
 import { DINING_MINUTES } from '../content/dining';
 import { diningQuote, restaurantById, restaurantsIn } from './dining';
 import { atWork } from './availability';
-import { MEET_KIND, arrange, contactsOf, inviteRefusal, levelOf, type Contact, type Invitation } from './people';
+import { MEET_KIND, PLAY_HOURS, arrange, contactsOf, declines, inviteRefusal, inviteWords, levelOf, type Contact, type Invitation } from './people';
+import { DROP_INS, DROP_IN_MINUTES } from '../content/dropins';
+import { homeCourts, type Court } from './dwelling';
 
 export const ANSWER_KIND = 'social.answer';
 
-/** A meal a friend has asked you to: when, where, your dish, and when they asked. */
-export interface Ask { at: Instant; restaurantId: string; item: string; made: Instant }
+/**
+ * What a friend has asked you to, and when they asked: a meal (where, your dish), and from 2026-10-06 a visit to
+ * yours, a game on your court, or a class together. An ask kept from before then, without `what`, is a meal.
+ */
+export interface Ask { at: Instant; what?: 'meal' | 'visit' | 'play' | 'class'; restaurantId?: string; item?: string; court?: Court; classId?: string; made: Instant }
 
 const TIERS: readonly Tier[] = ['fast', 'casual', 'mid', 'upscale'];
 
@@ -54,24 +64,45 @@ export function mayAsk(sim: Simulation, person: Person, c: Contact): boolean {
 /** Whether they ask today, at the odds given (their own, unless a sweep says otherwise). */
 export const asksToday = (sim: Simulation, c: Contact, day: string, odds = askOdds(c)): boolean => sim.rng('social.asks', c.id, day).next() < odds;
 
-/** What they'd ask you to: an evening on, a restaurant in their town they'd spend on, and a dish there with a price. */
-export function whatTheyAsk(sim: Simulation, c: Contact, day: string): Ask | undefined {
+/**
+ * What they'd ask you to: an evening on, and a meal at a restaurant in their town they'd spend on, a dish there with a
+ * price; or, from 2026-10-06, a visit to yours, a game on your court, or a class at a studio in their town. Each of
+ * those that they'd say yes to themselves (`declines`, their interests among it) is as likely as the others, SLATE's
+ * estimate: nobody publishes what friends ask each other to.
+ */
+export function whatTheyAsk(sim: Simulation, c: Contact, day: string, person: Person = sim.player): Ask | undefined {
   const rng = sim.rng('social.asks', c.id, day, 'what');
   const zone = CITIES.require(c.cityId).timeZone;
-  const places = restaurantsIn(c.cityId).filter((r) => TIERS.indexOf(r.tier) <= TIERS.indexOf(c.spends) && r.menu.some((m) => m.price !== null));
-  if (places.length === 0) return undefined;
-  const r = places[Math.floor(rng.next() * places.length)]!;
-  const dishes = r.menu.filter((m) => m.price !== null && diningQuote(sim, r, [m.item], 'in'));
-  if (dishes.length === 0) return undefined;
-  const item = dishes[Math.floor(rng.next() * dishes.length)]!.item;
-  const ahead = ASKS.ahead.least + Math.floor(rng.next() * (ASKS.ahead.most - ASKS.ahead.least + 1));
+  const ahead = (n: number) => ASKS.ahead.least + Math.floor(n * (ASKS.ahead.most - ASKS.ahead.least + 1));
   const today = zonedParts(sim.now, zone);
-  const at = instantFromZoned({ ...normalDate(today.year, today.month, today.day + ahead), hour: ASKS.hour, minute: 0 }, zone);
-  if (atWork(sim, c, at, DINING_MINUTES[r.tier])) return undefined;
-  return { at, restaurantId: r.id, item, made: sim.now };
+  const evening = (n: number) => instantFromZoned({ ...normalDate(today.year, today.month, today.day + ahead(n)), hour: ASKS.hour, minute: 0 }, zone);
+  const asks: Ask[] = [];
+  const places = restaurantsIn(c.cityId).filter((r) => TIERS.indexOf(r.tier) <= TIERS.indexOf(c.spends) && r.menu.some((m) => m.price !== null));
+  if (places.length > 0) {
+    const r = places[Math.floor(rng.next() * places.length)]!;
+    const dishes = r.menu.filter((m) => m.price !== null && diningQuote(sim, r, [m.item], 'in'));
+    const item = dishes.length ? dishes[Math.floor(rng.next() * dishes.length)]!.item : undefined;
+    const at = evening(rng.next());
+    if (item && !atWork(sim, c, at, DINING_MINUTES[r.tier])) asks.push({ at, what: 'meal', restaurantId: r.id, item, made: sim.now });
+  }
+  const other = sim.rng('social.asks', c.id, day, 'other');
+  const at = evening(other.next());
+  const court = homeCourts(person)[0]?.court;
+  const klass = DROP_INS.filter((d) => d.cityId === c.cityId);
+  const others: Ask[] = [
+    ...(person.home && person.home.kind !== 'sofa' ? [{ at, what: 'visit' as const, made: sim.now }] : []),
+    ...(court ? [{ at, what: 'play' as const, court, made: sim.now }] : []),
+    ...(klass.length ? [{ at, what: 'class' as const, classId: klass[Math.floor(other.next() * klass.length)]!.id, made: sim.now }] : []),
+  ];
+  for (const a of others) if (!declines(person, c, invitationOf(c, a), sim) && !atWork(sim, c, a.at, minutesFor(a))) asks.push(a);
+  if (asks.length === 0) return undefined;
+  return asks[Math.floor(sim.rng('social.asks', c.id, day, 'kind').next() * asks.length)];
 }
 
-const placeOf = (a: Ask): string => restaurantById(a.restaurantId)?.name ?? 'a restaurant';
+const minutesFor = (a: Ask): number => (a.what === 'play' ? PLAY_HOURS * 60 : a.what === 'class' ? DROP_IN_MINUTES : SOCIAL.visitMinutes);
+
+/** What an ask is to, in words:  meal at …,  visit to your home. */
+export const askWords = (a: Ask): string => (a.what && a.what !== 'meal' ? inviteWords({ what: a.what, court: a.court, classId: a.classId }) : `a meal at ${restaurantById(a.restaurantId ?? '')?.name ?? 'a restaurant'}`);
 
 /** Who has asked you to something you haven't answered. */
 export const askedBy = (person: Person): Contact[] => contactsOf(person).filter((c) => c.ask);
@@ -80,7 +111,7 @@ export const askedBy = (person: Person): Contact[] => contactsOf(person).filter(
 export function reachOut(sim: Simulation, person: Person): void {
   for (const c of contactsOf(person)) {
     if (!c.ask || c.ask.at > sim.now) continue;
-    c.memory.unshift({ at: sim.now, what: `Asked you to a meal at ${placeOf(c.ask)}; you never answered` });
+    c.memory.unshift({ at: sim.now, what: `Asked you to ${askWords(c.ask)}; you never answered` });
     delete c.ask;
   }
   for (const c of contactsOf(person)) {
@@ -92,9 +123,9 @@ export function reachOut(sim: Simulation, person: Person): void {
     c.ask = ask;
     c.askedAt = sim.now;
     const when = formatDate(ask.at, CITIES.require(c.cityId).timeZone);
-    c.memory.unshift({ at: sim.now, what: `Asked you to a meal at ${placeOf(ask)} on ${when}` });
+    c.memory.unshift({ at: sim.now, what: `Asked you to ${askWords(ask)} on ${when}` });
     const first = c.name.split(' ')[0];
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${first} Asked You Out To Eat`, body: `${c.name} would like to meet at ${placeOf(ask)} on ${when}, at seven.`, importance: 45, route: '/workspace/people' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: !ask.what || ask.what === 'meal' ? `${first} Asked You Out To Eat` : `${first} Asked You To Something`, body: `${c.name} would like ${askWords(ask)} on ${when}, at seven.`, importance: 45, route: '/workspace/people' });
   }
 }
 
@@ -107,7 +138,7 @@ export function answerRefusal(sim: Simulation, person: Person, contactId: string
   return inviteRefusal(sim, person, invitationOf(c, c.ask));
 }
 
-const invitationOf = (c: Contact, a: Ask): Invitation => ({ contactId: c.id, at: a.at, what: 'meal', restaurantId: a.restaurantId, item: a.item });
+const invitationOf = (c: Contact, a: Ask): Invitation => ({ contactId: c.id, at: a.at, what: a.what ?? 'meal', ...(a.restaurantId ? { restaurantId: a.restaurantId, item: a.item } : {}), ...(a.court ? { court: a.court } : {}), ...(a.classId ? { classId: a.classId } : {}) });
 
 export function registerReachingOut(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'social.reach_out', (_e, { sim: s }) => {
@@ -124,7 +155,7 @@ export function registerReachingOut(sim: Simulation): void {
     const ask = c.ask!;
     delete c.ask;
     c.askedAt = s.now;
-    c.memory.unshift({ at: s.now, what: `You said ${yes ? 'yes' : 'no'} to a meal at ${placeOf(ask)}` });
+    c.memory.unshift({ at: s.now, what: `You said ${yes ? 'yes' : 'no'} to ${askWords(ask)}` });
     if (!yes) return {};
     arrange(s, person, c, invitationOf(c, ask));
     return { at: ask.at };

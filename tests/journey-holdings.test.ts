@@ -366,17 +366,18 @@ describe('a flat of one’s own in New York', () => {
     const maya = (): Contact => contactsOf(sim.player).find((c) => c.name === 'Maya Okafor')!;
     expect(sim.execute({ kind: 'social.answer', payload: { contactId: maya().id, yes: true } }).error).toBe('Maya hasn’t asked you to anything.');
     expect(sim.execute({ kind: 'social.answer', payload: { contactId: 'nobody', yes: true } }).error).toBe('You don’t know them.');
-    for (let d = 0; d < 120 && !maya().ask; d += 1) sim.advanceBy(MS_DAY);
+    // A meal asked for, here; from 2026-10-06 a friend may ask to other things too (tests/reaching-out.test.ts).
+    for (let d = 0; d < 120 && !maya().ask; d += 1) { sim.advanceBy(MS_DAY); if (maya().ask && maya().ask!.what !== 'meal') { delete maya().ask; delete maya().askedAt; } }
     const ask = maya().ask!;
     expect(ask).toBeDefined();
     sim = reload(sim);
     expect(maya().ask).toEqual(ask);
     expect(sim.must<{ at: number }>({ kind: 'social.answer', payload: { contactId: maya().id, yes: true } }).at).toBe(ask.at);
     expect(sim.execute({ kind: 'social.answer', payload: { contactId: maya().id, yes: false } }).error).toBe('Maya hasn’t asked you to anything.');
-    const r = restaurantById(ask.restaurantId)!;
+    const r = restaurantById(ask.restaurantId!)!;
     sim.advanceTo(ask.at - MS_HOUR);
     const b0 = banked(sim);
-    const price = diningQuote(sim, r, [ask.item], 'in')!.total;
+    const price = diningQuote(sim, r, [ask.item!], 'in')!.total;
     sim.advanceTo(ask.at + 4 * MS_HOUR);
     expect(b0 - banked(sim)).toBe(price);
     expect(maya().memory.some((x) => x.what === `A meal at ${r.name}, 7:00 PM`)).toBe(true);

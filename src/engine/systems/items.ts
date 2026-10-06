@@ -113,6 +113,10 @@ export interface Item {
   litterKg?: number;
   /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */
   bed?: { country: string; size: string };
+  /** A duvet cover and pillowcase set: the bed size it fits, the nights slept in since its wash, and whether it's due one (`systems/bedding.ts`, from 2026-10-06). */
+  bedding?: { size: string; nights: number; dirty?: boolean; /** The day its last night was counted, in the home's time. */ lastDay?: string };
+  /** Hair clippers for a haircut at home (`systems/hygiene.ts`, from 2026-10-06). */
+  clippers?: true;
 }
 
 /** The key of a home they live in: an owned home by its id, any other by its kind, town and when it began. */

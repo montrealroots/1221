@@ -40,7 +40,7 @@
 import type { Simulation, CommandResult } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { saveCurrency, type Money } from '../core/money';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { FUEL_STOP_MINUTES, LEG_KM, METER, MIN_PER_KM, STATIONS, WALK_KM, WALK_KMH, type LegKind } from '../content/errandtrips';
@@ -67,6 +67,14 @@ import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 import { TRANSIT } from '../content/transit';
 import { rateOn } from '../content/career';
 import { STATION_RIDE_MINUTES } from './rail';
+import { arrange } from './catalog';
+import { groceryCatalog } from './kitchen';
+import { salonsIn, toiletryCatalog } from './hygiene';
+import { basketOf, collectRefusal, productById as clothingProduct, retailerById, returnRefusal } from './clothing';
+import { extraSupplyRefusal, longestFillOf } from './health';
+import { walletOf, withdrawalQuote } from './cash';
+import { menuCatalog } from './dining';
+import { clubById, membershipsOf } from './clubs';
 
 export type TripMode = 'car' | 'foot' | 'transit';
 
@@ -456,4 +464,52 @@ export function runErrands(sim: Simulation, plan: { by: TripMode; vehicleId?: st
   }
   if (sim.player.trip) exec('errand.go', { to: 'home' });
   return { done, ...(stopped ? { stopped } : {}) };
+}
+
+/** A stop a trip can make, with what the screen calls it. */
+export interface StopOffer extends Stop { key: string; label: string }
+
+/**
+ * What a stop on errands can be in the town they're in, each the command a screen already runs (from 2026-10-06; until
+ * then the screen built its own list, of groceries, toiletries, a salon, the dry cleaner's, a station and a club):
+ * besides those, a clothes shop (an order collected, the basket paid for at the till, a purchase taken back), the
+ * pharmacy (a longer supply of their medicine, where they live), the bank's counter and, where their bank lets it, the
+ * Post Office (cash taken out or paid in, of `cash`), a purchase posted back, and a meal at a restaurant. A stop
+ * offered can still be refused when it's made, by the command's own rules.
+ */
+export function errandStops(sim: Simulation, person: Person, by: TripMode, cash: Money = 0): StopOffer[] {
+  const here = person.currentLocationId;
+  const errand = 'errand' as const;
+  const shopping = 'shopping' as const;
+  const bought = person.clothesBought ?? [];
+  const waitingOrders = [...new Set(bought.map((b) => b.orderId).filter((id): id is string => Boolean(id) && !collectRefusal(person, id!)))];
+  const tills = [...new Set(basketOf(person).filter((l) => l.how === 'store').map((l) => clothingProduct(l.productId)?.retailer).filter((r): r is string => Boolean(r) && retailerById(r!)!.storesIn.includes(here)))];
+  const current = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
+  const wallet = walletOf(sim, person)?.balance ?? 0;
+  const cur = saveCurrency(sim.universe);
+  const amount = formatMoney(cash, cur);
+  const postOffice = CITIES.get(here)?.countryId === 'uk' && cash > 0 && !withdrawalQuote(sim, person, cash, 'post_office').refused;
+  const supply = extraSupplyRefusal(person, longestFillOf(person)) ? [] : [{ key: 'rx', label: `Collect ${longestFillOf(person)} Days Of Your Medicine At The Pharmacy`, kind: 'health.extra_supply', payload: { days: longestFillOf(person) }, leg: errand }];
+  return [
+    ...arrange(groceryCatalog(sim, here)).map((e) => ({ key: `g:${e.id}`, label: `Buy ${e.label}`, kind: 'food.buy_groceries', payload: { productId: e.id, quantity: 1 }, leg: shopping })),
+    ...arrange(toiletryCatalog(sim, here)).map((e) => ({ key: `t:${e.id}`, label: `Buy ${e.label}`, kind: 'hygiene.buy', payload: { productId: e.id, quantity: 1 }, leg: shopping })),
+    ...salonsIn(here).flatMap((salon) => salon.services.filter((x) => x.price !== null).map((x) => ({ key: `s:${salon.id}:${x.service}`, label: `${x.label} At ${salon.name}`, kind: 'hygiene.groom', payload: { salonId: salon.id, service: x.service }, leg: errand }))),
+    { key: 'dry', label: 'Drop Off The Dry Cleaning', kind: 'clothes.dry_clean', payload: {}, leg: errand },
+    { key: 'collect', label: 'Collect The Dry Cleaning', kind: 'clothes.collect', payload: {}, leg: errand },
+    ...waitingOrders.map((id) => ({ key: `o:${id}`, label: `Collect Your ${retailerById(bought.find((b) => b.orderId === id)!.retailerId)?.name ?? 'Clothes'} Order`, kind: 'clothes.collect_order', payload: { orderId: id }, leg: shopping })),
+    ...tills.map((r) => ({ key: `b:${r}`, label: `Pay For The Basket At ${retailerById(r)!.name}`, kind: 'clothes.checkout', payload: { retailerId: r, how: 'store' }, leg: shopping })),
+    ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'store')).map((b) => ({ key: `r:${b.id}`, label: `Take Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'store' }, leg: shopping })),
+    ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'mail')).map((b) => ({ key: `m:${b.id}`, label: `Post Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'mail' }, leg: errand })),
+    ...supply,
+    ...(cash > 0 && current ? [
+      { key: 'bank-out', label: `Take Out ${amount} At The Bank’s Counter`, kind: 'cash.withdraw', payload: { amount: cash, from: 'counter' }, leg: errand },
+      ...(wallet >= cash ? [{ key: 'bank-in', label: `Pay In ${amount} At The Bank’s Counter`, kind: 'cash.deposit', payload: { amount: cash, toId: current.id, at: 'counter' }, leg: errand }] : []),
+    ] : []),
+    ...(postOffice ? [{ key: 'po-out', label: `Take Out ${amount} At The Post Office`, kind: 'cash.withdraw', payload: { amount: cash, from: 'post_office' }, leg: errand }] : []),
+    ...menuCatalog(sim, here).filter((e) => e.price !== null).map((e) => ({ key: `d:${e.id}`, label: `Eat ${e.label} At ${e.value.restaurant.name}`, kind: 'food.dine', payload: { restaurantId: e.value.restaurant.id, items: [e.value.item], how: 'in' }, leg: errand })),
+    ...(by === 'car' ? (STATIONS[here] ?? []).map((st, i) => ({ key: `f:${i}`, label: `Fuel At ${st}`, kind: 'errand.fuel', payload: { station: i }, leg: errand })) : []),
+    // A club's meeting on the way, checked in at as Set Out does (`systems/clubs.ts`, from 2026-10-03).
+    ...membershipsOf(person).map((m) => clubById(m.clubId)).filter((c): c is NonNullable<typeof c> => Boolean(c) && c!.cityId === here)
+      .map((c) => ({ key: `c:${c.id}`, label: `${c.name}, Its Meeting`, kind: 'club.check_in', payload: { clubId: c.id }, leg: errand })),
+  ];
 }

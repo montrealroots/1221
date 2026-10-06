@@ -1,0 +1,20 @@
+{
+  "topic": "American Time Use Survey 2025: household activities by task, and walking, for a partner's share of the housework and a walk together",
+  "retrieved": "2026-10-06",
+  "source": "https://www.bls.gov/tus/tables/a1-2025.pdf",
+  "table": "Table A-1. Time spent in detailed primary activities and percent of the civilian population engaging in each activity, averages per day by sex, 2025 annual averages",
+  "population": "Civilian population, 15 years and over; average hours per day over everyone, whether or not they did the activity, unless said otherwise",
+  "findings": [
+    { "what": "Housework", "total": 0.56, "men": 0.30, "women": 0.81, "unit": "hours a day" },
+    { "what": "Interior cleaning", "total": 0.33, "men": 0.20, "women": 0.45, "unit": "hours a day" },
+    { "what": "Laundry", "total": 0.17, "men": 0.07, "women": 0.26, "unit": "hours a day" },
+    { "what": "Storing interior household items, including food", "total": 0.03, "men": 0.01, "women": 0.04, "unit": "hours a day" },
+    { "what": "Food preparation and cleanup", "total": 0.71, "men": 0.51, "women": 0.91, "unit": "hours a day" },
+    { "what": "Food and drink preparation", "total": 0.56, "men": 0.42, "women": 0.69, "unit": "hours a day" },
+    { "what": "Kitchen and food cleanup", "total": 0.15, "men": 0.08, "women": 0.21, "unit": "hours a day" },
+    { "what": "Consumer goods purchases", "total": 0.30, "men": 0.26, "women": 0.35, "unit": "hours a day" },
+    { "what": "Grocery shopping", "total": 0.12, "men": 0.10, "women": 0.14, "unit": "hours a day" },
+    { "what": "Walking (sports, exercise and recreation), hours a day for people who engaged in it", "total": 0.96, "men": 0.97, "women": 0.95, "unit": "hours a day, those who walked", "note": "9.4% of people walked on an average day" }
+  ],
+  "confidence": "high: read from BLS's own PDF table, 2026-10-06"
+}

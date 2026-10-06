@@ -32,7 +32,12 @@
  * them, home, eats a serving of what's cooked with them, the meal's time
  * counting to the two of them; and a dinner for friends at home is cooked from
  * a recipe where the stock makes it for everyone (`social.host`), its money
- * spent only where it can't be.
+ * spent only where it can't be. Until 2026-10-06 the partner was the only one
+ * an ordinary meal served, and whenever there was a second serving; from then
+ * the cook chooses (`serve`, `dinersOf`): the partner, a child living there, a
+ * friend staying, a lodger or a flatmate, each a serving. A child's meal comes
+ * out of the food share of its month's raising (`raisingMonth`), and a
+ * guest's out of the day's food bought for them, so neither is paid twice.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -63,6 +68,12 @@ import { contactsOf } from './people';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
 import { stow } from './trips';
+import { CITIES } from '../content/geography';
+import { CHILD_FOOD_SHARE } from '../content/children';
+import { childrenOf, livesWithYou } from './children';
+import { guestsOf } from './houseguests';
+import { lodgersIn } from './lodgers';
+import { roomsOf } from './rooms';
 import { foodOf, fresh, mealsReady, stockOf, takePortion, throwOutSpoiled, type Food, type Stocked } from './pantry';
 
 const MARKET: Readonly<Record<string, string>> = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
@@ -315,15 +326,54 @@ export function shortfall(sim: Simulation, person: Person, recipeId: string, ser
   return { buys, unbuyable };
 }
 
+/** Someone at home a meal can be served to, by the id `food.cook`'s `serve` takes. */
+export interface Diner { id: string; label: string; who: 'partner' | 'child' | 'guest' | 'lodger' | 'flatmate' }
+
+/**
+ * Who at home can be served from what's cooked (from 2026-10-06): a partner living there, each child who lives with
+ * them from their first birthday (SLATE's estimate: no figure for when a baby first eats a family meal was read), in
+ * America and Canada only, where a
+ * published food share of raising a child takes their meal out of its cost (`CHILD_FOOD_SHARE`); a friend staying;
+ * each lodger in the home they own; and each flatmate in a flat-share. Nobody where they aren't home.
+ */
+export function dinersOf(sim: Simulation, person: Person): Diner[] {
+  if (!atHome(person)) return [];
+  const out: Diner[] = [];
+  const partner = contactsOf(person).find((c) => c.livesWith !== undefined);
+  if (partner) out.push({ id: partner.id, label: partner.name.split(' ')[0]!, who: 'partner' });
+  const country = CITIES.get(person.home?.cityId ?? '')?.countryId ?? '';
+  if (CHILD_FOOD_SHARE[country] !== undefined) {
+    for (const k of childrenOf(person)) {
+      const age = (sim.now - k.born) / (365.2425 * MS_DAY);
+      if (livesWithYou(k) && age >= 1 && age < 18) out.push({ id: k.id, label: k.name.split(' ')[0]!, who: 'child' });
+    }
+  }
+  for (const g of guestsOf(person)) if (g.stay.from <= sim.now) out.push({ id: g.id, label: g.name.split(' ')[0]!, who: 'guest' });
+  const owned = livingIn(person);
+  (owned ? lodgersIn(owned) : []).forEach((_l, i) => out.push({ id: `lodger:${i}`, label: `Your Lodger${owned!.lodgers!.length > 1 ? ` ${i + 1}` : ''}`, who: 'lodger' }));
+  for (let i = 0; i < (roomsOf(sim, person)?.flatmates ?? 0); i += 1) out.push({ id: `flatmate:${i}`, label: `A Flatmate${i ? ` (${i + 1})` : ''}`, who: 'flatmate' });
+  return out;
+}
+
+/** Why a meal can't be served to these, or nothing: each must be at home to eat, and each takes a serving beside the cook's. */
+export function serveRefusal(sim: Simulation, person: Person, serve: readonly string[], servings: number): string | undefined {
+  const here = new Set(dinersOf(sim, person).map((d) => d.id));
+  if (new Set(serve).size !== serve.length) return 'Each is served once.';
+  const missing = serve.find((id) => !here.has(id));
+  if (missing) return 'They aren’t here to eat.';
+  if (servings < serve.length + 1) return `That takes ${serve.length + 1} servings, one for you.`;
+  return undefined;
+}
+
 /** Cooks a recipe for so many servings: its ingredients used at that scale, one serving eaten, the rest in the fridge. The portions left. */
-export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number, outside = false): number {
+export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number, outside = false, serve?: readonly string[]): number {
   // In the outdoor kitchen (from 2026-10-04): built, and the weather fit to sit out in for the recipe's minutes.
   if (outside) {
     if (!(atHome(person) && livingIn(person)?.facts.features.includes('outdoorKitchen'))) throw new CommandError('You have no outdoor kitchen.');
     const weather = fineWeatherRefusal(sim, person, 'cook outside', COOKING_MET, recipeById(recipeId)?.minutes ?? KITCHEN.minutes);
     if (weather) throw new CommandError(weather);
   }
-  const no = cookRefusal(sim, person, recipeId, servings);
+  const no = cookRefusal(sim, person, recipeId, servings) ?? (serve ? serveRefusal(sim, person, serve, servings ?? recipeById(recipeId)!.servings) : undefined);
   if (no) throw new CommandError(no);
   const busy = occupiedAt(sim, sim.now);
   if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`);
@@ -338,10 +388,19 @@ export function cook(sim: Simulation, person: Person, recipeId: string, servings
   applyLookingAfter(person, 'eat', sim.now);
   // Outdoors, the minutes are time outside, at sitting out's rate for them.
   if (outside) applyLookingAfter(person, 'outside', sim.now, 1, minutes / LOOKING_AFTER.outside.minutes);
-  // A partner living with them, home, eats with them.
+  // A partner living with them, home, eats with them; from 2026-10-06, whoever the meal is served to where they're
+  // chosen, each a serving: a partner the meal's time together, a child's meal out of its raising, a guest's out of the
+  // day's food bought for them, a lodger or a flatmate only the serving.
   const partner = atHome(person) ? contactsOf(person).find((c) => c.livesWith !== undefined) : undefined;
+  const served = serve ?? (partner && (servings ?? r.servings) > 1 ? [partner.id] : []);
   if (partner) { partner.hours += minutes / 60; partner.lastSeen = sim.now; }
-  const left = (servings ?? r.servings) - 1 - (partner && (servings ?? r.servings) > 1 ? 1 : 0);
+  for (const id of served) {
+    const child = childrenOf(person).find((k) => k.id === id);
+    if (child) child.served = (child.served ?? 0) + 1;
+    const guest = guestsOf(person).find((g) => g.id === id);
+    if (guest) guest.stay.served = (guest.stay.served ?? 0) + 1;
+  }
+  const left = (servings ?? r.servings) - 1 - served.length;
   if (left > 0) {
     const where = homeKeyOf(person.home);
     addItem(sim, person, {
@@ -511,7 +570,7 @@ export function registerKitchen(sim: Simulation): void {
     addItem(s, person, { kind: `gear:${g.gear}`, label: g.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: g.cost });
     return { paid: g.cost };
   });
-  sim.onCommand<{ recipeId: string; servings?: number; outside?: boolean }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings), p?.outside === true) }));
+  sim.onCommand<{ recipeId: string; servings?: number; outside?: boolean; serve?: string[] }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings), p?.outside === true, Array.isArray(p?.serve) ? p.serve.map(String) : undefined) }));
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');
     // Without one named, what's ready that goes off soonest: a routine's "eat something ready".

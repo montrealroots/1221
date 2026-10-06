@@ -54,6 +54,7 @@ import { describe, expect, it } from 'vitest';
 import { loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { livingOf } from '@/engine/systems/dwelling';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
 import { RESTAURANTS } from '@/engine/content/restaurants';
@@ -241,6 +242,9 @@ describe('a graduate in New York', () => {
     const rent = rentOf(sim, sim.player);
     since = mark(sim);
     const twinSince = mark(alone);
+    // From 2026-10-06 the partner does a load when the washing is due (tests/dwelling.test.ts), which the twin alone
+    // never does; their laundry is held off this month, so what's compared here is the split alone.
+    livingOf(sim.player).partnerLaundry = -Infinity;
     sim.advanceTo(nextFirst(sim));
     alone.advanceTo(sim.now);
     expect(rentCheck(alone)).toBe(rent);

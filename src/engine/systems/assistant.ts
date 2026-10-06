@@ -48,7 +48,7 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'clothes.save_outfit': { does: 'Save garments you own as an outfit', payload: '{ name: string, itemIds: string[] }' },
   'clothes.wear_outfit': { does: 'Put on a saved outfit', payload: '{ outfitId: string }' },
   'clothes.sell': { does: 'Sell clean garments you own', payload: '{ itemIds: string[] }' },
-  'food.cook': { does: 'Cook a recipe from what is in your kitchen, for so many servings', payload: '{ recipeId: string, servings?: number }' },
+  'food.cook': { does: 'Cook a recipe from what is in your kitchen, for so many servings, served to whom you choose at home', payload: '{ recipeId: string, servings?: number, serve?: string[] }' },
   'food.eat_ready': { does: 'Eat something ready in your kitchen', payload: '{ itemId?: string }' },
   'travel.book': { does: 'Book a journey to another town, with somewhere to stay', payload: '{ toCity: city id, day: epoch ms, slot?: number, nights?: number, returnDay?: epoch ms, hotelId?: string, room?: string, bags?: number }' },
   'vehicle.buy': { does: 'Buy a vehicle where you live', payload: '{ modelId: string, age?: years, financed?: boolean, months?: number, coverage?: "full" | "liability" }' },
