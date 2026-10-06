@@ -1,0 +1,20 @@
+{
+  "name": "SlateMechanicProposal",
+  "type": "object",
+  "description": "A new game mechanic the built-in assistant's development role proposed, kept for the owner to review. Written only by the askAssistant function; never read by the game and never run against a save.",
+  "properties": {
+    "user_id": { "type": "string", "description": "The signed-in player who asked." },
+    "request": { "type": "string", "description": "What they asked for." },
+    "title": { "type": "string", "description": "The mechanic's name." },
+    "what": { "type": "string", "description": "What it would do, in plain words." },
+    "why": { "type": "string", "description": "Why the game would be truer or fuller with it." },
+    "sources": { "type": "array", "items": { "type": "string" }, "description": "Where its figures would come from; none invented." },
+    "touches": { "type": "array", "items": { "type": "string" }, "description": "The systems it would change." },
+    "status": { "type": "string", "enum": ["proposed", "accepted", "declined"], "description": "The owner's review: proposed until they decide." }
+  },
+  "required": ["user_id", "title", "what", "status"],
+  "rls": {
+    "read": { "created_by": "{{user.email}}" },
+    "write": false
+  }
+}

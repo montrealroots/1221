@@ -30,7 +30,7 @@ export interface FakeWorld {
   calls: string[];
 }
 
-const COLLECTIONS = ['SlateSave', 'SlateCommandReceipt', 'SlateOfficialResult', 'SlateAssistantUsage'] as const;
+const COLLECTIONS = ['SlateSave', 'SlateCommandReceipt', 'SlateOfficialResult', 'SlateAssistantUsage', 'SlateMechanicProposal'] as const;
 
 export const world: FakeWorld = { user: { id: 'u1', email: 'one@example.test' }, stores: new Map(), calls: [] };
 

@@ -17,6 +17,14 @@
  *  - the request and the summary are size-limited;
  *  - only proposals whose command is in the summary's list come back.
  *
+ * Three roles (from 2026-10-05; requirements 55 and 57): "play", the default,
+ * proposes commands; "customize" proposes only the customization commands the
+ * browser lists for it (a wrap, a stereo, tires, an outfit, a lamp, paint),
+ * each tried and put back like any other; "develop" proposes new mechanics
+ * as written proposals, stored in SlateMechanicProposal for the owner to
+ * review. A mechanic is never a command: nothing the develop role returns is
+ * run, and nothing reaches a save.
+ *
  * The model is SLATE_ASSISTANT_MODEL, or Claude Haiku 4.5 by default; check
  * the current ids and prices before activation.
  */
@@ -37,6 +45,40 @@ const SYSTEM = [
   'If what they ask cannot be done with the listed commands, say so plainly in the answer and propose nothing for it.',
   'The game checks every proposal and the player decides; keep proposals few and specific.',
 ].join(' ');
+
+const DEVELOP = [
+  'You are the development role of the assistant inside SLATE, a text-based life simulation of one life as an actor, built to reflect the real world wherever the character is.',
+  'You never act on the game. Answer with the propose_mechanics tool: a short answer, and new mechanics the owner may review, each with what it would do, why, where its figures would come from, and which systems it would touch.',
+  'Propose only mechanics whose figures can come from a real published source; name the source kind. Never invent a figure, a law, a price or a rate.',
+  'A proposal is reviewed by the owner before anything is built. Keep them few and specific.',
+].join(' ');
+
+const MECHANICS_TOOL = {
+  name: 'propose_mechanics',
+  description: 'Answer and propose new game mechanics for the owner to review.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      answer: { type: 'string' },
+      mechanics: {
+        type: 'array',
+        maxItems: 4,
+        items: {
+          type: 'object',
+          properties: {
+            title: { type: 'string' },
+            what: { type: 'string' },
+            why: { type: 'string' },
+            sources: { type: 'array', items: { type: 'string' } },
+            touches: { type: 'array', items: { type: 'string' } },
+          },
+          required: ['title', 'what', 'why'],
+        },
+      },
+    },
+    required: ['answer', 'mechanics'],
+  },
+};
 
 const TOOL = {
   name: 'propose_actions',
@@ -80,6 +122,7 @@ export default async function (req) {
     const state = JSON.stringify(body?.state ?? {});
     if (state.length > MAX_STATE) return reply({ ok: false, status: 413, error: 'The life is too large to send as it is.' }, 413);
     const allowed = new Set(Object.keys(body?.state?.commands ?? {}));
+    const role = body?.role === 'develop' || body?.role === 'customize' ? body.role : 'play';
 
     // A player's requests today, capped.
     const day = new Date().toISOString().slice(0, 10);
@@ -95,14 +138,23 @@ export default async function (req) {
       body: JSON.stringify({
         model: env('SLATE_ASSISTANT_MODEL') ?? 'claude-haiku-4-5-20251001',
         max_tokens: 1_500,
-        system: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }],
-        tools: [TOOL],
-        tool_choice: { type: 'tool', name: 'propose_actions' },
+        system: [{ type: 'text', text: role === 'develop' ? DEVELOP : SYSTEM, cache_control: { type: 'ephemeral' } }],
+        tools: [role === 'develop' ? MECHANICS_TOOL : TOOL],
+        tool_choice: { type: 'tool', name: role === 'develop' ? 'propose_mechanics' : 'propose_actions' },
         messages: [{ role: 'user', content: `The life as it stands:\n${state}\n\nThe player asks: ${request}` }],
       }),
     });
     if (!res.ok) return reply({ ok: false, status: 502, error: 'The assistant didn’t answer; try again in a moment.' }, 502);
     const data = await res.json();
+    // The development role's mechanics, stored for the owner's review and returned; never a command.
+    if (role === 'develop') {
+      const dev = (data.content ?? []).find((c) => c.type === 'tool_use' && c.name === 'propose_mechanics')?.input ?? {};
+      const strs = (xs, n) => (Array.isArray(xs) ? xs.filter((x) => typeof x === 'string').slice(0, n).map((x) => x.slice(0, 300)) : []);
+      const mechanics = (Array.isArray(dev.mechanics) ? dev.mechanics : []).filter((m) => m && typeof m.title === 'string' && typeof m.what === 'string')
+        .slice(0, 4).map((m) => ({ title: m.title.slice(0, 200), what: m.what.slice(0, 2_000), why: String(m.why ?? '').slice(0, 1_000), sources: strs(m.sources, 8), touches: strs(m.touches, 8) }));
+      for (const m of mechanics) await base44.entities.SlateMechanicProposal.create({ user_id: user.id, request: request.slice(0, 2_000), ...m, status: 'proposed' });
+      return reply({ ok: true, answer: String(dev.answer ?? '').slice(0, 2_000), proposals: [], mechanics });
+    }
     const used = (data.content ?? []).find((c) => c.type === 'tool_use' && c.name === 'propose_actions');
     const input = used?.input ?? {};
     const proposals = (Array.isArray(input.proposals) ? input.proposals : [])

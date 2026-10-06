@@ -215,6 +215,35 @@ describe('writing, and writing again', () => {
   });
 });
 
+describe('restoring the backup (from 2026-10-05)', () => {
+  it('swaps the backup and the save on the server, an older clock and all, and can be undone', async () => {
+    const { payload } = aPayload(1);
+    const later = edited(payload, (u) => {
+      u.now = (u.now as number) + 86_400_000;
+      (u.meta as Record<string, unknown>).playtimeSeconds = 600;
+    });
+    await save(post({ slot: 1, payload, idempotencyKey: 'a' }));
+    await save(post({ slot: 1, payload: later, idempotencyKey: 'b' }));
+    const res = await body(await save(post({ slot: 1, restore: true })));
+    expect(res.ok).toBe(true);
+    expect(res.restored).toBe(true);
+    const row = rowsFor('u1', 'SlateSave')[0]!;
+    expect(row.payload).toBe(payload);
+    expect(row.backup_payload).toBe(later);
+    // Restored again, it's back where it was.
+    await save(post({ slot: 1, restore: true }));
+    expect(rowsFor('u1', 'SlateSave')[0]!.payload).toBe(later);
+  });
+
+  it('refuses where there is no backup', async () => {
+    const { payload } = aPayload(1);
+    await save(post({ slot: 1, payload }));
+    const res = await save(post({ slot: 1, restore: true }));
+    expect(res.status).toBe(404);
+    expect((await body(res)).error).toMatch(/no backup/);
+  });
+});
+
 describe('a stale tab', () => {
   it('cannot overwrite newer progress with an older clock', async () => {
     const { payload } = aPayload(1);

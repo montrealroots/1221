@@ -64,6 +64,8 @@ Nothing is sent to Anthropic until all three are done.
 
 ## Built, 2026-10-02: off until the key is set
 
+**Roles, from 2026-10-05.** Ask It To chooses one. *Help You Play*, the default, proposes any listed command. *Help Customize What You Own* is told only the customization commands (`CUSTOMIZE_COMMANDS`: a wrap, a stereo or speakers, tires, clothes and outfits, a lamp, paint, a renovation), each tried and put back like any other. *Propose A New Mechanic For Review* (requirement 57) answers through a second tool, `propose_mechanics`: each mechanic's title, what it would do, why, its sources and the systems it would touch, stored in the `SlateMechanicProposal` entity with status `proposed` for the owner to review. It returns no command, so nothing it says runs or reaches a save. A test checks every command the assistant may propose is one the engine handles.
+
 - **The engine's side** (`src/engine/systems/assistant.ts`): `assistantState` is
   the summary sent (where you are, money, wellbeing, what's on the calendar,
   your garments, outfits, vehicles, homes and contacts), and
