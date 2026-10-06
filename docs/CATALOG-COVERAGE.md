@@ -12,8 +12,8 @@ which never counts toward the target.
 
 | Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands at 100 | Variants | Offers | Unbranded | Markets | Met |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Apparel | Everyday Clothing | 121 | 100% | 1343 | 1 / 2 / 114 | 1 | 33326 | 1493 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Formalwear | 78 | 100% | 307 | 1 / 2 / 34 | 0 | 5333 | 333 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Everyday Clothing | 136 | 100% | 1409 | 1 / 2 / 114 | 1 | 33496 | 1559 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Formalwear | 78 | 100% | 308 | 1 / 2 / 34 | 0 | 5340 | 334 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Outerwear | 69 | 100% | 286 | 1 / 2 / 18 | 0 | 4616 | 333 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Underwear, Lingerie And Socks | 65 | 100% | 203 | 1 / 2 / 15 | 0 | 2965 | 225 | 0 | CA, GB, IE, MX, US | No |
@@ -34,9 +34,9 @@ which never counts toward the target.
 | Electronics | Televisions | 51 | 100% | 271 | 1 / 2 / 40 | 0 | 273 | 328 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
 | Home | Furniture | 66 | 100% | 268 | 1 / 2 / 90 | 0 | 268 | 341 | 0 | CA, GB, IE, MX, US | No |
-| Home | Mattresses And Beds | 53 | 100% | 88 | 1 / 1 / 29 | 0 | 88 | 249 | 0 | CA, GB, IE, MX, US | No |
+| Home | Mattresses And Beds | 55 | 100% | 133 | 1 / 1 / 29 | 0 | 133 | 350 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 61 | 100% | 102 | 1 / 2 / 5 | 0 | 117 | 102 | 0 | CA, GB, IE, MX, US | No |
-| Home | Appliances | 59 | 100% | 110 | 1 / 2 / 5 | 0 | 112 | 110 | 0 | CA, GB, IE, MX, US | No |
+| Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 0 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 85 | 100% | 320 | 1 / 2 / 27 | 0 | 320 | 322 | 1 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 554 | 145 | 8 |
+| Stores And Chains | 576 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 
