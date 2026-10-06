@@ -15,6 +15,7 @@ import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/sy
 import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
 import { bacAt } from '@/engine/systems/alcohol';
 import { arrange } from '@/engine/systems/catalog';
+import { addItem, coldRoomL, coldUsedL, homeKeyOf } from '@/engine/systems/items';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const bank = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
@@ -272,5 +273,22 @@ describe('the cheapest pack', () => {
       const quantity = Math.max(1, Math.ceil(amountIn(ing, p.sizeUnit, 1) / p.sizeQty - 1e-9));
       expect(groceryPrice(sim, 'uk-eng-london', p) * quantity).toBeGreaterThanOrEqual(oats.cost);
     }
+  });
+});
+
+describe('what keeps cold, bought (from 2026-10-05)', () => {
+  it('has to fit the fridge at home, as a thing moved there does', () => {
+    const sim = life('us-ny-newyork', 'fridge-full');
+    const fridge = groceryCatalog(sim, 'us-ny-newyork').map((e) => e.value).filter((p) => p.storage === 'fridge');
+    for (let h = 0; h < 24 && fridge.every((p) => groceryRefusal(sim, sim.player, p.id, 1)); h += 1) sim.universe.now += MS_DAY / 24;
+    const chilled = fridge.find((p) => !groceryRefusal(sim, sim.player, p.id, 1))!;
+    expect(chilled).toBeDefined();
+    const home = homeKeyOf(sim.player.home)!;
+    const holds = coldRoomL(sim.player, 'fridge')!;
+    addItem(sim, sim.player, { kind: 'test:crate', label: 'Crate', quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'fridge' }, acquiredAt: sim.now, volumeL: holds - coldUsedL(sim.player, home, 'fridge') - 0.001, food: { key: 'water', unit: 'ml', left: 1 } } as never);
+    expect(groceryRefusal(sim, sim.player, chilled.id, 1)).toMatch(/^The Fridge is full: 0 liters of its \d+ are free/);
+    // The pantry's things aren't held to it.
+    const shelf = groceryCatalog(sim, 'us-ny-newyork').map((e) => e.value).find((p) => p.storage === 'pantry' && p.chain === chilled.chain);
+    if (shelf) expect(groceryRefusal(sim, sim.player, shelf.id, 1)).toBeUndefined();
   });
 });

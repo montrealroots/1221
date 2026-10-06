@@ -10,6 +10,20 @@ export interface SportGear { id: string; market: string; kind: SportGearKind; br
 
 export const SPORT_GEAR: readonly SportGear[] = [
   {
+    "id": "ca-nike-playground-outdoor-rubber-basketball-size-7-canadian-tire",
+    "market": "ca",
+    "kind": "basketball",
+    "brand": "Nike",
+    "name": "Nike Playground Outdoor Rubber Basketball, Official Size 7 (29.5-in), Orange",
+    "retailer": "Canadian Tire",
+    "price": 24.99,
+    "currency": "CAD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.canadiantire.ca/en/pdp/nike-playground-outdoor-rubber-basketball-official-size-7-29-5-in-orange-1841127p.html",
+    "confirmed": false
+  },
+  {
     "id": "ca-spalding-street-performance-outdoor-rubber-basketball-canadian-tire",
     "market": "ca",
     "kind": "basketball",
@@ -164,6 +178,48 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "ie-wilson-mvp-295-basketball-size-7-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson MVP 295 Basketball - Size 7",
+    "retailer": "Elverys",
+    "price": 16,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-mvp-295-basketball-size-7",
+    "confirmed": false
+  },
+  {
+    "id": "ie-wilson-ncaa-legend-basketball-size-7-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson NCAA Legend Basketball - Size 7",
+    "retailer": "Elverys",
+    "price": 30,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-ncaa-legend-orange",
+    "confirmed": false
+  },
+  {
+    "id": "ie-wilson-nba-giannis-outdoor-basketball-size-7-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson NBA Giannis Outdoor Basketball - Size 7",
+    "retailer": "Elverys",
+    "price": 35,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-nba-giannis-outdoor-basketball-size-7",
+    "confirmed": false
+  },
+  {
     "id": "ie-molten-indoor-outdoor-basketball-size-6-elverys",
     "market": "ie",
     "kind": "basketball",
@@ -178,6 +234,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "ie-wilson-nba-authentic-outdoor-basketball-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson NBA Authentic Outdoor Basketball",
+    "retailer": "Elverys",
+    "price": 40,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-nba-authentic-outdoor-basketball",
+    "confirmed": false
+  },
+  {
+    "id": "ie-wilson-wnba-authentic-outdoor-basketball-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson WNBA Authentic Outdoor Basketball",
+    "retailer": "Elverys",
+    "price": 40,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-wnba-authentic-outdoor-basketball",
+    "confirmed": false
+  },
+  {
     "id": "ie-molten-super-league-basketball-size-7-elverys",
     "market": "ie",
     "kind": "basketball",
@@ -189,6 +273,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": true,
     "count": 1,
     "url": "https://www.elverys.ie/products/molten-basketball-ireland-super-league-basketball-size-7",
+    "confirmed": false
+  },
+  {
+    "id": "ie-wilson-evolution-game-ball-elverys",
+    "market": "ie",
+    "kind": "basketball",
+    "brand": "Wilson",
+    "name": "Wilson Evolution Game Ball",
+    "retailer": "Elverys",
+    "price": 75,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.elverys.ie/products/wilson-evolution-game-ball",
     "confirmed": false
   },
   {
@@ -385,6 +483,76 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": true,
     "count": 1,
     "url": "https://www.elverys.ie/ForThePlayer/TennisRacketsGear/c/9219",
+    "confirmed": false
+  },
+  {
+    "id": "ie-head-extreme-team-2024-head-ireland",
+    "market": "ie",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Extreme Team 2024 Racquet",
+    "retailer": "Head Ireland",
+    "price": 230,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://headireland.ie/pages/tennis-1",
+    "confirmed": false
+  },
+  {
+    "id": "ie-head-boom-team-2024-sports-direct-ireland",
+    "market": "ie",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Boom Team 2024 Racquet",
+    "retailer": "Sports Direct Ireland",
+    "price": 230,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://ie.sportsdirect.com/tennis/tennis-rackets/head",
+    "confirmed": false
+  },
+  {
+    "id": "ie-head-boom-mp-alternative-2024-head-ireland",
+    "market": "ie",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Boom MP Alternative 2024 Racquet",
+    "retailer": "Head Ireland",
+    "price": 250,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://headireland.ie/pages/tennis-1",
+    "confirmed": false
+  },
+  {
+    "id": "ie-head-speed-team-2024-sports-direct-ireland",
+    "market": "ie",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Speed Team 2024 Racquet",
+    "retailer": "Sports Direct Ireland",
+    "price": 250,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://ie.sportsdirect.com/tennis/tennis-rackets/head",
+    "confirmed": false
+  },
+  {
+    "id": "ie-head-radical-pro-head-ireland",
+    "market": "ie",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Radical Pro Tennis Racquet",
+    "retailer": "Head Ireland",
+    "price": 300,
+    "currency": "EUR",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://headireland.ie/pages/tennis-1",
     "confirmed": false
   },
   {
@@ -612,6 +780,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "mx-wilson-clash-100l-v2-0-innovasport",
+    "market": "mx",
+    "kind": "tennis-racket",
+    "brand": "Wilson",
+    "name": "Raqueta para Tennis Wilson Clash 100L V2.0 (Grip 3)",
+    "retailer": "Innovasport",
+    "price": 6699,
+    "currency": "MXN",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.innovasport.com/c/raqueta-wilson-clash-100l-v20-grip-3/p/000000000000243286",
+    "confirmed": false
+  },
+  {
     "id": "uk-tarmak-k500r-size-3-decathlon",
     "market": "uk",
     "kind": "basketball",
@@ -623,6 +805,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": true,
     "count": 1,
     "url": "https://www.decathlon.co.uk/sports/basketball/basketballs/f-brand_tarmak",
+    "confirmed": false
+  },
+  {
+    "id": "uk-slazenger-szr-basketball-sports-direct",
+    "market": "uk",
+    "kind": "basketball",
+    "brand": "Slazenger",
+    "name": "Slazenger SZR Basketball",
+    "retailer": "Sports Direct",
+    "price": 12,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.sportsdirect.com/slazenger-slazenger-szr-basketball-713312",
+    "confirmed": false
+  },
+  {
+    "id": "uk-mitre-nylon-wound-basketball-all-sports-superstore",
+    "market": "uk",
+    "kind": "basketball",
+    "brand": "Mitre",
+    "name": "Mitre Nylon Wound Basketball",
+    "retailer": "All Sports Superstore",
+    "price": 13.99,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://allsportssuperstore.co.uk/products/mitre-nylon-wound-basketball-1",
     "confirmed": false
   },
   {
@@ -680,6 +890,48 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://rjmsports.com/product/uhlsport-team-classic-football-size-5/",
     "confirmed": true
+  },
+  {
+    "id": "uk-mitre-ultimatch-indoor-football-sports-direct",
+    "market": "uk",
+    "kind": "football",
+    "brand": "Mitre",
+    "name": "Mitre Ultimatch Indoor Football",
+    "retailer": "Sports Direct",
+    "price": 22,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.sportsdirect.com/mitre-mitre-ultimatch-indoor-football-857439",
+    "confirmed": false
+  },
+  {
+    "id": "uk-mitre-ultimatch-one-football-sports-direct",
+    "market": "uk",
+    "kind": "football",
+    "brand": "Mitre",
+    "name": "Mitre Ultimatch One Football",
+    "retailer": "Sports Direct",
+    "price": 27,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.sportsdirect.com/mitre-mitre-ultimatch-one-football-418877",
+    "confirmed": false
+  },
+  {
+    "id": "uk-mitre-ultimatch-evo-football-sports-direct",
+    "market": "uk",
+    "kind": "football",
+    "brand": "Mitre",
+    "name": "Mitre Ultimatch Evo Football (Adults)",
+    "retailer": "Sports Direct",
+    "price": 29.99,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.sportsdirect.com/mitre-ultimatch-evo-football-adults-820013",
+    "confirmed": false
   },
   {
     "id": "uk-kipsta-official-match-ball-pro-league-2023-2025-decathlon",
@@ -794,6 +1046,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "uk-dunlop-tristorm-110-2025-decathlon",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Dunlop",
+    "name": "Dunlop TriStorm 110 Tennis Racket 2025",
+    "retailer": "Decathlon",
+    "price": 50,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.decathlon.co.uk/sports/tennis/tennis-rackets/f-brand_dunlop",
+    "confirmed": false
+  },
+  {
     "id": "uk-artengo-tr990-power-285g-decathlon",
     "market": "uk",
     "kind": "tennis-racket",
@@ -805,6 +1071,76 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": true,
     "count": 1,
     "url": "https://www.decathlon.co.uk/sports/tennis/artengo-tennis-rackets",
+    "confirmed": false
+  },
+  {
+    "id": "uk-dunlop-tristorm-elite-100-2025-decathlon",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Dunlop",
+    "name": "Dunlop TriStorm Elite 100 Tennis Racket 2025",
+    "retailer": "Decathlon",
+    "price": 100,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.decathlon.co.uk/sports/tennis/tennis-rackets/f-brand_dunlop",
+    "confirmed": false
+  },
+  {
+    "id": "uk-dunlop-sx-team-105-2025-decathlon",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Dunlop",
+    "name": "Dunlop SX Team 105 Tennis Racket 2025",
+    "retailer": "Decathlon",
+    "price": 110,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.decathlon.co.uk/sports/tennis/tennis-rackets/f-brand_dunlop",
+    "confirmed": false
+  },
+  {
+    "id": "uk-dunlop-sx-300-lite-2025-frame-only-decathlon",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Dunlop",
+    "name": "Dunlop SX 300 Lite Tennis Racket - Frame Only - 2025",
+    "retailer": "Decathlon",
+    "price": 180,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.decathlon.co.uk/sports/tennis/tennis-rackets/f-brand_dunlop",
+    "confirmed": false
+  },
+  {
+    "id": "uk-dunlop-fx-500-lite-frame-only-decathlon",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Dunlop",
+    "name": "Dunlop FX 500 Lite Tennis Racket - Frame Only",
+    "retailer": "Decathlon",
+    "price": 200,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.decathlon.co.uk/sports/tennis/tennis-rackets/f-brand_dunlop",
+    "confirmed": false
+  },
+  {
+    "id": "us-franklin-hardcourt-indoor-outdoor-mini-basketball-dick-s-sporting-goods",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Franklin",
+    "name": "Franklin Sports Hardcourt Indoor/Outdoor Mini Basketball",
+    "retailer": "Dick's Sporting Goods",
+    "price": 14.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.dickssportinggoods.com/a/franklin-sports.html",
     "confirmed": false
   },
   {
@@ -850,6 +1186,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "us-spalding-react-tf-250-official-size-7-29-5in-walmart",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Spalding",
+    "name": "Spalding React TF-250 Official Size 7 Indoor-Outdoor Basketball 29.5 Inch",
+    "retailer": "Walmart",
+    "price": 36.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.walmart.com/ip/Spalding-React-TF-250-Indoor-Outdoor-Basketball-29-5/822521551",
+    "confirmed": false
+  },
+  {
+    "id": "us-spalding-tf-250-composite-28-5in-walmart",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Spalding",
+    "name": "Spalding TF-250 Composite Basketball 28.5\"",
+    "retailer": "Walmart",
+    "price": 39.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.walmart.com/ip/Spalding-TF-250-Composite-Basketball-28-5/48460816",
+    "confirmed": false
+  },
+  {
     "id": "us-mikasa-bwl110-s-s-worldwide",
     "market": "us",
     "kind": "basketball",
@@ -861,6 +1225,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.ssww.com/item/mikasa-bwl110-basketball-W5624/",
+    "confirmed": false
+  },
+  {
+    "id": "us-franklin-pro-hoops-basketball-dick-s-sporting-goods",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Franklin",
+    "name": "Franklin Pro Hoops Basketball",
+    "retailer": "Dick's Sporting Goods",
+    "price": 44.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.dickssportinggoods.com/p/franklin-pro-hoops-basketball-16frauprhpsbsktblstg/16frauprhpsbsktblstg",
     "confirmed": false
   },
   {
@@ -1032,6 +1410,48 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "us-puma-big-cat-ball-purple-bestbuysoccer",
+    "market": "us",
+    "kind": "football",
+    "brand": "Puma",
+    "name": "Puma Big Cat Ball Purple",
+    "retailer": "BestBuySoccer",
+    "price": 17.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.bestbuysoccer.com/products/puma-big-cat-ball-purple",
+    "confirmed": false
+  },
+  {
+    "id": "us-puma-big-cat-ball-amazon",
+    "market": "us",
+    "kind": "football",
+    "brand": "Puma",
+    "name": "Puma Big Cat Ball, Orange-Blue",
+    "retailer": "Amazon",
+    "price": 21.4,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.amazon.com/PUMA-8399401-Big-Cat-Ball/dp/B0BB4M1M49",
+    "confirmed": false
+  },
+  {
+    "id": "us-nike-mercurial-fade-soccer-ball-soccer-village",
+    "market": "us",
+    "kind": "football",
+    "brand": "Nike",
+    "name": "Nike Mercurial Fade Soccer Ball",
+    "retailer": "Soccer Village",
+    "price": 21.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.soccervillage.com/dd0002-100.html",
+    "confirmed": false
+  },
+  {
     "id": "us-puma-men-s-football-sports-direct",
     "market": "us",
     "kind": "football",
@@ -1057,6 +1477,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.nike.com/t/pitch-soccer-ball-t6rJhR",
+    "confirmed": false
+  },
+  {
+    "id": "us-adidas-mexico-club-ball-adidas",
+    "market": "us",
+    "kind": "football",
+    "brand": "adidas",
+    "name": "adidas Mexico Club Ball",
+    "retailer": "adidas",
+    "price": 25,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.adidas.com/us/mexico-club-ball/IP2927.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-adidas-fifa-world-cup-26-trionda-mexico-club-ball-adidas",
+    "market": "us",
+    "kind": "football",
+    "brand": "adidas",
+    "name": "adidas FIFA World Cup 26 Trionda Mexico Club Ball",
+    "retailer": "adidas",
+    "price": 25,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.adidas.com/us/fifa-world-cup-26-trionda-mexico-club-ball/KA0849.html",
     "confirmed": false
   },
   {
@@ -1086,6 +1534,48 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://us.select-sport.com/collections/soccer-balls",
     "confirmed": true
+  },
+  {
+    "id": "us-adidas-fifa-world-cup-26-trionda-league-mexico-ball-adidas",
+    "market": "us",
+    "kind": "football",
+    "brand": "adidas",
+    "name": "adidas FIFA World Cup 26 Trionda League Mexico Ball",
+    "retailer": "adidas",
+    "price": 45,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.adidas.com/us/fifa-world-cup-26-trionda-league-mexico-ball/JZ5560.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-adidas-tiro-league-ball-adidas",
+    "market": "us",
+    "kind": "football",
+    "brand": "adidas",
+    "name": "adidas Tiro League Ball",
+    "retailer": "adidas",
+    "price": 45,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.adidas.com/us/tiro-league-ball/KA5262.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-molten-vantaggio-elite-competition-futsal-ball-4800-molten-usa",
+    "market": "us",
+    "kind": "football",
+    "brand": "Molten",
+    "name": "Molten Vantaggio Elite Competition Futsal Ball 4800",
+    "retailer": "Molten USA",
+    "price": 64.98,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://moltenusa.com/molten-vantaggio-elite-competition-futsal-ball-4800/",
+    "confirmed": false
   },
   {
     "id": "us-select-numero-10-select-sport",
@@ -1186,6 +1676,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-onix-z5-graphite-onix",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Onix",
+    "name": "Onix Z5 Graphite Pickleball Paddle",
+    "retailer": "Onix",
+    "price": 89.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.onixpickleball.com/products/graphite-z5-pickleball-paddle",
+    "confirmed": false
+  },
+  {
+    "id": "us-onix-evoke-pro-composite-onix",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Onix",
+    "name": "Onix Evoke Pro Composite Pickleball Paddle",
+    "retailer": "Onix",
+    "price": 99.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.onixpickleball.com/products/composite-evoke-pro-pickleball-paddle",
+    "confirmed": false
+  },
+  {
     "id": "us-vatic-pro-v-sol-pro-16mm-vatic-pro-official",
     "market": "us",
     "kind": "pickleball-paddle",
@@ -1198,6 +1716,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://vaticpro.com/products/v-sol-pro-16mm",
     "confirmed": true
+  },
+  {
+    "id": "us-joola-ben-johns-hyperion-cas-16mm-joola",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "JOOLA",
+    "name": "JOOLA Ben Johns Hyperion CAS 16 Pickleball Paddle",
+    "retailer": "JOOLA",
+    "price": 119.95,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://joola.com/products/ben-johns-hyperion-cas-16mm-pickleball-paddle",
+    "confirmed": false
   },
   {
     "id": "us-engage-pursuit-pro1-innovation-15-2mm-engage",
@@ -1225,6 +1757,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://us.sixzeropickleball.com/products/sapphire",
+    "confirmed": false
+  },
+  {
+    "id": "us-joola-ben-johns-hyperion-c2-cfs-14mm-joola",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "JOOLA",
+    "name": "JOOLA Ben Johns Hyperion C2 CFS 14 Pickleball Paddle",
+    "retailer": "JOOLA",
+    "price": 159.95,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://joola.com/products/ben-johns-hyperion-c2-cfs-14-pickleball-paddle",
     "confirmed": false
   },
   {
@@ -1326,6 +1872,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-selkirk-vanguard-control-invikta-selkirk",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Selkirk",
+    "name": "Selkirk Vanguard Control - Invikta Pickleball Paddle",
+    "retailer": "Selkirk",
+    "price": 200,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.selkirk.com/products/vanguard-control",
+    "confirmed": false
+  },
+  {
     "id": "us-vulcan-v1200tl-t800-raw-carbon-fiber-vulcan",
     "market": "us",
     "kind": "pickleball-paddle",
@@ -1410,6 +1970,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-selkirk-luxx-control-air-epic-dick-s-sporting-goods",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Selkirk",
+    "name": "Selkirk LUXX Control Air - Epic Pickleball Paddle",
+    "retailer": "Dick's Sporting Goods",
+    "price": 249.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.dickssportinggoods.com/p/selkirk-slk-luxx-control-air-epic-pickleball-paddle-23taqalxxcntrlrpctnn/23taqalxxcntrlrpctnn",
+    "confirmed": false
+  },
+  {
+    "id": "us-joola-ben-johns-hyperion-pro-iv-16mm-joola",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "JOOLA",
+    "name": "JOOLA Ben Johns Hyperion Pro IV 16mm Pickleball Paddle",
+    "retailer": "JOOLA",
+    "price": 279.95,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://joola.com/products/pre-order-joola-ben-johns-hyperion-pro-iv-16mm-pickleball-paddle",
+    "confirmed": false
+  },
+  {
     "id": "us-crbn-crbn1-trufoam-barrage-crbn",
     "market": "us",
     "kind": "pickleball-paddle",
@@ -1424,6 +2012,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-selkirk-luxx-control-air-invikta-dick-s-sporting-goods",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Selkirk",
+    "name": "Selkirk LUXX Control Air - Invikta Pickleball Paddle",
+    "retailer": "Dick's Sporting Goods",
+    "price": 279.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.dickssportinggoods.com/p/selkirk-slk-luxx-control-air-invikta-pickleball-paddle-23taqalxxcntrlrnvtnn/23taqalxxcntrlrnvtnn",
+    "confirmed": false
+  },
+  {
     "id": "us-joola-perseus-pro-v-joola",
     "market": "us",
     "kind": "pickleball-paddle",
@@ -1436,6 +2038,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://www.joola.com/collections/pickleball-paddles",
     "confirmed": true
+  },
+  {
+    "id": "us-joola-ben-johns-hyperion-pro-v-16mm-joola",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "JOOLA",
+    "name": "JOOLA Ben Johns Hyperion Pro V 16mm Pickleball Paddle",
+    "retailer": "JOOLA",
+    "price": 299.95,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://joola.com/collections/hyperion",
+    "confirmed": false
   },
   {
     "id": "us-selkirk-omni-selkirk",
@@ -1464,6 +2080,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://www.selkirk.com/collections/pickleball-paddles",
     "confirmed": true
+  },
+  {
+    "id": "us-penn-40-outdoor-pickleballs-3-pack-walmart",
+    "market": "us",
+    "kind": "pickleballs",
+    "brand": "Penn",
+    "name": "Penn 40 Outdoor Pickleball Balls, Yellow, 3 Ball Sleeve",
+    "retailer": "Walmart",
+    "price": 9.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 3,
+    "url": "https://www.walmart.com/ip/Penn-Pro-Penn-40-Outdoor-Pickleball-Balls-3-Ball-sleeve/1365327163",
+    "confirmed": false
   },
   {
     "id": "us-joola-primo-joola",
@@ -1564,6 +2194,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-penn-championship-extra-duty-1-can-walmart",
+    "market": "us",
+    "kind": "tennis-balls",
+    "brand": "Penn",
+    "name": "Penn Championship Extra Duty Tennis Balls (1 Can, 3 balls)",
+    "retailer": "Walmart",
+    "price": 5.39,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 3,
+    "url": "https://www.walmart.com/ip/Penn-Championship-Extra-Duty-Tennis-Balls-1-Can-3-balls/9906177",
+    "confirmed": false
+  },
+  {
     "id": "us-dunlop-australian-open-xd-tennis-warehouse",
     "market": "us",
     "kind": "tennis-balls",
@@ -1592,6 +2236,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-yonex-championship-tennis-balls-yonex-official",
+    "market": "us",
+    "kind": "tennis-balls",
+    "brand": "Yonex",
+    "name": "Yonex Championship Tennis Balls (3-ball can)",
+    "retailer": "Yonex (official)",
+    "price": 6.1,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 3,
+    "url": "https://us.yonex.com/products/championship-tennis-balls",
+    "confirmed": false
+  },
+  {
+    "id": "us-yonex-tour-tennis-balls-yonex-official",
+    "market": "us",
+    "kind": "tennis-balls",
+    "brand": "Yonex",
+    "name": "Yonex Tour Tennis Balls (3-ball can)",
+    "retailer": "Yonex (official)",
+    "price": 6.4,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 3,
+    "url": "https://us.yonex.com/products/tour-tennis-balls",
+    "confirmed": false
+  },
+  {
     "id": "us-wilson-triniti-pro-tennis-warehouse",
     "market": "us",
     "kind": "tennis-balls",
@@ -1606,6 +2278,48 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-slazenger-smash-tennis-racket-sports-direct",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Slazenger",
+    "name": "Slazenger Smash Tennis Racket",
+    "retailer": "Sports Direct",
+    "price": 44.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://us.sportsdirect.com/slazenger-smash-tennis-racket-741021",
+    "confirmed": false
+  },
+  {
+    "id": "us-prince-textreme-warrior-100-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Prince",
+    "name": "Prince Textreme Warrior 100 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 129,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/PrinceRacquets.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-prince-phantom-100x-2024-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Prince",
+    "name": "Prince Phantom 100X 290g Racquet 2024",
+    "retailer": "Tennis Warehouse",
+    "price": 199,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Prince_Phantom_100X_290g/descpageRCTWABG-PHNX9.html",
+    "confirmed": false
+  },
+  {
     "id": "us-prince-ripstick-100-300g-2025-tennis-warehouse",
     "market": "us",
     "kind": "tennis-racket",
@@ -1617,6 +2331,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.tennis-warehouse.com/PrinceRacquets.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-prince-o3-phantom-100x-2025-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Prince",
+    "name": "Prince O3 Phantom 100X Racquet 2025",
+    "retailer": "Tennis Warehouse",
+    "price": 219,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Prince_O3_Phantom_100X/descpageRCTWABG-PO310X.html",
     "confirmed": false
   },
   {
@@ -1704,6 +2432,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-head-boom-pro-2026-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Head",
+    "name": "Head Boom Pro 2026 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 269,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Head_Boom_Pro/descpageRCHEAD-HBOOMP.html",
+    "confirmed": false
+  },
+  {
     "id": "us-volkl-vostra-v1-pro-tennis-warehouse",
     "market": "us",
     "kind": "tennis-racket",
@@ -1716,6 +2458,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://www.tennis-warehouse.com/Tennis_Racquets/catpage-RACQUETS.html",
     "confirmed": true
+  },
+  {
+    "id": "us-babolat-pure-aero-lite-2026-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Babolat",
+    "name": "Babolat Pure Aero Lite 2026 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 279,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Babolat_Pure_Aero_2026/catpage-AERO26PP.html",
+    "confirmed": false
   },
   {
     "id": "us-babolat-pure-strike-100-carbon-grey-tennis-warehouse",
@@ -1802,6 +2558,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "us-wilson-clash-108-v3-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Wilson",
+    "name": "Wilson Clash 108 v3 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 299,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Wilson_Clash_108_v3/descpageRCWILSON-CL183V.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-babolat-pure-aero-2026-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Babolat",
+    "name": "Babolat Pure Aero 2026 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 299,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Babolat_Pure_Aero_2026/descpageRCBAB-BPAR26.html",
+    "confirmed": false
+  },
+  {
     "id": "us-yonex-ezone-105-tennis-warehouse",
     "market": "us",
     "kind": "tennis-racket",
@@ -1827,6 +2611,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.tennis-warehouse.com/Yonex_Tennis_Racquets/catpage-YONEXRACS.html",
+    "confirmed": false
+  },
+  {
+    "id": "us-babolat-pure-aero-98-2026-tennis-warehouse",
+    "market": "us",
+    "kind": "tennis-racket",
+    "brand": "Babolat",
+    "name": "Babolat Pure Aero 98 2026 Racquet",
+    "retailer": "Tennis Warehouse",
+    "price": 309,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.tennis-warehouse.com/Babolat_Pure_Aero_2026/catpage-AERO26PP.html",
     "confirmed": false
   }
 ];

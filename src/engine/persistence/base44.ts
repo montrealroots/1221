@@ -323,6 +323,13 @@ export class Base44SaveAdapter implements SaveAdapter {
     const [existing] = await entity.filter({ slot });
     if (!existing?.backup_payload) return null;
     const universe = deserialise(existing.backup_payload);
+    // The server swaps its own backup and save (from 2026-10-05). Until then this re-sent the backup as an ordinary
+    // write, which the server replayed or refused for its older clock, so a restore never took on Base44.
+    if (this.fn) {
+      await this.call('saveUniverse', { slot, restore: true }, 'Restoring');
+      await this.fallback.save(universe).catch(() => undefined);
+      return universe;
+    }
     await this.save(universe);
     return universe;
   }

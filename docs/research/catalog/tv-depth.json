@@ -1,0 +1,131 @@
+{
+ "read": "2026-10-05",
+ "category": "televisions",
+ "note": "Depth pass: new market offers (CA/GB/IE/MX) for models already catalogued elsewhere under their US model code, plus a few brand-new models/sizes for thinner makers. Every price below came from a WebSearch result retrieved in this session; none were independently re-fetched and visually confirmed on the live page (WebFetch returned HTTP 403 or a bot-check page for every UK/CA/MX retailer domain tried: Currys, Currys IE, Best Buy Canada, Coppel, Argos, Walmart.com, B&H, Crutchfield, lg.com/ca, lg.com/mx). All offers are therefore marked status 'secondhand' per this catalog's existing convention (verified = page fetched and price seen directly; secondhand = price read from a search result/snippet only). 'code' holds the market-specific SKU where it differs from the canonical US model string.",
+ "products": [
+  { "brand": "Samsung", "series": "S95F OLED", "model": "QN65S95FAFXZA", "sizeIn": 65, "panel": "QD-OLED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "Tizen", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "QN65S95FAFXZC", "price": 3299.99, "currency": "CAD", "taxIncluded": false, "url": "https://bestbuy.ca/en-ca/product/samsung-65-s95f-series-4k-uhd-oled-hdr-120hz-tizen-smart-tv-qn65s95fafxzc-2025/19204361", "status": "secondhand" },
+     { "market": "ie", "seller": "Currys Ireland", "code": "QE65S95F", "price": 2399.00, "currency": "EUR", "taxIncluded": true, "url": "https://www.currys.ie/products/samsung-s95f-65-oled-glare-free-4k-vision-ai-smart-tv-2025-qe65s95f-10284604.html", "status": "secondhand" }
+    ],
+    "url": "https://www.samsung.com/us/tvs/oled-tv/65-class-oled-tvs95f-sku-qn65s95fafxza/", "status": "secondhand" },
+
+  { "brand": "Samsung", "series": "S95F OLED", "model": "QN55S95FAFXZA", "sizeIn": 55, "panel": "QD-OLED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "Tizen", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "QE55S95FATXXU", "price": 1199.97, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/samsung-s95f-55-oled-glare-free-4k-vision-ai-smart-tv-2025-qe55s95f-10282689.html", "status": "secondhand" }
+    ],
+    "url": "https://www.samsung.com/us/tvs/oled-tv/55-class-oled-tv-s95f-sku-qn55s95fafxza/", "status": "secondhand" },
+
+  { "brand": "Samsung", "series": "QN70F Neo QLED 4K", "model": "QN85QN70FAFXZA", "sizeIn": 85, "panel": "Mini-LED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "Tizen", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "QE85QN70F", "price": 1799.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/samsung-qn70f-85-neo-qled-4k-mini-led-vision-ai-smart-tv-2025-qe85qn70f-10282611.html", "status": "secondhand" }
+    ],
+    "url": "https://www.rtings.com/tv/reviews/samsung/qn70f-qled", "status": "secondhand" },
+
+  { "brand": "Samsung", "series": "Q7F QLED 4K", "model": "QN55Q7FAAFXZA", "sizeIn": 55, "panel": "QLED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "Tizen", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "mx", "seller": "Amazon Mexico", "code": "QN55Q7FAAFXZA", "price": 14790.00, "currency": "MXN", "taxIncluded": true, "url": "https://www.amazon.com.mx/SAMSUNG-Smart-Pulgadas-Color-Negro/dp/B0DXMY6KV8", "status": "secondhand" }
+    ],
+    "url": "https://www.samsung.com/us/tvs/qled-tv/55-class-qled-tv-q7f-sku-qn55q7faafxza/", "status": "secondhand" },
+
+  { "brand": "LG", "series": "G5 OLED evo", "model": "OLED55G5WUA", "sizeIn": 55, "panel": "OLED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "webOS", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "OLED55G5SUB", "price": 1999.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/lg-55-g5-4k-uhd-hdr-oled-smart-tv-oled55g5sub-2025/19275493", "status": "secondhand" }
+    ],
+    "url": "https://www.lg.com/us/tvs/lg-oled55g5wua-oled-4k-tv", "status": "secondhand" },
+
+  { "brand": "LG", "series": "C5 OLED evo", "model": "OLED48C5PUA", "sizeIn": 48, "panel": "OLED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "webOS", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "OLED48C54LA", "price": 999.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/lg-c5-48-oled-evo-ai-4k-hdr-smart-tv-2025-oled48c54la-10281782.html", "status": "secondhand" }
+    ],
+    "url": "https://www.lg.com/us/tvs/lg-oled48c5pua-oled-4k-tv", "status": "secondhand" },
+
+  { "brand": "LG", "series": "C5 OLED evo", "model": "OLED55C5PUA", "sizeIn": 55, "panel": "OLED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "webOS", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ie", "seller": "Currys Ireland", "code": "OLED55C54LA", "price": 1099.00, "currency": "EUR", "taxIncluded": true, "url": "https://www.currys.ie/products/lg-c5-55-oled-evo-ai-4k-hdr-smart-tv-2025-oled55c54la-10283435.html", "status": "secondhand" }
+    ],
+    "url": "https://www.lg.com/us/tvs/lg-oled55c5pua-oled-4k-tv", "status": "secondhand" },
+
+  { "brand": "Sony", "series": "Bravia 5", "model": "K-55XR50", "sizeIn": 55, "panel": "Mini-LED", "resolution": "4K", "refreshHz": 120, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "K55XR55B", "price": 1299.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/sony-bravia-5-55-xr-mini-led-4k-hdr-smart-tv-k55xr55b-10282780.html", "status": "secondhand" },
+     { "market": "ca", "seller": "Best Buy Canada", "code": "K55XR50", "price": 1499.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/sony-bravia-5-55-xr50-series-4k-uhd-hdr-mini-led-smart-google-tv-k55xr50-2025/19254957", "status": "secondhand" }
+    ],
+    "url": "https://www.rtings.com/tv/reviews/sony/bravia-5", "status": "secondhand" },
+
+  { "brand": "Sony", "series": "Bravia 5", "model": "K-75XR50", "sizeIn": 75, "panel": "Mini-LED", "resolution": "4K", "refreshHz": 120, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "K75XR50", "price": 1999.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/sony-bravia-5-75-xr50-series-4k-uhd-hdr-mini-led-smart-google-tv-k75xr50-2025/19254959", "status": "secondhand" }
+    ],
+    "url": "https://www.rtings.com/tv/reviews/sony/bravia-5", "status": "secondhand" },
+
+  { "brand": "TCL", "series": "QM7K QD-Mini LED", "model": "65QM7K", "sizeIn": 65, "panel": "QD-Mini LED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "65QM7K", "price": 1299.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/tcl-65-qm7k-series-4k-uhd-hdr-qd-mini-led-smart-google-tv-65qm7k-2025/18984523", "status": "secondhand" }
+    ],
+    "url": "https://us.tcl.com/products/tcl-65-qm7k-series-qd-mini-led-qled-4k-uhd-smart-tv-with-google-tv-65qm7k", "status": "secondhand" },
+
+  { "brand": "TCL", "series": "QM7K QD-Mini LED", "model": "55QM7K", "sizeIn": 55, "panel": "QD-Mini LED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "55QM7K", "price": 799.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/tcl-55-qm7k-series-4k-uhd-hdr-qd-mini-led-144hz-dolby-atmos-google-tv-smart-tv-55qm7k-2025-great-for-sports-gaming/18984524", "status": "secondhand" }
+    ],
+    "url": "https://us.tcl.com/products/qm7k-series-qd-mini-led-qled-4k-uhd-smart-tv-with-google-tv", "status": "secondhand" },
+
+  { "brand": "Hisense", "series": "U88QG Mini-LED Pro", "model": "55U88QG", "sizeIn": 55, "panel": "Mini-LED", "resolution": "4K", "refreshHz": 165, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "ca", "seller": "Best Buy Canada", "code": "55U88QG", "price": 999.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/hisense-55-u88qg-series-4k-uhd-hdr-mini-led-qled-pro-smart-google-tv-55u88qg-2025/19326117", "status": "secondhand" }
+    ],
+    "url": "https://www.hisense-canada.com/en/home-entertainment/view-all/55U88QG_hisense-55-mini-led-qled-ai-tv-165hz-google-tv", "status": "secondhand" },
+
+  { "brand": "Hisense", "series": "U7QG Mini-LED", "model": "55U7QG", "sizeIn": 55, "panel": "Mini-LED", "resolution": "4K", "refreshHz": 144, "year": 2025, "smartOs": "Google TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "55U7QTUK PRO", "price": 649.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/hisense-u7q-pro-55-mini-led-4k-165hz-smart-ai-tv-with-freely-55u7qtuk-pro-10283696.html", "status": "secondhand" }
+    ],
+    "url": "https://www.hisense-usa.com/post/hisense-debuts-2025-uled-series-with-bigger-screens-for-more-immersive-entertainment", "status": "secondhand" },
+
+  { "brand": "Amazon", "series": "Fire TV Omni QLED", "model": "QL50F601U", "sizeIn": 50, "panel": "QLED", "resolution": "4K", "refreshHz": 60, "year": 2022, "smartOs": "Fire TV", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "QL50F601U", "price": 459.99, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/amazon-omni-qled-series-fire-tv-ql50f601u-50-smart-4k-ultra-hd-hdr-tv-with-amazon-alexa-10250164.html", "status": "secondhand" }
+    ],
+    "url": "https://www.techradar.com/televisions/amazon-fire-tv-omni-qled-review", "status": "secondhand" },
+
+  { "brand": "Sharp", "series": "4T-C50HJ4725K", "model": "4T-C50HJ4725K", "sizeIn": 50, "panel": "LED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": null, "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "4T-C50HJ4725K", "price": 239.99, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/sharp-4tc50gj4725k-50-smart-4k-ultra-hd-hdr-led-tv-10266015.html", "status": "secondhand" }
+    ],
+    "url": "https://www.currys.co.uk/tv-and-audio/televisions/tvs/sharp", "status": "secondhand" },
+
+  { "brand": "Sharp", "series": "4T-C50HJ6725K", "model": "4T-C50HJ6725K", "sizeIn": 50, "panel": "QLED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": null, "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Currys", "code": "4T-C50HJ6725K", "price": 249.99, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/tv-and-audio/televisions/tvs/sharp", "status": "secondhand" }
+    ],
+    "url": "https://www.currys.co.uk/tv-and-audio/televisions/tvs/sharp", "status": "secondhand" },
+
+  { "brand": "Bush", "series": "UT24SB", "model": "50UT24SB", "sizeIn": 50, "panel": "LED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "TiVo / Freely", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Argos", "code": "50UT24SB", "price": 219.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.argos.co.uk/product/7140585", "status": "secondhand" }
+    ],
+    "url": "https://pricespy.co.uk/product.php?p=14595743", "status": "secondhand" },
+
+  { "brand": "Bush", "series": "QT24SB", "model": "50QT24SB", "sizeIn": 50, "panel": "QLED", "resolution": "4K", "refreshHz": null, "year": 2025, "smartOs": "TiVo / Freely", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "uk", "seller": "Argos", "code": "50QT24SB", "price": 249.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.argos.co.uk/product/6799418", "status": "secondhand" }
+    ],
+    "url": "https://www.argos.co.uk/product/6799418", "status": "secondhand" },
+
+  { "brand": "Vizio", "series": "V-Series", "model": "V4K70M-08", "sizeIn": 70, "panel": "LED", "resolution": "4K", "refreshHz": 60, "year": 2024, "smartOs": "SmartCast", "onModeWatts": null, "powerBasis": null, "powerUrl": null, "colors": null,
+    "offers": [
+     { "market": "us", "seller": "Walmart", "code": "V4K70M-08", "price": 528.00, "currency": "USD", "taxIncluded": false, "url": "https://www.walmart.com/ip/VIZIO-70-Class-4K-UHD-LED-HDR-Smart-TV-New-V4K70M-08/5197667453", "status": "secondhand" }
+    ],
+    "url": "https://www.walmart.com/ip/VIZIO-70-Class-4K-UHD-LED-HDR-Smart-TV-New-V4K70M-08/5197667453", "status": "secondhand" }
+ ],
+ "notFound": [
+  "Every direct WebFetch attempted this pass on Currys (UK/IE), Best Buy Canada, Coppel, Argos, lg.com/ca, lg.com/mx, bhphotovideo.com and walmart.com returned HTTP 403 or a bot-check page, so no offer in this file could be upgraded from a search snippet to a fetched/verified page; all are honestly marked 'secondhand'.",
+  "TCL QM6K/QM7K at Currys IE and Currys UK: no GB/IE listing found this pass; TCL's UK range at these retailers runs under different series names (T6C, P7K, C7K) that are not confirmed to be the same panel/spec as the US QM6K/QM7K line, so no cross-market offer was recorded for them.",
+  "Panasonic W95A (TX-55/65/75W95A, already in tv-a.json/tv-b.json with no offers at all): US Best Buy snippets returned conflicting bundle-vs-standalone prices ($497.99-$1,299.99 depending on bundle) and the plain-TV listing could not be isolated from protection-plan/speaker bundles, so no Panasonic offer was recorded rather than guess which price was the bare TV.",
+  "Liverpool and Coppel (Mexico) for Samsung Q8F/TCL QM8L: searched but neither retailer's site returned the exact model and size requested in this pass (Liverpool had no 65QN65Q8F listing; Coppel/TCL 65QM8L was not found at Liverpool).",
+  "Hitachi and Philips new GB offers: searched (Hitachi 65in at Currys, Philips 65OLED810 at Argos) but no retailer page with a clear current price surfaced in the snippets, so neither was recorded.",
+  "Insignia NS-65F501NA26 US re-offer and Roku Select/Plus Series CA offers: prices found only as ranges across multiple retailers/models in the search synthesis (not a single page's displayed price for one exact SKU), so they were left out per the no-range rule.",
+  "Target for this pass was 80+ new offers; 21 were obtained given that essentially every targeted retailer in CA/GB/IE/MX blocks direct page fetches, leaving WebSearch snippets (honestly marked 'secondhand', never 'verified') as the only source, and several additional searches (Hisense 65U7QG CA, TCL 55QM6K UK, Hitachi, Philips) returned no usable single-page price at all."
+ ]
+}

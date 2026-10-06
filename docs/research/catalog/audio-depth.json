@@ -1,0 +1,234 @@
+{
+  "read": "2026-10-05",
+  "category": "audio",
+  "products": [
+    { "brand": "Sonos", "family": "Era", "model": "Era 300", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "gb", "seller": "Sonos", "price": 499, "currency": "GBP", "taxIncluded": true, "url": "https://www.sonos.com/en-gb/shop/era-300", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-gb/shop/era-300", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Era", "model": "Era 300", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "ie", "seller": "Sonos", "price": 549, "currency": "EUR", "taxIncluded": true, "url": "https://www.sonos.com/en-ie/shop/era-300", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ie/shop/era-300", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Arc", "model": "Arc Ultra", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "ca", "seller": "Sonos", "price": 1449, "currency": "CAD", "taxIncluded": false, "url": "https://www.sonos.com/en-ca/shop/arc-ultra", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ca/shop/arc-ultra", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Beam", "model": "Beam Ultra", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "gb", "seller": "Sonos", "price": 699, "currency": "GBP", "taxIncluded": true, "url": "https://www.sonos.com/en-gb/shop/beam-ultra", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-gb/shop/beam-ultra", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Move", "model": "Move 2", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White", "Olive"],
+      "offers": [ { "market": "ca", "seller": "Sonos", "price": 649, "currency": "CAD", "taxIncluded": false, "url": "https://www.sonos.com/en-ca/shop/move-2", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ca/shop/move-2", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Ray", "model": "Ray", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "gb", "seller": "Sonos", "price": 199, "currency": "GBP", "taxIncluded": true, "url": "https://www.sonos.com/en-gb/shop/ray", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-gb/shop/ray", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Sub", "model": "Sub 4", "type": "powered", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "ca", "seller": "Sonos", "price": 1149, "currency": "CAD", "taxIncluded": false, "url": "https://www.sonos.com/en-ca/shop/sub-4", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ca/shop/sub-4", "status": "verified" },
+
+    { "brand": "Sonos", "family": "Five", "model": "Five", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "ie", "seller": "Sonos", "price": 649, "currency": "EUR", "taxIncluded": true, "url": "https://www.sonos.com/en-ie/shop/five", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ie/shop/five", "status": "verified" },
+
+    { "brand": "Bose", "family": "SoundLink", "model": "SoundLink Home", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "gb", "seller": "Bose", "price": 219.95, "currency": "GBP", "taxIncluded": true, "url": "https://www.bose.co.uk/p/speakers/soundlink-home-bluetooth-speaker/SLHM-SPEAKERWIRELESS.html", "status": "verified" } ],
+      "url": "https://www.bose.co.uk/p/speakers/soundlink-home-bluetooth-speaker/SLHM-SPEAKERWIRELESS.html", "status": "verified" },
+
+    { "brand": "Bose", "family": "SoundLink", "model": "SoundLink Max", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "ca", "seller": "Bose", "price": 549.00, "currency": "CAD", "taxIncluded": false, "url": "https://www.bose.ca/en-ca/p/speakers/bose-soundlink-max-portable-speaker/SLMAX-SPEAKERWIRELESS.html", "status": "verified" } ],
+      "url": "https://www.bose.ca/en-ca/p/speakers/bose-soundlink-max-portable-speaker/SLMAX-SPEAKERWIRELESS.html", "status": "verified" },
+
+    { "brand": "JBL", "family": "Charge", "model": "Charge 6", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "ca", "seller": "JBL", "price": 249.98, "currency": "CAD", "taxIncluded": false, "url": "https://ca.jbl.com/en_CA/CHARGE-6.html", "status": "verified" } ],
+      "url": "https://ca.jbl.com/en_CA/CHARGE-6.html", "status": "verified" },
+
+    { "brand": "Denon", "family": "Home", "model": "Denon Home 150", "type": "smart", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "gb", "seller": "Denon", "price": 219, "currency": "GBP", "taxIncluded": true, "url": "https://www.denon.com/en-gb/product/wireless-speakers/denon-home-150/DENONHOME150GB.html", "status": "verified" } ],
+      "url": "https://www.denon.com/en-gb/product/wireless-speakers/denon-home-150/DENONHOME150GB.html", "status": "verified" },
+
+    { "brand": "Ultimate Ears", "family": "Megaboom", "model": "Megaboom 4", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "gb", "seller": "Ultimate Ears", "price": 149.99, "currency": "GBP", "taxIncluded": true, "url": "https://www.ultimateears.com/en-gb/shop/p/megaboom-4", "status": "verified" } ],
+      "url": "https://www.ultimateears.com/en-gb/shop/p/megaboom-4", "status": "verified" },
+
+    { "brand": "Bang & Olufsen", "family": "Beosound", "model": "Beosound A1 (3rd Gen)", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "gb", "seller": "Bang & Olufsen", "price": 299, "currency": "GBP", "taxIncluded": true, "url": "https://www.bang-olufsen.com/en/gb/speakers/beosound-a1", "status": "verified" } ],
+      "url": "https://www.bang-olufsen.com/en/gb/speakers/beosound-a1", "status": "verified" },
+
+    { "brand": "KEF", "family": "Q Series", "model": "Q3 Meta", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "us", "seller": "KEF", "price": 899.99, "currency": "USD", "taxIncluded": false, "url": "https://us.kef.com/products/q3-meta", "status": "verified" } ],
+      "url": "https://us.kef.com/products/q3-meta", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Acton", "model": "Acton IV", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 429.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 299, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Stanmore", "model": "Stanmore IV", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 549.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 399, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Woburn", "model": "Woburn III", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 849.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 599, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Emberton", "model": "Emberton III", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 249.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 179, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Emberton", "model": "Emberton II", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Steel"],
+      "offers": [ { "market": "ca", "seller": "Marshall", "price": 229.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" } ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Middleton", "model": "Middleton II", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 399.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 299, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Kilburn", "model": "Kilburn II", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "ca", "seller": "Marshall", "price": 399.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" } ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Willen", "model": "Willen II", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass", "Cream"],
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 179.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 119, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Stockwell", "model": "Stockwell III", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass", "Cream"],
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 379.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 229, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Kilburn", "model": "Kilburn III", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 479.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 349, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Tufton", "model": "Tufton", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass"],
+      "offers": [ { "market": "ca", "seller": "Marshall", "price": 599.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" } ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Bromley", "model": "Bromley 150", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass"],
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 729.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 449, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Bromley", "model": "Bromley 450", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass"],
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 969.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 649, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Bromley", "model": "Bromley 750", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Brass"],
+      "offers": [
+        { "market": "ca", "seller": "Marshall", "price": 1549.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+        { "market": "ie", "seller": "Marshall", "price": 999, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/ca/en/speakers/bluetooth", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Heston", "model": "Heston 120", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ie", "seller": "Marshall", "price": 999, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" } ],
+      "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Heston", "model": "Heston 60", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ie", "seller": "Marshall", "price": 599, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" } ],
+      "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Heston", "model": "Heston Sub 200", "type": "powered", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ie", "seller": "Marshall", "price": 499, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" } ],
+      "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Heddon", "model": "Heddon", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ie", "seller": "Marshall", "price": 199, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" } ],
+      "url": "https://www.marshall.com/ie/en/speakers", "status": "verified" },
+
+    { "brand": "Apple", "family": "HomePod", "model": "HomePod mini", "type": "smart", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Blue", "Yellow", "Midnight", "White", "Orange"],
+      "offers": [ { "market": "ca", "seller": "Apple", "price": 179.00, "currency": "CAD", "taxIncluded": false, "url": "https://www.apple.com/ca/shop/buy-homepod/homepod-mini", "status": "verified" } ],
+      "url": "https://www.apple.com/ca/shop/buy-homepod/homepod-mini", "status": "verified" },
+
+    { "brand": "Apple", "family": "HomePod", "model": "HomePod", "type": "smart", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Midnight", "White"],
+      "offers": [ { "market": "gb", "seller": "Apple", "price": 349.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.apple.com/uk/shop/buy-homepod/homepod", "status": "verified" } ],
+      "url": "https://www.apple.com/uk/shop/buy-homepod/homepod", "status": "verified" },
+
+    { "brand": "Apple", "family": "HomePod", "model": "HomePod mini", "type": "smart", "pair": false, "watts": null, "standbyWatts": null, "colors": ["White", "Midnight", "Blue", "Yellow", "Orange"],
+      "offers": [ { "market": "gb", "seller": "Apple", "price": 129, "currency": "GBP", "taxIncluded": true, "url": "https://www.apple.com/uk/shop/buy-homepod/homepod", "status": "verified" } ],
+      "url": "https://www.apple.com/uk/shop/buy-homepod/homepod", "status": "verified" },
+
+    { "brand": "Q Acoustics", "family": "3000i", "model": "3010i", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "us", "seller": "Q Acoustics", "price": 379.00, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/collections/all", "status": "verified" } ],
+      "url": "https://www.qacoustics.com/collections/all", "status": "verified" },
+
+    { "brand": "Q Acoustics", "family": "3000i", "model": "3030i", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "us", "seller": "Q Acoustics", "price": 499.96, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/collections/all", "status": "verified" } ],
+      "url": "https://www.qacoustics.com/collections/all", "status": "verified" },
+
+    { "brand": "Q Acoustics", "family": "3070", "model": "3070", "type": "powered", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "us", "seller": "Q Acoustics", "price": 419.99, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/collections/all", "status": "verified" } ],
+      "url": "https://www.qacoustics.com/collections/all", "status": "verified" },
+
+    { "brand": "Cambridge Audio", "family": "Minx", "model": "Minx X201", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "gb", "seller": "Cambridge Audio", "price": 349.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.cambridgeaudio.com/gbr/en/products/speakers/minx", "status": "verified" } ],
+      "url": "https://www.cambridgeaudio.com/gbr/en/products/speakers/minx", "status": "verified" },
+
+    { "brand": "Cambridge Audio", "family": "Minx", "model": "Minx X301", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": null,
+      "offers": [ { "market": "gb", "seller": "Cambridge Audio", "price": 449.00, "currency": "GBP", "taxIncluded": true, "url": "https://www.cambridgeaudio.com/gbr/en/products/speakers/minx", "status": "verified" } ],
+      "url": "https://www.cambridgeaudio.com/gbr/en/products/speakers/minx", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "Signa", "model": "Signa S2", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 349, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "Signa", "model": "Signa S4", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 599, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "Signa", "model": "Signa S2D", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 369, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "Signa", "model": "Signa S4D", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 649, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "MagniFi", "model": "MagniFi Max AX", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 949, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "MagniFi", "model": "MagniFi Max AX SR", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 1099, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/category/sound-bars/", "status": "verified" }
+  ],
+  "notFound": [
+    "JBL Xtreme 4 (uk.jbl.com) and JBL Flip 7 (harmanaudio.com.mx) returned HTTP 403 on direct fetch; search snippets only, excluded per honesty rule (no unfetched prices used)",
+    "Sony sony.ca/.com.mx, Samsung samsung.com/uk, LG lg.com/uk, Yamaha ca.yamaha.com/mx.yamaha.com, Bowers & Wilkins bowerswilkins.com/en-gb, Klipsch klipsch.com collections, Wharfedale wharfedale.co.uk, Dali dali-speakers.com, Edifier edifier.ca, Google store.google.com/ca all returned 403/404 or no visible price on fetch; not included",
+    "Bose Ireland: bose.ie redirects to a support/international page with no IE storefront found; no Bose IE offer included",
+    "Marshall marshall.com/uk/en/speakers rendered USD-labelled prices on fetch (geo-mismatch), so no UK offer was recorded from it despite the URL path; GB market left to existing audio-a.json Marshall entries",
+    "KEF Q3 Meta page showed a $0.00 'regular price' artifact alongside the $899.99 displayed price; $899.99 used as the shown price",
+    "Google Nest Audio additional market and Cambridge Audio further Minx/L-R models not fetched within budget"
+  ]
+}

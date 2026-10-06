@@ -26,7 +26,7 @@ import { levelOf, rangeKm } from './fueltank';
 
 /** What the assistant may propose, and the payload each takes, as the engine reads it. */
 export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload: string }>> = {
-  'life.look_after': { does: 'Spend time looking after yourself: eat, wash, bathe, exercise, swim, unwind, laundry, tidy, wash up, mow and the rest', payload: '{ action: "eat" | "order" | "wash" | "bathe" | "exercise" | "swim" | "court" | "ride" | "outside" | "unwind" | "laundry" | "tidy" | "washup" | "mow" }' },
+  'life.look_after': { does: 'Spend time looking after yourself: eat, wash, bathe, exercise, swim, unwind, laundry, tidy, wash up, mow, paint a room and the rest', payload: '{ action: "eat" | "order" | "wash" | "bathe" | "exercise" | "swim" | "court" | "dance" | "ride" | "outside" | "boat" | "trail" | "charter" | "unwind" | "laundry" | "tidy" | "washup" | "mow" | "sauna" | "paint" }' },
   'life.sleep': { does: 'Sleep for some hours, from now or a later time', payload: '{ hours: number, startAt?: epoch ms }' },
   'calendar.schedule': { does: 'Put a plan of your own on the calendar', payload: '{ title: string, at: epoch ms, durationMinutes?: number, locationId?: city id }' },
   'clothes.buy': { does: 'Buy a clothing product in a store or online', payload: '{ productId: string, how: "store" | "online", size?: string, color?: string, quantity?: number }' },
@@ -45,7 +45,18 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'vehicle.wrap': { does: 'Wrap a car you own, or its roof, hood or accent panels, at a wrap shop', payload: '{ vehicleId: string, shopId: string, color: string, finish: string, part?: "full" | "roof" | "hood" | "accents" }' },
   'vehicle.keep_in': { does: 'Say where a car is kept overnight, in your garage or on the street', payload: '{ vehicleId: string, where: "garage" | "street" }' },
   'vehicle.unwrap': { does: 'Have a wrap taken off at a shop that posts its price', payload: '{ vehicleId: string, shopId: string }' },
-  'vehicle.stereo': { does: 'Fit a stereo to a car you own', payload: '{ vehicleId: string }' },
+  'vehicle.stereo': { does: 'Fit a stereo to a car you own: the market\'s, or a model chosen by its offer', payload: '{ vehicleId: string, offerId?: string }' },
+  // From 2026-10-05, the commands the catalogs by make and model brought.
+  'vehicle.audio': { does: 'Fit speakers or an amplifier to a car you own, or a stereo, speakers or an amplifier chosen by its offer', payload: '{ vehicleId: string, part?: "speakers" | "amp", offerId?: string }' },
+  'vehicle.replace_tires': { does: 'Fit a set of four everyday tires to a car you own, the market\'s or a model chosen by its offer', payload: '{ vehicleId: string, offerId?: string }' },
+  'vehicle.winter_tires': { does: 'Fit a set of winter tires to a car you own in America or Canada', payload: '{ vehicleId: string, offerId?: string }' },
+  'lighting.buy_bulbs': { does: 'Buy a pack of light bulbs for your home, kept as spares', payload: '{ offerId: string }' },
+  'lighting.buy_lamp': { does: 'Buy a lamp for your home, with its sockets', payload: '{ offerId: string, color?: string }' },
+  'lighting.fit': { does: 'Fit spare bulbs of a kind, dark sockets first', payload: '{ productId: string }' },
+  'garden.buy_mower': { does: 'Buy a lawn mower for a home you own', payload: '{ offerId: string }' },
+  'computer.buy': { does: 'Buy a computer for your home', payload: '{ offerId: string, color?: string }' },
+  'home.buy_paint': { does: 'Buy a can of paint for repainting a home you own by hand', payload: '{ offerId: string }' },
+  'social.ask_to_stay': { does: 'Ask a friend from another town to come and stay', payload: '{ contactId: string, from: epoch ms, nights?: number }' },
   'home.renovate': { does: 'Start a project on a home you own', payload: '{ homeId: string, projectId: string }' },
   'home.move': { does: 'Rent a room or a one-bedroom where you live', payload: '{ kind: "shared" | "own" }' },
   'home.gardener': { does: 'Hire or let go of a gardener for a home you own', payload: '{ homeId: string, on: boolean }' },
@@ -55,11 +66,21 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'build.start': { does: 'Start building a house on land you own', payload: '{ parcelId: string, designId: string, live?: boolean, financed?: boolean }' },
 };
 
+/** The assistant's roles (from 2026-10-05): playing, customizing what they own, or proposing new mechanics for the owner's review. */
+export type AssistantRole = 'play' | 'customize' | 'develop';
+/** What the customization role may propose: choices of how a thing they own looks or is fitted, each a command checked like any other. */
+export const CUSTOMIZE_COMMANDS: readonly string[] = ['vehicle.wrap', 'vehicle.unwrap', 'vehicle.stereo', 'vehicle.audio', 'vehicle.replace_tires', 'clothes.buy', 'clothes.basket_add', 'clothes.save_outfit', 'clothes.wear_outfit', 'lighting.buy_lamp', 'home.buy_paint', 'home.renovate'];
+/** The commands a role may propose: every one for play, the customization ones for customizing, none for developing, whose mechanics are never commands. */
+export const commandsFor = (role: AssistantRole): Readonly<Record<string, { does: string; payload: string }>> =>
+  role === 'play' ? ASSISTANT_COMMANDS : role === 'customize' ? Object.fromEntries(CUSTOMIZE_COMMANDS.map((k) => [k, ASSISTANT_COMMANDS[k]!])) : {};
+/** A new mechanic the development role proposed, kept by the server for the owner's review. */
+export interface MechanicProposal { title: string; what: string; why: string; sources: string[]; touches: string[] }
+
 export interface Proposal { kind: string; payload: Record<string, unknown>; why: string }
 export interface CheckedProposal extends Proposal { ok: boolean; refusal?: string; costs?: number; notices: string[] }
 
 /** What the assistant is told about the life: enough to plan with, read fresh each time. */
-export function assistantState(sim: Simulation) {
+export function assistantState(sim: Simulation, role: AssistantRole = 'play') {
   const p = sim.player;
   const cur = saveCurrency(sim.universe);
   const worth = netWorth(sim, p.id);
@@ -77,7 +98,7 @@ export function assistantState(sim: Simulation) {
     vehicles: (p.vehicles ?? []).filter((v) => v.soldAt === undefined).map((v) => ({ id: v.id, modelId: v.modelId, cityId: v.cityId, full: Math.round(levelOf(v) * 100) / 100, rangeKm: rangeKm(v) })),
     homes: (p.homes ?? []).map((h) => ({ id: h.id, cityId: h.cityId, address: h.facts.address })),
     contacts: (p.contacts ?? []).slice(0, 40).map((c) => ({ id: c.id, name: c.name, cityId: c.cityId })),
-    commands: ASSISTANT_COMMANDS,
+    commands: commandsFor(role),
   };
 }
 

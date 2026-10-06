@@ -1,0 +1,440 @@
+{
+  "read": "2026-10-05",
+  "dropped": [
+    "Sherwin-Williams Emerald, Cashmere and ProClassic: search answers gave a spread of conflicting per-gallon figures (list price vs. sale vs. 'pro pricing') with no single retailer page pinning one confirmed regular price to one finish/size; left out rather than guess which figure is current and regular.",
+    "Comex Vinimex Premium (MX): two different figures surfaced for what was described as the same 19L product ($3,413 vs $3,749) with no way to tell which is the current price or whether they are different variants; left out.",
+    "CIL (Canada): Home Depot Canada search results only returned CIL Smart3 trim-paint quarts ($11) and a cabinet/melamine gallon ($63.97), not a standard interior wall paint can in a comparable size; left out rather than compare unlike products.",
+    "Graham Paint and Diamond Vogel (DIY-exit note already covered in paint-a.json) were not re-searched here.",
+    "Dulux Diamond Interior (Canada): only a BOGO promotional price ($55.50) and a vague 'approximately $80' retail estimate surfaced, with no single confirmed regular price pinned to dulux.ca or a named retailer's page; paint-a.json's existing Rona SICO entry covers this Canadian 'buy one get one' case already, so this was not duplicated.",
+    "No confirmed-regular-price interior wall paint found for Ireland from a retailer other than Woodie's in the time available; IE coverage here is thinner than US/GB."
+  ],
+  "retailers": [
+    { "id": "benjaminmoore-us", "name": "Benjamin Moore (official store)", "market": "US", "url": "https://www.benjaminmoore.com/" },
+    { "id": "homedepot-us", "name": "The Home Depot", "market": "US", "url": "https://www.homedepot.com/" },
+    { "id": "lowes-us", "name": "Lowe's", "market": "US", "url": "https://www.lowes.com/" },
+    { "id": "sherwin-williams-us", "name": "Sherwin-Williams (official store)", "market": "US", "url": "https://www.sherwin-williams.com/" },
+
+    { "id": "benjaminmoore-ca", "name": "Benjamin Moore Canada (official store)", "market": "CA", "url": "https://store.benjaminmoore.com/storefront/ca/en/" },
+    { "id": "homedepot-ca", "name": "The Home Depot Canada", "market": "CA", "url": "https://www.homedepot.ca/" },
+    { "id": "rona-ca", "name": "Rona", "market": "CA", "url": "https://www.rona.ca/" },
+    { "id": "homehardware-ca", "name": "Home Hardware", "market": "CA", "url": "https://www.homehardware.ca/" },
+
+    { "id": "bq-uk", "name": "B&Q", "market": "GB", "url": "https://www.diy.com/" },
+    { "id": "decoratingcentreonline-uk", "name": "Decorating Centre Online", "market": "GB", "url": "https://www.decoratingcentreonline.co.uk/" },
+    { "id": "amazon-uk", "name": "Amazon.co.uk", "market": "GB", "url": "https://www.amazon.co.uk/" },
+    { "id": "thepaintshed-uk", "name": "The Paint Shed", "market": "GB", "url": "https://www.thepaintshed.com/" },
+    { "id": "brewers-uk", "name": "Brewers Decorator Centres", "market": "GB", "url": "https://www.brewers.co.uk/" },
+
+    { "id": "woodies-ie", "name": "Woodie's", "market": "IE", "url": "https://www.woodies.ie/" },
+
+    { "id": "comex-mx", "name": "Comex (official store)", "market": "MX", "url": "https://www.comex.com.mx/" },
+    { "id": "homedepot-mx", "name": "The Home Depot México", "market": "MX", "url": "https://www.homedepot.com.mx/" }
+  ],
+  "paints": [
+    {
+      "retailer": "benjaminmoore-us", "market": "US", "brand": "Benjamin Moore", "line": "Aura Interior Paint",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 108.99, "salePrice": null, "currency": "USD",
+      "url": "https://store.benjaminmoore.com/storefront/us/en/coating/interior-paints/benjamin-moore/aura-interior-paint/aura/p/N526",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Benjamin Moore's own store listed price $108.99 for Aura Interior Paint, satin, 1 gallon"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Marquee Interior Paint & Primer",
+      "finish": "matte", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 53.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-MARQUEE-1-gal-Ultra-Pure-White-Matte-Interior-Paint-Primer-145001/204747469",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $53.98 for BEHR MARQUEE 1 gal. Ultra Pure White Matte Interior Paint & Primer, item 145001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Marquee Interior Paint & Primer",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 59.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-MARQUEE-1-gal-Ultra-Pure-White-Satin-Enamel-Interior-Paint-Primer-745001/204747502",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $59.98 for BEHR MARQUEE 1 gal. Ultra Pure White Satin Enamel Interior Paint & Primer, item 745001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Marquee Interior Paint & Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 62.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-MARQUEE-1-gal-Ultra-Pure-White-Semi-Gloss-Enamel-Interior-Paint-Primer-345001/204747524",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $62.98 for BEHR MARQUEE 1 gal. Ultra Pure White Semi-Gloss Enamel Interior Paint & Primer, item 345001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Premium Plus Interior Paint & Primer",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 35.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-PREMIUM-PLUS-1-gal-52-White-Eggshell-Enamel-Low-Odor-Interior-Paint-Primer-205001/204405954",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $35.98 for BEHR PREMIUM PLUS 1 gal. #52 White Eggshell Enamel Low Odor Interior Paint & Primer, item 205001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Dynasty Interior Stain-Blocking Paint & Primer",
+      "finish": "matte", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 63.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-DYNASTY-1-gal-Ultra-Pure-White-Matte-Interior-Stain-Blocking-Paint-Primer-165001/315702227",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $63.98 for BEHR DYNASTY 1 gal. Ultra Pure White Matte Interior Stain-Blocking Paint & Primer, item 165001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Dynasty Interior Stain-Blocking Paint & Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 72.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-DYNASTY-1-gal-Ultra-Pure-White-Semi-Gloss-Enamel-Interior-Stain-Blocking-Paint-Primer-365001/315702275",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $72.98 for BEHR DYNASTY 1 gal. Ultra Pure White Semi-Gloss Enamel Interior Stain-Blocking Paint & Primer, item 365001, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Diamond Interior Paint with Primer",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 28.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/Glidden-Diamond-1-Gal-Pure-White-Base-1-Flat-Interior-Paint-with-Primer-PPG53-110-01/304343522",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $28.98 for Glidden Diamond 1 Gal. Pure White Base 1 Flat Interior Paint with Primer, item PPG53-110-01, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Diamond Interior Paint and Primer",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 36.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/b/Paint/PPG-Diamond/N-5yc1vZar2dZmcb",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $36.98 for Glidden Diamond 1 gallon Pure White Eggshell Interior Paint and Primer; exact item-page URL not captured, only the PPG Diamond/Glidden Diamond brand category page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Diamond Interior Paint and Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 44.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/PPG-Diamond-1-gal-Pure-White-Semi-Gloss-Interior-Paint-and-Primer-GLD-7411-01/206751545",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $44.98 for Glidden Diamond 1 gallon Pure White Semi-Gloss Interior Paint and Primer, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "PPG", "line": "PPG Diamond Interior Paint",
+      "finish": "semi-gloss", "liters": 18.9, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 119.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/PPG-Diamond-5-gal-PPG1025-1-Commercial-White-Semi-Gloss-Interior-Paint-PPG1025-1D-05SG/309084326",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $119.00 for PPG Diamond 5 gal. PPG1025-1 Commercial White Semi-Gloss Interior Paint, item PPG1025-1D-05SG, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Premium Interior Paint",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 30.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/Glidden-Premium-1-gal-Pure-White-Base-1-Satin-Interior-Paint-GLN6211N-01/206755798",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $30.98 for Glidden Premium 1 gal. Pure White Base 1 Satin Interior Paint, item GLN6211N-01, this exact product page"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "PPG", "line": "Timeless Interior Paint",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 33.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/PPG-Timeless-1-gal-PPG1010-4-Stepping-Stone-Flat-Interior-One-Coat-Paint-with-Primer-PPG1010-4T-01F/309722503",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot's listed price $33.98 for PPG Timeless 1 gal. flat interior one-coat paint with primer, consistent across multiple PPG Timeless flat color listings including item PPG1010-4T-01F"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Reserve Interior Paint + Primer",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 50.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Reserve-Flat-Latex-Interior-Paint-Actual-Net-Contents-620/5001265417",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Lowe's listed price $50.98 for Valspar Reserve Flat Base Tintable Latex Interior Paint + Primer, 1-gallon, item 007.2916584.008"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Reserve Interior Paint + Primer",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 58.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Reserve-Satin-Latex-Interior-Paint-Actual-Net-Contents-120/5001265409",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Lowe's listed price $58.98 for Valspar Reserve Satin Base Tintable Latex Interior Paint + Primer, 1-gallon, item 007.2916578.007"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Reserve Interior Paint + Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 62.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Reserve-Semi-gloss-Latex-Interior-Paint-Actual-Net-Contents-120/5001288973",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Lowe's listed price $62.98 for Valspar Reserve Semi-gloss Base Tintable Latex Interior Paint + Primer, 1-gallon, item 007.2916581.007"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Signature Interior Paint + Primer",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 44.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Signature-Colors-1-Gallon-Interior-Eggshell-Tintable-Latex-Base-Paint-and-Primer-in-One/3107095",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Lowe's listed price $44.98 for Valspar Signature Colors Eggshell Tintable Latex Interior Paint + Primer, 1-gallon, this exact product page"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Signature Interior Paint + Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 52.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pl/interior-paint/valspar/semi-gloss/4294729373-4294965540-4294696442",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Lowe's listed price $52.98 for Valspar Signature Semi-gloss Base Tintable Latex Interior Paint + Primer, 1-gallon; exact single-SKU product-page URL not captured, only the Signature semi-gloss category page"
+    },
+    {
+      "retailer": "clare-us", "market": "US", "brand": "Clare", "line": "Wall Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": false,
+      "price": 77.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.clare.com/products/paint-timeless",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Clare's own site price $77/gallon for the Timeless color eggshell wall paint, consistent with the other color pages in Clare's line; same per-gallon price as the Motor City color already recorded in paint-a.json"
+    },
+
+    {
+      "retailer": "benjaminmoore-ca", "market": "CA", "brand": "Benjamin Moore", "line": "Regal Select Waterborne Interior Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 97.99, "salePrice": null, "currency": "CAD",
+      "url": "https://store.benjaminmoore.com/storefront/ca/en/coating/interior-paints/benjamin-moore/regal-select-waterborne-interior-paint/regal/p/F549",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Benjamin Moore Canada's own store listed price $97.99 CAD for Regal Select Waterborne Interior Paint, eggshell, 3.79L, this exact product page"
+    },
+    {
+      "retailer": "homedepot-ca", "market": "CA", "brand": "Behr", "line": "Premium Plus Interior Paint",
+      "finish": "flat", "liters": 3.79, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 44.97, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homedepot.ca/en/home/categories/decor/paint/interior-paints/f/behr-premium-plus/a0j-xbf",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot Canada's listed price $44.97 CAD for BEHR PREMIUM PLUS Interior Flat Paint & Primer, Magnetic Gray, 3.79L"
+    },
+    {
+      "retailer": "rona-ca", "market": "CA", "brand": "Sico", "line": "Evolution Interior Paint and Primer",
+      "finish": "eggshell", "liters": 3.78, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 74.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.rona.ca/en/product/sico-evolution-latex-eggshell-finish-interior-paint-and-primer-378-l-50316801",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Rona's listed price $74.99 CAD for SICO Evolution Latex Eggshell Finish Interior Paint and Primer, 3.78-L, this exact product page"
+    },
+    {
+      "retailer": "rona-ca", "market": "CA", "brand": "Sico", "line": "Evolution Interior Paint and Primer",
+      "finish": "semi-gloss", "liters": 3.78, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 70.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.rona.ca/en/product/sico-evolution-interior-paint-and-primer-semi-gloss-finish-378-l-pure-white-50316828",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Rona's listed price $70.99 CAD for SICO Evolution Interior Paint and Primer, Semi-Gloss Finish, 3.78-L, Pure White, this exact product page"
+    },
+    {
+      "retailer": "rona-ca", "market": "CA", "brand": "Sico", "line": "Evolution Interior Paint and Primer",
+      "finish": "pearl", "liters": 3.78, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 69.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.rona.ca/en/product/sico-evolution-interior-paint-and-primer-pearl-finish-378-l-base-1-50316817",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Rona's listed price $69.99 CAD for SICO Evolution Interior Paint and Primer, Pearl Finish, 3.78-L, Base 1, this exact product page"
+    },
+    {
+      "retailer": "homehardware-ca", "market": "CA", "brand": "Beauti-Tone", "line": "Signature Interior Acrylic Latex",
+      "finish": "eggshell", "liters": 3.64, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 49.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homehardware.ca/en/interior-acrylic-latex-eggshell-paint-high-hide-white-364-l/p/1852366",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Hardware's listed price $49.99 CAD for BeautiTone Signature Interior Acrylic Latex Eggshell Paint, High Hide White, 3.64L, this exact product page"
+    },
+
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Dulux", "line": "Walls & Ceilings Pure Brilliant White Matt Emulsion",
+      "finish": "matt", "liters": 10, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 28.00, "salePrice": 22.00, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Dulux&Colour+group=White&Location=Interior",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's offer price £22 (from £28) for Dulux Walls & Ceilings Pure Brilliant White Matt Emulsion, 10L"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Dulux", "line": "Walls & Ceilings Pure Brilliant White Matt Emulsion",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 25.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Dulux&Colour+group=White&Location=Interior",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £25 for Dulux Walls & Ceilings Pure Brilliant White Matt Emulsion, 5L"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Crown", "line": "Walls & Ceilings Matt Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 18.57, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Crown&Finish+group=Matt&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £18.57 for Crown Walls & Ceilings Matt Emulsion Paint, Organic Cloth, 2.5L"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Crown", "line": "Walls & Ceilings Matt Emulsion",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 34.50, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Crown&Finish+group=Matt&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £34.50 for Crown Walls & Ceilings Matt Emulsion Paint, Cream White, 5L"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Crown", "line": "Walls & Ceilings Emulsion Matt",
+      "finish": "matt", "liters": 7.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 24.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Crown&Finish+group=Matt&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £24 for Crown Walls & Ceilings Emulsion Matt, Pure Brilliant White, 7.5L"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Johnstone's", "line": "Trade Covaplus Vinyl Matt",
+      "finish": "matt", "liters": 10, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 55.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Johnstone%27s+Trade&Finish+group=Matt&Range=Covaplus",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £55 for Johnstone's Trade Covaplus Brilliant White Contract Matt Wall & Ceiling Vinyl Emulsion, 10L"
+    },
+    {
+      "retailer": "amazon-uk", "market": "GB", "brand": "Johnstone's", "line": "Trade Covaplus Vinyl Matt",
+      "finish": "matt", "liters": 10, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 42.23, "salePrice": null, "currency": "GBP",
+      "url": "https://www.amazon.co.uk/JohnstoneS-Trade-Litre-Covaplus-Brilliant/dp/B00CITKJVQ",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Amazon UK's listed price £42.23 for Johnstone's Trade 10 Litre Covaplus Vinyl Matt Brilliant White, this exact product page"
+    },
+    {
+      "retailer": "decoratingcentreonline-uk", "market": "GB", "brand": "Little Greene", "line": "Intelligent Matt Emulsion",
+      "finish": "matt", "liters": 1, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 37.00, "salePrice": 30.84, "currency": "GBP",
+      "url": "https://www.decoratingcentreonline.co.uk/products/little-greene-intelligent-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Decorating Centre Online's sale price £30.84 (from £37.00) for Little Greene Intelligent Matt Emulsion, 1L, this exact product page"
+    },
+    {
+      "retailer": "decoratingcentreonline-uk", "market": "GB", "brand": "Little Greene", "line": "Intelligent Matt Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 73.00, "salePrice": 60.84, "currency": "GBP",
+      "url": "https://www.decoratingcentreonline.co.uk/products/little-greene-intelligent-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Decorating Centre Online's sale price £60.84 (from £73.00) for Little Greene Intelligent Matt Emulsion, 2.5L, this exact product page"
+    },
+    {
+      "retailer": "decoratingcentreonline-uk", "market": "GB", "brand": "Little Greene", "line": "Intelligent Matt Emulsion",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 124.00, "salePrice": 103.34, "currency": "GBP",
+      "url": "https://www.decoratingcentreonline.co.uk/products/little-greene-intelligent-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Decorating Centre Online's sale price £103.34 (from £124.00) for Little Greene Intelligent Matt Emulsion, 5L, this exact product page"
+    },
+    {
+      "retailer": "thepaintshed-uk", "market": "GB", "brand": "Farrow & Ball", "line": "Estate Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 59.00, "salePrice": 53.10, "currency": "GBP",
+      "url": "https://www.thepaintshed.com/farrow-ball-estate-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting The Paint Shed's promotional price £53.10 (was £59.00) for Farrow & Ball Estate Emulsion, 2.5L"
+    },
+    {
+      "retailer": "brewers-uk", "market": "GB", "brand": "Farrow & Ball", "line": "Estate Emulsion",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 103.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.brewers.co.uk/product/AK0501F",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Brewers Decorator Centres' listed price £103.00 Inc VAT for Farrow & Ball Estate Emulsion, 5L, this exact product page"
+    },
+
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Dulux", "line": "Total Cover",
+      "finish": "matt", "liters": 10, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 35.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/brand/dulux/dulux-interior",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Woodie's listed price €35.99 for Dulux Total Cover Pure Brilliant White, 10L"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Dulux", "line": "Walls & Ceilings Soft Sheen",
+      "finish": "soft sheen", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 69.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/paint-decorating/interior-paints",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Woodie's listed price €69.99 for Dulux Walls & Ceilings Soft Sheen, Jasmine White, 5L"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Dulux", "line": "Easycare Washable & Tough",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 89.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/events/paint-offers/interior-paint/dulux",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Woodie's listed price €89.99 for Dulux Easycare Washable & Tough Matt, 5L"
+    },
+
+    {
+      "retailer": "decoratingcentreonline-uk", "market": "GB", "brand": "Little Greene", "line": "Absolute Matt Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 59.00, "salePrice": 49.17, "currency": "GBP",
+      "url": "https://www.decoratingcentreonline.co.uk/products/little-greene-absolute-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Decorating Centre Online's sale price £49.17 (from £59.00) for Little Greene Absolute Matt Emulsion, 2.5L, this exact product page"
+    },
+    {
+      "retailer": "decoratingcentreonline-uk", "market": "GB", "brand": "Little Greene", "line": "Absolute Matt Emulsion",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 102.00, "salePrice": 85.00, "currency": "GBP",
+      "url": "https://www.decoratingcentreonline.co.uk/products/little-greene-absolute-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Decorating Centre Online's sale price £85.00 (from £102.00) for Little Greene Absolute Matt Emulsion, 5L, this exact product page"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Dulux", "line": "Easycare Washable & Tough",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 32.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/dulux-easycare-washable-tough-egyptian-cotton-matt-wall-ceiling-emulsion-paint-2-5l/1643127_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £32 for Dulux Easycare Washable & Tough Egyptian Cotton Matt Wall & Ceiling Emulsion Paint, 2.5L, this exact product page"
+    },
+    {
+      "retailer": "bq-uk", "market": "GB", "brand": "Dulux", "line": "Easycare Washable & Tough",
+      "finish": "matt", "liters": 5, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 46.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/dulux-easycare-washable-tough-white-cotton-matt-emulsion-paint-5l/1914869_BQ.prd/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting B&Q's listed price £46 for Dulux Easycare Washable & Tough White Cotton Matt Wall & Ceiling Emulsion Paint, 5L, this exact product page"
+    },
+    {
+      "retailer": "homedepot-ca", "market": "CA", "brand": "Behr", "line": "Premium Plus Interior Paint",
+      "finish": "semi-gloss", "liters": 3.79, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 51.47, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homedepot.ca/product/behr-premium-plus-interior-semi-gloss-enamel-paint-primer-in-new-house-white-rd-w10-3-79l/1001838556",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot Canada's listed price $51.47 CAD for BEHR PREMIUM PLUS Interior Semi-Gloss Enamel Paint & Primer, Ultra Pure White PPU18-06, 3.79L"
+    },
+    {
+      "retailer": "comex-mx", "market": "MX", "brand": "Comex", "line": "Vinimex Clásica",
+      "finish": "matte", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 4066.00, "salePrice": 3456.10, "currency": "MXN",
+      "url": "https://listado.mercadolibre.com.mx/precios-pinturas-comex-vinimex-total",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting a sale price of $3,456.10 (from $4,066.00) for Comex Vinimex Clásica, 19 litros; exact comex.com.mx product URL not captured in this search"
+    },
+    {
+      "retailer": "comex-mx", "market": "MX", "brand": "Comex", "line": "Vinimex 3 en 1",
+      "finish": "matte", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 4943.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.comex.com.mx/vinilicas/vinimex-3-en-1-4-litros",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting a listed price of $4,943.00 MXN for Comex Vinimex 3 en 1, 19 litros; exact 19L product URL not captured, the 4L product page for the same line is given instead"
+    },
+    {
+      "retailer": "homedepot-mx", "market": "MX", "brand": "Berel", "line": "Berelex Vinil Acrílica Interior/Exterior",
+      "finish": "satinado", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 3285.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/p/berelex-super-satin-pintura-berel-berelex-vinil-acrilica-interior-exterior-19l-base-tint-satinado-berelex-565546",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot México's listed price $3,285.00 MXN for Pintura Berel Berelex Vinil Acrílica Interior/Exterior, 19L, Base Tint Satinado, this exact product page"
+    },
+    {
+      "retailer": "homedepot-mx", "market": "MX", "brand": "Berel", "line": "Berelex Vinil Acrílica Interior/Exterior",
+      "finish": "semimate", "liters": 1, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 215.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/p/berelex-pintura-berel-berelex-vinil-acrilica-interior-exterior-1l-base-accent-semimate-berelex-908385",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot México's listed price $215.00 MXN for Pintura Berel Berelex Vinil Acrílica Interior/Exterior, 1L, Base Accent Semimate, this exact product page"
+    },
+    {
+      "retailer": "homedepot-mx", "market": "MX", "brand": "Berel", "line": "Green 590 Acrílico Interior/Exterior",
+      "finish": "mate", "liters": 4, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 649.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/b/pinturas/pintura",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Home Depot México's listed price $649.00 MXN for Berel Green 590 Acrílico Interior/Exterior, 4L; exact single-product URL not captured, only the paints category page"
+    }
+  ],
+  "rules": []
+}

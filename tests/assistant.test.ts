@@ -8,7 +8,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { quickSave } from '@/engine';
 import { serialise } from '@/engine/persistence/adapter';
-import { ASSISTANT_COMMANDS, assistantState, checkProposal } from '@/engine/systems/assistant';
+import { ASSISTANT_COMMANDS, CUSTOMIZE_COMMANDS, assistantState, checkProposal } from '@/engine/systems/assistant';
 import { resetWorld, rowsFor, world } from './fakes/base44-sdk';
 import askAssistant from '../base44/functions/askAssistant/entry.js';
 
@@ -50,6 +50,13 @@ describe('a proposal, tried and put back', () => {
 
 const post = (body: unknown) => new Request('https://slate.test/fn', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
 
+describe('what the assistant may propose', () => {
+  it('is every one a command the engine handles, so a proposal never names one that isn’t there (from 2026-10-05)', () => {
+    const sim = life('assistant-allowlist');
+    expect(Object.keys(ASSISTANT_COMMANDS).filter((kind) => !sim.hasCommand(kind))).toEqual([]);
+  });
+});
+
 describe('the server function', () => {
   beforeEach(() => { resetWorld(); vi.stubEnv('ANTHROPIC_API_KEY', ''); });
   afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
@@ -77,6 +84,30 @@ describe('the server function', () => {
     expect(rowsFor('u1', 'SlateAssistantUsage')[0]!.requests).toBe(1);
     const sent = JSON.parse((fetched.mock.calls[0] as unknown as [string, { body: string; headers: Record<string, string> }])[1].body) as { tool_choice: { name: string } };
     expect(sent.tool_choice.name).toBe('propose_actions');
+  });
+
+  it('as the development role, stores mechanics for the owner’s review and returns no command (requirement 57)', async () => {
+    vi.stubEnv('ANTHROPIC_API_KEY', 'test-key');
+    const fetched = vi.fn(async () => new Response(JSON.stringify({ content: [{ type: 'tool_use', name: 'propose_mechanics', input: { answer: 'One idea.', mechanics: [
+      { title: 'Allergy Season', what: 'Pollen counts by town raise a sufferer\u2019s stress.', why: 'Truer springs.', sources: ['a national pollen service'], touches: ['health'] },
+      { what: 'No title' },
+    ], proposals: [{ kind: 'life.look_after', payload: { action: 'unwind' }, why: 'smuggled' }] } }] }), { status: 200 }));
+    vi.stubGlobal('fetch', fetched);
+    const res = await askAssistant(post({ request: 'Something new for spring', role: 'develop', state: { commands: {} } }));
+    const body = await res.json() as { ok: boolean; proposals: unknown[]; mechanics: { title: string }[] };
+    expect(body.ok).toBe(true);
+    expect(body.proposals).toEqual([]);
+    expect(body.mechanics.map((m) => m.title)).toEqual(['Allergy Season']);
+    expect(rowsFor('u1', 'SlateMechanicProposal').map((r) => [r.title, r.status])).toEqual([['Allergy Season', 'proposed']]);
+    const sent = JSON.parse((fetched.mock.calls[0] as unknown as [string, { body: string }])[1].body) as { tool_choice: { name: string } };
+    expect(sent.tool_choice.name).toBe('propose_mechanics');
+  });
+
+  it('as the customization role, is told only the customization commands', () => {
+    const sim = life('assistant-customize');
+    expect(Object.keys(assistantState(sim, 'customize').commands)).toEqual([...CUSTOMIZE_COMMANDS]);
+    expect(assistantState(sim, 'develop').commands).toEqual({});
+    expect(CUSTOMIZE_COMMANDS.every((k) => ASSISTANT_COMMANDS[k])).toBe(true);
   });
 
   it('stops a player at the day’s cap', async () => {
