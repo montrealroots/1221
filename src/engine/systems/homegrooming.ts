@@ -16,6 +16,7 @@
  * due is only shown, and how long a trim takes isn't kept.
  */
 
+import { salesTaxRate } from '../content/tax';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -37,7 +38,9 @@ const MONTH_MS = (365.2425 / 12) * MS_DAY;
 /** The clipper kit sold where they are, with its price in the save's money; nothing where none was priced. */
 export function clipperOffer(sim: Simulation, person: Person): { kit: ClipperKit; cost: Money } | undefined {
   const kit = CLIPPER_KITS.find((k) => k.country === CITIES.get(person.currentLocationId)?.countryId);
-  return kit ? { kit, cost: inSaveMoney(sim, Math.round(kit.price * 100), kit.currency) } : undefined;
+  // Sales tax at the till in America and Canada, VAT in the price elsewhere (from 2026-10-06; until then none).
+  const tax = kit && (kit.country === 'us' || kit.country === 'ca') ? salesTaxRate(person.currentLocationId, sim.now, 'electronics') : 0;
+  return kit ? { kit, cost: inSaveMoney(sim, Math.round(kit.price * (1 + tax) * 100), kit.currency) } : undefined;
 }
 
 /** Whether they own clippers. */
@@ -91,6 +94,8 @@ export function registerHomeGrooming(sim: Simulation): void {
   sim.onCommand<{ which?: 'fingers' | 'toes' }, { due: Instant }>('hygiene.trim_nails', (p, { sim: s }) => {
     const person = s.player;
     if (!atHome(person)) throw new CommandError('Nails are trimmed at home.');
+    // Fingers or toes, and nothing else (from 2026-10-06; until then any other word trimmed the fingernails).
+    if (p?.which !== undefined && p.which !== 'fingers' && p.which !== 'toes') throw new CommandError('Fingers or toes.');
     const which = p?.which === 'toes' ? 'toes' : 'fingers';
     person.nailsAt = { ...person.nailsAt, [which]: s.now };
     return { due: nailsDue(person, which) };

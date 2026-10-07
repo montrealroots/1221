@@ -1595,6 +1595,7 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 
 | Brand | Products | Status |
 |---|---|---|
+| IKEA | 6 | Short: 94 to go |
 | Linen Chest | 5 | Short: 95 to go |
 | Boll & Branch | 4 | Short: 96 to go |
 | Parachute | 4 | Short: 96 to go |
@@ -1641,7 +1642,6 @@ products in SLATE and whether it meets the depth target: at least 100, or its wh
 | Dunelm | 1 | Short: 99 to go |
 | Fieldcrest | 1 | Short: 99 to go |
 | HAUS | 1 | Short: 99 to go |
-| IKEA | 1 | Short: 99 to go |
 | La Josefina | 1 | Short: 99 to go |
 | Lauren Ralph Lauren | 1 | Short: 99 to go |
 | Martha Stewart Collection | 1 | Short: 99 to go |

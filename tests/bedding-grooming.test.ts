@@ -7,6 +7,7 @@
  * by their published growth.
  */
 import { describe, expect, it } from 'vitest';
+import { salesTaxRate } from '@/engine/content/tax';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { BEDDING_NIGHTS } from '@/engine/content/bedding';
@@ -63,10 +64,11 @@ describe('bedding', () => {
 });
 
 describe('grooming at home', () => {
-  it('cuts your hair with clippers bought at Walmart’s $19.99, a haircut as a barber’s counts', () => {
+  it('cuts your hair with clippers bought at Walmart’s $19.99 and the tax on it, a haircut as a barber’s counts', () => {
     const sim = life('us-ny-newyork', 'clippers');
     expect(sim.execute({ kind: 'hygiene.cut_hair', payload: {} }).error).toBe('You need clippers of your own.');
-    expect(sim.must<{ paid: number }>({ kind: 'hygiene.buy_clippers', payload: {} }).paid).toBe(inSaveMoney(sim, 1_999, 'USD'));
+    // Walmart's shelf price and New York's sales tax on it (until 2026-10-06 charged without the tax).
+    expect(sim.must<{ paid: number }>({ kind: 'hygiene.buy_clippers', payload: {} }).paid).toBe(inSaveMoney(sim, Math.round(1_999 * (1 + salesTaxRate('us-ny-newyork', sim.now, 'electronics'))), 'USD'));
     expect(hasClippers(sim.player)).toBe(true);
     sim.player.groomedAt = sim.now - 60 * MS_DAY;
     sim.player.wellbeing.morale = 50;

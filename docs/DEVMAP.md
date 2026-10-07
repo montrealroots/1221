@@ -110,7 +110,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journeys.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
-| `career.attend_ceremony` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `ceremony.test.ts` | The Business |
+| `career.attend_ceremony` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `ceremony.test.ts` `journey-everyday-more.test.ts` | The Business |
 | `career.buy_kit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.class` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.coach` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
@@ -129,10 +129,10 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
 | `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
-| `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `school.test.ts` | The Business |
+| `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `journey-everyday-more.test.ts` `school.test.ts` | The Business |
 | `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `skills.test.ts` | The Business |
 | `career.sign_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
-| `career.submit_for` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `breakdowns.test.ts` | The Business |
+| `career.submit_for` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `breakdowns.test.ts` `journey-everyday-more.test.ts` | The Business |
 | `career.subscribe` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.t1287` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `carried.test.ts` `journey-career.test.ts` | — |
 | `career.workshop` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
@@ -177,9 +177,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.alter` | `src/engine/systems/tailoring.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `tailoring.test.ts` | Rent And A Roof |
 | `clothes.basket_add` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `errand-stops.test.ts` `journey-clothes.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.basket_remove` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` | Rent And A Roof |
-| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journey-bank.test.ts` `journey-belongings.test.ts` `journey-clothes.test.ts` `journey-travel.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journey-bank.test.ts` `journey-belongings.test.ts` `journey-clothes.test.ts` `journey-everyday-more.test.ts` `journey-travel.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.cancel` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` | Rent And A Roof |
-| `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `take-off.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+| `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-everyday-more.test.ts` `take-off.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.checkout` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `errand-stops.test.ts` `journey-clothes.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.collect` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `journey-clothes.test.ts` `tailoring.test.ts` `trips.test.ts` | Rent And A Roof |
 | `clothes.collect_order` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `journey-clothes.test.ts` | Rent And A Roof |
@@ -269,17 +269,17 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `food.buy_gear` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `journey-food.test.ts` `kitchengear.test.ts` | Rent And A Roof |
-| `food.buy_groceries` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `carrying.test.ts` `connected-day.test.ts` `cooking-household.test.ts` `cooking-interrupted.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `routines.test.ts` `shopping-cart.test.ts` `trips.test.ts` `utilities.test.ts` | Rent And A Roof |
+| `food.buy_groceries` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `carrying.test.ts` `connected-day.test.ts` `cooking-household.test.ts` `cooking-interrupted.test.ts` `journey-day-at-home.test.ts` `journey-everyday-more.test.ts` `journey-food.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `routines.test.ts` `shopping-cart.test.ts` `trips.test.ts` `utilities.test.ts` | Rent And A Roof |
 | `food.buy_short` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `journey-food.test.ts` `kitchen.test.ts` | Rent And A Roof |
 | `food.cancel_table` | `src/engine/systems/reservations.ts` | `FoodWorkspace.tsx` | `journey-food.test.ts` `reservations.test.ts` | Rent And A Roof |
-| `food.cook` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `cooking-interrupted.test.ts` `garden.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `routines.test.ts` | Rent And A Roof |
+| `food.cook` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `cooking-interrupted.test.ts` `garden.test.ts` `journey-day-at-home.test.ts` `journey-everyday-more.test.ts` `journey-food.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `routines.test.ts` | Rent And A Roof |
 | `food.dine` | `src/engine/systems/life.ts` | `FoodWorkspace.tsx` | `dining.test.ts` `errand-stops.test.ts` `journey-food.test.ts` | Rent And A Roof |
 | `food.drink` | `src/engine/systems/alcohol.ts` | `FoodWorkspace.tsx` | `alcohol.test.ts` `journey-food.test.ts` | Rent And A Roof |
 | `food.drink_home` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `cups.test.ts` `journey-food.test.ts` `kitchen.test.ts` | Rent And A Roof |
 | `food.eat_ready` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `journey-food.test.ts` `kitchen.test.ts` `looks.test.ts` | Rent And A Roof |
 | `food.freeze` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `freezing.test.ts` `journey-food.test.ts` | Rent And A Roof |
 | `food.reserve` | `src/engine/systems/reservations.ts` | `FoodWorkspace.tsx` | `journey-food.test.ts` `reservations.test.ts` | Rent And A Roof |
-| `food.resume_cooking` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `cooking-interrupted.test.ts` | Rent And A Roof |
+| `food.resume_cooking` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `cooking-interrupted.test.ts` `journey-everyday-more.test.ts` | Rent And A Roof |
 | `food.thaw` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `freezing.test.ts` `journey-food.test.ts` | Rent And A Roof |
 
 ## garden
@@ -326,7 +326,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `home.alarm` | `src/engine/systems/alarm.ts` | `Home.tsx` | `alarm.test.ts` `journey-holdings.test.ts` | Rent And A Roof |
 | `home.borrow` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` `journey-homes.test.ts` | Rent And A Roof |
-| `home.buy_bedding` | `src/engine/systems/bedding.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` | Rent And A Roof |
+| `home.buy_bedding` | `src/engine/systems/bedding.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` `journey-everyday-more.test.ts` | Rent And A Roof |
 | `home.buy_game` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
 | `home.buy_paint` | `src/engine/systems/paint.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` `paint.test.ts` | Rent And A Roof |
 | `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `furniture-makers.test.ts` `hosting.test.ts` `journey-belongings.test.ts` `journey-holdings.test.ts` `journeys.test.ts` | Rent And A Roof |
@@ -343,7 +343,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.end_sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.end_tenancy` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
 | `home.fit` | `src/engine/systems/appliances.ts` | `HomesWorkspace.tsx` | `appliance-models.test.ts` `appliances.test.ts` `journey-homes.test.ts` | Rent And A Roof |
-| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` `journey-holdings.test.ts` `journey-homes.test.ts` `journey-people.test.ts` | Rent And A Roof |
+| `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `branded-mattresses.test.ts` `furniture.test.ts` `gear.test.ts` `hosting.test.ts` `journey-everyday-more.test.ts` `journey-holdings.test.ts` `journey-homes.test.ts` `journey-people.test.ts` | Rent And A Roof |
 | `home.gardener` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` | Rent And A Roof |
 | `home.hold_mail` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journey-acting-travel.test.ts` `journey-homes.test.ts` | Rent And A Roof |
 | `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `journey-homes.test.ts` `telecom.test.ts` | Rent And A Roof |
@@ -369,7 +369,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `journey-homes.test.ts` `lodgers.test.ts` | Rent And A Roof |
 | `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` `programmes.test.ts` | Rent And A Roof |
 | `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `journey-belongings.test.ts` | Rent And A Roof |
-| `home.water_lawn` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | `lawns.test.ts` | Rent And A Roof |
+| `home.water_lawn` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | `journey-everyday-more.test.ts` `lawns.test.ts` | Rent And A Roof |
 
 ## hotel
 
@@ -382,14 +382,14 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `hygiene.buy` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` `TimeControls.tsx` | `cabin-bags.test.ts` `hygiene.test.ts` `journey-clothes.test.ts` `shortfalls.test.ts` `usefirst.test.ts` | Rent And A Roof |
-| `hygiene.buy_clippers` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` | Rent And A Roof |
-| `hygiene.cut_hair` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` | Rent And A Roof |
+| `hygiene.buy_clippers` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` `journey-everyday-more.test.ts` | Rent And A Roof |
+| `hygiene.cut_hair` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` `journey-everyday-more.test.ts` | Rent And A Roof |
 | `hygiene.groom` | `src/engine/systems/life.ts` | `ClothesWorkspace.tsx` | `hygiene.test.ts` `journey-clothes.test.ts` `trips.test.ts` | Rent And A Roof |
 | `hygiene.makeup_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `makeup.test.ts` | Rent And A Roof |
 | `hygiene.shave_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `shaving.test.ts` | Rent And A Roof |
 | `hygiene.shower_minutes` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `shower-length.test.ts` | Rent And A Roof |
 | `hygiene.style_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `makeup.test.ts` | Rent And A Roof |
-| `hygiene.trim_nails` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` | Rent And A Roof |
+| `hygiene.trim_nails` | `src/engine/systems/homegrooming.ts` | `ClothesWorkspace.tsx` | `bedding-grooming.test.ts` `journey-everyday-more.test.ts` | Rent And A Roof |
 | `hygiene.use_first` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `journey-clothes.test.ts` `usefirst.test.ts` | Rent And A Roof |
 
 ## items
@@ -456,7 +456,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `orders.collect` | `src/engine/systems/orders.ts` | `BelongingsWorkspace.tsx` | `missed-delivery.test.ts` | Rent And A Roof |
+| `orders.collect` | `src/engine/systems/orders.ts` | `BelongingsWorkspace.tsx` | `journey-everyday-more.test.ts` `missed-delivery.test.ts` | Rent And A Roof |
 
 ## pawn
 
@@ -500,7 +500,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 | `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phones.test.ts` | Rent And A Roof |
-| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `journey-everyday-more.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 | `phone.claim` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` | Rent And A Roof |
 | `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 
@@ -590,7 +590,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `travel.bag_claim` | `src/engine/systems/baggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-travel.test.ts` | Rent And A Roof |
-| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey-travel.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pet-travel-day.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` `underway.test.ts` | Getting Around |
+| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey-everyday-more.test.ts` `journey-travel.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pet-travel-day.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` `underway.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `journey-travel.test.ts` `travelchange.test.ts` | Getting Around |
 | `travel.check_out` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `journey-travel.test.ts` `local-stay.test.ts` | Getting Around |
