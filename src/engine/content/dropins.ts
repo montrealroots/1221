@@ -27,5 +27,12 @@ export const DROP_INS: readonly DropIn[] = [
   { id: 'blanco-yoga', cityId: 'mx-cmx-mexicocity', studio: 'Blanco Yoga', kind: 'yoga', label: 'Una Clase Suelta De Yoga', price: 350, currency: 'MXN', taxIncluded: true, met: 2.3, confirmed: true },
 ];
 
+/**
+ * The skill of an actor's craft a class's kind trains, where it's one casting reads (from 2026-10-06): a dance class,
+ * the craft's dance, which a musical's genre and a breakdown that asks for a dance read (`GENRE_READS`,
+ * `PART_DEMANDS`). Yoga trains none of the craft's skills. Until then a dance class was a workout and nothing else.
+ */
+export const DROP_IN_SKILL: Readonly<Partial<Record<string, import('./school').Skill>>> = { dance: 'dance' };
+
 /** A class's minutes: SLATE's reading, no studio publishing one. */
 export const DROP_IN_MINUTES = 60;

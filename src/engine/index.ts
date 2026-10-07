@@ -446,7 +446,12 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // And a suitcase to pack them in (`systems/luggage.ts`).
   starterLuggage(sim, sim.player);
   // No shortcut is on in a new life until it's chosen (from 2026-10-03).
-  sim.player.automation = {};
+  // From 2026-10-06 but two: the day's outfit put together and the day's meals eaten from what's ready, which every life
+  // had done for it until then, are shortcuts too, on in a new life and turned off on Your Shortcuts. Off by default was
+  // tried and measured that day: a top lasts one wear, so a new life was undressed from its second day, at the cost to
+  // its mood and in the cold, and 21 tests of played days in 9 files moved. That default is the owner's to change.
+  sim.player.automation = { chooseOutfit: true, eatLeftovers: true };
+  sim.player.dayShortcuts = true;
   return sim;
 }
 
@@ -467,6 +472,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-03 packed, unpacked and put the shopping away on its own: it keeps those, now as shortcuts it can turn off.
   if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { ...EVERY_SHORTCUT };
+  // A save from before 2026-10-06 had its day's outfit and meals chosen for it: it keeps both, as shortcuts it can turn off.
+  if (universe.people[universe.playerId] && !sim.player.dayShortcuts) { sim.player.automation = { ...sim.player.automation, chooseOutfit: true, eatLeftovers: true }; sim.player.dayShortcuts = true; }
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

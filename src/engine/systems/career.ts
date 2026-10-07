@@ -15,7 +15,10 @@
  *   may leave on SAG-AFTRA's terms: no offer in the first 120 days, or fewer
  *   than ten days' work in the last 91. Anybody can submit themselves, on the
  *   casting sites, for the smaller work that takes them; and a job worked
- *   while unrepresented can bring an agency's call.
+ *   while unrepresented can bring an agency's call. From 2026-10-06 the
+ *   week's breakdowns are browsed, each part with its genre and what it asks,
+ *   and a submission is for the one chosen (`breakdownsOf`); until then the
+ *   part was picked when the submission came back.
  * - **Auditions.** A self-tape is made wherever they are; an audition in the
  *   room is in the agency's city. Awake and there, the actor is weighed
  *   against the part (`career.booking`); booked, the offer comes days later
@@ -364,7 +367,12 @@ export interface Audition {
   demands?: (keyof Craft)[];
   /** Sent by the commercial agent, not the theatrical one (`systems/commercial.ts`). */
   via?: 'commercial';
+  /** Submitted for from its breakdown, its genre and demands those it was read with (from 2026-10-06). */
+  chosen?: true;
 }
+
+/** A breakdown open to a submission: a part, the genre it's filed under and what it asks beside it (from 2026-10-06). */
+export interface Breakdown { roleId: string; genre?: string; demands?: (keyof Craft)[] }
 
 export interface Booking {
   id: string;
@@ -492,6 +500,8 @@ export interface CareerRecord {
   option?: { seriesId: string; decidedAt: Instant };
   /** Self-submissions this week, waiting on Monday. */
   submitted: number;
+  /** Of them, the breakdowns chosen and submitted for (`career.submit_for`, from 2026-10-06): the part, its genre and what it asks. */
+  chosen?: Breakdown[];
   /** When the business began for them: the school's hold let go. */
   since?: Instant;
   /** What the work costs them: casting sites paid to a date and whether they renew; headshots' date; a tape kit; a class, and the month it's paid for. */
@@ -1144,7 +1154,40 @@ export function keepsPart(sim: Simulation, person: Person, weekStart: Instant, n
   return sim.rng('career.age', person.id, `${weekStart}-${n}`).next() < share;
 }
 
-export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number, managed = false): Omit<Audition, 'id' | 'status'>[] {
+/**
+ * The breakdowns open to a submission this week, from 2026-10-06: each part here that takes submissions, the genre it's
+ * filed under and what it asks beside it, drawn for the week as an audition's are (`genreOf`, `demandsOf`, on
+ * `career.booking`), and the same for the week however often they're looked at. Until then a submission was for a part
+ * the engine picked when it came back, and nobody saw a breakdown before its audition.
+ */
+export function breakdownsOf(sim: Simulation, person: Person): Breakdown[] {
+  const cityId = workCity(person);
+  const week = nextMonday(sim.now, zoneOf(cityId));
+  return ROLES.filter((r) => r.cities.includes(cityId) && r.selfSubmit).map((role) => {
+    const rng = sim.rng('career.booking', person.id, `breakdown-${week}-${role.id}`);
+    const { genre } = genreOf(role, rng.next());
+    const demands = demandsOf(role, genre, () => rng.next());
+    return { roleId: role.id, ...(genre ? { genre } : {}), ...(demands.length ? { demands } : {}) };
+  });
+}
+
+/** Why a breakdown can't be submitted for now, or nothing: the week's submissions as Submit Yourself's, and once a part. */
+export function submitForRefusal(sim: Simulation, person: Person, roleId: string): string | undefined {
+  const career = careerOf(person);
+  if (career.since === undefined && !summerOf(person, sim.now)) return 'While classes are in session, the school’s work comes first; submissions start in the summer, and for good when school ends.';
+  const most = submissionsAWeek(career, sim.now, workCity(person));
+  if (career.submitted >= most) return `You’ve made this week’s ${most} submissions.`;
+  if (!breakdownsOf(sim, person).some((b) => b.roleId === roleId)) return 'That part isn’t taking submissions here this week.';
+  if ((career.chosen ?? []).some((b) => b.roleId === roleId)) return 'You’ve submitted for it this week.';
+  return undefined;
+}
+
+/**
+ * A week's auditions. From 2026-10-06 the first of the week's submissions are the breakdowns chosen (`chosen`), each
+ * come back at the same odds as any submission; one that does is an audition for its part, read with its breakdown's
+ * genre and demands, where until then every submission's part was picked when it came back.
+ */
+export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number, managed = false, chosen: readonly Breakdown[] = []): Omit<Audition, 'id' | 'status'>[] {
   const rng = sim.rng('career.auditions', person.id, String(weekStart));
   const poisson = (mean: number) => { let n = 0; const limit = Math.exp(-mean); for (let p = rng.next(); p > limit; p *= rng.next()) n += 1; return n; };
   // Old headshots get an actor called in less, by the agency and on their own.
@@ -1158,12 +1201,14 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const count = agency && (agency.countryId ?? 'us') === country ? poisson(agency.auditionsPerWeek * look * known) : 0;
   // A manager's relationships: the work a middling agency's reach sends.
   const fromManager = managed && country === 'us' ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
-  let self = 0;
+  // The submissions that came back, by their place in the week's.
+  const back: number[] = [];
   // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
   // A site casts in its own country: Spotlight in Britain, the American ones there.
   const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => siteCountry(site) === country && onSite(career, site, weekStart));
   const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
-  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) self += 1;
+  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) back.push(n);
+  const self = back.length;
   const pick = (open: readonly Role[]) => {
     let x = rng.next() * open.reduce((sum, r) => sum + r.weight, 0);
     for (const r of open) { x -= r.weight; if (x <= 0) return r; }
@@ -1180,7 +1225,10 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const age = (weekStart - person.birthInstant) / (365.2425 * MS_DAY);
   for (let n = 0; n < count + fromManager + self; n += 1) {
     const mine = n >= count + fromManager;
-    const role = pick(mine ? open : n >= count ? theirs : sent);
+    const asked = mine ? chosen[back[n - count - fromManager]!] : undefined;
+    // A breakdown is cast where it was posted: moved away since, the submission is any part's here, as before.
+    const breakdown = asked && roleById(asked.roleId).cities.includes(cityId) ? asked : undefined;
+    const role = breakdown ? roleById(breakdown.roleId) : pick(mine ? open : n >= count ? theirs : sent);
     const share = partsForAge(role, age);
     if (share < 1 && !keepsPart(sim, person, weekStart, n, share)) continue;
     const when = at(weekStart, zone, Math.floor(rng.next() * 5), 10 + Math.floor(rng.next() * 7));
@@ -1190,7 +1238,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     // out-of-town clients. Until 2026-09-27 a client who moved away from the
     // agency's city was booked into its rooms, missed them, and was let go.
     const room = rng.next() >= ESTIMATE.tapeShare && !(person.currentLocationId !== cityId && (mine || homeOf(person) !== cityId));
-    out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}) });
+    out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}), ...(breakdown ? { chosen: true as const, ...(breakdown.genre ? { genre: breakdown.genre } : {}), ...(breakdown.demands?.length ? { demands: breakdown.demands } : {}) } : {}) });
   }
   return out;
 }
@@ -1584,16 +1632,20 @@ export function registerCareer(sim: Simulation): void {
     workCostsWeek(s, person, item.at);
     const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
     const cityId = workCity(person);
-    const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted, career.managerId !== undefined);
+    const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted, career.managerId !== undefined, career.chosen ?? []);
     career.submitted = 0;
+    delete career.chosen;
     for (const one of week) {
       // Booked out: an agency doesn't send a client to an audition that clashes with a job they're working.
       if (s.timeline.conflicts(one.at, one.mode === 'tape' ? 120 : 60).some((i) => i.kind === WORK_KIND && i.payload.personId === person.id)) continue;
       const audition: Audition = { ...one, id: nextOwnId(career, 'a'), status: 'ahead' };
-      Object.assign(audition, genreOf(roleById(audition.roleId), s.rng('career.booking', person.id, `${audition.id}-genre`).next()));
-      const asks = s.rng('career.booking', person.id, `${audition.id}-demands`);
-      const demands = demandsOf(roleById(audition.roleId), audition.genre, () => asks.next());
-      if (demands.length) audition.demands = demands;
+      // A breakdown chosen keeps the genre and demands it was posted with; any other part's are drawn now.
+      if (!audition.chosen) {
+        Object.assign(audition, genreOf(roleById(audition.roleId), s.rng('career.booking', person.id, `${audition.id}-genre`).next()));
+        const asks = s.rng('career.booking', person.id, `${audition.id}-demands`);
+        const demands = demandsOf(roleById(audition.roleId), audition.genre, () => asks.next());
+        if (demands.length) audition.demands = demands;
+      }
       career.auditions.push(audition);
       s.schedule({
         at: audition.at, kind: AUDITION_KIND, label: `${audition.mode === 'tape' ? 'Self-Tape' : 'Audition'}: ${roleById(audition.roleId).label}`,
@@ -2284,6 +2336,17 @@ export function registerCareer(sim: Simulation): void {
     if (career.since === undefined && !summerOf(s.player, s.now)) throw new CommandError('While classes are in session, the school’s work comes first; submissions start in the summer, and for good when school ends.');
     const most = submissionsAWeek(career, s.now, workCity(s.player));
     if (career.submitted >= most) throw new CommandError(`You’ve made this week’s ${most} submissions.`);
+    career.submitted += 1;
+    return { submitted: career.submitted };
+  });
+
+  // A breakdown browsed and submitted for (from 2026-10-06): one of the week's submissions, for that part.
+  sim.onCommand<{ roleId: string }, { submitted: number }>('career.submit_for', (p, { sim: s }) => {
+    const roleId = String(p?.roleId);
+    const no = submitForRefusal(s, s.player, roleId);
+    if (no) throw new CommandError(no);
+    const career = careerOf(s.player);
+    career.chosen = [...(career.chosen ?? []), breakdownsOf(s, s.player).find((b) => b.roleId === roleId)!];
     career.submitted += 1;
     return { submitted: career.submitted };
   });

@@ -64,7 +64,12 @@ describe('a power cut', () => {
     expect(hours).toBeGreaterThan(WITHOUT_POWER.fridgeHours);
     const chicken = foodOf(sim.player).find((i) => i.at.kind === 'home' && i.at.spot === 'fridge')!;
     const pizza = foodOf(sim.player).find((i) => i.at.kind === 'home' && i.at.spot === 'freezer')!;
-    expect(chicken.food.expiresAt).toBeLessThanOrEqual(sim.now + (day - 1) * MS_DAY);
+    // From 2026-10-06 a cut comes at its minute of the day, and spoils the fridge as of then (until then, at midnight).
+    const cut = sim.player.powerCut!;
+    expect(cut.from).toBeGreaterThanOrEqual(sim.now + (day - 1) * MS_DAY);
+    expect(cut.from).toBeLessThan(sim.now + day * MS_DAY);
+    expect(cut.until - cut.from).toBe(Math.round(hours! * 3_600_000));
+    expect(chicken.food.expiresAt).toBeLessThanOrEqual(cut.from);
     if (hours! <= WITHOUT_POWER.freezerHours) expect(pizza.food.expiresAt).toBeGreaterThan(sim.now + day * MS_DAY);
     expect(RELIABILITY['ie-lei-dublin']!.distributor).toBe('ESB Networks');
   });

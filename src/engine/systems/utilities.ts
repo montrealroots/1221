@@ -125,16 +125,33 @@ export const outageChance = (cityId: string): number => {
   return r ? 1 - Math.exp(-r.saifi / 365) : 0;
 };
 
-/** What a cut of so many hours spoils at a home: the fridge past four, the freezer past forty-eight. How many things. */
+/** What a cut of so many hours spoils at a home: the fridge past four, the freezer past forty-eight, as of the cut (never later than it would have gone off anyway). How many things. */
 export function spoilWithoutPower(person: Person, home: string, hours: number, at: Instant): number {
   const spot = (s: string) => (i: ReturnType<typeof itemsOf>[number]) => i.food && i.at.kind === 'home' && i.at.home === home && i.at.spot === s;
   let spoiled = 0;
-  if (hours > WITHOUT_POWER.fridgeHours) for (const i of itemsOf(person).filter(spot('fridge'))) { i.food!.expiresAt = at; spoiled += 1; }
-  if (hours > WITHOUT_POWER.freezerHours) for (const i of itemsOf(person).filter(spot('freezer'))) { i.food!.expiresAt = at; spoiled += 1; }
+  const off = (i: ReturnType<typeof itemsOf>[number]) => { i.food!.expiresAt = Math.min(i.food!.expiresAt ?? at, at); spoiled += 1; };
+  if (hours > WITHOUT_POWER.fridgeHours) for (const i of itemsOf(person).filter(spot('fridge'))) off(i);
+  if (hours > WITHOUT_POWER.freezerHours) for (const i of itemsOf(person).filter(spot('freezer'))) off(i);
   return spoiled;
 }
 
-/** The day's power at home: a cut drawn at the town's rate, and what it spoils. The hours without power, or nothing. */
+/**
+ * Where most homes cook on gas, so a power cut leaves the hob lit: Mexico City, where ENIGH 2024 found 69.2% of homes
+ * cooking on LP gas and 27.6% on piped gas, 2.3% on electricity (`research-utilities-mx-outages.json`). No other town's
+ * cooking fuel was read, so a cut stops cooking there (from 2026-10-06; `docs/DATA-GAPS.md`).
+ */
+export const COOKS_ON_GAS: Readonly<Record<string, number>> = { 'mx-cmx-mexicocity': 0.692 + 0.276 };
+export const cutStopsCooking = (cityId: string): boolean => (COOKS_ON_GAS[cityId] ?? 0) <= 0.5;
+
+/** The power off at home at an instant: the cut, or nothing. */
+export const powerOffAt = (person: Person, at: Instant): SupplyCut | undefined => { const c = person.powerCut; return c && c.from <= at && at < c.until ? c : undefined; };
+
+/**
+ * The day's power at home: a cut drawn at the town's rate, when in the day and for how long, and what it spoils. The
+ * hours without power, or nothing. From 2026-10-06 a cut has its minute of the day, drawn evenly over the day as a
+ * water or gas cut's is, and is kept (`powerCut`) so cooking under way stops at it; it's told when it comes, not at
+ * midnight. Until then it had no time of day, spoiled the food as of midnight and was told then.
+ */
 export function powerDay(sim: Simulation, person: Person, at: Instant): number | undefined {
   const cityId = person.home?.cityId;
   const r = cityId ? RELIABILITY[cityId] : undefined;
@@ -144,14 +161,25 @@ export function powerDay(sim: Simulation, person: Person, at: Instant): number |
   if (rng.next() >= outageChance(cityId!)) return undefined;
   const mean = r.saidiMinutes / r.saifi / 60;
   const hours = -Math.log(1 - rng.next()) * mean;
-  const spoiled = spoilWithoutPower(person, home, hours, at);
-  if (person.id === sim.universe.playerId) {
-    sim.notify({ category: 'home', title: 'A Power Cut', body: `${r.distributor}’s power was off at home for ${hours < 1 ? `${Math.max(1, Math.round(hours * 60))} minutes` : `${hours.toFixed(1)} hours`}.${spoiled ? ` What was in the fridge${hours > WITHOUT_POWER.freezerHours ? ' and the freezer' : ''} spoiled.` : ''}`, importance: spoiled ? 50 : 20, route: '/workspace/food' });
-  }
+  const from = at + Math.floor(rng.next() * 24 * 60) * 60_000;
+  const spoiled = spoilWithoutPower(person, home, hours, from);
+  person.powerCut = { from, until: from + Math.round(hours * 3_600_000), by: r.distributor, ...(spoiled ? { spoiled } : {}) };
   return hours;
 }
 
+/** A cut told to the player as it comes: how long, and what it spoiled. */
+function tellPowerCut(sim: Simulation): void {
+  const person = sim.universe.people[sim.universe.playerId];
+  const cut = person?.powerCut;
+  if (!cut || cut.told || cut.from > sim.now) return;
+  cut.told = true;
+  const hours = (cut.until - cut.from) / 3_600_000;
+  const spoiled = Boolean(cut.spoiled);
+  sim.notify({ category: 'home', title: 'A Power Cut', body: `${cut.by}’s power went off at home at ${formatTime(cut.from, sim.zone)}, for ${hours < 1 ? `${Math.max(1, Math.round(hours * 60))} minutes` : `${hours.toFixed(1)} hours`}.${spoiled ? ` What was in the fridge${hours > WITHOUT_POWER.freezerHours ? ' and the freezer' : ''} spoiled.` : ''}`, importance: spoiled ? 50 : 20, route: '/workspace/food' });
+}
+
 export function registerUtilities(sim: Simulation): void {
+  sim.onPassage('utilities.power_cut', (s) => tellPowerCut(s));
   sim.onEvent('world.day_rollover', 'utilities.day', (_e, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
       settleIn(s, person);

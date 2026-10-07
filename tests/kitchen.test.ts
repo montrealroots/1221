@@ -148,6 +148,17 @@ describe('the day’s meals', () => {
     expect(mealsFromStock(sim, sim.player)).toBe(3);
   });
 
+  it('come out of what’s ready only on the shortcut, from 2026-10-06; off, it’s left to eat by hand and the day’s three are bought', () => {
+    const sim = life('us-ny-newyork', 'stock-off');
+    expect(sim.player.automation).toMatchObject({ eatLeftovers: true });
+    expect(sim.execute({ kind: 'life.set_automation', payload: { key: 'eatLeftovers', on: false } }).ok).toBe(true);
+    buy(sim, P.pizza, 2);
+    expect(buyTheDaysFood(sim, sim.player)).toBe(true);
+    expect(mealsReady(sim, sim.player)).toHaveLength(2);
+    const groceries = Object.values(sim.universe.transactions).filter((t) => t.memo === 'Groceries').at(-1)!;
+    expect(Math.max(...groceries.postings.map((p) => p.amount))).toBe(daysFoodCost(sim, sim.player));
+  });
+
   it('a ready meal eaten by hand, heated', () => {
     const sim = life('us-ny-newyork', 'ready');
     buy(sim, P.pizza);

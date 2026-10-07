@@ -78,6 +78,28 @@ describe('a day’s outfit', () => {
     expect(told.body).toBe('Dress was in the wash, so T-Shirt and Jeans instead.');
   });
 
+  it('stands nothing in from the rest of the wardrobe with the shortcut off, from 2026-10-06, and says so', () => {
+    const sim = life('ward-off');
+    const b = basics(sim);
+    const dress = wear(sim, 'Dress', 'dress', 'dress')[0]!;
+    sim.player.dressed = [dress.id];
+    expect(sim.player.automation).toMatchObject({ chooseOutfit: true });
+    expect(sim.execute({ kind: 'life.set_automation', payload: { key: 'chooseOutfit', on: false } }).ok).toBe(true);
+    // The chosen dress, clean, is still put on with what goes with it of the chosen and what's on.
+    sim.player.dressed = [dress.id, b.under[0]!.id, b.socks[0]!.id, b.shoes.id];
+    expect(wearTheDay(sim, sim.player)).toBe(true);
+    expect(sim.player.wornNow!.itemIds).toContain(dress.id);
+    dress.garment!.dirty = true;
+    b.under[0]!.garment!.dirty = true;
+    // In the wash, nothing else stands in, and the day says so.
+    expect(outfitFor(sim, sim.player, sim.now, false)).toBeUndefined();
+    expect(wearTheDay(sim, sim.player)).toBe(false);
+    expect(sim.universe.notifications.at(-1)!.title).toBe('No Outfit To Wear');
+    // On again, the wardrobe stands in.
+    sim.must({ kind: 'life.set_automation', payload: { key: 'chooseOutfit', on: true } });
+    expect(wearTheDay(sim, sim.player)).toBe(true);
+  });
+
   it('is what they have on once the day dresses them, and a change takes its minutes, wears what goes on, and can’t sell what’s on', () => {
     const sim = life('ward-change');
     const b = basics(sim);

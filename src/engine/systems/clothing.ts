@@ -631,7 +631,8 @@ export function starterWardrobe(sim: Simulation, person: Person): boolean {
   person.clothesSince = sim.now;
   const l = person.living;
   if (l && l.dirty !== undefined) {
-    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person, sim.now, false);
+    // Worn into the garments as the days were, the rest of the wardrobe standing in (as every day did until 2026-10-06).
+    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person, sim.now, false, true);
     delete l.clean;
     delete l.dirty;
     delete l.drying;

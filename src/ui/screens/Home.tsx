@@ -802,7 +802,7 @@ function YourBelongings() {
   // Everything in progress, soonest first (`systems/underway.ts`, from 2026-10-02).
   const pending = useWorld((s) => underWay(s, s.player));
   // What was stopped partway, each picked up where it was left (from 2026-10-03).
-  const partway = useWorld((s) => leftPartway(s.player));
+  const partway = useWorld((s) => leftPartway(s.player, s.now));
   return (
     <div className="col gap-2">
       <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />

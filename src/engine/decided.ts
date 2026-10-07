@@ -328,7 +328,7 @@ defineDecider<{ sim: Simulation; km: number }, string>({
 
 defineDecider<{ sim: Simulation; day: number }, string>({
   id: 'utilities.outage',
-  decides: 'A day with a power cut at home or not, at the distributor’s interruptions a customer a year (RELIABILITY), and its length around their mean; swept in Dublin, the likeliest of the towns.',
+  decides: 'A day with a power cut at home or not, at the distributor’s interruptions a customer a year (RELIABILITY), its length around their mean, and from 2026-10-06 its minute of the day, evenly over it; swept in Dublin, the likeliest of the towns.',
   drawnIn: 'src/engine/systems/utilities.ts',
   reads: {
     day: (o, t) => ({ ...o, day: Math.round(t * 4000) }),
@@ -992,7 +992,7 @@ defineDecider<{ sim: Simulation; week: number; n: number }, string>({
 
 defineDecider<{ sim: Simulation; roleId: string; level: number }, string>({
   id: 'career.booking',
-  decides: 'Which auditions book, weighed on the actor’s craft against the part, and the genre a part’s breakdown gives.',
+  decides: 'Which auditions book, weighed on the actor’s craft against the part, and the genre a part’s breakdown gives (from 2026-10-06 also each week’s breakdowns browsed before a submission, `breakdownsOf`).',
   drawnIn: 'src/engine/systems/career.ts',
   reads: {
     // The part: its bar.

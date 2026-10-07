@@ -7,7 +7,10 @@
  * or a suit, and underwear, socks and shoes. It's the outfit they chose
  * where it's still to hand and clean; otherwise what's already on the go,
  * then the least washed of what's clean, and the player told what stood in
- * (silent until 2026-10-02). Each wear counts toward the kind's wears between washes
+ * (silent until 2026-10-02). From 2026-10-06 the rest of the wardrobe stands
+ * in only where they've chosen the shortcut for it (`chooseOutfit`); without
+ * it, a day is dressed in what they chose and have on, or not at all, and
+ * they're told. Each wear counts toward the kind's wears between washes
  * (`content/garmentcare.ts`), and at that count it goes in the wash. A wash
  * takes each garment's share of the washes its kind lasts off its
  * condition, and it's wearable once dry. A dry-clean-only garment goes to a
@@ -27,6 +30,7 @@ import { fitOf } from './tailoring';
 import { stopped } from './watches';
 import { itemsOf, reachable, type Item, homeKeyOf, type Spot, usedL, volumeOf } from './items';
 import { bagsGoing, stayName } from './luggage';
+import { isOn } from './automation';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
 export interface Garment {
@@ -94,9 +98,14 @@ export function chosenMissing(sim: Simulation, person: Person, at: Instant = sim
  */
 const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }): number => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
 
-/** The day's outfit, or nothing where no whole outfit is to hand and clean. */
-export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment })[] | undefined {
-  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at)).sort(freshest);
+/**
+ * The day's outfit, or nothing where no whole outfit is to hand and clean. From 2026-10-06 the rest of the wardrobe
+ * stands in for what isn't only where they've chosen it (`standIn`, the `chooseOutfit` shortcut); without, it's made
+ * only of what they chose and what they have on.
+ */
+export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now, standIn = true): (Item & { garment: Garment })[] | undefined {
+  const own = new Set([...(person.dressed ?? []), ...(person.wornNow?.itemIds ?? [])]);
+  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at) && (standIn || own.has(g.id))).sort(freshest);
   const chosen = (person.dressed ?? []).map((id) => ready.find((g) => g.id === id)).filter((g): g is Item & { garment: Garment } => Boolean(g));
   const pick = (slot: Slot) => chosen.find((g) => g.garment.slot === slot) ?? ready.find((g) => g.garment.slot === slot);
   const suit = pick('suit');
@@ -200,9 +209,13 @@ function wearOnce(item: Item & { garment: Garment }): void {
  * and clean. A chosen piece the day couldn't put on is told to the player,
  * with what stood in for it. Until 2026-10-02 the swap was silent.
  */
-export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now, tell = true): boolean {
-  const outfit = outfitFor(sim, person, at);
-  if (!outfit) return false;
+export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now, tell = true, standIn = isOn(person, 'chooseOutfit')): boolean {
+  // Put together from the rest of the wardrobe only where they've chosen the shortcut (from 2026-10-06).
+  const outfit = outfitFor(sim, person, at, standIn);
+  if (!outfit) {
+    if (tell && !standIn && person.id === sim.universe.playerId && outfitFor(sim, person, at)) sim.notify({ category: 'home', title: 'No Outfit To Wear', body: 'What you chose or have on isn’t a whole outfit, clean and to hand. Choose one on Clothes, or let the day put one together on Your Shortcuts.', importance: 40, route: '/workspace/clothes' });
+    return false;
+  }
   const missing = tell && person.id === sim.universe.playerId ? chosenMissing(sim, person, at) : [];
   for (const g of outfit) wearOnce(g);
   takeOff(person, new Set(outfit.map((g) => g.id)));

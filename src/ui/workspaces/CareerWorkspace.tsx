@@ -20,7 +20,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal } from '@/engine/systems/career';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -37,7 +37,7 @@ import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { allowanceFor, furnishRefusal } from '@/engine/systems/fittings';
-import { categoryName, categoryOf, emmyEntry, entriesOf, entryRefusal } from '@/engine/systems/awards';
+import { attendRefusal, categoryName, categoryOf, ceremonyOf, dressedForCeremony, emmyEntry, entriesOf, entryRefusal } from '@/engine/systems/awards';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { dateKey } from '@/engine/core/time';
@@ -283,6 +283,7 @@ function AgencyPane() {
           On the casting sites every actor uses, for the low budget films, games and audiobooks that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
           {career.since === undefined ? ' At school, submissions are for the summers between years, for jobs that end before the fall term; for good when school ends.' : ''} Submitted from out of town, casting asks for a tape, and a job in another city means a room sublet there for its nights.
         </p>
+        <Breakdowns />
       </Panel>
 
       <WorkCostsPanel />
@@ -747,6 +748,29 @@ function WorkCostsPanel() {
 
 const yearCosts = (person: Parameters<typeof earningsOf>[0], at: number) => earningsOf(person).years[zonedParts(at, 'America/New_York').year]?.jobCosts ?? 0;
 
+/** The week's breakdowns, each part with its genre and what it asks, and a submission for the one chosen (from 2026-10-06). */
+function Breakdowns() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const list = breakdownsOf(sim, person);
+  const chosen = new Set((careerOf(person).chosen ?? []).map((b) => b.roleId));
+  if (list.length === 0) return null;
+  return (
+    <div className="col gap-1">
+      <div className="small muted">This Week’s Breakdowns</div>
+      {list.map((b) => {
+        const no = submitForRefusal(sim, person, b.roleId);
+        return (
+          <div key={b.roleId} className="row-between small" style={{ flexWrap: 'wrap' }}>
+            <span><Open subject={at('part', b.roleId)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}` : ''}{b.demands?.length ? `, asks for ${b.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{chosen.has(b.roleId) ? ', submitted' : ''}</span>
+            {!chosen.has(b.roleId) && <Gated feature="career.submit_for" disabled={Boolean(no)} title={no} onClick={() => { if (run('career.submit_for', { roleId: b.roleId }).ok) toast('Submitted for it. Any audition comes on Monday.', 'positive'); }}>Submit For It</Gated>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function ManagerPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -860,7 +884,16 @@ function AwardsPanel() {
         {[...entries].reverse().map((e) => (
           <div key={`${e.bookingId}-${e.body}`} className="row-between small">
             <span>{e.year} · <Open subject={at('award', `${e.bookingId}/${e.body}`)}>{categoryName(person, e)}</Open></span>
-            <span className="mono">{e.won ? 'Won' : e.won === false ? 'Nominated' : e.nominated ? 'Nominated, The Ceremony To Come' : e.nominated === false ? 'Not Nominated' : 'Entered'}</span>
+            <span className="mono">{e.won ? (e.there ? 'Won, There' : 'Won') : e.won === false ? (e.there ? 'Nominated, There' : 'Nominated') : e.nominated ? 'Nominated, The Ceremony To Come' : e.nominated === false ? 'Not Nominated' : 'Entered'}</span>
+            {e.nominated && e.won === undefined && (() => {
+              // Going to the ceremony (from 2026-10-06): on the calendar in its town, reached on Travel, dressed for on Clothes.
+              const where = ceremonyOf(e.body, e.year);
+              const no = attendRefusal(sim, person, e.bookingId, e.body);
+              const town = CITIES.get(where.cityId)?.name ?? 'its town';
+              return e.attending
+                ? <span className="xs dim">{`Going: ${formatDate(where.at, zoneOf(where.cityId))} in ${town}${where.hall ? `, ${where.hall}` : ''}; book the journey on Travel, and wear a suit or a dress${dressedForCeremony(person) ? ' (you have one on)' : ''}`}</span>
+                : <Gated feature="career.attend_ceremony" disabled={Boolean(no)} title={no} onClick={() => { if (run('career.attend_ceremony', { bookingId: e.bookingId, body: e.body }).ok) toast(`Going: it’s on the calendar, in ${town}.`, 'positive'); }}>Go To The Ceremony</Gated>;
+            })()}
           </div>
         ))}
         <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Academy Awards’ field is counted from its Reminder List; the Tonys’, the Oliviers’ and the Ariels’ publish only how many productions or films are eligible, so their fields are those counts at a published cast size, SLATE’s estimate.</Fine>

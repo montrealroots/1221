@@ -38,6 +38,15 @@
  * friend staying, a lodger or a flatmate, each a serving. A child's meal comes
  * out of the food share of its month's raising (`raisingMonth`), and a
  * guest's out of the day's food bought for them, so neither is paid twice.
+ *
+ * **Stopped partway** (from 2026-10-06; until then cooking was one stretch of
+ * the clock nothing could stop): the clock is moved over a recipe's minutes
+ * as anything else that stops it for them would stop it, and at home, where a
+ * power cut stops a kitchen (`cutStopsCooking`), at the cut. Stopped, the food
+ * is left part-done (`person.cooking`), its ingredients already used, and
+ * finished later for the minutes left (`food.resume_cooking`), in the same
+ * kitchen, within USDA's two hours for perishable food left out; past them it
+ * goes in the bin. One thing is on the go at a time.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -67,7 +76,8 @@ import { applyLookingAfter, occupiedAt } from './life';
 import { contactsOf } from './people';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
-import { stow } from './trips';
+import { COLD_CHAIN_HOURS, stow } from './trips';
+import { cutStopsCooking, powerOffAt } from './utilities';
 import { CITIES } from '../content/geography';
 import { CHILD_FOOD_SHARE } from '../content/children';
 import { childrenOf, livesWithYou } from './children';
@@ -201,6 +211,9 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string, s
   const place = placeOf(sim, person);
   if (!place?.cooks) return 'There’s no kitchen where you are.';
   if (sinkFull(person)) return SINK_FULL;
+  // One thing on the go at a time (from 2026-10-06): what was left partway is finished, or left past its two hours, first.
+  const partway = cookingLeft(sim, person);
+  if (partway) return `${recipeById(partway.recipeId)?.name ?? 'Something'} is partway: finish it first.`;
   // A recipe that needs nothing ('none') was refused for wanting a 'none' until 2026-10-03.
   const has = kitchenHas(person);
   const missing = r.appliances.filter((a) => a !== 'none' && !has.has(a));
@@ -365,6 +378,87 @@ export function serveRefusal(sim: Simulation, person: Person, serve: readonly st
   return undefined;
 }
 
+/**
+ * A recipe under way and stopped partway (from 2026-10-06): its ingredients already taken, the minutes cooked so far,
+ * when and why it stopped, and the kitchen it's in. Until then cooking was one stretch of the clock that nothing could
+ * stop: something due in it refused the recipe before it began, and nothing else was looked at.
+ */
+export interface Cooking { recipeId: string; servings?: number; serve?: string[]; outside?: boolean; minutes: number; minutesDone: number; stoppedAt: Instant; why: string; home?: string }
+
+/**
+ * What was left cooking partway and is still safe to finish, or nothing: within USDA's two hours for perishable food
+ * left out (`COLD_CHAIN_HOURS`, the rule the shopping left in a car already keeps).
+ */
+export function cookingLeft(sim: Simulation, person: Person): Cooking | undefined {
+  const c = person.cooking;
+  return c && sim.now - c.stoppedAt <= COLD_CHAIN_HOURS * 3_600_000 ? c : undefined;
+}
+
+/** Part-cooked food left out past USDA's two hours, thrown away and told. True where it was. */
+export function binPartway(sim: Simulation, person: Person): boolean {
+  const c = person.cooking;
+  if (!c || cookingLeft(sim, person)) return false;
+  delete person.cooking;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Left Partway Too Long', body: `${recipeById(c.recipeId)?.name ?? 'What was cooking'} was left part-cooked more than ${COLD_CHAIN_HOURS} hours, USDA's limit, and went in the bin.`, importance: 35, route: '/workspace/food' });
+  return true;
+}
+
+/** The power cut that would stop cooking at home between two instants: where a cut stops cooking, its start, or nothing. */
+function cutWhileCooking(person: Person, from: Instant, to: Instant): Instant | undefined {
+  const cut = person.powerCut;
+  if (!cut || !atHome(person) || !cutStopsCooking(person.home!.cityId)) return undefined;
+  return cut.from > from && cut.from < to ? cut.from : undefined;
+}
+
+/**
+ * Cooking carried on from where it is: the clock moved over the minutes left, stopping where something that stops it
+ * for them comes (an appointment, a club's time to set out, a routine's time, anything scheduled meanwhile) or the
+ * power goes off. Stopped, it's left partway (`person.cooking`) and the portions are none; done, it's served.
+ */
+function carryOn(sim: Simulation, person: Person, c: Cooking): number {
+  const start = sim.now;
+  const end = start + (c.minutes - c.minutesDone) * 60_000;
+  const cut = cutWhileCooking(person, start, end);
+  const res = sim.advanceTo(cut ?? end, { stopOnPlayerRequired: true });
+  const done = (sim.now - start) / 60_000;
+  // Cooking's effort, the Compendium's 2.0 METs (from 2026-10-03), for the minutes cooked.
+  exerts(person, COOKING_MET, done / 60);
+  // Outdoors, the minutes are time outside, at sitting out's rate for them.
+  if (c.outside) applyLookingAfter(person, 'outside', sim.now, 1, done / LOOKING_AFTER.outside.minutes);
+  c.minutesDone += done;
+  if (sim.now < end) {
+    c.stoppedAt = sim.now;
+    c.why = res.interruptedBy ? res.interruptedBy.label : 'The power went off';
+    person.cooking = c;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Cooking Stopped Partway', body: `${recipeById(c.recipeId)!.name} stopped ${Math.round(c.minutesDone)} of ${c.minutes} minutes in: ${c.why}. It keeps ${COLD_CHAIN_HOURS} hours part-cooked, USDA's limit, to be finished.`, importance: 45, route: '/workspace/food' });
+    return 0;
+  }
+  delete person.cooking;
+  return serveCooked(sim, person, c);
+}
+
+/** Why what was left partway can't be taken up again now, or nothing. */
+export function resumeRefusal(sim: Simulation, person: Person): string | undefined {
+  const c = cookingLeft(sim, person);
+  if (!c) return person.cooking ? `It was left more than ${COLD_CHAIN_HOURS} hours, USDA's limit.` : 'There’s no cooking left partway.';
+  if (c.home !== undefined && !(atHome(person) && homeKeyOf(person.home) === c.home)) return 'It’s in the kitchen at home.';
+  if (!placeOf(sim, person)?.cooks) return 'There’s no kitchen where you are.';
+  if (atHome(person) && powerOffAt(person, sim.now) && cutStopsCooking(person.home!.cityId)) return `The power’s off until ${formatTime(person.powerCut!.until, sim.zone)}.`;
+  const busy = occupiedAt(sim, sim.now);
+  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
+  const end = sim.now + (c.minutes - c.minutesDone) * 60_000;
+  const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
+  if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time to finish it.`;
+  return undefined;
+}
+
+/** What was left partway, finished: the minutes left cooked, and served. The portions left, none where it stopped again. */
+export function resumeCooking(sim: Simulation, person: Person): number {
+  const no = resumeRefusal(sim, person);
+  if (no) throw new CommandError(no);
+  return carryOn(sim, person, person.cooking!);
+}
+
 /** Cooks a recipe for so many servings: its ingredients used at that scale, one serving eaten, the rest in the fridge. The portions left. */
 export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number, outside = false, serve?: readonly string[]): number {
   // In the outdoor kitchen (from 2026-10-04): built, and the weather fit to sit out in for the recipe's minutes.
@@ -379,15 +473,22 @@ export function cook(sim: Simulation, person: Person, recipeId: string, servings
   if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`);
   const clash = cookingClash(sim, recipeId);
   if (clash) throw new CommandError(clash);
+  // With the power off at home, where a cut stops cooking, nothing's started (from 2026-10-06).
+  if (atHome(person) && powerOffAt(person, sim.now) && cutStopsCooking(person.home!.cityId)) throw new CommandError(`The power’s off until ${formatTime(person.powerCut!.until, sim.zone)}.`);
+  // What was left partway past USDA's two hours goes in the bin before anything new is started.
+  binPartway(sim, person);
   const r = recipeById(recipeId)!;
   takeIngredients(sim, person, recipeId, servings);
-  const minutes = r.minutes ?? KITCHEN.minutes;
-  sim.advanceTo(sim.now + minutes * 60_000);
-  // Cooking's effort, the Compendium's 2.0 METs (from 2026-10-03).
-  exerts(person, COOKING_MET, minutes / 60);
+  const home = atHome(person) ? homeKeyOf(person.home) : undefined;
+  return carryOn(sim, person, { recipeId, ...(servings !== undefined ? { servings } : {}), ...(serve ? { serve: [...serve] } : {}), ...(outside ? { outside } : {}), minutes: r.minutes ?? KITCHEN.minutes, minutesDone: 0, stoppedAt: sim.now, why: '', ...(home ? { home } : {}) });
+}
+
+/** A recipe cooked through, served: one serving eaten, one each to whoever it's served to, the rest in the fridge. The portions left. */
+function serveCooked(sim: Simulation, person: Person, c: Cooking): number {
+  const r = recipeById(c.recipeId)!;
+  const { servings, serve } = c;
+  const minutes = c.minutes;
   applyLookingAfter(person, 'eat', sim.now);
-  // Outdoors, the minutes are time outside, at sitting out's rate for them.
-  if (outside) applyLookingAfter(person, 'outside', sim.now, 1, minutes / LOOKING_AFTER.outside.minutes);
   // A partner living with them, home, eats with them; from 2026-10-06, whoever the meal is served to where they're
   // chosen, each a serving: a partner the meal's time together, a child's meal out of its raising, a guest's out of the
   // day's food bought for them, a lodger or a flatmate only the serving.
@@ -543,6 +644,7 @@ export function registerKitchen(sim: Simulation): void {
   });
   sim.onEvent('world.day_rollover', 'kitchen.spoil', (_e, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
+      binPartway(s, person);
       const n = throwOutSpoiled(person, s.now);
       if (n > 0 && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Thrown Out', body: `${n} ${n === 1 ? 'thing had' : 'things had'} gone off in the kitchen.`, importance: 15, route: '/workspace/food' });
     }
@@ -570,7 +672,15 @@ export function registerKitchen(sim: Simulation): void {
     addItem(s, person, { kind: `gear:${g.gear}`, label: g.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: g.cost });
     return { paid: g.cost };
   });
-  sim.onCommand<{ recipeId: string; servings?: number; outside?: boolean; serve?: string[] }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings), p?.outside === true, Array.isArray(p?.serve) ? p.serve.map(String) : undefined) }));
+  // Stopped partway, it says why (from 2026-10-06), and what's left is taken up with `food.resume_cooking`.
+  sim.onCommand<{ recipeId: string; servings?: number; outside?: boolean; serve?: string[] }, { left: number; stopped?: string }>('food.cook', (p, { sim: s }) => {
+    const left = cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings), p?.outside === true, Array.isArray(p?.serve) ? p.serve.map(String) : undefined);
+    return { left, ...(s.player.cooking ? { stopped: s.player.cooking.why } : {}) };
+  });
+  sim.onCommand<Record<string, never>, { left: number; stopped?: string }>('food.resume_cooking', (_p, { sim: s }) => {
+    const left = resumeCooking(s, s.player);
+    return { left, ...(s.player.cooking ? { stopped: s.player.cooking.why } : {}) };
+  });
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');
     // Without one named, what's ready that goes off soonest: a routine's "eat something ready".

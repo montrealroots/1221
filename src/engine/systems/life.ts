@@ -19,7 +19,8 @@ import { boatOf, charterAt, charterCost, charterRefusal, outingCost, outingRefus
 import { bikeHere, rideOut, rideRefusal, trailOut, trailRefusal } from './outings';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
-import { DROP_INS, DROP_IN_MINUTES, type DropIn } from '../content/dropins';
+import { DROP_INS, DROP_IN_MINUTES, DROP_IN_SKILL, type DropIn } from '../content/dropins';
+import { focusOf, grow } from './school';
 import { CITIES } from '../content/geography';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
@@ -455,6 +456,10 @@ export function registerLife(sim: Simulation): void {
     exerts(person, c.met, DROP_IN_MINUTES / 60);
     // Under three METs it's an hour unwinding, not a workout, as a lesson is (`systems/clubs.ts`).
     applyLookingAfter(person, c.met >= 3 ? 'exercise' : 'unwind', s.now);
+    // From 2026-10-06 a dance class trains an actor's dance as a session of their craft does, as an improv class
+    // trains their improvisation; casting reads it where a musical or a breakdown asks for a dance (`levelFor`).
+    const skill = DROP_IN_SKILL[c.kind];
+    if (skill && person.craft) grow(person.craft, skill, focusOf(person));
     return { doneAt: s.now, paid };
   });
 

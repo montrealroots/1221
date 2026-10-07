@@ -19,9 +19,9 @@ import { garmentsOf } from '@/engine/systems/wardrobe';
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
 describe('packing by choice', () => {
-  it('a new life has no shortcut on, and an empty bag goes empty', () => {
+  it('a new life has no shortcut on but the day’s outfit and meals (from 2026-10-06), and an empty bag goes empty', () => {
     const sim = life('lc-empty');
-    expect(sim.player.automation).toEqual({});
+    expect(sim.player.automation).toEqual({ chooseOutfit: true, eatLeftovers: true });
     moveTo(sim, sim.player, 'us-ca-losangeles');
     const bag = suitcaseOf(sim.player)!;
     expect(bag.at.kind).toBe('person');
@@ -109,6 +109,17 @@ describe('a save from before', () => {
     delete sim.player.automation;
     const back = loadSave(deserialise(serialise(sim.universe)) as never);
     expect(back.player.automation).toEqual(EVERY_SHORTCUT);
+  });
+
+  it('from before 2026-10-06 is given the day’s outfit and meals beside what it chose; one after keeps them off once turned off', () => {
+    const sim = life('lc-day');
+    sim.player.automation = { laundry: true };
+    delete sim.player.dayShortcuts;
+    const back = loadSave(deserialise(serialise(sim.universe)) as never);
+    expect(back.player.automation).toEqual({ laundry: true, chooseOutfit: true, eatLeftovers: true });
+    back.must({ kind: 'life.set_automation', payload: { key: 'chooseOutfit', on: false } });
+    const again = loadSave(deserialise(serialise(back.universe)) as never);
+    expect(again.player.automation).toEqual({ laundry: true, eatLeftovers: true });
   });
 });
 
