@@ -82,6 +82,8 @@ describe('naturalizing', () => {
     record(sim);
     expect(naturalizeRefusal(sim, sim.player, 'GB')).toMatch(/residence there first/);
     expect(sim.execute({ kind: 'documents.residence', payload: { country: 'GB' } }).ok).toBe(true);
+    // Granted the day its biometrics are enrolled (from 2026-10-06, `systems/papervisits.ts`).
+    sim.advanceTo(sim.player.documents!.find((d) => d.route === 'global-talent')!.visit!.at + 3_600_000);
     age(sim, 'global-talent', 5);
     sim.player.home = { kind: 'shared', cityId: 'uk-eng-london', since: sim.now };
     sim.player.currentLocationId = 'uk-eng-london';

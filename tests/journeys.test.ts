@@ -9,7 +9,7 @@ import { breaches } from '@/engine/core/invariants';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
 import { documentsOf } from '@/engine/systems/documents';
 import { vehiclesOf } from '@/engine/systems/vehicles';
@@ -23,6 +23,8 @@ import { journeysOf } from '@/engine/systems/journey';
 import { petsOf } from '@/engine/systems/pets';
 import { clubById, meetingsAhead } from '@/engine/systems/clubs';
 import { seatsAtHome } from '@/engine/systems/furnishings';
+import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
+import { bindCeiling, ceilingFrom, evenCraft } from '@/engine/systems/school';
 
 const NY = 'us-ny-newyork';
 const life = (seed: string, city = NY) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -70,10 +72,18 @@ describe('clothes bought through to resale', () => {
     const { purchaseId } = sim.must<{ purchaseId: string }>({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'store', size: 'M', color: tee.colors[0], quantity: 1 } });
     const [bought] = purchaseItems(sim.player, purchaseId);
     expect(bought!.at).toMatchObject({ kind: 'home', spot: 'wardrobe' });
+    const bill = (s: Simulation) => memos(s, new RegExp(`: ${tee.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`));
+    expect(bill(sim)).toBe(1);
     sim = reload(sim);
     expect(purchaseItems(sim.player, purchaseId).map((i) => i.id)).toEqual([bought!.id]);
+    // Paid once, across the save and load (until 2026-10-06 the purchase's charge was never counted).
+    expect(bill(sim)).toBe(1);
     const sold = sim.must<{ paid: number }>({ kind: 'clothes.sell', payload: { itemIds: [bought!.id] } });
-    expect(sold.paid).toBeGreaterThanOrEqual(0);
+    // One tee in a ThredUp bag earns less than the bag's $14.99 fee, so nothing is paid and nothing is posted
+    // (until 2026-10-06 the test asked only that the payment wasn't negative).
+    expect(sold.paid).toBe(0);
+    expect(memos(sim, /^Clothes sold\./)).toBe(0);
+    expect(bill(sim)).toBe(1);
     expect(garmentsOf(sim.player).some((g) => g.id === bought!.id)).toBe(false);
     // Edge: sold, it can't be sold again; nothing chosen is refused.
     expect(sim.execute({ kind: 'clothes.sell', payload: { itemIds: [bought!.id] } }).ok).toBe(false);
@@ -105,6 +115,10 @@ describe('a hotel stay', () => {
     expect(sim.player.currentLocationId).toBe(NY);
     expect(itemsOf(sim.player).some((i) => i.at.kind === 'held')).toBe(false);
     expect(packedIn(sim.player, suitcaseOf(sim.player)!)).toHaveLength(packed);
+    // The fare both ways and the three nights charged once, as one booking, across the save and load; no night
+    // more and nothing given back (until 2026-10-06 no charge was counted).
+    expect(memos(sim, /^A round trip to Los Angeles, and 3 nights in a hotel$/)).toBe(1);
+    expect(memos(sim, /^Another night in a hotel|canceled, refunded$|the deposit held$/)).toBe(0);
     // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
     expect(breaches(sim.universe)).toEqual([]);
   });
@@ -152,21 +166,39 @@ describe('pet care before a trip', () => {
 });
 
 describe('a car modified, and the way about meanwhile', () => {
-  it('at the fitter’s for its hours, the car refused, the bus taken, saved and loaded, and the car back after, paid once', () => {
+  // Until 2026-10-06 "while you work" was a transit errand; now a day's work booked through the career is worked by
+  // the clock while the car is at the fitter's.
+  it('at the fitter’s through a booked day’s work, the car refused, the bus taken, saved and loaded, and the car back after, paid once', () => {
     let sim = life('j-mods', 'uk-eng-london');
     documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'uk', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+    // An actor as the school's admission leaves one (`tests/journey-career.test.ts`'s `actor`), the business begun.
+    sim.player.craft = evenCraft(80);
+    sim.player.craftCeiling = ceilingFrom(sim.player.craft);
+    bindCeiling(sim.player.craft, sim.player.craftCeiling);
+    beginCareer(sim, sim.player);
     const car = sim.must<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'gb-ford-puma' } }).vehicleId;
     sim.advanceTo(noon(sim, 2));
+    // A day's television offered for the next morning, as the career's week offers one, and taken.
+    const starts = noon(sim, 1) - 3 * MS_HOUR;
+    const job: Booking = { id: 'work', roleId: 'uk-tv', cityId: 'uk-eng-london', starts, units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+    careerOf(sim.player).bookings.push(job);
+    sim.must({ kind: 'career.accept', payload: { bookingId: 'work' } });
     sim.must({ kind: 'vehicle.modify', payload: { vehicleId: car, mod: 'respray' } });
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: car } }).error).toMatch(/^It’s at the body shop until/);
     sim.must({ kind: 'errand.go', payload: { to: 'errand', by: 'transit' } });
     sim.must({ kind: 'errand.go', payload: { to: 'home' } });
+    // The day worked by the clock, the car still at the fitter's at its end.
+    while (sim.now < starts + 14 * MS_HOUR) sim.advanceTo(Math.min(starts + 14 * MS_HOUR, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true });
+    expect(careerOf(sim.player).bookings.find((b) => b.id === 'work')).toMatchObject({ worked: 1 });
     sim = reload(sim);
+    expect(careerOf(sim.player).bookings.find((b) => b.id === 'work')).toMatchObject({ worked: 1 });
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: car } }).ok).toBe(false);
     sim.advanceBy(6 * MS_DAY);
     sim.must({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: car } });
     sim.must({ kind: 'errand.go', payload: { to: 'home' } });
     expect(memos(sim, /^A Full Respray, fitted$/)).toBe(1);
+    // The day's work paid once, across the save and load.
+    expect(memos(sim, /^A Part, A British Television Series/)).toBe(1);
     // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
     expect(breaches(sim.universe)).toEqual([]);
   });
@@ -196,17 +228,34 @@ describe('a club meeting', () => {
 });
 
 describe('a room furnished and used', () => {
-  it('a piece bought flat-packed, saved and loaded, put together, and sat on', () => {
+  // Until 2026-10-06 this set the home to an owned one by hand and furnished one chair, its charge never counted;
+  // now the home is the one the life starts in, and two rooms are furnished by the commands the screens run.
+  it('pieces bought flat-packed, saved and loaded, put together, set in their rooms, and sat on, each charged once', () => {
     let sim = life('j-room');
-    sim.player.home = { ...sim.player.home!, kind: 'own' } as never;
     const seats = seatsAtHome(sim.player).seats;
+    const home = sim.player.home!;
     sim.must({ kind: 'home.buy_piece', payload: { pieceId: 'us-onnestad-19554477', quantity: 1 } });
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: 'us-rast-70582165', quantity: 1 } });
+    const charges = () => [memos(sim, /^IKEA, ÖNNESTAD, delivered$/), memos(sim, /^IKEA, RAST, delivered$/)];
+    expect(charges()).toEqual([1, 1]);
     sim = reload(sim);
+    expect(charges()).toEqual([1, 1]);
     const chair = itemsOf(sim.player).find((i) => i.kind === 'ikea:us-onnestad-19554477')!;
-    expect(chair.flatPacked).toBe(true);
+    const chest = itemsOf(sim.player).find((i) => i.kind === 'ikea:us-rast-70582165')!;
+    expect([chair.flatPacked, chest.flatPacked]).toEqual([true, true]);
     sim.must({ kind: 'items.assemble', payload: { itemId: chair.id } });
+    sim.must({ kind: 'items.assemble', payload: { itemId: chest.id } });
     expect(seatsAtHome(sim.player).seats).toBeGreaterThan(seats);
-    // Edge: away from home it can't be put together, and put together it can't be again.
+    // Each to its room: the armchair the living room's, the drawers the bedroom's.
+    const key = (chair.at as { home: string }).home;
+    sim.must({ kind: 'items.move', payload: { itemId: chair.id, to: { kind: 'home', home: key, spot: 'floor', room: 'living' } } });
+    sim.must({ kind: 'items.move', payload: { itemId: chest.id, to: { kind: 'home', home: key, spot: 'floor', room: 'bedroom-1' } } });
+    sim = reload(sim);
+    const placed = (id: string) => (itemsOf(sim.player).find((i) => i.id === id)!.at as { room?: string }).room;
+    expect([placed(chair.id), placed(chest.id)]).toEqual(['living', 'bedroom-1']);
+    expect(sim.player.home).toMatchObject({ kind: home.kind, cityId: home.cityId });
+    expect(charges()).toEqual([1, 1]);
+    // Edge: put together it can't be again.
     expect(sim.execute({ kind: 'items.assemble', payload: { itemId: chair.id } }).error).toBe('It’s put together.');
     // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
     expect(breaches(sim.universe)).toEqual([]);
@@ -218,6 +267,16 @@ describe('the edges a life meets', () => {
     const sim = life('j-edges');
     sim.player.documents = (sim.player.documents ?? []).filter((d) => d.kind !== 'passport');
     expect(sim.execute({ kind: 'travel.book', payload: { toCity: 'uk-eng-london', day: noon(sim, 10), slot: 1, nights: 2 } }).ok).toBe(false);
+    // The closed store, asserted from 2026-10-06 (until then the title said it and nothing checked it): at three in
+    // the morning the grocer is shut, the errand stops there, and nothing is bought, charged or waiting.
+    const p = zonedParts(sim.now + MS_DAY, sim.zone);
+    sim.advanceTo(instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 3 }, sim.zone));
+    const run = runErrands(sim, { by: 'foot', stops: [{ kind: 'food.buy_groceries', payload: { productId: 'thefreshgrocer-bowl-basket-russet-potatoes-5-lb-bag', quantity: 1 }, leg: 'shopping' }] });
+    expect(run.done).toBe(0);
+    expect(run.stopped!.error).toMatch(/opens at/);
+    expect(memos(sim, /Fresh Grocer/)).toBe(0);
+    expect(waitingShopping(sim.player)).toHaveLength(0);
+    expect(sim.player.trip).toBeUndefined();
     // Every law of the world holds at the journey's end (from 2026-10-06, `core/invariants.ts`).
     expect(breaches(sim.universe)).toEqual([]);
   });

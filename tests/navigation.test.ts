@@ -47,6 +47,9 @@ function lockedRoutes(): Set<string> {
   return locked;
 }
 
+/** The residence routes a document carries, read from the `Route` union in residence.ts. */
+const PAPER_ROUTES = new Set([...(read('engine/systems/residence.ts').match(/export type Route = ([^;]+);/)?.[1] ?? '').matchAll(/'([^']+)'/g)].map((m) => m[1]!));
+
 /** Every route string the engine hands to a notification or a decision. */
 function enginesRoutes(): { file: string; route: string }[] {
   const dir = new URL('engine/systems/', ROOT);
@@ -54,7 +57,13 @@ function enginesRoutes(): { file: string; route: string }[] {
   for (const file of readdirSync(dir)) {
     if (!file.endsWith('.ts')) continue;
     const source = readFileSync(new URL(file, dir), 'utf8');
-    for (const match of source.matchAll(/route:\s*'([^']+)'/g)) out.push({ file, route: match[1]! });
+    for (const match of source.matchAll(/route:\s*'([^']+)'/g)) {
+      // A document's immigration route (`Route` in residence.ts) shares the key, not the meaning (from 2026-10-06,
+      // when a pending Global Talent permit was first written as a literal); any other word without a slash is still
+      // taken as a screen and fails.
+      if (!match[1]!.startsWith('/') && PAPER_ROUTES.has(match[1]!)) continue;
+      out.push({ file, route: match[1]! });
+    }
   }
   const world = read('engine/world/world.ts');
   for (const match of world.matchAll(/route:\s*'([^']+)'/g)) out.push({ file: 'world.ts', route: match[1]! });

@@ -9,7 +9,9 @@
  * outfit is what the day put on. From 2026-10-06 the shower's towel and
  * products are checked, a late-afternoon run makes them hungry for supper, and the
  * next day washes up the night's dishes by hand (§33i); until then the
- * hygiene, the hunger, the tank and the larder were set by hand.
+ * hygiene, the hunger, the tank and the larder were set by hand. From later
+ * on 2026-10-06 a second save is taken midway through the morning, before
+ * the shops; until then the only one was after lunch.
  */
 import { describe, expect, it } from 'vitest';
 import { breaches } from '@/engine/core/invariants';
@@ -67,6 +69,14 @@ describe('a connected day', () => {
     const pick = (slot: string) => garmentsOf(sim.player).find((g) => g.garment.slot === slot && wearable(sim, sim.player, g))!.id;
     const outfit = ['top', 'bottom', 'underwear', 'socks', 'shoes'].map(pick);
     must(sim, 'clothes.change', { itemIds: outfit });
+    expect(sim.player.wornNow!.itemIds).toEqual(outfit);
+
+    // Saved and loaded midway through the morning, showered and dressed and not yet out (from 2026-10-06; until then
+    // the only save was after lunch): the hygiene, the towel's use, the supplies and what's worn come back as they were.
+    sim.advanceTo(at(9));
+    const morning = { hygiene: sim.player.wellbeing.hygiene, towel: towelWears(), bodyWash: left('body-wash'), tx: sim.universe.transactions.length };
+    sim = loadSave(deserialise(serialise(sim.universe)));
+    expect({ hygiene: sim.player.wellbeing.hygiene, towel: towelWears(), bodyWash: left('body-wash'), tx: sim.universe.transactions.length }).toEqual(morning);
     expect(sim.player.wornNow!.itemIds).toEqual(outfit);
 
     // To the shops on what's in the tank, a fuel stop on the way back.

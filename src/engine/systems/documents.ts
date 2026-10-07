@@ -22,6 +22,7 @@
  */
 
 import { VISAS } from '../content/visas';
+import { VISITS, bookVisit, waitsOnVisit } from './papervisits';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -71,6 +72,8 @@ export interface PersonDocument {
   endedAt?: number;
   /** A route to residence it was granted on (`systems/residence.ts`, from 2026-09-30). */
   route?: import('./residence').Route;
+  /** The interview or biometrics its decision waits on (`systems/papervisits.ts`, from 2026-10-06). */
+  visit?: import('./papervisits').PaperVisit;
 }
 
 /** A person's papers, kept on them. */
@@ -237,7 +240,8 @@ export function residenceRefusal(person: Person, cityId: string, at: Instant): s
   if (status === 'citizen' || status === 'free-movement') return undefined;
   if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === to && inForce(d, at))) return undefined;
   // Permission to work there is permission to live there while it lasts, and an OPT filed in time keeps a student while it's decided.
-  if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === to && d.bookingId === undefined && (inForce(d, at) || d.status === 'pending'))) return undefined;
+  // Not a Global Talent visa waiting on its biometrics (from 2026-10-06): it's applied for from abroad, and lets no one in until it's granted.
+  if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === to && d.bookingId === undefined && (inForce(d, at) || (d.status === 'pending' && d.route !== 'global-talent')))) return undefined;
   const there = theCountry(COUNTRIES.get(to.toLowerCase())?.name ?? to);
   return `Living in ${there} needs permission to live there, which you don’t hold: see Papers for a route to residence, where there is one.`;
 }
@@ -344,12 +348,17 @@ export function registerDocuments(sim: Simulation): void {
     const rule = VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]!;
     const fee = inSave(s, rule.fee, rule.currency);
     if (!payFromBank(s, person, fee, rule.name, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    const readyAt = s.now + rule.days * MS_DAY;
     const id = s.nextId('document');
-    documentsOf(person).push({
+    const doc: PersonDocument = {
       id, kind: 'visa', issuer: destination, name: rule.name, number: numberFor('V', id),
-      status: 'pending', appliedAt: s.now, readyAt, destination, passportId: passportOf(person, s.now)!.id,
-    });
+      status: 'pending', appliedAt: s.now, readyAt: s.now + rule.days * MS_DAY, destination, passportId: passportOf(person, s.now)!.id,
+    };
+    documentsOf(person).push(doc);
+    // The visit it waits on (from 2026-10-06, `systems/papervisits.ts`): America's interview at the visa's own wait, its
+    // week to issue after; Canada's biometrics, its days counted from them. Until then it was decided with neither.
+    if (destination === 'US') doc.readyAt = bookVisit(s, person, doc, 'us-interview', rule.days - VISITS['us-interview'].after) + VISITS['us-interview'].after * MS_DAY;
+    if (destination === 'CA') doc.readyAt = bookVisit(s, person, doc, 'ca-biometrics', undefined, { after: rule.days }) + rule.days * MS_DAY;
+    const readyAt = doc.readyAt!;
     s.schedule({ at: readyAt, kind: DECIDED_KIND, label: `${rule.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id } });
     return { readyAt, fee };
   });
@@ -359,6 +368,8 @@ export function registerDocuments(sim: Simulation): void {
     if (!person) return;
     for (const doc of documentsOf(person)) {
       if (doc.status !== 'pending' || (doc.readyAt ?? Infinity) > s.now) continue;
+      // Its interview or biometrics not yet kept, it waits on them (from 2026-10-06, `systems/papervisits.ts`).
+      if (waitsOnVisit(doc)) continue;
       issue(s, person, doc);
     }
   });

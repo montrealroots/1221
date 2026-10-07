@@ -19,6 +19,7 @@ import { registerAlarm } from './systems/alarm';
 import { registerHomeSecurity } from './systems/homesecurity';
 import { registerCharging } from './systems/charging';
 import { registerResidence } from './systems/residence';
+import { registerPaperVisits } from './systems/papervisits';
 import { registerCanadaPensions } from './systems/capensions';
 import { registerCitizenship } from './systems/citizenship';
 import { registerEiSelfEmployed } from './systems/eiself';
@@ -321,6 +322,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDocuments(sim);
   registerLicensing(sim);
   registerPermission(sim);
+  registerPaperVisits(sim);
   registerJourneys(sim);
   registerLocalStays(sim);
 }

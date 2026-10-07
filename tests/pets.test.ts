@@ -89,8 +89,8 @@ describe('a pet', () => {
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2026, 11, 20, 15))).toBe('Air Canada carries no pets in the hold from 18 December to 4 January.');
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 3, 15))).toMatch(/no pets in the hold/);
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 6, 15))).toBe(inSaveMoney(sim, 105_00, 'CAD'));
-    // Out of America no airline takes it for an ordinary passenger.
-    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toMatch(/^Rua: No airline flies a pet in the hold out of America/);
+    // Out of America Delta's hold takes none for an ordinary passenger; from 2026-10-06 Alaska is named in its place.
+    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toMatch(/^Rua: Delta checks no pets.*Alaska Airlines checks one/);
     // Aeromexico: the hold, in pesos either way.
     expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 5_570_00, 'MXN'));
     // Each pet its own, and none without a flight.
