@@ -331,7 +331,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |
 | `routine.save` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | — (also routineRefusal) | routinesOf (added to) | — | — | 5 | journey-clothes.test.ts; journey-school-week.test.ts |
 | `routine.set_time` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | No such routine. (also routineTimeRefusal) | — | — | — | 2 | journey-clothes.test.ts |
-| `school.ask_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | rehearsals (added to) | — | school.partner_rehearsal | 2 | journey-school-week.test.ts |
+| `school.ask_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | rehearsals (added to) | — | school.partner_rehearsal | 3 | journey-school-week.test.ts |
 | `school.cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 2 | journey-career.test.ts |
 | `school.call_in_sick` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; There are no classes today.; Today’s classes have been and gone; calling in sick now excuses nothing.; You’re well enough to go: staying away would be an unexcused absence. | — | — | — | 3 | journey-career.test.ts |
 | `school.cancel_rehearsal` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 2 | journey-school-week.test.ts |
@@ -479,7 +479,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `career.query_answer` | `systems/career.ts` | systems/career.ts | managerId; managerSince; managerOffers | — | — | 0 |
 | `career.renewal` | `systems/career.ts` | systems/career.ts | status; lastBookedAt; submitted; chosen; sites; and 5 more | — | career.work; career.travel; social.stay; and 1 more | 3 |
 | `career.residual` | `systems/career.ts` | systems/career.ts | — | — | — | 4 |
-| `career.showcase` | `systems/career.ts` | systems/career.ts | showcases (added to) | — | — | 4 |
+| `career.showcase` | `systems/career.ts` | systems/career.ts | showcases (added to) | — | — | 6 |
 | `career.travel` | `systems/career.ts` | systems/career.ts | travelOwed; stay; perDiemOwed | — | hotel | 4 |
 | `career.wardrobe_back` | `systems/fittings.ts` | systems/fittings.ts | — | — | — | 1 |
 | `career.week` | `systems/career.ts` | systems/career.ts | submitted; offers; managerOffers; auditions; auditions (added to) | — | career.audition | 10 |
@@ -562,7 +562,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.evaluation` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
 | `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status; rehearsals (added to) | — | school.partner_rehearsal | 3 |
-| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
+| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 4 |
 | `school.payday` | `systems/school.ts` | systems/school.ts | — | Yes | — | 1 |
 | `school.recess` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.shift` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |

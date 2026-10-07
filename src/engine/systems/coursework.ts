@@ -52,7 +52,7 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENES, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Scene, type Template } from '../content/coursework';
-import { classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { occupiedAt } from './life';
 import { exerts } from './body';
 import { wearForExercise } from './wardrobe';
@@ -83,6 +83,14 @@ export const WORK = {
   reliability: { from: 0.72, to: 0.98 },
   /** Trust: where it starts, what a rehearsal kept, missed or called off late does to it, and below what they'd rather not. */
   trust: { start: 50, kept: 4, missed: -12, lateCancel: -4, wary: 25 },
+  /**
+   * What a rehearsal kept or missed does to the classmate's bond (`BONDS` in
+   * `systems/school.ts`), the one the class is known by after school
+   * (`knowTheClass`): a partner kept faith with is a friend for longer, one
+   * stood up can be a rival. Until 2026-10-07 the partnership moved only its
+   * own trust, which ended with the degree.
+   */
+  bond: { kept: 2, missed: -5 },
   /** A rehearsal with a partner: how long, the hours a call may be in, and how far ahead it must be asked for. */
   rehearsal: { minutes: 90, from: 7, until: 22, aheadHours: 2 },
   /** A partner's share of a scene: their own work against what you've done together. */
@@ -200,9 +208,10 @@ function remember(sim: Simulation, mate: Classmate, what: string): void {
   if (m.log.length > 20) m.log.length = 20;
 }
 
-function moveTrust(mate: Classmate, by: number): void {
+function moveTrust(mate: Classmate, by: number, bond?: { person: Person; by: number }): void {
   const m = mateRecord(mate);
   m.trust = Math.max(0, Math.min(100, trustOf(mate) + by));
+  if (bond) mate.bond = Math.max(-100, Math.min(100, (mate.bond ?? 0) + bondMove(bond.person, bond.by)));
 }
 
 /** Whether a classmate is cast this term, and so called Tuesday to Friday from three (the Bulletin's rehearsal hours). */
@@ -497,7 +506,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (excused && next) { due.dueOn = next; return 1; }
       due.status = 'missed';
-      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
+      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
       if (mine) sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: 'You weren’t there when it was due, and it isn’t taken later.', importance: 60, route: '/workspace/school' });
       return 1;
     }
@@ -633,7 +642,7 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   if (!here) {
     r.status = 'missedByYou';
     m.missedByYou = (m.missedByYou ?? 0) + 1;
-    moveTrust(mate, WORK.trust.missed);
+    moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed });
     remember(sim, mate, `You didn’t come to rehearse ${what}`);
     if (mine) sim.notify({ category: 'school', title: `${first} Waited For You`, body: `You didn’t come to the rehearsal of ${what}. ${first} will remember it.`, importance: 60, route: '/workspace/school' });
     return;
@@ -652,7 +661,7 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   const before = a.prep.partner;
   a.prep.partner = clamp01(before + (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person))) * (1 - before));
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
-  moveTrust(mate, WORK.trust.kept);
+  moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
   remember(sim, mate, `Rehearsed ${what} together`);
 }
 

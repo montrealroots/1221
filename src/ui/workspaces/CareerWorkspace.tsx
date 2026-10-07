@@ -16,11 +16,12 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { residenceRefusal } from '@/engine/systems/documents';
+import type { Person } from '@/engine/domain/model';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen } from '@/engine/systems/career';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -197,6 +198,21 @@ export function CareerWorkspace() {
   );
 }
 
+/** What the school's work brings to the showcase beside the day: a final-year lead and the latest reviewed terms (`thesisSeen`), and the showcase scene as it last went in class (from 2026-10-07). */
+const BAND_WORD = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' } as const;
+function ShowcaseCarried({ person }: { person: Person }) {
+  if (!person.school) return null;
+  const scene = showcaseSceneSeen(person);
+  const thesis = thesisSeen(person);
+  const signed = (n: number) => (n > 0 ? `+${n.toFixed(1)}` : n.toFixed(1));
+  return (
+    <div className="small">
+      From your school work, beside the day: a lead in the final year and your two latest reviewed terms on stage {signed(thesis)}; your showcase scene {scene ? `${BAND_WORD[scene.band]}, ${signed(scene.points)}` : 'not yet shown in class'}.
+      <span className="xs dim"> Nothing here is an offer: each agency still reads the day, your reputation and the class beside you.</span>
+    </div>
+  );
+}
+
 /** The agency, the offers standing, leaving, the showcases, submitting yourself, and the agencies' bars. */
 function AgencyPane() {
   const { sim, run, toast } = useGame();
@@ -290,6 +306,7 @@ function AgencyPane() {
 
       <Panel title="The Showcase" subtitle={career.showcases.length ? undefined : `New York ${formatDate(instantFromZoned({ ...SHOWCASE_2029.newYork, hour: 17 }, zoneOf(CAREER_CITIES[0])), zoneOf(CAREER_CITIES[0]))}, Los Angeles a week later`}>
         <LookRegion className="col gap-3">
+          <ShowcaseCarried person={person} />
           {career.showcases.length > 0 && (
             <div className="table-scroll">
               <table>

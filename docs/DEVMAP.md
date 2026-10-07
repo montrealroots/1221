@@ -536,7 +536,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
+| `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `carryover.test.ts` `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
 | `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
 | `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `coursework.test.ts` `journey-career.test.ts` `school.test.ts` | Drama School |
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
