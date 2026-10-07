@@ -166,6 +166,7 @@ birthday on the day the law counts it, in New York and in London.
 | 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
 | 2026-10-06 | `c94c7b33` | the replay above, in foreground chunks | two lives | clean; `main` merged as `45bbc415` |
 | 2026-10-06 | `9565013f` | the same replay, after the triaged rows' four build batches and the catalogs | two lives | clean (New York to 89, London to 50, the same days; New York ends holding 60 things); `main` merged as `9270128a` |
+| 2026-10-06 | `d1065893` | the same replay, with every command in a journey again | two lives | clean; `main` merged as `d8304bf2` |
 | 2026-10-06 | `49c5d3b3` | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `abda6d4e` | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `8b4f3328` | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
