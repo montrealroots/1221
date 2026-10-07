@@ -60,8 +60,8 @@ import { phonesOf } from './phones';
 import { reachable } from './items';
 import { inHospital } from './health';
 import {
-  ADVANCED, LEARNING, OBJECTIVE_DIM, mayGive, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
-  type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
+  ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
+  type Approach, type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
 } from './learning';
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
@@ -170,6 +170,8 @@ export interface Assignment {
   revisit?: Revisit & { answers?: Partial<Record<Question['id'], string>> };
   /** Notes from before put right by this showing, by their ledger key. */
   taken?: string[];
+  /** Another way at a persistent weakness, chosen for this work (`APPROACHES`, from 2026-10-08): which note, how, when. */
+  approach?: { key: string; dim: PrepDim; kind: Approach; on: string };
   /** Work shown in rounds (`Template.rounds`): the round it's at, and each round shown, with how it went. From 2026-10-08. */
   round?: number;
   roundsShown?: { label: string; band: Band; on: string }[];
@@ -365,7 +367,8 @@ export const openFor = (sim: Simulation, person: Person, course: string): Assign
 
 /** How long a step takes: learning lines by how much there is to learn. */
 export function minutesOf(a: Assignment, act: Activity): number {
-  if (act.dim === 'memorization' && a.sceneId) return SCENE_SIZE_MINUTES[sceneById(a.sceneId)!.size];
+  // A targeted drill keeps its own half hour (from 2026-10-08): it isn't learning the scene.
+  if (act.dim === 'memorization' && a.sceneId && act.id !== 'drill') return SCENE_SIZE_MINUTES[sceneById(a.sceneId)!.size];
   return act.minutes;
 }
 
@@ -382,12 +385,47 @@ function needRefusal(sim: Simulation, person: Person, need: Need): string | unde
   }
 }
 
+/** The persistent weaknesses this work can be a way at: open notes given often, on a part this work prepares. */
+export function persistentFor(cw: Coursework, a: Assignment): { key: string; dim: PrepDim; given: number }[] {
+  const t = templateById(a.template)!;
+  return notesOf(cw).flatMap((n) => {
+    if (n.status !== 'open' || n.given < LEARNING.persistent) return [];
+    const dim = (n.key.startsWith('dim:') ? n.key.slice(4) : n.key.startsWith('choice:') ? 'interpretation' : undefined) as PrepDim | undefined;
+    return dim && t.dims[dim] ? [{ key: n.key, dim, given: n.given }] : [];
+  }).sort((x, y) => y.given - x.given);
+}
+
+/** Why a way at a weakness can't be chosen for this work, or nothing. */
+export function approachRefusal(sim: Simulation, person: Person, a: Assignment | undefined, kind: Approach): string | undefined {
+  if (!a) return 'There’s no such assignment.';
+  if (a.status !== 'open' && a.status !== 'revising') return 'That work is finished.';
+  if (a.approach) return `You chose ${APPROACHES[a.approach.kind].label.toLowerCase()} for this work already.`;
+  const cw = courseworkOf(sim, person)!;
+  const weak = persistentFor(cw, a)[0];
+  if (!weak) return 'No note keeps coming back that this work can help with.';
+  if (kind === 'objective' && !(Object.keys(OBJECTIVE_DIM) as Objective[]).some((o) => OBJECTIVE_DIM[o] === weak.dim && (o !== 'listening' || a.partner !== undefined))) return 'This work can’t put that first.';
+  if (kind === 'partner') {
+    if (a.partner === undefined) return 'This work has no partner.';
+    if (weak.dim === 'partner') return 'That’s the work with your partner already.';
+    if (trustOf(person.school!.classmates[a.partner]!) < WORK.trust.wary) return `${person.school!.classmates[a.partner]!.name.split(' ')[0]} would rather work alone, after last time.`;
+  }
+  return undefined;
+}
+
+/** The steps of an assignment: its template's, and a targeted drill where that's the way chosen at a weakness (`approach`). */
+export function activitiesOf(a: Assignment): readonly Activity[] {
+  const t = templateById(a.template)!;
+  if (a.approach?.kind !== 'drill') return t.activities;
+  const label = `${APPROACHES.drill.label}: ${t.dims[a.approach.dim]?.label ?? a.approach.dim}`;
+  return [...t.activities, { id: 'drill', label, minutes: APPROACH.drill.minutes, dim: a.approach.dim, gain: APPROACH.drill.gain, daily: true }];
+}
+
 /** Why a step can't be done now, or nothing. */
 export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | undefined, activityId: string): string | undefined {
   if (!a) return 'There’s no such assignment.';
   if (a.status !== 'open' && a.status !== 'revising') return 'That work is finished.';
   const t = templateById(a.template)!;
-  const act = t.activities.find((x) => x.id === activityId);
+  const act = activitiesOf(a).find((x) => x.id === activityId);
   if (!act) return 'That isn’t a step of this work.';
   if (act.dim === 'revision' && t.revised && a.status !== 'revising') return 'There’s no note to work on until it’s been shown.';
   if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this: read it first.';
@@ -406,8 +444,7 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
 
 /** A step done: its time taken, its part of the preparation moved, and its skill trained while the assignment allows. */
 export function prepare(sim: Simulation, person: Person, a: Assignment, activityId: string): { moved: number; dim: PrepDim; minutes: number } {
-  const t = templateById(a.template)!;
-  const act = t.activities.find((x) => x.id === activityId)!;
+  const act = activitiesOf(a).find((x) => x.id === activityId)!;
   if ((act.needs ?? []).includes('moveClothes') && !wearForExercise(sim, person)) throw new CommandError('Nothing clean to move in: clothes for a workout, and underwear and socks.');
   const minutes = minutesOf(a, act);
   const focus = focusOf(person);
@@ -489,6 +526,8 @@ export function preparedParts(person: Person, a: Assignment, onDay: string): Par
     else if (dim === 'partner' && t.paired) out[dim] = WORK.partnerMix.together * a.prep.partner + WORK.partnerMix.own * partnerOwn(person, a, onDay);
     else out[dim] = a.prep[dim];
   }
+  // A smaller piece of a part asked for (`approach`): six tenths of it reads as the whole of what was asked.
+  if (a.approach?.kind === 'smaller' && out[a.approach.dim] !== undefined) out[a.approach.dim] = Math.min(1, out[a.approach.dim]! / APPROACH.smaller);
   return out;
 }
 
@@ -605,10 +644,14 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   }
   for (const key of taken) strengths.push(`The note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()} is taken`);
   if (taken.length) a.taken = taken;
-  const showing: Showing = { band: bandOf(score), score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
+  // A smaller piece shown is no better than Working (`approach`).
+  const band = a.approach?.kind === 'smaller' && ['strong', 'exceptional'].includes(bandOf(score)) ? 'working' : bandOf(score);
+  const showing: Showing = { band, score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
   // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
   const pick = noteCandidates(person, a, parts, craft, notes)[0];
-  const focus: Focus = pick?.focus ?? { kind: 'advanced', challenge: nextChallenge(notes, sim.rng('school.coursework', person.id, `challenge-${a.id}-${onDay}`).next()) };
+  // The course's last step beyond, not given again running.
+  const lastHere = cw.assignments.filter((x) => x.course === a.course && x.id !== a.id && x.feedback?.focus.kind === 'advanced').at(-1)?.feedback?.focus;
+  const focus: Focus = pick?.focus ?? { kind: 'advanced', challenge: nextChallenge(notes, sim.rng('school.coursework', person.id, `challenge-${a.id}-${onDay}`).next(), challengesFor(t), lastHere?.kind === 'advanced' ? lastHere.challenge : undefined) };
   const { kind, before } = recordNote(notes, focus, onDay, a.id, c.name, pick?.level);
   const partnerName = a.partner !== undefined ? person.school!.classmates[a.partner]?.name : undefined;
   const body = noteText(a, focus, pick?.level, partnerName);
@@ -670,7 +713,19 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     } else due.status = 'done';
     if (due.partner !== undefined) remember(sim, person.school!.classmates[due.partner]!, `Showed ${sceneById(due.sceneId ?? '')?.play ?? t.title} together: ${BAND_LABEL[showing.band].toLowerCase()}`);
     const roundLabel = t.rounds && due.roundsShown?.length ? ` (${due.roundsShown.at(-1)!.label})` : '';
-    if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${showing.strengths.length ? `${showing.strengths.join('; ')}. ` : ''}${due.feedback ? `The note (simulated feedback from ${due.feedback.course}): ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
+    const rec = due.feedback ? notesOf(cw).find((n) => n.key === noteKey(due.feedback!.focus)) : undefined;
+    // A weakness that keeps coming back: a note the same again, never the step beyond (which is kept in the ledger too, and
+    // which a measured term found sent as 'still there' after exceptional work).
+    const persistent = rec && rec.status === 'open' && rec.given > LEARNING.persistent && due.feedback!.kind === 'recurring' && !rec.key.startsWith('advanced:');
+    if (mine && persistent) {
+      // A weakness that keeps coming back (from 2026-10-08): said once a week at most, short, and pointing at what can be done
+      // about it; until then each showing sent the whole note again, the same subject a dozen times a term.
+      const quiet = (rec as NoteRecord & { notifiedAt?: number }).notifiedAt;
+      if (quiet === undefined || when - quiet >= LEARNING.quietDays * MS_DAY) {
+        (rec as NoteRecord & { notifiedAt?: number }).notifiedAt = when;
+        sim.notify({ category: 'school', title: `Still There: ${noteSubject(rec.key)}`, body: `${t.title}, ${BAND_LABEL[showing.band].toLowerCase()}: the same note, given ${rec.given} times. On the Coursework tab you can choose another way at it.`, importance: 30, route: '/workspace/school' });
+      }
+    } else if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${showing.strengths.length ? `${showing.strengths.join('; ')}. ` : ''}${due.feedback ? `The note (simulated feedback from ${due.feedback.course}): ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
     return WORK.weight[showing.band];
   }
   const revising = cw.assignments.find((a) => a.course === course && a.status === 'revising' && a.revision?.dueOn === key);
@@ -704,7 +759,8 @@ function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string): 
   const ready = clamp01((focusOf(person) - 0.3) / 0.9);
   const luck = (sim.rng('school.coursework', person.id, `reshow-${a.id}-${onDay}`).next() * 2 - 1) * WORK.showing.luck;
   const s = WORK.showing;
-  return bandOf(s.prep * prep + (s.craft * craft + s.ready * ready) * Math.min(1, prep / s.carries) + luck);
+  const b = bandOf(s.prep * prep + (s.craft * craft + s.ready * ready) * Math.min(1, prep / s.carries) + luck);
+  return a.approach?.kind === 'smaller' && (b === 'strong' || b === 'exceptional') ? 'working' : b;
 }
 
 /** Work still open when its term's classes end lapses: there's no meeting left to show it. */
@@ -834,6 +890,8 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
   moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
   keptWith(mate);
+  // The weakness worked on with the partner too, where that's the way chosen (`approach`), once.
+  if (a.approach?.kind === 'partner' && !(a as Assignment & { partnerWorked?: boolean }).partnerWorked) { a.prep[a.approach.dim] = clamp01(a.prep[a.approach.dim] + APPROACH.partner * (1 - a.prep[a.approach.dim])); (a as Assignment & { partnerWorked?: boolean }).partnerWorked = true; }
   // Both readings tried, as agreed with them (`systems/classmates.ts`): the table work moves, once.
   const tried = a as Assignment & { tryBoth?: boolean };
   if (tried.tryBoth) { a.prep.interpretation = clamp01(a.prep.interpretation + 0.15 * (1 - a.prep.interpretation)); delete tried.tryBoth; }
@@ -941,6 +999,19 @@ export function registerCoursework(sim: Simulation): void {
     const no = prepareRefusal(s, person, a, String(p?.activity));
     if (no) throw new CommandError(no);
     return prepare(s, person, a!, String(p.activity));
+  });
+
+  sim.onCommand<{ assignmentId: string; kind: Approach }, { dim: PrepDim }>('school.approach', (p, { sim: s }) => {
+    const person = s.player;
+    const a = assignmentById(s, person, String(p?.assignmentId));
+    const kind = (['drill', 'objective', 'partner', 'smaller'] as const).find((k) => k === p?.kind);
+    if (!kind) throw new CommandError('That isn’t a way to work on it.');
+    const no = approachRefusal(s, person, a, kind);
+    if (no) throw new CommandError(no);
+    const weak = persistentFor(courseworkOf(s, person)!, a!)[0]!;
+    a!.approach = { key: weak.key, dim: weak.dim, kind, on: dayKey(s.now) };
+    if (kind === 'objective') a!.objective = (Object.keys(OBJECTIVE_DIM) as Objective[]).find((o) => OBJECTIVE_DIM[o] === weak.dim)!;
+    return { dim: weak.dim };
   });
 
   sim.onCommand<{ assignmentId: string; question: Question['id']; option: string }, { supported: boolean }>('school.choose', (p, { sim: s }) => {

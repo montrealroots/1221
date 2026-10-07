@@ -68,11 +68,38 @@ export const LEARNING = {
   objectiveWeight: 1.5,
   /** Where a revisit asks for another reading and none differs, the reading counts this much. */
   sameReading: 0.8,
+  /** A note open and given this often is a persistent weakness, and the work offers another way at it (`APPROACHES`). */
+  persistent: 3,
+  /** A persistent note's notice, at most this often (days): the card and the ledger keep it in view between. */
+  quietDays: 7,
 } as const;
 
+/**
+ * Another way at a weakness that keeps coming back (from 2026-10-08), one an
+ * assignment, chosen by the player; none of them takes the note by itself:
+ * - `drill`: a targeted drill of that part, half an hour, once a day, moving
+ *   it as the work's own steps do, by what's left;
+ * - `objective`: the part put first, weighing more in the showing;
+ * - `partner`: the next rehearsal kept with the partner works on it too;
+ * - `smaller`: a smaller piece of it asked for, so a part prepared to six
+ *   tenths reads as whole, and the showing can be no better than Working,
+ *   since less was shown.
+ * SLATE's estimates, each.
+ */
+export type Approach = 'drill' | 'objective' | 'partner' | 'smaller';
+export const APPROACHES: Record<Approach, { label: string; words: string }> = {
+  drill: { label: 'A Targeted Drill', words: 'a drill of it, half an hour once a day' },
+  objective: { label: 'Put It First', words: 'it put first, weighing more when it’s shown' },
+  partner: { label: 'Work On It With Your Partner', words: 'the next rehearsal with your partner working on it too' },
+  smaller: { label: 'A Smaller Piece Of It', words: 'a smaller piece asked for, shown as no better than Working' },
+};
+export const APPROACH = { drill: { minutes: 30, gain: 0.3 }, partner: 0.2, smaller: 0.6 } as const;
+
 /** The steps beyond the work, by what they ask: SLATE's, given in the game's words and shown as simulated. */
-export type Challenge = 'stakes' | 'listening' | 'economy' | 'contrast' | 'text';
+export type Challenge = 'stakes' | 'listening' | 'economy' | 'contrast' | 'text' | 'release' | 'precision';
 export const ADVANCED: Record<Challenge, string> = {
+  release: 'Take it slower than feels safe, and let go of what you’re holding to get through it: the effort shouldn’t show.',
+  precision: 'Make one moment exact: choose where it starts and ends, and repeat it the same way twice.',
   stakes: 'Raise what it costs: play it as though the scene decides everything for your character, and see what that does to the pace.',
   listening: 'Let the other person change you: take your next line from what you were just given, not from what you planned.',
   economy: 'Do less: find the moments that need nothing added, and trust the text in them.',
@@ -226,8 +253,20 @@ export function mayGive(notes: readonly NoteRecord[], key: string, level?: numbe
 }
 
 /** The step beyond the work given least recently, so two showings with nothing holding them back don't hear the same thing. */
-export function nextChallenge(notes: readonly NoteRecord[], draw: number): Challenge {
-  const all = Object.keys(ADVANCED) as Challenge[];
+/**
+ * Which steps beyond fit a piece of work (from 2026-10-08): another person's
+ * only where there's a partner, the text's and the stakes' only where there's
+ * material, letting go where it's the body or the voice alone. Until then
+ * a voice sequence could be told to let its partner change it.
+ */
+export function challengesFor(t: Template): Challenge[] {
+  const scene = t.material !== 'none';
+  return (Object.keys(ADVANCED) as Challenge[]).filter((c) => (c === 'listening' ? t.paired : c === 'text' || c === 'stakes' || c === 'contrast' ? scene : c === 'release' ? !scene : true));
+}
+
+export function nextChallenge(notes: readonly NoteRecord[], draw: number, fits: readonly Challenge[] = Object.keys(ADVANCED) as Challenge[], notAgain?: Challenge): Challenge {
+  // Not the one the course gave last, where another fits (a measured term found the same words twice running in a course).
+  const all = fits.length > 1 && notAgain ? fits.filter((c) => c !== notAgain) : fits.length ? [...fits] : (Object.keys(ADVANCED) as Challenge[]);
   const last = (c: Challenge) => noteRecord(notes, `advanced:${c}`)?.last ?? '';
   const sorted = [...all].sort((a, b) => (last(a) < last(b) ? -1 : last(a) > last(b) ? 1 : 0));
   const oldest = sorted.filter((c) => last(c) === last(sorted[0]!));
@@ -257,8 +296,12 @@ export interface Freshness {
   assignments: number; withMaterial: number; scenes: number; recentRepeat: number; avoidableRepeat: number; unacknowledged: number;
   revisits: Record<string, number>; paired: number; partners: number; partnerRepeat: number;
   notes: number; sameNoteRun: number; kinds: Record<string, number>; objectives: Record<string, number>;
+  /** Of notes given, the share on the same subject as the course's previous note, whatever the words (from 2026-10-08). */
+  sameSubjectRun: number;
+  /** Approaches chosen, by kind. */
+  approaches: Record<string, number>;
 }
-export function freshnessOf(assignments: readonly (Worked & { feedback?: { text: string; kind?: string }; revisit?: { change: string } })[]): Freshness {
+export function freshnessOf(assignments: readonly (Worked & { feedback?: { text: string; kind?: string; focus?: NoteFocus }; revisit?: { change: string }; approach?: { kind: string } })[]): Freshness {
   const ordered = [...assignments].sort((a, b) => (a.setOn < b.setOn ? -1 : a.setOn > b.setOn ? 1 : 0));
   const material = ordered.filter((a) => a.sceneId);
   const recent = material.filter((a, i) => material.slice(Math.max(0, i - 6), i).some((b) => b.sceneId === a.sceneId)).length;
@@ -270,12 +313,13 @@ export function freshnessOf(assignments: readonly (Worked & { feedback?: { text:
   const partnerRepeat = paired.filter((a) => { const prev = paired.filter((b) => b.course === a.course && b.setOn < a.setOn).at(-1); return prev !== undefined && prev.partner === a.partner; }).length;
   const noted = ordered.filter((a) => a.feedback);
   const sameRun = noted.filter((a) => { const prev = noted.filter((b) => b.course === a.course && b.setOn < a.setOn).at(-1); return prev !== undefined && prev.feedback!.text === a.feedback!.text; }).length;
+  const sameSubject = noted.filter((a) => { const prev = noted.filter((b) => b.course === a.course && b.setOn < a.setOn).at(-1); return prev?.feedback?.focus !== undefined && a.feedback!.focus !== undefined && noteKey(prev.feedback.focus) === noteKey(a.feedback!.focus); }).length;
   const count = (xs: (string | undefined)[]) => xs.reduce<Record<string, number>>((m, x) => { if (x) m[x] = (m[x] ?? 0) + 1; return m; }, {});
   const share = (n: number, of: number) => (of ? Math.round((n / of) * 1000) / 1000 : 0);
   return {
     assignments: ordered.length, withMaterial: material.length, scenes: new Set(material.map((a) => a.sceneId)).size, recentRepeat: share(recent, material.length), avoidableRepeat: avoidable, unacknowledged,
     revisits: count(ordered.map((a) => a.revisit?.change)), paired: paired.length, partners: new Set(paired.map((a) => a.partner)).size, partnerRepeat: share(partnerRepeat, paired.length),
-    notes: noted.length, sameNoteRun: share(sameRun, noted.length), kinds: count(noted.map((a) => a.feedback!.kind)), objectives: count(ordered.map((a) => a.objective)),
+    notes: noted.length, sameNoteRun: share(sameRun, noted.length), sameSubjectRun: share(sameSubject, noted.length), kinds: count(noted.map((a) => a.feedback!.kind)), objectives: count(ordered.map((a) => a.objective)), approaches: count(ordered.map((a) => a.approach?.kind)),
   };
 }
 

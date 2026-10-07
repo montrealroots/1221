@@ -6,7 +6,10 @@
  * course of the Bulletin setting work, The Greeks with its Greek scenes.
  */
 import { describe, expect, it } from 'vitest';
-import { QUESTIONS, SCENES, TEMPLATES, templateFor } from '@/engine/content/coursework';
+import { QUESTIONS, SCENES, TEMPLATES, sceneById, templateFor } from '@/engine/content/coursework';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { courseworkOf, questionsFor, setWork, show } from '@/engine/systems/coursework';
 import { COURSES } from '@/engine/content/school';
 import { scenesFor } from '@/engine/systems/learning';
 
@@ -16,7 +19,8 @@ describe('the scene bank', () => {
     for (const s of SCENES) {
       expect([1, 2, 3]).toContain(s.difficulty);
       expect(['comedy', 'drama', 'tragedy']).toContain(s.genre);
-      expect(s.year).toBeLessThanOrEqual(1930);
+      // Public-domain plays to 1930; an original scene written for SLATE is of now, says so, and gives its facts.
+      if (s.origin === 'original') { expect(s.by).toBe('An original scene written for SLATE'); expect(s.facts?.length).toBeGreaterThanOrEqual(4); } else expect(s.year).toBeLessThanOrEqual(1930);
       const sets = [s.circumstances, s.relationship, ...s.roles.flatMap((r) => [r.objective, r.obstacle, r.tactic])];
       for (const opts of sets) {
         expect(opts.some((o) => o.supported), `${s.id}: a supported reading`).toBe(true);
@@ -52,5 +56,28 @@ describe('the scene bank', () => {
     expect(templateFor('DRAM 103a/b', 'fall')!.id).toBe('scene-study');
     expect(templateFor('DRAM 103a/b', 'spring')!.id).toBe('simulated-rehearsal');
     expect(TEMPLATES.find((t) => t.id === 'simulated-rehearsal')!.rounds).toHaveLength(3);
+  });
+});
+
+describe('original material, through the work', () => {
+  it('is set like any scene where the fitting public-domain ones are studied, its readings rest on its facts, and it’s shown, noted and revised', () => {
+    const sim = createSave(1, 'orig-work', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    const cw = courseworkOf(sim, sim.player)!;
+    // Every fitting public-domain scene studied already, long ago: what's never studied comes first.
+    const t = templateFor('DRAM 103a/b', 'fall')!;
+    for (const s of scenesFor(t, 'DRAM 103a/b', [], 1).filter((x) => x.origin !== 'original')) cw.assignments.push({ id: `old-${s.id}`, course: 'X', template: 'scene-study', term: 0, setOn: '2026-01-01', dueOn: '2026-01-02', sceneId: s.id, role: 0, prep: { familiarity: 0, memorization: 0, interpretation: 0, rehearsal: 0, partner: 0, revision: 0 }, answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], status: 'done' });
+    const a = setWork(sim, sim.player, 'DRAM 103a/b', { year: 2026, month: 9, day: 1 })!;
+    const scene = sceneById(a.sceneId!)!;
+    expect(scene.origin).toBe('original');
+    expect(a.revisit).toBeUndefined();
+    // A reading cut against: the note names why, from the scene's own facts.
+    const q = questionsFor(a).find(({ options }) => options.some((o) => !o.supported))!;
+    for (const { q: x, options } of questionsFor(a)) a.answers[x.id] = options.find((o) => o.supported)!.id;
+    a.answers[q.q.id] = q.options.find((o) => !o.supported)!.id;
+    for (const d of ['familiarity', 'memorization', 'rehearsal', 'partner'] as const) a.prep[d] = 0.95;
+    show(sim, sim.player, a, '2026-10-01', sim.now);
+    expect(a.feedback!.focus).toEqual({ kind: 'choice', question: q.q.id });
+    expect(a.feedback!.text).toContain(q.options.find((o) => !o.supported)!.why!);
+    expect(a.feedback!.text).toContain(`As ${scene.roles[a.role!].name} in ${scene.play}.`);
   });
 });

@@ -16,10 +16,10 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 401
+- Verified (journey): 402
 - Implemented But Unverified: 4
 - Partially Implemented: 0
-- Commands in all: 405
+- Commands in all: 406
 
 ## Commands
 
@@ -331,19 +331,20 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |
 | `routine.save` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | — (also routineRefusal) | routinesOf (added to) | — | — | 8 | journey-clothes.test.ts; journey-school-week.test.ts |
 | `routine.set_time` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | No such routine. (also routineTimeRefusal) | — | — | — | 2 | journey-clothes.test.ts |
-| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 2 | journey-school-year.test.ts |
+| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 3 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 2 | journey-three-students.test.ts |
 | `school.ask_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | — | — | — | 4 | journey-school-week.test.ts |
 | `school.buy_ppe` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | It’s …, which the bank can’t cover. (also ppeRefusal) | status | Yes | school.call | 1 | — |
 | `school.cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 3 | journey-career.test.ts |
 | `school.call_in_sick` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; There are no classes today.; Today’s classes have been and gone; calling in sick now excuses nothing.; You’re well enough to go: staying away would be an unexcused absence. | — | — | — | 3 | journey-career.test.ts |
 | `school.cancel_rehearsal` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 2 | journey-school-week.test.ts |
-| `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already.; and 1 more | — | — | — | 3 | journey-school-week.test.ts; journey-school-year.test.ts |
+| `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already.; and 1 more | — | — | — | 4 | journey-school-week.test.ts; journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx RoutinesWorkspace.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 3 | journey-school-production.test.ts |
 | `school.make_amends` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/classmates.ts` | — (also amendsRefusal) | status | — | — | 1 | — |
 | `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 2 | journey-school-week.test.ts |
-| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 6 | journey-school-week.test.ts; journey-school-year.test.ts |
-| `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 3 | journey-school-week.test.ts; journey-school-year.test.ts |
-| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | — (also respondRefusal) | — | — | school.study_session | 2 | journey-school-year.test.ts |
+| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 8 | journey-school-week.test.ts; journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 4 | journey-school-week.test.ts; journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | — (also respondRefusal) | — | — | school.study_session | 3 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 3 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 3 | journey-career.test.ts |
 | `school.take_shift` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | No free evening in the next two weeks. (also shiftRefusal) | — | — | school.shift | 2 | journey-career.test.ts |

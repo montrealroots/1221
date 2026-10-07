@@ -1,0 +1,92 @@
+{
+  "topic": "Contemporary scene-study material: why plays after 1930 aren't reproduced in SLATE, and why its contemporary scenes are original to it",
+  "retrieved": "2026-10-08",
+  "findings": [
+    {
+      "what": "US copyright term, works created on or after January 1, 1978",
+      "value": "Life of the author plus 70 years; for works made for hire, anonymous and pseudonymous works, 95 years from first publication or 120 from creation, whichever is shorter.",
+      "unit": "copyright term",
+      "market": "us",
+      "source": "https://www.copyright.gov/circs/circ15a.pdf (U.S. Copyright Office, Circular 15A, Duration of Copyright)",
+      "quote": "The law automatically protects a work that is created and fixed in a tangible medium of expression on or after January 1, 1978, from the moment of its creation and gives it a term lasting for the author's life plus an additional 70 years.",
+      "confidence": "high"
+    },
+    {
+      "what": "US copyright term, works under statutory protection before 1978 (published 1931-1977)",
+      "value": "Up to 95 years (a 28-year first term plus a 67-year renewal term); all works published in the US before January 1, 1931 are in the public domain.",
+      "unit": "copyright term",
+      "market": "us",
+      "source": "https://www.copyright.gov/circs/circ15a.pdf (U.S. Copyright Office, Circular 15A, Duration of Copyright)",
+      "quote": "Thus the maximum total term of copyright protection for works already protected by January 1, 1978, has been increased from 56 years (a first term of 28 years plus a renewal term of 28 years) to 95 years (a first term of 28 years plus a renewal term of 67 years). Applying these standards, all works published in the United States before January 1, 1931, are in the public domain.",
+      "confidence": "high"
+    },
+    {
+      "what": "US copyright term, the Copyright Office's FAQ",
+      "value": "Life plus 70 years for works created after January 1, 1978; for works published before 1978 the term varies.",
+      "unit": "copyright term",
+      "market": "us",
+      "source": "https://www.copyright.gov/help/faq/faq-duration.html (U.S. Copyright Office, FAQ: How long does copyright protection last?)",
+      "quote": "copyright protection lasts for the life of the author plus an additional 70 years",
+      "confidence": "high"
+    },
+    {
+      "what": "Works published in 1930 entered the US public domain on January 1, 2026",
+      "value": "The 95-year term of 1930's works ran out at the end of 2025; Noel Coward's Private Lives is among the plays listed.",
+      "unit": "public domain date",
+      "market": "us",
+      "source": "https://cspd.law.duke.edu/publicdomainday/2026/ (Duke Law, Center for the Study of the Public Domain, Public Domain Day 2026)",
+      "quote": "On January 1, 2026, thousands of copyrighted works from 1930 enter the US public domain, along with sound recordings from 1925. ... The 1998 Copyright Term Extension Act gave works published or registered before 1978 a 95-year term, expiring on January 1 after the conclusion of the 95th year.",
+      "confidence": "high"
+    },
+    {
+      "what": "Reproducing and publicly performing a dramatic work are the copyright owner's exclusive rights",
+      "value": "The owner has the exclusive right to reproduce the work and, for dramatic works, to perform it publicly, and to authorize others to.",
+      "unit": "statute",
+      "market": "us",
+      "source": "https://www.law.cornell.edu/uscode/text/17/106 (17 U.S.C. 106)",
+      "quote": "Subject to sections 107 through 122, the owner of copyright under this title has the exclusive rights to do and to authorize any of the following: (1) to reproduce the copyrighted work in copies or phonorecords; ... (4) in the case of literary, musical, dramatic, and choreographic works, pantomimes, and motion pictures and other audiovisual works, to perform the copyrighted work publicly",
+      "confidence": "high"
+    },
+    {
+      "what": "Performing a copyrighted play needs a license from the author or a licensing agency",
+      "value": "The Educational Theatre Association's guidance: a class, a private audience or a free show still needs the performance rights licensed from the author or their representative, usually a licensing agency.",
+      "unit": "licensing practice",
+      "market": "us",
+      "source": "https://dramatics.org/copyright-in-theatre/ (Dramatics magazine, Educational Theatre Association, Copyright in Theatre)",
+      "quote": "It doesn't matter if you're performing for a class, presenting to a private audience, or staging a show for free—you must license the performance rights from the author or their legal representation (typically that's a licensing agency).",
+      "confidence": "medium"
+    },
+    {
+      "what": "The face-to-face teaching exemption",
+      "value": "Performance by instructors or pupils in face-to-face teaching at a nonprofit educational institution, in a classroom, isn't an infringement; it covers performing in class, not reproducing the text. SLATE reproduces no copyrighted text either way, and the exemption doesn't let it invent a play and put it to a real playwright.",
+      "unit": "statute",
+      "market": "us",
+      "source": "https://www.law.cornell.edu/uscode/text/17/110 (17 U.S.C. 110(1))",
+      "quote": "Notwithstanding the provisions of section 106, the following are not infringements of copyright: (1) performance or display of a work by instructors or pupils in the course of face-to-face teaching activities of a nonprofit educational institution, in a classroom or similar place devoted to instruction",
+      "confidence": "high"
+    },
+    {
+      "what": "DRAM 103a/b Acting I: the first term's material is twentieth- and twenty-first-century playwrights",
+      "value": "The first term explores the plays of a wide variety of twentieth- and twenty-first-century playwrights (also recorded in research-yale-coursework.json).",
+      "unit": "course description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (David Geffen School of Drama Bulletin 2026-2027, Acting (M.F.A. and Certificate), Courses of Instruction)",
+      "quote": "The first term of this class employs a series of questions to examine the principles and craft behind acting technique while exploring the plays of a wide variety of twentieth- and twenty-first-century playwrights.",
+      "confidence": "high"
+    }
+  ],
+  "notFound": [
+    {
+      "what": "Concord Theatricals' (and Dramatists Play Service's) own US licensing FAQ wording",
+      "looked": "https://www.concordtheatricals.com/resources/faq could not be fetched; https://www.dramatists.com/text/faqs.asp now redirects to concordtheatricals.com. Concord's UK site (concordtheatricals.co.uk) says the same in UK terms but isn't the US market."
+    },
+    {
+      "what": "Which plays Yale's Acting I actually assigns",
+      "looked": "The 2026-2027 Bulletin names no plays for DRAM 103a/b; no published syllabus was found."
+    },
+    {
+      "what": "Public-domain status of particular 1931-1963 plays whose copyright wasn't renewed",
+      "looked": "Circular 15A says such copyrights expired after 28 years if not renewed, but checking renewal records play by play wasn't done; SLATE treats every play after 1930 as under copyright."
+    }
+  ]
+}
