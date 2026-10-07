@@ -83,6 +83,7 @@ import { armHealth, inHospital } from './health';
 import { armTaxes, canadaElected } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { actingOf, ceilingOf, grow, focusOf, summerOf, type Craft } from './school';
+import type { Band } from './coursework';
 import { rentAt } from '../content/rents';
 import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, classmatePresence, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
@@ -725,6 +726,25 @@ export function thesisSeen(person: Person): number {
   const reviewed = school.history.filter((r) => r.work !== undefined).slice(-2);
   const nights = reviewed.length ? reviewed.reduce((sum, r) => sum + r.work!, 0) / reviewed.length : 0;
   return 2 * Math.min(1, leads) + Math.max(-2, Math.min(2, nights * 2));
+}
+
+/**
+ * What the showcase scene, as it last went in class, adds to the showcase
+ * (from 2026-10-07): the scene the actor chose and rehearsed in DRAM 793b
+ * (`showcase-scene` in `content/coursework.ts`), shown, and shown again with
+ * the note taken. Ordinary work adds nothing, so an actor's showcase reads as
+ * it did before; an unready scene, or one not shown, two points less; a
+ * strong one, one more, and an exceptional one two. SLATE's estimate, on the
+ * scale of `thesisSeen`. Until 2026-10-07 the showcase read the craft and the
+ * thesis, and the scene shown to the industry was nobody's work.
+ */
+export const SHOWCASE_SCENE_POINTS: Record<Band, number> = { unready: -2, working: 0, strong: 1, exceptional: 2 };
+export function showcaseSceneSeen(person: Person): { band: Band; points: number } | undefined {
+  const scenes = (person.school?.coursework?.assignments ?? []).filter((a) => a.template === 'showcase-scene' && (a.shown || a.status === 'missed' || a.status === 'lapsed'));
+  const last = scenes.at(-1);
+  if (!last) return undefined;
+  const band: Band = last.revision?.band ?? last.shown?.band ?? 'unready';
+  return { band, points: SHOWCASE_SCENE_POINTS[band] };
 }
 
 /** Which agencies offer after a showing (`career.offers`): those whose bar it clears and who want the actor. */
@@ -1569,7 +1589,8 @@ export function registerCareer(sim: Simulation): void {
     // Nerves in the room, by the composure there is (`attributes.ts`).
     const focus = present(person, item.at) ? focusOf(person) * nerves(s, person, 'showcase') : 0;
     // Agents come to the third-years' thesis shows: the last year's work on stage, as the faculty reviewed it, reads beside the day's.
-    const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence) + thesisSeen(person);
+    // And the scene itself, as it last went in class (`showcaseSceneSeen`).
+    const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence) + thesisSeen(person) + (showcaseSceneSeen(person)?.points ?? 0);
     if (focus > 0) earn(s, person, Math.max(0, score - 50) * ATTRIBUTES.reputation.showcasePer);
     career.showcases.push({ cityId, at: item.at, score });
     // The class shows with them, each classmate at an ordinary day's readiness and their own presence.

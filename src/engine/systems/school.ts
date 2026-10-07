@@ -84,6 +84,8 @@ import { exerts } from './body';
 import { BODY } from '../content/body';
 import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
+import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
+import { STAGE_LABEL, callAnswered, callMissed, nightFactor, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -139,6 +141,12 @@ export interface Classmate {
   bond?: number;
   /** Their life after the degree: an agency, and the work they book (`systems/rivals.ts`). */
   career?: ClassmateCareer;
+  /**
+   * As a partner in class work (`systems/coursework.ts`, from 2026-10-07): how reliably they come, how far they trust
+   * you, the rehearsals kept with you, the ones they missed and the ones you did, when you met, and what's happened.
+   */
+  reliability?: number; trust?: number; kept?: number; stoodUp?: number; missedByYou?: number; met?: Instant;
+  log?: { at: Instant; what: string }[];
 }
 
 /**
@@ -227,6 +235,8 @@ export interface SchoolRecord {
   workStudy: { electiveHours: number; owedHours: number; assignedBooked?: number };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
+  /** The courses' work between meetings, and the first week (`systems/coursework.ts`, from 2026-10-07). */
+  coursework?: import('./coursework').Coursework;
 }
 
 export const TERM_KIND = 'school.term';
@@ -853,6 +863,8 @@ export function enroll(sim: Simulation, person: Person): void {
   school.tally = freshTally(person, school);
   sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termLabel(0) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
   planWeek(sim, person, sim.now);
+  // The first week's sessions, each changing what's known or arranged (`systems/coursework.ts`, from 2026-10-07).
+  scheduleOrientation(sim, person);
   if (person.id !== sim.universe.playerId) return;
   const day = (d: SchoolDate) => formatDate(at(d, 12), zone());
   sim.notify({
@@ -1345,7 +1357,14 @@ function cast(sim: Simulation, person: Person, term: number): void {
   // over a School one. Until 2026-09-27 each was booked on its own, and a
   // second-year understudy was called to Rep and to a thesis on eight
   // afternoons, and credited with both.
-  type Call = { at: Instant; minutes: number; label: string; call: 'rehearsal' | 'performance' | 'oncall' | 'runthrough'; which?: 'rep'; last?: true };
+  type Call = { at: Instant; minutes: number; label: string; call: 'rehearsal' | 'performance' | 'oncall' | 'runthrough'; which?: 'rep'; last?: true; stage?: Stage; n?: number; of?: number };
+  // Each rehearsal call's stage in the process, numbered (`systems/production.ts`, from 2026-10-07): until then every
+  // call was the same rehearsal, from the first to the night before opening.
+  const staged = (calls: Call[], name: string, understudy = false) => {
+    const rehearsals = calls.filter((c) => c.call === 'rehearsal');
+    const stages = stagesOf(rehearsals.length);
+    rehearsals.forEach((c, i) => { c.stage = understudy ? 'understudy' : stages[i]!; c.n = i + 1; c.of = rehearsals.length; c.label = `${name}: ${STAGE_LABEL[c.stage]}`; });
+  };
   const ours: Call[] = [];
   const reps: Call[] = [];
   const production = mine?.production;
@@ -1356,6 +1375,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     };
     for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
     production.runs.forEach((d, k) => ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
+    staged(ours, production.name);
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
@@ -1379,6 +1399,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     const final = reps.filter((r) => r.call === 'performance').at(-1);
     if (final) final.last = true;
+    staged(reps, rep.name, !inRole);
     // An understudy's run-through: the understudies play the show once for the
     // director and stage management, on the dark Monday of the run's second
     // week (SLATE's estimate of when).
@@ -1397,7 +1418,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, which: 'rep' } });
       continue;
     }
-    schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}), ...(c.last ? { last: true } : {}) } });
+    schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}), ...(c.last ? { last: true } : {}), ...(c.stage ? { stage: c.stage, n: c.n, of: c.of } : {}) } });
   }
   // The class's others the directors ask into the Rep's company in the third year, the same bar.
   if (repTerm(term) && yearOfTerm(term) === 3) {
@@ -1551,18 +1572,31 @@ export function registerSchool(sim: Simulation): void {
     school.classmates.forEach((mate, i) => {
       if (inClass[i]) for (const course of courses) for (const skill of course.skills) grow(mate.craft, skill, ESTIMATE.classmateFocus * (mate.drive ?? 1));
     });
+    // Each course's work: due there, shown once (or moved on, excused), and what that makes of the meeting's growth in
+    // place of an ordinary meeting's; then the course's next work set (`systems/coursework.ts`, from 2026-10-07).
+    const meet = (here: boolean, excused: boolean) => courses.map((course) => {
+      const weight = meetingWeight(s, person, course.code, day, item.at, here, excused);
+      setWork(s, person, course.code, day);
+      // In class, a partner may ask for an evening (`partnerAsks`, from 2026-10-07).
+      if (here) partnerAsks(s, person, course.code, day);
+      return weight;
+    });
     // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day
     // counted only for someone absent anyway, and a student who called in was counted in class).
-    if (school.sickDay === keyOf(day)) { item.status = 'missed'; school.tally.excused += 1; return; }
+    if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; return; }
     if (present(person, item.at)) {
       school.tally.attended += 1;
       const focus = focusOf(person);
-      for (const course of courses) for (const skill of course.skills) grow(person.craft, skill, focus);
+      const weights = meet(true, false);
+      courses.forEach((course, i) => { for (const skill of course.skills) grow(person.craft!, skill, focus, weights[i]); });
+      // The class, met in the room if not before.
+      for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
       tire(person, ESTIMATE.energy.classes);
       return;
     }
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
+    meet(false, offSick(person, item.at));
     if (offSick(person, item.at)) { school.tally.excused += 1; return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
@@ -1675,7 +1709,7 @@ export function registerSchool(sim: Simulation): void {
         return;
       }
       school.tally.answered += 1;
-      const kept = nerves(s, person, 'performance');
+      const kept = nerves(s, person, 'performance') * nightFactor(casting);
       playNight(person.craft, castingReads(casting), focusOf(person) * kept, 0.75);
       tire(person, ESTIMATE.energy.performance);
       const night = reckonNight(s, person, casting, item, kept, true);
@@ -1713,18 +1747,28 @@ export function registerSchool(sim: Simulation): void {
         // Friends in the cast: a better night to be in.
         const friends = (casting.cast ?? []).filter((c) => (school.classmates.find((m) => m.name === c.name)?.bond ?? 0) >= BONDS.friend).length;
         person.wellbeing.morale = Math.max(0, Math.min(100, person.wellbeing.morale + castCompany(person, friends)));
-        playNight(person.craft, castingReads(casting), focusOf(person) * kept);
+        // The rehearsal process behind it: lines, blocking and notes taken (`nightFactor`, 1 for an actor who came to every call).
+        const prepared = kept * nightFactor(casting);
+        playNight(person.craft, castingReads(casting), focusOf(person) * prepared);
         tire(person, ESTIMATE.energy.performance);
-        reckonNight(s, person, casting, item, kept, item.payload.which === 'rep');
+        reckonNight(s, person, casting, item, prepared, item.payload.which === 'rep');
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
-        rehearse(person.craft, focusOf(person));
+        const stage = (item.payload.stage as Stage | undefined) ?? 'work';
+        const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting));
+        rehearse(person.craft, focusOf(person) * weight);
+        // The dress, played through as a night would be, with no house: its reading kept, nothing counted as a performance.
+        if (stage === 'dress') {
+          const dress = nightOf(s, person, `${casting.production}-dress-${item.at}`, readOf(person.craft, castingReads(casting)), focusOf(person) * nightFactor(casting), casting.size ?? 'lead', item.payload.which === 'rep' ? 'rep' : 'school');
+          (casting as Casting & { process?: { dress?: string } }).process!.dress = dress;
+        }
         tire(person, ESTIMATE.energy.rehearsal);
         enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
       }
       return;
     }
     item.status = 'missed';
+    if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
     if (call === 'performance') { breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
     if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) {
       school.castable = false;
@@ -1736,7 +1780,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onSchedule(EVALUATION_KIND, (item, s) => {
     const person = personOf(item);
-    if (person) evaluate(s, person, Number(item.payload.term));
+    if (!person) return;
+    // The term’s classes are over: work still open has no meeting left to be shown at (`systems/coursework.ts`).
+    lapseTerm(s, person, Number(item.payload.term));
+    evaluate(s, person, Number(item.payload.term));
   });
 
   sim.onSchedule(COMMENCEMENT_KIND, (item, s) => {

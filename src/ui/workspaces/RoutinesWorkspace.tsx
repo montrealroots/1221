@@ -4,6 +4,10 @@
  * a screen would run, stopping at the first that can't be done.
  */
 import { useState } from 'react';
+import { COURSES } from '@/engine/content/school';
+import { templateFor } from '@/engine/content/coursework';
+import { termStart, yearOfTerm } from '@/engine/systems/school';
+import type { Person } from '@/engine/domain/model';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
@@ -92,6 +96,9 @@ export function RoutinesWorkspace() {
     { key: 'ready', label: 'Eat Something Ready', step: { kind: 'food.eat_ready', payload: {} } },
     ...RECIPES.map((r) => ({ key: `cook:${r.id}`, label: `Cook ${r.name}`, step: { kind: 'food.cook', payload: { recipeId: r.id } } })),
     ...outfits.map((o) => ({ key: `wear:${o.id}`, label: `Wear ${o.name}`, step: { kind: 'clothes.wear_outfit', payload: { outfitId: o.id } } })),
+    // A student's preparation for this term's courses (from 2026-10-07): each step names the course, so it does whatever
+    // work the course has open when it runs; partner work isn't a routine's, being agreed with the partner.
+    ...schoolSteps(person),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0]!;
   // A cook step's servings, one to three times what the recipe makes (from 2026-10-06).
@@ -360,4 +367,16 @@ function ErrandsPanel() {
       </div>
     </Panel>
   );
+}
+
+/** This term's courses' preparation steps, as routine steps, for a student. */
+function schoolSteps(person: Person): { key: string; label: string; step: RoutineStep }[] {
+  const school = person.school;
+  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return [];
+  const term = Math.max(0, school.termsBegun - 1);
+  const when = termStart(term).fall ? 'fall' : 'spring';
+  return COURSES.filter((c) => c.year === yearOfTerm(term) && c.terms.includes(when)).flatMap((c) => {
+    const t = templateFor(c.code, when);
+    return (t?.activities ?? []).filter((a) => a.dim !== 'partner').map((a) => ({ key: `school:${c.code}:${a.id}`, label: `${c.name}: ${a.label}`, step: { kind: 'school.prepare', payload: { course: c.code, activity: a.id } } }));
+  });
 }

@@ -35,6 +35,7 @@ import { declines } from './systems/lending';
 import { MS_DAY, MS_HOUR, startOfDay } from './core/time';
 import { internetDown } from './systems/telecom';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
+import { reliabilityOf, setWork } from './systems/coursework';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
@@ -904,6 +905,35 @@ defineDecider<{ sim: Simulation; day: number }, string>({
   sample: (seed) => ({ sim: atYale(seed), day: seed % 60 }),
   // A fortnight of class days from the one read, so an absence shows.
   decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
+});
+
+defineDecider<{ sim: Simulation; day: number }, string>({
+  id: 'school.coursework',
+  decides: 'A course’s work when it’s set: which scene not yet worked, which part is yours, and which classmate partners you; and a showing’s luck, a little either side.',
+  drawnIn: 'src/engine/systems/coursework.ts',
+  reads: {
+    // The day it’s set: each meeting draws its own.
+    day: (o, t) => ({ ...o, day: Math.round(t * 20) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), day: seed % 20 }),
+  // Acting I set on a class day in September, each day drawn apart.
+  decide: ({ sim, day }) => {
+    const a = setWork(sim, sim.player, 'DRAM 103a/b', { year: 2026, month: 9, day: 1 + day });
+    return a ? `${a.sceneId} ${a.role} ${a.partner}` : 'none';
+  },
+});
+
+defineDecider<{ sim: Simulation; who: number }, string>({
+  id: 'school.partner',
+  decides: 'How reliable each classmate is as a partner, drawn once by their drive; and whether they come to a rehearsal agreed, at that reliability.',
+  drawnIn: 'src/engine/systems/coursework.ts',
+  reads: {
+    who: (o, t) => ({ ...o, who: Math.round(t * 14) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), who: seed % 15 }),
+  decide: ({ sim, who }) => reliabilityOf(sim, sim.player, who).toFixed(3),
 });
 
 defineDecider<{ sim: Simulation; level: number; ready: number }, string>({
