@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 401
-- Implemented But Unverified: 2
+- Implemented But Unverified: 4
 - Partially Implemented: 0
-- Commands in all: 403
+- Commands in all: 405
 
 ## Commands
 
@@ -351,16 +351,18 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `sneakers.buy` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/sneakers.ts` | — | — | — | — | 2 | journey-clothes.test.ts |
 | `sneakers.sell` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/sneakers.ts` | — | items; dressed | Yes | — | 2 | journey-clothes.test.ts |
 | `social.adopt` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/adoption.ts` | … is more than the bank can cover. (also adoptRefusal) | familyPath | Yes | adoption; child.adopted; child.surrogate_birth | 2 | journey-people.test.ts |
-| `social.answer` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/reachingout.ts` | — (also answerRefusal) | — | — | — | 2 | journey-holdings.test.ts |
+| `social.answer` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/reachingout.ts` | — (also answerRefusal) | — | — | — | 3 | journey-holdings.test.ts |
 | `social.ask_out` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | You don’t know them. (also askingRefusal, asksOutRefusal) | — | — | — | 2 | journey-people.test.ts |
 | `social.ask_to_stay` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/houseguests.ts` | — (also stayRefusal) | — | — | social.stay | 2 | journey-people.test.ts |
 | `social.break_up` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | You aren’t seeing them.; You’re married: only a divorce ends it. | — | — | — | 3 | journey-people.test.ts |
+| `social.cancel` | Implemented But Unverified | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also cancelRefusal) | — | — | — | 1 | — |
 | `social.cancel_stay` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/houseguests.ts` | Nobody’s coming to stay.; … is here already. | — | Yes | social.stay_day | 2 | journey-people.test.ts |
 | `social.divorce` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | You aren’t married.; Your divorce is under way already. | — | Yes | — | 2 | journey-people.test.ts |
 | `social.host` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/hosting.ts` | No such recipe.; … cooks for … at the most. (also hostRefusal, cookRefusal) | items | Yes | social.host | 3 | journey-people.test.ts |
-| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, fineWeatherRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 6 | journey-people.test.ts |
+| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, fineWeatherRefusal, cancelRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 7 | journey-people.test.ts |
 | `social.marry` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | The bank couldn’t pay for it. (also marryRefusal) | marriage | Yes | social.wedding; social.anniversary | 2 | journey-people.test.ts |
 | `social.move_in` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | You don’t know them. (also moveInRefusal) | — | — | — | 2 | journey-people.test.ts |
+| `social.reschedule` | Implemented But Unverified | People | PeopleWorkspace.tsx | `systems/people.ts` | Choose a time to come.; You have … then. (also cancelRefusal) | — | — | — | 1 | — |
 | `social.split` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | — | billSplit | — | — | 2 | journey-people.test.ts |
 | `social.try_for_child` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/children.ts` | — (also tryRefusal) | trying; childrenOf (added to) | Yes | child.month; travel.leave | 2 | journey-people.test.ts |
 | `speaker.buy` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/speakers.ts` | — | — | — | — | 2 | journey-holdings.test.ts |
@@ -559,7 +561,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `roadside.renew` | `systems/roadside.ts` | systems/roadside.ts | — | Yes | roadside.renew | 1 |
 | `routine.due` | `systems/routines.ts` | systems/routines.ts | routines | — | — | 6 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 6 |
-| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 11 |
+| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 13 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 2 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
@@ -580,7 +582,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `social.anniversary` | `systems/marriage.ts` | systems/marriage.ts | — | — | social.anniversary | 1 |
 | `social.divorce_final` | `systems/marriage.ts` | systems/marriage.ts | — | Yes | — | 0 |
 | `social.host` | `systems/hosting.ts` | systems/hosting.ts | items | Yes | — | 5 |
-| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 4 |
+| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 6 |
 | `social.stay` | `systems/houseguests.ts` | systems/career.ts; systems/houseguests.ts | — | — | social.stay_day | 1 |
 | `social.stay_day` | `systems/houseguests.ts` | systems/houseguests.ts | — | Yes | social.stay_day | 2 |
 | `social.wedding` | `systems/marriage.ts` | systems/marriage.ts | marriage | — | social.anniversary | 1 |

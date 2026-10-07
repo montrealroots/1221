@@ -58,8 +58,10 @@ describe('a job of their own', () => {
     const day = at(sim, 2, 11);
     const busy = friends.find((c) => atWork(sim, c, day, 120))!;
     expect(busy).toBeDefined();
-    const r = sim.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: { contactId: busy.id, at: day, what: 'visit' } });
-    expect(r.value).toEqual({ accepted: false, reason: atWorkReason(busy) });
+    const r = sim.execute<{ accepted: boolean; reason?: string; counter?: number }>({ kind: 'social.invite', payload: { contactId: busy.id, at: day, what: 'visit' } });
+    expect(r.value).toMatchObject({ accepted: false, reason: atWorkReason(busy) });
+    // A no about the time offers another (`counterTime`, from 2026-10-08): an evening that week they're free.
+    expect(r.value!.counter).toBeGreaterThan(day);
     const evening = sim.execute<{ accepted: boolean }>({ kind: 'social.invite', payload: { contactId: busy.id, at: at(sim, 2, 19), what: 'visit' } });
     expect(evening.value!.accepted).toBe(true);
   });

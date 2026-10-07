@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-403 commands; 403 named by a test, 0 not.
+405 commands; 405 named by a test, 0 not.
 
 ## aircraft
 
@@ -566,16 +566,18 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `social.adopt` | `src/engine/systems/adoption.ts` | `PeopleWorkspace.tsx` | `adoption.test.ts` `journey-people.test.ts` | People |
-| `social.answer` | `src/engine/systems/reachingout.ts` | `PeopleWorkspace.tsx` | `journey-holdings.test.ts` `reaching-out.test.ts` | People |
+| `social.answer` | `src/engine/systems/reachingout.ts` | `PeopleWorkspace.tsx` | `journey-holdings.test.ts` `reaching-out.test.ts` `school-social.test.ts` | People |
 | `social.ask_out` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
 | `social.ask_to_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
 | `social.break_up` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` `people.test.ts` | People |
+| `social.cancel` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `school-social.test.ts` | People |
 | `social.cancel_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
 | `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` `journey-people.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `outings-together.test.ts` `people.test.ts` `together.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `outings-together.test.ts` `people.test.ts` `school-social.test.ts` `together.test.ts` | People |
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
+| `social.reschedule` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `school-social.test.ts` | People |
 | `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.try_for_child` | `src/engine/systems/children.ts` | `PeopleWorkspace.tsx` | `children.test.ts` `journey-people.test.ts` | People |
 

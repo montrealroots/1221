@@ -1,0 +1,212 @@
+{
+  "topic": "Yale/New Haven social prices for a Geffen School acting student: Yale Cabaret, Yale Rep, Geffen School productions and Carlotta, Yale Summer Cabaret ticket prices; Haas Arts Library term hours; New Haven cafe coffee prices",
+  "retrieved": "2026-10-08",
+  "findings": [
+    {
+      "what": "Yale Cabaret Season 59 (NEXUS) single ticket: Regular",
+      "value": 28,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "Regular: $28.00"
+    },
+    {
+      "what": "Yale Cabaret Season 59 single ticket: Student",
+      "value": 16,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "Student: $16.00"
+    },
+    {
+      "what": "Yale Cabaret Season 59 single ticket: DGSD (David Geffen School of Drama) student",
+      "value": 10,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "DGSD Student: $10.00"
+    },
+    {
+      "what": "Yale Cabaret Season 59 single ticket: DGSD Night",
+      "value": 9,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "DGSD Night: $9.00"
+    },
+    {
+      "what": "Yale Cabaret Season 59 single ticket: Yale Faculty/Staff/YRT Artist; Group Sales/Discount",
+      "value": "19 (faculty/staff/YRT artist); 22 (group/discount)",
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "Yale Faculty/Staff/YRT Artist: $19.00"
+    },
+    {
+      "what": "Yale Cabaret Season 59 flex passes (4/7/13 shows)",
+      "value": "Regular 104/175/286; Yale Faculty/Staff 68/112/182; Student 52/84/143; DGSD 34/56/91 (DGSD passes box office in person only)",
+      "unit": "USD per pass",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "DGSD 4/7/13 Show: $34.00 / $56.00 / $91.00"
+    },
+    {
+      "what": "Yale Cabaret ticket processing fee",
+      "value": 2.5,
+      "unit": "USD per order",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/visit-us/",
+      "quote": "A $2.50 ticket processing fee is added to each order at check out."
+    },
+    {
+      "what": "Yale Rep 2025-26, Hedda Gabler: ticket prices by performance type",
+      "value": "Previews $15 and $35; weeknights $15 and $50; weekends and matinees $15 and $65",
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://asset.yalerep.org/uploads/2025/09/Yale-Rep-Hedda-Gabler-PR-092525-2.pdf",
+      "quote": "Tickets for Hedda Gabler are currently available: $15 and $35 (all previews), $15 and $50 (weeknights), and $15 and $65 (weekends and matinees)."
+    },
+    {
+      "what": "Yale Rep 2025-26, Hedda Gabler: student ticket",
+      "value": 15,
+      "unit": "USD per ticket, all performances",
+      "market": "us",
+      "source": "https://asset.yalerep.org/uploads/2025/09/Yale-Rep-Hedda-Gabler-PR-092525-2.pdf",
+      "quote": "Student tickets are $15 for all performances."
+    },
+    {
+      "what": "Yale Rep student ticket policy (Yale students online with NetID; others by phone)",
+      "value": "Discounted tickets for full-time university, college and high school students with proof; online only for current Yale students with NetID",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://yalerep.org/visit/faqs/",
+      "quote": "Student Tickets are available online for current Yale students only and require a valid Net ID at login."
+    },
+    {
+      "what": "Geffen School production, Machinal (Oct 9-16, 2026, Yale Repertory Theatre): ticket price range",
+      "value": "10 to 15",
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://dgsd-tickets.yale.edu/27569",
+      "quote": "$10.00 to $15.00"
+    },
+    {
+      "what": "Geffen School production ticket tiers (IS GOD IS, Jan 2026, University Theatre): student vs general public",
+      "value": "10 student; 15 general public",
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://www.broadwayworld.com/connecticut/article/David-Geffen-School-Of-Drama-To-Stage-IS-GOD-IS-In-January-20251202",
+      "quote": "Tickets will be $10 for students and $15 for the general public and will be available online, by phone, and in person at the Box Office."
+    },
+    {
+      "what": "Geffen School production ticketing: non-Yale students must call",
+      "value": "Student tier listed; non-Yale students by phone",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://dgsd-tickets.yale.edu/27569",
+      "quote": "Student (Non-Yale students, please call)"
+    },
+    {
+      "what": "Carlotta Festival of New Plays ticket price (2019, most recent dated figure found)",
+      "value": "from 25; 15 for students",
+      "unit": "USD per play",
+      "market": "us",
+      "source": "https://news.yale.edu/2019/04/08/annual-carlotta-festival-showcases-works-graduating-playwrights",
+      "quote": "Tickets for individual Carlotta Festival plays start at $25 ($15 for students)"
+    },
+    {
+      "what": "Yale Summer Cabaret 2026 (season 52, SPECTRA) single ticket: Yale Student",
+      "value": 10,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://summercabaret.org/https-summercab-tickets-yale-edu/",
+      "quote": "Yale Student $10"
+    },
+    {
+      "what": "Yale Summer Cabaret 2026 single ticket: General Admission",
+      "value": 30,
+      "unit": "USD per ticket",
+      "market": "us",
+      "source": "https://summercabaret.org/https-summercab-tickets-yale-edu/",
+      "quote": "General Admission $30"
+    },
+    {
+      "what": "Yale Summer Cabaret 2026: Community Nights and Access Talks",
+      "value": 0,
+      "unit": "USD (free to reserve)",
+      "market": "us",
+      "source": "https://summercabaret.org/https-summercab-tickets-yale-edu/",
+      "quote": "Community Nights and Access Talks are free to reserve"
+    },
+    {
+      "what": "Haas Arts Library hours, Wednesday Oct 7, 2026 (term weekday)",
+      "value": "8:30am-10pm",
+      "unit": "opening hours",
+      "market": "us",
+      "source": "https://library.yale.edu/hours-libraries",
+      "quote": "8:30am – 10pm"
+    },
+    {
+      "what": "Haas Arts Library access: Yale ID swipe required weekends and after 6pm Mon-Thu",
+      "value": "Yale ID required Sat, Sun, and after 6pm Mon-Thu",
+      "unit": "access policy",
+      "market": "us",
+      "source": "https://library.yale.edu/arts",
+      "quote": "A valid Yale ID with activated swipe access is required for entry into the Loria Center building Saturday, Sunday, and after 6pm Monday-Thursday."
+    },
+    {
+      "what": "Atticus Market (771 Orange St, New Haven): drip coffee",
+      "value": 2.9,
+      "unit": "USD per cup (third-party menu aggregator; a search snippet of the Toast menu showed $2.95+)",
+      "market": "us",
+      "source": "https://hello.food/restaurants/connecticut/atticus-market",
+      "quote": "Drip Coffee ... $2.90"
+    },
+    {
+      "what": "Atticus Market (New Haven): latte and cappuccino",
+      "value": "5.00 each (espresso 3.50)",
+      "unit": "USD per drink (third-party menu aggregator; a search snippet of the Toast menu showed latte $5.25+)",
+      "market": "us",
+      "source": "https://hello.food/restaurants/connecticut/atticus-market",
+      "quote": "Latte: \"2 shots of espresso with steamed milk\" - $5.00"
+    }
+  ],
+  "notFound": [
+    {
+      "what": "Yale Rep student rush ticket price for the 2025-26 or 2026-27 season",
+      "looked": "yalerep.org/visit/faqs (mentions student discounts, no rush or dollar figure); yalerep.org/2025-26-season; web search (only a dated archives.news.yale.edu item on half-price rush, not current)"
+    },
+    {
+      "what": "Yale Rep 2026-27 season ticket prices",
+      "looked": "yalerep.org; web search; only the 2025-26 Hedda Gabler press release carried prices"
+    },
+    {
+      "what": "Exact Yale-student vs general split for Machinal (2026)",
+      "looked": "dgsd-tickets.yale.edu/27569 shows only a $10-$15 range per category; drama.yale.edu/productions links straight to ticketing with no prices"
+    },
+    {
+      "what": "Carlotta Festival 2026 ticket price (whether free or priced)",
+      "looked": "drama.yale.edu; news.yale.edu (latest priced article 2019); web search"
+    },
+    {
+      "what": "Yale Summer Cabaret 2026 multi-ticket pass prices (3/6/9/12-ticket)",
+      "looked": "summercabaret.org/https-summercab-tickets-yale-edu/ (passes listed, prices not rendered); summercab-tickets.yale.edu not fetched"
+    },
+    {
+      "what": "Haas Arts Library full weekly term schedule (Fri/Sat/Sun), verified",
+      "looked": "library.yale.edu/arts and library.yale.edu/hours-libraries show only today's hours; a web-search summary claimed Fri 8:30-5, Sat 10-6, Sun 2-11 but no page was fetched to confirm"
+    },
+    {
+      "what": "Atticus Bookstore Cafe (1082 Chapel St) and Atticus Market Toast menus, first-party",
+      "looked": "order.toasttab.com/online/atticus-bookstore-cafe-1082-chapel-st and toasttab.com Atticus Market page both returned HTTP 403"
+    },
+    {
+      "what": "Koffee? (104 Audubon St) published coffee prices",
+      "looked": "joe.coffee/locations/ct/new-haven/koffee-new-haven (no prices); web search (only reviewer-reported figures)"
+    },
+    {
+      "what": "Blue State Coffee New Haven menu prices",
+      "looked": "not reached; Atticus Market prices used instead"
+    }
+  ]
+}

@@ -65,6 +65,7 @@ import {
 } from './learning';
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
+import { classAtSchool } from './people';
 import { laidUp } from './injury';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -743,6 +744,7 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
     }
     case 'classmates': {
       for (const mate of school.classmates) mateRecord(mate).met ??= sim.now;
+      classAtSchool(sim, person);
       return `You met the ${school.classmates.length} others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.`;
     }
     case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${[...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))].join(', ')}.`;

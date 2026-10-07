@@ -434,7 +434,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Each person you know cares about three things of their own: asked to a game, they say yes only if sport or fitness is one, and to A Class Together only if sport, fitness or dance is, each paying their own. What they said, yes or no, is in their memory.',
     ],
     names: ['A Class Together', 'People', 'Join', 'Leave', 'Going', 'Not Going', 'Set Out Now', 'Set Out', 'Not This Time', 'Stay After', 'Renew Now', 'Renew At The Season’s End', 'Go On Their Own', 'Ask Them Over', 'Ask Them', 'Ask To Stay', 'Call It Off', 'Come Over To Play', 'Ask Them Out', 'Move In Together', 'Break Up', 'Marry', 'Ask For A Divorce', 'Try For A Child', 'Adopt', 'A Surrogacy', 'Pay For It', 'Care For Them', 'Leave It To The State', 'Join A Dating App'],
-    opens: ['ui.people', 'club.join', 'club.leave', 'club.set', 'club.rsvp', 'club.go', 'club.check_in', 'club.renew', 'class.take', 'social.host', 'social.invite', 'social.answer', 'social.ask_to_stay', 'social.cancel_stay', 'social.ask_out', 'social.move_in', 'social.break_up', 'social.split', 'social.marry', 'social.divorce', 'social.try_for_child', 'social.adopt', 'family.care', 'dating.app', 'look.contact', 'look.child', 'look.parent'],
+    opens: ['ui.people', 'club.join', 'club.leave', 'club.set', 'club.rsvp', 'club.go', 'club.check_in', 'club.renew', 'class.take', 'social.host', 'social.invite', 'social.answer', 'social.cancel', 'social.reschedule', 'social.ask_to_stay', 'social.cancel_stay', 'social.ask_out', 'social.move_in', 'social.break_up', 'social.split', 'social.marry', 'social.divorce', 'social.try_for_child', 'social.adopt', 'family.care', 'dating.app', 'look.contact', 'look.child', 'look.parent'],
   },
   {
     id: 'assistant',
