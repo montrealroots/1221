@@ -355,6 +355,8 @@ export interface Living {
   lights?: Lights;
   /** The month's days a guest has stayed (`systems/houseguests.ts`, from 2026-10-05), each a person's water. */
   guestDays?: number;
+  /** The month's liters poured on the lawn (`systems/lawns.ts`, from 2026-10-06): billed and cleared with the month's water. */
+  lawnL?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of

@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { clothingCatalog, otherSellers, productById } from '@/engine/systems/clothing';
+import { clothingCatalog, otherSellers, productById, retailerById, sellersCompared } from '@/engine/systems/clothing';
 import { garmentsOf, isSwimsuit, swimsuitFor, wearForExercise, wearForSwim } from '@/engine/systems/wardrobe';
 import { addItem } from '@/engine/systems/items';
 import type { Simulation } from '@/engine/core/simulation';
@@ -42,6 +42,31 @@ describe('the kinds the trade names apart', () => {
     try { expect(otherSellers(sim, 'us-ny-newyork', levis).map((o) => o.product.price)).toEqual([84.95, 200]); } finally { first.price = 79.5; }
     expect(others.every((o) => o.product.market === 'US')).toBe(true);
     expect(otherSellers(sim, 'us-ny-newyork', productById(CLOTHING_PRODUCTS.find((p) => p.sameAs === null)!.id)!)).toEqual([]);
+  });
+
+  it('sets one product’s offers side by side, every seller of it with its own price, store, delivery and returns (from 2026-10-06)', () => {
+    const sim = life('us-ny-newyork', 'sellers-compared');
+    const levis = productById('us-levis-501-original-fit-mens-jeans')!;
+    const offers = sellersCompared(sim, 'us-ny-newyork', levis);
+    // The one chosen among them, and the two Macy's listings.
+    expect(offers.map((o) => o.product.id).sort()).toEqual([levis.id, ...otherSellers(sim, 'us-ny-newyork', levis).map((o) => o.product.id)].sort());
+    expect(offers.map((o) => o.price)).toEqual([...offers.map((o) => o.price)].sort((a, b) => a - b));
+    // Each seller's own terms, read off its retailer.
+    for (const o of offers) {
+      const r = retailerById(o.product.retailer)!;
+      expect(o.seller).toBe(r.name);
+      expect(o.inStoreHere).toBe(r.storesIn.includes('us-ny-newyork'));
+      expect(o.delivers).toBe(r.delivers);
+      expect(o.returnDays).toBe(r.returnDays ?? undefined);
+      expect(o.returnFreeInStore).toBe(r.returnFreeInStore);
+    }
+    // Change a seller's terms, and its column changes.
+    const macys = retailerById('us-macys')! as { returnDays: number | null };
+    const was = macys.returnDays;
+    macys.returnDays = 7;
+    try { expect(sellersCompared(sim, 'us-ny-newyork', levis).filter((o) => o.product.retailer === 'us-macys').every((o) => o.returnDays === 7)).toBe(true); } finally { macys.returnDays = was; }
+    // A product only one seller lists stands alone.
+    expect(sellersCompared(sim, 'us-ny-newyork', productById(CLOTHING_PRODUCTS.find((p) => p.sameAs === null && p.market === 'US')!.id)!)).toHaveLength(1);
   });
 });
 

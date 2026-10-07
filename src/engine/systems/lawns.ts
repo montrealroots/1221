@@ -40,6 +40,17 @@
  * tickets, and none is drawn. New York, Los Angeles's flat basin, London,
  * Dublin, Vancouver and Mexico City set no height for a lived-in lawn. A
  * home let to a tenant is the tenant's to mow, and isn't kept.
+ *
+ * **Water** (from 2026-10-06, `research-lawn-watering.json`). A lawn wants "approximately 1 inch of water each week,
+ * either from rainfall, irrigation, or a combination of both" (Wisconsin Extension), the Sports Turf Managers
+ * Association's acre-inch a week for a grass field. A day of rain is taken for the week's inch, SLATE's reading, its
+ * weather keeping whether it rained and not how much. Seven days in the season without rain or a watering and it stops
+ * growing ("Kentucky bluegrass can start turning brown after about 7 days without water", Minnesota Extension); watered
+ * again, it grows only after ten days ("once sufficient water is supplied for an extended period of time (10 days and
+ * longer)", Wisconsin). Water The Lawn pours the inch over it, 25.4 liters a square meter of the lot less the house
+ * (`lawnM2`), onto the month's water bill; sprinklers (`irrigation`) pour it themselves on the day a week has gone dry,
+ * at the home lived in, whose water is billed. Until then the grass grew a centimeter a week in its season whatever
+ * fell on it, and sprinklers were bought and read by nothing.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -50,8 +61,10 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { spend } from './household';
-import type { OwnedHome } from './homes';
-import { robotFor } from './mowers';
+import { livingIn, type OwnedHome } from './homes';
+import { lawnM2, robotFor } from './mowers';
+import { weatherOn } from './weather';
+import { livingOf } from './dwelling';
 
 export const GROWS_CM_A_WEEK = 1;
 export const MOWN_CM = 5;
@@ -72,7 +85,46 @@ export const LAWNS: Readonly<Record<string, LawnPlace>> = {
 };
 export const NOTICE_DAYS = 10;
 
-export interface Lawn { cm: number; gardener?: boolean; lastCut?: Instant; noticeAt?: Instant }
+/** The week's inch, a lawn's days without water before it stops growing, and the days watered before it grows again. */
+export const INCH_L_PER_M2 = 25.4;
+export const DRY_DAYS = 7;
+export const WAKE_DAYS = 10;
+
+/** A lawn's height; from 2026-10-06 when it last had water, rain or poured, and when a lawn gone dry grows again. */
+export interface Lawn { cm: number; gardener?: boolean; lastCut?: Instant; noticeAt?: Instant; wetAt?: Instant; wakesAt?: Instant }
+
+/** A week without rain or a watering: it isn't growing. */
+export const parched = (lawn: Lawn, at: Instant): boolean => lawn.wetAt !== undefined && at - lawn.wetAt >= DRY_DAYS * MS_DAY;
+
+/** Water on it, rain or poured: a lawn gone dry starts its ten days. */
+export function wetLawn(lawn: Lawn, at: Instant): void {
+  if (parched(lawn, at)) lawn.wakesAt = at + WAKE_DAYS * MS_DAY;
+  lawn.wetAt = at;
+}
+
+/** Whether it grows today, water-wise: not parched, and past any ten days of coming back. */
+export const greening = (lawn: Lawn, at: Instant): boolean => !parched(lawn, at) && (lawn.wakesAt === undefined || at >= lawn.wakesAt);
+
+/** The inch over a home's lawn, liters; nothing where its lot isn't known. */
+export const inchOf = (owned: OwnedHome): number | undefined => { const m2 = lawnM2(owned); return m2 === undefined ? undefined : m2 * INCH_L_PER_M2; };
+
+/** Why the lawn can't be watered now, or nothing. */
+export function waterRefusal(person: Person): string | undefined {
+  const owned = livingIn(person);
+  const lawn = owned ? lawnOf(owned) : undefined;
+  if (!owned || !lawn) return 'There’s no lawn of yours here.';
+  if (person.currentLocationId !== owned.cityId) return 'You’re away from home.';
+  if (!inchOf(owned)) return 'SLATE doesn’t know how big the lawn is.';
+  return undefined;
+}
+
+/** The inch poured on the lawn of the home they live in, onto the month's water: by hand, or by sprinklers on the day the week runs out, before it's dry. */
+function pour(person: Person, owned: OwnedHome, lawn: Lawn, at: Instant, sprinklers = false): void {
+  const l = livingOf(person);
+  l.lawnL = (l.lawnL ?? 0) + (inchOf(owned) ?? 0);
+  // On the week's last day it hasn't gone dry yet; a lawn dry longer, sprinklers just put in, still takes its ten days.
+  if (sprinklers && lawn.wetAt !== undefined && at - lawn.wetAt < (DRY_DAYS + 1) * MS_DAY) lawn.wetAt = at; else wetLawn(lawn, at);
+}
 
 const inSave = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 const md = (m: number, d: number) => m * 100 + d;
@@ -99,7 +151,12 @@ export function lawnDay(sim: Simulation, person: Person, owned: OwnedHome, at: I
   if (!lawn) return;
   const place = LAWNS[owned.cityId]!;
   const mine = person.id === sim.universe.playerId;
-  if (growing(owned.cityId, at)) lawn.cm += GROWS_CM_A_WEEK / 7;
+  // Water (from 2026-10-06): out of the season it's taken as watered, drought being a growing lawn's; a first day, as watered.
+  const season = growing(owned.cityId, at);
+  if (!season || lawn.wetAt === undefined) lawn.wetAt = at;
+  else if (weatherOn(sim, CITIES.require(owned.cityId), at).precipitation !== 'none') wetLawn(lawn, at);
+  else if (owned.facts.features.includes('irrigation') && parched(lawn, at) && livingIn(person) === owned && inchOf(owned)) pour(person, owned, lawn, at, true);
+  if (season && greening(lawn, at)) lawn.cm += GROWS_CM_A_WEEK / 7;
   // A robot rated for the lawn keeps it at its height through the season (`systems/mowers.ts`, from 2026-10-05).
   if (growing(owned.cityId, at) && robotFor(person, owned)) { lawn.cm = MOWN_CM; lawn.lastCut = at; }
   const g = place.gardener;
@@ -143,5 +200,14 @@ export function registerLawns(sim: Simulation, homeOf: (person: Person, id: stri
     if (!lawn) throw new CommandError('It has no lawn of yours to keep.');
     lawn.gardener = p?.on === true;
     return { on: lawn.gardener };
+  });
+  // The week's inch poured over the lawn of the home lived in (from 2026-10-06), billed with the month's water.
+  sim.onCommand<Record<string, never>, { liters: number }>('home.water_lawn', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = waterRefusal(person);
+    if (no) throw new CommandError(no);
+    const owned = livingIn(person)!;
+    pour(person, owned, lawnOf(owned)!, s.now);
+    return { liters: Math.round(inchOf(owned)!) };
   });
 }

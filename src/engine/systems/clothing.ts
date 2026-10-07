@@ -122,6 +122,36 @@ export function otherSellers(sim: Simulation, cityId: string, p: ClothingProduct
     .map((product) => ({ product, price: productPrice(sim, cityId, product) })).sort((a, b) => a.price - b.price);
 }
 
+/** One seller's offer of a product, for setting beside the others: its price here, delivery and returns as its terms give them. */
+export interface SellerOffer {
+  product: ClothingProduct; seller: string; price: Money; inStoreHere: boolean;
+  /** Delivery's fee, the order it's free over and its days, in the save's money; nothing where it doesn't deliver or didn't say. */
+  delivers: boolean; deliveryFee?: Money; freeOver?: Money; days?: number;
+  returnDays?: number; returnByMail?: Money; returnFreeInStore: boolean;
+}
+
+/**
+ * One product's offers side by side across every seller of it in the market, the one chosen among them, cheapest first
+ * (the master plan's §22b, from 2026-10-06): each the same listing's `sameAs` key, at its own retailer's price here,
+ * delivery and returns. Until then the others were only named beside it, a price each (`otherSellers`).
+ */
+export function sellersCompared(sim: Simulation, cityId: string, p: ClothingProduct): SellerOffer[] {
+  const money = (units: number | null, currency: string) => (units === null ? undefined : inSaveMoney(sim, Math.round(units * 100), currency));
+  return [{ product: p, price: productPrice(sim, cityId, p) }, ...otherSellers(sim, cityId, p)]
+    .map(({ product, price }) => {
+      const r = retailerById(product.retailer);
+      const fee = r?.delivers ? money(r.fee, product.currency) : undefined;
+      const over = r?.delivers ? money(r.freeOver, product.currency) : undefined;
+      const back = money(r?.returnByMail ?? null, product.currency);
+      return {
+        product, seller: r?.name ?? product.retailer, price, inStoreHere: Boolean(r?.storesIn.includes(cityId)), delivers: Boolean(r?.delivers),
+        ...(fee !== undefined ? { deliveryFee: fee } : {}), ...(over !== undefined ? { freeOver: over } : {}), ...(r?.delivers && r.days !== null ? { days: r.days } : {}),
+        ...(r?.returnDays !== null && r?.returnDays !== undefined ? { returnDays: r.returnDays } : {}), ...(back !== undefined ? { returnByMail: back } : {}), returnFreeInStore: Boolean(r?.returnFreeInStore),
+      };
+    })
+    .sort((a, b) => a.price - b.price);
+}
+
 export const KIND_LABEL: Readonly<Record<string, string>> = {
   't-shirt': 'T-Shirts', shirt: 'Shirts And Tops', sweater: 'Sweaters', jeans: 'Jeans', trousers: 'Trousers And Shorts', skirt: 'Skirts',
   dress: 'Dresses', suit: 'Suits And Tailoring', coat: 'Coats And Jackets', active: 'Activewear', underwear: 'Underwear', bra: 'Bras',

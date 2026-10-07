@@ -36,7 +36,7 @@ import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { cloOf } from '@/engine/content/clo';
 import type { PayWith } from '@/engine/systems/household';
-import { buyRefusal, fitsOf, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
+import { buyRefusal, fitsOf, otherSellers, sellersCompared,collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -351,6 +351,23 @@ function ClothesCompared({ ids, entries, money, onClear }: { ids: readonly strin
   );
 }
 
+/** One product's offers, a column for each seller of it, cheapest first: its price here, a store here, delivery and returns (from 2026-10-06). */
+function SellersCompared({ product, money, onClear }: { product: ClothingProduct; money: (c: number) => string; onClear: () => void }) {
+  const here = useWorld((s) => s.player.currentLocationId);
+  const offers = useWorld((s) => sellersCompared(s, here, product), [here, product]);
+  const maybe = (c: number | undefined) => (c === undefined ? 'Not Published' : money(c));
+  return (
+    <CompareTable heads={offers.map((o) => o.seller)} onClear={onClear} rows={[
+      { label: 'Price', values: offers.map((o) => money(o.price)) },
+      { label: 'In A Store Here', values: offers.map((o) => (o.inStoreHere ? 'Yes' : 'No')) },
+      { label: 'Delivery', values: offers.map((o) => (!o.delivers ? 'Doesn’t Deliver' : `${maybe(o.deliveryFee)}${o.freeOver !== undefined ? `, Free Over ${money(o.freeOver)}` : ''}${o.days !== undefined ? `, ${o.days} ${o.days === 1 ? 'Day' : 'Days'}` : ''}`)) },
+      { label: 'Returns', values: offers.map((o) => `${o.returnDays !== undefined ? `${o.returnDays} Days` : 'Not Published'}${o.returnByMail !== undefined ? `, ${money(o.returnByMail)} By Mail` : ''}${o.returnFreeInStore ? ', Free In A Store' : ''}`) },
+      { label: 'Sizes', values: offers.map((o) => sizeRun(o.product.sizes).join(', ') || '—') },
+      { label: 'Colors', values: offers.map((o) => o.product.colors.join(', ') || '—') },
+    ]} />
+  );
+}
+
 /** A product chosen: its size, color and how many, and buying it in a store here or online. */
 function Choose({ productId, onPick }: { productId: string; onPick: (id: string) => void }) {
   const { sim, run, toast } = useGame();
@@ -365,6 +382,8 @@ function Choose({ productId, onPick }: { productId: string; onPick: (id: string)
   const [size, setSize] = useState(mine ?? p.sizes[0] ?? '');
   const [color, setColor] = useState(p.colors[0] ?? '');
   const [quantity, setQuantity] = useState(1);
+  // Every seller of it side by side (`sellersCompared`, from 2026-10-06).
+  const [sellers, setSellers] = useState(false);
   const [way, setWay] = useState<PayWith>('debit');
   const buy = useFeature('clothes.buy');
   const add = useFeature('clothes.basket_add');
@@ -390,9 +409,11 @@ function Choose({ productId, onPick }: { productId: string; onPick: (id: string)
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <span className="xs muted">Also Sold By</span>
             {others.map((o) => <button key={o.product.id} type="button" className="btn btn-sm btn-ghost" onClick={() => onPick(o.product.id)}>{`${retailerById(o.product.retailer)?.name}, ${money(o.price)}`}</button>)}
+            <CompareToggle on={sellers} onToggle={() => setSellers(!sellers)} />
           </div>
         ) : null;
       })()}
+      {sellers && <SellersCompared product={p} money={money} onClear={() => setSellers(false)} />}
       <div className="field-row field-row-tight">
         {p.sizes.length > 0 && (
           <div className="field">

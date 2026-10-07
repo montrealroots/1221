@@ -1,0 +1,49 @@
+{
+  "read": "2026-10-06",
+  "scope": "What a lawn needs watered, and what becomes of it without water, for the home lawn in src/engine/systems/lawns.ts (row 43m), and what Fixr's home theater price includes, for the theater's screen and seats (row 43i). Status: verified = read on the publisher's own page on 2026-10-06; secondhand = seen only in a search-engine summary.",
+  "lawnWater": {
+    "inchAWeek": {
+      "claim": "'To keep lawns green throughout the growing season, they should receive approximately 1 inch of water each week, either from rainfall, irrigation, or a combination of both.'",
+      "source": "University of Wisconsin-Madison Extension, Lawn Maintenance",
+      "url": "https://hort.extension.wisc.edu/articles/lawn-maintenance/",
+      "status": "verified"
+    },
+    "stmaAcreInch": {
+      "claim": "A natural grass athletic field is watered 1 acre-inch a week (a soccer field for 26 weeks); 33 mowings a season on native-soil practice fields and a sand-capped stadium field, 50 on a sand-based soccer field. Already recorded in research-special-rooms-outdoor.json (naturalGrass.fieldMaintenance).",
+      "source": "Sports Turf Managers Association, Natural Grass Athletic Fields bulletin",
+      "url": "https://www.stma.org/sites/stma/files/STMA_Bulletins/NaturalGrassFields.pdf",
+      "status": "verified (earlier file)"
+    },
+    "litersPerSquareMeter": { "value": 25.4, "status": "arithmetic", "derivation": "An inch is 25.4 mm; a millimeter of water over a square meter is a liter." },
+    "withoutWater": {
+      "claim": "'The leaves will stop growing and turn brown during extended periods of drought but dormant plants can remain alive for 2-3 months.'",
+      "source": "University of Wisconsin-Madison Extension, Lawn Maintenance",
+      "url": "https://hort.extension.wisc.edu/articles/lawn-maintenance/",
+      "status": "verified"
+    },
+    "daysToBrown": {
+      "claim": "'Kentucky bluegrass can start turning brown after about 7 days without water.'",
+      "source": "University of Minnesota Extension, Conserving water on drought-affected lawns",
+      "url": "https://extension.umn.edu/lawn-care/conserving-water-drought-affected-lawns",
+      "status": "verified"
+    },
+    "recovery": {
+      "claim": "'New leaves will grow once sufficient water is supplied for an extended period of time (10 days and longer).'",
+      "source": "University of Wisconsin-Madison Extension, Lawn Maintenance",
+      "url": "https://hort.extension.wisc.edu/articles/lawn-maintenance/",
+      "status": "verified"
+    }
+  },
+  "homeTheaterKit": {
+    "claim": "'Most people spend $25,000 to install a fixed frame screen LED projector with 7.1 speakers and amplifier, professional wiring, and furniture.' Furniture is listed as an add-on of $500 to $20,000, with no count of seats. Page updated January 31, 2025.",
+    "source": "Fixr, Home Theater Cost",
+    "url": "https://www.fixr.com/costs/home-theater-setup",
+    "status": "verified",
+    "note": "The same $25,000 is the average SLATE prices a home theater at (Angi's, through a search summary, research-facilities.json). Angi's own page returned 403. The four seats are research-special-rooms-indoor.json's spare-bedroom estimate (Seatcraft's commonest layout)."
+  },
+  "notFound": [
+    "Rainfall depth by day: SLATE's weather keeps whether it rained, not how much, so a day of rain is taken for the week's inch.",
+    "A wattage for a home theater's projector: not looked for in this pass; the projector's electricity is not billed.",
+    "angi.com returned HTTP 403 for its home theater installation cost page."
+  ]
+}

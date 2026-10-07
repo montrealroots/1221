@@ -19,6 +19,9 @@ import { hostRefusal } from '@/engine/systems/hosting';
 import { contactsOf, newContact } from '@/engine/systems/people';
 import { boothFee, quietAtHome } from '@/engine/systems/career';
 import { inSaveMoney } from '@/engine/systems/banking';
+import { SEAT_KIND, kitTheater, theaterAt } from '@/engine/systems/theater';
+import { lovedIn } from '@/engine/systems/enjoyment';
+import { watchRefusal } from '@/engine/systems/homelife';
 
 const bare: Fixtures = { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' };
 const home = (features: Feature[], seed: string, city = 'us-ny-newyork') => {
@@ -79,16 +82,52 @@ describe('storage rooms', () => {
 });
 
 describe('a home theater', () => {
-  it('holds a film night for as many as it seats', () => {
+  it('holds a film night for as many as its seats there, before its screen (from 2026-10-06 things of theirs)', () => {
     const sim = home(['homeTheater'], 'film');
     const friends = [0, 1, 2, 3].map((n) => { const c = newContact(sim, sim.player, 'us-ny-newyork', `f${n}`, { at: sim.now, how: 'work' }); contactsOf(sim.player).push(c); return c.id; });
     const at = sim.now + 3 * 86_400_000;
+    // Built before its screen and seats were things, it has neither until they're given.
+    expect(hostRefusal(sim, sim.player, friends.slice(0, 3), at, 'film')).toBe('The theater has no screen in it.');
+    const owned = sim.player.homes![0]!;
+    kitTheater(sim, sim.player, owned);
+    kitTheater(sim, sim.player, owned);
+    expect(theaterAt(sim.player)).toEqual({ screen: true, seats: THEATER.seats });
     expect(hostRefusal(sim, sim.player, friends.slice(0, 3), at, 'film')).toBeUndefined();
     expect(hostRefusal(sim, sim.player, friends, at, 'film')).toBe(`The theater seats ${THEATER.seats}, you among them.`);
+    // Two of the seats gone: it seats two.
+    const seats = sim.player.items!.find((i) => i.kind === SEAT_KIND)!;
+    seats.quantity = 2;
+    expect(hostRefusal(sim, sim.player, friends.slice(0, 2), at, 'film')).toBe('The theater seats 2, you among them.');
+    expect(hostRefusal(sim, sim.player, friends.slice(0, 1), at, 'film')).toBeUndefined();
     const none = home([], 'film-none');
     const c = newContact(none, none.player, 'us-ny-newyork', 'f', { at: none.now, how: 'work' });
     contactsOf(none.player).push(c);
     expect(hostRefusal(none, none.player, [c.id], at, 'film')).toBe('You have no home theater.');
+  });
+
+  it('a theater without them is given its screen and seats at the next day’s turn, once', () => {
+    const sim = home(['homeTheater'], 'film-turn');
+    expect(theaterAt(sim.player).screen).toBe(false);
+    sim.advanceTo(sim.now + 2 * 86_400_000);
+    expect(theaterAt(sim.player)).toEqual({ screen: true, seats: THEATER.seats });
+    sim.advanceTo(sim.now + 86_400_000);
+    expect(sim.player.items!.filter((i) => i.kind === SEAT_KIND)).toHaveLength(1);
+  });
+
+  it('its screen is a film lover’s screen at home, and a streaming service’s, with no TV of their own', () => {
+    const sim = home(['homeTheater'], 'film-lover');
+    const p = sim.player;
+    p.interests = ['film'];
+    delete p.furniture;
+    p.items = (p.items ?? []).filter((i) => i.kind !== 'furniture:tv');
+    expect(lovedIn(p, 'unwind')).not.toContain('film');
+    // Nothing else to watch a service on: no phone, no computer, a home bought empty.
+    p.items = p.items.filter((i) => !i.device && !i.kind.startsWith('computer'));
+    const nothing = watchRefusal(sim, p, 'netflix');
+    kitTheater(sim, p, p.homes![0]!);
+    expect(lovedIn(p, 'unwind')).toContain('film');
+    expect(nothing).toBe('There’s nothing here to watch it on: a TV, a computer, a tablet or a phone.');
+    expect(watchRefusal(sim, p, 'netflix')).not.toBe(nothing);
   });
 });
 

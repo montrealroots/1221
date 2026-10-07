@@ -40,6 +40,7 @@ import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { addItem, homeKeyOf, itemsOf } from './items';
 import { bareHome, owns } from './furniture';
+import { theaterAt } from './theater';
 import { computerForGames } from './computers';
 import { phonesOf } from './phones';
 import { homeInternetPlan, internetDown } from './telecom';
@@ -119,10 +120,11 @@ export function playable(person: Person): boolean {
 export function watchRefusal(sim: Simulation, person: Person, how: string): string | undefined {
   const m = marketOf(person);
   if (how === 'games') return consolesOwned(person).length === 0 ? 'You have no console.' : playable(person) ? undefined : 'It needs a game of its own to play, or its maker’s subscription.';
-  // A screen to watch on: a TV for live TV; for a service, a TV, a computer, a tablet or a phone.
+  // A screen to watch on: a TV for live TV; for a service, a TV, a computer, a tablet or a phone, and from 2026-10-06 a
+  // home theater's projector (`systems/theater.ts`), no tuner being part of what Fixr's price includes.
   const tv = !bareHome(person) || owns(person, 'tv');
   if (how === 'live' && !tv) return 'There’s no TV here to watch it on.';
-  if (how !== 'live' && !tv && !computerForGames(person) && phonesOf(person).length === 0) return 'There’s nothing here to watch it on: a TV, a computer, a tablet or a phone.';
+  if (how !== 'live' && !tv && !theaterAt(person).screen && !computerForGames(person) && phonesOf(person).length === 0) return 'There’s nothing here to watch it on: a TV, a computer, a tablet or a phone.';
   // Ireland's license is for the TV set itself; Britain's for live TV and iPlayer.
   if (((how === 'live' && m === 'uk') || (m === 'ie' && how !== 'games')) && !licensed(person, sim.now)) return `You need a TV license for that${m === 'ie' ? ': any TV at home needs one in Ireland' : ''}.`;
   if (how === 'live') return undefined;

@@ -12,6 +12,9 @@ import { exchange } from '@/engine/content/currency';
 import { PROJECTS } from '@/engine/content/homes';
 import { planningRefused, projectAlternatives } from '@/engine/systems/homes';
 import { PLANNING_REFUSED } from '@/engine/systems/permits';
+import { gymHere } from '@/engine/systems/gyms';
+import { GYMS } from '@/engine/content/gyms';
+import { lookAfterRefusal } from '@/engine/systems/life';
 import { coolingOffUntil, inspectionFee, ownBuilt, projectBids, worksDeposit, type HomeFacts } from '@/engine/systems/homes';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -116,5 +119,29 @@ describe('a project the home can’t take', () => {
     expect(projectAlternatives('us-ny-newyork', 'pool').every((x) => x.clubId || x.classId || x.gymId)).toBe(true);
     expect(projectAlternatives('us-ny-newyork', 'home-gym').some((x) => x.gymId)).toBe(true);
     expect(projectAlternatives('us-ny-newyork', 'paint')).toEqual([]);
+  });
+
+  it('a sauna’s at a gym read to have one; a library’s at the town’s; a home theater’s at the cinema where a ticket is published (from 2026-10-06)', () => {
+    // McBurney has the sauna research-gyms.json read; Planet Fitness, read without, is not offered.
+    expect(projectAlternatives('us-ny-newyork', 'sauna')).toEqual([{ label: 'McBurney YMCA, with a sauna', gymId: 'mcburney-ymca' }]);
+    expect(projectAlternatives('us-ny-newyork', 'library')).toEqual([{ label: 'The New York Public Library, A Card Free To A Resident', libraryCard: true }]);
+    expect(projectAlternatives('us-ny-newyork', 'home-theater')).toEqual([{ label: 'A Film At The Cinema With A Friend, About $10.75 A Ticket', cinema: true }]);
+    // Ireland's ticket is only Numbeo's, so no film is offered there.
+    expect(projectAlternatives('ie-lei-dublin', 'home-theater')).toEqual([]);
+  });
+
+  it('Take A Sauna at a member’s gym with one, its heater not on the home’s bill; not at a gym without one', () => {
+    const sim = life('us-ny-newyork', 'gym-sauna');
+    sim.player.gym = { gymId: 'planet-fitness-union-square', tier: 'Classic' } as never;
+    for (let n = 0; n < 48 && !gymHere(sim, sim.player); n += 1) sim.advanceTo(sim.now + 3_600_000);
+    expect(gymHere(sim, sim.player)).toBeDefined();
+    expect(lookAfterRefusal(sim, 'sauna')).toBe('You have no sauna at home.');
+    sim.player.gym = { gymId: 'mcburney-ymca', tier: GYMS.find((g) => g.id === 'mcburney-ymca')!.tiers[0]!.name } as never;
+    for (let n = 0; n < 48 && !gymHere(sim, sim.player); n += 1) sim.advanceTo(sim.now + 3_600_000);
+    expect(lookAfterRefusal(sim, 'sauna')).toBeUndefined();
+    const kwh = sim.player.living?.extraKwh ?? 0;
+    const r = sim.execute({ kind: 'life.look_after', payload: { action: 'sauna' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(sim.player.living?.extraKwh ?? 0).toBe(kwh);
   });
 });

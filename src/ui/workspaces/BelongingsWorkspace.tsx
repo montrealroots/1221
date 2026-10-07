@@ -35,7 +35,7 @@ import { contactsOf, type Contact } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
-import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { ROOM_USE_LABEL, furnishedIn, roomList } from '@/engine/systems/rooms';
 import { claimAmount, claimRefusal } from '@/engine/systems/baggage';
 import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { PET_ENTRY } from '@/engine/content/petentry';
@@ -190,6 +190,8 @@ function YourRooms() {
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
   const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:') || i.kind.startsWith('furn:')));
   const owns = Boolean(livingIn(person));
+  // What a furnished home came with, in its rooms (from 2026-10-06).
+  const came = furnishedIn(person);
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
       <div className="table-scroll">
@@ -215,7 +217,7 @@ function YourRooms() {
                     )}
                   </td>
                   <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>
-                  <td className="small">{inIt.length ? inIt.map((i) => i.label).join(', ') : '—'}</td>
+                  <td className="small">{[...inIt.map((i) => i.label), ...came.filter((f) => f.roomId === r.id).map((f) => f.label)].join(', ') || '—'}</td>
                   <td>
                     {loose.length > 0 && r.kind !== 'bathroom' && (
                       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>

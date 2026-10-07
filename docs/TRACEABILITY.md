@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 381
-- Implemented But Unverified: 8
+- Implemented But Unverified: 9
 - Partially Implemented: 0
-- Commands in all: 389
+- Commands in all: 390
 
 ## Commands
 
@@ -254,6 +254,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `home.take_lodger` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | You don’t own that home. (also lodgerRefusal) | lodgersIn (added to) | — | — | 2 | journey-homes.test.ts |
 | `home.tv_licence` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | No TV license is needed where you live.; Yours runs more than another month.; It comes to …, more than you can pay. | tvLicence | Yes | — | 3 | journey-belongings.test.ts |
 | `home.unsubscribe` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | You don’t subscribe to it. | subscriptions | — | — | 2 | journey-belongings.test.ts |
+| `home.water_lawn` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/lawns.ts` | — (also waterRefusal) | — | — | — | 1 | — |
 | `hotel.breakfast` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/hotelbreakfast.ts` | The payment didn’t go through. (also breakfastRefusal) | — | Yes | — | 2 | journey-travel.test.ts |
 | `hygiene.buy` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx TimeControls.tsx | `systems/hygiene.ts` | — | — | — | — | 5 | journey-clothes.test.ts |
 | `hygiene.buy_clippers` | Implemented But Unverified | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | The payment didn’t go through. (also clipperRefusal) | — | Yes | home; person | 1 | — |
@@ -280,7 +281,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `land.sell` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s for sale already.; A house is being built on it. | — | — | land.sale_closes | 4 | journey-holdings.test.ts |
 | `land.split` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s let to a farmer: end the lease first.; The bank couldn’t pay the fee to split it. (also splitRefusal) | parcelsOf (added to) | Yes | land.tax_year | 3 | journey-holdings.test.ts |
 | `land.withdraw` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | You have no offer accepted. | parcelsOf (added to) | Yes | land.loan_month; land.tax_year | 2 | journey-holdings.test.ts |
-| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 42 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 5 more |
+| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 43 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 5 more |
 | `life.set_automation` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx RoutinesWorkspace.tsx | `systems/automation.ts` | There’s no such shortcut. | automation | — | — | 7 | journey-belongings.test.ts |
 | `life.sleep` | Verified (journey) | Sleep | TimeControls.tsx | `systems/life.ts` | You can’t go to sleep in the past.; You’re at … until …. | lastSleptAt; awakeSince; wokeWithDebt | — | — | 17 | connected-day.test.ts; journey-day-at-home.test.ts; journey-residence.test.ts; and 1 more |
 | `lighting.buy_bulbs` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lighting.ts` | — | — | — | — | 2 | journey-food.test.ts |
@@ -324,7 +325,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `phone.protect` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/phones.ts` | That cover isn’t offered for it. | — | Yes | — | 3 | journey-belongings.test.ts |
 | `pilot.train` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/aviation.ts` | Your bank couldn’t pay. (also trainRefusal, buyAircraftRefusal) | pilotTraining; pilotLicences; pilot; planes | Yes | pilot.month; pilot.medical; aircraft.month | 3 | journey-travel.test.ts |
 | `reading.buy` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/reading.ts` | That isn’t on sale.; It’s bought where you live, and kept at home.; It’s sold in another country.; The bank couldn’t pay for it. | — | Yes | home | 2 | journey-belongings.test.ts |
-| `reading.library_card` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/reading.ts` | — (also cardRefusal) | libraryCard | — | — | 2 | journey-belongings.test.ts |
+| `reading.library_card` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx HomesWorkspace.tsx | `systems/reading.ts` | — (also cardRefusal) | libraryCard | — | — | 2 | journey-belongings.test.ts |
 | `roadside.join` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | The payment didn’t go through. (also joinRefusal) | roadside | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `roadside.leave` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | You aren’t a member of a club. | — | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |

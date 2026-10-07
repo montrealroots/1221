@@ -39,6 +39,10 @@ import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { SAUNA } from '../content/specialrooms';
+import { gymHere } from './gyms';
+
+/** A sauna of their own at the home they're in. */
+const homeSauna = (person: Person): boolean => atHome(person) && Boolean(livingIn(person)?.facts.features.includes('sauna'));
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
 import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
@@ -568,7 +572,8 @@ export function registerLife(sim: Simulation): void {
       if (court) exerts(person, COURT_MET[court.court], 1);
       if (action === 'dance') exerts(person, DANCE_MET, 1);
       // The heater's hour to heat and the session on the month's bill, where it's billed by the kilowatt-hour (`systems/electricity.ts`).
-      if (action === 'sauna') { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
+      // A gym's sauna is the gym's to heat (from 2026-10-06).
+      if (action === 'sauna' && homeSauna(person)) { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
       // A ride's effort and a cyclist's risk on the road; the trail's effort (`systems/outings.ts`).
       if (action === 'ride' && bike) rideOut(s, person, bike);
       if (action === 'trail') trailOut(person);
@@ -621,7 +626,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   trail: { label: 'Ride The ATV', minutes: 120, does: 'Two hours on land of your own in the fine weather: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   // From 2026-10-04: a sauna of your own, a session's 14 minutes after the hour its heater takes (`content/specialrooms.ts`).
-  sauna: { label: 'Take A Sauna', minutes: SAUNA.sessionMinutes, does: 'A session in your own sauna: unwinding for its minutes, and the heater’s hour and more on the electricity bill' },
+  // From 2026-10-06 at a member's gym with one too, its heater the gym's.
+  sauna: { label: 'Take A Sauna', minutes: SAUNA.sessionMinutes, does: 'A session in your own sauna, or your gym’s: unwinding for its minutes, and at home the heater’s hour and more on the electricity bill' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
   washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
@@ -744,7 +750,8 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter, laundry: La
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   if (action === 'dance' && !(atHome(person) && livingIn(person)?.facts.features.includes('danceStudio'))) return 'You have no dance studio at home.';
-  if (action === 'sauna' && !(atHome(person) && livingIn(person)?.facts.features.includes('sauna'))) return 'You have no sauna at home.';
+  // Or the sauna at the member's gym, open where they are (`Gym.sauna`, from 2026-10-06).
+  if (action === 'sauna' && !homeSauna(person) && !gymHere(sim, person)?.sauna) return 'You have no sauna at home.';
   if (action === 'ride') { const no = rideRefusal(sim, person); if (no) return no; }
   if (action === 'trail') { const no = trailRefusal(sim, person); if (no) return no; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }

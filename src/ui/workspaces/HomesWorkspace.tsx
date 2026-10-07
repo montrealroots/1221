@@ -46,7 +46,7 @@ import {
 } from '@/engine/systems/homes';
 import { CAREER_CITIES } from '@/engine/content/career';
 import { managerIn } from '@/engine/systems/propertymanagers';
-import { LAWNS, MOWN_CM, gardenerPrice } from '@/engine/systems/lawns';
+import { LAWNS, MOWN_CM, gardenerPrice, greening, inchOf, waterRefusal } from '@/engine/systems/lawns';
 import { inTheBank } from '@/engine/systems/household';
 import { dateKey } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -63,13 +63,19 @@ const HOMES_TABS: readonly { id: HomesTab; label: string }[] = [
 function LawnRow({ owned }: { owned: OwnedHome }) {
   const { sim, run, toast } = useGame();
   const lawn = owned.facts.features.includes('yard') && LAWNS[owned.cityId] && !owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let') ? owned.lawn ?? { cm: MOWN_CM } : undefined;
+  // Its water (from 2026-10-06): gone a week dry it isn't growing; Water The Lawn at the home lived in.
+  const lives = useWorld((s) => livingIn(s.player)?.id === owned.id, [owned]);
+  const dry = useWorld((s) => (lawn ? !greening(lawn, s.now) : false), [lawn]);
+  const noWater = useWorld((s) => waterRefusal(s.player), [owned]);
   if (!lawn) return null;
   const g = LAWNS[owned.cityId]!.gardener;
   const price = formatMoney(gardenerPrice(sim, owned.cityId), saveCurrency(sim.universe), { cents: false });
   const limit = LAWNS[owned.cityId]!.limitCm;
+  const inch = inchOf(owned);
   return (
     <div className="row-between small">
-      <span>{`The Lawn, ${Math.round(lawn.cm)} cm${limit ? ` (The City’s Limit ${Math.round(limit)} cm)` : ''}${lawn.noticeAt ? ', A Notice To Cut It' : ''}`}</span>
+      <span>{`The Lawn, ${Math.round(lawn.cm)} cm${limit ? ` (The City’s Limit ${Math.round(limit)} cm)` : ''}${lawn.noticeAt ? ', A Notice To Cut It' : ''}${dry ? ', Too Dry To Grow' : ''}`}</span>
+      {lives && <Gated feature="home.water_lawn" className="btn btn-sm btn-ghost" disabled={Boolean(noWater)} title={noWater} onClick={() => { const r = run('home.water_lawn', {}); if (r.ok) toast(`An inch of water poured, about ${Math.round(inch ?? 0).toLocaleString()} liters, metered with the month’s water.`, 'positive'); }}>Water The Lawn</Gated>}
       <Gated feature="home.gardener" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.gardener', { homeId: owned.id, on: !lawn.gardener }).ok) toast(lawn.gardener ? 'No gardener now.' : `${g.name}, every ${g.everyDays === 7 ? 'week' : 'two weeks'} in the season.`, 'positive'); }}>{lawn.gardener ? 'Let The Gardener Go' : `Hire A Gardener, ${price} A Visit`}</Gated>
     </div>
   );
@@ -619,9 +625,12 @@ function Letting({ owned, unit }: { owned: OwnedHome; unit: Tenancy['unit'] }) {
   );
 }
 
-/** What in town does a refused project's job, each with its button: a club joined, a class taken, a gym joined (from 2026-10-06; until then words alone). */
+/**
+ * What in town does a refused project's job, each with its button: a club joined, a class taken, a gym joined (from
+ * 2026-10-06; until then words alone); later that day a library card got, and People opened to ask a friend to the cinema.
+ */
 function Instead({ options }: { options: readonly Alternative[] }) {
-  const { run, toast } = useGame();
+  const { run, toast, navigate } = useGame();
   return (
     <div className="col gap-1">
       <span className="xs dim">Instead:</span>
@@ -631,6 +640,8 @@ function Instead({ options }: { options: readonly Alternative[] }) {
           {o.clubId && <Gated feature="club.join" className="btn btn-sm btn-ghost" onClick={() => { if (run('club.join', { clubId: o.clubId }).ok) toast('Joined.', 'positive'); }}>Join</Gated>}
           {o.classId && <Gated feature="class.take" className="btn btn-sm btn-ghost" onClick={() => { if (run('class.take', { classId: o.classId }).ok) toast('Taken.', 'positive'); }}>Take A Class</Gated>}
           {o.gymId && <Gated feature="gym.join" className="btn btn-sm btn-ghost" onClick={() => { const tier = GYMS.find((g) => g.id === o.gymId)!.tiers[0]!.name; if (run('gym.join', { gymId: o.gymId, tier }).ok) toast('Joined.', 'positive'); }}>Join The Gym</Gated>}
+          {o.libraryCard && <Gated feature="reading.library_card" className="btn btn-sm btn-ghost" onClick={() => { if (run('reading.library_card', {}).ok) toast('A library card, free.', 'positive'); }}>Get A Library Card</Gated>}
+          {o.cinema && <Gated feature="ui.people" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/people', 'People')}>Ask Someone To The Cinema</Gated>}
         </div>
       ))}
     </div>

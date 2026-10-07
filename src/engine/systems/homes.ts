@@ -89,6 +89,9 @@ import { usBankHoliday } from '../content/usholidays';
 import { CLUBS } from '../content/clubs';
 import { DROP_INS } from '../content/dropins';
 import { gymsIn } from './gyms';
+import { libraryIn } from './reading';
+import { kitTheater } from './theater';
+import { OUTINGS } from '../content/people';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
@@ -511,6 +514,8 @@ export interface OwnedHome {
   garden?: Partial<Record<import('./garden').Plot, import('./garden').Planting>>;
   /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */
   lawn?: import('./lawns').Lawn;
+  /** Its home theater's screen and seats given, once (`systems/theater.ts`, from 2026-10-06). */
+  theaterKit?: true;
   /** A repaint by hand under way: the paint in hand and the rooms done (`systems/paint.ts`, from 2026-10-05). */
   painting?: import('./paint').Painting;
   /** The letting agent managing it, where one is hired (`systems/propertymanagers.ts`, from 2026-10-01). */
@@ -1123,11 +1128,18 @@ export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): 
  * drop-in class, a spare room's lodger for a cottage or a suite. Each is
  * something SLATE keeps in that town, so what's offered can be done.
  */
-const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string; gyms?: 'pool' | 'any' }[] = [
+const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string; gyms?: 'pool' | 'any' | 'sauna'; library?: true; cinema?: true }[] = [
   // A pool's swimming, or a gym that has one (from 2026-10-06).
   { projects: /^(pool|hot-tub)$/, names: /swim/i, gyms: 'pool' },
   // A home gym's training at the town's gyms (from 2026-10-06; until then a refused home gym offered nothing).
   { projects: /^home-gym$/, names: /$^/, gyms: 'any' },
+  // Later on 2026-10-06: a sauna's at a gym that research-gyms.json read one at, Take A Sauna there; a library's at the
+  // town's public library, a card free to a resident (`systems/reading.ts`); a home theater's film at the cinema with a
+  // friend, at the country's average ticket where one's published (`outingPrice`, asked on People). Until then each of
+  // the three was refused with nothing offered.
+  { projects: /^sauna$/, names: /$^/, gyms: 'sauna' },
+  { projects: /^library$/, names: /$^/, library: true },
+  { projects: /^home-theater$/, names: /$^/, cinema: true },
   { projects: /^(tennis-|pickleball)/, names: /tennis|pickleball/i },
   { projects: /^(basketball-|pitch-)/, names: /soccer|football|fútbol|five-a-side|kickball|netball/i },
   { projects: /^dance-studio$/, names: /dance/i },
@@ -1137,15 +1149,22 @@ const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string; gyms?:
  * An alternative, with what to do it by (from 2026-10-06; until then words with no button): a club to join, a drop-in
  * class to take, a gym to join, or a lodger to take, where the home's work is refused.
  */
-export interface Alternative { label: string; clubId?: string; classId?: string; gymId?: string; lodger?: true }
+export interface Alternative { label: string; clubId?: string; classId?: string; gymId?: string; lodger?: true; /** The town's library card (from 2026-10-06). */ libraryCard?: true; /** A friend asked to the cinema, on People (from 2026-10-06). */ cinema?: true }
 
 export function projectAlternatives(cityId: string, projectId: string): Alternative[] {
   const rule = INSTEAD.find((r) => r.projects.test(projectId));
   if (!rule) return [];
   const clubs = CLUBS.filter((c) => c.cityId === cityId && rule.names.test(`${c.name} ${c.place}`)).map((c) => ({ label: `${c.name} at ${c.place}`, clubId: c.id }));
   const classes = DROP_INS.filter((d) => d.cityId === cityId && rule.names.test(`${d.kind} ${d.label}`)).map((d) => ({ label: `${d.label} at ${d.studio}`, classId: d.id }));
-  const gyms = rule.gyms ? gymsIn(cityId).filter((g) => rule.gyms === 'any' || g.pool).map((g) => ({ label: `${g.name}${g.pool ? ', with a pool' : ''}`, gymId: g.id })) : [];
-  return [...clubs, ...classes, ...gyms, ...(rule.also ? [{ label: rule.also, lodger: true as const }] : [])];
+  const gyms = rule.gyms ? gymsIn(cityId).filter((g) => rule.gyms === 'any' || (rule.gyms === 'pool' ? g.pool : g.sauna)).map((g) => ({ label: `${g.name}${rule.gyms === 'sauna' ? ', with a sauna' : g.pool ? ', with a pool' : ''}`, gymId: g.id })) : [];
+  const library = rule.library ? libraryIn(cityId) : undefined;
+  const ticket = rule.cinema ? OUTINGS.film[CITIES.get(cityId)?.countryId ?? ''] : undefined;
+  return [
+    ...clubs, ...classes, ...gyms,
+    ...(rule.also ? [{ label: rule.also, lodger: true as const }] : []),
+    ...(library ? [{ label: `${library.name}, A Card Free To A Resident`, libraryCard: true as const }] : []),
+    ...(ticket ? [{ label: `A Film At The Cinema With A Friend, About ${formatMoney(Math.round(ticket.price * 100), ticket.currency)} A Ticket`, cinema: true as const }] : []),
+  ];
 }
 
 /** Work this long, where they live, weighs on them every day of it: SLATE's estimate. */
@@ -1208,6 +1227,8 @@ function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: W
     if (a.gains?.includes('garage')) f.parts.garageDoor = year;
   }
   owned.improvements.push({ projectId: project.id, at: sim.now, value: adds, cost: works.cost });
+  // A home theater's screen and seats, the owner's things from 2026-10-06 (`systems/theater.ts`).
+  kitTheater(sim, person, owned);
   if (person.id === sim.universe.playerId) {
     sim.notify({ category: 'home', title: 'The Work Is Done', body: `${project.label} at ${f.address}: finished, and ${formatMoney(adds, saveCurrency(sim.universe), { cents: false })} on what it’s worth.`, importance: 60, route: '/workspace/homes' });
   }

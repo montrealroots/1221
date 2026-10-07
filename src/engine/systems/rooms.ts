@@ -47,7 +47,10 @@
  * SLATE's estimate. Until then a lodger could be let the same spare bedroom a
  * library was in. Furniture is put in a room (`items.move` with a room): a
  * bed in a bedroom, a sofa in the living room, a dining table in the living
- * room or the kitchen, and only in the floor that room has to furnish.
+ * room or the kitchen, and only in the floor that room has to furnish. From
+ * 2026-10-06 what a furnished home comes with stands in its rooms too, taking
+ * their floor (`furnishedIn`). A room's real layout, and a bathroom's own
+ * size, aren't kept: no plan is drawn and none is published.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -152,7 +155,9 @@ export function roomFitRefusal(sim: Simulation, person: Person, item: Item, room
   if (isTable && room.kind === 'bathroom') return 'A table doesn’t go in a bathroom.';
   if (room.kind === 'bathroom') return 'Furniture doesn’t go in a bathroom.';
   const home = homeKeyOf(person.home);
-  const taken = itemsOf(person).filter((i) => i.id !== item.id && i.at.kind === 'home' && i.at.home === home && i.at.room === roomId).reduce((n, i) => n + footprintOf(i), 0);
+  // What's been put there, and from 2026-10-06 what a furnished home came with that stands there (`furnishedIn`).
+  const taken = itemsOf(person).filter((i) => i.id !== item.id && i.at.kind === 'home' && i.at.home === home && i.at.room === roomId).reduce((n, i) => n + footprintOf(i), 0)
+    + furnishedIn(person).filter((f) => f.roomId === roomId).reduce((n, f) => n + f.m2, 0);
   const room2 = room.m2 * FURNISHABLE;
   if (taken + footprintOf(item) > room2 + 1e-9) return `It won’t fit in ${room.label.replace(/^The /, 'the ')}: ${taken.toFixed(1)} of its ${room2.toFixed(1)} m² that can be furnished is taken, and it needs ${footprintOf(item).toFixed(1)}.`;
   return undefined;
@@ -192,18 +197,33 @@ export function footprintOf(item: Item): number {
 /** SANDSBERG's table for four and its four chairs, m². */
 export const TABLE_SET_M2 = 1.099 * 0.67 + 4 * 0.391 * 0.47;
 
+/**
+ * What a furnished home comes with, room by room (from 2026-10-06): the bed in the main bedroom (a studio's main
+ * room), the sofa in the living room and the table for four with its chairs in the kitchen, SLATE's reading of where
+ * they'd stand, a dining table going in either; each gone where one of their own replaces it. Until then they took the
+ * home's floor and no room's, so a room kept the floor they stood on free for what was put in it.
+ */
+export function furnishedIn(person: Person, replacing?: 'bed' | 'sofa'): { roomId: string; label: string; m2: number }[] {
+  if (!person.home || person.home.kind === 'sofa' || bareHome(person)) return [];
+  const home = homeKeyOf(person.home);
+  const placed = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor');
+  const country = CITIES.get(person.home.cityId)?.countryId ?? 'us';
+  const usual = bedSize(BED_MARKET[country] ?? 'na', DEFAULT_BED_SIZE[country] ?? 'queen');
+  // A studio has no bedroom (`roomList`): its bed is in the main room.
+  const studio = (livingIn(person)?.facts.type ?? person.home.unit?.type) === 'studio';
+  const out: { roomId: string; label: string; m2: number }[] = [];
+  if (usual && replacing !== 'bed' && !placed.some((i) => i.kind === 'furniture:bed')) out.push({ roomId: studio ? 'living' : 'bedroom-1', label: 'The Bed It Came With', m2: (usual.widthCm * usual.lengthCm) / 10_000 });
+  if (person.home.kind === 'shared') return out;
+  if (replacing !== 'sofa' && !placed.some((i) => i.kind === 'furniture:sofa')) out.push({ roomId: 'living', label: 'The Sofa It Came With', m2: KIVIK_M2 });
+  out.push({ roomId: 'kitchen', label: 'The Table And Chairs It Came With', m2: TABLE_SET_M2 });
+  return out;
+}
+
 /** The floor the furniture in the rooms takes, m²: what they've put there, and what a furnished home comes with, less the piece of it one of their own replaces. */
 export const furnishedM2 = (person: Person, replacing?: 'bed' | 'sofa'): number => {
   const home = homeKeyOf(person.home);
   const placed = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor');
-  let m2 = placed.reduce((n, i) => n + footprintOf(i), 0);
-  if (!person.home || person.home.kind === 'sofa' || bareHome(person)) return m2;
-  const country = CITIES.get(person.home.cityId)?.countryId ?? 'us';
-  const usual = bedSize(BED_MARKET[country] ?? 'na', DEFAULT_BED_SIZE[country] ?? 'queen');
-  if (usual && replacing !== 'bed' && !placed.some((i) => i.kind === 'furniture:bed')) m2 += (usual.widthCm * usual.lengthCm) / 10_000;
-  if (person.home.kind === 'shared') return m2;
-  if (replacing !== 'sofa' && !placed.some((i) => i.kind === 'furniture:sofa')) m2 += KIVIK_M2;
-  return m2 + TABLE_SET_M2;
+  return placed.reduce((n, i) => n + footprintOf(i), 0) + furnishedIn(person, replacing).reduce((n, f) => n + f.m2, 0);
 };
 
 /** Why a piece of some footprint won't fit in the rooms, or nothing. */

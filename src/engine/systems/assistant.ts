@@ -71,6 +71,7 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'home.renovate': { does: 'Start a project on a home you own', payload: '{ homeId: string, projectId: string }' },
   'home.move': { does: 'Rent a room or a one-bedroom where you live', payload: '{ kind: "shared" | "own" }' },
   'home.gardener': { does: 'Hire or let go of a gardener for a home you own', payload: '{ homeId: string, on: boolean }' },
+  'home.water_lawn': { does: 'Pour the week’s inch of water over the lawn of the home you live in, metered with the month’s water', payload: '{}' },
   'gym.join': { does: 'Join a gym in your town', payload: '{ gymId: string, tier: string }' },
   'gym.trainer': { does: 'Book a personal trainer, or stop', payload: '{ trainerId?: string, perWeek?: number }' },
   'social.invite': { does: 'Invite a person you know to a meal or home', payload: '{ contactId: string, at: epoch ms, what: "meal" | "visit", restaurantId?: string }' },
