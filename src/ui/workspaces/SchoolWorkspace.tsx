@@ -30,6 +30,7 @@ import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
+import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
@@ -361,6 +362,7 @@ function CastingPane() {
                 {casting.note ? ` The director’s note: ${casting.note}` : ' How a run goes is read by the chair when casting you next.'}
               </p>
             )}
+            <RehearsalProcess casting={casting} which={casting === school.rep ? 'rep' : 'school'} />
             {casting.cast && casting.cast.length > 0 && (
               <p className="small" style={{ margin: 0 }}>
                 From the class with you: {casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.
