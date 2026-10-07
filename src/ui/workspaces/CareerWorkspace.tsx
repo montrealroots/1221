@@ -21,7 +21,8 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
+import { footageRefusal } from '@/engine/systems/footage';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -376,7 +377,7 @@ function AuditionsPane() {
           <LookRegion className="col gap-2">
             {ahead.map((a) => (
               <div key={a.id} className="row-between small">
-                <span><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open>{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
+                <span><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open>{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.referredBy ? `, passed along by ${a.referredBy}` : ''}{a.coached ? ', coached' : ''}</span>
                 <span className="row gap-2">
                   <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : <>In The Room, <Town id={a.cityId} /></>}, <When at={a.at} zone={zoneOf(a.cityId)}>{formatDateTime(a.at, zoneOf(a.cityId))}</When></span>
                   {!a.coached && <Gated feature="career.coach" onClick={() => { if (run('career.coach', { auditionId: a.id }).ok) toast('An hour with a coach on it.', 'positive'); }}>Book A Coach</Gated>}
@@ -394,7 +395,7 @@ function AuditionsPane() {
               <thead><tr><th scope="col">Part</th><th scope="col">From</th><th scope="col">When</th><th scope="col">How</th><th scope="col">Result</th></tr></thead>
               <tbody>
                 {behind.map((a) => (
-                  <tr key={a.id}><td><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open></td><td>{a.self ? 'Submitted Yourself' : 'Your Agency'}</td><td><When at={a.at} zone={zoneOf(a.cityId)} /></td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
+                  <tr key={a.id}><td><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open></td><td>{a.self ? 'Submitted Yourself' : a.referredBy ? `Passed Along By ${a.referredBy}` : 'Your Agency'}</td><td><When at={a.at} zone={zoneOf(a.cityId)} /></td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -726,10 +727,8 @@ function WorkCostsPanel() {
             <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
           </div>
         )}
-        <div className="row-between small">
-          <span>A reel, {dollars(WORK_COSTS.reel)} to edit: {career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : career.credits.some((c) => roleById(c.roleId).medium === 'screen') || person.school?.filmed ? 'None' : 'None, and no screen footage to cut one from'}</span>
-          <Gated feature="career.reel" onClick={() => { if (run('career.reel').ok) toast('A reel, cut from your footage.', 'positive'); }}>{career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}</Gated>
-        </div>
+        <ReelRow />
+
         <div className="row-between small">
           <span>A self-tape kit, {dollars(WORK_COSTS.kit)} and the sales tax: {career.kit ? 'Yours' : 'None'}</span>
           {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
@@ -916,5 +915,42 @@ function AwardsPanel() {
         <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Academy Awards’ field is counted from its Reminder List; the Tonys’, the Oliviers’ and the Ariels’ publish only how many productions or films are eligible, so their fields are those counts at a published cast size, SLATE’s estimate.</Fine>
       </LookRegion>
     </Panel>
+  );
+}
+
+/**
+ * The reel (from 2026-10-08): the footage there is, school's and screen's,
+ * each with how it went and whether it can be used, chosen and cut; and how
+ * good the reel is, which a paid submission's callback reads.
+ */
+function ReelRow() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = careerOf(person);
+  const cur = saveCurrency(sim.universe);
+  const footage = footageFor(person);
+  const [chosen, setChosen] = useState<string[]>([]);
+  const usable = footage.filter((f) => !footageRefusal(f));
+  const BAND: Record<string, string> = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' };
+  return (
+    <div className="col gap-1">
+      <div className="row-between small">
+        <span>A reel, {formatMoney(inSaveMoney(sim, WORK_COSTS.reel, 'USD'), cur)} to edit: {career.reelCut ? `${BAND[career.reelCut.band]}, cut ${formatDate(career.reelCut.at, sim.zone)} from ${career.reelCut.ids.length} ${career.reelCut.ids.length === 1 ? 'piece' : 'pieces'}` : career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : usable.length ? 'None' : 'None, and no footage to cut one from'}</span>
+        <Gated feature="career.reel" disabled={!usable.length} title={usable.length ? (chosen.length ? `Cut from the ${chosen.length} chosen` : 'Cut from all your usable footage') : 'No footage to cut one from'}
+          onClick={() => { const r = run<{ band: string }>('career.reel', chosen.length ? { footage: chosen } : {}); if (r.ok) toast(`A reel, ${BAND[r.value!.band]!.toLowerCase()}.`, 'positive'); }}>
+          {career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}
+        </Gated>
+      </div>
+      {footage.map((f) => {
+        const no = footageRefusal(f);
+        return (
+          <label key={f.id} className="xs row gap-2" style={{ alignItems: 'center' }}>
+            <input type="checkbox" disabled={Boolean(no)} checked={chosen.includes(f.id)} onChange={(e) => setChosen((c) => (e.target.checked ? [...c, f.id] : c.filter((x) => x !== f.id)))} />
+            <span>{f.label} · {BAND[f.band]}{no ? ` · ${no}` : ''}</span>
+          </label>
+        );
+      })}
+      <Fine>A reel is as good as what’s on it on average, so weak footage pulls strong down. Casting sees it on paid submissions: a strong reel is called back a little more often, an exceptional one more. It isn’t read again at the audition, where your craft is. The factors are SLATE’s estimate; the school’s film monologue is the school’s (DRAM 473b).</Fine>
+    </div>
   );
 }

@@ -53,7 +53,7 @@ import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
-import { occupiedAt } from './life';
+import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
 import { wearForExercise } from './wardrobe';
 import { phonesOf } from './phones';
@@ -396,6 +396,8 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
+  // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
+  if ((act.needs ?? []).some((n) => n === 'studio' || n === 'moveClothes') && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   return undefined;

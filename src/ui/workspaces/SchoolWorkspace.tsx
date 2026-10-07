@@ -20,11 +20,11 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -509,7 +509,13 @@ function WorkPane() {
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours} of ${WORK_STUDY.electiveHours}`} />
           <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
+          <Stat label="Protective Equipment" value={person.school!.ppe ? 'Bought' : 'Not Yet'} note={person.school!.ppe ? `On ${formatDate(person.school!.ppe.at, zone())}, ${formatMoney(person.school!.ppe.cost, cur)}` : `Required for the Saturday crew: ${formatMoney(ppeCost(sim), cur)}, or bought at your first shift`} />
         </div>
+        {!person.school!.ppe && !ppeRefusal(person) && (
+          <div>
+            <Gated feature="school.buy_ppe" className="btn btn-sm btn-ghost" title={`${formatMoney(ppeCost(sim), cur)}, from your bank`} onClick={() => { const r = run<{ cost: number }>('school.buy_ppe'); if (r.ok) toast(`Bought: ${formatMoney(r.value!.cost, cur)}.`, 'positive'); }}>Buy The Protective Equipment</Gated>
+          </div>
+        )}
         {shifts.length > 0 && (
           <LookRegion className="col gap-2">
             {shifts.map((s) => (
@@ -523,7 +529,7 @@ function WorkPane() {
         <p className="small" style={{ margin: 0 }}>
           Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
         </p>
-        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</Fine>
+        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. The protective equipment is the school’s requirement and its $150 the school’s figure; what the kit holds beyond steel-toed work shoes isn’t published. Without it, or the money for it at the shift, the supervisor sends you home. Source: {WORK_STUDY.source}; {REQUIRED_PPE.source}.</Fine>
       </div>
     </Panel>
   );

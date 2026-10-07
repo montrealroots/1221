@@ -63,14 +63,15 @@ import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Inst
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
-  CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SKILL_FROM, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
+  CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, REQUIRED_PPE, SEAGULL_2027, SKILLS, SKILL_FROM, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
 import type { ClassmateCareer } from './rivals';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
-import { payFromCurrent } from './household';
+import { payFromCurrent, spend } from './household';
+import { inSaveMoney } from './banking';
 import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
 import { ATTRIBUTES, earn, nerves, nudge } from './attributes';
 import { YALE_COST_GROWTH } from '../content/career';
@@ -234,6 +235,8 @@ export interface SchoolRecord {
   rep?: Casting;
   /** The year's work-study: hours worked, elective hours asked for, owed on Friday, and assigned hours booked (to `WORK_STUDY.assignedHours`). */
   workStudy: { electiveHours: number; owedHours: number; assignedBooked?: number };
+  /** The work-study protective equipment, when bought and for how much (`REQUIRED_PPE`, from 2026-10-08). */
+  ppe?: { at: Instant; cost: Money };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
   /** The courses' work between meetings, and the first week (`systems/coursework.ts`, from 2026-10-07). */
@@ -656,6 +659,25 @@ export function termAccount(into: string, need = true, term = 0): { tuition: Mon
   // What of it the US taxes: all but the books, which with tuition are what a scholarship may pay untaxed.
   const books = need ? usd(Math.round(grown(COST_2026_27.books, YALE_COST_GROWTH.living) / 2)) : 0;
   return { tuition, healthPlan, livingScholarship, refund: livingScholarship - healthPlan, taxable: livingScholarship - books };
+}
+
+/** The protective equipment's price in the save's money. */
+export const ppeCost = (sim: Simulation): Money => inSaveMoney(sim, REQUIRED_PPE.cost, 'USD');
+
+/** Why the protective equipment can't be bought now, or nothing. */
+export function ppeRefusal(person: Person): string | undefined {
+  const school = person.school;
+  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return 'It’s for students’ work-study.';
+  if (school.ppe) return `You bought it on ${formatDate(school.ppe.at, zone())}.`;
+  return undefined;
+}
+
+/** Bought, through the bank, as a school cost; false where the bank can't cover it. */
+export function buyPpe(sim: Simulation, person: Person): boolean {
+  const cost = ppeCost(sim);
+  if (!spend(sim, person, cost, 'Required protective equipment for work-study', 'school')) return false;
+  person.school!.ppe = { at: sim.now, cost };
+  return true;
 }
 
 /** The work-study rate in a currency. */
@@ -1611,6 +1633,14 @@ export function registerSchool(sim: Simulation): void {
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
+  sim.onCommand<Record<string, never>, { cost: Money }>('school.buy_ppe', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = ppeRefusal(person);
+    if (no) throw new CommandError(no);
+    if (!buyPpe(s, person)) throw new CommandError(`It’s ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, which the bank can’t cover.`);
+    return { cost: person.school!.ppe!.cost };
+  });
+
   sim.onSchedule(SHIFT_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
@@ -1620,6 +1650,13 @@ export function registerSchool(sim: Simulation): void {
     // A shift in hospital isn't one they were there to be asked for.
     if (offSick(person, item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
     if (!elective) school.tally.shifts += 1;
+    // The crew's Saturday needs the protective equipment: bought there if not before, through the bank; the bank short of
+    // it, the supervisor sends them home and the shift is missed (`REQUIRED_PPE`, from 2026-10-08).
+    if (!elective && present(person, item.at) && !school.ppe && !buyPpe(s, person)) {
+      item.status = 'missed';
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Sent Home From Work-Study', body: `The shift needs the required protective equipment, ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, and the bank couldn’t cover it. The shift counts as missed. Buy it on the School’s Shifts And Pay tab once you can.`, importance: 70, route: '/workspace/school' });
+      return;
+    }
     if (present(person, item.at)) {
       if (!elective) school.tally.worked += 1;
       school.workStudy.owedHours += hours;

@@ -98,7 +98,7 @@ describe('an actor’s working costs', () => {
     for (let n = 0; n < ESTIMATE.selfSubmitsAWeek + WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']; n += 1) expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(true);
     expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
     // A reel takes screen footage.
-    expect(sim.execute({ kind: 'career.reel', payload: {} })).toMatchObject({ ok: false, error: 'A reel is cut from footage, and you have no screen credit yet.' });
+    expect(sim.execute({ kind: 'career.reel', payload: {} })).toMatchObject({ ok: false, error: 'A reel is cut from footage, and you have none: a screen credit, a self-tape from class, or the school’s film monologue.' });
     career.credits.push({ roleId: 'lort-b', year: 2026, cityId: 'us-ny-newyork' });
     expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(false);
     // The school's filmed monologues are footage too.

@@ -111,7 +111,7 @@ describe('a working actor in New York', () => {
     let sim = actor('journey-career');
 
     // Not yet: a reel wants footage, and a submission wants headshots.
-    expect(sim.execute({ kind: 'career.reel', payload: {} }).error).toBe('A reel is cut from footage, and you have no screen credit yet.');
+    expect(sim.execute({ kind: 'career.reel', payload: {} }).error).toBe('A reel is cut from footage, and you have none: a screen credit, a self-tape from class, or the school’s film monologue.');
     expect(sim.execute({ kind: 'career.query_agencies', payload: {} }).error).toBe('A submission is a headshot and a résumé: have headshots taken first.');
 
     // Headshots the bank can't cover: refused, and nothing taken.

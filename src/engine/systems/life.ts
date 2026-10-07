@@ -655,7 +655,7 @@ export function dropInPrice(sim: Simulation, c: DropIn): Money {
 /** Too full to eat, too clean to shower, and too spent to train. */
 const FULL = 90;
 const CLEAN = 95;
-const SPENT = 25;
+export const SPENT = 25;
 
 /**
  * Why the player can't do it now, in the world's words, or nothing if they can.
