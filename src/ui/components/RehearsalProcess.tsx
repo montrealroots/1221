@@ -12,14 +12,13 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { YALE_DRAMA } from '@/engine/content/school';
-import type { Casting } from '@/engine/systems/school';
-import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, type Which } from '@/engine/systems/production';
+import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, type Holder, type Which } from '@/engine/systems/production';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const DRESS_WORD: Record<string, string> = { off: 'An Off Run', solid: 'Solid', strong: 'Strong', remarkable: 'Remarkable' };
 
-export function RehearsalProcess({ casting, which }: { casting: Casting; which: Which }) {
+export function RehearsalProcess({ casting, which }: { casting: Holder; which: Which }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const p = hasProcess(casting) ? casting.process : undefined;
@@ -36,6 +35,7 @@ export function RehearsalProcess({ casting, which }: { casting: Casting; which: 
         <Stat label="A Night’s Readiness" value={`${Math.round(nightFactor(casting) * 100)}%`} note="Were it opening now: every call kept, and no more, makes 100%" />
       </div>
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
+      {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s reading of the process.</span></div>}
       {last && (
         <div className="small">
           The director’s last note, {formatDate(last.at, zone())}: {last.text}

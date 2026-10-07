@@ -378,6 +378,8 @@ function schoolSteps(person: Person): { key: string; label: string; step: Routin
   const parts = [
     ...(school.casting ? [{ key: 'school:part', label: `${school.casting.production}: Learn Your Part`, step: { kind: 'school.learn_part', payload: { which: 'school' } } }] : []),
     ...(school.rep ? [{ key: 'school:rep-part', label: `${school.rep.production}: Learn Your Part`, step: { kind: 'school.learn_part', payload: { which: 'rep' } } }] : []),
+    ...(school.cabaret ? [{ key: 'school:cabaret-part', label: 'Yale Cabaret: Learn Your Part', step: { kind: 'school.learn_part', payload: { which: 'cabaret' } } }] : []),
+    ...(school.summer && !school.summer.out ? [{ key: 'school:summer-part', label: 'Summer Cabaret: Learn Your Part', step: { kind: 'school.learn_part', payload: { which: 'summer' } } }] : []),
   ];
   return [...parts, ...COURSES.filter((c) => c.year === yearOfTerm(term) && c.terms.includes(when)).flatMap((c) => {
     const t = templateFor(c.code, when);

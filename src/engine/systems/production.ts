@@ -32,11 +32,14 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatTime, type Instant } from '../core/time';
-import { SKILLS, type Skill } from '../content/school';
+import { formatTime, zonedParts, type Instant } from '../core/time';
+import { SKILLS, YALE_DRAMA, type Skill } from '../content/school';
+import { CITIES } from '../content/geography';
 import { occupiedAt } from './life';
 import { exerts } from './body';
-import { CALL_KIND, type Casting, type Craft } from './school';
+import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
+import { courseworkOf, notesOf } from './coursework';
+import { recordNote, type NoteFocus as LedgerFocus } from './learning';
 
 export const PROCESS = {
   /** What a call attended does to lines and blocking, as a share of what's left. */
@@ -52,8 +55,18 @@ export const PROCESS = {
   noteTaken: 1.1,
 } as const;
 
-export type Stage = 'read' | 'blocking' | 'work' | 'tech' | 'dress' | 'understudy';
-export const STAGE_LABEL: Record<Stage, string> = { read: 'Read-Through', blocking: 'Blocking Rehearsal', work: 'Rehearsal', tech: 'Technical Rehearsal', dress: 'Dress Rehearsal', understudy: 'Understudy Rehearsal' };
+export type Stage = 'read' | 'blocking' | 'work' | 'tech' | 'dress' | 'techdress' | 'understudy';
+export const STAGE_LABEL: Record<Stage, string> = { read: 'Read-Through', blocking: 'Blocking Rehearsal', work: 'Rehearsal', tech: 'Technical Rehearsal', dress: 'Dress Rehearsal', techdress: 'Technical And Dress Rehearsal', understudy: 'Understudy Rehearsal' };
+
+/**
+ * How a format's calls run. A School production, the Rep and a Summer
+ * Cabaret show are full productions (`stagesOf`). A Yale Cabaret show is a
+ * new piece put up over a few weeknight evenings in a small room (from
+ * 2026-10-08; the Bulletin: "strictly extracurricular"): a read-through, two
+ * evenings blocking, then work, and its last evening the technical and dress
+ * at once (`cabaretStages`); how it divides is SLATE's reading.
+ */
+export type Format = 'production' | 'cabaret';
 
 export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill };
 export interface DirectorNote { at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean }
@@ -70,10 +83,23 @@ export interface Process {
   /** The rehearsal calls this casting has, and whether they're an understudy's: what the par is measured on. */
   of?: number;
   understudy?: boolean;
+  /** A format whose calls run otherwise than a full production's (`Format`). */
+  format?: Format;
+  /** Looking back once it closed (`reflect`), from 2026-10-08. */
+  reflection?: { on: Instant; text: string };
 }
 
-export const processOf = (casting: Casting): Process => ((casting as Casting & { process?: Process }).process ??= { lines: 0, blocking: 0, calls: 0, blockingMissed: 0, notes: [], trained: 0 });
-export const hasProcess = (casting: Casting | undefined): casting is Casting & { process: Process } => Boolean(casting && (casting as Casting & { process?: Process }).process);
+/** Anything a process can be kept on: a casting, a Cabaret show, a Summer Cabaret show. */
+export type Holder = object;
+export const processOf = (holder: Holder): Process => ((holder as { process?: Process }).process ??= { lines: 0, blocking: 0, calls: 0, blockingMissed: 0, notes: [], trained: 0 });
+export const hasProcess = <T extends Holder>(holder: T | undefined): holder is T & { process: Process } => Boolean(holder && (holder as { process?: Process }).process);
+
+/** A Cabaret show's evenings: the read-through, two blocking, work, and the last the technical and dress together. */
+export function cabaretStages(n: number): Stage[] {
+  return Array.from({ length: n }, (_, i): Stage => (i === 0 ? 'read' : n >= 3 && i === n - 1 ? 'techdress' : i <= 2 ? 'blocking' : 'work'));
+}
+/** A format's stages for a run of calls. */
+export const stagesFor = (n: number, format: Format = 'production'): Stage[] => (format === 'cabaret' ? cabaretStages(n) : stagesOf(n));
 
 /** The stages of a run of rehearsal calls in order: the first a read-through, two-fifths blocking, the last two before opening tech and dress. */
 export function stagesOf(n: number): Stage[] {
@@ -102,13 +128,13 @@ const takenUnworked = (p: Kept, kind: NoteFocus['kind']) =>
 /** One call's lines and blocking, attended. */
 const attend = (p: Kept, stage: Stage) => {
   p.lines = clamp01(p.lines + PROCESS.call.lines * (1 - p.lines));
-  if (stage === 'blocking' || stage === 'tech' || stage === 'understudy') p.blocking = clamp01(p.blocking + PROCESS.call.blocking * (1 - p.blocking));
+  if (stage === 'blocking' || stage === 'tech' || stage === 'techdress' || stage === 'understudy') p.blocking = clamp01(p.blocking + PROCESS.call.blocking * (1 - p.blocking));
 };
 
 /** The score of an actor who came to all of a run of calls and did nothing more: the par a night is measured against. */
-export function parFor(of: number, understudy = false): number {
+export function parFor(of: number, understudy = false, format: Format = 'production'): number {
   const p = { lines: 0, blocking: 0, blockingMissed: 0, notes: [] as { kind: NoteFocus['kind']; taken?: boolean }[] };
-  const stages = understudy ? Array.from({ length: of }, (): Stage => 'understudy') : stagesOf(of);
+  const stages = understudy ? Array.from({ length: of }, (): Stage => 'understudy') : stagesFor(of, format);
   stages.forEach((stage, i) => {
     attend(p, stage);
     const last = p.notes.at(-1);
@@ -119,11 +145,11 @@ export function parFor(of: number, understudy = false): number {
 }
 
 /** A night's readiness factor from the process: 1 for an actor who came to every call and did no more; 1 for a casting from before the process. */
-export function nightFactor(casting: Casting | undefined): number {
-  if (!hasProcess(casting)) return 1;
-  const p = casting.process;
+export function nightFactor(holder: Holder | undefined): number {
+  if (!hasProcess(holder)) return 1;
+  const p = holder.process;
   const f = PROCESS.factor;
-  return Math.max(f.least, Math.min(f.most, 1 + f.slope * (scoreOf(p) - parFor(p.of ?? 0, p.understudy))));
+  return Math.max(f.least, Math.min(f.most, 1 + f.slope * (scoreOf(p) - parFor(p.of ?? 0, p.understudy, p.format))));
 }
 
 /** The note a director gives at a work-through: a gap in the blocking, the lines past off-book, the blocking short, else the play's craft weakest in the actor. */
@@ -145,8 +171,8 @@ export function noteText(f: NoteFocus): string {
  * note where it's a work-through. What it makes of the call's growth (1, or
  * more with a note taken).
  */
-export function callAnswered(sim: Simulation, person: Person, casting: Casting, stage: Stage, n: number, of: number, reads: Partial<Craft>): number {
-  const p = processOf(casting);
+export function callAnswered(sim: Simulation, person: Person, holder: Holder, stage: Stage, n: number, of: number, reads: Partial<Craft>): number {
+  const p = processOf(holder);
   p.calls += 1;
   p.of = of;
   p.understudy = stage === 'understudy';
@@ -167,22 +193,38 @@ export function callAnswered(sim: Simulation, person: Person, casting: Casting, 
 }
 
 /** A call missed: the par still counts it, and a blocking call missed is a gap in the book to catch up. */
-export function callMissed(casting: Casting, stage: Stage, of: number): void {
-  const p = processOf(casting);
+export function callMissed(holder: Holder, stage: Stage, of: number): void {
+  const p = processOf(holder);
   p.of = of;
   p.understudy = stage === 'understudy';
-  if (stage === 'blocking' || stage === 'tech') p.blockingMissed += 1;
+  if (stage === 'blocking' || stage === 'tech' || stage === 'techdress') p.blockingMissed += 1;
 }
 
-export type Which = 'school' | 'rep';
-const castingFor = (person: Person, which: Which): Casting | undefined => (which === 'rep' ? person.school?.rep : person.school?.casting);
+/** Where a part is: the School production, the Rep, this term's Cabaret show, or the Summer Cabaret's show now rehearsing or running. */
+export type Which = 'school' | 'rep' | 'cabaret' | 'summer';
+export const WHICH: readonly Which[] = ['school', 'rep', 'cabaret', 'summer'];
+const pendingOf = (sim: Simulation, person: Person, which: Which) => sim.universe.scheduled.filter((i) => i.status === 'pending' && i.payload.personId === person.id && (
+  which === 'cabaret' ? i.kind === CABARET_KIND : which === 'summer' ? i.kind === SUMMER_KIND : i.kind === CALL_KIND && (i.payload.which === 'rep') === (which === 'rep')));
+/** The Summer Cabaret show whose calls come next. */
+const summerShow = (sim: Simulation, person: Person): number | undefined => {
+  const next = pendingOf(sim, person, 'summer').filter((i) => i.payload.run !== undefined).sort((a, b) => a.at - b.at)[0];
+  return next ? Number(next.payload.run) : undefined;
+};
+export function holderFor(sim: Simulation, person: Person, which: Which): Holder | undefined {
+  const school = person.school;
+  if (which === 'rep') return school?.rep;
+  if (which === 'school') return school?.casting;
+  if (which === 'cabaret') return school?.cabaret;
+  const n = summerShow(sim, person);
+  return n === undefined || school?.summer?.out ? undefined : school?.summer?.shows?.[n];
+}
 
 /** Why the actor's own work on a part can't be done now, or nothing. */
 export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, what: 'part' | 'blocking' | 'note'): string | undefined {
-  const casting = castingFor(person, which);
+  const casting = holderFor(sim, person, which);
   if (!casting) return 'You aren’t cast in anything there.';
   // A run over: nothing left to rehearse for. Until the first version was checked in the running app, a finished run's part could still be learned.
-  if (!sim.universe.scheduled.some((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.personId === person.id && (i.payload.which === 'rep') === (which === 'rep'))) return 'The run is over.';
+  if (!pendingOf(sim, person, which).length) return 'The run is over.';
   const p = processOf(casting);
   if (what === 'part' && p.lines >= 0.97) return 'You know the part.';
   if (what === 'blocking' && p.blockingMissed === 0) return 'You haven’t missed any blocking.';
@@ -203,10 +245,10 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
   };
   sim.onCommand<{ which?: Which }, { lines: number }>('school.learn_part', (p, { sim: s }) => {
     const person = s.player;
-    const which: Which = p?.which === 'rep' ? 'rep' : 'school';
+    const which: Which = WHICH.includes(p?.which as Which) ? (p!.which as Which) : 'school';
     const no = ownWorkRefusal(s, person, which, 'part');
     if (no) throw new CommandError(no);
-    const proc = processOf(castingFor(person, which)!);
+    const proc = processOf(holderFor(s, person, which)!);
     const focus = focusOf(person);
     take(s, person);
     proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * (1 - proc.lines));
@@ -215,10 +257,10 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
   });
   sim.onCommand<{ which?: Which }, { blocking: number }>('school.review_blocking', (p, { sim: s }) => {
     const person = s.player;
-    const which: Which = p?.which === 'rep' ? 'rep' : 'school';
+    const which: Which = WHICH.includes(p?.which as Which) ? (p!.which as Which) : 'school';
     const no = ownWorkRefusal(s, person, which, 'blocking');
     if (no) throw new CommandError(no);
-    const proc = processOf(castingFor(person, which)!);
+    const proc = processOf(holderFor(s, person, which)!);
     take(s, person);
     proc.blockingMissed -= 1;
     proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
@@ -226,10 +268,10 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
   });
   sim.onCommand<{ which?: Which }, { worked: true }>('school.work_note', (p, { sim: s }) => {
     const person = s.player;
-    const which: Which = p?.which === 'rep' ? 'rep' : 'school';
+    const which: Which = WHICH.includes(p?.which as Which) ? (p!.which as Which) : 'school';
     const no = ownWorkRefusal(s, person, which, 'note');
     if (no) throw new CommandError(no);
-    const proc = processOf(castingFor(person, which)!);
+    const proc = processOf(holderFor(s, person, which)!);
     const note = proc.notes.at(-1)!;
     take(s, person);
     note.worked = true;
@@ -238,4 +280,39 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
     if (note.focus.kind === 'blocking') proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
     return { worked: true };
   });
+}
+
+/**
+ * Looking back once a part has closed (from 2026-10-08), once: how many of
+ * its calls were answered, the director's notes given and taken, the dress,
+ * and the night's readiness it played at. The notes not taken are carried into
+ * the coursework's ledger (`recordNote`, `systems/learning.ts`): lines as
+ * lines, blocking as time on its feet, a skill as that skill, so the next work
+ * can ask for them and a showing says if they come back. Until 2026-10-08 a
+ * production's notes ended with it.
+ */
+export function reflect(sim: Simulation, person: Person, holder: Holder, title: string): string | undefined {
+  if (!hasProcess(holder) || holder.process.reflection) return undefined;
+  const p = holder.process;
+  const given = p.notes.filter((n) => n.taken !== undefined);
+  const taken = given.filter((n) => n.taken).length;
+  const open = p.notes.filter((n) => n.taken === false || (n.taken === undefined && !n.worked));
+  const factor = Math.round(nightFactor(holder) * 100);
+  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${p.dress ? `; the dress ${p.dress}` : ''}; you played at ${factor}% of what every call kept makes.${open.length ? ' What’s still open goes with you into class.' : ''}`;
+  p.reflection = { on: sim.now, text };
+  const cw = courseworkOf(sim, person);
+  if (cw) {
+    const pz = zonedParts(sim.now, CITIES.require(YALE_DRAMA.cityId).timeZone);
+    const on = `${pz.year}-${String(pz.month).padStart(2, '0')}-${String(pz.day).padStart(2, '0')}`;
+    const seen = new Set<string>();
+    for (const n of open) {
+      const f: LedgerFocus = n.focus.kind === 'lines' ? { kind: 'dim', dim: 'memorization' } : n.focus.kind === 'blocking' ? { kind: 'dim', dim: 'rehearsal' } : { kind: 'skill', skill: n.focus.skill };
+      const key = JSON.stringify(f);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      recordNote(notesOf(cw), f, on, `production:${title}`, title, f.kind === 'dim' ? (f.dim === 'memorization' ? p.lines : p.blocking) : undefined);
+    }
+  }
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Looking Back: ${title}`, body: `${text} (Simulated: the game’s reading of the process.)`, importance: 50, route: '/workspace/school' });
+  return text;
 }

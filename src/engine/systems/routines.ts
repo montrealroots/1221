@@ -83,7 +83,7 @@ export function stepLabel(person: Person, step: RoutineStep): string {
     case 'food.cook': return `Cook ${recipeById(String(step.payload.recipeId))?.name ?? 'A Recipe'}${step.payload.servings === undefined ? '' : `, ${Number(step.payload.servings)} Servings`}`;
     case 'clothes.wear_outfit': return `Wear ${person.outfits?.find((o) => o.id === step.payload.outfitId)?.name ?? 'An Outfit'}`;
     case 'school.prepare': return `${COURSES.find((c) => c.code === step.payload.course)?.name ?? 'A Course'}: ${TEMPLATES.flatMap((t) => t.activities).find((a) => a.id === step.payload.activity)?.label ?? 'Prepare'}`;
-    case 'school.learn_part': return step.payload.which === 'rep' ? 'Learn Your Part At Yale Rep' : 'Learn Your Part';
+    case 'school.learn_part': return ({ rep: 'Learn Your Part At Yale Rep', cabaret: 'Learn Your Cabaret Part', summer: 'Learn Your Summer Cabaret Part' } as Record<string, string>)[String(step.payload.which)] ?? 'Learn Your Part';
     default: return step.kind;
   }
 }
@@ -95,7 +95,7 @@ export function routineRefusal(name: string, steps: readonly RoutineStep[]): str
   if (steps.length > MAX_STEPS) return `Twelve steps at most.`;
   if (steps.some((s) => !ROUTINE_COMMANDS.has(s.kind))) return 'A routine is made of everyday things.';
   if (steps.some((s) => s.kind === 'life.look_after' && !LOOKING_AFTER[s.payload.action as LookAfter])) return 'That isn’t something you can do for yourself.';
-  if (steps.some((s) => s.kind === 'school.learn_part' && s.payload.which !== undefined && s.payload.which !== 'school' && s.payload.which !== 'rep')) return 'That isn’t a part you could be cast in.';
+  if (steps.some((s) => s.kind === 'school.learn_part' && s.payload.which !== undefined && !(['school', 'rep', 'cabaret', 'summer'] as unknown[]).includes(s.payload.which))) return 'That isn’t a part you could be cast in.';
   // A school step names a course that has work, and a step that work has.
   for (const s of steps) {
     if (s.kind !== 'school.prepare') continue;

@@ -31,6 +31,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
+import { hasProcess, holderFor } from '@/engine/systems/production';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
@@ -441,6 +442,7 @@ function CabaretPanel() {
           </div>
         )}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
+        {mine && <RehearsalProcess casting={mine} which="cabaret" />}
         <Fine>
           The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
         </Fine>
@@ -456,6 +458,7 @@ function SummerPanel() {
   const cur = saveCurrency(sim.universe);
   const school = person.school!;
   const summer = school.summer && school.summer.until > sim.now ? school.summer : undefined;
+  const current = summer ? holderFor(sim, person, 'summer') : undefined;
   return (
     <Panel
       title="The Yale Summer Cabaret"
@@ -470,6 +473,8 @@ function SummerPanel() {
               <div key={i} className="small">
                 <strong>{show?.play ?? `Show ${i + 1}`}</strong>{show?.by ? `, by ${show.by}` : ''}: {show ? `${show.role}, ` : ''}{dayOf(run.from)} to {dayOf(run.to)}, played {summer.played[i] ?? 0}.
                 {show?.nights ? ` ${nightsLine(show)}` : ''}
+                {show && show === current && <RehearsalProcess casting={show} which="summer" />}
+                {show && show !== current && hasProcess(show) && show.process.reflection && <div className="xs dim">Looking Back: {show.process.reflection.text}</div>}
               </div>
             );
           })}
