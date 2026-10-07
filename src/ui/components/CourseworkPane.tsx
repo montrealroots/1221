@@ -19,11 +19,11 @@ import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/conte
 import {
   BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
-  notesOf, readingDiffers, revisitWords, weightsOf,
+  activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { PRIORITY_WORDS, amendsRefusal, personOf } from '@/engine/systems/classmates';
-import { OBJECTIVE_DIM, noteSubject, objectiveLabel, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
+import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 import { garmentsOf } from '@/engine/systems/wardrobe';
 import { phonesOf } from '@/engine/systems/phones';
 import { routinesOf } from '@/engine/systems/routines';
@@ -122,6 +122,12 @@ function AssignmentCard({ a }: { a: Assignment }) {
             : a.repPlay ? <>On <strong>{a.repPlay}</strong>, this season at Yale Rep. {t.deliverable}.</>
               : <>{t.deliverable}{mate ? `, with ${mate.name}` : ''}.</>}
         </div>
+        {scene?.origin === 'original' && scene.facts && (
+          <div className="small">
+            <strong>An Original Scene, Written For SLATE.</strong> <span className="xs dim">Its facts, what the readings rest on:</span>
+            <ul className="xs" style={{ margin: '0.2rem 0 0', paddingLeft: '1.1rem' }}>{scene.facts.map((f) => <li key={f}>{f}</li>)}</ul>
+          </div>
+        )}
         {(a.objective || a.revisit) && (
           <div className="small">
             {a.objective && <div><strong>Put First: {objectiveLabel(t, a.objective)}.</strong> <span className="xs dim">{objectiveWhy(a, notesOf(courseworkOf(sim, person)!))}</span></div>}
@@ -132,7 +138,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
           {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}`} />)}
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          {t.activities.filter((x) => x.dim !== 'partner').map((act) => {
+          {activitiesOf(a).filter((x) => x.dim !== 'partner').map((act) => {
             const no = prepareRefusal(sim, person, a, act.id);
             return (
               <Gated key={act.id} feature="school.prepare" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${minutesOf(a, act)} minutes`}
@@ -142,6 +148,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
             );
           })}
         </div>
+        <AnotherWay a={a} />
         {questionsFor(a).length > 0 && <TableWork a={a} />}
         {mate && <Rehearsals a={a} />}
         {a.feedback && <FeedbackBlock a={a} />}
@@ -334,5 +341,35 @@ function Partners() {
         })}
       </div>
     </Panel>
+  );
+}
+
+/**
+ * Another way at a weakness that keeps coming back (`approach`, from
+ * 2026-10-08): the note, how often, and the four ways, one chosen for this
+ * work; or the one chosen, and what it does.
+ */
+function AnotherWay({ a }: { a: Assignment }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cw = courseworkOf(sim, person)!;
+  const weak = persistentFor(cw, a)[0];
+  if (a.approach) return <div className="small"><strong>Another Way At It: {APPROACHES[a.approach.kind].label}.</strong> <span className="xs dim">On {noteSubject(a.approach.key).toLowerCase()}: {APPROACHES[a.approach.kind].words}. It doesn’t take the note by itself.</span></div>;
+  if (!weak) return null;
+  return (
+    <div className="col gap-1">
+      <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose another way at it for this work, one.</span></div>
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        {(Object.keys(APPROACHES) as Approach[]).map((k) => {
+          const no = approachRefusal(sim, person, a, k);
+          return (
+            <Gated key={k} feature="school.approach" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? APPROACHES[k].words}
+              onClick={() => { if (run('school.approach', { assignmentId: a.id, kind: k }).ok) toast(`${APPROACHES[k].label}: ${APPROACHES[k].words}.`, 'positive'); }}>
+              {APPROACHES[k].label}
+            </Gated>
+          );
+        })}
+      </div>
+    </div>
   );
 }

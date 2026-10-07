@@ -86,7 +86,8 @@ import { BODY } from '../content/body';
 import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
 import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
-import { momentInClass } from './classmates';
+import { celebrate, momentInClass } from './classmates';
+import { classAtSchool } from './people';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, nightFactor, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -1623,6 +1624,8 @@ export function registerSchool(sim: Simulation): void {
       for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
       // And maybe one of them brings something (`systems/classmates.ts`, from 2026-10-08).
       momentInClass(s, person, item.at);
+      // The class as people, known since the first week (`classAtSchool`, `systems/people.ts`, from 2026-10-08).
+      classAtSchool(s, person);
       tire(person, ESTIMATE.energy.classes);
       return;
     }
@@ -1707,6 +1710,9 @@ export function registerSchool(sim: Simulation): void {
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
     // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).
     reflect(s, person, casting, casting.play ?? casting.production);
+    // And a classmate in the cast may ask you out after it (`celebrate`, from 2026-10-08).
+    const cast = (casting as Run & { cast?: { name: string }[] }).cast;
+    if (cast) celebrate(s, person, cast, item.at + 150 * 60_000, casting.play ?? casting.production);
     return night;
   };
 

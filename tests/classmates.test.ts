@@ -175,7 +175,11 @@ describe('after the degree', () => {
     mate.bond = 30;
     knowTheClass(sim, sim.player, sim.player.school!.classmates);
     const c = contactsOf(sim.player).find((x) => x.name === mate.name)!;
-    expect(c.memory.map((x) => x.what)).toEqual(['At Yale: Ran lines with you', 'At Yale: You helped them with their lines when they were behind']);
+    expect(c.memory.map((x) => x.what)).toEqual(expect.arrayContaining(['At Yale: Ran lines with you', 'At Yale: You helped them with their lines when they were behind']));
+    // The same person known since the first week: one contact a classmate, never a second at the degree.
+    expect(c.classmate).toBe(0);
+    expect(contactsOf(sim.player).filter((x) => x.classmate !== undefined)).toHaveLength(sim.player.school!.classmates.length);
+    expect(new Set(contactsOf(sim.player).filter((x) => x.met.how === 'school').map((x) => x.name)).size).toBe(sim.player.school!.classmates.length);
     expect(c.rival).toBeUndefined();
   });
 

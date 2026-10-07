@@ -24,6 +24,7 @@ import type { Skill } from './school';
 import { CLASSICAL_SCENES } from './scenes-classical';
 import { MODERN_SCENES } from './scenes-modern';
 import { GREEK_SCENES } from './scenes-greek';
+import { ORIGINAL_SCENES } from './scenes-original';
 
 /** The parts of a preparation SLATE keeps, each 0 to 1. */
 export type PrepDim = 'familiarity' | 'memorization' | 'interpretation' | 'rehearsal' | 'partner' | 'revision';
@@ -97,6 +98,15 @@ export interface Scene {
   difficulty: 1 | 2 | 3;
   /** A tradition a course asks for by name: The Greeks' tragedies and comedies in translation. */
   tradition?: 'greek';
+  /**
+   * An original scene written for SLATE (from 2026-10-08), set now: plays after
+   * 1930 are under copyright and aren't reproduced, and nothing is invented and
+   * put to a real playwright (research-contemporary-material.json). Shown as
+   * SLATE's own. Every other scene is from a public-domain play.
+   */
+  origin?: 'original';
+  /** An original scene's given facts, the text its readings rest on (a public-domain scene's text is its play). */
+  facts?: readonly string[];
   circumstances: readonly Option[];
   relationship: readonly Option[];
   roles: readonly [Role, Role];
@@ -785,6 +795,7 @@ export const SCENES: readonly Scene[] = [
   ...CLASSICAL_SCENES,
   ...MODERN_SCENES,
   ...GREEK_SCENES,
+  ...ORIGINAL_SCENES,
 ];
 
 export const sceneById = (id: string): Scene | undefined => SCENES.find((s) => s.id === id);

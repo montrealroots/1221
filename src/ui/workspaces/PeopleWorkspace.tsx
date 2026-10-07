@@ -10,7 +10,7 @@ import { DROP_INS } from '@/engine/content/dropins';
 import { dropInPrice } from '@/engine/systems/life';
 import { Panel } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
-import { formatDate, instantFromZoned, MS_DAY, zonedParts } from '@/engine/core/time';
+import { formatDate, formatTime, instantFromZoned, MS_DAY, zonedParts } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { RESTAURANTS } from '@/engine/content/restaurants';
@@ -23,7 +23,7 @@ import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption
 import { Gated } from '@/ui/guide/Guide';
 import { supportLines } from '@/engine/systems/support';
 import { careHours, careRefusal, formatCare, needsCare, parentsOf, type Parent } from '@/engine/systems/parents';
-import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, outingPrice, type Contact, type Invitation, type InvitationKind } from '@/engine/systems/people';
+import { MEET_KIND, NEW_HAVEN_OUTINGS, askingRefusal, atSchoolWith, cancelRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, outingPrice, type Contact, type Invitation, type InvitationKind } from '@/engine/systems/people';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { dateKey } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -79,6 +79,7 @@ export function PeopleWorkspace() {
           )}
         </Panel>
         <AskedYou />
+        <YourPlans />
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
         {person.home && person.home.kind !== 'sofa' && contacts.some((c) => c.cityId === person.home!.cityId) && <HaveFriendsOver />}
         <ClubsPanel />
@@ -91,6 +92,38 @@ export function PeopleWorkspace() {
   );
 }
 
+
+/**
+ * The meetings on your calendar with people you know (from 2026-10-08): each
+ * called off (with a day's notice it costs nothing; at shorter, they wait a
+ * few days before making plans) or moved to the next day at the same hour,
+ * which they take or don't as they would an invitation.
+ */
+function YourPlans() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const plans = sim.universe.scheduled.filter((x) => x.kind === MEET_KIND && x.status === 'pending' && x.payload.personId === person.id).sort((a, b) => a.at - b.at).slice(0, 8);
+  if (plans.length === 0) return null;
+  return (
+    <Panel title="Your Plans" subtitle="Called off with a day’s notice, it costs nothing">
+      <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+        {plans.map((p) => {
+          const c = contactsOf(person).find((x) => x.id === p.payload.contactId);
+          const zone = CITIES.require(c?.cityId ?? person.currentLocationId).timeZone;
+          const no = cancelRefusal(sim, person, p.id);
+          const late = p.at - sim.now < MS_DAY;
+          return (
+            <li key={p.id} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+              <span>{p.label}, {formatDate(p.at, zone)} at {formatTime(p.at, zone)}</span>
+              <Gated feature="social.cancel" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (late ? 'Short notice: they’ll wait a few days before making plans' : 'With notice: it costs nothing')} onClick={() => { const r = run<{ late: boolean }>('social.cancel', { itemId: p.id }); if (r.ok) toast(r.value!.late ? 'Called off, at short notice.' : 'Called off, with notice.', 'neutral'); }}>Call It Off</Gated>
+              <Gated feature="social.reschedule" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'The next day, the same hour, if it suits them'} onClick={() => { const r = run<{ moved: boolean; reason?: string }>('social.reschedule', { itemId: p.id, at: p.at + MS_DAY }); if (r.ok) toast(r.value!.moved ? 'Moved to the next day.' : `It didn’t suit them: ${r.value!.reason}`, r.value!.moved ? 'positive' : 'neutral'); }}>The Next Day Instead</Gated>
+            </li>
+          );
+        })}
+      </ul>
+    </Panel>
+  );
+}
 
 /** What friends have asked you to, a meal, a visit, a game or a class (`social.answer`, from 2026-10-06): yes, and it's on the calendar; no; or left, and it lapses. */
 function AskedYou() {
@@ -107,9 +140,19 @@ function AskedYou() {
           const no = answerRefusal(sim, sim.player, c.id, true);
           return (
             <li key={c.id} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-              <span>{c.name}: {askWords(a)}, {formatDate(a.at, CITIES.require(c.cityId).timeZone)} at seven{a.item ? `, ${a.item}` : ''}</span>
+              <span>{c.name}: {askWords(a)}, {formatDate(a.at, CITIES.require(c.cityId).timeZone)} at {formatTime(a.at, CITIES.require(c.cityId).timeZone)}{a.item ? `, ${a.item}` : ''}</span>
               <Gated feature="social.answer" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: true }).ok) toast(`It’s on the calendar with ${first}.`, 'positive'); }}>Say Yes</Gated>
               <Gated feature="social.answer" className="btn btn-sm btn-ghost" title={answer.reason} onClick={() => { if (run('social.answer', { contactId: c.id, yes: false }).ok) toast(`You told ${first} another time.`, 'neutral'); }}>Say No</Gated>
+              {(() => {
+                const later = a.at + MS_DAY;
+                const no2 = answerRefusal(sim, sim.player, c.id, false, later);
+                return (
+                  <Gated feature="social.answer" className="btn btn-sm btn-ghost" disabled={Boolean(no2)} title={no2 ?? `Ask for ${formatDate(later, CITIES.require(c.cityId).timeZone)} instead`}
+                    onClick={() => { const r = run<{ at?: number; reason?: string }>('social.answer', { contactId: c.id, yes: false, at: later }); if (r.ok) toast(r.value!.at ? `${first} can do the next day.` : `${first} can’t: ${r.value!.reason}`, r.value!.at ? 'positive' : 'neutral'); }}>
+                    The Next Day Instead
+                  </Gated>
+                );
+              })()}
             </li>
           );
         })}
@@ -227,6 +270,7 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
   const dish = dishes.find((m) => m.item === item) ?? dishes[0];
   const [day, setDay] = useState(1);
   const [hour, setHour] = useState(19);
+  const [counter, setCounter] = useState<number | undefined>(undefined);
   const today = zonedParts(sim.now, zone);
   const at = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
   const inv: Invitation = { contactId: contact.id, at, what, ...(what === 'meal' && r ? { restaurantId: r.id, item: dish?.item } : {}), ...(what === 'play' ? { court } : {}), ...(what === 'class' ? { classId } : {}) };
@@ -248,6 +292,9 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
               <option value="walk" disabled={!homeCity}>A Walk In The Park</option>
               {homeCity && outingPrice(sim, homeCity, 'film') !== undefined && <option value="film">A Film At The Cinema</option>}
               {homeCity && outingPrice(sim, homeCity, 'pint') !== undefined && <option value="pint">A Pint At A Bar</option>}
+              {atSchoolWith(sim.player, contact) && <option value="study">Study Together At The Library</option>}
+              {contact.cityId === NEW_HAVEN_OUTINGS.cityId && <option value="coffee">A Coffee At Atticus Market</option>}
+              {contact.cityId === NEW_HAVEN_OUTINGS.cityId && <option value="show">A Show At The Yale Cabaret</option>}
             </select>
           </div>
           {what === 'class' && (
@@ -295,10 +342,19 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
             </select>
           </div>
           <button type="button" className="btn btn-sm" disabled={!invite.open || Boolean(no)} title={no ?? invite.reason} onClick={() => {
-            const a = run<{ accepted: boolean; reason?: string }>('social.invite', { ...inv });
-            if (a.ok) toast(a.value!.accepted ? `${first} said yes.` : `${first} said no: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral');
+            const a = run<{ accepted: boolean; reason?: string; counter?: number }>('social.invite', { ...inv });
+            if (a.ok) { setCounter(a.value!.counter); toast(a.value!.accepted ? `${first} said yes.` : `${first} said no: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }
           }}>{quote ? `Ask Them, Your Meal ${formatMoney(quote.total, cur, { cents: false })}` : 'Ask Them'}</button>
         </div>
+        {counter !== undefined && counter > sim.now && (
+          <div className="row gap-2 small" style={{ alignItems: 'center' }}>
+            <span>{first} could do {formatDate(counter, zone)} at {formatTime(counter, zone)}.</span>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!invite.open} title={invite.reason} onClick={() => {
+              const a = run<{ accepted: boolean; reason?: string }>('social.invite', { ...inv, at: counter });
+              if (a.ok) { setCounter(undefined); toast(a.value!.accepted ? `It’s on the calendar with ${first}.` : `${first} said no: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }
+            }}>Take That Time</button>
+          </div>
+        )}
         <Together contact={contact} />
         {homeCity && homeCity !== contact.cityId && <ComeToStay contact={contact} homeCity={homeCity} />}
         {contact.memory.length > 0 && (

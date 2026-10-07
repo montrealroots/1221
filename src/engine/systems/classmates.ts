@@ -52,6 +52,8 @@ import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
 import { occupiedAt } from './life';
+import { contactsOf, inviteRefusal } from './people';
+import { diningQuote, restaurantsIn } from './dining';
 import { exerts } from './body';
 
 export const CLASS = {
@@ -428,3 +430,29 @@ export const momentInClass = (sim: Simulation, person: Person, when: Instant): M
   const p = zonedParts(when, zone());
   return classMoment(sim, person, { year: p.year, month: p.month, day: p.day });
 };
+
+/**
+ * After a closing night (from 2026-10-08): a classmate in the cast who isn't
+ * a rival asks you out to eat half an hour after the show, at a place in
+ * town they'd spend on and a dish with a price (New Haven has no published
+ * pint price, so a first version asking for a pint was never offered), as a friend's ask is made
+ * (`systems/reachingout.ts`): yes, no, another time, or left to lapse. The
+ * one least recently out with you asks, so it isn't the same friend each run.
+ */
+export function celebrate(sim: Simulation, person: Person, cast: readonly { name: string }[], after: Instant, title: string): void {
+  const names = new Set(cast.map((x) => x.name));
+  const mates = contactsOf(person).filter((c) => c.classmate !== undefined && names.has(c.name) && !c.rival && !c.ask);
+  if (!mates.length) return;
+  const at = after + 30 * 60_000;
+  const c = [...mates].sort((a, b) => (a.kinds?.meal ?? 0) - (b.kinds?.meal ?? 0))[0]!;
+  const tiers = ['fast', 'casual', 'mid', 'upscale'];
+  const place = restaurantsIn(c.cityId).filter((x) => tiers.indexOf(x.tier) <= tiers.indexOf(c.spends) && x.menu.some((m) => m.price !== null && diningQuote(sim, x, [m.item], 'in'))).sort((a, b) => tiers.indexOf(a.tier) - tiers.indexOf(b.tier))[0];
+  const dish = place?.menu.find((m) => m.price !== null && diningQuote(sim, place, [m.item], 'in'));
+  if (!place || !dish) return;
+  const inv = { contactId: c.id, at, what: 'meal' as const, restaurantId: place.id, item: dish.item };
+  if (inviteRefusal(sim, person, inv)) return;
+  c.ask = { at, what: 'meal', restaurantId: place.id, item: dish.item, made: sim.now, about: `after the closing of ${title}` };
+  c.askedAt = sim.now;
+  c.memory.unshift({ at: sim.now, what: `Asked you out after the closing of ${title}` });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${c.name.split(' ')[0]} Asks You Out After The Closing`, body: `${c.name} would like to eat at ${place.name} after the closing of ${title}, at ${formatTime(at, zone())}.`, importance: 45, route: '/workspace/people' });
+}
