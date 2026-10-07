@@ -111,3 +111,16 @@ describe('a scene back for another reading', () => {
     expect(same).toBeCloseTo(interpretationOf(a) * LEARNING.sameReading, 10);
   });
 });
+
+describe('a weakness that keeps coming back', () => {
+  it('is named as one from the third time, counted', () => {
+    const sim = life('fb-count');
+    sim.player.craft = Object.fromEntries(Object.keys(sim.player.craft!).map((k) => [k, 60])) as never;
+    const days = [1, 8, 15, 22];
+    const shown = days.map((d) => { const a = prepared(sim, 0.2); showAt(sim, a, d); return a; });
+    expect(shown.map((a) => a.feedback!.kind)).toEqual(['new', 'recurring', 'recurring', 'recurring']);
+    expect(shown[1]!.feedback!.text).not.toMatch(/ time it’s been given/);
+    expect(shown[2]!.feedback!.text).toMatch(/^The same note as on October 8, 2026, in Acting I, the 3rd time it’s been given: it’s still there\./);
+    expect(shown[3]!.feedback!.text).toMatch(/the 4th time it’s been given/);
+  });
+});

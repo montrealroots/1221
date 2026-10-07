@@ -559,13 +559,17 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
 }
 
 /** A note's words with where it stands against the ones before: new, still there, better but not yet, or the step beyond. */
-export function feedbackWords(kind: NoteKind, body: string, before?: { on: string; course: string; level?: number }, level?: number): string {
+export function feedbackWords(kind: NoteKind, body: string, before?: { on: string; course: string; level?: number; given?: number }, level?: number): string {
   const when = before ? formatDate(at(parse(before.on), 12), zone()) : '';
   if (kind === 'advanced') return `It held together this time. The next step: ${body}`;
   if (kind === 'partial' && before) return `Better than on ${when}${before.level !== undefined && level !== undefined ? ` (${Math.round(before.level * 100)}% then, ${Math.round(level * 100)}% now)` : ''}, not there yet. ${body}`;
-  if (kind === 'recurring' && before) return `The same note as on ${when}, in ${before.course}: it’s still there. ${body}`;
+  // From the third time, how many: a weakness that keeps coming back is named as one (from a measured run, where one note came seventeen times in a year).
+  const times = before?.given !== undefined && before.given >= 2 ? `, the ${ordinal(before.given + 1)} time it’s been given` : '';
+  if (kind === 'recurring' && before) return `The same note as on ${when}, in ${before.course}${times}: it’s still there. ${body}`;
   return body;
 }
+
+const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
 
 function bandOf(score: number): Band {
   const b = WORK.bands;
@@ -607,7 +611,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const { kind, before } = recordNote(notes, focus, onDay, a.id, c.name, pick?.level);
   const partnerName = a.partner !== undefined ? person.school!.classmates[a.partner]?.name : undefined;
   const body = noteText(a, focus, pick?.level, partnerName);
-  const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, ...(before.level !== undefined ? { level: before.level } : {}) } : undefined;
+  const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, given: before.given, ...(before.level !== undefined ? { level: before.level } : {}) } : undefined;
   a.feedback = { course: c.name, teachers: c.teachers, text: feedbackWords(kind, body, prior, pick?.level), focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
   return showing;

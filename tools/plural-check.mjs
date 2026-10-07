@@ -35,6 +35,8 @@ const COUNTABLE = [
 // matched any more were dropped: an allowance with nothing to allow is a word
 // nothing reads.
 const ALLOWED = {
+  // An ordinal, not a count: "the 3rd time it's been given" (from 2026-10-08).
+  'src/engine/systems/coursework.ts': ['${ordinal(before.given + 1)} time'],
   // Figures printed to a decimal place read correctly at one: "1.0 hours".
   'src/engine/systems/life.ts': ['hours.toFixed(1)', 'available.toFixed(1)'],
   // Populations, printed with thousands separators.
