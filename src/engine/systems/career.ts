@@ -98,7 +98,7 @@ import { BODY } from '../content/body';
 /** Genres whose work fights or dances whatever the part asks (`GENRE_READS`): action and the musical. */
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
-import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
+import { RIVALS, castClassmate, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
@@ -396,6 +396,8 @@ export interface Booking {
   /** A commercial's product (`PRODUCTS`), drawn at the offer. */
   product?: string;
   status: 'offered' | 'accepted' | 'passed' | 'lapsed' | 'worked' | 'fired' | 'released';
+  /** A former classmate cast in it too, by their place in the class (`castClassmate`, from 2026-10-08). */
+  castmate?: number;
   dueAt: Instant;
   offeredAt: Instant;
   /** Days worked, and of them not yet paid. */
@@ -1509,8 +1511,9 @@ function finishJob(s: Simulation, person: Person, career: CareerRecord, booking:
     if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
     if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
-    // A castmate known from it (`systems/people.ts`, from 2026-10-01).
-    metAtWork(s, person, workCityOf(booking), booking.id, role.label);
+    // A castmate known from it (`systems/people.ts`, from 2026-10-01): the former classmate cast in it where there was one
+    // (from 2026-10-08), the person you already know, never a second; otherwise somebody new.
+    if (booking.castmate === undefined || !workedWith(s, person, booking.castmate, role.label, workDays(booking).length)) metAtWork(s, person, workCityOf(booking), booking.id, role.label);
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
     if (television) {
       const a = FILM_ROAD.audience;
@@ -1767,6 +1770,8 @@ export function registerCareer(sim: Simulation): void {
     // A classmate in the room who reads better is likelier to get it (`systems/rivals.ts`).
     const role = roleById(audition.roleId);
     const room = inTheRoom(s, person, audition);
+    // The class in the room, remembered on the contacts they are (from 2026-10-08).
+    metInTheRoom(s, person, room, role.label);
     const mine = auditionLevel(person.craft, role, audition.mode, audition.genre, audition.demands ?? []);
     const better = room.filter((r) => r.read > mine).sort((a, b) => b.read - a.read)[0];
     if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
@@ -2324,6 +2329,8 @@ export function registerCareer(sim: Simulation): void {
     booking.status = 'accepted';
     career.lastBookedAt = s.now;
     const workCity = workCityOf(booking);
+    // A former classmate cast in it too, now and then, where one suits it and is free (`castClassmate`, from 2026-10-08).
+    if (booking.castmate === undefined && days.length) { const i = castClassmate(s, person, booking.id, role, workCity, days[0]!.at, days.at(-1)!.at); if (i !== undefined) booking.castmate = i; }
     const zone = zoneOf(workCity);
     for (const d of days) {
       s.schedule({

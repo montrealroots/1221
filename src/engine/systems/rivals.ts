@@ -25,6 +25,7 @@ import { AGENCIES, ROLES, type Role } from '../content/career';
 import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
 import { classmatePresence, nudge } from './attributes';
 import { BONDS, bondMove, bondWord, type Classmate } from './school';
+import { contactsOf } from './people';
 
 export const RIVALS = {
   /** The chance a classmate, out of school, is in the room for one of the player's auditions. */
@@ -40,6 +41,13 @@ export const RIVALS = {
   rivalNews: 1.5,
   /** Trade items kept. */
   kept: 40,
+  /**
+   * A job taken with a former classmate cast in it too (from 2026-10-08): a
+   * job in this many, where one suits it, is free and works there; and the
+   * hours a day worked side by side count toward knowing each other, to the
+   * most a job adds. SLATE's estimates.
+   */
+  castmate: { chance: 0.15, readBelowBar: 10, hoursPerDay: 2, mostHours: 60 },
 } as const;
 
 /** The parts that make the trades, which trade, and how it puts it. */
@@ -58,7 +66,7 @@ const NEWSWORTHY: Readonly<Record<string, { source: 'Deadline' | 'Playbill'; wor
 export interface NewsItem { at: Instant; source: string; headline: string; about: 'you' | 'class' }
 
 /** A classmate's life after the degree: their agency, and the work they've booked. */
-export interface ClassmateCareer { agencyId?: string; credits: { roleId: string; year: number }[] }
+export interface ClassmateCareer { agencyId?: string; credits: { roleId: string; year: number }[]; /** On a job with the player until then (`castClassmate`, from 2026-10-08). */ busyUntil?: Instant }
 
 /** Something in the trades: kept on the player's record, the latest first, and a little recognition when it's them. */
 export function report(sim: Simulation, person: Person, source: string, headline: string, about: 'you' | 'class'): void {
@@ -122,7 +130,68 @@ export function inTheRoom(sim: Simulation, person: Person, audition: Audition): 
  */
 export function partTaken(person: Person, i: number): void {
   const m = person.school?.classmates[i];
-  if (m) m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, -BONDS.leadTaken)));
+  if (!m) return;
+  m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, -BONDS.leadTaken)));
+  // The person they are after school (`classmate` on the contact) follows the bond: a rival from there, not before.
+  const c = contactsOf(person).find((x) => x.classmate === i);
+  if (c && m.bond <= BONDS.rival) c.rival = true;
+}
+
+/**
+ * The class in the room, remembered (from 2026-10-08): each classmate there
+ * keeps it on the contact they are, and the player hears who, with the last
+ * thing the two of you shared, once an audition. Being in the room decides
+ * nothing by itself: the read does (`RIVALS.outread`).
+ */
+export function metInTheRoom(sim: Simulation, person: Person, room: readonly { i: number; name: string }[], roleLabel: string): void {
+  for (const r of room) {
+    const c = contactsOf(person).find((x) => x.classmate === r.i);
+    if (!c) continue;
+    const before = c.memory.find((m) => !m.what.startsWith('At an audition'));
+    c.memory.unshift({ at: sim.now, what: `At an audition for ${roleLabel}, both of you` });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${r.name.split(' ')[0]} Was At The Audition Too`, body: `${r.name}, from your class at Yale, read for ${roleLabel} as well.${before ? ` The last thing you shared: ${before.what.replace(/^At Yale: /, '').toLowerCase()}.` : ''}`, importance: 35, route: '/workspace/career' });
+  }
+}
+
+/**
+ * A job taken, and maybe a former classmate cast in it too (from 2026-10-08):
+ * one in `RIVALS.castmate.chance`, of those whose craft carries the part's
+ * level (within ten of its bar), who aren't on another job with you then, and
+ * who're signed (an agency sends them where the work is) or live in the
+ * job's town. How you get on decides nothing: a friend isn't cast for being
+ * one, nor a rival kept out. Booked, it's their credit (`classmateBooked`),
+ * once, and they're busy until the job ends. The classmate's index, or
+ * nothing.
+ */
+export function castClassmate(sim: Simulation, person: Person, bookingId: string, role: Role, cityId: string, from: Instant, until: Instant): number | undefined {
+  const school = person.school;
+  if (!school || school.standing !== 'graduated') return undefined;
+  const rng = sim.rng('career.rivals', person.id, `castmate-${bookingId}`);
+  if (rng.next() >= RIVALS.castmate.chance) return undefined;
+  const fit = school.classmates.map((m, i) => ({ m, i })).filter(({ m, i }) => {
+    if (!m.career || (m.career.busyUntil ?? 0) > from) return false;
+    if (readFor(m, role, 'room') < role.bar - RIVALS.castmate.readBelowBar) return false;
+    const c = contactsOf(person).find((x) => x.classmate === i);
+    return Boolean(m.career.agencyId) || c?.cityId === cityId;
+  });
+  if (!fit.length) return undefined;
+  const pick = fit[Math.floor(rng.next() * fit.length)]!;
+  classmateBooked(sim, person, pick.i, role, from);
+  pick.m.career!.busyUntil = until;
+  const c = contactsOf(person).find((x) => x.classmate === pick.i);
+  c?.memory.unshift({ at: sim.now, what: `Cast in ${role.label} with you` });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${pick.m.name.split(' ')[0]} Is In It Too`, body: `${pick.m.name}, from your class at Yale, is cast in ${role.label} beside you.`, importance: 45, route: '/workspace/career' });
+  return pick.i;
+}
+
+/** A job worked beside a former classmate: the contact they are keeps it, and the hours side by side. */
+export function workedWith(sim: Simulation, person: Person, i: number, roleLabel: string, days: number): boolean {
+  const c = contactsOf(person).find((x) => x.classmate === i);
+  if (!c) return false;
+  c.hours += Math.min(RIVALS.castmate.mostHours, days * RIVALS.castmate.hoursPerDay);
+  c.lastSeen = sim.now;
+  c.memory.unshift({ at: sim.now, what: `Worked together on ${roleLabel}` });
+  return true;
 }
 
 /** A part a classmate booked: on their record, and in the trades where it makes them. */
