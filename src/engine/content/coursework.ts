@@ -21,6 +21,9 @@
  */
 
 import type { Skill } from './school';
+import { CLASSICAL_SCENES } from './scenes-classical';
+import { MODERN_SCENES } from './scenes-modern';
+import { GREEK_SCENES } from './scenes-greek';
 
 /** The parts of a preparation SLATE keeps, each 0 to 1. */
 export type PrepDim = 'familiarity' | 'memorization' | 'interpretation' | 'rehearsal' | 'partner' | 'revision';
@@ -52,6 +55,7 @@ export interface Activity {
 
 /** A question a reading of the material answers, and the answers on offer: some the text supports, some it cuts against, and why. */
 export interface Question { id: 'circumstances' | 'relationship' | 'objective' | 'obstacle' | 'tactic'; label: string }
+/** An answer: supported by the text or cut against by it, and why either way (for a supported one, what it rests on). */
 export interface Option { id: string; text: string; supported: boolean; why?: string }
 
 /** A part in a scene: who, and the character-specific answers. */
@@ -75,9 +79,24 @@ export interface Scene {
   year: number;
   where: string;
   summary: string;
-  /** Prose drama, or verse (heightened language), which a classical course asks for. */
+  /**
+   * Modern prose drama, or classical heightened text, which a classical
+   * course asks for. 'verse' is the classical side, Shakespeare's prose
+   * included: Much Ado's church scene is prose, and the course takes it for
+   * its period and its wit, not its meter.
+   */
   language: 'prose' | 'verse';
   size: 'short' | 'medium' | 'long';
+  /** What kind of play it is, by its own tradition (Chekhov called The Cherry Orchard a comedy; SLATE files a scene by what it plays as). */
+  genre: 'comedy' | 'drama' | 'tragedy';
+  /**
+   * How much a scene asks of an actor, 1 to 3 (SLATE's reading: its length,
+   * how far its feeling travels, how much its language asks). Work is matched
+   * to where an actor is (`scenesFor` in `systems/coursework.ts`).
+   */
+  difficulty: 1 | 2 | 3;
+  /** A tradition a course asks for by name: The Greeks' tragedies and comedies in translation. */
+  tradition?: 'greek';
   circumstances: readonly Option[];
   relationship: readonly Option[];
   roles: readonly [Role, Role];
@@ -91,12 +110,13 @@ export const QUESTIONS: readonly Question[] = [
   { id: 'tactic', label: 'A Choice To Play' },
 ];
 
-const yes = (id: string, text: string): Option => ({ id, text, supported: true });
-const no = (id: string, text: string, why: string): Option => ({ id, text, supported: false, why });
+/** A reading the text supports; `why`, where given, is what in the text it rests on (a second defensible reading of the same question says its own). */
+export const yes = (id: string, text: string, why?: string): Option => ({ id, text, supported: true, ...(why ? { why } : {}) });
+export const no = (id: string, text: string, why: string): Option => ({ id, text, supported: false, why });
 
 export const SCENES: readonly Scene[] = [
   {
-    id: 'seagull-4', play: 'The Seagull', by: 'Anton Chekhov', year: 1896, where: 'Act Four', language: 'prose', size: 'long',
+    id: 'seagull-4', play: 'The Seagull', by: 'Anton Chekhov', year: 1896, where: 'Act Four', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
     summary: 'Two years after she left with Trigorin, Nina comes in from the storm to Konstantin’s study. She has been acting in the provinces and lost her child; he still loves her and begs her to stay.',
     circumstances: [
       yes('storm', 'A stormy autumn night, two years on; she has come in secret, and the household is at dinner next door'),
@@ -146,7 +166,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'dollhouse-3', play: 'A Doll’s House', by: 'Henrik Ibsen', year: 1879, where: 'Act Three, the last scene', language: 'prose', size: 'long',
+    id: 'dollhouse-3', play: 'A Doll’s House', by: 'Henrik Ibsen', year: 1879, where: 'Act Three, the last scene', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
     summary: 'Helmer has read Krogstad’s letter, raged at Nora, then forgiven her once the bond came back. Nora changes out of her costume, sits him down for their first serious talk in eight years, and leaves.',
     circumstances: [
       yes('night', 'Late at night after the costume party, the danger just over and Helmer relieved'),
@@ -196,7 +216,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'earnest-2', play: 'The Importance of Being Earnest', by: 'Oscar Wilde', year: 1895, where: 'Act Two, the garden', language: 'prose', size: 'medium',
+    id: 'earnest-2', play: 'The Importance of Being Earnest', by: 'Oscar Wilde', year: 1895, where: 'Act Two, the garden', language: 'prose', size: 'medium', genre: 'comedy', difficulty: 2,
     summary: 'Gwendolen arrives at the Manor House and meets Cecily, whom she takes for a guest. Each learns the other believes she’s engaged to Ernest Worthing, and tea becomes a war of manners.',
     circumstances: [
       yes('garden', 'A summer afternoon in the Manor House garden, tea about to be served'),
@@ -246,7 +266,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'vanya-2', play: 'Uncle Vanya', by: 'Anton Chekhov', year: 1898, where: 'Act Two, at night', language: 'prose', size: 'medium',
+    id: 'vanya-2', play: 'Uncle Vanya', by: 'Anton Chekhov', year: 1898, where: 'Act Two, at night', language: 'prose', size: 'medium', genre: 'drama', difficulty: 2,
     summary: 'In the small hours, after the storm, Sonya and her young stepmother Yelena make up after months of coldness and drink to it. Sonya confides she loves the doctor, Astrov.',
     circumstances: [
       yes('night', 'The middle of a sleepless night in the dining room, the storm passing'),
@@ -296,7 +316,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'trifles', play: 'Trifles', by: 'Susan Glaspell', year: 1916, where: 'The one act, the Wright kitchen', language: 'prose', size: 'medium',
+    id: 'trifles', play: 'Trifles', by: 'Susan Glaspell', year: 1916, where: 'The one act, the Wright kitchen', language: 'prose', size: 'medium', genre: 'drama', difficulty: 1,
     summary: 'While the men search the farmhouse for a motive for John Wright’s murder, Mrs. Hale and Mrs. Peters, the sheriff’s wife, find the dead canary in Minnie Wright’s sewing box, and decide what to do with it.',
     circumstances: [
       yes('kitchen', 'A cold winter morning in the dead man’s kitchen, the men upstairs looking for evidence'),
@@ -346,7 +366,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'julie', play: 'Miss Julie', by: 'August Strindberg', year: 1888, where: 'Midsummer Eve, the kitchen', language: 'prose', size: 'long',
+    id: 'julie', play: 'Miss Julie', by: 'August Strindberg', year: 1888, where: 'Midsummer Eve, the kitchen', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
     summary: 'On Midsummer Eve the Count’s daughter comes down to the kitchen and draws her father’s valet, Jean, into a game of command and seduction that crosses the line between master and servant.',
     circumstances: [
       yes('midsummer', 'Midsummer Eve in the manor kitchen, the Count away and the servants dancing in the barn'),
@@ -396,7 +416,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'cherry-orchard-4', play: 'The Cherry Orchard', by: 'Anton Chekhov', year: 1904, where: 'Act Four, the emptied house', language: 'prose', size: 'short',
+    id: 'cherry-orchard-4', play: 'The Cherry Orchard', by: 'Anton Chekhov', year: 1904, where: 'Act Four, the emptied house', language: 'prose', size: 'short', genre: 'drama', difficulty: 1,
     summary: 'On the day the family leaves the estate Lopakhin has bought, everyone arranges for him to be alone with Varya so he can propose at last. They talk about something she has lost and the weather, and he’s called away.',
     circumstances: [
       yes('departure', 'An October morning, the house emptied and the carriages waiting; the orchard is already being cut down'),
@@ -446,7 +466,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'pygmalion-4', play: 'Pygmalion', by: 'Bernard Shaw', year: 1913, where: 'Act Four, the Wimpole Street laboratory', language: 'prose', size: 'medium',
+    id: 'pygmalion-4', play: 'Pygmalion', by: 'Bernard Shaw', year: 1913, where: 'Act Four, the Wimpole Street laboratory', language: 'prose', size: 'medium', genre: 'comedy', difficulty: 2,
     summary: 'After the triumph at the ambassador’s party, Higgins and Pickering congratulate themselves and go up to bed without a word to Eliza. Left with Higgins, she throws his slippers at him and asks what is to become of her.',
     circumstances: [
       yes('after-party', 'Midnight, back from the party where she passed as a duchess; the bet is won'),
@@ -496,7 +516,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'playboy-3', play: 'The Playboy of the Western World', by: 'J. M. Synge', year: 1907, where: 'Act Three, the shebeen', language: 'prose', size: 'medium',
+    id: 'playboy-3', play: 'The Playboy of the Western World', by: 'J. M. Synge', year: 1907, where: 'Act Three, the shebeen', language: 'prose', size: 'medium', genre: 'comedy', difficulty: 2,
     summary: 'After Christy wins every race on the strand, he and Pegeen are left alone in the shebeen and court in Synge’s high Mayo talk, planning to marry, before Christy’s father, whom he claimed to have killed, comes back.',
     circumstances: [
       yes('after-races', 'Evening in Flaherty’s shebeen after the races, the two alone for a moment'),
@@ -546,7 +566,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'machinal-2', play: 'Machinal', by: 'Sophie Treadwell', year: 1928, where: 'Episode Two, At Home', language: 'prose', size: 'short',
+    id: 'machinal-2', play: 'Machinal', by: 'Sophie Treadwell', year: 1928, where: 'Episode Two, At Home', language: 'prose', size: 'short', genre: 'drama', difficulty: 2,
     summary: 'At home in the evening, the Young Woman tells her mother that her employer, Mr. Jones, wants to marry her; she doesn’t love him and is afraid. Her mother asks about his money and wants the match.',
     circumstances: [
       yes('home', 'Evening at home in a cramped city flat after work, the garbage to go out'),
@@ -596,7 +616,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'muchado-4-1', play: 'Much Ado About Nothing', by: 'William Shakespeare', year: 1599, where: 'Act Four, Scene One, the church', language: 'verse', size: 'medium',
+    id: 'muchado-4-1', play: 'Much Ado About Nothing', by: 'William Shakespeare', year: 1599, where: 'Act Four, Scene One, the church', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 2,
     summary: 'Hero has been shamed at the altar and left for dead. Alone in the church, Beatrice and Benedick confess their love, and Beatrice asks him to kill Claudio.',
     circumstances: [
       yes('church', 'The church, minutes after the wedding broke apart and the others left'),
@@ -646,7 +666,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'romeo-2-2', play: 'Romeo and Juliet', by: 'William Shakespeare', year: 1597, where: 'Act Two, Scene Two, the orchard', language: 'verse', size: 'long',
+    id: 'romeo-2-2', play: 'Romeo and Juliet', by: 'William Shakespeare', year: 1597, where: 'Act Two, Scene Two, the orchard', language: 'verse', size: 'long', genre: 'tragedy', difficulty: 2,
     summary: 'After the Capulets’ feast, Romeo climbs into the orchard and hears Juliet at her window speak of her love; they exchange vows and agree to marry.',
     circumstances: [
       yes('night', 'The night of the feast, in the Capulet orchard, Juliet at her window and the Nurse calling'),
@@ -696,7 +716,7 @@ export const SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'macbeth-1-7', play: 'Macbeth', by: 'William Shakespeare', year: 1606, where: 'Act One, Scene Seven, outside the feast', language: 'verse', size: 'medium',
+    id: 'macbeth-1-7', play: 'Macbeth', by: 'William Shakespeare', year: 1606, where: 'Act One, Scene Seven, outside the feast', language: 'verse', size: 'medium', genre: 'tragedy', difficulty: 3,
     summary: 'With Duncan at supper under his roof, Macbeth decides to go no further with the murder. Lady Macbeth finds him and turns him back.',
     circumstances: [
       yes('feast', 'Night at Inverness, Duncan at supper in the hall, Macbeth having left the table'),
@@ -745,6 +765,9 @@ export const SCENES: readonly Scene[] = [
       },
     ],
   },
+  ...CLASSICAL_SCENES,
+  ...MODERN_SCENES,
+  ...GREEK_SCENES,
 ];
 
 export const sceneById = (id: string): Scene | undefined => SCENES.find((s) => s.id === id);
@@ -765,8 +788,8 @@ export interface Template {
   courses: readonly string[];
   title: string;
   deliverable: string;
-  /** A scene with a partner, a scene of one's own (a monologue or a text), or none. */
-  material: 'scene' | 'verse-scene' | 'none';
+  /** A scene with a partner in modern prose, in classical text, from the Greek tragedies (The Greeks, by the Bulletin), or none. */
+  material: 'scene' | 'verse-scene' | 'greek-scene' | 'none';
   paired: boolean;
   dims: Partial<Record<PrepDim, { label: string; weight: number }>>;
   activities: readonly Activity[];
@@ -786,6 +809,13 @@ export interface Template {
   only?: Partial<Record<string, 'fall' | 'spring'>>;
   /** Material that is this season's play at Yale Rep (Text And Context, by the Bulletin), not a scene. */
   repPlay?: boolean;
+  /**
+   * Work shown in rounds, each at its own meeting, each reading only its parts
+   * of the preparation, and the note of one round to be taken in the next
+   * (spring Acting I's simulated rehearsals, from 2026-10-08). `gap` is how
+   * many of the course's meetings after the round before it.
+   */
+  rounds?: readonly { label: string; dims: readonly PrepDim[]; gap: number }[];
 }
 
 const read: Activity = { id: 'read', label: 'Read The Scene', minutes: 40, dim: 'familiarity', gain: 0.55 };
@@ -821,6 +851,58 @@ const SHOWCASE_SCENE: Template = {
 };
 
 export const TEMPLATES: readonly Template[] = [
+  {
+    // Spring Acting I: the Bulletin's "the second term includes a sequence of simulated rehearsals in order to put those
+    // principles and craft into practice". One scene taken through a rehearsal's stages in class, each shown and noted:
+    // at the table, then off book and on its feet, then run. How many rounds and what each asks is SLATE's reading.
+    // Until 2026-10-08 the spring term set the fall's scene study again.
+    id: 'simulated-rehearsal', courses: ['DRAM 103a/b'], only: { 'DRAM 103a/b': 'spring' }, title: 'A Simulated Rehearsal', deliverable: 'A scene taken through a rehearsal in class: at the table, on its feet off book, and run',
+    material: 'scene', paired: true,
+    dims: {
+      familiarity: { label: 'Knows The Scene', weight: 0.15 }, memorization: { label: 'Lines', weight: 0.2 }, interpretation: { label: 'Table Work', weight: 0.2 },
+      rehearsal: { label: 'On Its Feet', weight: 0.2 }, partner: { label: 'With Your Partner', weight: 0.25 },
+    },
+    activities: [read, learn, alone, withPartner],
+    reads: { scene: 2, character: 1, emotion: 1 }, dueAfter: 2, revised: false, par: 52,
+    rounds: [
+      { label: 'At The Table', dims: ['familiarity', 'interpretation'], gap: 0 },
+      { label: 'Off Book, On Its Feet', dims: ['memorization', 'rehearsal', 'partner'], gap: 2 },
+      { label: 'The Run', dims: ['familiarity', 'memorization', 'interpretation', 'rehearsal', 'partner'], gap: 2 },
+    ],
+    notes: {
+      familiarity: 'At the table the scene wasn’t known well enough yet to question it.',
+      interpretation: 'The table work stayed general: what each of you wants, and what’s in the way, needs deciding before it goes on its feet.',
+      memorization: 'Off book was the call, and the lines weren’t there; the room waited on them.',
+      rehearsal: 'On its feet it hadn’t found a shape yet: the moves were still being invented in front of us.',
+      partner: 'The two of you were still finding each other in it.',
+    },
+  },
+  {
+    // The Greeks (DRAM 293b): the Bulletin's "second-year scene study continuing to develop embodiment of heightened
+    // circumstances and poetic text, centered on scenes from classical Greek texts in translation and/or modern poetic
+    // adaptations; students prepare and rehearse scenes for presentation and exploration in class". The scenes are from
+    // public-domain translations (Jebb's Sophocles, Murray's Euripides and Aeschylus; research-yale-school-2.json).
+    id: 'greek-scene', courses: ['DRAM 293b'], title: 'A Scene From The Greeks', deliverable: 'A scene from a Greek tragedy in translation, prepared, rehearsed and presented in class, then shown again with the note taken',
+    material: 'greek-scene', paired: true,
+    dims: {
+      familiarity: { label: 'Knows The Play', weight: 0.1 }, memorization: { label: 'Lines', weight: 0.2 }, interpretation: { label: 'The Stakes And The Text', weight: 0.25 },
+      rehearsal: { label: 'Rehearsal', weight: 0.2 }, partner: { label: 'With Your Partner', weight: 0.25 },
+    },
+    activities: [
+      { id: 'read', label: 'Read The Play', minutes: 90, dim: 'familiarity', gain: 0.5 },
+      learn,
+      { id: 'voice-text', label: 'Speak The Text Aloud', minutes: 50, dim: 'interpretation', gain: 0.35, requires: { dim: 'familiarity', at: 0.3, why: 'Read the play first.' }, trains: 'classical' },
+      alone, withPartner, revise,
+    ],
+    reads: { classical: 2, voice: 1, emotion: 1 }, dueAfter: 4, revised: true, par: 58,
+    notes: {
+      familiarity: 'The play around the scene wasn’t known: what has happened before it, and what the gods and the city want, is what it stands on.',
+      memorization: 'The text was still being paraphrased, and translated verse falls apart that way.',
+      interpretation: 'The stakes were played small: in these plays a choice is life or death, and the language has to carry that size.',
+      rehearsal: 'It needed more time on its feet, finding how much stillness the text can hold.',
+      partner: 'The two of you weren’t yet in the same argument.',
+    },
+  },
   {
     id: 'scene-study', courses: ['DRAM 103a/b', 'DRAM 303a'], title: 'Scene Study', deliverable: 'A scene shown in class, then shown again with the note taken',
     material: 'scene', paired: true,

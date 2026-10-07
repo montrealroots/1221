@@ -19,7 +19,9 @@ import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/conte
 import {
   BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
+  notesOf, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
+import { OBJECTIVE_DIM, noteSubject, objectiveLabel, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 import { garmentsOf } from '@/engine/systems/wardrobe';
 import { phonesOf } from '@/engine/systems/phones';
 import { routinesOf } from '@/engine/systems/routines';
@@ -45,6 +47,7 @@ export function CourseworkPane() {
         ? <Panel title="Work Set"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
       {past.length > 0 && <Shown list={past} />}
+      <NotesLedger />
       <Partners />
     </div>
   );
@@ -107,16 +110,23 @@ function AssignmentCard({ a }: { a: Assignment }) {
   const parts = preparedParts(person, a, due);
   const dims = (Object.keys(t.dims) as PrepDim[]).filter((d) => PREP_DIMS.includes(d));
   const course = COURSES.find((c) => c.code === a.course)!;
+  const weights = weightsOf(a);
   return (
-    <Panel title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`}>
+    <Panel title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`}>
       <div className="col gap-3">
         <div className="small">
           {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {scene.where}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
             : a.repPlay ? <>On <strong>{a.repPlay}</strong>, this season at Yale Rep. {t.deliverable}.</>
               : <>{t.deliverable}{mate ? `, with ${mate.name}` : ''}.</>}
         </div>
+        {(a.objective || a.revisit) && (
+          <div className="small">
+            {a.objective && <div><strong>Put First: {objectiveLabel(t, a.objective)}.</strong> <span className="xs dim">{objectiveWhy(a, notesOf(courseworkOf(sim, person)!))}</span></div>}
+            {a.revisit && scene && <div>{revisitWords(a, scene.roles[a.revisit.role].name, person.school!.classmates[a.revisit.partner ?? -1]?.name)}{a.revisit.change === 'reading' && <span className="xs dim"> {readingDiffers(a) ? 'Your reading differs from last time’s.' : 'Your reading is last time’s so far.'}</span>}</div>}
+          </div>
+        )}
         <div className="grid grid-3">
-          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(t.dims[d]!.weight)}`} />)}
+          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}`} />)}
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           {t.activities.filter((x) => x.dim !== 'partner').map((act) => {
@@ -150,9 +160,10 @@ function TableWork({ a }: { a: Assignment }) {
             <option value="">Not Decided</option>
             {options.map((o) => <option key={o.id} value={o.id}>{o.text}</option>)}
           </select>
+          {a.shown && (() => { const o = options.find((x) => x.id === a.answers[q.id]); return o?.why ? <div className="xs dim">{o.supported ? 'What it rests on' : 'What cuts against it'}: {o.why}</div> : null; })()}
         </div>
       ))}
-      <Fine>Ten minutes a question. Which readings the text supports is SLATE’s reading of the play; the showing counts only those.</Fine>
+      <Fine>Ten minutes a question. Which readings the text supports is SLATE’s reading of the play, and some questions have more than one; each supported reading counts the same. Once it’s shown, each choice says what in the text it rests on or what cuts against it.</Fine>
     </div>
   );
 }
@@ -232,12 +243,44 @@ function FeedbackBlock({ a }: { a: Assignment }) {
   const f = a.feedback!;
   return (
     <div className="col gap-1">
-      <div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}` : ''}</div>
+      <div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div>
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
       <div className="xs dim">Simulated feedback in {f.course}, taught by {f.teachers}: the game’s words, not theirs.</div>
       {!f.seen && <div><Gated feature="school.read_feedback" className="btn btn-sm btn-ghost" onClick={() => run('school.read_feedback', { assignmentId: a.id })}>Take The Note</Gated></div>}
     </div>
+  );
+}
+
+const KIND_LABEL: Record<NoteKind, string> = { new: 'A New Note', recurring: 'Still There', partial: 'Better, Not Yet', applied: 'Taken', advanced: 'The Next Step' };
+
+/** Why an assignment asks what it asks first: the note that keeps coming back, or the part this course hasn't asked of you lately. */
+function objectiveWhy(a: Assignment, notes: readonly NoteRecord[]): string {
+  const dim = OBJECTIVE_DIM[a.objective!];
+  const rec = notes.find((n) => n.key === `dim:${dim}` && n.status === 'open' && n.given >= 2);
+  return rec ? `Your notes have named it ${rec.given} times since ${dayOfKey(rec.first)}; it weighs more in this showing.` : 'The course hasn’t asked it of you lately; it weighs more in this showing.';
+}
+
+/** The ledger: every note given, by what it's about, across courses; open ones first. */
+function NotesLedger() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const cw = courseworkOf(sim, person);
+  const notes = cw ? notesOf(cw).filter((n) => !n.key.startsWith('advanced:')) : [];
+  if (!notes.length) return null;
+  const sorted = [...notes].sort((x, y) => (x.status === y.status ? (x.last < y.last ? 1 : -1) : x.status === 'open' ? -1 : 1));
+  return (
+    <Panel title="Your Notes" subtitle="What showings have named, across courses, and where each stands">
+      <div className="col gap-1">
+        {sorted.map((n) => (
+          <div key={n.key} className="row-between small">
+            <span>{noteSubject(n.key)} <span className="xs dim">· Given {n.given} {n.given === 1 ? 'time' : 'times'}, first {dayOfKey(n.first)}, last {dayOfKey(n.last)}</span></span>
+            <span className="xs">{n.status === 'resolved' ? `Taken ${dayOfKey(n.resolvedOn!)}` : n.history.at(-1)?.kind === 'partial' ? 'Better, Not Yet' : 'Open'}</span>
+          </div>
+        ))}
+        <Fine>Simulated notes: the game’s reading of the work, never a teacher’s words. A note taken isn’t given again unless the part slips back.</Fine>
+      </div>
+    </Panel>
   );
 }
 
