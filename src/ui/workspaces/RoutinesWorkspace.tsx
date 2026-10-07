@@ -375,8 +375,12 @@ function schoolSteps(person: Person): { key: string; label: string; step: Routin
   if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return [];
   const term = Math.max(0, school.termsBegun - 1);
   const when = termStart(term).fall ? 'fall' : 'spring';
-  return COURSES.filter((c) => c.year === yearOfTerm(term) && c.terms.includes(when)).flatMap((c) => {
+  const parts = [
+    ...(school.casting ? [{ key: 'school:part', label: `${school.casting.production}: Learn Your Part`, step: { kind: 'school.learn_part', payload: { which: 'school' } } }] : []),
+    ...(school.rep ? [{ key: 'school:rep-part', label: `${school.rep.production}: Learn Your Part`, step: { kind: 'school.learn_part', payload: { which: 'rep' } } }] : []),
+  ];
+  return [...parts, ...COURSES.filter((c) => c.year === yearOfTerm(term) && c.terms.includes(when)).flatMap((c) => {
     const t = templateFor(c.code, when);
     return (t?.activities ?? []).filter((a) => a.dim !== 'partner').map((a) => ({ key: `school:${c.code}:${a.id}`, label: `${c.name}: ${a.label}`, step: { kind: 'school.prepare', payload: { course: c.code, activity: a.id } } }));
-  });
+  })];
 }

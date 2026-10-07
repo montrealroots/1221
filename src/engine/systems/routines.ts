@@ -68,7 +68,9 @@ export function routineTimeRefusal(t: Partial<RoutineTime>): string | undefined 
 /** The commands a step can be. */
 // A course's preparation too (from 2026-10-07): a step names the course, so it does whatever work that course has open,
 // with every check the button has; a refusal (nothing open, a need not met, new feedback unread) stops the routine there.
-export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit', 'school.prepare']);
+// A part's lines learned between calls joined them on 2026-10-07 (`school.learn_part`, `systems/production.ts`); catching up the
+// blocking and working a note answer what happened at a call, so they stay the player's.
+export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit', 'school.prepare', 'school.learn_part']);
 export const MAX_STEPS = 12;
 
 export const routinesOf = (person: Person): Routine[] => (person.routines ??= []);
@@ -81,6 +83,7 @@ export function stepLabel(person: Person, step: RoutineStep): string {
     case 'food.cook': return `Cook ${recipeById(String(step.payload.recipeId))?.name ?? 'A Recipe'}${step.payload.servings === undefined ? '' : `, ${Number(step.payload.servings)} Servings`}`;
     case 'clothes.wear_outfit': return `Wear ${person.outfits?.find((o) => o.id === step.payload.outfitId)?.name ?? 'An Outfit'}`;
     case 'school.prepare': return `${COURSES.find((c) => c.code === step.payload.course)?.name ?? 'A Course'}: ${TEMPLATES.flatMap((t) => t.activities).find((a) => a.id === step.payload.activity)?.label ?? 'Prepare'}`;
+    case 'school.learn_part': return step.payload.which === 'rep' ? 'Learn Your Part At Yale Rep' : 'Learn Your Part';
     default: return step.kind;
   }
 }
@@ -92,6 +95,7 @@ export function routineRefusal(name: string, steps: readonly RoutineStep[]): str
   if (steps.length > MAX_STEPS) return `Twelve steps at most.`;
   if (steps.some((s) => !ROUTINE_COMMANDS.has(s.kind))) return 'A routine is made of everyday things.';
   if (steps.some((s) => s.kind === 'life.look_after' && !LOOKING_AFTER[s.payload.action as LookAfter])) return 'That isn’t something you can do for yourself.';
+  if (steps.some((s) => s.kind === 'school.learn_part' && s.payload.which !== undefined && s.payload.which !== 'school' && s.payload.which !== 'rep')) return 'That isn’t a part you could be cast in.';
   // A school step names a course that has work, and a step that work has.
   for (const s of steps) {
     if (s.kind !== 'school.prepare') continue;
