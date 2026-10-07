@@ -13,6 +13,7 @@
  * sizes what unwashed sheets do to a night's sleep.
  */
 
+import { salesTaxRate } from '../content/tax';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -38,7 +39,10 @@ export function beddingOffers(sim: Simulation, person: Person): { set: BeddingSe
   const bed = bedAtHome(person);
   const country = CITIES.get(person.home?.cityId ?? '')?.countryId;
   if (!bed || !country) return [];
-  return BEDDING_SETS.filter((s) => s.country === country && s.sizes.includes(bed.size)).map((set) => ({ set, cost: inSaveMoney(sim, Math.round(set.price * 100), set.currency) }));
+  // America's and Canada's shelf prices are before the sales tax, added at the till; Britain's, Ireland's and
+  // Mexico's include their VAT (from 2026-10-06; until then America's and Canada's were charged without it).
+  const tax = country === 'us' || country === 'ca' ? salesTaxRate(person.home!.cityId, sim.now, 'furniture') : 0;
+  return BEDDING_SETS.filter((s) => s.country === country && s.sizes.includes(bed.size)).map((set) => ({ set, cost: inSaveMoney(sim, Math.round(set.price * (1 + tax) * 100), set.currency) }));
 }
 
 /** Why a set can't be bought now, or nothing. */

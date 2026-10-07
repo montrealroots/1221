@@ -8,7 +8,8 @@
  *   npx vite-node tools/catalog-coverage.mjs --write   (rewrite the report)
  *   npx vite-node tools/catalog-coverage.mjs --check   (fail if it's stale)
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { BEDDING_SETS } from '../src/engine/content/bedding.ts';
 import { BRAND_TARGET, CATEGORIES } from '../src/engine/content/catalogtaxonomy.ts';
 import { CLOTHING_PRODUCTS } from '../src/engine/content/clothingcatalog.ts';
 import { SNEAKERS, SNEAKER_RETAIL } from '../src/engine/content/sneakers.ts';
@@ -75,6 +76,7 @@ const rvLine = (model) => {
   const at = words.findIndex((w, i) => i > 0 && /\d/.test(w));
   return (at < 0 ? words : words.slice(0, at)).join(' ');
 };
+const BEDDING_MARKET = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
 /**
@@ -105,8 +107,9 @@ const READ = {
   everyday: () => clothing('everyday'), formalwear: () => clothing('formalwear'), outerwear: () => clothing('outerwear'),
   activewear: () => clothing('activewear'), underwear: () => clothing('underwear'), sleepwear: () => clothing('sleepwear'),
   swimwear: () => clothing('swimwear'), thermals: () => clothing('thermals'), cultural: () => clothing('cultural'),
-  // Bath towels, sold and kept as the clothes are (from 2026-10-05); bedding isn't sold yet.
-  bedding: () => clothing('towels'),
+  // Bath towels, sold and kept as the clothes are (from 2026-10-05); and from 2026-10-06 IKEA's duvet sets, each set's
+  // sizes its variants (until then bedding wasn't sold).
+  bedding: () => [...clothing('towels'), ...BEDDING_SETS.map((b) => row('IKEA', `IKEA|${b.name}`, Math.max(1, b.sizes.length), BEDDING_MARKET[b.country] ?? b.country.toUpperCase()))],
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
   // Every one is Nike's Jordan Brand's, an Air Jordan or a Jordan signature shoe (from 2026-10-05 counted as its brand, not unbranded).
@@ -207,10 +210,27 @@ function count(rows) {
 
 const lines = [];
 lines.push('# Catalog coverage', '');
-lines.push('Written by `tools/catalog-coverage.mjs` from the catalogs themselves; don\'t edit by hand. The hierarchy is', '`src/engine/content/catalogtaxonomy.ts`. The target for a brand category is at least', `${BRAND_TARGET.brands} real brands, each with at least ${BRAND_TARGET.productsPerBrand} distinct real products where the brand\'s range reaches that`, 'many (the owner, 2026-10-03, corrected 2026-10-05: a hundred is a floor, not a ceiling). A brand whose researched', 'real range is smaller meets it with its whole range held (`docs/research/catalog-ranges.json`). Brands, distinct', 'products, variants and offers are counted apart: a product sold by several sellers is one product with several', 'offers, and its sizes, colors, storage tiers, configurations and pack counts are its variants, never products of', 'their own. Owned items are counted in each save, on Belongings. A category none of whose catalogs records a brand', 'counts its products as unbranded, which never counts toward the target. Each brand\'s own count is in', '`docs/CATALOG-DEPTH.md`.', '');
+lines.push('Written by `tools/catalog-coverage.mjs` from the catalogs themselves; don\'t edit by hand. The hierarchy is', '`src/engine/content/catalogtaxonomy.ts`. The target for a brand category is at least', `${BRAND_TARGET.brands} real brands, each with at least ${BRAND_TARGET.productsPerBrand} distinct real products where the brand's range reaches that`, 'many (the owner, 2026-10-03, corrected 2026-10-05: a hundred is a floor, not a ceiling). A brand whose researched', 'real range is smaller meets it with its whole range held (`docs/research/catalog-ranges.json`). Brands, distinct', 'products, variants and offers are counted apart: a product sold by several sellers is one product with several', 'offers, and its sizes, colors, storage tiers, configurations and pack counts are its variants, never products of', 'their own. Owned items are counted in each save, on Belongings. A category none of whose catalogs records a brand', 'counts its products as unbranded, which never counts toward the target. Each brand\'s own count is in', '`docs/CATALOG-DEPTH.md`.', '');
 lines.push('## Brand categories', '');
-lines.push('| Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands Deep Enough | Variants | Offers | Unbranded | Markets | Met |');
-lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|');
+lines.push('| Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands Deep Enough | Variants | Offers | Unbranded | Markets | Read By | Met |');
+lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|');
+/**
+ * Which engine systems read a category's catalog (from 2026-10-06, the "functional coverage" requirement E11 asks):
+ * the content constants its reader counts, and its helpers', found by name in src/engine/systems. A catalog nothing
+ * reads is declared and does nothing, which is what THE ONE RULE forbids; this says so where it's so.
+ */
+const SELF = readFileSync('tools/catalog-coverage.mjs', 'utf8');
+const SYSTEM_FILES = readdirSync('src/engine/systems').filter((x) => x.endsWith('.ts')).map((x) => ({ name: x.replace(/\.ts$/, ''), text: readFileSync('src/engine/systems/' + x, 'utf8') }));
+const constantsIn = (text) => [...new Set(text.match(/\b[A-Z][A-Z0-9_]{2,}\b/g) ?? [])].filter((n) => !['IKEA', 'US', 'GB'].includes(n));
+const helperText = (name) => SELF.match(new RegExp('const ' + name + ' = [^\\n]+'))?.[0] ?? '';
+function readBy(id) {
+  const fn = READ[id];
+  if (!fn) return [];
+  const body = fn.toString();
+  const helpers = [...body.matchAll(/\b([a-z][A-Za-z]+)\(/g)].map((m) => helperText(m[1])).join('\n');
+  const names = constantsIn(body + '\n' + helpers);
+  return SYSTEM_FILES.filter((x) => names.some((n) => new RegExp('\\b' + n + '\\b').test(x.text))).map((x) => x.name).sort();
+}
 let met = 0;
 let brandCats = 0;
 const depth = ['# Catalog depth', '', 'Written by `tools/catalog-coverage.mjs`; don\'t edit by hand. Every brand in every brand category, with its distinct', `products in SLATE and whether it meets the depth target: at least ${BRAND_TARGET.productsPerBrand}, or its whole researched range`, '(`docs/research/catalog-ranges.json`). Short means more of its real range is to be researched and added.', ''];
@@ -240,7 +260,7 @@ for (const c of CATEGORIES.filter((x) => x.structure !== 'service')) {
   if (ok) met += 1;
   const per = k.perBrand ? `${k.perBrand.least} / ${k.perBrand.median} / ${k.perBrand.most}` : '—';
   const status = c.structure === 'narrow' ? `Narrow market: ${c.realRange}` : ok ? 'Yes' : k.products === 0 ? 'No catalog yet' : 'No';
-  lines.push(`| ${c.department} | ${c.label} | ${k.brands} | ${Math.min(100, Math.round((k.brands / BRAND_TARGET.brands) * 100))}% | ${k.products} | ${per} | ${deep} | ${k.variants} | ${k.offers} | ${k.unbranded} | ${k.markets.join(', ') || '—'} | ${status} |`);
+  lines.push(`| ${c.department} | ${c.label} | ${k.brands} | ${Math.min(100, Math.round((k.brands / BRAND_TARGET.brands) * 100))}% | ${k.products} | ${per} | ${deep} | ${k.variants} | ${k.offers} | ${k.unbranded} | ${k.markets.join(', ') || '—'} | ${(() => { const by = readBy(c.id); return by.length ? by.join(', ') : k.products ? 'Nothing' : '—'; })()} | ${status} |`);
 }
 lines.push('', `${met} of ${brandCats} brand and narrow categories meet the target.`, '');
 lines.push('## Service directories', '', 'Counted by their own structure: providers, branches or listings, and the towns they cover.', '');
