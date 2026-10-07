@@ -84,7 +84,7 @@ import { exerts } from './body';
 import { BODY } from '../content/body';
 import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
-import { lapseTerm, meetingWeight, mateRecord, scheduleOrientation, setWork } from './coursework';
+import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
 import { STAGE_LABEL, callAnswered, callMissed, nightFactor, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -1577,6 +1577,8 @@ export function registerSchool(sim: Simulation): void {
     const meet = (here: boolean, excused: boolean) => courses.map((course) => {
       const weight = meetingWeight(s, person, course.code, day, item.at, here, excused);
       setWork(s, person, course.code, day);
+      // In class, a partner may ask for an evening (`partnerAsks`, from 2026-10-07).
+      if (here) partnerAsks(s, person, course.code, day);
       return weight;
     });
     // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day

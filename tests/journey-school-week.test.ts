@@ -123,7 +123,9 @@ describe('the first weeks at Yale', () => {
       expect(next.sceneId).not.toBe(acting.sceneId);
     }
     const partner = sim.player.school!.classmates[acting.partner!]!;
-    expect(trustOf(partner)).toBeGreaterThanOrEqual(WORK.trust.start - 1);
+    // Each ask of theirs left unanswered cost a little (`partnerAsks`, from 2026-10-07); nothing else of this week did.
+    const lapsed = courseworkOf(sim, sim.player)!.assignments.filter((x) => x.partner === acting.partner).flatMap((x) => x.asks ?? []).filter((k) => k.status === 'lapsed').length;
+    expect(trustOf(partner)).toBeGreaterThanOrEqual(WORK.trust.start - 1 + lapsed * WORK.ask.unanswered);
     expect(breaches(sim.universe)).toEqual([]);
   });
 });

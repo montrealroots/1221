@@ -268,7 +268,9 @@ describe('absence and the term', () => {
     tended(away, at(mo!, d!, 16, 0, y));
     const gone = courseworkOf(away, away.player)!.assignments.find((x) => x.id === b.id)!;
     expect(gone.status).toBe('missed');
-    expect(trustOf(away.player.school!.classmates[b.partner!]!)).toBe(trust0 + WORK.trust.missed);
+    // And any ask of theirs left unanswered meanwhile (`partnerAsks`, from 2026-10-07).
+    const lapsed = courseworkOf(away, away.player)!.assignments.filter((x) => x.partner === b.partner).flatMap((x) => x.asks ?? []).filter((k) => k.status === 'lapsed').length;
+    expect(trustOf(away.player.school!.classmates[b.partner!]!)).toBe(trust0 + WORK.trust.missed + lapsed * WORK.ask.unanswered);
     expect(breaches(away.universe)).toEqual([]);
   });
 

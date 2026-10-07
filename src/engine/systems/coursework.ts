@@ -91,6 +91,14 @@ export const WORK = {
    * own trust, which ended with the degree.
    */
   bond: { kept: 2, missed: -5 },
+  /**
+   * A partner asking you (from 2026-10-07): in class, how likely on a day
+   * there's nothing booked between you, the hour they ask for, how many days
+   * ahead they look for an evening they're free, and what an ask left
+   * unanswered does to their trust. A no costs nothing: a partner who can't
+   * have the evening they asked for isn't wronged by hearing so.
+   */
+  ask: { chance: 0.4, hour: 19, withinDays: 3, unanswered: -2 },
   /** A rehearsal with a partner: how long, the hours a call may be in, and how far ahead it must be asked for. */
   rehearsal: { minutes: 90, from: 7, until: 22, aheadHours: 2 },
   /** A partner's share of a scene: their own work against what you've done together. */
@@ -113,7 +121,13 @@ export interface Showing {
 
 export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean }
 
-export interface PartnerRehearsal { id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled' }
+export interface PartnerRehearsal {
+  id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled';
+  /** What the partner said after it, kept (`peerNote`): the game's words, marked simulated. */
+  said?: string;
+}
+/** A rehearsal the partner asked for: answered yes (booked), no, or not in time. */
+export interface PartnerAsk { id: string; at: Instant; until: Instant; status: 'open' | 'accepted' | 'declined' | 'lapsed' }
 
 export interface Assignment {
   id: string;
@@ -136,6 +150,7 @@ export interface Assignment {
   trained: number;
   /** What your partner has done together with you, and on their own. */
   rehearsals: PartnerRehearsal[];
+  asks?: PartnerAsk[];
   status: 'open' | 'revising' | 'done' | 'missed' | 'lapsed';
   shown?: Showing;
   feedback?: Feedback;
@@ -160,6 +175,8 @@ export interface Coursework {
 
 export const ORIENTATION_KIND = 'school.orientation';
 export const PARTNER_KIND = 'school.partner_rehearsal';
+/** A partner's ask, lapsing unanswered at its answer-by time. */
+export const ASK_KIND = 'school.partner_ask';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const at = (d: SchoolDate, hour: number, minute = 0): Instant => instantFromZoned({ ...d, hour, minute }, zone());
@@ -336,6 +353,7 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (!act) return 'That isn’t a step of this work.';
   if (act.dim === 'revision' && t.revised && a.status !== 'revising') return 'There’s no note to work on until it’s been shown.';
   if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this: read it first.';
+  if (a.asks?.some((k) => k.status === 'open')) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} asked to rehearse: answer first.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
   if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
@@ -663,6 +681,78 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
   moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
   remember(sim, mate, `Rehearsed ${what} together`);
+  r.said = peerNote(a, first!);
+}
+
+/**
+ * What a partner says after a rehearsal: the part of your preparation that
+ * held the scene back most, of those a partner feels (knowing the scene, the
+ * lines, the choices, time on its feet), or that it's coming together. The
+ * game's words, from your preparation as it stands; change the preparation
+ * and what they say changes.
+ */
+export function peerNote(a: Assignment, first: string): string {
+  const t = templateById(a.template)!;
+  const felt = (['familiarity', 'memorization', 'interpretation', 'rehearsal'] as const).filter((d) => t.dims[d]);
+  const weakest = [...felt].sort((x, y) => a.prep[x] - a.prep[y])[0];
+  if (!weakest || a.prep[weakest] >= 0.7) return `${first} says it’s coming together.`;
+  return {
+    familiarity: `${first} thinks you don’t know the scene well enough yet to play it.`,
+    memorization: `${first} says you were on book most of the time, and they couldn’t catch your eye.`,
+    interpretation: `${first} isn’t sure what you’re playing for: your choices weren’t clear to them.`,
+    rehearsal: `${first} says it needs more time on its feet.`,
+  }[weakest];
+}
+
+/**
+ * In class, a partner may ask to rehearse (from 2026-10-07): on a day nothing
+ * is booked between you and none of their asks is open, an evening in the
+ * next three they're free, before the work's due. Not a partner who'd rather
+ * work alone. Until then only the player asked.
+ */
+export function partnerAsks(sim: Simulation, person: Person, course: string, day: SchoolDate): void {
+  const cw = person.school?.coursework;
+  const a = cw?.assignments.find((x) => x.course === course && (x.status === 'open' || x.status === 'revising') && x.partner !== undefined);
+  if (!a) return;
+  const mate = person.school!.classmates[a.partner!]!;
+  if (trustOf(mate) < WORK.trust.wary) return;
+  if (a.asks?.some((k) => k.status === 'open') || a.rehearsals.some((r) => r.status === 'booked' && r.at > sim.now)) return;
+  if (sim.rng('school.partner', person.id, `ask-${a.id}-${keyOf(day)}`).next() >= WORK.ask.chance) return;
+  const due = at(parse(a.status === 'revising' ? a.revision!.dueOn : a.dueOn), 9);
+  for (let n = 1; n <= WORK.ask.withinDays; n += 1) {
+    const when = at(plus(day, n), WORK.ask.hour);
+    if (when + WORK.rehearsal.minutes * 60_000 > due) return;
+    if (mateBusy(person, a.partner!, when, WORK.rehearsal.minutes)) continue;
+    const k: PartnerAsk = { id: sim.nextId('rehearsal'), at: when, until: when - WORK.rehearsal.aheadHours * 3_600_000, status: 'open' };
+    if (k.until <= sim.now) continue;
+    (a.asks ??= []).push(k);
+    sim.schedule({ at: k.until, kind: ASK_KIND, label: `Answer ${mate.name.split(' ')[0]}`, category: 'school', priority: 33, requiresPlayer: false, payload: { personId: person.id, assignmentId: a.id, askId: k.id } });
+    const first = mate.name.split(' ')[0];
+    const what = sceneById(a.sceneId ?? '')?.play ?? templateById(a.template)!.title;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${first} Asks To Rehearse`, body: `${first} asks to rehearse ${what} on ${formatDate(when, zone())} at ${formatTime(when, zone())}. Answer by ${formatTime(k.until, zone())} that day.`, importance: 60, route: '/workspace/school' });
+    return;
+  }
+}
+
+/** Why a partner's ask can't be answered so, or nothing. */
+export function answerRefusal(sim: Simulation, person: Person, a: Assignment | undefined, askId: string, yes: boolean): string | undefined {
+  const k = a?.asks?.find((x) => x.id === askId);
+  if (!a || !k) return 'There’s no such request.';
+  if (k.status === 'lapsed') return 'You didn’t answer in time.';
+  if (k.status !== 'open') return 'You’ve answered it.';
+  if (!yes) return undefined;
+  const q = askRefusal(sim, person, a, k.at);
+  if (q.refused?.startsWith('You have ')) return `${q.refused.replace(/\.$/, '')}: say no instead.`;
+  return q.refused ?? q.declines;
+}
+
+/** A rehearsal booked with the partner, asked by either. */
+function book(sim: Simulation, person: Person, a: Assignment, when: Instant): PartnerRehearsal {
+  const mate = person.school!.classmates[a.partner!]!;
+  const r: PartnerRehearsal = { id: sim.nextId('rehearsal'), at: when, status: 'booked' };
+  a.rehearsals.push(r);
+  sim.schedule({ at: when, kind: PARTNER_KIND, label: `Rehearsal With ${mate.name.split(' ')[0]}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: WORK.rehearsal.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, assignmentId: a.id, rehearsalId: r.id } });
+  return r;
 }
 
 export function registerCoursework(sim: Simulation): void {
@@ -729,10 +819,38 @@ export function registerCoursework(sim: Simulation): void {
     if (q.refused) throw new CommandError(q.refused);
     const mate = person.school!.classmates[a!.partner!]!;
     if (q.declines) { remember(s, mate, `Couldn’t rehearse at ${formatTime(when, zone())}: ${q.declines}`); return { accepted: false, reason: q.declines }; }
-    const r: PartnerRehearsal = { id: s.nextId('rehearsal'), at: when, status: 'booked' };
-    a!.rehearsals.push(r);
-    s.schedule({ at: when, kind: PARTNER_KIND, label: `Rehearsal With ${mate.name.split(' ')[0]}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: WORK.rehearsal.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, assignmentId: a!.id, rehearsalId: r.id } });
+    const r = book(s, person, a!, when);
     return { accepted: true, rehearsalId: r.id };
+  });
+
+  sim.onCommand<{ assignmentId: string; askId: string; yes: boolean }, { booked: boolean; rehearsalId?: string }>('school.answer_partner', (p, { sim: s }) => {
+    const person = s.player;
+    const a = assignmentById(s, person, String(p?.assignmentId));
+    const yes = p?.yes === true;
+    const no = answerRefusal(s, person, a, String(p?.askId), yes);
+    if (no) throw new CommandError(no);
+    const k = a!.asks!.find((x) => x.id === p!.askId)!;
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === ASK_KIND && item.payload.askId === k.id) s.timeline.cancel(item.id, s.now);
+    const mate = person.school!.classmates[a!.partner!]!;
+    if (!yes) {
+      k.status = 'declined';
+      remember(s, mate, `You couldn’t rehearse on ${formatDate(k.at, zone())}, and said so`);
+      return { booked: false };
+    }
+    k.status = 'accepted';
+    return { booked: true, rehearsalId: book(s, person, a!, k.at).id };
+  });
+
+  sim.onSchedule(ASK_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const a = person ? assignmentById(s, person, String(item.payload.assignmentId)) : undefined;
+    const k = a?.asks?.find((x) => x.id === item.payload.askId);
+    if (!person || !a || !k || k.status !== 'open') return;
+    k.status = 'lapsed';
+    const mate = person.school!.classmates[a.partner!]!;
+    moveTrust(mate, WORK.ask.unanswered);
+    remember(s, mate, 'Asked you to rehearse, and heard nothing back');
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${mate.name.split(' ')[0]} Didn’t Hear Back`, body: `You didn’t answer about rehearsing on ${formatDate(k.at, zone())}, so it isn’t on.`, importance: 40, route: '/workspace/school' });
   });
 
   sim.onCommand<{ assignmentId: string; rehearsalId: string }, { late: boolean }>('school.cancel_rehearsal', (p, { sim: s }) => {

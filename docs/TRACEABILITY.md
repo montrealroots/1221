@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 399
-- Implemented But Unverified: 0
+- Implemented But Unverified: 1
 - Partially Implemented: 0
-- Commands in all: 399
+- Commands in all: 400
 
 ## Commands
 
@@ -331,14 +331,15 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |
 | `routine.save` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | — (also routineRefusal) | routinesOf (added to) | — | — | 5 | journey-clothes.test.ts; journey-school-week.test.ts |
 | `routine.set_time` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | No such routine. (also routineTimeRefusal) | — | — | — | 2 | journey-clothes.test.ts |
-| `school.ask_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | rehearsals (added to) | — | school.partner_rehearsal | 3 | journey-school-week.test.ts |
+| `school.answer_partner` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 1 | — |
+| `school.ask_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | — | — | — | 4 | journey-school-week.test.ts |
 | `school.cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 2 | journey-career.test.ts |
 | `school.call_in_sick` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; There are no classes today.; Today’s classes have been and gone; calling in sick now excuses nothing.; You’re well enough to go: staying away would be an unexcused absence. | — | — | — | 3 | journey-career.test.ts |
 | `school.cancel_rehearsal` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 2 | journey-school-week.test.ts |
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already.; and 1 more | — | — | — | 2 | journey-school-week.test.ts |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 2 | journey-school-production.test.ts |
 | `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 2 | journey-school-week.test.ts |
-| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 2 | journey-school-week.test.ts |
+| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 3 | journey-school-week.test.ts |
 | `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 2 | journey-school-week.test.ts |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 2 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 2 | journey-career.test.ts |
@@ -561,8 +562,9 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.evaluation` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
-| `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status; rehearsals (added to) | — | school.partner_rehearsal | 3 |
-| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 4 |
+| `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 3 |
+| `school.partner_ask` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
+| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 6 |
 | `school.payday` | `systems/school.ts` | systems/school.ts | — | Yes | — | 1 |
 | `school.recess` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.shift` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |

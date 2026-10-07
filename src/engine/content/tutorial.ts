@@ -179,7 +179,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Beside the craft are four attributes, on the School and Career screens. Presence is mostly given, and read at every audition and the showcase. Composure grows with every audition and performance; short of it, nerves add stress and take some of the work. Reputation is earned by work done, calls kept and the degree, and lost by a missed day, a firing or a missed audition; it sets how often you’re called in, and how an agency reads a showing. Recognition comes from screen work that airs, and Broadway, fades without new work, and once the public knows the name is paid above scale.',
     ],
     names: ['School', 'Your school, from the School panel', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company'],
-    opens: ['ui.school', 'school.call_in_sick', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'look.school', 'look.course', 'look.skill'],
+    opens: ['ui.school', 'school.call_in_sick', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'look.school', 'look.course', 'look.skill'],
   },
   {
     id: 'career',

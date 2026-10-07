@@ -17,7 +17,7 @@ import { CITIES } from '@/engine/content/geography';
 import { COURSES, YALE_DRAMA } from '@/engine/content/school';
 import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/content/coursework';
 import {
-  BAND_LABEL, ORIENTATION, WORK, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
+  BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
 } from '@/engine/systems/coursework';
 import { garmentsOf } from '@/engine/systems/wardrobe';
@@ -200,12 +200,27 @@ function Rehearsals({ a }: { a: Assignment }) {
           </Gated>
         </div>
       ) : <p className="small muted" style={{ margin: 0 }}>No days left before it’s due.</p>}
+      {(a.asks ?? []).filter((k) => k.status === 'open').map((k) => {
+        const yes = answerRefusal(sim, person, a, k.id, true);
+        return (
+          <div key={k.id} className="col gap-1">
+            <div className="small">{first} asks to rehearse on {formatDateTime(k.at, zone())}. Answer by {formatTime(k.until, zone())} that day.</div>
+            <div className="row gap-2">
+              <Gated feature="school.answer_partner" className="btn btn-sm" disabled={Boolean(yes)} title={yes ?? 'Yes: It Goes On Your Calendar'} onClick={() => { const r = run<{ booked: boolean }>('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: true }); if (r.ok) toast('On your calendar.', 'positive'); }}>Say Yes</Gated>
+              <Gated feature="school.answer_partner" className="btn btn-sm btn-ghost" title="No: They’ll Know, And It Costs Nothing" onClick={() => { if (run('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: false }).ok) toast(`You told ${first} you can’t.`, 'neutral'); }}>Say No</Gated>
+            </div>
+          </div>
+        );
+      })}
       {a.rehearsals.map((r) => (
-        <div key={r.id} className="row-between small">
+        <div key={r.id} className="col">
+        <div className="row-between small">
           <span>{formatDateTime(r.at, zone())}</span>
           {r.status === 'booked'
             ? <Gated feature="school.cancel_rehearsal" className="btn btn-sm btn-ghost" title={r.at - sim.now < 86_400_000 ? `Short notice: ${first} will mind` : 'With notice'} onClick={() => { if (run('school.cancel_rehearsal', { assignmentId: a.id, rehearsalId: r.id }).ok) toast('Called off.', 'neutral'); }}>Call It Off</Gated>
             : <span className="xs">{{ kept: 'Rehearsed', missedByYou: 'You Didn’t Come', missedByThem: `${first} Didn’t Come`, cancelled: 'Called Off', booked: '' }[r.status]}</span>}
+        </div>
+        {r.said && <div className="xs dim">{r.said} <span>(Simulated: the game’s words.)</span></div>}
         </div>
       ))}
     </div>
