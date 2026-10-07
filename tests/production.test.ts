@@ -15,6 +15,7 @@ import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { CALL_KIND, type Casting } from '@/engine/systems/school';
+import { routinesOf, stepLabel } from '@/engine/systems/routines';
 import { PROCESS, hasProcess, nightFactor, parFor, stagesOf } from '@/engine/systems/production';
 
 const zone = 'America/New_York';
@@ -210,6 +211,17 @@ describe('the process, played', () => {
     expect(note(sim)!.taken).toBe(false);
     expect(total(twin) - before).toBeGreaterThan(total(sim) - before);
   }, 300_000);
+
+  it('learns the part in a routine by the same command, saved only for a part there could be', () => {
+    const sim = castForSpring('pr-routine');
+    tended(sim, calls(sim, 'school')[0]!.at - 18 * MS_HOUR);
+    expect(sim.execute({ kind: 'routine.save', payload: { name: 'Bad', steps: [{ kind: 'school.learn_part', payload: { which: 'opera' } }] } }).error).toBe('That isn’t a part you could be cast in.');
+    sim.must({ kind: 'routine.save', payload: { name: 'Lines', steps: [{ kind: 'school.learn_part', payload: { which: 'school' } }] } });
+    const routine = routinesOf(sim.player).at(-1)!;
+    expect(stepLabel(sim.player, routine.steps[0]!)).toBe('Learn Your Part');
+    for (const step of routine.steps) sim.must({ kind: step.kind, payload: step.payload });
+    expect(process(sim)!.lines).toBeGreaterThan(0);
+  });
 
   it('refuses the part’s work to an actor cast in nothing', () => {
     const sim = life('pr-uncast');

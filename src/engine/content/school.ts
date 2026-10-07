@@ -235,6 +235,17 @@ export const CLASSES_2026_27 = {
   ] as readonly (readonly [string, string])[],
 };
 
+/**
+ * The protective equipment work-study requires (from 2026-10-08): the
+ * school's cost of attendance "includes $150 for required personal
+ * protective equipment for first-year students", and students "must be
+ * appropriately dressed for the work-study tasks at hand including required
+ * personal protective equipment such as steel-toed work shoes, as communicated
+ * by the work-study supervisor" (research-yale-school-2.json). What else the
+ * kit holds isn't published; the $150 is the school's figure.
+ */
+export const REQUIRED_PPE = { cost: 150_00, source: 'https://www.drama.yale.edu/admissions/financial-aid/ (cost of attendance 2026–2027); Yale Bulletin 2026–2027, work-study' } as const;
+
 /** Work-study: the hours every student works a year, assigned and elective, and the rate (Bulletin 2026–2027; the rate from the school's financial aid pages). */
 export const WORK_STUDY = { assignedHours: 150, electiveHours: 50, hourly: 23_00, source: 'Yale Bulletin 2026–2027, General Policies; https://www.drama.yale.edu/admissions/financial-aid/' } as const;
 

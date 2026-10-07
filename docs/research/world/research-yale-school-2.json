@@ -1,0 +1,460 @@
+{
+  "topic": "Yale David Geffen School of Drama, Acting MFA: public-domain Greek play texts for scene study (DRAM 293b The Greeks), Yale Cabaret and Summer Cabaret, filmed monologues and showcase, required supplies (2026-2027)",
+  "retrieved": "2026-10-07",
+  "findings": [
+    {
+      "what": "DRAM 293b The Greeks: description (2026-2027 Bulletin)",
+      "value": "Second-year scene-study module running alongside the final six weeks of Plays of Extended and Heightened Language; scenes from classical Greek texts in translation and/or modern poetic adaptations, prepared and rehearsed for presentation in class. Instructor Evan Yionoulis.",
+      "unit": "course description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "DRAM 293b, The Greeks The purpose of second-year scene study is to continue to develop the actor's ability to embody and activate heightened circumstances and poetic text. This module runs alongside the final six weeks of Plays of Extended and Heightened Language and is centered on scenes from classical Greek texts in translation and/or modern poetic adaptations. Students prepare and rehearse scenes for presentation and exploration in class. Evan Yionoulis",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, Medea, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation; Project Gutenberg eBook #35451 reproduces the Oxford University Press American Branch, New York, 1912 printing, copyright 1906",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/35451/pg35451.txt",
+      "quote": "OXFORD UNIVERSITY PRESS AMERICAN BRANCH NEW YORK: 35 WEST 32ND STREET 1912 ... Copyright, 1906, by OXFORD UNIVERSITY PRESS",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, The Trojan Women, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation; London, George Allen, 1905 (Project Gutenberg eBook #35171; an earlier PG edition is #10096)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/files/35171/35171-h/35171-h.htm",
+      "quote": "TRANSLATED INTO ENGLISH RHYMING VERSE WITH EXPLANATORY NOTES BY GILBERT MURRAY ... LONDON GEORGE ALLEN, 156, CHARING CROSS ROAD 1905",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, Electra, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation; first edition November 1905, London, George Allen & Unwin (Project Gutenberg eBook #14322)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/14322/pg14322.txt",
+      "quote": "LONDON: GEORGE ALLEN & UNWIN LTD _First Edition, November_ 1905",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, The Bacchae, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation, second edition, London, George Allen, 1906 (Project Gutenberg eBook #35173)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/35173/pg35173.txt",
+      "quote": "TRANSLATED INTO ENGLISH RHYMING VERSE _SECOND EDITION_ ... 1906 [All rights reserved]",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, Hippolytus and The Bacchae, tr. Gilbert Murray (Harvard Classics vol. 8)",
+      "value": "Gilbert Murray translations as printed in The Harvard Classics vol. 8, Nine Greek Dramas (P. F. Collier & Son; first 25 volumes published 1909); Project Gutenberg eBook #8418",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/8418/pg8418.txt",
+      "quote": "HIPPOLYTUS and THE BACCHAE By Euripides Translated by GILBERT MURRAY ... Nine Greek Dramas By Aeschylus, Sophocles, Euripides And Aristophanes",
+      "confidence": "high"
+    },
+    {
+      "what": "Harvard Classics first publication year (dates the Gutenberg Hippolytus/Bacchae and Frogs texts)",
+      "value": "1909 (first 25 volumes), P. F. Collier & Son",
+      "unit": "year",
+      "market": "us",
+      "source": "https://en.wikipedia.org/wiki/Harvard_Classics",
+      "quote": "published in 1909 (First 25 volumes), 1910 (Next 25 volumes)",
+      "confidence": "medium"
+    },
+    {
+      "what": "PD text: Aeschylus, Agamemnon, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation; London, Allen & Unwin, 1920 (Project Gutenberg eBook #14417; the PG text itself carries no date, the year is from the Internet Archive record)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://archive.org/details/aeschylagamemnon00aescrich",
+      "quote": "Publisher: London: Allen & Unwin ... Publication Date: 1920",
+      "confidence": "medium"
+    },
+    {
+      "what": "PD text URL: Aeschylus, Agamemnon, tr. Gilbert Murray (Gutenberg)",
+      "value": "https://www.gutenberg.org/cache/epub/14417/pg14417.txt",
+      "unit": "text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/14417/pg14417.txt",
+      "quote": "Agamemnon by Aeschylus TRANSLATED INTO ENGLISH RHYMING VERSE WITH EXPLANATORY NOTES BY GILBERT MURRAY",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text (line-numbered): Aeschylus, Agamemnon, tr. Herbert Weir Smyth",
+      "value": "Herbert Weir Smyth, Harvard University Press (Loeb), 1926; on Perseus with Greek line numbers",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0004%3Acard%3D810",
+      "quote": "Aeschylus. Agamemnon. Translated by Herbert Weir Smyth, Ph.D. Harvard University Press, 1926.",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Sophocles, Oedipus King of Thebes, tr. Gilbert Murray",
+      "value": "Gilbert Murray verse translation; first published February 1911, London, George Allen & Unwin (Project Gutenberg eBook #27673)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/27673/pg27673.txt",
+      "quote": "LONDON: GEORGE ALLEN & UNWIN LTD. _First published_ _February 1911_",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Sophocles, Antigone, tr. R. C. Jebb",
+      "value": "R. C. Jebb prose translation; Perseus cites Cambridge University Press, 1891 (Perseus notes it modernized the English); also on the Internet Classics Archive",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0186%3Acard%3D441",
+      "quote": "Sophocles. The Antigone of Sophocles. Edited with introduction and notes by Sir Richard Jebb. Cambridge: Cambridge University Press, 1891.",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text URL: Sophocles, Antigone, tr. R. C. Jebb (Internet Classics Archive, unmodernized)",
+      "value": "http://classics.mit.edu/Sophocles/antigone.html",
+      "unit": "text URL",
+      "market": "us",
+      "source": "http://classics.mit.edu/Sophocles/antigone.html",
+      "quote": "Translated by R. C. Jebb",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Sophocles, Oedipus Tyrannus, tr. R. C. Jebb",
+      "value": "R. C. Jebb prose translation; Cambridge University Press, 1887 (Perseus)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0192:card%3D300",
+      "quote": "Sophocles. The Oedipus Tyrannus of Sophocles. Edited with introduction and notes by Sir Richard Jebb. Cambridge University Press, 1887.",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Sophocles, Electra, tr. R. C. Jebb",
+      "value": "R. C. Jebb prose translation; Cambridge University Press, 1894 (Perseus); also on the Internet Classics Archive at http://classics.mit.edu/Sophocles/electra.html",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0188%3Acard%3D328",
+      "quote": "Sophocles. The Electra of Sophocles. Edited with introduction and notes by Sir Richard Jebb. Cambridge University Press, 1894.",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Sophocles, Oedipus the King, tr. F. Storr (Internet Classics Archive)",
+      "value": "Francis Storr verse translation (the MIT archive's Oedipus is Storr, not Jebb; Storr's Sophocles is also Project Gutenberg #31)",
+      "unit": "translator / text URL",
+      "market": "us",
+      "source": "http://classics.mit.edu/Sophocles/oedipus.html",
+      "quote": "Translated by F. Storr",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Euripides, Bacchae, tr. T. A. Buckley (line-numbered prose)",
+      "value": "T. A. Buckley prose; London, Henry G. Bohn, 1850 (Perseus)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0092:card%3D434",
+      "quote": "Euripides. The Tragedies of Euripides, translated by T. A. Buckley. London: Henry G. Bohn, 1850.",
+      "confidence": "high"
+    },
+    {
+      "what": "PD text: Aristophanes, The Frogs, tr. B. B. Rogers (Harvard Classics vol. 8)",
+      "value": "Benjamin Bickley Rogers translation as printed in The Harvard Classics vol. 8 (1909); Project Gutenberg eBook #7998",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/7998/pg7998.txt",
+      "quote": "THE FROGS OF ARISTOPHANES ... The Harvard Classics ... Nine Greek Dramas ... Translations By E D A Morshead E H Plumptre Gilbert Murray And B B Rogers",
+      "confidence": "medium"
+    },
+    {
+      "what": "PD text: Aristophanes, Lysistrata, tr. Jack Lindsay",
+      "value": "Jack Lindsay translation, London, Fanfrolico Press, [1926]; Project Gutenberg eBook #7700 (US public domain as a 1926 publication)",
+      "unit": "translator / year / text URL",
+      "market": "us",
+      "source": "https://www.bonhams.com/auction/20048/lot/2330/lindsay-norman-illustrator-aristophanes-lysistrata-london-fanfrolico-press-1926/",
+      "quote": "LINDSAY, NORMAN, illustrator. ARISTOPHANES. Lysistrata. London: Fanfrolico Press, [1926].",
+      "confidence": "medium"
+    },
+    {
+      "what": "PD text URL: Aristophanes, Lysistrata, tr. Jack Lindsay (Gutenberg)",
+      "value": "https://www.gutenberg.org/cache/epub/7700/pg7700.txt",
+      "unit": "text URL",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/7700/pg7700.txt",
+      "quote": "Title: Lysistrata Author: Aristophanes ... Translator: Jack Lindsay",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 1: Sophocles, Antigone — first Creon–Antigone confrontation (Jebb)",
+      "value": "Creon and Antigone alone after the Guard exits; lines 441-525, from Creon's 'do you admit, or deny' to 'While I live, no woman will rule me' (Ismene is sent for next)",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0186%3Acard%3D441",
+      "quote": "You, you with your face bent to the ground, do you admit, or deny that you did this? ... While I live, no woman will rule me. [525]",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 2: Sophocles, Oedipus Tyrannus — Oedipus–Teiresias (Jebb)",
+      "value": "Oedipus and Teiresias; lines 300-462, from Oedipus' opening address to Teiresias' parting challenge",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0192:card%3D300",
+      "quote": "Teiresias, whose soul grasps all things, both that which may be told and that which is unspeakable ... So go in and evaluate this, and if you find that I am wrong, say then that I have no wit in prophecy.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 3: Sophocles, Electra — Electra–Chrysothemis, the first sisters' scene (Jebb)",
+      "value": "Electra and Chrysothemis (Chorus has a few lines); about lines 328-471, from Chrysothemis' entrance to her exit with the offerings",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0188%3Acard%3D466",
+      "quote": "let me have your silence, [470] since if my mother hears of it, I believe that this attempt which I will dare shall in the end cause me bitterness. Exit Chrysothemis on the spectators' right.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 4: Euripides, Medea — first Jason–Medea confrontation (Murray)",
+      "value": "Jason and Medea (the Leader speaks twice); Jason's entrance through Medea's last reply before the Aegeus scene; Greek lines ~446-626 (line numbers from Perseus' Kovacs text, which is not PD; use Murray's PD text to perform)",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/35451/pg35451.txt",
+      "quote": "_Enter from the right_ JASON. JASON. Oft have I seen, in other days than these, How a dark temper maketh maladies No friend can heal.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Scene 4 line anchor: Medea, Jason's entrance at line 446",
+      "value": "Lines 446-491 card begins with Jason's entrance speech; Jason and Medea speak",
+      "unit": "line number",
+      "market": "us",
+      "source": "http://www.perseus.tufts.edu/hopper/text?doc=urn%3Acts%3AgreekLit%3Atlg0006.tlg003.perseus-eng1%3A446",
+      "quote": "Not now for the first time but often before I have seen what an impossible evil to deal with is a fierce temper.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 5: Euripides, Bacchae — Pentheus interrogates the bound Stranger (Dionysus) (Murray; Buckley for line numbers)",
+      "value": "Pentheus and Dionysus in stichomythia; Greek lines ~451-518 (Buckley card: Pentheus' questioning begins 454, Dionysus led off 515-518); Murray's PD verse text has the same scene",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/35173/pg35173.txt",
+      "quote": "[_The guards loose the arms of_ DIONYSUS; PENTHEUS _studies him for a while in silence, then speaks jeeringly_. DIONYSUS _remains gentle and unafraid_.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 5 line anchor: Bacchae, end of the Pentheus–Dionysus exchange (Buckley)",
+      "value": "Dionysus' exit lines about 515-518",
+      "unit": "line number",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0092:card%3D476",
+      "quote": "I will go, for I need not suffer that which is not necessary. But Dionysus, who you claim does not exist, will pursue you for these insults.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scene 6: Aeschylus, Agamemnon — the tapestry (carpet) scene, Clytemnestra–Agamemnon (Murray; Smyth for line numbers)",
+      "value": "Clytemnestra and Agamemnon; Clytemnestra enters with the tapestries at about line 855 (Smyth places the entrance direction near 850), Agamemnon agrees to tread the purple at 957-958 and goes in; Smyth marks his entry to the palace and Clytemnestra's exit at about 970-974. Murray's PD verse text has the same scene.",
+      "unit": "scene (speakers; line range)",
+      "market": "us",
+      "source": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0004%3Acard%3D944",
+      "quote": "I will tread upon a purple pathway as I pass to my palace halls.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Scene 6 in Murray's text: Agamemnon tapestry moment",
+      "value": "Murray's stage direction and Agamemnon's yielding lines",
+      "unit": "scene text",
+      "market": "us",
+      "source": "https://www.gutenberg.org/cache/epub/14417/pg14417.txt",
+      "quote": "[_The attendants spread tapestries of crimson and gold from the Chariot to the Door of the Palace._ AGAMEMNON _does not move_.]",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Cabaret: strictly extracurricular for actors; chair approves participation",
+      "value": "Extracurricular; Acting chair works with Cabaret artistic directors on approval; depends on casting obligations and academic standing",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "Yale Cabaret provides an additional, although strictly extracurricular, outlet for the exploration of a wide range of material, including self-scripted pieces, company-devised original work, adaptations, and musicals. The program's chair works directly with the Yale Cabaret artistic directors regarding approval of Cabaret participation by actors. Participation in Yale Cabaret productions is dependent on students' program-related casting obligations and academic standing.",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Cabaret: participation rules (encouraged, ranks 6th of 7 in scheduling priority, advance chair approval for Acting, none on academic warning)",
+      "value": "Encouraged but voluntary; conflicts never resolved in the Cabaret's favour; Acting and Directing chairs must approve in advance; students on academic warning may not participate",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "Students in all programs are encouraged to involve themselves in the Yale Cabaret ... Conflicts with these priorities will not be resolved in favor of the cabaret. ... approval from the chairs of the following academic programs is required in advance before a student commits to participation in the Yale Cabaret: Directing and Acting. ... No student on academic warning in any program may participate in the cabaret.",
+      "confidence": "high"
+    },
+    {
+      "what": "Scheduling priority of Yale Cabaret",
+      "value": "6th of 7 priorities (after Yale Rep calls, classes, ticketed School productions, other assigned projects, required work-study)",
+      "unit": "rank",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "6. Yale Cabaret productions, which are extracurricular 7. Any formally approved outside work, affinity group meetings, events, or productions, and elective work-study",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Cabaret: student-run, actors may direct",
+      "value": "Own student artistic and management leadership reporting to a board; entirely student-produced; only place students regularly leave their discipline",
+      "unit": "description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "With its own student artistic and management leadership, reporting to a board of directors comprising students, faculty, staff, and New Haven community members, the Yale Cabaret presents work that is entirely student-produced. It is the only area of production at the School where students regularly move out of their primary discipline of study: actors may direct, managers act, playwrights produce.",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Cabaret: acting program page note on double casting",
+      "value": "Actors who are double cast may not do Cabaret shows",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://www.drama.yale.edu/training/acting/program-information/",
+      "quote": "Actors who are double cast may not participate in Yale Cabaret productions.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Yale Cabaret: performance pattern (2024-25 season report)",
+      "value": "New show each weekend, Thursday-Saturday 8 p.m. plus 11 p.m. Friday and Saturday; 15 shows that season plus a two-production Ignite Festival",
+      "unit": "schedule",
+      "market": "us",
+      "source": "https://www.newhavenindependent.org/2024/10/01/yale_cab_2024/",
+      "quote": "Each weekend of the Cab's demanding season presents a new show Thursday through Saturday at 8 p.m., and at 11 p.m. on Fridays and Saturdays.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Yale Cabaret: shows per season (2024-25)",
+      "value": "15",
+      "unit": "shows",
+      "market": "us",
+      "source": "https://www.newhavenindependent.org/2024/10/01/yale_cab_2024/",
+      "quote": "15 shows — including the annual Dragaret, a celebration of cross-gender performance",
+      "confidence": "medium"
+    },
+    {
+      "what": "Yale Cabaret Season 59 (2026-27): shows listed on its site so far",
+      "value": "7 shows described (Dirty Butterfly, Sunena, Blood of the Lamb, an untitled Mary Magdalene play, a devised dance piece about grief, Push Party, Sanctuary City); Spring 2027 proposals open in November",
+      "unit": "shows",
+      "market": "us",
+      "source": "https://www.yalecabaret.org/shows/",
+      "quote": "Season 59 ... NEXUS – Coalescence. Connection. Creation.",
+      "confidence": "low"
+    },
+    {
+      "what": "Yale Summer Cabaret: student-run summer theater",
+      "value": "Student-run and interdisciplinary; a new artistic and management team each season",
+      "unit": "description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "During the summer, Yale Summer Cabaret is the exploratory theatrical home for David Geffen School of Drama students. Like Yale Cabaret, it is student-run and interdisciplinary. Each season, a new artistic and management team has the opportunity to shape the theater's vision",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Summer Cabaret 2026 season: productions and run weeks",
+      "value": "3 productions: Bacchae [or, Present Madness] June 25-27; Hedwig and the Angry Inch July 23-25 and July 30-Aug 1; Wonderland Aug 13-15 and Aug 20-22, 2026; 8pm evenings with 2pm matinees",
+      "unit": "productions / dates",
+      "market": "us",
+      "source": "https://summercabaret.org/2026-season/",
+      "quote": "from July 23-25, and July 30 – August 1 2026 directed by Roberto Di Donato ... from August 13-15, and August 20-22, 2026 directed by Tess Cruz ... August 15, 2pm and 8pm",
+      "confidence": "high"
+    },
+    {
+      "what": "Yale Summer Cabaret leadership (2026)",
+      "value": "Co-artistic directors from Lighting and Projection Design MFA programs; producing director (2nd-year Theater Management); managing director (3rd-year Theater Management); season 'Spectra'",
+      "unit": "leadership",
+      "market": "us",
+      "source": "https://summercabaret.org/meet-the-team/",
+      "quote": "Spectra, a season dedicated to exploring accessibility, innovation, and community through the performing arts.",
+      "confidence": "medium"
+    },
+    {
+      "what": "DRAM 463a/b On-Camera Acting Technique (third year)",
+      "value": "Three-session course; brief scenes of the student's choice filmed, watched, discussed, refilmed. Ellen Novack.",
+      "unit": "course description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "DRAM 463a/b, On-Camera Acting Technique This three-session course gives students experience working on camera. Brief scenes of the individual student's choice are filmed, watched, discussed, and, when time permits, filmed again.",
+      "confidence": "high"
+    },
+    {
+      "what": "DRAM 473b Taming the Cyclops: professionally shot film monologues posted on the School website",
+      "value": "Film/TV monologue rehearsed over two classes, shot with a professional cinematographer, edited professionally, posted on the School website at the end of the final semester; also industry workshops and self-tape audition practice. Ellen Novack.",
+      "unit": "course description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "with the help of a professional cinematographer and their equipment, each student's monologue is shot in a situation that mimics a professional shoot as closely as possible. The monologues are edited professionally and posted on the School website at the end of the final semester, so casting directors, representatives, and other professionals can experience our students' work on camera.",
+      "confidence": "high"
+    },
+    {
+      "what": "DRAM 793b Actor Showcase",
+      "value": "Final-term scenes presented to industry in New York and Los Angeles; directed by Paul Mullins; Incompletes must be cleared by week four of the final semester to be eligible",
+      "unit": "course description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "DRAM 793b, Actor Showcase In their final term, students choose and rehearse scenes, which are presented to agents, managers, casting directors, and other members of the industry in New York and Los Angeles.",
+      "confidence": "high"
+    },
+    {
+      "what": "2026 Actor Showcase web page: each actor gets headshot, resume, website link and a filmed monologue (Vimeo)",
+      "value": "NY: Mon Apr 27 (5PM, 7:30PM) and Tue Apr 28 (1PM), MCC Theater Space; LA: Tue May 5 (1PM, 4:30PM, 7PM), Garry Marshall Theatre; per-actor 'Monologue' video links",
+      "unit": "page contents",
+      "market": "us",
+      "source": "https://www.drama.yale.edu/training/acting/actor-showcase/",
+      "quote": "Monday, April 27 at 5PM and 7:30PM / Tuesday, April 28 at 1PM / The Robert W. Wilson MCC Theater Space ... Tuesday, May 5 at 1PM, 4:30PM and 7PM / Garry Marshall Theatre",
+      "confidence": "medium"
+    },
+    {
+      "what": "Acting program: on-camera and audio training in the curriculum",
+      "value": "Multiple courses on camera and in front of a microphone",
+      "unit": "description",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "Students also have multiple courses in learning to work on camera and in front of a microphone, transferring their acquired skills to the mediums of film and audio recording.",
+      "confidence": "high"
+    },
+    {
+      "what": "Laptop: urged, not required (School-wide)",
+      "value": "School urges students to consider buying a laptop; program-specific requirements via the program; one-time computer loan available via cost-of-attendance increase",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "David Geffen School of Drama urges all students to consider the purchase of a laptop computer, accessories, and appropriate software to use during their time at the School. Students should contact their program for requirements specific to their discipline.",
+      "confidence": "high"
+    },
+    {
+      "what": "Books and supplies estimate, 2026-2027 cost of attendance",
+      "value": "913-2373 (varies by program; includes $150 required personal protective equipment for first-year students and technical interns); tuition 40750, living 28028",
+      "unit": "USD per nine-month year",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "Books and supplies (estimated)* ... $913-$2,373 ... *Costs vary from one program to another. Includes $150 for required personal protective equipment for first-year students and technical interns.",
+      "confidence": "high"
+    },
+    {
+      "what": "Required work-study dress / PPE",
+      "value": "Students must dress for work-study tasks, including required PPE such as steel-toed work shoes as communicated by the supervisor",
+      "unit": "policy",
+      "market": "us",
+      "source": "https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf",
+      "quote": "Students must be appropriately dressed for the work-study tasks at hand including required personal protective equipment such as steel-toed work shoes, as communicated by the work-study supervisor.",
+      "confidence": "high"
+    }
+  ],
+  "notFound": [
+    {
+      "what": "Gilbert Murray's own first-publication years for Hippolytus (Gutenberg #8418 text) and for The Frogs translation by B. B. Rogers",
+      "looked": "Gutenberg texts #8418 and #7998 carry only the Harvard Classics vol. 8 front matter, no year; recorded the Harvard Classics 1909 year instead (Wikipedia Harvard_Classics). HathiTrust, Free Library catalog and Bartleby returned 403."
+    },
+    {
+      "what": "E. P. Coleridge prose translations of Euripides on Perseus/ICA (translator and year)",
+      "looked": "Not pursued after Perseus' Medea English text turned out to be David Kovacs (not public domain); Perseus Bacchae English is T. A. Buckley 1850, recorded instead."
+    },
+    {
+      "what": "Yale Cabaret rehearsal period length",
+      "looked": "yalecabaret.org home, /shows/, /shows-tickets/, /get-involved/, /mission-vision-values/, /about-us/, /visit-us/; 2026-2027 Bulletin PDF; New Haven Independent 2024-10-01; Yale Daily News 59th-season article (403). None states a rehearsal period."
+    },
+    {
+      "what": "Yale Cabaret Season 59 (2026-27) performance days/times and total show count",
+      "looked": "yalecabaret.org /shows/, /shows-tickets/, /visit-us/ (box office hours only: Monday–Friday, 3–6 PM); a search snippet of yalecabaret.org/tickets/ listed Season 58 times (Thu 8pm, Fri 8pm and 11pm, Sat 4pm and 8pm) but the page now redirects and could not be quoted."
+    },
+    {
+      "what": "Published required supplies for first-year MFA Acting students (movement clothes, books/scripts, rehearsal shoes)",
+      "looked": "2026-2027 Bulletin PDF (Acting chapter, General Policies, Facilities, Financial Aid: only the School-wide laptop recommendation, books-and-supplies estimate, $150 PPE, steel-toed work shoes for work-study); drama.yale.edu Acting plan-of-study, program-information, FAQ and student-life pages. A search snippet attributed to the old ysdinfo.yale.edu 'Suggested Summer Reading Lists' page says Acting students should own a yoga mat and buy a lock for a locker in 149 York, but ysdinfo.yale.edu no longer resolves (DNS failure) and the Wayback Machine was unreachable, so it is unverified."
+    }
+  ]
+}

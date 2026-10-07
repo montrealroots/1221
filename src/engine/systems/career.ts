@@ -82,8 +82,9 @@ import { ABROAD } from '../content/safetynet';
 import { armHealth, inHospital } from './health';
 import { armTaxes, canadaElected } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
-import { actingOf, ceilingOf, grow, focusOf, summerOf, type Craft } from './school';
+import { BONDS, actingOf, ceilingOf, grow, focusOf, summerOf, type Craft } from './school';
 import type { Band } from './coursework';
+import { footageOf, footageRefusal, reelBand, reelCallback, type Footage } from './footage';
 import { rentAt } from '../content/rents';
 import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, classmatePresence, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
@@ -360,6 +361,8 @@ export interface Audition {
   status: 'ahead' | 'done' | 'missed' | 'booked';
   /** Self-submitted, not sent by the agency. */
   self?: boolean;
+  /** Passed along by a close friend from school who works, by name (`REFERRAL`, from 2026-10-08). */
+  referredBy?: string;
   /** Worked on with a coach first. */
   coached?: boolean;
   /** The job's genre, as the breakdown gives it, read at the audition and kept by the booking. */
@@ -512,6 +515,8 @@ export interface CareerRecord {
   queriedAt?: Instant;
   kit?: boolean;
   reelAt?: Instant;
+  /** What the reel was cut from, and how good it is (`systems/footage.ts`, from 2026-10-08). */
+  reelCut?: { at: Instant; ids: string[]; band: Band };
   scene?: { paidFor: string };
   /** An improv course under way: its evenings left (`career.improv`). */
   improv?: { left: number };
@@ -529,6 +534,23 @@ export type CastingSite = keyof typeof WORK_COSTS.sites;
 
 /** Whether a casting site is paid for at a moment. */
 export const onSite = (career: CareerRecord, site: CastingSite, at: Instant) => (career.sites?.[site]?.until ?? 0) > at;
+
+/**
+ * How far a self-submission reaches: a free one a name and a résumé; a paid
+ * site's the headshot and the reel, without which the breakdowns that ask for
+ * one are shut; and, from 2026-10-08, the reel's footage read too
+ * (`reelCallback`), strong work called back a little more often.
+ */
+export function submissionReach(career: CareerRecord, onAny: boolean): number {
+  if (!onAny) return WORK_COSTS.freeSubmissionShare;
+  return career.reelAt !== undefined ? reelCallback(career.reelCut) : 1 - WORK_COSTS.wantReel;
+}
+
+/** The actor's footage, school's and screen's, for a reel (`footageOf`). */
+export function footageFor(person: Person): Footage[] {
+  const credits = (person.career?.credits ?? []).map((c, i) => ({ c, i })).filter(({ c }) => roleById(c.roleId).medium === 'screen').map(({ c, i }) => ({ id: `${c.roleId}-${c.year}-${i}`, label: `${roleById(c.roleId).label}, ${c.year}` }));
+  return footageOf(person, credits);
+}
 
 /** Headshots more than two years old: the showcase's, from when the business began, until new ones. */
 export const staleHeadshots = (career: CareerRecord, at: Instant) => at - (career.headshotsAt ?? career.since ?? at) > WORK_COSTS.headshotsLastDays * MS_DAY;
@@ -1226,7 +1248,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
   // A site casts in its own country: Spotlight in Britain, the American ones there.
   const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => siteCountry(site) === country && onSite(career, site, weekStart));
-  const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
+  const paid = submissionReach(career, onAny);
   for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) back.push(n);
   const self = back.length;
   const pick = (open: readonly Role[]) => {
@@ -1260,8 +1282,19 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     const room = rng.next() >= ESTIMATE.tapeShare && !(person.currentLocationId !== cityId && (mine || homeOf(person) !== cityId));
     out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}), ...(breakdown ? { chosen: true as const, ...(breakdown.genre ? { genre: breakdown.genre } : {}), ...(breakdown.demands?.length ? { demands: breakdown.demands } : {}) } : {}) });
   }
+  // A part passed along by a close friend from school who's signed with an agency (from 2026-10-08), now and then: the
+  // class's years together reaching the profession. Its own draw, so the week's others are as they were.
+  const friend = (person.school?.classmates ?? []).find((m) => (m.bond ?? 0) >= BONDS.close && m.career?.agencyId);
+  const tip = sim.rng('career.auditions', person.id, `referral-${weekStart}`);
+  if (friend && person.career?.since !== undefined && theirs.length && tip.next() < REFERRAL.chance) {
+    const role = theirs[Math.floor(tip.next() * theirs.length)]!;
+    out.push({ roleId: role.id, at: at(weekStart, zone, 2, 12), mode: 'tape', cityId, referredBy: friend.name });
+  }
   return out;
 }
+
+/** How often a close friend from school who works passes along a part: a week in this many. SLATE's estimate. */
+export const REFERRAL = { chance: 0.02 } as const;
 
 /**
  * A city an actor reaches for the day and comes home from: Metro-North's New
@@ -2400,15 +2433,22 @@ export function registerCareer(sim: Simulation): void {
     return { at: s.now };
   });
 
-  sim.onCommand<Record<string, never>, { at: Instant }>('career.reel', (_p, { sim: s }) => {
+  sim.onCommand<{ footage?: string[] }, { at: Instant; band: Band }>('career.reel', (p, { sim: s }) => {
     const person = s.player;
     const career = careerOf(person);
-    // Footage: a screen credit, or the school's filmed monologues.
-    if (!career.credits.some((c) => roleById(c.roleId).medium === 'screen') && !person.school?.filmed) throw new CommandError('A reel is cut from footage, and you have no screen credit yet.');
+    // Footage: what's filmed and can be used (`footageOf`); the pieces chosen, or, none chosen, every usable piece.
+    const all = footageFor(person);
+    const usable = all.filter((f) => !footageRefusal(f));
+    if (!usable.length) throw new CommandError(all.length ? footageRefusal(all[0]) ?? 'None of your footage can go on a reel.' : 'A reel is cut from footage, and you have none: a screen credit, a self-tape from class, or the school’s film monologue.');
+    const ids = Array.isArray(p?.footage) && p!.footage!.length ? p!.footage!.map(String) : usable.map((f) => f.id);
+    if (ids.length > 4) throw new CommandError('A reel is short: four pieces at most.');
+    for (const id of ids) { const no = footageRefusal(all.find((f) => f.id === id)); if (no) throw new CommandError(no); }
     const cur = saveCurrency(s.universe);
     if (!payForWork(s, person, usd(WORK_COSTS.reel, cur), 'A reel, edited')) throw new CommandError(`An edit is ${formatMoney(usd(WORK_COSTS.reel, cur), cur)}, which the bank can’t cover.`);
     career.reelAt = s.now;
-    return { at: s.now };
+    const band = reelBand(ids.map((id) => all.find((f) => f.id === id)!.band));
+    career.reelCut = { at: s.now, ids, band };
+    return { at: s.now, band };
   });
 
   sim.onCommand<Record<string, never>, { kit: true }>('career.buy_kit', (_p, { sim: s }) => {

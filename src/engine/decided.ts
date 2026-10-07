@@ -36,6 +36,7 @@ import { MS_DAY, MS_HOUR, startOfDay } from './core/time';
 import { internetDown } from './systems/telecom';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { reliabilityOf, setWork } from './systems/coursework';
+import { priorityOf } from './systems/classmates';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
@@ -1525,4 +1526,16 @@ defineDecider<{ sim: Simulation; who: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), who: seed }),
   decide: ({ sim, who }) => interestsOf(sim, sim.player, { id: `contact-${who}` } as Contact).join(','),
+});
+
+defineDecider<{ sim: Simulation; who: number }, string>({
+  id: 'school.classmates',
+  decides: 'What each classmate cares about most, drawn once by their drive; whether a class day brings a moment, and which, among those the record makes possible.',
+  drawnIn: 'src/engine/systems/classmates.ts',
+  reads: {
+    who: (o, t) => ({ ...o, who: Math.round(t * 14) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), who: seed % 15 }),
+  decide: ({ sim, who }) => priorityOf(sim, sim.player, who),
 });

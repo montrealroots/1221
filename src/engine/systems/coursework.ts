@@ -51,14 +51,20 @@ import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Inst
 import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
-import { PREP_DIMS, QUESTIONS, SCENES, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Scene, type Template } from '../content/coursework';
+import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
-import { occupiedAt } from './life';
+import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
 import { wearForExercise } from './wardrobe';
 import { phonesOf } from './phones';
 import { reachable } from './items';
 import { inHospital } from './health';
+import {
+  ADVANCED, LEARNING, OBJECTIVE_DIM, mayGive, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
+  type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
+} from './learning';
+import { actingOf } from './school';
+import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp } from './injury';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -110,7 +116,8 @@ export const WORK = {
 export type Band = 'unready' | 'working' | 'strong' | 'exceptional';
 export const BAND_LABEL: Record<Band, string> = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' };
 
-export type Focus = { kind: 'dim'; dim: PrepDim } | { kind: 'choice'; question: Question['id'] } | { kind: 'skill'; skill: Skill };
+/** What a note is about (`NoteFocus` in `systems/learning.ts`): a part of the preparation, a choice at the table, a skill, or the next step beyond the work. */
+export type Focus = NoteFocus;
 
 export interface Showing {
   band: Band; score: number; at: Instant;
@@ -119,7 +126,12 @@ export interface Showing {
   strengths: string[];
 }
 
-export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean }
+/**
+ * A showing's note: its words, what it's about, and how it stands against the
+ * notes before it on the same thing (`kind`; `before` is the last time it was
+ * given). From 2026-10-08.
+ */
+export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string } }
 
 export interface PartnerRehearsal {
   id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled';
@@ -152,6 +164,14 @@ export interface Assignment {
   rehearsals: PartnerRehearsal[];
   asks?: PartnerAsk[];
   status: 'open' | 'revising' | 'done' | 'missed' | 'lapsed';
+  /** What the work asks you to put first (`objectiveFor`), and, for a scene studied before, what's new about it (`revisitOf`). From 2026-10-08. */
+  objective?: Objective;
+  revisit?: Revisit & { answers?: Partial<Record<Question['id'], string>> };
+  /** Notes from before put right by this showing, by their ledger key. */
+  taken?: string[];
+  /** Work shown in rounds (`Template.rounds`): the round it's at, and each round shown, with how it went. From 2026-10-08. */
+  round?: number;
+  roundsShown?: { label: string; band: Band; on: string }[];
   shown?: Showing;
   feedback?: Feedback;
   revision?: { dueOn: string; before: number; applied?: boolean; band?: Band };
@@ -168,8 +188,10 @@ export const ORIENTATION: readonly { task: OrientationTask; label: string; day: 
 
 export interface Coursework {
   assignments: Assignment[];
-  /** Scenes worked already, so the next is another. */
+  /** Scenes worked already, so the next is another. Kept for old saves; the history is read from the assignments (`scenePast`) from 2026-10-08. */
   used: string[];
+  /** Every note given, by what it's about, across courses (`systems/learning.ts`). */
+  notes?: NoteRecord[];
   orientation: { done: Partial<Record<OrientationTask, Instant>>; behind?: boolean };
 }
 
@@ -266,13 +288,8 @@ export function meetingsFrom(course: string, from: SchoolDate): string[] {
 
 const termWord = (term: number): 'fall' | 'spring' => (termStart(term).fall ? 'fall' : 'spring');
 
-/** The scenes a template can take for a course: prose or verse as it asks, from its earliest year, the ones not yet worked first. */
-function scenesFor(t: Template, course: string, used: readonly string[]): Scene[] {
-  const from = t.materialFrom?.[course] ?? 0;
-  const fits = SCENES.filter((s) => s.year >= from && (t.material === 'verse-scene' ? s.language === 'verse' : s.language === 'prose'));
-  const fresh = fits.filter((s) => !used.includes(s.id));
-  return fresh.length ? fresh : fits;
-}
+/** The ledger of notes, made where a save has none. */
+export const notesOf = (cw: Coursework): NoteRecord[] => (cw.notes ??= []);
 
 /** Sets a course's next work, from its meeting on a day, where there's room before the term's classes end. */
 export function setWork(sim: Simulation, person: Person, course: string, day: SchoolDate): Assignment | undefined {
@@ -286,32 +303,52 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   const meetings = meetingsFrom(course, day).filter((k) => k > keyOf(day));
   const dueOn = meetings[t.dueAfter - 1];
   if (!dueOn) return undefined;
+  // Work in rounds is set only where the term has a meeting for every round: a rehearsal cut off after its table
+  // work isn't one (the first played year found one closed after its first round).
+  if (t.rounds && !meetings[t.dueAfter - 1 + t.rounds.slice(1).reduce((n, r) => n + r.gap, 0)]) return undefined;
   const rng = sim.rng('school.coursework', person.id, `${course}-${keyOf(day)}`);
   const a: Assignment = {
     id: sim.nextId('assignment'), course, template: t.id, term, setOn: keyOf(day), dueOn,
     prep: Object.fromEntries(PREP_DIMS.map((d) => [d, 0])) as Record<PrepDim, number>,
     answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], status: 'open',
   };
+  // The material: the fitting scene not yet studied, nearest the difficulty that suits (`scenesFor`); every fitting one
+  // studied, the longest ago comes back, and asks something new of it (`revisitOf`). Until 2026-10-08 a scene was
+  // drawn from the unstudied ones at random, and once they ran out, from all of them, in any part, with anyone.
+  const year = Math.min(3, Math.floor(term / 2) + 1);
   if (t.material !== 'none') {
-    const pool = scenesFor(t, course, cw.used);
-    const scene = pool[Math.floor(rng.next() * pool.length)]!;
+    const pool = scenesFor(t, course, cw.assignments, targetDifficulty(year, person.craft ? actingOf(person.craft) : 50));
+    const scene = pool[0];
+    // No scene of the kind it asks: nothing to set.
+    if (!scene) return undefined;
     a.sceneId = scene.id;
-    a.role = rng.next() < 0.5 ? 0 : 1;
+    const past = scenePast(cw.assignments, scene.id);
+    const { role, revisit } = revisitOf(past, rng.next());
+    a.role = role;
+    if (revisit) {
+      const before = past.find((x) => x.id === revisit.assignmentId);
+      a.revisit = { ...revisit, ...(revisit.change === 'reading' && before ? { answers: { ...before.answers } } : {}) };
+    }
     if (!cw.used.includes(scene.id)) cw.used.push(scene.id);
   }
   if (t.repPlay) a.repPlay = repProduction(term).name;
   if (t.paired && school.classmates.length) {
-    a.partner = Math.floor(rng.next() * school.classmates.length);
+    // The classmate least worked with, not last time's in this course or in this scene where another is free.
+    a.partner = partnerFor(cw.assignments, course, school.classmates.length, rng.next(), a.revisit?.partner !== undefined ? [a.revisit.partner] : []);
     // Their reliability drawn now, once, so a screen only ever reads it.
     reliabilityOf(sim, person, a.partner);
   }
+  const objective = objectiveFor(t, course, cw.assignments, notesOf(cw));
+  if (objective) a.objective = objective;
   cw.assignments.push(a);
   if (person.id === sim.universe.playerId) {
     const c = courseOf(course);
     const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
     const partner = a.partner !== undefined ? school.classmates[a.partner]!.name : undefined;
     const what = scene ? `${scene.play}, ${scene.where}: you play ${scene.roles[a.role!].name}${partner ? `, ${partner} the other part` : ''}` : a.repPlay ? `${a.repPlay}, this season at Yale Rep` : t.deliverable;
-    sim.notify({ category: 'school', title: `${c?.name ?? course}: ${t.title}`, body: `${what}. Due at the meeting on ${formatDate(at(parse(dueOn), 12), zone())}.`, importance: 55, route: '/workspace/school' });
+    const again = a.revisit && scene ? ` ${revisitWords(a, scene.roles[a.revisit.role].name, school.classmates[a.revisit.partner ?? -1]?.name)}` : '';
+    const focus = a.objective ? ` Put first: ${objectiveLabel(t, a.objective)}.` : '';
+    sim.notify({ category: 'school', title: `${c?.name ?? course}: ${t.title}`, body: `${what}.${again}${focus} Due at the meeting on ${formatDate(at(parse(dueOn), 12), zone())}.`, importance: 55, route: '/workspace/school' });
   }
   return a;
 }
@@ -354,10 +391,13 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (act.dim === 'revision' && t.revised && a.status !== 'revising') return 'There’s no note to work on until it’s been shown.';
   if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this: read it first.';
   if (a.asks?.some((k) => k.status === 'open')) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} asked to rehearse: answer first.`;
+  if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene another way: answer first.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
   if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
+  // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
+  if ((act.needs ?? []).some((n) => n === 'studio' || n === 'moveClothes') && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   return undefined;
@@ -383,6 +423,22 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   return { moved: a.prep[act.dim] - before, dim: act.dim, minutes };
 }
 
+/** A scene coming back, said: when it was studied, in which part, with whom, and what's new this time. */
+export function revisitWords(a: Assignment, lastRole: string, lastPartner?: string): string {
+  const r = a.revisit!;
+  const when = formatDate(at(parse(r.on), 12), zone());
+  const before = `You worked this scene from ${when}, as ${lastRole}${lastPartner ? ` with ${lastPartner}` : ''}.`;
+  if (r.change === 'role') return `${before} This time you play the other part.`;
+  return `${before} You’ve played both parts: this time, find another reading at the table than last time’s.`;
+}
+
+/** Where a revisit asks for another reading: whether one of today's answers differs, where the text supports another. */
+export function readingDiffers(a: Assignment): boolean {
+  const prev = a.revisit?.answers;
+  if (a.revisit?.change !== 'reading' || !prev) return true;
+  return questionsFor(a).some(({ q, options }) => options.filter((o) => o.supported).length > 1 && a.answers[q.id] !== undefined && a.answers[q.id] !== prev[q.id]);
+}
+
 /** The questions an assignment's table work answers, and the options for each, for your part. */
 export function questionsFor(a: Assignment): { q: Question; options: readonly Option[] }[] {
   const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
@@ -402,8 +458,10 @@ export function answersScore(a: Assignment): number {
 export function interpretationOf(a: Assignment): number {
   const t = templateById(a.template)!;
   if (t.material === 'none') return a.prep.interpretation;
-  if (t.activities.some((x) => x.dim === 'interpretation')) return 0.5 * answersScore(a) + 0.5 * a.prep.interpretation;
-  return answersScore(a);
+  // A scene back for another reading, played the same way as last time where the text allows another, reads less.
+  const same = readingDiffers(a) ? 1 : LEARNING.sameReading;
+  if (t.activities.some((x) => x.dim === 'interpretation')) return same * (0.5 * answersScore(a) + 0.5 * a.prep.interpretation);
+  return same * answersScore(a);
 }
 
 /** Minutes a question takes to answer at the table, SLATE's estimate. */
@@ -441,32 +499,77 @@ function craftScore(person: Person, t: Template): number {
   return clamp01(0.5 + (level - t.par) / WORK.showing.perPoint);
 }
 
-/** The one thing that most held a showing back: the part furthest short by its weight, a choice the text cuts against, or the craft it asks. */
-export function mainNote(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number): Focus | undefined {
+/** A part's weight in a showing: the template's, and more for the assignment's objective (normalized in `weightsOf`). */
+export function weightsOf(a: Assignment): Partial<Record<PrepDim, number>> {
   const t = templateById(a.template)!;
-  const wrong = questionsFor(a).find(({ q, options }) => a.answers[q.id] && !options.find((o) => o.id === a.answers[q.id])?.supported);
-  const dims = (Object.entries(parts) as [PrepDim, number][]).map(([dim, v]) => ({ dim, short: t.dims[dim]!.weight * (1 - v) })).sort((x, y) => y.short - x.short);
-  const worst = dims[0];
-  if (wrong && (!worst || worst.short < 0.12)) return { kind: 'choice', question: wrong.q.id };
-  if (worst && worst.short >= 0.05) return { kind: 'dim', dim: worst.dim };
-  if (craft < 0.45) {
-    const weakest = (Object.keys(t.reads) as Skill[]).sort((x, y) => person.craft![x] - person.craft![y])[0]!;
-    return { kind: 'skill', skill: weakest };
-  }
-  return wrong ? { kind: 'choice', question: wrong.q.id } : undefined;
+  // Work shown in rounds reads the round's parts only.
+  const only = t.rounds?.[a.round ?? 0]?.dims;
+  const raw = Object.fromEntries((Object.entries(t.dims) as [PrepDim, { weight: number }][]).filter(([d]) => !only || only.includes(d)).map(([d, v]) => [d, v.weight * (a.objective && OBJECTIVE_DIM[a.objective] === d ? LEARNING.objectiveWeight : 1)])) as Partial<Record<PrepDim, number>>;
+  const total = Object.values(raw).reduce((x, y) => x + (y ?? 0), 0);
+  return Object.fromEntries(Object.entries(raw).map(([d, w]) => [d, w! / total])) as Partial<Record<PrepDim, number>>;
 }
 
-/** The note in words: the course's own for a part, the text's reason for a choice, or the skill to work on. */
-export function noteText(a: Assignment, focus: Focus): string {
+/**
+ * What held a showing back, most first, as the ledger allows: a part short by
+ * its weight (the objective's first, where it's short at all), a choice the
+ * text cuts against, the craft it asks. A note on something put right and
+ * holding isn't given (`mayGive`). Each with what it measures now.
+ */
+export function noteCandidates(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[]): { focus: Focus; level?: number }[] {
   const t = templateById(a.template)!;
-  if (focus.kind === 'dim') return t.notes[focus.dim] ?? `${t.dims[focus.dim]?.label ?? focus.dim} needed more work.`;
+  const w = weightsOf(a);
+  const out: { focus: Focus; level?: number; short: number }[] = [];
+  for (const [dim, v] of Object.entries(parts) as [PrepDim, number][]) {
+    const short = (w[dim] ?? 0) * (1 - v) + (a.objective && OBJECTIVE_DIM[a.objective] === dim && v < LEARNING.enough ? 0.05 : 0);
+    if (short >= 0.05) out.push({ focus: { kind: 'dim', dim }, level: v, short });
+  }
+  for (const { q, options } of questionsFor(a)) {
+    if (a.answers[q.id] && !options.find((o) => o.id === a.answers[q.id])?.supported) out.push({ focus: { kind: 'choice', question: q.id }, short: 0.1 });
+  }
+  if (craft < 0.45) {
+    const weakest = (Object.keys(t.reads) as Skill[]).sort((x, y) => person.craft![x] - person.craft![y])[0]!;
+    out.push({ focus: { kind: 'skill', skill: weakest }, level: person.craft![weakest] / 100, short: 0.06 });
+  }
+  return out.filter((c) => mayGive(notes, noteKey(c.focus), c.level)).sort((x, y) => y.short - x.short).map(({ focus, level }) => (level === undefined ? { focus } : { focus, level }));
+}
+
+/** The one thing that most held a showing back, as the ledger allows, or nothing. */
+export function mainNote(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[] = []): Focus | undefined {
+  return noteCandidates(person, a, parts, craft, notes)[0]?.focus;
+}
+
+/** The note's substance: the course's own words for a part, with what the work measured and the material's specifics; the text's reason for a choice; the skill; or the step beyond. */
+export function noteText(a: Assignment, focus: Focus, level?: number, partnerName?: string): string {
+  const t = templateById(a.template)!;
+  const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
+  const as = scene && a.role !== undefined ? ` As ${scene.roles[a.role].name} in ${scene.play}.` : '';
+  if (focus.kind === 'dim') {
+    const base = t.notes[focus.dim] ?? `${t.dims[focus.dim]?.label ?? focus.dim} needed more work.`;
+    const with_ = focus.dim === 'partner' && partnerName ? ` You and ${partnerName.split(' ')[0]} had rehearsed together ${a.rehearsals.filter((r) => r.status === 'kept').length} times.` : '';
+    const measured = level !== undefined ? ` (${t.dims[focus.dim]?.label ?? focus.dim}: ${Math.round(level * 100)}%.)` : '';
+    return `${base}${with_}${measured}${as}`;
+  }
   if (focus.kind === 'choice') {
     const qo = questionsFor(a).find(({ q }) => q.id === focus.question);
     const picked = qo?.options.find((o) => o.id === a.answers[focus.question]);
-    return `${qo?.q.label ?? 'A choice'}: ${picked?.why ?? 'the text cuts against it.'}`;
+    return `${qo?.q.label ?? 'A choice'}: ${picked?.why ?? 'the text cuts against it.'}${as}`;
   }
-  return `It asked more ${labelOf(focus.skill).toLowerCase()} than you have yet: that’s the work for the next weeks.`;
+  if (focus.kind === 'skill') return `It asked more ${labelOf(focus.skill).toLowerCase()} than you have yet: that’s the work for the next weeks.`;
+  return ADVANCED[focus.challenge];
 }
+
+/** A note's words with where it stands against the ones before: new, still there, better but not yet, or the step beyond. */
+export function feedbackWords(kind: NoteKind, body: string, before?: { on: string; course: string; level?: number; given?: number }, level?: number): string {
+  const when = before ? formatDate(at(parse(before.on), 12), zone()) : '';
+  if (kind === 'advanced') return `It held together this time. The next step: ${body}`;
+  if (kind === 'partial' && before) return `Better than on ${when}${before.level !== undefined && level !== undefined ? ` (${Math.round(before.level * 100)}% then, ${Math.round(level * 100)}% now)` : ''}, not there yet. ${body}`;
+  // From the third time, how many: a weakness that keeps coming back is named as one (from a measured run, where one note came seventeen times in a year).
+  const times = before?.given !== undefined && before.given >= 2 ? `, the ${ordinal(before.given + 1)} time it’s been given` : '';
+  if (kind === 'recurring' && before) return `The same note as on ${when}, in ${before.course}${times}: it’s still there. ${body}`;
+  return body;
+}
+
+const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
 
 function bandOf(score: number): Band {
   const b = WORK.bands;
@@ -476,8 +579,10 @@ function bandOf(score: number): Band {
 /** The showing reckoned once: its band and parts, what helped, and the note. */
 export function show(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant): Showing {
   const t = templateById(a.template)!;
-  const parts = preparedParts(person, a, onDay);
-  const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + t.dims[dim]!.weight * v, 0);
+  const w = weightsOf(a);
+  // The parts this showing reads: all of the work's, or a round's.
+  const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Partial<Record<PrepDim, number>>;
+  const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + (w[dim] ?? 0) * v, 0);
   const craft = craftScore(person, t);
   const ready = clamp01((focusOf(person) - 0.3) / 0.9);
   const luck = (sim.rng('school.coursework', person.id, `show-${a.id}-${onDay}`).next() * 2 - 1) * WORK.showing.luck;
@@ -487,10 +592,27 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const strengths = (Object.entries(parts) as [PrepDim, number][]).filter(([, v]) => v >= 0.75).map(([dim]) => `${t.dims[dim]!.label} was there`);
   if (craft >= 0.65) strengths.push(`Your ${(Object.keys(t.reads) as Skill[]).map((k) => labelOf(k).toLowerCase()).join(' and ')} carried it`);
   if (ready >= 0.75) strengths.push('You came rested and ready');
-  const showing: Showing = { band: bandOf(score), score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
-  const focus = mainNote(person, a, parts, craft);
   const c = courseOf(a.course)!;
-  if (focus) a.feedback = { course: c.name, teachers: c.teachers, text: noteText(a, focus), focus };
+  const cw = courseworkOf(sim, person)!;
+  const notes = notesOf(cw);
+  // Notes from before whose part this work has put right: taken, and said (`resolveNote`).
+  const taken: string[] = [];
+  for (const n of notes) {
+    if (n.status !== 'open' || !n.key.startsWith('dim:')) continue;
+    const v = parts[n.key.slice(4) as PrepDim];
+    if (v !== undefined && v >= LEARNING.enough && resolveNote(notes, n.key, onDay, a.id, c.name)) taken.push(n.key);
+  }
+  for (const key of taken) strengths.push(`The note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()} is taken`);
+  if (taken.length) a.taken = taken;
+  const showing: Showing = { band: bandOf(score), score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
+  // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
+  const pick = noteCandidates(person, a, parts, craft, notes)[0];
+  const focus: Focus = pick?.focus ?? { kind: 'advanced', challenge: nextChallenge(notes, sim.rng('school.coursework', person.id, `challenge-${a.id}-${onDay}`).next()) };
+  const { kind, before } = recordNote(notes, focus, onDay, a.id, c.name, pick?.level);
+  const partnerName = a.partner !== undefined ? person.school!.classmates[a.partner]?.name : undefined;
+  const body = noteText(a, focus, pick?.level, partnerName);
+  const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, given: before.given, ...(before.level !== undefined ? { level: before.level } : {}) } : undefined;
+  a.feedback = { course: c.name, teachers: c.teachers, text: feedbackWords(kind, body, prior, pick?.level), focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
   return showing;
 }
@@ -524,13 +646,20 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (excused && next) { due.dueOn = next; return 1; }
       due.status = 'missed';
-      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
+      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); noteIncident(mate, sim.now, 'missed'); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
       if (mine) sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: 'You weren’t there when it was due, and it isn’t taken later.', importance: 60, route: '/workspace/school' });
       return 1;
     }
     const showing = show(sim, person, due, key, when);
     const t = templateById(due.template)!;
-    if (t.revised && due.feedback) {
+    if (t.rounds) {
+      // A round shown: the next is due its gap of meetings on, the work still open, its note to be taken there.
+      const r = due.round ?? 0;
+      (due.roundsShown ??= []).push({ label: t.rounds[r]!.label, band: showing.band, on: key });
+      const nextRound = t.rounds[r + 1];
+      const next = nextRound ? meetingsFrom(course, plus(day, 1))[nextRound.gap - 1] : undefined;
+      if (nextRound && next) { due.round = r + 1; due.dueOn = next; } else due.status = 'done';
+    } else if (t.revised && due.feedback) {
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (next) {
         const f = due.feedback.focus;
@@ -539,7 +668,8 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       } else due.status = 'done';
     } else due.status = 'done';
     if (due.partner !== undefined) remember(sim, person.school!.classmates[due.partner]!, `Showed ${sceneById(due.sceneId ?? '')?.play ?? t.title} together: ${BAND_LABEL[showing.band].toLowerCase()}`);
-    if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}, ${BAND_LABEL[showing.band]}`, body: `${showing.strengths.length ? `${showing.strengths.join('; ')}. ` : ''}${due.feedback ? `The note (simulated feedback from ${due.feedback.course}): ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
+    const roundLabel = t.rounds && due.roundsShown?.length ? ` (${due.roundsShown.at(-1)!.label})` : '';
+    if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${showing.strengths.length ? `${showing.strengths.join('; ')}. ` : ''}${due.feedback ? `The note (simulated feedback from ${due.feedback.course}): ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
     return WORK.weight[showing.band];
   }
   const revising = cw.assignments.find((a) => a.course === course && a.status === 'revising' && a.revision?.dueOn === key);
@@ -552,11 +682,28 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     }
     const applied = noteTaken(person, revising, key);
     revising.revision!.applied = applied;
+    // Shown again, reckoned as a showing: its band kept (the showcase reads the last one, `showcaseSceneSeen`). Until
+    // 2026-10-08 the second showing was only taken or not, and its band was never set.
+    revising.revision!.band = reshow(sim, person, revising, key);
+    if (applied && revising.feedback) resolveNote(notesOf(courseworkOf(sim, person)!), noteKey(revising.feedback.focus), key, revising.id, courseOf(course)?.name ?? course);
     revising.status = 'done';
     if (mine) sim.notify({ category: 'school', title: applied ? 'The Note Was Taken' : 'The Note Wasn’t Taken Yet', body: `${templateById(revising.template)!.title}, shown again: ${applied ? 'what held it back last time was worked on, and it showed.' : `${revising.feedback?.text ?? ''} It’s still there.`}`, importance: 50, route: '/workspace/school' });
     return applied ? WORK.revision.applied : WORK.revision.notApplied;
   }
   return 1;
+}
+
+/** The revised work's band: read as a showing is, without a new note (the note given stands until the next work). */
+function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string): Band {
+  const t = templateById(a.template)!;
+  const parts = preparedParts(person, a, onDay);
+  const w = weightsOf(a);
+  const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + (w[dim] ?? 0) * v, 0);
+  const craft = craftScore(person, t);
+  const ready = clamp01((focusOf(person) - 0.3) / 0.9);
+  const luck = (sim.rng('school.coursework', person.id, `reshow-${a.id}-${onDay}`).next() * 2 - 1) * WORK.showing.luck;
+  const s = WORK.showing;
+  return bandOf(s.prep * prep + (s.craft * craft + s.ready * ready) * Math.min(1, prep / s.carries) + luck);
 }
 
 /** Work still open when its term's classes end lapses: there's no meeting left to show it. */
@@ -646,6 +793,9 @@ export function askRefusal(sim: Simulation, person: Person, a: Assignment | unde
   const busy = mateBusy(person, a.partner, when, WORK.rehearsal.minutes);
   if (busy) return { declines: busy };
   if (trustOf(mate) < WORK.trust.wary) return { declines: `${first} would rather work on it alone, after last time.` };
+  // A boundary they set, after being let down (`systems/classmates.ts`): a day's notice.
+  const boundary = boundaryRefusal(mate, sim.now, when);
+  if (boundary) return { declines: boundary };
   return {};
 }
 
@@ -661,6 +811,7 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     r.status = 'missedByYou';
     m.missedByYou = (m.missedByYou ?? 0) + 1;
     moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed });
+    noteIncident(mate, when, 'missed');
     remember(sim, mate, `You didn’t come to rehearse ${what}`);
     if (mine) sim.notify({ category: 'school', title: `${first} Waited For You`, body: `You didn’t come to the rehearsal of ${what}. ${first} will remember it.`, importance: 60, route: '/workspace/school' });
     return;
@@ -680,6 +831,10 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   a.prep.partner = clamp01(before + (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person))) * (1 - before));
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
   moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
+  keptWith(mate);
+  // Both readings tried, as agreed with them (`systems/classmates.ts`): the table work moves, once.
+  const tried = a as Assignment & { tryBoth?: boolean };
+  if (tried.tryBoth) { a.prep.interpretation = clamp01(a.prep.interpretation + 0.15 * (1 - a.prep.interpretation)); delete tried.tryBoth; }
   remember(sim, mate, `Rehearsed ${what} together`);
   r.said = peerNote(a, first!);
 }
@@ -862,7 +1017,7 @@ export function registerCoursework(sim: Simulation): void {
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === PARTNER_KIND && item.payload.rehearsalId === r.id) s.timeline.cancel(item.id, s.now);
     const late = r.at - s.now < MS_DAY;
     const mate = person.school!.classmates[a.partner!]!;
-    if (late) moveTrust(mate, WORK.trust.lateCancel);
+    if (late) { moveTrust(mate, WORK.trust.lateCancel); noteIncident(mate, s.now, 'lateCancel'); }
     remember(s, mate, late ? 'You called off a rehearsal at short notice' : 'You moved a rehearsal, with notice');
     return { late };
   });

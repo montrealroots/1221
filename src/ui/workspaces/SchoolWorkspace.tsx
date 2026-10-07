@@ -20,17 +20,18 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
+import { hasProcess, holderFor } from '@/engine/systems/production';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
@@ -441,6 +442,7 @@ function CabaretPanel() {
           </div>
         )}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
+        {mine && <RehearsalProcess casting={mine} which="cabaret" />}
         <Fine>
           The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
         </Fine>
@@ -456,6 +458,7 @@ function SummerPanel() {
   const cur = saveCurrency(sim.universe);
   const school = person.school!;
   const summer = school.summer && school.summer.until > sim.now ? school.summer : undefined;
+  const current = summer ? holderFor(sim, person, 'summer') : undefined;
   return (
     <Panel
       title="The Yale Summer Cabaret"
@@ -470,6 +473,8 @@ function SummerPanel() {
               <div key={i} className="small">
                 <strong>{show?.play ?? `Show ${i + 1}`}</strong>{show?.by ? `, by ${show.by}` : ''}: {show ? `${show.role}, ` : ''}{dayOf(run.from)} to {dayOf(run.to)}, played {summer.played[i] ?? 0}.
                 {show?.nights ? ` ${nightsLine(show)}` : ''}
+                {show && show === current && <RehearsalProcess casting={show} which="summer" />}
+                {show && show !== current && hasProcess(show) && show.process.reflection && <div className="xs dim">Looking Back: {show.process.reflection.text}</div>}
               </div>
             );
           })}
@@ -504,7 +509,13 @@ function WorkPane() {
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours} of ${WORK_STUDY.electiveHours}`} />
           <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
+          <Stat label="Protective Equipment" value={person.school!.ppe ? 'Bought' : 'Not Yet'} note={person.school!.ppe ? `On ${formatDate(person.school!.ppe.at, zone())}, ${formatMoney(person.school!.ppe.cost, cur)}` : `Required for the Saturday crew: ${formatMoney(ppeCost(sim), cur)}, or bought at your first shift`} />
         </div>
+        {!person.school!.ppe && !ppeRefusal(person) && (
+          <div>
+            <Gated feature="school.buy_ppe" className="btn btn-sm btn-ghost" title={`${formatMoney(ppeCost(sim), cur)}, from your bank`} onClick={() => { const r = run<{ cost: number }>('school.buy_ppe'); if (r.ok) toast(`Bought: ${formatMoney(r.value!.cost, cur)}.`, 'positive'); }}>Buy The Protective Equipment</Gated>
+          </div>
+        )}
         {shifts.length > 0 && (
           <LookRegion className="col gap-2">
             {shifts.map((s) => (
@@ -518,7 +529,7 @@ function WorkPane() {
         <p className="small" style={{ margin: 0 }}>
           Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
         </p>
-        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</Fine>
+        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. The protective equipment is the school’s requirement and its $150 the school’s figure; what the kit holds beyond steel-toed work shoes isn’t published. Without it, or the money for it at the shift, the supervisor sends you home. Source: {WORK_STUDY.source}; {REQUIRED_PPE.source}.</Fine>
       </div>
     </Panel>
   );
