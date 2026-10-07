@@ -14,12 +14,26 @@
  * bills there, so nothing is paid twice (`TELECOM_OF_BILLS`). Switch
  * Provider takes the other offer, as a new customer, paying what's left of
  * a contract's months. Elsewhere the bills still carry them.
+ *
+ * **Outages** (from 2026-10-06; `research-internet-reliability.json`): until
+ * then the internet at home never went down. ComReg's 2023 report gives
+ * Ireland's users 45 hours of outage a year on copper and 16 on fiber; eir's
+ * 500Mb can only be fiber (copper lines don't carry it), so a Dublin home on
+ * it is down each hour at 16 over a year's hours (decider
+ * `home.internet_outage`), an hour at a time, how long one lasts not being
+ * published. Virgin Media Ireland's cable is neither, and nowhere else
+ * publishes a rate: Ofcom gives only power's share of incidents, the CRTC a
+ * reporting rule, and the FCC's measuring doesn't count outages, so no outage
+ * is drawn there. While it's down, a service isn't streamed at home
+ * (`watchRefusal` in `systems/homelife.ts`): the phone's plan has its data,
+ * Tesco Mobile's 5GB, but what an hour's stream takes of it wasn't read, so
+ * SLATE doesn't stream on it.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -74,6 +88,25 @@ export function leavingCost(sim: Simulation, person: Person, at: Instant): Money
   // A rolling offer has no months to owe.
   const left = Math.ceil((plan.contract ?? 0) - (at - now.since) / MONTH_MS);
   return left > 0 ? inSave(sim, internetMonth(plan, now.since, at) * left * internetShare(person.home?.kind), plan.currency) : 0;
+}
+
+/** A home internet offer's hours of outage a year, where published: ComReg's 16 for fiber. */
+export const OUTAGE_HOURS: Readonly<Record<string, number>> = { 'eir-500': 16 };
+const YEAR_HOURS = 365.2425 * 24;
+
+/** The internet offer at their home: the account's, or the town's cheapest that one opens at. */
+export function homeInternetPlan(person: Person): InternetPlan | undefined {
+  const home = person.home;
+  if (!home || internetShare(home.kind) === 0) return undefined;
+  const t = telecomOf(person).internet;
+  return t && t.cityId === home.cityId ? planById(t.planId) : internetIn(home.cityId)[0];
+}
+
+/** Whether the internet at their home is down in the hour of a moment, at its offer's published hours a year; a sweep's odds where given. */
+export function internetDown(sim: Simulation, person: Person, at: Instant, odds?: number): boolean {
+  const plan = homeInternetPlan(person);
+  const rate = odds ?? (plan ? (OUTAGE_HOURS[plan.id] ?? 0) / YEAR_HOURS : 0);
+  return rate > 0 && sim.rng('home.internet_outage', person.id, String(Math.floor(at / MS_HOUR))).next() < rate;
 }
 
 export function switchRefusal(person: Person, planId: string): string | undefined {

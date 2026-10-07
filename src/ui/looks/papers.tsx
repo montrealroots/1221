@@ -24,6 +24,7 @@ import {
   documentsOf, inForce, mayDrive, mayEnter, passportOf, type PersonDocument,
 } from '@/engine/systems/documents';
 import { tsaAccepts } from '@/engine/systems/identity';
+import { VISITS } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
@@ -150,8 +151,10 @@ defineLook<ThePaper>('document', {
     const issuer = doc.kind === 'license' && LICENSES[doc.issuer] ? LICENSES[doc.issuer]!.authority : region?.name ?? country?.name ?? doc.issuer.toUpperCase();
     const last = lastOf(doc.number);
 
+    // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
+    const visit = doc.visit && doc.visit.keptAt === undefined ? `It waits on the ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}: be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more and then' : 'the application'} ends. ` : '';
     const summary = state === 'pending'
-      ? `It’s being decided, and it should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
+      ? `${visit}It’s being decided, and it should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
       : state === 'lost' ? `You reported it lost, so the number ending ${last} is canceled.`
         : state === 'cancelled' ? `Canceled, the number ending ${last} is no use to you now.`
           : state === 'expired' ? `Run out on ${formatDate(doc.expiresAt!, zone)}, it no longer counts for anything.`

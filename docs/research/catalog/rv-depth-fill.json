@@ -1,0 +1,158 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing the smallest depth gaps of docs/CATALOG-DEPTH.md's rvs category: Mercedes-Benz and Elddis and Bailey in Great Britain, and Airstream in the US, against each brand's whole range as counted in docs/research/catalog-ranges.json. Prices and weights read live on 2026-10-06 from the makers' own pages where they rendered as fetchable text (changaneurope... not used here; elddis.co.uk, baileyofbristol.co.uk), and from rvusa.com's and jdpower.com's spec guides and a UK dealer where a maker's own page didn't. Each model's MTPLM or GVWR is its maker's or its listing's own stated figure, within the place's car license (GB category B to 3,500 kg; US class D/C to 26,000 lb), converted to kg where given in lb (*0.45359237).",
+  "models": [
+    {
+      "market": "GB",
+      "make": "Mercedes-Benz",
+      "model": "Marco Polo",
+      "kind": "campervan",
+      "basePrice": {
+        "amount": 71245,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://mercedes-benz.co.uk/passengercars/mercedes-benz-cars/models/v-class/v-class-marco-polo/explore/prices.module.html",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3200,
+      "grossBasis": "3,200 kg gross vehicle weight, as stated for the V-Class-based Marco Polo",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "GB",
+      "make": "Mercedes-Benz",
+      "model": "Marco Polo Horizon",
+      "kind": "campervan",
+      "basePrice": {
+        "amount": 77280,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://mercedes-benz.co.uk/passengercars/mercedes-benz-cars/models/v-class/v-class-marco-polo/explore/prices.module.html",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3200,
+      "grossBasis": "3,200 kg gross vehicle weight, the same V-Class base as the Marco Polo",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "GB",
+      "make": "Elddis",
+      "model": "Whirlwind GT 120",
+      "kind": "motorhome",
+      "basePrice": {
+        "amount": 61689,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://elddis.co.uk/motorhomes/whirlwind-gt/whirlwind-gt-120",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3500,
+      "grossBasis": "3,500 kg MTPLM, as stated on Elddis's own Whirlwind GT 120 page",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "GB",
+      "make": "Elddis",
+      "model": "Whirlwind GTS 66DS",
+      "kind": "motorhome",
+      "basePrice": {
+        "amount": 61227,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://elddis.co.uk/en/motorhomes/whirlwind-gts",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3499,
+      "grossBasis": "3,499 kg MTPLM, as stated on Elddis's own Whirlwind GTS page",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "GB",
+      "make": "Bailey",
+      "model": "Alora 69-4S",
+      "kind": "motorhome",
+      "basePrice": {
+        "amount": 75499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.baileyofbristol.co.uk/motorhomes/alora/alora-69-4s/",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3500,
+      "grossBasis": "3,500 kg MTPLM, as stated on Bailey's own Alora 69-4S page",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "GB",
+      "make": "Bailey",
+      "model": "Autograph 72-2",
+      "kind": "motorhome",
+      "basePrice": {
+        "amount": 89000,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.baileyofbristol.co.uk/motorhomes/autograph/",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 3500,
+      "grossBasis": "3,500 kg MTPLM, the lightest of the Autograph range (72-2)",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "US",
+      "make": "Airstream",
+      "model": "Atlas 25RT",
+      "kind": "motorhome",
+      "basePrice": {
+        "amount": 289900,
+        "currency": "USD",
+        "includesTax": false,
+        "url": "https://www.airstream.com/explore-products/touring-coaches/atlas/atlas-25RT/",
+        "sourceType": "primary"
+      },
+      "fuel": "diesel",
+      "grossKg": 5500.12,
+      "grossBasis": "GVWR 12,125 lb, on the Mercedes-Benz 4500 cab chassis",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    },
+    {
+      "market": "US",
+      "make": "Airstream",
+      "model": "Rangeline",
+      "kind": "campervan",
+      "basePrice": {
+        "amount": 158400,
+        "currency": "USD",
+        "includesTax": false,
+        "url": "https://www.rvusa.com/rv-guide/2026-airstream-rangeline-base-class-b-specs-tr70459",
+        "sourceType": "secondary"
+      },
+      "fuel": "diesel",
+      "grossKg": 4240.09,
+      "grossBasis": "GVWR 9,350 lb, read from RVUSA's 2026 spec guide",
+      "berths": null,
+      "lengthM": null,
+      "economy": null
+    }
+  ]
+}

@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, restaurantsIn, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf, freezeDaysOf, freezeRefusal, thawRefusal } from '@/engine/systems/kitchen';
+import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, cookingLeft, recipeById, resumeRefusal, dinersOf, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf, freezeDaysOf, freezeRefusal, thawRefusal } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -296,8 +296,32 @@ function Recipes() {
   const ready = rows.filter((x) => !x.no).length;
   // An outdoor kitchen of their own, where they are (from 2026-10-04).
   const outdoors = atHome(person) && Boolean(livingIn(person)?.facts.features.includes('outdoorKitchen'));
+  // Whom a meal serves (from 2026-10-06): the partner by default, as before; anyone at home once chosen.
+  const diners = dinersOf(sim, person);
+  const [chosen, setChosen] = useState<string[] | null>(null);
+  const serving = (chosen ?? diners.filter((d) => d.who === 'partner').map((d) => d.id)).filter((id) => diners.some((d) => d.id === id));
+  const serve = chosen === null ? {} : { serve: serving };
+  // A recipe stopped partway (from 2026-10-06), finished from here within USDA's two hours.
+  const partway = cookingLeft(sim, person);
+  const resumeNo = partway ? resumeRefusal(sim, person) : undefined;
   return (
     <Panel title="Recipes" subtitle={`${ready} of ${RECIPES.length} can be cooked with what’s in the kitchen`}>
+      {partway && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'baseline' }}>
+          <span className="small">{`${recipeById(partway.recipeId)?.name ?? 'A recipe'}, partway: ${Math.round(partway.minutesDone)} of ${partway.minutes} minutes cooked (${partway.why})`}</span>
+          <Gated feature="food.resume_cooking" className="btn btn-sm btn-ghost" disabled={Boolean(resumeNo)} title={resumeNo} onClick={() => { const res = run<{ left: number; stopped?: string }>('food.resume_cooking', {}); if (res.ok) toast(res.value?.stopped ? `Stopped again: ${res.value.stopped}.` : `Finished: one eaten, ${res.value?.left ?? 0} kept.`, res.value?.stopped ? 'negative' : 'positive'); }}>Finish Cooking It</Gated>
+        </div>
+      )}
+      {diners.length > 0 && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+          <span className="small">Serve</span>
+          {diners.map((d) => (
+            <label key={d.id} className="small row gap-1" style={{ alignItems: 'center' }}>
+              <input type="checkbox" checked={serving.includes(d.id)} onChange={() => setChosen(serving.includes(d.id) ? serving.filter((x) => x !== d.id) : [...serving, d.id])} />{d.label}
+            </label>
+          ))}
+        </div>
+      )}
       <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Recipe</th><th scope="col" className="num">Serves</th><th scope="col" className="num">Minutes</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -313,7 +337,7 @@ function Recipes() {
                 </td>
                 <td className="num mono">{r.minutes ?? '30*'}</td>
                 <td className="small">{r.source}</td>
-                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button>{outdoors && <Gated feature="food.cook" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={Boolean(no)} title={no} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n, outside: true }); if (res.ok) toast(`${r.name}, cooked outside: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It Outside</Gated>}</td>
+                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number; stopped?: string }>('food.cook', { recipeId: r.id, servings: n, ...serve }); if (res.ok) toast(res.value?.stopped ? `${r.name}, stopped partway: ${res.value.stopped}.` : `${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, res.value?.stopped ? 'negative' : 'positive'); }}>Cook It</button>{outdoors && <Gated feature="food.cook" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={Boolean(no)} title={no} onClick={() => { const res = run<{ left: number; stopped?: string }>('food.cook', { recipeId: r.id, servings: n, outside: true, ...serve }); if (res.ok) toast(res.value?.stopped ? `${r.name}, stopped partway: ${res.value.stopped}.` : `${r.name}, cooked outside: one eaten, ${res.value?.left ?? 0} kept.`, res.value?.stopped ? 'negative' : 'positive'); }}>Cook It Outside</Gated>}</td>
               </tr>
             ))}
           </tbody>

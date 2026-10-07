@@ -1,0 +1,34 @@
+{
+ "read": "2026-10-06",
+ "category": "mattresses",
+ "method": "Closing Restonic's US depth gap in docs/CATALOG-DEPTH.md (held 4 of its counted 6: Signature, HealthRest, ComfortCare, Drew & Jonathan Home already recorded). 'Scott Living' is Restonic's licensed collection with Property Brothers' Scott brothers, sold only through dealers; its own retail model names (Cascade, Vista, Stargazer, Concord...) aren't 'Signature' (already recorded separately as the retail name 'Scott Living Signature'), so one of its other SKUs is recorded here under model 'Scott Living' the same way 'Drew & Jonathan Home' already stands for that licensed line's own retail SKU. 'Grand Palais' was researched and found discontinued; recorded in rangeProblems, not added.",
+ "products": [
+  {
+   "brand": "Restonic",
+   "model": "Scott Living",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "plush",
+   "heightIn": null,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 1399.95, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "DealBeds",
+   "url": "https://www.dealbeds.com/restonic-scott-living-hybrid-stargazer-plush-mattress/",
+   "status": "secondhand",
+   "notes": "Retail name 'Scott Living Hybrid Stargazer Plush'; Scott Living is Restonic's licensed collection with HGTV's Scott brothers, sold through dealers only. Regular (pre-discount, crossed-out 'original') price recorded; this dealer runs a standing sale off it to $1,099.95."
+  }
+ ],
+ "notFound": [],
+ "rangeProblems": [
+  {
+   "brand": "Restonic",
+   "category": "mattresses",
+   "market": "us",
+   "issue": "Grand Palais, one of the 6 lines in catalog-ranges.json's counted field for Restonic US, is a discontinued line (GoodBed lists 13 Grand Palais models, e.g. Tiara Plush Euro Top, Cambridge Euro Top, Danbury Euro Top, Beaumont Euro Top, all under 'Restonic Discontinued Mattress Models', https://www.goodbed.com/mattresses/restonic/discontinued-lines/). No current dealer or retailer listing with a live price was found for any Grand Palais model in this pass; it is no longer sold new."
+  }
+ ]
+}

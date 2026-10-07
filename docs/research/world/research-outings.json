@@ -1,0 +1,139 @@
+{
+  "topic": "Average cinema ticket price and average pint/beer and wine prices by SLATE market",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "US average movie ticket price (NATO/Cinema United-sourced figure reported in trade press, commonly cited as ~$10.75-$11)",
+      "value": "10.75-11.00",
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.indiewire.com/features/general/movie-ticket-price-average-11-dollars-1234765924/",
+      "quote": "The National Association of Theatre Owners (NATO) reported the most recent average ticket price in the U.S. at approximately $10.75... The Average Movie Ticket Price Is Now $11",
+      "confidence": "medium"
+    },
+    {
+      "what": "US average movie ticket price, a different 2025 aggregator figure (illustrates spread between sources)",
+      "value": 16.08,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://latestcost.com/average-cost-movie-ticket-united-states/",
+      "quote": "The average price of movie tickets in the U.S. is around $16.08 in 2025.",
+      "confidence": "low"
+    },
+    {
+      "what": "US regional ticket price example: New York City",
+      "value": "23+",
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.americantv.com/cost-of-a-movie-ticket-in-each-state.php",
+      "quote": "In places like New York City, you might pay over $23 for a single ticket",
+      "confidence": "low"
+    },
+    {
+      "what": "UK average cinema ticket price, 2025, UK Cinema Association",
+      "value": 8.01,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.cinemauk.org.uk/the-industry/facts-and-figures/uk-cinema-industry-economics-and-turnover/average-ticket-price/",
+      "quote": "Average UK cinema ticket prices rose from £7.73 in 2024 to £8.01 in 2025, driven by both inflationary pressures and the increasingly premium nature of the cinema experience.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland average cinema ticket price (Numbeo aggregator, 'international release')",
+      "value": 13.90,
+      "unit": "USD",
+      "market": "ie",
+      "source": "https://www.numbeo.com/cost-of-living/country_price_rankings?itemId=44",
+      "quote": "Ireland: $13.90",
+      "confidence": "low"
+    },
+    {
+      "what": "Canada average cinema ticket price (Numbeo aggregator, 'international release')",
+      "value": 11.23,
+      "unit": "USD",
+      "market": "ca",
+      "source": "https://www.numbeo.com/cost-of-living/country_price_rankings?itemId=44",
+      "quote": "Canada: $11.23",
+      "confidence": "low"
+    },
+    {
+      "what": "Mexico average cinema ticket price (Numbeo aggregator, 'international release')",
+      "value": 5.40,
+      "unit": "USD",
+      "market": "mx",
+      "source": "https://www.numbeo.com/cost-of-living/country_price_rankings?itemId=44",
+      "quote": "Mexico: $5.40",
+      "confidence": "low"
+    },
+    {
+      "what": "UK average pint price (overall survey average, 2025, via trade press)",
+      "value": 5.17,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.thedrinksbusiness.com/2025/06/the-price-of-a-pint-rises-again-in-the-uk/",
+      "quote": "The average pint price rose from £5.08 in January to £5.17 by May 2025.",
+      "confidence": "medium"
+    },
+    {
+      "what": "UK average lager pint price per ONS data, January 2025 (lower, official figure)",
+      "value": 4.83,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.morningadvertiser.co.uk/Article/2025/06/10/what-is-the-average-price-of-a-pint-of-lager-in-great-britain/",
+      "quote": "ONS (Office for National Statistics) data shows the most recent average pint price for lager in pubs and bars - from January 2025 - is £4.83",
+      "confidence": "medium"
+    },
+    {
+      "what": "London average pint price, 2025 (priciest UK region)",
+      "value": 6.10,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://finance.yahoo.com/news/mapped-price-pint-across-uk-120656917.html",
+      "quote": "London tops the list for the priciest pints, with pub owners charging an average of £6.10",
+      "confidence": "low"
+    },
+    {
+      "what": "Dublin average domestic draught beer price, restaurant/bar (0.5L), Numbeo aggregator",
+      "value": 10.90,
+      "unit": "USD",
+      "market": "ie",
+      "source": "https://www.numbeo.com/cost-of-living/city_price_rankings?displayCurrency=KGS&itemId=4",
+      "quote": "Dublin, Ireland: $10.90",
+      "confidence": "low"
+    },
+    {
+      "what": "Toronto average domestic draught beer price, restaurant/bar (0.5L), Numbeo aggregator",
+      "value": 10.20,
+      "unit": "USD",
+      "market": "ca",
+      "source": "https://www.numbeo.com/cost-of-living/city_price_rankings?displayCurrency=KGS&itemId=4",
+      "quote": "Toronto, Canada: $10.20",
+      "confidence": "low"
+    },
+    {
+      "what": "New York City average domestic draught beer price, restaurant/bar (0.5L), Numbeo aggregator",
+      "value": 10.15,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.numbeo.com/cost-of-living/city_price_rankings?displayCurrency=KGS&itemId=4",
+      "quote": "New York City, USA: $10.15",
+      "confidence": "low"
+    },
+    {
+      "what": "Mexico City average domestic draught beer price, restaurant/bar (0.5L), Numbeo aggregator",
+      "value": 5.10,
+      "unit": "USD",
+      "market": "mx",
+      "source": "https://www.numbeo.com/cost-of-living/city_price_rankings?displayCurrency=KGS&itemId=4",
+      "quote": "Mexico City, Mexico: $5.10",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "A single authoritative, current (2025/2026) US figure directly sourced from Cinema United's own site (NATO was renamed Cinema United; its own current report page was not reached in this session; IMDb/Yahoo articles citing it returned 403)", "looked": ["https://www.imdb.com/news/ni63779830/ (403 Forbidden)", "average movie ticket price US 2025 NATO Cinema United"] },
+    { "what": "Los Angeles and New Haven CT specific cinema/pint prices (only national/NYC figures found)", "looked": ["Not separately searched; Numbeo and NATO figures are national/NYC, not LA or New Haven specific"] },
+    { "what": "Average price of a glass of wine in a bar, any market (search focused on beer/pint; wine not located)", "looked": ["average price pint beer UK ONS 2025 (did not surface wine-by-the-glass figures)"] },
+    { "what": "CANACINE's own official average Mexican cinema ticket price (only Numbeo's aggregate figure was found, not a CANACINE source)", "looked": ["average cinema ticket price Ireland Canada Mexico CANACINE 2025 — search did not surface a CANACINE page"] },
+    { "what": "Vancouver beer price in consistent currency/unit (one search result returned a GBP-denominated figure for Vancouver, inconsistent with the USD figures for other cities, so it was not included as a clean data point)", "looked": ["Numbeo average price pint beer domestic New York Toronto Vancouver Dublin Mexico City"] }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "topic": "Typical school-day start/end times: London, Dublin, Toronto (TDSB), Vancouver (VSB)",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "Typical UK primary school start and end times (general range)",
+      "value": "8:30-9:00 am start; 3:00-3:30 pm end",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://edumentors.co.uk/blog/what-time-does-school-start-in-the-uk-a-complete-guide/",
+      "quote": "Most primary schools in the UK begin between 8:30am and 9:00am, and primary schools often end the day between 3:00pm and 3:30pm",
+      "confidence": "low"
+    },
+    {
+      "what": "Specific London primary school example (Rotherhithe Primary), Years 1-6 vs Reception",
+      "value": "Years 1-6: 8:55 line-up/9:00 start to 3:30 end; Reception: 9:00 start to 3:15 end",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://rotherhitheprimary.co.uk/school-opening-hours/",
+      "quote": "Year 1 to Year 6 pupils start with children lining up at 8:55am for a 9:00am start and ending at 3:30pm, while Reception pupils start at 9:00am and end at 3:15pm.",
+      "confidence": "medium"
+    },
+    {
+      "what": "UK school day total length (instructional time)",
+      "value": "6 hours 30 minutes/day (~32.5 hours/week)",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://www.coedfoundation.org.uk/how-long-is-a-school-day-in-the-uk.html",
+      "quote": "Children are in school for 6 hours and 30 minutes a day (Monday to Friday), during term time, which totals approximately 32.5 hours per week.",
+      "confidence": "low"
+    },
+    {
+      "what": "Ireland primary school day length and typical start times",
+      "value": "5 hours 40 minutes total; classes start between 8:30 and 9:30 am",
+      "unit": "text",
+      "market": "ie",
+      "source": "https://www.into.ie/help-advice/other-school-matters/school-year/length-of-school-day/",
+      "quote": "The primary school day lasts 5 hours and 40 minutes... Classes usually start between 8:30am and 9.30am.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland primary school end times by class level",
+      "value": "Junior/Senior Infants: 1:10-2:00 pm; older classes: 2:10-3:00 pm",
+      "unit": "text",
+      "market": "ie",
+      "source": "https://www.into.ie/help-advice/other-school-matters/school-year/length-of-school-day/",
+      "quote": "Children finish between 1.10 p.m. and 2 p.m. in Junior & Senior infants, while older children spend another hour in school and finish between 2:10 p.m. and 3 p.m.",
+      "confidence": "medium"
+    },
+    {
+      "what": "TDSB (Toronto) typical elementary bell schedule",
+      "value": "Supervision 8:35am, entry bell 8:45am, classes begin 8:50am; recess 10:10-10:25am; lunch 11:35am; afternoon entry 12:35pm; recess 1:55-2:10pm; day ends 3:20pm",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://www.tdsb.on.ca/Portals/0/EarlyYears/docs/Bell%20Times%20for%20Website%20Updated%20on%20March%2012.pdf",
+      "quote": "Supervision begins at 8:35, Entry Bell at 8:45, Classes begin at 8:50... School Day ends at 3:20.",
+      "confidence": "medium"
+    },
+    {
+      "what": "TDSB specific school example, General Crerar (2026-2027)",
+      "value": "Supervision 8:30am, student entry 8:40am, day starts 8:45am, day ends 3:15pm",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://schoolweb.tdsb.on.ca/generalcrerar/About-Us/Schedule-and-Bell-Times",
+      "quote": "General Crerar has supervision starting at 8:30 am, student entry at 8:40 am, start of day at 8:45 am, and end of day at 3:15 pm for 2026-2027",
+      "confidence": "medium"
+    },
+    {
+      "what": "TDSB minimum daily instructional time requirement for elementary students",
+      "value": 300,
+      "unit": "minutes/day",
+      "market": "ca",
+      "source": "https://www.tdsb.on.ca/Portals/0/EarlyYears/docs/Bell%20Times%20for%20Website%20Updated%20on%20March%2012.pdf",
+      "quote": "The TDSB expects all Elementary students to receive a minimum of 300 minutes of daily instruction.",
+      "confidence": "medium"
+    },
+    {
+      "what": "VSB (Vancouver) elementary bell schedule example, Trafalgar Elementary and General Brock Elementary",
+      "value": "8:00 am start; 3:30 pm end",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://www.vsb.bc.ca/trafalgar/page/66886/bell-schedule",
+      "quote": "Trafalgar Elementary School has a start time of 8:00 AM and closing time of 3:30 PM.",
+      "confidence": "medium"
+    },
+    {
+      "what": "VSB elementary bell schedule example, Tecumseh Elementary (different timing)",
+      "value": "Warning bell 8:55am, instruction 9:00am, recess 10:30-10:45am, lunch 12:00-12:47pm, dismissal 3:00pm",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://media.vsb.bc.ca/media/Default/medialib/bell-schedule-2020-2021.e56b2432365.pdf",
+      "quote": "Tecumseh Elementary School's bell schedule shows a warning bell at 8:55 AM, instruction begins at 9:00 AM, recess at 10:30-10:45 AM, lunch at 12:00-12:47 PM, and dismissal at 3:00 PM.",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "A single board-wide standardized VSB bell time (VSB schools clearly vary school-to-school, 8:00am-3:30pm vs 9:00am-3:00pm, with no single authoritative board-wide figure located)", "looked": ["Vancouver School Board VSB elementary school start end time bell schedule"] },
+    { "what": "A single board-wide standardized TDSB bell time distinct from the general pattern and the General Crerar example (times vary ~15 minutes school to school)", "looked": ["TDSB Toronto elementary school start end time bell schedule"] }
+  ]
+}

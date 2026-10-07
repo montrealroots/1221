@@ -15,7 +15,7 @@ import { addCountryCities } from '@/engine/content/geography';
 import type { Fixtures } from '@/engine/content/homes';
 import { depositFor } from '@/engine/systems/household';
 import { listingsIn } from '@/engine/systems/homes';
-import { CLEANER_VISIT, LAUNDRY, PARTNER_HOUSEWORK_HOURS, TIDY, cleanerCost, cleaningMinutes, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { CLEANER_VISIT, LAUNDRY, PARTNER_CLEANUP_HOURS, PARTNER_HOUSEWORK_HOURS, PARTNER_LAUNDRY_HOURS, TIDY, WASH_UP, laundryWay, cleanerCost, cleaningMinutes, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
 import { cleanOutfits, garmentsOf, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { applyLookingAfter, lookAfterRefusal } from '@/engine/systems/life';
 
@@ -249,7 +249,51 @@ describe('the cleaner’s key', () => {
 });
 
 describe('a partner at home', () => {
-  it('does ATUS’s 0.56 hours of housework a day, a cleaning of the place when it adds up to one', () => {
+  it('washes up by ATUS’s 0.15 hours of kitchen cleanup a day, the sink when it adds up to its days', () => {
+    const sink = (withPartner: boolean) => {
+      const s = save(withPartner ? 'partner-sink-yes' : 'partner-sink-no');
+      if (withPartner) {
+        const partner = newContact(s, s.player, s.player.home!.cityId, 'sink-partner', { at: s.now, how: 'school' });
+        partner.livesWith = s.now;
+        contactsOf(s.player).push(partner);
+      }
+      fitted(s, { dishwasher: false });
+      const l = livingOf(s.player);
+      l.dishes = 1;
+      l.partnerCleanup = WASH_UP.minutesADay * WASH_UP.full;
+      s.advanceBy(MS_DAY);
+      return livingOf(s.player);
+    };
+    expect(PARTNER_CLEANUP_HOURS).toBe(0.15);
+    const yes = sink(true);
+    const no = sink(false);
+    expect(no.partnerCleanup).toBeUndefined();
+    expect(no.dishes).toBeGreaterThan(0);
+    expect(yes.dishes ?? 0).toBe(0);
+  });
+
+  it('does ATUS’s 0.17 hours of laundry a day, a load when it adds up to one', () => {
+    expect(PARTNER_LAUNDRY_HOURS).toBe(0.17);
+    const dirtyAfter = (withPartner: boolean) => {
+      const s = save(withPartner ? 'partner-laundry-yes' : 'partner-laundry-no');
+      if (withPartner) {
+        const partner = newContact(s, s.player, s.player.home!.cityId, 'laundry-partner', { at: s.now, how: 'school' });
+        partner.livesWith = s.now;
+        contactsOf(s.player).push(partner);
+      }
+      // The clean clothes all worn, so there's a load to do.
+      for (const g of garmentsOf(s.player)) if (g.garment.care !== 'dry-clean') g.garment.dirty = true;
+      livingOf(s.player).partnerLaundry = LAUNDRY.minutes[laundryWay(s, s.player)];
+      s.advanceBy(MS_DAY);
+      return { dirty: washableDirty(s, s.player).length, left: livingOf(s.player).partnerLaundry };
+    };
+    const yes = dirtyAfter(true);
+    const no = dirtyAfter(false);
+    expect(no.left).toBeUndefined();
+    expect(yes.dirty).toBeLessThan(no.dirty);
+  });
+
+  it('does ATUS’s 0.33 hours of interior cleaning a day, a cleaning of the place when it adds up to one', () => {
     const sim = save('partner-chores');
     const place = placeOf(sim, sim.player)!;
     const days = Math.ceil(cleaningMinutes(place) / (PARTNER_HOUSEWORK_HOURS * 60));

@@ -72,6 +72,7 @@ import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { mealsFromHelp } from './foodhelp';
 import { mealsFromStock } from './pantry';
+import { isOn } from './automation';
 import { partnerStays } from './people';
 import { billShare } from './marriage';
 import { TELECOM_OF_BILLS, billedApart, telecomLines } from './telecom';
@@ -615,7 +616,8 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
 export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
   if (!person.home) return true;
   // The day's meals out of what's ready at home first, a portion each, and groceries bought for the rest (`systems/pantry.ts`).
-  const fromStock = mealsFromStock(sim, person);
+  // Only where they've chosen the shortcut, from 2026-10-06; until then always, and without it what's ready is theirs to eat by hand.
+  const fromStock = isOn(person, 'eatLeftovers') ? mealsFromStock(sim, person) : 0;
   let cost = Math.round((foodOf(sim, person) * (3 - fromStock)) / 3);
   // An EBT card's SNAP pays for groceries first, and for nothing else (from 2026-10-01).
   const ebtId = person.assistance?.ebtAccountId;
@@ -1004,7 +1006,7 @@ export function registerHousehold(sim: Simulation): void {
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
     // The internet and the phone, each by its provider, the internet shared as the bills are (`systems/telecom.ts`).
     for (const line of telecomLines(s, person, item.at)) payBills(s, person, line.shared ? Math.round(line.amount * share) : line.amount, line.memo);
-    if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; delete person.living.showers; delete person.living.baths; delete person.living.extraKwh; delete person.living.tvKwh; delete person.living.lightKwh; delete person.living.guestDays; }
+    if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; delete person.living.showers; delete person.living.baths; delete person.living.extraKwh; delete person.living.tvKwh; delete person.living.lightKwh; delete person.living.guestDays; delete person.living.lawnL; }
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({

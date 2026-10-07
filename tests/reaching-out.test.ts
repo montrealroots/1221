@@ -14,9 +14,9 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
 import { ASKS, HALL } from '@/engine/content/people';
 import { DINING_MINUTES } from '@/engine/content/dining';
-import { contactsOf, knowTheClass, type Contact } from '@/engine/systems/people';
+import { contactsOf, declines, knowTheClass, type Contact } from '@/engine/systems/people';
 import { diningQuote, restaurantById } from '@/engine/systems/dining';
-import { askOdds, asksToday, mayAsk } from '@/engine/systems/reachingout';
+import { askOdds, asksToday, mayAsk, whatTheyAsk } from '@/engine/systems/reachingout';
 
 const NY = 'us-ny-newyork';
 const life = (seed: string) => {
@@ -28,7 +28,12 @@ const banked = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAcco
 const named = (sim: Simulation, name: string): Contact => contactsOf(sim.player).find((c) => c.name === name)!;
 /** Day by day until the friend asks, or the days run out. */
 const untilAsked = (sim: Simulation, name: string, days: number) => {
-  for (let d = 0; d < days && !named(sim, name).ask; d += 1) sim.advanceBy(MS_DAY);
+  for (let d = 0; d < days && !named(sim, name).ask; d += 1) {
+    sim.advanceBy(MS_DAY);
+    // A meal asked for, here: from 2026-10-06 a friend may ask to other things, which another test reads.
+    const c = named(sim, name);
+    if (c.ask && c.ask.what !== 'meal') { delete c.ask; delete c.askedAt; }
+  }
   return named(sim, name).ask;
 };
 
@@ -47,14 +52,14 @@ describe('a friend who asks first', () => {
     const maya = named(sim, 'Maya Okafor');
     expect(maya.ask).toEqual(ask);
     const hours = maya.hours;
-    const r = restaurantById(ask!.restaurantId)!;
+    const r = restaurantById(ask!.restaurantId!)!;
     const r1 = sim.must<{ at: number }>({ kind: 'social.answer', payload: { contactId: maya.id, yes: true } });
     expect(r1.at).toBe(ask!.at);
     expect(named(sim, 'Maya Okafor').ask).toBeUndefined();
     expect(sim.execute({ kind: 'social.answer', payload: { contactId: maya.id, yes: true } }).error).toBe('Maya hasn’t asked you to anything.');
     sim.advanceTo(ask!.at - MS_HOUR);
     const before = banked(sim);
-    const price = diningQuote(sim, r, [ask!.item], 'in')!.total;
+    const price = diningQuote(sim, r, [ask!.item!], 'in')!.total;
     sim.advanceTo(ask!.at + 4 * MS_HOUR);
     // The meal at its price, and its hours together.
     expect(before - banked(sim)).toBe(price);
@@ -69,7 +74,7 @@ describe('a friend who asks first', () => {
     const maya = named(sim, 'Maya Okafor');
     sim.must({ kind: 'social.answer', payload: { contactId: maya.id, yes: false } });
     const answered = sim.now;
-    expect(maya.memory[0]!.what).toBe(`You said no to a meal at ${restaurantById(ask.restaurantId)!.name}`);
+    expect(maya.memory[0]!.what).toBe(`You said no to a meal at ${restaurantById(ask.restaurantId!)!.name}`);
     expect(sim.universe.scheduled.some((x) => x.status === 'pending' && x.kind === 'social.meet')).toBe(false);
     // No new ask inside the fortnight: not a lucky draw, they won't (`mayAsk`), and do once it's past.
     for (let d = 0; d < ASKS.pause - 1; d += 1) { sim.advanceBy(MS_DAY); expect(mayAsk(sim, sim.player, named(sim, 'Maya Okafor'))).toBe(false); }
@@ -80,7 +85,7 @@ describe('a friend who asks first', () => {
     expect(again.made - answered).toBeGreaterThanOrEqual(ASKS.pause * MS_DAY - MS_DAY);
     sim.advanceTo(again.at + MS_DAY);
     expect(named(sim, 'Maya Okafor').ask).toBeUndefined();
-    expect(named(sim, 'Maya Okafor').memory.some((m) => m.what === `Asked you to a meal at ${restaurantById(again.restaurantId)!.name}; you never answered`)).toBe(true);
+    expect(named(sim, 'Maya Okafor').memory.some((m) => m.what === `Asked you to a meal at ${restaurantById(again.restaurantId!)!.name}; you never answered`)).toBe(true);
     expect(sim.execute({ kind: 'social.answer', payload: { contactId: 'nobody', yes: true } }).error).toBe('You don’t know them.');
     expect(breaches(sim.universe)).toEqual([]);
   });
@@ -119,6 +124,35 @@ describe('a friend who asks first', () => {
     sim.advanceBy(7 * MS_DAY + MS_HOUR);
     expect(mayAsk(sim, sim.player, maya())).toBe(true);
     expect(breaches(sim.universe)).toEqual([]);
+  });
+
+  it('asks to a visit, a game on your court or a class too, only one they’d say yes to themselves', () => {
+    const sim = life('reach-kinds');
+    const maya = named(sim, 'Maya Okafor');
+    const kinds = new Map<string, number>();
+    for (let d = 0; d < 200; d += 1) {
+      const a = whatTheyAsk(sim, maya, `kinds-${d}`);
+      if (!a) continue;
+      kinds.set(a.what!, (kinds.get(a.what!) ?? 0) + 1);
+      if (a.what !== 'meal') expect(declines(sim.player, maya, { contactId: maya.id, at: a.at, what: a.what!, ...(a.classId ? { classId: a.classId } : {}), ...(a.court ? { court: a.court } : {}) }, sim)).toBeUndefined();
+    }
+    expect(kinds.get('meal') ?? 0).toBeGreaterThan(0);
+    expect(kinds.get('visit') ?? 0).toBeGreaterThan(0);
+    // Without a home of your own to come to, no visit is asked.
+    sim.player.home = { ...sim.player.home!, kind: 'sofa' } as never;
+    for (let d = 0; d < 50; d += 1) expect(whatTheyAsk(sim, maya, `sofa-${d}`)?.what).not.toBe('visit');
+  });
+
+  it('a visit asked and said yes to is on the calendar as your own would be', () => {
+    const sim = life('reach-visit');
+    const maya = named(sim, 'Maya Okafor');
+    const day = Array.from({ length: 200 }, (_, d) => `v-${d}`).find((k) => whatTheyAsk(sim, maya, k)?.what === 'visit')!;
+    maya.ask = whatTheyAsk(sim, maya, day)!;
+    sim.must({ kind: 'social.answer', payload: { contactId: maya.id, yes: true } });
+    expect(maya.memory[0]!.what).toBe('You said yes to a visit to your home');
+    const meet = sim.universe.scheduled.find((x) => x.status === 'pending' && x.kind === 'social.meet')!;
+    expect(meet.label).toBe('Maya Comes Over');
+    expect(meet.payload.what).toBe('visit');
   });
 
   it('asks at about its odds a day: a close friend near one a fortnight, a casual one far less', () => {

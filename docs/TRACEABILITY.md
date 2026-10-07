@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 381
-- Implemented But Unverified: 0
+- Implemented But Unverified: 9
 - Partially Implemented: 0
-- Commands in all: 381
+- Commands in all: 390
 
 ## Commands
 
@@ -84,7 +84,8 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.set_over_limit` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Opting in to going over the limit is a US card’s choice. | — | — | — | 2 | journey-bank.test.ts |
 | `card.set_statement_day` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Pick a day from the 1st to the 28th. | — | — | — | 3 | journey-bank.test.ts |
 | `card.update_billers` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | Your bills already have your card’s number. | — | — | — | 2 | journey-bank.test.ts |
-| `career.accept` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open.; Another series holds an option on you until it’s decided.; It clashes with …. (also acceptRefusal, crossingRefusal, workRefusal) | stay; travelOwed; perDiemOwed; status; lastBookedAt; and 1 more | Yes | own; sublet; sofa; hotel; and 3 more | 21 | journey-acting-travel.test.ts; journey-career.test.ts; journey-residence.test.ts |
+| `career.accept` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open.; Another series holds an option on you until it’s decided.; It clashes with …. (also acceptRefusal, crossingRefusal, workRefusal) | stay; travelOwed; perDiemOwed; status; lastBookedAt; and 1 more | Yes | own; sublet; sofa; hotel; and 3 more | 22 | journey-acting-travel.test.ts; journey-career.test.ts; journey-residence.test.ts; and 1 more |
+| `career.attend_ceremony` | Implemented But Unverified | The Business | CareerWorkspace.tsx | `systems/awards.ts` | — | — | — | — | 1 | — |
 | `career.buy_kit` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | You have a kit.; A kit is … with the sales tax, which the bank can’t cover. | kit | — | — | 2 | journey-career.test.ts |
 | `career.class` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | School is your class for now.; You aren’t in a class.; You’re in a class.; A month is …, which the bank can’t cover. | scene | — | — | 2 | journey-career.test.ts |
 | `career.coach` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That audition isn’t ahead.; You’ve worked on it already.; You’re at … until ….; An hour is …, which the bank can’t cover. | — | — | — | 2 | journey-career.test.ts |
@@ -106,30 +107,31 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `career.self_submit` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | While classes are in session, the school’s work comes first; submissions start in the summ; You’ve made this week’s … submissions. | submitted | — | — | 4 | journey-career.test.ts |
 | `career.sign` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That agency hasn’t an offer standing.; You’re with …. | — | — | — | 3 | journey-career.test.ts |
 | `career.sign_manager` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | … manages you.; That firm hasn’t an offer standing. | managerId; managerSince; managerOffers | — | — | 2 | journey-career.test.ts |
+| `career.submit_for` | Implemented But Unverified | The Business | CareerWorkspace.tsx | `systems/career.ts` | — (also submitForRefusal) | chosen; submitted | — | — | 1 | — |
 | `career.subscribe` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | No such site.; You aren’t on ….; A year is …, which the bank can’t cover. | sites | — | — | 2 | journey-career.test.ts |
 | `career.t1287` | Verified (journey) | — | CareerWorkspace.tsx | `systems/career.ts` | There’s no such job. | t1287Rate | — | — | 2 | journey-career.test.ts |
 | `career.workshop` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | While classes are in session, the school’s work comes first.; You have one booked.; A workshop is …, which the bank can’t cover. | status | — | career.workshop | 2 | journey-career.test.ts |
 | `cart.add` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx FoodWorkspace.tsx | `systems/shoppingcart.ts` | — | cartOf (added to) | — | — | 2 | journey-food.test.ts |
 | `cart.checkout` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/shoppingcart.ts` | — | — | — | — | 2 | journey-food.test.ts |
 | `cart.remove` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/shoppingcart.ts` | That isn’t in the basket. | cart | — | — | 2 | journey-food.test.ts |
-| `cash.deposit` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office. | — | Yes | — | 2 | journey-bank.test.ts |
-| `cash.withdraw` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | Say how much.; From your bank’s ATM, another bank’s, the counter, the Post Office or the card. | — | Yes | — | 5 | journey-bank.test.ts |
+| `cash.deposit` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office. | — | Yes | — | 3 | journey-bank.test.ts |
+| `cash.withdraw` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | Say how much.; From your bank’s ATM, another bank’s, the counter, the Post Office or the card. | — | Yes | — | 6 | journey-bank.test.ts |
 | `catalog.favorite` | Verified (journey) | Rent And A Roof | Catalog.tsx | `systems/catalog.ts` | Choose something in a list. | favorites | — | — | 2 | journey-food.test.ts |
 | `children.passport` | Verified (journey) | Rent And A Roof | PeopleWorkspace.tsx | `systems/childpassports.ts` | — | — | — | — | 2 | journey-people.test.ts |
 | `class.take` | Verified (journey) | People | HomesWorkspace.tsx PeopleWorkspace.tsx | `systems/life.ts` | There’s no such class.; … is in ….; You’re at … until ….; The payment didn’t go through. | — | Yes | — | 2 | journey-people.test.ts |
 | `clothes.alter` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/tailoring.ts` | The payment didn’t go through. (also alterRefusal) | at | Yes | service | 2 | journey-clothes.test.ts |
-| `clothes.basket_add` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — (also buyRefusal) | basketOf (added to) | — | — | 3 | journey-clothes.test.ts |
+| `clothes.basket_add` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — (also buyRefusal) | basketOf (added to) | — | — | 4 | journey-clothes.test.ts |
 | `clothes.basket_remove` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | That isn’t in the basket. | basket | — | — | 2 | journey-clothes.test.ts |
 | `clothes.buy` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | What to buy? | — | — | — | 11 | journey-bank.test.ts; journey-belongings.test.ts; journey-clothes.test.ts; and 2 more |
 | `clothes.cancel` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 2 | journey-clothes.test.ts |
 | `clothes.change` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | Choose what to put on.; You’re at … until …. (also dressRefusal) | dressed | — | — | 5 | connected-day.test.ts; journey-clothes.test.ts; journey-day-at-home.test.ts |
-| `clothes.checkout` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | basket | — | — | 3 | journey-clothes.test.ts |
-| `clothes.collect` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx RoutinesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 4 | journey-clothes.test.ts |
+| `clothes.checkout` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | basket | — | — | 4 | journey-clothes.test.ts |
+| `clothes.collect` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 4 | journey-clothes.test.ts |
 | `clothes.collect_order` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — (also collectRefusal) | — | — | home; person | 2 | journey-clothes.test.ts |
 | `clothes.delete_outfit` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | There’s no outfit of yours by that name. | outfits | — | — | 3 | journey-clothes.test.ts |
 | `clothes.dress` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — (also dressRefusal) | dressed | — | — | 3 | journey-clothes.test.ts |
 | `clothes.dry_by` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | On the rack or in the dryer. | laundryDry | — | — | 2 | journey-clothes.test.ts |
-| `clothes.dry_clean` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx RoutinesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 2 | journey-clothes.test.ts |
+| `clothes.dry_clean` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 2 | journey-clothes.test.ts |
 | `clothes.measures` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — (also measuresRefusal) | measures | — | — | 2 | journey-clothes.test.ts |
 | `clothes.return` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 2 | journey-clothes.test.ts |
 | `clothes.save_outfit` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/clothing.ts` | — | — | — | — | 5 | journey-career.test.ts; journey-clothes.test.ts |
@@ -149,8 +151,8 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `documents.apply_idcard` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idCardRefusal) | documentsOf (added to) | Yes | idcard | 3 | journey-residence.test.ts |
 | `documents.apply_idp` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/licensing.ts` | … is more than the bank can cover. (also idpRefusal) | documentsOf (added to) | Yes | idp | 2 | journey-papers.test.ts |
 | `documents.apply_opt` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/permission.ts` | — (also optRefusal) | documentsOf (added to) | — | permit; documents.permission | 2 | journey-residence.test.ts |
-| `documents.apply_passport` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 2 | journey-papers.test.ts |
-| `documents.apply_visa` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also visaRefusal) | documentsOf (added to) | Yes | visa; documents.decided | 2 | journey-residence.test.ts |
+| `documents.apply_passport` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 3 | journey-papers.test.ts |
+| `documents.apply_visa` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also visaRefusal) | documentsOf (added to) | Yes | visa; documents.decided | 3 | journey-residence.test.ts |
 | `documents.apply_work_permit` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/permission.ts` | — (also caPermitRefusal, optRefusal) | usOutOfStatus; documentsOf (added to) | — | permit; documents.permission; documents.opt_week; shared | 2 | journey-residence.test.ts |
 | `documents.exchange_license` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/licensing.ts` | … is more than the bank can cover. (also exchangeRefusal) | — | Yes | — | 3 | journey-residence.test.ts |
 | `documents.license_step` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/licensing.ts` | … is more than the bank can cover. (also stepRefusal) | status | Yes | documents.license_step | 3 | journey-residence.test.ts |
@@ -163,25 +165,26 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `documents.replace_idcard` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idReplaceRefusal) | documentsOf (added to) | Yes | documents.idcard_arrives | 3 | journey-residence.test.ts |
 | `documents.replace_license` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/licensing.ts` | … is more than the bank can cover. (also replaceRefusal) | documentsOf (added to) | Yes | documents.license_card | 6 | journey-cars.test.ts; journey-papers.test.ts; journey-travel.test.ts |
 | `documents.report_lost` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/documents.ts` | That isn’t a document you hold. | — | — | — | 11 | journey-cars.test.ts; journey-papers.test.ts; journey-residence.test.ts; and 2 more |
-| `documents.residence` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also routeRefusal) | documentsOf (added to) | Yes | permit; documents.decided | 3 | journey-residence.test.ts |
+| `documents.residence` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also routeRefusal) | documentsOf (added to) | Yes | permit; documents.decided | 4 | journey-residence.test.ts |
 | `documents.settle` | Verified (journey) | Passports And Licenses | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also settleRefusal) | — | Yes | — | 3 | journey-residence.test.ts |
 | `errand.fuel` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/trips.ts` | You aren’t out in the car. | — | — | vehicle.refuel | 3 | connected-day.test.ts; journeys.test.ts |
-| `errand.go` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/trips.ts` | You’re home already.; Say where you’re going: the shops or an errand.; The fare can’t be paid.; There isn’t enough in the tank to get there: … km left, and the leg is …. Stop for fuel fi (also tripRefusal) | trip; errandKm; km | Yes | — | 9 | journey-cars.test.ts; journey-food.test.ts; journeys.test.ts |
+| `errand.go` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/trips.ts` | You’re home already.; Say where you’re going: the shops or an errand.; The fare can’t be paid.; There isn’t enough in the tank to get there: … km left, and the leg is …. Stop for fuel fi (also tripRefusal) | trip; errandKm; km | Yes | — | 10 | journey-cars.test.ts; journey-food.test.ts; journeys.test.ts |
 | `errand.park` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/trips.ts` | You aren’t out in the car.; There’s no such garage in this town.; The garage didn’t take the payment.; The meter didn’t take the payment. (also meterRefusal) | — | Yes | — | 2 | journey-food.test.ts |
 | `family.care` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/parents.ts` | — (also careRefusal) | — | — | — | 2 | journey-people.test.ts |
 | `finance.pay_card` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t have a card.; You don’t owe anything on it.; Pay something, or nothing.; There’s nothing in the bank to pay it with. | — | — | — | 5 | journey-bank.test.ts |
 | `finance.set_autopay` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month; the … can’t carry a balance. | — | — | — | 4 | journey-bank.test.ts |
 | `food.buy_gear` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | That model isn’t sold where you live.; The bank couldn’t pay for it. (also gearRefusal) | — | Yes | home | 2 | journey-food.test.ts |
-| `food.buy_groceries` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx RoutinesWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 12 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts; and 2 more |
+| `food.buy_groceries` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 14 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts; and 2 more |
 | `food.buy_short` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | No such recipe.; No store here sells ….; You have all of it. | — | — | — | 2 | journey-food.test.ts |
 | `food.cancel_table` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/reservations.ts` | No such booking. | reservations | Yes | — | 2 | journey-food.test.ts |
-| `food.cook` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx RoutinesWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 7 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts |
-| `food.dine` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/life.ts` | You’re at … until ….; The payment didn’t go through. (also diningRefusal) | — | Yes | — | 2 | journey-food.test.ts |
+| `food.cook` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx RoutinesWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 9 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts |
+| `food.dine` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/life.ts` | You’re at … until ….; The payment didn’t go through. (also diningRefusal) | — | Yes | — | 3 | journey-food.test.ts |
 | `food.drink` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/alcohol.ts` | You’re at … until ….; The payment didn’t go through. (also drinkRefusal) | — | Yes | — | 2 | journey-food.test.ts |
 | `food.drink_home` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 3 | journey-food.test.ts |
 | `food.eat_ready` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx RoutinesWorkspace.tsx | `systems/kitchen.ts` | You aren’t hungry.; There’s no meal ready to eat here. | — | — | — | 3 | journey-food.test.ts |
 | `food.freeze` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | — (also freezeRefusal) | — | — | home | 2 | journey-food.test.ts |
 | `food.reserve` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/reservations.ts` | … is more than the bank can cover. (also reserveRefusal) | reservationsOf (added to) | Yes | food.table | 2 | journey-food.test.ts |
+| `food.resume_cooking` | Implemented But Unverified | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | — | — | — | — | 1 | — |
 | `food.thaw` | Verified (journey) | Rent And A Roof | FoodWorkspace.tsx | `systems/kitchen.ts` | — (also thawRefusal) | — | — | home | 2 | journey-food.test.ts |
 | `garden.buy_mower` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/mowers.ts` | — | — | — | — | 3 | journey-food.test.ts |
 | `garden.harvest` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/garden.ts` | — (also harvestRefusal) | garden | — | home; garden.frost | 2 | journey-food.test.ts |
@@ -199,7 +202,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.drop` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | You have no plan of your own to drop. | — | — | — | 2 | journey-health.test.ts; journey-papers.test.ts |
 | `health.elect_cobra` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | You have no COBRA to elect.; COBRA’s first … … come to …, which the bank can’t cover. | — | — | — | 2 | journey-health.test.ts |
 | `health.enroll` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | — | — | — | — | 5 | journey-health.test.ts; journey-papers.test.ts |
-| `health.extra_supply` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | — (also extraSupplyRefusal) | — | — | — | 2 | journey-health.test.ts |
+| `health.extra_supply` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | — (also extraSupplyRefusal) | — | — | — | 3 | journey-health.test.ts |
 | `health.mobility` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/access.ts` | — | mobility | — | — | 2 | journey-health.test.ts |
 | `health.parking_permit` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/access.ts` | The payment didn’t go through. (also permitRefusal) | parkingPermit | Yes | — | 2 | journey-health.test.ts |
 | `health.pay_bill` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | You owe nothing for care.; Say how much.; Your current account can’t cover it. | — | Yes | — | 2 | journey-papers.test.ts |
@@ -208,6 +211,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.treat` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/health.ts` | You don’t have that. | — | — | — | 2 | journey-health.test.ts |
 | `home.alarm` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/alarm.ts` | Your home has none.; … is more than the bank can cover. (also alarmRefusal) | alarm; living | Yes | — | 2 | journey-holdings.test.ts |
 | `home.borrow` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/homes.ts` | You don’t own that home. (also borrowRefusal) | equity | Yes | mortgage | 2 | journey-homes.test.ts |
+| `home.buy_bedding` | Implemented But Unverified | Rent And A Roof | ClothesWorkspace.tsx | `systems/bedding.ts` | The payment didn’t go through. (also beddingRefusal) | — | Yes | home | 1 | — |
 | `home.buy_game` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | That isn’t sold where you live.; It plays on a … console, and you have none.; A game is kept in a home of your own.; It comes to …, more than you can pay. | subscriptions | Yes | home | 2 | journey-belongings.test.ts |
 | `home.buy_paint` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/paint.ts` | — | — | — | — | 2 | journey-homes.test.ts |
 | `home.buy_piece` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/furnishings.ts` | The bank couldn’t pay for it. (also pieceRefusal) | ikeaCredit | Yes | home | 6 | journey-belongings.test.ts; journey-holdings.test.ts; journeys.test.ts |
@@ -250,19 +254,23 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `home.take_lodger` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lodgers.ts` | You don’t own that home. (also lodgerRefusal) | lodgersIn (added to) | — | — | 2 | journey-homes.test.ts |
 | `home.tv_licence` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | No TV license is needed where you live.; Yours runs more than another month.; It comes to …, more than you can pay. | tvLicence | Yes | — | 3 | journey-belongings.test.ts |
 | `home.unsubscribe` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/homelife.ts` | You don’t subscribe to it. | subscriptions | — | — | 2 | journey-belongings.test.ts |
+| `home.water_lawn` | Implemented But Unverified | Rent And A Roof | HomesWorkspace.tsx | `systems/lawns.ts` | — (also waterRefusal) | — | — | — | 1 | — |
 | `hotel.breakfast` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/hotelbreakfast.ts` | The payment didn’t go through. (also breakfastRefusal) | — | Yes | — | 2 | journey-travel.test.ts |
-| `hygiene.buy` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/hygiene.ts` | — | — | — | — | 5 | journey-clothes.test.ts |
-| `hygiene.groom` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx RoutinesWorkspace.tsx | `systems/life.ts` | You’re at … until ….; The payment didn’t go through. (also groomingRefusal) | groomedAt | Yes | — | 3 | journey-clothes.test.ts |
+| `hygiene.buy` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx TimeControls.tsx | `systems/hygiene.ts` | — | — | — | — | 5 | journey-clothes.test.ts |
+| `hygiene.buy_clippers` | Implemented But Unverified | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | The payment didn’t go through. (also clipperRefusal) | — | Yes | home; person | 1 | — |
+| `hygiene.cut_hair` | Implemented But Unverified | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | You’re at … until …. (also homeCutRefusal) | groomedAt | — | — | 1 | — |
+| `hygiene.groom` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/life.ts` | You’re at … until ….; The payment didn’t go through. (also groomingRefusal) | groomedAt | Yes | — | 3 | journey-clothes.test.ts |
 | `hygiene.makeup_every` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | Choose how often.; Choose what you wear. | makeup | — | — | 2 | journey-clothes.test.ts |
 | `hygiene.shave_every` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | Choose how often. (also toiletryRefusal, groomingRefusal) | shaves; items | — | — | 2 | journey-clothes.test.ts |
 | `hygiene.shower_minutes` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | — (also showerMinutesRefusal) | showerMinutes | — | — | 2 | journey-clothes.test.ts |
 | `hygiene.style_every` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | Choose how often. | styles | — | — | 2 | journey-clothes.test.ts |
+| `hygiene.trim_nails` | Implemented But Unverified | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | Nails are trimmed at home. | nailsAt | — | — | 1 | — |
 | `hygiene.use_first` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | There’s no such product. | usesFirst | — | — | 2 | journey-clothes.test.ts |
 | `items.assemble` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/furnishings.ts` | You’re at … until …. (also assembleRefusal) | — | — | — | 4 | journey-belongings.test.ts; journey-holdings.test.ts; journeys.test.ts |
 | `items.discard` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/bulky.ts` | … is more than the bank can cover. (also bulkyRefusal) | bulkyYear; items | Yes | items.bulky_collected | 2 | journey-belongings.test.ts |
 | `items.give` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/gifts.ts` | — (also giveRefusal) | items | — | — | 2 | journey-belongings.test.ts |
-| `items.move` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/items.ts` | That isn’t something you own.; Where to? (also moveRefusal) | at | — | home | 7 | journey-belongings.test.ts; journey-people.test.ts |
-| `items.put_away` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/trips.ts` | There’s no shopping waiting to be put away. | — | — | — | 6 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts; and 2 more |
+| `items.move` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/items.ts` | That isn’t something you own.; Where to? (also moveRefusal) | at | — | home | 8 | journey-belongings.test.ts; journey-people.test.ts; journeys.test.ts |
+| `items.put_away` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/trips.ts` | There’s no shopping waiting to be put away. | — | — | — | 7 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts; and 2 more |
 | `items.recover` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | It’s collected in ….; No one here is holding anything of yours. | items | — | person | 2 | journeys.test.ts |
 | `jewelry.commission` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/commissions.ts` | The bank can’t pay for it. (also commissionRefusal) | commissions; commissionsOf (added to) | Yes | jewelry.ready; home; person; accessory | 2 | journey-belongings.test.ts |
 | `jewelry.engrave` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/commissions.ts` | Only jewelry or a watch is engraved.; The … isn’t to hand.; Write the words to engrave.; SLATE keeps no engraver’s price where you are.; and 1 more | engraved | Yes | — | 2 | journey-belongings.test.ts |
@@ -273,8 +281,8 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `land.sell` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s for sale already.; A house is being built on it. | — | — | land.sale_closes | 4 | journey-holdings.test.ts |
 | `land.split` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s let to a farmer: end the lease first.; The bank couldn’t pay the fee to split it. (also splitRefusal) | parcelsOf (added to) | Yes | land.tax_year | 3 | journey-holdings.test.ts |
 | `land.withdraw` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | You have no offer accepted. | parcelsOf (added to) | Yes | land.loan_month; land.tax_year | 2 | journey-holdings.test.ts |
-| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 42 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 5 more |
-| `life.set_automation` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx RoutinesWorkspace.tsx | `systems/automation.ts` | There’s no such shortcut. | automation | — | — | 3 | journey-belongings.test.ts |
+| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 43 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 5 more |
+| `life.set_automation` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx RoutinesWorkspace.tsx | `systems/automation.ts` | There’s no such shortcut. | automation | — | — | 7 | journey-belongings.test.ts |
 | `life.sleep` | Verified (journey) | Sleep | TimeControls.tsx | `systems/life.ts` | You can’t go to sleep in the past.; You’re at … until …. | lastSleptAt; awakeSince; wokeWithDebt | — | — | 17 | connected-day.test.ts; journey-day-at-home.test.ts; journey-residence.test.ts; and 1 more |
 | `lighting.buy_bulbs` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lighting.ts` | — | — | — | — | 2 | journey-food.test.ts |
 | `lighting.buy_lamp` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lighting.ts` | — | — | — | — | 2 | journey-food.test.ts |
@@ -288,6 +296,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `luggage.save_list` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | Give the list a name.; That isn’t a bag of yours.; The bag is empty: pack it first, then keep what’s in it. | packingLists | — | — | 2 | journey-belongings.test.ts |
 | `luggage.take` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | That isn’t a bag of yours.; Which bags go is chosen at home.; At least one bag goes. | goingBags; luggageId | — | — | 3 | journey-belongings.test.ts; journey-travel.test.ts |
 | `luggage.unpack` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | That isn’t a bag of yours.; The suitcase isn’t to hand.; The suitcase is empty. (also luggageRefusal) | — | — | — | 6 | journey-acting-travel.test.ts; journey-belongings.test.ts; journeys.test.ts |
+| `orders.collect` | Implemented But Unverified | Rent And A Roof | BelongingsWorkspace.tsx | `systems/orders.ts` | — | — | — | — | 1 | — |
 | `pawn.pledge` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pawn.ts` | It wouldn’t bring a loan. (also pledgeRefusal) | pawnsOf (added to) | Yes | loan; service; pawn.due | 2 | journey-belongings.test.ts |
 | `pawn.redeem` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pawn.ts` | There’s no such pledge.; A pledge is redeemed where it was made.; The bank can’t pay what’s owed. | at; pawns | Yes | home; person | 2 | journey-belongings.test.ts |
 | `pension.bienestar` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/homepensions.ts` | — (also bienestarRefusal) | bienestarFrom | Yes | pension.bienestar_payment | 2 | journey-health.test.ts |
@@ -298,14 +307,14 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pension.social_security` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/socialsecurity.ts` | — (also socialSecurityRefusal) | socialSecurity | Yes | pension.ss_month | 2 | journey-career.test.ts |
 | `pension.start` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/pension.ts` | — (also earlyRefusal) | pensionStart | Yes | pension.month | 2 | journey-career.test.ts |
 | `pension.state` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/statepension.ts` | — (also statePensionRefusal) | statePensionFrom | Yes | pension.state_payment | 2 | journey-health.test.ts |
-| `pets.adopt` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/pets.ts` | It comes to …, more than you can pay. (also adoptRefusal) | petsOf (added to) | Yes | pets.month | 7 | journey-belongings.test.ts; journeys.test.ts |
+| `pets.adopt` | Verified (journey) | Rent And A Roof | Home.tsx | `systems/pets.ts` | It comes to …, more than you can pay. (also adoptRefusal) | petsOf (added to) | Yes | pets.month | 8 | journey-belongings.test.ts; journeys.test.ts |
 | `pets.buy` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t sold where you live.; It’s delivered to a home of yours.; The bank couldn’t pay for it. | — | Yes | home | 2 | journey-belongings.test.ts |
-| `pets.certificate` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | SLATE keeps no rules for taking a pet there.; The payment didn’t go through. | — | Yes | — | 2 | journey-belongings.test.ts |
+| `pets.certificate` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | SLATE keeps no rules for taking a pet there.; The payment didn’t go through. | — | Yes | — | 3 | journey-belongings.test.ts |
 | `pets.chip` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a pet of yours.; … is chipped already.; The payment didn’t go through. | — | Yes | — | 2 | journey-belongings.test.ts |
 | `pets.feed` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | You have no pets.; They’re fed at home. | — | — | — | 2 | journey-belongings.test.ts |
 | `pets.groom` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a dog of yours.; The payment didn’t go through. | — | Yes | — | 2 | journey-belongings.test.ts |
 | `pets.import_form` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | The CDC’s form is for a dog. | — | — | — | 2 | journey-belongings.test.ts |
-| `pets.tapeworm` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a dog of yours.; The payment didn’t go through. | — | Yes | — | 2 | journey-belongings.test.ts |
+| `pets.tapeworm` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a dog of yours.; The payment didn’t go through. | — | Yes | — | 3 | journey-belongings.test.ts |
 | `pets.vet` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a pet of yours.; Its vet is where you live.; The payment didn’t go through. | — | Yes | — | 2 | journey-belongings.test.ts |
 | `pets.walk` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a dog of yours.; It’s walked at home.; …’s been walked today. | — | — | — | 2 | journey-belongings.test.ts |
 | `pets.walker` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/pets.ts` | That isn’t a dog of yours. | — | — | — | 2 | journey-belongings.test.ts |
@@ -316,7 +325,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `phone.protect` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/phones.ts` | That cover isn’t offered for it. | — | Yes | — | 3 | journey-belongings.test.ts |
 | `pilot.train` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/aviation.ts` | Your bank couldn’t pay. (also trainRefusal, buyAircraftRefusal) | pilotTraining; pilotLicences; pilot; planes | Yes | pilot.month; pilot.medical; aircraft.month | 3 | journey-travel.test.ts |
 | `reading.buy` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/reading.ts` | That isn’t on sale.; It’s bought where you live, and kept at home.; It’s sold in another country.; The bank couldn’t pay for it. | — | Yes | home | 2 | journey-belongings.test.ts |
-| `reading.library_card` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/reading.ts` | — (also cardRefusal) | libraryCard | — | — | 2 | journey-belongings.test.ts |
+| `reading.library_card` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx HomesWorkspace.tsx | `systems/reading.ts` | — (also cardRefusal) | libraryCard | — | — | 2 | journey-belongings.test.ts |
 | `roadside.join` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | The payment didn’t go through. (also joinRefusal) | roadside | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `roadside.leave` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | You aren’t a member of a club. | — | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |
@@ -336,7 +345,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `social.cancel_stay` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/houseguests.ts` | Nobody’s coming to stay.; … is here already. | — | Yes | social.stay_day | 2 | journey-people.test.ts |
 | `social.divorce` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | You aren’t married.; Your divorce is under way already. | — | Yes | — | 2 | journey-people.test.ts |
 | `social.host` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/hosting.ts` | No such recipe.; … cooks for … at the most. (also hostRefusal, cookRefusal) | items | Yes | social.host | 3 | journey-people.test.ts |
-| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 5 | journey-people.test.ts |
+| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, fineWeatherRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 6 | journey-people.test.ts |
 | `social.marry` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | The bank couldn’t pay for it. (also marryRefusal) | marriage | Yes | social.wedding; social.anniversary | 2 | journey-people.test.ts |
 | `social.move_in` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | You don’t know them. (also moveInRefusal) | — | — | — | 2 | journey-people.test.ts |
 | `social.split` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | — | billSplit | — | — | 2 | journey-people.test.ts |
@@ -346,7 +355,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `tax.file` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. | — | Yes | tax.refund | 3 | journey-papers.test.ts |
 | `tax.pay` | Verified (journey) | Between Jobs | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; … is more than the bank can cover. | — | Yes | — | 2 | journey-papers.test.ts |
 | `travel.bag_claim` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/baggage.ts` | There’s no such claim. (also claimRefusal) | — | Yes | — | 2 | journey-travel.test.ts |
-| `travel.book` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | Paratransit is for a rider who uses a wheelchair.; A caravan is towed behind a car of your own.; The way home leaves before the way out arrives.; The way home: …; and 6 more (also cabinBagRefusal, stepFreeRefusal, byCarRefusal, bookRefusal, streetRefusal, namedStayRefusal, petCareRefusal, entryRefusal) | journeysOf (added to) | Yes | travel.leave | 35 | journey-travel.test.ts; journey.test.ts; journeys-edges.test.ts; and 1 more |
+| `travel.book` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | Paratransit is for a rider who uses a wheelchair.; A caravan is towed behind a car of your own.; The way home leaves before the way out arrives.; The way home: …; and 6 more (also cabinBagRefusal, stepFreeRefusal, byCarRefusal, bookRefusal, streetRefusal, namedStayRefusal, petCareRefusal, entryRefusal) | journeysOf (added to) | Yes | travel.leave | 37 | journey-travel.test.ts; journey.test.ts; journeys-edges.test.ts; and 1 more |
 | `travel.cancel` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | That isn’t a journey you have booked. | — | Yes | — | 7 | journey.test.ts |
 | `travel.change` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | … is more than the bank can cover. | — | Yes | travel.leave | 2 | journey-travel.test.ts |
 | `travel.check_out` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/localstay.ts` | You aren’t in a hotel booked here. | — | — | — | 3 | journey-clothes.test.ts; journey-travel.test.ts |
@@ -357,11 +366,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `travel.late_checkout` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/latecheckout.ts` | — | — | — | — | 2 | journey-travel.test.ts |
 | `travel.pay_deposit` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | Your bank declined the payment. (also depositRefusal) | stay | Yes | sofa; own; let; travel.checkout; and 1 more | 3 | journey-travel.test.ts |
 | `travel.pay_rental_deposit` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/rentals.ts` | No car is held for a deposit.; The hold has run out.; The deposit is …, more than the bank holds. | — | Yes | — | 2 | journey-travel.test.ts |
-| `travel.rent_car` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/rentals.ts` | That isn’t a journey you have booked.; A rental is booked with the way home, which says when it goes back.; A car is rented on it already.; … is more than the bank can cover. | rentalsOf (added to) | Yes | rental.pickup; rental.return; travel.rental_deposit_due | 5 | journey-travel.test.ts |
+| `travel.rent_car` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/rentals.ts` | That isn’t a journey you have booked.; A rental is booked with the way home, which says when it goes back.; A car is rented on it already.; … is more than the bank can cover. | rentalsOf (added to) | Yes | rental.pickup; rental.return; travel.rental_deposit_due | 6 | journey-travel.test.ts |
 | `travel.show_id` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | — (also showIdRefusal) | — | — | — | 2 | journey-travel.test.ts |
-| `travel.stay_here` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/localstay.ts` | It comes to …, more than you can pay. | stay | Yes | hotel; travel.local_stay_end | 3 | journey-clothes.test.ts; journey-travel.test.ts |
+| `travel.stay_here` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/localstay.ts` | It comes to …, more than you can pay. | stay | Yes | hotel; travel.local_stay_end | 4 | journey-clothes.test.ts; journey-travel.test.ts |
 | `travel.stay_let` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | That isn’t a journey you have booked.; A let takes the place of the journey’s hotel.; Too close to arrival to cancel the hotel free.; The hotel was paid ahead on a rate that isn’t refunded.; and 1 more | — | Yes | — | 4 | journey-travel.test.ts |
-| `travel.take_refund` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | — (also refundRefusal, crossingRefusal, boardingIdRefusal) | — | Yes | — | 2 | journey-travel.test.ts |
+| `travel.take_refund` | Verified (journey) | Getting Around | TravelWorkspace.tsx | `systems/journey.ts` | — (also refundRefusal, crossingRefusal, entryRefusal, embargoRefusal, boardingIdRefusal) | — | Yes | — | 2 | journey-travel.test.ts |
 | `tutorial.read` | Verified (journey) | — | Guide.tsx | `world/tutorial.ts` | This life has no guide to read through; everything is open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first; the chapters go in order. | read (added to) | — | — | 2 | journey-holdings.test.ts |
 | `tv.buy` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/televisions.ts` | — | — | — | — | 3 | journey-belongings.test.ts |
 | `tv.watch` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/programmes.ts` | That isn’t shown where you live. (also lookAfterRefusal, programmeRefusal) | — | — | — | 4 | journey-belongings.test.ts |
@@ -374,7 +383,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `vehicle.coverage` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/wraps.ts` | The payment didn’t go through. (also coverRefusal) | — | Yes | — | 3 | journey-cars.test.ts |
 | `vehicle.hitch` | Verified (journey) | Rent And A Roof | VehiclesWorkspace.tsx | `systems/caravans.ts` | That isn’t a car you own.; The bank couldn’t pay. (also hitchRefusal) | hitch | Yes | — | 2 | journey-cars.test.ts |
 | `vehicle.inspect_used` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/usedcars.ts` | A new car isn’t inspected before it’s bought.; No such car.; SLATE sells no car where you live.; … is more than the bank can cover. | inspectedUsed | Yes | — | 2 | journey-cars.test.ts |
-| `vehicle.interior` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/interiors.ts` | That isn’t a car you own.; There’s no such shop.; The car isn’t in the shop’s town.; You’re not in the shop’s town.; and 4 more | interiorOrdered; interior; inShop | Yes | vehicle.interior_fit | 2 | journey-cars.test.ts |
+| `vehicle.interior` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/interiors.ts` | That isn’t a car you own.; There’s no such shop.; The car isn’t in the shop’s town.; You’re not in the shop’s town.; and 4 more | interiorOrdered; interior; inShop | Yes | vehicle.interior_fit | 3 | journey-cars.test.ts |
 | `vehicle.keep_in` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/vehicles.ts` | That isn’t a car you have.; In the garage or on the street.; Your home has no garage. | keptIn; errandUsed; dayKm; dry; errandKm; and 4 more | Yes | vehicle.day; vehicle.month; vehicle.renewal | 2 | journey-cars.test.ts |
 | `vehicle.lease` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/leasing.ts` | … is more than the bank can cover.; That isn’t a car you lease. (also leaseRefusal) | registrationDue; vehiclesOf (added to) | Yes | vehicle.month; vehicle.lease_month; vehicle.renewal; vehicle.lease_end | 4 | journey-cars.test.ts |
 | `vehicle.lease_buyout` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/leasing.ts` | … is more than the bank can cover. | — | Yes | — | 2 | journey-cars.test.ts |
@@ -399,7 +408,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `vehicle.unlist` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/carsale.ts` | It isn’t listed. | — | — | vehicle.private_sale | 2 | journey-cars.test.ts |
 | `vehicle.unwrap` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/wraps.ts` | The payment didn’t go through. (also unwrapRefusal) | — | Yes | — | 2 | journey-cars.test.ts |
 | `vehicle.winter_tires` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/tires.ts` | … is more than the bank can cover. (also tiresRefusal, tireOfferRefusal) | — | Yes | — | 3 | journey-holdings.test.ts |
-| `vehicle.wrap` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/wraps.ts` | The payment didn’t go through. (also wrapRefusal) | — | Yes | — | 2 | journey-cars.test.ts |
+| `vehicle.wrap` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/wraps.ts` | The payment didn’t go through. (also wrapRefusal) | — | Yes | — | 4 | journey-cars.test.ts |
 | `watch.battery` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/watches.ts` | The bank can’t pay for it. (also batteryRefusal) | at; batteryAt | Yes | service; watch.back | 2 | journey-belongings.test.ts |
 | `watch.service` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/watches.ts` | Only a mechanical watch whose maker’s service SLATE keeps is serviced here.; The … isn’t to hand.; … prices no service where you are.; The bank can’t pay for it. | at; servicedAt | Yes | service; watch.back; home; person | 2 | journey-clothes.test.ts |
 | `world.dismiss_decision` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | No such decision.; It’s dismissed already. | — | — | — | 2 | journey-holdings.test.ts |
@@ -422,6 +431,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `WORKS_KIND` | `systems/homes.ts` | — | offersMade; counter; works; selling; tenancies; and 4 more | Yes | home.planning_refused; WORKS_KIND; SALE_KIND; and 1 more | 0 |
 | `aircraft.month` | `systems/aviation.ts` | systems/aviation.ts | — | Yes | aircraft.repo_sale | 2 |
 | `aircraft.repo_sale` | `systems/aviation.ts` | systems/aviation.ts | — | Yes | — | 0 |
+| `awards.ceremony` | `systems/awards.ts` | systems/awards.ts | — | — | — | 2 |
 | `bank.check_clears` | `systems/payments.ts` | systems/payments.ts | — | — | — | 1 |
 | `bank.fraud_refund` | `systems/security.ts` | systems/security.ts | expiresAt | Yes | bank.fraud_refund | 1 |
 | `bank.loan_due` | `systems/lending.ts` | systems/lending.ts | — | Yes | — | 3 |
@@ -443,7 +453,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `build.stage` | `systems/construction.ts` | systems/construction.ts | log (added to) | Yes | — | 0 |
 | `caravan.month` | `systems/caravans.ts` | systems/caravans.ts | — | Yes | — | 0 |
 | `card.arrives` | `systems/cardlife.ts` | systems/cardlife.ts | — | — | credit_card; card.arrives | 0 |
-| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 20 |
+| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 21 |
 | `card.replaced` | `systems/security.ts` | systems/security.ts | last4; issued; expiresAt; billersStale | — | — | 0 |
 | `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 16 |
 | `career.agency_term` | `systems/career.ts` | systems/career.ts | renewal | — | — | 3 |
@@ -458,7 +468,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `career.pay` | `systems/career.ts` | systems/career.ts | travelOwed; fittingOwed; owed; perDiemOwed; wardrobeOwed; and 1 more | Yes | career.query_answer | 4 |
 | `career.press` | `systems/career.ts` | systems/career.ts | — | — | — | 2 |
 | `career.query_answer` | `systems/career.ts` | systems/career.ts | managerId; managerSince; managerOffers | — | — | 0 |
-| `career.renewal` | `systems/career.ts` | systems/career.ts | status; lastBookedAt; submitted; sites; reelAt; and 4 more | — | career.work; career.travel; social.stay; and 1 more | 3 |
+| `career.renewal` | `systems/career.ts` | systems/career.ts | status; lastBookedAt; submitted; chosen; sites; and 5 more | — | career.work; career.travel; social.stay; and 1 more | 3 |
 | `career.residual` | `systems/career.ts` | systems/career.ts | — | — | — | 4 |
 | `career.showcase` | `systems/career.ts` | systems/career.ts | showcases (added to) | — | — | 4 |
 | `career.travel` | `systems/career.ts` | systems/career.ts | travelOwed; stay; perDiemOwed | — | hotel | 4 |
@@ -481,6 +491,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `documents.opt_week` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
 | `documents.permission` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
 | `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | shared | 0 |
+| `documents.visit` | `systems/papervisits.ts` | systems/papervisits.ts | keptAt; missed; at | — | — | 4 |
 | `family.care_visit` | `systems/parents.ts` | systems/parents.ts | status | — | — | 4 |
 | `family.school_run` | `systems/schoolrun.ts` | systems/schoolrun.ts | status | — | — | 2 |
 | `food.table` | `systems/reservations.ts` | systems/reservations.ts | reservations | Yes | — | 0 |
@@ -504,6 +515,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `items.bulky_collected` | `systems/bulky.ts` | systems/bulky.ts | items | — | — | 0 |
 | `items.held_ends` | `systems/luggage.ts` | systems/luggage.ts | items; luggageId; packingLists | Yes | home | 0 |
 | `items.order_arrives` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
+| `items.order_held_due` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `items.out_for_delivery` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `jewelry.ready` | `systems/commissions.ts` | systems/commissions.ts | commissions; engraved | Yes | home; person; accessory | 0 |
 | `kind` | `systems/adoption.ts` | — | — | — | — | 5 |
@@ -532,7 +544,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `rental.pickup` | `systems/rentals.ts` | systems/rentals.ts | — | Yes | rental.pickup; travel.rental_deposit_due | 0 |
 | `rental.return` | `systems/rentals.ts` | systems/journey.ts; systems/rentals.ts; systems/standin.ts | — | — | — | 3 |
 | `roadside.renew` | `systems/roadside.ts` | systems/roadside.ts | — | Yes | roadside.renew | 1 |
-| `routine.due` | `systems/routines.ts` | systems/routines.ts | routines | — | — | 4 |
+| `routine.due` | `systems/routines.ts` | systems/routines.ts | routines | — | — | 6 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 4 |
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 5 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
@@ -550,9 +562,9 @@ money, what it sets going next, and how many test files name it or its constant.
 | `social.anniversary` | `systems/marriage.ts` | systems/marriage.ts | — | — | social.anniversary | 1 |
 | `social.divorce_final` | `systems/marriage.ts` | systems/marriage.ts | — | Yes | — | 0 |
 | `social.host` | `systems/hosting.ts` | systems/hosting.ts | items | Yes | — | 5 |
-| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 3 |
+| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 4 |
 | `social.stay` | `systems/houseguests.ts` | systems/career.ts; systems/houseguests.ts | — | — | social.stay_day | 1 |
-| `social.stay_day` | `systems/houseguests.ts` | systems/houseguests.ts | — | Yes | social.stay_day | 0 |
+| `social.stay_day` | `systems/houseguests.ts` | systems/houseguests.ts | — | Yes | social.stay_day | 2 |
 | `social.wedding` | `systems/marriage.ts` | systems/marriage.ts | marriage | — | social.anniversary | 1 |
 | `tax.due` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 2 |
 | `tax.notice` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 3 |

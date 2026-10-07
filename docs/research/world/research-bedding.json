@@ -1,0 +1,92 @@
+{
+  "topic": "IKEA basic duvet cover/sheet/pillowcase set prices by market, and recommended sheet-washing interval",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "IKEA US basic duvet cover + pillowcase set, Twin (ÄNGSLILJA)",
+      "value": 29.99,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.ikea.com/us/en/p/aengslilja-duvet-cover-and-pillowcase-s-blue-gray-00585228/",
+      "quote": "Twin-sized basic options start at $29.99, such as the ÄNGSLILJA model.",
+      "confidence": "medium"
+    },
+    {
+      "what": "IKEA US basic duvet cover + pillowcase set, Full/Queen",
+      "value": "39.99-49.99",
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.ikea.com/us/en/cat/duvet-cover-sets-10680/",
+      "quote": "Full/Queen-sized basic sets range from $39.99 to $49.99, with options like SLÅNHÖSTMAL at $39.99 and DOFTAKLEJA at $49.99.",
+      "confidence": "medium"
+    },
+    {
+      "what": "IKEA UK basic duvet cover + pillowcase set, smallest/single size (SOLFIBBLA)",
+      "value": 20,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.ikea.com/gb/en/cat/duvet-cover-10680/",
+      "quote": "The SOLFIBBLA duvet cover with pillowcase in a 150x200/50x80 cm size is priced at £20, which appears to be one of the most basic options available.",
+      "confidence": "medium"
+    },
+    {
+      "what": "IKEA UK duvet cover + 2 pillowcases, mid-size (EKTANDVINGE, larger size)",
+      "value": 35,
+      "unit": "GBP",
+      "market": "uk",
+      "source": "https://www.ikea.com/gb/en/cat/duvet-cover-10680/",
+      "quote": "EKTANDVINGE duvet cover and 2 pillowcases (240x220/50x80 cm) at £35",
+      "confidence": "low"
+    },
+    {
+      "what": "IKEA Canada basic duvet cover + pillowcase set range",
+      "value": "29.99-34.99",
+      "unit": "CAD",
+      "market": "ca",
+      "source": "https://www.ikea.com/ca/en/cat/duvet-cover-sets-10680/",
+      "quote": "basic duvet cover sets from IKEA.ca start at around $29.99-$34.99 CAD depending on the size and style",
+      "confidence": "medium"
+    },
+    {
+      "what": "IKEA Mexico basic duvet cover + pillowcase set (DVALA, full/queen, cheapest option found)",
+      "value": 499,
+      "unit": "MXN",
+      "market": "mx",
+      "source": "https://www.ikea.com/mx/es/p/dvala-funda-nordica-funda-s-de-almohada-blanco-30377954/",
+      "quote": "DVALA - $499 pesos for a queen/full size duvet cover with pillowcases. It's made of 100% cotton",
+      "confidence": "medium"
+    },
+    {
+      "what": "IKEA Mexico basic duvet cover + pillowcase set (ÄNGSLILJA, full/queen)",
+      "value": 799,
+      "unit": "MXN",
+      "market": "mx",
+      "source": "https://www.ikea.com/mx/es/p/aengslilja-funda-nordica-funda-s-de-almohada-blanco-00318541/",
+      "quote": "ÄNGSLILJA - $799 pesos for a queen/full size set. It's a basic cover that's soft, lightweight, standard size and easy to put on.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Sleep Foundation recommended sheet-washing frequency, general population",
+      "value": "once a week (twice a week if not sleeping on the mattress nightly)",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.sleepfoundation.org/best-sheets/how-often-should-you-wash-your-sheets",
+      "quote": "The Sleep Foundation recommends that people wash and change their bed sheets once a week, or twice a week if you travel and don't sleep on your mattress every night.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Sleep Foundation recommended sheet-washing frequency for people with asthma/allergies",
+      "value": "every 3-4 days",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.sleepfoundation.org/best-sheets/how-often-should-you-wash-your-sheets",
+      "quote": "the Sleep Foundation recommends people with asthma or allergies wash bedding every 3-4 days to help control dust mite allergens that trigger breathing problems",
+      "confidence": "medium"
+    }
+  ],
+  "notFound": [
+    { "what": "IKEA Ireland-specific price (IKEA does not appear to have a dedicated .ie storefront distinct from the UK one; a separate Irish-euro price point was not located)", "looked": ["Not separately searched; IKEA operates in Ireland but a distinct .ie price list was not retrieved in this session"] },
+    { "what": "A fitted-sheet-only and pillowcase-only (not duvet-set) specific price breakdown per market", "looked": ["Searches returned duvet cover + pillowcase set bundles rather than itemized fitted-sheet and pillowcase prices separately"] },
+    { "what": "An NHS-specific published sheet-washing recommendation (only Sleep Foundation, a US source, was found with a clear citable figure)", "looked": ["how often should you wash your sheets NHS Sleep Foundation study — results were dominated by US consumer-brand blogs and Sleep Foundation; no distinct NHS page surfaced"] }
+  ]
+}

@@ -28,6 +28,7 @@ import { careerOf, homeAbroadOf, workDays, type Booking } from './career';
 import { earningsOf } from './earnings';
 import { citizenOf } from './documents';
 import { STARTING, addYears, documentsOf, inForce, isoOfCity, isoOfCountry, numberFor, theCountry, type PersonDocument } from './documents';
+import { bookVisit, waitsOnVisit } from './papervisits';
 
 export const PERMISSION_KIND = 'documents.permission';
 export const OPT_WEEK_KIND = 'documents.opt_week';
@@ -337,7 +338,10 @@ export function registerPermission(sim: Simulation): void {
     payOrRefuse(s, person, fee, `${r.name}, with biometrics`);
     const readyAt = s.now + r.standardDays * MS_DAY;
     const id = s.nextId('document');
-    documentsOf(person).push({ id, kind: 'permit', issuer: 'CA', name: r.name, number: numberFor('C14', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'CA', bookingId: booking!.id });
+    const doc: PersonDocument = { id, kind: 'permit', issuer: 'CA', name: r.name, number: numberFor('C14', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'CA', bookingId: booking!.id };
+    documentsOf(person).push(doc);
+    // The biometrics it's paid for, given at a visa application center (from 2026-10-06, `systems/papervisits.ts`).
+    bookVisit(s, person, doc, 'ca-biometrics', undefined, { decidedBy: PERMISSION_KIND });
     s.schedule({ at: readyAt, kind: PERMISSION_KIND, label: 'Work Permit Decided', category: 'system', priority: 20, payload: { personId: person.id, documentId: id } });
     return { readyAt, fee };
   });
@@ -346,6 +350,8 @@ export function registerPermission(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!person || !doc || doc.status !== 'pending') return;
+    // Its biometrics not yet given, it waits on them (from 2026-10-06, `systems/papervisits.ts`).
+    if (waitsOnVisit(doc) || (doc.readyAt ?? 0) > s.now) return;
     const mine = person.id === s.universe.playerId;
     const tell = (title: string, body: string) => { if (mine) s.notify({ category: 'personal', title, body, importance: 75, route: '/workspace/papers' }); };
     if (doc.name.includes('OPT')) {

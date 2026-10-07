@@ -7,7 +7,10 @@
  * or a suit, and underwear, socks and shoes. It's the outfit they chose
  * where it's still to hand and clean; otherwise what's already on the go,
  * then the least washed of what's clean, and the player told what stood in
- * (silent until 2026-10-02). Each wear counts toward the kind's wears between washes
+ * (silent until 2026-10-02). From 2026-10-06 the rest of the wardrobe stands
+ * in only where they've chosen the shortcut for it (`chooseOutfit`); without
+ * it, a day is dressed in what they chose and have on, or not at all, and
+ * they're told. Each wear counts toward the kind's wears between washes
  * (`content/garmentcare.ts`), and at that count it goes in the wash. A wash
  * takes each garment's share of the washes its kind lasts off its
  * condition, and it's wearable once dry. A dry-clean-only garment goes to a
@@ -25,7 +28,9 @@ import type { Instant } from '../core/time';
 import { careFor, type Care, type Slot } from '../content/garmentcare';
 import { fitOf } from './tailoring';
 import { stopped } from './watches';
-import { itemsOf, reachable, type Item, homeKeyOf, type Spot } from './items';
+import { itemsOf, reachable, type Item, homeKeyOf, type Spot, usedL, volumeOf } from './items';
+import { bagsGoing, stayName } from './luggage';
+import { isOn } from './automation';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
 export interface Garment {
@@ -93,9 +98,14 @@ export function chosenMissing(sim: Simulation, person: Person, at: Instant = sim
  */
 const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }): number => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
 
-/** The day's outfit, or nothing where no whole outfit is to hand and clean. */
-export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment })[] | undefined {
-  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at)).sort(freshest);
+/**
+ * The day's outfit, or nothing where no whole outfit is to hand and clean. From 2026-10-06 the rest of the wardrobe
+ * stands in for what isn't only where they've chosen it (`standIn`, the `chooseOutfit` shortcut); without, it's made
+ * only of what they chose and what they have on.
+ */
+export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now, standIn = true): (Item & { garment: Garment })[] | undefined {
+  const own = new Set([...(person.dressed ?? []), ...(person.wornNow?.itemIds ?? [])]);
+  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at) && (standIn || own.has(g.id))).sort(freshest);
   const chosen = (person.dressed ?? []).map((id) => ready.find((g) => g.id === id)).filter((g): g is Item & { garment: Garment } => Boolean(g));
   const pick = (slot: Slot) => chosen.find((g) => g.garment.slot === slot) ?? ready.find((g) => g.garment.slot === slot);
   const suit = pick('suit');
@@ -132,14 +142,29 @@ export const wornNow = (person: Person): (Item & { garment: Garment })[] => {
 /**
  * What comes off at a change, the master plan's §32e (from 2026-10-06; until then a change only said what was on, and
  * nothing came off): each piece not put back on, at home, goes in the laundry basket where its wears have made it due a
- * wash, and back where it's kept where not. Away from home it stays with what they have there.
+ * wash, and back where it's kept where not. Away from home it stayed, until later on 2026-10-06, wherever it was; from
+ * then it goes into the room where they're staying in the town (`stay`, the place a suitcase is unpacked into), and
+ * with no room there, into the suitcase they travel with while it holds it (`bagsGoing`). Away there's no basket: what's
+ * due a wash keeps its count and is washed at home, as before.
  */
 export function takeOff(person: Person, keep: ReadonlySet<string>): void {
   const home = homeKeyOf(person.home);
   const atHomeNow = Boolean(home) && person.home!.cityId === person.currentLocationId;
+  const here = person.currentLocationId;
+  const room = person.stay && person.stay.cityId === here ? stayName(person) : undefined;
   for (const g of wornNow(person)) {
-    if (keep.has(g.id) || !atHomeNow || g.at.kind !== 'home' || g.at.home !== home) continue;
-    g.at = { ...g.at, spot: g.garment.dirty ? 'hamper' : keptIn(g.garment.slot) };
+    if (keep.has(g.id)) continue;
+    if (atHomeNow) {
+      if (g.at.kind === 'home' && g.at.home === home) g.at = { ...g.at, spot: g.garment.dirty ? 'hamper' : keptIn(g.garment.slot) };
+      continue;
+    }
+    // Only what's with them away: carried, in a bag, or out in the room here.
+    if (g.at.kind !== 'person' && g.at.kind !== 'inside' && !(g.at.kind === 'stay' && g.at.cityId === here)) continue;
+    if (person.stay && person.stay.cityId === here) { g.at = { kind: 'stay', cityId: here, ...(room ? { by: room } : {}) }; continue; }
+    if (g.at.kind === 'inside') continue;
+    const v = volumeOf(g) * g.quantity;
+    const bag = bagsGoing(person).find((b) => b.at.kind === 'person' && (b.holdsL ?? 0) - usedL(person, b.id) >= v - 1e-9);
+    if (bag) g.at = { kind: 'inside', itemId: bag.id };
   }
 }
 
@@ -184,9 +209,13 @@ function wearOnce(item: Item & { garment: Garment }): void {
  * and clean. A chosen piece the day couldn't put on is told to the player,
  * with what stood in for it. Until 2026-10-02 the swap was silent.
  */
-export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now, tell = true): boolean {
-  const outfit = outfitFor(sim, person, at);
-  if (!outfit) return false;
+export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now, tell = true, standIn = isOn(person, 'chooseOutfit')): boolean {
+  // Put together from the rest of the wardrobe only where they've chosen the shortcut (from 2026-10-06).
+  const outfit = outfitFor(sim, person, at, standIn);
+  if (!outfit) {
+    if (tell && !standIn && person.id === sim.universe.playerId && outfitFor(sim, person, at)) sim.notify({ category: 'home', title: 'No Outfit To Wear', body: 'What you chose or have on isn’t a whole outfit, clean and to hand. Choose one on Clothes, or let the day put one together on Your Shortcuts.', importance: 40, route: '/workspace/clothes' });
+    return false;
+  }
   const missing = tell && person.id === sim.universe.playerId ? chosenMissing(sim, person, at) : [];
   for (const g of outfit) wearOnce(g);
   takeOff(person, new Set(outfit.map((g) => g.id)));

@@ -346,14 +346,16 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
     case 'US-NY': {
       const rate = NYC.has(cityId) ? NY.nycRate : NY.stateRate;
       lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(3).replace(/0+$/, '')}%${NYC.has(cityId) ? '' : ' (The State’s; The County’s Not Kept)'}`, amount: Math.round(taxedPrice * rate) });
-      lines.push({ label: 'Title', amount: c(NY.title) }, { label: 'Plates', amount: c(NY.plates) });
+      // A private sale's title is paid at its transfer (`TRANSFER`, from 2026-10-06), not here as well.
+      if (!opts.privateSeller) lines.push({ label: 'Title', amount: c(NY.title) });
+      lines.push({ label: 'Plates', amount: c(NY.plates) });
       lines.push({ label: 'Registration, Two Years', amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(model)) + (NYC.has(cityId) ? NY.nycUseTax + NY.mctd : 0)) });
       break;
     }
     case 'US-CT': {
       lines.push({ label: units > CT.luxuryOver ? 'Sales Tax, 7.75% (Over $50,000)' : 'Sales Tax, 6.35%', amount: Math.round(taxedPrice * (units > CT.luxuryOver ? CT.luxuryRate : CT.rate)) });
       lines.push({ label: 'Registration And Its Fees, Three Years', amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks) });
-      lines.push({ label: 'Title And Plate', amount: c(CT.title + CT.plate) });
+      lines.push(opts.privateSeller ? { label: 'Plate', amount: c(CT.plate) } : { label: 'Title And Plate', amount: c(CT.title + CT.plate) });
       if (!used) lines.push({ label: 'Greenhouse Gas Fee And Emissions Exemption', amount: c(CT.greenhouseNew + CT.emissionsExemption) });
       if (opts.financed) lines.push({ label: 'Lien', amount: c(CT.lien) });
       break;
@@ -373,7 +375,8 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
       break;
     case 'CA-ON':
       lines.push({ label: 'HST, 13%', amount: Math.round(price * ON.hst) });
-      lines.push({ label: 'Permit And Plates', amount: c(ON.permit + ON.plate) });
+      // Until 2026-10-06 a private sale paid the $32 permit here and again at its transfer; now only there.
+      lines.push(opts.privateSeller ? { label: 'Plates', amount: c(ON.plate) } : { label: 'Permit And Plates', amount: c(ON.permit + ON.plate) });
       break;
     case 'CA-BC': {
       lines.push({ label: 'GST, 5%', amount: used ? 0 : Math.round(price * BC.gst) });

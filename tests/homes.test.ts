@@ -23,6 +23,7 @@ import { PROPERTY_MANAGERS } from '@/engine/content/propertymanagers';
 import { lettingFee, managementFee, renewalFee } from '@/engine/systems/propertymanagers';
 import { fixturesOf, trainingAt } from '@/engine/systems/dwelling';
 import { lateDays, overrunOf } from '@/engine/systems/worksrisk';
+import { underWay } from '@/engine/systems/underway';
 import { billsOf } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
@@ -322,7 +323,11 @@ describe('renovating', () => {
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
     // The same work isn't started twice while it's under way (requirement 59).
     expect(sim.execute({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } }).error).toBe('That work is under way.');
+    // And it's on the list of what's under way until it's done (`underWay`, tested from 2026-10-06).
+    const works = underWay(sim, sim.player).filter((u) => u.kind === 'works');
+    expect(works).toEqual([{ kind: 'works', label: `${roof.label}, ${owned.facts.address}`, until: owned.works[0]!.doneAt, route: '/workspace/homes' }]);
     finish(sim, owned);
+    expect(underWay(sim, sim.player).some((u) => u.kind === 'works')).toBe(false);
     expect(owned.facts.parts.roof).toBeGreaterThanOrEqual(year);
     expect(homeValue(sim, owned) - value).toBeGreaterThanOrEqual(worn * 0.99);
   });

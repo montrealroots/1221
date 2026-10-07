@@ -45,7 +45,9 @@
  * kept, so a winter month and a summer one use the same.
  *
  * **The bill.** The atlas's bills carry a typical month's gas in their heat.
- * That month at the tariff comes out, and the month used goes in.
+ * That month at the tariff comes out, and the month used goes in, from
+ * 2026-10-06 with a gas heater's showers past the average in it, in America
+ * and London (`showerGasKwhDelta` in `systems/hotwater.ts`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -53,6 +55,7 @@ import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { KIND_SHARE } from './electricity';
+import { showerGasKwhDelta } from './hotwater';
 
 const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /** PURA's purchased gas adjustment for Southern Connecticut Gas's heating customers, January to September 2026, a ccf. */
@@ -105,5 +108,13 @@ export function gasAdjustment(sim: Simulation, person: Person, month: number): M
   if (!t || used === undefined) return 0;
   const days = DAYS[month - 1]!;
   const typical = t.typical * KIND_SHARE[person.home!.kind]!;
-  return inSave(sim, t.bill(used, month, days) - t.bill(typical, month, days), t.currency);
+  // A gas heater's showers past the average, in the tariff's unit (`systems/hotwater.ts`, from 2026-10-06).
+  const showers = gasUnits(t.unit, showerGasKwhDelta(sim, person, month));
+  return inSave(sim, t.bill(Math.max(0, used + showers), month, days) - t.bill(typical, month, days), t.currency);
+}
+
+/** Kilowatt-hours of gas in a tariff's unit: a therm's 100,000 Btu, a ccf's 103,600 at EIA's 1,036 Btu a cubic foot (`derived-gas-use.json`); nothing in a unit not converted. */
+export function gasUnits(unit: GasTariff['unit'], kwh: number): number {
+  const btu = kwh * 3_412.14;
+  return unit === 'kWh' ? kwh : unit === 'therm' ? btu / 100_000 : unit === 'ccf' ? btu / 103_600 : 0;
 }

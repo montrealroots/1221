@@ -16,7 +16,8 @@ import { usedFault, usedListings, type UsedListing } from '@/engine/systems/used
 import { inSaveMoney } from '@/engine/systems/banking';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
-const license = (sim: Simulation, issuer: string) => documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer, name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+const MX_CAR = 'mx-nissan-versa';
+const license =(sim: Simulation, issuer: string) => documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer, name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
 /** A life whose month has a listing of the seller wanted. */
 function withSeller(city: string, j: Parameters<typeof usedListings>[4], model: string, seller: UsedListing['seller'], seed: string): { sim: Simulation; l: UsedListing } {
   for (let i = 0; i < 60; i += 1) {
@@ -90,6 +91,37 @@ describe('a private seller', () => {
     expect(laidUp(w, on.sim.now + 7 * MS_DAY)).toBe('Its transfer to you is overdue: it’s driven again once that’s done.');
     // Done, at ServiceOntario's $32 vehicle permit (from 2026-10-05); California's has no fee kept.
     expect(on.sim.must<{ fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: w.id } }).fee).toBe(inSaveMoney(on.sim, 32_00, 'CAD'));
+    // Its quote no longer charges the permit as well (from 2026-10-06).
+    const crv = modelById('ca-honda-cr-v')!;
+    expect((quote(crv, 'ca-on-toronto', on.sim.now, { age: 3, privateSeller: true }) as Quote).lines.map((l) => l.label)).not.toContain('Permit And Plates');
+  });
+
+  it('in New York charges the $50 title at the transfer, not the sale; in Connecticut $25, and $50 more after 30 days', () => {
+    const m = modelById('us-toyota-camry')!;
+    const labels = (q: Quote) => q.lines.map((l) => l.label);
+    expect(labels(quote(m, 'us-ny-newyork', Date.UTC(2026, 9, 6), { age: 3, privateSeller: true }) as Quote)).not.toContain('Title');
+    expect(labels(quote(m, 'us-ny-newyork', Date.UTC(2026, 9, 6), { age: 3 }) as Quote)).toContain('Title');
+    const ny = withSeller('us-ny-newyork', 'US-NY', 'us-toyota-camry', 'private', 'ul-priv-ny');
+    ny.sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', age: ny.l.age } });
+    const v = vehiclesOf(ny.sim.player)[0]!;
+    expect(v.transferBy! - v.boughtAt).toBe(30 * MS_DAY);
+    ny.sim.advanceBy(40 * MS_DAY);
+    expect(ny.sim.must<{ penalty: number; fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: v.id } })).toEqual({ penalty: 0, fee: inSaveMoney(ny.sim, 50_00, 'USD') });
+    const ct = withSeller('us-ct-newhaven', 'US-CT', 'us-toyota-camry', 'private', 'ul-priv-ct');
+    ct.sim.must({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', age: ct.l.age } });
+    const w = vehiclesOf(ct.sim.player)[0]!;
+    ct.sim.advanceBy(31 * MS_DAY);
+    expect(ct.sim.must<{ penalty: number; fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: w.id } })).toEqual({ penalty: inSaveMoney(ct.sim, 50_00, 'USD'), fee: inSaveMoney(ct.sim, 25_00, 'USD') });
+  });
+
+  it('in British Columbia charges $28; in Mexico City 433 pesos, with no fine past the 15 working days', () => {
+    const bc = withSeller('ca-bc-vancouver', 'CA-BC', 'ca-honda-cr-v', 'private', 'ul-priv-bc');
+    bc.sim.must({ kind: 'vehicle.buy', payload: { modelId: 'ca-honda-cr-v', age: bc.l.age } });
+    expect(bc.sim.must<{ fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: vehiclesOf(bc.sim.player)[0]!.id } }).fee).toBe(inSaveMoney(bc.sim, 28_00, 'CAD'));
+    const mx = withSeller('mx-cmx-mexicocity', 'MX-CMX', MX_CAR, 'private', 'ul-priv-mx');
+    mx.sim.must({ kind: 'vehicle.buy', payload: { modelId: MX_CAR, age: mx.l.age } });
+    mx.sim.advanceBy(30 * MS_DAY);
+    expect(mx.sim.must<{ penalty: number; fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: vehiclesOf(mx.sim.player)[0]!.id } })).toEqual({ penalty: 0, fee: inSaveMoney(mx.sim, 433_00, 'MXN') });
   });
 });
 

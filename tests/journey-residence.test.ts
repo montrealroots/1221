@@ -110,7 +110,7 @@ describe('residence: an American makes a home in Mexico City', () => {
     let b0 = banked(sim);
     const renewed = sim.must<{ expiresAt: number; fee: number }>({ kind: 'documents.renew_license', payload: {} });
     expect(b0 - banked(sim)).toBe(renewed.fee);
-    expect(renewed.fee).toBe(inSave(sim, Math.round(LICENSES['us-ny']!.renewalInside!.fee * 100), 'USD'));
+    expect(renewed.fee).toBe(inSave(sim, Math.round((LICENSES['us-ny']!.renewalFee! + 16) * 100), 'USD'));
     expect(renewed.expiresAt).toBe(addYears(sim.now + 120 * MS_DAY, 8));
     const nyLicense = licenseOf(p(), sim.now)!;
     expect(nyLicense).toMatchObject({ issuer: 'us-ny', realId: true, expiresAt: renewed.expiresAt });
@@ -272,8 +272,7 @@ describe('residence: an American makes a home in Mexico City', () => {
   }, 120_000);
 
   // Found by this journey on 2026-10-06 and fixed: a New York City license renewed at $64.50, the price outside the
-  // MCTD; it's $80.50 for someone living inside it (`renewalInside`). A first license and an exchange there still
-  // aren't charged the MCTD's part, whose 8-year figure isn't published (the path's note says so).
+  // MCTD; it's $80.50 for someone living inside it, the MCTD's $1 a half-year on eight years (`district`).
   it('renews a New York City license at the MCTD’s price', () => {
     const sim = quickSave({ startLocationId: NYC, homeRegionId: NYC, livesWhereBorn: true, wealth: 'wealthy' }, 'journey-residence-mctd');
     sim.player.documents = [{ id: 'lic', kind: 'license', issuer: 'us-ny', name: 'Class D Driver License', number: 'D1', status: 'valid', issuedAt: sim.now - 8 * YEAR + 120 * MS_DAY, expiresAt: sim.now + 120 * MS_DAY }];
@@ -355,7 +354,12 @@ describe('residence: a Mexican graduate works in New York and Toronto', () => {
     b0 = banked(sim);
     const visa = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_visa', payload: { destination: 'CA' } });
     expect(visa.fee).toBe(inSave(sim, 185_00, 'CAD'));
-    expect(visa.readyAt).toBe(sim.now + 18 * MS_DAY);
+    // Its 18 days run from the biometrics, at a visa application center where they live two weeks on (from 2026-10-06,
+    // `systems/papervisits.ts`; until then from the day it was applied for, with no biometrics given).
+    const trv = documentsOf(p()).find((d) => d.kind === 'visa' && d.destination === 'CA')!;
+    expect(trv.visit).toMatchObject({ rule: 'ca-biometrics', cityId: NYC });
+    expect(trv.visit!.at - sim.now).toBeGreaterThanOrEqual(13 * MS_DAY);
+    expect(visa.readyAt).toBe(trv.visit!.at + 18 * MS_DAY);
     expect(sim.execute({ kind: 'documents.apply_visa', payload: { destination: 'CA' } }).error).toBe('One is being decided.');
     expect(sim.execute({ kind: 'documents.apply_work_permit', payload: { bookingId: 'nope' } }).error).toBe('That isn’t a job you’ve been offered or taken.');
     const permit = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_work_permit', payload: { bookingId: 'tor' } });
@@ -363,13 +367,16 @@ describe('residence: a Mexican graduate works in New York and Toronto', () => {
     expect(permit.readyAt).toBe(sim.now + WORK_RULES.caC14.standardDays * MS_DAY);
     expect(b0 - banked(sim)).toBe(visa.fee + permit.fee);
     expect(sim.execute({ kind: 'documents.apply_work_permit', payload: { bookingId: 'tor' } }).error).toBe('You’ve applied for it.');
-    walk(sim, visa.readyAt + MS_HOUR);
-    expect(mayEnter(p(), 'CA', sim.now).ok).toBe(true);
-    expect(sim.execute({ kind: 'documents.apply_visa', payload: { destination: 'CA' } }).error).toBe('You hold one in force already.');
-    expect(acceptRefusal(sim, p(), toronto)).toMatch(/work permit/);
+    // From 2026-10-06 the permit, its biometrics given the day after the visa's, comes first at its 30 days, and the
+    // visa its 18 days after its own biometrics; until then the visa came first.
     walk(sim, permit.readyAt + MS_HOUR);
     const c14 = documentsOf(p()).find((d) => d.kind === 'permit' && d.destination === 'CA')!;
     expect(c14).toMatchObject({ status: 'valid', bookingId: 'tor', expiresAt: jobSpan(toronto).to + 2 * MS_DAY });
+    expect(c14.visit!.keptAt).toBeLessThan(permit.readyAt);
+    expect(acceptRefusal(sim, p(), toronto)).toMatch(/A visa for Canada/);
+    walk(sim, visa.readyAt + MS_HOUR);
+    expect(mayEnter(p(), 'CA', sim.now).ok).toBe(true);
+    expect(sim.execute({ kind: 'documents.apply_visa', payload: { destination: 'CA' } }).error).toBe('You hold one in force already.');
     expect(acceptRefusal(sim, p(), toronto)).toBeUndefined();
     sim.must({ kind: 'career.accept', payload: { bookingId: 'tor' } });
     expect(careerOf(p()).bookings.find((b) => b.id === 'tor')!.status).toBe('accepted');
@@ -453,7 +460,8 @@ describe('residence: a Connecticut native moves to New York', () => {
     expect(sim.execute({ kind: 'documents.license_step', payload: { step: 'permit' } }).error).toMatch(/exchanges here without the tests: Exchange It\.$/);
     b0 = banked(sim);
     const swapped = sim.must<{ expiresAt: number; fee: number }>({ kind: 'documents.exchange_license', payload: {} });
-    expect(swapped.fee).toBe(inSave(sim, 64_25, 'USD'));
+    // The exchange’s fee and the MCTD’s $1 a half-year on its eight years: they live in New York City.
+    expect(swapped.fee).toBe(inSave(sim, 80_25, 'USD'));
     expect(b0 - banked(sim)).toBe(swapped.fee);
     expect(swapped.expiresAt).toBe(addYears(sim.now, 8));
     expect(documentsOf(p()).find((d) => d.id === 'ct')!.status).toBe('cancelled');

@@ -13,16 +13,13 @@ import { MAX_STEPS, routineRefusal, routineTimeRefusal, runRoutine, stepLabel, t
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { gymById } from '@/engine/content/gyms';
 import { gymsIn, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
-import { arrange } from '@/engine/systems/catalog';
-import { groceryCatalog } from '@/engine/systems/kitchen';
-import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
+import { recipeById, servingsRange } from '@/engine/systems/kitchen';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
-import { clubById, membershipsOf } from '@/engine/systems/clubs';
-import { leg, runErrands, transitFare, tripRefusal, type Stop, type TripMode, driverIn, garagesIn } from '@/engine/systems/trips';
+import { errandStops, leg, runErrands, transitFare, tripRefusal, type Stop, type StopOffer, type TripMode, driverIn, garagesIn } from '@/engine/systems/trips';
 import { SHORTCUTS, isOn, type Shortcut } from '@/engine/systems/automation';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
-import { METER, STATIONS } from '@/engine/content/errandtrips';
+import { METER } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -97,6 +94,10 @@ export function RoutinesWorkspace() {
     ...outfits.map((o) => ({ key: `wear:${o.id}`, label: `Wear ${o.name}`, step: { kind: 'clothes.wear_outfit', payload: { outfitId: o.id } } })),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0]!;
+  // A cook step's servings, one to three times what the recipe makes (from 2026-10-06).
+  const [servings, setServings] = useState<number | undefined>(undefined);
+  const recipe = picked.step.kind === 'food.cook' ? recipeById(String(picked.step.payload.recipeId)) : undefined;
+  const pickedStep: RoutineStep = recipe ? { kind: 'food.cook', payload: { recipeId: recipe.id, servings: servings ?? recipe.servings } } : picked.step;
   const no = routineRefusal(name, steps);
   const go = (routineId: string, routineName: string) => {
     const result = runRoutine(sim, routineId, (kind, payload) => run(kind, payload, { silent: true }));
@@ -139,17 +140,25 @@ export function RoutinesWorkspace() {
             <div className="field-row field-row-tight">
               <div className="field">
                 <label htmlFor="routine-step">Step</label>
-                <select id="routine-step" value={picked.key} onChange={(e) => setChoice(e.target.value)}>
+                <select id="routine-step" value={picked.key} onChange={(e) => { setChoice(e.target.value); setServings(undefined); }}>
                   {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                 </select>
               </div>
+              {recipe && (
+                <div className="field">
+                  <label htmlFor="routine-servings">Servings</label>
+                  <select id="routine-servings" value={servings ?? recipe.servings} onChange={(e) => setServings(Number(e.target.value))}>
+                    {Array.from({ length: servingsRange(recipe).most - servingsRange(recipe).least + 1 }, (_, i) => servingsRange(recipe).least + i).map((k) => <option key={k} value={k}>{k}</option>)}
+                  </select>
+                </div>
+              )}
               <div className="field">
                 <label htmlFor="routine-name">Name</label>
                 <input id="routine-name" value={name} placeholder="Weekday Morning" onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
             <div className="row gap-1">
-              <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length >= MAX_STEPS} onClick={() => setSteps([...steps, picked.step])}>Add The Step</button>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length >= MAX_STEPS} onClick={() => setSteps([...steps, pickedStep])}>Add The Step</button>
               <button type="button" className="btn btn-sm btn-ghost" disabled={steps.length === 0} onClick={() => setSteps(steps.slice(0, -1))}>Take The Last Off</button>
               <button type="button" className="btn btn-sm" disabled={!save.open || Boolean(no)} title={no ?? save.reason} onClick={() => { if (run('routine.save', { name, steps }).ok) { toast(`${name.trim()}, saved.`, 'positive'); setSteps([]); setName(''); } }}>Save It</button>
             </div>
@@ -254,19 +263,11 @@ function ErrandsPanel() {
   const [stops, setStops] = useState<(Stop & { label: string })[]>([]);
   const [choice, setChoice] = useState('');
   const car = cars.find((v) => v.id === vehicleId) ?? cars[0];
-  // What a stop can be, cheapest first within each kind.
-  const options: (Stop & { key: string; label: string })[] = [
-    // Every grocery and toiletry sold here (from 2026-10-06; until then the first 40 of each).
-    ...arrange(groceryCatalog(sim, here)).map((e) => ({ key: `g:${e.id}`, label: `Buy ${e.label}`, kind: 'food.buy_groceries', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
-    ...arrange(toiletryCatalog(sim, here)).map((e) => ({ key: `t:${e.id}`, label: `Buy ${e.label}`, kind: 'hygiene.buy', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
-    ...salonsIn(here).flatMap((salon) => salon.services.filter((x) => x.price !== null).map((x) => ({ key: `s:${salon.id}:${x.service}`, label: `${x.label} At ${salon.name}`, kind: 'hygiene.groom', payload: { salonId: salon.id, service: x.service }, leg: 'errand' as const }))),
-    { key: 'dry', label: 'Drop Off The Dry Cleaning', kind: 'clothes.dry_clean', payload: {}, leg: 'errand' },
-    { key: 'collect', label: 'Collect The Dry Cleaning', kind: 'clothes.collect', payload: {}, leg: 'errand' },
-    ...(by === 'car' ? (STATIONS[here] ?? []).map((st, i) => ({ key: `f:${i}`, label: `Fuel At ${st}`, kind: 'errand.fuel', payload: { station: i }, leg: 'errand' as const })) : []),
-    // A club's meeting on the way, checked in at as Set Out does (`systems/clubs.ts`, from 2026-10-03).
-    ...(checkIn.open ? membershipsOf(person) : []).map((m) => clubById(m.clubId)).filter((c): c is NonNullable<typeof c> => Boolean(c) && c!.cityId === here)
-      .map((c) => ({ key: `c:${c.id}`, label: `${c.name}, Its Meeting`, kind: 'club.check_in', payload: { clubId: c.id }, leg: 'errand' as const })),
-  ];
+  const [cashText, setCashText] = useState('');
+  const cash = Math.max(0, Math.round(Number(cashText) * 100) || 0);
+  // What a stop can be, the engine's list (from 2026-10-06, when the clothes shop, the pharmacy, the bank, the Post
+  // Office and a restaurant joined it); a club's meeting once Clubs' chapter has been read.
+  const options: StopOffer[] = errandStops(sim, person, by, cash).filter((o) => o.kind !== 'club.check_in' || checkIn.open);
   const picked = options.find((o) => o.key === choice) ?? options[0];
   const withDriver = by === 'car' && driven && Boolean(driver);
   const no = tripRefusal(sim, person, by, car?.id, passengers, withDriver) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
@@ -328,6 +329,10 @@ function ErrandsPanel() {
             <select id="errand-stop" value={picked?.key ?? ''} onChange={(e) => setChoice(e.target.value)}>
               {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
             </select>
+          </div>
+          <div className="field">
+            <label htmlFor="errand-cash">Cash At The Bank Or Post Office</label>
+            <input id="errand-cash" type="number" min={0} step="any" value={cashText} onChange={(e) => setCashText(e.target.value)} />
           </div>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!picked || stops.length >= 8} onClick={() => picked && setStops([...stops, { kind: picked.kind, payload: picked.payload, leg: picked.leg, label: picked.label }])}>Add The Stop</button>
           <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no) || Boolean(person.trip)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {

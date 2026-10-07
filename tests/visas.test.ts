@@ -28,10 +28,14 @@ describe('a visitor visa', () => {
     expect(r.ok, r.error).toBe(true);
     const cur = saveCurrency(sim.universe);
     expect(r.value!.fee).toBe(cur === 'USD' ? 185_00 : exchange(185_00, 'USD', cur));
-    expect(r.value!.readyAt - sim.now).toBe(VISAS['US<MX']!.days * MS_DAY);
+    // From 2026-10-06 the interview is booked on the calendar at the wait's end, the first business morning from it,
+    // and the visa decided its week after; until then the decision came at the wait's end with no interview.
+    const visa = documentsOf(sim.player).find((d) => d.kind === 'visa' && d.destination === 'US')!;
+    expect(visa.visit!.at - sim.now).toBeGreaterThanOrEqual((VISAS['US<MX']!.days - 7) * MS_DAY - 24 * 3_600_000);
+    expect(visa.visit!.at - sim.now).toBeLessThan((VISAS['US<MX']!.days - 7 + 4) * MS_DAY);
+    expect(r.value!.readyAt).toBe(visa.visit!.at + 7 * MS_DAY);
     expect(visaRefusal(sim.player, 'US', sim.now)).toMatch(/being decided/);
     sim.advanceTo(r.value!.readyAt + 60_000);
-    const visa = documentsOf(sim.player).find((d) => d.kind === 'visa' && d.destination === 'US')!;
     expect(visa.status).toBe('valid');
     // Ten years, but no longer than the passport's nine and a half left.
     expect(visa.expiresAt).toBe(passportOf(sim.player, sim.now)!.expiresAt);

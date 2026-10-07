@@ -6,7 +6,10 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { DROP_INS, DROP_IN_MINUTES } from '@/engine/content/dropins';
+import { DROP_INS, DROP_IN_MINUTES, DROP_IN_SKILL } from '@/engine/content/dropins';
+import { ROLES } from '@/engine/content/career';
+import { bookingChance } from '@/engine/systems/career';
+import { evenCraft, type Craft } from '@/engine/systems/school';
 import { dropInPrice } from '@/engine/systems/life';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { salesTaxRate } from '@/engine/content/tax';
@@ -46,6 +49,28 @@ describe('a drop-in class', () => {
     yoga.must({ kind: 'class.take', payload: { classId: 'new-york-yoga' } });
     expect(yoga.player.wellbeing.fitness).toBeLessThanOrEqual(30);
     expect(yoga.player.wellbeing.stress).toBeLessThan(60);
+  });
+
+  it('a dance class trains an actor’s dance, which casting reads where a breakdown asks for a dance; yoga trains none of it', () => {
+    const sim = life('us-ny-newyork', 'dropin-craft');
+    sim.advanceBy(MS_DAY);
+    const role = ROLES.find((r) => r.medium === 'stage')!;
+    sim.player.craft = evenCraft(role.bar);
+    const before = { ...sim.player.craft };
+    const odds = (demands: (keyof Craft)[]) => bookingChance(sim.player.craft!, role, 1, 'room', true, false, 50, undefined, demands);
+    const asked = odds(['dance']);
+    const plain = odds([]);
+    sim.must({ kind: 'class.take', payload: { classId: 'bdc-open-class' } });
+    expect(sim.player.craft.dance).toBeGreaterThan(before.dance);
+    expect(sim.player.craft.singing).toBe(before.singing);
+    // The part that asks for a dance is likelier by the existing fit rule; one that doesn't, not at all.
+    expect(odds(['dance'])).toBeGreaterThan(asked);
+    expect(odds([])).toBe(plain);
+    const after = { ...sim.player.craft };
+    sim.advanceBy(MS_DAY);
+    sim.must({ kind: 'class.take', payload: { classId: 'new-york-yoga' } });
+    expect(sim.player.craft).toEqual(after);
+    expect(DROP_IN_SKILL).toEqual({ dance: 'dance' });
   });
 
   it('is taken in the studio’s town', () => {

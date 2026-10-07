@@ -50,8 +50,11 @@
  * From 2026-10-06 a shower is as long as the player takes it (`hygiene.shower_minutes`), and counts as that share of
  * the country's average shower: REU2016's 7.8 minutes in America and Canada, the Energy Saving Trust's seven and a
  * half in Britain (At Home with Water, 2013, p. 19: "approximately eight liters/min", 60 liters). Until then every
- * shower was the average's, however long. Ireland meters no home's water (its domestic charges were abolished), and
- * no shower's volume was read in Mexico, so there a shower's length changes no bill.
+ * shower was the average's, however long. Ireland meters no home's water (its domestic charges were abolished).
+ * Until 2026-10-06 no shower's volume was read in Mexico, so there a shower changed no bill; from then a shower in
+ * Mexico City runs NOM-008-CONAGUA's 10 liters a minute, the most a head sold there may, for its minutes, against
+ * America's 7.8-minute shower 0.70 times a day taken out of the city's average, no Mexican survey of shower length
+ * or frequency having been found (`research-mexico-shower.json`). A bath there still isn't metered.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -110,6 +113,10 @@ export const WASHING: Readonly<Record<string, { showerL: number; showersADay: nu
   us: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
   ca: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
   gb: { showerL: 60, showersADay: 4.4 / 7, bathL: 80, bathsADay: 1.3 / 7 },
+  // Mexico (from 2026-10-06, `research-mexico-shower.json`): NOM-008-CONAGUA-1998's 10 liters a minute, the most a
+  // shower head sold there may run, over America's 7.8 minutes and 0.70 showers a day, stood in because no Mexican
+  // survey of how long or how often people shower was found. The flow is a ceiling, not a measured average.
+  mx: { showerL: 10 * 7.8, showersADay: (11.1 * 3.78541) / 59.8 },
 };
 
 /**
@@ -128,7 +135,8 @@ export function litersUsed(person: Person, cityId: string, month: number): numbe
   const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
   const pets = (person.pets ?? []).reduce((n, pet) => n + PET_WATER_L[pet.species], 0) * DAYS[month - 1]!;
   // And a guest's days staying, each a person's (from 2026-10-05).
-  const average = t.perPersonLiters * (householdOf(person) * days + (l?.guestDays ?? 0)) + pets;
+  // And the lawn's water poured (from 2026-10-06, `systems/lawns.ts`).
+  const average = t.perPersonLiters * (householdOf(person) * days + (l?.guestDays ?? 0)) + pets + (l?.lawnL ?? 0);
   const w = WASHING[CITIES.get(cityId)?.countryId === 'uk' ? 'gb' : CITIES.get(cityId)?.countryId ?? ''];
   if (!w || !l?.billDays || t.perPersonLiters === 0) return average;
   const showers = ((l.showers ?? 0) - w.showersADay * days) * w.showerL;
@@ -136,8 +144,8 @@ export function litersUsed(person: Person, cityId: string, month: number): numbe
   return average + showers + baths;
 }
 
-/** The country's average shower, minutes, from the same studies as its liters (`WASHING`). */
-export const SHOWER_MINUTES: Readonly<Record<string, number>> = { us: 7.8, ca: 7.8, gb: 7.5 };
+/** The country's average shower, minutes, from the same studies as its liters (`WASHING`); Mexico's is America's, stood in. */
+export const SHOWER_MINUTES: Readonly<Record<string, number>> = { us: 7.8, ca: 7.8, gb: 7.5, mx: 7.8 };
 
 /**
  * A shower or a bath at home, counted toward the month's water: a shower as its share of the country's average one,

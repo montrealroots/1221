@@ -1,0 +1,109 @@
+{
+  "topic": "Internet outage frequency/duration (Ofcom, ComReg, CRTC, FCC) and cheapest mobile data plans by market",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "UK (Ofcom) power-related outage share and typical duration, fixed/mobile networks, 2020-2022",
+      "value": "25.3% of incidents power-related; 90% of power outages last 3 minutes to 3 hours",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://www.ofcom.org.uk/siteassets/resources/documents/consultations/category-1-10-weeks/272921-resilience-guidance-and-mobile-ran-power-back-up/associated-documents/mobile-ran-power-resilience-technical-report-cfi-update.pdf?v=390945",
+      "quote": "between 2020 and 2022, 693 out of 2735 (25.3%) of reported incidents for fixed and mobile networks were caused by power-related issues... 90% of power outages last between 3 minutes and 3 hours.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland (ComReg) average annual outage hours: copper vs fibre broadband",
+      "value": "45 hours/year (copper) vs 16 hours/year (fibre)",
+      "unit": "hours/year",
+      "market": "ie",
+      "source": "https://www.comreg.ie/media/2023/08/5-Connectivity-Network-Resilience.pdf",
+      "quote": "Users of services over copper networks report experiencing an average of 45 hours of outage per year, against 16 hours for fibre users.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland (ComReg) Storm Barra (2021) impact on network, all 26 counties",
+      "value": "~1.5 million user-hours lost",
+      "unit": "user-hours",
+      "market": "ie",
+      "source": "https://www.comreg.ie/media/2022/12/ComReg-22100a.pdf",
+      "quote": "In 2021, Storm Barra damaged network infrastructure in all 26 counties of the Republic of Ireland resulting in almost 1.5m user hours lost.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Canada (CRTC) new outage-reporting requirement: carriers must report major outages within 2 hours, full report within 14 days (effective since March 8, 2023)",
+      "value": "report within 2 hours; full report within 14 days",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://crtc.gc.ca/eng/resilience.htm",
+      "quote": "The Commission directs all Canadian carriers to report major service outages to the Commission within two hours of when the carrier becomes aware of such an outage, and to file a comprehensive report with the Commission within 14 days following the outage, with this direction taking effect on March 8, 2023.",
+      "confidence": "medium"
+    },
+    {
+      "what": "US (FCC) Measuring Broadband America program: scope and limitation re: outage data",
+      "value": "measures speed/latency/packet loss via volunteer routers; not currently structured to capture large-scale outage events directly",
+      "unit": "text",
+      "market": "us",
+      "source": "https://vtechworks.lib.vt.edu/server/api/core/bitstreams/ba422301-2a83-439c-9ba0-0203f0d548a2/content",
+      "quote": "the MBA test servers could see larger-scale outages instantaneously but are currently not set up to do so according to the available documentation.",
+      "confidence": "low"
+    },
+    {
+      "what": "US cheapest Mint Mobile (T-Mobile network) plan: price and data allowance",
+      "value": "15 (intro, 3 months)/month for 6GB",
+      "unit": "USD/month for GB",
+      "market": "us",
+      "source": "https://www.whistleout.com/CellPhones/Guides/best-mint-mobile-plans",
+      "quote": "Mint Mobile's 6 GB Plan has a regular monthly cost of $15 per month and comes with 6 GB of data per month.",
+      "confidence": "medium"
+    },
+    {
+      "what": "UK cheapest giffgaff plan: price and data allowance",
+      "value": "6/month for 2GB (5G)",
+      "unit": "GBP/month for GB",
+      "market": "uk",
+      "source": "https://www.simsherpa.com/sim-only-deals/giffgaff",
+      "quote": "Giffgaff SIM only deals start at just £6 per month... The £6/month no-contract plan includes 2GB of 5G data",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland cheapest 48 Mobile plan: price and data allowance",
+      "value": "10.99/month for 100GB (Student plan)",
+      "unit": "EUR/month for GB",
+      "market": "ie",
+      "source": "https://www.smartsaver.ie/mobile/providers/48",
+      "quote": "48 Mobile plans start from €10.99 per month in Ireland... Plan: Student 100GB, Price: €10.99/month, Data: 100GB",
+      "confidence": "low"
+    },
+    {
+      "what": "Mexico cheapest Telcel Amigo plan: price and data allowance",
+      "value": "~10 USD (170 MXN) for ~2GB",
+      "unit": "USD/month for GB",
+      "market": "mx",
+      "source": "https://www.traveltomtom.net/destinations/north-america/mexico/best-mexico-sim-card",
+      "quote": "The Amigo Plan at $10 USD (170 MXN) includes around 2 GB of data, unlimited calls within Mexico, and free WhatsApp usage.",
+      "confidence": "low"
+    },
+    {
+      "what": "Canada cheapest widely-cited plan (Public Mobile/Telus network), 20GB+ tier",
+      "value": "25/month for 20GB+ (various budget carriers: Public Mobile, Koodo, Lucky Mobile, Chatr, PC Mobile, SpeakOut, Fizz)",
+      "unit": "CAD/month for GB",
+      "market": "ca",
+      "source": "https://www.topicks.ca/cell-phones/best-cheap-cell-phone-plans-with-20gb-data-in-canada/",
+      "quote": "the cheapest cell phone plans with 20 GB or more data in Canada start at just $25/month",
+      "confidence": "low"
+    },
+    {
+      "what": "Canada Koodo cheapest plan (lowest absolute price, low data), as of Oct 2026",
+      "value": "37.50/month for 2GB",
+      "unit": "CAD/month for GB",
+      "market": "ca",
+      "source": "https://www.planhub.ca/cell-phone-plans-koodo",
+      "quote": "As of October 2, 2026, Koodo's cheapest cell phone plan was priced at $37.50 per month, offering 2 GB of data.",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "A direct FCC Measuring Broadband America figure for outage frequency/duration comparable to Ofcom's or ComReg's (the program does not appear to publish this metric directly)", "looked": ["FCC Measuring Broadband America report outage reliability"] },
+    { "what": "A single authoritative 'cheapest plan' figure for each market's single dominant/main carrier as literally named in the brief (e.g., Vodafone UK's own cheapest plan, rather than giffgaff; Telus/Rogers/Bell's own cheapest plan rather than Public Mobile/Koodo sub-brands)", "looked": ["Canada cheapest cell phone plan Public Mobile Koodo data GB price 2026 — results centered on budget sub-brands, not the parent carriers' own lowest tier"] }
+  ]
+}

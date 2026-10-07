@@ -98,6 +98,7 @@ No status claims a screen was checked in the running app: SLATE has no tests of 
 | A piece bought with IKEA's refund card sold back for less, or nothing | the holdings journey | its price was kept as what the bank paid | its price as new kept, as IKEA's tiers are of it (`systems/furnishings.ts`); the journey's case |
 | The preferences took anything, and kept it | the holdings journey | `Object.assign` of the payload | only the clock's speed, as one of its four (`world/world.ts`); the journey's case |
 | A question was dismissed twice, the day its keeping counts from moved | the holdings journey | no check | refused (`world/world.ts`); the journey's case |
+| A life played to 60 held 463 pairs of underwear among its 490 things, and its Belongings took 8.9 seconds to open | the screens check | the Replace Worn-Out Clothes shortcut bought a whole pack for each pair worn out, and threw away only the one | bought back up to the starting wardrobe's count for the kind, one for one where it keeps none, and a worn-out pair with enough left thrown away (`replaceWornOut`, `systems/clothing.ts`); `tests/clothes-replace.test.ts`, eighty pairs worn through never a pack over the count |
 | A 29th-of-February birthday was kept on the 28th while the age turned on the 1st of March | the leap-year test | two rules for one day | one rule, `birthdayIn`, by where they live: the 1st of March in the UK, the 28th elsewhere (`docs/research/world/research-leap-day-birthday.json`); `tests/calendar-year.test.ts` |
 
 ## The long runs
@@ -119,6 +120,28 @@ Reproduce: check out the commit in the `slate-lives` worktree, copy `probe/play-
 into it, and run `bash probe/chunk.sh <out> <snaps> "death-1:us-ny-newyork:modest:" "death-ldn:uk-eng-london:modest:"`
 until it prints `ALL DONE`; then `npx vite-node tools/breaches.mjs <snaps>`.
 
+The same two lives at `c94c7b33`, with all 381 commands in a journey and the twenty-nine defects in the table above
+fixed, played in foreground chunks of eight minutes: New York to 89 on 2091-11-06 and London to 50 on 2052-09-08,
+the same days; 0 errors and 0 anomalies each; every law held at all eight snapshots; New York's save 19.5 MB at the
+end with 68,365 transactions and 1,483 scheduled items, London's 6.1 MB, 21,345 and 1,215; no notice twice among either's
+last 500. `main` was merged from it as `45bbc415`.
+
+## The screens
+
+`tools/screens-check.mjs` opens the built app in Chromium on a played life's save, continues it, reads the guide
+through where the life is guided, and opens every destination from Home and every tab on it. A screen fails on an
+uncaught error, an error in the console, the app's "Something went wrong.", or no heading; the exit is the number
+that failed. On 2026-10-06, at `c94c7b33`'s build, on New York at 25 and at 60 and London at 40: 37 screens and 40
+tabs opened, none failed. Every screen opened in under a second but one: Belongings on the New York life at 60, 8.9
+seconds, which is how the underwear above was found. This checks that each screen opens and draws, not that every
+button on it does what it says; that is what the journeys check, through the same commands.
+
+The 8.9 seconds wasn’t only the underwear. A profile of opening Belongings put SLATE’s own work at about a second
+and the engine’s checks at 16 ms; each of its 490 rows had drawn a list of the 339 people in town it could be handed to.
+That list is now drawn when a row’s Give To is pressed. At `dd83e877`’s build the same three lives opened 45 screens
+and 59 tabs, none failing, and Belongings at 60 in 0.4 seconds. A second 8.7-second reading along the way was a
+preview server still handing out the build it started with, and was thrown out.
+
 ## The command sweep
 
 `tests/commands-robust.test.ts` gives every one of the 375 commands an empty payload and a payload of nonsense (ids
@@ -138,13 +161,14 @@ birthday on the day the law counts it, in New York and in London.
 |---|---|---|---|---|
 | 2026-10-06 | `bfd4dd7b` | `npm run gate` with `VITEST_MAX_FORKS=2` | the full suite and every check | 3,228 tests passed; the voice check failed on five law names, fixed, and every check after it run and passed |
 | 2026-10-06 | `8eb0da03` | the replay above | two lives | clean |
+| 2026-10-06 | `c94c7b33` | the replay above, in foreground chunks | two lives | clean; `main` merged as `45bbc415` |
 | 2026-10-06 | `49c5d3b3` | `npx vitest run` in five foreground batches of about 72 files, two workers each; then `tsc -b`, lint, and each of the fifteen checks alone | the full suite and every check | 359 files and 3,275 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `abda6d4e` | the same, five batches | the full suite and every check, with friends asking first and the tailor's fix | 361 files and 3,290 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `8b4f3328` | the same, five batches | the full suite and every check, with the three travel fixes | 362 files and 3,301 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `40c9dccb` | the same, five batches | the full suite and every check, with the two food fixes | 363 files and 3,310 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `28c8d33a` | the same, five batches | the full suite and every check, with the dental plan's fix | 364 files and 3,323 tests passed; typecheck, lint and every check exited 0 |
 | 2026-10-06 | `f9cf1fe1` | the same, five batches | the full suite and every check, with the four papers fixes | 365 files and 3,330 tests passed; typecheck, lint and every check exited 0 |
-| 2026-10-06 | the holdings journey's commit | the same, five batches | the full suite and every check, with the five holdings fixes | 366 files and 3,346 tests passed; typecheck, lint and every check exited 0 |
+| 2026-10-06 | `c94c7b33` | the same, five batches | the full suite and every check, with the five holdings fixes | 366 files and 3,346 tests passed; typecheck, lint and every check exited 0 |
 
 Two gate runs and one replay were stopped by Claude Code for low memory before finishing; each is counted as
 incomplete, never as passed, and was rerun with fewer workers.

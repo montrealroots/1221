@@ -25,17 +25,17 @@ import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commiss
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
-import { orderStage, ordersOf } from '@/engine/systems/orders';
+import { heldRefusal, orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
 import { batteryOptions, batteryRefusal, batteryYears, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
 import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
-import { contactsOf } from '@/engine/systems/people';
+import { contactsOf, type Contact } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
-import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { ROOM_USE_LABEL, furnishedIn, roomList } from '@/engine/systems/rooms';
 import { claimAmount, claimRefusal } from '@/engine/systems/baggage';
 import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { PET_ENTRY } from '@/engine/content/petentry';
@@ -190,6 +190,8 @@ function YourRooms() {
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
   const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:') || i.kind.startsWith('furn:')));
   const owns = Boolean(livingIn(person));
+  // What a furnished home came with, in its rooms (from 2026-10-06).
+  const came = furnishedIn(person);
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
       <div className="table-scroll">
@@ -215,7 +217,7 @@ function YourRooms() {
                     )}
                   </td>
                   <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>
-                  <td className="small">{inIt.length ? inIt.map((i) => i.label).join(', ') : '—'}</td>
+                  <td className="small">{[...inIt.map((i) => i.label), ...came.filter((f) => f.roomId === r.id).map((f) => f.label)].join(', ') || '—'}</td>
                   <td>
                     {loose.length > 0 && r.kind !== 'bathroom' && (
                       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
@@ -274,7 +276,7 @@ function ShoppingOut() {
                 return (
                   <tr key={i.id}>
                     <td>{i.label}{i.quantity > 1 ? ` × ${i.quantity}` : ''}</td>
-                    <td className="small">{i.at.kind === 'vehicle' ? 'In The Car' : 'In Your Arms'}</td>
+                    <td className="small">{i.at.kind === 'vehicle' ? 'In The Car' : i.at.kind === 'home' ? 'Inside The Door' : 'In Your Arms'}</td>
                     <td className="small">{SPOT_LABEL[i.storeIn!]}{left !== undefined ? <div className="xs dim">{left > 0 ? `${left} minutes of the two hours left` : 'Out past the two hours'}</div> : null}</td>
                     <td>
                       <select aria-label={`Where To Put ${i.label}`} value={spot} onChange={(e) => setSpots((x) => ({ ...x, [i.id]: e.target.value as Spot }))}>
@@ -308,6 +310,8 @@ export function BelongingsWorkspace() {
   const [target, setTarget] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
+  // Who a thing can be handed to, once for the screen: somebody here who isn’t a rival (`giveRefusal`’s own reading).
+  const givable = contactsOf(person).filter((c) => !c.rival && c.cityId === person.currentLocationId);
   const toHandCount = items.filter((i) => reachable(sim, person, i.at)).length;
   const coming = ordersOf(person).filter((o) => o.status === 'placed');
   // Grouped by where each thing is, in the order a person thinks of them.
@@ -340,7 +344,13 @@ export function BelongingsWorkspace() {
           {coming.length > 0 && (
             <div className="col gap-1 small" style={{ marginTop: '0.5rem' }}>
               {/* Each order's stage as the carrier's tracking says it (`orderStage`). */}
-              {coming.map((o) => <div key={o.id}>{`${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</div>)}
+              {/* Missed for want of a signature, it's held by its carrier and collected (`orders.collect`, from 2026-10-06). */}
+              {coming.map((o) => (
+                <div key={o.id} className="row gap-2" style={{ alignItems: 'center' }}>
+                  <span>{o.held ? `${o.from}: ${orderStage(person, o, sim.now)} at ${o.held.carrier}, until ${formatDate(o.held.until, sim.zone)}` : `${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</span>
+                  {o.held && <Gated feature="orders.collect" className="btn btn-sm btn-ghost" title={heldRefusal(person, o.id, sim.now)} disabled={Boolean(heldRefusal(person, o.id, sim.now))} onClick={() => { if (run('orders.collect', { orderId: o.id }).ok) toast('Collected.', 'positive'); }}>Collect It</Gated>}
+                </div>
+              ))}
             </div>
           )}
         </Panel>
@@ -403,7 +413,7 @@ export function BelongingsWorkspace() {
                                     {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
-                                  <GiveTo itemId={item.id} label={item.label} />
+                                  <GiveTo itemId={item.id} label={item.label} people={givable} />
                                   <Collected item={item} />
                                   {item.kind.startsWith('ikea:') && !buybackRefusal(person, item.id) && <button type="button" className="btn btn-sm btn-ghost" disabled={!sellBack.open} title={sellBack.reason ?? 'IKEA’s refund card, for the next piece'} onClick={() => { const r = run<{ credit: number }>('home.sell_back', { itemId: item.id }); if (r.ok) toast(`${formatMoney(r.value!.credit, saveCurrency(sim.universe))} of IKEA credit.`, 'positive'); }}>{`Sell It Back To IKEA, ${formatMoney(Math.round((item.paid ?? 0) * buybackShare(item.condition)), saveCurrency(sim.universe))}`}</button>}
                                   {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
@@ -721,13 +731,17 @@ function PetPapers() {
 }
 
 /** Giving a thing to a friend here (`items.give`): theirs from then, and remembered. */
-function GiveTo({ itemId, label }: { itemId: string; label: string }) {
+function GiveTo({ itemId, label, people }: { itemId: string; label: string; people: readonly Contact[] }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const give = useFeature('items.give');
-  const here = contactsOf(person).filter((c) => !giveRefusal(sim, person, itemId, c.id));
   const [to, setTo] = useState('');
-  if (here.length === 0) return null;
+  // The list drawn only once asked for (from 2026-10-06): until then each row drew everybody known who's here, and a
+  // life at 60 with 339 people in town and 490 things drew 166,000 choices and took 8.9 seconds to open.
+  const [open, setOpen] = useState(false);
+  if (people.length === 0 || giveRefusal(sim, person, itemId, people[0]!.id)) return null;
+  if (!open) return <button type="button" className="btn btn-sm btn-ghost" disabled={!give.open} title={give.reason} onClick={() => setOpen(true)}>Give To…</button>;
+  const here = people;
   const chosen = here.find((c) => c.id === to) ?? here[0]!;
   return (
     <>

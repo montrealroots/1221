@@ -1,0 +1,353 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "rvs|Pleasure-Way": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.pleasureway.com/models/",
+      "counted": "Plateau, Ascent, Ontour, Lexor, Everbound (floorplan/drivetrain suffixes like XLTS/XLRB/TS/RB/AWD collapsed into each base nameplate)",
+      "market": "CA"
+    },
+    "rvs|Roadtrek": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://roadtrek.com/models/",
+      "counted": "Play, Play Tuff, Wave, Chase, Zion (SL trim and 'for 2' layout variants collapsed into each base nameplate)",
+      "market": "CA"
+    },
+    "rvs|Swift": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.swiftgroup.co.uk/motorhomes/",
+      "counted": "Kon-Tiki, Trekker, Voyager, Escape",
+      "market": "GB"
+    },
+    "rvs|Bailey": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.baileyofbristol.co.uk/motorhomes/",
+      "counted": "Adamo, Alora, Autograph",
+      "market": "GB"
+    },
+    "rvs|Auto-Trail": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.auto-trail.co.uk/motorhomes/",
+      "counted": "Expedition, F-Line, Excel, Imala, Frontier, Grande Frontier",
+      "market": "GB"
+    },
+    "rvs|Hymer": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.hymer.com/gb/en/motorhomes",
+      "counted": "Venture S, B-Class MasterLine I, B-Class ModernComfort I, ML-T, B-Class MasterLine T, B-Class ModernComfort T, GT-S, Exsis-t, Grand Canyon S (ML-T CrossOver collapsed as a trim variant of ML-T)",
+      "market": "GB"
+    },
+    "rvs|Rapido": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.rapido-motorhome.co.uk/",
+      "counted": "V55, V62, V64, V65 XL, V68, C03, C50, C55, C66, C86, Serie 6F, Serie 8F, Serie 80dF, i66M, i96M, i166M, i196M (i-suffix compact trims and TRUMA/ALDE heating variants collapsed into each base nameplate)",
+      "market": "GB"
+    },
+    "motorcycles|MV Agusta": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.mvagusta.com/en-en/models",
+      "counted": "Rush, Brutale, Dragster, Turismo Veloce, F3, Superveloce, Enduro Veloce",
+      "market": "GB"
+    },
+    "motorcycles|Can-Am": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles.html",
+      "counted": "Canyon, Ryker, Spyder F3, Spyder RT",
+      "market": "US"
+    },
+    "motorcycles|Energica": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://energicamotor.com/models",
+      "counted": "Experia, EsseEsse9, Eva Ribelle, Ego",
+      "market": "US"
+    },
+    "motorcycles|LiveWire": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.livewire.com/bike-comparison/livewire-one",
+      "counted": "LiveWire ONE, S2 Alpinista, S2 Mulholland, S2 Del Mar",
+      "market": "US"
+    },
+    "motorcycles|Royal Enfield": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.royalenfield.com/us/en/motorcycles/",
+      "counted": "Bullet 350, Classic 350, Goan Classic 350, Hunter 350, Meteor 350, Guerrilla 450, Himalayan 450, Bear 650, Bullet 650, Classic 650, Continental GT 650, INT 650, Shotgun 650, Super Meteor 650",
+      "market": "US"
+    },
+    "motorcycles|Vespa": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://storeusa.vespa.com/",
+      "counted": "Primavera, Sprint, GTS, Elettrica, GTV (946/946 Horse special edition excluded as uncertain whether a base 946 is separately listed on this page)",
+      "market": "US"
+    },
+    "motorcycles|Husqvarna": {
+      "range": 30,
+      "meetsHundred": false,
+      "url": "https://www.husqvarna-motorcycles.com/en-us/models.html",
+      "counted": "TC 85, TC 65, TC 50, TC 300, TC 250, TC 125, FC 450, FC 350, FC 250, TE 300, TE 250, TE 150, FE 501s, FE 350s, FX 450, FX 350, TX 300, Norden 901, 701 Enduro, Svartpilen 801, Svartpilen 401, Vitpilen 801, 701 Supermoto, EE 1.20, EE 1.18, EE 1.16, EE 1.12, EE 5, EE 2, EE 3 (Heritage/Factory Edition/SE trim variants collapsed into their base nameplate)",
+      "market": "US"
+    },
+    "motorcycles|Benelli": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.benelli.com/int-en",
+      "counted": "TRK 902 Xplorer, TRK 902 Stradale, Leoncino Bobber 400, BKX 125, TRK 702 X, TRK 702, Tornado 550, BN 125",
+      "market": "GB"
+    },
+    "motorcycles|Kymco": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://kymcousa.com/",
+      "counted": "Agility 50, Super 8, Like 150i, People S 150i, Downtown GT, CV3, AK 550i, Mongoose 110i, MXU 150x, Mongoose 270i, MXU 270i, MXU 450i, Maxxer 450i, MXU 550i, MXU 700i, UXV 450i, UXV 700i (ABS/LE/EPS/Euro/Platform trim and colour-size suffixes collapsed into each base nameplate)",
+      "market": "US"
+    },
+    "motorcycles|Harley-Davidson": {
+      "range": 25,
+      "meetsHundred": false,
+      "url": "https://www.harley-davidson.com/us/en/motorcycles/index.html",
+      "counted": "Street Bob, Super Glide, Deadwood, Low Rider S, Heritage Classic, Fat Boy, Breakout, Low Rider ST, Street Glide, Road Glide, Street Glide Limited, Road Glide Limited, CVO Street Glide ST, CVO Road Glide ST, CVO Street Glide, CVO Street Glide Limited, Nightster, Nightster Special, Sportster S, Road Glide 3, Street Glide 3 Limited, CVO Street Glide 3 Limited, Pan America 1250 Special, Pan America 1250 ST, Pan America 1250 Limited",
+      "market": "US"
+    },
+    "cars|Škoda": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.skoda.co.uk/new-cars/range",
+      "counted": "Peaq, Epiq, Elroq, Enyaq, Fabia, Scala, Octavia, Superb, Kamiq, Karoq, Kodiaq",
+      "market": "GB"
+    },
+    "cars|Skoda": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.skoda.co.uk/new-cars/range",
+      "counted": "Peaq, Epiq, Elroq, Enyaq, Fabia, Scala, Octavia, Superb, Kamiq, Karoq, Kodiaq",
+      "market": "GB"
+    },
+    "cars|BYD": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.byd.com/uk/electric-cars",
+      "counted": "Dolphin Surf, Dolphin, Atto 2, Atto 3, Seal, Sealion 7",
+      "market": "GB"
+    },
+    "cars|Mitsubishi": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.mitsubishicars.com/cars-and-suvs",
+      "counted": "Outlander, Outlander PHEV, Outlander Sport, Eclipse Cross, Eclipse Sportback EV",
+      "market": "US"
+    },
+    "cars|Polestar": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.polestar.com/us/",
+      "counted": "Polestar 2, Polestar 3, Polestar 4",
+      "market": "US"
+    },
+    "cars|Renault": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.renault.co.uk/vehicles.html",
+      "counted": "Renault 5, Renault 4, Clio, Captur, Megane, Symbioz, Scenic, Austral, Rafale, Twingo, R5 Turbo 3E, Trafic Passenger",
+      "market": "GB"
+    },
+    "cars|Lincoln": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.lincoln.com/suvs/",
+      "counted": "Navigator, Aviator, Nautilus, Corsair",
+      "market": "US"
+    },
+    "cars|Suzuki": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://cars.suzuki.co.uk/new-cars/",
+      "counted": "e Vitara, Swift, S-Cross, Vitara, Across, Ignis, Swace, Jimny",
+      "market": "GB"
+    },
+    "cars|Aston Martin": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.astonmartin.com/en/models",
+      "counted": "DBX, Valen, DB12, Vantage, Vanquish, Valhalla, Valkyrie, Valour, Valiant (AMR26 Formula One car excluded as not a road model; GT/S/707/Volante/Roadster/anniversary-edition variants collapsed into their base nameplate)",
+      "market": "GB"
+    },
+    "cars|Cupra": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.cupraofficial.co.uk/new-cars",
+      "counted": "Raval, Born, Tavascan, Formentor, Terramar, Leon, Ateca (Leon Estate collapsed into Leon as a body variant)",
+      "market": "GB"
+    },
+    "cars|Dacia": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.dacia.co.uk/range.html",
+      "counted": "Spring, Sandero, Jogger, Duster, Bigster, Striker (Sandero Stepway and Duster Cargo collapsed as body/trim variants)",
+      "market": "GB"
+    },
+    "cars|Infiniti": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.infinitiusa.com/",
+      "counted": "QX65, QX60, QX80",
+      "market": "US"
+    },
+    "cars|Jaguar": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.jaguar.com/jaguar-range/index.html",
+      "counted": "I-PACE, F-PACE, E-PACE, XE, XF, F-TYPE",
+      "market": "GB"
+    },
+    "cars|Lotus": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.lotuscars.com/en-GB/models",
+      "counted": "Emeya, Eletre, Emira, Evija (Eletre X and Emira 420 Sport collapsed as trim variants)",
+      "market": "GB"
+    },
+    "cars|Changan": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.changaneurope.com/uk/",
+      "counted": "Deepal S05, Deepal S07 (S05 Ultra PHEV collapsed as a trim variant)",
+      "market": "GB"
+    },
+    "cars|Lucid": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.lucidmotors.com/air",
+      "counted": "Air, Gravity (Sapphire collapsed as a performance trim of Air)",
+      "market": "US"
+    },
+    "cars|Rivian": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://rivian.com/r1t",
+      "counted": "R1T, R1S",
+      "market": "US"
+    },
+    "cars|SEAT": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.seat.co.uk/",
+      "counted": "Ibiza, Arona, Leon, Ateca, Tarraco (Leon Estate collapsed as a body variant)",
+      "market": "GB"
+    },
+    "cars|Alpine": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.alpine-cars.co.uk/",
+      "counted": "A390, A290, A110 (GTS and R 70 collapsed as trim variants)",
+      "market": "GB"
+    },
+    "cars|Geely": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.geely.com/models",
+      "counted": "EX5, EX2, Coolray (EX5 EM-i collapsed as a powertrain variant)",
+      "market": "GB"
+    },
+    "cars|GWM Ora": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://gwmcars.co.uk/models/",
+      "counted": "Haval Jolion Pro, POER300, ORA 03",
+      "market": "GB"
+    },
+    "cars|Jaecoo": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.jaecoo.co.uk/",
+      "counted": "Jaecoo 5, Jaecoo 7, Jaecoo 8",
+      "market": "GB"
+    },
+    "cars|Omoda": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://omodaauto.co.uk/models/",
+      "counted": "Omoda 5, Omoda E5, Omoda 7, Omoda 9 (SHS-H/SHS-P hybrid variants collapsed into base model)",
+      "market": "GB"
+    },
+    "cars|VinFast": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://vinfastauto.us/",
+      "counted": "VF 8, VF 9 (VF DrgnFly is an e-bike, not a car, excluded)",
+      "market": "US"
+    },
+    "cars|Xpeng": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://xpengcars.co.uk/models/",
+      "counted": "G6, X9 (L03 and G9L listed as Coming Soon, not yet on sale, excluded)",
+      "market": "GB"
+    },
+    "cars|Leapmotor": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.stellantisandyou.co.uk/leapmotor",
+      "counted": "T03, B10, C10, B05, B03X",
+      "market": "GB"
+    },
+    "cars|BAIC": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.baicmx.com/",
+      "counted": "BJ30, X55 II, U5 Plus, ArcFox T1",
+      "market": "MX"
+    },
+    "cars|GAC": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.gacgroup.com/es-mx/modelos-gac",
+      "counted": "GS7, Aion UT, Emzoom, Emkoo, GS4 Max, GS8, GN8, Aion Y, Hyptec HT (HEV/PHEV powertrain variants collapsed into base model)",
+      "market": "MX"
+    }
+  },
+  "notFound": {
+    "cars|Citroën": "citroen.co.uk returned HTTP 403 Forbidden on every page attempted (homepage, citroen-range.html, models.html). Could not read the brand's own lineup page.",
+    "cars|Ram": "ramtrucks.com returned HTTP 403 Forbidden on every page attempted (homepage, all-vehicles.html, trucks.html). Could not read the brand's own lineup page.",
+    "cars|Bentley": "bentleymotors.com/en/models.html returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|MG": "mg.co.uk pages (range/brochure) returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Alfa Romeo": "alfaromeousa.com/models returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Buick": "buick.com/suvs and /all-vehicles returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Chrysler": "chrysler.com and stellantis.com pages returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Ferrari": "ferrari.com/en-EN/auto/range and /car-range returned empty/JS-only content on repeated fetch attempts; could not read the brand's own page directly.",
+    "cars|Fiat": "fiat.co.uk (homepage and /range) returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Peugeot": "peugeot.co.uk/range/ and /help-me-choose/peugeot-range.html returned HTTP 403 Forbidden or timed out; could not read the brand's own page directly.",
+    "cars|Rolls-Royce": "rolls-roycemotorcars.com/en_US/home.html and /showroom.html returned HTTP 403 Forbidden or timed out; could not read the brand's own page directly.",
+    "cars|Dodge": "dodge.com (all-vehicles.html, vehicle-selector) returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|DS": "dsautomobiles.co.uk/ds-range.html returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Lamborghini": "lamborghini.com/en-en/models and /models/range returned no usable content or 404; could not read the brand's own page directly.",
+    "cars|Maserati": "maserati.com (models and car-range pages) returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "cars|Abarth": "abarthcars.co.uk returned HTTP 403 Forbidden / fetch failure on every page attempted; could not read the brand's own page directly.",
+    "cars|JAC": "jac.mx homepage navigation was incomplete (several category headers with no model names shown) and jac.mx/modelos returned HTTP 404; jacen.jac.com.cn/models_list/ is JAC's China-export portal, not a page for a SLATE market (US/GB/IE/CA/MX), so no reliable market-specific count could be read.",
+    "cars|Opel": "Opel is not sold in any SLATE market (GB/IE retained Vauxhall branding instead; opel.de is a non-SLATE market); opel.de/en/vehicles.html also returned HTTP 403 Forbidden.",
+    "cars|Vauxhall": "vauxhall.co.uk (homepage and /all-vehicles.html) returned HTTP 403 Forbidden on every attempt; could not read the brand's own page directly.",
+    "cars|Smart": "smart.com UK/GB/DE model pages all redirected to global.smart.com, which returned only a country-selector page with no model names visible; could not read a usable lineup page directly.",
+    "motorcycles|Moto Guzzi": "motoguzzi.com/us_EN/models.html returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "motorcycles|Piaggio": "piaggio.com/en_US/models returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "motorcycles|SYM": "sym-world.com/products returned HTTP 404; could not find the brand's own current lineup page in this session.",
+    "motorcycles|TVS": "tvsmotor.com/motorcycles returned HTTP 404; could not find the brand's own current lineup page in this session.",
+    "motorcycles|Zero": "zeromotorcycles.com/models returned HTTP 404; could not read the brand's own lineup page directly in this session (only indirect search-summary information was available, which the task rules exclude).",
+    "motorcycles|Norton": "No official Norton Motorcycles current-model page could be located and fetched in this session; only secondary press coverage of a 2026 US relaunch was found.",
+    "motorcycles|Bajaj": "bajajauto.com's motorcycle pages found in this session were region-specific portals (Argentina, Bangladesh) rather than a page for a SLATE market (US/GB/IE/CA/MX); could not confirm Bajaj sells in a SLATE market or read a market-specific lineup page.",
+    "motorcycles|Indian": "indianmotorcycle.com/en-us/ and /en-us/motorcycles/ returned HTTP 403 Forbidden; could not read the brand's own page directly.",
+    "rvs|Ford": "ford.com/trucks/transit/ shows the Transit as a commercial chassis for other manufacturers' camper conversions; Ford does not appear to sell a motorhome under its own brand on this page, so no Ford-branded model count could be read.",
+    "rvs|Forest River": "forestriverinc.com/rvs/motorhomes and /rvs returned HTTP 403 Forbidden on every attempt; could not read the brand's own page directly.",
+    "rvs|Coachmen": "coachmenrv.com (homepage and /floorplans/class-c/) returned HTTP 403 Forbidden on every attempt; could not read the brand's own page directly."
+  }
+}

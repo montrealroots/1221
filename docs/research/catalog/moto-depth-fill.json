@@ -1,0 +1,118 @@
+{
+  "read": "2026-10-06",
+  "method": "Closing the smallest depth gaps of docs/CATALOG-DEPTH.md's motorcycles category: Can-Am and LiveWire, both in the US, against their whole range as counted in docs/research/catalog-ranges.json. Prices and engine sizes read live on 2026-10-06 from the makers' own pages (can-am.brp.com, livewire.com), each sourceType primary. No economy is published by either maker for these models, so it's left null, which the first catalog's mean per100 for the kind covers.",
+  "models": [
+    {
+      "market": "US",
+      "make": "Can-Am",
+      "model": "Ryker",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 599,
+      "basePrice": {
+        "amount": 9699,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "base, Rotax 600 ACE",
+        "url": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles/ryker.html",
+        "sourceType": "primary"
+      },
+      "delivery": null,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "Can-Am",
+      "model": "Spyder F3",
+      "kind": "motorcycle",
+      "fuel": "petrol",
+      "cc": 1330,
+      "basePrice": {
+        "amount": 22299,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "F3-S, Rotax 1330 ACE",
+        "url": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles/cruiser/spyder-f3.html",
+        "sourceType": "primary"
+      },
+      "delivery": null,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": null,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "LiveWire",
+      "model": "LiveWire ONE",
+      "kind": "motorcycle",
+      "fuel": "ev",
+      "cc": null,
+      "basePrice": {
+        "amount": 13999,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "",
+        "url": "https://www.livewire.com/livewire-one-electric-motorcycle",
+        "sourceType": "primary"
+      },
+      "delivery": null,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": 15.4,
+      "kerbKg": null
+    },
+    {
+      "market": "US",
+      "make": "LiveWire",
+      "model": "S2 Mulholland",
+      "kind": "motorcycle",
+      "fuel": "ev",
+      "cc": null,
+      "basePrice": {
+        "amount": 11999,
+        "currency": "USD",
+        "includesTax": false,
+        "trim": "",
+        "url": "https://www.livewire.com/s2-mulholland-electric-motorcycle",
+        "sourceType": "primary"
+      },
+      "delivery": null,
+      "economy": null,
+      "tankL": null,
+      "batteryKwh": 10.5,
+      "kerbKg": null
+    }
+  ],
+  "specs": [
+    {
+      "market": "US",
+      "make": "LiveWire",
+      "model": "LiveWire ONE",
+      "batteryKwh": 15.4,
+      "rangeKm": 234.9,
+      "rangeCycle": "city",
+      "kwhPer100km": null,
+      "continuousKw": 75,
+      "peakKw": 100,
+      "licence": null,
+      "url": "https://www.livewire.com/livewire-one-electric-motorcycle"
+    },
+    {
+      "market": "US",
+      "make": "LiveWire",
+      "model": "S2 Mulholland",
+      "batteryKwh": 10.5,
+      "rangeKm": 146.4,
+      "rangeCycle": "combined",
+      "kwhPer100km": null,
+      "continuousKw": 30,
+      "peakKw": null,
+      "licence": null,
+      "url": "https://www.livewire.com/s2-mulholland-electric-motorcycle"
+    }
+  ]
+}

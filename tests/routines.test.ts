@@ -52,4 +52,27 @@ describe('a routine', () => {
     expect(run.stopped).toMatchObject({ step: 1, error: 'You aren’t hungry.' });
     expect(sim.player.wellbeing.hygiene).toBeGreaterThan(95);
   });
+
+  // From 2026-10-06: a cook step carries its servings, checked when saved.
+  it('cooks a recipe for the servings its step carries, checked against the recipe’s range', () => {
+    const recipeId = 'chicken-and-tomato-jacket-potato';
+    const cook = (servings?: number) => ({ kind: 'food.cook', payload: servings === undefined ? { recipeId } : { recipeId, servings } });
+    expect(routineRefusal('Supper', [cook(0)])).toMatch(/cooks from 1 to 12 servings/);
+    expect(routineRefusal('Supper', [cook(13)])).toMatch(/cooks from 1 to 12 servings/);
+    expect(routineRefusal('Supper', [cook(2)])).toBeUndefined();
+    expect(routineRefusal('Supper', [{ kind: 'food.cook', payload: { recipeId: 'no-such' } }])).toBe('There’s no such recipe.');
+    const sim = life('routine-servings');
+    expect(sim.execute({ kind: 'routine.save', payload: { name: 'Supper', steps: [cook(13)] } }).ok).toBe(false);
+    const buy = (productId: string, quantity = 1) => sim.must({ kind: 'food.buy_groceries', payload: { productId, quantity } });
+    buy('thefreshgrocer-bowl-basket-russet-potatoes-5-lb-bag'); buy('thefreshgrocer-perdue-99-fat-free-boneless-skinless-chicken-breasts', 2);
+    buy('thefreshgrocer-bowl-basket-grape-tomatoes-pint', 4); buy('thefreshgrocer-chobani-nonfat-plain-greek-yogurt-32-oz'); buy('thefreshgrocer-bowl-basket-yellow-onions-3-lb-bag');
+    sim.player.wellbeing.nourishment = 40;
+    sim.must({ kind: 'routine.save', payload: { name: 'Supper', steps: [cook(2)] } });
+    const r = routinesOf(sim.player)[0]!;
+    expect(stepLabel(sim.player, r.steps[0]!)).toMatch(/, 2 Servings$/);
+    const results: unknown[] = [];
+    expect(runRoutine(sim, r.id, (kind, payload) => { const x = sim.execute({ kind, payload }); results.push(x.value); return x; })).toEqual({ done: 1 });
+    // Two of the recipe's four: one eaten, one left, where a step without servings leaves three.
+    expect(results[0]).toEqual({ left: 1 });
+  });
 });

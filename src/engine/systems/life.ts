@@ -19,7 +19,8 @@ import { boatOf, charterAt, charterCost, charterRefusal, outingCost, outingRefus
 import { bikeHere, rideOut, rideRefusal, trailOut, trailRefusal } from './outings';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
-import { DROP_INS, DROP_IN_MINUTES, type DropIn } from '../content/dropins';
+import { DROP_INS, DROP_IN_MINUTES, DROP_IN_SKILL, type DropIn } from '../content/dropins';
+import { focusOf, grow } from './school';
 import { CITIES } from '../content/geography';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
@@ -27,7 +28,8 @@ import { salesTaxRate } from '../content/tax';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { dateKey, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { beddingNight } from './bedding';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
@@ -37,6 +39,10 @@ import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { SAUNA } from '../content/specialrooms';
+import { gymHere } from './gyms';
+
+/** A sauna of their own at the home they're in. */
+const homeSauna = (person: Person): boolean => atHome(person) && Boolean(livingIn(person)?.facts.features.includes('sauna'));
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
 import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
@@ -384,6 +390,8 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(wakeAt);
 
       applySleep(person, hours, quality, s.now, before);
+      // A night on the bedding, at home (`systems/bedding.ts`, from 2026-10-06).
+      beddingNight(person, dateKey(s.now, s.zone));
       person.wokeWithDebt = person.wellbeing.sleepDebt;
       const recovered = person.wellbeing.energy - before.energy;
 
@@ -452,6 +460,10 @@ export function registerLife(sim: Simulation): void {
     exerts(person, c.met, DROP_IN_MINUTES / 60);
     // Under three METs it's an hour unwinding, not a workout, as a lesson is (`systems/clubs.ts`).
     applyLookingAfter(person, c.met >= 3 ? 'exercise' : 'unwind', s.now);
+    // From 2026-10-06 a dance class trains an actor's dance as a session of their craft does, as an improv class
+    // trains their improvisation; casting reads it where a musical or a breakdown asks for a dance (`levelFor`).
+    const skill = DROP_IN_SKILL[c.kind];
+    if (skill && person.craft) grow(person.craft, skill, focusOf(person));
     return { doneAt: s.now, paid };
   });
 
@@ -560,7 +572,8 @@ export function registerLife(sim: Simulation): void {
       if (court) exerts(person, COURT_MET[court.court], 1);
       if (action === 'dance') exerts(person, DANCE_MET, 1);
       // The heater's hour to heat and the session on the month's bill, where it's billed by the kilowatt-hour (`systems/electricity.ts`).
-      if (action === 'sauna') { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
+      // A gym's sauna is the gym's to heat (from 2026-10-06).
+      if (action === 'sauna' && homeSauna(person)) { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
       // A ride's effort and a cyclist's risk on the road; the trail's effort (`systems/outings.ts`).
       if (action === 'ride' && bike) rideOut(s, person, bike);
       if (action === 'trail') trailOut(person);
@@ -613,7 +626,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   trail: { label: 'Ride The ATV', minutes: 120, does: 'Two hours on land of your own in the fine weather: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   // From 2026-10-04: a sauna of your own, a session's 14 minutes after the hour its heater takes (`content/specialrooms.ts`).
-  sauna: { label: 'Take A Sauna', minutes: SAUNA.sessionMinutes, does: 'A session in your own sauna: unwinding for its minutes, and the heater’s hour and more on the electricity bill' },
+  // From 2026-10-06 at a member's gym with one too, its heater the gym's.
+  sauna: { label: 'Take A Sauna', minutes: SAUNA.sessionMinutes, does: 'A session in your own sauna, or your gym’s: unwinding for its minutes, and at home the heater’s hour and more on the electricity bill' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
   washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
@@ -736,7 +750,8 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter, laundry: La
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   if (action === 'dance' && !(atHome(person) && livingIn(person)?.facts.features.includes('danceStudio'))) return 'You have no dance studio at home.';
-  if (action === 'sauna' && !(atHome(person) && livingIn(person)?.facts.features.includes('sauna'))) return 'You have no sauna at home.';
+  // Or the sauna at the member's gym, open where they are (`Gym.sauna`, from 2026-10-06).
+  if (action === 'sauna' && !homeSauna(person) && !gymHere(sim, person)?.sauna) return 'You have no sauna at home.';
   if (action === 'ride') { const no = rideRefusal(sim, person); if (no) return no; }
   if (action === 'trail') { const no = trailRefusal(sim, person); if (no) return no; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
@@ -1310,6 +1325,7 @@ function creditNightAlone(sim: Simulation, person: Person, bedtime: number): voi
   // A night they did not plan. Shorter, poorer, and it does not clear debt
   // the way a deliberate one does.
   applySleep(person, unattendedNight(person).hours, sleepQuality(sim, person, bedtime) * 0.95, bedtime);
+  beddingNight(person, dateKey(sim.now, sim.zone));
   person.wokeWithDebt = w.sleepDebt;
   person.lastSleptAt = bedtime;
   // A night from midnight is the one the day's meals come after, when it is

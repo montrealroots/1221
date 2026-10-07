@@ -72,6 +72,8 @@ export interface PathStep {
   withCarLicense?: string;
   withoutCarLicense?: string;
   /** Paid on passing, for what it grants. */
+  /** Its fee covers the first license too, so a district’s part on that license is paid with it (`districtPart`). */
+  coversFirst?: true;
   issueFee?: number;
   /** Days after passing before the license arrives. */
   issueDays?: number;
@@ -102,9 +104,9 @@ const MIDPOINT = (low: number, high: number) => Math.round(((low + high) / 2) * 
 export const LICENSE_PATHS: Readonly<Record<string, LicensePath>> = {
   'us-ny': {
     currency: 'USD',
-    note: 'The fee is New York’s for 21 and over outside the Metropolitan Commuter Transportation District; inside it, New York City among it, it’s $9 to $13.25 more, which SLATE doesn’t add. The six-month probation isn’t kept.',
+    note: 'The fee is New York’s for 21 and over outside the Metropolitan Commuter Transportation District; inside it, New York City among it, the MCTD adds $1 for each six months the first license runs, $10 on its five years, within the DMV’s $9 to $13.25 more (`district` in `content/licenses.ts`, from 2026-10-06). The six-month probation isn’t kept.',
     steps: [
-      { id: 'permit', kind: 'test', name: 'Permit Test', fee: 64.25, minutes: 90, pass: 'us-ny-knowledge', retakeDays: 1, retakeFee: 0,
+      { id: 'permit', kind: 'test', name: 'Permit Test', fee: 64.25, minutes: 90, pass: 'us-ny-knowledge', retakeDays: 1, retakeFee: 0, coversFirst: true,
         grants: { stage: 'learner', name: 'Learner Permit', years: 5, yearsEstimated: true, alone: false },
         note: 'The written test on the Driver’s Manual and an eye test at the DMV; the fee covers the permit and the first license.' },
       { id: 'course', kind: 'course', name: 'Pre-Licensing Course', fee: MIDPOINT(40, 62), feeBasis: 'The middle of $40 to $62, what DMV-approved schools advertise; the DMV sets no price.', minutes: 300, sessions: 1,

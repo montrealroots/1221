@@ -38,11 +38,15 @@ export const PINT: Readonly<Record<DrinkingMarket, { ml: number; abv: number }>>
   US: { ml: 473, abv: 0.05 }, CA: { ml: 473, abv: 0.05 }, MX: { ml: 473, abv: 0.05 }, GB: { ml: 568, abv: 0.04 }, IE: { ml: 568, abv: 0.04 },
 };
 
-/** Numbeo's domestic draft pint, by town, in its money. */
+/**
+ * A domestic draft pint at a bar, by town, in its money: Numbeo's, but London's the £6.10 its pubs charge on average
+ * (2025, as reported; `research-outings.json`), which on 2026-10-06 replaced Numbeo's £7. Read for a pint alone and
+ * one together alike.
+ */
 export const BAR_PINT: Readonly<Record<string, { price: number; currency: string }>> = {
   'us-ny-newyork': { price: 8, currency: 'USD' },
   'us-ca-losangeles': { price: 8, currency: 'USD' },
-  'uk-eng-london': { price: 7, currency: 'GBP' },
+  'uk-eng-london': { price: 6.1, currency: 'GBP' },
   'ie-lei-dublin': { price: 7, currency: 'EUR' },
   'ca-on-toronto': { price: 9, currency: 'CAD' },
   'ca-bc-vancouver': { price: 8, currency: 'CAD' },

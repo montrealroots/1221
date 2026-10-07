@@ -1,0 +1,100 @@
+{
+  "topic": "Vehicle title/ownership transfer fee and deadline after a private sale: NY DMV, CT DMV, Mexico City (SEMOVI/Finanzas CDMX)",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "New York DMV title transfer fee (MV-82)",
+      "value": 50,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://statefeecalculator.com/title-transfer/new-york/",
+      "quote": "The title itself costs $50 in New York, and you pay it at the NY DMV.",
+      "confidence": "medium"
+    },
+    {
+      "what": "New York DMV deadline to apply for new title/registration after private sale",
+      "value": "30 days (practical target); up to 180 days before late fees formally apply",
+      "unit": "days",
+      "market": "us",
+      "source": "https://www.carpaperwork.com/new-york/title-transfer",
+      "quote": "The buyer has 30 days to apply for a new title, normally using MV-82... the buyer has 180 days to complete the transfer before late fees apply, but every day before then is a day driving without registration in their own name.",
+      "confidence": "medium"
+    },
+    {
+      "what": "New York additional sales tax due at title transfer (on top of the $50 title fee)",
+      "value": "7.5-8.875",
+      "unit": "%",
+      "market": "us",
+      "source": "https://statefeecalculator.com/title-transfer/new-york/",
+      "quote": "Beyond the $50 title fee, New York charges 4% state sales tax plus local county/city tax (total typically 7.5-8.875% depending on location).",
+      "confidence": "low"
+    },
+    {
+      "what": "Connecticut DMV title transfer fee",
+      "value": 25,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.dmvroads.com/states/connecticut/title-transfer/",
+      "quote": "The fee to transfer a vehicle title in CT is $25.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Connecticut deadline to complete title transfer after private sale",
+      "value": 30,
+      "unit": "days",
+      "market": "us",
+      "source": "https://www.dmvroads.com/states/connecticut/title-transfer/",
+      "quote": "most Connecticut title transfers must be completed within 30 days of the sale date to avoid late fees",
+      "confidence": "medium"
+    },
+    {
+      "what": "Connecticut late-filing penalty for missing the title-transfer deadline",
+      "value": 50,
+      "unit": "USD",
+      "market": "us",
+      "source": "https://www.carregistration.com/blog/connecticut-dmv-title-transfer-guide/",
+      "quote": "If you don't meet that deadline, you will have to pay a fee of $50.",
+      "confidence": "low"
+    },
+    {
+      "what": "Mexico City (CDMX) cambio de propietario fee, 2026",
+      "value": 433,
+      "unit": "MXN",
+      "market": "mx",
+      "source": "https://autoinventario.com/cambio-de-propietario-de-auto-usado-en-cdmx",
+      "quote": "El costo publicado para 2026 es de 433 pesos.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Mexico City cambio de propietario deadline after sale",
+      "value": 15,
+      "unit": "business days",
+      "market": "mx",
+      "source": "https://autoinventario.com/cambio-de-propietario-de-auto-usado-en-cdmx",
+      "quote": "El comprador tiene 15 días hábiles a partir de la fecha de la compraventa. The count begins on the sale date itself, not when you start the process.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Mexico City consequence of missing the cambio de propietario deadline (no explicit fine found; liability risk instead)",
+      "value": "no specific fine found; vehicle remains registered to seller, who stays liable for fines/violations tied to the plate",
+      "unit": "text",
+      "market": "mx",
+      "source": "https://autoinventario.com/cambio-de-propietario-de-auto-usado-en-cdmx",
+      "quote": "The document does not specify any fine or penalty for missing the 15-business-day deadline. It only emphasizes that delaying creates problems: the vehicle remains registered to the seller, who remains liable for any fines or violations associated with the license plate.",
+      "confidence": "low"
+    },
+    {
+      "what": "Variant CDMX fee figures reported by other 2026 sources (illustrates some spread)",
+      "value": "358 or 417",
+      "unit": "MXN",
+      "market": "mx",
+      "source": "https://www.elimparcial.com/dinero/2026/07/04/compraste-un-carro-seminuevo-estos-documentos-acreditan-que-eres-el-nuevo-propietario-y-el-cambio-de-dueno-en-cdmx-cuesta-433-pesos-durante-2026/",
+      "quote": "some sources show slight variations, with costs of $358 or $417 pesos mentioned for 2026",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "An explicit, confirmed late-penalty peso amount for missing CDMX's 15-business-day cambio de propietario deadline (sources describe ongoing liability risk but not a specific fine figure)", "looked": ["SEMOVI cambio de propietario costo vehículo CDMX multa por retraso", "https://autoinventario.com/cambio-de-propietario-de-auto-usado-en-cdmx"] },
+    { "what": "Direct confirmation from the official nyc.gov/dmv.ny.gov or ct.gov/dmv page text (sources used were third-party guide sites, not the state DMV sites themselves)", "looked": ["New York DMV MV-82 title transfer fee deadline private sale", "Connecticut DMV title transfer fee deadline private sale"] }
+  ]
+}

@@ -85,6 +85,15 @@ export const LEAVE: Readonly<Record<string, { birth: readonly LeavePay[]; other:
   },
 };
 
+/**
+ * Food's share of raising a child, by country (from 2026-10-06, `research-child-food-share.json`): the USDA's 18% for
+ * a middle-income married couple (Expenditures on Children by Families, 2015, its last), and Statistics Canada's 17.0%
+ * for a two-parent medium-income family (2014 to 2017), each the share of the same estimate `raisingCost` uses. A
+ * child's meal served at home comes out of it. Britain's CPAG gives food only in pounds, not a share of its £250,000,
+ * and Ireland and Mexico publish none, so there a child isn't served from what's cooked.
+ */
+export const CHILD_FOOD_SHARE: Readonly<Record<string, number>> = { us: 0.18, ca: 0.17 };
+
 /** A year of raising a child, by country and age, in its money. */
 export function raisingCost(country: string, age: number): { amount: number; currency: string } | undefined {
   if (age >= 18) return undefined;

@@ -1,0 +1,250 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "luggage|BÉIS": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://beistravel.com/collections/luggage",
+      "counted": "The Carry-On Roller, The Small Carry-On Roller, The Medium Check-In Roller, The Large Check-In Roller, The Hybrid Carry-On Roller, The Hybrid Check-In Roller, The Pro Rolling Backpack, The Pro-Rolling Duffle Check-In",
+      "market": "US"
+    },
+    "luggage|Arlo Skye": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://arloskye.com/collections/all",
+      "counted": "Expandable Carry-On Max, Expandable Carry-On Max - Front Pocket, Expandable Check-In - Medium, Top-Load Expandable Trunk - Large, Original Carry-On Max, Original Carry-On Max - Front Pocket, Original Check-In - Large, Original Check-In - Medium, Original Frame Carry-On Max (the sold-out Aluminum Edition excluded as not currently sold)",
+      "market": "US"
+    },
+    "luggage|Eagle Creek": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://eaglecreek.com/collections/luggage",
+      "counted": "Cargo Hauler XT, Expanse, Tarmac, Gear Warrior XE, ORV",
+      "market": "US"
+    },
+    "luggage|NOMATIC": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.nomatic.com/collections/travel-bags",
+      "counted": "Travel Pack, Travel Duffel Bag 40L, Travel Duffel Bag 30L, McKinnon Camera Pack 35L, Navigator Travel Backpack 32L, Messenger Bag, Navigator Pack 15L, Navigator RS Pack 15L, Navigator Collapsible Duffel 42L, Laptop Bag, Navigator Collapsible Pack 16L, McKinnon Camera Pack 35L V2",
+      "market": "US"
+    },
+    "luggage|Roam Luggage": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.roamluggage.com/collections/all",
+      "counted": "Americana Carry-On, Americana Carry-On Expandable, Americana Check-In, Americana Check-In Expandable, Americana Large Carry-On, Americana Large Carry-On Expandable, Americana Large Check-In, Americana Large Check-In Expandable, Carry-On, Carry-On Expandable, Check-In, Large Check-In",
+      "market": "US"
+    },
+    "luggage|July": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://july.com/products",
+      "counted": "American Airlines Checked Expandable CaseSafe, American Airlines Carry On CaseSafe, Carry On Trunk, Checked Plus Expandable CaseSafe, Capsule Carry On Pro, Checked 80/20 CaseSafe, Carry On Max Expandable CaseSafe, Checked Trunk, Checked Plus CaseSafe, Checked CaseSafe, Checked Trunk Set, Carry On Pro, Carry On Light Expandable, Carry On Essential",
+      "market": "US"
+    },
+    "luggage|Monos": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://monos.com/collections/all",
+      "counted": "Carry-On, Carry-On Pro, Expandable Carry-On, Expandable Carry-On Pro, Carry-On Plus, Carry-On Pro Plus, Check-In Medium, Check-In Large, Expandable Check-In Medium",
+      "market": "CA"
+    },
+    "bicycles|Cannondale": {
+      "range": 34,
+      "meetsHundred": false,
+      "url": "https://www.cannondale.com/en-us/bikes",
+      "counted": "CAAD14, SuperSix EVO, SuperSix EVO CX, SuperSix EVO SE, SuperSlice, SuperX, Synapse, Topstone Alloy, Topstone Carbon, Bad Habit, Habit, Habit HT, Jekyll, Scalpel, Scalpel HT, Trail, Adventure, Bad Boy, Quick, Quick CX, Treadwell, Habit Neo, Moterra, Moterra LT, Moterra SL, Synapse Neo, Synapse Neo Allroad, Adventure Neo Allroad, FlyingV, Mavaro, Tesoro Carbon, Tesoro X, Treadwell Neo, Cargowagen Neo",
+      "market": "US"
+    },
+    "bicycles|Kona": {
+      "range": 23,
+      "meetsHundred": false,
+      "url": "https://konaworld.com/collections/bikes",
+      "counted": "Process 134, Hei Hei, Cinder Cone, Fire Mountain, Honzo, Honzo 20, Honzo 24, Honzo ESD, Lava Dome, Unity, LBF, Libre, Ouroboros, Ouroboros Supreme, Coco, Dew, Dr Dew, Hula, Humu, Makena, Dew-E, Ecoco, El Kahuna (CR/DL component-spec suffixes collapsed into each base nameplate)",
+      "market": "US"
+    },
+    "bicycles|Marin": {
+      "range": 36,
+      "meetsHundred": false,
+      "url": "https://www.marinbikes.com/bikes",
+      "counted": "Alpine Trail, Alpine Trail Electric, Bear Valley, Bobcat Trail, Bolinas Ridge, Bayview Trail, Coast Trail, DSX, DSX Electric, Donky Jr., Fairfax, Fairfax Electric, Four Corners, Gestalt, Gestalt X, Headlands, Kentfield, Larkspur, Larkspur Electric, Lombard Electric, Madrone Trail, Muirwoods, Nicasio, Pine Mountain, Presidio, Quake, Rift Zone, Rift Zone Electric, Rift Zone Jr, San Quentin, Sausalito, Stinson, Stinson Electric, Tam, Team Marin, Alcatraz",
+      "market": "US"
+    },
+    "bicycles|Brompton": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.brompton.com/bikes",
+      "counted": "A Line, C Line, P Line, G Line, T Line",
+      "market": "GB"
+    },
+    "bicycles|Brompton Electric": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.brompton.com/bikes",
+      "counted": "Electric C Line, Electric P Line, Electric T Line, Electric G Line",
+      "market": "GB"
+    },
+    "rvs|Knaus": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.knaus.com/en/motorhomes/models",
+      "counted": "VAN TI VANSATION, VAN TI VW VANSATION, VAN TI PLUS, L!VE TI PLATINUM SELECTION, L!VE WAVE PLATINUM SELECTION, SKY TI VW, L!VE I, BOXLIFE PLATINUM SELECTION, BOXTIME",
+      "market": "GB"
+    },
+    "rvs|Westfalia": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.westfalia-mobil.com/modelle/modelluebersicht.php and https://westfalia-mobil.com/de/neue-westfalia-kollektion/",
+      "counted": "Nansen, Columbus Liner, Columbus, James Cook, Sven Hedin, Meridian, Club Joker Urban, Jules Verne, Kelsey, Kipling (length/drivetrain/edition suffixes like 600L/640LS/540D/600E/600D/640E/50 Jahre Edition collapsed into each base nameplate)",
+      "market": "GB"
+    },
+    "rvs|Grech RV": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://grechrv.com/models/",
+      "counted": "STRADA-ion, VACANZA-ion, TURISMO-ion, TERRENO-ion, LUSSO-ion Lounge, LUSSO Tour (AWD/length variants collapsed into each base nameplate)",
+      "market": "US"
+    },
+    "rvs|Storyteller Overland": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.storytelleroverland.com/pages/adventurevehicles",
+      "counted": "Beast Mode, Dark Mode, Classic Mode, Crew Mode, GXV Hilt, GXV Epic (OG/XO/XL configurations collapsed into each base nameplate; 2027 Grand Bohemian and GXV Wild excluded as not yet available)",
+      "market": "US"
+    },
+    "motorcycles|Buell": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.buellmotorcycle.com/models",
+      "counted": "Super Cruiser, SuperTouring, Hammerhead 1190, 1190SX",
+      "market": "US"
+    },
+    "motorcycles|Genuine Scooter Co": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.genuinescooters.com/",
+      "counted": "Buddy 50, Buddy 125, Buddy 170i, Buddy Kick 125i, Hooligan 170i, Rattler, Roughhouse 50, Urbano, G400C (the Genuine-brand products on genuinescooters.com; NIU, Royal Alloy and Chicago Scooter Co. models the same site distributes are catalogued under their own brand names, not here)",
+      "market": "US"
+    },
+    "motorcycles|Genuine": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.genuinescooters.com/",
+      "counted": "Buddy 50, Buddy 125, Buddy 170i, Buddy Kick 125i, Hooligan 170i, Rattler, Roughhouse 50, Urbano, G400C (same Genuine-brand lineup as 'Genuine Scooter Co'; CATALOG-DEPTH.md carries this company as two separate brand entries)",
+      "market": "US"
+    },
+    "motorcycles|Janus": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.janusmotorcycles.com/",
+      "counted": "Halcyon 450, Halcyon 250, Gryffin 450 Scrambler, Gryffin 250 (Origin trim collapsed into each base nameplate)",
+      "market": "US"
+    },
+    "motorcycles|Dinamo": {
+      "range": 32,
+      "meetsHundred": false,
+      "url": "https://www.dinamotos.mx/catalogo-motos/",
+      "counted": "U2, U5, U5 175, Metro, Adventure Elite, Alien R, Custom, Rayo, Custom Black, Renegada, Rayo Elite, B-52, Bandid, DNM 2.5, DNM 3.0, Scorpion, Scorpion XT, Rocky, Xtreme RLX, Goliat, R4, Super Sport, Comando, R2 GT, SpeedFire, DNM-4, Skeleton, Heavy Cab B, Heavy Cab R, Heavy Cab 300, Heavy MAX, MOTO TX",
+      "market": "MX"
+    },
+    "motorcycles|Mash": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://mashmotors.co.uk/models/",
+      "counted": "X-Ride 50, Fifty 50, Seventy 125, Black Seven LC 125, Two Fifty 250, Five Hundred 400, Six Hundred 650, X-Ride 650, X-Ride 650 Trail",
+      "market": "GB"
+    },
+    "motorcycles|AJS": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.ajsmotorcycles.co.uk/motorcycles and https://www.ajsmotorcycles.co.uk/scooters",
+      "counted": "Ridgeway, Sedona, '71 Desert Scrambler, Cadwell, JFT-125, Bilston, JS125-X, Leten LT190, Firefox 50, Barletta 50, Modena 125, Barletta 125, Firefox 125, ADV-S 125, Digita 50",
+      "market": "GB"
+    },
+    "motorcycles|Lambretta": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://lambrettauk.co.uk/gallery",
+      "counted": "V50 Special, V125 Special, J125, V200 Special, X125, X300 GP, X300 SR, X300 GT, G350 Series II, G350",
+      "market": "GB"
+    },
+    "motorcycles|Zontes": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://zontes.co.uk/new-bikes/",
+      "counted": "ZT125-G1, ZT125-X, ZT125-U1 LCD, ZT125-C, ZT125-GK, ZT125-C2, ZT125-Z2, ZT368T-G, ZT703-RR, ZT703-T, ZT703-F",
+      "market": "GB"
+    },
+    "motorcycles|Keeway": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://keeway.co.uk/new-bikes",
+      "counted": "RKS 125cc, X-Light 125cc, RKF 125cc, Morbidelli T125X, ICON 125i, Fact X 125cc, Morbidelli SC125RE, XDV 125 Evo Pro, Fact X 50cc, K-Light 125cc, Superlight Ltd 125cc, Superlight SE 125cc, RKV125C, V-Cruise 125C, V-Cruise 302C, E-Zi Mini, Blueshark 45 Lite, Blueshark 80 Lite, Blueshark 80, Morbidelli F125",
+      "market": "GB"
+    },
+    "motorcycles|Hanway": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://hanwaymotor.co.uk/new-bikes",
+      "counted": "NK 125cc, SC 125cc",
+      "market": "GB"
+    },
+    "motorcycles|Sinnis": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://sinnismotorcycles.com/",
+      "counted": "Terrain, GPX, Outlaw, SM-R, SM-XE, Akuma, Hoodlum, Connect, Hero-X, Shuttle, Twist, Encanto",
+      "market": "GB"
+    },
+    "motorcycles|Royal Alloy": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://royalalloy.co.uk/scooters",
+      "counted": "GT 125 AC, TG 125 AC, TG 125 LC, TG 300 LC, GP 300 LC",
+      "market": "GB"
+    },
+    "cars|Chirey": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.chirey.mx/",
+      "counted": "Tiggo 2 Pro, Tiggo 4 Pro, Tiggo 7 Pro, Tiggo 8 Pro, Arrizo 8, Tiggo 7 PHEV CSH, Tiggo 8 PHEV CSH",
+      "market": "MX"
+    }
+  },
+  "notFound": {
+    "cars|McLaren": "cars.mclaren.com / mclaren.com all-models pages render client-side via JS; WebFetch only returned nav/newsletter markup with no model list, both at the gl_en and us_en redirected URLs",
+    "motorcycles|CFMoto": "cfmoto.com/en/motorcycle.html and cfmoto.com/motorcycle both 404; could not locate a readable official full-lineup page",
+    "motorcycles|Triumph": "triumphmotorcycles.com/motorcycles is a JS configurator hub; its per-category pages (adventure, classic, sport) return a mix of family names and trim-like suffixes (e.g. Tiger 900 GT vs GT Pro) that cannot be reliably separated into distinct models vs trims from the fetched markdown, and the roadster category URL 404'd",
+    "motorcycles|BMW Motorrad": "bmw-motorrad.ca/en/models/modeloverview.html timed out on fetch; no other readable official full-lineup page found in the time available",
+    "motorcycles|Aprilia": "aprilia.com/en_US/models/ returned 403 Forbidden; only third-party/press coverage of the 2026 lineup was found, which is not the brand's own published complete lineup",
+    "motorcycles|Lexmoto": "lexmoto.com/bikes/ 404'd after the redirect from lexmoto.co.uk; no readable official full-lineup page found",
+    "motorcycles|Ryvid": "ryvid.com's pages returned truncated/oversized fetch content with no usable model navigation; third-party sources (autoevolution, Cycle News) suggest 2 models (Anthem, Outset) but that is not the brand's own page",
+    "motorcycles|Cake": "cakeworld.com/en/models 404'd and cake0.com failed TLS (self-signed cert / wrong SSL version); no readable official lineup page found",
+    "motorcycles|Maeving": "maeving.com/collections/motorcycles 404'd; no other readable official full-lineup page found in the time available",
+    "motorcycles|Super Soco": "supersoco.com resolved to multiple broken/legacy URLs (ENOTFOUND on www subdomain, old footer-about-us.php page); no readable current official full-lineup page found",
+    "motorcycles|Italika": "italika.mx/Modelos only rendered specific model names for 3 of its ~11 category headings (Línea Z, Motoneta, Cafe Racer) in the fetched markdown; the rest (Trabajo, Adventure/Doble Propósito, Deportiva, Cuatrimoto, Chopper, Vort X, Crossover, Morbidelli) showed as empty category navigation only, so the page's own full list could not be read",
+    "motorcycles|Vento": "vento.com returned 403 Forbidden; no other readable official full-lineup page found",
+    "motorcycles|Carabela": "carabela.com.mx returned a blank 'Untitled Document' page with no model content",
+    "motorcycles|BSA": "bsamotorcycles.com/en-us/models returned an empty page and bsacompany.com does not resolve (ENOTFOUND); no readable official full-lineup page found",
+    "rvs|Midwest Automotive Designs": "midwestautomotivedesigns.com's homepage fetch surfaced only Mercedes Heritage and Mercedes Patriot under 'RV Vans', while other site text elsewhere references a Passage and Patriot Cruiser/Daycruiser too; could not get one page giving the brand's complete current camper lineup without contradiction",
+    "rvs|Carado": "carado.com's vehicle pages (unsere-fahrzeuge/integrierte, wohnmobile/van, wohnmobile/teilintegriert) list only a handful of chassis-filter names (V132, V337, V347) rather than a flat model list, and the FAQ overview page returned 403",
+    "rvs|Rimor": "rimor.it/it/it/gamma 404'd; only secondary sources (CamperOnLine, Vita in Camper) described the range names (Horus, Kilig, Sarus, Super Brig, Sailer), not the brand's own complete model-by-model lineup",
+    "rvs|Eura Mobil": "no official euramobil.com/eura-mobil.de page was reachable; only third-party dealer pages describing the series (Activa One, Contura, Profila T, Profila RS, Integra Line, Integra) were found",
+    "rvs|Malibu": "only secondary sources (nomady.camp, alpacacamping.de, carthago-center.de) for malibu-carthago.com's range were found in search; did not get a single official page enumerating the complete current lineup",
+    "bicycles|Pinarello": "pinarello.com (both /usa/bikes and /en_US/bikes) failed TLS certificate verification; no readable official lineup page found",
+    "bicycles|Cube": "cube.eu/bikes, cube.eu/de-en/bikes, cube.eu/bikes/mountainbike and cube.eu/bikes/gravel all 404'd; no readable official full-lineup page found",
+    "bicycles|Raleigh": "raleigh.co.uk/collections/bikes 404'd; no other readable official full-lineup page found in the time available",
+    "bicycles|Pashley": "pashley.co.uk/bikes/ 404'd; no other readable official full-lineup page found in the time available",
+    "bicycles|Tern": "tern.com.tw does not resolve (ENOTFOUND); no readable official full-lineup page found",
+    "luggage|Away": "awaytravel.com/collections/luggage listed Series 3, Classic and Flex collection models but the fetch itself noted other collections (Topside, Softside, Aluminum) referenced without their models detailed, so only part of the lineup was readable",
+    "luggage|CALPAK": "calpak.com failed TLS (TLSV1_ALERT_INTERNAL_ERROR) on repeated attempts; no readable official lineup page found",
+    "luggage|CabinZero": "cabinzero.com/collections/all returned only category/filter navigation (Classic, Military, ADV, Air collections; Backpacks, Shoulder Bags, etc.) with no individual product model names in the fetched markdown",
+    "luggage|Lo & Sons": "lo-sons.com/collections/all 404'd; no other readable official full-lineup page found in the time available",
+    "luggage|Floyd": "floyd.ca/collections/luggage failed TLS (TLSV1_ALERT_UNRECOGNIZED_NAME); no readable official lineup page found",
+    "luggage|Globe-Trotter": "globe-trotter.com/collections/all-luggage mixes core collections (Centenary, Safari, Metropolis, etc.) with brand collaborations (007 James Bond with 6+ sub-collections, Peanuts, Aston Martin, Etro, FPM Milano, etc.) and style/product-type categories (Carry-On, Check-In, Trunks...), so distinct current models cannot be reliably counted from this page",
+    "luggage|Osprey": "osprey.com/us/en/collection/day-hiking-packs/ returned 403 Forbidden; no readable official full-lineup page found",
+    "luggage|Paravel": "paravel.com/collections/luggage fetch returned only header/nav markup with no product listing",
+    "luggage|Horizn Studios": "horizn-studios.com/collections/all surfaced only series names (Pro Series, Air Series, Essential) via spotlight/filter sections, not an enumerated model list"
+  }
+}

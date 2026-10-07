@@ -14,7 +14,9 @@
  * twelfth, shared as the bills are, and brings the state's child benefit by
  * its rules; America's Child Tax Credit is on the return
  * (\`systems/taxreturn.ts\`). At eighteen a child is grown, and costs and
- * brings nothing more.
+ * brings nothing more. From 2026-10-06 the meals a child is served from what's
+ * cooked at home come out of that cost's food share, in America and Canada,
+ * where one is published (`CHILD_FOOD_SHARE`).
  *
  * A child may come by adoption or a surrogacy too (`systems/adoption.ts`,
  * from 2026-10-02). Childcare beside the cost of raising isn't kept (it
@@ -33,7 +35,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { NAMES } from '../content/people';
-import { CHILD_BENEFIT, LEAVE, PREGNANCY_DAYS, US_BIRTH, conceptionChance, raisingCost } from '../content/children';
+import { CHILD_BENEFIT, CHILD_FOOD_SHARE, LEAVE, PREGNANCY_DAYS, US_BIRTH, conceptionChance, raisingCost } from '../content/children';
 import { contactsOf, type Contact } from './people';
 import { billShare, earnedIn, incomeOf, livesWithPartner } from './marriage';
 import { owe, payFromBank, spend } from './household';
@@ -46,7 +48,7 @@ export const BIRTH_KIND = 'child.birth';
 const YEAR_MS = 365.2425 * MS_DAY;
 const MONTH_MS = YEAR_MS / 12;
 
-export interface Child { id: string; name: string; born: Instant; otherParentId?: string; /** Living with their other parent, after a separation (`systems/support.ts`, from 2026-10-02). */ livesWith?: 'them'; /** Their own passport (`systems/childpassports.ts`, from 2026-10-05). */ passport?: import('./childpassports').ChildPassport }
+export interface Child { id: string; name: string; born: Instant; otherParentId?: string; /** Living with their other parent, after a separation (`systems/support.ts`, from 2026-10-02). */ livesWith?: 'them'; /** Their own passport (`systems/childpassports.ts`, from 2026-10-05). */ passport?: import('./childpassports').ChildPassport; /** Meals served them from what was cooked since the family's last month (`food.cook`'s `serve`, from 2026-10-06). */ served?: number }
 
 /** A child lives with you unless they stayed with their other parent. */
 export const livesWithYou = (k: Child): boolean => k.livesWith !== 'them';
@@ -133,11 +135,24 @@ export function childBenefit(sim: Simulation, person: Person, at: Instant): Mone
   return 0;
 }
 
-/** A month of raising the children, your share, in the save's money. */
+/** A month's meals, three a day, as the day's groceries count them (`systems/household.ts`). */
+export const MONTH_MEALS = 3 * (365.2425 / 12);
+
+/**
+ * A month of raising the children, your share, in the save's money. From 2026-10-06 a child's meals served from what
+ * was cooked come out of its food share (`CHILD_FOOD_SHARE`), as that meal's share of the month's, so its food isn't
+ * paid twice; until then the whole published cost was paid however they ate.
+ */
 export function raisingMonth(sim: Simulation, person: Person, at: Instant): Money {
   const country = countryOf(person.home?.cityId ?? person.currentLocationId);
+  const food = CHILD_FOOD_SHARE[country] ?? 0;
   // The children who live with you; the others' raising is their other parent's, and support (`systems/support.ts`).
-  const total = childrenOf(person).filter(livesWithYou).reduce((s, k) => { const c = raisingCost(country, ageAt(k.born, at)); return s + (c ? inSave(sim, c.amount / 12, c.currency) : 0); }, 0);
+  const total = childrenOf(person).filter(livesWithYou).reduce((s, k) => {
+    const c = raisingCost(country, ageAt(k.born, at));
+    if (!c) return s;
+    const month = inSave(sim, c.amount / 12, c.currency);
+    return s + month - month * food * Math.min(1, (k.served ?? 0) / MONTH_MEALS);
+  }, 0);
   return Math.round(total * billShare(sim, person));
 }
 
@@ -198,6 +213,7 @@ export function registerChildren(sim: Simulation): void {
     if (!person) return;
     mayConceive(s, person, item.at);
     const cost = raisingMonth(s, person, item.at);
+    for (const k of childrenOf(person)) delete k.served;
     if (cost > 0 && !payFromBank(s, person, cost, 'Raising the children, your share', 'household')) owe(s, person, cost, 'Raising the children', 'household');
     const benefit = childBenefit(s, person, item.at);
     if (benefit > 0 && person.primaryAccountId) {

@@ -228,6 +228,29 @@ export function stationAt(cityId: string, index = 0): { name: string; kept?: Sta
 
 export const chargersIn = (cityId: string): Charger[] => CHARGERS.filter((c) => c.cityId === cityId);
 
+/**
+ * Idle fees, from 2026-10-06 (`research-ev-adapters-idle.json`, both read on
+ * third-party pages): a car left plugged in past a network's grace after its
+ * charge is done pays a minute's fee for each minute after. Electrify
+ * America's $0.40 a minute after ten; a Tesla Supercharger's $0.50 a minute
+ * after five, its rate when the station is at least half full. Tesla charges
+ * nothing below half full and $1.00 when it's full; how full a station is
+ * isn't published, so SLATE charges the half-full rate at every one of its
+ * American Superchargers, its reading. Until then a charge ended when it was
+ * done and nothing was charged for staying.
+ */
+export const IDLE_FEES: readonly { network: string; country: string; perMinute: number; currency: string; graceMinutes: number }[] = [
+  { network: 'Electrify America', country: 'us', perMinute: 0.4, currency: 'USD', graceMinutes: 10 },
+  { network: 'Tesla Supercharger', country: 'us', perMinute: 0.5, currency: 'USD', graceMinutes: 5 },
+];
+export const idleRuleOf = (c: Charger) => IDLE_FEES.find((r) => r.network === c.network && r.country === CITIES.get(c.cityId)?.countryId);
+/** A charger's idle fee for minutes left plugged in after the charge, in the save's money; nothing within the grace or where none is read. */
+export function idleFee(sim: Simulation, c: Charger, minutes: number): Money {
+  const r = idleRuleOf(c);
+  const over = r ? Math.max(0, Math.round(minutes) - r.graceMinutes) : 0;
+  return over > 0 ? inSave(sim, Math.round(over * r!.perMinute * 100), r!.currency) : 0;
+}
+
 /** Why a car can't charge at a charger: connectors not published, none that fit, or a network that keeps it to Teslas. */
 export function chargerRefusal(m: CarModel, c: Charger): string | undefined {
   if (!c.connectors.length) return 'Its connectors aren’t published.';
@@ -380,7 +403,7 @@ export function fillRefusal(person: Person, vehicleId: string, home = false): st
 
 export function registerFuelTank(sim: Simulation): void {
   // Filled at a station in its town, or a battery charged, publicly or at home: to full, or to the 80% for every day at home.
-  sim.onCommand<{ vehicleId: string; station?: number; home?: boolean; grade?: Grade; chargerId?: string; amount?: FillAmount }, { amount: number; paid: Money; minutes: number; level: number; rangeKm?: number }>('vehicle.refuel', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string; station?: number; home?: boolean; grade?: Grade; chargerId?: string; amount?: FillAmount; leaveMinutes?: number }, { amount: number; paid: Money; minutes: number; level: number; rangeKm?: number; idle: Money }>('vehicle.refuel', (p, { sim: s }) => {
     const person = s.player;
     const home = p?.home === true;
     const no = fillRefusal(person, String(p?.vehicleId), home);
@@ -394,14 +417,17 @@ export function registerFuelTank(sim: Simulation): void {
     if (typeof q === 'string') throw new CommandError(q);
     const charger = p.chargerId ? chargersIn(person.currentLocationId).find((c) => c.id === p.chargerId) : undefined;
     const where = home ? 'at home' : m.fuel === 'ev' ? (charger ? `at ${charger.network}, ${charger.name}` : 'at a public charger') : `at ${stationAt(person.currentLocationId, at.station ?? 0)?.name ?? 'a station'}`;
+    // Left plugged in after it's done, at a named charger: the time, and the network's idle fee past its grace.
+    const stay = charger ? Math.max(0, Math.round(Number(p.leaveMinutes ?? 0)) || 0) : 0;
+    const idle = charger ? idleFee(s, charger, stay) : 0;
     // Paid at the pump or refused (from 2026-10-06; until then a fill nobody could pay for went through into arrears, and this refusal never came).
-    if (!spend(s, person, q.cost, `${m.fuel === 'ev' ? 'Charging' : 'Fuel'} ${where}, the ${m.make} ${m.model}`, 'vehicle')) throw new CommandError(`It comes to ${formatMoney(q.cost, saveCurrency(s.universe))}, more than you can pay.`);
+    if (!spend(s, person, q.cost + idle, `${m.fuel === 'ev' ? 'Charging' : 'Fuel'} ${where}, the ${m.make} ${m.model}${idle ? `, and ${stay} minutes left plugged in` : ''}`, 'vehicle')) throw new CommandError(`It comes to ${formatMoney(q.cost + idle, saveCurrency(s.universe))}, more than you can pay.`);
     v.fuelLevel = q.to;
     delete v.dry;
-    if (q.minutes > 0) s.advanceTo(s.now + q.minutes * 60_000);
+    if (q.minutes + stay > 0) s.advanceTo(s.now + (q.minutes + stay) * 60_000);
     const range = rangeKm(v);
-    v.fills = [{ at: s.now, where: where.replace(/^at /, ''), amount: q.amount, unit: q.unit, cost: q.cost, basis: q.price.basis, priceWhy: q.price.why, ...(m.fuel !== 'ev' ? { grade: at.grade ?? (m.fuel === 'diesel' ? 'diesel' : 'regular') } : {}), minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) }, ...(v.fills ?? [])].slice(0, FILL_LOG_KEEP);
-    return { amount: q.amount, paid: q.cost, minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) };
+    v.fills = [{ at: s.now, where: where.replace(/^at /, ''), amount: q.amount, unit: q.unit, cost: q.cost + idle, basis: q.price.basis, priceWhy: q.price.why, ...(m.fuel !== 'ev' ? { grade: at.grade ?? (m.fuel === 'diesel' ? 'diesel' : 'regular') } : {}), minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) }, ...(v.fills ?? [])].slice(0, FILL_LOG_KEEP);
+    return { amount: q.amount, paid: q.cost + idle, minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}), idle };
   });
 
   // Who fills it as the month's driving goes: you alone, or the driver at a quarter.

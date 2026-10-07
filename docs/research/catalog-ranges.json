@@ -161,14 +161,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-vehicles-tires.json"
   },
-  "cars|Lexus": {
-   "range": 13,
-   "market": "US",
-   "url": "https://www.lexus.com/models",
-   "counted": "ES, IS, LS, LC, RC, LBX, UX, NX, RX, TX, GX, LX, RZ",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json"
-  },
   "cars|Land Rover": {
    "range": 7,
    "market": "US",
@@ -233,15 +225,6 @@
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-vehicles-tires.json",
    "roadOnly": "The lineup counted 46 with 12 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 34 can be registered for the road (2026-10-06)."
-  },
-  "motorcycles|Yamaha": {
-   "range": 25,
-   "market": "US",
-   "url": "https://www.yamahamotorsports.com/motorcycles",
-   "counted": "YZF-R9, YZF-R1M, YZF-R1, YZF-R7, YZF-R3, MT-10, MT-10 SP, MT-09, MT-09 SP, MT-07, MT-03, BOLT R-SPEC, XSR900, XSR700, V STAR 250, FJR1300ES, TENERE 700, TENERE 700 World Raid, Tracer 9, XT250, TW200, WR125R, XMAX, Zuma 125, YZ450F, YZ250F, YZ250, YZ125, YZ85LW, YZ85, YZ65, YZ450FX, YZ250FX, YZ250X, YZ125X, WR450F, WR250F, TT-R230, TT-R125LE, TT-R110E, TT-R50E, PW50",
-   "read": "2026-10-06",
-   "from": "docs/research/catalog/ranges-vehicles-tires.json",
-   "roadOnly": "The lineup counted 45 with 20 off-road-only models SLATE doesn't sell to ride (tools/build-motorcycles.mjs, OFF_ROAD); 25 can be registered for the road (2026-10-06)."
   },
   "motorcycles|Suzuki": {
    "range": 30,
@@ -378,6 +361,2654 @@
    "counted": "Defender2, CrossClimate2, Defender LTX M/S2, X-Ice Snow+, X-Ice Snow, Pilot Alpin 5, Defender LTX Platinum, e.Primacy All Season, Primacy MXM4, Pilot Sport All-Season 4, Pilot Sport 4 S, Defender LTX M/S, Primacy All Season, Defender T+H, Pilot Sport Cup 2 Connect, Pilot Sport Cup 2 R, Pilot Sport Cup 2, LTX A/T2, Primacy Tour A/S, Pilot Sport EV, Pilot Sport S 5, Agilis CrossClimate 2, Agilis CrossClimate, LTX M/S2, Primacy LTX, Latitude Tour HP, Pilot Super Sport, Pilot Sport PS2, Energy Saver All-Season, Pilot Sport 5, Pilot Alpin PA4, Pilot Sport 4, Pilot Sport 4 SUV, Latitude Sport 3, Pilot Sport 3, Latitude Sport, Premier LTX, Latitude Alpin LA2, Primacy XC, Latitude Alpin, LTX Trail, Primacy 3, Latitude Tour",
    "read": "2026-10-06",
    "from": "docs/research/catalog/ranges-vehicles-tires.json"
+  },
+  "rvs|Pleasure-Way": {
+   "range": 5,
+   "market": "CA",
+   "url": "https://www.pleasureway.com/models/",
+   "counted": "Plateau, Ascent, Ontour, Lexor, Everbound (floorplan/drivetrain suffixes like XLTS/XLRB/TS/RB/AWD collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Roadtrek": {
+   "range": 5,
+   "market": "CA",
+   "url": "https://roadtrek.com/models/",
+   "counted": "Play, Play Tuff, Wave, Chase, Zion (SL trim and 'for 2' layout variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Swift": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.swiftgroup.co.uk/motorhomes/",
+   "counted": "Kon-Tiki, Trekker, Voyager, Escape",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Bailey": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.baileyofbristol.co.uk/motorhomes/",
+   "counted": "Adamo, Alora, Autograph",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Auto-Trail": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.auto-trail.co.uk/motorhomes/",
+   "counted": "Expedition, F-Line, Excel, Imala, Frontier, Grande Frontier",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Hymer": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://www.hymer.com/gb/en/motorhomes",
+   "counted": "Venture S, B-Class MasterLine I, B-Class ModernComfort I, ML-T, B-Class MasterLine T, B-Class ModernComfort T, GT-S, Exsis-t, Grand Canyon S (ML-T CrossOver collapsed as a trim variant of ML-T)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "rvs|Rapido": {
+   "range": 17,
+   "market": "GB",
+   "url": "https://www.rapido-motorhome.co.uk/",
+   "counted": "V55, V62, V64, V65 XL, V68, C03, C50, C55, C66, C86, Serie 6F, Serie 8F, Serie 80dF, i66M, i96M, i166M, i196M (i-suffix compact trims and TRUMA/ALDE heating variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|MV Agusta": {
+   "range": 7,
+   "market": "GB",
+   "url": "https://www.mvagusta.com/en-en/models",
+   "counted": "Rush, Brutale, Dragster, Turismo Veloce, F3, Superveloce, Enduro Veloce",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Can-Am": {
+   "range": 4,
+   "market": "US",
+   "url": "https://can-am.brp.com/on-road/us/en/models/3-wheel-vehicles.html",
+   "counted": "Canyon, Ryker, Spyder F3, Spyder RT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Energica": {
+   "range": 4,
+   "market": "US",
+   "url": "https://energicamotor.com/models",
+   "counted": "Experia, EsseEsse9, Eva Ribelle, Ego",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|LiveWire": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.livewire.com/bike-comparison/livewire-one",
+   "counted": "LiveWire ONE, S2 Alpinista, S2 Mulholland, S2 Del Mar",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Royal Enfield": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.royalenfield.com/us/en/motorcycles/",
+   "counted": "Bullet 350, Classic 350, Goan Classic 350, Hunter 350, Meteor 350, Guerrilla 450, Himalayan 450, Bear 650, Bullet 650, Classic 650, Continental GT 650, INT 650, Shotgun 650, Super Meteor 650",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Vespa": {
+   "range": 5,
+   "market": "US",
+   "url": "https://storeusa.vespa.com/",
+   "counted": "Primavera, Sprint, GTS, Elettrica, GTV (946/946 Horse special edition excluded as uncertain whether a base 946 is separately listed on this page)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Husqvarna": {
+   "range": 30,
+   "market": "US",
+   "url": "https://www.husqvarna-motorcycles.com/en-us/models.html",
+   "counted": "TC 85, TC 65, TC 50, TC 300, TC 250, TC 125, FC 450, FC 350, FC 250, TE 300, TE 250, TE 150, FE 501s, FE 350s, FX 450, FX 350, TX 300, Norden 901, 701 Enduro, Svartpilen 801, Svartpilen 401, Vitpilen 801, 701 Supermoto, EE 1.20, EE 1.18, EE 1.16, EE 1.12, EE 5, EE 2, EE 3 (Heritage/Factory Edition/SE trim variants collapsed into their base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Benelli": {
+   "range": 8,
+   "market": "GB",
+   "url": "https://www.benelli.com/int-en",
+   "counted": "TRK 902 Xplorer, TRK 902 Stradale, Leoncino Bobber 400, BKX 125, TRK 702 X, TRK 702, Tornado 550, BN 125",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Kymco": {
+   "range": 17,
+   "market": "US",
+   "url": "https://kymcousa.com/",
+   "counted": "Agility 50, Super 8, Like 150i, People S 150i, Downtown GT, CV3, AK 550i, Mongoose 110i, MXU 150x, Mongoose 270i, MXU 270i, MXU 450i, Maxxer 450i, MXU 550i, MXU 700i, UXV 450i, UXV 700i (ABS/LE/EPS/Euro/Platform trim and colour-size suffixes collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "motorcycles|Harley-Davidson": {
+   "range": 25,
+   "market": "US",
+   "url": "https://www.harley-davidson.com/us/en/motorcycles/index.html",
+   "counted": "Street Bob, Super Glide, Deadwood, Low Rider S, Heritage Classic, Fat Boy, Breakout, Low Rider ST, Street Glide, Road Glide, Street Glide Limited, Road Glide Limited, CVO Street Glide ST, CVO Road Glide ST, CVO Street Glide, CVO Street Glide Limited, Nightster, Nightster Special, Sportster S, Road Glide 3, Street Glide 3 Limited, CVO Street Glide 3 Limited, Pan America 1250 Special, Pan America 1250 ST, Pan America 1250 Limited",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Škoda": {
+   "range": 11,
+   "market": "GB",
+   "url": "https://www.skoda.co.uk/new-cars/range",
+   "counted": "Peaq, Epiq, Elroq, Enyaq, Fabia, Scala, Octavia, Superb, Kamiq, Karoq, Kodiaq",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Skoda": {
+   "range": 11,
+   "market": "GB",
+   "url": "https://www.skoda.co.uk/new-cars/range",
+   "counted": "Peaq, Epiq, Elroq, Enyaq, Fabia, Scala, Octavia, Superb, Kamiq, Karoq, Kodiaq",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|BYD": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.byd.com/uk/electric-cars",
+   "counted": "Dolphin Surf, Dolphin, Atto 2, Atto 3, Seal, Sealion 7",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Mitsubishi": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.mitsubishicars.com/cars-and-suvs",
+   "counted": "Outlander, Outlander PHEV, Outlander Sport, Eclipse Cross, Eclipse Sportback EV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Polestar": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.polestar.com/us/",
+   "counted": "Polestar 2, Polestar 3, Polestar 4",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Renault": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://www.renault.co.uk/vehicles.html",
+   "counted": "Renault 5, Renault 4, Clio, Captur, Megane, Symbioz, Scenic, Austral, Rafale, Twingo, R5 Turbo 3E, Trafic Passenger",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Lincoln": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.lincoln.com/suvs/",
+   "counted": "Navigator, Aviator, Nautilus, Corsair",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Suzuki": {
+   "range": 8,
+   "market": "GB",
+   "url": "https://cars.suzuki.co.uk/new-cars/",
+   "counted": "e Vitara, Swift, S-Cross, Vitara, Across, Ignis, Swace, Jimny",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Aston Martin": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://www.astonmartin.com/en/models",
+   "counted": "DBX, Valen, DB12, Vantage, Vanquish, Valhalla, Valkyrie, Valour, Valiant (AMR26 Formula One car excluded as not a road model; GT/S/707/Volante/Roadster/anniversary-edition variants collapsed into their base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Cupra": {
+   "range": 7,
+   "market": "GB",
+   "url": "https://www.cupraofficial.co.uk/new-cars",
+   "counted": "Raval, Born, Tavascan, Formentor, Terramar, Leon, Ateca (Leon Estate collapsed into Leon as a body variant)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Dacia": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.dacia.co.uk/range.html",
+   "counted": "Spring, Sandero, Jogger, Duster, Bigster, Striker (Sandero Stepway and Duster Cargo collapsed as body/trim variants)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Infiniti": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.infinitiusa.com/",
+   "counted": "QX65, QX60, QX80",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Jaguar": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.jaguar.com/jaguar-range/index.html",
+   "counted": "I-PACE, F-PACE, E-PACE, XE, XF, F-TYPE",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Lotus": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.lotuscars.com/en-GB/models",
+   "counted": "Emeya, Eletre, Emira, Evija (Eletre X and Emira 420 Sport collapsed as trim variants)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Changan": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://www.changaneurope.com/uk/",
+   "counted": "Deepal S05, Deepal S07 (S05 Ultra PHEV collapsed as a trim variant)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Lucid": {
+   "range": 2,
+   "market": "US",
+   "url": "https://www.lucidmotors.com/air",
+   "counted": "Air, Gravity (Sapphire collapsed as a performance trim of Air)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Rivian": {
+   "range": 2,
+   "market": "US",
+   "url": "https://rivian.com/r1t",
+   "counted": "R1T, R1S",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|SEAT": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.seat.co.uk/",
+   "counted": "Ibiza, Arona, Leon, Ateca, Tarraco (Leon Estate collapsed as a body variant)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Alpine": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.alpine-cars.co.uk/",
+   "counted": "A390, A290, A110 (GTS and R 70 collapsed as trim variants)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Geely": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.geely.com/models",
+   "counted": "EX5, EX2, Coolray (EX5 EM-i collapsed as a powertrain variant)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|GWM Ora": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://gwmcars.co.uk/models/",
+   "counted": "Haval Jolion Pro, POER300, ORA 03",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Jaecoo": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.jaecoo.co.uk/",
+   "counted": "Jaecoo 5, Jaecoo 7, Jaecoo 8",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Omoda": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://omodaauto.co.uk/models/",
+   "counted": "Omoda 5, Omoda E5, Omoda 7, Omoda 9 (SHS-H/SHS-P hybrid variants collapsed into base model)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|VinFast": {
+   "range": 2,
+   "market": "US",
+   "url": "https://vinfastauto.us/",
+   "counted": "VF 8, VF 9 (VF DrgnFly is an e-bike, not a car, excluded)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Xpeng": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://xpengcars.co.uk/models/",
+   "counted": "G6, X9 (L03 and G9L listed as Coming Soon, not yet on sale, excluded)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|Leapmotor": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.stellantisandyou.co.uk/leapmotor",
+   "counted": "T03, B10, C10, B05, B03X",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|BAIC": {
+   "range": 4,
+   "market": "MX",
+   "url": "https://www.baicmx.com/",
+   "counted": "BJ30, X55 II, U5 Plus, ArcFox T1",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "cars|GAC": {
+   "range": 9,
+   "market": "MX",
+   "url": "https://www.gacgroup.com/es-mx/modelos-gac",
+   "counted": "GS7, Aion UT, Emzoom, Emkoo, GS4 Max, GS8, GN8, Aion Y, Hyptec HT (HEV/PHEV powertrain variants collapsed into base model)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-vehicles.json"
+  },
+  "computers|Microsoft": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.microsoft.com/en-us/surface/devices",
+   "counted": "Surface Pro, Surface Laptop, Surface Laptop Ultra, Surface RTX Spark Dev Box",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Apple": {
+   "range": 10,
+   "market": "US",
+   "url": "https://www.apple.com/mac/compare/, https://www.apple.com/ipad/compare/",
+   "counted": "MacBook (A18 Pro entry model), MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, iPad Pro, iPad Air, iPad, iPad mini",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Corsair": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.corsair.com/us/en/c/gaming-computers",
+   "counted": "VENGEANCE a7500, VENGEANCE a7500 AIR, VENGEANCE a5100, VENGEANCE i7500, VENGEANCE i7600, VENGEANCE i7600 AIR, VENGEANCE i5200, VENGEANCE i8200, VENGEANCE i8300, VENGEANCE a8200, CORSAIR ONE i600, CORSAIR ONE a600, NEURON Gaming PC, MILLENNIUM Gaming PC",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Framework": {
+   "range": 5,
+   "market": "US",
+   "url": "https://frame.work/marketplace/laptops",
+   "counted": "Framework Desktop, Framework Laptop 12, Framework Laptop 13 Pro, Framework Laptop 13, Framework Laptop 16",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|GMKtec": {
+   "range": 26,
+   "market": "US",
+   "url": "https://www.gmktec.com/collections/all",
+   "counted": "G10, G11 Plus, G3S, G5S, M2 Pro S, M3 Pro, M5 Ultra, M5S, M6 Ultra, M7 Ultra, M8, K7 PLUS, K8 Plus, K9, K11, K12, K13, K15, K17, K17 Plus, EVO-X1, EVO-X1 Pro, EVO-X2, EVO-X3, EVO-X5 Pro, EVO-T1, EVO-T2, NEO-X1 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|NZXT": {
+   "range": 6,
+   "market": "US",
+   "url": "https://nzxt.com/collections/prebuilt-pcs",
+   "counted": "Player One, Player One Prime, Player Two, Player Two Prime, Player Three, Player Three Prime",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Purism": {
+   "range": 5,
+   "market": "US",
+   "url": "https://puri.sm/products/",
+   "counted": "Librem 16, Librem 14, Librem 11, Librem Mini, Librem Server",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Raspberry Pi": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.raspberrypi.com/products/",
+   "counted": "Raspberry Pi 5, Raspberry Pi 500+, Raspberry Pi 500, Raspberry Pi Zero 2 W, Raspberry Pi Compute Module 5",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|System76": {
+   "range": 6,
+   "market": "US",
+   "url": "https://system76.com/",
+   "counted": "Lemur Pro, Darter Pro, Thelio Mira AI, Thelio Mira, Thelio Major, Serval WS",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Samsung": {
+   "range": 22,
+   "market": "US",
+   "url": "https://www.samsung.com/us/computing/galaxy-books/, https://www.samsung.com/us/tablets/compare/",
+   "counted": "Galaxy Book6 Ultra, Galaxy Book6 Pro, Galaxy Book6 Edge, Galaxy Book6 (Intel Core), Galaxy Book6 Touch, Galaxy Book6, Galaxy Book5 Pro 360, Galaxy Book5 Pro, Galaxy Book5 360, Galaxy Book5, Galaxy Book4 Edge 14|16, Galaxy Book4 Edge 15, Galaxy Chromebook Plus, Galaxy Tab S12 Ultra, Galaxy Tab S12+, Galaxy Tab S11 Ultra, Galaxy Tab S11, Galaxy Tab S10 Lite, Galaxy Tab A11+, Galaxy Tab S10+, Galaxy Tab S10 FE+, Galaxy Tab S10 FE",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|GEEKOM": {
+   "range": 28,
+   "market": "US",
+   "url": "https://www.geekompc.com/?post_type=product",
+   "counted": "A9 Max 2026 Edition, A6, A5, A8, IT13 Max, Air12 2026 Edition, AX8 Max, IT12, IT15, A7 2026 Edition, Air12 Lite, IT13 2026 Edition, GT15 Max, A8 Max, A5 Pro, GT1 Mega, GT13 Max, A5 Pro 2026 Edition, iX12, A9 Mega, AE8, XT12 Pro, Air11, IT11, GT2 Mega, GeekBook X14 Pro, GeekBook X16 Pro, GeekBook M16",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Minisforum": {
+   "range": 6,
+   "market": "US",
+   "url": "https://store.minisforum.com/collections/all-product",
+   "counted": "MS-S1 MAX, AI X1 Pro, AtomMan G1 Pro, MS-02 Ultra, MS-03, MS-A2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Beelink": {
+   "range": 19,
+   "market": "US",
+   "url": "https://www.bee-link.com/collections/all-pc",
+   "counted": "GTR9 Pro, GTi15 Ultra, GTi14 Ultra, GTi13 Ultra, SER10 MAX, SER9 MAX, SER9 Pro, SEi14 AI, SEi13 AI, SER8, EQi 304, EQR7, EQR6, EQR5, EQi13 Pro, EQi13, EQi12, EQ14, ME mini",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|OnePlus": {
+   "range": 1,
+   "market": "US",
+   "url": "https://www.oneplus.com/us/oneplus-pad-3",
+   "counted": "OnePlus Pad 3",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Razer": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.razer.com/gaming-laptops",
+   "counted": "Razer Blade 14, Razer Blade 16, Razer Blade 18",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Chuwi": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.chuwi.com/collections/all",
+   "counted": "GTBook X 230H, NeoBook Plus, NeoBook, MiniBook X U300, UniBook 304, CoreBook Air, CoreBook Air 226V, Hi10 Max, LarkBox X 100U, AuBox X 256V, AuBox X, LarkBox X i3, AuBox AI365, Unitech 24 100U, Unitech 27, Unitech 24, ETBox AI P09H, ERBox1 7735HS, ETBook M14P, ERBook Max, ETBox i7-13620H",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Dynabook": {
+   "range": 17,
+   "market": "US",
+   "url": "https://us.dynabook.com/computers-tablets/home",
+   "counted": "Portege X30, Portege X30L, Portege X30L-J, Portege X30T, Portege X30W, Portege X40, Portege X40-J, Portege X50, Tecra X40, Tecra X50, Tecra A30, Tecra A40, Tecra A50, Satellite Pro L50, Satellite Pro C40, Satellite Pro C50, Dynabook E10",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Gateway": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.gatewayusa.com/collections/all",
+   "counted": "Gateway 15.6 FHD IPS 2-in-1 Convertible (Intel N100), Gateway 15.6 FHD IPS 2-in-1 Convertible (AMD Ryzen 7), Gateway 15.6 FHD IPS Laptop (Intel N100), Gateway 16 FHD IPS Laptop (AMD Ryzen 5), Gateway 17.3 FHD IPS Laptop (Intel N100), Gateway 23.8 All-in-One Desktop, Gateway 27 Monitor & Desktop Tower Bundle",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|ABS": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.abs.com/",
+   "counted": "Kaze II Series, Stratos II Series, Cyclone Series, Eurus Series, Flux II Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Alldocube": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.alldocube.com/en/products/",
+   "counted": "iPlay 80 mini Turbo, iPlay 80 mini Pro, iPlay 80 mini Ultra, iPlay 80SE, iPlay 70 Max Pro, iPlay 70E 2026, iPlay 70 Pad Pro, iPlay 70SE, iPlay 70 mini Pro, iPlay 70 mini Ultra, iPlay 70 Pro, iPlay 70S, iPlay 60 mini, iPlay 60 Pad Pro, Ultra Pad, Kido, iWork GT Ultra, GTBook 15 Gen2, GTBook 14 Gen2, iWork GT 12, iWork GT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|CyberPowerPC": {
+   "range": 44,
+   "market": "US",
+   "url": "https://www.cyberpowerpc.com/category/gaming-pcs/",
+   "counted": "Daily Deal Ryzen Special, GeForce Mainstream Gaming PC, GeForce Pro Gaming PC, GeForce Elite Gaming PC, GeForce Extreme Creator Gaming PC, Infinity 8800 Pro SE, Syber M Essential Gaming PC, Infinity 8000 Gaming PC, Infinity 8800 Pro Gaming PC, Columbus Day Special II, Master 9500, AMD Esports 300, AMD Elite Gaming PC Configurator, Master 9400, AMD Extreme Gaming PC Configurator, AMD Mainstream Gaming PC Configurator, Columbus Day 5070 Ti, Columbus Day 9950X3D2, Syber GRVTY Mainstream Gaming PC, Master 9000, AMD Pro Gaming PC Configurator, Intel Extreme Gaming PC Configurator, Columbus Day Special 2026, Columbus Day RTX 5070, Master 8000, Columbus Day RTX 5060, IEM Challenger Gaming PC, Intel Pro Gaming PC Configurator, Intel Elite Gaming PC Configurator, Creator Pro 300, Intel Mainstream Gaming PC Configurator, Infinity XLC Gaming PC, LUXE 4K, Syber GRVTY Creator Pro PC, Columbus Day Special I, Master 9200, BattleBox Pro Gaming PC, Syber GRVTY Ultimate Gaming PC, Master 9300, Creator Pro 200, AMD Esports 100, Creator Pro 100, AMD Esports 200, LUXE SF-100",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|CyberPower": {
+   "range": 44,
+   "market": "US",
+   "url": "https://www.cyberpowerpc.com/category/gaming-pcs/",
+   "counted": "Same product listing as CyberPowerPC (CyberPower is the same company/brand as CyberPowerPC, which trades as cyberpowerpc.com)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Doogee": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.doogee.com/collections/tab-series",
+   "counted": "Tab E3 Max, Tab E3 Pro, Tab G6 Max, Tab A9 Pro+, Tab G5, Tab G6 Pro, Tab E3, Tab G6",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Honor": {
+   "range": 41,
+   "market": "GB (global.honor.com)",
+   "url": "https://www.honor.com/global/laptops/, https://www.honor.com/global/tablets/",
+   "counted": "MagicBook Art 14 2025, MagicBook Art 14, MagicBook Art 14 Snapdragon, MagicBook Pro 14 2026, MagicBook Pro 16 HUNTER 2025, MagicBook Pro 14, MagicBook Pro 16 2024, MagicBook 16 2026, MagicBook 14 2023, MagicBook 14 2022 RTX 2050, MagicBook 14 2022, MagicBook 16, MagicBook X14 Plus 2025, MagicBook X14 2026, MagicBook X16 2026, MagicBook X16 AMD 2025, MagicBook X16 Plus 2025, MagicBook X14 2025, MagicBook X16 2025, MagicPad4, MagicPad3, MagicPad2, Pad V9, Pad 20 Pro, Pad 20, Pad 20 Pro Paperlike Edition, Pad 20 Paperlike Edition, Pad 10, Pad 9, Pad 8, Pad X9b Max, Pad X8b, Pad X8b Kids Edition, Pad X7b, Pad X7, Pad X9a, Pad X8a, Pad X8a Kids Edition, Pad X9, Pad X8, Pad X8 Lite",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Panasonic": {
+   "range": 6,
+   "market": "US",
+   "url": "https://connect.na.panasonic.com/toughbook",
+   "counted": "TOUGHBOOK 34, TOUGHBOOK G3, TOUGHBOOK 56, TOUGHBOOK 40, TOUGHBOOK 33, TOUGHBOOK G2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Mele": {
+   "range": 16,
+   "market": "US (store.mele.cn ships internationally)",
+   "url": "https://store.mele.cn/collections/all",
+   "counted": "Cyber X1, Quieter 3Q, Overclock X2, Overclock 3C, Overclock X5, PCG02, PCG02 GLE, PCG02 Pro, PCG02 SE, PCG35, Quieter 2Q, Quieter 3C, Quieter 4C, Quieter 4C SE, Quieter DL, Quieter HD",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Teclast": {
+   "range": 23,
+   "market": "US (en.teclast.com, international storefront)",
+   "url": "https://en.teclast.com/tablet/",
+   "counted": "ArtPad, ArtPad Air, ArtPad Pro, T60Mini, T70Pro, T70, T65, T50Plus, T50Mini, T65Max, T65Plus, T60Pro, T60Ai, M60, M50T, P50, P50T, P30T, P30, P35, P33, P85, P50Mini",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Huawei": {
+   "range": 7,
+   "market": "GB",
+   "url": "https://consumer.huawei.com/uk/offer/huawei-laptops/, https://consumer.huawei.com/uk/offer/huawei-tablets/",
+   "counted": "MateBook X Pro, MateBook 14, MatePad 11.5, MatePad 12 X, MatePad Pro 12.2, MatePad SE, MatePad Air",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Yeyian": {
+   "range": 12,
+   "market": "MX",
+   "url": "https://mx.yeyiangaming.com/pc-gaming.html",
+   "counted": "Hollow 5500C-560P1M, SAI 570GB-01M, Core Ultra 5 250KF-560, Krypton 570GC-01M, Vault 560XC-5601M, Abyss 570GB-05M, Vault 5500B-3501M, Crescent 56GTB-251M, Hussar 2400B-560PM, Edge 5500C-5601M, Vault 040FA-59P1M, Edge 44F0B-5601U",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "computers|Vorago": {
+   "range": 15,
+   "market": "MX",
+   "url": "https://voragolive.com/",
+   "counted": "CSG300, CSG400, CSG500, CSG503, CSG530, CSG550, CSG570, CSG800, Slimbay, Volt Basic, Nanobay 3, Minibay, Tablet 7-inch, Tablet 8-inch, Tablet 9-inch",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Marshall": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.marshall.com/speakers",
+   "counted": "Acton IV, Stanmore IV, Heston 120, Heston 60, Heston Sub 200, Heddon, Acton III, Stanmore III, Woburn III, Willen II, Emberton III, Emberton II, Middleton II, Stockwell III, Stockwell II, Kilburn III, Kilburn II, Tufton, Bromley 150, Bromley 450, Bromley 750",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Anker Soundcore": {
+   "range": 26,
+   "market": "US",
+   "url": "https://www.soundcore.com/collections/speakers",
+   "counted": "Boom Go 3i, Boom 2 Plus, Boom 2, Rave 3S, Boom 3i, Select 4 Go, Motion X600, soundcore 2, soundcore 3, Motion Boom, soundcore 1, Soundcore Mini, Motion Boom Plus, Motion+, Motion 300, Space 2 Pro, Space 2, Space One Pro, Space One, Life Q20, Q30, Q20i, AeroClip 2, Liberty Buds 2, Sleep A30, AeroFit 2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Sonos": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.sonos.com/en-us/shop/all-products",
+   "counted": "Beam Ultra, Sonos Ace Ultra, Sonos Play, Sonos Ace, Arc Ultra, Beam (Gen 2), Ray, Era 100, Era 100 SL, Era 300, Roam 2, Move 2, Sub 4, Sub Mini, Five, Amp, Port",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Polk Audio": {
+   "range": 16,
+   "market": "US",
+   "url": "https://www.polkaudio.com/en-us/category/home-speakers/",
+   "counted": "SR2 Wireless Surrounds, Monitor XT70, Monitor XT60, Signature Elite ES50, Signature Elite ES60, Reserve R700, Signature Elite ES55, Signature Elite ES35, Monitor XT35, Signature Elite ES30, Signature Elite ES8, Monitor XT12, Monitor XT10, Signature Elite ES10, Signature Elite ES20, Monitor XT90, Reserve R900",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Bose": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.bose.com/c/all-products",
+   "counted": "SoundLink Max, SoundLink Flex (2nd Gen), SoundLink Plus, SoundLink Micro (2nd Gen), SoundLink Micro, S1 Pro+, Lifestyle Ultra Soundbar, Portable Smart Speaker, Virtually Invisible 791 in-ceiling, SoundLink Revolve II, TV Speaker (2nd Gen), QuietComfort Headphones, QuietComfort Headphones (2nd Gen), QuietComfort Ultra Headphones (2nd Gen), QC x Thom Browne Ultra Headphones, Ultra Open Earbuds, QuietComfort Earbuds, Smart Ultra Soundbar",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Bowers & Wilkins": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.bowerswilkins.com/en-us/category/headphones/",
+   "counted": "Px8 S2 McLaren Edition, Px8 S2, Px8, Px7 S3, Px7 S2e, Pi8 McLaren Edition, Pi8, 800 Series Diamond D5, Nautilus, Signature, 800 Series Diamond D4, 700 Series, 600 Series, DB Series, ASW Series, Mini Theater, Zeppelin Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Ultimate Ears": {
+   "range": 10,
+   "market": "US",
+   "url": "https://www.ultimateears.com/en-us/wireless-speakers.html",
+   "counted": "MINIROLL, EVERBOOM, WONDERBOOM 4, BOOM 4, EPICBOOM, HYPERBOOM, MEGABOOM 3, BOOM 3, HYPERBOOM RENEWED, MEGABOOM 4",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Cambridge Audio": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.cambridgeaudio.com/usa/en/products",
+   "counted": "Alva Duo, Alva MC, Alva Solo, Alva ST, AXA25, AXA35, AXC35, AXN10, AXR100, C155, C165, C165SS",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Denon": {
+   "range": 28,
+   "market": "US",
+   "url": "https://www.denon.com/en-us/category/shop-all-speakers/ and https://www.denon.com/en-us/category/av-receivers/",
+   "counted": "Denon Home 150, Denon Home 200, Denon Home 250, Denon Home 350, Denon Home 400, Denon Home 600, Denon Home Subwoofer, Denon Home Sound Bar 550, DHT-S517, DHT-S316, DHT-S218, AVR-S980H, AVR-X2900H, AVR-X3900H, AVR-A1H, AVR-A10H, AVR-X6800H, AVR-X4800H, AVR-X3800H, AVR-X2800H, AVR-S970H, AVR-X1800H, DRA-900H, AVR-S760H, AVR-S770H, AVR-X1700H, AVR-S670H, AVR-S570BT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|KEF": {
+   "range": 14,
+   "market": "US",
+   "url": "https://us.kef.com/collections/kef-speakers and https://us.kef.com/collections/all",
+   "counted": "Blade One Meta, Blade Two Meta, Ci100.2QR, Ci100QS, Ci130.2CR, Ci130.2CS, Q1 Meta, R3 Meta, Q6 Meta, LSX II, R11 Meta, Reference 4 Meta, Ci3160REFM-THX, R6 Meta",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Klipsch": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.klipsch.com/floor-standing-speakers and https://www.klipsch.com/bookshelf-speakers",
+   "counted": "RP-8060FA II, RP-8000F II, RP-6000F II, RP-5000F II, R-800F, R-605FA, R-600F, RF-7 III, RP-600M II, RP-500M II, R-50M, R-40M, The Nines II, The Sevens II, The Fives II, R-50PM, R-40PM",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Bang & Olufsen": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.bang-olufsen.com/en/us/speakers",
+   "counted": "Beosound A9, Beosound A5, Beosound Balance, Beosound Level, Beosound Emerge, Beosound 2, Beosound A1 3rd Gen, Beosound Explore, Beolit 20, Beolab 8, Beolab 28, Beolab 50, Beolab 90, Beosound Shape, Beosystem 3000c, Beogram 4000c, Beosystem 9000c, Beosound Bollard, Beolab 19, Celestial, Palatial",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Edifier": {
+   "range": 59,
+   "market": "US",
+   "url": "https://www.edifier.com/us/",
+   "counted": "S880DB MKII, S3000MKII, R1280T WiiM Mini, R1280DB, R1280T, S1000MKII, MP330, ES300, ES60, ES20, M90, QR30, QS30, M60, MG250, MR5, MR3, MR4, S360DB, B700, S760D, S350DB, MF3, MF5P, T5s, T5, R1280DBs, QR65, S300, NeoBuds Planar, NeoBuds Plus, NeoDots, STAX SPIRIT S10, W820NB Plus, WH950NB, ES850NB, STAX SPIRIT S3, STAX SPIRIT S5, W830NB, Comfo Run, W210BT, CC200, W280NB, K550, USB K810, USB K800, K6500, G1000 II, G2000 PRO, G200, G1500 SE, G1500, G1000, G2000, G5000, G5BT CAT, GX07, GX04, G5BT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Audio Pro": {
+   "range": 13,
+   "market": "US",
+   "url": "https://us.audiopro.com/collections/all",
+   "counted": "C10 MkII, P5, T3+, C20, C5 MkII, A10 MkII, A15, SW-10, A28, SW-5, Drumfire II, A48, D-2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Dali": {
+   "range": 27,
+   "market": "US",
+   "url": "https://www.dali-speakers.com/en-us/products/",
+   "counted": "KORE, EPIKORE 11, EPIKORE 9, EPIKORE 7, EPIKORE 3, RUBIKORE 2, RUBIKORE 6, RUBIKORE 8, RUBIKORE Cinema, RUBIKORE On-Wall, MENUET, OPTICON MK2, FAZON, SONIK, KUPID, ALTECO, VEGA, KATCH, IO-12, IO-8, IO-6, GARDIAN, PHANTOM S, PHANTOM M, PHANTOM K, PHANTOM H, PHANTOM E",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Kanto": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.kantoaudio.com/collections/all",
+   "counted": "H1, H2, H3, HH, Obi3, Ora, Ora4, Ren, S10, S12, S2, S4, S6, SCH, SE2, SE4, SE6, SLH",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|LG": {
+   "range": 10,
+   "market": "US",
+   "url": "https://www.lg.com/us/soundbars",
+   "counted": "S95AR, S95TR, S90TY, S90TR, SG10TY, S80TR, S70TR, S70TY, SC9S, S77S",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Tribit": {
+   "range": 35,
+   "market": "US",
+   "url": "https://www.tribit.com/collections/all",
+   "counted": "StormBox Flow, StormBox Blast, StormBox Micro 2, StormBox Pro, StormBox Micro, StormBox, MaxSound Plus, XSound Surf, XSound Go, XSound Mega, Home, SoundBar, AquaEase, StormBox 2, StormBox Blast 2, StormBox Lava, StormBox Max, StormBox Micro 3, PocketGo, FlyBuds C1 Pro, FlyBuds C2, Movebuds H1, FlyBuds 3, FlyBuds C1, FlyBuds NC, FlyBuds 1, FlyBuds, FlyBuds C3, QuietPlus 71, QuietPlus 72, QuietPlus, XFree Go, XFree Tune, CallElite 81, QuietPlus 81",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Vizio": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.vizio.com/en/sound-bars and https://www.vizio.com/en/sound-bar-comparison",
+   "counted": "Elevate P514a-H6, V-Series V51-H6, M-Series M512a-H6, SB362ANF6",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Apple": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.apple.com/airpods/ and https://www.apple.com/homepod/",
+   "counted": "AirPods 5, AirPods Pro 3, AirPods Max 2, HomePod, HomePod mini",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Wharfedale": {
+   "range": 71,
+   "market": "GB",
+   "url": "https://www.wharfedale.co.uk/products/",
+   "counted": "ASTON, DOVEDALE, DENTON 80, DENTON 85, DENTON 1S, SUPER DENTON, LINTON, SUPER LINTON, HERITAGE CENTRE, ELYSIAN 1R, ELYSIAN 2R, AURA 1, AURA 2, Crystal 4.1, Crystal 4.2, DIAMOND 12.0, DIAMOND 12.1, DIAMOND 12.2, DIAMOND 12.0i, DIAMOND 12.1i, DIAMOND 12.2i, ELYSIAN 1, ELYSIAN 2, EVO4.1, EVO4.2, EVO 5.1, EVO 5.2, ELYSIAN 3R, ELYSIAN 4R, AURA 3, AURA 4, Crystal 4.3, DIAMOND A2, DIAMOND 12.3, DIAMOND 12.4, DIAMOND 12.3i, DIAMOND 12.4i, ELYSIAN 3, ELYSIAN 4, EVO4.3, EVO4.4, EVO 5.3, EVO 5.4, NOVA 8, NOVA 10, NOVA 12, NOVA 15, SLIM BASS 8, SW 10, SW 12, SW 15, SW 150, WH D8, WH D10, WH S8E, WH S10E, DX-3 HCP, ELYSIAN CR, AURA C, AURA CS, DIAMOND 12.C, DIAMOND 12.Ci, ELYSIAN C, EVO4.C, EVO4.CS, EVO4.S, EVO 5.C, DIAMOND A1, Exson M, Exson Pro, Exson S",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Acoustic Energy": {
+   "range": 20,
+   "market": "GB",
+   "url": "https://www.acoustic-energy.co.uk/products/",
+   "counted": "AE500, AE509, AE520, AE300², AE309², AE320², AE307², AE100², AE109², AE120², AE105, AE107², Corinium, AE2 40th Anniversary, AE1 40th Anniversary, AE Active, AE1 Active, AE SUB, Aego Systems, Extreme Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Elac": {
+   "range": 25,
+   "market": "US",
+   "url": "https://elac.com/shop",
+   "counted": "Concentro 2.0, Vela 2.0, Elegant, Solano 2.0, Carina, UniFi Reference, Debut Reference, Debut 3.0, Debut 2.0, UniFi 2.0, Debut ConneX, Designer Series, Varro, Debut 3.0 Subwoofers, Miracord, AirX2, Alchemy, NAVA, RD 100, Vertex I, Vertex II, Vertex III, Muro, Muro Pro, WS Line",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Steren": {
+   "range": 22,
+   "market": "MX",
+   "url": "https://www.steren.com.mx/audio/bocinas-bluetooth",
+   "counted": "BOC-9030, BOC-9020, BOC-980NE, SPK-BT700-BL, BOC-940NE, BOOM-300, BOC-095, BOC-066, BOC-9500, BOC-9000, BOOM-550, BOC-9300, BOC-9200, BOC-9100, BOC-9050, BSD-120, BOOM-140, BOOM-600, BOC-950, BOC-970, BOOM-200, BOC-KR",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Altec Lansing": {
+   "range": 16,
+   "market": "US",
+   "url": "https://alteclansing.com/collections/all",
+   "counted": "BabyBoom XL Speaker, BoomJacket Wireless Speaker, BoomJacket XL Wireless Speaker, HydraBlast 2.0 EVERYTHINGPROOF Speaker, HydraBlast 2.0 x Boston Red Sox Bluetooth Speaker, HydraBlast Speaker, HydraBoom 2.0 EVERYTHINGPROOF Speaker, HydraBoom Speaker, HydraJolt 2.0 EVERYTHINGPROOF Speaker, HydraJolt Speaker, HydraMicro Speaker, HydraMini 2.0 EVERYTHINGPROOF Speaker, Hydramini 2.0 x Boston Red Sox Bluetooth Speaker, HydraMini Speaker, HydraMotion 2.0 EVERYTHINGPROOF Speaker, HydraMotion Speaker",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Beats": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.beatsbydre.com/headphones",
+   "counted": "Beats 360, Beats Studio Pro, Beats Solo 4, Powerbeats Fit, Powerbeats Pro 2, Beats Studio Buds +, Beats Solo Buds, Beats Flex, Beats Pill",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Bluesound": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.bluesound.com/products/node/ and https://www.bluesound.com/products/powernode/",
+   "counted": "NODE, POWERNODE, PULSE SUB+",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Cabasse": {
+   "range": 34,
+   "market": "US",
+   "url": "https://www.cabasse.com/shop/",
+   "counted": "Murano, Minorca MC40, Antigua MC170, Murano Alto, Java MC40, Jersey MC170, Baltic 5 On-Stand, Baltic 5 On-Base, Riga 2 On-Stand, Riga 2 On-Base, iO3 On-Stand, iO3 On-Base, La Sphère, LA SPHERE EVO, Santorin 30-500, Santorin 30-200, Santorin 25, Lipari 21, Orion, Amp 240 S, The Pearl Pelegrina, The Pearl, The Pearl Akoya, The Pearl Myuki, Rialto, The Pearl Sub, Eole 4, Alcyone 3, Zef 17/Zef 17 Tr, Zef 13/Zef 13 Tr, Archipel 17 ICD/ICP/ICPS, Archipel 13 ICP/ICD/ICP TR, Minorca MC IW, Antigua MT IW",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Canton": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.canton.de/en/products/",
+   "counted": "A 35, A 45, A 45 5.1 Set, A 45 5.1.2 Set, A 45 AR, A 45 AUDIO Edition, A 45 BS, A 45 CS, A 45 LS, A 45 SUB, A 45 SUB S2, A 45.2 LS, A 55, A 65, AR 5",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Creative": {
+   "range": 20,
+   "market": "US",
+   "url": "https://us.creative.com/p/speakers",
+   "counted": "Creative Pebble Nova, Creative Pebble X Plus, Creative Pebble X, Creative Pebble Pro, Creative Pebble V3, Creative Pebble V2, Creative Pebble SE, Creative Pebble, Creative Pebble Plus, Sound Blaster Katana V2X, Sound Blaster GS5, Sound Blaster GS3, Creative Stage Pro, Creative Stage Air V2, ZiiSound D5, Creative XF1, Creative T100, Creative T60, GigaWorks T40 Series II, Creative MUVO Flex",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Fluance": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.fluance.com/fluance-series",
+   "counted": "Signature HiFi Surround Sound Home Theater 7.0 Channel System, Elite HD Surround Sound Home Theater 7.0 Channel System, Elite HD Surround Sound Home Theater 7.1 Channel System, Elite HD Compact Surround Sound Home Theater 5.0 Channel System, Elite HD Compact Surround Sound Home Theater 5.1 Channel System, Elite HD 2-Way Floorstanding Speakers, Signature HiFi 2-Way Center Channel Speaker, Signature HiFi 2-Way Bookshelf Surround Sound Speakers, Signature HiFi 3-Way Floorstanding Speakers, Signature HiFi Surround Sound Home Theater 5.0 Channel System, Signature HiFi Compact Surround Sound Home Theater 5.0 Channel System, Reference High Performance 3-Way Floorstanding Loudspeakers, Elite HD Surround Sound Home Theater 5.0 Channel System, Reference High Performance 2-Way Bookshelf and Surround Speakers, Reference Surround Sound Home Theater 5.0 Channel System, Elite HD Surround Sound Home Theater 5.1 Channel System, Reference Compact Surround Sound Home Theater 5.0 Channel System, Elite HD 2-Way Bipolar Surround Speakers, Reference Surround Sound Home Theater 7.0 Channel System, Elite HD 2-Way Bookshelf Surround Sound Speakers, Reference High Performance 2-Way Center Channel Speaker",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Hisense": {
+   "range": 10,
+   "market": "US",
+   "url": "https://shop.hisense-usa.com/collections/audio",
+   "counted": "Hisense VoyageBoom Portable Bluetooth Speaker, Hisense WeBoom Portable Bluetooth Speaker, Hisense FlexBoom Portable Bluetooth Speaker, Hisense HT Saturn, Hisense AX5140Q, Hisense AX3120Q, Hisense AX3100Q, Hisense HS5100, Hisense HS3100, Hisense HS2100",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Jamo": {
+   "range": 27,
+   "market": "US",
+   "url": "https://www.jamo.com/collections/all",
+   "counted": "6.5CS-T In-Ceiling Speaker, C113 Bookshelf Speaker, C119 Floor Standing Speaker, C60 CEN MKII, C60 SUR MKII, C603 MKII, C605 MKII, C607 MKII, C705PA MKII, C707PA MKII, C9 CEN II, C9 SUR II, C91 II, C93 II, C95 II, C97 II, Concert Element 50, Concert Element 70, Concert Element 90, Concert Legacy 8, Concert Legacy 9, Concert Legacy 11, D590, D600 LCR, DS7 2.1, Gwong Tau Zai, HYG Flex",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Lenco": {
+   "range": 14,
+   "market": "GB",
+   "url": "https://www.lenco.com/speakers",
+   "counted": "LENCO SB-080 BK, LENCO WTVS-100SI, LENCO SB-042LEDBK, LENCO PA-101BK, LENCO SPB-240BKGY, LENCO BTP-400BK, LENCO KCD-011KIDS, LENCO BTP-200BK, LENCO BTL-030BA, LENCO SPB-241WDGY, LENCO PA-260BK, LENCO BTC-060WH, LENCO PA-220BK, LENCO PA-210BK",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Logitech": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.logitech.com/en-us/c/speakers.html",
+   "counted": "Z407, G560, Z533, Z625, Z207, Z906, Z313, Z150, S150",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Majority": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://majorityaudio.com/",
+   "counted": "Naga Range, Bowfell Range, D50X, Quadriga Maxi, Move Range",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|MartinLogan": {
+   "range": 40,
+   "market": "US",
+   "url": "https://www.martinlogan.com/en/category/our-speakers",
+   "counted": "Neolith, Renaissance ESL 15A, Expression ESL 13A, Impression ESL 11A, Classic ESL 9, Illusion ESL C34A, Focus ESL C18, ElectroMotion ESL X, ElectroMotion ESL, EFX, ElectroMotion ESL C, ElectroMotion FX2, Motion XT F200, Motion XT F100, Motion XT B100, Motion XT C100, Motion F20, Motion F10, Motion B10, Motion C10, Motion MP10, Motion 4i, Motion 2i, Motion 8i, Motion 6i, Motion SLM XL, Motion SLM, Motion SLM X3, Motion SLM XL 3 Speaker Bundle, Discrete Cinema LCR9, Discrete Cinema LCR7, Discrete Cinema LCR5, Discrete Cinema Soundbar 85, Discrete Cinema Soundbar 75, Discrete Cinema Soundbar 65, Motion Foundation F2, Motion Foundation F1, Motion Foundation B1, Motion Foundation B2, Motion Foundation C1",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Mission": {
+   "range": 40,
+   "market": "GB",
+   "url": "https://www.mission.co.uk/floorstanding-speakers/ and https://www.mission.co.uk/standmount-speakers/",
+   "counted": "LX-1 MKII, LX-2 MKII, LX-3 MKII, LX-4 MKII, LX-5 MKII, LX-6 MKII, LX-C1 MKII, LX-C2 MKII, LX-3D MKII, LX-10SUB MKII, QX-1 MKII, QX-2 MKII, QX-3 MKII, QX-4 MKII, QX-5 MKII, QX-C MKII, QX-12SUB MKII, ZX-1, ZX-2, ZX-3, ZX-4, ZX-5, ZX-C1, ZX-C2, ZX-S, ZX-12 Sub, MISSION 778CDT, MISSION 778S, MISSION 778X, MISSION 770, MISSION 750, MISSION 700, LX CONNECT, LX CONNECT DAC, M-CUBE+SE, GO-X1, MS-150, MS-200, MS-400, MS-450",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Monitor Audio": {
+   "range": 11,
+   "market": "US",
+   "url": "https://www.monitoraudio.com/products/",
+   "counted": "Hyphn, Platinum Series 3G, Gold Series 6G, Studio 89, Anthra Subwoofer Series, Silver Series 8G, Bronze Series 7G, Vestra Subwoofer Series, Radius Series 4G, Cinergy, Monitor 50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Naim": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.naimaudio.com/catalog/streaming-amplifiers",
+   "counted": "Uniti Nova, Uniti Nova PE, Uniti Atom, Uniti Atom Headphone Edition",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Paradigm": {
+   "range": 38,
+   "market": "CA",
+   "url": "https://www.paradigm.com/en/home-theater-stereo",
+   "counted": "Persona 9H, Persona 7F, Persona 5F, Persona 3F, Founder 120H, Founder 100F, Founder 80F, Premier 820F v2, Premier 720F v2, Monitor SE 8000F, Monitor SE 6000F, Monitor SE 3000F, Persona C, Founder 90C, Founder 70LCR, Premier 620C v2, Premier 520LCR v2, Monitor SE 2000C, Persona B, Founder 40B, Premier 220B v2, Premier 120B v2, Monitor SE Atom, Persona SUB, Signature SUB 2, Seismic 110, MilleniaSub, XR 11, XR 13, Essentials Sub 12, Essentials Sub 10, Defiance S10, Defiance S12, Cinema Sub, Surround 3, Surround 1, Cinema 100 CT, MilleniaOne 1.0",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Philips": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.usa.philips.com/c-m-so/soundbars-and-home-sound",
+   "counted": "TAB6200/37, TAB5309/37, TAB4208/37, TAB5109/37, TAB7568/37",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Pro-Ject": {
+   "range": 34,
+   "market": "US",
+   "url": "https://www.project-audio.com/en/categories/turntables/",
+   "counted": "A1.2, A2, E1.2, VT-E, VT-E BT, Juke Box E1, Juke Box E1 HiFi Set, Juke Box S2, Juke Box S2 HiFiSet, T1 EVO, T2, T2 Super Phono, T2 W, Debut Reference 10, Debut EVO 2, Debut PRO S Balanced, Debut PRO B White Edition, Debut PRO B, RPM 1 Carbon, RPM 3 Carbon, RPM 5 Carbon, RPM 9 Carbon, RPM 10 Carbon, The Classic Reference, XA B, X1 B, X2 B, 6 PerspeX Balanced, X8 B, Xtension 9 Evolution, Xtension 10 Evolution, Xtension 12 Evolution, Signature 10, Signature 12.2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|ProAc": {
+   "range": 15,
+   "market": "GB",
+   "url": "https://proac-loudspeakers.com/products/",
+   "counted": "Tablette 10 Signature, Centre Voice, K1, K3, K6, K6 Signature, K10, Response DB3, Response DB1/R/D, Response D2/R/D, Response DT8, Response D20/D/R, Response D30S, Response D48, Studio SM100",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|PSB": {
+   "range": 11,
+   "market": "CA",
+   "url": "https://psbspeakers.com/collections/all",
+   "counted": "Alpha 1-100 Powered Media System, Alpha AM3, Alpha AM5, Alpha C10, Alpha iQ, Alpha P3, Alpha P5, Alpha S8, Alpha S10, Alpha T20 Tower, C-LCR",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Rega": {
+   "range": 21,
+   "market": "GB",
+   "url": "https://www.rega.co.uk/products/turntables, https://www.rega.co.uk/products/amplifiers, https://www.rega.co.uk/products/loudspeakers",
+   "counted": "Planar 1, Planar 1 Plus, Planar 78, Planar 2, Planar 3, Planar 3 RS, Planar 6, Planar 6 RS, Planar 8, Planar 10 Ref, Naia Ref, Io, Brio, Elex, Elicit, Aethos, Osiris Ref, Mercury Ref, Solis Ref, KYTE, AYA",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Ruark Audio": {
+   "range": 15,
+   "market": "GB",
+   "url": "https://shop.ruarkaudio.com/collections/product-range",
+   "counted": "R1S Smart Radio, R1S Limited Edition Terracotta Smart Radio, R2 Mk4 Smart Music System, R3S Compact Music System, MR1 Mk3 Desktop Speaker System, RS1 Subwoofer, R410 All-In-One Music System, R410 Anniversary Edition, R610 Music Console, R710 CD Hi-Fi Console, R810 High Fidelity Radiogram, R810 MiE, Sabre-R Bookshelf Speakers, Talisman-R Floorstanding Speakers, R-CD100 CD Player",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Sennheiser": {
+   "range": 29,
+   "market": "US",
+   "url": "https://us.sennheiser-hearing.com/collections/all-headphones",
+   "counted": "MOMENTUM 5 Wireless, HDB 630, MOMENTUM 4 Wireless, MOMENTUM True Wireless 5, CX 80, Massdrop HD 6XX, HD 660 S 2, HD 600, ACCENTUM Open, ACCENTUM Wireless, ACCENTUM Plus Wireless, HD 560S, HD 599 SE, HD 550, IE 200, IE 200 Silver, IE 600, HD 620 S, HD 599, HD 650, HD 400, ACCENTUM True Wireless, ACCENTUM Wireless SE, HD 800 S, HD 569, HD 820, HD 505, IE 900, IE 300",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|SVS": {
+   "range": 31,
+   "market": "US",
+   "url": "https://www.svsound.com/collections/subwoofers and https://www.svsound.com/collections/speakers",
+   "counted": "SB-1000 Pro, PB-1000 Pro, SB-2000 Pro, PB-2000 Pro, PC-2000 Pro, SB-3000 R|Evolution, PB-3000 R|Evolution, 3000 Micro R|Evolution, SB-5000 R|Evolution, PB-5000 R|Evolution, SB17-Ultra R|Evolution, PB17-Ultra R|Evolution, 3000 In-Wall Subwoofer, Ultra Evolution Pinnacle, Ultra Evolution Titan, Ultra Evolution Bookshelf, Ultra Evolution Center, Ultra Evolution Elevation, Ultra Evolution Tower, Ultra Evolution Nano, Prime Bookshelf, Prime Tower, Prime Pinnacle, Prime Center, Prime Elevation, Prime Satellite, Prime Satellite 2.1, Prime Satellite 5.1, Prime Wireless Pro Powered Speaker Pair, Prime Wireless Pro Soundbase",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|TCL": {
+   "range": 7,
+   "market": "US",
+   "url": "https://us.tcl.com/pages/sound-bars",
+   "counted": "Q85H, Q65H, S55H, S45H, A65K, S65K, S60K",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "audio|Teufel": {
+   "range": 17,
+   "market": "DE",
+   "url": "https://teufel.de/bluetooth",
+   "counted": "BOOMSTER GO, MYND, ROCKSTER 2, RADIO 3SIXTY, MOTIV HOME, ROCKSTER GO 2, BOOMSTER 4, ROCKSTER CROSS 2, RADIO ONE, ROCKSTER AIR 2, ROCKSTER NEO, MUSICSTATION, Teufel ONE S, MOTIV GO 2, Teufel ONE M, MOTIV GO VOICE, MOTIV XL",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "appliances|Beko": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://www.beko.co.uk/appliances/laundry/washing-machines",
+   "counted": "BW1O3841B, BW1O3842, BWC7121, BWC8121, WTIK741511, BM3WT1241I, BM3WT4104I, BM5WT61141T, BM5WT61341T, BM3WT4841I, BM5WT6843T, BM3WT4941I",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "appliances|Speed Queen": {
+   "range": 15,
+   "market": "US",
+   "url": "https://speedqueen.com/products/all-products/",
+   "counted": "TR7, TC5, TR5, TR3, FF7 (washers, 5); DR7, DC5, DR5, DR3 electric dryers (4); DR7, DC5, DR5, DR3 gas dryers (4, same model names as electric); DF7 front load dryer electric+gas (1); SF7 stacked washer-dryer (1)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "appliances|Hotpoint": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.hotpoint.co.uk/appliances/laundry/washing-machines",
+   "counted": "Fabric Care Pro 12kg, Fabric Care Pro 10kg, Fabric Care 12kg (HB123W series) - color variants merged",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "appliances|Blomberg": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.blomberg.co.uk/appliances/laundry/washing-machines",
+   "counted": "LWA210461, LWI284421, LWA29461, LWA18461, LWA27461, LWI284420",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Pioneer": {
+   "range": 25,
+   "market": "US",
+   "url": "https://usa.pioneer/collections/all",
+   "counted": "DMH-W3000NEX, DMH-1800NEX, MVH-S322BT, DEH-S4220BT, DMH-W3050NEX, DMH-W4660NEX, AVH-3500NEX, DMH-WT8000NEX, DMH-W2770NEX, DMH-241EX, MVH-S622BS, SPH-10BT, DMH-WT8600NEX, TS-M651PRO, TS-B401PRO, TS-6900PRO, TS-A1681F, TS-W3020PRO, TS-WX010A, TS-WX140DA, TS-A120D4, GM-DX104, GM-DX874, GM-DX871, GM-A6704",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|JVC": {
+   "range": 62,
+   "market": "US",
+   "url": "https://www.us.jvc.com/car/",
+   "counted": "KW-Z1000AW, KW-Z800AW, KW-Z1001W, KW-Z1000W, KW-Z900W, KW-V960BW, KW-M875BW, KW-M795BW, KW-M785BW, KW-M788BH, KW-M780BT, KW-M695BW, KW-M690BW, KW-V660BT, KW-M595BT, KW-M590BT, KW-M56BT, KW-M560BT, KW-M180BT, KD-T925BTS, KD-T920BTS, KD-T720BT, KD-TD72BT, KD-T92MBS, KW-R950BTS, KW-X855BTS, KW-X850BTS, KD-X480BHS, KD-X380BTS, KD-X280BT, KD-XD28BT, KD-MR305BTS, KD-X38MBS, KD-X560BT, KS-DR2104DBT, KS-DR2004D, KS-DR2001D, KS-DR1004D, CS-DR1700C, CS-DR601C, CS-DR6941, CS-DR693, CS-DR6931, CS-DR6821, CS-DR1721, CS-DR621, CS-DR521, CS-DR421, CS-DR162, CS-DF6920, CS-DF620, CS-V4627, CS-J6820, CS-DR620MBL, CS-DR621MWL, CS-DR6200M, CS-DR6201MW, CS-MS620, CW-DR124, CW-DR104, CW-DRA8, CW-DR1040ML",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Kicker": {
+   "range": 25,
+   "market": "US",
+   "url": "https://www.kicker.com/car",
+   "counted": "SoloXS L7XS, SoloX L7X, Solo-Baric L7S, Solo-Baric L7R, Solo-Baric L7T, CompQ, CompVX, CompR, CompVR, CompRT, CompVT, CompC, Comp, WXA Amplifiers, LX Amplifiers, Key Smart Amplifiers, CX Amplifiers, PXA Amplifiers, KPX Amplifiers, VXA Amplifiers, ST Series speakers, KS Series speakers, CS Series speakers, DS Series speakers, QS Series speakers",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Boss Audio": {
+   "range": 74,
+   "market": "US",
+   "url": "https://bossaudio.com/collections/car-audio",
+   "counted": "MCK508WB.64S, MR762BRGB, BCPA12, BCPA14, BCP62, MR500UAB, MCK508WB.6, 611UAB, 656BCK, MGR350B, MCKGB350W.6, MCKGB350B.6, MR508UABW, MGR450B, MCKGB450W.6, MGV550B, MCBK634B.6, MG150W.6, 750BRGB, 508UAB, BCP62-RC, MG250W.64, BV9968MB, MGR300B, MCBK634B.64, 850BRGB, MCKGB450B.6, AR3000D, R1004, CE102, AR2000M, AR1500M, R2504, OX4.400, OX1.5KM, R6002, R3004, R1100M-S, R4002, PT1600, PT1000, PF1800, CH6CK, BRS410, CH6950, NX654, P65.4C, BRS65, CH6940B, BRS40, BRS52, CH4330, NX694, CH5530, CH4220, CH4630, CH4230, R94, R63, NX524, BRS69, BRS46, CH4330B, CH6930, CH5730, CH6940, CH5730B, CH5720, BRS5768, B12ES, CH12DVC, P126DVC, BAB8, CX122, P12SVC, TW15",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Skar Audio": {
+   "range": 22,
+   "market": "US",
+   "url": "https://www.skaraudio.com/collections/car-amplifiers",
+   "counted": "SK-M Series, RP Series, SA Series, SKv2 Series, Marine Amplifiers, VD Series, VS Series, SDR Series, SVR Series, DDX Series, EVL Series, VXF Series, ZVXv2 Series, Marine Subwoofers, TX275, TX35, TX4, TX46, TX525, TX65, TX68, TX69",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Rockville": {
+   "range": 16,
+   "market": "US",
+   "url": "https://rockvilleaudio.com/collections/car-amplifiers/products.json",
+   "counted": "RVA600.1 + RWK10 Bundle, dB16, dB14, dB15, dB45, dB55, X6.5C 2-Pair, RV6.3A, RV69.4A, RV68.2C 2-Pair, RT6, RXM64 4-Pack, W12K9D2 V3, PUNISHER 12D2, W12K6D2 V2 2-Pack, W12K6D4 V2 2-Pack",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Hertz": {
+   "range": 16,
+   "market": "US",
+   "url": "https://hertz-audio.com/collections/car-audio/",
+   "counted": "Mille Subwoofers, Cento Subwoofers, Dieci Subwoofers, Uno Subwoofers, SPL Subwoofers, Mille Speakers, Cento Speakers, Dieci Speakers, Uno Speakers, SPL Speakers, Mille Amplifiers, Cento Amplifiers, Dieci Amplifiers, HCP Amplifiers, DPower Amplifiers, SPL Amplifiers",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|In Phase": {
+   "range": 48,
+   "market": "GB",
+   "url": "https://inphaseaudio.co.uk/collections/subwoofers",
+   "counted": "In Phase XT-8PRO, In Phase USW300, In Phase XTB-8A, In Phase USW12, In Phase XT-10, In Phase XT-12D4, DB Audio TREX-10D2, DB Audio TREX-12D2, In Phase XT-6, In Phase XTB-828R, In Phase XTB-88A, DB Audio Xtinct12v2, In Phase XT-10D4, In Phase XT-10D2, In Phase XT-12D2, In Phase XT-12PRO, DB Audio TREX-12D4, DB Audio TREX-15D2, DB Audio TREX-15D4, DB Audio TREX-10D4, Juice JS12, Juice JS10, Juice JS8.1, DB Audio Xtinct12, In Phase SXT1035, In Phase XTC6CX, In Phase SXT6435, In Phase XTC-180VW, In Phase XTC17.2CF, Juice S520, Juice S420, In Phase SXT1, In Phase XTC10.2, Juice S620, DB Audio T-Rex5.2C, In Phase SPX17C, In Phase XTC5CX, In Phase SXT5735, In Phase XTC13.2, In Phase XTC17.2, In Phase SXT1735, In Phase SXT1335, In Phase IPA7001D, In Phase IPA5001D, Juice JA1504, Juice JA1201D, Juice JA902, In Phase IPA601",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Polk Audio": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.polkaudio.com/en-us/category/car-and-marine-speakers/",
+   "counted": "DB462, DB5252, DB692, DB402, DB6502, DB1242 DVC, DB1242 SVC, DB652, DB1042 SVC, DB842 DVC, DB842 SVC, DB522",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Atoto": {
+   "range": 40,
+   "market": "US",
+   "url": "https://www.atotodirect.com/collections/car-stereo",
+   "counted": "ATOTO S8G2094MS, ATOTO A5LG211T-S01, ATOTO A5LG209T-S12, ATOTO A5LG110T, ATOTO A6G2A7PF, ATOTO A5LG2A7T-S12, ATOTO X10G125E-R3, ATOTO A6G209PF, ATOTO A5LG110PT, ATOTO S8G2C74MS-S02F, ATOTO A5LG110PT-S01, ATOTO A5LG2A7T, ATOTO F7G2A7WE-S01, ATOTO A5LG2B7T, ATOTO A5LG2A7T-S01, ATOTO F7G211WE, ATOTO V10G2D7OC, ATOTO A5LG2A7T-S02, ATOTO A5LG110T-S01, ATOTO S8LG211SD, ATOTO S8 Gen4, ATOTO X10G209E-R3, ATOTO S84G211P, ATOTO S8G2A74MS-S01R, ATOTO A5LG209T-S01, ATOTO X10G211E, ATOTO A5LG2B7T-S12, ATOTO A5LTYB7T, ATOTO S8G1104MS-S01, ATOTO V10G211OC, ATOTO X10G225E, ATOTO S8G2A74MS, ATOTO X10G110PESM, ATOTO S8LG2B7SD-S04, ATOTO A5LG110T-S02, ATOTO X10G129ESM-R3S, ATOTO V10G209OC, ATOTO V10G211OC-S04, ATOTO X10G211E-R3, ATOTO A5LG2A7T-S04",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Power Acoustik": {
+   "range": 33,
+   "market": "US",
+   "url": "https://poweracoustik.com/collections/all/products.json?limit=250",
+   "counted": "BAMF-102, BAMF-104, BAMF-122, BAMF-124, BAMF-154, BAMF1-3000D, BAMF1-5000D, BAMF1-8000D, BAMF4-1200D, BAMF4-1800D, BAMF5-2500D, BAMF-152, BASS-10C, BASS-12C, BASS-15C, BASS-18C, BASS-MX, BUC-2, BUC-1, CA1-1500, CA1-3500D, CA1-5000D, CA1-77W, CA1-8000D, CA2-1000, CA2-74W, CA4-1600, CA4-2000, CB1-2500D, CB1-4500D, CB1-8000D, CB4-1200, CB4-1800",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Soundstream": {
+   "range": 30,
+   "market": "US",
+   "url": "https://soundstream.com/collections/all/products.json?limit=250",
+   "counted": "AC.6, AF.42, AF.52, AF.573, AF.653, AF.694, AR1-2500D, AR1-3000D, AR1-5000D, AR1-7500D, AR1-8000D, AR1.2500D, AR1.4500D (variant A), AR1.4500D (variant B), AR1.8000D, AR1-10000D, AR2-1000D, AR4-1200, AR4-1800, AR4-2000D, AR4.1200, AR4.1800, BTC-3100, BX-10, BX-108Z, BX-10MX, BX-10W, BX-10X, BX-12, BX-12W",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Taramps": {
+   "range": 20,
+   "market": "US",
+   "url": "https://tarampsusa.com/collections/amplifiers/products.json?limit=250",
+   "counted": "HD 3000, TS 400X4, HD 2000, BASS 5K, THE BIG BOSS 3 BASS, BASS 3K, SMART3 BASS, TS 800x4, BASS 1200, TS 1200x4, TS 400X4 HIGH LEVEL INPUT, DS 800x4, SMART3, MD 1200.1, MD 5000.1, DS 2000x4, THE BIG BOSS 8 BASS, DS 1200x4, MD 3000.1, Bass 400",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Xtrons": {
+   "range": 14,
+   "market": "US",
+   "url": "https://xtrons.com/product-category/car-stereos/",
+   "counted": "IQ Series, IM Series, PX Series, IA Series, ID Series, QD Series, QT Series, QWB Series, QG Series, QBB Series, QBA Series, QBM Series, QIR Series, QL Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|American Bass": {
+   "range": 11,
+   "market": "US",
+   "url": "https://americanbassusa.com/collections/american-bass/products.json?limit=250",
+   "counted": "XFL 12, XFL 10, XFL 15, Godzilla 8, Godfather 6.5 Midrange, Elite 12, HAWK 12, HAWK Slim 12, HD Velocity 12, Elite 15",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Blaupunkt": {
+   "range": 37,
+   "market": "US",
+   "url": "https://www.bpcarusa.com/collections/all/products.json?limit=250",
+   "counted": "CAMDEN 450, AMP-1404PRO, AMP-1501PRO, AMP-1604PRO, AMP-1804BTPRO, AMP-7502PRO, AMP1901D (4ch), AMP1901D (mono), ASPEN 140, BDB-1, BFH-A1, BMX-3RCA, BPA-401Mi, BPA-404Mi, BPA-C1000, BPA-C400, BPA-C500, BPA-E1001, BPA-E602, BPA-E604, BPA-HX1200, BPA-HX320, BPA-HX80DSP, BPA-M604BT, BPA-M605BT, BPA-M701, BPA-M704, BPP-MD800, BPP-MDS60, BPP-MR65B, BPP-MR80B, BPP-TW200, BPP-TW300, BPP-TW400, BPS-E452, BPS-E552, BPS-E650C",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Cerwin-Vega": {
+   "range": 16,
+   "market": "US",
+   "url": "https://cerwinvega.com/collections/car-audio/products.json?limit=250",
+   "counted": "VPSTX12, PH654, V82DV2, V693, CVP8, PH694, VPAS12, VPAS12ST, V652, V465C, V3, V525, H7653, H746, VS12SH, H735",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Sundown Audio": {
+   "range": 18,
+   "market": "US",
+   "url": "https://sundownaudio.com/collections/active-items",
+   "counted": "SA-Classic 12, LCS v.2 12, U-Series v.2 12, E-Series V.4 12, M-Series M12, SA-Series v.3 12, SA-Classic 10, SIA-2500D, SML-Series 12 Thin, LCS v.2 10, E-Series v.6 8, X-Series v.3 12, SAEv4-2000.1D, SA-69CX, X-Series v.3 15, E-6.5CX, ET-R1, SML-Series 10 Thin",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "car-audio|Massive Audio": {
+   "range": 28,
+   "market": "US",
+   "url": "https://www.massiveaudio.com/collections/all",
+   "counted": "AK0, AK4, ALUMA 6, AM3, AW65, AX02, B-LYNX, BAS6, BAS8, BASSPRO, BG6, BG8, BOA102R, BOA121, MX693, NIS6K, NIS6X, NOISE-OFF, P0-50G, P0-50R, P2, P3, P4, P4-100G, P4-100R, P65NTI, P65XV2, P65Z",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-computers-appliances-audio.json"
+  },
+  "tires|Hankook": {
+   "range": 47,
+   "market": "US",
+   "url": "https://www.hankooktire.com/us/en/tirelist/brand-family.html",
+   "counted": "Kinergy (6), Ventus (11), iON (9), Dynapro (9), Vantra (1), Winter i*cept (7), Winter i*pike (3), Weatherflex (1) - consumer passenger/LT/SUV families only, Smart (commercial truck/bus, 33) excluded",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Kumho": {
+   "range": 21,
+   "market": "US",
+   "url": "https://kumhotireusa.com/",
+   "counted": "CRUGEN EV HP71, MAJESTY 9 EV TA91, SOLUS EV TA31, SOLUS TA71, ECSTA V730, ECSTA Sport S, ECSTA Sport, ECSTA Sport A/S, ECSTA 4X II, SOLUS 4S HA32, SOLUS TA51a, SOLUS TA31, SOLUS 4S HA32 SUV, CRUGEN GT Pro, CRUGEN HP71, CRUGEN Premium, CRUGEN HT51, ROAD VENTURE HT, ROAD VENTURE AT52, ROAD VENTURE RT, ROAD VENTURE MT71",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|BFGoodrich": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.bfgoodrichtires.com/auto/tires",
+   "counted": "All-Terrain T/A KO3, All-Terrain T/A KO2, G-Force Phenom T/A, Mud-Terrain T/A KM3, HD-Terrain T/A KT, Trail-Terrain T/A +, Advantage Control, Elite-Force T/A, Silvertown Radial Blackwalls, Silvertown Radial Redlines and Goldlines, Silvertown Radial White Wall, Silvertown Bias Ply Vintage Car and Truck, Silvertown Bias Ply Redlines/Goldlines/Bluelines, Silvertown Bias Ply Black Walls, Silvertown Bias Ply White Walls",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Dunlop": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.dunloptires.com/tires",
+   "counted": "Blue Response A/S, Winter Maxx SJ8, Winter Maxx WM02",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Maxxis": {
+   "range": 25,
+   "market": "US",
+   "url": "https://www.maxxis.com/us/tires/autolt/",
+   "counted": "Victra Sport AS, Victra Sport EV, Bravo HP-M3, MA-P1, MA-202, Escapade MA-T1, Victra VR-1, Victra VR2, RAZR AT, RAZR AT-S, RAZR HT, RAZR MT, Bravo Series AT-771, Bravo HT-770, Buckshot Mudder II MT-764, Bighorn MT-762, Trepador Radial M8060, Bravo UE-168, Creepy Crawler M8090, Trepador M8060, RAZR MT Competition, Trepador Competition M8060, Victra RC-1, M8008 Plus ST Radial, UR-275 ST Radial",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Vredestein": {
+   "range": 13,
+   "market": "US",
+   "url": "https://www.vredestein.com/car-suv-tires/",
+   "counted": "Hitrac, Hypertrac, Vredestein Pinza AT, Vredestein Pinza HT, Comtrac Cargo A/S, Ultrac Pro, Quatrac 5, Wintrac, Wintrac Pro, Quatrac, Sprint+, Sprint Classic, Ultrac Vorti",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Nokian": {
+   "range": 18,
+   "market": "US",
+   "url": "https://na.nokiantyres.com/tires/",
+   "counted": "Hakkapeliitta 01, Surpass AS01, Remedy WRG5, Outpost nAT, Outpost APT, Hakkapeliitta R5, Hakkapeliitta R5 SUV, Hakkapeliitta 10, Hakkapeliitta 10 SUV, Hakkapeliitta R5 EV, Hakkapeliitta 10 EV, Hakkapeliitta C4, Hakkapeliitta CR4, Hakkapeliitta LT3, One, One HT, WR C3, Encompass AW02",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Uniroyal": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.uniroyaltires.com/homepage/our-tires",
+   "counted": "Laredo HT, Laredo AT, Power Paw A/S, Tiger Paw Touring A/S",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Nitto": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.nittotire.com/light-truck-tires/",
+   "counted": "Mud Grappler, Trail Grappler, Ridge Grappler, Recon Grappler, Terra Grappler G3, Dura Grappler, Nomad Grappler, NT420V, Motivo 365, NT05, NT555 G2, Invo, Neo Gen, NT555RII, NT01, Trail Grappler SxS, Exo Grappler",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|GT Radial": {
+   "range": 24,
+   "market": "US",
+   "url": "https://www.gtradial.com/products",
+   "counted": "SportActive, SportActive 2, SportActive RunFlat, FE2, CHAMPIRO VP1, CHAMPIRO FE1, CHAMPIRO ECO, CHAMPIRO UHP AS, CHAMPIRO HPY, CHAMPIRO SX2, MAXTOUR, MAXTOUR LX, SAVERO HT PLUS, SAVERO HT2, SAVERO HT-S, SAVERO AT-S, SAVERO A/T PRO, ADVENTURO M/T, ADVENTURO AT3, ADVENTURO A/T, MAXMILER-X, MAXMILER PRO, MAXMILER Pro2, SUPER TRAVELER 668",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Sailun": {
+   "range": 22,
+   "market": "CA",
+   "url": "https://sailuntire.ca/en/plt/tires/",
+   "counted": "Ice Blazer WSL2, Ice Blazer WSTX, Ice Blazer WST2 LT, Ice Blazer WST1 C-Type, TERRAMAX RT, TERRAMAX AT2, TERRAMAX HT2, TERRAMAX HLT-C, TERRAMAX CVR, TERRAMAX HLT, TERRAMAX M/T, Atrezzo 4S, Inspire, Atrezzo SH408, Atrezzo Touring WR, Atrezzo ZSR, Atrezzo ZSR SUV, Atrezzo R01, Atrezzo SVA2, Atrezzo TCON, Atrezzo SVR LX+, ERANGE EV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|General": {
+   "range": 15,
+   "market": "US",
+   "url": "https://generaltire.com/tires",
+   "counted": "Grabber Arctic X, AltiMAX Arctic X, AltiMAX365 AW, AltiMAX RT45, G-MAX AS07, G-MAX RS, Grabber A/TX, Grabber APT, Grabber H/T, Grabber HTS60, ReliaTrek, Grabber X3, Grabber Arctic LT, Grabber Arctic, AltiMAX Arctic12. Note: 'General' is the same company/site as 'General Tire' - no separate lineup exists, same URL used.",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Mastercraft": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.mastercrafttires.com/tires",
+   "counted": "Courser All Weather, Courser CXT, Courser Trail RT, Glacier Trex, Avenger G/T, SRT Touring, Courser MXT, Courser HXT, Courser Trail, Avenger, Glacier MSR, Stratus AP, Avenger M8, Stratus HT, Stratus AS",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Hercules": {
+   "range": 24,
+   "market": "US",
+   "url": "https://www.herculestire.com/treads",
+   "counted": "RAPTIS R-T6, RAPTIS R-T6X, RAPTIS R-T5, H/P 4000, ROADTOUR CONNECT PCV, ROADTOUR CONNECT AS, TERRA TRAC A/T, TERRA TRAC CROSS-V AW, TERRA TRAC HPT, TERRA TRAC AT X-JOURNEY, TERRA TRAC AT X-VENTURE, TIS RT1, TIS TT1, TERRA TRAC T/G MAX, TERRA TRAC CH4, STRONG GUARD ST, STRONG GUARD C-ST, H-901 ST, H-901 LT, AVALANCHE RT, AVALANCHE XUV, AVALANCHE TT, TIS UT1, TERRA TRAC TURF",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Milestar": {
+   "range": 19,
+   "market": "US",
+   "url": "https://milestar.com/products",
+   "counted": "MS932 Sport, Weatherguard AS710 Sport, Weatherguard AW365, Interceptor AS810, Interceptor RS-1, Streetsteel, MS775 Touring SLE, Winterguard, Patagonia M/T Pro, Patagonia M/T-02, Patagonia X/T, Patagonia A/T Pro, Patagonia A/T R, Patagonia H/T, Steelpro MS597, Steelpro MS597S, Steelpro AST, Patagonia SXT, Patagonia SXS",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Primewell": {
+   "range": 4,
+   "market": "US",
+   "url": "https://primewelltires.com/home/",
+   "counted": "Valera Sport AS, Valera All Season, Valera HT, Valera AT2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Westlake": {
+   "range": 6,
+   "market": "US",
+   "url": "https://westlaketireusa.com/passenger-tires/",
+   "counted": "Foray RP218, SA07 Sport, SU318 Radial H/T, SL309 Radial A/P, SL369 Radial A/T, SL376 Radial M/T",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Federal": {
+   "range": 32,
+   "market": "US",
+   "url": "https://www.federaltire.com/en/tires.html",
+   "counted": "FZ-101, FZ-101W, Federally G-10, Federally T-10, Federally G-11, FZ-201, Evoluzion F60, Evoluzion ST-1, 595RS-PRO, 595RS-RR, SS595, Formoza AZ01, Formoza FD2, Formoza GIO, Xtramile XR03, SS657, Xplora M/T, Xplora R/T, Xplora A/T, Xplora A/P, Xplora MTS, Couragia F/X, Couragia XUV, Couragia XUV II, Couragia M/T, Ecovan ER02, Himalaya K1 PC, Himalaya WS3 Nordic, Himalaya Inverno, Himalaya SUV, Himalaya K1 LT, Glacier GC01",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Ironman": {
+   "range": 21,
+   "market": "US",
+   "url": "https://www.ironmantires.com/tire-details",
+   "counted": "iMOVE SPORT G2, iMOVE GEN 3 AS, GR906, iMOVE GEN 2 AS, iMOVE PT PLUS, RB-12, RB-12 NWS, ALL COUNTRY AT-X, iMOVE GEN 2 SUV, RB-SUV, ALL COUNTRY AT2, ALL COUNTRY A/T, ALL COUNTRY HT, ALL COUNTRY HT 4S, ALL COUNTRY MT-X, RB-LT, ALL COUNTRY CHT, RADIAL A/P, ALL STEEL HD, STR, POLAR TRAX GEN 2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Triangle": {
+   "range": 32,
+   "market": "CA",
+   "url": "https://triangletire.ca/en/plt/tires/",
+   "counted": "TA01, TA702, TC101, TE301, TE307, TH201, TH202, TR652, TR918, TR928, TR968, TS601, TR257, TR259, TR281, TR292, LL01, PL01, PL02, TI501, TR777, TR797, TW401, TR653, TRT01S (page's own stated total was 32 distinct models)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Fulda": {
+   "range": 17,
+   "market": "GB",
+   "url": "https://www.fulda.com/en_gb/consumer/tires/car.html",
+   "counted": "SportControl, EcoControl, EcoControl HP2, EcoControl HP, SportControl 2, MultiControl, Kristall Control HP2, Kristall Montero 2 MS, Kristall Control HP, Kristall Montero MS, Kristall Montero 3, 4x4 Road, EcoControl SUV, MultiControl SUV, Kristall Control SUV, Conveo Trac 3, Conveo Tour 2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Kleber": {
+   "range": 10,
+   "market": "GB",
+   "url": "https://www.kleber-tyres.com/",
+   "counted": "Krisalp HP3 SUV, Quadraxer 3, Transalp 2+, Quadraxer SUV, Dynaxer HP5, Dynaxer HP4, Krisalp HP3, Dynaxer HP5 SUV, Transpro 4S, Transpro 2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Lexani": {
+   "range": 9,
+   "market": "US",
+   "url": "https://lexanitires.com/en/products",
+   "counted": "LXUHP-207, LX-Twenty, LX-Thirty, LX-Six II, LX-Nine, Volt-EC, Freccia GT-S, Terrain Beast AT, LXST-105",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Thunderer": {
+   "range": 10,
+   "market": "US",
+   "url": "https://thunderertireusa.com/",
+   "counted": "Mach I Plus, Mach I, Mach IV, Mach V, City, Ranger 007, Ranger A/T, Ranger A/TR, Trac Grip M/T, Commercial L/T (heavy-duty truck/bus and trailer lines excluded)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Achilles": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.achillestires.com/tires",
+   "counted": "Touring Sport A/S, Street Hawk Sport, Desert Hawk HT3, Desert Hawk AT3, Rugged Hawk (page explicitly notes ATR Sport 2 is no longer part of the current US portfolio)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Arroyo": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.arroyotires.com/collections/passenger-tires",
+   "counted": "Eco Pro A/S, Eco Pro Plus, Grand Sport A/S, Ultra Sport A/S, Razzo Sport A/S, Grand Sport Plus, Extreme Sport RR, Eco Pro H/T, Van Pro Plus, Eco Pro H/T Plus, Van Pro, Corso UHT, Tamarock A/T, Tamarock M/T, Tamarock R/T, Tamarock XR/T, Tamarock X-A/T (ST trailer and TBR truck/bus lines excluded)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Delinte": {
+   "range": 18,
+   "market": "US",
+   "url": "https://delintetires.com/tires",
+   "counted": "Centurion 365, Centurion 365 LMD, Centurion A/T, Centurion H/T, Centurion X/T, D7, DH2, DH7, DS2, DS8, DST1, DST2, DX9 Bandit M/T, DX10 Bandit A/T, DX11 Bandit H/T, DX12 Bandit R/T, DX20 Bandit X/T Crossover-Terrain, DV3 LMD AS (DL-prefixed commercial/TBR codes excluded)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Fortune": {
+   "range": 10,
+   "market": "US",
+   "url": "https://fortunetireusa.com/consumer-tires/",
+   "counted": "ClimaFlex 4S, Perfectus, Viento, Tormenta A/T2, Tormenta H/T, Tormenta R/T, Tormenta M/T, Tormenta LMD, ST01, FST02",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Prinx": {
+   "range": 10,
+   "market": "US",
+   "url": "https://www.prinxtire.com/product/",
+   "counted": "HiRACE HZ2, HiCITY HH2, HiRACE HZ1, HiRACE HU1, HiCOUNTRY HT2, HiCOUNTRY HA2, HiCOUNTRY HM1, HiCITY HT1, HiFREE HV1, HiiCY HW1",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Tornel": {
+   "range": 11,
+   "market": "MX",
+   "url": "https://jktornel.com.mx/auto-suv/",
+   "counted": "Real, Classic, Selecta, Direccional, Astral, Selecta Plus, Deportiva, America Cargo, America AT 909, Corona, AT 09 (JK-branded lines on the same page excluded as a different brand)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Ohtsu": {
+   "range": 4,
+   "market": "US",
+   "url": "https://ohtsu-tire.com/",
+   "counted": "FP8000, FP7000, ST5000, AT4000",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Laufenn": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.laufenn.com/",
+   "counted": "S FIT AS, G FIT AS, X FIT AT2, X FIT AT, X FIT HP, X FIT HT, X FIT Van, I FIT Ice",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "tires|Euzkadi": {
+   "range": 8,
+   "market": "MX",
+   "url": "https://www.euzkadi.mx/llantas/",
+   "counted": "EuroDrive 2, EuroDrive 3, Overlander AT, Overlander AT2, Overlander HT, Overlander HT2, Campera LT2, All Terrain (compiled from individual euzkadi.mx product pages found via site search - the index page at /llantas/ is JS-rendered and did not return a product list on direct fetch)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|IKEA": {
+   "range": 18,
+   "market": "US",
+   "url": "https://www.ikea.com/us/en/cat/mattresses-bm002/",
+   "counted": "VALEVÅG, VESTERÖY, ÅNNELAND, ÅSBYGDA, ÅGOTNES, VÅGSTRANDA, ÅSVANG, ÅBROTTEN, ÅKREHAMN, UNDERLIG, KRUMMELUR, INNERLIG, VIMSIG, PELLEPLUTT, ÖMSINT, JÄTTETRÖTT, SKÖNAST, VANNAREID",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Emma": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.emma-sleep.co.uk/mattresses-comparison-table/",
+   "counted": "Original Lite, Original, Original Pro, Original Elite, NextGen Premium, Performance",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Tuft & Needle": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.tuftandneedle.com/collections/all",
+   "counted": "2024 Original Mattress, 2024 Original Hybrid Mattress, 2024 Mint Mattress, 2024 Mint Hybrid Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Amerisleep": {
+   "range": 7,
+   "market": "US",
+   "url": "https://amerisleep.com/mattresses/compare/",
+   "counted": "AS2, AS3, AS3 Hybrid, AS5, AS5 Hybrid, AS6 Black Series, Organica",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Endy": {
+   "range": 3,
+   "market": "CA",
+   "url": "https://www.endy.com/",
+   "counted": "Endy Mattress, Endy Elevate Hybrid Mattress, Endy Kids Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Leesa": {
+   "range": 17,
+   "market": "US",
+   "url": "https://www.leesa.com/collections/all",
+   "counted": "Original, Original Hybrid, Oasis Chill, Sapira Hybrid, Sapira Chill, Legend Hybrid, Legend Chill, Reserve, Plus, Natural Essential, Natural Luxe, Studio, Studio Chill, Crib, Kids, Youth, Trundle",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Sognare": {
+   "range": 7,
+   "market": "GB",
+   "url": "https://www.sognarebeds.co.uk/collections/mattresses",
+   "counted": "Memory Pocket 1000, Memory Pocket 2000, Orthopaedic, Cool Gel Memory 2000, Memory Pillow Top, PillowTop 3000, Memory Spring",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Spring Air": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.springair.com/collections/all",
+   "counted": "Back Supporter Amelia, Back Supporter Francesca, Back Supporter Grace, Back Supporter Hannah, Back Supporter Kaylee, Back Supporter Makayla, Chattam & Wells Palermo, Chattam & Wells Contour Pillow, Copper Foam, Copper Hybrid, Four Seasons, Grand Hybrid, Reserve, Nature's Rest",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|King Koil": {
+   "range": 11,
+   "market": "US",
+   "url": "https://www.kingkoil.com/collections/all-mattresses",
+   "counted": "iBed, Scott Living, FLOWT, Intimate, Xtended Life, SmartLife, Re-Spun, Natural, Modern Luxury, Reserve Luxury, PureBliss",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Avocado": {
+   "range": 11,
+   "market": "US",
+   "url": "https://www.avocadogreenmattress.com/collections/mattresses",
+   "counted": "Avocado Green Mattress, Eco Organic Mattress, Luxury Organic Mattress, Grand Luxe Mattress, Avocado Green Ultra Plush Mattress, Extra Firm Mattress, Avocado Wool Mattress, Avocado Vegan Mattress, Avocado Latex Mattress, Organic 11 Hybrid Mattress, Organic 13 Pillow-Top Hybrid Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Bear": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.bearmattress.com/collections/mattresses",
+   "counted": "Elite Ultra Hybrid, Elite Hybrid, Pro Hybrid, Pro Foam, Original Hybrid, Bear Original, Bear Natural, Bear Cub, Bear Trundle",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Big Fig": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.bigfigmattress.com/blog/big-fig-mattress-comparisons",
+   "counted": "Classic, Firm, Luxe",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Birch": {
+   "range": 5,
+   "market": "US",
+   "url": "https://birchliving.com/pages/all-mattresses",
+   "counted": "Birch Natural, Birch Luxe Natural, Birch Elite Natural, Birch Essential, Birch Kids Natural",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Brooklyn Bedding": {
+   "range": 20,
+   "market": "US",
+   "url": "https://brooklynbedding.com/collections/mattresses",
+   "counted": "Signature Hybrid, Aurora Luxe Cooling, BB Kids, CopperFlex, CopperFlex Pro, CopperFlex Essential, Plank Firm Luxe, Plank Firm, Titan Plus Elite, Titan Plus Luxe, Titan Plus Core, ThermoBalance, ThermoBalance Elite, ThermoBalance LX, ThermoBalance LX Elite, Sedona, Sedona Elite, Sedona LX, Sedona LX Elite, Spartan",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Douglas": {
+   "range": 6,
+   "market": "CA",
+   "url": "https://www.douglas.ca/en/mattresses/",
+   "counted": "Douglas Original, Douglas Alpine, Douglas Summit, Douglas Original Hybrid, Douglas Alpine Hybrid, Douglas Summit Hybrid",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|DreamCloud": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.dreamcloudsleep.com/mattresses",
+   "counted": "Classic Hybrid, Premier Hybrid, Luxe Hybrid, Ultra Hybrid, Classic Memory Foam, Premier Memory Foam, Luxe Memory Foam, Ultra Memory Foam, PressureSmart",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Dunlopillo": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://www.dunlopillo.co.uk/elite",
+   "counted": "Elite Comfort, Elite Luxury, Elite Supreme, Elite Relax, Firmrest, Sovereign, Millennium, Meya, Kareena",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|eve": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.evesleep.co.uk/collections/all",
+   "counted": "Premium Hybrid, Original Hybrid, Original, Premium, Wunderflip Premium Hybrid, Wunderflip Ultimate Hybrid",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Eve": {
+   "range": 6,
+   "market": "GB",
+   "url": "https://www.evesleep.co.uk/collections/all",
+   "counted": "Premium Hybrid, Original Hybrid, Original, Premium, Wunderflip Premium Hybrid, Wunderflip Ultimate Hybrid",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Luuna": {
+   "range": 6,
+   "market": "MX",
+   "url": "https://luuna.mx/colchones",
+   "counted": "Luuna Original, Luuna One, Luuna Signature, Luuna Blue, Luuna Air, Luuna Basics",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Lucid": {
+   "range": 3,
+   "market": "US",
+   "url": "https://lucidmattress.com/collections/all",
+   "counted": "The Original Memory Foam Mattress, Premium Memory Foam Mattress, Low Profile Memory Foam Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Molecule": {
+   "range": 20,
+   "market": "US",
+   "url": "https://moleculesleep.com/collections/mattresses",
+   "counted": "Core 10, Core Hybrid 10, CopperWELL 12, CopperWELL Hybrid 13, Reflex 11, Reflex Hybrid 11, Reflex Pro 12, Reflex Pro Hybrid 12, Reflex Elite 14, Reflex Elite Hybrid 14, Engage 12, Engage Hybrid 12, Engage Pro 12 Hybrid, Engage Pro 13, Engage Pro Hybrid 13, Engage Elite 14, Engage Elite Hybrid 14",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Nest Bedding": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.nestbedding.com/collections/shop-mattresses",
+   "counted": "Sparrow, Owl, Starling, Raven, Puffin",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Nolah": {
+   "range": 7,
+   "market": "US",
+   "url": "https://nolahsleep.com/collections/mattresses",
+   "counted": "Nolah Evolution, Nolah Signature Hybrid, Nolah Signature All-Foam, Nolah Original, Nolah Evo Comfort+, Nolah Natural, Nolah Nurture",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Novosbed": {
+   "range": 1,
+   "market": "CA",
+   "url": "https://www.novosbed.com/shop/mattress/novosbed-memory-foam/",
+   "counted": "Novosbed Memory Foam Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Origin": {
+   "range": 2,
+   "market": "US",
+   "url": "https://originmattress.com/shop/",
+   "counted": "Adapt Hybrid Mattress, LumbarCloud Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Otty": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://otty.com/collections/all",
+   "counted": "Pure Hybrid Bamboo, Pure+ Hybrid 4000 Pocket Sprung, Pure Pro Hybrid Bamboo & Charcoal, Extra Firm Hybrid, Aura Hybrid, Original Hybrid, Original Ice Hybrid, Natural Origin, Natural Evolve",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|PlushBeds": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.plushbeds.com/collections/",
+   "counted": "Botanical Bliss, Organic Bliss, Eco Bliss, Luxury Bliss, Signature Bliss, Royal Bliss, Kathy Ireland Hybrid, Healthy Child Organic Latex, Healthy Child Hybrid, Cool Bliss Luxury Memory Foam, Memory Foam Sofa Bed Mattress, Cool Bliss Gel Sofa Mattress, Slice of Heaven Eco-Green Sofa Mattress, MobilePlush 6 Classic RV Mattress, MobilePlush Eco-Green 8 RV Mattress",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Polysleep": {
+   "range": 8,
+   "market": "CA",
+   "url": "https://polysleep.ca/collections/mattresses",
+   "counted": "Luna, Sierra, Origin, Polycouch, Baby Mattress, Polysleep, Aura, Zephyr",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Silk & Snow": {
+   "range": 3,
+   "market": "CA",
+   "url": "https://www.silkandsnow.com/en-us/mattresses/",
+   "counted": "Original, Hybrid, Organic",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Sleepeezee": {
+   "range": 15,
+   "market": "GB",
+   "url": "https://sleepeezee.com/mattresses/",
+   "counted": "ActivFlex Response, Campaign for Wool, Centurial, Cool Refresh, Fusion Pro, Graphite Echo, Hotel Collection, InMotion, Jack Mattress, Jessica, Little Bedz, Majestic, Memory Ultimate, Ortho Bespoke, Travelodge Dreamer",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Tempur-Pedic": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.tempurpedic.com/shop-mattresses/",
+   "counted": "TEMPUR-Cloud, TEMPUR-Adapt, TEMPUR-Breeze, TEMPUR-ActiveBreeze",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Vispring": {
+   "range": 14,
+   "market": "GB",
+   "url": "https://www.vispring.com/collections/",
+   "counted": "Devonshire, Baronet Superb, Elite, Renaissance, Kingsbridge, Regal Superb, Shetland, Dartington, Herald Superb, Diamond Majesty, Magnificence, Signatory, Sublime Superb, Tiara Superb",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|WinkBeds": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.winkbeds.com/collections/all",
+   "counted": "The WinkBed, The GravityLux, The EcoCloud",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Zinus": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.zinus.com/collections/mattress",
+   "counted": "Core Memory Foam, Signature Memory Foam, Luxe Memory Foam, Core Hybrid, Signature Hybrid, Luxe Hybrid",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "mattresses|Sleep Number": {
+   "range": 10,
+   "market": "US",
+   "url": "https://support.sleepnumber.com/hc/en-us/articles/360050729394-Get-to-Know-Your-Sleep-Number-360-Smart-Bed",
+   "counted": "c2, c4, cSE, p5, p6, pSE, m7, iLE, i8, i10",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Cello": {
+   "range": 7,
+   "market": "GB",
+   "url": "https://celloelectronics.com/collections/televisions",
+   "counted": "CTrav series, C-series (16/19/22/24 Pitch Perfect TZH), C1926TZ-UC Kitchen TV, C2224SH, C2424SH, VOYAGER (C-TZR-VOY), C2426TZF (TV/DVD)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Bang & Olufsen": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.bang-olufsen.com/en/us/televisions",
+   "counted": "Beovision Harmony, Beovision Theatre, Beovision Contour",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Element": {
+   "range": 11,
+   "market": "US",
+   "url": "https://elementelectronics.com/shop/tvs/",
+   "counted": "E300AE_C (Xumo 720p/1080p), E300AG_R (Roku 720p/1080p), E300AF32PBG (portable Google), EBG300AG_R (Building Block green Roku), EBB300AG_R (Building Block blue Roku), E550AE_C (4K UHD Xumo), E550AF_T (4K UHD TiVo), E550AG_R (4K UHD Roku), EMQ650AE_C (Mini-LED QLED Xumo), EQ550AG_R (QLED Roku), EQ550AF_C (QLED Xumo)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Haier": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.haier-europe.com/en_GB/collections/tv",
+   "counted": "S90, S80, K85",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Majestic": {
+   "range": 3,
+   "market": "US",
+   "url": "https://majesticelectronics.us/",
+   "counted": "Smart 12V LED TV - Google/Android (GTV series), Smart 12V LED TV - webOS (SLT series), Non-Smart 12V LED TV (L-DA/global tuner series)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Sceptre": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.sceptre.com/product/search.html?search=tv",
+   "counted": "U-series (4K UHD, e.g. U515CV/U517CV/U557CV/U860CV), X-series (LED HDTV/Edgeless, e.g. X322BV/X405BV/X435BV/X437BV), A-series (Smart Android TV, e.g. A517CV/A557CV/A658CV), E-series (HD/Full HD LED, e.g. E246BV/E247BD)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Vizio": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.vizio.com/en/shop/tv",
+   "counted": "Mini LED Quantum 4K, Quantum 4K, Quantum Full HD, Quantum HD",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Sharp": {
+   "range": 5,
+   "market": "US",
+   "url": "https://shop.sharpusa.com/home-entertainment/televisions/",
+   "counted": "AQUOS QLED (Xumo), AQUOS QLED TiVo Edition, Sharp Roku TV (4K), AQUOS XLED (Mini LED Google TV), Sharp Roku TV OLED",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Skyworth": {
+   "range": 20,
+   "market": "US",
+   "url": "https://www.skyworthusa.com/pages/compare",
+   "counted": "Clarus Outdoor PS1, Clarus Outdoor S1, UE7600, UD7300, UD6300, UD6200, XC9300, XC9000, UC7500, UC6200, TD7300, TC6200, C1 Canvas Art, G6400A, Q6500A, E5500A, CE1 Canvas Elite, G6500B, Q6500B, C2 Canvas Art",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|JVC": {
+   "range": 3,
+   "market": "US",
+   "url": "https://jvcproducts.com/",
+   "counted": "Select Series, Premier Series, Quantum Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Amazon": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.aboutamazon.com/news/devices/amazon-updates-the-fire-tv-lineup-with-new-qled-sizes-a-200-smart-tv-and-availability-in-new-countries",
+   "counted": "Fire TV Omni QLED Series, Fire TV 4-Series, Fire TV 2-Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Konka": {
+   "range": 3,
+   "market": "US",
+   "url": "https://www.konka-usa.com/televisions/",
+   "counted": "812 Series (OLED), 809 Series (Mini QD-LED), 684 Series (Frameless LED)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|iFFALCON": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.iffalcon.com/uk/en/tvs",
+   "counted": "F510B, K610B, S52K, U62K",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Supersonic": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.supersonicinc.com/collections/tv-home-theater",
+   "counted": "SC-2426SDVD, SC-4350GTV, SC-3250GTV, SC-2816, SC-2416STV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Daewoo": {
+   "range": 16,
+   "market": "GB",
+   "url": "https://www.daewooelectronics.com/collections/tv",
+   "counted": "DE15HL, DM65QV, DM65FV, DM65HV, DM85HV, DM64HA, DM62FA, DM72QA, DM56QV, DM55UV, DM95QV, DM85FV, DM95FV, DE74HLI, DM75QV, DM65UV (size digit stripped from each model number family)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Emerson": {
+   "range": 11,
+   "market": "US",
+   "url": "https://emersonaudio.com/collections/televisions",
+   "counted": "ET-7000, ET-1300, ESTD-2400, ET-2400, ETD-4050A, ETD-2450, ET-5000K, ET-3200, ETD-4050, ETD-3250, ET-4000",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Avtex": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://avtex.co.uk/television/",
+   "counted": "Vidaa Smart TV Range (AV195TS/AV215TS/AV249TS/AV270TS/AV320TS/AV390TS), Freely-DVD-Combi Range (AV21DS/AV24DS), SmartPRO Range, Smart DVD-Combi Series (V219DS/V249DS)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Pyle": {
+   "range": 2,
+   "market": "US",
+   "url": "https://pyleusa.com/collections/tv-screens-and-monitors",
+   "counted": "RV TV with DVD Combo series (PLTLD16/19/22/24, size-only variants of one series), WebOS Smart TV series (PTVWEB50UHD)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Ghia": {
+   "range": 5,
+   "market": "MX",
+   "url": "https://tienda.ghia.com.mx/categoria-producto/tv-video/televisiones/",
+   "counted": "Netflix Series, Android TV Series, Whale Series QLED 4K, Whale Series Full HD, Google TV Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "televisions|Atyme": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.atymetv.com/",
+   "counted": "Class F Series, Class N Series, D55 Series, Class F3 Series, Class A Series, Class F2 Series, Class F Series Mini LED, Class S Series, Class S7 Series",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|OnePlus": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.oneplus.com/uk/store/phone",
+   "counted": "OnePlus 15, OnePlus 15R, OnePlus 13, OnePlus Nord 5, OnePlus Nord CE5",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Nothing": {
+   "range": 8,
+   "market": "GB",
+   "url": "https://intl.nothing.tech/collections/phones",
+   "counted": "Phone (4a), Phone (4a) Pro, Phone (4b), Phone (3), Phone (3a) Lite, Phone (3a) Pro, Phone (3a), Phone (2a)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|CMF by Nothing": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://intl.nothing.tech/collections/phones",
+   "counted": "CMF Phone 2 Pro, CMF Phone 1",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|vivo": {
+   "range": 15,
+   "market": "MX",
+   "url": "https://vivoshop.mx/collections/serie-t",
+   "counted": "X300, X300 Pro, V70, V70 FE, V60 Lite 4G, V50, T5, T5 Pro 5G, Y21d, Y28, Y04, Y05, Y31d, Y11d, Y19s",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Oukitel": {
+   "range": 12,
+   "market": "US",
+   "url": "https://oukitel.com/collections/all",
+   "counted": "WP68 Air, WP100 Plus, WP500, WP500 Ultra, WP66, WP61 Series, C17 Mini, C26 Mini, P2 Plus, C72, C17, C62 GT",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Unihertz": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.unihertz.com/collections/smartphones",
+   "counted": "Titan 2, Jelly Star, Jelly Max, Jelly 2, Jelly 2E, Tank 4 Pro, Tank 3 Pro, Tank Mini, Atom, Atom L, Titan Slim, Tank 2 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Blackview": {
+   "range": 9,
+   "market": "US",
+   "url": "https://store.blackview.hk/en-us/collections/smartphone",
+   "counted": "FORT 5, BL9000 Pro, ROCK 3, XPLORE X1, XPLORE 1, XPLORE 1 Pro, XPLORE 2, WAVE 10, COLOR 6",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Gigaset": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://www.gigaset.com/hq_en/smartphones/",
+   "counted": "GX30, GX50, GS6, GX6 PRO, GX4 PRO, GL40, GL30, GL795, GL695, GLX8 PLUS, GL595, GL395",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Alcatel": {
+   "range": 6,
+   "market": "US",
+   "url": "https://us.alcatelmobile.com/",
+   "counted": "GO FLIP 4, LUMOS, AXEL, APPRISE, INSIGHT, GLIMPSE",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Doro": {
+   "range": 11,
+   "market": "GB",
+   "url": "https://uk.doro.com/en-gb/collections/smartphones",
+   "counted": "Aurora A30, Aurora A20, Aurora A10, Leva X10, Leva E10, Leva E20, Leva E22, Leva E30, Leva L10, Leva L20, Leva L30",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Hammer": {
+   "range": 20,
+   "market": "IE",
+   "url": "https://hammerphones.com/en/category/store-smartphones",
+   "counted": "VENTUS 5G, CONSTRUCTION 2 THERMAL 5G, CONSTRUCTION 2 5G, BLADE V 5G, IRON 6 5G, IRON V, ENERGY X2 5G, RANGER, IRON Va, Power Plus LTE, Power Plus, Forge LTE, Forge, HORIZON LTE, BOW LTE, Boost 2 LTE, 6 LTE, ROCK LTE, Boost, Rock (excludes items explicitly marked out of stock)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Volla": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://volla.online/en/devices/",
+   "counted": "Volla Phone Quintus, Volla Phone Plinius, Volla Phone X23",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Huawei": {
+   "range": 21,
+   "market": "GB",
+   "url": "https://consumer.huawei.com/en/phones/",
+   "counted": "Pura 90s Pro Max, Pura 90s Pro, Pura 80 Pro, Pura 80 Ultra, Pura 80, Mate 80 Pro, Mate X7, Mate XT Ultimate Design, Mate X6, nova 16s Pro, nova 16s, nova 15 Max, nova Y74, nova 15 Pro, nova 15, nova 14 Pro, nova 14, nova Y73, nova 13 Pro, nova 13",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Infinix": {
+   "range": 18,
+   "market": "GB",
+   "url": "https://wap.infinixmobility.com/smartphones",
+   "counted": "HOT 70 Pro 5G+, SMART 20 HD, HOT 70, GT 50 Pro, SMART 20, NOTE 60 Pro, NOTE 60, NOTE Edge, HOT 60 Pro FREE FIRE, HOT 60i 5G, GT 30, HOT 60 Pro+ FREE FIRE, HOT 60 Pro+, NOTE 50S 5G, ZERO FLIP, HOT 60 5G, GT 30 Pro, HOT 60i",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Lively": {
+   "range": 5,
+   "market": "US",
+   "url": "https://shop.lively.com/",
+   "counted": "Jitterbug Flip3, Jitterbug Smart5, Jitterbug Flip2, Jitterbug Smart4, RAZ",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|POCO": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://www.mi.com/global/product-list/phone/poco/",
+   "counted": "POCO C95 Pro, POCO F9 Ultra, POCO F9 Pro, POCO X8, POCO M8s 5G, POCO C81 Pro, POCO X8 Pro Max, POCO X8 Pro, POCO M8 Pro 5G, POCO M8 5G, POCO F8 Ultra, POCO F8 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Redmi": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://www.mi.com/global/product-list/phone/redmi/",
+   "counted": "REDMI 17C 5G, REDMI Note 17 Pro Max 5G, REDMI Note 17 Pro 5G, REDMI Note 17 5G, REDMI Note 17, REDMI 17 5G, REDMI 17, REDMI A7, REDMI A7 Pro, REDMI Note 15, REDMI Note 15 5G, REDMI Note 15 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Xiaomi": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.mi.com/global/product-list/phone/",
+   "counted": "Xiaomi 17T Pro, Xiaomi 17T, Xiaomi 17 Ultra, Leica Leitzphone powered by Xiaomi, Xiaomi 17",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Sony": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.sony.co.uk/electronics/smartphones",
+   "counted": "Xperia 10 VIII, Xperia 1 VIII, Xperia 10 VII, Xperia 1 VII",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Cubot": {
+   "range": 5,
+   "market": "US",
+   "url": "https://shop.cubot.net/collections/phones",
+   "counted": "Note 60, P90, X100, A40, A50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|TCL": {
+   "range": 10,
+   "market": "US",
+   "url": "https://us.tcl.com/collections/mobile-for-sale",
+   "counted": "NXTPAPER 70 PRO, 60 XE NXTPAPER 5G, 50 XL NXTPAPER 5G, K70, K33, K32, FLIP PRO, CLASSIC, FLIP 3, FLIP 4 5G",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|AGM": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.agmmobile.com/collections/smartphone",
+   "counted": "G2 Guardian, G3 PRO, G3, Glory Pro, X7 Pro, M7, H6, H6 LITE, H Max",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|ASUS": {
+   "range": 6,
+   "market": "US",
+   "url": "https://rog.asus.com/phones-group/allmodels/",
+   "counted": "ROG Phone 9, ROG Phone 9 Pro Edition, ROG Phone 9 Pro, ROG Phone 8 Pro Edition, ROG Phone 8 Pro, ROG Phone 8",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Consumer Cellular": {
+   "range": 2,
+   "market": "US",
+   "url": "https://www.consumercellular.com/shop/phones/",
+   "counted": "SpeakEasy Flip, SpeakEasy Smart",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Doogee": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.doogee.com/collections/smart-phones",
+   "counted": "Note56 X, Note57 Plus, Note57 Pro, Note 57, Note57 Lite, Note56 X Lite, Note56 Lite, Note60, V Max Play Projector, V50 Pro, V50, V Max 2 Pro, S300 Pro, S200X, S200 Ultra",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Fairphone": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://www.fairphone.com/en/shop/",
+   "counted": "Fairphone (Gen. 6+), Fairphone (Gen. 6)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Sonim": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.sonimtech.com/products/",
+   "counted": "XP Pro, XP Pro Thermal, XP Pro E, XP10, XP5plus 5G, XP5plus, XP3plus 5G, XP3plus, XP100",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|FOSSIBOT": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.fossibot.com/collections/all",
+   "counted": "F106 Plus, F116 Pro, F115 Ultra, F110L, F113, F109S, F107 Pro, F110 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|HOTWAV": {
+   "range": 36,
+   "market": "US",
+   "url": "https://www.hotwav.com/collections/all",
+   "counted": "W11 Pro, A16 Pro Max, A17 Pro Max, A18 Pro Max, A25 Ultra, A26 Ultra, A36, A56, Cyber 13 Pro, Cyber 13, Cyber 16 Pro, Cyber 17, Cyber 18, Cyber 7, Cyber 8, Cyber 9 Pro, Cyber X Pro, Cyber X, Hyper 7 Pro, Hyper 7, Hyper 7S, Hyper 8 Pro, Hyper 8 Ultra, Hyper 8E, Note 12 2024, Note 12 EF, Note 12, Note 13 Max, Note 13 Pro, Note 15 Pro, Note 15, Note 16 Pro, Note 16, Note 17 Max, Note 18 GT, Note 18 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Artfone": {
+   "range": 8,
+   "market": "US",
+   "url": "https://theartfone.com/",
+   "counted": "CS182, CF241A, C1, M2, CB3, U3, G6 Pro, G3 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Kyocera": {
+   "range": 2,
+   "market": "US",
+   "url": "https://www.kyoceramobile.com/",
+   "counted": "DuraForce PRO 3, DuraXA Equip",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|HMD": {
+   "range": 20,
+   "market": "GB",
+   "url": "https://www.hmd.com/en_gb/all-phones",
+   "counted": "HMD 3210, HMD 215 4G 2nd Edition, HMD 235 4G 2nd Edition, HMD 105 4G School Edition, HMD Barca 3210 4G, HMD 2660 Flip 4G, HMD 110 4G, HMD 105 4G, HMD Barbie Phone 4G, HMD Aura2, HMD Fuse, HMD Fusion X1, HMD Barca Fusion, HMD Key, HMD Fusion, HMD Skyline, HMD XR21, HMD Pulse+, HMD Pulse, HMD Pulse Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Murena": {
+   "range": 6,
+   "market": "US",
+   "url": "https://murena.com/america/products/smartphones/",
+   "counted": "Fairphone (Gen. 6+) with Murena's /e/OS, Fairphone (Gen. 6) with Murena's /e/OS, HIROH Phone powered by Murena, Murena Pixel 8 (Refurbished), Murena Teracube 2s, Murena Pixel 7 (Refurbished)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Nubia": {
+   "range": 6,
+   "market": "US",
+   "url": "https://global.redmagic.gg/collections/phones",
+   "counted": "REDMAGIC 11S Pro, REDMAGIC 11 Air, REDMAGIC 11 Pro, REDMAGIC 10S Pro, REDMAGIC 10 Air, REDMAGIC 10 Pro",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Orbic": {
+   "range": 11,
+   "market": "US",
+   "url": "https://orbic.us/collections/phones",
+   "counted": "Trophy 5G, Myra 5G UW, Maui 4G LTE Prepaid, Journey V 4G, Maui+ 4G LTE Prepaid, Joy 4G Prepaid, Fun 4G Unlocked Bundle, Journey R 4G, JOY 2, JOURNEY Pro, JOURNEY Pro Lite",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|OSCAL": {
+   "range": 29,
+   "market": "US",
+   "url": "https://www.oscal.hk/series/11",
+   "counted": "PILOT8, MARINE 3, PILOT 6, PILOT 5, TANK 1, PILOT 3, PILOT 1, MARINE 2, MARINE 1, PILOT 2, S70, S80, S60 Pro Night Vision, S60 Pro, Flat 3C Mini, FLAT 3C, TIGER 8, TIGER 12, FLAT 2, FLAT 2C, TIGER 13, TIGER 10, FLAT 1C, MODERN 8, C60, C80, C30 Pro, C70, C30",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Punkt": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://www.punkt.ch/en/products/",
+   "counted": "MC03, MP02, MC02",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|Ulefone": {
+   "range": 56,
+   "market": "US",
+   "url": "https://www.ulefone.com/collections/smartphones",
+   "counted": "Armor 24 Pro, Armor 22 Pro, Armor 27T Pro+, Armor 27T+, Armor 34 Pro+, Armor 34+, Armor 29 Pro Thermal Version, Armor 28 Ultra Thermal Version, Armor 33 Pro, Armor 33, Armor 29 Ultra, Armor 29 Pro, Armor 28 Pro, Armor 30 Pro, Armor 28 Ultra, Armor 34 Pro, Armor 34, Armor 30, Armor 27T, Armor 27, Armor 27T Pro, Armor 27 Pro, Armor 25T, Armor 25T Pro, Armor 26 Ultra, Armor 26 Ultra Walkie-Talkie, Armor 24, Armor 22, Armor 21, Armor X32 Pro, Armor X32, Armor X31 Pro, Armor X31, Armor X16 Pro, Armor X16, Armor X13, Armor X12 Pro, Armor X12, RugKing 5 Pro, RugKing 4 Pro, RugKing 3 Pro, RugKing 2 Pro, RugKing, Armor Mini 5, Armor Mini 4, Armor Mini 20T Pro, Armor Mini 20 Pro, Armor Mini 20, Note 23, Note 22, Note 21, Note 20 Pro, Note 18 Ultra, Note 18 Pro, Power Armor 18T Ultra Version, Power Armor 18 Ultra Version",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|UMIDIGI": {
+   "range": 34,
+   "market": "US",
+   "url": "https://www.umidigi.com/page-phones.html",
+   "counted": "G9x, G100x 5G, G100x, G100 5G, G100A, G100, G9 5G, G9T, G9C, G9A, Note 100x 5G, Note 100x, Note 100 5G, Note 100A, Note 100, Note 90, BISON X20, BISON GT2 5G, BISON GT2 PRO 5G, A75x, A15 | A15C, A15 Pro 5G, A13 Pro Max 5G, A13 Pro, Power 7S, Power 7, Power 7 Max, Power 5S, Power 5, F3 Pro 5G, F3 5G, F3, F3S, F3 SE",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "phones|ZTE": {
+   "range": 6,
+   "market": "US",
+   "url": "https://global.ztedevices.com/collections/all-smartphones",
+   "counted": "Axon 60 Ultra 5G, Axon 40 Pro, Axon 40 Ultra, Axon 30, Axon 30 Ultra, Axon 20 5G",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-tires-beds-screens.json"
+  },
+  "luggage|BÉIS": {
+   "range": 8,
+   "market": "US",
+   "url": "https://beistravel.com/collections/luggage",
+   "counted": "The Carry-On Roller, The Small Carry-On Roller, The Medium Check-In Roller, The Large Check-In Roller, The Hybrid Carry-On Roller, The Hybrid Check-In Roller, The Pro Rolling Backpack, The Pro-Rolling Duffle Check-In",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Arlo Skye": {
+   "range": 9,
+   "market": "US",
+   "url": "https://arloskye.com/collections/all",
+   "counted": "Expandable Carry-On Max, Expandable Carry-On Max - Front Pocket, Expandable Check-In - Medium, Top-Load Expandable Trunk - Large, Original Carry-On Max, Original Carry-On Max - Front Pocket, Original Check-In - Large, Original Check-In - Medium, Original Frame Carry-On Max (the sold-out Aluminum Edition excluded as not currently sold)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Eagle Creek": {
+   "range": 5,
+   "market": "US",
+   "url": "https://eaglecreek.com/collections/luggage",
+   "counted": "Cargo Hauler XT, Expanse, Tarmac, Gear Warrior XE, ORV",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|NOMATIC": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.nomatic.com/collections/travel-bags",
+   "counted": "Travel Pack, Travel Duffel Bag 40L, Travel Duffel Bag 30L, McKinnon Camera Pack 35L, Navigator Travel Backpack 32L, Messenger Bag, Navigator Pack 15L, Navigator RS Pack 15L, Navigator Collapsible Duffel 42L, Laptop Bag, Navigator Collapsible Pack 16L, McKinnon Camera Pack 35L V2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Roam Luggage": {
+   "range": 12,
+   "market": "US",
+   "url": "https://www.roamluggage.com/collections/all",
+   "counted": "Americana Carry-On, Americana Carry-On Expandable, Americana Check-In, Americana Check-In Expandable, Americana Large Carry-On, Americana Large Carry-On Expandable, Americana Large Check-In, Americana Large Check-In Expandable, Carry-On, Carry-On Expandable, Check-In, Large Check-In",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|July": {
+   "range": 14,
+   "market": "US",
+   "url": "https://july.com/products",
+   "counted": "American Airlines Checked Expandable CaseSafe, American Airlines Carry On CaseSafe, Carry On Trunk, Checked Plus Expandable CaseSafe, Capsule Carry On Pro, Checked 80/20 CaseSafe, Carry On Max Expandable CaseSafe, Checked Trunk, Checked Plus CaseSafe, Checked CaseSafe, Checked Trunk Set, Carry On Pro, Carry On Light Expandable, Carry On Essential",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "luggage|Monos": {
+   "range": 9,
+   "market": "CA",
+   "url": "https://monos.com/collections/all",
+   "counted": "Carry-On, Carry-On Pro, Expandable Carry-On, Expandable Carry-On Pro, Carry-On Plus, Carry-On Pro Plus, Check-In Medium, Check-In Large, Expandable Check-In Medium",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Cannondale": {
+   "range": 34,
+   "market": "US",
+   "url": "https://www.cannondale.com/en-us/bikes",
+   "counted": "CAAD14, SuperSix EVO, SuperSix EVO CX, SuperSix EVO SE, SuperSlice, SuperX, Synapse, Topstone Alloy, Topstone Carbon, Bad Habit, Habit, Habit HT, Jekyll, Scalpel, Scalpel HT, Trail, Adventure, Bad Boy, Quick, Quick CX, Treadwell, Habit Neo, Moterra, Moterra LT, Moterra SL, Synapse Neo, Synapse Neo Allroad, Adventure Neo Allroad, FlyingV, Mavaro, Tesoro Carbon, Tesoro X, Treadwell Neo, Cargowagen Neo",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Kona": {
+   "range": 23,
+   "market": "US",
+   "url": "https://konaworld.com/collections/bikes",
+   "counted": "Process 134, Hei Hei, Cinder Cone, Fire Mountain, Honzo, Honzo 20, Honzo 24, Honzo ESD, Lava Dome, Unity, LBF, Libre, Ouroboros, Ouroboros Supreme, Coco, Dew, Dr Dew, Hula, Humu, Makena, Dew-E, Ecoco, El Kahuna (CR/DL component-spec suffixes collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Marin": {
+   "range": 36,
+   "market": "US",
+   "url": "https://www.marinbikes.com/bikes",
+   "counted": "Alpine Trail, Alpine Trail Electric, Bear Valley, Bobcat Trail, Bolinas Ridge, Bayview Trail, Coast Trail, DSX, DSX Electric, Donky Jr., Fairfax, Fairfax Electric, Four Corners, Gestalt, Gestalt X, Headlands, Kentfield, Larkspur, Larkspur Electric, Lombard Electric, Madrone Trail, Muirwoods, Nicasio, Pine Mountain, Presidio, Quake, Rift Zone, Rift Zone Electric, Rift Zone Jr, San Quentin, Sausalito, Stinson, Stinson Electric, Tam, Team Marin, Alcatraz",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Brompton": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://www.brompton.com/bikes",
+   "counted": "A Line, C Line, P Line, G Line, T Line",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "bicycles|Brompton Electric": {
+   "range": 4,
+   "market": "GB",
+   "url": "https://www.brompton.com/bikes",
+   "counted": "Electric C Line, Electric P Line, Electric T Line, Electric G Line",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Knaus": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://www.knaus.com/en/motorhomes/models",
+   "counted": "VAN TI VANSATION, VAN TI VW VANSATION, VAN TI PLUS, L!VE TI PLATINUM SELECTION, L!VE WAVE PLATINUM SELECTION, SKY TI VW, L!VE I, BOXLIFE PLATINUM SELECTION, BOXTIME",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Westfalia": {
+   "range": 10,
+   "market": "GB",
+   "url": "https://www.westfalia-mobil.com/modelle/modelluebersicht.php and https://westfalia-mobil.com/de/neue-westfalia-kollektion/",
+   "counted": "Nansen, Columbus Liner, Columbus, James Cook, Sven Hedin, Meridian, Club Joker Urban, Jules Verne, Kelsey, Kipling (length/drivetrain/edition suffixes like 600L/640LS/540D/600E/600D/640E/50 Jahre Edition collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Grech RV": {
+   "range": 6,
+   "market": "US",
+   "url": "https://grechrv.com/models/",
+   "counted": "STRADA-ion, VACANZA-ion, TURISMO-ion, TERRENO-ion, LUSSO-ion Lounge, LUSSO Tour (AWD/length variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "rvs|Storyteller Overland": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.storytelleroverland.com/pages/adventurevehicles",
+   "counted": "Beast Mode, Dark Mode, Classic Mode, Crew Mode, GXV Hilt, GXV Epic (OG/XO/XL configurations collapsed into each base nameplate; 2027 Grand Bohemian and GXV Wild excluded as not yet available)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Buell": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.buellmotorcycle.com/models",
+   "counted": "Super Cruiser, SuperTouring, Hammerhead 1190, 1190SX",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Genuine Scooter Co": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.genuinescooters.com/",
+   "counted": "Buddy 50, Buddy 125, Buddy 170i, Buddy Kick 125i, Hooligan 170i, Rattler, Roughhouse 50, Urbano, G400C (the Genuine-brand products on genuinescooters.com; NIU, Royal Alloy and Chicago Scooter Co. models the same site distributes are catalogued under their own brand names, not here)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Janus": {
+   "range": 4,
+   "market": "US",
+   "url": "https://www.janusmotorcycles.com/",
+   "counted": "Halcyon 450, Halcyon 250, Gryffin 450 Scrambler, Gryffin 250 (Origin trim collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Dinamo": {
+   "range": 32,
+   "market": "MX",
+   "url": "https://www.dinamotos.mx/catalogo-motos/",
+   "counted": "U2, U5, U5 175, Metro, Adventure Elite, Alien R, Custom, Rayo, Custom Black, Renegada, Rayo Elite, B-52, Bandid, DNM 2.5, DNM 3.0, Scorpion, Scorpion XT, Rocky, Xtreme RLX, Goliat, R4, Super Sport, Comando, R2 GT, SpeedFire, DNM-4, Skeleton, Heavy Cab B, Heavy Cab R, Heavy Cab 300, Heavy MAX, MOTO TX",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Mash": {
+   "range": 9,
+   "market": "GB",
+   "url": "https://mashmotors.co.uk/models/",
+   "counted": "X-Ride 50, Fifty 50, Seventy 125, Black Seven LC 125, Two Fifty 250, Five Hundred 400, Six Hundred 650, X-Ride 650, X-Ride 650 Trail",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|AJS": {
+   "range": 15,
+   "market": "GB",
+   "url": "https://www.ajsmotorcycles.co.uk/motorcycles and https://www.ajsmotorcycles.co.uk/scooters",
+   "counted": "Ridgeway, Sedona, '71 Desert Scrambler, Cadwell, JFT-125, Bilston, JS125-X, Leten LT190, Firefox 50, Barletta 50, Modena 125, Barletta 125, Firefox 125, ADV-S 125, Digita 50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Lambretta": {
+   "range": 10,
+   "market": "GB",
+   "url": "https://lambrettauk.co.uk/gallery",
+   "counted": "V50 Special, V125 Special, J125, V200 Special, X125, X300 GP, X300 SR, X300 GT, G350 Series II, G350",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Zontes": {
+   "range": 11,
+   "market": "GB",
+   "url": "https://zontes.co.uk/new-bikes/",
+   "counted": "ZT125-G1, ZT125-X, ZT125-U1 LCD, ZT125-C, ZT125-GK, ZT125-C2, ZT125-Z2, ZT368T-G, ZT703-RR, ZT703-T, ZT703-F",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Keeway": {
+   "range": 20,
+   "market": "GB",
+   "url": "https://keeway.co.uk/new-bikes",
+   "counted": "RKS 125cc, X-Light 125cc, RKF 125cc, Morbidelli T125X, ICON 125i, Fact X 125cc, Morbidelli SC125RE, XDV 125 Evo Pro, Fact X 50cc, K-Light 125cc, Superlight Ltd 125cc, Superlight SE 125cc, RKV125C, V-Cruise 125C, V-Cruise 302C, E-Zi Mini, Blueshark 45 Lite, Blueshark 80 Lite, Blueshark 80, Morbidelli F125",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Hanway": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://hanwaymotor.co.uk/new-bikes",
+   "counted": "NK 125cc, SC 125cc",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Sinnis": {
+   "range": 12,
+   "market": "GB",
+   "url": "https://sinnismotorcycles.com/",
+   "counted": "Terrain, GPX, Outlaw, SM-R, SM-XE, Akuma, Hoodlum, Connect, Hero-X, Shuttle, Twist, Encanto",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Royal Alloy": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://royalalloy.co.uk/scooters",
+   "counted": "GT 125 AC, TG 125 AC, TG 125 LC, TG 300 LC, GP 300 LC",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "cars|Chirey": {
+   "range": 7,
+   "market": "MX",
+   "url": "https://www.chirey.mx/",
+   "counted": "Tiggo 2 Pro, Tiggo 4 Pro, Tiggo 7 Pro, Tiggo 8 Pro, Arrizo 8, Tiggo 7 PHEV CSH, Tiggo 8 PHEV CSH",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-d.json"
+  },
+  "motorcycles|Moto Morini": {
+   "range": 9,
+   "market": "US",
+   "url": "https://www.motomoriniusa.com/",
+   "counted": "X-Cape 1200, X-Cape 700, X-Cape 650, Vettore 450, Calibro 700, Calibro 700 Bagger, SCR, STR, STR Sport",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|QJMOTOR": {
+   "range": 26,
+   "market": "GB",
+   "url": "https://qjmotor.co.uk/new-bikes",
+   "counted": "SRK 125 R, SRV 125, TRX 125, COV 125 X, COV 125 S, SRK 125 E, SRK 125 J, SRK 125 S, SRT 600 S, SVT 650, SVT 650 X, SRT 900 S, SRT 900 SX, SRT 450 RX, SRT 125 DX, SRT 600 SX, SRV 600 V4, SRV 600 V2, SRK 800, SRK 900, SRK 921, LTS 50 S, LTS 125 S, ATR 125, SRK 800 RR, SRK 921 RR",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|Islo": {
+   "range": 6,
+   "market": "MX",
+   "url": "https://www.islo.com.mx/",
+   "counted": "Rabbit Rush, Trip 150, Freedom, Mutant 250R, Blackwing, Montana ADV250",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|GasGas": {
+   "range": 15,
+   "market": "US",
+   "url": "https://www.gasgas.com/en-us/models/motorcycles.html",
+   "counted": "MC 125, MC 85 19/16, MC 85 17/14, MC 65, MC 50, MC 450F, MC 250F, MC-E 5, MC-E 2, EC 300, EX 300, TXT GP 250, TXT GP 300, TXT RACING 250, TXT RACING 300",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|Kove": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.kovemotousa.com/models-current",
+   "counted": "800X Rally, 800X Pro, 450 Rally, 450 Rally Street Legal, MX450, MX250",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "motorcycles|ItalJet": {
+   "range": 5,
+   "market": "US",
+   "url": "https://italjet.com/",
+   "counted": "Dragster 125-300, Dragster 459, Roadster 400, Dragster 700, Dragster 700 Twin",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Chausson": {
+   "range": 18,
+   "market": "GB",
+   "url": "https://www.motorhomes-chausson.co.uk/ranges/",
+   "counted": "V594, S614, S697, S514, X640, X550, 798, 660, 640, 650, 630, 777, 788, 627, 720, C727, C656, C514",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|East To West": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.easttowestrv.com/motorhomes",
+   "counted": "College Avenue, Alita, Bravado, Entrada, Entrada M-Class",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Leisure Travel Vans": {
+   "range": 2,
+   "market": "US",
+   "url": "https://leisurevans.com/products/",
+   "counted": "Unity, Wonder",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Volkswagen": {
+   "range": 2,
+   "market": "GB",
+   "url": "https://www.volkswagen-vans.co.uk/en/california-world/california-camper-van-range.html",
+   "counted": "California, Grand California (Beach/Coast/Ocean trims and 600/680 length variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "rvs|Weinsberg": {
+   "range": 5,
+   "market": "GB",
+   "url": "https://weinsberg.com/en-uk/motorhomes/",
+   "counted": "CaraCompact, CaraSuite, CaraHome, CaraCore, Competence (EDITION [PEPPER]/[SPICY] trims collapsed into base nameplates)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Riese & Müller": {
+   "range": 14,
+   "market": "US",
+   "url": "https://www.r-m.de/en-us/bikes/",
+   "counted": "Nevo, Charger, Load, Multitinker, Swing, Carrie, Multicharger, Homage, Delite, Superdelite, UBN, Culture, Packster, Transporter",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|MiRider": {
+   "range": 3,
+   "market": "GB",
+   "url": "https://mirider.co.uk/shop/",
+   "counted": "MiRiDER 16, MiRiDER 20, MiRiDER 24 (Single Speed/GB3 three-speed gearbox drivetrain variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Aventon": {
+   "range": 7,
+   "market": "US",
+   "url": "https://www.aventon.com/collections/all-products",
+   "counted": "Current, Aventure, Level, Ramblas, Pace, Abound, Soltera",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Whyte": {
+   "range": 14,
+   "market": "GB",
+   "url": "https://whytebikes.com/collections/bikes",
+   "counted": "909 X, 905, 629, E-160, E-180, ELyte 140, ELyte 150, ELyte EVO, RHeO 1, RHeO 2, RHeO 3, T-140, T-160, Kado (RSX/S/RS spec-tier and ST step-through suffixes collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Lectric": {
+   "range": 6,
+   "market": "US",
+   "url": "https://lectricebikes.com/pages/compare-lectric-ebikes",
+   "counted": "XP4, XP Lite2, XP Trike2, XPedition2, XPeak2, XPress2",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Fiido": {
+   "range": 12,
+   "market": "US",
+   "url": "https://fiido.com/pages/compare",
+   "counted": "D3 Pro, Titan, T2, M1 Pro, Air, C11, C21, C11 Pro, Nomads, Nomads Pro, T3, T3 Max",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Himiway": {
+   "range": 9,
+   "market": "US",
+   "url": "https://himiwaybike.com/collections/ebikes",
+   "counted": "D5 2.0, D5 Pro, D7, D7 Pro, A7, A7 Pro, C1, C3, C5 (ST step-through, Camo and Zebra colour/size variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Electra": {
+   "range": 10,
+   "market": "US",
+   "url": "https://electra.trekbikes.com/us/en_US/bikes/c/B100/",
+   "counted": "Townie Go!, Townie Go! S, Townie Go! 7D EQ, Ponto Go!, Ponto Go! S, Townie 7D, Townie 7D EQ, Cruiser 7D, Cruiser 1, Sprocket 1 20\" (Step-Thru/Step-Over frame-style variants collapsed into each base nameplate)",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-e.json"
+  },
+  "bicycles|Suzuki": {
+   "range": 6,
+   "market": "US",
+   "url": "https://www.suzukicycles.com/atvs",
+   "counted": "KingQuad 750AXi, KingQuad 500AXi, KingQuad 400ASi, KingQuad 400FSi, QuadSport Z90, QuadSport Z50",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Kawasaki": {
+   "range": 5,
+   "market": "US",
+   "url": "https://www.kawasaki.com/en-us/category/atv/kfx",
+   "counted": "KFX50, KFX90, Brute Force 300, Brute Force 450, Brute Force 750",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Yamaha": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.yamahamotorsports.com/models.php",
+   "counted": "YFZ450R, Raptor 700R, Raptor 700, Raptor 110, Grizzly, Grizzly 110, Kodiak 700, Kodiak 450",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|Kymco": {
+   "range": 9,
+   "market": "US",
+   "url": "https://kymcousa.com/atvs/",
+   "counted": "Mongoose 110i, MXU 150X, Mongoose 270i, MXU 270i EURO, MXU 450i, Maxxer 450i, MXU 450i LE, MXU 550i EPS, MXU 700i EURO",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
+  },
+  "bicycles|CFMoto": {
+   "range": 8,
+   "market": "US",
+   "url": "https://www.cfmotousa.com/cforce-series",
+   "counted": "CFORCE 1000 OVERLAND, CFORCE 1000 TOURING, CFORCE 800 TOURING, CFORCE C6 PRO TOURING, CFORCE C6 PRO, CFORCE C6, CFORCE C5, CFORCE C4",
+   "read": "2026-10-06",
+   "from": "docs/research/catalog/ranges-f.json"
   }
  },
  "rejected": {
@@ -394,6 +3025,24 @@
   "cars|Acura": "counted from the home page, not an all-vehicles page",
   "cars|Cadillac": "counted from the SUVs page only, leaving out its cars",
   "motorcycles|Kawasaki": "counted from the home page, not a models page",
-  "tires|Toyo": "counted from a tire finder, at the research’s own moderate confidence"
+  "tires|Toyo": "counted from a tire finder, at the research’s own moderate confidence",
+  "appliances|Bosch": "its own notes say the page read wasn't the whole range: Washers/Dryers: 800 Series Compact Washer, 500 Series Compact Washer, 800 Series Heat Pump Dryer, 500 Series Heat Pump Dryer, 300 Series Compact Condensation Dr",
+  "appliances|Neff": "its own notes say the page read wasn't the whole range: N90 Built-in compact oven with microwave (C24MS71G0B), N70 Built-in compact oven with microwave (C24MR21G0B/N0B, color variants merged), N50 Built-in microwave",
+  "appliances|Siemens": "its own notes say the page read wasn't the whole range: iQ500 Fully-integrated dishwasher (SN95YX02CG), iQ300 Fully-integrated dishwasher (SN73HX03VG), iQ100 Fully-integrated dishwasher (SN61HX00KG), iQ700 Fully-inte",
+  "appliances|Russell Hobbs": "its own notes say the page read wasn't the whole range: Everyday Kettle, Everyday 2 Slice Toaster, Everyday 4 Slice Toaster, Calm 2 Slice Toaster (color variants merged) -- page shown was a subset/subcategory listing",
+  "appliances|Indesit": "its own notes say the page read wasn't the whole range: Push&Go BI WMIL 71252 UK N (integrated), My Time MTWC 91495 W UK N (freestanding) -- page rendered only 2 featured models, not the full catalog",
+  "televisions|Furrion": "its own notes say the page read wasn't the whole range: Aurora Full-Sun Pro Series, Aurora Partial-Sun Series, Aurora Partial-Sun Premier Series, Aurora Full-Shade Series",
+  "televisions|Metz": "the page said 18 sets and named 15, so the count and its list disagree",
+  "appliances|Hisense": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Midea": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Fisher & Paykel": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Bertazzoni": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Gaggenau": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "appliances|Sharp": "counted fridges, ovens, ranges and microwaves, which SLATE’s appliance catalog doesn’t sell (it holds washers, dryers and dishwashers), so it isn’t that catalog’s range",
+  "computers|Stormforce": "four of the models it counted aren’t on Stormforce’s own site, so the count can’t be trusted",
+  "cars|Lexus": "it counted the RC, discontinued in America after 2025, and the LBX, never sold there (lexus.com, read 2026-10-06), so the count isn’t America’s current lineup",
+  "motorcycles|Yamaha": "Yamaha’s own current road lineup page lists 24 models against the 25 counted (moto-depth-fill-2.json), so the count is in doubt",
+  "mattresses|Restonic": "one of its six counted lines, Grand Palais, is discontinued (mattress-depth-fill-2.json), so the count isn’t the current lineup",
+  "motorcycles|Genuine": "the same company as Genuine Scooter Co (genuinescooters.com), counted twice under two names; its models are kept under that one"
  }
 }

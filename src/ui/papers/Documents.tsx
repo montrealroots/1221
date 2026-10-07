@@ -26,7 +26,7 @@ import {
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal, type VehicleClass } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
-import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
+import { applies, stepFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal, usStatusEnds } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -179,7 +179,7 @@ function LicensePath({ track = 'car' }: { track?: VehicleClass }) {
                 const booked = r?.booked?.step === st.id;
                 const owed = r?.unpaid === st.id;
                 const standing = owed ? 'Passed; License Fee Owed' : booked ? 'Booked' : no === 'Done.' && done !== undefined ? `Done ${formatDate(done, sim.zone)}` : no ? no : 'Open';
-                const fee = owed ? st.issueFee ?? 0 : attemptFee(st, fresh);
+                const fee = owed ? st.issueFee ?? 0 : stepFee(person, jurisdiction, path, st, fresh);
                 const rate = st.pass ? passRate(st.pass) : undefined;
                 return (
                   <tr key={st.id}>

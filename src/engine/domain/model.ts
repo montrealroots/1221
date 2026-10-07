@@ -313,14 +313,18 @@ export interface Person {
   watching?: Record<string, import('../systems/programmes').Watching>;
   /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
   favorites?: Record<string, string[]>;
-  /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
   /** A course of therapy under way (`systems/therapy.ts`, from 2026-10-03). */
   therapy?: import('../systems/therapy').Course;
   /** IKEA refund card credit, from pieces sold back (`systems/furnishings.ts`, from 2026-10-03), in the save's money. */
   ikeaCredit?: number;
   /** Pieces of jewelry commissioned and not yet ready (`systems/commissions.ts`, from 2026-10-03). */
   commissions?: import('../systems/commissions').Commission[];
+  /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
   supplyCuts?: { water?: import('../systems/utilities').SupplyCut; gas?: import('../systems/utilities').SupplyCut };
+  /** The day's power cut at home, from when to when (`powerDay`, from 2026-10-06; until then a cut had no time of day). */
+  powerCut?: import('../systems/utilities').SupplyCut & { told?: true; spoiled?: number };
+  /** A recipe stopped partway, the food left part-done (`systems/kitchen.ts`, from 2026-10-06). */
+  cooking?: import('../systems/kitchen').Cooking;
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;
@@ -350,6 +354,8 @@ export interface Person {
    * set. None is on unless chosen.
    */
   automation?: Partial<Record<import('../systems/automation').Shortcut, true>>;
+  /** The day's outfit and meals asked as shortcuts (from 2026-10-06): a save without it had both done for it, and is given both on opening. */
+  dayShortcuts?: true;
   /** The bags that go away with them (from 2026-10-03); none chosen, the one suitcase. */
   goingBags?: string[];
   /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */
@@ -376,6 +382,8 @@ export interface Person {
   parkingPermit?: { cityId: string; at: number };
   applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;
+  /** When their fingernails and toenails were last trimmed at home (`systems/homegrooming.ts`, from 2026-10-06). */
+  nailsAt?: { fingers?: number; toes?: number };
   /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
   utilitiesAt?: string;
   /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */

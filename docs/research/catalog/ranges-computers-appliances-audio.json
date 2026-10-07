@@ -1,0 +1,937 @@
+{
+  "read": "2026-10-06",
+  "ranges": {
+    "computers|Microsoft": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.microsoft.com/en-us/surface/devices",
+      "counted": "Surface Pro, Surface Laptop, Surface Laptop Ultra, Surface RTX Spark Dev Box",
+      "market": "US"
+    },
+    "computers|Apple": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.apple.com/mac/compare/, https://www.apple.com/ipad/compare/",
+      "counted": "MacBook (A18 Pro entry model), MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, iPad Pro, iPad Air, iPad, iPad mini",
+      "market": "US"
+    },
+    "computers|Corsair": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.corsair.com/us/en/c/gaming-computers",
+      "counted": "VENGEANCE a7500, VENGEANCE a7500 AIR, VENGEANCE a5100, VENGEANCE i7500, VENGEANCE i7600, VENGEANCE i7600 AIR, VENGEANCE i5200, VENGEANCE i8200, VENGEANCE i8300, VENGEANCE a8200, CORSAIR ONE i600, CORSAIR ONE a600, NEURON Gaming PC, MILLENNIUM Gaming PC",
+      "market": "US"
+    },
+    "computers|Framework": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://frame.work/marketplace/laptops",
+      "counted": "Framework Desktop, Framework Laptop 12, Framework Laptop 13 Pro, Framework Laptop 13, Framework Laptop 16",
+      "market": "US"
+    },
+    "computers|GMKtec": {
+      "range": 26,
+      "meetsHundred": false,
+      "url": "https://www.gmktec.com/collections/all",
+      "counted": "G10, G11 Plus, G3S, G5S, M2 Pro S, M3 Pro, M5 Ultra, M5S, M6 Ultra, M7 Ultra, M8, K7 PLUS, K8 Plus, K9, K11, K12, K13, K15, K17, K17 Plus, EVO-X1, EVO-X1 Pro, EVO-X2, EVO-X3, EVO-X5 Pro, EVO-T1, EVO-T2, NEO-X1 Pro",
+      "market": "US"
+    },
+    "computers|NZXT": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://nzxt.com/collections/prebuilt-pcs",
+      "counted": "Player One, Player One Prime, Player Two, Player Two Prime, Player Three, Player Three Prime",
+      "market": "US"
+    },
+    "computers|Purism": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://puri.sm/products/",
+      "counted": "Librem 16, Librem 14, Librem 11, Librem Mini, Librem Server",
+      "market": "US"
+    },
+    "computers|Raspberry Pi": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.raspberrypi.com/products/",
+      "counted": "Raspberry Pi 5, Raspberry Pi 500+, Raspberry Pi 500, Raspberry Pi Zero 2 W, Raspberry Pi Compute Module 5",
+      "market": "US"
+    },
+    "computers|System76": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://system76.com/",
+      "counted": "Lemur Pro, Darter Pro, Thelio Mira AI, Thelio Mira, Thelio Major, Serval WS",
+      "market": "US"
+    },
+    "computers|Samsung": {
+      "range": 22,
+      "meetsHundred": false,
+      "url": "https://www.samsung.com/us/computing/galaxy-books/, https://www.samsung.com/us/tablets/compare/",
+      "counted": "Galaxy Book6 Ultra, Galaxy Book6 Pro, Galaxy Book6 Edge, Galaxy Book6 (Intel Core), Galaxy Book6 Touch, Galaxy Book6, Galaxy Book5 Pro 360, Galaxy Book5 Pro, Galaxy Book5 360, Galaxy Book5, Galaxy Book4 Edge 14|16, Galaxy Book4 Edge 15, Galaxy Chromebook Plus, Galaxy Tab S12 Ultra, Galaxy Tab S12+, Galaxy Tab S11 Ultra, Galaxy Tab S11, Galaxy Tab S10 Lite, Galaxy Tab A11+, Galaxy Tab S10+, Galaxy Tab S10 FE+, Galaxy Tab S10 FE",
+      "market": "US"
+    },
+    "computers|GEEKOM": {
+      "range": 28,
+      "meetsHundred": false,
+      "url": "https://www.geekompc.com/?post_type=product",
+      "counted": "A9 Max 2026 Edition, A6, A5, A8, IT13 Max, Air12 2026 Edition, AX8 Max, IT12, IT15, A7 2026 Edition, Air12 Lite, IT13 2026 Edition, GT15 Max, A8 Max, A5 Pro, GT1 Mega, GT13 Max, A5 Pro 2026 Edition, iX12, A9 Mega, AE8, XT12 Pro, Air11, IT11, GT2 Mega, GeekBook X14 Pro, GeekBook X16 Pro, GeekBook M16",
+      "market": "US"
+    },
+    "computers|Minisforum": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://store.minisforum.com/collections/all-product",
+      "counted": "MS-S1 MAX, AI X1 Pro, AtomMan G1 Pro, MS-02 Ultra, MS-03, MS-A2",
+      "market": "US"
+    },
+    "computers|Beelink": {
+      "range": 19,
+      "meetsHundred": false,
+      "url": "https://www.bee-link.com/collections/all-pc",
+      "counted": "GTR9 Pro, GTi15 Ultra, GTi14 Ultra, GTi13 Ultra, SER10 MAX, SER9 MAX, SER9 Pro, SEi14 AI, SEi13 AI, SER8, EQi 304, EQR7, EQR6, EQR5, EQi13 Pro, EQi13, EQi12, EQ14, ME mini",
+      "market": "US"
+    },
+    "computers|OnePlus": {
+      "range": 1,
+      "meetsHundred": false,
+      "url": "https://www.oneplus.com/us/oneplus-pad-3",
+      "counted": "OnePlus Pad 3",
+      "market": "US"
+    },
+    "computers|Razer": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.razer.com/gaming-laptops",
+      "counted": "Razer Blade 14, Razer Blade 16, Razer Blade 18",
+      "market": "US"
+    },
+    "computers|Chuwi": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.chuwi.com/collections/all",
+      "counted": "GTBook X 230H, NeoBook Plus, NeoBook, MiniBook X U300, UniBook 304, CoreBook Air, CoreBook Air 226V, Hi10 Max, LarkBox X 100U, AuBox X 256V, AuBox X, LarkBox X i3, AuBox AI365, Unitech 24 100U, Unitech 27, Unitech 24, ETBox AI P09H, ERBox1 7735HS, ETBook M14P, ERBook Max, ETBox i7-13620H",
+      "market": "US"
+    },
+    "computers|Dynabook": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://us.dynabook.com/computers-tablets/home",
+      "counted": "Portege X30, Portege X30L, Portege X30L-J, Portege X30T, Portege X30W, Portege X40, Portege X40-J, Portege X50, Tecra X40, Tecra X50, Tecra A30, Tecra A40, Tecra A50, Satellite Pro L50, Satellite Pro C40, Satellite Pro C50, Dynabook E10",
+      "market": "US"
+    },
+    "computers|Gateway": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://www.gatewayusa.com/collections/all",
+      "counted": "Gateway 15.6 FHD IPS 2-in-1 Convertible (Intel N100), Gateway 15.6 FHD IPS 2-in-1 Convertible (AMD Ryzen 7), Gateway 15.6 FHD IPS Laptop (Intel N100), Gateway 16 FHD IPS Laptop (AMD Ryzen 5), Gateway 17.3 FHD IPS Laptop (Intel N100), Gateway 23.8 All-in-One Desktop, Gateway 27 Monitor & Desktop Tower Bundle",
+      "market": "US"
+    },
+    "computers|ABS": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.abs.com/",
+      "counted": "Kaze II Series, Stratos II Series, Cyclone Series, Eurus Series, Flux II Series",
+      "market": "US"
+    },
+    "computers|Alldocube": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.alldocube.com/en/products/",
+      "counted": "iPlay 80 mini Turbo, iPlay 80 mini Pro, iPlay 80 mini Ultra, iPlay 80SE, iPlay 70 Max Pro, iPlay 70E 2026, iPlay 70 Pad Pro, iPlay 70SE, iPlay 70 mini Pro, iPlay 70 mini Ultra, iPlay 70 Pro, iPlay 70S, iPlay 60 mini, iPlay 60 Pad Pro, Ultra Pad, Kido, iWork GT Ultra, GTBook 15 Gen2, GTBook 14 Gen2, iWork GT 12, iWork GT",
+      "market": "US"
+    },
+    "computers|CyberPowerPC": {
+      "range": 44,
+      "meetsHundred": false,
+      "url": "https://www.cyberpowerpc.com/category/gaming-pcs/",
+      "counted": "Daily Deal Ryzen Special, GeForce Mainstream Gaming PC, GeForce Pro Gaming PC, GeForce Elite Gaming PC, GeForce Extreme Creator Gaming PC, Infinity 8800 Pro SE, Syber M Essential Gaming PC, Infinity 8000 Gaming PC, Infinity 8800 Pro Gaming PC, Columbus Day Special II, Master 9500, AMD Esports 300, AMD Elite Gaming PC Configurator, Master 9400, AMD Extreme Gaming PC Configurator, AMD Mainstream Gaming PC Configurator, Columbus Day 5070 Ti, Columbus Day 9950X3D2, Syber GRVTY Mainstream Gaming PC, Master 9000, AMD Pro Gaming PC Configurator, Intel Extreme Gaming PC Configurator, Columbus Day Special 2026, Columbus Day RTX 5070, Master 8000, Columbus Day RTX 5060, IEM Challenger Gaming PC, Intel Pro Gaming PC Configurator, Intel Elite Gaming PC Configurator, Creator Pro 300, Intel Mainstream Gaming PC Configurator, Infinity XLC Gaming PC, LUXE 4K, Syber GRVTY Creator Pro PC, Columbus Day Special I, Master 9200, BattleBox Pro Gaming PC, Syber GRVTY Ultimate Gaming PC, Master 9300, Creator Pro 200, AMD Esports 100, Creator Pro 100, AMD Esports 200, LUXE SF-100",
+      "market": "US"
+    },
+    "computers|CyberPower": {
+      "range": 44,
+      "meetsHundred": false,
+      "url": "https://www.cyberpowerpc.com/category/gaming-pcs/",
+      "counted": "Same product listing as CyberPowerPC (CyberPower is the same company/brand as CyberPowerPC, which trades as cyberpowerpc.com)",
+      "market": "US"
+    },
+    "computers|Doogee": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.doogee.com/collections/tab-series",
+      "counted": "Tab E3 Max, Tab E3 Pro, Tab G6 Max, Tab A9 Pro+, Tab G5, Tab G6 Pro, Tab E3, Tab G6",
+      "market": "US"
+    },
+    "computers|Honor": {
+      "range": 41,
+      "meetsHundred": false,
+      "url": "https://www.honor.com/global/laptops/, https://www.honor.com/global/tablets/",
+      "counted": "MagicBook Art 14 2025, MagicBook Art 14, MagicBook Art 14 Snapdragon, MagicBook Pro 14 2026, MagicBook Pro 16 HUNTER 2025, MagicBook Pro 14, MagicBook Pro 16 2024, MagicBook 16 2026, MagicBook 14 2023, MagicBook 14 2022 RTX 2050, MagicBook 14 2022, MagicBook 16, MagicBook X14 Plus 2025, MagicBook X14 2026, MagicBook X16 2026, MagicBook X16 AMD 2025, MagicBook X16 Plus 2025, MagicBook X14 2025, MagicBook X16 2025, MagicPad4, MagicPad3, MagicPad2, Pad V9, Pad 20 Pro, Pad 20, Pad 20 Pro Paperlike Edition, Pad 20 Paperlike Edition, Pad 10, Pad 9, Pad 8, Pad X9b Max, Pad X8b, Pad X8b Kids Edition, Pad X7b, Pad X7, Pad X9a, Pad X8a, Pad X8a Kids Edition, Pad X9, Pad X8, Pad X8 Lite",
+      "market": "GB (global.honor.com)"
+    },
+    "computers|Panasonic": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://connect.na.panasonic.com/toughbook",
+      "counted": "TOUGHBOOK 34, TOUGHBOOK G3, TOUGHBOOK 56, TOUGHBOOK 40, TOUGHBOOK 33, TOUGHBOOK G2",
+      "market": "US"
+    },
+    "computers|Mele": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://store.mele.cn/collections/all",
+      "counted": "Cyber X1, Quieter 3Q, Overclock X2, Overclock 3C, Overclock X5, PCG02, PCG02 GLE, PCG02 Pro, PCG02 SE, PCG35, Quieter 2Q, Quieter 3C, Quieter 4C, Quieter 4C SE, Quieter DL, Quieter HD",
+      "market": "US (store.mele.cn ships internationally)"
+    },
+    "computers|Teclast": {
+      "range": 23,
+      "meetsHundred": false,
+      "url": "https://en.teclast.com/tablet/",
+      "counted": "ArtPad, ArtPad Air, ArtPad Pro, T60Mini, T70Pro, T70, T65, T50Plus, T50Mini, T65Max, T65Plus, T60Pro, T60Ai, M60, M50T, P50, P50T, P30T, P30, P35, P33, P85, P50Mini",
+      "market": "US (en.teclast.com, international storefront)"
+    },
+    "computers|Stormforce": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.stormforcegaming.co.uk/category/pre-built-gaming-pcs/",
+      "counted": "Carbon Pro AMD, Carbon Pulse AMD, Carbon Origin AMD, Rogue Core AMD, Rogue Prime Intel, Zenith Pulse AMD, Zenith Edge AMD, Zenith Core Intel, Zenith Xtreme AMD, Aether Elite Intel, Zenith Core AMD, Void Pro AMD",
+      "market": "GB"
+    },
+    "computers|Huawei": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://consumer.huawei.com/uk/offer/huawei-laptops/, https://consumer.huawei.com/uk/offer/huawei-tablets/",
+      "counted": "MateBook X Pro, MateBook 14, MatePad 11.5, MatePad 12 X, MatePad Pro 12.2, MatePad SE, MatePad Air",
+      "market": "GB"
+    },
+    "computers|Yeyian": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://mx.yeyiangaming.com/pc-gaming.html",
+      "counted": "Hollow 5500C-560P1M, SAI 570GB-01M, Core Ultra 5 250KF-560, Krypton 570GC-01M, Vault 560XC-5601M, Abyss 570GB-05M, Vault 5500B-3501M, Crescent 56GTB-251M, Hussar 2400B-560PM, Edge 5500C-5601M, Vault 040FA-59P1M, Edge 44F0B-5601U",
+      "market": "MX"
+    },
+    "computers|Vorago": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://voragolive.com/",
+      "counted": "CSG300, CSG400, CSG500, CSG503, CSG530, CSG550, CSG570, CSG800, Slimbay, Volt Basic, Nanobay 3, Minibay, Tablet 7-inch, Tablet 8-inch, Tablet 9-inch",
+      "market": "MX"
+    },
+    "audio|Marshall": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.marshall.com/speakers",
+      "counted": "Acton IV, Stanmore IV, Heston 120, Heston 60, Heston Sub 200, Heddon, Acton III, Stanmore III, Woburn III, Willen II, Emberton III, Emberton II, Middleton II, Stockwell III, Stockwell II, Kilburn III, Kilburn II, Tufton, Bromley 150, Bromley 450, Bromley 750",
+      "market": "US"
+    },
+    "audio|Anker Soundcore": {
+      "range": 26,
+      "meetsHundred": false,
+      "url": "https://www.soundcore.com/collections/speakers",
+      "counted": "Boom Go 3i, Boom 2 Plus, Boom 2, Rave 3S, Boom 3i, Select 4 Go, Motion X600, soundcore 2, soundcore 3, Motion Boom, soundcore 1, Soundcore Mini, Motion Boom Plus, Motion+, Motion 300, Space 2 Pro, Space 2, Space One Pro, Space One, Life Q20, Q30, Q20i, AeroClip 2, Liberty Buds 2, Sleep A30, AeroFit 2",
+      "market": "US"
+    },
+    "audio|Sonos": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.sonos.com/en-us/shop/all-products",
+      "counted": "Beam Ultra, Sonos Ace Ultra, Sonos Play, Sonos Ace, Arc Ultra, Beam (Gen 2), Ray, Era 100, Era 100 SL, Era 300, Roam 2, Move 2, Sub 4, Sub Mini, Five, Amp, Port",
+      "market": "US"
+    },
+    "audio|Polk Audio": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://www.polkaudio.com/en-us/category/home-speakers/",
+      "counted": "SR2 Wireless Surrounds, Monitor XT70, Monitor XT60, Signature Elite ES50, Signature Elite ES60, Reserve R700, Signature Elite ES55, Signature Elite ES35, Monitor XT35, Signature Elite ES30, Signature Elite ES8, Monitor XT12, Monitor XT10, Signature Elite ES10, Signature Elite ES20, Monitor XT90, Reserve R900",
+      "market": "US"
+    },
+    "audio|Bose": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.bose.com/c/all-products",
+      "counted": "SoundLink Max, SoundLink Flex (2nd Gen), SoundLink Plus, SoundLink Micro (2nd Gen), SoundLink Micro, S1 Pro+, Lifestyle Ultra Soundbar, Portable Smart Speaker, Virtually Invisible 791 in-ceiling, SoundLink Revolve II, TV Speaker (2nd Gen), QuietComfort Headphones, QuietComfort Headphones (2nd Gen), QuietComfort Ultra Headphones (2nd Gen), QC x Thom Browne Ultra Headphones, Ultra Open Earbuds, QuietComfort Earbuds, Smart Ultra Soundbar",
+      "market": "US"
+    },
+    "audio|Bowers & Wilkins": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.bowerswilkins.com/en-us/category/headphones/",
+      "counted": "Px8 S2 McLaren Edition, Px8 S2, Px8, Px7 S3, Px7 S2e, Pi8 McLaren Edition, Pi8, 800 Series Diamond D5, Nautilus, Signature, 800 Series Diamond D4, 700 Series, 600 Series, DB Series, ASW Series, Mini Theater, Zeppelin Pro",
+      "market": "US"
+    },
+    "audio|Ultimate Ears": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.ultimateears.com/en-us/wireless-speakers.html",
+      "counted": "MINIROLL, EVERBOOM, WONDERBOOM 4, BOOM 4, EPICBOOM, HYPERBOOM, MEGABOOM 3, BOOM 3, HYPERBOOM RENEWED, MEGABOOM 4",
+      "market": "US"
+    },
+    "audio|Cambridge Audio": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.cambridgeaudio.com/usa/en/products",
+      "counted": "Alva Duo, Alva MC, Alva Solo, Alva ST, AXA25, AXA35, AXC35, AXN10, AXR100, C155, C165, C165SS",
+      "market": "US"
+    },
+    "audio|Denon": {
+      "range": 28,
+      "meetsHundred": false,
+      "url": "https://www.denon.com/en-us/category/shop-all-speakers/ and https://www.denon.com/en-us/category/av-receivers/",
+      "counted": "Denon Home 150, Denon Home 200, Denon Home 250, Denon Home 350, Denon Home 400, Denon Home 600, Denon Home Subwoofer, Denon Home Sound Bar 550, DHT-S517, DHT-S316, DHT-S218, AVR-S980H, AVR-X2900H, AVR-X3900H, AVR-A1H, AVR-A10H, AVR-X6800H, AVR-X4800H, AVR-X3800H, AVR-X2800H, AVR-S970H, AVR-X1800H, DRA-900H, AVR-S760H, AVR-S770H, AVR-X1700H, AVR-S670H, AVR-S570BT",
+      "market": "US"
+    },
+    "audio|KEF": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://us.kef.com/collections/kef-speakers and https://us.kef.com/collections/all",
+      "counted": "Blade One Meta, Blade Two Meta, Ci100.2QR, Ci100QS, Ci130.2CR, Ci130.2CS, Q1 Meta, R3 Meta, Q6 Meta, LSX II, R11 Meta, Reference 4 Meta, Ci3160REFM-THX, R6 Meta",
+      "market": "US"
+    },
+    "audio|Klipsch": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://www.klipsch.com/floor-standing-speakers and https://www.klipsch.com/bookshelf-speakers",
+      "counted": "RP-8060FA II, RP-8000F II, RP-6000F II, RP-5000F II, R-800F, R-605FA, R-600F, RF-7 III, RP-600M II, RP-500M II, R-50M, R-40M, The Nines II, The Sevens II, The Fives II, R-50PM, R-40PM",
+      "market": "US"
+    },
+    "audio|Bang & Olufsen": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.bang-olufsen.com/en/us/speakers",
+      "counted": "Beosound A9, Beosound A5, Beosound Balance, Beosound Level, Beosound Emerge, Beosound 2, Beosound A1 3rd Gen, Beosound Explore, Beolit 20, Beolab 8, Beolab 28, Beolab 50, Beolab 90, Beosound Shape, Beosystem 3000c, Beogram 4000c, Beosystem 9000c, Beosound Bollard, Beolab 19, Celestial, Palatial",
+      "market": "US"
+    },
+    "audio|Edifier": {
+      "range": 59,
+      "meetsHundred": false,
+      "url": "https://www.edifier.com/us/",
+      "counted": "S880DB MKII, S3000MKII, R1280T WiiM Mini, R1280DB, R1280T, S1000MKII, MP330, ES300, ES60, ES20, M90, QR30, QS30, M60, MG250, MR5, MR3, MR4, S360DB, B700, S760D, S350DB, MF3, MF5P, T5s, T5, R1280DBs, QR65, S300, NeoBuds Planar, NeoBuds Plus, NeoDots, STAX SPIRIT S10, W820NB Plus, WH950NB, ES850NB, STAX SPIRIT S3, STAX SPIRIT S5, W830NB, Comfo Run, W210BT, CC200, W280NB, K550, USB K810, USB K800, K6500, G1000 II, G2000 PRO, G200, G1500 SE, G1500, G1000, G2000, G5000, G5BT CAT, GX07, GX04, G5BT",
+      "market": "US"
+    },
+    "audio|Audio Pro": {
+      "range": 13,
+      "meetsHundred": false,
+      "url": "https://us.audiopro.com/collections/all",
+      "counted": "C10 MkII, P5, T3+, C20, C5 MkII, A10 MkII, A15, SW-10, A28, SW-5, Drumfire II, A48, D-2",
+      "market": "US"
+    },
+    "audio|Dali": {
+      "range": 27,
+      "meetsHundred": false,
+      "url": "https://www.dali-speakers.com/en-us/products/",
+      "counted": "KORE, EPIKORE 11, EPIKORE 9, EPIKORE 7, EPIKORE 3, RUBIKORE 2, RUBIKORE 6, RUBIKORE 8, RUBIKORE Cinema, RUBIKORE On-Wall, MENUET, OPTICON MK2, FAZON, SONIK, KUPID, ALTECO, VEGA, KATCH, IO-12, IO-8, IO-6, GARDIAN, PHANTOM S, PHANTOM M, PHANTOM K, PHANTOM H, PHANTOM E",
+      "market": "US"
+    },
+    "audio|Kanto": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://www.kantoaudio.com/collections/all",
+      "counted": "H1, H2, H3, HH, Obi3, Ora, Ora4, Ren, S10, S12, S2, S4, S6, SCH, SE2, SE4, SE6, SLH",
+      "market": "US"
+    },
+    "audio|LG": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://www.lg.com/us/soundbars",
+      "counted": "S95AR, S95TR, S90TY, S90TR, SG10TY, S80TR, S70TR, S70TY, SC9S, S77S",
+      "market": "US"
+    },
+    "audio|Tribit": {
+      "range": 35,
+      "meetsHundred": false,
+      "url": "https://www.tribit.com/collections/all",
+      "counted": "StormBox Flow, StormBox Blast, StormBox Micro 2, StormBox Pro, StormBox Micro, StormBox, MaxSound Plus, XSound Surf, XSound Go, XSound Mega, Home, SoundBar, AquaEase, StormBox 2, StormBox Blast 2, StormBox Lava, StormBox Max, StormBox Micro 3, PocketGo, FlyBuds C1 Pro, FlyBuds C2, Movebuds H1, FlyBuds 3, FlyBuds C1, FlyBuds NC, FlyBuds 1, FlyBuds, FlyBuds C3, QuietPlus 71, QuietPlus 72, QuietPlus, XFree Go, XFree Tune, CallElite 81, QuietPlus 81",
+      "market": "US"
+    },
+    "audio|Vizio": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.vizio.com/en/sound-bars and https://www.vizio.com/en/sound-bar-comparison",
+      "counted": "Elevate P514a-H6, V-Series V51-H6, M-Series M512a-H6, SB362ANF6",
+      "market": "US"
+    },
+    "audio|Apple": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.apple.com/airpods/ and https://www.apple.com/homepod/",
+      "counted": "AirPods 5, AirPods Pro 3, AirPods Max 2, HomePod, HomePod mini",
+      "market": "US"
+    },
+    "audio|Wharfedale": {
+      "range": 71,
+      "meetsHundred": false,
+      "url": "https://www.wharfedale.co.uk/products/",
+      "counted": "ASTON, DOVEDALE, DENTON 80, DENTON 85, DENTON 1S, SUPER DENTON, LINTON, SUPER LINTON, HERITAGE CENTRE, ELYSIAN 1R, ELYSIAN 2R, AURA 1, AURA 2, Crystal 4.1, Crystal 4.2, DIAMOND 12.0, DIAMOND 12.1, DIAMOND 12.2, DIAMOND 12.0i, DIAMOND 12.1i, DIAMOND 12.2i, ELYSIAN 1, ELYSIAN 2, EVO4.1, EVO4.2, EVO 5.1, EVO 5.2, ELYSIAN 3R, ELYSIAN 4R, AURA 3, AURA 4, Crystal 4.3, DIAMOND A2, DIAMOND 12.3, DIAMOND 12.4, DIAMOND 12.3i, DIAMOND 12.4i, ELYSIAN 3, ELYSIAN 4, EVO4.3, EVO4.4, EVO 5.3, EVO 5.4, NOVA 8, NOVA 10, NOVA 12, NOVA 15, SLIM BASS 8, SW 10, SW 12, SW 15, SW 150, WH D8, WH D10, WH S8E, WH S10E, DX-3 HCP, ELYSIAN CR, AURA C, AURA CS, DIAMOND 12.C, DIAMOND 12.Ci, ELYSIAN C, EVO4.C, EVO4.CS, EVO4.S, EVO 5.C, DIAMOND A1, Exson M, Exson Pro, Exson S",
+      "market": "GB"
+    },
+    "audio|Acoustic Energy": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://www.acoustic-energy.co.uk/products/",
+      "counted": "AE500, AE509, AE520, AE300², AE309², AE320², AE307², AE100², AE109², AE120², AE105, AE107², Corinium, AE2 40th Anniversary, AE1 40th Anniversary, AE Active, AE1 Active, AE SUB, Aego Systems, Extreme Series",
+      "market": "GB"
+    },
+    "audio|Elac": {
+      "range": 25,
+      "meetsHundred": false,
+      "url": "https://elac.com/shop",
+      "counted": "Concentro 2.0, Vela 2.0, Elegant, Solano 2.0, Carina, UniFi Reference, Debut Reference, Debut 3.0, Debut 2.0, UniFi 2.0, Debut ConneX, Designer Series, Varro, Debut 3.0 Subwoofers, Miracord, AirX2, Alchemy, NAVA, RD 100, Vertex I, Vertex II, Vertex III, Muro, Muro Pro, WS Line",
+      "market": "US"
+    },
+    "audio|Steren": {
+      "range": 22,
+      "meetsHundred": false,
+      "url": "https://www.steren.com.mx/audio/bocinas-bluetooth",
+      "counted": "BOC-9030, BOC-9020, BOC-980NE, SPK-BT700-BL, BOC-940NE, BOOM-300, BOC-095, BOC-066, BOC-9500, BOC-9000, BOOM-550, BOC-9300, BOC-9200, BOC-9100, BOC-9050, BSD-120, BOOM-140, BOOM-600, BOC-950, BOC-970, BOOM-200, BOC-KR",
+      "market": "MX"
+    },
+    "audio|Altec Lansing": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://alteclansing.com/collections/all",
+      "counted": "BabyBoom XL Speaker, BoomJacket Wireless Speaker, BoomJacket XL Wireless Speaker, HydraBlast 2.0 EVERYTHINGPROOF Speaker, HydraBlast 2.0 x Boston Red Sox Bluetooth Speaker, HydraBlast Speaker, HydraBoom 2.0 EVERYTHINGPROOF Speaker, HydraBoom Speaker, HydraJolt 2.0 EVERYTHINGPROOF Speaker, HydraJolt Speaker, HydraMicro Speaker, HydraMini 2.0 EVERYTHINGPROOF Speaker, Hydramini 2.0 x Boston Red Sox Bluetooth Speaker, HydraMini Speaker, HydraMotion 2.0 EVERYTHINGPROOF Speaker, HydraMotion Speaker",
+      "market": "US"
+    },
+    "audio|Beats": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.beatsbydre.com/headphones",
+      "counted": "Beats 360, Beats Studio Pro, Beats Solo 4, Powerbeats Fit, Powerbeats Pro 2, Beats Studio Buds +, Beats Solo Buds, Beats Flex, Beats Pill",
+      "market": "US"
+    },
+    "audio|Bluesound": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.bluesound.com/products/node/ and https://www.bluesound.com/products/powernode/",
+      "counted": "NODE, POWERNODE, PULSE SUB+",
+      "market": "US"
+    },
+    "audio|Cabasse": {
+      "range": 34,
+      "meetsHundred": false,
+      "url": "https://www.cabasse.com/shop/",
+      "counted": "Murano, Minorca MC40, Antigua MC170, Murano Alto, Java MC40, Jersey MC170, Baltic 5 On-Stand, Baltic 5 On-Base, Riga 2 On-Stand, Riga 2 On-Base, iO3 On-Stand, iO3 On-Base, La Sphère, LA SPHERE EVO, Santorin 30-500, Santorin 30-200, Santorin 25, Lipari 21, Orion, Amp 240 S, The Pearl Pelegrina, The Pearl, The Pearl Akoya, The Pearl Myuki, Rialto, The Pearl Sub, Eole 4, Alcyone 3, Zef 17/Zef 17 Tr, Zef 13/Zef 13 Tr, Archipel 17 ICD/ICP/ICPS, Archipel 13 ICP/ICD/ICP TR, Minorca MC IW, Antigua MT IW",
+      "market": "US"
+    },
+    "audio|Canton": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://www.canton.de/en/products/",
+      "counted": "A 35, A 45, A 45 5.1 Set, A 45 5.1.2 Set, A 45 AR, A 45 AUDIO Edition, A 45 BS, A 45 CS, A 45 LS, A 45 SUB, A 45 SUB S2, A 45.2 LS, A 55, A 65, AR 5",
+      "market": "US"
+    },
+    "audio|Creative": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://us.creative.com/p/speakers",
+      "counted": "Creative Pebble Nova, Creative Pebble X Plus, Creative Pebble X, Creative Pebble Pro, Creative Pebble V3, Creative Pebble V2, Creative Pebble SE, Creative Pebble, Creative Pebble Plus, Sound Blaster Katana V2X, Sound Blaster GS5, Sound Blaster GS3, Creative Stage Pro, Creative Stage Air V2, ZiiSound D5, Creative XF1, Creative T100, Creative T60, GigaWorks T40 Series II, Creative MUVO Flex",
+      "market": "US"
+    },
+    "audio|Fluance": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.fluance.com/fluance-series",
+      "counted": "Signature HiFi Surround Sound Home Theater 7.0 Channel System, Elite HD Surround Sound Home Theater 7.0 Channel System, Elite HD Surround Sound Home Theater 7.1 Channel System, Elite HD Compact Surround Sound Home Theater 5.0 Channel System, Elite HD Compact Surround Sound Home Theater 5.1 Channel System, Elite HD 2-Way Floorstanding Speakers, Signature HiFi 2-Way Center Channel Speaker, Signature HiFi 2-Way Bookshelf Surround Sound Speakers, Signature HiFi 3-Way Floorstanding Speakers, Signature HiFi Surround Sound Home Theater 5.0 Channel System, Signature HiFi Compact Surround Sound Home Theater 5.0 Channel System, Reference High Performance 3-Way Floorstanding Loudspeakers, Elite HD Surround Sound Home Theater 5.0 Channel System, Reference High Performance 2-Way Bookshelf and Surround Speakers, Reference Surround Sound Home Theater 5.0 Channel System, Elite HD Surround Sound Home Theater 5.1 Channel System, Reference Compact Surround Sound Home Theater 5.0 Channel System, Elite HD 2-Way Bipolar Surround Speakers, Reference Surround Sound Home Theater 7.0 Channel System, Elite HD 2-Way Bookshelf Surround Sound Speakers, Reference High Performance 2-Way Center Channel Speaker",
+      "market": "US"
+    },
+    "audio|Hisense": {
+      "range": 10,
+      "meetsHundred": false,
+      "url": "https://shop.hisense-usa.com/collections/audio",
+      "counted": "Hisense VoyageBoom Portable Bluetooth Speaker, Hisense WeBoom Portable Bluetooth Speaker, Hisense FlexBoom Portable Bluetooth Speaker, Hisense HT Saturn, Hisense AX5140Q, Hisense AX3120Q, Hisense AX3100Q, Hisense HS5100, Hisense HS3100, Hisense HS2100",
+      "market": "US"
+    },
+    "audio|Jamo": {
+      "range": 27,
+      "meetsHundred": false,
+      "url": "https://www.jamo.com/collections/all",
+      "counted": "6.5CS-T In-Ceiling Speaker, C113 Bookshelf Speaker, C119 Floor Standing Speaker, C60 CEN MKII, C60 SUR MKII, C603 MKII, C605 MKII, C607 MKII, C705PA MKII, C707PA MKII, C9 CEN II, C9 SUR II, C91 II, C93 II, C95 II, C97 II, Concert Element 50, Concert Element 70, Concert Element 90, Concert Legacy 8, Concert Legacy 9, Concert Legacy 11, D590, D600 LCR, DS7 2.1, Gwong Tau Zai, HYG Flex",
+      "market": "US"
+    },
+    "audio|Lenco": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://www.lenco.com/speakers",
+      "counted": "LENCO SB-080 BK, LENCO WTVS-100SI, LENCO SB-042LEDBK, LENCO PA-101BK, LENCO SPB-240BKGY, LENCO BTP-400BK, LENCO KCD-011KIDS, LENCO BTP-200BK, LENCO BTL-030BA, LENCO SPB-241WDGY, LENCO PA-260BK, LENCO BTC-060WH, LENCO PA-220BK, LENCO PA-210BK",
+      "market": "GB"
+    },
+    "audio|Logitech": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://www.logitech.com/en-us/c/speakers.html",
+      "counted": "Z407, G560, Z533, Z625, Z207, Z906, Z313, Z150, S150",
+      "market": "US"
+    },
+    "audio|Majority": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://majorityaudio.com/",
+      "counted": "Naga Range, Bowfell Range, D50X, Quadriga Maxi, Move Range",
+      "market": "GB"
+    },
+    "audio|MartinLogan": {
+      "range": 40,
+      "meetsHundred": false,
+      "url": "https://www.martinlogan.com/en/category/our-speakers",
+      "counted": "Neolith, Renaissance ESL 15A, Expression ESL 13A, Impression ESL 11A, Classic ESL 9, Illusion ESL C34A, Focus ESL C18, ElectroMotion ESL X, ElectroMotion ESL, EFX, ElectroMotion ESL C, ElectroMotion FX2, Motion XT F200, Motion XT F100, Motion XT B100, Motion XT C100, Motion F20, Motion F10, Motion B10, Motion C10, Motion MP10, Motion 4i, Motion 2i, Motion 8i, Motion 6i, Motion SLM XL, Motion SLM, Motion SLM X3, Motion SLM XL 3 Speaker Bundle, Discrete Cinema LCR9, Discrete Cinema LCR7, Discrete Cinema LCR5, Discrete Cinema Soundbar 85, Discrete Cinema Soundbar 75, Discrete Cinema Soundbar 65, Motion Foundation F2, Motion Foundation F1, Motion Foundation B1, Motion Foundation B2, Motion Foundation C1",
+      "market": "US"
+    },
+    "audio|Mission": {
+      "range": 40,
+      "meetsHundred": false,
+      "url": "https://www.mission.co.uk/floorstanding-speakers/ and https://www.mission.co.uk/standmount-speakers/",
+      "counted": "LX-1 MKII, LX-2 MKII, LX-3 MKII, LX-4 MKII, LX-5 MKII, LX-6 MKII, LX-C1 MKII, LX-C2 MKII, LX-3D MKII, LX-10SUB MKII, QX-1 MKII, QX-2 MKII, QX-3 MKII, QX-4 MKII, QX-5 MKII, QX-C MKII, QX-12SUB MKII, ZX-1, ZX-2, ZX-3, ZX-4, ZX-5, ZX-C1, ZX-C2, ZX-S, ZX-12 Sub, MISSION 778CDT, MISSION 778S, MISSION 778X, MISSION 770, MISSION 750, MISSION 700, LX CONNECT, LX CONNECT DAC, M-CUBE+SE, GO-X1, MS-150, MS-200, MS-400, MS-450",
+      "market": "GB"
+    },
+    "audio|Monitor Audio": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://www.monitoraudio.com/products/",
+      "counted": "Hyphn, Platinum Series 3G, Gold Series 6G, Studio 89, Anthra Subwoofer Series, Silver Series 8G, Bronze Series 7G, Vestra Subwoofer Series, Radius Series 4G, Cinergy, Monitor 50",
+      "market": "US"
+    },
+    "audio|Naim": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.naimaudio.com/catalog/streaming-amplifiers",
+      "counted": "Uniti Nova, Uniti Nova PE, Uniti Atom, Uniti Atom Headphone Edition",
+      "market": "GB"
+    },
+    "audio|Paradigm": {
+      "range": 38,
+      "meetsHundred": false,
+      "url": "https://www.paradigm.com/en/home-theater-stereo",
+      "counted": "Persona 9H, Persona 7F, Persona 5F, Persona 3F, Founder 120H, Founder 100F, Founder 80F, Premier 820F v2, Premier 720F v2, Monitor SE 8000F, Monitor SE 6000F, Monitor SE 3000F, Persona C, Founder 90C, Founder 70LCR, Premier 620C v2, Premier 520LCR v2, Monitor SE 2000C, Persona B, Founder 40B, Premier 220B v2, Premier 120B v2, Monitor SE Atom, Persona SUB, Signature SUB 2, Seismic 110, MilleniaSub, XR 11, XR 13, Essentials Sub 12, Essentials Sub 10, Defiance S10, Defiance S12, Cinema Sub, Surround 3, Surround 1, Cinema 100 CT, MilleniaOne 1.0",
+      "market": "CA"
+    },
+    "audio|Philips": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.usa.philips.com/c-m-so/soundbars-and-home-sound",
+      "counted": "TAB6200/37, TAB5309/37, TAB4208/37, TAB5109/37, TAB7568/37",
+      "market": "US"
+    },
+    "audio|Pro-Ject": {
+      "range": 34,
+      "meetsHundred": false,
+      "url": "https://www.project-audio.com/en/categories/turntables/",
+      "counted": "A1.2, A2, E1.2, VT-E, VT-E BT, Juke Box E1, Juke Box E1 HiFi Set, Juke Box S2, Juke Box S2 HiFiSet, T1 EVO, T2, T2 Super Phono, T2 W, Debut Reference 10, Debut EVO 2, Debut PRO S Balanced, Debut PRO B White Edition, Debut PRO B, RPM 1 Carbon, RPM 3 Carbon, RPM 5 Carbon, RPM 9 Carbon, RPM 10 Carbon, The Classic Reference, XA B, X1 B, X2 B, 6 PerspeX Balanced, X8 B, Xtension 9 Evolution, Xtension 10 Evolution, Xtension 12 Evolution, Signature 10, Signature 12.2",
+      "market": "US"
+    },
+    "audio|ProAc": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://proac-loudspeakers.com/products/",
+      "counted": "Tablette 10 Signature, Centre Voice, K1, K3, K6, K6 Signature, K10, Response DB3, Response DB1/R/D, Response D2/R/D, Response DT8, Response D20/D/R, Response D30S, Response D48, Studio SM100",
+      "market": "GB"
+    },
+    "audio|PSB": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://psbspeakers.com/collections/all",
+      "counted": "Alpha 1-100 Powered Media System, Alpha AM3, Alpha AM5, Alpha C10, Alpha iQ, Alpha P3, Alpha P5, Alpha S8, Alpha S10, Alpha T20 Tower, C-LCR",
+      "market": "CA"
+    },
+    "audio|Rega": {
+      "range": 21,
+      "meetsHundred": false,
+      "url": "https://www.rega.co.uk/products/turntables, https://www.rega.co.uk/products/amplifiers, https://www.rega.co.uk/products/loudspeakers",
+      "counted": "Planar 1, Planar 1 Plus, Planar 78, Planar 2, Planar 3, Planar 3 RS, Planar 6, Planar 6 RS, Planar 8, Planar 10 Ref, Naia Ref, Io, Brio, Elex, Elicit, Aethos, Osiris Ref, Mercury Ref, Solis Ref, KYTE, AYA",
+      "market": "GB"
+    },
+    "audio|Ruark Audio": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://shop.ruarkaudio.com/collections/product-range",
+      "counted": "R1S Smart Radio, R1S Limited Edition Terracotta Smart Radio, R2 Mk4 Smart Music System, R3S Compact Music System, MR1 Mk3 Desktop Speaker System, RS1 Subwoofer, R410 All-In-One Music System, R410 Anniversary Edition, R610 Music Console, R710 CD Hi-Fi Console, R810 High Fidelity Radiogram, R810 MiE, Sabre-R Bookshelf Speakers, Talisman-R Floorstanding Speakers, R-CD100 CD Player",
+      "market": "GB"
+    },
+    "audio|Sennheiser": {
+      "range": 29,
+      "meetsHundred": false,
+      "url": "https://us.sennheiser-hearing.com/collections/all-headphones",
+      "counted": "MOMENTUM 5 Wireless, HDB 630, MOMENTUM 4 Wireless, MOMENTUM True Wireless 5, CX 80, Massdrop HD 6XX, HD 660 S 2, HD 600, ACCENTUM Open, ACCENTUM Wireless, ACCENTUM Plus Wireless, HD 560S, HD 599 SE, HD 550, IE 200, IE 200 Silver, IE 600, HD 620 S, HD 599, HD 650, HD 400, ACCENTUM True Wireless, ACCENTUM Wireless SE, HD 800 S, HD 569, HD 820, HD 505, IE 900, IE 300",
+      "market": "US"
+    },
+    "audio|SVS": {
+      "range": 31,
+      "meetsHundred": false,
+      "url": "https://www.svsound.com/collections/subwoofers and https://www.svsound.com/collections/speakers",
+      "counted": "SB-1000 Pro, PB-1000 Pro, SB-2000 Pro, PB-2000 Pro, PC-2000 Pro, SB-3000 R|Evolution, PB-3000 R|Evolution, 3000 Micro R|Evolution, SB-5000 R|Evolution, PB-5000 R|Evolution, SB17-Ultra R|Evolution, PB17-Ultra R|Evolution, 3000 In-Wall Subwoofer, Ultra Evolution Pinnacle, Ultra Evolution Titan, Ultra Evolution Bookshelf, Ultra Evolution Center, Ultra Evolution Elevation, Ultra Evolution Tower, Ultra Evolution Nano, Prime Bookshelf, Prime Tower, Prime Pinnacle, Prime Center, Prime Elevation, Prime Satellite, Prime Satellite 2.1, Prime Satellite 5.1, Prime Wireless Pro Powered Speaker Pair, Prime Wireless Pro Soundbase",
+      "market": "US"
+    },
+    "audio|TCL": {
+      "range": 7,
+      "meetsHundred": false,
+      "url": "https://us.tcl.com/pages/sound-bars",
+      "counted": "Q85H, Q65H, S55H, S45H, A65K, S65K, S60K",
+      "market": "US"
+    },
+    "audio|Teufel": {
+      "range": 17,
+      "meetsHundred": false,
+      "url": "https://teufel.de/bluetooth",
+      "counted": "BOOMSTER GO, MYND, ROCKSTER 2, RADIO 3SIXTY, MOTIV HOME, ROCKSTER GO 2, BOOMSTER 4, ROCKSTER CROSS 2, RADIO ONE, ROCKSTER AIR 2, ROCKSTER NEO, MUSICSTATION, Teufel ONE S, MOTIV GO 2, Teufel ONE M, MOTIV GO VOICE, MOTIV XL",
+      "market": "DE"
+    },
+    "appliances|Bosch": {
+      "range": 49,
+      "meetsHundred": false,
+      "url": "https://www.bosch-home.com/us/en/category/washers-and-dryers",
+      "counted": "Washers/Dryers: 800 Series Compact Washer, 500 Series Compact Washer, 800 Series Heat Pump Dryer, 500 Series Heat Pump Dryer, 300 Series Compact Condensation Dryer (5); Dishwashers: Benchmark Dishwasher 24, 800 Series Dishwasher 24, 800 Series Built-in (Custom Panel) 24, 800 Series Dishwasher 17.75, 500 Series Dishwasher 24, 300 Series Dishwasher 24, 300 Series Built-in (Custom Panel) 24, 300 Series Dishwasher 17.75 (8, color variants merged); Refrigerators: Benchmark Built-in Bottom Freezer 36/30 (x2 SKUs), Benchmark Built-in Bottom Freezer (panel) 36/30, 800 Series French Door Bottom Mount 36 (x4 SKUs), 500 Series French Door Bottom Mount 36 (x3 SKUs), 800 Series Free-standing fridge-freezer 24 (12); Microwaves: 800 Series Drawer Microwave 30, 800 Series Drawer Microwave 24, 500 Series Built-In Microwave 30, 800 Series Over-The-Range Microwave 30, 500 Series Over-The-Range Microwave 30, 300 Series Built-In Microwave 24, 100 Series Over-The-Range Microwave 30, 300 Series Over-The-Range Microwave 30 (9); Wall Ovens: Benchmark Double Wall Oven 30, 800 Series Combination Oven 30 (x2), Benchmark Single Wall Oven 30 (x2), 800 Series Single Wall Oven 30, 500 Series Single Wall Oven 30 (x2), Benchmark Speed Oven 30, 800 Series Speed Oven 30 (x2) (12); Cooktops (partial, only 3 found on nav page): NET8062UC, NITP669SUC, NIT8069UC",
+      "market": "US",
+      "kinds": "washers, dryers, dishwashers, refrigerators, microwaves, wall ovens, cooktops"
+    },
+    "appliances|LG": {
+      "range": 260,
+      "meetsHundred": true,
+      "url": "https://www.lg.com/us/business/washers/view-all",
+      "counted": "Washers: 45 models (WM/WT/WD series). Dryers: 101 models (DLE/DLEX/DLG/DLGX/DLEY/DLGY series, electric+gas). Refrigerators: 91 models (LRFXS/LRMWS/LRSXS/LFXS/LMXC/etc series). Dishwashers: 23 models (LSDT/LDTS/LDFN/LDF/LDT/LDP series). Full names omitted for brevity; counts per-category listed in fetch.",
+      "market": "US",
+      "kinds": "washers, dryers, refrigerators, dishwashers"
+    },
+    "appliances|Beko": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.beko.co.uk/appliances/laundry/washing-machines",
+      "counted": "BW1O3841B, BW1O3842, BWC7121, BWC8121, WTIK741511, BM3WT1241I, BM3WT4104I, BM5WT61141T, BM5WT61341T, BM3WT4841I, BM5WT6843T, BM3WT4941I",
+      "market": "GB",
+      "kinds": "washers"
+    },
+    "appliances|Hisense": {
+      "range": 8,
+      "meetsHundred": false,
+      "url": "https://www.hisense-usa.com/category/refrigerators",
+      "counted": "Hisense 18 cu.ft. Counter-Depth Top-Mount Refrigerator, Hisense 21.2 cu.ft. Top-Mount Refrigerator, Hisense 14 cu.ft. Convertible Upright Freezer, Hisense 10.2 cu.ft. Garage Ready Convertible Upright Freezer, Hisense 29.1 cu.ft. Side by Side Refrigerator, Hisense 18 cu.ft. Top Mount Garage Ready Refrigerator, Hisense 3.3 cu.ft. Compact Refrigerator, Hisense 5.4 cu.ft. Wine Cooler",
+      "market": "US",
+      "kinds": "refrigerators"
+    },
+    "appliances|Midea": {
+      "range": 5,
+      "meetsHundred": false,
+      "url": "https://www.midea.com/us/store",
+      "counted": "Midea 0.7 cu.ft. Countertop Microwave, Midea 0.9 cu.ft. Countertop Microwave, Midea 1.1 cu.ft. Countertop Microwave, Midea Flexify French Door Air Fryer Oven, Midea 11qt 8-in-1 Smart Dual-Zone Air Fryer Oven",
+      "market": "US",
+      "kinds": "microwaves, small kitchen appliances"
+    },
+    "appliances|Speed Queen": {
+      "range": 15,
+      "meetsHundred": false,
+      "url": "https://speedqueen.com/products/all-products/",
+      "counted": "TR7, TC5, TR5, TR3, FF7 (washers, 5); DR7, DC5, DR5, DR3 electric dryers (4); DR7, DC5, DR5, DR3 gas dryers (4, same model names as electric); DF7 front load dryer electric+gas (1); SF7 stacked washer-dryer (1)",
+      "market": "US",
+      "kinds": "washers, dryers"
+    },
+    "appliances|Hotpoint": {
+      "range": 3,
+      "meetsHundred": false,
+      "url": "https://www.hotpoint.co.uk/appliances/laundry/washing-machines",
+      "counted": "Fabric Care Pro 12kg, Fabric Care Pro 10kg, Fabric Care 12kg (HB123W series) - color variants merged",
+      "market": "GB",
+      "kinds": "washers"
+    },
+    "appliances|Fisher & Paykel": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.fisherpaykel.com/us/cooling/refrigeration/all-refrigeration/",
+      "counted": "RS3084SRHE1, RS3084FRJE1, RS2484FRJE1, RS2484SRHE1, RS2484WRUK1, RS2484VL2K1, RS3084WRUE1, RS2484WRUE1, RS1884FRJE1, RS3084WRUK1, RS36W80RJ1N, RF178WRNX1",
+      "market": "US",
+      "kinds": "refrigerators"
+    },
+    "appliances|Bertazzoni": {
+      "range": 35,
+      "meetsHundred": false,
+      "url": "https://us.bertazzoni.com/products/ranges",
+      "counted": "Professional Series (11 SKUs: 48/36/30/24in induction/gas/dual-fuel), Master Series (18 SKUs incl gold-accent variants), Heritage Series (6 SKUs incl gold-accent variants)",
+      "market": "US",
+      "kinds": "ranges"
+    },
+    "appliances|Neff": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.neff-home.com/uk/products/ovens/ovens",
+      "counted": "N90 Built-in compact oven with microwave (C24MS71G0B), N70 Built-in compact oven with microwave (C24MR21G0B/N0B, color variants merged), N50 Built-in microwave oven with hot air (C1AMG84N1B) -- page showed only a 'favourites' selection, not the full catalog",
+      "market": "GB",
+      "kinds": "ovens (partial listing only)"
+    },
+    "appliances|Siemens": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.siemens-home.bsh-group.com/uk/appliances/dishcare/built-in",
+      "counted": "iQ500 Fully-integrated dishwasher (SN95YX02CG), iQ300 Fully-integrated dishwasher (SN73HX03VG), iQ100 Fully-integrated dishwasher (SN61HX00KG), iQ700 Fully-integrated dishwasher (SN97T801CE) -- page showed only a featured selection, not the full catalog",
+      "market": "GB",
+      "kinds": "dishwashers (partial listing only)"
+    },
+    "appliances|Blomberg": {
+      "range": 6,
+      "meetsHundred": false,
+      "url": "https://www.blomberg.co.uk/appliances/laundry/washing-machines",
+      "counted": "LWA210461, LWI284421, LWA29461, LWA18461, LWA27461, LWI284420",
+      "market": "GB",
+      "kinds": "washers"
+    },
+    "appliances|Gaggenau": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://www.gaggenau.com/us/products/ovens",
+      "counted": "Expressive Series Ovens, EB 333, Expressive Series Combi-Steam Ovens, Expressive Series Combi-Microwave Ovens (200 Series excluded, discontinued Dec 2025 per page)",
+      "market": "US",
+      "kinds": "ovens"
+    },
+    "appliances|Sharp": {
+      "range": 9,
+      "meetsHundred": false,
+      "url": "https://shop.sharpusa.com/products/microwave-ovens/",
+      "counted": "SMD2420MS, SMD2430MS, SMD2479 (Deco Series, color variants merged), SMC1174KS, SMC0985KS, SMC2266KS, SMC1662KS, SMC1585 (color variants merged), SMC1469KS",
+      "market": "US",
+      "kinds": "microwaves"
+    },
+    "appliances|Russell Hobbs": {
+      "range": 4,
+      "meetsHundred": false,
+      "url": "https://uk.russellhobbs.com/small-kitchen-appliances",
+      "counted": "Everyday Kettle, Everyday 2 Slice Toaster, Everyday 4 Slice Toaster, Calm 2 Slice Toaster (color variants merged) -- page shown was a subset/subcategory listing, not the full small-appliance catalog",
+      "market": "GB",
+      "kinds": "small kitchen appliances (partial listing only)"
+    },
+    "appliances|Indesit": {
+      "range": 2,
+      "meetsHundred": false,
+      "url": "https://www.indesit.co.uk/products/laundry/washing-machines",
+      "counted": "Push&Go BI WMIL 71252 UK N (integrated), My Time MTWC 91495 W UK N (freestanding) -- page rendered only 2 featured models, not the full catalog",
+      "market": "GB",
+      "kinds": "washers (partial listing only)"
+    },
+    "car-audio|Pioneer": {
+      "range": 25,
+      "meetsHundred": false,
+      "url": "https://usa.pioneer/collections/all",
+      "counted": "DMH-W3000NEX, DMH-1800NEX, MVH-S322BT, DEH-S4220BT, DMH-W3050NEX, DMH-W4660NEX, AVH-3500NEX, DMH-WT8000NEX, DMH-W2770NEX, DMH-241EX, MVH-S622BS, SPH-10BT, DMH-WT8600NEX, TS-M651PRO, TS-B401PRO, TS-6900PRO, TS-A1681F, TS-W3020PRO, TS-WX010A, TS-WX140DA, TS-A120D4, GM-DX104, GM-DX874, GM-DX871, GM-A6704",
+      "market": "US"
+    },
+    "car-audio|Kenwood": {
+      "range": 121,
+      "meetsHundred": true,
+      "url": "https://www.kenwood.com/usa/car/caraudio/",
+      "counted": "KDC-BT782HD, KDC-BT382U, KDC-BT35, KDC-BT282U, KMM-BT732HD, KMM-BT332U, KMM-BT38, KMM-BT232U, DPX505BT, DPX305MBT, KAC-9106D, KAC-M5024BT, KAC-M5014, KAC-M5001, KAC-M3004, KAC-M3001, KAC-M1814, KAC-D8105, KAC-D5101, KAC-D3104, KSC-PSW7EQ, KSC-PSW8, P-W804B, KFC-W3042, KFC-W2542, KFC-6998RS, KFC-6988RS, KFC-1798RS, KFC-1698RS, KFC-1398RS, KFC-1098RS, KFC-C6898RS, KFC-C5798RS, KFC-P710PS, KFC-6996PS, KFC-6986PS, KFC-1796PS, KFC-1696PS, KFC-1396PS, KFC-1096PS, KFC-C6896PS, KFC-C5796PS, KFC-6966S, KFC-C6866S, KFC-1666S, KFC-1366S, KFC-1066S, KFC-C1656S, KFC-C1356S, KFC-C1056S, KFC-835C, KFC-4675C, KFC-415C, KFC-ST01, DMX908S, DMX907S, DMX809S, DMX709S, KDC-X705, KDC-X305, DPX795BH, DPX594BT, KMM-X705, DPX395MBT, KFC-XW1242, KFC-XW1042, KFC-XW1200F, KFC-XW1000F, KFC-XW800F, P-XW1002B, KFC-XP6903C, KFC-XP6902C, KFC-X3C, KFC-X2C, KFC-XP184C, KFC-X183C, KFC-X175, KFC-X135, KFC-X695, KFC-X174, KFC-X134, KFC-X694, KFC-X683C, KFC-X463C, X803-5, X503-1, X303-4, X802-5, X502-1, X302-4, DAX1050XR, DAX800XR, DMX1058XR, DMX1057XR, DMX958XR, DDX9907XR, XR-1801P, XR-1701P, XR-1701, XR-W1204, XR-W1202, XR-W1004, XR-W1002, XR-W804, P-XW804B, P-XRW122DB, P-XRW102DB, XR1001-1, XR901-5, XR601-1, XR401-4",
+      "market": "US"
+    },
+    "car-audio|JVC": {
+      "range": 62,
+      "meetsHundred": false,
+      "url": "https://www.us.jvc.com/car/",
+      "counted": "KW-Z1000AW, KW-Z800AW, KW-Z1001W, KW-Z1000W, KW-Z900W, KW-V960BW, KW-M875BW, KW-M795BW, KW-M785BW, KW-M788BH, KW-M780BT, KW-M695BW, KW-M690BW, KW-V660BT, KW-M595BT, KW-M590BT, KW-M56BT, KW-M560BT, KW-M180BT, KD-T925BTS, KD-T920BTS, KD-T720BT, KD-TD72BT, KD-T92MBS, KW-R950BTS, KW-X855BTS, KW-X850BTS, KD-X480BHS, KD-X380BTS, KD-X280BT, KD-XD28BT, KD-MR305BTS, KD-X38MBS, KD-X560BT, KS-DR2104DBT, KS-DR2004D, KS-DR2001D, KS-DR1004D, CS-DR1700C, CS-DR601C, CS-DR6941, CS-DR693, CS-DR6931, CS-DR6821, CS-DR1721, CS-DR621, CS-DR521, CS-DR421, CS-DR162, CS-DF6920, CS-DF620, CS-V4627, CS-J6820, CS-DR620MBL, CS-DR621MWL, CS-DR6200M, CS-DR6201MW, CS-MS620, CW-DR124, CW-DR104, CW-DRA8, CW-DR1040ML",
+      "market": "US"
+    },
+    "car-audio|Kicker": {
+      "range": 25,
+      "meetsHundred": false,
+      "url": "https://www.kicker.com/car",
+      "counted": "SoloXS L7XS, SoloX L7X, Solo-Baric L7S, Solo-Baric L7R, Solo-Baric L7T, CompQ, CompVX, CompR, CompVR, CompRT, CompVT, CompC, Comp, WXA Amplifiers, LX Amplifiers, Key Smart Amplifiers, CX Amplifiers, PXA Amplifiers, KPX Amplifiers, VXA Amplifiers, ST Series speakers, KS Series speakers, CS Series speakers, DS Series speakers, QS Series speakers",
+      "market": "US"
+    },
+    "car-audio|Boss Audio": {
+      "range": 74,
+      "meetsHundred": false,
+      "url": "https://bossaudio.com/collections/car-audio",
+      "counted": "MCK508WB.64S, MR762BRGB, BCPA12, BCPA14, BCP62, MR500UAB, MCK508WB.6, 611UAB, 656BCK, MGR350B, MCKGB350W.6, MCKGB350B.6, MR508UABW, MGR450B, MCKGB450W.6, MGV550B, MCBK634B.6, MG150W.6, 750BRGB, 508UAB, BCP62-RC, MG250W.64, BV9968MB, MGR300B, MCBK634B.64, 850BRGB, MCKGB450B.6, AR3000D, R1004, CE102, AR2000M, AR1500M, R2504, OX4.400, OX1.5KM, R6002, R3004, R1100M-S, R4002, PT1600, PT1000, PF1800, CH6CK, BRS410, CH6950, NX654, P65.4C, BRS65, CH6940B, BRS40, BRS52, CH4330, NX694, CH5530, CH4220, CH4630, CH4230, R94, R63, NX524, BRS69, BRS46, CH4330B, CH6930, CH5730, CH6940, CH5730B, CH5720, BRS5768, B12ES, CH12DVC, P126DVC, BAB8, CX122, P12SVC, TW15",
+      "market": "US"
+    },
+    "car-audio|Skar Audio": {
+      "range": 22,
+      "meetsHundred": false,
+      "url": "https://www.skaraudio.com/collections/car-amplifiers",
+      "counted": "SK-M Series, RP Series, SA Series, SKv2 Series, Marine Amplifiers, VD Series, VS Series, SDR Series, SVR Series, DDX Series, EVL Series, VXF Series, ZVXv2 Series, Marine Subwoofers, TX275, TX35, TX4, TX46, TX525, TX65, TX68, TX69",
+      "market": "US"
+    },
+    "car-audio|Rockville": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://rockvilleaudio.com/collections/car-amplifiers/products.json",
+      "counted": "RVA600.1 + RWK10 Bundle, dB16, dB14, dB15, dB45, dB55, X6.5C 2-Pair, RV6.3A, RV69.4A, RV68.2C 2-Pair, RT6, RXM64 4-Pack, W12K9D2 V3, PUNISHER 12D2, W12K6D2 V2 2-Pack, W12K6D4 V2 2-Pack",
+      "market": "US"
+    },
+    "car-audio|Rockford Fosgate": {
+      "range": 177,
+      "meetsHundred": true,
+      "url": "https://rockfordfosgate.com/products/selector/car-audio/",
+      "counted": "Power T2500-1bd, Power T1500-1bd, Power T1000-4ad, Power T1000X5ad, Power T1000-1bd, Power T600-4, Power T750X1bd, Power T500-1bd, Power T400X2ad, Power T400-4, Power T400X4ad, Punch P1000X5, Punch P1000X2, Punch P1000X1bd, Punch P600X4, Punch P500X2, Punch P500X1bd, Punch P400X4, Punch P300X2, Punch P300X1, Punch PBR400X4D, Punch PBR300X2, Punch PBR300X1, Prime R2-750X5, Prime R2-1200X1, Prime R2-750X1, Prime R2-500X4, Prime R2-500X1, Prime R2-300X4, Prime R2-200X2, Power T3S1-19, Power T3S2-19, Power T2S1-16, Power T2S2-16, Power T2S1-13, Power T2S2-13, Power T1D215, Power T1D415, Power T1S-1X12, Power T1S1-12, Power T1S2-12, Power T1D212, Power T1D412, Power T1S1-10P, Power T1S1-10S, Power T1S2-10P, Power T1S2-10S, Power T1D210, Power T1D410, Punch P3S1-19, Punch P3D2-15, Punch P3D4-15, Punch P3D2-12, Punch P3D4-12, Punch P3D2-10, Punch P3D4-10, Punch P3SD2-12, Punch P3SD4-12, Punch P3SD2-10, Punch P3SD4-10, Punch P3SD2-8, Punch P3SD4-8, Punch P2D2-15, Punch P2D4-15, Punch P2D2-12, Punch P2D4-12, Punch P2D2-10, Punch P2D4-10, Punch P2D2-8, Punch P2D4-8, Punch P1S2-15, Punch P1S4-15, Punch P1S2-12, Punch P1S4-12, Punch P1S2-10, Punch P1S4-10, Prime R2D2-12, Prime R2D4-12, Prime R2D2-10, Prime R2D4-10, Prime R2SD2-12, Prime R2SD4-12, Prime R2SD2-10, Prime R2SD4-10, Power T4652-S, Power T3652-S, Power T2652-S, Power T1650-S, Power T1675-S, Power T1692, Power T1682, Power T1462, Power T152, Power T1650, Power T1675, Punch P3V2-69, Punch P3V2-65, Punch P3V2-69C2, Punch P3V2-69C3, Punch P3V2-25, Punch P2V2-69, Punch P2V2-69HO, Punch P2V2-68HO, Punch P2V2-65HO, Punch P2V2-68, Punch P2V2-65, Punch P2V2-675, Punch P1V2-69, Punch P1V2-68, Punch P1V2-5, Punch P1V2-6, Punch P1V2-65, Punch P1V2-675, Punch P1V2-25, Punch P1V2-3, Punch P1V2-46, Punch P1V2-4, Punch P1694, Punch P1683, Punch P1692, Punch P1675, Punch P1462, Punch P1572, Punch P152, Punch P16, Punch P1650, Punch P132, Prime R169X3, Prime R169X2, Prime R168X2, Prime R1525X2, Prime R165X3, Prime R1675X2, Prime R14X2, Punch P500-12P, Punch P300-12T, Punch P300-12, Punch PS-8, Punch P300-10T, Punch P300-10, Punch P300-8P, Punch P3-2X12, Punch P3-1X12, Punch P3S-1X12, Punch P3S-1X10, Punch P2-2X12, Punch P2-1X12, Punch P1-2X12, Punch P1-2X10, Punch P1-1X12, Punch P1-1X10, Prime R2-2X12, Prime R2-2X10, Prime R2S-1X12, Prime R2S-1X10, 18WRNGLER-STG5, 20GLADR-STG5, 24WRNGLER-STG3, DSR1",
+      "market": "US"
+    },
+    "car-audio|Hertz": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://hertz-audio.com/collections/car-audio/",
+      "counted": "Mille Subwoofers, Cento Subwoofers, Dieci Subwoofers, Uno Subwoofers, SPL Subwoofers, Mille Speakers, Cento Speakers, Dieci Speakers, Uno Speakers, SPL Speakers, Mille Amplifiers, Cento Amplifiers, Dieci Amplifiers, HCP Amplifiers, DPower Amplifiers, SPL Amplifiers",
+      "market": "US"
+    },
+    "car-audio|In Phase": {
+      "range": 48,
+      "meetsHundred": false,
+      "url": "https://inphaseaudio.co.uk/collections/subwoofers",
+      "counted": "In Phase XT-8PRO, In Phase USW300, In Phase XTB-8A, In Phase USW12, In Phase XT-10, In Phase XT-12D4, DB Audio TREX-10D2, DB Audio TREX-12D2, In Phase XT-6, In Phase XTB-828R, In Phase XTB-88A, DB Audio Xtinct12v2, In Phase XT-10D4, In Phase XT-10D2, In Phase XT-12D2, In Phase XT-12PRO, DB Audio TREX-12D4, DB Audio TREX-15D2, DB Audio TREX-15D4, DB Audio TREX-10D4, Juice JS12, Juice JS10, Juice JS8.1, DB Audio Xtinct12, In Phase SXT1035, In Phase XTC6CX, In Phase SXT6435, In Phase XTC-180VW, In Phase XTC17.2CF, Juice S520, Juice S420, In Phase SXT1, In Phase XTC10.2, Juice S620, DB Audio T-Rex5.2C, In Phase SPX17C, In Phase XTC5CX, In Phase SXT5735, In Phase XTC13.2, In Phase XTC17.2, In Phase SXT1735, In Phase SXT1335, In Phase IPA7001D, In Phase IPA5001D, Juice JA1504, Juice JA1201D, Juice JA902, In Phase IPA601",
+      "market": "GB"
+    },
+    "car-audio|Polk Audio": {
+      "range": 12,
+      "meetsHundred": false,
+      "url": "https://www.polkaudio.com/en-us/category/car-and-marine-speakers/",
+      "counted": "DB462, DB5252, DB692, DB402, DB6502, DB1242 DVC, DB1242 SVC, DB652, DB1042 SVC, DB842 DVC, DB842 SVC, DB522",
+      "market": "US"
+    },
+    "car-audio|Atoto": {
+      "range": 40,
+      "meetsHundred": false,
+      "url": "https://www.atotodirect.com/collections/car-stereo",
+      "counted": "ATOTO S8G2094MS, ATOTO A5LG211T-S01, ATOTO A5LG209T-S12, ATOTO A5LG110T, ATOTO A6G2A7PF, ATOTO A5LG2A7T-S12, ATOTO X10G125E-R3, ATOTO A6G209PF, ATOTO A5LG110PT, ATOTO S8G2C74MS-S02F, ATOTO A5LG110PT-S01, ATOTO A5LG2A7T, ATOTO F7G2A7WE-S01, ATOTO A5LG2B7T, ATOTO A5LG2A7T-S01, ATOTO F7G211WE, ATOTO V10G2D7OC, ATOTO A5LG2A7T-S02, ATOTO A5LG110T-S01, ATOTO S8LG211SD, ATOTO S8 Gen4, ATOTO X10G209E-R3, ATOTO S84G211P, ATOTO S8G2A74MS-S01R, ATOTO A5LG209T-S01, ATOTO X10G211E, ATOTO A5LG2B7T-S12, ATOTO A5LTYB7T, ATOTO S8G1104MS-S01, ATOTO V10G211OC, ATOTO X10G225E, ATOTO S8G2A74MS, ATOTO X10G110PESM, ATOTO S8LG2B7SD-S04, ATOTO A5LG110T-S02, ATOTO X10G129ESM-R3S, ATOTO V10G209OC, ATOTO V10G211OC-S04, ATOTO X10G211E-R3, ATOTO A5LG2A7T-S04",
+      "market": "US"
+    },
+    "car-audio|Power Acoustik": {
+      "range": 33,
+      "meetsHundred": false,
+      "url": "https://poweracoustik.com/collections/all/products.json?limit=250",
+      "counted": "BAMF-102, BAMF-104, BAMF-122, BAMF-124, BAMF-154, BAMF1-3000D, BAMF1-5000D, BAMF1-8000D, BAMF4-1200D, BAMF4-1800D, BAMF5-2500D, BAMF-152, BASS-10C, BASS-12C, BASS-15C, BASS-18C, BASS-MX, BUC-2, BUC-1, CA1-1500, CA1-3500D, CA1-5000D, CA1-77W, CA1-8000D, CA2-1000, CA2-74W, CA4-1600, CA4-2000, CB1-2500D, CB1-4500D, CB1-8000D, CB4-1200, CB4-1800",
+      "market": "US"
+    },
+    "car-audio|Soundstream": {
+      "range": 30,
+      "meetsHundred": false,
+      "url": "https://soundstream.com/collections/all/products.json?limit=250",
+      "counted": "AC.6, AF.42, AF.52, AF.573, AF.653, AF.694, AR1-2500D, AR1-3000D, AR1-5000D, AR1-7500D, AR1-8000D, AR1.2500D, AR1.4500D (variant A), AR1.4500D (variant B), AR1.8000D, AR1-10000D, AR2-1000D, AR4-1200, AR4-1800, AR4-2000D, AR4.1200, AR4.1800, BTC-3100, BX-10, BX-108Z, BX-10MX, BX-10W, BX-10X, BX-12, BX-12W",
+      "market": "US"
+    },
+    "car-audio|Taramps": {
+      "range": 20,
+      "meetsHundred": false,
+      "url": "https://tarampsusa.com/collections/amplifiers/products.json?limit=250",
+      "counted": "HD 3000, TS 400X4, HD 2000, BASS 5K, THE BIG BOSS 3 BASS, BASS 3K, SMART3 BASS, TS 800x4, BASS 1200, TS 1200x4, TS 400X4 HIGH LEVEL INPUT, DS 800x4, SMART3, MD 1200.1, MD 5000.1, DS 2000x4, THE BIG BOSS 8 BASS, DS 1200x4, MD 3000.1, Bass 400",
+      "market": "US"
+    },
+    "car-audio|Xtrons": {
+      "range": 14,
+      "meetsHundred": false,
+      "url": "https://xtrons.com/product-category/car-stereos/",
+      "counted": "IQ Series, IM Series, PX Series, IA Series, ID Series, QD Series, QT Series, QWB Series, QG Series, QBB Series, QBA Series, QBM Series, QIR Series, QL Series",
+      "market": "US"
+    },
+    "car-audio|American Bass": {
+      "range": 11,
+      "meetsHundred": false,
+      "url": "https://americanbassusa.com/collections/american-bass/products.json?limit=250",
+      "counted": "XFL 12, XFL 10, XFL 15, Godzilla 8, Godfather 6.5 Midrange, Elite 12, HAWK 12, HAWK Slim 12, HD Velocity 12, Elite 15",
+      "market": "US"
+    },
+    "car-audio|Blaupunkt": {
+      "range": 37,
+      "meetsHundred": false,
+      "url": "https://www.bpcarusa.com/collections/all/products.json?limit=250",
+      "counted": "CAMDEN 450, AMP-1404PRO, AMP-1501PRO, AMP-1604PRO, AMP-1804BTPRO, AMP-7502PRO, AMP1901D (4ch), AMP1901D (mono), ASPEN 140, BDB-1, BFH-A1, BMX-3RCA, BPA-401Mi, BPA-404Mi, BPA-C1000, BPA-C400, BPA-C500, BPA-E1001, BPA-E602, BPA-E604, BPA-HX1200, BPA-HX320, BPA-HX80DSP, BPA-M604BT, BPA-M605BT, BPA-M701, BPA-M704, BPP-MD800, BPP-MDS60, BPP-MR65B, BPP-MR80B, BPP-TW200, BPP-TW300, BPP-TW400, BPS-E452, BPS-E552, BPS-E650C",
+      "market": "US"
+    },
+    "car-audio|Cerwin-Vega": {
+      "range": 16,
+      "meetsHundred": false,
+      "url": "https://cerwinvega.com/collections/car-audio/products.json?limit=250",
+      "counted": "VPSTX12, PH654, V82DV2, V693, CVP8, PH694, VPAS12, VPAS12ST, V652, V465C, V3, V525, H7653, H746, VS12SH, H735",
+      "market": "US"
+    },
+    "car-audio|DD Audio": {
+      "range": 119,
+      "meetsHundred": true,
+      "url": "https://ddaudio.com/product-category/subwoofers/ and https://ddaudio.com/speakers/",
+      "counted": "W508, W10a, WN710, W712, SL608, SL610, SL612, SL710, SL712, SL715, 508e, 510e, 512e, 606d, 608f, 610f, 612f, 710g, 712g, 715f, 1506a, 2508g, 9510L, 9912c, 9915c, 9918c, 9921c, Z310, Z312, Z315, Z318, Z321, Z412, Z415, Z418, Z421, C-C6.5c, C-C6.5c+XO, D-X4b, D-X5.25b, D-X6.5b, D-X6x9b, D-C6.5b, E-C6.5b, E-X6.5b, D-FR2.75, VO-FR508, VO-FR510, VO-M106, VO-M206, VO-M208, VO-M210, VO-M406-C, VO-M408-C, VO-M10, VO-MN104, VO-MN105, VO-MN306, VO-MN369, VO-MN308, VO-MN310, VO-MX206, VO-MX269, VO-MX208, VO-XN305, VO-XN306, VO-XN369, VO-XN308, VO-MW812, VO-MW815, VO-MWN710, VO-MWN712, VO-MWN812, VO-MWN815, VO-W508, VO-W10a, VO-WN710, VO-W712, D-T25a, VO-B1c, VO-B2a, VO-MBTN125, VO-BTN125, VO-B4a, VO-CT35, VO-CT55, VO-CT75, MC-106b, MCA-106b, LSS-161, CXO2WAY, RAGER-PRO-851",
+      "market": "US"
+    },
+    "car-audio|Sundown Audio": {
+      "range": 18,
+      "meetsHundred": false,
+      "url": "https://sundownaudio.com/collections/active-items",
+      "counted": "SA-Classic 12, LCS v.2 12, U-Series v.2 12, E-Series V.4 12, M-Series M12, SA-Series v.3 12, SA-Classic 10, SIA-2500D, SML-Series 12 Thin, LCS v.2 10, E-Series v.6 8, X-Series v.3 12, SAEv4-2000.1D, SA-69CX, X-Series v.3 15, E-6.5CX, ET-R1, SML-Series 10 Thin",
+      "market": "US"
+    },
+    "car-audio|Massive Audio": {
+      "range": 28,
+      "meetsHundred": false,
+      "url": "https://www.massiveaudio.com/collections/all",
+      "counted": "AK0, AK4, ALUMA 6, AM3, AW65, AX02, B-LYNX, BAS6, BAS8, BASSPRO, BG6, BG8, BOA102R, BOA121, MX693, NIS6K, NIS6X, NOISE-OFF, P0-50G, P0-50R, P2, P3, P4, P4-100G, P4-100R, P65NTI, P65XV2, P65Z",
+      "market": "US"
+    }
+  },
+  "notFound": {
+    "computers|Acer": "Tried acer.com/us-en/laptops (timeout), store.acer.com/en-us/laptops (timeout), acer.com/ca-en/laptops (timeout). JS-rendered storefront would not return product listing via fetch after 3 tries.",
+    "computers|HP": "Tried hp.com/us-en/shop/cv/laptops and hp.com/us-en/shop/slp/laptops (both timed out) and store.hp.com variants. JS-rendered storefront did not return a parseable product list.",
+    "computers|Lenovo": "Tried lenovo.com/us/en/laptops/, lenovo.com/us/en/d/laptops/, lenovo.com/us/en/laptops/c/laptops/ - all returned HTTP 403 Forbidden to WebFetch.",
+    "computers|MSI": "Tried msi.com/Laptops/All-Products (timeout), us.msi.com/Laptops/All-Series (403), msi.com/Laptop/All-Series (403).",
+    "computers|Dell": "Tried dell.com/en-us/shop/laptops/sc/laptops and dell.com/en-us/shop/dell-laptops/sf/laptops - JS-rendered storefront returned only nav/sitemap content (hallucinated or empty product lists), no reliable product listing.",
+    "computers|Alienware": "Alienware sells through dell.com; same JS-rendering issue as Dell prevented getting a real product list from alienware.com or dell.com/alienware pages.",
+    "computers|Zotac": "Tried zotacstore.com/us/zbox (404) and zotac.com/product/mini_pcs (403 Forbidden).",
+    "computers|Gigabyte": "Tried gigabyte.com/Laptop - HTTP 403 Forbidden.",
+    "computers|LG": "Tried lg.com/us/laptops - page returned only broad category names (gram Pro, gram Pro 2-in-1, gram, gram Book, gram Copilot+), not individual distinct model names; could not get a reliable per-model count from the JS-rendered page.",
+    "computers|Amazon": "Tried amazon.com/fire-tablets and amazon.com/b?node=6669702011 for Fire tablets - both returned HTTP 503 Service Unavailable.",
+    "computers|Google": "Tried store.google.com/category/tablets and store.google.com/category/computers and store.google.com/product/pixel_tablet - timeouts or truncated/empty content.",
+    "computers|Trigkey": "Tried trigkey.com/collections/all and trigkey.com/ - both returned HTTP 402 Payment Required (site blocking automated fetch).",
+    "computers|Fujitsu": "Tried fujitsu.com/global/products/computing/pc/notebooks/ - redirected to a corporate capabilities page with no product list; Fujitsu's PC business (Lifebook) is largely not sold as Fujitsu-branded in SLATE's priority markets (US/GB/IE/CA/MX) since Fujitsu Client Computing sells mainly in Japan/EU under FCCL - could not find a current lineup page in an applicable market.",
+    "computers|Avita": "Tried avita-americas.com/collections/laptops - domain now redirects to an unrelated parked site (streetauntie.com), so Avita's US storefront appears defunct; avita-india.com and avita-ireland.com exist but India is not a SLATE market and the Ireland site was not successfully fetched.",
+    "computers|ASRock": "Tried asrock.com/nettop/index.asp, index.us.asp, and /nettop/ - all returned empty content (likely JS-rendered), could not get a product listing.",
+    "computers|Chillblast": "Tried chillblast.com/gaming-pcs (403 Forbidden) and chillblast.com/ (403 Forbidden).",
+    "computers|Ghia": "Tried tienda.ghia.com.mx/categoria-producto/computo/portatiles/laptops/ (multiple attempts, with and without per_page param) - page consistently rendered only 1 product (Notebook Ghia Libero), likely due to JS pagination; could not establish a reliable full count from the brand's own site.",
+    "computers|iBUYPOWER": "Tried ibuypower.com/Gaming-PCs and ibuypower.com/gaming-pc-finder and ibuypower.com/gaming-pc - all returned HTTP 403 Forbidden.",
+    "computers|Lanix": "Tried lanix.com/category/laptops/, lanix.com/laptops/, lanix.com/?s=laptop - all returned HTTP 307 Temporary Redirect with no retrievable content (site appears to block automated fetch).",
+    "computers|Overclockers UK": "Tried overclockers.co.uk/pc-systems, /sector/systems, and the homepage - all returned HTTP 403 Forbidden.",
+    "computers|PCSpecialist": "Tried pcspecialist.co.uk/systems/ and pcspecialist.co.uk/gaming-pc/ - both returned HTTP 403 Forbidden.",
+    "computers|Skytech": "Tried skytechgaming.com/collections/gaming-pcs (404), /collections/all (404), /shop/ and /product-category/pre-built-pcs/ - these returned only 1-2 individual SKUs (e.g. King 45 variants) or a content-free series landing page (Nebula), not a full product listing; could not establish a reliable count.",
+    "computers|Xiaomi": "Tried mi.com/global/tablets/, mi.com/uk/tablets/, mi.com/global/explore/tablets, mi.com/global/product-list/tablets/tablet/, mi.com/global/product-list/pad/ - all returned HTTP 403 Forbidden.",
+    "computers|Fierce PC": "Tried fiercepc.co.uk/gaming-pcs - HTTP 403 Forbidden.",
+    "audio|JBL": "Tried https://www.jbl.com/speakers/, https://www.jbl.com/wireless-speakers/, https://global.jbl.com/bluetooth-speakers/ - all returned HTTP 403 Forbidden to WebFetch; could not read brand's own page directly.",
+    "audio|Q Acoustics": "Tried https://www.qacoustics.co.uk/products/ and https://www.qacoustics.co.uk/shop/ - pages render as series/category names (3000i Series, 5000 Series, etc.) with only a couple of individual model names (3040c, 5040, E60) visible in fetched text; could not establish a reliable distinct-model count. qacoustics.com/us/speakers/ and .co.uk/all-products/ both 404.",
+    "audio|Audioengine": "Tried https://audioengineusa.com/collections/all, /collections/all-speakers, and /shop/ - all failed with SSL handshake failure via WebFetch; could not read the brand's own page.",
+    "audio|Samsung": "Tried https://www.samsung.com/us/audio-sound/all-audio-sound/, .../soundbars/all-soundbars/, .../televisions-home-theater/home-theater/sound-bars/, and .../audio-devices/all-audio-devices/ - all are heavily JS-rendered/paginated and WebFetch only surfaced 1-4 named models (e.g. HW-Q990F, Music Studio 7) plus category labels each time; could not establish a reliable full distinct-model count from the fetched page content.",
+    "audio|Amazon Echo": "Tried https://www.amazon.com/stores/node/21039226011, https://www.amazon.com/b?node=15726326011, and the Amazon-Echo-And-Alexa-Devices node - all returned HTTP 503 Service Unavailable via WebFetch; could not read Amazon's own page.",
+    "audio|Harman Kardon": "Tried https://www.harmankardon.com/speakers, /best-sellers/, https://in.harmankardon.com/Allproducts, and https://global.harmankardon.com/homepage - 403 Forbidden, 403 Forbidden, 403 Forbidden, and DNS resolution failure respectively; could not read the brand's own page.",
+    "audio|Sony": "Tried https://electronics.sony.com/audio/c/audio-all, https://www.sony.com/electronics/speakers - both failed (fetch disallowed / DNS-level failure); could not read the brand's own page.",
+    "audio|Yamaha": "Tried https://usa.yamaha.com/products/audio_visual/index.html, https://shop.usa.yamaha.com/en/audio-home-theater, https://usa.yamaha.com/products/audio_visual/speakers/index.html - all returned HTTP 403 Forbidden; could not read the brand's own page.",
+    "audio|Devialet": "Tried https://www.devialet.com/en-us/shop/ and https://www.devialet.com/en-us/phantom-speaker/ - both returned HTTP 403 Forbidden; could not read the brand's own page.",
+    "audio|Focal": "Tried https://www.focal.com/en/speakers, https://www.focal.com/catalog/high-fidelity-speakers, https://focal.com/en/catalog/home-cinema - the speakers pages render only category names and discontinued-product notices (no current speaker model names reachable), and the home-cinema URL 404'd; only the headphones page yielded real model names (5), insufficient to establish a full lineup count.",
+    "audio|Google Nest": "Tried https://store.google.com/us/category/speakers_displays and https://store.google.com/category/nest_speakers - both timed out (60s) via WebFetch; could not read the brand's own page directly.",
+    "audio|Definitive Technology": "Tried https://www.definitivetechnology.com/collections/all (403) and https://www.definitivetechnology.com/en-us/category/speakers/floor-standing/ (403); could not read the brand's own page.",
+    "audio|Panasonic": "Tried https://www.panasonic.com/us/audio-video.html (403) and https://shop.panasonic.com/collections/home-audio (loaded but only showed nav/category links, no product model names); could not establish a distinct-model count.",
+    "audio|Roku": "Tried https://www.roku.com/products/streambar (404), https://www.roku.com/products/compare-speakers (404), https://www.roku.com/products/accessories/roku-wireless-speakers, and https://www.roku.com/products/players - the latter two loaded but WebFetch's extracted text contained only the word 'Roku' with no product details; could not establish a distinct-model count.",
+    "audio|Sharp": "Tried https://www.sharpusa.com/soundbars (404) and searched shop.sharpusa.com, which per search results focuses on home appliances (microwaves, ovens) rather than audio; could not find or read a working soundbar lineup page on Sharp's own site.",
+    "audio|Steljes Audio": "Tried https://steljesaudio.com/collections/all (command failed/no output) and https://steljesaudio.com/ (command failed/no output); could not read the brand's own page. Web search also failed to surface indexed pages from steljesaudio.com.",
+    "audio|Triangle": "Tried https://www.triangle-hifi.com/en/speakers/ and https://www.triangle-hifi.com/en/ - both failed with ECONNREFUSED; could not read the brand's own page.",
+    "appliances|Whirlpool": "Tried whirlpool.com/laundry/see-all.html, /laundry/washers.html, and the content path variant; all requests consistently timed out (60s) via WebFetch, likely a heavy client-rendered SPA that cannot be read this way.",
+    "appliances|Miele": "Tried miele.com/en/com/products-2066.htm (nav-only, no models), miele.co.uk washing-machines page (403 Forbidden), and miele.com/en/com/washing-machines-1177.htm (404). Could not locate a readable lineup listing page.",
+    "appliances|Electrolux": "Tried electroluxappliances.com Ranges/View-All and Refrigerators pages (301 redirected to electrolux.com/en/...) and the redirected electrolux.com URLs; all timed out (60s) after redirect.",
+    "appliances|Frigidaire": "Tried frigidaire.com/en/kitchen-appliances/refrigerators/view-all and /en/laundry/washers/view-all; both timed out (60s) via WebFetch.",
+    "appliances|GE": "Tried geappliances.com/ge/refrigerators.htm (nav-only, 1 model named), geappliances.com/shop-all-refrigerators (404), geappliances.com/shop/refrigerators (404). Could not locate a full lineup listing page.",
+    "appliances|Samsung": "Tried samsung.com/us/home-appliances/washers/all-washers (nav-only, 0 models) and /refrigerators/all-refrigerators (only 1-2 models rendered in static HTML, rest client-rendered via JS). Page is a JS SPA; could not get a full count from the own-site page.",
+    "appliances|Amana": "amana.com/kitchen.html timed out (60s); amana.com shares the Whirlpool corporate web platform which consistently times out via WebFetch.",
+    "appliances|Maytag": "maytag.com/washers-and-dryers/washers/see-all.html timed out (60s); maytag.com shares the Whirlpool corporate web platform which consistently times out via WebFetch.",
+    "appliances|KitchenAid": "kitchenaid.com/major-appliances/refrigeration/refrigerators.html timed out (60s); kitchenaid.com shares the Whirlpool corporate web platform which consistently times out via WebFetch.",
+    "appliances|AEG": "aeg.co.uk/promotions/washing-machines/ timed out (60s) via WebFetch.",
+    "appliances|Asko": "us.asko.com/products/kitchen/dishwashers (403 Forbidden) and global.asko.com fully-integrated-dishwashers page (403 Forbidden); site blocks the fetch tool.",
+    "appliances|CDA": "cda.eu/ovens returned a TLS certificate mismatch (cert for amica-international.co.uk, not cda.eu); page could not be verified.",
+    "appliances|Grundig": "grundig.com/en-za/home-appliances/laundry/washing-machines and en-gb variant both returned 403 Forbidden.",
+    "appliances|Haier": "haierappliances.com/refrigeration returned 403 Forbidden.",
+    "appliances|Viking": "vikingrange.com and www2.vikingrange.com/consumer/category/products/cooking/freestanding-ranges returned a TLS certificate mismatch (cert for extranet.vikingrange.com); page could not be verified.",
+    "appliances|Thermador": "thermador.com/us/products/ranges returned HTTP 503 Service Unavailable.",
+    "appliances|Cafe": "cafeappliances.com/refrigeration/ returned 403 Forbidden.",
+    "appliances|Panasonic": "shop.panasonic.com/collections/microwave-ovens: page content was truncated by the fetch tool before any product listings appeared (page too large/JS-heavy); could not get a model count.",
+    "appliances|Zanussi": "Could not find a readable own-site product listing page via search (zanussi.co.uk search results surfaced only support/parts/buying-guide pages, no direct catalog page found in time available).",
+    "car-audio|JL Audio": "jlaudio.com now redirects (301) to Garmin's site (garmin.com/en-US/c/jlaudio/ and .../automotive/jl-audio-car-audio/) following Garmin's 2023 acquisition of JL Audio; the Garmin pages returned only navigation links, no product listing, after two attempts.",
+    "car-audio|MTX": "mtx.com/car-audio returned HTTP 403 Forbidden to WebFetch; unable to read the brand's own page to verify a count.",
+    "car-audio|Crunch": "crunchcaraudio.com/shop/ returned HTTP 403 Forbidden to WebFetch; unable to read the brand's own page to verify a count.",
+    "car-audio|Vibe": "vibeaudio.co.uk/car-audio/ returned HTTP 403 Forbidden to WebFetch; unable to read the brand's own page to verify a count.",
+    "car-audio|Alpine": "Alpine's official US site (alpine-usa.com) is a JavaScript SPA; WebFetch on /products, /products/receivers, /products/speakers, /products/subwoofers, and /products/speakers/x-series all returned identical cached amplifier-only content (18 amp models confirmed), with no distinct receiver/speaker/subwoofer listings renderable via WebFetch after 5 attempts. Could not verify full lineup from the brand's own page.",
+    "car-audio|JBL": "JBL's official car-audio pages (jbl.com/car-audio/, global.jbl.com/car-audio/, jbl.com/car-speakers/, jbl.com/car-subwoofers/, global.jbl.com/car-amplifiers/) all returned HTTP 403 Forbidden to WebFetch; unable to read the brand's own page to verify a count.",
+    "car-audio|Infinity": "Infinity's official US store (infinityspeakers.com redirects to shop.infinityspeakers.com) returned HTTP 403 Forbidden on /home, /car-speakers/, and /car-amplifiers/; no official page could be read via WebFetch.",
+    "car-audio|Sony": "Sony's car-audio pages (sony.com/electronics/car-audio-video, electronics.sony.com/car-electronics) could not be fetched by WebFetch (fetch error / blocked) in US market after two attempts.",
+    "car-audio|Focal": "Focal's official pages (focal-america.com/lines/, focal-america.com/products/, focal-america.com/collections/car-audio-amplifiers) only show series/line names (Utopia M, K2 Power, Expert/Flax, etc.), not individual model listings, and a direct amplifiers collection URL 404'd; could not verify an individual-model count from the brand's own page.",
+    "car-audio|Audison": "Audison's official pages (audison.com/collections/car-amplifiers/, audison.com/prima-amplifiers/) returned empty page content to WebFetch (likely JS-rendered) after repeated attempts; unable to verify a count.",
+    "car-audio|Clarion": "clarion.com/us/en/ redirects (302) to archive.clarion.com, which further redirects to archive.clarion.com/xl/en/top.html — an archived legacy site, indicating Clarion has no current US car-audio lineup page to verify a count from.",
+    "car-audio|DS18": "ds18.com's catalog (stated '1506 products' sitewide) is fragmented across dozens of narrow Shopify collections mixing car, marine, pro-audio and powersports items (e.g. /collections/mobile-subwoofers, /collections/amplifiers-1, /collections/speakers-and-components, /collections/car-audio-1 each only returned ~11-14 titles, several non-car-audio). Could not assemble a reliable car-audio-only count within the attempts made; likely large but unverified.",
+    "car-audio|Hifonics": "hifonics.com returned HTTP 403 Forbidden to WebFetch; unable to read the brand's own page to verify a count.",
+    "computers|Asus": "Only partially checked via a single fetch of asus.com/us/laptops/, which returned a categorical series list (Zenbook, Vivobook, Chromebook lines) but did not surface the ROG gaming-laptop line at all, so the result is known-incomplete and unreliable; not recorded as a verified count."
+  }
+}

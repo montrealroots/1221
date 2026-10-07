@@ -8,7 +8,8 @@
  * it stays done.
  *
  * Steps are the everyday ones a routine is made of: looking after yourself,
- * eating what's ready or cooking a recipe, and putting on an outfit. A
+ * eating what's ready or cooking a recipe (from 2026-10-06 for the servings
+ * chosen, until then always what it makes), and putting on an outfit. A
  * drink at home names a bottle, which next time is gone, so it isn't a
  * step. Up to twelve.
  *
@@ -27,7 +28,7 @@ import type { Simulation, CommandResult } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { LOOKING_AFTER, type LookAfter } from './life';
-import { recipeById } from './kitchen';
+import { recipeById, servingsRange } from './kitchen';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 
 export interface RoutineStep { kind: string; payload: Record<string, unknown> }
@@ -73,7 +74,7 @@ export function stepLabel(person: Person, step: RoutineStep): string {
   switch (step.kind) {
     case 'life.look_after': return LOOKING_AFTER[step.payload.action as LookAfter]?.label ?? 'Look After Yourself';
     case 'food.eat_ready': return 'Eat Something Ready';
-    case 'food.cook': return `Cook ${recipeById(String(step.payload.recipeId))?.name ?? 'A Recipe'}`;
+    case 'food.cook': return `Cook ${recipeById(String(step.payload.recipeId))?.name ?? 'A Recipe'}${step.payload.servings === undefined ? '' : `, ${Number(step.payload.servings)} Servings`}`;
     case 'clothes.wear_outfit': return `Wear ${person.outfits?.find((o) => o.id === step.payload.outfitId)?.name ?? 'An Outfit'}`;
     default: return step.kind;
   }
@@ -86,6 +87,18 @@ export function routineRefusal(name: string, steps: readonly RoutineStep[]): str
   if (steps.length > MAX_STEPS) return `Twelve steps at most.`;
   if (steps.some((s) => !ROUTINE_COMMANDS.has(s.kind))) return 'A routine is made of everyday things.';
   if (steps.some((s) => s.kind === 'life.look_after' && !LOOKING_AFTER[s.payload.action as LookAfter])) return 'That isn’t something you can do for yourself.';
+  // A cook step can carry its servings (from 2026-10-06; until then it cooked
+  // what the recipe makes, always), checked here against the recipe's range
+  // as food.cook checks it, so a routine isn't saved to fail at that step.
+  for (const s of steps) {
+    if (s.kind !== 'food.cook') continue;
+    const r = recipeById(String(s.payload.recipeId));
+    if (!r) return 'There’s no such recipe.';
+    if (s.payload.servings === undefined) continue;
+    const n = Number(s.payload.servings);
+    const range = servingsRange(r);
+    if (!Number.isInteger(n) || n < range.least || n > range.most) return `${r.name} cooks from ${range.least} to ${range.most} servings.`;
+  }
   return undefined;
 }
 

@@ -8,7 +8,8 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Feature, Fixtures } from '@/engine/content/homes';
 import { moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
-import { BATHROOM_M2, NDSS, SINGLE_M2, STORAGE_ROOM_SHARE, roomList, roomsOf } from '@/engine/systems/rooms';
+import { BATHROOM_M2, FURNISHABLE, NDSS, SINGLE_M2, STORAGE_ROOM_SHARE, TABLE_SET_M2, furnishedIn, roomList, roomsOf } from '@/engine/systems/rooms';
+import { FURNITURE_CATALOG } from '@/engine/content/furniturecatalog';
 import { addItem, homeKeyOf } from '@/engine/systems/items';
 import { lodgerRefusal } from '@/engine/systems/lodgers';
 import { PROJECTS } from '@/engine/content/homes';
@@ -83,6 +84,26 @@ describe('furniture put in a room', () => {
       refused = sim.execute({ kind: 'items.move', payload: { itemId: sofa.id, to: { kind: 'home', home: h, spot: 'floor', room: 'bedroom-3' } } }).error;
     }
     expect(refused).toMatch(/^It won’t fit in Bedroom 3/);
+  });
+
+  it('a furnished home’s bed, sofa and table stand in their rooms and take that room’s floor (from 2026-10-06)', () => {
+    const sim = home([], 'rooms-furnished');
+    // Built new it came empty; bought furnished, it came with them.
+    sim.player.homes![0]!.bare = false;
+    expect(furnishedIn(sim.player).map((f) => f.roomId)).toEqual(['bedroom-1', 'living', 'kitchen']);
+    const h = homeKeyOf(sim.player.home)!;
+    const kitchen = roomList(sim, sim.player).find((r) => r.id === 'kitchen')!;
+    const piece = FURNITURE_CATALOG.find((p) => p.kind === 'bookcase' && p.cm?.[0] && p.cm[1])!;
+    const fp = (piece.cm![0]! * piece.cm![1]!) / 10_000;
+    const q = Math.floor((kitchen.m2 * FURNISHABLE) / fp);
+    const shelves = addItem(sim, sim.player, { kind: `ikea:${piece.id}`, label: 'Shelves', quantity: q, condition: 1, at: { kind: 'home', home: h, spot: 'floor' }, acquiredAt: sim.now, bulky: true });
+    // They'd fill the kitchen's floor bare; the table and chairs it came with take some of it.
+    expect(q * fp + TABLE_SET_M2).toBeGreaterThan(kitchen.m2 * FURNISHABLE);
+    expect(sim.execute({ kind: 'items.move', payload: { itemId: shelves.id, to: { kind: 'home', home: h, spot: 'floor', room: 'kitchen' } } }).error).toMatch(/^It won’t fit in the Kitchen/);
+    // Bought empty, nothing came with it, and they go in.
+    sim.player.homes![0]!.bare = true;
+    expect(furnishedIn(sim.player)).toEqual([]);
+    sim.must({ kind: 'items.move', payload: { itemId: shelves.id, to: { kind: 'home', home: h, spot: 'floor', room: 'kitchen' } } });
   });
 
   it('works giving over a spare bedroom count a lodger’s room as taken', () => {

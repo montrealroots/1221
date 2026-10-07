@@ -33,20 +33,30 @@
  * C$60), Aeroméxico's MX$1,520 (read secondhand); Aer Lingus and British
  * Airways take none in the cabin. A job's trip is the production's, and
  * isn't held up.
+ *
+ * **On the day** (from 2026-10-06): a journey booked with the pets along
+ * keeps them (`Journey.pets`), and at the airport each way their papers are
+ * read again on landing, the way home's certificate and a dog's tapeworm
+ * treatment with them, which booking looks past; and in the hold, the
+ * carrier's temperatures (`embargoRefusal`). Short of either, the airline
+ * won't take them, and the journey is refused at check-in as for a
+ * passenger's papers. A carrier other than the flag carrier is chosen with
+ * `petCarrier` (`petCarrierFor`).
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
-import { CITIES } from '../content/geography';
+import { CITIES, type City } from '../content/geography';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { contactsOf } from './people';
 import { sitterThrough } from './away';
 import { HOTEL_AMENITIES } from '../content/hotelamenities';
-import { CABIN_MAX_KG, PET_FLIGHT, PET_KG, type PetFare } from '../content/petair';
+import { CABIN_MAX_KG, OTHER_PET_CARRIERS, PET_FLIGHT, PET_KG, type PetFare, type PetFlightRule } from '../content/petair';
+import { weatherAt } from './weather';
 import { PAPER_LABEL, PET_ENTRY, type EntryRule, type Paper } from '../content/petentry';
 import { ARRIVAL_FEE, CERTIFICATE_FEE, CHIP_LAW, CHIP_PRICE, ENDORSEMENT } from '../content/petpapers';
 import { KCAL_A_DAY, LITTERS, LITTER_KG_A_WEEK, PET_FOODS, RATION_KCAL_PER_KG, VET_YEAR, WALK, type PetMarket } from '../content/petcare';
@@ -274,26 +284,92 @@ export function hotelPetFee(sim: Simulation, person: Person, hotelId: string | u
  * checked or as cargo, at its own fare, inside or outside the country; or why
  * it can't fly. Nothing where there are no pets or no flight.
  */
-export function petFlightFee(sim: Simulation, person: Person, fromCityId: string, toCityId: string, flights: number, at: Instant = sim.now): Money | string {
+/**
+ * The carrier a pet flies with between two towns: the departure country's
+ * flag carrier, or one chosen in its place where it's offered between the two
+ * countries (`OTHER_PET_CARRIERS`, from 2026-10-06). Or why it can't be.
+ */
+export function petCarrierFor(fromCityId: string, toCityId: string, chosen?: string): PetFlightRule | string {
+  const from = CITIES.get(fromCityId)?.countryId ?? '';
+  const to = CITIES.get(toCityId)?.countryId ?? '';
+  if (chosen) {
+    const other = OTHER_PET_CARRIERS[chosen];
+    if (!other) return 'SLATE keeps no such airline’s pet rules.';
+    if (!other.flies.includes(from) || !other.flies.includes(to)) return `SLATE keeps ${other.carrier}’s pets ${other.flies.length === 1 ? 'within' : 'between'} ${other.flies.map((c) => theCountryName(c)).join(' and ')} only.`;
+    return other;
+  }
+  return PET_FLIGHT[from] ?? 'SLATE keeps no airline’s pet rules here.';
+}
+const theCountryName = (iso: string): string => ({ us: 'America', ca: 'Canada', mx: 'Mexico', uk: 'Britain', ie: 'Ireland' } as Record<string, string>)[iso] ?? iso.toUpperCase();
+
+/** The pets that fly in the hold with a carrier between two countries: those it won't or can't take in the cabin. */
+function inTheHold(person: Person, rule: PetFlightRule, from: string, to: string): Pet[] {
+  // Britain takes no pet arriving in a cabin, so it comes in the hold (`content/petentry.ts`).
+  const cabinIn = !(entryRule(from, to)?.noCabin);
+  return petsOf(person).filter((pet) => !(rule.cabin && cabinIn && PET_KG[pet.species] <= CABIN_MAX_KG));
+}
+
+export function petFlightFee(sim: Simulation, person: Person, fromCityId: string, toCityId: string, flights: number, at: Instant = sim.now, chosen?: string): Money | string {
   const pets = petsOf(person);
   if (pets.length === 0 || flights === 0) return 0;
   const from = CITIES.get(fromCityId);
-  const rule = PET_FLIGHT[from?.countryId ?? ''];
-  if (!rule) return 'SLATE keeps no airline’s pet rules here.';
+  const rule = petCarrierFor(fromCityId, toCityId, chosen);
+  if (typeof rule === 'string') return rule;
   const to = CITIES.get(toCityId)?.countryId ?? '';
-  const domestic = (rule.domesticTo ?? [from!.countryId]).includes(to);
+  // Domestic where both ends are among its own (Air Canada and WestJet price America as Canada).
+  const own = rule.domesticTo ?? [from!.countryId];
+  const domestic = own.includes(to) && own.includes(from!.countryId);
   const fare = (f: PetFare): Money => inSaveMoney(sim, Math.round((domestic ? f.domestic : f.abroad) * 100), domestic ? f.currency : f.abroadCurrency ?? f.currency);
+  const held = new Set(inTheHold(person, rule, from!.countryId, to).map((p) => p.id));
   let total = 0;
   for (const pet of pets) {
-    // Britain takes no pet arriving in a cabin, so it comes in the hold (`content/petentry.ts`).
-    const cabinIn = !(entryRule(from!.countryId, to)?.noCabin);
-    if (rule.cabin && cabinIn && PET_KG[pet.species] <= CABIN_MAX_KG) { total += fare(rule.cabin); continue; }
+    if (!held.has(pet.id)) { total += fare(rule.cabin!); continue; }
     const hold = rule.hold;
     if ('refused' in hold) return `${pet.name}: ${hold.refused}`;
     if (hold.closed && inClosed(at, from!.timeZone, hold.closed)) return `${rule.carrier} carries no pets in the hold from ${hold.closed.from[1]} December to ${hold.closed.to[1]} January.`;
+    // WestJet's summer towns, known when it's booked (from 2026-10-06).
+    const s = rule.summer;
+    if (s && (s.cities.includes(fromCityId) || s.cities.includes(toCityId)) && inStretch(at, from!.timeZone, s.from, s.until)) return `${rule.carrier} checks no pets to or from ${CITIES.get(s.cities.includes(toCityId) ? toCityId : fromCityId)?.name} from ${dayOfYear(s.from)} to ${dayOfYear(s.until)}.`;
     total += fare(hold);
   }
   return total;
+}
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const dayOfYear = ([m, d]: [number, number]): string => `${d} ${MONTH_NAMES[m - 1]}`;
+
+/** Whether a day falls between two months and days of its year, in a zone. */
+function inStretch(at: Instant, zone: string, from: [number, number], until: [number, number]): boolean {
+  const [, m, d] = new Date(at).toLocaleDateString('en-CA', { timeZone: zone }).split('-').map(Number) as [number, number, number];
+  const key = m * 100 + d;
+  return key >= from[0] * 100 + from[1] && key <= until[0] * 100 + until[1];
+}
+
+/**
+ * Why the carrier won't fly a pet in its hold on the day, by its temperatures
+ * (from 2026-10-06, `content/petair.ts`): read in the weather SLATE draws at
+ * the hour it leaves and the hour it lands. Nothing where it flies, or no pet
+ * is in the hold, or the carrier keeps no figure SLATE read.
+ */
+export function embargoRefusal(sim: Simulation, person: Person, fromCityId: string, toCityId: string, leaveAt: Instant, arriveAt: Instant, chosen?: string): string | undefined {
+  const rule = petCarrierFor(fromCityId, toCityId, chosen);
+  if (typeof rule === 'string' || !rule.embargo) return undefined;
+  const from = CITIES.get(fromCityId);
+  const to = CITIES.get(toCityId);
+  if (!from || !to) return undefined;
+  const held = inTheHold(person, rule, from.countryId, to.countryId);
+  if (held.length === 0) return undefined;
+  const e = rule.embargo;
+  if (e.windows && !e.windows.some((w) => w.to.includes(to.countryId) && inStretch(arriveAt, to.timeZone, w.from, w.until))) return undefined;
+  const ends: [City, Instant][] = e.where === 'both' ? [[from, leaveAt], [to, arriveAt]] : [[to, arriveAt]];
+  for (const [city, at] of ends) {
+    const t = weatherAt(sim, city.id, at)?.temperatureC;
+    if (t === undefined) continue;
+    const hot = e.maxC !== undefined && t > e.maxC;
+    const cold = e.minC !== undefined && t < e.minC;
+    if (hot || cold) return `${rule.carrier} won’t fly ${held.map((p) => p.name).join(' and ')} in the hold: it’s ${t}°C in ${city.name}, ${hot ? 'over' : 'under'} the ${Math.round((hot ? e.maxC! : e.minC!) * 10) / 10}°C it flies pets in.`;
+  }
+  return undefined;
 }
 
 /** Whether a day falls in a closed stretch running from one month and day across the new year to another. */

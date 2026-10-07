@@ -40,7 +40,7 @@
 import type { Simulation, CommandResult } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { saveCurrency, type Money } from '../core/money';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { FUEL_STOP_MINUTES, LEG_KM, METER, MIN_PER_KM, STATIONS, WALK_KM, WALK_KMH, type LegKind } from '../content/errandtrips';
@@ -67,6 +67,15 @@ import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 import { TRANSIT } from '../content/transit';
 import { rateOn } from '../content/career';
 import { STATION_RIDE_MINUTES } from './rail';
+import { arrange } from './catalog';
+import { groceryCatalog } from './kitchen';
+import { salonsIn, toiletryCatalog } from './hygiene';
+import { basketOf, collectRefusal, productById as clothingProduct, retailerById, returnRefusal } from './clothing';
+import { extraSupplyRefusal, longestFillOf } from './health';
+import { walletOf, withdrawalQuote } from './cash';
+import { menuCatalog } from './dining';
+import { clubById, membershipsOf } from './clubs';
+import { heldRefusal, ordersOf } from './orders';
 
 export type TripMode = 'car' | 'foot' | 'transit';
 
@@ -199,10 +208,41 @@ export const COLD_CHAIN_HOURS = 2;
  */
 export const CARRY_KG = 23;
 
-/** What the trip's shopping carried by hand weighs, kilograms. */
-export const carriedKg = (person: Person): number => (person.trip?.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i)).reduce((kg, i) => kg + weightG(i) / 1000, 0);
+/** What the trip's shopping carried by hand weighs, kilograms: what's in their arms, not a load taken home on a second trip (from 2026-10-06). */
+export const carriedKg = (person: Person): number => (person.trip?.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i) && i!.at.kind === 'person').reduce((kg, i) => kg + weightG(i) / 1000, 0);
 
-export function stow(person: Person, item: Item, at: Instant): void {
+/**
+ * A second trip (from 2026-10-06; until then what was past a carry wasn't
+ * bought): shopping more than one carry, the load in hand is taken home and
+ * they come back for the rest, the shopping leg walked or ridden twice more,
+ * as long as the one already timed (`leg`), its kilometers and on transit its
+ * two fares. The load taken home waits inside the door, not put away
+ * (`waitingShopping`), as it would in their arms; how long bringing things in
+ * takes isn't published, so it takes none. Only where they live: away, or
+ * staying out of the house, there's nowhere to take a load.
+ */
+function secondTripRefusal(person: Person, itemKg: number): string | undefined {
+  if (itemKg > CARRY_KG + 1e-9) return `That’s more than you can carry: about ${Math.round(itemKg * 10) / 10} kg, of about ${CARRY_KG}.`;
+  if (!person.home || person.home.cityId !== person.currentLocationId || person.stay) return `That’s more than you can carry home: ${Math.round(carriedKg(person) * 10) / 10} kg in hand already, of about ${CARRY_KG}.`;
+  return undefined;
+}
+
+function secondTrip(sim: Simulation, person: Person, trip: Trip): void {
+  const here = person.currentLocationId;
+  const l = leg(here, trip.by, 'shopping');
+  if (trip.by === 'transit') {
+    const fare = transitFare(sim, here) ?? 0;
+    if (fare > 0 && !spend(sim, person, fare * 2, `${CITIES.get(here)?.name ?? 'The town'}’s transit, home and back with the shopping`, 'personal')) throw new CommandError('The fares home and back can’t be paid.');
+  }
+  const home = homeKeyOf(person.home)!;
+  const load = (trip.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i) && i!.at.kind === 'person');
+  for (const i of load) i.at = { kind: 'home', home };
+  trip.km += 2 * l.km;
+  sim.advanceTo(sim.now + Math.round(2 * l.minutes * 60_000));
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Second Trip', body: `More than you can carry at once: ${load.length} ${load.length === 1 ? 'thing' : 'things'} taken home and left inside the door, and back for the rest, ${Math.round(2 * l.minutes)} minutes.`, importance: 25, route: '/workspace/belongings' });
+}
+
+export function stow(sim: Simulation, person: Person, item: Item, at: Instant): void {
   const trip = person.trip;
   if (!trip || item.at.kind !== 'home') return;
   const inCar = trip.by === 'car' && trip.vehicleId && !trip.standInId;
@@ -218,18 +258,24 @@ export function stow(person: Person, item: Item, at: Instant): void {
       if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);
     }
   }
-  // Carried by hand, up to what a person carries home (`CARRY_KG`); a car's cargo is its own.
+  // Carried by hand, up to what a person carries home (`CARRY_KG`); a car's cargo is its own. Past it, a second trip
+  // where they live (`secondTrip`, from 2026-10-06); until then, and still elsewhere, it isn't bought.
   if (!inCar) {
     const kg = carriedKg(person);
-    if (kg + weightG(item) / 1000 > CARRY_KG + 1e-9) throw new CommandError(`That’s more than you can carry home: ${Math.round(kg * 10) / 10} kg in hand already, of about ${CARRY_KG}.`);
+    const itemKg = weightG(item) / 1000;
+    if (kg + itemKg > CARRY_KG + 1e-9) {
+      const no = secondTripRefusal(person, itemKg);
+      if (no) throw new CommandError(no);
+      secondTrip(sim, person, trip);
+    }
   }
   (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
   if (item.at.spot) item.storeIn = item.at.spot;
   item.at = inCar ? { kind: 'vehicle', vehicleId: trip.vehicleId! } : { kind: 'person' };
 }
 
-/** Shopping not yet put away: bought on a trip, in a car or in their arms. */
-export const waitingShopping = (person: Person): Item[] => itemsOf(person).filter((i) => i.storeIn !== undefined && (i.at.kind === 'vehicle' || i.at.kind === 'person'));
+/** Shopping not yet put away: bought on a trip, in a car or in their arms, or from 2026-10-06 taken home on a second trip and left inside the door. */
+export const waitingShopping = (person: Person): Item[] => itemsOf(person).filter((i) => i.storeIn !== undefined && (i.at.kind === 'vehicle' || i.at.kind === 'person' || (i.at.kind === 'home' && i.at.spot === undefined)));
 
 /** Out of the cold too long to keep: food that needs the fridge or freezer, bought more than USDA's two hours ago. */
 export const outTooLong = (item: Item, now: Instant): boolean => (item.storeIn === 'fridge' || item.storeIn === 'freezer') && now - item.acquiredAt > COLD_CHAIN_HOURS * 3_600_000;
@@ -419,4 +465,55 @@ export function runErrands(sim: Simulation, plan: { by: TripMode; vehicleId?: st
   }
   if (sim.player.trip) exec('errand.go', { to: 'home' });
   return { done, ...(stopped ? { stopped } : {}) };
+}
+
+/** A stop a trip can make, with what the screen calls it. */
+export interface StopOffer extends Stop { key: string; label: string }
+
+/**
+ * What a stop on errands can be in the town they're in, each the command a screen already runs (from 2026-10-06; until
+ * then the screen built its own list, of groceries, toiletries, a salon, the dry cleaner's, a station and a club):
+ * besides those, a clothes shop (an order collected, the basket paid for at the till, a purchase taken back), the
+ * pharmacy (a longer supply of their medicine, where they live), the bank's counter and, where their bank lets it, the
+ * Post Office (cash taken out or paid in, of `cash`), a purchase posted back, a meal at a restaurant and, from
+ * 2026-10-06, a parcel missed for want of a signature collected from its carrier (`orders.collect`). A stop
+ * offered can still be refused when it's made, by the command's own rules.
+ */
+export function errandStops(sim: Simulation, person: Person, by: TripMode, cash: Money = 0): StopOffer[] {
+  const here = person.currentLocationId;
+  const errand = 'errand' as const;
+  const shopping = 'shopping' as const;
+  const bought = person.clothesBought ?? [];
+  const waitingOrders = [...new Set(bought.map((b) => b.orderId).filter((id): id is string => Boolean(id) && !collectRefusal(person, id!)))];
+  const tills = [...new Set(basketOf(person).filter((l) => l.how === 'store').map((l) => clothingProduct(l.productId)?.retailer).filter((r): r is string => Boolean(r) && retailerById(r!)!.storesIn.includes(here)))];
+  const current = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
+  const wallet = walletOf(sim, person)?.balance ?? 0;
+  const cur = saveCurrency(sim.universe);
+  const amount = formatMoney(cash, cur);
+  const postOffice = CITIES.get(here)?.countryId === 'uk' && cash > 0 && !withdrawalQuote(sim, person, cash, 'post_office').refused;
+  const supply = extraSupplyRefusal(person, longestFillOf(person)) ? [] : [{ key: 'rx', label: `Collect ${longestFillOf(person)} Days Of Your Medicine At The Pharmacy`, kind: 'health.extra_supply', payload: { days: longestFillOf(person) }, leg: errand }];
+  return [
+    ...arrange(groceryCatalog(sim, here)).map((e) => ({ key: `g:${e.id}`, label: `Buy ${e.label}`, kind: 'food.buy_groceries', payload: { productId: e.id, quantity: 1 }, leg: shopping })),
+    ...arrange(toiletryCatalog(sim, here)).map((e) => ({ key: `t:${e.id}`, label: `Buy ${e.label}`, kind: 'hygiene.buy', payload: { productId: e.id, quantity: 1 }, leg: shopping })),
+    ...salonsIn(here).flatMap((salon) => salon.services.filter((x) => x.price !== null).map((x) => ({ key: `s:${salon.id}:${x.service}`, label: `${x.label} At ${salon.name}`, kind: 'hygiene.groom', payload: { salonId: salon.id, service: x.service }, leg: errand }))),
+    { key: 'dry', label: 'Drop Off The Dry Cleaning', kind: 'clothes.dry_clean', payload: {}, leg: errand },
+    { key: 'collect', label: 'Collect The Dry Cleaning', kind: 'clothes.collect', payload: {}, leg: errand },
+    ...waitingOrders.map((id) => ({ key: `o:${id}`, label: `Collect Your ${retailerById(bought.find((b) => b.orderId === id)!.retailerId)?.name ?? 'Clothes'} Order`, kind: 'clothes.collect_order', payload: { orderId: id }, leg: shopping })),
+    ...tills.map((r) => ({ key: `b:${r}`, label: `Pay For The Basket At ${retailerById(r)!.name}`, kind: 'clothes.checkout', payload: { retailerId: r, how: 'store' }, leg: shopping })),
+    ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'store')).map((b) => ({ key: `r:${b.id}`, label: `Take Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'store' }, leg: shopping })),
+    ...bought.filter((b) => !returnRefusal(sim, person, b.id, 'mail')).map((b) => ({ key: `m:${b.id}`, label: `Post Back ${clothingProduct(b.productId)?.name ?? 'A Purchase'} To ${retailerById(b.retailerId)!.name}`, kind: 'clothes.return', payload: { purchaseId: b.id, how: 'mail' }, leg: errand })),
+    ...supply,
+    // A parcel missed for want of a signature, collected from its carrier (`systems/orders.ts`, from 2026-10-06).
+    ...ordersOf(person).filter((o) => o.held && !heldRefusal(person, o.id, sim.now)).map((o) => ({ key: `h:${o.id}`, label: `Collect Your ${o.from} Parcel From ${o.held!.carrier}`, kind: 'orders.collect', payload: { orderId: o.id }, leg: errand })),
+    ...(cash > 0 && current ? [
+      { key: 'bank-out', label: `Take Out ${amount} At The Bank’s Counter`, kind: 'cash.withdraw', payload: { amount: cash, from: 'counter' }, leg: errand },
+      ...(wallet >= cash ? [{ key: 'bank-in', label: `Pay In ${amount} At The Bank’s Counter`, kind: 'cash.deposit', payload: { amount: cash, toId: current.id, at: 'counter' }, leg: errand }] : []),
+    ] : []),
+    ...(postOffice ? [{ key: 'po-out', label: `Take Out ${amount} At The Post Office`, kind: 'cash.withdraw', payload: { amount: cash, from: 'post_office' }, leg: errand }] : []),
+    ...menuCatalog(sim, here).filter((e) => e.price !== null).map((e) => ({ key: `d:${e.id}`, label: `Eat ${e.label} At ${e.value.restaurant.name}`, kind: 'food.dine', payload: { restaurantId: e.value.restaurant.id, items: [e.value.item], how: 'in' }, leg: errand })),
+    ...(by === 'car' ? (STATIONS[here] ?? []).map((st, i) => ({ key: `f:${i}`, label: `Fuel At ${st}`, kind: 'errand.fuel', payload: { station: i }, leg: errand })) : []),
+    // A club's meeting on the way, checked in at as Set Out does (`systems/clubs.ts`, from 2026-10-03).
+    ...membershipsOf(person).map((m) => clubById(m.clubId)).filter((c): c is NonNullable<typeof c> => Boolean(c) && c!.cityId === here)
+      .map((c) => ({ key: `c:${c.id}`, label: `${c.name}, Its Meeting`, kind: 'club.check_in', payload: { clubId: c.id }, leg: errand })),
+  ];
 }

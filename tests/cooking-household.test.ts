@@ -9,7 +9,14 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { HALL } from '@/engine/content/people';
-import { cookingClash, recipeById } from '@/engine/systems/kitchen';
+import { cookingClash, dinersOf, recipeById } from '@/engine/systems/kitchen';
+import { MONTH_MEALS, childrenOf, raisingMonth } from '@/engine/systems/children';
+import { CHILD_FOOD_SHARE } from '@/engine/content/children';
+import { billShare } from '@/engine/systems/marriage';
+import { STAY_DAY_KIND } from '@/engine/systems/houseguests';
+import { foodOf as householdFoodOf } from '@/engine/systems/household';
+import { livingIn, moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
+import { lodgersIn } from '@/engine/systems/lodgers';
 import { HOST_KIND } from '@/engine/systems/hosting';
 import { foodOf } from '@/engine/systems/pantry';
 import { contactsOf, newContact } from '@/engine/systems/people';
@@ -47,6 +54,65 @@ describe('cooking', () => {
     const r = sim.must<{ left: number }>({ kind: 'food.cook', payload: { recipeId: RECIPE } });
     expect(r.left).toBe(recipeById(RECIPE)!.servings - 2);
     expect(partner.hours).toBeCloseTo(hours + (recipeById(RECIPE)!.minutes ?? 30) / 60, 9);
+  });
+});
+
+describe('whom a meal serves', () => {
+  const YEAR = 365.2425 * MS_DAY;
+
+  it('is chosen: the partner left out, a child served, its meal out of the USDA’s 18% food share of its raising', () => {
+    const sim = life('us-ny-newyork', 'serve-child');
+    stockUp(sim);
+    const partner = friend(sim, 'serve-partner');
+    partner.livesWith = sim.now;
+    childrenOf(sim.player).push({ id: 'kid', name: 'Kid Doe', born: sim.now - 6 * YEAR }, { id: 'baby', name: 'Baby Doe', born: sim.now - 0.5 * YEAR });
+    const ids = dinersOf(sim, sim.player).map((d) => d.id);
+    expect(ids).toContain(partner.id);
+    expect(ids).toContain('kid');
+    // Under one, SLATE's estimate, a baby isn't served a dish.
+    expect(ids).not.toContain('baby');
+    expect(sim.execute({ kind: 'food.cook', payload: { recipeId: RECIPE, servings: 1, serve: ['kid'] } }).error).toBe('That takes 2 servings, one for you.');
+    expect(sim.execute({ kind: 'food.cook', payload: { recipeId: RECIPE, serve: ['lodger:0'] } }).error).toBe('They aren’t here to eat.');
+    const before = raisingMonth(sim, sim.player, sim.now);
+    const r = sim.must<{ left: number }>({ kind: 'food.cook', payload: { recipeId: RECIPE, serve: ['kid'] } });
+    // The partner, not chosen, isn't served.
+    expect(r.left).toBe(recipeById(RECIPE)!.servings - 2);
+    expect(childrenOf(sim.player)[0]!.served).toBe(1);
+    // Two children's months, the six-year-old's and the baby's, the same a year.
+    const month = before / billShare(sim, sim.player) / 2;
+    expect(before - raisingMonth(sim, sim.player, sim.now)).toBeCloseTo(month * CHILD_FOOD_SHARE.us! / MONTH_MEALS * billShare(sim, sim.player), 0);
+  });
+
+  it('serves no child in London, where no food share of raising one is published', () => {
+    const sim = life('uk-eng-london', 'serve-ldn');
+    childrenOf(sim.player).push({ id: 'kid', name: 'Kid Doe', born: sim.now - 6 * YEAR });
+    expect(dinersOf(sim, sim.player).some((d) => d.who === 'child')).toBe(false);
+  });
+
+  it('takes a third off a staying friend’s day of food for each meal served them', () => {
+    const sim = life('us-ny-newyork', 'serve-guest');
+    stockUp(sim);
+    const g = friend(sim, 'serve-guest-f');
+    g.stay = { from: sim.now - 60_000, nights: 3, roomId: 'guest' };
+    sim.must({ kind: 'food.cook', payload: { recipeId: RECIPE, serve: [g.id] } });
+    expect(g.stay.served).toBe(1);
+    const day = householdFoodOf(sim, sim.player);
+    sim.schedule({ at: sim.now + 60_000, kind: STAY_DAY_KIND, label: 'Staying', category: 'relationship', payload: { personId: sim.player.id, contactId: g.id, day: 1 } });
+    sim.advanceTo(sim.now + 120_000);
+    const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Food for ')).at(-1)!;
+    expect(Math.abs(paid.postings[0]!.amount)).toBe(Math.round(day * 2 / 3));
+    expect(g.stay?.served).toBeUndefined();
+  });
+
+  it('serves a lodger in the home you own a serving of it', () => {
+    const sim = life('us-ny-newyork', 'serve-lodger');
+    const facts = { type: 'house', address: 'Test Home', beds: 3, baths: 2, size: 1_800, built: 2000, features: ['yard'], parts: {}, hoaUsd: 0, fixtures: { bathtub: true, dishwasher: true, laundry: 'in-unit', cooling: 'central', outdoor: 'yard', gym: 'none' }, lot: 12_000 } as unknown as HomeFacts;
+    moveIntoOwned(sim, sim.player, ownBuilt(sim, sim.player, { cityId: 'us-ny-newyork', facts, price: 900_000_00, closing: 0 }));
+    sim.player.currentLocationId = 'us-ny-newyork';
+    stockUp(sim);
+    lodgersIn(livingIn(sim.player)!).push({ since: sim.now });
+    expect(dinersOf(sim, sim.player).map((d) => d.id)).toContain('lodger:0');
+    expect(sim.must<{ left: number }>({ kind: 'food.cook', payload: { recipeId: RECIPE, serve: ['lodger:0'] } }).left).toBe(recipeById(RECIPE)!.servings - 2);
   });
 });
 

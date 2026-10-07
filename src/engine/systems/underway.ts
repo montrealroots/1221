@@ -12,7 +12,8 @@
  * picks it up where it was left: a program partway through, a book begun,
  * flight training stopped, a build stopped on a bill unpaid. Until then
  * each could be taken up again only from its own screen, and nothing said
- * it was waiting.
+ * it was waiting. From 2026-10-06 a recipe stopped partway is listed while
+ * it's safe to finish.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -30,6 +31,8 @@ import { MACHINE_LABEL, faultsOf, type Machine } from './appliancefaults';
 import { finished, programmeById } from './programmes';
 import { NOVEL_WORDS, bookInHand } from './reading';
 import { PILOT_TRAINING } from './aviation';
+import { recipeById } from './kitchen';
+import { COLD_CHAIN_HOURS } from './trips';
 
 export interface UnderWay { kind: 'order' | 'car' | 'shop' | 'appointment' | 'journey' | 'document' | 'works' | 'rental' | 'repair'; label: string; until: Instant; route: string }
 
@@ -54,11 +57,13 @@ export function underWay(sim: Simulation, person: Person): UnderWay[] {
 }
 
 /** Something stopped partway, and the command that picks it up where it was left. */
-export interface Partway { kind: 'program' | 'book' | 'pilot' | 'build'; label: string; note: string; since: Instant; route: string; resume: { command: string; payload: Record<string, unknown>; label: string } }
+export interface Partway { kind: 'program' | 'book' | 'pilot' | 'build' | 'cooking'; label: string; note: string; since: Instant; route: string; resume: { command: string; payload: Record<string, unknown>; label: string } }
 
-/** What was left partway, the last left first. */
-export function leftPartway(person: Person): Partway[] {
+/** What was left partway, the last left first; from 2026-10-06 a recipe stopped partway too, while it's within USDA's two hours at `now`. */
+export function leftPartway(person: Person, now?: Instant): Partway[] {
   const out: Partway[] = [];
+  const c = person.cooking;
+  if (c && (now === undefined || now - c.stoppedAt <= COLD_CHAIN_HOURS * 3_600_000)) out.push({ kind: 'cooking', label: recipeById(c.recipeId)?.name ?? 'Cooking', note: `${Math.round(c.minutesDone)} of ${c.minutes} minutes cooked; ${c.why}`, since: c.stoppedAt, route: '/workspace/food', resume: { command: 'food.resume_cooking', payload: {}, label: 'Finish Cooking It' } });
   for (const [id, w] of Object.entries(person.watching ?? {})) {
     const p = programmeById(id);
     if (!p || finished(p, w)) continue;

@@ -41,6 +41,7 @@ import { TIDY, livingOf } from './dwelling';
 import { applyLookingAfter } from './life';
 import { livingIn } from './homes';
 import { THEATER } from '../content/specialrooms';
+import { theaterAt } from './theater';
 import { personalityOf } from './personality';
 import { foodOf, fresh } from './pantry';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
@@ -66,10 +67,13 @@ export function hostRefusal(sim: Simulation, person: Person, contactIds: readonl
   if (contactIds.some((id) => !contactsOf(person).some((c) => c.id === id))) return 'You don’t know them.';
   if (at <= sim.now) return 'Choose a time to come.';
   const everyone = contactIds.length + 1;
-  // A film is watched in the home theater, at its seats.
+  // A film is watched in the home theater, before its screen, at its seats: from 2026-10-06 the screen and the seats
+  // there are, things of theirs (`systems/theater.ts`); until then the room and THEATER's four, always.
   if (what === 'film') {
     if (!livingIn(person)?.facts.features.includes('homeTheater')) return 'You have no home theater.';
-    if (everyone > THEATER.seats) return `The theater seats ${THEATER.seats}, you among them.`;
+    const kit = theaterAt(person);
+    if (!kit.screen) return 'The theater has no screen in it.';
+    if (everyone > kit.seats) return kit.seats === 0 ? 'The theater has no seats in it.' : `The theater seats ${kit.seats}, you among them.`;
   }
   const room = seatsAtHome(person);
   if (what !== 'film' && everyone > room.seats) return `You have seats for ${room.seats}, you among them.`;

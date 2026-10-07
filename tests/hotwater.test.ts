@@ -5,7 +5,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { COLD_MAINS_C, HEATER_SHARE, showerKwh, showerKwhDelta, waterHeaterOf } from '@/engine/systems/hotwater';
+import { COLD_MAINS_C, HEATER_SHARE, showerGasKwhDelta, showerKwh, showerKwhDelta, waterHeaterOf } from '@/engine/systems/hotwater';
+import { gasAdjustment, gasUnits } from '@/engine/systems/gas';
 import { countHomeDay, electricityAdjustment } from '@/engine/systems/electricity';
 import { WASHING } from '@/engine/systems/water';
 
@@ -64,5 +65,38 @@ describe('an electric heater’s showers', () => {
       return;
     }
     throw new Error('no gas heater drawn');
+  });
+});
+
+describe('a gas heater’s showers', () => {
+  function heated(city: string, heater: string) {
+    for (let i = 0; i < 200; i += 1) {
+      const sim = life(city, `gasheat-${i}`);
+      if (waterHeaterOf(sim, sim.player) !== heater) continue;
+      sim.player.home = { ...sim.player.home!, kind: 'own' } as never;
+      sim.player.living = { tidy: 80, billDays: 30, homeDays: 30, showers: WASHING[city.startsWith('uk') ? 'gb' : 'us']!.showersADay * 30 };
+      return sim;
+    }
+    throw new Error(`no ${heater} heater drawn`);
+  }
+
+  it('past the average are on the gas bill: ENERGY STAR’s 0.81 UEF in America, a combi’s 92% in London', () => {
+    const ny = heated('us-ny-newyork', 'gas');
+    expect(showerGasKwhDelta(ny, ny.player, 11)).toBeCloseTo(0, 9);
+    const even = gasAdjustment(ny, ny.player, 11);
+    ny.player.living!.showers! += 30;
+    expect(showerGasKwhDelta(ny, ny.player, 11)).toBeCloseTo((30 * showerKwh('us', 11)!) / 0.81, 9);
+    expect(gasAdjustment(ny, ny.player, 11)).toBeGreaterThan(even);
+    // Not on the electricity bill as well.
+    expect(showerKwhDelta(ny, ny.player, 11)).toBe(0);
+    const ldn = heated('uk-eng-london', 'other');
+    ldn.player.living!.showers! += 30;
+    expect(showerGasKwhDelta(ldn, ldn.player, 11)).toBeCloseTo((30 * showerKwh('uk', 11)!) / 0.92, 9);
+    expect(gasUnits('therm', 29.3071)).toBeCloseTo(1, 4);
+    expect(gasUnits('ccf', 29.3071 * 1.036)).toBeCloseTo(1, 4);
+    // An electric shower in London isn't the boiler's.
+    const elec = heated('uk-eng-london', 'electric');
+    elec.player.living!.showers! += 30;
+    expect(showerGasKwhDelta(elec, elec.player, 11)).toBe(0);
   });
 });

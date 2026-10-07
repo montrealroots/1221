@@ -35,21 +35,52 @@
  * reputation; a win, 8 and 8, on the scale where a series is worth 12 of
  * recognition (`ATTRIBUTES.recognition`). Recognition sets what an actor
  * is paid over scale (`overscaleOf`). The sizes are SLATE's estimates.
+ *
+ * **The ceremony** (from 2026-10-06; until then it was a draw on the day and
+ * nobody went): a nominee may go, and it's on the calendar in its town
+ * (`CEREMONY`), reached by a journey booked on Travel and dressed for in a
+ * suit or a dress, SLATE's reading. Going, the result is told there; a win's
+ * recognition is in full only for one who was there, and at a festival
+ * premiere's share without them otherwise (`holdCeremony`). The odds are the
+ * vote's, whichever.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { dateKey, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { dateKey, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { AWARD_DATES, EMMY_ENTRY, EMMY_FIELDS, EMMY_NAMES, OTHER_FIELDS, OTHER_NAMES, type AwardBody } from '../content/awards';
-import { careerOf, levelFor, roleById, workDays, type Booking } from './career';
-import { earn, nudge } from './attributes';
+import { careerOf, levelFor, present, roleById, workDays, type Booking } from './career';
+import { ATTRIBUTES, earn, nudge } from './attributes';
+import { wornNow } from './wardrobe';
+import { CITIES } from '../content/geography';
 import { spend } from './household';
 
-export interface AwardEntry { bookingId: string; body: AwardBody; year: number; category: string; entered: Instant; byThem: boolean; nominated?: boolean; won?: boolean }
+export interface AwardEntry {
+  bookingId: string; body: AwardBody; year: number; category: string; entered: Instant; byThem: boolean; nominated?: boolean; won?: boolean;
+  /** A nominee going to the ceremony, on the calendar (from 2026-10-06); and whether they were there, in the room and dressed for it. */
+  attending?: true;
+  there?: boolean;
+}
+
+/**
+ * Where each body's ceremony is held, from 2026-10-06: the town its time zone was already read for, and the hall where
+ * one was read (`research-career-depth.json`): the Academy Awards at the Dolby Theatre, the Oliviers at the Royal
+ * Albert Hall (2026's), the Tonys at Radio City Music Hall (the 79th's). The Emmys', BAFTA's and the Ariels' halls
+ * weren't read.
+ */
+export const CEREMONY: Readonly<Record<AwardBody, { cityId: string; hall?: string }>> = {
+  emmys: { cityId: 'us-ca-losangeles' },
+  'bafta-film': { cityId: 'uk-eng-london' },
+  oscars: { cityId: 'us-ca-losangeles', hall: 'the Dolby Theatre' },
+  tonys: { cityId: 'us-ny-newyork', hall: 'Radio City Music Hall' },
+  oliviers: { cityId: 'uk-eng-london', hall: 'the Royal Albert Hall' },
+  ariel: { cityId: 'mx-cmx-mexicocity' },
+};
+export const CEREMONY_KIND = 'awards.ceremony';
 
 const ZONE: Readonly<Record<AwardBody, string>> = { emmys: 'America/Los_Angeles', 'bafta-film': 'Europe/London', oscars: 'America/Los_Angeles', tonys: 'America/New_York', oliviers: 'Europe/London', ariel: 'America/Mexico_City' };
 /** A nomination's and a win's recognition and reputation, and the mood. SLATE's estimates. */
@@ -178,24 +209,71 @@ export function announceNominations(sim: Simulation, person: Person, body: Award
     if (!e.nominated) continue;
     n += 1;
     lift(sim, person, AWARD_EFFECT.nominated);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Nominated', body: `${categoryName(person, e)}, for ${roleById(booking.roleId).label}.`, importance: 85, route: '/workspace/career' });
+    const where = ceremonyOf(body, year);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Nominated', body: `${categoryName(person, e)}, for ${roleById(booking.roleId).label}. The ceremony is in ${CITIES.get(where.cityId)?.name ?? 'its town'}${where.hall ? `, at ${where.hall}` : ''}, on ${formatDate(where.at, ZONE[body])}; going is on Career.`, importance: 85, route: '/workspace/career' });
   }
   return n;
 }
 
-/** A body's ceremony: each nominee's chance at the win. How many won. */
-export function holdCeremony(sim: Simulation, person: Person, body: AwardBody, year: number): number {
+/** A body's ceremony, as it's held in a year: noon on its day where it's held, the time the vote has always been read at, and where. */
+export function ceremonyOf(body: AwardBody, year: number): { at: Instant; cityId: string; hall?: string } {
+  return { at: dayOf(body, year, AWARD_DATES[body].ceremony), ...CEREMONY[body] };
+}
+
+/** Why a nominee can't say they're going to the ceremony, or nothing. */
+export function attendRefusal(sim: Simulation, person: Person, bookingId: string, body: AwardBody): string | undefined {
+  const e = entriesOf(person).find((x) => x.bookingId === bookingId && x.body === body);
+  if (!e?.nominated) return 'Only a nominee is asked.';
+  if (e.won !== undefined) return 'Its ceremony has been held.';
+  if (e.attending) return 'You’re going.';
+  if (ceremonyOf(body, e.year).at <= sim.now) return 'Its ceremony has been held.';
+  return undefined;
+}
+
+/** Dressed for a ceremony: a suit or a dress on, SLATE's reading (no body's dress code was read). */
+export const dressedForCeremony = (person: Person): boolean => wornNow(person).some((g) => g.garment.slot === 'suit' || g.garment.slot === 'dress');
+
+/**
+ * A body's ceremony: each nominee's chance at the win, at the odds it always had. How many won. From 2026-10-06 a
+ * nominee going is held at the ceremony itself (`atCeremony`), told there, and a win's recognition is the room's and
+ * the broadcast's seeing them take it: there, in its town and dressed for it, in full; not, at the share a festival's
+ * premiere without them earns (`ATTRIBUTES.build.festival.absent`, SLATE's estimate). Until then nobody could go, and
+ * every win lifted recognition in full.
+ */
+export function holdCeremony(sim: Simulation, person: Person, body: AwardBody, year: number, atCeremony = false): number {
   let n = 0;
+  const where = ceremonyOf(body, year);
   for (const e of entriesOf(person)) {
     if (e.body !== body || e.year !== year || !e.nominated || e.won !== undefined) continue;
+    // Going, it's decided at the ceremony; the day's turn leaves it to then.
+    if (Boolean(e.attending) !== atCeremony) continue;
     const booking = careerOf(person).bookings.find((b) => b.id === e.bookingId)!;
     e.won = sim.rng('awards.vote', person.id, `${e.bookingId}-won`).next() < awardChances(person, booking, body, e.category).won;
-    if (!e.won) continue;
+    e.there = atCeremony && present(person, sim.now, where.cityId) && dressedForCeremony(person);
+    const place = where.hall ?? CITIES.get(where.cityId)?.name ?? 'the ceremony';
+    if (atCeremony && person.id === sim.universe.playerId && !e.there) sim.notify({ category: 'career', title: 'You Weren’t There', body: present(person, sim.now, where.cityId) ? `Not dressed for it, you didn’t go in to ${place}.` : `You weren’t in ${CITIES.get(where.cityId)?.name ?? 'its town'} for it.`, importance: 60, route: '/workspace/career' });
+    if (!e.won) {
+      if (e.there && person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Not This Time', body: `At ${place}, ${categoryName(person, e)} went to another nominee.`, importance: 70, route: '/workspace/career' });
+      continue;
+    }
     n += 1;
-    lift(sim, person, AWARD_EFFECT.won);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'You Won', body: `${categoryName(person, e)}, for ${roleById(booking.roleId).label}.`, importance: 95, route: '/workspace/career' });
+    lift(sim, person, { ...AWARD_EFFECT.won, recognition: AWARD_EFFECT.won.recognition * (e.there ? 1 : ATTRIBUTES.build.festival.absent) });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'You Won', body: `${e.there ? `At ${place}: ` : ''}${categoryName(person, e)}, for ${roleById(booking.roleId).label}.`, importance: 95, route: '/workspace/career' });
   }
   return n;
+}
+
+/** A nominee going to the ceremony: on the calendar, the clock stopping for it there. */
+export function attendCeremony(sim: Simulation, person: Person, bookingId: string, body: AwardBody): Instant {
+  const no = attendRefusal(sim, person, bookingId, body);
+  if (no) throw new CommandError(no);
+  const e = entriesOf(person).find((x) => x.bookingId === bookingId && x.body === body)!;
+  const where = ceremonyOf(body, e.year);
+  e.attending = true;
+  // One ceremony on the calendar however many of their nominations it decides.
+  const listed = sim.universe.scheduled.some((i) => i.kind === CEREMONY_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.body === body && i.payload.year === e.year);
+  if (!listed) sim.schedule({ at: where.at, kind: CEREMONY_KIND, label: `The Ceremony: ${categoryName(person, e)}`, category: 'career', priority: 30, stopsClock: true, locationId: where.cityId, payload: { personId: person.id, body, year: e.year } });
+  return where.at;
 }
 
 export function registerAwards(sim: Simulation): void {
@@ -212,4 +290,10 @@ export function registerAwards(sim: Simulation): void {
     }
   });
   sim.onCommand<{ bookingId: string }, { paid: Money }>('career.enter_award', (p, { sim: s }) => ({ paid: enterAward(s, s.player, String(p?.bookingId)) }));
+  // Going to the ceremony as a nominee (from 2026-10-06): getting there is a journey booked on Travel, dressing for it on Clothes.
+  sim.onCommand<{ bookingId: string; body: AwardBody }, { at: Instant }>('career.attend_ceremony', (p, { sim: s }) => ({ at: attendCeremony(s, s.player, String(p?.bookingId), p?.body as AwardBody) }));
+  sim.onSchedule(CEREMONY_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (person) holdCeremony(s, person, item.payload.body as AwardBody, Number(item.payload.year), true);
+  });
 }

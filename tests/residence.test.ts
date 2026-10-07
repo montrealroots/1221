@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { residenceRefusal } from '@/engine/systems/documents';
+import { documentsOf, residenceRefusal } from '@/engine/systems/documents';
 import { publicCareShareOf } from '@/engine/systems/health';
 import { careerOf } from '@/engine/systems/career';
 import { earningsOf, yearOf } from '@/engine/systems/earnings';
@@ -39,6 +39,15 @@ describe('a route to residence', () => {
     const r = sim.execute<{ paid: number }>({ kind: 'documents.residence', payload: { country: 'gb' } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(inSave(sim, (561 + 205 + 5 * 1_035) * 100, 'GBP'));
+    // From 2026-10-06 it waits on the biometrics, enrolled at a visa application center where they live (until then
+    // it was granted the day it was paid for): kept, it's granted for its five years.
+    expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toBeDefined();
+    expect(routeRefusal(sim, sim.player, 'GB')).toBe('Your application waits on its biometrics.');
+    const pending = documentsOf(sim.player).find((d) => d.route === 'global-talent')!;
+    expect(pending.visit).toMatchObject({ rule: 'uk-enrolment-abroad', cityId: 'us-ny-newyork' });
+    sim.advanceTo(pending.visit!.at + 3_600_000);
+    expect(pending).toMatchObject({ status: 'valid', issuedAt: pending.visit!.keptAt });
+    expect(pending.expiresAt! - pending.issuedAt!).toBe(GLOBAL_TALENT.years * YEAR);
     expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toBeUndefined();
     // Living in London on it, the NHS is theirs.
     sim.player.home = { kind: 'shared', cityId: 'uk-eng-london', since: sim.now };

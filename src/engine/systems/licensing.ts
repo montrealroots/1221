@@ -243,6 +243,19 @@ function grant(sim: Simulation, person: Person, jurisdiction: string, g: License
   return doc;
 }
 
+/** A district's surcharge on a license of so many years, for someone living in it; nothing elsewhere. */
+export function districtPart(person: Person, jurisdiction: string, years: number): number {
+  const d = LICENSES[jurisdiction]?.district;
+  return d && person.home && d.cityIds.includes(person.home.cityId) ? d.perHalfYear * Math.round(years * 2) : 0;
+}
+
+/** A step’s fee this attempt, and with the fee that covers the first license, a district’s part on it (New York’s permit test). */
+export function stepFee(person: Person, jurisdiction: string, path: LicensePath, step: PathStep, r: LicensingRecord): number {
+  const fee = attemptFee(step, r);
+  const first = fee > 0 && step.coversFirst ? path.steps.map((x) => x.grants).find((g) => g?.stage === 'full')?.years ?? 0 : 0;
+  return fee + districtPart(person, jurisdiction, first);
+}
+
 /** A step done: marked, and what it grants given, its license fee paid where one is due. */
 function complete(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord, track: VehicleClass): string {
   const path = pathsFor(track)[jurisdiction]!;
@@ -366,7 +379,7 @@ export function registerLicensing(sim: Simulation): void {
       const doc = grant(s, person, jurisdiction, step.grants!, step.issueDays, track);
       return { at: [], fee, message: `${doc.name}, good until ${formatDate(doc.expiresAt!, s.zone)}.` };
     }
-    const fee = inSave(s, attemptFee(step, r), path.currency);
+    const fee = inSave(s, stepFee(person, jurisdiction, path, step, r), path.currency);
     if (!payFromBank(s, person, fee, `${step.name}, ${LICENSES[jurisdiction]!.authority}`, 'documents')) throw new CommandError(`${formatMoney(fee, cur)} is more than the bank can cover.`);
     // Paying a covering fee again starts its attempts over.
     if (path.steps.some((x) => x.covered?.by === stepId)) r.used[stepId] = 0;
@@ -420,7 +433,7 @@ export function registerLicensing(sim: Simulation): void {
     const no = exchangeRefusal(person, s.now);
     if (no) throw new CommandError(no);
     const { jurisdiction, held, exchange } = exchangeable(person, s.now)!;
-    const fee = inSave(s, exchange.fee, exchange.currency);
+    const fee = inSave(s, exchange.fee + districtPart(person, jurisdiction, exchange.years), exchange.currency);
     if (!payFromBank(s, person, fee, `${LICENSES[jurisdiction]!.name}, exchanged`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     // The old one is surrendered.
     held.status = 'cancelled';
@@ -436,10 +449,9 @@ export function registerLicensing(sim: Simulation): void {
     const held = renewable(person, s.now)!;
     const rule = LICENSES[held.issuer]!;
     const currency = LICENSE_PATHS[held.issuer]?.currency ?? 'USD';
-    // Inside a district that adds its own, at its price, by where they live (New York City’s MCTD, from 2026-10-06; until
-    // then every New York renewal was charged the price outside it).
-    const inside = rule.renewalInside && person.home && rule.renewalInside.cityIds.includes(person.home.cityId);
-    const fee = inSave(s, inside ? rule.renewalInside!.fee : rule.renewalFee!, currency);
+    // Inside a district that adds its own, its part by the years renewed (New York City’s MCTD, $16 on eight years; until
+    // 2026-10-06 every New York renewal was charged the price outside it).
+    const fee = inSave(s, rule.renewalFee! + districtPart(person, held.issuer, rule.validityYears ?? 5), currency);
     if (!payFromBank(s, person, fee, `${rule.name}, renewed`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     const from = Math.max(s.now, held.expiresAt!);
     held.status = 'cancelled';

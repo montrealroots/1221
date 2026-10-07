@@ -1,0 +1,173 @@
+{
+  "topic": "Carrier parcel-hold periods after a missed delivery, Apple's shipping carrier by market, and retailer online-order cancellation terms",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "USPS standard hold period for a missed-delivery package at the local post office before return to sender",
+      "value": 15,
+      "unit": "days",
+      "market": "us",
+      "source": "https://parcelpath.com/how-long-will-usps-hold-a-package",
+      "quote": "USPS holds missed deliveries for 15 days at the local post office, after which the package is returned to the sender.",
+      "confidence": "medium"
+    },
+    {
+      "what": "USPS Priority Mail Express hold period (shorter than standard)",
+      "value": 5,
+      "unit": "days",
+      "market": "us",
+      "source": "https://parcelpath.com/how-long-will-usps-hold-a-package",
+      "quote": "Priority Mail Express packages are held for just 5 days",
+      "confidence": "medium"
+    },
+    {
+      "what": "UPS hold period at a Customer Center before return to sender",
+      "value": 5,
+      "unit": "business days",
+      "market": "us",
+      "source": "https://thefuturewarehouse.com/work/ups/how-long-will-ups-hold-a-package-in-warehouse/",
+      "quote": "At a UPS Customer Center: UPS typically holds packages at a customer center for five business days.",
+      "confidence": "low"
+    },
+    {
+      "what": "UPS hold period at a UPS Access Point before return to sender",
+      "value": 7,
+      "unit": "calendar days",
+      "market": "us",
+      "source": "https://thefuturewarehouse.com/work/ups/how-long-will-ups-hold-a-package-in-warehouse/",
+      "quote": "At a UPS Access Point: If the package is delivered to a UPS Access Point, it is usually held for seven calendar days.",
+      "confidence": "low"
+    },
+    {
+      "what": "UPS My Choice premium extended hold option",
+      "value": 14,
+      "unit": "days",
+      "market": "us",
+      "source": "https://thefuturewarehouse.com/work/ups/how-long-will-ups-hold-a-package-in-warehouse/",
+      "quote": "Premium members can have their deliveries held for up to 14 days, offering flexibility during longer absences.",
+      "confidence": "low"
+    },
+    {
+      "what": "Royal Mail standard hold period before return to sender",
+      "value": 18,
+      "unit": "calendar days",
+      "market": "uk",
+      "source": "https://3reelabels.co.uk/how-long-does-royal-mail-hold-packages/",
+      "quote": "Royal Mail holds items for 18 calendar days before returning them to their sender.",
+      "confidence": "low"
+    },
+    {
+      "what": "Royal Mail hold period when a customs charge is due",
+      "value": 21,
+      "unit": "days",
+      "market": "uk",
+      "source": "https://3reelabels.co.uk/how-long-does-royal-mail-hold-packages/",
+      "quote": "if there's a customs charge to pay, Royal Mail will hold on to the item for 21 days",
+      "confidence": "low"
+    },
+    {
+      "what": "Canada Post standard hold period before return to sender",
+      "value": 15,
+      "unit": "calendar days",
+      "market": "ca",
+      "source": "https://postageguru.com/guides/how-long-does-canada-post-hold-a-parcel/",
+      "quote": "Canada Post will hold an item at the post office for 15 calendar days, after which time they'll return it to the sender.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Canada Post hold period for Xpresspost/Priority",
+      "value": 7,
+      "unit": "days",
+      "market": "ca",
+      "source": "https://postageguru.com/guides/how-long-does-canada-post-hold-a-parcel/",
+      "quote": "Xpresspost and Priority packages are held for just 7 days before return.",
+      "confidence": "low"
+    },
+    {
+      "what": "An Post hold period for a domestic parcel before return (older forum-sourced figure; official current policy not independently confirmed)",
+      "value": "5 working days (domestic); 16 working days (from abroad); 3 working days for Registered Post",
+      "unit": "days",
+      "market": "ie",
+      "source": "https://www.boards.ie/discussion/2056608954/how-long-does-an-post-hold-parcels",
+      "quote": "An Post keeps parcels for five working days, or 3 working days if sent by Registered Post, and 16 working days if received from abroad, after which they must return it to the sender if there's a legible address on the outside.",
+      "confidence": "low"
+    },
+    {
+      "what": "Apple US shipping carrier(s)",
+      "value": "UPS (custom/engraved builds shipped from China) or FedEx (in-US-warehouse stock)",
+      "unit": "text",
+      "market": "us",
+      "source": "https://forums.macrumors.com/threads/does-apple-ship-thru-ups-or-fedex.361043/",
+      "quote": "if you're ordering a custom build or something with engraving (which ships directly from China), it will come via UPS, and if the product is in a warehouse in the US, it will ship via FedEx",
+      "confidence": "low"
+    },
+    {
+      "what": "Apple UK shipping carrier(s)",
+      "value": "TNT and UPS (also DPD reported)",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://discussions.apple.com/thread/2439775",
+      "quote": "UK orders are being handled by TNT and UPS. Additionally, some reports indicate DPD and UPS deliveries in the UK.",
+      "confidence": "low"
+    },
+    {
+      "what": "Apple Canada shipping carrier",
+      "value": "FedEx",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://forums.macrumors.com/threads/does-apple-ship-thru-ups-or-fedex.361043/",
+      "quote": "Free delivery is usually with FedEx when ordering from Apple Online Canada.",
+      "confidence": "low"
+    },
+    {
+      "what": "Amazon US order cancellation window",
+      "value": "~30 minutes after placing order, or any time before shipping begins (not guaranteed once processing starts)",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.howtogeek.com/787330/how-to-cancel-an-amazon-order-and-get-a-refund/",
+      "quote": "You can typically cancel an order within 30 minutes of placing it... You can cancel an order in the app or desktop, as long as it hasn't entered the shipping process.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Best Buy US order cancellation window for shipping orders",
+      "value": "30 minutes from order placement, or anytime before shipping begins",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.bestbuy.com/site/help-topics/cancel-your-order/pcmcat203900050004.c?id=pcmcat203900050004",
+      "quote": "Shipping Orders: You can cancel within 30 minutes from placing the order... You can cancel items as long as Best Buy hasn't started the shipping process, which is usually within 30 minutes of placing your order.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Best Buy store-pickup order hold/cancellation",
+      "value": "held 5 days at store; order auto-cancelled and refunded if not picked up",
+      "unit": "days",
+      "market": "us",
+      "source": "https://www.bestbuy.com/site/help-topics/cancel-your-order/pcmcat203900050004.c?id=pcmcat203900050004",
+      "quote": "Store Pickup: You can cancel anytime, and Best Buy will hold your items at the store for 5 days. If you don't pick up your items by then, the order will be canceled and refund your method of payment.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Walmart Canada order cancellation terms",
+      "value": "Can edit/cancel most items before shipment, subject to a pickup/delivery cutoff time; Express/unscheduled-delivery orders have no cutoff and can only be cancelled prior to shipment",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://www.walmart.ca/en/help/article/changing-or-cancelling-an-order/08ecf43c017c4d48818de962d7433c35",
+      "quote": "You can edit or request cancellation for most items and orders before shipment in Purchase history. The amount of time you have to edit an order depends on your scheduled pickup or delivery time, called cutoff time",
+      "confidence": "medium"
+    },
+    {
+      "what": "Walmart Mexico (walmart.com.mx) order cancellation terms",
+      "value": "Orders cannot be cancelled once processing begins; returns only, via customer-service call, processed in 3-4 business days",
+      "unit": "text",
+      "market": "mx",
+      "source": "https://www.quora.com/How-do-you-cancel-a-Walmart-online-order-in-Canada",
+      "quote": "Walmart.com.mx's order cancellation policy states that orders cannot be canceled once they enter the processing phase. Customers can request a return by calling a customer service phone number. Returns are processed within 3-4 business days",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "Apple Ireland and Apple Mexico shipping carrier", "looked": ["which carrier does Apple ship orders by US UK Ireland Canada Mexico UPS FedEx — search returned nothing specific for Ireland or Mexico"] },
+    { "what": "An Post's current official (not 2012 forum) hold-period policy, directly from anpost.com", "looked": ["An Post how long hold parcel before return to sender days — only a 2012 boards.ie thread surfaced; An Post's own site was not reached in this session"] },
+    { "what": "Amazon Canada and Amazon Mexico specific cancellation-window terms (only US terms confirmed)", "looked": ["Walmart order cancellation policy online order Canada Mexico (search focused on Walmart, not Amazon, for CA/MX)"] }
+  ]
+}

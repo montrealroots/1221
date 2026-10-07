@@ -7,8 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
+import { OUTAGE_HOURS, homeInternetPlan, internetDown, telecomOf } from '@/engine/systems/telecom';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
 import { SERVICES } from '@/engine/content/homelife';
@@ -64,6 +65,39 @@ describe('the TV license', () => {
     expect(watchRefusal(ny, ny.player, plansHere(ny.player)[0]!.id)).toBe('You don’t subscribe to it.');
     expect(ny.execute({ kind: 'home.tv_licence', payload: {} }).error).toBe('No TV license is needed where you live.');
     expect(watchRefusal(ny, ny.player, 'live')).toBeUndefined();
+  });
+});
+
+describe('the internet at home', () => {
+  it('in Dublin, on eir’s fiber, is down ComReg’s 16 hours a year, and a service isn’t streamed then; nowhere else is it drawn', () => {
+    const sim = life('ie-lei-dublin', 'outage-ie');
+    expect(homeInternetPlan(sim.player)?.id).toBe('eir-500');
+    expect(OUTAGE_HOURS['eir-500']).toBe(16);
+    const hours = 200_000;
+    let down = 0;
+    let downAt: number | undefined;
+    let upAt: number | undefined;
+    for (let h = 0; h < hours; h += 1) {
+      const at = sim.now + h * MS_HOUR;
+      if (internetDown(sim, sim.player, at)) { down += 1; downAt ??= at; } else upAt ??= at;
+    }
+    expect((down / hours) * 365.2425 * 24).toBeGreaterThan(12);
+    expect((down / hours) * 365.2425 * 24).toBeLessThan(20);
+    const netflix = plansHere(sim.player).find((p) => /Netflix/.test(p.label))!;
+    sim.must({ kind: 'home.subscribe', payload: { id: netflix.id } });
+    sim.must({ kind: 'home.tv_licence', payload: {} });
+    sim.universe.now = downAt!;
+    expect(watchRefusal(sim, sim.player, netflix.id)).toMatch(/^The internet at home is down \(eir\)/);
+    // Live TV comes by the aerial.
+    expect(watchRefusal(sim, sim.player, 'live')).toBeUndefined();
+    sim.universe.now = upAt!;
+    expect(watchRefusal(sim, sim.player, netflix.id)).toBeUndefined();
+    // Virgin Media's cable publishes no rate, nor does New York.
+    telecomOf(sim.player).internet = { planId: 'virgin-ie-500', since: sim.now, cityId: 'ie-lei-dublin' };
+    sim.universe.now = downAt!;
+    expect(internetDown(sim, sim.player, downAt!)).toBe(false);
+    const ny = life('us-ny-newyork', 'outage-ny');
+    for (let h = 0; h < 20_000; h += 1) expect(internetDown(ny, ny.player, ny.now + h * MS_HOUR)).toBe(false);
   });
 });
 

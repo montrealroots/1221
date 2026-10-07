@@ -11,9 +11,23 @@
  * times), Mexico City's primaria 8:00 to 12:30 (the SEP), and New York's and
  * Los Angeles's 8:00 to 2:20 and 2:23, schools' own times read secondhand.
  * The year: each district's first and last days and the breaks it names for
- * 2026-27, taken again each year on the same dates, SLATE's reading. London,
- * Dublin, Toronto and Vancouver publish no common bell, and no run is kept
- * there.
+ * 2026-27, taken again each year on the same dates, SLATE's reading. Until
+ * 2026-10-06 London, Dublin, Toronto and Vancouver kept no run, none of them
+ * having a common bell read. From then (`research-school-bells.json`, the
+ * years from `research-referrals-childday.json`):
+ * - **London**: Rotherhithe Primary's Years 1 to 6, 9:00 to 3:30, one
+ *   school's own times inside the 8:30-9:00 and 3:00-3:30 every guide gives;
+ *   Haringey's 2026-27 terms, 2 September to 22 July, out between them (its
+ *   half-terms not read, so none is kept).
+ * - **Dublin**: the INTO's 5 hours 40 minutes from 9:00, the middle of its
+ *   8:30 to 9:30 starts, out at 2:40, inside the 2:10 to 3:00 it gives older
+ *   classes (SLATE's reading of two ranges); the Department of Education's
+ *   standardised breaks for 2026-27, from 1 September, the week the circular
+ *   names, to 25 June, the last Friday of its "late June" (SLATE's reading).
+ * - **Toronto**: the TDSB's entry bell at 8:45, out at 3:20, its typical
+ *   elementary schedule; 8 September to 29 June, its breaks not read.
+ * - **Vancouver** keeps none: the VSB's schools run from 8:00 to 3:30 at one
+ *   and 9:00 to 3:00 at another, and the board publishes no time of its own.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -29,6 +43,9 @@ export const SCHOOL: Readonly<Record<string, SchoolTown>> = {
   'mx-cmx-mexicocity': { start: [8, 0], end: [12, 30], first: '08-31', last: '07-09', breaks: [['12-21', '01-05'], ['03-22', '04-03']], confirmed: true },
   'us-ny-newyork': { start: [8, 0], end: [14, 20], first: '09-10', last: '06-28', breaks: [], confirmed: false },
   'us-ca-losangeles': { start: [8, 0], end: [14, 23], first: '08-12', last: '06-04', breaks: [['11-26', '11-27'], ['12-21', '01-08']], confirmed: false },
+  'uk-eng-london': { start: [9, 0], end: [15, 30], first: '09-02', last: '07-22', breaks: [['12-19', '01-03'], ['03-26', '04-11']], confirmed: false },
+  'ie-lei-dublin': { start: [9, 0], end: [14, 40], first: '09-01', last: '06-25', breaks: [['10-26', '10-30'], ['12-23', '01-05'], ['02-18', '02-19'], ['03-20', '04-04']], confirmed: false },
+  'ca-on-toronto': { start: [8, 45], end: [15, 20], first: '09-08', last: '06-29', breaks: [], confirmed: false },
 };
 export const SCHOOL_RUN_MINUTES = 15;
 export const SCHOOL_RUN_KIND = 'family.school_run';

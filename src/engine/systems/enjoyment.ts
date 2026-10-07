@@ -31,6 +31,7 @@ import type { LookAfter } from './life';
 import { personalityOf } from './personality';
 import type { Piece } from '../content/furniture';
 import { homeKeyOf } from './items';
+import { SCREEN_KIND } from './theater';
 import { computerForGames } from './computers';
 import { hasSomethingToRead } from './reading';
 import { PRODUCT_INTEREST } from '../content/career';
@@ -85,10 +86,13 @@ export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person,
   return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || (id === 'reading' ? hasSomethingToRead(person as Person) : !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!) || (id === 'games' && computerForGames(person)))));
 }
 
-/** Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items. */
+/**
+ * Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items; from
+ * 2026-10-06 a home theater's screen is a screen (`systems/theater.ts`).
+ */
 function hasGear(person: Partial<Pick<Person, 'furniture' | 'items' | 'home'>>, piece: Piece): boolean {
   const home = homeKeyOf(person.home);
-  return person.furniture?.[piece] !== undefined || (person.items ?? []).some((i) => i.kind === `furniture:${piece}` && i.at.kind === 'home' && i.at.home === home);
+  return person.furniture?.[piece] !== undefined || (person.items ?? []).some((i) => (i.kind === `furniture:${piece}` || (piece === 'tv' && i.kind === SCREEN_KIND)) && i.at.kind === 'home' && i.at.home === home);
 }
 
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */

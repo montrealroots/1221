@@ -1,0 +1,109 @@
+{
+  "topic": "Uniform Energy Factor of gas storage water heaters, standby heat loss, and UK combi boiler efficiency",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "ENERGY STAR minimum UEF for gas storage water heaters, >20 and <=55 gallon tanks",
+      "value": "0.81 (Medium Draw) / 0.86 (High Draw)",
+      "unit": "UEF",
+      "market": "us",
+      "source": "https://www.energystar.gov/products/water_heaters/residential_water_heaters_key_product_criteria",
+      "quote": "For gas storage water heaters with a tank volume greater than 20 gallons and 55 gallons or less, ENERGY STAR requires a UEF of at least 0.81 for the Medium Draw Pattern and 0.86 for the High Draw Pattern.",
+      "confidence": "medium"
+    },
+    {
+      "what": "ENERGY STAR minimum UEF for gas storage water heaters, >55 gallon tanks",
+      "value": 0.86,
+      "unit": "UEF",
+      "market": "us",
+      "source": "https://www.energystar.gov/products/water_heaters/residential_water_heaters_key_product_criteria",
+      "quote": "For tanks greater than 55 gallons, the requirement is UEF >= 0.86.",
+      "confidence": "medium"
+    },
+    {
+      "what": "ENERGY STAR certified gas storage water heater minimum First Hour Rating and warranty requirement",
+      "value": "FHR >= 51 gal/hr; 6-year minimum warranty",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.energystar.gov/products/water_heaters/residential_water_heaters_key_product_criteria",
+      "quote": "ENERGY STAR certified gas storage water heaters must have a First Hour Rating (FHR) of at least 51 gallons per hour and a warranty of 6 years or more on the system including parts.",
+      "confidence": "medium"
+    },
+    {
+      "what": "DOE 2024 Final Rule on residential gas-fired storage water heater efficiency standards (20-55 gal units get UEF increase; >55-100 gal unchanged; new standards for >100 gal; effective 2029)",
+      "value": "8-16% more efficient depending on size category",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.energy.gov/sites/default/files/2024-04/cwh_fr1.pdf",
+      "quote": "the standard will require gas-fired water heaters to be 8% to 16% more efficient depending on the size category... The rule does not affect utility programs until it takes effect in 2029.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Example maker-published standby loss figure, A.O. Smith spec sheet (100-gallon commercial-type model)",
+      "value": "80% thermal efficiency, 1146 BTU/hr standby loss",
+      "unit": "text",
+      "market": "us",
+      "source": "https://assets.aosmith.com/damroot/Original/10005/aosrg45400.pdf",
+      "quote": "A 100-gallon model has 80% efficiency and 1146 BTU/hr standby loss.",
+      "confidence": "low"
+    },
+    {
+      "what": "A.O. Smith general compliance statement on standby loss requirements",
+      "value": "n/a",
+      "unit": "text",
+      "market": "us",
+      "source": "https://assets.aosmith.com/damroot/Original/10004/320991-000.pdf",
+      "quote": "A.O. Smith gas water heaters meet the thermal efficiency and standby loss requirements of the U.S. Department of Energy and current edition of ASHRAE/IESNA 90.1.",
+      "confidence": "low"
+    },
+    {
+      "what": "Example maker-published standby loss figure, Rheem GHE75S*-100 model",
+      "value": 900,
+      "unit": "BTU/hr",
+      "market": "us",
+      "source": "https://www.ussupply.com/50-gal-tall-water-heater-residential-gas-38-000-btu-1966054.html",
+      "quote": "For a Rheem GHE75S*-100 model, the standby loss specification is 900 Btu/hr.",
+      "confidence": "low"
+    },
+    {
+      "what": "UK minimum legal boiler efficiency (ErP rating) for new gas boiler installations since April 2018, equivalent to A-rated",
+      "value": 92,
+      "unit": "%",
+      "market": "uk",
+      "source": "https://www.homeheatingguide.co.uk/efficiency-tables",
+      "quote": "92% efficiency is equivalent to 'A' rated under the ErP system. As of April 2018, you cannot install a gas boiler with an ErP rating under 92%.",
+      "confidence": "medium"
+    },
+    {
+      "what": "SEDBUK minimum seasonal efficiency still used for new-build boilers under current building regs",
+      "value": 89.5,
+      "unit": "%",
+      "market": "uk",
+      "source": "https://www.homeheatingguide.co.uk/central-heating/sedbuk-seasonal-efficiency-domestic-boilers-uk-rating",
+      "quote": "SEDBUK is still used for boilers in new build homes under the current building regulations and requires a seasonal efficiency of at least 89.5%.",
+      "confidence": "low"
+    },
+    {
+      "what": "Combined (boiler ErP + heating controls) stated efficiency range for combi boilers",
+      "value": "93-99%",
+      "unit": "%",
+      "market": "uk",
+      "source": "https://www.theheatinghub.co.uk/are-we-being-mislead-over-boiler-efficiencies-erp-sedbuk",
+      "quote": "Combi boiler owners will believe they have a boiler with an ErP rating of between 92-94%, paired with a heating control of between 1-5%, offering a combined heating efficiency of between 93-99%.",
+      "confidence": "low"
+    },
+    {
+      "what": "Energy Saving Trust field study: real-world performance of A-rated condensing boilers, vs. their stated rating",
+      "value": "none of 40 tested boilers hit their stated rating; 83% ran at 75-85% actual efficiency",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://www.theheatinghub.co.uk/are-we-being-mislead-over-boiler-efficiencies-erp-sedbuk",
+      "quote": "a detailed field study by the Energy Saving Trust found that out of 40 A-rated condensing boilers tested over 12 months, none operated at their stated rating. Instead, 83% were found to be operating between 75% and 85% efficiency.",
+      "confidence": "medium"
+    }
+  ],
+  "notFound": [
+    { "what": "A clean, directly-quoted standby-loss percentage (%/hr, rather than BTU/hr) from an actual current A.O. Smith or Rheem residential spec sheet (PDF text was not machine-extractable via WebFetch in this session; only search-engine-summarized figures were obtainable)", "looked": ["https://assets.aosmith.com/damroot/Original/10005/aosrg45400.pdf (PDF unreadable)", "Rheem gas water heater \"standby loss\" percent per hour spec"] },
+    { "what": "Irish (SEAI) or Mexican equivalent efficiency standard/label for gas water heaters or boilers", "looked": ["Not separately searched; topic focused on US DOE/ENERGY STAR and UK SEDBUK/ErP as specified"] }
+  ]
+}

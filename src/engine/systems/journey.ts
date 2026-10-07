@@ -53,7 +53,7 @@ import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { cabinBagRefusal, moveTo, cabinCheck, securityCheck, weighIn } from './luggage';
 import { landBags } from './baggage';
-import { arrivalFee, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
+import { arrivalFee, embargoRefusal, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
@@ -116,6 +116,8 @@ export interface Journey {
   by?: string;
   /** The caravan towed behind it (`systems/caravans.ts`, from 2026-09-30). */
   towing?: string;
+  /** The pets along, and the carrier chosen for them in place of the flag carrier (from 2026-10-06): their papers and the hold's temperatures are checked again at the airport. */
+  pets?: { carrier?: string };
   /** A trip the career makes (from 2026-09-29): the job's, who paid the fares, and where they sleep on arrival. */
   bookingId?: string;
   paidBy?: 'production' | 'self';
@@ -536,7 +538,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; rooms?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string; withPets?: boolean }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; rooms?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string; withPets?: boolean; petCarrier?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -629,6 +631,8 @@ export function registerJourneys(sim: Simulation): void {
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${ownPark ? ` ${ownPark.basis}.` : park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
     // Pets at home need someone; along, a hotel that takes them and the carrier's own way for each, the cabin or the hold (`systems/pets.ts`, from 2026-10-03; by species and carrier from 2026-10-04).
     const withPets = Boolean(p?.withPets) && petsOf(person).length > 0;
+    // A carrier chosen for them in place of the flag carrier, where one is kept (from 2026-10-06, `OTHER_PET_CARRIERS`).
+    const petCarrier = withPets && p?.petCarrier ? String(p.petCarrier) : undefined;
     const until = back ? back[back.length - 1]!.arriveAt : arriveOut + Math.max(1, nights) * MS_DAY;
     const petNo = petCareRefusal(person, out[0]!.departAt, until, withPets);
     if (petNo) throw new CommandError(petNo);
@@ -637,12 +641,13 @@ export function registerJourneys(sim: Simulation): void {
       const stayFee = room && cls === 'hotel' ? hotelPetFee(s, person, named?.hotelId, nights) : 0;
       if (typeof stayFee === 'string') throw new CommandError(stayFee);
       const flights = (legs: JourneyLeg[] | undefined) => (legs ?? []).filter((l) => l.mode === 'flight').length;
-      const outFee = by ? 0 : petFlightFee(s, person, fromCity, toCity, flights(out), out[0]!.departAt);
-      const backFee = by || !back ? 0 : petFlightFee(s, person, toCity, fromCity, flights(back), back[0]!.departAt);
+      const outFee = by ? 0 : petFlightFee(s, person, fromCity, toCity, flights(out), out[0]!.departAt, petCarrier);
+      const backFee = by || !back ? 0 : petFlightFee(s, person, toCity, fromCity, flights(back), back[0]!.departAt, petCarrier);
       if (typeof outFee === 'string') throw new CommandError(outFee);
       if (typeof backFee === 'string') throw new CommandError(backFee);
       // Each country's papers, good on the day they arrive there, and on the day home (from 2026-10-04).
-      // The way home only on what lasts: a certificate or a tapeworm treatment is got near the day, at a vet there.
+      // The way home only on what lasts: a certificate or a tapeworm treatment is got near the day, at a vet there, and
+      // from 2026-10-06 held to on the day, at the airport (`LEAVE_KIND`).
       const inNo = entryRefusal(person, fromCity, toCity, out[out.length - 1]!.arriveAt) ?? (back ? entryRefusal(person, toCity, fromCity, back[back.length - 1]!.arriveAt, { lasting: true }) : undefined);
       if (inNo) throw new CommandError(inNo);
       // A fee on arriving with them, each way (Heathrow's, Canada's), paid with the way out.
@@ -657,7 +662,7 @@ export function registerJourneys(sim: Simulation): void {
       const id = s.nextId('journey');
       const leaveAt = legs[0]!.departAt;
       const arriveAt = legs[legs.length - 1]!.arriveAt;
-      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(cabin === 'premium' ? { cabin } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}), ...(towing ? { towing } : {}) };
+      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(cabin === 'premium' ? { cabin } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}), ...(towing ? { towing } : {}), ...(withPets ? { pets: petCarrier ? { carrier: petCarrier } : {} } : {}) };
       journeysOf(person).push(j);
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
@@ -808,6 +813,19 @@ export function registerJourneys(sim: Simulation): void {
       missedHotel(s, person, j);
       tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
+    }
+    // The pets along, on the day (from 2026-10-06): the far end's papers good on landing, the way home's certificate and
+    // tapeworm treatment too, which booking looked past (`entryMissing`'s `lasting`); and on a flight the hold's
+    // temperatures (`embargoRefusal`). Until then a way home was checked only at booking, on what lasts.
+    if (j.pets && petsOf(person).length > 0) {
+      const petNo = entryRefusal(person, j.fromCity, j.toCity, j.arriveAt) ?? (j.by ? undefined : embargoRefusal(s, person, j.fromCity, j.toCity, j.leaveAt, j.arriveAt, j.pets.carrier));
+      if (petNo) {
+        j.status = 'missed';
+        j.why = `The pets weren’t taken: ${petNo}`;
+        missedHotel(s, person, j);
+        tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
+        return;
+      }
     }
     // The checked bags weighed at the counter, on a flight (from 2026-10-04): past the allowance the band's fee, past the most it takes the heaviest things out.
     if (!j.by && j.bags > 0) {

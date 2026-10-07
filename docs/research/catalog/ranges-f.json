@@ -1,0 +1,60 @@
+{
+ "read": "2026-10-06",
+ "ranges": {
+  "luggage|Tumi": {
+   "range": "100+",
+   "meetsHundred": true,
+   "url": "https://www.tumi.com/c/luggage/",
+   "counted": "19 Degree, 19 Degree Aluminum, 19 Degree Frame, 19 Degree Front Access, 19 Degree Lite, 19 Degree Titanium, Aerotour, Alpha, Alpha Bravo, Alpha Hybrid, Alpha X, Arrive, Tegra-Lite, TUMI x McLaren, TUMI Sport, Turin, Ventra, Voyageur (18 named collections, each sold in multiple carry-on and checked sizes, well past 100 distinct products; not an exhaustive piece-level count)",
+   "market": "US"
+  },
+  "luggage|Delsey Paris": {
+   "range": "100+",
+   "meetsHundred": true,
+   "url": "https://us.delsey.com/collections/shop-luggage",
+   "counted": "Chatelet, Chatelet Air 2.0, Turenne, Turenne 2.0, Turenne Soft, Shadow, Shadow 5.0, Shadow DLX, Moncey, Freestyle, Parvis Plus, Raspail, Securban, Securitime, Segur, Sky, Sky Max, Brochant 2.0, Brochant 3, Cadence, Carrousel, Carrousel 2, Caumartin Plus, Croisiere, Lepic, Longitude, Lutece, Lutece SE, Maubert 2.0, Montmartre 3, Montmartre Air 2.0, Nomade (31 named collections, most sold in cabin/medium/large check-in sizes, well past 100 distinct products; not an exhaustive piece-level count)",
+   "market": "US"
+  },
+  "bicycles|Suzuki": {
+   "range": 6,
+   "meetsHundred": false,
+   "url": "https://www.suzukicycles.com/atvs",
+   "counted": "KingQuad 750AXi, KingQuad 500AXi, KingQuad 400ASi, KingQuad 400FSi, QuadSport Z90, QuadSport Z50",
+   "market": "US"
+  },
+  "bicycles|Kawasaki": {
+   "range": 5,
+   "meetsHundred": false,
+   "url": "https://www.kawasaki.com/en-us/category/atv/kfx",
+   "counted": "KFX50, KFX90, Brute Force 300, Brute Force 450, Brute Force 750",
+   "market": "US"
+  },
+  "bicycles|Yamaha": {
+   "range": 8,
+   "meetsHundred": false,
+   "url": "https://www.yamahamotorsports.com/models.php",
+   "counted": "YFZ450R, Raptor 700R, Raptor 700, Raptor 110, Grizzly, Grizzly 110, Kodiak 700, Kodiak 450",
+   "market": "US"
+  },
+  "bicycles|Kymco": {
+   "range": 9,
+   "meetsHundred": false,
+   "url": "https://kymcousa.com/atvs/",
+   "counted": "Mongoose 110i, MXU 150X, Mongoose 270i, MXU 270i EURO, MXU 450i, Maxxer 450i, MXU 450i LE, MXU 550i EPS, MXU 700i EURO",
+   "market": "US"
+  },
+  "bicycles|CFMoto": {
+   "range": 8,
+   "meetsHundred": false,
+   "url": "https://www.cfmotousa.com/cforce-series",
+   "counted": "CFORCE 1000 OVERLAND, CFORCE 1000 TOURING, CFORCE 800 TOURING, CFORCE C6 PRO TOURING, CFORCE C6 PRO, CFORCE C6, CFORCE C5, CFORCE C4",
+   "market": "US"
+  }
+ },
+ "notFound": {
+  "bicycles|Honda": "powersports.honda.com/atv and search results gave only a partial ATV list (FourTrax Rubicon/Foreman Rubicon/Foreman/Rancher variants) with youth models (e.g. TRX90X) not confirmed; not a complete official lineup view, so not counted.",
+  "bicycles|Can-Am": "can-am.brp.com/off-road (direct fetch 404'd; search snippets of can-am.brp.com/off-road/us/en/models/atv.html gave only Outlander, Renegade and youth DS/Renegade EFI without confirming the full current model list, e.g. Outlander MAX/PRO/X variants); partial view, not counted.",
+  "bicycles|Polaris": "polaris.com (direct fetch 403'd; search snippets of polaris.com/en-us/off-road/sportsman/2026/models/ gave only Sportsman 450/570/850, Scrambler 850 and Outlaw youth models, with the page itself noting further touring/sport/special-edition trims not enumerated); partial view, not counted.",
+  "bicycles|Huffy": "huffy.com (search only; no single page found listing the complete current model lineup -- results named a scattered handful of models, e.g. Moto X, Glimmer, Cerana 2, Airway, Montview, with no confirmed complete list); partial view, not counted."
+ }
+}

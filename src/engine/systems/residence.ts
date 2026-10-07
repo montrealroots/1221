@@ -43,6 +43,11 @@
  *   renewals, and after five years opens federal Medicaid and naturalizing.
  *   The card's renewal isn't charged, its ten years not read on USCIS's pages.
  * Citizenship by naturalization isn't kept: SLATE holds one citizenship.
+ *
+ * From 2026-10-06 each waits on its visit (`systems/papervisits.ts`): the
+ * Global Talent visa is granted the day its biometrics are enrolled, and the
+ * green card's decision waits on the I-485's biometrics, either ended if
+ * they're missed. Until then the visa was granted the day it was paid for.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -57,6 +62,7 @@ import { CITIES } from '../content/geography';
 import { homeOf } from './earnings';
 import { earningsOf } from './earnings';
 import { o1Evidence } from './permission';
+import { bookVisit, ukEnrolment } from './papervisits';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 
@@ -118,6 +124,7 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
   if (iso === 'GB') {
     if (own === 'IE') return 'An Irish citizen lives in Britain under the Common Travel Area.';
     if (residenceIn(person, 'GB', sim.now)) return 'You hold permission to live there.';
+    if (documentsOf(person).some((d) => d.destination === 'GB' && d.route === 'global-talent' && d.status === 'pending')) return 'Your application waits on its biometrics.';
     if (o1Evidence(sim, person).filter((e) => e.met).length < GLOBAL_TALENT.evidence) return 'Arts Council England endorses exceptional talent or promise: three kinds of the evidence an O-1 asks, which your record doesn’t show yet.';
     return undefined;
   }
@@ -169,13 +176,22 @@ export function registerResidence(sim: Simulation): void {
       if (!payFromBank(s, person, fee, 'A green card: the I-140, its fee and the I-485', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
       const id = s.nextId('document');
       const readyAt = s.now + Math.round(greenCardDays(person, p?.premium === true)) * MS_DAY;
-      documentsOf(person).push({ id, kind: 'permit', issuer: 'US', name: 'Permanent Resident Card', number: numberFor('R', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US', route: GREEN_CARD_ROUTE });
+      const doc: PersonDocument = { id, kind: 'permit', issuer: 'US', name: 'Permanent Resident Card', number: numberFor('R', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US', route: GREEN_CARD_ROUTE };
+      documentsOf(person).push(doc);
+      // The I-485's biometrics at an Application Support Center, which it waits on (from 2026-10-06, `systems/papervisits.ts`).
+      bookVisit(s, person, doc, 'us-biometrics');
       s.schedule({ at: readyAt, kind: DECIDED_KIND, label: 'Green Card Decided', category: 'system', priority: 20, payload: { personId: person.id } });
       return { paid: fee };
     }
     if (!payFromBank(s, person, fee, iso === 'GB' ? 'The Global Talent visa, its endorsement and the health surcharge' : 'Mexican temporary residence, the card and the visa', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    if (iso === 'GB') grant(s, person, 'GB', 'global-talent', 'Global Talent Visa', GLOBAL_TALENT.years);
-    else grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);
+    if (iso === 'GB') {
+      // Granted the day its biometrics are enrolled, for its five years (from 2026-10-06, `systems/papervisits.ts`);
+      // until then the day it was paid for.
+      const id = s.nextId('document');
+      const doc: PersonDocument = { id, kind: 'permit', issuer: 'GB', name: 'Global Talent Visa', number: numberFor('R', id), status: 'pending', appliedAt: s.now, destination: 'GB', route: 'global-talent' };
+      documentsOf(person).push(doc);
+      bookVisit(s, person, doc, ukEnrolment(person), undefined, { years: GLOBAL_TALENT.years });
+    } else grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);
     return { paid: fee };
   });
 

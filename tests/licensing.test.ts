@@ -66,8 +66,9 @@ describe('a license in New York', () => {
     const before = bank(sim);
     const a = book(sim, 'permit');
     expect(a.ok).toBe(true);
-    expect(a.value!.fee).toBe(64_25);
-    expect(before - bank(sim)).toBe(64_25);
+    // New York City is in the MCTD: $1 a half-year on the first license’s five years (until 2026-10-06 not added).
+    expect(a.value!.fee).toBe(74_25);
+    expect(before - bank(sim)).toBe(74_25);
     // On the calendar as a commitment, on a weekday at ten.
     const item = sim.universe.scheduled.find((i) => i.kind === LICENSE_KIND && i.status === 'pending')!;
     expect(item.requiresPlayer).toBe(true);
@@ -348,7 +349,8 @@ describe('a license from elsewhere', () => {
     const before = bank(sim);
     const a = sim.execute<{ expiresAt: number; fee: number }>({ kind: 'documents.exchange_license', payload: {} });
     expect(a.ok).toBe(true);
-    expect(before - bank(sim)).toBe(64_25);
+    // Its fee and the MCTD’s $1 a half-year on its eight years, for a New York City life.
+    expect(before - bank(sim)).toBe(80_25);
     expect(ct.status).toBe('cancelled');
     const ny = licenseOf(sim.player, sim.now)!;
     expect(ny.issuer).toBe('us-ny');

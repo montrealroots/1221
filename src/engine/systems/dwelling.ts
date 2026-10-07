@@ -49,6 +49,7 @@ import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { SITTING_MET, coldRefusal } from './coldstress';
 import { BODY } from '../content/body';
+import { dirtyBedding, washBedding } from './bedding';
 import { GARMENTS_PER_LOAD, cleanOutfits, garmentsOf, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay, type Garment } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { isOn } from './automation';
@@ -271,8 +272,21 @@ export const TIDY = { perDay: 6, dishwasher: 0.75, messy: 40, morale: 1, stress:
  * together, put into the home they share; when it adds up to a cleaning of
  * the place (`cleaningMinutes`), the place is cleaned. Until then a partner
  * living there did none of it.
+ *
+ * From 2026-10-06 the 0.56 was split by ATUS 2025's Table A-1
+ * (`research-atus-household.json`): 0.33 hours of interior cleaning go to the
+ * cleaning, 0.17 of laundry to a load of the household's washing when they add
+ * up to the time one takes (`LAUNDRY.minutes`), and the 0.15 of kitchen and
+ * food cleanup, from its food preparation and cleanup, to washing up the sink
+ * when they add up to its days (`WASH_UP`). Until then the whole 0.56 went to
+ * the cleaning, the laundry in it too. Its 0.56 hours of food and drink
+ * preparation and 0.12 of grocery shopping aren't kept: a day's groceries are
+ * bought and eaten without anybody's time (`systems/household.ts`), so a
+ * partner's cooking or shopping would take the place of nothing.
  */
-export const PARTNER_HOUSEWORK_HOURS = 0.56;
+export const PARTNER_HOUSEWORK_HOURS = 0.33;
+export const PARTNER_LAUNDRY_HOURS = 0.17;
+export const PARTNER_CLEANUP_HOURS = 0.15;
 /**
  * Washing up by hand, from 2026-10-03: a day's dishes are 38 minutes, the
  * 230 hours a year Energy Star says its dishwasher saves over washing by hand,
@@ -341,6 +355,8 @@ export interface Living {
   lights?: Lights;
   /** The month's days a guest has stayed (`systems/houseguests.ts`, from 2026-10-05), each a person's water. */
   guestDays?: number;
+  /** The month's liters poured on the lawn (`systems/lawns.ts`, from 2026-10-06): billed and cleared with the month's water. */
+  lawnL?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of
@@ -369,6 +385,9 @@ export interface Living {
   cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
   /** A partner's housework minutes put in toward the next cleaning (from 2026-10-03). */
   partnerMinutes?: number;
+  /** A partner's laundry minutes toward the next load, and their kitchen cleanup toward the sink (from 2026-10-06). */
+  partnerLaundry?: number;
+  partnerCleanup?: number;
   /** The cleaner's visits, the latest first, the last twelve kept (from 2026-10-03): when, what it cost, or that they couldn't get in. */
   cleanerLog?: CleanerVisit[];
 }
@@ -452,7 +471,9 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant, 
   const load = laundryLoad(sim, person, choice);
   const washed = typeof load === 'string' ? [] : load;
   const rack = (way === 'in-unit') && (choice.dry ?? person.laundryDry) === 'rack';
-  const loads = Math.ceil(washed.length / GARMENTS_PER_LOAD);
+  // And the bedding due its wash, from 2026-10-06, a set a garment's room (`systems/bedding.ts`).
+  const sheets = choice.itemIds ? [] : dirtyBedding(person);
+  const loads = Math.ceil((washed.length + sheets.length) / GARMENTS_PER_LOAD);
   if (!detergentFor(sim, person, loads)) return false;
   if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
   laundryDetergent(sim, person, loads);
@@ -460,6 +481,7 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant, 
   // On the rack the dryer isn't run, and the load's dry when a washer-only home's is.
   if (way === 'in-unit' || way === 'washer-only') l.loads = { ...l.loads, washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' && !rack ? loads : 0) };
   washGarments(washed, finishedAt + LAUNDRY.readyHours[rack ? 'washer-only' : way] * MS_HOUR);
+  washBedding(sheets);
   return true;
 }
 
@@ -569,11 +591,20 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (machine) { delete l.dishes; l.loads = { washer: l.loads?.washer ?? 0, dryer: l.loads?.dryer ?? 0, dishwasher: (l.loads?.dishwasher ?? 0) + DISHWASHER_CYCLES_A_DAY }; } else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
   if (free && isOn(person, 'washUp')) washUp(sim, person);
   if (free && isOn(person, 'tidy') && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
-  // A partner living there does their share of the housework, a cleaning when it adds up to one.
+  // A partner living there does their share of the housework, a cleaning when it adds up to one; from 2026-10-06 the
+  // laundry and the washing up by their own ATUS hours, a load or the sink when either adds up to one.
   if (livesWithPartner(person)) {
     l.partnerMinutes = (l.partnerMinutes ?? 0) + PARTNER_HOUSEWORK_HOURS * 60;
     if (l.partnerMinutes >= cleaningMinutes(place)) { l.tidy = 100; l.partnerMinutes -= cleaningMinutes(place); }
-  } else delete l.partnerMinutes;
+    const load = LAUNDRY.minutes[laundryWay(sim, person)];
+    l.partnerLaundry = Math.min(load, (l.partnerLaundry ?? 0) + PARTNER_LAUNDRY_HOURS * 60);
+    // A load when there's one to do: a drum's worth of washing, or the clean clothes nearly all worn, as the shortcut's.
+    const dirty = washableDirty(sim, person).length;
+    if (l.partnerLaundry >= load && dirty > 0 && (dirty >= GARMENTS_PER_LOAD || lowOnClean) && doLaundry(sim, person, sim.now)) l.partnerLaundry -= load;
+    const sink = WASH_UP.minutesADay * (l.dishes ?? 0);
+    l.partnerCleanup = Math.min(WASH_UP.minutesADay * WASH_UP.full, (l.partnerCleanup ?? 0) + PARTNER_CLEANUP_HOURS * 60);
+    if (sink > 0 && l.partnerCleanup >= sink && washUp(sim, person)) l.partnerCleanup -= sink;
+  } else { delete l.partnerMinutes; delete l.partnerLaundry; delete l.partnerCleanup; }
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (l.cleaner && weekday === l.cleaner.day) {

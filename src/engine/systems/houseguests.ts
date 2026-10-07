@@ -21,7 +21,8 @@
  * (`SOCIAL.visitMinutes`), which you must be home for, or you've stood them
  * up and they go home. Each day after, until they leave, they eat at yours:
  * a day's groceries where you live, the cost of living's figure for one
- * person (`foodOf`), paid by you. Each of those days counts a visit's hours
+ * person (`foodOf`), paid by you, a third less for each meal you served
+ * them from what you cooked that day (from 2026-10-06). Each of those days counts a visit's hours
  * to the friendship where you're in town, and a person's day of water at
  * the town's own figure (`guestDays`, `litersUsed` in `systems/water.ts`).
  * A stay may be called off before it starts, never after.
@@ -49,7 +50,7 @@ export const STAY_DAY_KIND = 'social.stay_day';
 export const STAY_NIGHTS = 14;
 
 /** A guest's stay: when they arrive, how many nights, and the room. */
-export interface Stay { from: Instant; nights: number; roomId: string }
+export interface Stay { from: Instant; nights: number; roomId: string; /** Meals served them from what was cooked since the day's food was last bought for them (from 2026-10-06). */ served?: number }
 
 const isBed = (kind: string): boolean => kind === 'furniture:bed' || /bed/i.test(pieceById(kind.slice(5))?.type ?? '');
 
@@ -151,8 +152,12 @@ export function registerHouseguests(sim: Simulation): void {
     if (!person || !c?.stay) return;
     const day = Number(item.payload.day);
     const first = c.name.split(' ')[0];
-    // The day's food for them, at what a day's groceries cost where you live, and their day's water.
-    spend(s, person, foodOf(s, { ...person, currentLocationId: person.home?.cityId ?? person.currentLocationId }), `Food for ${first}, staying`, 'food', true);
+    // The day's food for them, at what a day's groceries cost where you live, a third less for each meal served them
+    // from what was cooked (from 2026-10-06, as the day's own groceries are by the meals from stock), and their day's water.
+    const served = Math.min(3, c.stay.served ?? 0);
+    delete c.stay.served;
+    const food = Math.round((foodOf(s, { ...person, currentLocationId: person.home?.cityId ?? person.currentLocationId }) * (3 - served)) / 3);
+    if (food > 0) spend(s, person, food, `Food for ${first}, staying`, 'food', true);
     const l = livingOf(person);
     l.guestDays = (l.guestDays ?? 0) + 1;
     if (person.currentLocationId === person.home?.cityId) { c.hours += SOCIAL.visitMinutes / 60; c.lastSeen = item.at; }

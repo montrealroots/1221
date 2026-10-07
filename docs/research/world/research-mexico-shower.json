@@ -1,0 +1,55 @@
+{
+  "topic": "Mexico shower-head maximum flow (NOM-008-CONAGUA) and shower length",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "Maximum showerhead flow rate under NOM-008-CNA-1998 (regular, any pressure class)",
+      "value": 10,
+      "unit": "L/min",
+      "market": "mx",
+      "source": "https://www.conagua.gob.mx/CONAGUA07/Contenido/Documentos/N8.pdf",
+      "quote": "baja presión (low pressure) has a maximum of 10 L/min at 98 kPa, media presión (medium pressure) has a maximum of 10 L/min at 294 kPa, and alta presión (high pressure) has a maximum of 10 L/min at 588 kPa",
+      "confidence": "medium"
+    },
+    {
+      "what": "Maximum showerhead flow restated by secondary summary of the standard",
+      "value": 10,
+      "unit": "L/min",
+      "market": "mx",
+      "source": "https://todoferreteria.com.mx/la-nom-008-cna-1998-y-las-reglas-que-debe-cumplir-tu-regadera/",
+      "quote": "su flujo máximo es de 10 litros por minuto",
+      "confidence": "low"
+    },
+    {
+      "what": "'Ecological' showerhead classification threshold under the standard",
+      "value": "1 to 2 (also stated elsewhere as under 3.8)",
+      "unit": "L/min",
+      "market": "mx",
+      "source": "https://todoferreteria.com.mx/la-nom-008-cna-1998-y-las-reglas-que-debe-cumplir-tu-regadera/",
+      "quote": "un flujo de agua de 1 a 2 litros por minuto",
+      "confidence": "low"
+    },
+    {
+      "what": "'Ecological' showerhead threshold per a different secondary source summarizing the same standard (minimum flow under which a showerhead may be marketed as ecológica)",
+      "value": 3.8,
+      "unit": "L/min",
+      "market": "mx",
+      "source": "https://www.dof.gob.mx/normasOficiales/7001/semarnat12_C/semarnat12_C.html",
+      "quote": "When the minimum flow is less than 3.8 liters per minute, the showerhead can be classified as 'ecological,' though in no case should the maximum flow rate be exceeded.",
+      "confidence": "low"
+    },
+    {
+      "what": "Proposed (not yet confirmed in force) updated maximum flow rates in a 2018 draft modification to the standard",
+      "value": "8.5 (regular) / 7.0 (ecological)",
+      "unit": "L/min",
+      "market": "mx",
+      "source": "http://legismex.mty.itesm.mx/normas/cna/conagua008-Proy2018_03.pdf",
+      "quote": "regular showerheads have a maximum flow of 8.5 L/min, while ecological showerheads have a maximum of 7.0 L/min",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "Any measured/surveyed average shower length (minutes) specific to Mexico", "looked": ["WebSearch: average shower length minutes Mexico survey", "Springer article on shower habits was for southern Spain, not Mexico", "EPA, Healthline, sensibledigs, showeraddict, aquabliss shower-time articles all gave US/UK/Switzerland figures (~7-8 min), none for Mexico"] },
+    { "what": "Direct full-text confirmation of the exact in-force (non-draft) flow-rate table from the primary CONAGUA PDF (PDF text was not machine-extractable via WebFetch; relied on search-engine summary and a secondary retailer page instead)", "looked": ["https://www.conagua.gob.mx/CONAGUA07/Contenido/Documentos/N8.pdf", "https://www.gob.mx/cms/uploads/attachment/file/110527/NOM_008_CONAGUA_1998.pdf"] }
+  ]
+}

@@ -35,7 +35,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
-import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
+import { breakfastPrice, breakfastRefusal, stayTotal } from '@/engine/systems/hotelbreakfast';
 import { byCar, byCarRefusal, byParatransit, byTransit, paratransitOffered, parkingAt, parkingFee, stepFreeRefusal, transitOffered, type GroundWay } from '@/engine/systems/airportground';
 import { usesWheelchair } from '@/engine/systems/access';
 import { HOTEL_WANT_LABEL, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas, hotelsIn, namedStayQuote, type HotelWant } from '@/engine/systems/hotels';
@@ -44,7 +44,8 @@ import { lateQuote } from '@/engine/systems/latecheckout';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { airportByCode } from '@/engine/systems/airports';
 import { cabinBagRefusal } from '@/engine/systems/luggage';
-import { petsOf } from '@/engine/systems/pets';
+import { petCarrierFor, petsOf } from '@/engine/systems/pets';
+import { OTHER_PET_CARRIERS } from '@/engine/content/petair';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
 /** A flight not flown by an airline: a chartered jet, or one's own plane flown by its owner or a hired pilot. */
@@ -79,6 +80,7 @@ export function TravelWorkspace() {
   const [budget, setBudget] = useState('');
   const [guests, setGuests] = useState(1);
   const [petsAlong, setPetsAlong] = useState(false);
+  const [petCarrier, setPetCarrier] = useState('');
   const [roomCount, setRoomCount] = useState(1);
   const [daysThere, setDaysThere] = useState(4);
   const [tow, setTow] = useState(false);
@@ -230,6 +232,15 @@ export function TravelWorkspace() {
               {petsOf(person).length > 0 && (
                 <label className="small row gap-1" style={{ alignItems: 'center' }}><input type="checkbox" checked={petsAlong} onChange={(e) => setPetsAlong(e.target.checked)} />Take Your Pets Along</label>
               )}
+              {petsAlong && !mode && toCity && Object.keys(OTHER_PET_CARRIERS).some((id) => typeof petCarrierFor(person.currentLocationId, toCity, id) !== 'string') && (
+                <div className="field">
+                  <label htmlFor="travel-pet-carrier">Pets Fly With</label>
+                  <select id="travel-pet-carrier" value={petCarrier} onChange={(e) => setPetCarrier(e.target.value)}>
+                    <option value="">{(() => { const r = petCarrierFor(person.currentLocationId, toCity); return typeof r === 'string' ? 'The Flag Carrier' : r.carrier; })()}</option>
+                    {Object.entries(OTHER_PET_CARRIERS).filter(([id]) => typeof petCarrierFor(person.currentLocationId, toCity, id) !== 'string').map(([id, c]) => <option key={id} value={id}>{c.carrier}</option>)}
+                  </select>
+                </div>
+              )}
               <div className="field">
                 <label htmlFor="travel-there">Days There</label>
                 <input id="travel-there" type="number" min={0} max={90} value={daysThere} onChange={(e) => setDaysThere(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
@@ -295,6 +306,26 @@ export function TravelWorkspace() {
                 </div>
               </div>
             )}
+            {rooms.length > 0 && (
+              // The whole stay side by side (§48c, from 2026-10-06): until then the list above, the room with its tax and fee, was all there was to compare.
+              <LookRegion className="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Hotel And Room</th><th scope="col" className="num">Room, Tax And Fees</th><th scope="col" className="num">Parking</th><th scope="col" className="num">Your Breakfast</th><th scope="col" className="num">Paid</th><th scope="col" className="num">Deposit Held</th></tr></thead>
+                  <tbody>
+                    {rooms.map((x) => ({ x, t: stayTotal(sim, x.hotel.id, x.room.name, ratePlan, arrival, stayNights, { rooms: roomsBooked, car: Boolean(car) }) })).filter((r) => r.t).sort((a, b) => a.t!.paid - b.t!.paid).map(({ x, t }) => (
+                      <tr key={x.key}>
+                        <td className="small"><Open subject={at('hotel', x.hotel.id)}>{x.hotel.name}</Open><div className="xs dim">{x.room.name}</div></td>
+                        <td className="num mono">{money(t!.room)}{t!.estimated ? <div className="xs dim">Estimate</div> : null}</td>
+                        <td className="num mono">{car ? money(t!.parking) : 'No Car'}</td>
+                        <td className="num mono">{t!.breakfast === undefined ? 'Not Published' : t!.breakfast === 0 ? 'Included' : money(t!.breakfast)}</td>
+                        <td className="num mono">{money(t!.paid)}</td>
+                        <td className="num mono">{t!.deposit ? money(t!.deposit) : 'None'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </LookRegion>
+            )}
             {picked && (
               <div className="xs dim">{amenityLine(picked.hotel.id)}{ratePlan === 'flexible' ? ` Free to call off until ${formatDateTime(freeCancelUntil(picked.hotel.id, arrival), CITIES.require(picked.hotel.cityId).timeZone)}.` : ''}</div>
             )}
@@ -339,7 +370,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(roomsBooked > 1 ? { rooms: roomsBooked } : {}), ...(petsAlong ? { withPets: true } : {}), ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}), ...(driving && ownCar ? { ground: 'car', carId: ownCar.id } : {}), ...(byPara ? { ground: 'paratransit' } : {}) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(roomsBooked > 1 ? { rooms: roomsBooked } : {}), ...(petsAlong ? { withPets: true, ...(petCarrier && !mode && typeof petCarrierFor(person.currentLocationId, toCity, petCarrier) !== 'string' ? { petCarrier } : {}) } : {}), ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}), ...(driving && ownCar ? { ground: 'car', carId: ownCar.id } : {}), ...(byPara ? { ground: 'paratransit' } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

@@ -1,0 +1,1414 @@
+{
+ "read": "2026-10-06",
+ "category": "mattresses",
+ "products": [
+  {
+   "brand": "Endy",
+   "model": "Endy Elevate Hybrid Mattress",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 12,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 995, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 1145, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 1245, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1545, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Endy",
+   "url": "https://www.endy.com/products/endy-elevate-hybrid-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Endy",
+   "model": "Endy Kids Mattress",
+   "market": "ca",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 7,
+   "trialNights": 365,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 495, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 595, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Endy",
+   "url": "https://www.endy.com/products/kids/endy-kids-mattress",
+   "status": "verified",
+   "notes": "Full product name is 'The Endy Petit Kids Mattress'. Only twin and full offered."
+  },
+  {
+   "brand": "Big Fig",
+   "model": "Firm",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "extra-firm",
+   "heightIn": 11.5,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1409, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1649, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1849, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1999, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Big Fig Mattress",
+   "url": "https://www.bigfigmattress.com/products/big-fig-firm-mattress-queen",
+   "status": "verified",
+   "notes": "Lifetime warranty (no flat numeric year figure published). Full product name 'Big Fig Firm Mattress'. Regular (pre-code) prices recorded; a sitewide promo code was discounting every size at fetch time."
+  },
+  {
+   "brand": "Big Fig",
+   "model": "Luxe",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "plush",
+   "heightIn": 13,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1859, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2099, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2299, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2499, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Big Fig Mattress",
+   "url": "https://www.bigfigmattress.com/products/big-fig-luxe-mattress-queen",
+   "status": "verified",
+   "notes": "Lifetime warranty (no flat numeric year figure published). Full product name 'Big Fig Luxe Mattress'. Regular (pre-code) prices recorded; a sitewide promo code was discounting every size at fetch time."
+  },
+  {
+   "brand": "Origin",
+   "model": "Adapt Hybrid Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 598, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 965, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1089, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1382, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Origin Mattress",
+   "url": "https://originmattress.com/products/origin-adapt-hybrid-mattress",
+   "status": "verified",
+   "notes": "Full product name 'Origin Adapt Hybrid Mattress'. Regular (pre-discount) prices recorded; the live page was running a 45%-off storewide sale at fetch time."
+  },
+  {
+   "brand": "Origin",
+   "model": "LumbarCloud Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 13,
+   "trialNights": 100,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1598, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2576, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3000, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3687, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Origin Mattress",
+   "url": "https://originmattress.com/products/origin-lumbarcloud-mattress",
+   "status": "verified",
+   "notes": "Full product name 'Origin LumbarCloud Mattress'. Regular (pre-discount) prices recorded; the live page was running a 60%-off storewide sale at fetch time."
+  },
+  {
+   "brand": "Silk & Snow",
+   "model": "Hybrid",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": "firm",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "queen", "price": 1180, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Silk & Snow",
+   "url": "https://www.silkandsnow.com/en-ca/hybrid-mattress/",
+   "status": "secondhand",
+   "notes": "Full product name 'S&S Hybrid Mattress'. Only the queen firm price could be confirmed against silkandsnow.com's own page (direct fetch returned 403); third-party sources gave conflicting twin/full/king figures, so those were left out rather than guessed."
+  },
+  {
+   "brand": "Silk & Snow",
+   "model": "Organic",
+   "market": "ca",
+   "type": "latex",
+   "firmness": "firm",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1150, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 1425, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 1700, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1990, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Silk & Snow",
+   "url": "https://www.silkandsnow.com/en-ca/organic-mattress/",
+   "status": "secondhand",
+   "notes": "Full product name 'S&S Organic Mattress'. Direct fetch of the maker's page returned 403; prices taken from search-engine snippets of the page's own content (firm option)."
+  },
+  {
+   "brand": "Purple",
+   "model": "PurplePlus",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "twin", "price": 1599, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1999, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2099, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2599, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Purple",
+   "url": "https://purple.com/mattresses/plus",
+   "status": "verified",
+   "notes": "Regular (compare-at) prices recorded; a sitewide sale was discounting every size at fetch time."
+  },
+  {
+   "brand": "Purple",
+   "model": "Restore Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 11.5,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "full", "price": 2499, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2699, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3399, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Purple",
+   "url": "https://purple.com/mattresses/restore",
+   "status": "verified",
+   "notes": "Full product name 'Restore Hybrid Mattress'. No standard twin offered (twin XL and up only). Regular (compare-at) prices recorded; a sitewide sale was discounting every size at fetch time."
+  },
+  {
+   "brand": "Purple",
+   "model": "RestorePlus Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 13,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "full", "price": 3499, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3599, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 4399, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Purple",
+   "url": "https://purple.com/mattresses/restore-plus",
+   "status": "verified",
+   "notes": "Full product name 'RestorePlus Hybrid Mattress'. No standard twin offered (twin XL and up only). Regular (compare-at) prices recorded; a sitewide sale was discounting every size at fetch time."
+  },
+  {
+   "brand": "Purple",
+   "model": "RestorePremier Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-soft",
+   "heightIn": 13,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 4399, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 5199, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Purple",
+   "url": "https://purple.com/mattresses/restore-premier",
+   "status": "verified",
+   "notes": "Full product name 'RestorePremier Hybrid Mattress'. No standard twin or full offered (twin XL, queen, king and cal king only). Regular (compare-at) prices recorded; a sitewide sale was discounting every size at fetch time."
+  },
+  {
+   "brand": "WinkBeds",
+   "model": "The WinkBed",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "luxury firm",
+   "heightIn": 13.5,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 999, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1499, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1799, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1999, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "WinkBeds",
+   "url": "https://www.winkbeds.com/pages/shop-winkbed",
+   "status": "secondhand",
+   "notes": "Lifetime warranty (no flat numeric year figure published). winkbeds.com itself renders prices via JS template, so direct fetch could not confirm figures; recorded from retailer-review-site snippets of the maker's own sale listing (Luxury Firm comfort option)."
+  },
+  {
+   "brand": "WinkBeds",
+   "model": "The GravityLux",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1199, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1599, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1799, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1999, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "WinkBeds",
+   "url": "https://www.winkbeds.com/pages/shop-gravitylux",
+   "status": "secondhand",
+   "notes": "Lifetime Limited Warranty (no flat numeric year figure published). winkbeds.com itself renders prices via JS template, so direct fetch could not confirm figures; recorded from retailer-review-site snippets of the maker's own pricing (medium comfort option)."
+  },
+  {
+   "brand": "WinkBeds",
+   "model": "The EcoCloud",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 12.5,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1299, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1599, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1999, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2299, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "WinkBeds",
+   "url": "https://www.winkbeds.com/pages/shop-ecocloud",
+   "status": "secondhand",
+   "notes": "Full replacement lifetime warranty (no flat numeric year figure published). winkbeds.com itself renders prices via JS template, so direct fetch could not confirm figures; third-party sources gave conflicting numbers, recorded the internally-consistent monotonic set."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Premier",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 13,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "twin", "price": 549, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 899, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 999, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1099, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nectar",
+   "url": "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'Nectar Premier Memory Foam Mattress'. Lifetime 'Forever Warranty'; no numeric years stated. Direct fetch confirmed only queen ($999); twin/full/king taken from retailer listings of nectarsleep.com's own pricing."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Classic Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 12,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "twin", "price": 499, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 749, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 849, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 999, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nectar",
+   "url": "https://www.nectarsleep.com/mattresses/hybrid-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'Nectar Classic Hybrid Mattress'. Lifetime 'Forever Warranty'; no numeric years stated. Direct fetch confirmed only queen ($849); twin/full/king taken from retailer listings of nectarsleep.com's own pricing."
+  },
+  {
+   "brand": "Nectar",
+   "model": "Premier Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 13,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "twin", "price": 799, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1099, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1199, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1299, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nectar",
+   "url": "https://www.nectarsleep.com/mattresses/premier-hybrid-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'Nectar Premier Hybrid Mattress'. Lifetime 'Forever Warranty'; no numeric years stated. Direct fetch confirmed only queen ($1,199); twin/full/king taken from retailer listings of nectarsleep.com's own pricing."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Latex Hybrid",
+   "market": "us",
+   "type": "latex",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1749, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2479, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2759, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3279, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Saatva",
+   "url": "https://www.saatva.com/mattresses/saatva-latex-hybrid",
+   "status": "secondhand",
+   "notes": "Full product name 'Saatva Latex Hybrid Mattress'. Lifetime warranty policy; no flat numeric year figure published. Regular (pre-sale) prices recorded via search-engine snippets of saatva.com's own listing (same JS-rendering limitation noted for other Saatva lines)."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Memory Foam Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 11.5,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1399, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1849, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2149, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2649, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Saatva",
+   "url": "https://www.saatva.com/mattresses/memory-foam-hybrid",
+   "status": "secondhand",
+   "notes": "Lifetime warranty policy; no flat numeric year figure published. Regular (pre-sale) prices recorded via search-engine snippets of saatva.com's own listing."
+  },
+  {
+   "brand": "Saatva",
+   "model": "Contour5",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1949, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 3019, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3179, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3849, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Saatva",
+   "url": "https://www.saatva.com/mattresses/saatva-contour5",
+   "status": "secondhand",
+   "notes": "Full product name 'Saatva Contour5 Memory Foam Mattress'. Lifetime warranty policy; no flat numeric year figure published. Regular (pre-sale) prices recorded via search-engine snippets of saatva.com's own listing."
+  },
+  {
+   "brand": "Simba",
+   "model": "Essential",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "depthCm": 20,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 549, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 549, "currency": "GBP", "taxIncluded": true },
+    { "size": "king", "price": 799, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Simba Sleep",
+   "url": "https://simbasleep.com/products/simba-hybrid-essential-mattress",
+   "status": "verified",
+   "notes": "Full name on-site is 'Hybrid Essential Mattress'. Double priced the same as single per the maker's own size/price table."
+  },
+  {
+   "brand": "Simba",
+   "model": "Pro",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "depthCm": 28,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 899, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 1299, "currency": "GBP", "taxIncluded": true },
+    { "size": "king", "price": 1399, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Mattress Online",
+   "url": "https://www.mattressonline.co.uk/Product/Simba-Hybrid-Pro-Mattress-P2144",
+   "status": "secondhand",
+   "notes": "Full name on-site is 'Hybrid Pro Mattress'. simbasleep.com's own page only exposed a 'from £899' clearance figure; double and king taken from a major UK mattress retailer's listing of the same model."
+  },
+  {
+   "brand": "Simba",
+   "model": "Luxe",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "depthCm": 31,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 1249, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 1799, "currency": "GBP", "taxIncluded": true },
+    { "size": "king", "price": 1899, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Simba Sleep",
+   "url": "https://simbasleep.com/products/simba-hybrid-luxe-mattress",
+   "status": "secondhand",
+   "notes": "Full name on-site is 'Hybrid Luxe Mattress'. King confirmed directly against simbasleep.com (shown as an 'overstock price'); single and double taken from major UK retailer listings (John Lewis / Mattress Online) of the same model."
+  },
+  {
+   "brand": "Casper",
+   "model": "The One",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 874, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1074, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1149, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1649, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Casper",
+   "url": "https://casper.com/pages/the-one-mattress",
+   "status": "verified",
+   "notes": "Full product name 'The One Mattress'. Regular (comparable-value) prices recorded; a sitewide sale was discounting every size at fetch time."
+  },
+  {
+   "brand": "Casper",
+   "model": "Dream",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1620, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1867, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1993, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2740, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Casper",
+   "url": "https://casper.com/products/casper-dream-hybrid",
+   "status": "secondhand",
+   "notes": "Full product name 'The Dream Hybrid Memory Foam Mattress'. Only twin's regular price ($1,620) was stated directly; full/queen/king regular prices computed from the 25%-off sale prices seen at fetch time ($1,400/$1,495/$2,055), so flagged as secondhand rather than directly confirmed."
+  },
+  {
+   "brand": "Casper",
+   "model": "Snow",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "full", "price": 2620, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2720, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3495, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Casper",
+   "url": "https://casper.com/products/casper-snow-v3",
+   "status": "verified",
+   "notes": "Full product name 'The Snow Cooling Memory Foam Hybrid Mattress'. No standard twin offered (twin XL and up only). Regular (pre-sale) prices recorded; a 25%-off sale was active at fetch time."
+  },
+  {
+   "brand": "Casper",
+   "model": "Dream Max",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "plush",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "full", "price": 3220, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3370, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 4245, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Casper",
+   "url": "https://casper.com/products/casper-dream-max-hybrid",
+   "status": "verified",
+   "notes": "Full product name 'The Dream Max Plush Orthopedic Mattress'. No standard twin offered (twin XL and up only). Regular (pre-sale) prices recorded; a 20%-off sale was active at fetch time."
+  },
+  {
+   "brand": "Tuft & Needle",
+   "model": "2024 Original Mattress",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 10,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 695, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 845, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 945, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1345, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tuft & Needle",
+   "url": "https://www.tuftandneedle.com/products/original-mattress-2024",
+   "status": "verified"
+  },
+  {
+   "brand": "Tuft & Needle",
+   "model": "2024 Original Hybrid Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1045, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1345, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1545, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2045, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tuft & Needle",
+   "url": "https://www.tuftandneedle.com/products/original-hybrid-mattress-2024",
+   "status": "verified"
+  },
+  {
+   "brand": "Tuft & Needle",
+   "model": "2024 Mint Mattress",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 845, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1145, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1345, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1845, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tuft & Needle",
+   "url": "https://www.tuftandneedle.com/products/mint-mattress-2024",
+   "status": "verified"
+  },
+  {
+   "brand": "Tuft & Needle",
+   "model": "2024 Mint Hybrid Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "plush",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1445, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1845, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2045, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2645, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tuft & Needle",
+   "url": "https://www.tuftandneedle.com/products/hybrid-mattress",
+   "status": "verified",
+   "notes": "Site brands this 'T&N Mint Hybrid Mattress II'; confirmed via search as the current 2024 Mint Hybrid model (starting price and per-size table match)."
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS3 Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1699, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1899, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1949, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2149, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Amerisleep",
+   "url": "https://amerisleep.com/as3.html?material=hybrid",
+   "status": "secondhand",
+   "notes": "Regular (starting, pre-promo-code) prices recorded; a $500-off promo code was discounting every size at fetch time."
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS5 Hybrid",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "soft",
+   "heightIn": 14,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 2399, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2599, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2649, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2849, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Amerisleep",
+   "url": "https://amerisleep.com/as5.html?material=hybrid",
+   "status": "secondhand",
+   "notes": "Regular (starting, pre-promo-code) prices recorded; a $500-off promo code was discounting every size at fetch time."
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS6 Black Series",
+   "market": "us",
+   "type": "foam",
+   "firmness": "firm",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 3399, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3649, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3849, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Amerisleep",
+   "url": "https://amerisleep.com/mattresses/luxury-mattresses/",
+   "status": "secondhand",
+   "notes": "Regular (starting, pre-promo-code) prices recorded; a $1,000-off promo code was discounting every size at fetch time. Full size price not found in this pass."
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "Organica",
+   "market": "us",
+   "type": "latex",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1049, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1249, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1299, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2249, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Amerisleep",
+   "url": "https://amerisleep.com/organica.html",
+   "status": "secondhand",
+   "notes": "Regular (starting) prices recorded where found; king's figure ($2,249) looks disproportionate to twin/full/queen and could not be cross-checked in this pass - flagging the discrepancy rather than resolving it."
+  }
+ ,
+  {
+   "brand": "Tempur-Pedic",
+   "model": "TEMPUR-Adapt",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 10,
+   "trialNights": 90,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "queen", "price": 2299, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tempur-Pedic",
+   "url": "https://www.tempurpedic.com/shop-mattresses/all-adapt-collection/",
+   "status": "secondhand",
+   "notes": "Only the current queen-size collection price ($2,299) was confirmed; twin/full/king not found in this pass (a discontinued 'previous generation' Adapt closeout line was excluded as a different, no-longer-sold product)."
+  },
+  {
+   "brand": "Tempur-Pedic",
+   "model": "TEMPUR-Breeze",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 12,
+   "trialNights": 90,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 3999, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 4499, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 4499, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 4499, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tempur-Pedic",
+   "url": "https://www.tempurpedic.com/shop-mattresses/",
+   "status": "secondhand",
+   "notes": "Twin shown with a sale price against a $4,499 regular; full/queen/king snippets all showed the same $4,499 figure, which may be an artifact of stale search-result caching rather than genuinely flat pricing across sizes - flagging rather than resolving."
+  },
+  {
+   "brand": "Tempur-Pedic",
+   "model": "TEMPUR-ActiveBreeze",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 90,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "queen", "price": 10598, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Tempur-Pedic",
+   "url": "https://www.tempurpedic.com/shop-mattresses/compare-tempurpedic-mattresses/",
+   "status": "secondhand",
+   "notes": "Full product name 'TEMPUR-ActiveBreeze System'. Only the queen regular price was confirmed in this pass; twin/full/king not found."
+  },
+  {
+   "brand": "Birch",
+   "model": "Birch Luxe Natural",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1849, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2349, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2624, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3249, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Birch",
+   "url": "https://birchliving.com/products/birch-luxe-natural-mattress",
+   "status": "secondhand",
+   "notes": "Limited Lifetime Warranty (no flat numeric year figure published). Queen's regular price ($2,624) confirmed directly against birchliving.com; twin/full/king taken from retailer listings and don't scale exactly to that queen figure - flagging rather than resolving the discrepancy."
+  },
+  {
+   "brand": "Birch",
+   "model": "Birch Elite Natural",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 12,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 2499, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 3311, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 3749, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 4499, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Birch",
+   "url": "https://birchliving.com/products/birch-elite-natural-mattress",
+   "status": "verified",
+   "notes": "Limited Lifetime Warranty (no flat numeric year figure published). Queen ($3,749) confirmed directly against birchliving.com; twin/full/king taken from retailer MSRP listings consistent with that queen figure."
+  },
+  {
+   "brand": "Birch",
+   "model": "Birch Essential",
+   "market": "us",
+   "type": "foam",
+   "firmness": "firm",
+   "heightIn": 9,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 865, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 999, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Birch",
+   "url": "https://birchliving.com/pages/birch-essential-for-budget-shoppers",
+   "status": "verified",
+   "notes": "Limited Lifetime Warranty (no flat numeric year figure published). Full/king not found in this pass."
+  },
+  {
+   "brand": "Birch",
+   "model": "Birch Kids Natural",
+   "market": "us",
+   "type": "latex",
+   "firmness": "dual-sided: firmer (ages 2-7) / softer (ages 8+)",
+   "heightIn": 8,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 799, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Birch",
+   "url": "https://birchliving.com/products/birch-kids-natural-mattress",
+   "status": "verified",
+   "notes": "Limited Lifetime Warranty (no flat numeric year figure published). Only twin offered."
+  },
+  {
+   "brand": "Nest Bedding",
+   "model": "Owl",
+   "market": "us",
+   "type": "latex",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1604, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 2235, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2598, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 3010, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nest Bedding",
+   "url": "https://www.nestbedding.com/products/owl-natural-latex-hybrid-mattress",
+   "status": "verified",
+   "notes": "Full product name 'Owl Natural Latex Hybrid Mattress'."
+  },
+  {
+   "brand": "Nest Bedding",
+   "model": "Starling",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1526, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 1959, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 2632, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 2752, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nest Bedding",
+   "url": "https://www.nestbedding.com/products/starling-signature-contour-grid",
+   "status": "secondhand",
+   "notes": "Full product name 'Starling Signature Contour Grid Mattress'. Twin and queen regular (pre-sale) prices confirmed; full and king figures found were sale-labeled and not independently confirmed as regular."
+  },
+  {
+   "brand": "Nest Bedding",
+   "model": "Raven",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "dual-sided (two firmness levels)",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 644, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 966, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 1128, "currency": "USD", "taxIncluded": false },
+    { "size": "king", "price": 1343, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nest Bedding",
+   "url": "https://www.nestbedding.com/products/raven-flippable-memory-foam-hybrid-mattress",
+   "status": "verified",
+   "notes": "Full product name 'Raven Flippable Hybrid Mattress'."
+  },
+  {
+   "brand": "Nest Bedding",
+   "model": "Puffin",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 536, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 805, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Nest Bedding",
+   "url": "https://www.nestbedding.com/products/puffin-memory-foam-kids-mattress",
+   "status": "verified",
+   "notes": "Full product name 'Puffin Memory Foam Kids Bed'. Only twin and full offered."
+  }
+ ,
+  {
+   "brand": "Douglas",
+   "model": "Douglas Alpine",
+   "market": "ca",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 799, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 899, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 999, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1099, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Douglas",
+   "url": "https://www.douglas.ca/en/product/douglas-alpine-mattress/",
+   "status": "verified",
+   "notes": "Full product name 'Douglas Alpine Memory Foam Mattress'."
+  },
+  {
+   "brand": "Douglas",
+   "model": "Douglas Summit",
+   "market": "ca",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 999, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 1149, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 1299, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1399, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Douglas",
+   "url": "https://www.douglas.ca/en/product/douglas-summit-mattress/",
+   "status": "verified",
+   "notes": "Full product name 'Douglas Summit Memory Foam Mattress'."
+  },
+  {
+   "brand": "Douglas",
+   "model": "Douglas Original Hybrid",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 749, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 849, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 949, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1049, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Douglas",
+   "url": "https://www.douglas.ca/en/product/douglas-original-hybrid-mattress/",
+   "status": "verified"
+  },
+  {
+   "brand": "Douglas",
+   "model": "Douglas Alpine Hybrid",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 13,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 949, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 1049, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 1149, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1249, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Douglas",
+   "url": "https://www.douglas.ca/en/product/douglas-alpine-hybrid-mattress/",
+   "status": "verified"
+  },
+  {
+   "brand": "Douglas",
+   "model": "Douglas Summit Hybrid",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": 365,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 1149, "currency": "CAD", "taxIncluded": false },
+    { "size": "full", "price": 1299, "currency": "CAD", "taxIncluded": false },
+    { "size": "queen", "price": 1449, "currency": "CAD", "taxIncluded": false },
+    { "size": "king", "price": 1549, "currency": "CAD", "taxIncluded": false }
+   ],
+   "seller": "Douglas",
+   "url": "https://www.douglas.ca/en/product/douglas-summit-hybrid-mattress/",
+   "status": "verified"
+  },
+  {
+   "brand": "eve",
+   "model": "Premium Hybrid",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": 28,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "double", "price": 1049, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "eve sleep",
+   "url": "https://www.evesleep.co.uk/products/the-premium-hybrid-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'The Premium Hybrid Mattress'. Only double's regular (RRP) price confirmed in this pass; single and king not found."
+  },
+  {
+   "brand": "eve",
+   "model": "Original Hybrid",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": 25,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 699, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "eve sleep",
+   "url": "https://www.evesleep.co.uk/products/the-original-hybrid-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'Eve Original Hybrid Mattress'. Only single's regular price confirmed in this pass; double and king not found."
+  },
+  {
+   "brand": "eve",
+   "model": "Premium",
+   "market": "uk",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": null,
+   "depthCm": 28,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "double", "price": 949, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "eve sleep",
+   "url": "https://www.evesleep.co.uk/products/the-premium-foam-mattress",
+   "status": "secondhand",
+   "notes": "Full product name 'Premium Foam Mattress'. Only double's regular (RRP) price confirmed in this pass; single and king not found."
+  },
+  {
+   "brand": "eve",
+   "model": "Wunderflip Premium Hybrid",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "soft/firm (flippable)",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "double", "price": 1099, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "eve sleep",
+   "url": "https://www.evesleep.co.uk/products/the-wunderflip-premium-hybrid-sleep-mattress",
+   "status": "secondhand",
+   "notes": "Only double's regular (RRP) price confirmed in this pass; single and king not found."
+  },
+  {
+   "brand": "eve",
+   "model": "Wunderflip Ultimate Hybrid",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "soft/firm (flippable)",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "double", "price": 1299, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "eve sleep",
+   "url": "https://www.evesleep.co.uk/products/the-wunderflip-ultimate-hybrid-sleep-mattress",
+   "status": "secondhand",
+   "notes": "Only double's regular price confirmed in this pass (via search snippet of the maker's own sale listing); single and king not found."
+  },
+  {
+   "brand": "Lucid",
+   "model": "The Original Memory Foam Mattress",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 10,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 229.99, "currency": "USD", "taxIncluded": false },
+    { "size": "full", "price": 309.99, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 349.99, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Lucid Mattress",
+   "url": "https://lucidmattress.com/products/the-original-memory-foam-mattress",
+   "status": "secondhand",
+   "notes": "King not found in this pass."
+  },
+  {
+   "brand": "Lucid",
+   "model": "Premium Memory Foam Mattress",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-plush",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 299.99, "currency": "USD", "taxIncluded": false },
+    { "size": "queen", "price": 449.99, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Lucid Mattress",
+   "url": "https://lucidmattress.com/products/premium-memory-foam-mattress",
+   "status": "verified",
+   "notes": "Full/king not found in this pass."
+  },
+  {
+   "brand": "Lucid",
+   "model": "Low Profile Memory Foam Mattress",
+   "market": "us",
+   "type": "foam",
+   "firmness": "plush",
+   "heightIn": 6,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "twin", "price": 119.99, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Lucid Mattress",
+   "url": "https://lucidmattress.com/products/low-profile-memory-foam-mattress",
+   "status": "verified",
+   "notes": "Full/queen/king not found in this pass; only twin's price rendered on direct fetch of the maker's page."
+  },
+  {
+   "brand": "Restonic",
+   "model": "Signature",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "firm",
+   "heightIn": null,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 1249, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Corcoran Furniture",
+   "url": "https://www.corcoranfurnituremanchester.com/products/scott-living-signature-firm-mattress",
+   "status": "secondhand",
+   "notes": "Restonic sells through dealers only and restonic.com itself states no price; 'Scott Living Signature' is the retail name for Restonic's Signature line. Only a queen price from one dealer was confirmed in this pass."
+  },
+  {
+   "brand": "Restonic",
+   "model": "HealthRest",
+   "market": "us",
+   "type": "foam",
+   "firmness": "firm",
+   "heightIn": 12,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 2659, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Macy's",
+   "url": "https://www.macys.com/shop/product/restonic-healthrest-bliss-12-luxury-firm-mattress-in-a-box-queen?ID=17155371",
+   "status": "secondhand",
+   "notes": "Full retail name 'HealthRest Bliss 12 Luxury Firm'. Restonic sells through dealers only; regular (listed, non-doorbuster) price from Macy's recorded. Macy's runs near-permanent deep discounts off this list price (seen as low as $899) - flagging rather than resolving which figure a shopper actually pays."
+  },
+  {
+   "brand": "Restonic",
+   "model": "ComfortCare",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "firm",
+   "heightIn": 12.5,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 2439, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Macy's",
+   "url": "https://restonic.com/mattress/comfortcare-qr-waldorf-et",
+   "status": "secondhand",
+   "notes": "Retail name 'Waldorf 12.5 Firm', restonic.com's own page confirms this as a 'ComfortCare Hybrid' model. Restonic sells through dealers only; price recorded from Macy's listing of this exact model."
+  },
+  {
+   "brand": "Restonic",
+   "model": "Drew & Jonathan Home",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    { "size": "queen", "price": 1649, "currency": "USD", "taxIncluded": false }
+   ],
+   "seller": "Belfort Furniture",
+   "url": "https://www.belfortfurniture.com/item/lavender-medium-pillow-top-queen-firm-mattress/1933177603",
+   "status": "secondhand",
+   "notes": "Retail name 'Lavender Medium Pillow Top'; Drew & Jonathan Home mattresses are made under licence by Restonic and sold only through dealers (no price on restonic.com or drewandjonathan.com directly). Price recorded from a regional furniture dealer's listing of this exact model."
+  },
+  {
+   "brand": "Emma",
+   "model": "Original Lite",
+   "market": "uk",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 199, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 289, "currency": "GBP", "taxIncluded": true },
+    { "size": "king", "price": 329, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-original-lite-mattress-2026/",
+   "status": "verified",
+   "notes": "Full product name 'Emma Original Lite Mattress 2026'."
+  },
+  {
+   "brand": "Emma",
+   "model": "Original",
+   "market": "uk",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 489, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-original-mattress/",
+   "status": "secondhand",
+   "notes": "Only single's price confirmed in this pass; double and king not found (earlier tranches' records for this model had an empty or single-size price table from a redirect, so this replaces rather than duplicates that gap)."
+  },
+  {
+   "brand": "Emma",
+   "model": "Original Pro",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 539, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-original-pro-mattress/",
+   "status": "secondhand",
+   "notes": "Only single's price confirmed in this pass; double and king not found."
+  },
+  {
+   "brand": "Emma",
+   "model": "Original Elite",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 749, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-original-elite-mattress/",
+   "status": "secondhand",
+   "notes": "Only single's price confirmed in this pass; double and king not found. A conflicting lower 'original price' of £649 also appeared in search snippets for this model - flagging rather than resolving."
+  },
+  {
+   "brand": "Emma",
+   "model": "NextGen Premium",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": null,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 305.15, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 475.15, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-nextgen-premium-mattress/",
+   "status": "secondhand",
+   "notes": "Site now brands this the 'Emma Hybrid Premium Mattress'. King not found (only a non-UK-size '160x200' figure appeared, left out)."
+  },
+  {
+   "brand": "Emma",
+   "model": "Performance",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": null,
+   "depthCm": 30,
+   "trialNights": 200,
+   "warrantyYears": 10,
+   "deliveryFee": 0,
+   "sizes": [
+    { "size": "single", "price": 749, "currency": "GBP", "taxIncluded": true },
+    { "size": "double", "price": 1199, "currency": "GBP", "taxIncluded": true },
+    { "size": "king", "price": 1349, "currency": "GBP", "taxIncluded": true }
+   ],
+   "seller": "Emma",
+   "url": "https://www.emma-sleep.co.uk/mattresses/emma-performance-30-mattress/",
+   "status": "verified",
+   "notes": "Site brands this 'Emma Performance 30 Mattress' (a 'Performance 28' variant also exists at slightly lower prices)."
+  }
+ ],
+ "notFound": [
+  { "brand": "Restonic", "market": "us", "model": "Grand Palais", "reason": "Restonic sells through local dealers only with no consistent direct online pricing; no major retailer or dealer listing with a clear 'Grand Palais' model name and price was found in this pass." }
+ ]
+}

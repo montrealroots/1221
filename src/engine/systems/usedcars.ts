@@ -44,8 +44,9 @@
  * **The transfer** after a private sale, by each place's own rule: done
  * before it's driven in Britain (it's taxed only then) and Ireland; within 10
  * days in California (a $15 penalty after) and British Columbia, 6 in
- * Ontario, 15 working days in Mexico City; and after those days a Canadian
- * car isn't driven until it's done.
+ * Ontario, 30 in New York and Connecticut (from 2026-10-06; $50 late in
+ * Connecticut), 15 working days in Mexico City; and after those days a
+ * Canadian car isn't driven until it's done.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -60,6 +61,7 @@ import { mayDrive } from './documents';
 import type { Jurisdiction } from '../content/vehiclefees';
 import { CITIES } from '../content/geography';
 import { payFromBank } from './household';
+import { inSaveMoney } from './banking';
 import { reliabilityOf, repairUsd, type Fault } from './repairs';
 import { drawBuild, hasModelYears, yearAt, type Build } from './modelyears';
 
@@ -97,12 +99,35 @@ const NHTSA_MILES: readonly number[] = [14_231, 13_961, 13_669, 13_357, 13_028, 
 const MILE_KM = 1.609344;
 export const TEST_DRIVE_MINUTES: Readonly<Partial<Record<Jurisdiction, number>>> = { 'MX-CMX': 15 };
 const TEST_DRIVE_DEFAULT = 30;
-/** The transfer after a private sale: days allowed, whether it's done before driving, whether it's driven past the days, and a late penalty. */
-/** And from 2026-10-05 the transfer's own fee where read: British Columbia's 8 (B.C. Reg. 334/91), Ontario's  vehicle permit (ontario.ca). */
-export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; beforeDriving?: boolean; blocksAfter?: boolean; lateUsd?: number; feeCad?: number }>>> = {
+/**
+ * The transfer after a private sale: days allowed, whether it's done before
+ * driving, whether it's driven past the days, a late penalty, and its own
+ * fee. From 2026-10-05 the fee where read: British Columbia's $28 (B.C. Reg.
+ * 334/91), Ontario's $32 vehicle permit (ontario.ca). Until 2026-10-06 New
+ * York and Connecticut kept no rule, so a private sale there was never
+ * transferred, and Mexico City's had no fee (`research-title-transfer.json`,
+ * third-party guides to the DMVs' own pages, which weren't read):
+ * - **New York**: the $50 title, applied for in 30 days; the 180 days before
+ *   late fees apply are published, the fee isn't, so none is charged.
+ * - **Connecticut**: the $25 title within 30 days, $50 late.
+ * - **Mexico City**: the 433 pesos of a cambio de propietario in 2026, within
+ *   15 working days (21 days here); no fine for missing it is published (the
+ *   car stays the seller's in the record), so none is charged.
+ * A private sale's quote leaves out the title, or Ontario's permit, that the
+ * transfer charges (`quote`). Mexico City's plates and circulation card stay
+ * in it: whether a private sale's car keeps its plates wasn't read.
+ */
+export interface Fee { amount: number; currency: 'USD' | 'CAD' | 'MXN' }
+export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; beforeDriving?: boolean; blocksAfter?: boolean; late?: Fee; fee?: Fee }>>> = {
   GB: { days: 0, beforeDriving: true }, IE: { days: 0, beforeDriving: true },
-  'US-CA': { days: 10, lateUsd: 15 }, 'CA-BC': { days: 10, blocksAfter: true, feeCad: 28 }, 'CA-ON': { days: 6, blocksAfter: true, feeCad: 32 }, 'MX-CMX': { days: 21 },
+  'US-NY': { days: 30, fee: { amount: 50, currency: 'USD' } },
+  'US-CT': { days: 30, fee: { amount: 25, currency: 'USD' }, late: { amount: 50, currency: 'USD' } },
+  'US-CA': { days: 10, late: { amount: 15, currency: 'USD' } },
+  'CA-BC': { days: 10, blocksAfter: true, fee: { amount: 28, currency: 'CAD' } }, 'CA-ON': { days: 6, blocksAfter: true, fee: { amount: 32, currency: 'CAD' } },
+  'MX-CMX': { days: 21, fee: { amount: 433, currency: 'MXN' } },
 };
+/** A fee in the save's money. */
+const inSaveFee = (sim: Simulation, f: Fee | undefined): Money => (f ? inSaveMoney(sim, Math.round(f.amount * 100), f.currency) : 0);
 
 export interface UsedListing { modelId: string; age: number; odometerKm: number; seller: 'dealer' | 'private'; /** Its model year and configuration where the model's are kept (`systems/modelyears.ts`, from 2026-10-05). */ modelYear?: number; build?: Build }
 
@@ -171,11 +196,10 @@ export function registerUsedCars(sim: Simulation, jurisdictionOf: (cityId: strin
     const v = (person.vehicles ?? []).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v || v.transferBy === undefined) throw new CommandError('It’s in your name.');
     const rule = TRANSFER[v.jurisdiction];
-    const late = s.now > v.transferBy && rule?.lateUsd ? Math.round(rule.lateUsd * 100) : 0;
     const cur = saveCurrency(s.universe);
-    const penalty = late ? (cur === 'USD' ? late : exchange(late, 'USD', cur) ?? late) : 0;
+    const penalty = s.now > v.transferBy ? inSaveFee(s, rule?.late) : 0;
     if (penalty > 0 && !payFromBank(s, person, penalty, 'A late transfer’s penalty', 'vehicle')) throw new CommandError(`${formatMoney(penalty, cur)} is more than the bank can cover.`);
-    const fee = rule?.feeCad ? (cur === 'CAD' ? rule.feeCad * 100 : exchange(rule.feeCad * 100, 'CAD', cur) ?? rule.feeCad * 100) : 0;
+    const fee = inSaveFee(s, rule?.fee);
     if (fee > 0 && !payFromBank(s, person, fee, 'The transfer of ownership’s fee', 'vehicle')) throw new CommandError(`The fee, ${formatMoney(fee, cur)}, is more than the bank can cover.`);
     delete v.transferBy;
     return { penalty, fee };

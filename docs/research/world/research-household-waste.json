@@ -1,0 +1,155 @@
+{
+  "topic": "Municipal solid waste per person, and bin sizes/collection frequency in SLATE cities",
+  "retrieved": "2026-10-06",
+  "findings": [
+    {
+      "what": "US municipal solid waste generation per person per day (EPA, most recent standardized figure, 2018 data)",
+      "value": 4.9,
+      "unit": "lb/person/day",
+      "market": "us",
+      "source": "https://css.umich.edu/sites/default/files/2023-10/U.S.%20MSW_CSS04-15.pdf",
+      "quote": "EPA found that the total generation of MSW in 2018 was 292.4 million tons or 4.9 pounds per person per day.",
+      "confidence": "medium"
+    },
+    {
+      "what": "England household waste per person, 2023/24",
+      "value": 377,
+      "unit": "kg/person/year",
+      "market": "uk",
+      "source": "https://www.statista.com/statistics/322535/total-household-waste-volumes-in-england-uk-per-person/",
+      "quote": "In 2023, total waste from households was equivalent to 377 kg per person",
+      "confidence": "medium"
+    },
+    {
+      "what": "England residual (non-recycled) household waste per person, 2024, with 2030 target",
+      "value": 535,
+      "unit": "kg/person/year",
+      "market": "uk",
+      "source": "https://www.mrw.co.uk/news/residual-waste-dropped-40kg-per-person-since-2019-estimates-defra-29-04-2026/",
+      "quote": "Per capita residual waste in England fell from 575kg to 535kg over five years (2019-2024), with a 2030 target of 437kg",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland managed household waste per person, 2019",
+      "value": 320,
+      "unit": "kg/person/year",
+      "market": "ie",
+      "source": "https://www.cso.ie/en/releasesandpublications/ep/p-sdg11/irelandsunsdgs-goal11sustainablecitiesandcommunities2021/environment/",
+      "quote": "The data indicates 320 kilogrammes per person of managed household waste in 2019, up from 314 kg/person in 2018.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland total municipal waste per capita, 2018",
+      "value": 600,
+      "unit": "kg/person/year",
+      "market": "ie",
+      "source": "https://www.cso.ie/en/releasesandpublications/ep/p-sdg11/irelandsunsdgs-goal11sustainablecitiesandcommunities2021/environment/",
+      "quote": "600 kilogrammes per capita for 2018",
+      "confidence": "medium"
+    },
+    {
+      "what": "Ireland municipal waste per capita, 2020 (EPA, via EEA country profile), for comparison with EU-27 average of 520 kg/cap",
+      "value": 644,
+      "unit": "kg/person/year",
+      "market": "ie",
+      "source": "https://www.eea.europa.eu/en/topics/in-depth/waste-and-recycling/country-profiles-on-waste-prevention-2025/ie-waste-prevention-factsheet-final.pdf/@@download/file",
+      "quote": "In 2020, Ireland generated 644 kg/cap of municipal waste, which is significantly above the estimated EU-27 average of 520 kg/cap in the same year.",
+      "confidence": "medium"
+    },
+    {
+      "what": "Canada national solid waste disposal per person, 2022 (Environment and Climate Change Canada indicator)",
+      "value": 684,
+      "unit": "kg/person/year",
+      "market": "ca",
+      "source": "https://www.canada.ca/en/environment-climate-change/services/environmental-indicators/solid-waste-diversion-disposal.html",
+      "quote": "In 2022, national solid waste disposal was 684 kg per person.",
+      "confidence": "high"
+    },
+    {
+      "what": "Canada national solid waste diversion (recycled/composted) per person, 2022",
+      "value": 254,
+      "unit": "kg/person/year",
+      "market": "ca",
+      "source": "https://www.canada.ca/en/environment-climate-change/services/environmental-indicators/solid-waste-diversion-disposal.html",
+      "quote": "in 2022, national solid waste diversion was 254 kg per person",
+      "confidence": "medium"
+    },
+    {
+      "what": "Mexico municipal solid waste (RSU) generation per capita, SEMARNAT Diagnóstico Básico para la Gestión Integral de los Residuos 2026",
+      "value": 1.076,
+      "unit": "kg/person/day",
+      "market": "mx",
+      "source": "https://www.info7.mx/nacional/mexico-genera-140-000-toneladas-de-basura-al-dia-apunta-semarnat/4721026608",
+      "quote": "La generación total de RSU se estimó que equivale a una generación per cápita de 1.076 kilogramos por habitante por día",
+      "confidence": "medium"
+    },
+    {
+      "what": "Mexico total national municipal solid waste generated per day (cross-check for per-capita figure above)",
+      "value": 139902,
+      "unit": "tonnes/day",
+      "market": "mx",
+      "source": "https://www.sinaloahoy.com.mx/portal/semarnat-presenta-diagnostico-2026-y-advierte-que-mexico-genera-139-mil-902-toneladas-diarias-de-basura/",
+      "quote": "México genera 139 mil 902 toneladas diarias de residuos sólidos urbanos",
+      "confidence": "medium"
+    },
+    {
+      "what": "Toronto curbside garbage bin sizes and collection frequency",
+      "value": "75L/120L/240L/360L carts; garbage collected every other week, Green Bin organics weekly",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://garbage-collection.org/toronto-garbage-schedule/",
+      "quote": "Garbage is collected every other week for houses using the curbside schedule... garbage and recycling run on alternating weeks.",
+      "confidence": "low"
+    },
+    {
+      "what": "Vancouver garbage cart sizes and collection frequency options",
+      "value": "75L/120L/180L/240L/360L carts; resident chooses weekly, every-other-week, or monthly collection",
+      "unit": "text",
+      "market": "ca",
+      "source": "https://vancouver.ca/home-property-development/getting-garbage-bins.aspx",
+      "quote": "Garbage service can be monthly, every other week, or weekly depending on the cart and service plan you choose.",
+      "confidence": "low"
+    },
+    {
+      "what": "New York City residential trash set-out rules (bins/bags, not a single bin size standard) and collection frequency",
+      "value": "1-9 unit buildings: bin up to 55 US gallons (~208 L) with secure lid, set out after 6pm; collection 2-3x/week depending on district; 10+ unit buildings may still use bags set out after 8pm",
+      "unit": "text",
+      "market": "us",
+      "source": "https://www.nyc.gov/site/dsny/news/24-027/trash-city-no-more-70-percent-nyc-trash-now-covered-bin-rules-first-residential-container",
+      "quote": "properties with 1-9 residential units are required to use bins, 55 gallons or less, with secure lids for trash set out",
+      "confidence": "medium"
+    },
+    {
+      "what": "London (outer borough example, Ealing) black bin size and collection frequency",
+      "value": "180 litres; collected every other week (fortnightly), alongside fortnightly food-waste bin",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://www.ealing.gov.uk/info/201167/rubbish_and_recycling/2108/your_rubbish_and_recycling_service",
+      "quote": "The standard bin is 180 litres... Your black bin is collected every other week with your small green food waste bin (fortnightly).",
+      "confidence": "low"
+    },
+    {
+      "what": "London (Redbridge) bin size and weekly collection (varies by borough; some keep weekly)",
+      "value": "180 litres; weekly collection",
+      "unit": "text",
+      "market": "uk",
+      "source": "https://www.redbridge.gov.uk/new-wheelie-bin-rubbish-collection/wheelie-bin-faqs/",
+      "quote": "Each wheelie bin holds 180 litres or around three black sacks of rubbish... Recycling and rubbish collections will continue to remain weekly",
+      "confidence": "low"
+    },
+    {
+      "what": "Dublin general waste wheelie bin sizes (private operators, no single municipal service) and collection frequency",
+      "value": "45L (apartments) / 120L / 140L / 240L bins; general waste and recycling collected on alternating fortnightly weeks",
+      "unit": "text",
+      "market": "ie",
+      "source": "https://greyhound.ie/what-size-wheelie-bin-do-i-need-dublin-bin-size-guide/",
+      "quote": "Standard general waste bin sizes available in Dublin include 45 litres..., 120 litres..., 140 litres..., and 240 litres...; collection frequency is every two weeks on alternating weeks",
+      "confidence": "low"
+    }
+  ],
+  "notFound": [
+    { "what": "New Haven, CT specific municipal bin size/collection frequency and MSW per-capita figure", "looked": ["New Haven CT trash collection bin size litres frequency (not directly searched; time-limited)"] },
+    { "what": "Mexico City (CDMX)-specific bin size/collection system (CDMX uses truck-side collection, not wheelie bins, so no standard bin-size figure was sought)", "looked": ["SEMARNAT generación residuos sólidos urbanos per cápita kg día México"] },
+    { "what": "England and Ireland most recent (2024/2025) single authoritative per-capita total municipal waste figure reconciling the different EPA/CSO/EEA numbers above", "looked": ["EPA Ireland municipal waste generated per capita kg", "https://www.epa.ie/resources/charts--data/waste/waste-for-irelands-environment/household-waste-per-capita-.php (404)"] }
+  ]
+}

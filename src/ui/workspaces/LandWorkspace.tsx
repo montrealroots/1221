@@ -14,7 +14,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { homeOf } from '@/engine/systems/earnings';
-import { buildingOn, landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
+import { buildingOn, landBuyingOf, landQuote, landValue, listingSource, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
 import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES, BUILD_LOANS } from '@/engine/content/construction';
 import { leaseRefusal, yearRent } from '@/engine/systems/landlease';
@@ -111,7 +111,7 @@ function YourDeal() {
   const q = landQuote(deal.listing.market, deal.listing.acres, sim.now, deal.price);
   const line = columnOf([q.price, ...q.lines.map((l) => l.amount), q.total], m.currency);
   return (
-    <Panel title="Your Offer, Accepted" subtitle={`${m.label}, ${areaWords(deal.listing.acres, m.place)}`}>
+    <Panel title="Your Offer, Accepted" subtitle={`${m.label}, ${areaWords(deal.listing.acres, m.place)}, ${listingSource(deal.listing).label}`}>
       <LookRegion className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Price" value={money(deal.price)} note={`${money(q.total)} with what buying it costs`} />
@@ -175,7 +175,7 @@ function ForSale() {
         <CatalogControls id="land-catalog" entries={landEntries} view={view} onChange={setView} facets={{ kind: 'Kind' }} />
         <div className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Land</th><th scope="col">Size</th><th scope="col" className="num">Asking</th><th scope="col">Listed</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
+            <thead><tr><th scope="col">Land</th><th scope="col">Size</th><th scope="col" className="num">Asking</th><th scope="col">Listed</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
             <tbody>
               {shown.map((l) => {
                 const lm = LAND_MARKETS[l.market]!;
@@ -185,6 +185,7 @@ function ForSale() {
                     <td>{areaWords(l.acres, lm.place)}</td>
                     <td className="num mono">{formatMoney(l.asking, lm.currency, { cents: false })}</td>
                     <td className="small">{formatDate(l.listedAt, sim.zone)}</td>
+                    <td className="small">{listingSource(l).label}</td>
                     <td className="row gap-1"><CompareToggle on={compared.includes(l.id)} onToggle={() => toggleCompare(l.id)} /><button type="button" className={`btn btn-sm ${l.id === listing.id ? '' : 'btn-ghost'}`} aria-pressed={l.id === listing.id} onClick={() => { setPick(l.id); setTyped(''); }}>{l.id === listing.id ? 'Chosen' : 'Choose'}</button></td>
                   </tr>
                 );
@@ -235,7 +236,7 @@ function ForSale() {
         <div className="row gap-2">
           <Gated feature="land.offer" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={offer}>Make An Offer</Gated>
         </div>
-        <Fine>{q.basis} None is a real listing: an asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept. A land loan is Farm Credit’s, about 6.3% over 30 years with 35% down (secondary), and only on America’s farmland, where its terms were read. Sources: {LAND_SOURCE}.</Fine>
+        <Fine>{q.basis} {listingSource(listing).sentence} An asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept. A land loan is Farm Credit’s, about 6.3% over 30 years with 35% down (secondary), and only on America’s farmland, where its terms were read. Sources: {LAND_SOURCE}.</Fine>
       </LookRegion>
     </Panel>
   );

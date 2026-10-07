@@ -19,6 +19,7 @@ import { registerAlarm } from './systems/alarm';
 import { registerHomeSecurity } from './systems/homesecurity';
 import { registerCharging } from './systems/charging';
 import { registerResidence } from './systems/residence';
+import { registerPaperVisits } from './systems/papervisits';
 import { registerCanadaPensions } from './systems/capensions';
 import { registerCitizenship } from './systems/citizenship';
 import { registerEiSelfEmployed } from './systems/eiself';
@@ -84,6 +85,8 @@ import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
 import { registerGarden } from './systems/garden';
 import { registerRooms } from './systems/rooms';
 import { registerHouseguests } from './systems/houseguests';
+import { registerBedding } from './systems/bedding';
+import { registerHomeGrooming } from './systems/homegrooming';
 import { registerReachingOut } from './systems/reachingout';
 import { registerSportsGear } from './systems/sportsgear';
 import { registerAwards } from './systems/awards';
@@ -166,6 +169,7 @@ import { registerTrainers } from './systems/trainers';
 import { registerLateCheckOut } from './systems/latecheckout';
 import { registerResale } from './systems/resale';
 import { registerLawns } from './systems/lawns';
+import { registerTheater } from './systems/theater';
 import { registerElectricity } from './systems/electricity';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -240,6 +244,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLateCheckOut(sim);
   registerResale(sim);
   registerLawns(sim, homeById);
+  registerTheater(sim);
   registerElectricity(sim);
   registerAviation(sim);
   registerOwnedAircraft(sim);
@@ -295,6 +300,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerGarden(sim);
   registerRooms(sim);
   registerHouseguests(sim);
+  registerBedding(sim);
+  registerHomeGrooming(sim);
   registerReachingOut(sim);
   registerSportsGear(sim);
   registerFuelTank(sim);
@@ -315,6 +322,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDocuments(sim);
   registerLicensing(sim);
   registerPermission(sim);
+  registerPaperVisits(sim);
   registerJourneys(sim);
   registerLocalStays(sim);
 }
@@ -442,7 +450,12 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   // And a suitcase to pack them in (`systems/luggage.ts`).
   starterLuggage(sim, sim.player);
   // No shortcut is on in a new life until it's chosen (from 2026-10-03).
-  sim.player.automation = {};
+  // From 2026-10-06 but two: the day's outfit put together and the day's meals eaten from what's ready, which every life
+  // had done for it until then, are shortcuts too, on in a new life and turned off on Your Shortcuts. Off by default was
+  // tried and measured that day: a top lasts one wear, so a new life was undressed from its second day, at the cost to
+  // its mood and in the cold, and 21 tests of played days in 9 files moved. That default is the owner's to change.
+  sim.player.automation = { chooseOutfit: true, eatLeftovers: true };
+  sim.player.dayShortcuts = true;
   return sim;
 }
 
@@ -463,6 +476,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-03 packed, unpacked and put the shopping away on its own: it keeps those, now as shortcuts it can turn off.
   if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { ...EVERY_SHORTCUT };
+  // A save from before 2026-10-06 had its day's outfit and meals chosen for it: it keeps both, as shortcuts it can turn off.
+  if (universe.people[universe.playerId] && !sim.player.dayShortcuts) { sim.player.automation = { ...sim.player.automation, chooseOutfit: true, eatLeftovers: true }; sim.player.dayShortcuts = true; }
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

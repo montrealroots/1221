@@ -35,13 +35,29 @@
  * morning of the day it comes, at eight, SLATE's reading of a round that USPS
  * finishes by five; then delivered. Out for delivery, it's said, so you can
  * be home, or have someone there, to take it in. Every carrier read leaves a
- * parcel without a signature unless the shipper asks for one, and none of
- * SLATE's retailers says it does, so none is carried back for want of one.
+ * parcel without a signature unless the shipper asks for one. Until
+ * 2026-10-06 none of SLATE's retailers was read asking, so none was carried
+ * back for want of one.
+ *
+ * **Missed** (from 2026-10-06; `research-missed-deliveries.json`,
+ * `research-carrier-holds.json`): Apple's American store says "Most shipments
+ * require a signature for delivery", and its stock in America ships by FedEx
+ * (a forum's reading, low confidence). FedEx's own page: a parcel that can't
+ * be left goes to a nearby FedEx location, held from that day for 7 days,
+ * then returned to the shipper. So an Apple parcel with nobody home to sign
+ * isn't left: it's held (`Order.held`), collected on an errand
+ * (`orders.collect`, a stop on a trip), or sent back and refunded once
+ * when the 7 days run out. Nothing else is signed for: no other retailer is
+ * read asking, and Apple's pages for the other markets weren't read. The
+ * posts' holds (USPS's 15 days, Royal Mail's 18, Canada Post's 15, An Post's
+ * 5 working days) are read too, but no retailer of SLATE's is read shipping
+ * by them, so none is kept.
  */
 
 import type { Simulation } from '../core/simulation';
+import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { startOfDay, type Instant } from '../core/time';
+import { MS_DAY, startOfDay, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
 import { expenseFor } from './household';
@@ -66,6 +82,24 @@ export interface Order {
   stolen?: true;
   /** When it was placed, for its tracking (from 2026-10-03). */
   placedAt?: Instant;
+  /** Missed with nobody home to sign: held by its carrier until a moment (from 2026-10-06). */
+  held?: { carrier: string; from: Instant; until: Instant };
+}
+
+/** Who asks for a signature on its parcels in a market, the carrier it ships by there, and that carrier's hold in days. */
+export const SIGNED: readonly { from: string; country: string; carrier: string; holdDays: number }[] = [
+  { from: 'Apple', country: 'us', carrier: 'FedEx', holdDays: 7 },
+];
+export const HELD_DUE_KIND = 'items.order_held_due';
+/** The signature an order needs where it's delivered, or none. */
+export const signatureFor = (person: Person, o: Order) => SIGNED.find((x) => x.from === o.from && x.country === CITIES.get(person.home?.cityId ?? '')?.countryId);
+
+/** Why a held order can't be collected now, or nothing: it must be held still and they in the town it's held in. */
+export function heldRefusal(person: Person, orderId: string, at: Instant): string | undefined {
+  const o = ordersOf(person).find((x) => x.id === orderId);
+  if (!o?.held || o.status !== 'placed' || at > o.held.until) return 'No parcel of yours is held for collection.';
+  if (person.currentLocationId !== person.home?.cityId) return `It’s collected from ${o.held.carrier} where you live.`;
+  return undefined;
 }
 
 /** The share of parcels delivered to a home that are stolen, by country. */
@@ -79,7 +113,7 @@ export function takenFromDoor(sim: Simulation, person: Person, orderId: string, 
 
 export const ordersOf = (person: Person): Order[] => (person.orders ??= []);
 
-export type OrderStage = 'Label Created' | 'In Transit' | 'Out For Delivery' | 'Delivered' | 'Returned' | 'Canceled';
+export type OrderStage = 'Label Created' | 'In Transit' | 'Out For Delivery' | 'Held For Collection' | 'Delivered' | 'Returned' | 'Canceled';
 export const OUT_FOR_DELIVERY_HOUR = 8;
 export const OUT_FOR_DELIVERY_KIND = 'items.out_for_delivery';
 /** When an order goes out for delivery: eight on the morning it comes, or when it comes if that's sooner. */
@@ -92,6 +126,7 @@ export function orderStage(person: Person, o: Order, at: Instant): OrderStage {
   if (o.status === 'delivered') return 'Delivered';
   if (o.status === 'returned') return 'Returned';
   if (o.status === 'canceled') return 'Canceled';
+  if (o.held) return 'Held For Collection';
   if (at >= outForDeliveryAt(person, o)) return 'Out For Delivery';
   const zone = CITIES.get(person.home?.cityId ?? person.currentLocationId)?.timeZone ?? 'UTC';
   return at >= startOfDay(o.placedAt ?? o.arrivesAt, zone) + 86_400_000 ? 'In Transit' : 'Label Created';
@@ -123,7 +158,7 @@ function destination(person: Person, to: Place): Place {
 /** Delivers an order, once. */
 export function deliver(sim: Simulation, person: Person, orderId: string): boolean {
   const order = ordersOf(person).find((o) => o.id === orderId);
-  if (!order || order.status !== 'placed') return false;
+  if (!order || order.status !== 'placed' || order.held) return false;
   const to = destination(person, order.to);
   // The post held, a parcel it takes waits for the hold's end (`systems/away.ts`).
   const held = to.kind === 'home' ? heldUntil(person, sim.now, true, to.home) : undefined;
@@ -131,9 +166,17 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
     holdBack(sim, { kind: ORDER_KIND, label: `A Delivery From ${order.from}`, category: 'home', priority: 30, payload: { personId: person.id, orderId } }, held);
     return false;
   }
+  const handedOver = to.kind === 'home' && to.home === homeKeyOf(person.home) && someoneHome(sim, person, sim.now, sim.now);
+  // Nobody home to sign: the carrier takes it away and holds it.
+  const signed = to.kind === 'home' ? signatureFor(person, order) : undefined;
+  if (signed && !handedOver) {
+    order.held = { carrier: signed.carrier, from: sim.now, until: sim.now + signed.holdDays * MS_DAY };
+    sim.schedule({ at: order.held.until, kind: HELD_DUE_KIND, label: `Held By ${signed.carrier}: ${order.from}`, category: 'home', priority: 30, payload: { personId: person.id, orderId } });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Delivery Was Missed', body: `Your order from ${order.from} needs a signature and nobody was home. ${signed.carrier} holds it for ${signed.holdDays} days to be collected, then sends it back.`, importance: 50, route: BELONGINGS_ROUTE });
+    return false;
+  }
   order.status = 'delivered';
   order.deliveredAt = sim.now;
-  const handedOver = to.kind === 'home' && to.home === homeKeyOf(person.home) && someoneHome(sim, person, sim.now, sim.now);
   if (to.kind === 'home' && !handedOver && takenFromDoor(sim, person, orderId)) {
     const taken = itemsOf(person).filter((i) => i.at.kind === 'order' && i.at.orderId === orderId);
     // Clothes taken are bought again as a worn-out garment is (`replaceWornOut` in `systems/clothing.ts`).
@@ -168,13 +211,37 @@ export function cancelOrder(sim: Simulation, person: Person, orderId: string, me
 
 const BELONGINGS_ROUTE = '/workspace/belongings';
 
+/** A held parcel collected from its carrier: what's in it where it was sent, and the order delivered. How many things. */
+export function collectHeld(sim: Simulation, person: Person, orderId: string): number {
+  const no = heldRefusal(person, orderId, sim.now);
+  if (no) throw new CommandError(no);
+  const order = ordersOf(person).find((o) => o.id === orderId)!;
+  const to = destination(person, order.to);
+  const things = itemsOf(person).filter((i) => i.at.kind === 'order' && i.at.orderId === orderId);
+  for (const i of things) i.at = to;
+  order.status = 'delivered';
+  order.deliveredAt = sim.now;
+  return things.length;
+}
+
 export function registerOrders(sim: Simulation): void {
+  sim.onCommand<{ orderId: string }, { collected: number }>('orders.collect', (p, { sim: s }) => ({ collected: collectHeld(s, s.player, String(p?.orderId)) }));
+  // Uncollected when the carrier's hold runs out: sent back, and refunded once.
+  sim.onSchedule(HELD_DUE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const o = person ? ordersOf(person).find((x) => x.id === item.payload.orderId) : undefined;
+    if (!person || !o?.held || o.status !== 'placed') return;
+    // Apple's phones are spent under personal (`buyPhone`), the only parcels signed for.
+    const back = cancelOrder(s, person, o.id, `${o.from}: not collected from ${o.held.carrier}, refunded`, 'personal');
+    o.status = 'returned';
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'A Parcel Went Back', body: `Your order from ${o.from} wasn’t collected from ${o.held.carrier} in time, so it went back${back > 0 ? ' and was refunded' : ''}.`, importance: 45, route: BELONGINGS_ROUTE });
+  });
   sim.onSchedule(OUT_FOR_DELIVERY_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const o = person ? ordersOf(person).find((x) => x.id === item.payload.orderId) : undefined;
     // Held by the post, it isn't out today.
     if (!person || !o || o.status !== 'placed' || person.id !== s.universe.playerId || heldUntil(person, o.arrivesAt, true) !== undefined) return;
-    s.notify({ category: 'home', title: 'Out For Delivery', body: `Your order from ${o.from} is out for delivery today${someoneHome(s, person, o.arrivesAt, o.arrivesAt) ? '' : ', and nobody will be home to take it in'}.`, importance: 35, route: BELONGINGS_ROUTE });
+    s.notify({ category: 'home', title: 'Out For Delivery', body: `Your order from ${o.from} is out for delivery today${someoneHome(s, person, o.arrivesAt, o.arrivesAt) ? '' : signatureFor(person, o) ? `, and it needs a signature: with nobody home, ${signatureFor(person, o)!.carrier} will hold it to be collected` : ', and nobody will be home to take it in'}.`, importance: 35, route: BELONGINGS_ROUTE });
   });
   sim.onSchedule(ORDER_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
