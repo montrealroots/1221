@@ -184,3 +184,16 @@ describe('a bond after school (found by the second replay)', () => {
     expect(c.memory.some((x) => x.what.startsWith('Worked together'))).toBe(true);
   });
 });
+
+describe('the years at school, remembered (found by the third replay)', () => {
+  it('outlast decades of what comes after: kept first when a contact’s memory is trimmed', () => {
+    const sim = graduate('co-yale');
+    const c = contactsOf(sim.player).find((x) => x.classmate === 0)!;
+    c.memory = [{ at: sim.now - 1000, what: 'At Yale: Ran lines with you' }, { at: sim.now - 2000, what: 'At Yale: Showed Trifles together: strong' }];
+    for (let i = 0; i < 200; i += 1) c.memory.unshift({ at: sim.now + i, what: `Asked you to a meal; you never answered ${i}` });
+    reachOut(sim, sim.player);
+    expect(c.memory.length).toBeLessThanOrEqual(MEMORY_KEPT);
+    expect(c.memory.filter((m) => m.what.startsWith('At Yale'))).toHaveLength(2);
+    expect(c.memory[0]!.what).toBe('Asked you to a meal; you never answered 199');
+  });
+});

@@ -42,6 +42,8 @@ export const ANSWER_KIND = 'social.answer';
 
 /** How much of what happened a contact keeps, the latest first. SLATE's estimate. */
 export const MEMORY_KEPT = 60;
+/** Of them, the memories of school kept however much comes after. */
+export const SCHOOL_KEPT = 8;
 
 /**
  * What a friend has asked you to, and when they asked: a meal (where, your dish), and from 2026-10-06 a visit to
@@ -131,7 +133,13 @@ export const askedBy = (person: Person): Contact[] => contactsOf(person).filter(
 /** Asks lapsed at their hour, then the day's new ones. */
 export function reachOut(sim: Simulation, person: Person): void {
   // What's remembered, the latest sixty (`MEMORY_KEPT`, from 2026-10-08): a replay found contacts carrying thousands.
-  for (const c of contactsOf(person)) if (c.memory.length > MEMORY_KEPT) c.memory.length = MEMORY_KEPT;
+  // The years at school kept first, up to eight (`SCHOOL_KEPT`): a replay's New York life, its friends' asks unanswered for
+  // decades, had pushed every memory of Yale out of its classmates.
+  for (const c of contactsOf(person)) if (c.memory.length > MEMORY_KEPT) {
+    const school = c.memory.filter((m) => m.what.startsWith('At Yale')).slice(0, SCHOOL_KEPT);
+    const rest = c.memory.filter((m) => !school.includes(m)).slice(0, MEMORY_KEPT - school.length);
+    c.memory = [...rest, ...school].sort((x, y) => y.at - x.at);
+  }
   for (const c of contactsOf(person)) {
     if (!c.ask || c.ask.at > sim.now) continue;
     c.memory.unshift({ at: sim.now, what: `Asked you to ${askWords(c.ask)}; you never answered` });
