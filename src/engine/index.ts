@@ -135,6 +135,7 @@ import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { registerCoursework } from './systems/coursework';
+import { registerClassmates } from './systems/classmates';
 import { registerProduction } from './systems/production';
 import { focusOf, grow } from './systems/school';
 import { agencyById, closeStaleBookings, registerCareer } from './systems/career';
@@ -206,6 +207,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSecurity(sim);
   registerSchool(sim);
   registerCoursework(sim);
+  registerClassmates(sim);
   registerProduction(sim, grow, focusOf);
   registerCareer(sim);
   registerPension(sim);

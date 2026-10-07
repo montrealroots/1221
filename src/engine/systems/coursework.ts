@@ -64,6 +64,7 @@ import {
   type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
 } from './learning';
 import { actingOf } from './school';
+import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp } from './injury';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -390,6 +391,7 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (act.dim === 'revision' && t.revised && a.status !== 'revising') return 'There’s no note to work on until it’s been shown.';
   if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this: read it first.';
   if (a.asks?.some((k) => k.status === 'open')) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} asked to rehearse: answer first.`;
+  if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene another way: answer first.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
   if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
@@ -638,7 +640,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (excused && next) { due.dueOn = next; return 1; }
       due.status = 'missed';
-      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
+      if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); noteIncident(mate, sim.now, 'missed'); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
       if (mine) sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: 'You weren’t there when it was due, and it isn’t taken later.', importance: 60, route: '/workspace/school' });
       return 1;
     }
@@ -785,6 +787,9 @@ export function askRefusal(sim: Simulation, person: Person, a: Assignment | unde
   const busy = mateBusy(person, a.partner, when, WORK.rehearsal.minutes);
   if (busy) return { declines: busy };
   if (trustOf(mate) < WORK.trust.wary) return { declines: `${first} would rather work on it alone, after last time.` };
+  // A boundary they set, after being let down (`systems/classmates.ts`): a day's notice.
+  const boundary = boundaryRefusal(mate, sim.now, when);
+  if (boundary) return { declines: boundary };
   return {};
 }
 
@@ -800,6 +805,7 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     r.status = 'missedByYou';
     m.missedByYou = (m.missedByYou ?? 0) + 1;
     moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed });
+    noteIncident(mate, when, 'missed');
     remember(sim, mate, `You didn’t come to rehearse ${what}`);
     if (mine) sim.notify({ category: 'school', title: `${first} Waited For You`, body: `You didn’t come to the rehearsal of ${what}. ${first} will remember it.`, importance: 60, route: '/workspace/school' });
     return;
@@ -819,6 +825,10 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   a.prep.partner = clamp01(before + (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person))) * (1 - before));
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
   moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
+  keptWith(mate);
+  // Both readings tried, as agreed with them (`systems/classmates.ts`): the table work moves, once.
+  const tried = a as Assignment & { tryBoth?: boolean };
+  if (tried.tryBoth) { a.prep.interpretation = clamp01(a.prep.interpretation + 0.15 * (1 - a.prep.interpretation)); delete tried.tryBoth; }
   remember(sim, mate, `Rehearsed ${what} together`);
   r.said = peerNote(a, first!);
 }
@@ -1001,7 +1011,7 @@ export function registerCoursework(sim: Simulation): void {
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === PARTNER_KIND && item.payload.rehearsalId === r.id) s.timeline.cancel(item.id, s.now);
     const late = r.at - s.now < MS_DAY;
     const mate = person.school!.classmates[a.partner!]!;
-    if (late) moveTrust(mate, WORK.trust.lateCancel);
+    if (late) { moveTrust(mate, WORK.trust.lateCancel); noteIncident(mate, s.now, 'lateCancel'); }
     remember(s, mate, late ? 'You called off a rehearsal at short notice' : 'You moved a rehearsal, with notice');
     return { late };
   });

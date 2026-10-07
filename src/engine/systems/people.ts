@@ -166,7 +166,7 @@ export function newContact(sim: Simulation, person: Person, cityId: string, key:
 }
 
 /** The class known at the degree, each as near as the three years made them. */
-export function knowTheClass(sim: Simulation, person: Person, classmates: readonly { name: string; bond?: number; title?: 'actor' | 'actress' }[]): void {
+export function knowTheClass(sim: Simulation, person: Person, classmates: readonly { name: string; bond?: number; title?: 'actor' | 'actress'; log?: readonly { at: Instant; what: string }[] }[]): void {
   for (const [i, mate] of classmates.entries()) {
     const c = newContact(sim, person, 'us-ny-newyork', `class-${i}`, { at: sim.now, how: 'school' });
     const bond = mate.bond ?? 0;
@@ -174,6 +174,8 @@ export function knowTheClass(sim: Simulation, person: Person, classmates: readon
     if (mate.title === 'actress') c.carries = true; else delete c.carries;
     c.hours = bond >= BONDS.close ? HALL.close : bond >= BONDS.friend ? HALL.friend : HALL.casual;
     if (bond <= BONDS.rival) c.rival = true;
+    // What happened between you at school, remembered (from 2026-10-08): the work shared, kept and missed, and made right.
+    c.memory = (mate.log ?? []).slice(0, 8).map((m) => ({ at: m.at, what: `At Yale: ${m.what}` }));
     contactsOf(person).push(c);
   }
 }

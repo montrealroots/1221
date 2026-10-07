@@ -16,10 +16,10 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 400
-- Implemented But Unverified: 0
+- Verified (journey): 401
+- Implemented But Unverified: 1
 - Partially Implemented: 0
-- Commands in all: 400
+- Commands in all: 402
 
 ## Commands
 
@@ -338,9 +338,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.cancel_rehearsal` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 2 | journey-school-week.test.ts |
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already.; and 1 more | — | — | — | 3 | journey-school-week.test.ts; journey-school-year.test.ts |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx RoutinesWorkspace.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 2 | journey-school-production.test.ts |
+| `school.make_amends` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/classmates.ts` | — (also amendsRefusal) | status | — | — | 1 | — |
 | `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 2 | journey-school-week.test.ts |
-| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 4 | journey-school-week.test.ts; journey-school-year.test.ts |
+| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx RoutinesWorkspace.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 5 | journey-school-week.test.ts; journey-school-year.test.ts |
 | `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 3 | journey-school-week.test.ts; journey-school-year.test.ts |
+| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | — (also respondRefusal) | — | — | school.study_session | 2 | journey-school-year.test.ts |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 2 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 2 | journey-career.test.ts |
 | `school.take_shift` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | No free evening in the next two weeks. (also shiftRefusal) | — | — | school.shift | 2 | journey-career.test.ts |
@@ -562,6 +564,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.evaluation` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
+| `school.moment` | `systems/classmates.ts` | systems/classmates.ts | — | — | — | 2 |
 | `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 3 |
 | `school.partner_ask` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
 | `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 6 |
@@ -569,6 +572,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.recess` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.shift` | `systems/school.ts` | systems/school.ts | status | — | — | 2 |
 | `school.stipend` | `systems/school.ts` | systems/school.ts | — | Yes | school.shift | 2 |
+| `school.study_session` | `systems/classmates.ts` | systems/classmates.ts | status | — | — | 2 |
 | `school.summer` | `systems/school.ts` | systems/school.ts | status | — | summer | 3 |
 | `school.term` | `systems/school.ts` | systems/school.ts | — | Yes | school.recess; school.evaluation; school.term | 2 |
 | `school.week` | `systems/school.ts` | systems/school.ts | — | — | — | 4 |

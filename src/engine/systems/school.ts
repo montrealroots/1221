@@ -85,6 +85,7 @@ import { BODY } from '../content/body';
 import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
 import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
+import { momentInClass } from './classmates';
 import { STAGE_LABEL, callAnswered, callMissed, nightFactor, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -1591,6 +1592,8 @@ export function registerSchool(sim: Simulation): void {
       courses.forEach((course, i) => { for (const skill of course.skills) grow(person.craft!, skill, focus, weights[i]); });
       // The class, met in the room if not before.
       for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
+      // And maybe one of them brings something (`systems/classmates.ts`, from 2026-10-08).
+      momentInClass(s, person, item.at);
       tire(person, ESTIMATE.energy.classes);
       return;
     }

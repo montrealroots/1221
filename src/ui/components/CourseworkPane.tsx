@@ -21,6 +21,8 @@ import {
   type Assignment,
   notesOf, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
+import { ClassMoments } from '@/ui/components/ClassMoments';
+import { PRIORITY_WORDS, amendsRefusal, personOf } from '@/engine/systems/classmates';
 import { OBJECTIVE_DIM, noteSubject, objectiveLabel, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 import { garmentsOf } from '@/engine/systems/wardrobe';
 import { phonesOf } from '@/engine/systems/phones';
@@ -48,6 +50,7 @@ export function CourseworkPane() {
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
       {past.length > 0 && <Shown list={past} />}
       <NotesLedger />
+      <ClassMoments />
       <Partners />
     </div>
   );
@@ -305,18 +308,30 @@ function Shown({ list }: { list: Assignment[] }) {
 }
 
 function Partners() {
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
-  const mates = person.school!.classmates.map((m) => ({ m, r: mateRecord(m) })).filter((x) => x.r.log?.length || x.r.kept || x.r.stoodUp || x.r.missedByYou);
+  const mates = person.school!.classmates.map((m, i) => ({ m, i, r: mateRecord(m) })).filter((x) => x.r.log?.length || x.r.kept || x.r.stoodUp || x.r.missedByYou);
   if (mates.length === 0) return null;
   return (
     <Panel title="Your Partners" subtitle="Who you’ve worked with, and how it’s gone">
       <div className="col gap-2">
-        {mates.map(({ m, r }) => (
-          <div key={m.name} className="small">
-            <strong>{m.name}</strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}</span>
-            {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
-          </div>
-        ))}
+        {mates.map(({ m, i, r }) => {
+          const p = personOf(m);
+          const amends = amendsRefusal(sim, person, i);
+          const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
+          return (
+            <div key={m.name} className="small">
+              <strong>{m.name}</strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ' · Ask A Day Ahead' : ''}</span>
+              {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
+              {owed > 0 && (
+                <div className="row gap-2" style={{ alignItems: 'center' }}>
+                  <span className="xs">{owed === 1 ? 'One time you let them down, not made right.' : `${owed} times you let them down, not made right.`}</span>
+                  <Gated feature="school.make_amends" className="btn btn-sm btn-ghost" disabled={Boolean(amends)} title={amends ?? 'Twenty minutes, in person'} onClick={() => { if (run('school.make_amends', { mate: i }).ok) toast(`You made it right with ${m.name.split(' ')[0]}.`, 'positive'); }}>Make Amends</Gated>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </Panel>
   );

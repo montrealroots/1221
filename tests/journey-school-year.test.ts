@@ -19,6 +19,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { templateById } from '@/engine/content/coursework';
 import { courseworkOf, notesOf, prepareRefusal, questionsFor, type Assignment } from '@/engine/systems/coursework';
 import { LEARNING, freshnessOf } from '@/engine/systems/learning';
+import { CHOICES, momentsOf } from '@/engine/systems/classmates';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 20) => instantFromZoned({ year, month, day, hour }, zone);
@@ -28,6 +29,11 @@ const tend = (sim: Simulation) => { Object.assign(sim.player.wellbeing, { energy
 /** One evening's work: notes read, asks answered, the table chosen, and up to `steps` steps on each open piece. */
 function evening(sim: Simulation, steps: number, careful: boolean) {
   const cw = courseworkOf(sim, sim.player)!;
+  // What classmates brought: answered, the careful way or the first offered.
+  for (const m of momentsOf(cw).filter((x) => x.status === 'open')) {
+    const choice = careful ? ({ disagreement: 'both', study: 'yes', help: 'help', apology: 'accept', boundary: 'respect', encouragement: '' } as const)[m.kind] : CHOICES[m.kind][0]!.id;
+    sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice } });
+  }
   for (const a of cw.assignments.filter((x) => x.status === 'open' || x.status === 'revising')) {
     if (a.feedback && !a.feedback.seen) sim.execute({ kind: 'school.read_feedback', payload: { assignmentId: a.id } });
     for (const k of a.asks ?? []) if (k.status === 'open') sim.execute({ kind: 'school.answer_partner', payload: { assignmentId: a.id, askId: k.id, yes: careful } });
@@ -66,6 +72,13 @@ describe('journey: a first year of coursework', () => {
     const as = cw.assignments as (Assignment & { feedback?: { text: string; kind?: string } })[];
     const report = freshnessOf(as);
     console.log('FRESHNESS', JSON.stringify(report));
+    // The class's moments: several kinds, and the same kind twice running rare.
+    const ms = momentsOf(cw);
+    const kinds = ms.reduce<Record<string, number>>((m, x) => { m[x.kind] = (m[x.kind] ?? 0) + 1; return m; }, {});
+    const sameRun = ms.filter((m, i) => i > 0 && ms[i - 1]!.kind === m.kind).length;
+    console.log('MOMENTS', JSON.stringify({ count: ms.length, kinds, sameKindRunning: Math.round((sameRun / Math.max(1, ms.length - 1)) * 1000) / 1000, answered: ms.filter((m) => m.status === 'answered').length, lapsed: ms.filter((m) => m.status === 'lapsed').length }));
+    expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(4);
+    expect(sameRun / Math.max(1, ms.length - 1)).toBeLessThanOrEqual(0.25);
 
     expect(report.assignments).toBeGreaterThan(40);
     // Every revision shown again, and its band kept (the showcase reads it).
