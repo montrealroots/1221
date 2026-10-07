@@ -56,6 +56,15 @@ export const RIVALS = {
    * and each contact carried eleven thousand memories of rooms. SLATE's estimates.
    */
   slightDays: 365, roomDays: 90,
+  /**
+   * And a bond after school isn't only worn down (from 2026-10-08): it drifts
+   * back toward even by this much a month, so a part lost stings for about a
+   * year; a job worked side by side draws two closer as a production shared at
+   * school does (`BONDS.shared`); a contact keeps its latest three rooms, not
+   * sixty of them. The second replay of the fix still ended with all fifteen
+   * at -100, the slights never fading and nothing warming them.
+   */
+  fadePerMonth: 1, roomsKept: 3,
 } as const;
 
 /** The parts that make the trades, which trade, and how it puts it. */
@@ -144,8 +153,7 @@ export function partTaken(person: Person, i: number, at?: Instant): void {
   if (at !== undefined) m.slightAt = at;
   m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, -BONDS.leadTaken)));
   // The person they are after school (`classmate` on the contact) follows the bond: a rival from there, not before.
-  const c = contactsOf(person).find((x) => x.classmate === i);
-  if (c && m.bond <= BONDS.rival) c.rival = true;
+  syncRival(person, i);
 }
 
 /**
@@ -163,6 +171,8 @@ export function metInTheRoom(sim: Simulation, person: Person, room: readonly { i
     if (lastRoom && sim.now - lastRoom.at < RIVALS.roomDays * 86_400_000) continue;
     const before = c.memory.find((m) => !m.what.startsWith('At an audition'));
     c.memory.unshift({ at: sim.now, what: `At an audition for ${roleLabel}, both of you` });
+    let rooms = 0;
+    c.memory = c.memory.filter((m) => !m.what.startsWith('At an audition') || (rooms += 1) <= RIVALS.roomsKept);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${r.name.split(' ')[0]} Was At The Audition Too`, body: `${r.name}, from your class at Yale, read for ${roleLabel} as well.${before ? ` The last thing you shared: ${before.what.replace(/^At Yale: /, '').toLowerCase()}.` : ''}`, importance: 35, route: '/workspace/career' });
   }
 }
@@ -203,9 +213,21 @@ export function workedWith(sim: Simulation, person: Person, i: number, roleLabel
   const c = contactsOf(person).find((x) => x.classmate === i);
   if (!c) return false;
   c.hours += Math.min(RIVALS.castmate.mostHours, days * RIVALS.castmate.hoursPerDay);
+  const m = person.school?.classmates[i];
+  if (m) m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, BONDS.shared)));
+  syncRival(person, i);
   c.lastSeen = sim.now;
   c.memory.unshift({ at: sim.now, what: `Worked together on ${roleLabel}` });
   return true;
+}
+
+/** The contact a classmate is: a rival at the bond's rival line, and not, once it's come ten back above it. */
+function syncRival(person: Person, i: number): void {
+  const m = person.school?.classmates[i];
+  const c = contactsOf(person).find((x) => x.classmate === i);
+  if (!m || !c) return;
+  if ((m.bond ?? 0) <= BONDS.rival) c.rival = true;
+  else if ((m.bond ?? 0) > BONDS.rival + 10) delete c.rival;
 }
 
 /** A part a classmate booked: on their record, and in the trades where it makes them. */
@@ -234,6 +256,12 @@ export function classMonth(sim: Simulation, person: Person, when: Instant): void
   if (!school || school.standing !== 'graduated') return;
   const key = `${zonedParts(when, sim.homeZone).year}-${zonedParts(when, sim.homeZone).month}`;
   const rng = sim.rng('career.rivals', person.id, `month-${key}`);
+  // Each bond a month nearer even (`RIVALS.fadePerMonth`), and the contact's rival flag kept to it.
+  school.classmates.forEach((m, i) => {
+    const b = m.bond ?? 0;
+    if (b !== 0) m.bond = b > 0 ? Math.max(0, b - RIVALS.fadePerMonth) : Math.min(0, b + RIVALS.fadePerMonth);
+    syncRival(person, i);
+  });
   school.classmates.forEach((m, i) => {
     if (!m.career) return;
     const agency = m.career.agencyId ? agencyById(m.career.agencyId) : undefined;

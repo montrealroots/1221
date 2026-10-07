@@ -14,10 +14,10 @@ import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
 import { roleById } from '@/engine/systems/career';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
-import { castClassmate, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
+import { RIVALS, castClassmate, classMonth, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
 import { contactsOf, knowTheClass } from '@/engine/systems/people';
 import { MEMORY_KEPT, reachOut } from '@/engine/systems/reachingout';
-import { BONDS, evenCraft } from '@/engine/systems/school';
+import { BONDS, bondMove, evenCraft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
@@ -151,5 +151,36 @@ describe('proportion over a long career (found by the lives replay of 07d52b84)'
     reachOut(sim, sim.player);
     expect(c.memory.length).toBeLessThanOrEqual(MEMORY_KEPT);
     expect(c.memory[0]!.what).toBe('Thing 99');
+  });
+});
+
+describe('a bond after school (found by the second replay)', () => {
+  it('drifts back toward even a month at a time, and a rival is one no longer once it has', () => {
+    const sim = graduate('co-fade');
+    const m = sim.player.school!.classmates[4]!;
+    const c = contactsOf(sim.player).find((x) => x.classmate === 4)!;
+    m.bond = BONDS.rival - 5;
+    classMonth(sim, sim.player, sim.now);
+    expect(m.bond).toBe(BONDS.rival - 5 + RIVALS.fadePerMonth);
+    expect(c.rival).toBe(true);
+    for (let k = 0; k < 20; k += 1) classMonth(sim, sim.player, sim.now + (k + 1) * 31 * MS_DAY);
+    expect(m.bond).toBeGreaterThan(BONDS.rival + 10);
+    expect(c.rival).toBeUndefined();
+    m.bond = 3;
+    for (let k = 0; k < 6; k += 1) classMonth(sim, sim.player, sim.now + (k + 30) * 31 * MS_DAY);
+    expect(m.bond).toBe(0);
+  });
+
+  it('a job worked side by side draws two closer; a contact keeps its latest three rooms', () => {
+    const sim = graduate('co-warm');
+    const m = sim.player.school!.classmates[5]!;
+    m.bond = 0;
+    workedWith(sim, sim.player, 5, role.label, 5);
+    expect(m.bond).toBeCloseTo(bondMove(sim.player, BONDS.shared), 10);
+    const c = contactsOf(sim.player).find((x) => x.classmate === 5)!;
+    const name = m.name;
+    for (let k = 0; k < 6; k += 1) { metInTheRoom(sim, sim.player, [{ i: 5, name }], role.label); sim.advanceTo(sim.now + 100 * MS_DAY); }
+    expect(c.memory.filter((x) => x.what.startsWith('At an audition'))).toHaveLength(RIVALS.roomsKept);
+    expect(c.memory.some((x) => x.what.startsWith('Worked together'))).toBe(true);
   });
 });
