@@ -48,6 +48,14 @@ export const RIVALS = {
    * most a job adds. SLATE's estimates.
    */
   castmate: { chance: 0.15, readBelowBar: 10, hoursPerDay: 2, mostHours: 60 },
+  /**
+   * A part taken in the room counts against the bond once a year a classmate
+   * at most, and sharing a room is remembered and told once a season (from
+   * 2026-10-08): a replay found every audition with a classmate in it cost the
+   * bond again, so that after decades of auditions all fifteen were rivals,
+   * and each contact carried eleven thousand memories of rooms. SLATE's estimates.
+   */
+  slightDays: 365, roomDays: 90,
 } as const;
 
 /** The parts that make the trades, which trade, and how it puts it. */
@@ -128,9 +136,12 @@ export function inTheRoom(sim: Simulation, person: Person, audition: Audition): 
  * Until 2026-09-28 a part lost to a classmate after school was news and
  * nothing between them.
  */
-export function partTaken(person: Person, i: number): void {
-  const m = person.school?.classmates[i];
+export function partTaken(person: Person, i: number, at?: Instant): void {
+  const m = person.school?.classmates[i] as (Classmate & { slightAt?: Instant }) | undefined;
   if (!m) return;
+  // Once a year a classmate at most (`RIVALS.slightDays`): a rivalry is a part lost, not every room shared.
+  if (at !== undefined && m.slightAt !== undefined && at - m.slightAt < RIVALS.slightDays * 86_400_000) return;
+  if (at !== undefined) m.slightAt = at;
   m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, -BONDS.leadTaken)));
   // The person they are after school (`classmate` on the contact) follows the bond: a rival from there, not before.
   const c = contactsOf(person).find((x) => x.classmate === i);
@@ -147,6 +158,9 @@ export function metInTheRoom(sim: Simulation, person: Person, room: readonly { i
   for (const r of room) {
     const c = contactsOf(person).find((x) => x.classmate === r.i);
     if (!c) continue;
+    // Remembered and told once a season a classmate (`RIVALS.roomDays`).
+    const lastRoom = c.memory.find((m) => m.what.startsWith('At an audition'));
+    if (lastRoom && sim.now - lastRoom.at < RIVALS.roomDays * 86_400_000) continue;
     const before = c.memory.find((m) => !m.what.startsWith('At an audition'));
     c.memory.unshift({ at: sim.now, what: `At an audition for ${roleLabel}, both of you` });
     if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${r.name.split(' ')[0]} Was At The Audition Too`, body: `${r.name}, from your class at Yale, read for ${roleLabel} as well.${before ? ` The last thing you shared: ${before.what.replace(/^At Yale: /, '').toLowerCase()}.` : ''}`, importance: 35, route: '/workspace/career' });

@@ -16,6 +16,7 @@ import { roleById } from '@/engine/systems/career';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { castClassmate, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
 import { contactsOf, knowTheClass } from '@/engine/systems/people';
+import { MEMORY_KEPT, reachOut } from '@/engine/systems/reachingout';
 import { BONDS, evenCraft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
@@ -114,5 +115,41 @@ describe('in the room', () => {
     expect(c.rival).toBe(true);
     // A job worked with somebody not linked to a classmate is nothing here.
     expect(workedWith(sim, sim.player, 99, role.label, 5)).toBe(false);
+  });
+});
+
+describe('proportion over a long career (found by the lives replay of 07d52b84)', () => {
+  it('a part taken counts against the bond once a year a classmate, not every room shared', () => {
+    const sim = graduate('co-slight');
+    const m = sim.player.school!.classmates[1]!;
+    m.bond = 30;
+    partTaken(sim.player, 1, first);
+    const once = m.bond;
+    expect(once).toBeLessThan(30);
+    partTaken(sim.player, 1, first + 30 * MS_DAY);
+    partTaken(sim.player, 1, first + 200 * MS_DAY);
+    expect(m.bond).toBe(once);
+    partTaken(sim.player, 1, first + 400 * MS_DAY);
+    expect(m.bond).toBeLessThan(once);
+  });
+
+  it('a room shared is remembered and told once a season a classmate', () => {
+    const sim = graduate('co-season');
+    const c = contactsOf(sim.player).find((x) => x.classmate === 3)!;
+    const name = sim.player.school!.classmates[3]!.name;
+    metInTheRoom(sim, sim.player, [{ i: 3, name }], role.label);
+    sim.advanceTo(sim.now + 10 * MS_DAY);
+    metInTheRoom(sim, sim.player, [{ i: 3, name }], role.label);
+    expect(c.memory.filter((x) => x.what.startsWith('At an audition'))).toHaveLength(1);
+    expect(sim.universe.notifications.filter((n) => n.title.endsWith('Was At The Audition Too'))).toHaveLength(1);
+  });
+
+  it('a contact keeps the latest sixty things that happened', () => {
+    const sim = graduate('co-memory');
+    const c = contactsOf(sim.player)[0]!;
+    for (let i = 0; i < 100; i += 1) c.memory.unshift({ at: sim.now + i, what: `Thing ${i}` });
+    reachOut(sim, sim.player);
+    expect(c.memory.length).toBeLessThanOrEqual(MEMORY_KEPT);
+    expect(c.memory[0]!.what).toBe('Thing 99');
   });
 });

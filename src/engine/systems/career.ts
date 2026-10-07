@@ -1777,14 +1777,14 @@ export function registerCareer(sim: Simulation): void {
     if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
       if (better) {
         classmateBooked(s, person, better.i, role, item.at);
-        partTaken(person, better.i);
+        partTaken(person, better.i, item.at);
         if (isPlayer(person)) s.notify({ category: 'career', title: `The Part Went To ${better.name}`, body: `${role.label}: your classmate from Yale was in the room too, and booked it.`, importance: 55, route: '/workspace/career' });
       }
       return;
     }
     audition.status = 'booked';
     // Booked over the classmates in the room: a part taken from each.
-    for (const r of room) partTaken(person, r.i);
+    for (const r of room) partTaken(person, r.i, item.at);
     const [lo, hi] = ESTIMATE.offerAfterDays;
     const wait = lo + Math.floor(s.rng('career.booking', person.id, `${audition.id}-wait`).next() * (hi - lo + 1));
     s.schedule({ at: item.at + wait * MS_DAY, kind: OFFER_KIND, label: 'An Offer', category: 'system', priority: 20, payload: { personId: person.id, auditionId: audition.id } });

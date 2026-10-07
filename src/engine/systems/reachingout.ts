@@ -40,6 +40,9 @@ import { homeCourts, type Court } from './dwelling';
 
 export const ANSWER_KIND = 'social.answer';
 
+/** How much of what happened a contact keeps, the latest first. SLATE's estimate. */
+export const MEMORY_KEPT = 60;
+
 /**
  * What a friend has asked you to, and when they asked: a meal (where, your dish), and from 2026-10-06 a visit to
  * yours, a game on your court, or a class together. An ask kept from before then, without `what`, is a meal.
@@ -127,6 +130,8 @@ export const askedBy = (person: Person): Contact[] => contactsOf(person).filter(
 
 /** Asks lapsed at their hour, then the day's new ones. */
 export function reachOut(sim: Simulation, person: Person): void {
+  // What's remembered, the latest sixty (`MEMORY_KEPT`, from 2026-10-08): a replay found contacts carrying thousands.
+  for (const c of contactsOf(person)) if (c.memory.length > MEMORY_KEPT) c.memory.length = MEMORY_KEPT;
   for (const c of contactsOf(person)) {
     if (!c.ask || c.ask.at > sim.now) continue;
     c.memory.unshift({ at: sim.now, what: `Asked you to ${askWords(c.ask)}; you never answered` });
