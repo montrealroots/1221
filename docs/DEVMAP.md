@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-390 commands; 390 named by a test, 0 not.
+396 commands; 396 named by a test, 0 not.
 
 ## aircraft
 
@@ -529,15 +529,21 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `routine.delete` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `commands-robust.test.ts` `journey-clothes.test.ts` `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
-| `routine.save` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `journey-clothes.test.ts` `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
+| `routine.save` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `coursework.test.ts` `journey-clothes.test.ts` `journey-school-week.test.ts` `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
 | `routine.set_time` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `journey-clothes.test.ts` `routinetime.test.ts` | Rent And A Roof |
 
 ## school
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
+| `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
 | `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
-| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
+| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `coursework.test.ts` `journey-career.test.ts` `school.test.ts` | Drama School |
+| `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
+| `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
+| `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
+| `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` `RoutinesWorkspace.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
+| `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-career.test.ts` `school.test.ts` | Drama School |
 

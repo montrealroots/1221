@@ -29,6 +29,8 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { LOOKING_AFTER, type LookAfter } from './life';
 import { recipeById, servingsRange } from './kitchen';
+import { COURSES } from '../content/school';
+import { TEMPLATES } from '../content/coursework';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 
 export interface RoutineStep { kind: string; payload: Record<string, unknown> }
@@ -64,7 +66,9 @@ export function routineTimeRefusal(t: Partial<RoutineTime>): string | undefined 
 }
 
 /** The commands a step can be. */
-export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit']);
+// A course's preparation too (from 2026-10-07): a step names the course, so it does whatever work that course has open,
+// with every check the button has; a refusal (nothing open, a need not met, new feedback unread) stops the routine there.
+export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit', 'school.prepare']);
 export const MAX_STEPS = 12;
 
 export const routinesOf = (person: Person): Routine[] => (person.routines ??= []);
@@ -76,6 +80,7 @@ export function stepLabel(person: Person, step: RoutineStep): string {
     case 'food.eat_ready': return 'Eat Something Ready';
     case 'food.cook': return `Cook ${recipeById(String(step.payload.recipeId))?.name ?? 'A Recipe'}${step.payload.servings === undefined ? '' : `, ${Number(step.payload.servings)} Servings`}`;
     case 'clothes.wear_outfit': return `Wear ${person.outfits?.find((o) => o.id === step.payload.outfitId)?.name ?? 'An Outfit'}`;
+    case 'school.prepare': return `${COURSES.find((c) => c.code === step.payload.course)?.name ?? 'A Course'}: ${TEMPLATES.flatMap((t) => t.activities).find((a) => a.id === step.payload.activity)?.label ?? 'Prepare'}`;
     default: return step.kind;
   }
 }
@@ -87,6 +92,14 @@ export function routineRefusal(name: string, steps: readonly RoutineStep[]): str
   if (steps.length > MAX_STEPS) return `Twelve steps at most.`;
   if (steps.some((s) => !ROUTINE_COMMANDS.has(s.kind))) return 'A routine is made of everyday things.';
   if (steps.some((s) => s.kind === 'life.look_after' && !LOOKING_AFTER[s.payload.action as LookAfter])) return 'That isn’t something you can do for yourself.';
+  // A school step names a course that has work, and a step that work has.
+  for (const s of steps) {
+    if (s.kind !== 'school.prepare') continue;
+    const course = String(s.payload.course);
+    const ts = TEMPLATES.filter((t) => t.courses.includes(course));
+    if (!ts.length) return 'That course sets no work to prepare.';
+    if (!ts.some((t) => t.activities.some((a) => a.id === s.payload.activity && a.dim !== 'partner'))) return 'That isn’t a step of the course’s work.';
+  }
   // A cook step can carry its servings (from 2026-10-06; until then it cooked
   // what the recipe makes, always), checked here against the recipe's range
   // as food.cook checks it, so a routine isn't saved to fail at that step.

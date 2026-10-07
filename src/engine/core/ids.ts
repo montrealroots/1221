@@ -25,10 +25,11 @@ export type Id = string;
  * land, possessions and their orders (`systems/items.ts`), clothes bought and outfits
  * put together (`systems/clothing.ts`), routines (`systems/routines.ts`), the people a life knows (`systems/people.ts`),
  * from later on 2026-10-02 pledges at a pawnbroker (`systems/pawn.ts`), from 2026-10-03 pets
- * adopted (`systems/pets.ts`), and from 2026-10-04 packing lists kept (`systems/luggage.ts`).
+ * adopted (`systems/pets.ts`), from 2026-10-04 packing lists kept (`systems/luggage.ts`), and from 2026-10-07 a course's
+ * assignments and the rehearsals agreed for them (`systems/coursework.ts`).
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit', 'routine', 'contact', 'pawn', 'pet', 'packlist',
+  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit', 'routine', 'contact', 'pawn', 'pet', 'packlist', 'assignment', 'rehearsal',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

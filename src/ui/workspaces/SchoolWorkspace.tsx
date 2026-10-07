@@ -1,6 +1,7 @@
 /**
  * SLATE — drama school: the student's standing, classes, casting, work-study
- * and terms (`systems/school.ts`, `content/school.ts`), in five tabs.
+ * and terms (`systems/school.ts`, `content/school.ts`), in six tabs: from
+ * 2026-10-07 the coursework between classes too (`components/CourseworkPane.tsx`).
  *
  * Every figure here is one the school system reads or writes: the craft the
  * classes grow and the chair casts by, the attendance and growth the term's
@@ -28,12 +29,14 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
+import { CourseworkPane } from '@/ui/components/CourseworkPane';
 
-type SchoolTab = 'standing' | 'classes' | 'casting' | 'work' | 'terms';
+type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
 const SCHOOL_TABS: readonly { id: SchoolTab; label: string }[] = [
   { id: 'standing', label: 'Standing And Craft' },
   { id: 'classes', label: 'Classes' },
+  { id: 'coursework', label: 'Coursework' },
   { id: 'casting', label: 'Casting' },
   { id: 'work', label: 'Shifts And Pay' },
   { id: 'terms', label: 'Terms And Award' },
@@ -61,6 +64,7 @@ export function SchoolWorkspace() {
   const panes: Record<SchoolTab, JSX.Element> = {
     standing: <StandingPane />,
     classes: <ClassesPane />,
+    coursework: <CourseworkPane />,
     casting: <CastingPane />,
     work: <WorkPane />,
     terms: <TermsPane />,

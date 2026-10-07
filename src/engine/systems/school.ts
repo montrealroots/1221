@@ -84,6 +84,7 @@ import { exerts } from './body';
 import { BODY } from '../content/body';
 import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
+import { lapseTerm, meetingWeight, mateRecord, scheduleOrientation, setWork } from './coursework';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -139,6 +140,12 @@ export interface Classmate {
   bond?: number;
   /** Their life after the degree: an agency, and the work they book (`systems/rivals.ts`). */
   career?: ClassmateCareer;
+  /**
+   * As a partner in class work (`systems/coursework.ts`, from 2026-10-07): how reliably they come, how far they trust
+   * you, the rehearsals kept with you, the ones they missed and the ones you did, when you met, and what's happened.
+   */
+  reliability?: number; trust?: number; kept?: number; stoodUp?: number; missedByYou?: number; met?: Instant;
+  log?: { at: Instant; what: string }[];
 }
 
 /**
@@ -227,6 +234,8 @@ export interface SchoolRecord {
   workStudy: { electiveHours: number; owedHours: number; assignedBooked?: number };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
+  /** The courses' work between meetings, and the first week (`systems/coursework.ts`, from 2026-10-07). */
+  coursework?: import('./coursework').Coursework;
 }
 
 export const TERM_KIND = 'school.term';
@@ -853,6 +862,8 @@ export function enroll(sim: Simulation, person: Person): void {
   school.tally = freshTally(person, school);
   sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termLabel(0) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
   planWeek(sim, person, sim.now);
+  // The first week's sessions, each changing what's known or arranged (`systems/coursework.ts`, from 2026-10-07).
+  scheduleOrientation(sim, person);
   if (person.id !== sim.universe.playerId) return;
   const day = (d: SchoolDate) => formatDate(at(d, 12), zone());
   sim.notify({
@@ -1551,18 +1562,29 @@ export function registerSchool(sim: Simulation): void {
     school.classmates.forEach((mate, i) => {
       if (inClass[i]) for (const course of courses) for (const skill of course.skills) grow(mate.craft, skill, ESTIMATE.classmateFocus * (mate.drive ?? 1));
     });
+    // Each course's work: due there, shown once (or moved on, excused), and what that makes of the meeting's growth in
+    // place of an ordinary meeting's; then the course's next work set (`systems/coursework.ts`, from 2026-10-07).
+    const meet = (here: boolean, excused: boolean) => courses.map((course) => {
+      const weight = meetingWeight(s, person, course.code, day, item.at, here, excused);
+      setWork(s, person, course.code, day);
+      return weight;
+    });
     // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day
     // counted only for someone absent anyway, and a student who called in was counted in class).
-    if (school.sickDay === keyOf(day)) { item.status = 'missed'; school.tally.excused += 1; return; }
+    if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; return; }
     if (present(person, item.at)) {
       school.tally.attended += 1;
       const focus = focusOf(person);
-      for (const course of courses) for (const skill of course.skills) grow(person.craft, skill, focus);
+      const weights = meet(true, false);
+      courses.forEach((course, i) => { for (const skill of course.skills) grow(person.craft!, skill, focus, weights[i]); });
+      // The class, met in the room if not before.
+      for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
       tire(person, ESTIMATE.energy.classes);
       return;
     }
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
+    meet(false, offSick(person, item.at));
     if (offSick(person, item.at)) { school.tally.excused += 1; return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
@@ -1736,7 +1758,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onSchedule(EVALUATION_KIND, (item, s) => {
     const person = personOf(item);
-    if (person) evaluate(s, person, Number(item.payload.term));
+    if (!person) return;
+    // The term’s classes are over: work still open has no meeting left to be shown at (`systems/coursework.ts`).
+    lapseTerm(s, person, Number(item.payload.term));
+    evaluate(s, person, Number(item.payload.term));
   });
 
   sim.onSchedule(COMMENCEMENT_KIND, (item, s) => {
