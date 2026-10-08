@@ -99,7 +99,7 @@ import { BODY } from '../content/body';
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
-import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, workedDay } from './companies';
+import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, tableRead, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
@@ -1902,6 +1902,7 @@ export function registerCareer(sim: Simulation): void {
     // Nerves at a performance or a day on set, none in the rehearsal room or the booth; and a day kept, remembered (`attributes.ts`).
     const event = role.medium === 'stage' ? (call.rehearsal ? undefined : 'performance') : role.medium === 'screen' ? 'set' : undefined;
     const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
+    if (item.payload.tableRead) tableRead(s, person, booking.id);
     // Reputation by how well the part was known that day (`partOnTheDay`, from 2026-10-08; until then every day earned the same).
     earn(s, person, ATTRIBUTES.reputation.day * (1 + PART.reputation * partOnTheDay(s, person, booking.id, booking.worked === 1)));
     for (const [skill, weight] of Object.entries(growsFor(role, booking.genre, booking.demands ?? [])) as [keyof Craft, number][]) {
@@ -2343,13 +2344,17 @@ export function registerCareer(sim: Simulation): void {
     // part now and then, where one fits it and is free. Until then a classmate was cast as the player's own part.
     if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at));
     const zone = zoneOf(workCity);
-    for (const d of days) {
+    // The first call of a stage or television job is its table read (`tableRead`, from 2026-10-08): the play's first
+    // rehearsal, a television episode's first day.
+    const reads = role.medium === 'stage' || role.after?.kind === 'tv';
+    for (const [n, d] of days.entries()) {
+      const table = reads && n === 0;
       s.schedule({
         at: d.at, kind: WORK_KIND,
-        label: role.medium === 'screen' ? `On Set: ${role.label}` : role.medium === 'voice' ? `In The Booth: ${role.label}` : `${d.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
+        label: role.medium === 'screen' ? `${table ? 'The Table Read, Then On Set' : 'On Set'}: ${role.label}` : role.medium === 'voice' ? `In The Booth: ${role.label}` : `${table && d.rehearsal ? 'The Table Read' : d.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
         category: 'career', priority: 34, requiresPlayer: true,
         durationMinutes: workMinutes(role, d.rehearsal),
-        locationId: workCity, payload: { personId: person.id, bookingId: booking.id },
+        locationId: workCity, payload: { personId: person.id, bookingId: booking.id, ...(table ? { tableRead: true } : {}) },
       });
     }
     // Out on the flight that lands in good time for the first call, from 2026-09-29 (`careerFlight`); where there's no flight, the day before at noon.

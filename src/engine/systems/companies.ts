@@ -42,6 +42,15 @@
  * actor and the history keeps who played it before, and the work done stays
  * paid and credited as before. Credits name the production and the part.
  *
+ * From 2026-10-08, the classmate's side too. Offered a part, they may turn
+ * it down, a small part likelier (`COMPANY.declines`). Cast in one not yet
+ * begun, they withdraw if their own month books them a job, and give back
+ * its credit (`classmateTakesJob`). In one running, they book nothing else.
+ * Until then a classmate offered a part always took it, and one cast could
+ * book a job across the same weeks and keep both. And the first call of a
+ * stage or television job is its table read (`tableRead`): the play or the
+ * episode read through, a share of the lines learned there.
+ *
  * Every number here is SLATE's estimate.
  */
 
@@ -71,7 +80,7 @@ export interface Slot {
   shared: number;
 }
 /** A production; its history, who was asked and who was replaced, is shown on the job (Career, Work). */
-export interface Production { id: string; bookingId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
+export interface Production { id: string; bookingId: string; /** Its role, whose credit a classmate who withdraws gives back. */ roleId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
 
 export const COMPANY = {
   /** The other parts a production casts, by medium. */
@@ -86,6 +95,10 @@ export const COMPANY = {
   hoursPerDay: 2, bondPerDay: 0.5,
   /** Productions kept on the record. */
   kept: 60,
+  /** A classmate offered a part turning it down, by its size: the smaller, the likelier. SLATE's estimate. */
+  declines: { principal: 0, supporting: 0.1, featured: 0.25, understudy: 0.35 } as Record<SlotSize, number>,
+  /** A table read's share of the lines still to learn, at the first call of a stage or television job. SLATE's estimate. */
+  tableRead: 0.15,
 } as const;
 
 const PART_WORDS: Record<SlotSize, string> = { principal: 'Your Part', supporting: 'A Supporting Part', featured: 'A Featured Part', understudy: 'An Understudy' };
@@ -108,7 +121,7 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
   read: (craft: Craft) => number, booked: (i: number) => void): Production {
   const year = new Date(from).getUTCFullYear();
   const p: Production = {
-    id: `prod-${booking.id}`, bookingId: booking.id, title: `${role.label}, ${CITIES.require(cityId).name} ${year}`, medium: role.medium, history: [],
+    id: `prod-${booking.id}`, bookingId: booking.id, roleId: role.id, title: `${role.label}, ${CITIES.require(cityId).name} ${year}`, medium: role.medium, history: [],
     slots: [{ id: `${booking.id}-0`, part: PART_WORDS.principal, size: 'principal', status: 'cast', performer: { kind: 'player' }, from, until, shared: 0 }],
   };
   const school = person.school;
@@ -129,6 +142,8 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
         const pick = fit[Math.floor(order * fit.length)]!;
         const busy = heldBetween(person, pick.i, from, until)?.title ?? ((pick.m.career!.busyUntil ?? 0) > from ? 'another job' : undefined);
         if (busy) p.history.push({ at: sim.now, what: `${pick.m.name} was asked for ${slot.part.toLowerCase()}, and was on ${busy} then` });
+        // Offered and turned down (from 2026-10-08): drawn apart from the casting's own draws, so the parts cast don't shift.
+        else if (sim.rng('career.company', person.id, `decline-${slot.id}`).next() < COMPANY.declines[size]) p.history.push({ at: sim.now, what: `${pick.m.name} was offered ${slot.part.toLowerCase()}, and turned it down` });
         else {
           slot.performer = { kind: 'classmate', i: pick.i };
           inThis.add(pick.i);
@@ -186,6 +201,44 @@ export function registerCompanies(sim: Simulation): void {
     p.lines = Math.min(1, before + PART.gain * Math.min(1.1, Math.max(0.5, focus)) * (1 - before));
     return { lines: p.lines };
   });
+}
+
+/**
+ * A classmate's own month of work (`classMonth`), against the parts they hold
+ * in the player's productions (from 2026-10-08): in one running, they're
+ * committed and book nothing else ('busy'); in one not yet started, they
+ * withdraw for the job ('withdrew'): the part goes to a company actor, the
+ * credit given at casting is given back, and the production and the player
+ * hear it. Until then a classmate cast could book a job across the same
+ * weeks, and kept both.
+ */
+export function classmateTakesJob(sim: Simulation, person: Person, i: number, when: Instant): 'free' | 'busy' | 'withdrew' {
+  const held = productionsOf(person).flatMap((p) => p.slots.filter((s) => s.status === 'cast' && s.performer.kind === 'classmate' && s.performer.i === i && s.until >= when).map((s) => ({ p, s })));
+  if (held.some(({ s }) => s.from <= when)) return 'busy';
+  if (!held.length) return 'free';
+  const m = person.school!.classmates[i]!;
+  for (const { p, s } of held) {
+    s.status = 'replaced';
+    p.slots.push({ ...s, id: `${s.id}-r`, status: 'cast', performer: { kind: 'company' }, shared: 0 });
+    p.history.push({ at: sim.now, what: `${m.name} withdrew from ${s.part.toLowerCase()} for another job; a company actor plays it` });
+    const credits = m.career?.credits ?? [];
+    const k = credits.map((c) => c.roleId).lastIndexOf(p.roleId);
+    if (k >= 0) credits.splice(k, 1);
+    const c = contactsOf(person).find((x) => x.classmate === i);
+    c?.memory.unshift({ at: sim.now, what: `Withdrew from ${p.title} for another job` });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${m.name.split(' ')[0]} Withdrew`, body: `${m.name} withdrew from ${p.title} for another job. A company actor plays ${s.part.toLowerCase()}.`, importance: 40, route: '/workspace/career' });
+  }
+  if (m.career) m.career.busyUntil = Math.max(0, ...productionsOf(person).flatMap((p) => p.slots.filter((s) => s.status === 'cast' && s.performer.kind === 'classmate' && s.performer.i === i).map((s) => s.until)));
+  return 'withdrew';
+}
+
+/** The first call of a stage or television job is its table read: the company reads the play or the episode through, and the part's lines move by a share of what's left. */
+export function tableRead(sim: Simulation, person: Person, bookingId: string): boolean {
+  const p = productionOf(person, bookingId);
+  if (!p || p.medium === 'voice') return false;
+  p.lines = Math.min(1, (p.lines ?? 0) + COMPANY.tableRead * (1 - (p.lines ?? 0)));
+  p.history.push({ at: sim.now, what: 'The table read' });
+  return true;
 }
 
 /**

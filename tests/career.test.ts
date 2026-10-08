@@ -17,6 +17,7 @@ import {
 import { actingOf, bindCeiling, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
 import { RIVALS } from '@/engine/systems/rivals';
 import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
+import { COMPANY, PART } from '@/engine/systems/companies';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
@@ -815,7 +816,9 @@ describe('the attributes at work', () => {
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     play(sim, at(2026, 10, 7, 12));
     expect(b.status).toBe('worked');
-    expect(a.reputation).toBeCloseTo(earned([ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.job]), 6);
+    // A television job's first day is its table read (`tableRead`): the lines it teaches lift that day's and the next's.
+    const day = ATTRIBUTES.reputation.day * (1 + PART.reputation * COMPANY.tableRead);
+    expect(a.reputation).toBeCloseTo(earned([day, day, ATTRIBUTES.reputation.job]), 6);
     expect(a.composure).toBeGreaterThan(composure);
     // Recognition when the episode airs, by its audience: nothing at the wrap.
     expect(a.recognition).toBe(0);
