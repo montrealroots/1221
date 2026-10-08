@@ -15,7 +15,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { roleById } from '@/engine/systems/career';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { RIVALS, classMonth, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
-import { COMPANY, PART, productionOf, productionsOf } from '@/engine/systems/companies';
+import { COMPANY, PART, classmateTakesJob, productionOf, productionsOf, tableRead } from '@/engine/systems/companies';
 import { attributesOf } from '@/engine/systems/attributes';
 import { contactsOf, knowTheClass } from '@/engine/systems/people';
 import { MEMORY_KEPT, reachOut } from '@/engine/systems/reachingout';
@@ -91,6 +91,88 @@ describe('a production and the parts in it', () => {
     for (let n = 0; n < 40; n += 1) expect(offerAndTake(weak, `w${n}`, 'lort-b', first + n * 40 * MS_DAY).slots.some((x) => x.performer.kind === 'classmate')).toBe(false);
   });
 
+  it('a classmate offered a part may turn it down, a small part likelier than a large, and isn’t cast in it', () => {
+    const sim = graduate('pr-decline');
+    const turned: Record<string, number> = {};
+    for (let n = 0; n < 300; n += 1) {
+      const p = offerAndTake(sim, `d${n}`, 'lort-b', first + n * 40 * MS_DAY);
+      for (const h of p.history) {
+        const m = /^(.+) was offered (.+), and turned it down$/.exec(h.what);
+        if (!m) continue;
+        turned[m[2]!] = (turned[m[2]!] ?? 0) + 1;
+        // Not cast in what they turned down.
+        expect(p.slots.some((x) => x.performer.kind === 'classmate' && sim.player.school!.classmates[x.performer.i]!.name === m[1] && x.part.toLowerCase() === m[2])).toBe(false);
+      }
+      careerOf(sim.player).bookings.find((b) => b.id === `d${n}`)!.status = 'released';
+    }
+    expect(Object.values(turned).reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
+    expect(turned['an understudy'] ?? 0).toBeGreaterThan(turned['a supporting part'] ?? 0);
+  });
+
+  it('a classmate cast who books a job before the run withdraws: a company actor plays it, the credit goes back; in a run they book nothing else', () => {
+    const sim = graduate('pr-withdraw');
+    let p: ReturnType<typeof offerAndTake> | undefined;
+    for (let n = 0; n < 300 && !p; n += 1) {
+      const q = offerAndTake(sim, `w${n}`, 'lort-b', first + (n + 1) * 40 * MS_DAY);
+      if (q.slots.some((x) => x.performer.kind === 'classmate')) p = q;
+      else careerOf(sim.player).bookings.find((b) => b.id === `w${n}`)!.status = 'released';
+    }
+    const slot = p!.slots.find((x) => x.performer.kind === 'classmate')!;
+    const i = (slot.performer as { i: number }).i;
+    const m = sim.player.school!.classmates[i]!;
+    const credits = m.career!.credits.length;
+    // During the run: committed, nothing else booked.
+    expect(classmateTakesJob(sim, sim.player, i, slot.from + MS_DAY)).toBe('busy');
+    // Before it: they withdraw.
+    expect(classmateTakesJob(sim, sim.player, i, slot.from - 10 * MS_DAY)).toBe('withdrew');
+    expect(slot.status).toBe('replaced');
+    expect(p!.slots.filter((x) => x.status === 'cast' && x.part === slot.part).map((x) => x.performer.kind)).toEqual(['company']);
+    expect(m.career!.credits.length).toBe(credits - 1);
+    expect(p!.history.some((h) => h.what === `${m.name} withdrew from ${slot.part.toLowerCase()} for another job; a company actor plays it`)).toBe(true);
+    expect(sim.universe.notifications.some((n) => n.title === `${m.name.split(' ')[0]} Withdrew`)).toBe(true);
+    expect(classmateTakesJob(sim, sim.player, i, slot.from - 10 * MS_DAY)).toBe('free');
+  });
+
+  it('the class’s months book nobody across a run they’re in, while the rest of the class books', () => {
+    const sim = graduate('pr-months');
+    for (const m of sim.player.school!.classmates) m.career!.agencyId = 'caa';
+    let runs = 0;
+    let others = 0;
+    for (let n = 0; n < 400; n += 1) {
+      const p = offerAndTake(sim, `m${n}`, 'lort-b', first + n * 120 * MS_DAY);
+      careerOf(sim.player).bookings.find((b) => b.id === `m${n}`)!.status = 'released';
+      const slot = p.slots.find((x) => x.performer.kind === 'classmate');
+      if (!slot) continue;
+      runs += 1;
+      const m = sim.player.school!.classmates[(slot.performer as { i: number }).i]!;
+      const mine = m.career!.credits.length;
+      const all = sim.player.school!.classmates.reduce((k, x) => k + x.career!.credits.length, 0);
+      // Each month the run is in, from its first day.
+      for (let t = slot.from + MS_DAY; t <= slot.until; t += 31 * MS_DAY) classMonth(sim, sim.player, t);
+      expect(m.career!.credits.length).toBe(mine);
+      expect(slot.status).toBe('cast');
+      others += sim.player.school!.classmates.reduce((k, x) => k + x.career!.credits.length, 0) - all;
+    }
+    expect(runs).toBeGreaterThan(5);
+    expect(others).toBeGreaterThan(0);
+  });
+
+  it('the first call of a stage or television job is its table read, and it teaches a share of the lines; a booth’s isn’t', () => {
+    const sim = graduate('pr-table');
+    offerAndTake(sim, 'T1', 'lort-b');
+    offerAndTake(sim, 'T2', 'costar', first + 90 * MS_DAY);
+    offerAndTake(sim, 'T3', 'commercial-vo', first + 120 * MS_DAY);
+    const firstOf = (id: string) => sim.universe.scheduled.filter((x) => x.kind === 'career.work' && x.payload.bookingId === id).sort((a, b) => a.at - b.at);
+    expect(firstOf('T1')[0]!.label).toBe('The Table Read: A Play, A LORT Theater (Category B)');
+    expect(firstOf('T1')[0]!.payload.tableRead).toBe(true);
+    expect(firstOf('T1').slice(1).every((x) => !x.payload.tableRead)).toBe(true);
+    expect(firstOf('T2')[0]!.label).toBe('The Table Read, Then On Set: Co-Star, A Television Series');
+    expect(firstOf('T3').some((x) => x.payload.tableRead)).toBe(false);
+    expect(tableRead(sim, sim.player, 'T1')).toBe(true);
+    expect(productionOf(sim.player, 'T1')!.lines).toBeCloseTo(COMPANY.tableRead, 9);
+    expect(tableRead(sim, sim.player, 'T3')).toBe(false);
+  });
+
   it('one classmate who fits is never cast twice in a production, nor said to be on another job when it’s this one', () => {
     const sim = graduate('pr-one');
     const fits = sim.player.school!.classmates.findIndex((m) => m.career);
@@ -133,7 +215,8 @@ describe('a production and the parts in it', () => {
     expect(careerOf(cold.player).bookings.find((b) => b.id === 'L1')!.worked).toBe(5);
     expect(attributesOf(learned, learned.player).reputation).toBeGreaterThan(attributesOf(cold, cold.player).reputation);
     expect(productionOf(learned.player, 'L1')!.history.map((h) => h.what)).toContain('You came in off book');
-    expect(productionOf(cold.player, 'L1')!.history.map((h) => h.what)).toContain('You came in on book, 0% of your lines known');
+    // Cold, all they know is the table read's share (`COMPANY.tableRead`).
+    expect(productionOf(cold.player, 'L1')!.history.map((h) => h.what)).toEqual(expect.arrayContaining(['The table read', `You came in on book, ${Math.round(COMPANY.tableRead * 100)}% of your lines known`]));
     expect(learned.execute({ kind: 'career.learn_part', payload: { bookingId: 'L1' } }).error).toBe('That isn’t a job you’re booked for.');
     expect(breaches(learned.universe)).toEqual([]);
   });

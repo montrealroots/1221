@@ -51,7 +51,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import type { Simulation } from '@/engine/core/simulation';
 import { serialise, deserialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
-import { productionOf } from '@/engine/systems/companies';
+import { COMPANY, productionOf } from '@/engine/systems/companies';
 import { overdraftHeadroom } from '@/engine/systems/lending';
 import { ABROAD } from '@/engine/content/safetynet';
 import { AGENT_COMMISSION, EQUITY, MANAGEMENT, SAG_AFTRA, WORK_COSTS } from '@/engine/content/career';
@@ -252,7 +252,8 @@ describe('a working actor in New York', () => {
     sim = reload(sim);
     const kept = careerOf(sim.player);
     expect(kept.bookings.find((b) => b.id === 'gs')).toMatchObject({ status: 'accepted', worked: 3 });
-    expect(productionOf(sim.player, 'gs')!.lines).toBeCloseTo(learnt[1]!, 9);
+    // And the table read on the first day: a share of what was left (`COMPANY.tableRead`).
+    expect(productionOf(sim.player, 'gs')!.lines).toBeCloseTo(learnt[1]! + COMPANY.tableRead * (1 - learnt[1]!), 9);
     expect(productionOf(sim.player, 'gs')!.history.some((h) => h.what.startsWith('You came in on book'))).toBe(true);
     expect(kept.agencyId).toBe('caa');
     expect(kept.managerId).toBe('3arts');

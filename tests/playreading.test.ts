@@ -25,7 +25,8 @@ const life = (seed: string, title: 'actor' | 'actress' = 'actress') => {
 };
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
-const rights = JSON.parse(readFileSync('docs/research/world/research-contemporary-plays-rights.json', 'utf8')) as { plays: { id: string; licensor: { us: { name: string; source: string; quote: string; evidence?: string } | null; uk: { name: string; source: string; quote: string } | null } | null; firstPublished: { year: number; publisher: string; edition: string; source: string; quote: string } | null }[] };
+type Fact = { name?: string; source: string; quote: string };
+const rights = JSON.parse(readFileSync('docs/research/world/research-contemporary-plays-rights.json', 'utf8')) as { plays: { id: string; licensor: { us: (Fact & { name: string }) | null; uk: (Fact & { name: string }) | null } | null; firstPublished: { year: number; publisher: string; edition: string; source: string; quote: string } | null }[] };
 const research = JSON.parse(readFileSync('docs/research/world/research-contemporary-plays.json', 'utf8')) as { retrieved: string; plays: { id: string; title: string; playwright: string; premiere: { year: number; date?: string; venue: string; source: string; quote: string }; cast: { text: string } | null; setting: { period: string } | null; publication: { year: number; publisher: string } | null }[] };
 
 describe('the plays, as facts', () => {
@@ -44,12 +45,19 @@ describe('the plays, as facts', () => {
       const x = rights.plays.find((y) => y.id === p.id)!;
       if (x.firstPublished) expect(p.published).toEqual({ year: x.firstPublished.year, by: x.firstPublished.publisher, acting: /acting/.test(x.firstPublished.edition) });
       else expect(p.published).toBeUndefined();
-      const us = x.licensor?.us && x.licensor.us.evidence !== 'search-result title only' ? x.licensor.us : undefined;
-      expect(p.licensor?.us).toBe(us?.name);
-      expect(p.licensor?.uk).toBe(x.licensor?.uk?.name);
-      for (const fact of [us, x.licensor?.uk, x.firstPublished]) if (fact) expect([fact.source.startsWith('http'), fact.quote.length > 5]).toEqual([true, true]);
+      const L = x.licensor as { us: Fact | null; uk: Fact | null; agent?: Fact & { name: string }; withheld?: Fact } | null;
+      expect(p.licensor?.us).toBe(L?.us?.name);
+      expect(p.licensor?.uk).toBe(L?.uk?.name);
+      expect(p.licensor?.agent).toBe(L?.agent?.name);
+      expect(Boolean(p.licensor?.withheld)).toBe(Boolean(L?.withheld));
+      for (const fact of [L?.us, L?.uk, L?.agent, L?.withheld, x.firstPublished]) if (fact) expect([fact.source.startsWith('http'), fact.quote.length > 5]).toEqual([true, true]);
       expect(Boolean(p.setting)).toBe(Boolean(r.setting?.period));
     }
+  });
+
+  it('says who licenses each, or that the author’s agent does, or that it isn’t released, for all but one; and every first edition', () => {
+    expect(CONTEMPORARY_PLAYS.filter((p) => !p.published)).toEqual([]);
+    expect(CONTEMPORARY_PLAYS.filter((p) => !p.licensor?.us && !p.licensor?.agent && !p.licensor?.withheld).map((p) => p.id)).toEqual(['jerusalem']);
   });
 
   it('none is played: no scene SLATE plays is from one, and the contemporary scenes are its own, said so', () => {
@@ -126,6 +134,14 @@ describe('reading one at school', () => {
     expect(sim.player.craft!.script).toBeGreaterThan(s0);
     expect(sim.execute({ kind: 'plays.research', payload: { playId: 'jerusalem' } }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
     expect(reload(sim).player.plays!['jerusalem']!.researchedAt).toBeDefined();
+  });
+
+  it('researched, a play no house licenses names the author’s agent, and one held back says so', () => {
+    const sim = life('pl-rights');
+    tended(sim, at(9, 5, 18));
+    for (const id of ['black-watch', 'fleabag']) sim.must({ kind: 'plays.read', payload: { playId: id } });
+    expect(sim.must<{ note: string }>({ kind: 'plays.research', payload: { playId: 'black-watch' } }).note).toBe('First staged in 2006 at Edinburgh Festival Fringe (National Theatre of Scotland production). First published 2007, by Faber & Faber. Its rights are by application to the author’s agent, Casarotto Ramsay & Associates.');
+    expect(sim.must<{ note: string }>({ kind: 'plays.research', payload: { playId: 'fleabag' } }).note).toBe('First staged in 2013 at Edinburgh Festival Fringe (then Soho Theatre, London). First published 2013, by Nick Hern Books. Its performing rights aren’t released.');
   });
 
   it('away from New Haven, there’s no copy to be had', () => {

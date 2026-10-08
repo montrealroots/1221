@@ -165,7 +165,8 @@ export function registerPlayReading(sim: Simulation): void {
     s.advanceTo(s.now + minutes * 60_000);
     exerts(person, PLAYREADING.met, minutes / 60);
     if (person.craft) grow(person.craft, 'script', focus, PLAYREADING.weight.research);
-    const rights = p.licensor ? ` Licensed for performance${p.licensor.us ? ` in the US by ${p.licensor.us}` : ''}${p.licensor.us && p.licensor.uk ? ',' : ''}${p.licensor.uk ? ` in the UK by ${p.licensor.uk}` : ''}.` : ' Who licenses it isn’t on record.';
+    const L = p.licensor;
+    const rights = L?.withheld ? ' Its performing rights aren’t released.' : L?.agent ? ` Its rights are by application to the author’s agent, ${L.agent}.` : L?.us || L?.uk ? ` Licensed for performance${L.us ? ` in the US by ${L.us}` : ''}${L.us && L.uk ? ',' : ''}${L.uk ? ` in the UK by ${L.uk}` : ''}.` : ' Who licenses it isn’t on record.';
     const words = `First staged ${p.premiere.date ? `on ${p.premiere.date}` : `in ${p.premiere.year}`} at ${p.premiere.venue}.${p.published ? ` First published ${p.published.year}, by ${p.published.by}${p.published.acting ? ', an acting edition' : ''}.` : ' Its first edition isn’t on record.'}${rights}`;
     study.researchedAt = s.now;
     note(study, s.now, words);

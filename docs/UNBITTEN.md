@@ -872,8 +872,20 @@ same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
   `social.invite`, by the screen's rules.
 - **Licensors and first editions.** They were kept from a second research
   pass (23 US licensors, 14 UK, 28 first editions) and read by researching a
-  play. Still unknown: 7 US licensors and 2 first editions, whose sites
-  refused.
+  play. A third pass settled all but one: 27 US licensors, Black Watch's
+  agent, Fleabag's rights withheld, and all 30 first editions
+  (`docs/REQUIREMENTS.md` W1). Jerusalem's US licensor is still not on
+  record.
+- **A classmate's side of a production.** A classmate cast always took the
+  part and could book across the run. Now they turn parts down, withdraw for
+  another job before a run, and book nothing during one; and each job's
+  first call is its table read (W2).
+- **An actor never moves up an agency on their own.** Seen in the replay at
+  `65b7c071`: signed by IAG at 29, the New York life stays there 45 years,
+  because a represented actor changes agency only when let go. The earlier
+  baseline's life reached CAA only by being dropped twice. Not a defect of
+  this work, and open: whether an actor's own move between agencies belongs
+  in SLATE is a design question.
 - **The acting-only economy.** The broke graduate was the social-lives
   script's doing: it never looked for work. With the lifetime probe's career
   habits the six actors book 48 to 72 jobs and end at −$13,637 to +$206,059.

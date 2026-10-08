@@ -25,6 +25,7 @@ import { AGENCIES, ROLES, type Role } from '../content/career';
 import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
 import { classmatePresence, nudge } from './attributes';
 import { BONDS, bondMove, bondWord, type Classmate } from './school';
+import { classmateTakesJob } from './companies';
 import { contactsOf } from './people';
 
 export const RIVALS = {
@@ -245,6 +246,8 @@ export function classMonth(sim: Simulation, person: Person, when: Instant): void
     const total = open.reduce((sum, r) => sum + r.weight, 0);
     let left = y * total;
     const role = open.find((r) => (left -= r.weight) <= 0) ?? open[open.length - 1]!;
+    // Not across a production of the player's they're working in; out of one not yet started (`classmateTakesJob`, from 2026-10-08).
+    if (classmateTakesJob(sim, person, i, when) === 'busy') return;
     classmateBooked(sim, person, i, role, when);
   });
 }
