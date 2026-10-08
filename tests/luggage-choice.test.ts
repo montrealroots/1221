@@ -15,6 +15,7 @@ import { HELD_DAYS, bagKg, bagRuleFor, bagsGoing, heldIn, moveTo, overweight, pa
 import { CARRY_ON_KG, GARMENT_G } from '@/engine/content/baggage';
 import { addItem, homeKeyOf } from '@/engine/systems/items';
 import { garmentsOf } from '@/engine/systems/wardrobe';
+import { breaches } from '@/engine/core/invariants';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
@@ -88,6 +89,21 @@ describe('a room left', () => {
     moveTo(back, back.player, 'us-ca-losangeles');
     expect(back.must<{ collected: number }>({ kind: 'items.recover', payload: {} }).collected).toBe(out);
     expect(back.player.items!.filter((i) => i.at.kind === 'person').length).toBeGreaterThanOrEqual(out);
+  });
+
+  it('a suitcase left in the room with things packed in it, not collected, goes with them: nothing left inside a bag that isn’t there', () => {
+    const { sim, bag } = away('lc-bag-gone');
+    // SETUP: the suitcase left out in the room with a garment packed back in it, and nothing repacked for them.
+    sim.player.automation = { ...(sim.player.automation ?? {}), packForMe: false } as never;
+    const g = garmentsOf(sim.player).find((x) => x.at.kind === 'stay')!;
+    bag.at = { kind: 'stay', cityId: 'us-ca-losangeles' } as never;
+    g.at = { kind: 'inside', itemId: bag.id } as never;
+    delete sim.player.stay;
+    moveTo(sim, sim.player, 'uk-eng-london');
+    expect(bag.at.kind).toBe('held');
+    sim.advanceBy((HELD_DAYS + 1) * MS_DAY);
+    expect(sim.player.items!.some((i) => i.id === bag.id || i.id === g.id)).toBe(false);
+    expect(breaches(sim.universe)).toEqual([]);
   });
 
   it('not collected in time, it’s gone', () => {

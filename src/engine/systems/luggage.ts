@@ -474,7 +474,13 @@ export function registerLuggage(sim: Simulation): void {
     if (!person) return;
     const gone = itemsOf(person).filter((i) => i.at.kind === 'held' && i.at.cityId === item.payload.cityId && i.at.until <= s.now);
     if (!gone.length) return;
-    person.items = itemsOf(person).filter((i) => !gone.includes(i));
+    // Gone with what's packed in it, as a bag declared lost is (`systems/baggage.ts`). Until 2026-10-08 a suitcase left in a room
+    // went alone, and what was in it stayed inside a bag that wasn't there: a played New York life's last snapshot held 22 such things.
+    const ids = new Set(gone.map((i) => i.id));
+    for (let more = true; more;) { more = false; for (const i of itemsOf(person)) if (i.at.kind === 'inside' && ids.has(i.at.itemId) && !ids.has(i.id)) { ids.add(i.id); more = true; } }
+    person.items = itemsOf(person).filter((i) => !ids.has(i.id));
+    if (person.goingBags) person.goingBags = person.goingBags.filter((id) => !ids.has(id));
+    if (person.luggageId && ids.has(person.luggageId)) delete person.luggageId;
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Not Collected', body: `${gone.length} ${gone.length === 1 ? 'thing' : 'things'} left in ${CITIES.get(String(item.payload.cityId))?.name ?? 'town'} weren’t collected in time, and are gone.`, importance: 30, route: '/workspace/belongings' });
   });
 
