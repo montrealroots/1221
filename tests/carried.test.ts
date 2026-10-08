@@ -345,11 +345,12 @@ describe('a day on set', () => {
     expect(before - sim.player.wellbeing.energy).toBeCloseTo(hours, 0);
     // And soils them by the hours, under lights and in costume.
     expect(90 - sim.player.wellbeing.hygiene).toBeCloseTo(hours * 1.6 * personalityOf(sim.player, 'hygieneDrift'), 0);
+    // A television job's first day: the table read, then on set (`tableRead`, from 2026-10-08).
     sim.advanceTo(call.at + 2 * 3_600_000);
     const sleep = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
     expect(sleep.ok).toBe(false);
-    expect(sleep.error).toMatch(/You’re at On Set/);
-    for (const action of ['wash', 'exercise', 'unwind']) expect(sim.execute({ kind: 'life.look_after', payload: { action } }).error ?? '').toMatch(/You’re at On Set/);
+    expect(sleep.error).toMatch(/You’re at The Table Read, Then On Set/);
+    for (const action of ['wash', 'exercise', 'unwind']) expect(sim.execute({ kind: 'life.look_after', payload: { action } }).error ?? '').toMatch(/You’re at The Table Read, Then On Set/);
     expect(sim.execute({ kind: 'life.look_after', payload: { action: 'eat' } }).error ?? '').not.toMatch(/You’re at/);
     // A sleep set for after the day is fine.
     sim.advanceTo(call.at + 12 * 3_600_000 + 60_000);
