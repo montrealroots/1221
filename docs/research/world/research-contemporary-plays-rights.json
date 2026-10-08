@@ -1,0 +1,737 @@
+{
+  "topic": "US and UK stage licensors and first published editions for the 30 plays in research-contemporary-plays.json",
+  "retrieved": "2026-10-08",
+  "definitions": {
+    "licensorUS": "The company that licenses stage performance rights in the United States. Where the only evidence is a Dramatists Play Service or Samuel French acting edition, or Concord's UK page naming the US catalogue, the record says so in 'basis'. Records with 'evidence': 'search-result title only' are weak and should be verified.",
+    "licensorUK": "A licensor whose own page offers UK performing rights: Concord Theatricals UK (concordtheatricals.co.uk /p/ licensing pages, quoting the catalogue line and fee) or Nick Hern Books (amateur rights). A Concord UK shop (/s/) page alone is not taken as licensing evidence.",
+    "firstPublished": "The earliest edition found on a publisher page or a Google Books record. 'edition' is 'trade' for TCG, Faber, Nick Hern, Vintage, Little Brown, Northwestern; 'acting' for Dramatists Play Service and Samuel French. Where two editions share the earliest year, the note says which order was not established.",
+    "quotes": "Quotes are the text returned by the fetch tool for the named page. Google Books quotes are the bibliographic table's 'Publisher' line; Concord UK quotes are the catalogue line beside the title.",
+    "catalogueOwnership": "Concord Theatricals' UK homepage (https://www.concordtheatricals.co.uk/) lists 'The Dramatists Play Service Collection' and 'The Playscripts Collection' among its collections, so DPS titles are now handled through Concord. The date of that change was not verified (the Deadline report of May 2025 is behind a paywall redirect)."
+  },
+  "plays": [
+    {
+      "id": "proof",
+      "title": "Proof",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books?id=MEfWYY3G1MkC&printsec=copyright",
+          "quote": "Published by Dramatists Play Service Inc.",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent).",
+          "corroboration": {
+            "source": "https://books.google.com/books/about/Proof.html?id=I7W4xAEACAAJ",
+            "quote": "Publisher: Dramatists Play Service Inc, 2001"
+          }
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/11702/proof",
+          "quote": "A SAMUEL FRENCH, LTD. TITLE",
+          "feeQuote": "Minimum Fee: £85 per performance plus VAT when applicable."
+        }
+      },
+      "firstPublished": {
+        "year": 2001,
+        "publisher": "Dramatists Play Service",
+        "edition": "acting edition",
+        "source": "https://books.google.com/books/about/Proof.html?id=I7W4xAEACAAJ",
+        "quote": "Publisher: Dramatists Play Service Inc, 2001",
+        "note": "A trade edition also appeared in 2001: Google Books lists ISBN 9780571199976 (a Faber and Faber ISBN prefix) as 'Publisher: Macmillan, 2001', dated March 5, 2001 (https://books.google.com/books/about/Proof.html?id=6AUtQVhrY90C). Which of the two came first was not established; the year is the same."
+      }
+    },
+    {
+      "id": "doubt-a-parable",
+      "title": "Doubt: A Parable",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Doubt.html?id=9Jg55OUsecYC",
+          "quote": "Publisher: Dramatists Play Service Inc, 2005",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2005,
+        "publisher": "Dramatists Play Service",
+        "edition": "acting edition",
+        "source": "https://books.google.com/books/about/Doubt.html?id=9Jg55OUsecYC",
+        "quote": "Publisher: Dramatists Play Service Inc, 2005",
+        "note": "Earliest edition verified. A Theatre Communications Group trade edition of 2005 was not found on a reachable page, so which came first was not established."
+      }
+    },
+    {
+      "id": "topdog-underdog",
+      "title": "Topdog/Underdog",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Topdog_underdog.html?id=Ia_c-GN1mi4C",
+          "quote": "Publisher: Dramatists Play Service Inc, 2002",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2001,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Topdog_Underdog_TCG_Edition.html?id=BUv6CAAAQBAJ",
+        "quote": "Publisher: Theatre Communications Group, 2001"
+      }
+    },
+    {
+      "id": "sweat",
+      "title": "Sweat",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books?id=KfxKDwAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2018",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2017,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Sweat.html?id=XSgJDQEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2017",
+        "note": "The TCG ebook record gives 'Theatre Communications Group, May 22, 2017' (https://books.google.com/books/about/Sweat_TCG_Edition.html?id=7mBhDgAAQBAJ)."
+      }
+    },
+    {
+      "id": "clybourne-park",
+      "title": "Clybourne Park",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Clybourne_Park.html?id=QC2eI_bLaBkC",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2012",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": {
+          "name": "Nick Hern Books (amateur rights)",
+          "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+          "quote": "Amateur rights performance fee: £85 per performance (plus VAT where applicable)",
+          "note": "Nick Hern Books licenses amateur performing rights for this title (its page offers an amateur fee and a rights application). Professional rights holder not stated."
+        }
+      },
+      "firstPublished": {
+        "year": 2011,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "Paperback: 27 Jan 2011, ISBN 9781848421783",
+        "note": "Earliest edition verified; the quote is the publisher page's publication line as returned by the fetch tool. A US trade ebook is listed for 2011 too ('Macmillan + ORM, 2011', https://books.google.com/books?id=idQVa80MsOkC)."
+      }
+    },
+    {
+      "id": "venus-in-fur",
+      "title": "Venus in Fur",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Venus_in_Fur.html?id=JZvjzijd2qMC",
+          "quote": "Publisher: Dramatists Play Service Inc, 2012",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2011,
+        "publisher": "Northwestern University Press",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Venus_in_Fur.html?id=I6H4depFn9sC",
+        "quote": "Publisher: Northwestern University Press, 2011"
+      }
+    },
+    {
+      "id": "disgraced",
+      "title": "Disgraced",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=4848",
+          "quote": "Disgraced",
+          "evidence": "search-result title only",
+          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2013,
+        "publisher": "Little, Brown",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Disgraced.html?id=4R43AQAAQBAJ",
+        "quote": "Publisher: Little, Brown, 2013",
+        "note": "Bloomsbury / A&C Black UK printings of 2013 are labelled 'reprint' by Google Books (ids BawYAAAAQBAJ, mZ8dAAAAQBAJ)."
+      }
+    },
+    {
+      "id": "water-by-the-spoonful",
+      "title": "Water by the Spoonful",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Water_by_the_Spoonful.html?id=lga51BzRCjUC",
+          "quote": "Publisher: Dramatists Play Service Inc, 2013",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2012,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Water_by_the_Spoonful.html?id=D2H_ugAACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2012"
+      }
+    },
+    {
+      "id": "august-osage-county",
+      "title": "August: Osage County",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/August.html?id=aThUTIlyYYIC",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2009",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2008,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/August_Osage_County_TCG_Edition.html?id=_O_oCAAAQBAJ",
+        "quote": "Publisher: Theatre Communications Group, 2008"
+      }
+    },
+    {
+      "id": "the-humans",
+      "title": "The Humans",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/The_Humans.html?id=ZEtdDgAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2017",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2015,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/The_Humans.html?id=QSRErgEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2015",
+        "note": "A revised TCG edition followed in 2016 ('Edition: Revised', 'Publisher: Theatre Communications Group, 2016', https://books.google.com/books/about/The_Humans.html?id=kY25DAEACAAJ)."
+      }
+    },
+    {
+      "id": "constellations",
+      "title": "Constellations",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=5128",
+          "quote": "Constellations",
+          "evidence": "search-result title only",
+          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it. A second result, 'Nick Payne' at https://www.dramatists.com/cgi-bin/db/single.asp?index=0&key=5129, came back for the same search."
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/15092/constellations",
+          "quote": "A SAMUEL FRENCH, LTD. TITLE",
+          "feeQuote": "Minimum £70 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": {
+        "year": 2012,
+        "publisher": "Faber & Faber",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Constellations.html?id=-vwwj4g1EaEC",
+        "quote": "Publisher: Faber & Faber, 2012",
+        "note": "faber.co.uk returned HTTP 403 to this agent, so the Google Books record is used. Same ISBN (9780571289080) as the Faber listing in research-contemporary-plays.json."
+      }
+    },
+    {
+      "id": "jerusalem",
+      "title": "Jerusalem",
+      "licensor": {
+        "us": null,
+        "uk": {
+          "name": "Nick Hern Books (amateur rights)",
+          "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+          "quote": "Amateur rights performance fee: £85 per performance (plus VAT where applicable)",
+          "note": "Nick Hern Books licenses amateur performing rights for this title (its page offers an amateur fee and a rights application). Professional rights holder not stated."
+        }
+      },
+      "firstPublished": {
+        "year": 2009,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Publication Date: 9 Jul 2009"
+      }
+    },
+    {
+      "id": "lungs",
+      "title": "Lungs",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Lungs.html?id=8yWNDwAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2019",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": null
+    },
+    {
+      "id": "the-flick",
+      "title": "The Flick",
+      "licensor": {
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.concordtheatricals.co.uk/p/12566/the-flick",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating catalogue; 'SAMUEL FRENCH, INC.' is the US Samuel French catalogue (now Concord Theatricals). The US page itself (concordtheatricals.com) could not be read.",
+          "corroboration": {
+            "source": "https://books.google.com/books/about/The_Flick.html?id=ZugUnQEACAAJ",
+            "quote": "Publisher: Samuel French, 2014"
+          }
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/12566/the-flick",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "feeQuote": "Minimum £70 per performance plus VAT when applicable. Please submit a license request to determine availability."
+        }
+      },
+      "firstPublished": {
+        "year": 2014,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/The_Flick.html?id=VccKCQAAQBAJ",
+        "quote": "Publisher: Theatre Communications Group, 2014",
+        "note": "A Samuel French acting edition is also dated 2014 ('Publisher: Samuel French, 2014', https://books.google.com/books/about/The_Flick.html?id=ZugUnQEACAAJ). Which came first was not established; the year is the same."
+      }
+    },
+    {
+      "id": "fairview",
+      "title": "Fairview",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Fairview.html?id=vIskEAAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2021",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2019,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Fairview.html?id=lmt-uQEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2019",
+        "note": "Google Books labels this record 'Edition: Reprint'. No earlier edition was found."
+      }
+    },
+    {
+      "id": "the-wolves",
+      "title": "The Wolves",
+      "licensor": {
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.concordtheatricals.co.uk/p/62099/the-wolves",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating catalogue; 'SAMUEL FRENCH, INC.' is the US Samuel French catalogue (now Concord Theatricals). The US page itself (concordtheatricals.com) could not be read.",
+          "corroboration": {
+            "source": "https://books.google.com/books/about/The_Wolves.html?id=30LWswEACAAJ",
+            "quote": "Series: Samuel French acting edition"
+          }
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/62099/the-wolves",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "feeQuote": "Minimum £70 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": {
+        "year": 2016,
+        "publisher": "Samuel French",
+        "edition": "acting edition",
+        "source": "https://books.google.com/books/about/The_Wolves.html?id=30LWswEACAAJ",
+        "quote": "Publisher: Concord Theatricals, 2016",
+        "note": "Caveat: the record names the publisher as Concord Theatricals and the series as 'Samuel French acting edition'; the Concord name post-dates 2016, so the record's metadata may be a later printing carrying the original year. Trade editions followed in 2018 (Abrams, 'The Wolves: A Play: Off-Broadway Edition', https://books.google.com/books/about/The_Wolves.html?id=czuEDwAAQBAJ; Oberon Books, labelled reprint)."
+      }
+    },
+    {
+      "id": "cost-of-living",
+      "title": "Cost of Living",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Cost_of_Living.html?id=31BgDwAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2018",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2018,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Cost_of_Living_TCG_Edition.html?id=SJdWDwAAQBAJ",
+        "quote": "Publisher: Theatre Communications Group, 2018",
+        "note": "The Dramatists Play Service acting edition is also dated 2018 (https://books.google.com/books/about/Cost_of_Living.html?id=31BgDwAAQBAJ). Which came first was not established; the year is the same."
+      }
+    },
+    {
+      "id": "gloria",
+      "title": "Gloria",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Gloria.html?id=_8ArDAAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2016",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2016,
+        "publisher": "Dramatists Play Service",
+        "edition": "acting edition",
+        "source": "https://books.google.com/books/about/Gloria.html?id=_8ArDAAAQBAJ",
+        "quote": "Publisher: Dramatists Play Service, Inc., 2016",
+        "note": "Trade editions followed in 2017: Nick Hern Books ('Publisher: Nick Hern Books, 2017', https://books.google.com/books/about/Gloria.html?id=gF9qAQAACAAJ) and a TCG edition seen only on retailer pages."
+      }
+    },
+    {
+      "id": "rabbit-hole",
+      "title": "Rabbit Hole",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Rabbit_Hole.html?id=utZsBAAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service Inc, 2006",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2006,
+        "publisher": "Dramatists Play Service",
+        "edition": "acting edition",
+        "source": "https://books.google.com/books/about/Rabbit_Hole.html?id=utZsBAAAQBAJ",
+        "quote": "Publisher: Dramatists Play Service Inc, 2006",
+        "note": "Earliest edition verified; a TCG trade edition was not checked."
+      }
+    },
+    {
+      "id": "between-riverside-and-crazy",
+      "title": "Between Riverside and Crazy",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Between_Riverside_and_Crazy.html?id=ODopDAAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2016",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2015,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Between_Riverside_and_Crazy.html?hl=en&id=lcZdrgEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2015"
+      }
+    },
+    {
+      "id": "fat-ham",
+      "title": "Fat Ham",
+      "licensor": {
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.concordtheatricals.co.uk/p/95381/fat-ham",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating catalogue; 'SAMUEL FRENCH, INC.' is the US Samuel French catalogue (now Concord Theatricals). The US page itself (concordtheatricals.com) could not be read.",
+          "corroboration": {
+            "source": "https://playbill.com/article/concord-theatricals-acquires-licensing-rights-to-tony-nominated-fat-ham",
+            "quote": "Concord Theatricals has acquired the exclusive worldwide English-speaking stage licensing rights to James Ijames' 2022 Pulitzer-winning and 2023 Tony-nominated play Fat Ham.",
+            "note": "Trade press, not a licensor page; corroboration only."
+          }
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/95381/fat-ham",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "feeQuote": "Minimum of £70 per performance plus VAT when applicable."
+        }
+      },
+      "firstPublished": {
+        "year": 2023,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Fat_Ham.html?id=xmEtzwEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2023"
+      }
+    },
+    {
+      "id": "english",
+      "title": "English",
+      "licensor": {
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.concordtheatricals.co.uk/p/94848/english",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating catalogue; 'SAMUEL FRENCH, INC.' is the US Samuel French catalogue (now Concord Theatricals). The US page itself (concordtheatricals.com) could not be read."
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/94848/english",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "feeQuote": "Minimum Fee: £55 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": {
+        "year": 2024,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition (with Wish You Were Here)",
+        "source": "https://books.google.com/books/about/English_Wish_You_Were_Here.html?id=JGaizwEACAAJ",
+        "quote": "Publisher: Theatre Communications Group, 2024",
+        "note": "Published as the two-play volume English / Wish You Were Here. No earlier single-play edition was found."
+      }
+    },
+    {
+      "id": "primary-trust",
+      "title": "Primary Trust",
+      "licensor": {
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.concordtheatricals.co.uk/p/96908/primary-trust",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating catalogue; 'SAMUEL FRENCH, INC.' is the US Samuel French catalogue (now Concord Theatricals). The US page itself (concordtheatricals.com) could not be read."
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/96908/primary-trust",
+          "quote": "A SAMUEL FRENCH, INC. TITLE",
+          "feeQuote": "Minimum £55 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": {
+        "year": 2025,
+        "publisher": "Theatre Communications Group",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Primary_Trust.html?id=gn0aEQAAQBAJ",
+        "quote": "Publisher: Theatre Communications Group, 2025"
+      }
+    },
+    {
+      "id": "the-children",
+      "title": "The Children",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=5667",
+          "quote": "The Children",
+          "evidence": "search-result title only",
+          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it."
+        },
+        "uk": {
+          "name": "Nick Hern Books (amateur rights)",
+          "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+          "quote": "Amateur rights performance fee: £85 per performance (plus VAT where applicable)",
+          "note": "Nick Hern Books licenses amateur performing rights for this title (its page offers an amateur fee and a rights application). Professional rights holder not stated."
+        }
+      },
+      "firstPublished": {
+        "year": 2016,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Paperback: ISBN 9781848426184, 17 Nov 2016"
+      }
+    },
+    {
+      "id": "enron",
+      "title": "Enron",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/Enron.html?id=2OvHmVUgl0gC",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2011",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/11075/enron",
+          "quote": "A Samuel French, Ltd. Title",
+          "feeQuote": "Minimum £70 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": null
+    },
+    {
+      "id": "escaped-alone",
+      "title": "Escaped Alone",
+      "licensor": {
+        "us": null,
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/59942/escaped-alone",
+          "quote": "A SAMUEL FRENCH, LTD. TITLE",
+          "feeQuote": "Minimum £55 per performance plus VAT when applicable",
+          "restriction": "This title may have restrictions in place for London based productions. Please submit a licence request to confirm specific availability."
+        }
+      },
+      "firstPublished": {
+        "year": 2016,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Paperback: 21 Jan 2016, ISBN 9781848425491",
+        "note": "The same page reads 'Performing rights not held by Nick Hern Books'."
+      }
+    },
+    {
+      "id": "king-charles-iii",
+      "title": "King Charles III",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://books.google.com/books/about/King_Charles_III.html?id=QbIrDAAAQBAJ",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2016",
+          "basis": "Inferred from the existence of a Dramatists Play Service acting edition: the Google Books record names DPS as publisher, and DPS publishes acting editions of the plays it licenses. No DPS or Concord show page could be read (dramatists.com redirects to concordtheatricals.com, which refuses this agent)."
+        },
+        "uk": {
+          "name": "Nick Hern Books (amateur rights)",
+          "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+          "quote": "Amateur rights performance fee: £85 per performance (plus VAT where applicable)",
+          "note": "Nick Hern Books licenses amateur performing rights for this title (its page offers an amateur fee and a rights application). Professional rights holder not stated."
+        }
+      },
+      "firstPublished": {
+        "year": 2014,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Paperback: ISBN 9781848424418, 25 Sep 2014"
+      }
+    },
+    {
+      "id": "fleabag",
+      "title": "Fleabag",
+      "licensor": {
+        "us": null,
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2013,
+        "publisher": "Nick Hern Books",
+        "edition": "trade edition",
+        "source": "https://books.google.co.uk/books/about/Fleabag.html?hl=en&id=egM6nwEACAAJ&redir_esc=y",
+        "quote": "Publisher: Nick Hern Books, 2013",
+        "note": "Google Books labels this record 'Edition: Reprint' (ISBN 9781848423640, 39 pages). An NHB edition of 2014 (48 pages, https://books.google.co.uk/books/about/Fleabag.html?hl=en&id=51CojwEACAAJ&redir_esc=y) and the 2016 'Fleabag: The Original Play' followed. This corrects the 2016 date in research-contemporary-plays.json, which was NHB's earliest current listing."
+      }
+    },
+    {
+      "id": "the-laramie-project",
+      "title": "The Laramie Project",
+      "licensor": {
+        "us": {
+          "name": "Dramatists Play Service",
+          "source": "https://www.concordtheatricals.co.uk/p/14582/the-laramie-project",
+          "quote": "A Dramatists Play Service Title",
+          "basis": "Concord Theatricals' own UK page tags the title with its originating US catalogue, Dramatists Play Service. The US page itself could not be read."
+        },
+        "uk": {
+          "name": "Concord Theatricals (UK)",
+          "source": "https://www.concordtheatricals.co.uk/p/14582/the-laramie-project",
+          "quote": "A Dramatists Play Service Title",
+          "feeQuote": "Minimum £85 per performance plus VAT when applicable"
+        }
+      },
+      "firstPublished": {
+        "year": 2001,
+        "publisher": "Vintage Books",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/The_Laramie_Project.html?id=i5I0PqHK-jIC",
+        "quote": "Publisher: Vintage Books, 2001",
+        "note": "Earliest edition verified; a DPS acting edition was not checked."
+      }
+    },
+    {
+      "id": "black-watch",
+      "title": "Black Watch",
+      "licensor": {
+        "us": null,
+        "uk": null
+      },
+      "firstPublished": {
+        "year": 2007,
+        "publisher": "Faber & Faber",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books/about/Black_Watch.html?id=1SIfAQAAIAAJ",
+        "quote": "Publisher: Faber & Faber, 2007",
+        "note": "Google Books labels this record 'Edition: illustrated, reprint'. No earlier edition was found."
+      }
+    }
+  ],
+  "notFound": [
+    {
+      "play": "jerusalem",
+      "fact": "licensor.us",
+      "tried": "Google Books (only TCG 2011 and NHB editions, no DPS or Samuel French acting edition found); dramatists.com WebSearch (only Mojo and other Butterworth titles); Concord UK has only a shop page (/s/28376), no licensing page."
+    },
+    {
+      "play": "escaped-alone",
+      "fact": "licensor.us",
+      "tried": "Google Books (only NHB 2016); dramatists.com WebSearch (no match). Concord UK tags it 'A SAMUEL FRENCH, LTD. TITLE', which is the UK catalogue and says nothing about US rights."
+    },
+    {
+      "play": "fleabag",
+      "fact": "licensor.us and licensor.uk",
+      "tried": "Concord UK lists only shop pages (/s/61936, /s/66681), no licensing page; dramatists.com WebSearch (no match); research-contemporary-plays.json records NHB's 'Performing rights not held by Nick Hern Books'."
+    },
+    {
+      "play": "black-watch",
+      "fact": "licensor.us and licensor.uk",
+      "tried": "Concord UK lists only a shop page (/s/46052); dramatists.com WebSearch (no match); no acting edition found on Google Books."
+    },
+    {
+      "play": "doubt-a-parable, topdog-underdog, sweat, venus-in-fur, disgraced, water-by-the-spoonful, august-osage-county, the-humans, lungs, fairview, cost-of-living, gloria, rabbit-hole, between-riverside-and-crazy",
+      "fact": "licensor.uk",
+      "tried": "Concord UK WebSearch returns only shop (/s/) pages or nothing for these, never a licensing (/p/) page; Nick Hern Books pages (per research-contemporary-plays.json) read 'Performing rights not held by Nick Hern Books' where they exist. Absence of a licensing page is not recorded as a fact."
+    },
+    {
+      "play": "lungs",
+      "fact": "firstPublished",
+      "tried": "Oberon Books 2011 paperback (ISBN 9781849431453) appears only on retailer pages (AbeBooks, Amazon), which give conflicting dates (1 Sep 2011 and 28 Feb 2012); Google Books has only the DPS 2019 record; bloomsbury.com (Oberon's owner) is closed to this agent; WorldCat search is JavaScript-rendered and returned nothing; googleapis Books API returned HTTP 429."
+    },
+    {
+      "play": "enron",
+      "fact": "firstPublished",
+      "tried": "The Methuen Drama 2009 first edition was not found on any reachable page. Earliest verified record: 'Publisher: A&C Black, 2010', 'Edition: Modern Plays' (https://books.google.co.uk/books/about/Enron.html?id=qv4NRcCs7dgC&redir_esc=y), which is probably not the first. bloomsbury.com is closed to this agent."
+    },
+    {
+      "play": "disgraced, constellations, the-children",
+      "fact": "licensor.us (strength)",
+      "tried": "Recorded from dramatists.com search-result titles only, flagged evidence 'search-result title only'. The DPS acting edition of Disgraced (ISBN 9780822230427) has no Google Books record found; the Google Books search for that ISBN returned a Bloomsbury 2021 record."
+    },
+    {
+      "play": "all",
+      "fact": "licensor pages",
+      "tried": "concordtheatricals.com (US) is refused to both WebFetch and WebSearch ('not accessible to our user agent'). dramatists.com, broadwaylicensing.com and playscripts.com all 301-redirect to concordtheatricals.com. faber.co.uk returned 403. Google Books in-book search hit Google's /sorry rate-limit page; googleapis.com/books returned 429 three times; worldcat.org returned 429 once and then a JavaScript shell; catalog.loc.gov redirects to a JavaScript search; catalogue.nla.gov.au is behind an Anubis bot challenge. concordtheatricals.co.uk (UK) and nickhernbooks.co.uk were readable."
+    }
+  ]
+}

@@ -23,7 +23,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
 import { footageRefusal } from '@/engine/systems/footage';
-import { productionOf, productionsOf } from '@/engine/systems/companies';
+import { learnPartRefusal, productionOf, productionsOf } from '@/engine/systems/companies';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -440,6 +440,21 @@ const spanOf = (b: Booking) => {
   return role.medium === 'screen' ? `${b.units} ${b.units === 1 ? 'day' : 'days'}` : `${b.rehearsalWeeks} weeks of rehearsal and ${b.units} of performances`;
 };
 
+/** Your part learned, an hour at a time, and how much of it you know (`career.learn_part`, from 2026-10-08). */
+function LearnPart({ bookingId }: { bookingId: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const p = productionOf(person, bookingId);
+  if (!p || p.medium === 'voice') return null;
+  const no = learnPartRefusal(sim, person, bookingId);
+  return (
+    <div className="row gap-1" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+      <span className="xs dim" style={{ whiteSpace: 'nowrap' }}>{Math.round((p.lines ?? 0) * 100)}% of your lines</span>
+      <Gated feature="career.learn_part" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ lines: number }>('career.learn_part', { bookingId }); if (r.ok) toast(`An hour on the part: ${Math.round(r.value!.lines * 100)}% of the lines known.`, 'positive'); }}>Learn The Part</Gated>
+    </div>
+  );
+}
+
 /** The jobs taken and ahead, and the credits. */
 function WorkPane() {
   const { sim, run, toast } = useGame();
@@ -454,7 +469,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /></span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}

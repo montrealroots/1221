@@ -18,13 +18,15 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
-import { CLASS_SOCIAL, contactsOf, type Contact } from '@/engine/systems/people';
+import { CLASS_SOCIAL, contactsOf, knowTheClass, type Contact } from '@/engine/systems/people';
+import { diningQuote, restaurantsIn } from '@/engine/systems/dining';
 import { CLASS } from '@/engine/systems/classmates';
 import { bondMove } from '@/engine/systems/school';
 import { NEW_HAVEN_OUTINGS } from '@/engine/systems/people';
 import { auditionLevel, roleById } from '@/engine/systems/career';
 import { railRoutes } from '@/engine/systems/rail';
 import { planBy } from '@/engine/systems/journey';
+import { runRoutine } from '@/engine/systems/routines';
 
 const zone = 'America/New_York';
 const at = (month: number, day: number, hour = 9, year = 2026) => instantFromZoned({ year, month, day, hour, minute: 0 }, zone);
@@ -48,6 +50,13 @@ describe('a plan and a trip at once', () => {
     const slot = (day: number, after: number) => Array.from({ length: route.perDay }, (_, i) => i).find((i) => { const legs = planBy(sim, route.id, 'us-ct-newhaven', 'us-ny-newyork', day, i, 0); return typeof legs !== 'string' && legs[0]!.departAt >= after; })!;
     sim.must({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day: at(9, 6, 0), by: route.id, slot: slot(at(9, 6, 0), at(9, 6, 12)), returnDay: at(9, 7, 0), returnSlot: slot(at(9, 7, 0), at(9, 7, 12)) } });
     sim = reload(sim);
+    // Told once, before: the trip takes them out of the coffee's town (from 2026-10-08).
+    tended(sim, at(9, 5, 12));
+    for (const n of sim.universe.notifications) n.read = true;
+    tended(sim, at(9, 6, 12));
+    const told = sim.universe.notifications.filter((n) => n.title === `You’ll Be Away For Coffee With ${c.name.split(' ')[0]}`);
+    expect(told).toHaveLength(1);
+    expect(told[0]!.body).toMatch(/^You’ll be in New York on .*. Call it off or move it, or .* waits for you.$/);
     tended(sim, at(9, 6, 21));
     expect(classmateOf(sim).stoodUp).toBe(at(9, 6, 19));
     expect(classmateOf(sim).memory[0]!.what).toBe('You didn’t come');
@@ -62,6 +71,27 @@ describe('a plan and a trip at once', () => {
     expect(sim.player.school!.classmates[0]!.bond!).toBeLessThan(b0 + 1e-9);
     expect(classmateOf(sim).stoodUp).toBeUndefined();
     expect(sim.execute({ kind: 'school.make_amends', payload: { mate: 0 } }).error).toBe('There’s nothing between you to make right.');
+    expect(breaches(sim.universe)).toEqual([]);
+  });
+});
+
+describe('somewhere you’ll be', () => {
+  it('dinner in New York asked from New Haven is refused, until a trip booked puts you there; then it’s on', () => {
+    const sim = life('js-where');
+    tended(sim, at(9, 1, 12));
+    // SETUP: the class known in New York, as after the degree; the player still in New Haven.
+    sim.player.school!.standing = 'graduated';
+    knowTheClass(sim, sim.player, sim.player.school!.classmates);
+    const c = classmateOf(sim);
+    const r = restaurantsIn('us-ny-newyork').find((x) => x.menu.some((m) => m.price !== null && diningQuote(sim, x, [m.item], 'in') && x.tier === 'casual'))!;
+    const item = r.menu.find((m) => m.price !== null && diningQuote(sim, r, [m.item], 'in'))!.item;
+    const inv = { contactId: c.id, what: 'meal', restaurantId: r.id, item, at: at(9, 6, 19) };
+    expect(sim.execute({ kind: 'social.invite', payload: inv }).error).toBe('You’ll be in New Haven then.');
+    const route = railRoutes('us-ct-newhaven', 'us-ny-newyork').find((x) => x.id === 'mnr-nhv-gct')!;
+    const slot = (day: number, after: number) => Array.from({ length: route.perDay }, (_, i) => i).find((i) => { const legs = planBy(sim, route.id, 'us-ct-newhaven', 'us-ny-newyork', day, i, 0); return typeof legs !== 'string' && legs[0]!.departAt >= after; })!;
+    sim.must({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day: at(9, 6, 0), by: route.id, slot: slot(at(9, 6, 0), at(9, 6, 10)), returnDay: at(9, 7, 0), returnSlot: slot(at(9, 7, 0), at(9, 7, 10)), nights: 1 } });
+    const ok = sim.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: inv });
+    expect(ok.error).toBeUndefined();
     expect(breaches(sim.universe)).toEqual([]);
   });
 });
@@ -84,6 +114,37 @@ describe('a day there and back', () => {
   });
 });
 
+describe('a routine and the screen, by the same rules', () => {
+  it('an evening asked by a routine is the People screen’s invitation: the same yes, the same no and reason, and a no stops the routine', () => {
+    // Two copies of one life at one moment: one asks by hand, the other by a routine.
+    const base = life('js-routine');
+    tended(base, at(9, 1, 12));
+    const c = classmateOf(base);
+    const byHand = reload(base);
+    const byRoutine = reload(base);
+    const hand = byHand.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: { contactId: c.id, what: 'coffee', at: at(9, 1, 19) } });
+    const saved = byRoutine.must<{ routineId: string }>({ kind: 'routine.save', payload: { name: 'Evenings', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'coffee', hour: 19, minute: 0, inDays: 0 } }] } });
+    const ran = runRoutine(byRoutine, saved.routineId);
+    expect(ran).toEqual({ done: 1 });
+    expect(hand.ok).toBe(true);
+    const meets = (sim: Simulation) => sim.universe.scheduled.filter((x) => x.kind === 'social.meet' && x.status === 'pending').map((x) => [x.at, x.payload.contactId, x.payload.what]);
+    expect(meets(byRoutine)).toEqual(meets(byHand));
+    expect(classmateOf(byRoutine).memory[0]).toEqual(classmateOf(byHand).memory[0]);
+    // In class at ten the next morning: the same no from both, and the routine stops at the step, saying it.
+    const handNo = byHand.execute({ kind: 'social.invite', payload: { contactId: c.id, what: 'study', at: at(9, 2, 10) } });
+    tended(byRoutine, at(9, 1, 20)); tended(byHand, at(9, 1, 20));
+    const two = byRoutine.must<{ routineId: string }>({ kind: 'routine.save', payload: { name: 'Mornings', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'study', hour: 10, minute: 0, inDays: 1 } }, { kind: 'life.look_after', payload: { action: 'wash' } }] } });
+    const stopped = runRoutine(byRoutine, two.routineId);
+    expect(stopped.done).toBe(0);
+    expect(stopped.stopped!.error).toBe(handNo.error);
+    expect(stopped.stopped!.label).toMatch(/^Ask .+ To Study Together, The Next Day At 10 AM$/);
+    expect(handNo.ok).toBe(false);
+    // What a routine can't hold: an evening needing more chosen.
+    expect(byRoutine.execute({ kind: 'routine.save', payload: { name: 'Dinner', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'meal', hour: 19, minute: 0, inDays: 0 } }] } }).error).toBe('A routine asks them for a coffee, to study, for a walk or to the cinema.');
+    expect(breaches(byRoutine.universe)).toEqual([]);
+  });
+});
+
 describe('with no money', () => {
   it('a coffee kept is still paid, owed where the bank can’t: nothing is free', () => {
     const sim = life('js-broke');
@@ -95,6 +156,8 @@ describe('with no money', () => {
     const c = classmateOf(sim);
     sim.must({ kind: 'social.invite', payload: { contactId: c.id, at: at(9, 2, 19), what: 'coffee' } });
     tended(sim, at(9, 2, 21));
+    // Kept in town: no word of being away.
+    expect(sim.universe.notifications.filter((n) => n.title.startsWith('You’ll Be Away'))).toEqual([]);
     const paid = sim.universe.transactions.filter((t) => t.memo === 'Atticus Market, a coffee');
     expect(paid).toHaveLength(1);
     expect(paid[0]!.postings.filter((p) => p.amount > 0).reduce((n, p) => n + p.amount, 0)).toBe(NEW_HAVEN_OUTINGS.coffee.price);

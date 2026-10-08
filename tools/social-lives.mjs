@@ -16,6 +16,8 @@
  *   out every second evening (the one least seen), takes another time offered;
  * - selective: prepares more and goes to bed at nine, says yes to its three closest only,
  *   politely no to the rest, asks one of them out a week;
+ * All three look for work and keep their money as the lifetime probe does;
+ * the engaged and the selective learn each part booked before it's played.
  * - unreliable: says yes to everything, then calls off a fifth at short
  *   notice and spends a Sunday in New York over a tenth of Sunday's (missing them), and from
  *   the second spring makes amends with whoever it let down, and moves plans
@@ -29,6 +31,11 @@ import { deserialise, serialise } from '../src/engine/persistence/adapter.ts';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time.ts';
 import { breaches } from '../src/engine/core/invariants.ts';
 import { suggestedSleep } from '../src/engine/systems/life.ts';
+import { queryRefusal } from '../src/engine/systems/career.ts';
+import { learnPartRefusal, productionOf, productionsOf } from '../src/engine/systems/companies.ts';
+import { attributesOf } from '../src/engine/systems/attributes.ts';
+import { bankAccountsOf } from '../src/engine/systems/banking.ts';
+import { cardsOf, stateOf } from '../src/engine/systems/credit.ts';
 import { courseworkOf, notesOf, prepareRefusal, questionsFor, activitiesOf } from '../src/engine/systems/coursework.ts';
 import { CHOICES, amendsRefusal, momentsOf, personOf } from '../src/engine/systems/classmates.ts';
 import { MEET_KIND, contactsOf, levelOf } from '../src/engine/systems/people.ts';
@@ -75,7 +82,46 @@ function tend(action) {
 function decisions() {
   for (const d of Object.values(sim.universe.decisions)) {
     if (d.resolvedAt || d.dismissedAt || !d.actions.length) continue;
-    const a = d.actions[0]; run(a.commandKind, a.payload ?? {});
+    if (!run('world.take_decision_action', { decisionId: d.id, actionIndex: 0 }).ok && d.actions.length > 1) run('world.take_decision_action', { decisionId: d.id, actionIndex: 1 });
+  }
+}
+
+/**
+ * Work, as the lifetime probe looks for it (`probe/play-to-death.ts`): put up
+ * for parts three times a season, every offer taken, the agencies written to
+ * when unrepresented; and after the degree, a move to the agency's town. Until
+ * 2026-10-08 these lives never looked for work, and an engaged graduate's two
+ * years in New York (ten jobs offered unasked) were read as the acting life
+ * not paying.
+ */
+function career() {
+  const p = sim.player; const c = p.career; const school = p.school;
+  if (c && (c.since !== undefined || (school && !inSchool()) || (inSchool() && [5, 6, 7, 8].includes(at(sim.now).month)))) {
+    if ((c.submitted ?? 0) < 3) run('career.self_submit');
+    for (const b of c.bookings) if (b.status === 'offered') run('career.accept', { bookingId: b.id });
+  }
+  // A part booked, learned before it's played: an hour an evening (the selective two), till it's known; the unreliable student comes in on book.
+  if (c && kind !== 'unreliable') for (const b of c.bookings.filter((x) => x.status === 'accepted')) for (let n = 0; n < (kind === 'selective' ? 2 : 1); n += 1) { if (learnPartRefusal(sim, p, b.id) || (productionOf(p, b.id)?.lines ?? 0) >= 0.85) break; run('career.learn_part', { bookingId: b.id }); }
+  if (!inSchool() && !queryRefusal(sim, p)) run('career.query_agencies');
+}
+
+/** Money, as the lifetime probe keeps it: a floor in the current account from savings, the cards paid, debts paid when there's money. */
+function money() {
+  const p = sim.player;
+  const accounts = bankAccountsOf(sim, p);
+  const current = accounts.find((a) => a.id === p.primaryAccountId);
+  const savings = accounts.find((a) => a.kind === 'savings');
+  const floor = 4_000_00;
+  if (current && savings) {
+    if (current.balance < floor && savings.balance > 0) run('bank.transfer', { fromId: savings.id, toId: current.id, amount: Math.min(savings.balance, floor * 2 - current.balance) });
+    else if (current.balance > floor * 4) run('bank.transfer', { fromId: current.id, toId: savings.id, amount: current.balance - floor * 2 });
+  }
+  for (const card of cardsOf(sim, p)) { const st = stateOf(p, card); if (st.statementBalance > 0 && (current?.balance ?? 0) > st.statementBalance) run('finance.pay_card', { amount: 'full', accountId: card.id }); }
+  for (const a of Object.values(sim.universe.accounts).filter((x) => x.ownerId === p.id)) {
+    if (a.balance >= 0 || (current?.balance ?? 0) < -a.balance + floor / 2) continue;
+    if (a.category === 'arrears') run('home.pay_landlord', { amount: -a.balance });
+    if (a.category === 'medical') run('health.pay_bill', { amount: -a.balance });
+    if (a.category === 'collections') run('bank.pay_collections', { accountId: a.id, amount: -a.balance });
   }
 }
 
@@ -142,6 +188,8 @@ function social(dayIndex) {
       if (r.ok && !r.value.accepted && r.value.counter) { count('counter offered'); run('social.invite', { ...inv, at: r.value.counter }); }
     }
   }
+  // A plan they'll be away for, called off when they're told (the engaged and the selective; the unreliable student lets it go).
+  if (kind !== 'unreliable') for (const m of sim.universe.scheduled.filter((x) => x.kind === MEET_KIND && x.status === 'pending' && x.payload.personId === p.id && x.payload.awayTold)) run('social.cancel', { itemId: m.id });
   // The unreliable student's plans: a fifth called off late, a tenth missed for a day in New York; from the second spring, moved instead, and amends made.
   if (kind === 'unreliable') {
     const reformed = sim.now > Date.parse('2028-02-01');
@@ -170,8 +218,11 @@ while (sim.universe.meta.endedAt === undefined && sim.now < until) {
     decisions();
     if (inSchool()) coursework(kind === 'selective' ? 3 : kind === 'engaged' ? 2 : 1);
     social(dayIndex);
-    // After the degree, to New York, where the class lives.
-    if (!inSchool() && sim.player.home?.cityId !== 'us-ny-newyork') run('career.relocate', { cityId: 'us-ny-newyork', kind: 'shared' });
+    career();
+    money();
+    // After the degree, to the agency's town, else New York, where the class lives.
+    const to = sim.player.career?.agencyCity ?? 'us-ny-newyork';
+    if (!inSchool() && sim.player.home?.cityId !== to && sim.player.currentLocationId === sim.player.home?.cityId) run('career.relocate', { cityId: to, kind: 'shared' });
     // A save and a reload each first of the month.
     noticed();
     if (z.day === 1 && z.month === 1) yearly.push(measure(String(z.year)));
@@ -200,6 +251,14 @@ function measure(label) {
     notesLedger: cw ? { subjects: notesOf(cw).length, mostGiven: Math.max(0, ...notesOf(cw).map((n) => n.given)) } : undefined,
     incidentsOpen: (p.school?.classmates ?? []).reduce((n, m) => n + (personOf(m).incidents ?? []).filter((x) => !x.repaired).length, 0),
     breaches: breaches(sim.universe).length,
+    worth: Math.round(Object.values(sim.universe.accounts).filter((a) => a.ownerId === p.id).reduce((n, a) => n + a.balance, 0) / 100),
+    city: p.home?.cityId, agency: p.career?.agencyId ?? null, credits: p.career?.credits.length ?? 0,
+    reputation: Math.round(attributesOf(sim, p).reputation * 10) / 10,
+    productions: productionsOf(p).length,
+    offBook: productionsOf(p).filter((x) => x.history.some((h) => h.what === 'You came in off book')).length,
+    withClassmates: productionsOf(p).filter((x) => x.slots.some((y) => y.performer.kind === 'classmate')).length,
+    sharedDays: productionsOf(p).reduce((n, x) => n + x.slots.reduce((m, y) => m + y.shared, 0), 0),
+    classCredits: (p.school?.classmates ?? []).reduce((n, m) => n + (m.career?.credits.length ?? 0), 0),
   };
 }
 

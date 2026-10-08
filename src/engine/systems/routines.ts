@@ -13,6 +13,14 @@
  * drink at home names a bottle, which next time is gone, so it isn't a
  * step. Up to twelve.
  *
+ * **Asking someone out** (from 2026-10-08): a step names the person, the
+ * kind of evening and its hour on the day the routine runs, or a few days on,
+ * and runs as `social.invite` with that time: the same command and checks
+ * as the People screen's, the same answer, the same reason given, and a no
+ * stops the routine there. Until then a routine made no plans with anybody,
+ * so routines and the screens couldn't be held to the same rules for the
+ * social life.
+ *
  * **At a time** (from 2026-10-02): a routine can be set for an hour on the
  * days of the week chosen, in the local time where you are. Its moment stops
  * the clock as anything that wants you does (`stopsClock`), without being a
@@ -70,7 +78,18 @@ export function routineTimeRefusal(t: Partial<RoutineTime>): string | undefined 
 // with every check the button has; a refusal (nothing open, a need not met, new feedback unread) stops the routine there.
 // A part's lines learned between calls joined them on 2026-10-07 (`school.learn_part`, `systems/production.ts`); catching up the
 // blocking and working a note answer what happened at a call, so they stay the player's.
-export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit', 'school.prepare', 'school.learn_part']);
+export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit', 'school.prepare', 'school.learn_part', 'social.invite']);
+/** The evenings a routine can ask somebody to: the ones that need nothing else chosen (a meal needs its restaurant and dish, a class its studio, a game its court, a show its night). */
+export const ROUTINE_INVITES: Readonly<Record<string, string>> = { coffee: 'For A Coffee', study: 'To Study Together', walk: 'For A Walk', film: 'To The Cinema' };
+
+/** A step's command as it's sent when it runs: an invitation's time resolved from its hour and days on, where you are, on the day it runs. */
+export function stepToRun(sim: Simulation, step: RoutineStep): RoutineStep {
+  if (step.kind !== 'social.invite') return step;
+  const { hour, minute, inDays, ...rest } = step.payload as { hour: number; minute: number; inDays: number };
+  const today = zonedParts(sim.now, sim.zone);
+  const day = new Date(Date.UTC(today.year, today.month - 1, today.day + Number(inDays ?? 0)));
+  return { kind: 'social.invite', payload: { ...rest, at: instantFromZoned({ year: day.getUTCFullYear(), month: day.getUTCMonth() + 1, day: day.getUTCDate(), hour: Number(hour), minute: Number(minute ?? 0) }, sim.zone) } };
+}
 export const MAX_STEPS = 12;
 
 export const routinesOf = (person: Person): Routine[] => (person.routines ??= []);
@@ -84,6 +103,12 @@ export function stepLabel(person: Person, step: RoutineStep): string {
     case 'clothes.wear_outfit': return `Wear ${person.outfits?.find((o) => o.id === step.payload.outfitId)?.name ?? 'An Outfit'}`;
     case 'school.prepare': return `${COURSES.find((c) => c.code === step.payload.course)?.name ?? 'A Course'}: ${TEMPLATES.flatMap((t) => t.activities).find((a) => a.id === step.payload.activity)?.label ?? 'Prepare'}`;
     case 'school.learn_part': return ({ rep: 'Learn Your Part At Yale Rep', cabaret: 'Learn Your Cabaret Part', summer: 'Learn Your Summer Cabaret Part' } as Record<string, string>)[String(step.payload.which)] ?? 'Learn Your Part';
+    case 'social.invite': {
+      const who = person.contacts?.find((c) => c.id === step.payload.contactId)?.name.split(' ')[0] ?? 'A Friend';
+      const h = Number(step.payload.hour);
+      const days = Number(step.payload.inDays ?? 0);
+      return `Ask ${who} ${ROUTINE_INVITES[String(step.payload.what)] ?? 'Out'}, ${days === 0 ? 'That Day' : days === 1 ? 'The Next Day' : `${days} Days On`} At ${h % 12 || 12}${Number(step.payload.minute ?? 0) ? `:${String(step.payload.minute).padStart(2, '0')}` : ''} ${h < 12 ? 'AM' : 'PM'}`;
+    }
     default: return step.kind;
   }
 }
@@ -96,6 +121,14 @@ export function routineRefusal(name: string, steps: readonly RoutineStep[]): str
   if (steps.some((s) => !ROUTINE_COMMANDS.has(s.kind))) return 'A routine is made of everyday things.';
   if (steps.some((s) => s.kind === 'life.look_after' && !LOOKING_AFTER[s.payload.action as LookAfter])) return 'That isn’t something you can do for yourself.';
   if (steps.some((s) => s.kind === 'school.learn_part' && s.payload.which !== undefined && !(['school', 'rep', 'cabaret', 'summer'] as unknown[]).includes(s.payload.which))) return 'That isn’t a part you could be cast in.';
+  for (const s of steps) {
+    if (s.kind !== 'social.invite') continue;
+    if (typeof s.payload.contactId !== 'string' || !s.payload.contactId) return 'Choose who to ask.';
+    if (!ROUTINE_INVITES[String(s.payload.what)]) return 'A routine asks them for a coffee, to study, for a walk or to the cinema.';
+    const h = Number(s.payload.hour); const m = Number(s.payload.minute ?? 0); const d = Number(s.payload.inDays ?? 0);
+    if (!Number.isInteger(h) || h < 0 || h > 23 || !Number.isInteger(m) || m < 0 || m > 59) return 'Choose an hour and a minute.';
+    if (!Number.isInteger(d) || d < 0 || d > 6) return 'An evening up to six days on.';
+  }
   // A school step names a course that has work, and a step that work has.
   for (const s of steps) {
     if (s.kind !== 'school.prepare') continue;
@@ -131,7 +164,8 @@ export function runRoutine(sim: Simulation, routineId: string, exec: (kind: stri
   if (!routine) return { done: 0, stopped: { step: 0, label: 'The Routine', error: 'No such routine.' } };
   for (let i = 0; i < routine.steps.length; i += 1) {
     const step = routine.steps[i]!;
-    const result = exec(step.kind, step.payload);
+    const sent = stepToRun(sim, step);
+    const result = exec(sent.kind, sent.payload);
     if (!result.ok) return { done: i, stopped: { step: i, label: stepLabel(sim.player, step), error: result.error ?? 'It couldn’t be done.' } };
   }
   return { done: routine.steps.length };

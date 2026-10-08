@@ -16,10 +16,10 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 405
+- Verified (journey): 406
 - Implemented But Unverified: 3
 - Partially Implemented: 0
-- Commands in all: 408
+- Commands in all: 409
 
 ## Commands
 
@@ -96,6 +96,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `career.furnish_wardrobe` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/fittings.ts` | — | — | — | — | 2 | journey-career.test.ts |
 | `career.headshots` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | A session and prints come to …, which the bank can’t cover. | — | — | — | 2 | journey-career.test.ts |
 | `career.improv` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | School is your class for now; a course waits for the summer or the degree.; You’re in a course.; The course is …, which the bank can’t cover. | improv; status | — | career.improv | 2 | journey-career.test.ts |
+| `career.learn_part` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/companies.ts` | — (also learnPartRefusal) | lines | — | — | 2 | journey-career.test.ts |
 | `career.leave` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | — | — | — | — | 2 | journey-career.test.ts |
 | `career.leave_manager` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | You have no manager.; The contract runs a year from …. | renewal | — | — | 2 | journey-career.test.ts |
 | `career.pass` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open. | status | — | — | 2 | journey-career.test.ts |
@@ -281,7 +282,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `land.sell` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s for sale already.; A house is being built on it. | — | — | land.sale_closes | 4 | journey-holdings.test.ts |
 | `land.split` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | That isn’t land you own.; It’s let to a farmer: end the lease first.; The bank couldn’t pay the fee to split it. (also splitRefusal) | parcelsOf (added to) | Yes | land.tax_year | 3 | journey-holdings.test.ts |
 | `land.withdraw` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | You have no offer accepted. | parcelsOf (added to) | Yes | land.loan_month; land.tax_year | 2 | journey-holdings.test.ts |
-| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 43 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 5 more |
+| `life.look_after` | Verified (journey) | Looking After Yourself | BelongingsWorkspace.tsx ClothesWorkspace.tsx RoutinesWorkspace.tsx TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; Your clothes are all clean.; That’s at home.; The payment didn’t go through.; and 1 more (also lookAfterRefusal, showerMinutesRefusal, dryRefusal, watchRefusal) | — | Yes | — | 44 | connected-day.test.ts; journey-belongings.test.ts; journey-career.test.ts; and 6 more |
 | `life.set_automation` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx RoutinesWorkspace.tsx | `systems/automation.ts` | There’s no such shortcut. | automation | — | — | 7 | journey-belongings.test.ts |
 | `life.sleep` | Verified (journey) | Sleep | TimeControls.tsx | `systems/life.ts` | You can’t go to sleep in the past.; You’re at … until …. | lastSleptAt; awakeSince; wokeWithDebt | — | — | 17 | connected-day.test.ts; journey-day-at-home.test.ts; journey-residence.test.ts; and 1 more |
 | `lighting.buy_bulbs` | Verified (journey) | Rent And A Roof | HomesWorkspace.tsx | `systems/lighting.ts` | — | — | — | — | 2 | journey-food.test.ts |
@@ -331,7 +332,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `roadside.join` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | The payment didn’t go through. (also joinRefusal) | roadside | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `roadside.leave` | Verified (journey) | A Car Of Your Own | VehiclesWorkspace.tsx | `systems/roadside.ts` | You aren’t a member of a club. | — | Yes | roadside.renew | 2 | journey-cars.test.ts |
 | `routine.delete` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | There’s no routine of yours by that name. | routines | — | — | 4 | journey-clothes.test.ts |
-| `routine.save` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | — (also routineRefusal) | routinesOf (added to) | — | — | 8 | journey-clothes.test.ts; journey-school-week.test.ts |
+| `routine.save` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | — (also routineRefusal) | routinesOf (added to) | — | — | 9 | journey-clothes.test.ts; journey-school-week.test.ts; journey-social.test.ts |
 | `routine.set_time` | Verified (journey) | Rent And A Roof | RoutinesWorkspace.tsx | `systems/routines.ts` | No such routine. (also routineTimeRefusal) | — | — | — | 2 | journey-clothes.test.ts |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 3 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 2 | journey-three-students.test.ts |
@@ -362,7 +363,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `social.cancel_stay` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/houseguests.ts` | Nobody’s coming to stay.; … is here already. | — | Yes | social.stay_day | 2 | journey-people.test.ts |
 | `social.divorce` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | You aren’t married.; Your divorce is under way already. | — | Yes | — | 2 | journey-people.test.ts |
 | `social.host` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/hosting.ts` | No such recipe.; … cooks for … at the most. (also hostRefusal, cookRefusal) | items | Yes | social.host | 3 | journey-people.test.ts |
-| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, fineWeatherRefusal, cancelRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 8 | journey-people.test.ts; journey-social.test.ts |
+| `social.invite` | Verified (journey) | People | PeopleWorkspace.tsx RoutinesWorkspace.tsx | `systems/people.ts` | — (also inviteRefusal, courtRefusal, fineWeatherRefusal, cancelRefusal, askingRefusal, asksOutRefusal, moveInRefusal) | — | Yes | — | 8 | journey-people.test.ts; journey-social.test.ts |
 | `social.marry` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/marriage.ts` | The bank couldn’t pay for it. (also marryRefusal) | marriage | Yes | social.wedding; social.anniversary | 2 | journey-people.test.ts |
 | `social.move_in` | Verified (journey) | People | PeopleWorkspace.tsx | `systems/people.ts` | You don’t know them. (also moveInRefusal) | — | — | — | 2 | journey-people.test.ts |
 | `social.reschedule` | Implemented But Unverified | People | PeopleWorkspace.tsx | `systems/people.ts` | Choose a time to come.; You have … then. (also cancelRefusal) | — | — | — | 1 | — |
@@ -585,7 +586,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `social.anniversary` | `systems/marriage.ts` | systems/marriage.ts | — | — | social.anniversary | 1 |
 | `social.divorce_final` | `systems/marriage.ts` | systems/marriage.ts | — | Yes | — | 0 |
 | `social.host` | `systems/hosting.ts` | systems/hosting.ts | items | Yes | — | 5 |
-| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 6 |
+| `social.meet` | `systems/people.ts` | systems/people.ts | — | Yes | — | 7 |
 | `social.stay` | `systems/houseguests.ts` | systems/career.ts; systems/houseguests.ts | — | — | social.stay_day | 1 |
 | `social.stay_day` | `systems/houseguests.ts` | systems/houseguests.ts | — | Yes | social.stay_day | 2 |
 | `social.wedding` | `systems/marriage.ts` | systems/marriage.ts | marriage | — | social.anniversary | 1 |
