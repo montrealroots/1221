@@ -13,9 +13,10 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
-import { CLASS_SOCIAL, MEET_KIND, SOCIAL_LATE, classAtSchool, contactsOf, knowTheClass, type Contact } from '@/engine/systems/people';
+import { CLASS_SOCIAL, MEET_KIND, SOCIAL_LATE, classAtSchool, classBond, contactsOf, knowTheClass, levelOf, type Contact } from '@/engine/systems/people';
+import { CLASS } from '@/engine/systems/classmates';
 import { whatTheyAsk } from '@/engine/systems/reachingout';
-import { bondMove, CALL_KIND } from '@/engine/systems/school';
+import { BONDS, bondMove, CALL_KIND } from '@/engine/systems/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 
 const zone = 'America/New_York';
@@ -39,6 +40,18 @@ describe('the class as people from the first week', () => {
     // Called again, nothing doubles.
     classAtSchool(sim, sim.player);
     expect(contactsOf(sim.player).filter((c) => c.classmate !== undefined)).toHaveLength(linked.length);
+  });
+
+  it('a classmate grown close at school reads as a friend there, by the bond as the degree reads it', () => {
+    const sim = life('ss-near');
+    tended(sim, at(9, 1, 12));
+    expect(levelOf(classmateOf(sim, 0))).toBe('Acquaintance');
+    sim.player.school!.classmates[0]!.bond = BONDS.friend;
+    sim.player.school!.classmates[1]!.bond = BONDS.close;
+    classAtSchool(sim, sim.player);
+    expect(levelOf(classmateOf(sim, 0))).toBe('Friend');
+    expect(levelOf(classmateOf(sim, 1))).toBe('Close Friend');
+    expect(levelOf(classmateOf(sim, 2))).toBe('Acquaintance');
   });
 
   it('a save from before has them made on its next class day', () => {
@@ -83,6 +96,11 @@ describe('time together', () => {
     expect(r.reason).toMatch(/has rehearsal calls from three/);
     expect(r.counter).toBeDefined();
     expect(zonedParts(r.counter!, zone).hour).toBe(19);
+    // Asked the same again, the same no is remembered once, the latest (`rememberAnswer`), not a line a time.
+    const words = `Said no to a coffee at Atticus Market: ${r.reason}`;
+    expect(sim.must<{ accepted: boolean }>({ kind: 'social.invite', payload: { contactId: c.id, at: at(1, 26, 17, 0, 2027), what: 'coffee' } }).accepted).toBe(false);
+    expect(classmateOf(sim, i).memory.filter((m) => m.what === words)).toHaveLength(1);
+    expect(classmateOf(sim, i).memory[0]!.what).toBe(words);
     expect(sim.must<{ accepted: boolean }>({ kind: 'social.invite', payload: { contactId: c.id, at: r.counter!, what: 'coffee' } }).accepted).toBe(true);
     // A polite no isn't held against anybody: the no to the morning left nothing behind.
     expect(classmateOf(sim).stoodUp).toBeUndefined();
@@ -106,6 +124,13 @@ describe('time together', () => {
     expect(again.accepted).toBe(false);
     expect(again.reason).toMatch(/you called off at short notice/);
     expect(sim.execute({ kind: 'social.cancel', payload: { itemId: near.id } }).error).toBe('There’s no such meeting on your calendar.');
+    // Made right, the bond comes back by what the late call took, and no further: letting somebody down and apologizing isn't a way to get closer.
+    tended(sim, at(9, 1, 16));
+    sim.must({ kind: 'school.make_amends', payload: { mate: 0 } });
+    expect(sim.player.school!.classmates[0]!.bond).toBeCloseTo(b0 + bondMove(sim.player, CLASS_SOCIAL.cutShort) + bondMove(sim.player, CLASS.amends.lateCancel.bond), 5);
+    expect(-CLASS_SOCIAL.cutShort).toBeGreaterThanOrEqual(CLASS.amends.lateCancel.bond);
+    expect(-CLASS.study.missed.bond).toBeGreaterThanOrEqual(CLASS.amends.missed.bond);
+    expect(classmateOf(sim).cutShort).toBeUndefined();
   });
 
   it('moved to the next day, it’s there once; held by a call past its start, you come late, or not at all', () => {
@@ -202,5 +227,18 @@ describe('after the degree', () => {
     expect(after[0]!.hours).toBeGreaterThanOrEqual(30);
     expect(after[0]!.memory.some((m) => m.what === 'A coffee at Atticus Market')).toBe(true);
     void MS_DAY;
+  });
+
+  it('an evening together after it still moves the bond, and a late call-off still costs it', () => {
+    const sim = life('ss-after');
+    tended(sim, at(9, 1, 12));
+    const c = classmateOf(sim);
+    sim.player.school!.standing = 'graduated';
+    knowTheClass(sim, sim.player, sim.player.school!.classmates);
+    const b0 = sim.player.school!.classmates[0]!.bond ?? 0;
+    classBond(sim.player, c, CLASS_SOCIAL.bondPerHour * 2);
+    expect(sim.player.school!.classmates[0]!.bond).toBeCloseTo(b0 + bondMove(sim.player, 2), 5);
+    classBond(sim.player, c, CLASS_SOCIAL.cutShort);
+    expect(sim.player.school!.classmates[0]!.bond).toBeCloseTo(b0 + bondMove(sim.player, 2) + bondMove(sim.player, CLASS_SOCIAL.cutShort), 5);
   });
 });

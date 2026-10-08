@@ -98,7 +98,8 @@ import { BODY } from '../content/body';
 /** Genres whose work fights or dances whatever the part asks (`GENRE_READS`): action and the musical. */
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
-import { RIVALS, castClassmate, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
+import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
+import { makeProduction, playerReplaced, productionOf, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
@@ -480,7 +481,7 @@ export interface CareerRecord {
   lastBookedAt?: Instant;
   auditions: Audition[];
   bookings: Booking[];
-  credits: { roleId: string; year: number; cityId: CareerCity }[];
+  credits: { roleId: string; year: number; cityId: CareerCity; /** The production and the part, from 2026-10-09 (`systems/companies.ts`). */ productionId?: string; part?: string }[];
   unions: {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
@@ -1510,10 +1511,14 @@ function finishJob(s: Simulation, person: Person, career: CareerRecord, booking:
     const television = role.series !== undefined || role.arc === true || role.id.startsWith('guest') || role.id === 'costar';
     if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
     if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
-    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
+    const production = productionOf(person, booking.id);
+    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId, ...(production ? { productionId: production.id, part: production.slots.find((x) => x.performer.kind === 'player')?.part ?? 'Your Part' } : {}) });
     // A castmate known from it (`systems/people.ts`, from 2026-10-01): the former classmate cast in it where there was one
     // (from 2026-10-08), the person you already know, never a second; otherwise somebody new.
-    if (booking.castmate === undefined || !workedWith(s, person, booking.castmate, role.label, workDays(booking).length)) metAtWork(s, person, workCityOf(booking), booking.id, role.label);
+    // A production with classmates who shared its days knows them already, day by day (`workedDay`); a booking from before
+    // productions kept its one castmate at the end (`workedWith`); otherwise somebody new.
+    const sharedWithClass = production?.slots.some((x) => x.performer.kind === 'classmate' && x.shared > 0);
+    if (!sharedWithClass && (booking.castmate === undefined || production || !workedWith(s, person, booking.castmate, role.label, workDays(booking).length))) metAtWork(s, person, workCityOf(booking), booking.id, role.label);
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
     if (television) {
       const a = FILM_ROAD.audience;
@@ -1850,6 +1855,7 @@ export function registerCareer(sim: Simulation): void {
           return;
         }
         booking.status = 'released';
+        playerReplaced(s, person, booking.id, 'recast while unable to work');
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
         sendHome(s, booking);
@@ -1858,6 +1864,7 @@ export function registerCareer(sim: Simulation): void {
         return;
       }
       booking.status = 'fired';
+      playerReplaced(s, person, booking.id, 'replaced for not turning up');
       earn(s, person, ATTRIBUTES.reputation.fired);
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
@@ -1869,6 +1876,8 @@ export function registerCareer(sim: Simulation): void {
     }
     booking.worked += 1;
     booking.owed += 1;
+    // Side by side with classmates in the cast that day, where they were (`workedDay`).
+    workedDay(s, person, booking.id, booking.worked, booking.worked + (booking.missedNights ?? 0) >= workDays(booking).length);
     const cur = saveCurrency(s.universe);
     const call = workDays(booking)[booking.worked + (booking.missedNights ?? 0) - 1]!;
     const unit = unitRate(booking, item.at, cur);
@@ -2329,8 +2338,9 @@ export function registerCareer(sim: Simulation): void {
     booking.status = 'accepted';
     career.lastBookedAt = s.now;
     const workCity = workCityOf(booking);
-    // A former classmate cast in it too, now and then, where one suits it and is free (`castClassmate`, from 2026-10-08).
-    if (booking.castmate === undefined && days.length) { const i = castClassmate(s, person, booking.id, role, workCity, days[0]!.at, days.at(-1)!.at); if (i !== undefined) booking.castmate = i; }
+    // The production it is, its parts and who plays them (`makeProduction`, from 2026-10-09): a former classmate in another
+    // part now and then, where one fits it and is free. Until then a classmate was cast as the player's own part.
+    if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at));
     const zone = zoneOf(workCity);
     for (const d of days) {
       s.schedule({

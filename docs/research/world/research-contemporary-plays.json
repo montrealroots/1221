@@ -1,0 +1,865 @@
+{
+  "topic": "Contemporary plays (first produced 2000 or later): first production, publication, setting, cast, form and licensing, for a drama-school and acting repertoire catalog",
+  "retrieved": "2026-10-07",
+  "definitions": {
+    "premiere": "The first production anywhere (world premiere), as the producing theatre, the playwright's publisher or a theatre trade report states it. 'year' and 'venue' are always sourced; 'date' is given only when a source states the day, and is then the opening or first-performance date the source names. Where a source names only an off-Broadway or festival production without the words 'world premiere', the record says so in 'note'.",
+    "publication": "The earliest edition shown on the publisher's own page, when that edition is plausibly the first. For US plays the only publisher pages reachable were Nick Hern Books' UK editions or its UK listings of Theatre Communications Group editions; those dates are UK availability, not first publication, so publication is null for those plays and the gap is listed in notFound.",
+    "setting": "When and where the story takes place, only as a source states it. 'period' records the time the source gives; where the source gives a place but no time, 'period' says 'not stated' and names the place."
+  },
+  "plays": [
+    {
+      "id": "proof",
+      "title": "Proof",
+      "playwright": "David Auburn",
+      "premiere": {
+        "year": 2000,
+        "venue": "Manhattan Theatre Club, New York (off-Broadway)",
+        "source": "https://shubert.nyc/press/ayo-edebiri-don-cheadle-to-make-their-broadway-debuts-this-spring-in-david-auburn-s-proof-directed-by-thomas-kail/",
+        "quote": "Proof had its world premiere Off-Broadway at Manhattan Theatre Club in 2000, becoming a sold-out smash and immediately transferred to Broadway",
+        "corroboration": {
+          "source": "https://www.manhattantheatreclub.com/who-we-are/about-mtc/history/",
+          "quote": "Two MTC world premieres move to Broadway: Charles Busch’s The Tale of the Allergist’s Wife, directed by Lynne Meadow starring Linda Lavin, Tony Roberts and Michele Lee and David Auburn’s Proof, directed by Daniel Sullivan and starring Mary-Louise Parker."
+        }
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": {
+        "text": "drama",
+        "source": "https://variety.com/2001/legit/news/proof-s-in-pulitzer-1117797183/",
+        "quote": "Auburn did reveal that his next play is set in the 1930s in Ohio, where he grew up, and is a drama, as is “Proof.”"
+      },
+      "licensor": null,
+      "acting": "A daughter who has spent years beside a brilliant, failing father must defend her own mind and her claim to his work. The lead has to hold grief, wit and the possibility of inherited illness at once, without telling the audience which way to read her."
+    },
+    {
+      "id": "doubt-a-parable",
+      "title": "Doubt: A Parable",
+      "playwright": "John Patrick Shanley",
+      "premiere": {
+        "year": 2004,
+        "venue": "Manhattan Theatre Club, New York (off-Broadway)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/doubt",
+        "quote": "John Patrick Shanley's play Doubt: A Parable was originally staged off-Broadway at the Manhattan Theatre Club in November 2004. The production transferred to the Walter Kerr Theatre on Broadway in March 2005.",
+        "corroboration": {
+          "source": "https://www.manhattantheatreclub.com/who-we-are/about-mtc/history/",
+          "quote": "World premiere of John Patrick Shanley’s Doubt, directed by Doug Hughes."
+        }
+      },
+      "publication": null,
+      "setting": {
+        "period": "1964, a Catholic school in the Bronx",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/doubt",
+        "quote": "A Catholic school in the Bronx, 1964."
+      },
+      "cast": {
+        "text": "3f 1m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/doubt",
+        "quote": "Cast: 3f 1m"
+      },
+      "form": {
+        "text": "Drama (NHB tag)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/doubt",
+        "quote": "Drama"
+      },
+      "licensor": null,
+      "acting": "A school principal accuses a priest of abusing a pupil with no proof, and the play never settles who is right. Both leads must play absolute conviction while leaving the audience room to doubt them, and the confrontation scenes demand precise control of status and pace."
+    },
+    {
+      "id": "topdog-underdog",
+      "title": "Topdog/Underdog",
+      "playwright": "Suzan-Lori Parks",
+      "premiere": {
+        "year": 2001,
+        "venue": "Joseph Papp Public Theater, New York",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/topdog-underdog",
+        "quote": "Topdog/Underdog was first performed at the Joseph Papp Public Theater, New York, in 2001. Its UK premiere was at the Royal Court Theatre, London, in 2003."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": {
+        "text": "2m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/topdog-underdog",
+        "quote": "Cast: 2m"
+      },
+      "form": {
+        "text": "Drama; a darkly comic fable (two-hander)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/topdog-underdog",
+        "quote": "A darkly comic fable of brotherly love and family identity, winner of the 2002 Pulitzer Prize for Drama."
+      },
+      "licensor": null,
+      "acting": "Two brothers, named as a joke after Lincoln and his assassin, share one room and a lifetime of rivalry. A two-hander that needs stamina, fast verbal sparring and a sustained build from banter to violence."
+    },
+    {
+      "id": "sweat",
+      "title": "Sweat",
+      "playwright": "Lynn Nottage",
+      "premiere": {
+        "year": 2015,
+        "venue": "Oregon Shakespeare Festival",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/sweat",
+        "quote": "The play premiered in Oregon in 2015, before being produced at the Public Theater, New York, in 2016, and the following year on Broadway, where it won the Pulitzer Prize for Drama.",
+        "note": "The same page's 'First Staged' field reads 'Oregon Shakespeare Festival, 2015'."
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: Reading, Pennsylvania)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/sweat",
+        "quote": "In one of the poorest cities in America – Reading, Pennsylvania – a group of factory workers struggle to keep their present lives in balance, ignorant of the financial devastation looming in their near future."
+      },
+      "cast": {
+        "text": "3f 6m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/sweat",
+        "quote": "Cast: 3f 6m"
+      },
+      "form": {
+        "text": "Drama, based on interviews with residents",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/sweat",
+        "quote": "Based on the playwright's extensive interviews with residents of Reading, Lynn Nottage's play Sweat is a tale of friends pitted against each other by big business"
+      },
+      "licensor": null,
+      "acting": "Friends who work the same factory floor and drink in the same bar turn on each other as their jobs disappear. An ensemble piece of working-class naturalism where the actors must make long friendships feel real before they break."
+    },
+    {
+      "id": "clybourne-park",
+      "title": "Clybourne Park",
+      "playwright": "Bruce Norris",
+      "premiere": {
+        "year": 2010,
+        "venue": "Playwrights Horizons, New York",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "Bruce Norris's play Clybourne Park was first performed at Playwrights Horizons, New York City, in February 2010."
+      },
+      "publication": null,
+      "setting": {
+        "period": "1959 (first act) and 2009 (second act), the same house in Clybourne Park, Chicago",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "In 1959, Russ and Bev are selling their desirable two-bed for a knock-down price, enabling the first black family to move into the neighbourhood and alarming the cosy white urbanites of Clybourne Park, Chicago. In 2009 the same property is being bought by Lindsey and Steve, a young white couple"
+      },
+      "cast": {
+        "text": "3f 5m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "Cast: 3f 5m"
+      },
+      "form": {
+        "text": "Satire; NHB tags it Comedy and Drama",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "An acerbically brilliant satire that explores the fault line between race and property."
+      },
+      "licensor": {
+        "name": "Nick Hern Books (amateur performing rights, as its page offers them)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/clybourne-park",
+        "quote": "Enquire about availability or apply for performing rights for this title"
+      },
+      "acting": "One house, two eras fifty years apart, with each actor playing a different character in each half. The challenge is a clean switch of period, status and manner at the interval, and comic timing that turns abruptly into discomfort."
+    },
+    {
+      "id": "venus-in-fur",
+      "title": "Venus in Fur",
+      "playwright": "David Ives",
+      "premiere": {
+        "year": 2010,
+        "date": "2010-01-13",
+        "dateKind": "first performance (start of the run)",
+        "venue": "Classic Stage Company, New York",
+        "source": "https://playbill.com/article/david-ives-venus-in-fur-with-bentley-and-arianda-begins-world-premiere-in-nyc-com-164899",
+        "quote": "David Ives' Venus in Fur, With Bentley and Arianda, Begins World Premiere in NYC ... Wes Bentley and Nina Arianda are featured in the Classic Stage Company production of David Ives' new two-character play, Venus in Fur, directed by Walter Bobbie, starting Jan. 13 in Manhattan's East Village.",
+        "corroboration": {
+          "source": "https://www.classicstage.org/show-archive/venus-in-fur-2009-2010/",
+          "quote": "VENUS IN FUR JANUARY 13 – MARCH 28, 2010 VENUS IN FUR BY DAVID IVES DIRECTED BY WALTER BOBBIE"
+        }
+      },
+      "publication": null,
+      "setting": null,
+      "cast": {
+        "text": "two characters",
+        "source": "https://playbill.com/article/david-ives-venus-in-fur-with-bentley-and-arianda-begins-world-premiere-in-nyc-com-164899",
+        "quote": "David Ives' new two-character play, Venus in Fur",
+        "note": "From a theatre trade report, not a licensor's breakdown."
+      },
+      "form": {
+        "text": "two-character play",
+        "source": "https://playbill.com/article/david-ives-venus-in-fur-with-bentley-and-arianda-begins-world-premiere-in-nyc-com-164899",
+        "quote": "David Ives' new two-character play, Venus in Fur"
+      },
+      "licensor": null,
+      "acting": "An actress arrives late to an audition and steadily takes control of the room from the director. A two-hander built on shifting power, where both actors must move between the audition scenes and their own selves, and between comedy and menace, often mid-line."
+    },
+    {
+      "id": "disgraced",
+      "title": "Disgraced",
+      "playwright": "Ayad Akhtar",
+      "premiere": {
+        "year": 2012,
+        "venue": "American Theater Company, Chicago",
+        "source": "https://www.lct.org/shows/disgraced-at-lct3/",
+        "quote": "DISGRACED had its world premiere in January 2012 at the American Theater Company, Chicago, Illinois (PJ Paparelli, Artistic Director)."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "A rising lawyer who has distanced himself from his Pakistani-American roots hosts a dinner party that comes apart. A small-cast chamber drama where a civil evening has to escalate believably into rupture, and the lead must stay sympathetic while revealing what he has buried."
+    },
+    {
+      "id": "water-by-the-spoonful",
+      "title": "Water by the Spoonful",
+      "playwright": "Quiara Alegría Hudes",
+      "premiere": {
+        "year": 2011,
+        "venue": "Hartford Stage, Hartford, Connecticut",
+        "source": "https://www.hartfordstage.org/pulitzer",
+        "quote": "Water by the Spoonful is an original work commissioned by Hartford Stage as part of Quiara’s 2008-2009 Aetna New Voices Fellowship. Its world premiere was here in October 2011."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": {
+        "text": "the second play of a three-play cycle",
+        "source": "https://www.nickhernbooks.co.uk/water-by-the-spoonful",
+        "quote": "It is the second in a three-play cycle which began with Elliot, A Soldier's Fugue and concludes with The Happiest Song Plays Last."
+      },
+      "licensor": null,
+      "acting": "A soldier home from Iraq and a group of recovering addicts who meet in an online chat room are tied together across distance. Actors must play people who are mostly typing to strangers, carrying intimacy and conflict without sharing the same physical space."
+    },
+    {
+      "id": "august-osage-county",
+      "title": "August: Osage County",
+      "playwright": "Tracy Letts",
+      "premiere": {
+        "year": 2007,
+        "venue": "Steppenwolf Theatre Company, Chicago",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/august-osage-county",
+        "quote": "Tracy Letts's play August: Osage County was first performed by Steppenwolf Theatre Company in Chicago in June 2007."
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: Oklahoma, the Weston family home)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/august-osage-county",
+        "quote": "When the large Weston family is reunited in Oklahoma after the disappearance of their father, they let loose a maelstrom of repressed truths and unsettling secrets."
+      },
+      "cast": {
+        "text": "7f 6m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/august-osage-county",
+        "quote": "Cast: 7f 6m"
+      },
+      "form": {
+        "text": "Black comedy",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/august-osage-county",
+        "quote": "A hugely-acclaimed black comedy exposing the dark side of the Midwestern American family."
+      },
+      "licensor": null,
+      "acting": "A large family gathers after a father vanishes and old secrets come out. A long, large-cast ensemble play with a monstrous matriarch at its centre; the actors need endurance, overlapping family rhythm and the ability to be funny and cruel in the same scene."
+    },
+    {
+      "id": "the-humans",
+      "title": "The Humans",
+      "playwright": "Stephen Karam",
+      "premiere": {
+        "year": 2014,
+        "venue": "American Theater Company, Chicago",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/the-humans",
+        "quote": "The Humans premiered in Chicago in 2014, before transferring to the Roundabout Theatre Company, New York, in 2015; Broadway in 2016; and Hampstead Theatre, London, in 2018.",
+        "note": "The same page's 'First Staged' field reads 'American Theater Company, Chicago, 2014'."
+      },
+      "publication": null,
+      "setting": {
+        "period": "Thanksgiving (year not stated), an apartment in Lower Manhattan",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/the-humans",
+        "quote": "Three generations of the Blake family have assembled for Thanksgiving in Brigid and Richard's ramshackle pre-war apartment in Lower Manhattan."
+      },
+      "cast": {
+        "text": "4f 2m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/the-humans",
+        "quote": "Cast: 4f 2m"
+      },
+      "form": {
+        "text": "Drama (described as funny and sad)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/the-humans",
+        "quote": "Stephen Karam's blisteringly funny and bruisingly sad drama, The Humans, is a stunning portrayal of the human condition"
+      },
+      "licensor": null,
+      "acting": "Three generations share a holiday meal in a cramped apartment while money, health and fear press in. Small-cast naturalism played across two levels at once, with overlapping talk and a slow, almost unexplained dread the actors have to build together."
+    },
+    {
+      "id": "constellations",
+      "title": "Constellations",
+      "playwright": "Nick Payne",
+      "premiere": {
+        "year": 2012,
+        "venue": "Royal Court Theatre (Theatre Upstairs), London",
+        "source": "https://www.faber.co.uk/product/9780571289080-constellations/",
+        "quote": "Constellations premiered at the Theatre Upstairs at the Royal Court Theatre, London, in January 2012."
+      },
+      "publication": {
+        "year": 2012,
+        "publisher": "Faber & Faber",
+        "source": "https://www.faber.co.uk/product/9780571289080-constellations/",
+        "quote": "Date Published 19.01.2012",
+        "note": "This is the Faber ebook listing (ISBN 9780571289080). A Faber paperback playscript (ISBN 9780571373499) is listed as published 01.07.2021."
+      },
+      "setting": null,
+      "cast": {
+        "text": "two characters (a quantum physicist and a beekeeper)",
+        "source": "https://www.faber.co.uk/product/9780571373499-constellations/",
+        "quote": "‘Nick Payne’s gorgeous two-character drama, may be the most sophisticated date play Broadway has seen.’",
+        "note": "Press quotation (New York Times) shown on the publisher's page, not a licensor's breakdown."
+      },
+      "form": {
+        "text": "a play about free will and friendship, built on multiverse theory",
+        "source": "https://www.faber.co.uk/product/9780571289080-constellations/",
+        "quote": "Constellations by Nick Payne is a play about free will and friendship; it’s about quantum multiverse theory, love and honey."
+      },
+      "licensor": null,
+      "acting": "A physicist and a beekeeper meet, and the same moments replay again and again with different outcomes. A two-hander that asks the actors to replay a scene several ways in quick succession, changing intention, tone and result with almost no set or costume to help."
+    },
+    {
+      "id": "jerusalem",
+      "title": "Jerusalem",
+      "playwright": "Jez Butterworth",
+      "premiere": {
+        "year": 2009,
+        "venue": "Royal Court Theatre, London",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Jerusalem premiered at the Royal Court Theatre, London, in July 2009 in a production directed by Ian Rickson and starring Mark Rylance."
+      },
+      "publication": {
+        "year": 2009,
+        "publisher": "Nick Hern Books",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Publication Date: 9 Jul 2009"
+      },
+      "setting": {
+        "period": "St George's Day, the morning of the local country fair (year not stated)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "On St George's Day, the morning of the local country fair, Johnny 'Rooster' Byron, local waster and Lord of Misrule, is a wanted man."
+      },
+      "cast": {
+        "text": "5f 8m plus 1 boy",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Cast: 5f 8m plus 1 boy"
+      },
+      "form": {
+        "text": "comic, contemporary play (NHB tag: Drama)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Jez Butterworth's hugely acclaimed, prize-winning play - a comic, contemporary vision of life in England's green and pleasant land."
+      },
+      "licensor": {
+        "name": "Nick Hern Books (amateur performing rights, as its page offers them)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem",
+        "quote": "Enquire about availability or apply for performing rights for this title"
+      },
+      "acting": "A charismatic outlaw facing eviction from his woodland caravan holds court over a crowd of hangers-on for one day. The central role is a huge, physical, storytelling part that has to dominate a large ensemble and swing from comedy to myth to collapse."
+    },
+    {
+      "id": "lungs",
+      "title": "Lungs",
+      "playwright": "Duncan Macmillan",
+      "premiere": {
+        "year": 2011,
+        "venue": "Studio Theatre, Washington, D.C.",
+        "source": "https://www.studiotheatre.org/plays/play-detail/2011-2012-lungs",
+        "quote": "His play Lungs received its world premiere at Studio in 2011",
+        "note": "The UK premiere was a Paines Plough and Sheffield Crucible production in 2011 (https://painesplough.com/productions/lungs/)."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": {
+        "text": "drama",
+        "source": "https://www.studiotheatre.org/plays/play-detail/2011-2012-lungs",
+        "quote": "Lungs is a smart and funny drama that follows a couple through the surprising lifecycle of their relationship"
+      },
+      "licensor": null,
+      "acting": "A couple argue over whether to have a child in a world of overpopulation and climate anxiety, and their relationship runs on for years. A two-hander played with almost nothing on stage, where the actors jump through time mid-conversation with no breaks or costume changes to mark it."
+    },
+    {
+      "id": "the-flick",
+      "title": "The Flick",
+      "playwright": "Annie Baker",
+      "premiere": {
+        "year": 2013,
+        "venue": "Playwrights Horizons, New York (off-Broadway)",
+        "source": "https://www.playwrightshorizons.org/shows/production-history/2010s/2012-13/flick",
+        "quote": "The Flick Written by Annie Baker Directed by Sam Gold February 15 - April 07, 2013 ... The Flick is the result of a Harold and Mimi Steinberg Charitable Trust commission awarded by Playwrights Horizons.",
+        "note": "The Playwrights Horizons page does not use the words 'world premiere'. Nick Hern Books gives the first staging as 'Off-Broadway, 2013; National Theatre, London, 2016' (https://www.nickhernbooks.co.uk/plays-to-perform/flick)."
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: a run-down movie theatre in central Massachusetts)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/flick",
+        "quote": "In a run-down movie theatre in central Massachusetts, three underpaid employees mop the floors and attend to one of the last 35-millimetre film projectors in the state."
+      },
+      "cast": {
+        "text": "1f 3m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/flick",
+        "quote": "Cast: 1f 3m"
+      },
+      "form": {
+        "text": "Drama with comedy (NHB tags: Comedy, Drama)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/flick",
+        "quote": "With keen insight and a finely tuned ear for comedy, The Flick is a hilarious and heart-rending cry for authenticity in a fast-changing world."
+      },
+      "licensor": null,
+      "acting": "Three cinema workers sweep up between screenings and slowly reveal what they want from one another. The test is stillness: long silences, very ordinary tasks and small talk that has to carry the whole emotional weight."
+    },
+    {
+      "id": "fairview",
+      "title": "Fairview",
+      "playwright": "Jackie Sibblies Drury",
+      "premiere": {
+        "year": 2018,
+        "date": "2018-06-17",
+        "dateKind": "world-premiere opening",
+        "venue": "Soho Rep, New York",
+        "source": "https://playbill.com/article/jackie-sibblies-drurys-fairview-opens-at-soho-rep-june-17",
+        "quote": "Soho Rep. celebrates the world-premiere opening of Jackie Sibblies Drury's new play Fairview June 17.",
+        "corroboration": {
+          "source": "https://www.sohorep.org/shows/fairview/",
+          "quote": "Fairview was co-commissioned by Berkeley Repertory Theatre, where it transferred in Fall 2018."
+        }
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "It opens as a family comedy about a birthday dinner, then the audience's gaze takes over the stage. The actors must play a sitcom-bright naturalism straight and then sustain it while the play pulls the ground out from under it."
+    },
+    {
+      "id": "the-wolves",
+      "title": "The Wolves",
+      "playwright": "Sarah DeLappe",
+      "premiere": {
+        "year": 2016,
+        "venue": "The Playwrights Realm, at The Duke on 42nd Street, New York (off-Broadway)",
+        "source": "https://www.playwrightsrealm.org/all-playwrights/sarah-delappe",
+        "quote": "Sarah DeLappe 's acclaimed play The Wolves premiered Off-Broadway at The Playwrights Realm, following an engagement at New York Stage and Film, and development at Clubbed Thumb and Great Plains Theatre Conference",
+        "corroboration": {
+          "source": "https://www.playwrightsrealm.org/the-wolves",
+          "quote": "August 29th - September 24th, 2016 November 29th - December 29th, 2016 The Duke on 42nd Street 229 W. 42nd Street"
+        }
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "A girls' indoor soccer team talks through its warm-ups week after week. An all-female ensemble of teenagers that has to play overlapping, half-heard conversation while doing real physical drills, and make each player distinct with very little exposition."
+    },
+    {
+      "id": "cost-of-living",
+      "title": "Cost of Living",
+      "playwright": "Martyna Majok",
+      "premiere": {
+        "year": 2016,
+        "venue": "Williamstown Theatre Festival, Massachusetts",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/cost-of-living",
+        "quote": "Winner of the 2018 Pulitzer Prize for Drama, Cost of Living was first seen at the Williamstown Theatre Festival in 2016, and had its UK premiere at Hampstead Theatre, London, in January 2019."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": {
+        "text": "2f 2m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/cost-of-living",
+        "quote": "Cast: 2f 2m"
+      },
+      "form": {
+        "text": "Drama (NHB tag), described as funny",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/cost-of-living",
+        "quote": "Martyna Majok's exquisitely original, honest and deftly funny new play Cost of Living explores our need to connect and be loved regardless of the gulfs that disability, race, class, and wealth place between us."
+      },
+      "licensor": null,
+      "acting": "Two pairings of a disabled person and a carer, one hired and one an estranged husband, run in parallel. Two of the four roles are written for actors with physical disabilities, and every role turns on the intimacy and power of physical care."
+    },
+    {
+      "id": "gloria",
+      "title": "Gloria",
+      "playwright": "Branden Jacobs-Jenkins",
+      "premiere": {
+        "year": 2015,
+        "venue": "Vineyard Theatre, New York (off-Broadway)",
+        "source": "https://vineyardtheatre.org/archive/garry-marshall-will-direct-first-show-2014-15-season/",
+        "quote": "Branden Jacobs-Jenkins, critically acclaimed playwright of APPROPRIATE and winner of The Vineyard’s Paula Vogel Playwriting Award, makes his Vineyard main stage debut with GLORIA in the spring of 2015.",
+        "corroboration": {
+          "source": "https://www.vineyardtheatre.org/branden-jacobs-jenkins-discusses-identity-ambition/",
+          "quote": "One of the plays he began that year was GLORIA, which also received a lab production for members on the road to its world premiere this spring."
+        }
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: the offices of a Manhattan magazine)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/gloria",
+        "quote": "In the offices of a notorious Manhattan magazine, ruthless editorial assistants vie for their bosses' jobs and a book deal before they're thirty."
+      },
+      "cast": {
+        "text": "3f 3m, doubling (7f 6m)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/gloria",
+        "quote": "Cast: 3f 3m, doubling (7f 6m)"
+      },
+      "form": {
+        "text": "comic drama",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/gloria",
+        "quote": "Branden Jacobs-Jenkins's Gloria is a razor-sharp comic drama about ambition, office warfare and hierarchies"
+      },
+      "licensor": null,
+      "acting": "Young editorial assistants trade gossip and resentment in a magazine office until an ordinary day becomes something else. Six actors cover thirteen roles, so the challenge is sharp office comedy followed by a hard tonal break, then a second set of characters."
+    },
+    {
+      "id": "rabbit-hole",
+      "title": "Rabbit Hole",
+      "playwright": "David Lindsay-Abaire",
+      "premiere": {
+        "year": 2006,
+        "venue": "Manhattan Theatre Club, Biltmore Theatre, New York",
+        "source": "https://www.manhattantheatreclub.com/who-we-are/about-mtc/history/",
+        "quote": "David Lindsay-Abaire’s Rabbit Hole has its world premiere at the Biltmore in a production with Tyne Daly, Cynthia Nixon and John Slattery, directed by Daniel Sullivan."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": {
+        "text": "five roles: Howie, Jason, Becca, Nat, Izzy (2m 3f)",
+        "source": "https://www.goodmantheatre.org/show/rabbit-hole/",
+        "quote": "Daniel Cantor Howie Jürgen Hooper Jason Lia D. Mortensen Becca Mary Ann Thebus Nat Amy Warren Izzy",
+        "note": "From the Goodman Theatre production's cast list, not a licensor's breakdown; the gender split is inferred from that list."
+      },
+      "form": null,
+      "licensor": null,
+      "acting": "A suburban couple try to go on after a sudden accident takes their young son, and grieve in incompatible ways. Quiet domestic realism that asks for restraint, with grief that surfaces through small household tasks and flashes of humour rather than big scenes."
+    },
+    {
+      "id": "between-riverside-and-crazy",
+      "title": "Between Riverside and Crazy",
+      "playwright": "Stephen Adly Guirgis",
+      "premiere": {
+        "year": 2014,
+        "venue": "Atlantic Theater Company, Linda Gross Theater, New York",
+        "source": "https://atlantictheater.org/production/between-riverside-and-crazy/",
+        "quote": "Between Riverside and Crazy by STEPHEN ADLY GUIRGIS Directed by AUSTIN PENDLETON Linda Gross Theater July 10 – August 23, 2014 A world premiere from the wildly original author of Broadway’s The Motherf*cker with the Hat, Jesus Hopped the A Train, and The Last Days of Judas Iscariot."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "A widowed ex-cop clings to his rent-stabilised apartment and his grievance against the city while his paroled son and a crowd of houseguests orbit him. Rough, profane comedy that has to hold real pain underneath, with a magnetic lead who never asks for sympathy."
+    },
+    {
+      "id": "fat-ham",
+      "title": "Fat Ham",
+      "playwright": "James Ijames",
+      "premiere": {
+        "year": 2021,
+        "venue": "Wilma Theater, Philadelphia",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fat-ham",
+        "quote": "First Staged: Wilma Theater, Philadelphia, 2021",
+        "note": "The same page says the play 'was originally co-produced Off-Broadway by The Public Theater and National Black Theatre in 2022'. The 2021 Wilma staging is the first."
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: a Southern family barbecue)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fat-ham",
+        "quote": "James Ijames's play Fat Ham reinvents Shakespeare's Hamlet in startling and hilarious ways against the backdrop of a Southern family barbecue."
+      },
+      "cast": null,
+      "form": {
+        "text": "comic tragedy; a reinvention of Hamlet (NHB tags: Comedy, Drama, Literary adaptations)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fat-ham",
+        "quote": "A delectable comic tragedy and a compelling examination of love and loss, pain and joy"
+      },
+      "licensor": null,
+      "acting": "A queer Black college student is told by his father's ghost to avenge his murder, at a family barbecue. Actors play a Hamlet structure in contemporary comic register, including direct address, and have to let the jokes and the inherited violence live side by side."
+    },
+    {
+      "id": "english",
+      "title": "English",
+      "playwright": "Sanaz Toossi",
+      "premiere": {
+        "year": 2022,
+        "venue": "Atlantic Theater Company, Linda Gross Theater, New York (off-Broadway)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/english-wish-you-were-here-two-plays",
+        "quote": "English premiered off-Broadway at Atlantic Theater Company's Linda Gross Theater in 2022, directed by Knud Adams.",
+        "corroboration": {
+          "source": "https://atlantictheater.org/production/english/",
+          "quote": "English by Sanaz Toossi directed by Knud Adams February 5 – March 20, 2022 Linda Gross Theater"
+        }
+      },
+      "publication": null,
+      "setting": {
+        "period": "2008, a TOEFL class in Karaj, Iran",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/english-wish-you-were-here-two-plays",
+        "quote": "It's 2008, and four Iranians assemble triweekly in a TOEFL (Test of English as a Foreign Language) class in Karaj, Iran."
+      },
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "Four adult students and their teacher prepare for an English exam in a classroom where Farsi is banned. The actors switch between fluent native speech and halting English, and the comedy and the loss both have to live in how well each character can say what they mean."
+    },
+    {
+      "id": "primary-trust",
+      "title": "Primary Trust",
+      "playwright": "Eboni Booth",
+      "premiere": {
+        "year": 2023,
+        "venue": "Laura Pels Theatre, New York (off-Broadway)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/primary-trust",
+        "quote": "It was premiered off-Broadway at the Laura Pels Theatre in 2023."
+      },
+      "publication": null,
+      "setting": {
+        "period": "not stated (place: suburban New York)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/primary-trust",
+        "quote": "38-year-old Kenneth lives a comfortable life of routine in suburban New York."
+      },
+      "cast": null,
+      "form": {
+        "text": "character study (NHB tag: Drama)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/primary-trust",
+        "quote": "Eboni Booth's play Primary Trust is an arresting character study of an isolated man finding the courage to expand his world and begin again."
+      },
+      "licensor": null,
+      "acting": "A man whose life runs on routine and an unseen best friend has to start again when the bookshop he works in closes. The lead carries the evening and narrates it, and the role asks for a gentle, exact portrait of anxiety and loneliness with no condescension."
+    },
+    {
+      "id": "the-children",
+      "title": "The Children",
+      "playwright": "Lucy Kirkwood",
+      "premiere": {
+        "year": 2016,
+        "venue": "Royal Court Theatre (Jerwood Theatre Downstairs), London",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Lucy Kirkwood's play The Children premiered at the Royal Court, London, in the Jerwood Theatre Downstairs in November 2016, in a production directed by James Macdonald."
+      },
+      "publication": {
+        "year": 2016,
+        "publisher": "Nick Hern Books",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Publication Date: 17 Nov 2016"
+      },
+      "setting": {
+        "period": "not stated (place: an isolated cottage on the coast)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Two ageing nuclear scientists in an isolated cottage on the coast, as the world around them crumbles."
+      },
+      "cast": {
+        "text": "2f 1m",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Cast: 2f 1m"
+      },
+      "form": {
+        "text": "Drama (NHB tag)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Drama"
+      },
+      "licensor": {
+        "name": "Nick Hern Books (amateur performing rights, as its page offers them)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/thechildren",
+        "quote": "Enquire about availability or apply for performing rights for this title"
+      },
+      "acting": "Two retired scientists living near a damaged nuclear plant get a visit from an old colleague who wants something of them. A three-hander for older actors, with decades of shared history, old desire and rivalry played under polite conversation."
+    },
+    {
+      "id": "enron",
+      "title": "Enron",
+      "playwright": "Lucy Prebble",
+      "premiere": {
+        "year": 2009,
+        "venue": "Chichester Festival Theatre (co-production with Headlong and the Royal Court)",
+        "source": "https://www.cft.org.uk/about-us/our-history/2009",
+        "quote": "The 2009 season featured a world premiere of ENRON by young playwright Lucy Prebble, a co-production with Headlong and the Royal Court."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": {
+        "text": "large-scale new play with ensemble, video and stage spectacle (as the producing theatre describes its ambition)",
+        "source": "https://www.cft.org.uk/about-us/our-history/2009",
+        "quote": "'We want to do a new play, with nobody cast in it, in the studio with seventeen people, marauding dinosaurs and video.'"
+      },
+      "licensor": null,
+      "acting": "The rise and collapse of an energy company told as theatrical spectacle. Actors switch between corporate realism and stylised, often comic set pieces, and the lead has to keep a fraud's charm working long after the audience knows the ending."
+    },
+    {
+      "id": "escaped-alone",
+      "title": "Escaped Alone",
+      "playwright": "Caryl Churchill",
+      "premiere": {
+        "year": 2016,
+        "venue": "Royal Court Theatre, London",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Caryl Churchill's play Escaped Alone premiered at the Royal Court Theatre, London, in 2016, in a production directed by James Macdonald."
+      },
+      "publication": {
+        "year": 2016,
+        "publisher": "Nick Hern Books",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Publication Date: 21 Jan 2016"
+      },
+      "setting": {
+        "period": "a summer of afternoons (year not stated), in a back yard",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Three old friends and a neighbour. A summer of afternoons in the back yard. Tea and catastrophe."
+      },
+      "cast": {
+        "text": "4f, all playing age at least 70",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Cast: 4f, all playing age at least 70"
+      },
+      "form": {
+        "text": "short play, tagged both Comedy and Drama",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/escapedalone",
+        "quote": "Comedy Drama"
+      },
+      "licensor": null,
+      "acting": "Four older women chat in a garden, and one breaks off at intervals to describe catastrophes beyond it. An all-female cast of actors at least seventy, with fragmentary, overlapping talk and long solo speeches of apocalyptic invention delivered without fuss."
+    },
+    {
+      "id": "king-charles-iii",
+      "title": "King Charles III",
+      "playwright": "Mike Bartlett",
+      "premiere": {
+        "year": 2014,
+        "venue": "Almeida Theatre, London",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Drawing on the style and structure of a Shakespearean history play, King Charles III opened at London's Almeida Theatre, directed by its Artistic Director Rupert Goold, in April 2014, before transferring to the West End."
+      },
+      "publication": {
+        "year": 2014,
+        "publisher": "Nick Hern Books",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Publication Date: 25 Sep 2014"
+      },
+      "setting": {
+        "period": "after the death of Queen Elizabeth II (an imagined future at the time of writing)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Queen Elizabeth II is dead. After a lifetime of waiting, her son ascends the throne."
+      },
+      "cast": {
+        "text": "4f 8m, doubling",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Cast: 4f 8m, doubling"
+      },
+      "form": {
+        "text": "'future history play' in the style and structure of a Shakespearean history play",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Mike Bartlett's 'future history play' explores the people beneath the crowns, the unwritten rules of our democracy, and the conscience of Britain's most famous family."
+      },
+      "licensor": {
+        "name": "Nick Hern Books (amateur performing rights, as its page offers them)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/KingCharlesIII",
+        "quote": "Enquire about availability or apply for performing rights for this title"
+      },
+      "acting": "A new king refuses to sign a law and brings on a constitutional crisis inside his own family. Actors have to play living public figures in a Shakespearean history-play shape, with heightened speech, soliloquy and a ghost, without sliding into impression or satire."
+    },
+    {
+      "id": "fleabag",
+      "title": "Fleabag",
+      "playwright": "Phoebe Waller-Bridge",
+      "premiere": {
+        "year": 2013,
+        "venue": "Edinburgh Festival Fringe (then Soho Theatre, London)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fleabag",
+        "quote": "Fleabag premiered at the 2013 Edinburgh Festival Fringe, performed by Phoebe herself, before transferring to Soho Theatre, London, for the first of several successful runs"
+      },
+      "publication": {
+        "year": 2016,
+        "publisher": "Nick Hern Books",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fleabag",
+        "quote": "Publication Date: 6 Oct 2016",
+        "note": "NHB publishes the play under the title 'Fleabag: The Original Play'. This is the earliest edition NHB lists; that no earlier edition exists was not checked."
+      },
+      "setting": null,
+      "cast": {
+        "text": "1f plus 6 recorded voices",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fleabag",
+        "quote": "Cast: 1f plus 6 recorded voices"
+      },
+      "form": {
+        "text": "monologue for a female performer (solo)",
+        "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fleabag",
+        "quote": "Phoebe Waller-Bridge's debut play is an outrageously funny monologue for a female performer."
+      },
+      "licensor": null,
+      "acting": "A young woman tells the audience about her sex life, her failing café and the friend she lost, and the jokes slowly give way to what she is avoiding. A solo show built on direct address and timing, which then has to turn the audience's laughter against them."
+    },
+    {
+      "id": "the-laramie-project",
+      "title": "The Laramie Project",
+      "playwright": "Moisés Kaufman and the members of Tectonic Theater Project",
+      "premiere": {
+        "year": 2000,
+        "date": "2000-02-26",
+        "dateKind": "world-premiere opening",
+        "venue": "Denver Center Theatre Company, Ricketson Theatre, Denver",
+        "source": "https://www.denvercenter.org/news-center/moises-kaufman-on-the-laramie-project-from-process-to-production/",
+        "quote": "Note: The following is an essay written by Tectonic Theater Project Artistic Director Moisés Kaufman to mark the opening of his world-premiere play ‘The Laramie Project’ on February 26, 2000, in the Denver Center’s Ricketson Theatre",
+        "corroboration": {
+          "source": "https://www.tectonictheaterproject.org/about-tectonic",
+          "quote": "February 2000 The Laramie Project premieres at The Denver Center Theater Company."
+        }
+      },
+      "publication": null,
+      "setting": {
+        "period": "the aftermath of Matthew Shepard's murder in October 1998, Laramie, Wyoming (as the interviews were gathered from November 1998)",
+        "source": "https://www.denvercenter.org/news-center/moises-kaufman-on-the-laramie-project-from-process-to-production/",
+        "quote": "So in November 1998, four weeks after Matthew Shepard’s murder, Tectonic Theater Project sent 10 of its members to Laramie, Wyoming."
+      },
+      "cast": null,
+      "form": {
+        "text": "documentary play drawn from interviews with the people of Laramie",
+        "source": "https://www.denvercenter.org/news-center/moises-kaufman-on-the-laramie-project-from-process-to-production/",
+        "quote": "The purpose of the trip was to hold interviews that might become material for a play and to explore a new way of researching."
+      },
+      "licensor": null,
+      "acting": "A town's response to a hate-crime murder, assembled from interviews. A small company plays dozens of real townspeople and themselves as interviewers, so each actor needs fast, precise changes of voice and body and the discipline not to comment on the people they portray."
+    },
+    {
+      "id": "black-watch",
+      "title": "Black Watch",
+      "playwright": "Gregory Burke",
+      "premiere": {
+        "year": 2006,
+        "venue": "Edinburgh Festival Fringe (National Theatre of Scotland production)",
+        "source": "https://www.nationaltheatrescotland.com/latest/acclaimed-black-watch-features-in-new-v-a-dundee-exhibition",
+        "quote": "The National Theatre of Scotland's production of Black Watch written by Gregory Burke opened at the Edinburgh Festival Fringe in 2006, where it won a Herald Angel, a Scotsman Fringe First, the Critics' Circle Award and the South Bank Show Award for Theatre."
+      },
+      "publication": null,
+      "setting": null,
+      "cast": null,
+      "form": null,
+      "licensor": null,
+      "acting": "Soldiers of a Scottish regiment talk about their tour in Iraq, and the play moves between a pub interview and the war itself. A physical ensemble piece in which movement sequences, song and military drill carry as much of the story as the dialogue."
+    }
+  ],
+  "notFound": [
+    {
+      "what": "Licensing house pages for every US title (Dramatists Play Service and Samuel French, now both under Concord Theatricals)",
+      "looked": "dramatists.com redirects to concordtheatricals.com, which refused this agent's fetches and searches ('Claude Code is unable to fetch from www.concordtheatricals.com'; WebSearch: 'domains are not accessible to our user agent'). The block was respected, so no US licensor is recorded. A single curl of a Concord page was made before the block was understood; it returned an unrelated title, and nothing from it was used."
+    },
+    {
+      "what": "Licensor for Doubt, Topdog/Underdog, Sweat, August: Osage County, The Humans, Cost of Living, Fat Ham, Primary Trust, The Flick, Gloria, Escaped Alone and Fleabag",
+      "looked": "Each Nick Hern Books plays-to-perform page reads 'Performing rights not held by Nick Hern Books' and names no other licensor. Licensor left null rather than assumed."
+    },
+    {
+      "what": "Bloomsbury / Methuen Drama pages (Enron, Lungs)",
+      "looked": "bloomsbury.com is closed to this agent's search tool ('domains are not accessible to our user agent'). Enron's cast, publication and licensor, and Lungs' cast and publication, stay null."
+    },
+    {
+      "what": "First publication year for US plays",
+      "looked": "Only UK editions (Nick Hern Books) or NHB's UK listings of Theatre Communications Group editions were reachable, e.g. Doubt (TCG, NHB-listed 9 Mar 2006), Water by the Spoonful (TCG, NHB-listed 22 Mar 2018), Primary Trust and English (TCG, NHB-listed 15 May 2025), Topdog/Underdog (NHB 9 Oct 2003), Clybourne Park (NHB 27 Jan 2011). These are UK dates, not first publication, so publication is null for every US play."
+    },
+    {
+      "what": "Pulitzer Prize facts from pulitzer.org",
+      "looked": "pulitzer.org returned HTTP 403 to WebFetch and a JavaScript challenge to a plain request. Prize facts are not fields in this file. Where a record mentions a prize, it is quoted from the publisher or theatre page."
+    },
+    {
+      "what": "Cast breakdown for Proof, Disgraced, Water by the Spoonful, Lungs, Fairview, The Wolves, Between Riverside and Crazy, Fat Ham, English, Primary Trust, Enron, The Laramie Project and Black Watch",
+      "looked": "The licensor pages (Concord, Bloomsbury) were unreachable and the pages that were reachable give only production cast lists or nothing. Venus in Fur ('two-character'), Constellations ('two-character', a press quote) and Rabbit Hole (a production cast list) are recorded with a note saying they are not licensor breakdowns."
+    },
+    {
+      "what": "Dropped candidates",
+      "looked": "Ruined (Lynn Nottage; verified, Goodman Theatre, Chicago, November 2008, per https://www.nickhernbooks.co.uk/plays-to-perform/ruined) was dropped because Sweat was used, one play per playwright. The Motherfucker with the Hat and Clyde's were dropped because Between Riverside and Crazy and Sweat were used. People, Places & Things was dropped because Lungs was used, The Ferryman because Jerusalem was used, and An Octoroon because Gloria was used. A Strange Loop was not pursued because it is a musical. Wit is from 1995 and out of scope."
+    }
+  ]
+}

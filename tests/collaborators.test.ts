@@ -14,7 +14,8 @@ import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
 import { roleById } from '@/engine/systems/career';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
-import { RIVALS, castClassmate, classMonth, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
+import { RIVALS, classMonth, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
+import { COMPANY, productionOf, productionsOf } from '@/engine/systems/companies';
 import { contactsOf, knowTheClass } from '@/engine/systems/people';
 import { MEMORY_KEPT, reachOut } from '@/engine/systems/reachingout';
 import { BONDS, bondMove, evenCraft } from '@/engine/systems/school';
@@ -39,60 +40,132 @@ const role = roleById('costar');
 const first = at(2026, 10, 5, 8);
 const last = first + 4 * MS_DAY;
 
-describe('cast beside you', () => {
-  it('now and then, where the part suits them and they’re free; their credit once; how you get on decides nothing', () => {
-    const sim = graduate('co-cast');
-    const credits = () => sim.player.school!.classmates.reduce((n, m) => n + (m.career?.credits.length ?? 0), 0);
-    // Rivals all, and still cast: friendship and rivalry aren't read.
-    for (const m of sim.player.school!.classmates) m.bond = -60;
-    let cast = 0;
-    const before = credits();
-    for (let n = 0; n < 60; n += 1) if (castClassmate(sim, sim.player, `b${n}`, role, 'us-ny-newyork', first + n * 10 * MS_DAY, last + n * 10 * MS_DAY) !== undefined) cast += 1;
-    expect(cast).toBeGreaterThan(0);
-    expect(cast).toBeLessThan(30);
-    expect(credits() - before).toBe(cast);
-    // Busy on one job, not cast on another at the same time.
-    const twin = graduate('co-busy');
-    for (const m of twin.player.school!.classmates) m.career!.busyUntil = last + MS_DAY;
-    for (let n = 0; n < 60; n += 1) expect(castClassmate(twin, twin.player, `b${n}`, role, 'us-ny-newyork', first, last)).toBeUndefined();
-    // A craft that can't carry the part: never cast.
-    const weak = graduate('co-weak');
-    for (const m of weak.player.school!.classmates) m.craft = evenCraft(20);
-    for (let n = 0; n < 60; n += 1) expect(castClassmate(weak, weak.player, `b${n}`, role, 'us-ny-newyork', first, last)).toBeUndefined();
-  });
-
-  it('a job taken with one, worked to its end, through a save: the castmate is the classmate already known, no second contact', () => {
-    let sim = graduate('co-job');
-    // The booking id whose draw casts a classmate, found on copies of the save.
-    let id = '';
-    for (let n = 0; n < 200 && !id; n += 1) { const copy = reload(sim); if (castClassmate(copy, copy.player, `job${n}`, role, 'us-ny-newyork', first, last) !== undefined) id = `job${n}`; }
-    expect(id).not.toBe('');
-    const b: Booking = { id, roleId: 'costar', cityId: 'us-ny-newyork', starts: first, units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+describe('a production and the parts in it', () => {
+  /** A job offered and taken through the public command, for a booking id. */
+  const offerAndTake = (sim: Simulation, id: string, roleId = 'lort-b', starts = first) => {
+    const b: Booking = { id, roleId, cityId: 'us-ny-newyork', starts, units: roleId === 'costar' ? 5 : 1, rehearsalWeeks: roleId === 'costar' ? 0 : 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
-    const contacts = contactsOf(sim.player).length;
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: id } }).ok).toBe(true);
-    const i = careerOf(sim.player).bookings.find((x) => x.id === id)!.castmate!;
-    expect(i).toBeDefined();
-    const mate = sim.player.school!.classmates[i]!;
-    expect(mate.career!.busyUntil).toBeGreaterThan(first);
-    const c0 = contactsOf(sim.player).find((c) => c.classmate === i)!;
-    const hours0 = c0.hours;
-    expect(c0.memory[0]!.what).toBe(`Cast in ${role.label} with you`);
-    sim = reload(sim);
-    // Up before each seven o'clock call, as a player sets an alarm for it; tended between.
+    const r = sim.execute({ kind: 'career.accept', payload: { bookingId: id } });
+    expect(r.ok, r.error).toBe(true);
+    return productionOf(sim.player, id)!;
+  };
+  /** Up before each call, tended between, to a time. */
+  const workThrough = (sim: Simulation, id: string, until: number) => {
     const calls = sim.universe.scheduled.filter((x) => x.kind === 'career.work' && x.payload.bookingId === id).map((x) => x.at).sort((x, y) => x - y);
-    for (const call of [...calls, last + 2 * MS_DAY]) {
+    for (const call of [...calls, until]) {
       while (sim.now < call - 60_000) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(call - 60_000, sim.now + 6 * MS_HOUR)); }
       sim.player.awakeSince = sim.now;
-      sim.advanceTo(Math.min(call + 60_000, last + 2 * MS_DAY));
+      sim.advanceTo(Math.min(call + 60_000, until));
     }
-    expect(careerOf(sim.player).bookings.find((x) => x.id === id)!.status).toBe('worked');
-    // No new contact for the job: the classmate known already, nearer for it.
-    expect(contactsOf(sim.player)).toHaveLength(contacts);
+  };
+
+  it('has an identity and distinct parts: the player’s one, the others by medium, nobody in two', () => {
+    const sim = graduate('pr-parts');
+    const stage = offerAndTake(sim, 'stage-1');
+    expect(stage.slots.map((x) => x.size)).toEqual(['principal', 'supporting', 'featured', 'understudy']);
+    expect(stage.slots.filter((x) => x.performer.kind === 'player')).toHaveLength(1);
+    expect(stage.title).toMatch(/, New York 20\d\d$/);
+    const classmates = stage.slots.flatMap((x) => (x.performer.kind === 'classmate' ? [x.performer.i] : []));
+    expect(new Set(classmates).size).toBe(classmates.length);
+    expect(productionsOf(sim.player).filter((p) => p.bookingId === 'stage-1')).toHaveLength(1);
+  });
+
+  it('casts a former classmate in a part of their own now and then, where they fit it, are free and are signed or local; rivals as readily', () => {
+    const sim = graduate('pr-cast');
+    for (const m of sim.player.school!.classmates) m.bond = -60;
+    let cast = 0;
+    const credits0 = sim.player.school!.classmates.reduce((n, m) => n + (m.career?.credits.length ?? 0), 0);
+    for (let n = 0; n < 40; n += 1) {
+      const p = offerAndTake(sim, `j${n}`, 'lort-b', first + n * 40 * MS_DAY);
+      cast += p.slots.filter((x) => x.performer.kind === 'classmate').length;
+      // Each classmate cast holds one part, and their credit is theirs: none credited with the player's.
+      for (const x of p.slots) if (x.performer.kind === 'classmate') expect(x.size).not.toBe('principal');
+      careerOf(sim.player).bookings.find((b) => b.id === `j${n}`)!.status = 'released';
+    }
+    expect(cast).toBeGreaterThan(0);
+    expect(sim.player.school!.classmates.reduce((n, m) => n + (m.career?.credits.length ?? 0), 0) - credits0).toBe(cast);
+    // A craft that can't carry the part: never cast.
+    const weak = graduate('pr-weak');
+    for (const m of weak.player.school!.classmates) m.craft = evenCraft(20);
+    for (let n = 0; n < 40; n += 1) expect(offerAndTake(weak, `w${n}`, 'lort-b', first + n * 40 * MS_DAY).slots.some((x) => x.performer.kind === 'classmate')).toBe(false);
+  });
+
+  it('one classmate who fits is never cast twice in a production, nor said to be on another job when it’s this one', () => {
+    const sim = graduate('pr-one');
+    const fits = sim.player.school!.classmates.findIndex((m) => m.career);
+    sim.player.school!.classmates.forEach((m, i) => { if (i !== fits) m.craft = evenCraft(20); else m.craft = evenCraft(95); });
+    for (let n = 0; n < 400; n += 1) {
+      const p = offerAndTake(sim, `o${n}`, 'lort-b', first + n * 40 * MS_DAY);
+      const cast = p.slots.filter((x) => x.performer.kind === 'classmate').length;
+      expect(cast).toBeLessThanOrEqual(1);
+      expect(p.history.filter((h) => h.what.includes(sim.player.school!.classmates[fits]!.name) && h.what.includes('another job')).length * cast).toBe(0);
+      careerOf(sim.player).bookings.find((b) => b.id === `o${n}`)!.status = 'released';
+    }
+  });
+
+  it('a classmate holding a part elsewhere then is asked and isn’t cast, and the production remembers it', () => {
+    const sim = graduate('pr-busy');
+    for (const m of sim.player.school!.classmates) m.career!.busyUntil = first + 400 * MS_DAY;
+    let asked = 0;
+    for (let n = 0; n < 40; n += 1) {
+      const p = offerAndTake(sim, `b${n}`, 'lort-b', first + n * 5 * MS_DAY);
+      expect(p.slots.some((x) => x.performer.kind === 'classmate')).toBe(false);
+      asked += p.history.filter((h) => /was asked for .* and was on another job then/.test(h.what)).length;
+      careerOf(sim.player).bookings.find((b) => b.id === `b${n}`)!.status = 'released';
+    }
+    expect(asked).toBeGreaterThan(0);
+  });
+
+  it('worked to its end through a save: days side by side counted as they happen, credit naming the part, no second contact, no pay for their work', () => {
+    let sim = graduate('pr-job');
+    // The booking whose production casts a classmate, found on copies of the save.
+    let id = '';
+    for (let n = 0; n < 300 && !id; n += 1) {
+      const copy = reload(sim);
+      const b: Booking = { id: `job${n}`, roleId: 'costar', cityId: 'us-ny-newyork', starts: first, units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: copy.now + 2 * MS_DAY, offeredAt: copy.now, worked: 0, owed: 0 };
+      careerOf(copy.player).bookings.push(b);
+      copy.execute({ kind: 'career.accept', payload: { bookingId: b.id } });
+      if (productionOf(copy.player, b.id)?.slots.some((x) => x.performer.kind === 'classmate')) id = b.id;
+    }
+    expect(id).not.toBe('');
+    const contacts = contactsOf(sim.player).length;
+    const p = offerAndTake(sim, id, 'costar');
+    const slot = p.slots.find((x) => x.performer.kind === 'classmate')!;
+    const i = (slot.performer as { i: number }).i;
+    const hours0 = contactsOf(sim.player).find((c) => c.classmate === i)!.hours;
+    sim = reload(sim);
+    workThrough(sim, id, last + 2 * MS_DAY);
+    const booking = careerOf(sim.player).bookings.find((x) => x.id === id)!;
+    expect(booking.status).toBe('worked');
+    const after = productionOf(sim.player, id)!.slots.find((x) => x.id === slot.id)!;
     const c = contactsOf(sim.player).find((x) => x.classmate === i)!;
-    expect(c.hours).toBeGreaterThan(hours0);
-    expect(c.memory.some((m) => m.what === `Worked together on ${role.label}`)).toBe(true);
+    // Hours by days shared, not by the job.
+    expect(c.hours - hours0).toBeCloseTo(after.shared * COMPANY.hoursPerDay, 5);
+    if (after.shared > 0) {
+      expect(c.memory.some((m) => m.what === `Worked together on ${p.title}, ${after.shared} ${after.shared === 1 ? 'day' : 'days'} side by side`)).toBe(true);
+      expect(contactsOf(sim.player)).toHaveLength(contacts);
+    }
+    // The player's credit names the production and the player's part, once.
+    const mine = careerOf(sim.player).credits.filter((x) => x.productionId === p.id);
+    expect(mine).toHaveLength(1);
+    expect(mine[0]!.part).toBe('Your Part');
+    // Paid for the player's days only: the booking's days, nobody else's.
+    expect(booking.worked).toBe(5);
     expect(breaches(sim.universe)).toEqual([]);
+  });
+
+  it('replaced for not turning up: the part goes to a company actor, the history keeps who played it, no second credit', () => {
+    const sim = graduate('pr-fired');
+    const p = offerAndTake(sim, 'f1', 'costar');
+    // Away for the first call.
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    const firstCall = sim.universe.scheduled.filter((x) => x.kind === 'career.work' && x.payload.bookingId === 'f1').map((x) => x.at).sort((x, y) => x - y)[0]!;
+    while (sim.now < firstCall + MS_HOUR) sim.advanceTo(Math.min(firstCall + MS_HOUR, sim.now + 6 * MS_HOUR));
+    const q = productionOf(sim.player, 'f1')!;
+    expect(q.slots.find((x) => x.performer.kind === 'player')!.status).toBe('replaced');
+    expect(q.slots.filter((x) => x.status === 'cast' && x.size === 'principal' && x.performer.kind === 'company')).toHaveLength(1);
+    expect(q.history.some((h) => h.what.startsWith('Your part recast'))).toBe(true);
+    expect(careerOf(sim.player).credits.filter((x) => x.productionId === p.id)).toHaveLength(0);
   });
 });
 

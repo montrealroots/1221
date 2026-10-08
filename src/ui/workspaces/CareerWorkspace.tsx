@@ -23,6 +23,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
 import { footageRefusal } from '@/engine/systems/footage';
+import { productionOf } from '@/engine/systems/companies';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -453,7 +454,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{b.castmate !== undefined && person.school?.classmates[b.castmate] ? `, with ${person.school.classmates[b.castmate]!.name} from your class` : ''}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}</span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
@@ -953,4 +954,11 @@ function ReelRow() {
       <Fine>A reel is as good as what’s on it on average, so weak footage pulls strong down. Casting sees it on paid submissions: a strong reel is called back a little more often, an exceptional one more. It isn’t read again at the audition, where your craft is. The factors are SLATE’s estimate; the school’s film monologue is the school’s (DRAM 473b).</Fine>
     </div>
   );
+}
+
+/** A job's cast from its production (`systems/companies.ts`, from 2026-10-09): the classmates in it, by name and part. */
+function castLine(person: Person, bookingId: string): string {
+  const p = productionOf(person, bookingId);
+  const mates = (p?.slots ?? []).filter((x) => x.status === 'cast' && x.performer.kind === 'classmate').map((x) => `${person.school?.classmates[(x.performer as { i: number }).i]?.name ?? 'a classmate'} (${x.part})`);
+  return mates.length ? `, with ${mates.join(' and ')} from your class` : '';
 }

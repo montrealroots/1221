@@ -69,6 +69,7 @@ import { bedSleepsOne } from './furniture';
 import { incomeOf } from './marriage';
 import { atWork, atWorkReason } from './availability';
 import { mateBusy } from './coursework';
+import { noteIncident } from './classmates';
 import { childrenStay } from './support';
 import { LOOKING_AFTER, applyLookingAfter, dropInPrice } from './life';
 import { COURT_MET, TRAINING, courtRefusal, fineWeatherRefusal, homeCourts, type Court } from './dwelling';
@@ -239,6 +240,11 @@ export function classAtSchool(sim: Simulation, person: Person): void {
     }
     if ((mate.bond ?? 0) <= BONDS.rival) c.rival = true;
     else if ((mate.bond ?? 0) > BONDS.rival + 10) delete c.rival;
+    // A friend at school is one by the bond, as the degree reads it (`knowTheClass`), not only by the evenings out: the
+    // days in class are time together. Until 2026-10-09 every classmate read as an acquaintance until the degree, however
+    // close, found by the social journeys (`tools/social-lives.mjs`): no classmate reached out at school, nor could be asked out.
+    const bond = mate.bond ?? 0;
+    c.hours = Math.max(c.hours, bond >= BONDS.close ? HALL.close : bond >= BONDS.friend ? HALL.friend : 0);
   }
 }
 
@@ -248,11 +254,26 @@ export const CLASS_SOCIAL = { bondPerHour: 1, missed: -3, cutShort: -1 } as cons
 /** Whether a contact is a classmate still at school with the player. */
 export const atSchoolWith = (person: Person, c: Contact): boolean => c.classmate !== undefined && Boolean(person.school) && person.school!.standing !== 'graduated' && person.school!.standing !== 'dismissed';
 
-/** A classmate's bond at school, moved by time spent together or let down. */
+/**
+ * A classmate's bond, moved by time spent together or let down: at school and after it. Until 2026-10-09 only at
+ * school, and after the degree an evening out moved nothing, so the social journeys (`tools/social-lives.mjs`) found
+ * friends seen every month fading to even by the monthly drift (`RIVALS.fadePerMonth`) as if never seen.
+ */
 export function classBond(person: Person, c: Contact, by: number): void {
-  if (!atSchoolWith(person, c)) return;
+  if (c.classmate === undefined || !person.school) return;
   const mate = person.school!.classmates[c.classmate!];
   if (mate) mate.bond = clamp((mate.bond ?? 0) + bondMove(person, by), -100, 100);
+}
+
+/**
+ * An answer to being asked, remembered once: the same answer again is the
+ * latest, not another line. Until 2026-10-09 each was a line of its own, and
+ * the social journeys (`tools/social-lives.mjs`) found a classmate holding
+ * "Said no to a walk in the park: Imani lives in New Haven." fifteen times
+ * among sixty memories, which pushed the evenings that happened out.
+ */
+export function rememberAnswer(c: Contact, at: Instant, what: string): void {
+  c.memory = [{ at, what }, ...c.memory.filter((m) => m.what !== what)];
 }
 
 /** A castmate known from a job, in the town it was worked in. */
@@ -405,7 +426,7 @@ export function registerPeople(sim: Simulation): void {
     // At work then, a job of their own (`systems/availability.ts`, from 2026-10-02).
     const reason = declines(person, c, inv, s) ?? busyReason(s, person, c, inv.at, minutesOf(inv));
     const what = inviteWords(inv);
-    c.memory.unshift({ at: s.now, what: reason ? `Said no to ${what}: ${reason}` : `Said yes to ${what}` });
+    rememberAnswer(c, s.now, reason ? `Said no to ${what}: ${reason}` : `Said yes to ${what}`);
     if (reason) { const counter = counterTime(s, person, c, inv, reason); return { accepted: false, reason, ...(counter ? { counter } : {}) }; }
     arrange(s, person, c, inv);
     return { accepted: true };
@@ -426,6 +447,9 @@ export function registerPeople(sim: Simulation): void {
     if (person.currentLocationId !== where || lateBy > SOCIAL_LATE.most) {
       c.stoodUp = item.at;
       classBond(person, c, CLASS_SOCIAL.missed);
+      // Something to make right with a classmate (`school.make_amends`, from 2026-10-09), at school or after it.
+      const mate = c.classmate !== undefined ? person.school?.classmates[c.classmate] : undefined;
+      if (mate) noteIncident(mate, item.at, 'missed');
       c.memory.unshift({ at: item.at, what: holding && person.currentLocationId === where ? `Not there: held at ${holding.label}` : 'You didn’t come' });
       if (person.id === s.universe.playerId) s.notify({ category: 'relationship', title: `You Missed ${first}`, body: `${c.name} waited for you${r ? ` at ${r.name}` : ''}, and will remember it.`, importance: 50, route: '/workspace/people' });
       return;
@@ -505,7 +529,7 @@ function callOff(sim: Simulation, person: Person, itemId: string, why: string): 
   const c = contactsOf(person).find((x) => x.id === item.payload.contactId)!;
   sim.timeline.cancel(item.id, sim.now);
   const late = item.at - sim.now < MS_DAY;
-  if (late) { c.cutShort = sim.now; classBond(person, c, CLASS_SOCIAL.cutShort); }
+  if (late) { c.cutShort = sim.now; classBond(person, c, CLASS_SOCIAL.cutShort); const mate = c.classmate !== undefined ? person.school?.classmates[c.classmate] : undefined; if (mate) noteIncident(mate, sim.now, 'lateCancel'); }
   c.memory.unshift({ at: sim.now, what: late ? `Called off ${why} at short notice` : `Moved ${why}, with notice` });
   return { late, c };
 }
@@ -594,7 +618,7 @@ export function registerPartners(sim: Simulation): void {
     const mine = askingRefusal(person);
     if (mine) throw new CommandError(mine);
     const reason = asksOutRefusal(person, c);
-    c.memory.unshift({ at: s.now, what: reason ? `Said no to going out: ${reason}` : 'Said yes to going out' });
+    rememberAnswer(c, s.now, reason ? `Said no to going out: ${reason}` : 'Said yes to going out');
     if (reason) return { accepted: false, reason };
     c.dating = { since: s.now, dates: 0 };
     return { accepted: true };

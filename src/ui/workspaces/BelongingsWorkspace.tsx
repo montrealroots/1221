@@ -28,6 +28,8 @@ import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQ
 import { heldRefusal, orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
+import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
+import { copyAt, partFor, readRefusal, researchRefusal } from '@/engine/systems/playreading';
 import { batteryOptions, batteryRefusal, batteryYears, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
 import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
@@ -361,6 +363,7 @@ export function BelongingsWorkspace() {
         <Phones />
         <WatchingAndPlaying />
         <Reading />
+        <PlaysToRead />
         <Valuables />
         <Commissions />
         {items.length > 0 && (
@@ -1082,6 +1085,62 @@ function WatchingAndPlaying() {
             </div>
           );
         })()}
+      </div>
+    </Panel>
+  );
+}
+
+/**
+ * Real plays from 2000 on (`systems/playreading.ts`, from 2026-10-09): their
+ * facts on record, read with a library's copy and researched. None is played:
+ * the scene work is public-domain plays and SLATE's own.
+ */
+function PlaysToRead() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const read = useFeature('plays.read');
+  const research = useFeature('plays.research');
+  const copy = copyAt(person);
+  const studies = person.plays ?? {};
+  const notes = CONTEMPORARY_PLAYS.flatMap((p) => (studies[p.id]?.notes[0] ? [{ p, n: studies[p.id]!.notes[0]! }] : [])).sort((a, b) => b.n.at - a.n.at).slice(0, 5);
+  return (
+    <Panel title="Plays To Read" subtitle={'library' in copy ? `A Copy From ${copy.library}` : 'No Copy To Hand'}>
+      <div className="col gap-2">
+        <div className="xs dim">Thirty plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Play</th><th scope="col">First Staged</th><th scope="col">Cast</th><th scope="col">A Part For You</th><th scope="col">Read</th><th scope="col"><span className="sr-only">Read Or Research</span></th></tr></thead>
+            <tbody>
+              {CONTEMPORARY_PLAYS.map((p) => {
+                const st = studies[p.id];
+                const fit = partFor(person, p, sim.now, sim.zone);
+                const noRead = readRefusal(sim, person, p.id);
+                const noResearch = researchRefusal(sim, person, p.id);
+                return (
+                  <tr key={p.id}>
+                    <td><span className="small">{p.title}</span><div className="xs dim">{p.by}</div></td>
+                    <td className="small">{p.premiere.year}, {p.premiere.venue}</td>
+                    <td className="small">{p.cast?.text ?? 'Not on record'}</td>
+                    <td className="small">{fit === 'yes' ? 'Yes' : fit === 'no' ? 'No' : 'Not on record'}</td>
+                    <td className="small">{st ? `${st.reads === 1 ? 'Once' : `${st.reads} Times`}${st.researchedAt ? ', Researched' : ''}` : 'Not Yet'}</td>
+                    <td>
+                      <div className="row gap-1">
+                        <button type="button" className="btn btn-sm btn-ghost" disabled={!read.open || Boolean(noRead)} title={noRead ?? read.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.read', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>{st ? 'Read It Again' : 'Read It'}</button>
+                        {st && !st.researchedAt && <button type="button" className="btn btn-sm btn-ghost" disabled={!research.open || Boolean(noResearch)} title={noResearch ?? research.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.research', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>Research It</button>}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {notes.length > 0 && (
+          <div className="col gap-1">
+            <div className="small">Your Latest Notes</div>
+            {notes.map(({ p, n }) => <div key={p.id} className="xs"><span className="dim">{formatDate(n.at, sim.zone)}, {p.title}:</span> {n.what}</div>)}
+          </div>
+        )}
       </div>
     </Panel>
   );

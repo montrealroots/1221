@@ -36,7 +36,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { HALL } from '../content/people';
-import { contactsOf, type Contact } from './people';
+import { contactsOf, rememberAnswer, type Contact } from './people';
 import { journeysOf, settleRoomShare, type Journey } from './journey';
 import { hotelById } from './hotels';
 import { childrenOf, livesWithYou, type Child } from './children';
@@ -152,7 +152,7 @@ export function registerCompanions(sim: Simulation): void {
     const out = journeysOf(person).find((j) => j.id === p.journeyId)!;
     const c = contactsOf(person).find((x) => x.id === p.contactId)! as Contact;
     const where = CITIES.require(out.toCity).name;
-    c.memory.unshift({ at: s.now, what: q.declines ? `Said no to a trip to ${where}: ${q.declines}` : `Said yes to a trip to ${where}` });
+    rememberAnswer(c, s.now, q.declines ? `Said no to a trip to ${where}: ${q.declines}` : `Said yes to a trip to ${where}`);
     if (q.declines) return { accepted: false, reason: q.declines };
     out.companionIds = [...companionsOf(out), c.id];
     delete out.companionId;

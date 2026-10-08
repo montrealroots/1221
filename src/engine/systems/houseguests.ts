@@ -35,7 +35,7 @@ import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { HALL, SOCIAL } from '../content/people';
-import { contactsOf, type Contact } from './people';
+import { contactsOf, rememberAnswer, type Contact } from './people';
 import { foodOf, spend } from './household';
 import { personalityOf } from './personality';
 import { livingIn } from './homes';
@@ -112,7 +112,7 @@ export function registerHouseguests(sim: Simulation): void {
     const room = freeRoom(s, person, from, nights)!;
     c!.stay = { from, nights, roomId: room.id };
     const first = c!.name.split(' ')[0];
-    c!.memory.unshift({ at: s.now, what: `Said yes to staying ${nights === 1 ? 'a night' : `${nights} nights`}` });
+    rememberAnswer(c!, s.now, `Said yes to staying ${nights === 1 ? 'a night' : `${nights} nights`}`);
     s.schedule({ at: from, kind: STAY_KIND, label: `${first} Arrives To Stay`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: SOCIAL.visitMinutes, locationId: person.home!.cityId, payload: { personId: person.id, contactId: c!.id } });
     return { from, until: until(c!.stay), roomId: room.id };
   });
