@@ -277,7 +277,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `items.give` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/gifts.ts` | — (also giveRefusal) | items | — | — | 2 | journey-belongings.test.ts |
 | `items.move` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/items.ts` | That isn’t something you own.; Where to? (also moveRefusal) | at | — | home | 8 | journey-belongings.test.ts; journey-people.test.ts; journeys.test.ts |
 | `items.put_away` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/trips.ts` | There’s no shopping waiting to be put away. | — | — | — | 7 | connected-day.test.ts; journey-day-at-home.test.ts; journey-food.test.ts; and 2 more |
-| `items.recover` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | It’s collected in ….; No one here is holding anything of yours. | items | — | person | 2 | journeys.test.ts |
+| `items.recover` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/luggage.ts` | It’s collected in ….; No one here is holding anything of yours. | items; goingBags | — | person | 2 | journeys.test.ts |
 | `jewelry.commission` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/commissions.ts` | The bank can’t pay for it. (also commissionRefusal) | commissions; commissionsOf (added to) | Yes | jewelry.ready; home; person; accessory | 2 | journey-belongings.test.ts |
 | `jewelry.engrave` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/commissions.ts` | Only jewelry or a watch is engraved.; The … isn’t to hand.; Write the words to engrave.; SLATE keeps no engraver’s price where you are.; and 1 more | engraved | Yes | — | 2 | journey-belongings.test.ts |
 | `land.combine` | Verified (journey) | Land | LandWorkspace.tsx | `systems/land.ts` | Two parcels you own, neither for sale.; A house is being built on it.; Let land isn’t joined: end the lease first.; Each is on its own loan: pay one off to join them.; and 1 more | — | Yes | land.loan_month; land.tax_year | 3 | journey-holdings.test.ts |
@@ -543,7 +543,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `home.units_out` | `systems/appliances.ts` | systems/appliances.ts | portables | Yes | home.portable_out | 0 |
 | `injury.comp` | `systems/injury.ts` | systems/injury.ts | — | — | injury.comp | 0 |
 | `items.bulky_collected` | `systems/bulky.ts` | systems/bulky.ts | items | — | — | 0 |
-| `items.held_ends` | `systems/luggage.ts` | systems/luggage.ts | items; luggageId; packingLists | Yes | home | 0 |
+| `items.held_ends` | `systems/luggage.ts` | systems/luggage.ts | items; goingBags; luggageId; packingLists | Yes | home | 0 |
 | `items.order_arrives` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `items.order_held_due` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
 | `items.out_for_delivery` | `systems/orders.ts` | systems/orders.ts | — | — | — | 0 |
