@@ -17,7 +17,7 @@
  * - selective: prepares more and goes to bed at nine, says yes to its three closest only,
  *   politely no to the rest, asks one of them out a week;
  * - unreliable: says yes to everything, then calls off a fifth at short
- *   notice and books a night in New York over a tenth of Saturday's (missing them), and from
+ *   notice and spends a Sunday in New York over a tenth of Sunday's (missing them), and from
  *   the second spring makes amends with whoever it let down, and moves plans
  *   rather than dropping them.
  * After the degree each moves to New York, where the class lives.
@@ -148,8 +148,8 @@ function social(dayIndex) {
       const r = rng(`plan-${m.id}`);
       if (reformed) { if (r < 0.2) run('social.reschedule', { itemId: m.id, at: m.at + MS_DAY }); continue; }
       if (r < 0.2) run('social.cancel', { itemId: m.id });
-      // A Saturday's plans missed for a night in New York: away from the plans, not from class.
-      else if (r < 0.3 && inSchool() && zonedParts(m.at, sim.zone).weekday === 6) run('travel.book', { toCity: 'us-ny-newyork', day: m.at - 6 * MS_HOUR, nights: 1 });
+      // A Sunday's plans missed for a day in New York, the noon train out and the seven o'clock back: in another town at their hour, and back for Monday.
+      else if (r < 0.3 && inSchool() && zonedParts(m.at, sim.zone).weekday === 0) { const z = zonedParts(m.at, sim.zone); const day = instantFromZoned({ year: z.year, month: z.month, day: z.day, hour: 0, minute: 0 }, sim.zone); run('travel.book', { toCity: 'us-ny-newyork', day, by: 'mnr-nhv-gct', slot: 20, returnDay: day, returnSlot: 40 }); }
     }
     if (reformed) for (const [i] of (p.school?.classmates ?? []).entries()) if (!amendsRefusal(sim, p, i)) run('school.make_amends', { mate: i });
   }

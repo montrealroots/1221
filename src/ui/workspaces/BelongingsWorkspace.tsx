@@ -1109,7 +1109,7 @@ function PlaysToRead() {
         <div className="xs dim">Thirty plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
         <div className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Play</th><th scope="col">First Staged</th><th scope="col">Cast</th><th scope="col">A Part For You</th><th scope="col">Read</th><th scope="col"><span className="sr-only">Read Or Research</span></th></tr></thead>
+            <thead><tr><th scope="col">Play</th><th scope="col">Cast</th><th scope="col">Read</th></tr></thead>
             <tbody>
               {CONTEMPORARY_PLAYS.map((p) => {
                 const st = studies[p.id];
@@ -1118,13 +1118,11 @@ function PlaysToRead() {
                 const noResearch = researchRefusal(sim, person, p.id);
                 return (
                   <tr key={p.id}>
-                    <td><span className="small">{p.title}</span><div className="xs dim">{p.by}</div></td>
-                    <td className="small">{p.premiere.year}, {p.premiere.venue}</td>
-                    <td className="small">{p.cast?.text ?? 'Not on record'}</td>
-                    <td className="small">{fit === 'yes' ? 'Yes' : fit === 'no' ? 'No' : 'Not on record'}</td>
-                    <td className="small">{st ? `${st.reads === 1 ? 'Once' : `${st.reads} Times`}${st.researchedAt ? ', Researched' : ''}` : 'Not Yet'}</td>
+                    <td><span className="small">{p.title}</span><div className="xs dim">{p.by}; first staged {p.premiere.year}, {p.premiere.venue}</div></td>
+                    <td><span className="small">{p.cast?.text ?? 'Not on record'}</span>{fit !== 'unknown' && <div className="xs dim">{fit === 'yes' ? 'A part for you' : 'No part for you'}</div>}</td>
                     <td>
-                      <div className="row gap-1">
+                      <span className="small" style={{ whiteSpace: 'nowrap' }}>{st ? (st.reads === 1 ? 'Once' : `${st.reads} Times`) : 'Not Yet'}</span>{st?.researchedAt && <div className="xs dim">Researched</div>}
+                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!read.open || Boolean(noRead)} title={noRead ?? read.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.read', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>{st ? 'Read It Again' : 'Read It'}</button>
                         {st && !st.researchedAt && <button type="button" className="btn btn-sm btn-ghost" disabled={!research.open || Boolean(noResearch)} title={noResearch ?? research.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.research', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>Research It</button>}
                       </div>
