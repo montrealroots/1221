@@ -34,6 +34,7 @@ import { CHOICES, amendsRefusal, momentsOf, personOf } from '../src/engine/syste
 import { MEET_KIND, contactsOf, levelOf } from '../src/engine/systems/people.ts';
 import { restaurantsIn, diningQuote } from '../src/engine/systems/dining.ts';
 import { freshnessOf } from '../src/engine/systems/learning.ts';
+import { planBy } from '../src/engine/systems/journey.ts';
 
 const [kind = 'engaged', seed = 'social-1', untilKey = '2031-06-01', out] = process.argv.slice(2);
 const until = Date.parse(`${untilKey}T12:00:00Z`);
@@ -148,8 +149,8 @@ function social(dayIndex) {
       const r = rng(`plan-${m.id}`);
       if (reformed) { if (r < 0.2) run('social.reschedule', { itemId: m.id, at: m.at + MS_DAY }); continue; }
       if (r < 0.2) { if (m.at - sim.now < MS_DAY) run('social.cancel', { itemId: m.id }); }
-      // A Sunday's plans missed for a day in New York, the noon train out and the seven o'clock back: in another town at their hour, and back for Monday.
-      else if (r < 0.3 && inSchool() && zonedParts(m.at, sim.zone).weekday === 0) { const z = zonedParts(m.at, sim.zone); const day = instantFromZoned({ year: z.year, month: z.month, day: z.day, hour: 0, minute: 0 }, sim.zone); run('travel.book', { toCity: 'us-ny-newyork', day, by: 'mnr-nhv-gct', slot: 20, returnDay: day, returnSlot: 40 }); }
+      // A Sunday's plans missed for a day in New York, the noon train out and the first back after the plan's hour: in another town then, and home for Monday.
+      else if (r < 0.3 && inSchool() && zonedParts(m.at, sim.zone).weekday === 0) { const z = zonedParts(m.at, sim.zone); const day = instantFromZoned({ year: z.year, month: z.month, day: z.day, hour: 0, minute: 0 }, sim.zone); const back = [...Array(45).keys()].find((i) => { const legs = planBy(sim, 'mnr-nhv-gct', 'us-ny-newyork', 'us-ct-newhaven', day, i, 0); return typeof legs !== 'string' && legs[0].departAt > m.at + (m.durationMinutes ?? 60) * 60_000; }); if (back !== undefined) run('travel.book', { toCity: 'us-ny-newyork', day, by: 'mnr-nhv-gct', slot: 20, returnDay: day, returnSlot: back }); }
     }
     if (reformed) for (const [i] of (p.school?.classmates ?? []).entries()) if (!amendsRefusal(sim, p, i)) run('school.make_amends', { mate: i });
   }
