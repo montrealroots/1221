@@ -23,7 +23,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
 import { footageRefusal } from '@/engine/systems/footage';
-import { productionOf } from '@/engine/systems/companies';
+import { productionOf, productionsOf } from '@/engine/systems/companies';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -493,7 +493,7 @@ function WorkPane() {
             <table>
               <thead><tr><th scope="col">Year</th><th scope="col">Part</th><th scope="col">City</th></tr></thead>
               <tbody>
-                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td><Open subject={at('part', c.roleId)}>{roleById(c.roleId).label}</Open></td><td><Town id={c.cityId} /></td></tr>)}
+                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td><Open subject={at('part', c.roleId)}>{roleById(c.roleId).label}</Open>{c.productionId && <div className="xs dim">{productionsOf(person).find((p) => p.id === c.productionId)?.title ?? 'A production'}{c.part ? `: ${c.part}` : ''}</div>}</td><td><Town id={c.cityId} /></td></tr>)}
               </tbody>
             </table>
           </LookRegion>
