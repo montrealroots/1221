@@ -21,7 +21,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { resolveAdapter } from '@/engine/persistence/base44';
 import type { SaveAdapter, SaveSlotInfo } from '@/engine/persistence/adapter';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { APP_VERSION } from '@/engine/world/bootstrap';
+import { APP_VERSION } from '@/engine/version';
 
 export interface StartupResult {
   adapter: SaveAdapter;
