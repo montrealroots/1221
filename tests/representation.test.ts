@@ -69,6 +69,11 @@ describe('approaching an agency', () => {
     expect(careerOf(sim.player).agencyId).toBe('iag');
     expect(careerOf(sim.player).nextAgency?.agencyId).toBe('caa');
     expect(careerOf(sim.player).renewal?.state).toBe('declined');
+    // Settled: no other agency approached or signed until it's made.
+    expect(sim.execute({ kind: 'career.approach_agency', payload: { agencyId: 'wme' } }).error).toMatch(/^You’ve signed with CAA from .*: the move is settled.$/);
+    careerOf(sim.player).offers.push({ agencyId: 'uta', cityId: 'us-ny-newyork', until: sim.now + MS_DAY, terms: careerOf(sim.player).nextAgency!.terms });
+    expect(sim.execute({ kind: 'career.sign', payload: { agencyId: 'uta', cityId: 'us-ny-newyork' } }).error).toMatch(/the move is settled/);
+    careerOf(sim.player).offers = careerOf(sim.player).offers.filter((o) => o.agencyId !== 'uta');
     sim = reload(sim);
     tended(sim, termEnds + MS_HOUR);
     const c = careerOf(sim.player);

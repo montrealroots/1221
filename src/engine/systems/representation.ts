@@ -132,7 +132,9 @@ export function approachRefusal(sim: Simulation, person: Person, agencyId: strin
   if (career.headshotsAt === undefined) return 'An approach is a headshot and a résumé: have headshots taken first.';
   if (!agenciesHere(person).includes(agency)) return `${agency.name} represents actors working in another country.`;
   if (career.agencyId === agencyId) return `You’re with ${agency.name}.`;
-  if (career.nextAgency?.agencyId === agencyId) return `You’ve signed with ${agency.name} already.`;
+  // A move settled is settled: nothing more until it's made. Until 2026-10-08's ten-year runs an actor signing every offer
+  // replaced the agency to follow again and again, 97 times in seven years.
+  if (career.nextAgency) return `You’ve signed with ${name(career.nextAgency.agencyId)} from ${formatDate(career.nextAgency.terms.effective, sim.zone)}: the move is settled.`;
   if (!takesBack(sim, person, agencyId)) return `${agency.name} won’t take you back yet: you parted on ${formatDate(career.ended!.at, sim.zone)}.`;
   const mine = approachesOf(person);
   const open = mine.find((a) => a.agencyId === agencyId && isOpen(a));
@@ -179,6 +181,7 @@ function meetingTime(sim: Simulation, cityId: string): Instant {
 /** Signing an offer: at once where they're free to, else from the current contract's end (`AgencyTerms.effective`). */
 export function moveTo(sim: Simulation, person: Person, offer: Offer): Instant {
   const career = careerOf(person);
+  if (career.nextAgency) throw new CommandError(`You’ve signed with ${name(career.nextAgency.agencyId)} from ${formatDate(career.nextAgency.terms.effective, sim.zone)}: the move is settled.`);
   const agency = agencyById(offer.agencyId)!;
   const approach = approachesOf(person).find((a) => a.agencyId === offer.agencyId && a.status === 'offered');
   const terms = termsFor(sim, person, agency);
