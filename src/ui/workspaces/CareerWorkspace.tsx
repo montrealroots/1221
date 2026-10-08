@@ -24,6 +24,7 @@ import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
 import { footageRefusal } from '@/engine/systems/footage';
 import { learnPartRefusal, productionOf, productionsOf } from '@/engine/systems/companies';
+import { agencyOutlook, representationReview } from '@/engine/systems/representation';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -216,6 +217,67 @@ function ShowcaseCarried({ person }: { person: Person }) {
 }
 
 /** The agency, the offers standing, leaving, the showcases, submitting yourself, and the agencies' bars. */
+/**
+ * What the agency has done, the others where you work, and approaching one (`systems/representation.ts`, from
+ * 2026-10-08). An agency's name and commission are facts; its reach, your chance and its attention are SLATE's estimates.
+ */
+function SeekingRepresentation() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = person.career!;
+  if (career.since === undefined) return null;
+  const review = representationReview(sim, person);
+  const outlook = agencyOutlook(sim, person);
+  const mine = (career.approaches ?? []).slice().sort((a, b) => b.sentAt - a.sentAt).slice(0, 8);
+  const approach = (agencyId: string, via: 'submission' | 'referral') => { const r = run<{ answerBy: number }>('career.approach_agency', { agencyId, via }); if (r.ok) toast(`Sent. ${agencyById(agencyId)!.name} answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); };
+  return (
+    <Panel title="Seeking Representation" subtitle={review ? 'What your agency has done, and the others' : 'The agencies where you work'}>
+      <div className="col gap-3">
+        {review && (
+          <div className="grid grid-3">
+            <Stat label="Auditions Sent" value={String(review.sent)} note={`Since ${formatDate(review.since, sim.zone)}, ${review.sentBooked} booked`} />
+            <Stat label="Work Offered Through It" value={String(review.offers)} note="Commissioned by it to the end" />
+            <Stat label="Days Worked, Last 91" value={String(review.worked91)} note={review.mayLeave.ok ? 'You may leave now' : 'The contract holds you'} tone={review.mayLeave.ok ? undefined : 'warning'} />
+          </div>
+        )}
+        {review?.next && <p className="small" style={{ margin: 0 }}>Signed with {agencyById(review.next.agencyId)!.name}, from {formatDate(review.next.terms.effective, sim.zone)}, when this contract ends.</p>}
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Agency</th><th scope="col">Your Chance</th><th scope="col">Its Attention</th><th scope="col"><span className="sr-only">Approach</span></th></tr></thead>
+            <tbody>
+              {outlook.map((o) => (
+                <tr key={o.agency.id}>
+                  <td><span className="small">{o.agency.name}</span><div className="xs dim">{pct(o.commission)} commission{o.referrer ? `; ${o.referrer} is with them` : ''}</div></td>
+                  <td className="small">{o.chance}</td>
+                  <td className="small">{o.fit >= 1.05 ? 'Among Its First Calls' : o.fit >= 0.9 ? 'A Regular Client' : 'A Newer Name'}</td>
+                  <td>
+                    <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                      <Gated feature="career.approach_agency" disabled={Boolean(o.refusal)} title={o.refusal} onClick={() => approach(o.agency.id, 'submission')}>Submit</Gated>
+                      {o.referrer && !o.refusal && <Gated feature="career.approach_agency" onClick={() => approach(o.agency.id, 'referral')}>Ask {o.referrer.split(' ')[0]} For An Introduction</Gated>}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {mine.length > 0 && (
+          <div className="col gap-1">
+            <div className="small">Your Approaches</div>
+            {mine.map((a) => (
+              <div key={a.id} className="row-between xs">
+                <span>{agencyById(a.agencyId)!.name}: {a.history.at(-1)!.what}{a.status === 'waiting' ? `; they answer by ${formatDate(a.answerAt, sim.zone)}` : ''}</span>
+                {(a.status === 'waiting' || a.status === 'meeting') && <Gated feature="career.withdraw_approach" onClick={() => { if (run('career.withdraw_approach', { agencyId: a.agencyId }).ok) toast('Withdrawn.', 'positive'); }}>Withdraw</Gated>}
+              </div>
+            ))}
+          </div>
+        )}
+        <Fine>An agency’s chance and attention are SLATE’s estimates from where you stand against the clients it signs: a big agency’s newest name is sent less. Three approaches open at once; after a pass, a year before the same agency again; after no answer or an offer declined, six months.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 function AgencyPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -274,17 +336,24 @@ function AgencyPane() {
       </Panel>
 
       {offers.length > 0 && (
-        <Panel title="Offers Of Representation" subtitle="Each stands a month">
+        <Panel title="Offers Of Representation" subtitle="A showcase’s or a submission’s stands a month; one after a meeting, two weeks">
           <LookRegion className="col gap-2">
             {offers.map((o) => (
               <div key={`${o.agencyId}-${o.cityId}`} className="row-between small">
-                <span><Open subject={at('agency', o.agencyId)}>{agencyById(o.agencyId)!.name}</Open>, <Town id={o.cityId} />, until <When at={o.until} zone={zoneOf(o.cityId)} /></span>
-                <Gated feature="career.sign" onClick={() => { if (run('career.sign', { agencyId: o.agencyId, cityId: o.cityId }).ok) toast(`Signed with ${agencyById(o.agencyId)!.name}.`, 'positive'); }}>Sign</Gated>
+                <span><Open subject={at('agency', o.agencyId)}>{agencyById(o.agencyId)!.name}</Open>, <Town id={o.cityId} />, until <When at={o.until} zone={zoneOf(o.cityId)} />
+                  {o.terms && <div className="xs dim">{pct(o.terms.commission)} commission, exclusive, a {plural(o.terms.years, 'year')} first contract, for {o.terms.scope.toLowerCase()}; {o.terms.effective > sim.now ? `from ${formatDate(o.terms.effective, sim.zone)}, when your contract ends` : 'from the day you sign'}.</div>}
+                </span>
+                <span className="row gap-1">
+                  <Gated feature="career.sign" onClick={() => { if (run('career.sign', { agencyId: o.agencyId, cityId: o.cityId }).ok) toast(`Signed with ${agencyById(o.agencyId)!.name}.`, 'positive'); }}>Sign</Gated>
+                  {o.terms && <Gated feature="career.decline_agency" onClick={() => { if (run('career.decline_agency', { agencyId: o.agencyId }).ok) toast(`You declined ${agencyById(o.agencyId)!.name}.`, 'positive'); }}>Decline</Gated>}
+                </span>
               </div>
             ))}
           </LookRegion>
         </Panel>
       )}
+
+      <SeekingRepresentation />
 
       <AttributesPanel />
 

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-409 commands; 409 named by a test, 0 not.
+412 commands; 412 named by a test, 0 not.
 
 ## aircraft
 
@@ -109,7 +109,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `collaborators.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journeys.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
+| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `collaborators.test.ts` `fittings.test.ts` `journey-acting-travel.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journeys.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `representation.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
+| `career.approach_agency` | `src/engine/systems/representation.ts` | `CareerWorkspace.tsx` | `representation.test.ts` | The Business |
 | `career.attend_ceremony` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `ceremony.test.ts` `journey-everyday-more.test.ts` | The Business |
 | `career.buy_kit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.class` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
@@ -117,6 +118,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.commercial_leave` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` `journey-career.test.ts` | The Business |
 | `career.commercial_meet` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` `journey-career.test.ts` | The Business |
 | `career.counter` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `counter.test.ts` `journey-career.test.ts` | The Business |
+| `career.decline_agency` | `src/engine/systems/representation.ts` | `CareerWorkspace.tsx` | `representation.test.ts` | The Business |
 | `career.enter_award` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `awards.test.ts` `journey-career.test.ts` | The Business |
 | `career.furnish_wardrobe` | `src/engine/systems/fittings.ts` | `CareerWorkspace.tsx` | `fittings.test.ts` `journey-career.test.ts` | The Business |
 | `career.headshots` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
@@ -131,11 +133,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journey-social.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
 | `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `journey-everyday-more.test.ts` `school.test.ts` | The Business |
-| `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `skills.test.ts` | The Business |
+| `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `representation.test.ts` `skills.test.ts` | The Business |
 | `career.sign_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
 | `career.submit_for` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `breakdowns.test.ts` `journey-everyday-more.test.ts` | The Business |
 | `career.subscribe` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.t1287` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `carried.test.ts` `journey-career.test.ts` | — |
+| `career.withdraw_approach` | `src/engine/systems/representation.ts` | `CareerWorkspace.tsx` | `representation.test.ts` | The Business |
 | `career.workshop` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
 
 ## cart

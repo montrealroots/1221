@@ -1,0 +1,480 @@
+{
+  "topic": "Changing talent agents (US SAG-AFTRA franchised agents, US Actors' Equity, UK PMA code) and schedule changes to engaged performers (SAG-AFTRA TV/Theatrical and Commercials, Actors' Equity LORT and Production, UK Equity/PACT TV)",
+  "retrieved": "2026-10-08",
+  "findings": [
+    {
+      "id": "us-agent-commission-cap-rule16g",
+      "what": "Maximum agent commission for SAG-covered motion picture work under SAG Rule 16(g) (1991 codified agency regulations), Section XI.A(1)",
+      "value": "10%",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf (mirror of https://www.sagaftra.org/files/sag_rule_16_g.pdf, which returned 403 to the fetcher)",
+      "quote": "No contract of an agent for agency services rendered or to be rendered an actor may specify a higher rate of commission than ten percent (10%) of the compensation or other consideration received by the actor for services rendered in the motion picture industry or under contracts for such services.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-agent-commission-cap-aftra12c",
+      "what": "Maximum commission in the legacy AFTRA (Rule 12-C) standard exclusive agency contract, Exhibit C para 3(a); ATA agencies remain franchised only under 12-C (see us-ata-agencies-12c-only)",
+      "value": "not more than 10%",
+      "market": "us",
+      "source": "https://www.bizparentz.org/wp-content/uploads/2021/12/standard_aftra_exclusive_agency_contract_exhibitc_0.pdf",
+      "quote": "The Artist agrees to pay to the Agent a sum equal to _______ per cent (not more than 10%) of all monies or other consideration received by the Artist, directly or indirectly, under contracts of employment entered into during the term specified herein as provided in the Regulations.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-no-double-commission",
+      "what": "Rule against paying more than 10% in total when two or more agents claim commission (Rule 16(g) Section XI.B)",
+      "value": "member never pays more than 10% in total; an arbitration tribunal decides which agent receives it",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "Notwithstanding anything in the Regulations, Basic Contract or any agency contract, no member shall ever pay more than ten percent (10%) commission for agency services in the motion picture industry, and if he has contracted to pay more than such ten percent (10%) to two or more agents, the arbitration tribunal shall decide which agent shall receive the commission, but in any event, the member shall only pay ten percent (10%).",
+      "confidence": "high"
+    },
+    {
+      "id": "us-termination-91-day-rule16g",
+      "what": "Termination for lack of work: the 91-day / ten-days-employment clause, and the initial-contract 151-day and 120-day conditions (Rule 16(g) Exhibit E, SAG Motion Picture/Television Agency Contract para 6(a))",
+      "value": "Initial contract: fewer than 10 days' employment in the initial 151 days, or no bona fide offer in any consecutive 120 days within the initial 151; otherwise fewer than 10 days' employment in the 91 days before notice. Either party may terminate by written notice to the other.",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "If this is an initial agency contract and if actor fails to be employed and receive, or be entitled to receive, compensation for ten (10) days' employment in the initial 151 days of the contract, provided further that if no bona fide offer of employment is received by the Actor within any consecutive 120 days during the initial 151 day period, or if during any other period of 91 days immediately preceding the giving of the notice of termination hereinafter mentioned in this paragraph, the Actor fails to be employed and receive, or be entitled to receive compensation for ten (10) days' employment, whether such employment is from fields under SAG's jurisdiction or any other branch of the entertainment industry in which the Agent may be authorized by written contract to represent the Actor, then either the Actor or Agent may terminate the engagement of the Agent hereunder by written notice to the other party",
+      "confidence": "high"
+    },
+    {
+      "id": "us-termination-current-sagaftra-faq",
+      "what": "SAG-AFTRA's current member answer on early termination of TV/Theatrical and Commercials agency contracts",
+      "value": "TV/Theatrical: after the initial 120 days with no bona fide offer; otherwise after 151 days if fewer than 10 days' work in the preceding 91 days. Commercials: no bona fide offer in initial 120 days, or after 151 days if less than $4,000 earned from commercials (incl. residuals) in preceding 91 days.",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/2360",
+      "quote": "Contract may be terminated early for lack of employment if after the initial 120 days in the life of the contract, you have not received any bona fide TV/Theatrical offer ... during the immediately preceding 91 days you have had less than 10 days of TV/Theatrical work. ... earned less than $4000 from commercials (including residuals)",
+      "confidence": "high"
+    },
+    {
+      "id": "us-termination-notice-method",
+      "what": "How a SAG-AFTRA member gives notice of termination to the agency",
+      "value": "Written notice to the agency by certified mail or any means with proof of receipt (e.g. email); member also updates their SAG-AFTRA account. No source found requiring a copy to the union for SAG-AFTRA (contrast US Actors' Equity, which requires notice to Equity).",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/2360",
+      "quote": "via certified mail (or any way that provides proof of receipt, such as an email)",
+      "confidence": "high"
+    },
+    {
+      "id": "us-commercials-termination-rule16g-form",
+      "what": "Older Rule 16(g) commercials agency contract earnings threshold (superseded in SAG-AFTRA's current guidance by $4,000)",
+      "value": "$3,500 in the 91 days preceding notice (historic form); written notice; not before 151 days on a non-renewal contract unless no bona fide offer in 120 days",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "If, during the period of 91 days immediately proceeding the giving of notice of termination, the Actor fails to receive compensation in the sum of $3,500 or more for services and reuse fees for commercials in which the Actor was employed during the term of this contract (including a prior contract which this contract renews), then either the Actor or the Agent may terminate the engagement of the Agent hereunder by written notice to the other party",
+      "confidence": "high"
+    },
+    {
+      "id": "us-post-termination-commission",
+      "what": "Former agent's commission after termination on contracts entered into during the term (Rule 16(g) Exhibit E para 6(f); same wording in AFTRA Exhibit C para 5(d))",
+      "value": "Former agent keeps commission on money earned before termination and on money earned after termination under contracts entered into before the termination's effective date",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "No termination hereunder shall deprive the Agent of the right to receive commission or compensation on moneys earned or received by the Actor prior to the date of termination, or earned or received by the Actor after the date of termination of the Agent's engagement, on contracts for the Actor's services entered into by the Actor prior to the effective date of any such termination.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-post-expiration-term-contract-options",
+      "what": "After an agency contract expires, the former agent's commission on a term contract (including options) made during the agency term (Rule 16(g) Section XI.J(1))",
+      "value": "Former agent continues to commission the term contract as it stood, including existing options, at expiration",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "After expiration of the term of an agency contract, if the actor is employed under a term contract entered into during the term of the agency contract, the agent who is a party to such contract shall be entitled thereafter to receive commissions computed on the basis of the aggregate annual amount of compensation which the actor has received or which the actor would be entitled to receive under the term contract for the term thereof (including options) as it existed at the time of such expiration of the agency contract.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-adjustments-extensions-new-agent",
+      "what": "Who commissions raises (adjustments) and extensions of a term contract after the old agency contract expires (Rule 16(g) Section XI.J(2)-(4))",
+      "value": "Former agent gets no commission on post-expiration adjustments or on extension beyond the term/options existing at expiration; the new agent is entitled to commission on that additional compensation",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "In each of the instances set forth in subparagraphs (2) and (3) above, if the actor is a party to an agency contract with a new agent at the time such adjustment, extension or substitution is made, such new agent is entitled to commissions on the additional compensation received by the actor as the result of any such adjustment, extension or substitution.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-new-agent-existing-contracts",
+      "what": "A new agency contract's commission on employment contracts already in existence when it is signed (Rule 16(g) Exhibit E para 3(a) form language)",
+      "value": "New agent may commission existing employment contracts only to the extent the actor does not already owe commission on them to another agent",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "entered into during the term specified in Paragraph (2) or in existence when this agency contract is entered into except to such extent as the Actor may be obligated to pay commissions on such existing employment contract to another agent.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-declined-offer-60-days",
+      "what": "Commission on an offer the agent obtained that the actor declined and later accepted (Rule 16(g) Exhibit E para 3(a)(4)/(j), and para 6(k) for offers after a termination right accrues)",
+      "value": "If the actor accepts substantially the same offer within 60 days of the agent communicating it, commission is owed",
+      "market": "us",
+      "source": "https://lenhoff.com/wp-content/uploads/2024/02/Exhibit-2i-SAG-Rule-16g.pdf",
+      "quote": "Should the Agent, during the term specified in Paragraph (2), negotiate a contract of employment for the Actor and secure for the Actor a bona fide offer of employment, which offer is communicated by the Agent to the Actor in reasonable detail and in writing or by other corroborative action, which offer the Actor declines, and if, within sixty (60) days after the date upon which the Agent gives such information to the Actor, the Actor accepts said offer of employment on substantially the same terms, then the Actor shall be required to pay commiss[ion]",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-aftra-agency-term-limits",
+      "what": "Maximum term of a legacy AFTRA (12-C) exclusive agency contract",
+      "value": "Initial term at most 18 months; up to 3 years after one year's representation",
+      "market": "us",
+      "source": "https://www.bizparentz.org/wp-content/uploads/2021/12/standard_aftra_exclusive_agency_contract_exhibitc_0.pdf",
+      "quote": "NOTE—THE INITIAL TERM MAY NOT BE IN EXCESS OF EIGHTEEN MONTHS. A TERM OF UP TO THREE (3) YEARS MAY BE ENTERED INTO AFTER ONE (1) YEAR'S REPRESENTATION.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-aftra-91-day-termination",
+      "what": "Legacy AFTRA (12-C) 91-day termination clause, Exhibit C para 5(a)",
+      "value": "Fewer than 10 days' employment in the 91 days before notice; either party terminates by written notice; week between Christmas and New Year not counted",
+      "market": "us",
+      "source": "https://www.bizparentz.org/wp-content/uploads/2021/12/standard_aftra_exclusive_agency_contract_exhibitc_0.pdf",
+      "quote": "If during any period of ninety-one (91) days immediately preceding the giving of the notice of termination hereinafter mentioned in this paragraph, the Artist fails to be employed and receive, or be entitled to receive, compensation for ten (10) days' employment ... then either the Artist or the Agent may terminate the employment of the Agent hereunder by written notice to the other party.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-ata-agencies-12c-only",
+      "what": "Status of Rule 16(g) for ATA member agencies, and general services agreements (GSAs)",
+      "value": "Agencies that join the ATA are no longer franchised under legacy SAG 16(g), only under legacy AFTRA 12-C; some present members with agency-drafted GSAs outside union oversight",
+      "market": "us",
+      "source": "https://www.sagaftra.org/surrender-bmg-talent-group-incs-sag-agency-franchise (search snippet; page returned 403 to the fetcher)",
+      "quote": "they are no longer franchised under legacy SAG's agency regulations [16(g)], and remain franchised only under legacy AFTRA's agency regulations, 12-C",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-equity-agency-termination",
+      "what": "US Actors' Equity agency contract termination for lack of offers, and how notice is given",
+      "value": "90 days without a bona fide offer of at least four weeks' work at customary salary; written notice to the agent AND to Equity",
+      "market": "us",
+      "source": "https://actorsequity.org/resources/agency-information/agency-contract-termination",
+      "quote": "If during any ninety (90) day period the Agent fails to secure for the Actor a bona fide offer of employment from an employer commensurate with the Actor's prestige for at least four weeks at the Actor's customary salary, which offer is communicated by the Agent to the Actor in reasonable detail and in writing, then in such case the Actor shall have the right to terminate this agreement by notice in writing to the Agent and to Equity.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-seek-new-rep-overlap",
+      "what": "Industry practice: securing new representation before leaving the current agent, and approaching agents while represented",
+      "value": "Line up the new agency before leaving; telling prospective agents you are already represented is acceptable and can help",
+      "market": "us",
+      "source": "https://www.backstage.com/magazine/article/tips-leaving-agent-manager-11141/ (search snippet; article returned 403 to the fetcher)",
+      "quote": "Never leave an agency until you have another one in place. It's just common sense. ... It's perfectly fine to tell the agents you approach that you already have representation.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-seek-new-rep-referrals",
+      "what": "How agents find clients / how actors reach new agents: referrals and managers",
+      "value": "Referrals from casting directors and existing clients first; referrer calls the agent; agents also ask managers about clients unhappy with their current representation; IMDb/onscreen work",
+      "market": "us",
+      "source": "https://www.backstage.com/magazine/article/where-do-acting-agents-find-clients-76906/ (search snippet; article returned 403 to the fetcher)",
+      "quote": "Agents first and foremost mentioned referrals—from casting directors and from existing clients—as how they find new clients. ... Agents call their manager friends to see if they have promising clients who need an agent or if they have clients unhappy with their current representation.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-leaving-agent-etiquette",
+      "what": "Industry practice on how to tell the outgoing agent",
+      "value": "Tell them directly by phone with thanks, rather than email",
+      "market": "us",
+      "source": "https://www.backstage.com/magazine/article/say-goodbye-agent-5928/ (search snippet; article returned 403 to the fetcher)",
+      "quote": "Professionals call. Cowards email.",
+      "confidence": "low"
+    },
+    {
+      "id": "uk-pma-no-notice-period",
+      "what": "Notice period to leave a PMA-member agent (PMA Approved Code of Practice for Agents Representing Artists, effective 1 January 2026, clause 6.1)",
+      "value": "None enforceable: members may not enforce any time restriction on a client's notice; commission rights survive per ACOP",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "Members shall not seek to enforce any time restriction in relation to a client's notice of termination of representation. Members cannot enforce their right to represent a client, if the client wishes to terminate. Members may retain the right to commission in accordance with ACOP guidelines.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-new-agent-check",
+      "what": "New agent's duty before taking on a previously represented client (ACOP 6.2-6.3)",
+      "value": "Must satisfy themselves the client terminated the earlier representation in writing; must try to agree commission due to previous agent(s)",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "Members shall not undertake representation of a potential new client who has previously been represented without first making every reasonable endeavour possible to satisfy themselves that such client has terminated the earlier representation in writing. 6.3 Every effort must be made to conclude a mutually satisfactory arrangement regarding commission that may be payable to the previous agent or agents.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-commission-rate-in-tob",
+      "what": "How UK commission rates are set under the PMA code (ACOP 4.3)",
+      "value": "Rate is whatever the written terms of business state, agreed at the start; no rate fixed by the code; no commission without agreed TOBs",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "Members terms of business, including current commission rates, shall be clearly stated in writing and agreed at the commencement of representation. Any subsequent variation in commission rate must be agreed with the client in writing. Commission is not due unless TOBs are agreed.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-typical-commission-rates",
+      "what": "Typical UK acting agent commission rates (non-authoritative guide; neither Equity nor PMA publishes a rate on the pages reached)",
+      "value": "10-15% for most acting work; 15-20% for some commercial/overseas bookings and voiceover; plus 20% VAT if agent is VAT-registered",
+      "market": "uk",
+      "source": "https://agent.co.uk/guides/how-acting-agents-make-money/",
+      "quote": "10–15% for most acting work (TV, film, theatre, commercials) ... 15–20% for some commercial and overseas bookings ... if your agent is VAT registered, they will charge 20% on top of their commission.",
+      "confidence": "low"
+    },
+    {
+      "id": "uk-pma-protection-letter",
+      "what": "Protection letter the former agent provides on notice of termination (ACOP 7.1)",
+      "value": "Lists current contracts incl. options/extensions/renewals, and all submissions/availability checks and meetings before termination",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "When a client gives his or her agent notice of their intent to terminate representation, the former agent must provide the following information: (i) the detail of all current and ongoing client contracts, inclusive of option, extension and renewal provisions; (ii) a list of all submissions, including availability checks, undertaken on behalf of the client prior to the termination date.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-film-tv-commission-after-leaving",
+      "what": "Former agent's commission on film/TV contracts after termination, and the new agent's share of renegotiated fees (ACOP 8.1, 8.3)",
+      "value": "Former agent commissions contracts concluded or initiated during representation; new agent takes 100% of commission on any fee uplift it renegotiates",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "In the event of termination of the Agency Agreement, the member (or successors in title), is entitled to collect all monies and to take commission in respect of and in accordance with contracts previously concluded with and behalf of the client, and appropriate commission in respect of contracts already initiated. ... 8.3 In the event such fees are re-negotiated by the new agent then the new agent will be entitled to 100% of all commission on the balance between the original and the newly re-negotiated fee.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-submission-no-meeting",
+      "what": "Former agent submitted the client but no meeting took place before termination (ACOP 8.5)",
+      "value": "Former agent gets 100% commission for the first outing/series only",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "In the event that the former agent submitted the client for a role but there was an absence of a meeting prior to termination, the former agent will be entitled to 100% commission for the first outing or series but no commission thereafter.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-sunset-sliding-scale",
+      "what": "Sunset provisions when a client continues in a series after changing agent, no options negotiated (ACOP 9.2)",
+      "value": "Former agent's share of commission: 75% first outing negotiated by new agent, 50% next, 25% next, 10% thereafter in perpetuity",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "Where no options have been negotiated the former agent shall be entitled to 75% commission for the first outing negotiated by the new agent, 50% for the next, 25% for the next, and 10% thereafter in perpetuity.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-sunset-options",
+      "what": "Sunset provisions where the former agent negotiated series options (ACOP 9.3(i), (iv))",
+      "value": "Change of agent before option pick-up: former agent 100% on current series plus two optioned series, then sliding scale; new agent always takes 100% of commission on any uplift",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "If the actor changes agent before the option pick-up date the former agent will be entitled to 100% of the commission on the fees negotiated for the current series in addition to 100% of the commission on the fees originally negotiated for two additional series. ... (iv) In all cases, the new agent will be entitled to 100% of the commission on any uplift agreed during their tenure.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-commercials-after-leaving",
+      "what": "Former agent's commission on commercials after the client leaves (ACOP 10.1-10.3)",
+      "value": "Former agent keeps all commission on commercials from notified submissions incl. further usage; on a renewal renegotiated by the new agent, new agent commissions only the uplift",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "The former agent shall be entitled to all commissions due on any commercial arising directly from a duly notified submission together with commission due on any income directly derived, from overseas sales, cinema and stills usage. 10.2 If fees for such additional usage are negotiated by the new agent, then the former agent shall still be entitled to 100% of the commission arising from such negotiations.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pma-theatre-after-leaving",
+      "what": "Former agent's commission on theatre after the client leaves (ACOP 11.1-11.3)",
+      "value": "100% on existing theatre contracts incl. options for the run; extension/transfer/remount within 12 months: 100% 2nd contract, 75% 3rd, 50% 4th, 25% 5th, 10% all future; returning after 12 months: 10% in perpetuity",
+      "market": "uk",
+      "source": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "quote": "The former agent shall be entitled to all commissions due on existing theatre contracts (including any options) for the run of the production ... 11.2. If a further contract is offered for the same production for an extension in the same role/track, transfer or remount that occurs within twelve months of the end of the original term agreed by the former agent, the former agent shall be due commission based on their original commission and applied as per the sliding scale below.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-theatrical-engagement-binding",
+      "what": "When a SAG-AFTRA theatrical engagement becomes firm (performers guaranteed under $65,000/day)",
+      "value": "Written acceptance, contract delivered, script given, fitted (not wardrobe test), or called and agrees to report",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/995/~/what-do-i-need-to-know-about-a-theatrical-engagement-and-cancelation",
+      "quote": "Written notice of acceptance ... Contract delivered to the performer ... Script is given to the performer ... When performer is fitted, other than wardrobe tests ... When performer is actually called and agrees to report",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-day-performer-cancel-window",
+      "what": "Day performer cancellation window (TV and theatrical)",
+      "value": "Either party may cancel before noon on the day before work, only if the call was verbal and no binding condition has occurred",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/952/",
+      "quote": "either party can cancel prior to noon on the day preceding such commencement date if the call for work has only been verbal and none of the binding conditions have occurred",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-weekly-performer-terminate-for-other-work",
+      "what": "Weekly theatrical performer with no start date set may terminate to take other work",
+      "value": "Performer notice: by end of same day if informed before noon on a business day; otherwise by noon of next business day",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/995/~/what-do-i-need-to-know-about-a-theatrical-engagement-and-cancelation",
+      "quote": "If the performer informs the Producer before noon on a business day, by the end of the same day; or ... If the performer informs the Producer at any other time, by noon of the next business day",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-daily-rest-period",
+      "what": "Daily rest period between dismissal and next call (TV/Theatrical), and permitted reductions",
+      "value": "12 hours; may drop to 10 hours on out-of-zone location for exterior photography (once every fourth consecutive day), or 11 hours on overnight theatrical location on up to two non-consecutive days a week",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/1001/~/how-do-rest-periods-work-for-a-theatrical-production",
+      "quote": "The performer is entitled to a 12 hour rest period from the time he is dismissed until the first call for the next day.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-weekly-rest-period",
+      "what": "Weekly rest period (TV/Theatrical)",
+      "value": "56 hours; 54 if next week's first call is 6 am or later; 36 hours on a six-day location week",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/958/~/how-do-television-rest-periods-%28forced-calls%29-work%3F",
+      "quote": "All performers are entitled to one weekly rest period of 56 hours.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-forced-call-penalty",
+      "what": "Penalty for violating a daily or weekly rest period (forced call)",
+      "value": "Day performer: daily rate or $900, whichever is less, per violation; weekly (and TV 3-day) performer: one day's pay or $950, whichever is less",
+      "market": "us",
+      "source": "https://servicesagaftra.custhelp.com/app/answers/detail/a_id/958/~/how-do-television-rest-periods-%28forced-calls%29-work%3F",
+      "quote": "A violation of either daily or weekly rest periods is a forced call. ... Day Performers: Daily rate or $900, whichever is less per violation ... 3-Day/Weekly Performers: one day's pay or $950, whichever is less per violation",
+      "confidence": "high"
+    },
+    {
+      "id": "us-sagaftra-commercials-weather-permitting",
+      "what": "SAG-AFTRA Commercials: weather-permitting call cancelled",
+      "value": "Half a session fee (instead of full cancellation fee) if properly booked as weather-permitting at time of hire; not for stages/studios; producer may use performer up to 4 hours for that half fee",
+      "market": "us",
+      "source": "https://www.sagaftra.org/sites/default/files/tips_and_tools_-_weather_permitting_0_0.pdf (search snippet; PDF returned 403 to the fetcher)",
+      "quote": "When a weather permitting call is properly booked and the shoot day is cancelled, the performer is paid half a session fee (as opposed to a full cancellation fee).",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-sagaftra-background-weather-permitting",
+      "what": "SAG-AFTRA background actors: weather-permitting call cancelled or postponed",
+      "value": "Half day's pay; may be held up to 4 hours; more than 4 hours adds another half check; a full day if actually photographed",
+      "market": "us",
+      "source": "https://www.sagaftra.org/sites/default/files/sa_documents/Background%20Actors%20Digest.pdf (search snippet; PDF returned 403 to the fetcher)",
+      "quote": "If a weather permitting call is cancelled or postponed due to unsuitable weather, a half-day's pay shall be due.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-lort-notices-written-copy-equity",
+      "what": "LORT (2023-27 Equity/LORT agreement) Rule 66(A): form of termination/closing notices",
+      "value": "All notices in writing; copies filed with or mailed to Equity by the party giving notice; company notices posted on the call-board",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "It is the essence of all employment contracts that all notices thereunder, company and individual, must be in writing. Copies of all notices must be filed with or mailed to Equity forthwith by the party (Actor or Stage Manager or Theatre) giving notice.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-lort-closing-notice",
+      "what": "LORT Rule 66(H): closing a season or production",
+      "value": "Two weeks' posted written notice; minimum employment guarantee two weeks; company closing notice supersedes individual notices",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "The Theatre may close the season and/or individual production by posting two weeks' written notice, provided the Actor or Stage Manager receives not less than the minimum employment and/or payment guaranteed under the Actor's or Stage Manager's contract. The minimum employment contract guarantee is two weeks.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-lort-notice-timing",
+      "what": "LORT Rule 66(C): what counts as two weeks' notice",
+      "value": "Notice given by end of Monday night's performance, effective end of the following week's Saturday (Tuesday/Sunday for Tue-Sun playing weeks)",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "Notices of termination or closing given at or before the end of the performance on Monday night, effective at the end of the Saturday night of the week following shall be deemed two weeks' notice.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-lort-cancel-before-rehearsal",
+      "what": "LORT Rule 66(G)(1): theatre terminates a signed Standard Contract before rehearsals begin (production cancelled after contract)",
+      "value": "More than 4 weeks before first day: theatre pays 2 weeks' contractual salary; within 4 weeks: theatre pays 4 weeks' salary. Actor may withdraw on 2 weeks' notice (free if >4 weeks out; paying the theatre 2 weeks' salary if within 4 weeks)",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "For notices given more than four weeks before the Actor's or Stage Manager's first day of employment, the Actor or Stage Manager may terminate their contract by giving the Theatre two weeks' notice in writing (with no required payment); the Theatre may terminate the contract by giving the Actor or Stage Manager written notice and paying the Actor or Stage Manager two weeks' contractual salary. (b) For notices given within four weeks of the Actor's or Stage Manager's first day of employment, the Actor or Stage Manager may terminate their contract by giving the Theatre two weeks' notice in writing and paying it two weeks' contractual salary; the Theatre may terminate the contract by giving the Actor or Stage Manager written notice and paying the Actor or Stage Manager four weeks' contractual salary.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-lort-terminate-during-rehearsal",
+      "what": "LORT Rule 66(G)(2)(a)(ii): theatre terminates during rehearsals",
+      "value": "During the first two weeks of rehearsal: notice-clause weeks of salary, minimum four weeks; after that: notice-clause weeks of salary. Individual notice after employment begins: 2-6 weeks (default 2)",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "If the Theatre terminates the Actor's or Stage Manager's contract during the first two weeks of rehearsals, the Actor or Stage Manager shall be paid weekly contractual salary multiplied by the number of weeks specified in the notice clause of the Actor's or Stage Manager's contract, but in no event may payment be less than four weeks' contractual salary.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-lort-buyout-no-notice",
+      "what": "LORT Rule 66(D): terminating without full notice",
+      "value": "Terminating party pays weekly contractual salary x notice weeks (capped at the unexpired term)",
+      "market": "us",
+      "source": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+      "quote": "In the event that the Theatre or Actor or Stage Manager terminates without the full notice specified in the contract, the terminating party shall pay the other an amount equal to the Actor's or Stage Manager's weekly contractual salary multiplied by the number of weeks specified in the notice clause of the Actor's or Stage Manager's contract (\"Buy-Out\").",
+      "confidence": "high"
+    },
+    {
+      "id": "us-production-contract-closing-notice",
+      "what": "Equity Production (Broadway) Contract Rule 69(B)(1) as agreed in the 2022-2025 negotiations: notice of closing",
+      "value": "One week's individual written notice to term-contract actors, or one week's salary in lieu",
+      "market": "us",
+      "source": "https://www.agentassociation.com/clientuploads/AEAProduction_Summary_of_Changes_2022-2025%5B1%5D.pdf",
+      "quote": "Notice of closing. The Producer shall give to all Actors signed to Term Contracts one week's individual notice in writing of the closing of the production and company or pay one week's salary in lieu thereof.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-tv-cancelled-day",
+      "what": "Equity/PACT Television Production Agreement (1 Aug 2004, varied 13 Oct 2005) clause T20: day cancelled for weather or circumstances outside producer's control",
+      "value": "Artist receives guaranteed payment (engagement fee or production day payment); re-attendance for lost weather days paid a production day payment; for other causes the guaranteed payment again",
+      "market": "uk",
+      "source": "https://www.fia-actors.com/uploads/Equity%20PACTTV.pdf",
+      "quote": "For any day upon which the Artist is required to attend but is unable to work due to adverse weather or is not called to render their services as a result of any other circumstances outside the control of the Producer, the Artist shall receive their guaranteed payment, i.e. either their engagement fee(s) or production day payment(s)",
+      "confidence": "medium"
+    },
+    {
+      "id": "uk-pact-tv-second-call-cancel",
+      "what": "Equity/PACT TV agreement (2004/2005) clause T18: cancelling a second call",
+      "value": "Cancellable without payment up to 48 hours before; within 48 hours payment is due",
+      "market": "uk",
+      "source": "https://www.fia-actors.com/uploads/Equity%20PACTTV.pdf",
+      "quote": "Calls to the Artist made under these second call provisions may be cancelled without payment up to 48 hours before the date upon which the Artist's services are required. For any call given within 48 hours that is subsequently cancelled, payment becomes due in any event.",
+      "confidence": "medium"
+    },
+    {
+      "id": "uk-pact-tv-break-between-calls",
+      "what": "Equity/PACT TV agreement (2004/2005) clause T21.10: break between calls",
+      "value": "Normally 12 hours; may be cut to 11 with artist's consent; below 11 only in emergency; infringement of 11 hours paid £34.50 per hour or part (2005 rate)",
+      "market": "uk",
+      "source": "https://www.fia-actors.com/uploads/Equity%20PACTTV.pdf",
+      "quote": "The period of rest between periods of work on the same engagement shall normally be not less than twelve hours, and whenever possible, such a period must be given. In special circumstances, however, this period may be reduced to eleven hours. ... In the event that the eleven hour break between calls is infringed then the Artist shall receive a payment of £34.50 for each hour or part thereof that the eleven hour break is curtailed.",
+      "confidence": "medium"
+    }
+  ],
+  "notFound": [
+    {
+      "what": "SAG-AFTRA TV/Theatrical: amount paid to a day performer whose firm engagement the producer cancels or postpones (pay-or-play / bumping)",
+      "tried": "servicesagaftra.custhelp.com answers 952 and 995 (state when engagement binds, not the payment); sagaftra.org Codified Basic Agreement digest PDF and engagement-and-cancellation pages returned 403; web searches for pay-or-play and postponement returned no authoritative text"
+    },
+    {
+      "what": "SAG-AFTRA TV/Theatrical weather-permitting calls for principal day performers",
+      "tried": "Searches found weather-permitting rules only for Commercials principals and background actors (both recorded above)"
+    },
+    {
+      "what": "Text of any current SAG-AFTRA/ATA franchise agreement superseding Rule 16(g)",
+      "tried": "sagaftra.org GSA Contract Update and FAQ pages returned 403; searches limited to sagaftra.org found only franchise-surrender notices saying ATA agencies are franchised under 12-C only"
+    },
+    {
+      "what": "Whether a SAG-AFTRA member must send the union a copy of the termination notice",
+      "tried": "SAG-AFTRA answer 2360 says only to notify the agency with proof of receipt and update the SAG-AFTRA account; Rule 16(g) form says written notice to the other party"
+    },
+    {
+      "what": "Explicit rule on signing a new exclusive agency contract while an existing one is still in force (effective dates, overlap)",
+      "tried": "Rule 16(g) and AFTRA Exhibit C text searched for new agent/overlap; only the existing-contract commission carve-out and the 10% total cap were found. Backstage advice (recorded) is practice, not rule"
+    },
+    {
+      "what": "Equity Production (Broadway) Contract: rehearsal/opening postponement rules and payment if a production is cancelled after contract",
+      "tried": "Production rulebook on members.actorsequity.org returned HTML (members-only); 2022-25 summary of changes covers only the closing-notice change"
+    },
+    {
+      "what": "LORT rules on postponing rehearsals or opening",
+      "tried": "Searched the full 2023-27 LORT agreement text for postpon*; no matches"
+    },
+    {
+      "what": "UK Equity theatre (UK Theatre/SOLT agreements) cancellation payments",
+      "tried": "equity.org.uk blocked for both search and fetch; uktheatre.org results were rate cards only; no agreement text reached"
+    },
+    {
+      "what": "Authoritative UK commission rates (Equity or PMA)",
+      "tried": "PMA ACOP 2026 and PMA FAQ set no rate (rates are in each agency's terms of business); equity.org.uk unreachable; only a non-authoritative guide (agent.co.uk) found"
+    },
+    {
+      "what": "Current (post-2005) Equity/PACT TV agreement rates and cancellation clauses",
+      "tried": "Only the 2004/2005 agreement hosted by FIA was reachable; equity.org.uk blocked"
+    }
+  ]
+}

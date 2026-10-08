@@ -68,6 +68,7 @@ import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { makeProduction, workedDay } from './systems/companies';
+import { answerOf, offersAfterMeeting } from './systems/representation';
 import { DENIALS, illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
@@ -984,6 +985,28 @@ defineDecider<{ sim: Simulation; score: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 25) }),
   decide: ({ sim, score }) => offersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
+});
+
+defineDecider<{ sim: Simulation; craft: number; key: number }, string>({
+  id: 'career.approach',
+  decides: 'Whether an agency approached answers, passes or asks to meet, and whether a meeting kept brings an offer of representation.',
+  drawnIn: 'src/engine/systems/representation.ts',
+  reads: {
+    // Where the actor stands: the better, the likelier a meeting and an offer.
+    craft: (o, t) => ({ ...o, craft: 50 + Math.round(t * 45) }),
+    // Which approach, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), craft: 60 + (seed % 30), key: seed * 7 }),
+  decide: ({ sim, craft, key }) => {
+    sim.player.craft = evenCraft(craft);
+    return AGENCIES.filter((a) => (a.countryId ?? 'us') === 'us').flatMap((a) => (['submission', 'referral'] as const).map((via) => {
+      const one = { id: `d${key}-${a.id}-${via}`, agencyId: a.id, via };
+      const answer = answerOf(sim, sim.player, one);
+      return answer === 'meeting' ? (offersAfterMeeting(sim, sim.player, one) ? 'O' : 'm') : answer[0];
+    })).join('');
+  },
 });
 
 defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number; managed?: boolean }, string>({

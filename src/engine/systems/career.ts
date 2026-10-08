@@ -99,6 +99,7 @@ import { BODY } from '../content/body';
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
+import { moveTo as signAgency } from './representation';
 import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, tableRead, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
@@ -397,6 +398,12 @@ export interface Booking {
   /** A commercial's product (`PRODUCTS`), drawn at the offer. */
   product?: string;
   status: 'offered' | 'accepted' | 'passed' | 'lapsed' | 'worked' | 'fired' | 'released';
+  /**
+   * The agency representing them when the work was offered, which commissions it to the end, whichever agency
+   * represents them on payday; null, nobody's (from 2026-10-08). A booking from before has none, and is commissioned as
+   * it was, by the agency of the day.
+   */
+  agentId?: string | null;
   /** A former classmate cast in it too, by their place in the class (`castClassmate`, from 2026-10-08). */
   castmate?: number;
   dueAt: Instant;
@@ -455,7 +462,7 @@ export interface Residual {
 /** A day worked: when, its hours, and its scale, for the rule on leaving an agency and a week's unemployment. */
 export interface WorkedDay { at: Instant; hours: number; pay: Money }
 
-export interface Offer { agencyId: string; cityId: CareerCity; until: Instant }
+export interface Offer { agencyId: string; cityId: CareerCity; until: Instant; /** The terms, from an approach's meeting (`systems/representation.ts`, from 2026-10-08). */ terms?: import('./representation').AgencyTerms }
 export interface ManagerOffer { managerId: string; until: Instant }
 
 export interface CareerRecord {
@@ -476,7 +483,11 @@ export interface CareerRecord {
   /** A renewal: offered by the agency until the term ends, or turned down by either side, for this term. */
   renewal?: { state: 'offered' | 'declined' | 'not-offered' };
   /** The last representation ended, and why. */
-  ended?: { agencyId: string; at: Instant; reason: string; left: boolean };
+  ended?: { agencyId: string; at: Instant; reason: string; left: boolean; /** Left for another agency (from 2026-10-08). */ moved?: boolean };
+  /** Approaches to agencies while represented or not, and their answers (`systems/representation.ts`, from 2026-10-08). */
+  approaches?: import('./representation').Approach[];
+  /** An agency signed with to begin when the current contract ends (`systems/representation.ts`). */
+  nextAgency?: { agencyId: string; cityId: CareerCity; terms: import('./representation').AgencyTerms };
   missed: number;
   lastBookedAt?: Instant;
   auditions: Audition[];
@@ -783,6 +794,21 @@ export function offersFor(sim: Simulation, person: Person, showing: number, key:
   return AGENCIES.filter((agency) => (agency.countryId ?? 'us') === countryId && rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
 }
 
+/** Where an actor stands as an agency reads them: the showing their craft and presence make, with their track record, as `offersFor` reads a showcase. */
+export function standing(sim: Simulation, person: Person): number {
+  const a = attributesOf(sim, person);
+  return person.craft ? showcaseScore(person.craft, 1, a.presence) + ATTRIBUTES.reputationShowing * a.reputation / 100 : 0;
+}
+
+/**
+ * An agency's attention to a client, by where they stand against the clients it signs (`Agency.bar`), from
+ * 2026-10-08: well above, they're among its first calls; well below, a big agency's newest name, sent less. A
+ * game term, SLATE's estimate: no agency publishes how it divides its calls. Until then every client of an agency
+ * was sent its every audition alike, and a bigger agency was only ever better.
+ */
+export const ROSTER = { slope: 25, least: 0.6, most: 1.2 } as const;
+export const rosterFit = (score: number, agency: Agency): number => Math.min(ROSTER.most, Math.max(ROSTER.least, 1 + (score - agency.bar) / ROSTER.slope));
+
 /** A showcase's buzz: how long a manager may still call after it, and how likely in a month. SLATE's estimates. */
 export const BUZZ = { days: 180, chance: 0.15 };
 
@@ -1019,7 +1045,7 @@ function yearsOn(from: Instant, zone: string, years: number): Instant {
 }
 
 /** A term's end, and the day its last third opens, on the calendar. */
-function armTerm(sim: Simulation, person: Person, from: Instant, years: number, initial: boolean): void {
+export function armTerm(sim: Simulation, person: Person, from: Instant, years: number, initial: boolean): void {
   const career = careerOf(person);
   const zone = zoneOf(career.agencyCity ?? workCity(person));
   const ends = yearsOn(from, zone, years);
@@ -1031,24 +1057,25 @@ function armTerm(sim: Simulation, person: Person, from: Instant, years: number, 
   sim.schedule({ at: ends, kind: AGENCY_TERM_KIND, label: 'The Agency Contract Ends', category: 'system', priority: 20, payload: { personId: person.id, stage: 'end', termEnds: ends } });
 }
 
-function represent(sim: Simulation, person: Person, offer: Offer): void {
+export function represent(sim: Simulation, person: Person, offer: Offer): void {
   const career = careerOf(person);
   career.agencyId = offer.agencyId;
   career.agencyCity = offer.cityId;
   if (person.id === sim.universe.playerId) report(sim, person, 'Deadline', `${agencyById(offer.agencyId)!.name} Signs ${person.firstName} ${person.lastName}`, 'you');
   career.signedAt = sim.now;
-  armTerm(sim, person, sim.now, AGENCY_TERM.firstYears, true);
+  // A first contract is a year, with this agency or any; one who returns to an agency starts a first contract again (`AGENCY_TERM`).
+  armTerm(sim, person, sim.now, offer.terms?.years ?? AGENCY_TERM.firstYears, true);
   career.missed = 0;
   career.offers = [];
   feel(person, 'signed');
   for (const d of Object.values(sim.universe.decisions)) if (d.category === 'career' && d.refType === 'representation' && !d.resolvedAt) d.resolvedAt = sim.now;
 }
 
-function endRepresentation(sim: Simulation, person: Person, reason: string, left: boolean): void {
+export function endRepresentation(sim: Simulation, person: Person, reason: string, left: boolean, moving = false): void {
   const career = careerOf(person);
   if (!career.agencyId) return;
   const agency = agencyById(career.agencyId)!;
-  career.ended = { agencyId: agency.id, at: sim.now, reason, left };
+  career.ended = { agencyId: agency.id, at: sim.now, reason, left, ...(moving ? { moved: true } : {}) };
   delete career.agencyId;
   delete career.agencyCity;
   delete career.signedAt;
@@ -1057,13 +1084,21 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
   delete career.renewal;
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'agency-renewal' && !d.resolvedAt) d.resolvedAt = sim.now;
   career.missed = 0;
-  for (const a of career.auditions) {
+  // Moving to another agency, the auditions this one set up are still yours to go to (from 2026-10-08); let go or walked out, they're canceled.
+  for (const a of moving ? [] : career.auditions) {
     if (a.status !== 'ahead' || a.self) continue;
     a.status = 'missed';
     for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind === AUDITION_KIND && item.payload.auditionId === a.id) sim.timeline.cancel(item.id, sim.now);
   }
   if (!left) feel(person, 'dropped');
   if (!left && person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${agency.name} Let You Go`, body: `${reason} You can still submit yourself for work.`, importance: 85, route: '/workspace/career' });
+  // An agency signed with to follow begins now, however this one ended (`systems/representation.ts`).
+  const next = career.nextAgency;
+  if (next) {
+    delete career.nextAgency;
+    represent(sim, person, { agencyId: next.agencyId, cityId: next.cityId, until: sim.now, terms: { ...next.terms, effective: sim.now } });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${agencyById(next.agencyId)!.name} Represents You`, body: `Your contract with ${agency.name} ended, and ${agencyById(next.agencyId)!.name}’s began.`, importance: 75, route: '/workspace/career' });
+  }
 }
 
 /**
@@ -1100,6 +1135,8 @@ export function takesBack(sim: Simulation, person: Person, agencyId: string): bo
   const ended = careerOf(person).ended;
   if (!ended || ended.agencyId !== agencyId) return true;
   const since = sim.now - ended.at;
+  // Moved on to another agency, a year: a client who left properly isn't held to it longer (from 2026-10-08).
+  if (ended.moved) return since > 365 * MS_DAY;
   if (ended.left) return since > 2 * 365 * MS_DAY;
   return since > 365 * MS_DAY || (careerOf(person).lastBookedAt ?? 0) > ended.at;
 }
@@ -1243,7 +1280,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   // An agency, and a manager (American, all of them), sends work in its own country only. Until
   // 2026-09-29 an American agency sent Irish parts to an actor living in Dublin, and kept them for 62 years.
   const country = CITIES.get(cityId)?.countryId ?? 'us';
-  const count = agency && (agency.countryId ?? 'us') === country ? poisson(agency.auditionsPerWeek * look * known) : 0;
+  const count = agency && (agency.countryId ?? 'us') === country ? poisson(agency.auditionsPerWeek * rosterFit(standing(sim, person), agency) * look * known) : 0;
   // A manager's relationships: the work a middling agency's reach sends.
   const fromManager = managed && country === 'us' ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
   // The submissions that came back, by their place in the week's.
@@ -1814,6 +1851,7 @@ export function registerCareer(sim: Simulation): void {
       ...(role.after?.kind === 'commercial' ? { product: productOf(s.rng('career.booking', person.id, `${audition.id}-product`).next(), s.now, s.homeZone) } : {}),
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
+      agentId: career.agencyId ?? null,
     };
     // A name the public knows is quoted above scale, and the quote holds for the job (`attributes.ts`).
     const over = overscaleOf(attributesOf(s, person).recognition);
@@ -1962,7 +2000,9 @@ export function registerCareer(sim: Simulation): void {
     const taxCity = CITIES.get(workCity)?.countryId === 'us' ? workCity : homeOf(person);
     const year = zonedParts(item.at, zone).year;
     const wages = yearOf(person, year);
-    const represented = career.agencyId !== undefined;
+    // Commissioned by the agency that had them when it was offered (`Booking.agentId`), not whoever has them now.
+    const agentId = booking.agentId !== undefined ? booking.agentId : career.agencyId ?? null;
+    const represented = agentId !== null;
     const managed = career.managerId !== undefined;
     // The days the period covers: SAG-AFTRA's through the Saturday before the Thursday, Equity's through the Friday; a last check, all.
     const cutoff = item.payload.final === true ? Number.POSITIVE_INFINITY : role.union === 'sag' ? item.at - 4 * MS_DAY : item.at;
@@ -1988,7 +2028,7 @@ export function registerCareer(sim: Simulation): void {
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
       // Use paid with the fees: an ACTRA producer's prepaid use, a Canadian commercial's year on television (`Role.prepaid`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week) * (1 + (role.prepaid ?? 0))), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur), relief: marriedRelief(person, taxCity, item.at, cur) });
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week) * (1 + (role.prepaid ?? 0))), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(agentId ?? '')?.commission, actraRoom: actraRoom(person, year, cur), relief: marriedRelief(person, taxCity, item.at, cur) });
       if (role.union === 'actra' && career.unions.actra) { const by = (career.unions.actra.duesBy ??= {}); by[year] = (by[year] ?? 0) + inMoney(check.dues, cur, ACTRA.currency); }
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
@@ -2062,6 +2102,9 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const offer = career.offers.find((o) => o.agencyId === p.agencyId && o.cityId === p.cityId && o.until > s.now);
     if (!offer) throw new CommandError('That agency hasn’t an offer standing.');
+    // An offer from an approach carries its terms and may begin later (`moveTo` in `systems/representation.ts`, from 2026-10-08); a showcase's or a submission's
+    // is for somebody unrepresented, signed at once.
+    if (offer.terms) { signAgency(s, person, offer); return { agencyId: p.agencyId }; }
     if (career.agencyId) throw new CommandError(`You’re with ${agencyById(career.agencyId)!.name}.`);
     represent(s, person, offer);
     return { agencyId: p.agencyId };
@@ -2106,6 +2149,8 @@ export function registerCareer(sim: Simulation): void {
     const agency = agencyById(career.agencyId)!;
     const zone = zoneOf(career.agencyCity ?? workCity(person));
     if (item.payload.stage === 'window') {
+      // Signed with another agency to follow: nothing to renew.
+      if (career.nextAgency) { career.renewal = { state: 'declined' }; return; }
       // An agency keeps a client it booked work for in the term.
       const booked = (career.lastBookedAt ?? 0) >= yearsOn(ends, zone, -(career.initialTerm === false ? AGENCY_TERM.renewalYears : AGENCY_TERM.firstYears));
       career.renewal = { state: booked ? 'offered' : 'not-offered' };
@@ -2127,7 +2172,8 @@ export function registerCareer(sim: Simulation): void {
     }
     // The term's end, unrenewed.
     const turnedDown = career.renewal?.state === 'declined' || career.renewal?.state === 'offered';
-    endRepresentation(s, person, turnedDown ? 'You let the contract run out.' : 'The contract ran its term, and the agency didn’t renew it.', turnedDown);
+    const moving = career.nextAgency !== undefined;
+    endRepresentation(s, person, moving ? 'The contract ran its term, and you’d signed with another agency to follow.' : turnedDown ? 'You let the contract run out.' : 'The contract ran its term, and the agency didn’t renew it.', turnedDown || moving, moving);
     if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Agency Contract Ended', body: `Your contract with ${agency.name} ended ${formatDate(item.at, zone)}.`, importance: 80, route: '/workspace/career' });
   });
 
@@ -2299,6 +2345,8 @@ export function registerCareer(sim: Simulation): void {
       // its days already gone, and its first call "missed" at once.
       id: nextOwnId(career, 'b'), roleId: role.id, cityId: prior.cityId, starts: nextMonday(Math.max(prior.starts + SERIES.nextSeasonDays * MS_DAY, s.now + role.leadDays * MS_DAY) - 3 * MS_DAY, zone),
       units: prior.units, rehearsalWeeks: 0, status: 'offered', dueAt: s.now, offeredAt: s.now, worked: 0, owed: 0,
+      // A season picked up under the option the first season's contract gave: that contract's agent's, as the first season was.
+      ...(prior.agentId !== undefined ? { agentId: prior.agentId } : {}),
       rate: Math.max(rate, prior.rate ? Math.round(prior.rate * (1 + SERIES.raise)) : 0), season, seriesId: prior.seriesId ?? prior.id,
       ...(prior.location ? { location: prior.location } : {}),
     };
@@ -3073,7 +3121,9 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   const before = yearOf(person, year).acting;
   const money = { currency: saveCurrency(sim.universe) };
   const withheld = computeAnnualTax(before + amount, homeOf(person), when, money).total - computeAnnualTax(before, homeOf(person), when, money).total;
-  const commission = stream === 'cycle' && person.career?.agencyId ? Math.round(amount * AGENT_COMMISSION.rate) : 0;
+  const booked = person.career?.bookings.find((b) => b.id === residual.bookingId);
+  const agentOf = booked && booked.agentId !== undefined ? booked.agentId : person.career?.agencyId ?? null;
+  const commission = stream === 'cycle' && agentOf ? Math.round(amount * AGENT_COMMISSION.rate) : 0;
   // Canada taxes residuals from work done there, at the same 23%.
   const foreign = residual.workCity && CITIES.get(residual.workCity)?.countryId === 'ca' ? foreignWithholding(person, residual.workCity, amount, when, cur) : 0;
   recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true, ...(foreign || residual.workCity ? { where: residual.workCity, foreignWithheld: foreign } : {}) });
