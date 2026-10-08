@@ -67,6 +67,7 @@ import { modelById } from './systems/vehicles';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
+import { makeProduction, workedDay } from './systems/companies';
 import { DENIALS, illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
@@ -1051,6 +1052,31 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), key: seed * 11 }),
   decide: ({ sim, key }) => Array.from({ length: 60 }, (_, n) => { const x = sim.rng('career.selection', sim.player.id, `film-${key + n}`).next(); return x < FILM_ROAD.tribeca ? 'T' : x < FILM_ROAD.tribeca + (1 - FILM_ROAD.tribeca) * FILM_ROAD.brooklyn ? 'B' : 'S'; }).join(''),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.company',
+  decides: 'Which of a production’s other parts goes to a former classmate who fits it, which classmate, and on screen which days their scenes meet the player’s.',
+  drawnIn: 'src/engine/systems/companies.ts',
+  reads: {
+    // Which booking, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 13 }),
+  decide: ({ sim, key }) => {
+    const school = sim.player.school!;
+    school.standing = 'graduated';
+    for (const m of school.classmates) m.career = { agencyId: 'gersh', credits: [] };
+    const out: string[] = [];
+    for (let n = 0; n < 40; n += 1) {
+      const role = ROLES.find((r) => r.id === (n % 2 ? 'lort-b' : 'costar'))!;
+      const from = sim.now + n * 60 * MS_DAY;
+      const p = makeProduction(sim, sim.player, { id: `d${key}-${n}`, roleId: role.id }, role, 'us-ny-newyork', from, from + 4 * MS_DAY, () => 100, () => undefined);
+      out.push(p.slots.map((x) => (x.performer.kind === 'classmate' ? x.performer.i : x.performer.kind[0])).join('') + workedDay(sim, sim.player, p.bookingId, 0, false).join(''));
+    }
+    return out.join(',');
+  },
 });
 
 defineDecider<{ sim: Simulation; month: number }, string>({

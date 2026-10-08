@@ -118,7 +118,7 @@ describe('invitations and requests', () => {
     tended(sim, m.when! + 26 * MS_HOUR);
     const r = sim.must<{ repaired: number }>({ kind: 'school.make_amends', payload: { mate: m.mate } });
     expect(r.repaired).toBe(1);
-    expect(trustOf(mate)).toBe(t0 + CLASS.study.missed.trust + CLASS.amends.trustPer);
+    expect(trustOf(mate)).toBe(t0 + CLASS.study.missed.trust + CLASS.amends.missed.trust);
     expect(sim.execute({ kind: 'school.make_amends', payload: { mate: m.mate } }).error).toBe('There’s nothing between you to make right.');
     expect(breaches(sim.universe)).toEqual([]);
   });

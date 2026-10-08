@@ -379,6 +379,8 @@ export interface Person {
   packingLists?: { id: string; name: string; itemIds: string[] }[];
   /** The town whose library card they hold (`systems/reading.ts`, from 2026-10-02). */
   libraryCard?: string;
+  /** The real plays read and researched, by play (`systems/playreading.ts`, from 2026-10-08). */
+  plays?: Record<string, import('../systems/playreading').PlayStudy>;
   parkingPermit?: { cityId: string; at: number };
   applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;

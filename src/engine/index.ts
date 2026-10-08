@@ -51,6 +51,7 @@ import { registerAccess } from './systems/access';
 import { registerGifts } from './systems/gifts';
 import { registerCleanerKey } from './systems/dwelling';
 import { registerReading } from './systems/reading';
+import { registerPlayReading } from './systems/playreading';
 import { registerValuables } from './systems/valuables';
 import { registerPawn } from './systems/pawn';
 import { registerWatches } from './systems/watches';
@@ -276,6 +277,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerGifts(sim);
   registerCleanerKey(sim);
   registerReading(sim);
+  registerPlayReading(sim);
   registerValuables(sim);
   registerPawn(sim);
   registerWatches(sim);

@@ -41,13 +41,8 @@ export const RIVALS = {
   rivalNews: 1.5,
   /** Trade items kept. */
   kept: 40,
-  /**
-   * A job taken with a former classmate cast in it too (from 2026-10-08): a
-   * job in this many, where one suits it, is free and works there; and the
-   * hours a day worked side by side count toward knowing each other, to the
-   * most a job adds. SLATE's estimates.
-   */
-  castmate: { chance: 0.15, readBelowBar: 10, hoursPerDay: 2, mostHours: 60 },
+  /** A job worked beside a former classmate, booked before productions: the hours a day side by side, to the most a job adds. */
+  castmate: { hoursPerDay: 2, mostHours: 60 },
   /**
    * A part taken in the room counts against the bond once a year a classmate
    * at most, and sharing a room is remembered and told once a season (from
@@ -178,37 +173,13 @@ export function metInTheRoom(sim: Simulation, person: Person, room: readonly { i
 }
 
 /**
- * A job taken, and maybe a former classmate cast in it too (from 2026-10-08):
- * one in `RIVALS.castmate.chance`, of those whose craft carries the part's
- * level (within ten of its bar), who aren't on another job with you then, and
- * who're signed (an agency sends them where the work is) or live in the
- * job's town. How you get on decides nothing: a friend isn't cast for being
- * one, nor a rival kept out. Booked, it's their credit (`classmateBooked`),
- * once, and they're busy until the job ends. The classmate's index, or
- * nothing.
+ * Casting a former classmate beside the player is a production's (`makeProduction`
+ * in `systems/companies.ts`, from 2026-10-08): a part of their own in it, for a
+ * job of the player's. Until then one draw here cast a classmate as the player's
+ * own part.
  */
-export function castClassmate(sim: Simulation, person: Person, bookingId: string, role: Role, cityId: string, from: Instant, until: Instant): number | undefined {
-  const school = person.school;
-  if (!school || school.standing !== 'graduated') return undefined;
-  const rng = sim.rng('career.rivals', person.id, `castmate-${bookingId}`);
-  if (rng.next() >= RIVALS.castmate.chance) return undefined;
-  const fit = school.classmates.map((m, i) => ({ m, i })).filter(({ m, i }) => {
-    if (!m.career || (m.career.busyUntil ?? 0) > from) return false;
-    if (readFor(m, role, 'room') < role.bar - RIVALS.castmate.readBelowBar) return false;
-    const c = contactsOf(person).find((x) => x.classmate === i);
-    return Boolean(m.career.agencyId) || c?.cityId === cityId;
-  });
-  if (!fit.length) return undefined;
-  const pick = fit[Math.floor(rng.next() * fit.length)]!;
-  classmateBooked(sim, person, pick.i, role, from);
-  pick.m.career!.busyUntil = until;
-  const c = contactsOf(person).find((x) => x.classmate === pick.i);
-  c?.memory.unshift({ at: sim.now, what: `Cast in ${role.label} with you` });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${pick.m.name.split(' ')[0]} Is In It Too`, body: `${pick.m.name}, from your class at Yale, is cast in ${role.label} beside you.`, importance: 45, route: '/workspace/career' });
-  return pick.i;
-}
 
-/** A job worked beside a former classmate: the contact they are keeps it, and the hours side by side. */
+/** A job worked beside a former classmate, booked before productions (2026-10-08 to 2026-10-08): the contact they are keeps it at the end. */
 export function workedWith(sim: Simulation, person: Person, i: number, roleLabel: string, days: number): boolean {
   const c = contactsOf(person).find((x) => x.classmate === i);
   if (!c) return false;

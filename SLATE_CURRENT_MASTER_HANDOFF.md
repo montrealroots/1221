@@ -55,9 +55,34 @@
   - On this machine the replay runs in the foreground, one `probe/chunk.sh` chunk a call (`CHUNK_SECONDS=480 timeout 590`), never beside the gate; it now takes about ten chunks.
   - Open:
     - every situation is authored, so a long life comes back to it, acknowledged;
-    - the scripted replay player never uses the social commands, so those paths are tested, not replayed;
-    - a castmate classmate plays another part in the same job, whose other parts aren't modeled;
+    - the scripted replay player never uses the social commands, so those paths are tested, not replayed (from the fourth brief, `tools/social-lives.mjs` lives them);
+    - a castmate classmate played another part in the same job, whose other parts weren't modeled (the fourth brief modeled them: `systems/companies.ts`);
     - the Cabaret's rehearsal length, the Haas library's weekend hours and Atticus Market's own menu price weren't confirmed.
+- **The owner's fourth brief of 2026-10-08: verify the social life, deepen professional productions, and add real contemporary plays.** `docs/REQUIREMENTS.md` "The social life verified, productions with parts, and real plays" (U1 to U8) is the per-part record. It holds the paths and the measures. `docs/UNBITTEN.md` "Open after the fourth brief" holds what's left.
+  - Verified first: the branch at `a1dcd5cc` and `main` at `f8f5a035` had the same tree, the stash was intact, and the replay worktree was at `cbd72adf`.
+  - `1a5ce7a0`:
+    - Productions with parts (`systems/companies.ts`, its own decider `career.company`). This replaced `castClassmate`, which had credited a classmate with the player's own part.
+    - The social journeys' four fixes: a friend at school by the bond; an answer remembered once; amends no bigger than the harm; a bond moved by evenings after the degree.
+    - Thirty real plays as facts, read and researched with a library's copy (`content/contemporary.ts`, `systems/playreading.ts`, `plays.read`, `plays.research`, Belongings › Plays To Read). None is played.
+  - `9601e5d2`: the brief's long-term scenarios as journeys (`tests/journey-social.test.ts`), and the plays' table fitted to a phone.
+  - `506c313d`: a day there and back the same night asks no hotel, a defect the unreliable student's lifetime run found.
+  - `e3832cf1`: the lifetime script's trip home comes after the plan it misses.
+  - `e6ed13d1`: unread fields deleted, a production's history shown on the job, and this brief's comments re-dated (they had said 2026-10-09).
+  - `717a98a5`: a credit shows its production and part.
+  - `tools/social-lives.mjs` lives three students (engaged, selective, unreliable) from orientation to June 2031 by public commands, in resumable pieces. Each piece writes `<out>.save.json` beside its report, and running it again with the same `out` carries on. A year takes about thirty seconds. Run each life in the foreground, one at a time.
+  - Measured at `e3832cf1`, two seeds each (U1, U6). At the degree, close friends / friends: engaged 7/7 and 5/9, unreliable 4/8 and 4/10, selective 3/3 and 3/1. In all six:
+    - no rivals and no breaches;
+    - about 260 to 300 notices a year;
+    - memory at its cap, with the school years kept;
+    - 0 avoidable coursework repeats.
+  - Gate at `717a98a5`: 398 files, 3,562 tests, every check, run in five sequential batches. Replay at `e6ed13d1` (the same engine): New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors, 0 anomalies, every law at all eight snapshots, each life's worth the baseline's to the cent. `main` was merged from the records commit after it; nothing deployed.
+  - Open:
+    - a classmate cast is rare in a two-year run (0 or 1 a life);
+    - no rival in six lives;
+    - routines make no social plans;
+    - a play's licensor and its US first edition aren't kept;
+    - learning a part in a professional production isn't modeled;
+    - the acting-only economy left the engaged graduate broke in New York, the owner's open call (§10).
 - **The audit, later on 2026-10-06.** Journeys for homes, people, clothes, travel, food, health, residence and holdings brought every command into one; they found seventeen defects (twenty-nine in the audit’s table in all), each fixed with its failing case first and mutated out to prove the case bites (`docs/AUDIT.md`'s table). Built beside them: a friend who asks first (`systems/reachingout.ts`, 52.7–9). Head `c94c7b33`, gate 366 files and 3,346 tests (foreground batches); its replay was clean (New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors, 0 anomalies, every law held at every snapshot), and `main` merged from it as `45bbc415`. Open: the partial rows of `docs/REQUIREMENTS.md` (54.7's outages want a phone's data allowance first, or they change only a sentence), catalog depth (about 2,770 pairs short), New York's MCTD part on a first license and an exchange (no 8-year figure published), and no screen machine-tested.
 - **The owner's audit of 2026-10-06** (implementation, playthrough and reliability; its record is `docs/AUDIT.md`). Done in its first part: the laws of a save checked by every journey (`core/invariants.ts`, `tools/breaches.mjs`); the inventory read from the code and checked by the gate (`docs/TRACEABILITY.md`); journeys for a day at home, acting on location, a house built, the bank, papers, belongings, cars and the career; every command given nothing and nonsense; a leap year lived through; eleven defects found and fixed, each with its failing test first. Requirements built: 22a, 27c, 32e (partly), 33h, 44e-f (partly), 48g. Next: journeys for homes, clothes, people, travel, food and routines; the partial rows in `docs/REQUIREMENTS.md`. On this machine the gate runs only as foreground batches: `ls tests/*.test.ts` split into five, each `VITEST_MAX_FORKS=2 VITEST_MIN_FORKS=1 npx vitest run <files>`, then each check after `npm run validate` in `package.json`'s gate; in the background Claude Code stops it for low memory even with one worker.
 - **Research agents must load search first.** A kitchenware agent once wrote 93 entries from memory because WebSearch is a deferred tool it never loaded; the file was deleted. Every research brief now starts with ToolSearch `select:WebSearch,WebFetch` and says to write nothing without it. Check an agent's tool-use count and its sources before building.

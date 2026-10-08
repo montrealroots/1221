@@ -68,7 +68,13 @@ export const CLASS = {
   encourage: { morale: 3, bondFrom: 10 },
   apology: { accept: 2, cool: -2 },
   boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: 3 },
-  amends: { minutes: 20, trustPer: 6, bond: 2 },
+  /**
+   * Making it right gives back what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the
+   * bond 2 of the 3 it cost), a plan called off late (the bond's 1; it took no trust). Until 2026-10-08 every one gave
+   * trust 6 and bond 2 whatever it was, and the social journeys (`tools/social-lives.mjs`) found the student who called
+   * off late and apologized ending school closer to the class than the one who kept every plan.
+   */
+  amends: { minutes: 20, missed: { trust: 6, bond: 2 }, lateCancel: { trust: 0, bond: 1 } },
   /** Trying both readings at the next rehearsal moves the table work this much of what's left. */
   bothGain: 0.15,
 } as const;
@@ -296,7 +302,10 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
   const mate = person.school?.classmates[i];
   if (!mate) return 'There’s no such classmate.';
   if (!unrepaired(mate).length) return 'There’s nothing between you to make right.';
-  if (person.currentLocationId !== YALE_DRAMA.cityId) return `${first(mate)} is in New Haven.`;
+  // Where they are: New Haven at school, after the degree the town the person they are lives in (from 2026-10-08).
+  const c = contactsOf(person).find((x) => x.classmate === i);
+  const where = person.school!.standing === 'graduated' || person.school!.standing === 'dismissed' ? c?.cityId ?? YALE_DRAMA.cityId : YALE_DRAMA.cityId;
+  if (person.currentLocationId !== where) return `${first(mate)} is in ${CITIES.require(where).name}.`;
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   return undefined;
@@ -385,8 +394,11 @@ export function registerClassmates(sim: Simulation): void {
     const open = unrepaired(mate);
     s.advanceTo(s.now + CLASS.amends.minutes * 60_000);
     for (const x of open) x.repaired = s.now;
-    move(person, mate, CLASS.amends.trustPer * open.length, CLASS.amends.bond);
+    move(person, mate, open.reduce((n, x) => n + CLASS.amends[x.kind].trust, 0), open.reduce((n, x) => n + CLASS.amends[x.kind].bond, 0));
     remember(s, mate, 'You made it right with them');
+    // The person they are hears it too: a meeting missed or called off late no longer keeps them from making plans.
+    const c = contactsOf(person).find((x) => x.classmate === i);
+    if (c) { delete c.stoodUp; delete c.cutShort; c.memory.unshift({ at: s.now, what: 'You made it right with them' }); }
     return { repaired: open.length };
   });
 

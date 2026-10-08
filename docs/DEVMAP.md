@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-406 commands; 406 named by a test, 0 not.
+408 commands; 408 named by a test, 0 not.
 
 ## aircraft
 
@@ -127,7 +127,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.publicist` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
 | `career.query_agencies` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `mxbusiness.test.ts` | The Business |
 | `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` `reel.test.ts` | The Business |
-| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
+| `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journey-social.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
 | `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `journey-everyday-more.test.ts` `school.test.ts` | The Business |
 | `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `skills.test.ts` | The Business |
@@ -510,12 +510,19 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `pilot.train` | `src/engine/systems/aviation.ts` | `TravelWorkspace.tsx` | `aviation.test.ts` `journey-travel.test.ts` `partway.test.ts` | Getting Around |
 
+## plays
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `plays.read` | `src/engine/systems/playreading.ts` | `BelongingsWorkspace.tsx` | `journey-social.test.ts` `playreading.test.ts` | Rent And A Roof |
+| `plays.research` | `src/engine/systems/playreading.ts` | `BelongingsWorkspace.tsx` | `journey-social.test.ts` `playreading.test.ts` | Rent And A Roof |
+
 ## reading
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `reading.buy` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` | `journey-belongings.test.ts` `reading.test.ts` | Rent And A Roof |
-| `reading.library_card` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` `HomesWorkspace.tsx` | `journey-belongings.test.ts` `reading.test.ts` | Rent And A Roof |
+| `reading.library_card` | `src/engine/systems/reading.ts` | `BelongingsWorkspace.tsx` `HomesWorkspace.tsx` | `journey-belongings.test.ts` `journey-social.test.ts` `reading.test.ts` | Rent And A Roof |
 
 ## roadside
 
@@ -545,7 +552,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` `RoutinesWorkspace.tsx` | `cabaret-process.test.ts` `journey-school-production.test.ts` `production.test.ts` | Drama School |
-| `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `classmates.test.ts` | Drama School |
+| `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `classmates.test.ts` `journey-social.test.ts` `school-social.test.ts` | Drama School |
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` | Drama School |
 | `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` `RoutinesWorkspace.tsx` | `approaches.test.ts` `classmates.test.ts` `coursework.test.ts` `journey-school-week.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` `school-everyday.test.ts` | Drama School |
 | `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `coursework.test.ts` `journey-school-week.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
@@ -575,7 +582,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `social.cancel_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
 | `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` `journey-people.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `outings-together.test.ts` `people.test.ts` `school-social.test.ts` `together.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `journey-social.test.ts` `outings-together.test.ts` `people.test.ts` `school-social.test.ts` `together.test.ts` | People |
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
 | `social.reschedule` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `school-social.test.ts` | People |
@@ -606,7 +613,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `travel.bag_claim` | `src/engine/systems/baggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journey-travel.test.ts` | Rent And A Roof |
-| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey-everyday-more.test.ts` `journey-travel.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pet-travel-day.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` `underway.test.ts` | Getting Around |
+| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey-everyday-more.test.ts` `journey-social.test.ts` `journey-travel.test.ts` `journey.test.ts` `journeys-edges.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pet-travel-day.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` `underway.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `journey-travel.test.ts` `travelchange.test.ts` | Getting Around |
 | `travel.check_out` | `src/engine/systems/localstay.ts` | `TravelWorkspace.tsx` | `journey-clothes.test.ts` `journey-travel.test.ts` `local-stay.test.ts` | Getting Around |
