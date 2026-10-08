@@ -855,32 +855,30 @@ their generators no longer write them.
 
 ---
 
-## Open after the fourth brief (2026-10-08)
+## Settled on 2026-10-08, after the fourth brief
 
-- **Days side by side, rarely reached in a long life.** `workedDay` and
-  `COMPANY.hoursPerDay` and `bondPerDay` bite, and `collaborators.test.ts` holds
-  them. But in the six social lives (`tools/social-lives.mjs`, 1 to 12 jobs
-  each), a classmate was cast in 0 or 1 parts, and one day was shared in all
-  six. `COMPANY.chance` (8% a part) is SLATE's estimate. Unreachable in
-  practice rather than dead: a long career gets there, and a two-year run
-  mostly doesn't.
-- **No rival in six lives.** After the proportion fixes of the third brief,
-  rivalry comes only from parts taken and slights. In two years after the
-  degree it never crossed the line in any of the six. That is no longer
-  "everyone an enemy", but whether rivalry is now too rare hasn't been
-  measured over a longer career.
-- **Routines make no social plans.** The brief asked that manual controls and
-  routines follow the same rules. They do where routines act, but no
-  routine invites, answers, cancels or makes amends, so for the social life
-  that half of the question has nothing to answer.
-- **A play's licensor and its US first edition** aren't kept. The research
-  could confirm the licensor for 4 plays of 30 and the US first edition for
-  none (Concord and Bloomsbury refused it). Nothing reads them, so nothing
-  was declared.
-- **The acting-only economy.** An engaged graduate in New York in the social
-  lives ran out of money within two years: $17,000 of work a year against
-  $18,000 of rent. That is the owner's open call on income outside acting
-  (handoff §10), seen again, not a new defect.
+The fourth brief left five things here. The owner asked for them finished the
+same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
+
+- **Days side by side, rarely reached.** That was a two-year window. In ten
+  years, classmates were cast beside the player in 5 to 10 productions a
+  life, with 26 to 486 days shared.
+- **No rival in six lives.** The first ten-year run found eight, all from a
+  defect: plans in New York were accepted from Los Angeles and never kept.
+  Fixed: an invitation must be in a town you'll be in, and a plan a later
+  booking takes you from is warned of. Rerun, rivalry comes from being let
+  down, not from losing parts alone.
+- **Routines made no social plans.** They now ask someone out through
+  `social.invite`, by the screen's rules.
+- **Licensors and first editions.** They were kept from a second research
+  pass (23 US licensors, 14 UK, 28 first editions) and read by researching a
+  play. Still unknown: 7 US licensors and 2 first editions, whose sites
+  refused.
+- **The acting-only economy.** The broke graduate was the social-lives
+  script's doing: it never looked for work. With the lifetime probe's career
+  habits the six actors book 48 to 72 jobs and end at −$13,637 to +$206,059.
+  The owner's call on a life abroad (handoff §10) is a separate matter, and
+  still open.
 
 ---
 
