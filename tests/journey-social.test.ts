@@ -25,6 +25,7 @@ import { NEW_HAVEN_OUTINGS } from '@/engine/systems/people';
 import { auditionLevel, roleById } from '@/engine/systems/career';
 import { railRoutes } from '@/engine/systems/rail';
 import { planBy } from '@/engine/systems/journey';
+import { runRoutine } from '@/engine/systems/routines';
 
 const zone = 'America/New_York';
 const at = (month: number, day: number, hour = 9, year = 2026) => instantFromZoned({ year, month, day, hour, minute: 0 }, zone);
@@ -81,6 +82,37 @@ describe('a day there and back', () => {
     tended(sim, at(9, 6, 23));
     expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
     expect(breaches(sim.universe)).toEqual([]);
+  });
+});
+
+describe('a routine and the screen, by the same rules', () => {
+  it('an evening asked by a routine is the People screen’s invitation: the same yes, the same no and reason, and a no stops the routine', () => {
+    // Two copies of one life at one moment: one asks by hand, the other by a routine.
+    const base = life('js-routine');
+    tended(base, at(9, 1, 12));
+    const c = classmateOf(base);
+    const byHand = reload(base);
+    const byRoutine = reload(base);
+    const hand = byHand.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: { contactId: c.id, what: 'coffee', at: at(9, 1, 19) } });
+    const saved = byRoutine.must<{ routineId: string }>({ kind: 'routine.save', payload: { name: 'Evenings', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'coffee', hour: 19, minute: 0, inDays: 0 } }] } });
+    const ran = runRoutine(byRoutine, saved.routineId);
+    expect(ran).toEqual({ done: 1 });
+    expect(hand.ok).toBe(true);
+    const meets = (sim: Simulation) => sim.universe.scheduled.filter((x) => x.kind === 'social.meet' && x.status === 'pending').map((x) => [x.at, x.payload.contactId, x.payload.what]);
+    expect(meets(byRoutine)).toEqual(meets(byHand));
+    expect(classmateOf(byRoutine).memory[0]).toEqual(classmateOf(byHand).memory[0]);
+    // In class at ten the next morning: the same no from both, and the routine stops at the step, saying it.
+    const handNo = byHand.execute({ kind: 'social.invite', payload: { contactId: c.id, what: 'study', at: at(9, 2, 10) } });
+    tended(byRoutine, at(9, 1, 20)); tended(byHand, at(9, 1, 20));
+    const two = byRoutine.must<{ routineId: string }>({ kind: 'routine.save', payload: { name: 'Mornings', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'study', hour: 10, minute: 0, inDays: 1 } }, { kind: 'life.look_after', payload: { action: 'wash' } }] } });
+    const stopped = runRoutine(byRoutine, two.routineId);
+    expect(stopped.done).toBe(0);
+    expect(stopped.stopped!.error).toBe(handNo.error);
+    expect(stopped.stopped!.label).toMatch(/^Ask .+ To Study Together, The Next Day At 10 AM$/);
+    expect(handNo.ok).toBe(false);
+    // What a routine can't hold: an evening needing more chosen.
+    expect(byRoutine.execute({ kind: 'routine.save', payload: { name: 'Dinner', steps: [{ kind: 'social.invite', payload: { contactId: c.id, what: 'meal', hour: 19, minute: 0, inDays: 0 } }] } }).error).toBe('A routine asks them for a coffee, to study, for a walk or to the cinema.');
+    expect(breaches(byRoutine.universe)).toEqual([]);
   });
 });
 

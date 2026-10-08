@@ -99,7 +99,7 @@ import { BODY } from '../content/body';
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
-import { makeProduction, playerReplaced, productionOf, workedDay } from './companies';
+import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
@@ -1902,7 +1902,8 @@ export function registerCareer(sim: Simulation): void {
     // Nerves at a performance or a day on set, none in the rehearsal room or the booth; and a day kept, remembered (`attributes.ts`).
     const event = role.medium === 'stage' ? (call.rehearsal ? undefined : 'performance') : role.medium === 'screen' ? 'set' : undefined;
     const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
-    earn(s, person, ATTRIBUTES.reputation.day);
+    // Reputation by how well the part was known that day (`partOnTheDay`, from 2026-10-08; until then every day earned the same).
+    earn(s, person, ATTRIBUTES.reputation.day * (1 + PART.reputation * partOnTheDay(s, person, booking.id, booking.worked === 1)));
     for (const [skill, weight] of Object.entries(growsFor(role, booking.genre, booking.demands ?? [])) as [keyof Craft, number][]) {
       // Toward how far they can grow (`CEILING`), the gain falling to nothing there.
       person.craft[skill] += ESTIMATE.workGain * weight * focus * Math.max(0, 1 - person.craft[skill] / ceilingOf(person.craft, skill)) ** 1.5;

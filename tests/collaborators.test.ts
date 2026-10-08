@@ -15,7 +15,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { roleById } from '@/engine/systems/career';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { RIVALS, classMonth, metInTheRoom, partTaken, signTheClass, workedWith } from '@/engine/systems/rivals';
-import { COMPANY, productionOf, productionsOf } from '@/engine/systems/companies';
+import { COMPANY, PART, productionOf, productionsOf } from '@/engine/systems/companies';
+import { attributesOf } from '@/engine/systems/attributes';
 import { contactsOf, knowTheClass } from '@/engine/systems/people';
 import { MEMORY_KEPT, reachOut } from '@/engine/systems/reachingout';
 import { BONDS, bondMove, evenCraft } from '@/engine/systems/school';
@@ -101,6 +102,40 @@ describe('a production and the parts in it', () => {
       expect(p.history.filter((h) => h.what.includes(sim.player.school!.classmates[fits]!.name) && h.what.includes('another job')).length * cast).toBe(0);
       careerOf(sim.player).bookings.find((b) => b.id === `o${n}`)!.status = 'released';
     }
+  });
+
+  it('a part learned an hour at a time: its lines, not the craft; the days earn more for it, and the first day says how you came in', () => {
+    const base = graduate('pr-learn');
+    offerAndTake(base, 'L1', 'costar');
+    // Booked, not yet worked: the part can be learned; a booth's can't, nor a job not booked.
+    expect(base.execute({ kind: 'career.learn_part', payload: { bookingId: 'nope' } }).error).toBe('That isn’t a job you’re booked for.');
+    offerAndTake(base, 'V1', 'commercial-vo', first + 60 * MS_DAY);
+    expect(base.execute({ kind: 'career.learn_part', payload: { bookingId: 'V1' } }).error).toBe('A booth’s copy is read there, not learned.');
+    const learned = reload(base);
+    const cold = reload(base);
+    const craft0 = JSON.stringify(learned.player.craft);
+    let lines = 0;
+    for (let n = 0; n < 6; n += 1) {
+      Object.assign(learned.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 });
+      const r = learned.must<{ lines: number }>({ kind: 'career.learn_part', payload: { bookingId: 'L1' } });
+      expect(r.lines).toBeGreaterThan(lines);
+      expect(r.lines - lines).toBeLessThanOrEqual(PART.gain * 1.1 * (1 - lines) + 1e-9);
+      lines = r.lines;
+    }
+    expect(lines).toBeGreaterThan(PART.offBook);
+    // Knowing this part isn't growing as an actor.
+    expect(JSON.stringify(learned.player.craft)).toBe(craft0);
+    const rep0 = attributesOf(learned, learned.player).reputation;
+    expect(attributesOf(cold, cold.player).reputation).toBe(rep0);
+    workThrough(learned, 'L1', last + 2 * MS_DAY);
+    workThrough(cold, 'L1', last + 2 * MS_DAY);
+    expect(careerOf(learned.player).bookings.find((b) => b.id === 'L1')!.worked).toBe(5);
+    expect(careerOf(cold.player).bookings.find((b) => b.id === 'L1')!.worked).toBe(5);
+    expect(attributesOf(learned, learned.player).reputation).toBeGreaterThan(attributesOf(cold, cold.player).reputation);
+    expect(productionOf(learned.player, 'L1')!.history.map((h) => h.what)).toContain('You came in off book');
+    expect(productionOf(cold.player, 'L1')!.history.map((h) => h.what)).toContain('You came in on book, 0% of your lines known');
+    expect(learned.execute({ kind: 'career.learn_part', payload: { bookingId: 'L1' } }).error).toBe('That isn’t a job you’re booked for.');
+    expect(breaches(learned.universe)).toEqual([]);
   });
 
   it('a classmate holding a part elsewhere then is asked and isn’t cast, and the production remembers it', () => {

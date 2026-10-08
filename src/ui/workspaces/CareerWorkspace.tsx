@@ -23,7 +23,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal, breakdownsOf, submitForRefusal, showcaseSceneSeen, thesisSeen, footageFor } from '@/engine/systems/career';
 import { footageRefusal } from '@/engine/systems/footage';
-import { productionOf, productionsOf } from '@/engine/systems/companies';
+import { learnPartRefusal, productionOf, productionsOf } from '@/engine/systems/companies';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -440,6 +440,21 @@ const spanOf = (b: Booking) => {
   return role.medium === 'screen' ? `${b.units} ${b.units === 1 ? 'day' : 'days'}` : `${b.rehearsalWeeks} weeks of rehearsal and ${b.units} of performances`;
 };
 
+/** Your part learned, an hour at a time, and how much of it you know (`career.learn_part`, from 2026-10-08). */
+function LearnPart({ bookingId }: { bookingId: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const p = productionOf(person, bookingId);
+  if (!p || p.medium === 'voice') return null;
+  const no = learnPartRefusal(sim, person, bookingId);
+  return (
+    <span className="row gap-1" style={{ alignItems: 'center' }}>
+      <span className="xs dim">{Math.round((p.lines ?? 0) * 100)}% of your lines</span>
+      <Gated feature="career.learn_part" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ lines: number }>('career.learn_part', { bookingId }); if (r.ok) toast(`An hour on the part: ${Math.round(r.value!.lines * 100)}% of the lines known.`, 'positive'); }}>Learn The Part</Gated>
+    </span>
+  );
+}
+
 /** The jobs taken and ahead, and the credits. */
 function WorkPane() {
   const { sim, run, toast } = useGame();
@@ -462,6 +477,7 @@ function WorkPane() {
                   {(b.travelOwed ?? 0) + (b.perDiemOwed ?? 0) > 0 ? `, ${formatMoney((b.travelOwed ?? 0) + (b.perDiemOwed ?? 0), cur)} of travel and per diem owed` : ''}
                   {b.t1287Rate !== undefined ? `, Canada withholding ${(b.t1287Rate * 100).toFixed(1)}% by your T1287` : ''}
                 </span>
+                <LearnPart bookingId={b.id} />
                 <LendClothes booking={b} />
                 {!('refused' in t1287Quote(sim, person, b)) && (
                   <Gated feature="career.t1287" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ rate: number }>('career.t1287', { bookingId: b.id }); if (r.ok) toast(`Filed: Canada withholds ${(r.value!.rate * 100).toFixed(1)}% instead of 23%.`, 'positive'); }}>File Form T1287</Gated>

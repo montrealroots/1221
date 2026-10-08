@@ -51,6 +51,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import type { Simulation } from '@/engine/core/simulation';
 import { serialise, deserialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
+import { productionOf } from '@/engine/systems/companies';
 import { overdraftHeadroom } from '@/engine/systems/lending';
 import { ABROAD } from '@/engine/content/safetynet';
 import { AGENT_COMMISSION, EQUITY, MANAGEMENT, SAG_AFTRA, WORK_COSTS } from '@/engine/content/career';
@@ -241,6 +242,9 @@ describe('a working actor in New York', () => {
     sim.must({ kind: 'life.look_after', payload: { action: 'laundry', itemIds: [top.id, bottom.id] } });
     for (let h = 0; h < 30 && !(wearable(sim, sim.player, top) && wearable(sim, sim.player, bottom)); h += 1) sim.advanceTo(sim.now + MS_HOUR);
     expect(sim.must<{ allowance: number }>({ kind: 'career.furnish_wardrobe', payload: { bookingId: 'gs', outfitIds: [outfit] } }).allowance).toBe(2 * 12_00);
+    // The part learned before the first day, two hours of it (`career.learn_part`, from 2026-10-08): kept through the save below, and the first day says so.
+    const learnt = [1, 2].map(() => sim.must<{ lines: number }>({ kind: 'career.learn_part', payload: { bookingId: 'gs' } }).lines);
+    expect(learnt[1]).toBeGreaterThan(learnt[0]!);
 
     // Three days in, saved and loaded: the job and its calls kept.
     walk(sim, at(2026, 2, 25, 18));
@@ -248,6 +252,8 @@ describe('a working actor in New York', () => {
     sim = reload(sim);
     const kept = careerOf(sim.player);
     expect(kept.bookings.find((b) => b.id === 'gs')).toMatchObject({ status: 'accepted', worked: 3 });
+    expect(productionOf(sim.player, 'gs')!.lines).toBeCloseTo(learnt[1]!, 9);
+    expect(productionOf(sim.player, 'gs')!.history.some((h) => h.what.startsWith('You came in on book'))).toBe(true);
     expect(kept.agencyId).toBe('caa');
     expect(kept.managerId).toBe('3arts');
     expect(pending(sim, WORK_KIND).filter((i) => i.payload.bookingId === 'gs')).toHaveLength(5);

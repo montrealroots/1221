@@ -99,6 +99,8 @@ export function RoutinesWorkspace() {
     // A student's preparation for this term's courses (from 2026-10-07): each step names the course, so it does whatever
     // work the course has open when it runs; partner work isn't a routine's, being agreed with the partner.
     ...schoolSteps(person),
+    // Asking somebody out, that evening at seven (from 2026-10-08): the People screen's invitation, run when the routine runs.
+    ...socialSteps(person),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0]!;
   // A cook step's servings, one to three times what the recipe makes (from 2026-10-06).
@@ -367,6 +369,19 @@ function ErrandsPanel() {
       </div>
     </Panel>
   );
+}
+
+/** An evening asked of each person known, at seven on the day the routine runs: at school a coffee or studying with a classmate, otherwise a walk or the cinema. */
+function socialSteps(person: Person): { key: string; label: string; step: RoutineStep }[] {
+  const school = person.school;
+  const atSchool = Boolean(school) && school!.standing !== 'graduated' && school!.standing !== 'dismissed';
+  return (person.contacts ?? []).flatMap((c) => {
+    const kinds = atSchool && c.classmate !== undefined ? ['coffee', 'study'] : ['walk', 'film'];
+    return kinds.map((what) => {
+      const step: RoutineStep = { kind: 'social.invite', payload: { contactId: c.id, what, hour: 19, minute: 0, inDays: 0 } };
+      return { key: `social:${c.id}:${what}`, label: stepLabel(person, step), step };
+    });
+  });
 }
 
 /** This term's courses' preparation steps, as routine steps, for a student. */

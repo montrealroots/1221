@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-408 commands; 408 named by a test, 0 not.
+409 commands; 409 named by a test, 0 not.
 
 ## aircraft
 
@@ -121,6 +121,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.furnish_wardrobe` | `src/engine/systems/fittings.ts` | `CareerWorkspace.tsx` | `fittings.test.ts` `journey-career.test.ts` | The Business |
 | `career.headshots` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` | The Business |
 | `career.improv` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
+| `career.learn_part` | `src/engine/systems/companies.ts` | `CareerWorkspace.tsx` | `collaborators.test.ts` `journey-career.test.ts` | The Business |
 | `career.leave` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.leave_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
 | `career.pass` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `playthrough-fixes.test.ts` | The Business |
@@ -426,7 +427,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `homeworks.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `journey-health.test.ts` `journey-holdings.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `homeworks.test.ts` `household.test.ts` `hygiene.test.ts` `journey-belongings.test.ts` `journey-career.test.ts` `journey-clothes.test.ts` `journey-day-at-home.test.ts` `journey-food.test.ts` `journey-health.test.ts` `journey-holdings.test.ts` `journey-social.test.ts` `kitchen.test.ts` `laundry-choice.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `mowers.test.ts` `outings.test.ts` `paint.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `shower-length.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothes-replace.test.ts` `journey-belongings.test.ts` `kitchen.test.ts` `luggage-choice.test.ts` `pet-care.test.ts` `trips.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey-day-at-home.test.ts` `journey-residence.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
@@ -536,7 +537,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `routine.delete` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `commands-robust.test.ts` `journey-clothes.test.ts` `routines.test.ts` `routinetime.test.ts` | Rent And A Roof |
-| `routine.save` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `cabaret-process.test.ts` `coursework.test.ts` `journey-clothes.test.ts` `journey-school-week.test.ts` `production.test.ts` `routines.test.ts` `routinetime.test.ts` `school-everyday.test.ts` | Rent And A Roof |
+| `routine.save` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `cabaret-process.test.ts` `coursework.test.ts` `journey-clothes.test.ts` `journey-school-week.test.ts` `journey-social.test.ts` `production.test.ts` `routines.test.ts` `routinetime.test.ts` `school-everyday.test.ts` | Rent And A Roof |
 | `routine.set_time` | `src/engine/systems/routines.ts` | `RoutinesWorkspace.tsx` | `journey-clothes.test.ts` `routinetime.test.ts` | Rent And A Roof |
 
 ## school
@@ -582,7 +583,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `social.cancel_stay` | `src/engine/systems/houseguests.ts` | `PeopleWorkspace.tsx` | `houseguests.test.ts` `journey-people.test.ts` | People |
 | `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` `journey-people.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `journey-social.test.ts` `outings-together.test.ts` `people.test.ts` `school-social.test.ts` `together.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` `RoutinesWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `journey-people.test.ts` `journey-social.test.ts` `outings-together.test.ts` `people.test.ts` `school-social.test.ts` `together.test.ts` | People |
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `journey-people.test.ts` `people.test.ts` | People |
 | `social.reschedule` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `school-social.test.ts` | People |

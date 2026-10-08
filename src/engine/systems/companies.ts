@@ -28,6 +28,16 @@
  * was credited with the player's own part, and the whole job's hours came at
  * its end whatever was shared.
  *
+ * **Your part, learned** (`career.learn_part`, from 2026-10-08): an hour of
+ * the actor's own on a booked part moves its lines a share of what's left
+ * (`PART`, as the school's `PROCESS.own`), and trains no craft: knowing this
+ * part isn't growing as an actor. Each day worked reads it: the reputation a
+ * day earns rises with the lines known (to two and a half times a day's,
+ * known cold), and the first day says on the job whether you came in off
+ * book. A booth's copy is read there, not learned. Unlearned, a day earns
+ * what it did before. Until then nothing about a professional part was the
+ * actor's own work beyond turning up.
+ *
  * **Changes.** The player replaced or recast: their part goes to a company
  * actor and the history keeps who played it before, and the work done stays
  * paid and credited as before. Credits name the production and the part.
@@ -40,8 +50,12 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import type { Role } from '../content/career';
 import { CITIES } from '../content/geography';
+import { CommandError } from '../core/simulation';
+import { formatTime } from '../core/time';
+import { occupiedAt } from './life';
+import { exerts } from './body';
 import { contactsOf } from './people';
-import { BONDS, bondMove, type Craft } from './school';
+import { BONDS, bondMove, focusOf, type Craft } from './school';
 
 export type SlotSize = 'principal' | 'supporting' | 'featured' | 'understudy';
 export type Performer = { kind: 'player' } | { kind: 'classmate'; i: number } | { kind: 'company' };
@@ -57,7 +71,7 @@ export interface Slot {
   shared: number;
 }
 /** A production; its history, who was asked and who was replaced, is shown on the job (Career, Work). */
-export interface Production { id: string; bookingId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[] }
+export interface Production { id: string; bookingId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
 
 export const COMPANY = {
   /** The other parts a production casts, by medium. */
@@ -132,6 +146,46 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
   all.push(p);
   if (all.length > COMPANY.kept) all.splice(0, all.length - COMPANY.kept);
   return p;
+}
+
+/** Learning a booked part: an hour, a share of what's left; off book from `offBook`; the day's reputation times up to `1 + reputation`. SLATE's estimates. */
+export const PART = { minutes: 60, gain: 0.3, offBook: 0.8, reputation: 1.5 } as const;
+
+/** Why the part can't be worked on now, or nothing. */
+export function learnPartRefusal(sim: Simulation, person: Person, bookingId: string): string | undefined {
+  const booking = person.career?.bookings.find((b) => b.id === bookingId);
+  const p = productionOf(person, bookingId);
+  if (!booking || booking.status !== 'accepted' || !p) return 'That isn’t a job you’re booked for.';
+  if (p.medium === 'voice') return 'A booth’s copy is read there, not learned.';
+  if ((p.lines ?? 0) >= 0.97) return 'You know it cold.';
+  const busy = occupiedAt(sim, sim.now);
+  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
+  return undefined;
+}
+
+/** The lines a production's part is known by, and, on its first day, the production's word on it. */
+export function partOnTheDay(sim: Simulation, person: Person, bookingId: string, first: boolean): number {
+  const p = productionOf(person, bookingId);
+  if (!p) return 0;
+  const lines = p.lines ?? 0;
+  if (first && p.medium !== 'voice') p.history.push({ at: sim.now, what: lines >= PART.offBook ? 'You came in off book' : `You came in on book, ${Math.round(lines * 100)}% of your lines known` });
+  return lines;
+}
+
+export function registerCompanies(sim: Simulation): void {
+  sim.onCommand<{ bookingId: string }, { lines: number }>('career.learn_part', (q, { sim: s }) => {
+    const person = s.player;
+    const id = String(q?.bookingId);
+    const no = learnPartRefusal(s, person, id);
+    if (no) throw new CommandError(no);
+    const p = productionOf(person, id)!;
+    const focus = focusOf(person);
+    s.advanceTo(s.now + PART.minutes * 60_000);
+    exerts(person, 1.5, PART.minutes / 60);
+    const before = p.lines ?? 0;
+    p.lines = Math.min(1, before + PART.gain * Math.min(1.1, Math.max(0.5, focus)) * (1 - before));
+    return { lines: p.lines };
+  });
 }
 
 /**
