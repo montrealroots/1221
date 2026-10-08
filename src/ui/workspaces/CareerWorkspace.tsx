@@ -448,10 +448,10 @@ function LearnPart({ bookingId }: { bookingId: string }) {
   if (!p || p.medium === 'voice') return null;
   const no = learnPartRefusal(sim, person, bookingId);
   return (
-    <span className="row gap-1" style={{ alignItems: 'center' }}>
-      <span className="xs dim">{Math.round((p.lines ?? 0) * 100)}% of your lines</span>
+    <div className="row gap-1" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+      <span className="xs dim" style={{ whiteSpace: 'nowrap' }}>{Math.round((p.lines ?? 0) * 100)}% of your lines</span>
       <Gated feature="career.learn_part" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ lines: number }>('career.learn_part', { bookingId }); if (r.ok) toast(`An hour on the part: ${Math.round(r.value!.lines * 100)}% of the lines known.`, 'positive'); }}>Learn The Part</Gated>
-    </span>
+    </div>
   );
 }
 
@@ -469,7 +469,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /></span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
@@ -477,7 +477,6 @@ function WorkPane() {
                   {(b.travelOwed ?? 0) + (b.perDiemOwed ?? 0) > 0 ? `, ${formatMoney((b.travelOwed ?? 0) + (b.perDiemOwed ?? 0), cur)} of travel and per diem owed` : ''}
                   {b.t1287Rate !== undefined ? `, Canada withholding ${(b.t1287Rate * 100).toFixed(1)}% by your T1287` : ''}
                 </span>
-                <LearnPart bookingId={b.id} />
                 <LendClothes booking={b} />
                 {!('refused' in t1287Quote(sim, person, b)) && (
                   <Gated feature="career.t1287" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ rate: number }>('career.t1287', { bookingId: b.id }); if (r.ok) toast(`Filed: Canada withholds ${(r.value!.rate * 100).toFixed(1)}% instead of 23%.`, 'positive'); }}>File Form T1287</Gated>
