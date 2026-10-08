@@ -592,6 +592,8 @@ describe('pay', () => {
     const sim = signed('paid');
     const b = offer(sim, 'costar', 2, 0, at(2026, 10, 5, 8));
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    // SETUP: the production keeps its schedule (a change is `rescheduling.test.ts`'s).
+    for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
     play(sim, at(2026, 10, 15, 18));
     const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Co-Star'));
     expect(pay).toHaveLength(1);
@@ -857,6 +859,8 @@ describe('the attributes at work', () => {
       const sim = pro('attr-press');
       const film = offer(sim, 'film-weekly', 1, 0, at(2026, 10, 5, 8));
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+      // SETUP: the production keeps its schedule (a change is `rescheduling.test.ts`'s).
+      for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
       play(sim, at(2026, 10, 14, 12));
       expect(film.status).toBe('worked');
       const day = pending(sim, PRESS_KIND)[0]!;

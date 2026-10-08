@@ -336,6 +336,8 @@ describe('a day on set', () => {
     const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    // SETUP: the production keeps its schedule (a change is `rescheduling.test.ts`'s).
+    for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'day')!;
     while (sim.now < call.at - 60_000) sim.advanceTo(Math.min(call.at - 60_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     const before = sim.player.wellbeing.energy;

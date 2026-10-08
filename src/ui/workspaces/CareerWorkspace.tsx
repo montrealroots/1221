@@ -25,6 +25,7 @@ import {
 import { footageRefusal } from '@/engine/systems/footage';
 import { learnPartRefusal, productionOf, productionsOf } from '@/engine/systems/companies';
 import { agencyOutlook, representationReview } from '@/engine/systems/representation';
+import { describe, proposalsFor, requestRefusal } from '@/engine/systems/rescheduling';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -509,6 +510,32 @@ const spanOf = (b: Booking) => {
   return role.medium === 'screen' ? `${b.units} ${b.units === 1 ? 'day' : 'days'}` : `${b.rehearsalWeeks} weeks of rehearsal and ${b.units} of performances`;
 };
 
+/** A change to the job's schedule waiting, with what it changes, what's in the way and what it pays; and asking to move a call (`systems/rescheduling.ts`, from 2026-10-08). */
+function ScheduleChange({ bookingId }: { bookingId: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const booking = person.career!.bookings.find((b) => b.id === bookingId)!;
+  const pending = proposalsFor(person, bookingId).find((p) => p.status === 'pending');
+  const next = workDays(booking).slice(booking.worked + (booking.missedNights ?? 0)).find((c) => c.at - sim.now >= 2 * 86_400_000);
+  const ask = next ? requestRefusal(sim, person, booking, next.at) : 'No call far enough ahead.';
+  return (
+    <div className="col gap-1">
+      {pending && (
+        <div className="xs">
+          <span>Proposed: {describe(sim, pending)}.{pending.conflicts.length ? ` It clashes with ${pending.conflicts.join('; ')}.` : ''} {pending.consequences} {pending.mustRespond ? `Answer by ${formatDate(pending.dueAt, sim.zone)}.` : `It takes effect ${formatDate(pending.dueAt, sim.zone)}.`}</span>
+          {pending.mustRespond && (
+            <span className="row gap-1">
+              <Gated feature="career.answer_schedule" onClick={() => { if (run('career.answer_schedule', { bookingId, proposalId: pending.id, accept: true }).ok) toast('The new dates are on your calendar.', 'positive'); }}>Accept The Change</Gated>
+              <Gated feature="career.answer_schedule" onClick={() => { if (run('career.answer_schedule', { bookingId, proposalId: pending.id, accept: false }).ok) toast('Refused.', 'positive'); }}>Refuse It</Gated>
+            </span>
+          )}
+        </div>
+      )}
+      {roleById(booking.roleId).medium === 'screen' && next && !ask && <Gated feature="career.request_schedule" onClick={() => { const r = run<{ answerBy: number }>('career.request_schedule', { bookingId, callAt: next.at }); if (r.ok) toast(`Asked. The production answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); }}>Ask To Move The Call On {formatDate(next.at, sim.zone)}</Gated>}
+    </div>
+  );
+}
+
 /** Your part learned, an hour at a time, and how much of it you know (`career.learn_part`, from 2026-10-08). */
 function LearnPart({ bookingId }: { bookingId: string }) {
   const { sim, run, toast } = useGame();
@@ -538,7 +565,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /></span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /><ScheduleChange bookingId={b.id} /></span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}

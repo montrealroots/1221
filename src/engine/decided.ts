@@ -69,6 +69,7 @@ import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffe
 import { classMonth } from './systems/rivals';
 import { makeProduction, workedDay } from './systems/companies';
 import { answerOf, offersAfterMeeting } from './systems/representation';
+import { changeFor } from './systems/rescheduling';
 import { DENIALS, illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
@@ -987,9 +988,27 @@ defineDecider<{ sim: Simulation; score: number }, string>({
   decide: ({ sim, score }) => offersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
 });
 
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.schedule',
+  decides: 'A job’s schedule after casting: if its production changes it, which way (postponed, a call moved, a day added, the rest cut), and if a call the player asks to move is moved.',
+  drawnIn: 'src/engine/systems/rescheduling.ts',
+  reads: {
+    // Which jobs, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 5 }),
+  decide: ({ sim, key }) => Array.from({ length: 60 }, (_, n) => {
+    const b = { id: `d${key}-${n}`, roleId: n % 2 ? 'lort-b' : 'costar', cityId: 'us-ny-newyork', starts: sim.now, units: 3, rehearsalWeeks: n % 2 ? 4 : 0, status: 'accepted', dueAt: sim.now, offeredAt: sim.now, worked: 0, owed: 0 } as const;
+    const c = changeFor(sim, sim.player, { ...b });
+    const asked = sim.rng('career.schedule', sim.player.id, `request-${b.id}`).next() < 0.5 ? 'y' : 'n';
+    return (c ? c.kind[0]! + c.kind.slice(-1) : '-') + asked;
+  }).join(','),
+});
+
 defineDecider<{ sim: Simulation; craft: number; key: number }, string>({
   id: 'career.approach',
-  decides: 'Whether an agency approached answers, passes or asks to meet, and whether a meeting kept brings an offer of representation.',
+  decides: 'An agency’s answer to an approach (none, a pass or a meeting), and after a meeting kept, an offer of representation or a pass.',
   drawnIn: 'src/engine/systems/representation.ts',
   reads: {
     // Where the actor stands: the better, the likelier a meeting and an offer.

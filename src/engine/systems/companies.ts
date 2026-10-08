@@ -80,7 +80,7 @@ export interface Slot {
   shared: number;
 }
 /** A production; its history, who was asked and who was replaced, is shown on the job (Career, Work). */
-export interface Production { id: string; bookingId: string; /** Its role, whose credit a classmate who withdraws gives back. */ roleId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
+export interface Production { id: string; bookingId: string; /** Its role, whose credit a classmate who withdraws gives back. */ roleId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** Changes to its schedule proposed, and what became of them (`systems/rescheduling.ts`, from 2026-10-08). */ proposals?: import('./rescheduling').Proposal[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
 
 export const COMPANY = {
   /** The other parts a production casts, by medium. */

@@ -213,6 +213,19 @@ describe('moving, and the work it leaves', () => {
   });
 });
 
+describe('an offer from an audition', () => {
+  it('carries the agency of the day, or nobody’s', () => {
+    for (const agencyId of ['iag', undefined]) {
+      const sim = actor(`rep-offer-${agencyId}`, 80, agencyId);
+      // SETUP: an audition done, its offer due in a minute (the offer is the engine's).
+      careerOf(sim.player).auditions.push({ id: 'aud1', roleId: 'costar', at: sim.now, mode: 'room', cityId: 'us-ny-newyork', status: 'done' });
+      sim.schedule({ at: sim.now + 60_000, kind: 'career.offer', label: 'An Offer', category: 'system', priority: 20, payload: { personId: sim.player.id, auditionId: 'aud1' } });
+      sim.advanceTo(sim.now + 2 * 60_000);
+      expect(careerOf(sim.player).bookings.at(-1)!.agentId).toBe(agencyId ?? null);
+    }
+  });
+});
+
 describe('the choice matters, and isn’t only upward', () => {
   it('years with Independent Artist Group: CAA can now be approached, and its attention to a client below its roster is less than IAG’s', () => {
     const sim = actor('rep-iag', 72, 'iag');

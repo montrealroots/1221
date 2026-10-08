@@ -100,6 +100,7 @@ const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
 import { moveTo as signAgency } from './representation';
+import { planChange } from './rescheduling';
 import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, tableRead, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
@@ -432,6 +433,12 @@ export interface Booking {
   wardrobeOwed?: Money;
   /** The actor's own outfits, lent for it, and when the production gives them back. */
   furnished?: { outfitIds: string[]; itemIds: string[]; backAt: Instant };
+  /** Its calls, once its schedule has changed (`systems/rescheduling.ts`, from 2026-10-08): the worked ones as they were, the rest as changed. */
+  calls?: { at: Instant; week: number; rehearsal: boolean }[];
+  /** Owed by a schedule change, paid with the job as wages: a cancellation's pay, a forced call's. */
+  cancellationOwed?: Money;
+  /** The player asked once to move a call. */
+  scheduleAsked?: boolean;
 }
 
 /** A job's life after it's made, and what it has paid (`RESIDUALS`, `AFTERLIFE`). */
@@ -598,7 +605,7 @@ export const agencyById = (id: string): Agency | undefined => AGENCIES.find((a) 
 export const managerById = (id: string): Manager | undefined => MANAGERS.find((m) => m.id === id);
 
 const zoneOf = (cityId: string) => CITIES.require(cityId).timeZone;
-const usd = (cents: Money, into: string) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
+export const usd = (cents: Money, into: string) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
 /** An amount in a currency, in the save's: a British part's pounds as a dollar figure is converted. */
 const inMoney = (cents: Money, from: string, into: string) => (into === from ? cents : exchange(cents, from, into) ?? cents);
 /** A casting site's money and country: dollars and America where it doesn't say. */
@@ -1386,6 +1393,8 @@ export function present(person: Person, when: Instant, cityId?: string): boolean
  * it's in, counted from the start.
  */
 export function workDays(booking: Booking): { at: Instant; week: number; rehearsal: boolean }[] {
+  // A schedule changed keeps its own calls (`systems/rescheduling.ts`, from 2026-10-08); until then a job's calls were always its start's.
+  if (booking.calls) return booking.calls;
   const role = roleById(booking.roleId);
   const zone = zoneOf(workCityOf(booking));
   const out: { at: Instant; week: number; rehearsal: boolean }[] = [];
@@ -1540,7 +1549,7 @@ export function mayLeave(sim: Simulation, person: Person): { ok: boolean; why: s
  * night missed laid up or in hospital left the run open for good, and the
  * actor on a job for the rest of their life.
  */
-function finishJob(s: Simulation, person: Person, career: CareerRecord, booking: Booking, role: Role, item: ScheduledItem): void {
+export function finishJob(s: Simulation, person: Person, career: CareerRecord, booking: Booking, role: Role, item: { at: Instant }): void {
   if (!person.craft) return;
     booking.status = 'worked';
     earn(s, person, ATTRIBUTES.reputation.job);
@@ -1879,6 +1888,8 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const booking = career.bookings.find((b) => b.id === item.payload.bookingId);
     if (!booking || booking.status !== 'accepted') return;
+    // A call its schedule no longer has (`systems/rescheduling.ts`): superseded, it does nothing, whatever kept it.
+    if (booking.calls && item.payload.callAt !== undefined && !booking.calls.some((c) => c.at === Number(item.payload.callAt))) { item.status = 'cancelled'; return; }
     const role = roleById(booking.roleId);
     if (!present(person, item.at, workCityOf(booking))) {
       item.status = 'missed';
@@ -1992,7 +2003,7 @@ export function registerCareer(sim: Simulation): void {
     const booking = career.bookings.find((b) => b.id === item.payload.bookingId);
     const account = payeeAccount(s, person);
     if (!booking) return;
-    if (booking.owed <= 0 && !booking.travelOwed && !booking.perDiemOwed && !booking.fittingOwed && !booking.wardrobeOwed) return;
+    if (booking.owed <= 0 && !booking.travelOwed && !booking.perDiemOwed && !booking.fittingOwed && !booking.wardrobeOwed && !booking.cancellationOwed) return;
     const role = roleById(booking.roleId);
     const cur = saveCurrency(s.universe);
     const workCity = workCityOf(booking);
@@ -2008,7 +2019,7 @@ export function registerCareer(sim: Simulation): void {
     const cutoff = item.payload.final === true ? Number.POSITIVE_INFINITY : role.union === 'sag' ? item.at - 4 * MS_DAY : item.at;
     const from = booking.worked - booking.owed;
     const calls = workDays(booking).slice(from, booking.worked).filter((c) => c.at <= cutoff);
-    const extras = (booking.travelOwed ?? 0) + (booking.perDiemOwed ?? 0) + (booking.fittingOwed ?? 0) + (booking.wardrobeOwed ?? 0);
+    const extras = (booking.travelOwed ?? 0) + (booking.perDiemOwed ?? 0) + (booking.fittingOwed ?? 0) + (booking.wardrobeOwed ?? 0) + (booking.cancellationOwed ?? 0);
     if (!calls.length && !extras) return;
     // A day's scale on screen; on stage, each week's, a sixth for each of its six days.
     const lines = new Map<number, { rehearsal: boolean; days: number }>();
@@ -2019,9 +2030,11 @@ export function registerCareer(sim: Simulation): void {
     let gross = 0;
     // Travel days are paid as days' work, with the first line.
     // And a fitting's, which is wages too.
-    let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0) + (booking.travelOwed ?? 0) + (booking.fittingOwed ?? 0);
+    // And what a schedule change owes (`systems/rescheduling.ts`): cancellation pay and a forced call's, wages too.
+    let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0) + (booking.travelOwed ?? 0) + (booking.fittingOwed ?? 0) + (booking.cancellationOwed ?? 0);
     booking.travelOwed = 0;
     booking.fittingOwed = 0;
+    booking.cancellationOwed = 0;
     for (const [week, line] of lines) {
       const rate = unitRate(booking, item.at, cur);
       // A series regular's episodes, spread over the season's workweeks.
@@ -2390,6 +2403,8 @@ export function registerCareer(sim: Simulation): void {
     const workCity = workCityOf(booking);
     // The production it is, its parts and who plays them (`makeProduction`, from 2026-10-08): a former classmate in another
     // part now and then, where one fits it and is free. Until then a classmate was cast as the player's own part.
+    // Whether the production will change its schedule, and when it says so (`systems/rescheduling.ts`, from 2026-10-08).
+    if (days.length) planChange(s, person, booking);
     if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at));
     const zone = zoneOf(workCity);
     // The first call of a stage or television job is its table read (`tableRead`, from 2026-10-08): the play's first
@@ -2402,7 +2417,7 @@ export function registerCareer(sim: Simulation): void {
         label: role.medium === 'screen' ? `${table ? 'The Table Read, Then On Set' : 'On Set'}: ${role.label}` : role.medium === 'voice' ? `In The Booth: ${role.label}` : `${table && d.rehearsal ? 'The Table Read' : d.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
         category: 'career', priority: 34, requiresPlayer: true,
         durationMinutes: workMinutes(role, d.rehearsal),
-        locationId: workCity, payload: { personId: person.id, bookingId: booking.id, ...(table ? { tableRead: true } : {}) },
+        locationId: workCity, payload: { personId: person.id, bookingId: booking.id, callAt: d.at, ...(table ? { tableRead: true } : {}) },
       });
     }
     // Out on the flight that lands in good time for the first call, from 2026-09-29 (`careerFlight`); where there's no flight, the day before at noon.
@@ -2421,14 +2436,7 @@ export function registerCareer(sim: Simulation): void {
       s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12), ...(flight ? { day: flight.day, slot: flight.slot, ...(flight.by ? { by: flight.by } : {}) } : {}) } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: STAY_KIND, label: 'Home Again', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back' } });
     }
-    // SAG-AFTRA pays on the Thursday after the week's Saturday; Equity, each Friday.
-    const paydays = new Set<Instant>();
-    for (const d of days) {
-      const wd = weekday(d.at, zone);
-      const toSaturday = (6 - wd + 7) % 7;
-      paydays.add(role.union === 'sag' ? at(d.at, zone, toSaturday + 5, 17) : at(d.at, zone, (5 - wd + 7) % 7, 18));
-    }
-    for (const when of paydays) schedulePay(s, person, booking, when);
+    for (const when of paydaysFor(role, days, zone)) schedulePay(s, person, booking, when);
     // A wardrobe fitting the day before, where the union's rules pay one (`FITTING`).
     scheduleFitting(s, person, booking, days[0]!.at);
     closeDecision(s, booking.id);
@@ -2912,7 +2920,7 @@ export function jobsClash(person: Person, a: Booking, b: Booking): boolean {
 }
 
 /** How long a job's day holds the actor: a screen day twelve hours, a voice session its hours, a stage rehearsal eight and a performance three. */
-function workMinutes(role: Role, rehearsal: boolean): number {
+export function workMinutes(role: Role, rehearsal: boolean): number {
   return role.medium === 'screen' ? 720 : role.medium === 'voice' ? (role.sessionHours ?? 4) * 60 : rehearsal ? 480 : 180;
 }
 
@@ -2942,7 +2950,18 @@ function stillWorkingIn(sim: Simulation, person: Person, cityId: string, except:
   return sim.universe.scheduled.some((i) => i.kind === WORK_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.bookingId !== except && i.locationId === cityId);
 }
 
-function schedulePay(sim: Simulation, person: Person, booking: Booking, when: Instant, final = false): void {
+/** A job's paydays for its calls: SAG-AFTRA's on the Thursday after the week's Saturday; Equity's each Friday. */
+export function paydaysFor(role: Role, calls: readonly { at: Instant }[], zone: string): Instant[] {
+  const paydays = new Set<Instant>();
+  for (const d of calls) {
+    const wd = weekday(d.at, zone);
+    const toSaturday = (6 - wd + 7) % 7;
+    paydays.add(role.union === 'sag' ? at(d.at, zone, toSaturday + 5, 17) : at(d.at, zone, (5 - wd + 7) % 7, 18));
+  }
+  return [...paydays];
+}
+
+export function schedulePay(sim: Simulation, person: Person, booking: Booking, when: Instant, final = false): void {
   sim.schedule({ at: when, kind: PAY_KIND, label: `Paid: ${roleById(booking.roleId).label}`, category: 'career', priority: 20, payload: { personId: person.id, bookingId: booking.id, ...(final ? { final } : {}) } });
 }
 

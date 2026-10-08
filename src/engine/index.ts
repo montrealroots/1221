@@ -54,6 +54,7 @@ import { registerReading } from './systems/reading';
 import { registerPlayReading } from './systems/playreading';
 import { registerCompanies } from './systems/companies';
 import { registerRepresentation } from './systems/representation';
+import { registerRescheduling } from './systems/rescheduling';
 import { registerValuables } from './systems/valuables';
 import { registerPawn } from './systems/pawn';
 import { registerWatches } from './systems/watches';
@@ -282,6 +283,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPlayReading(sim);
   registerCompanies(sim);
   registerRepresentation(sim);
+  registerRescheduling(sim);
   registerValuables(sim);
   registerPawn(sim);
   registerWatches(sim);

@@ -73,6 +73,8 @@ describe('a fitting', () => {
     const sim = pro('us-ny-newyork', 'fit-away');
     const b = offer(sim, 'costar', 'us-ny-newyork');
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    // SETUP: the production keeps its schedule (a change is `rescheduling.test.ts`'s).
+    for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
     const fit = sim.universe.scheduled.find((i) => i.kind === FITTING_KIND && i.payload.bookingId === b.id)!;
     sim.advanceTo(fit.at - MS_HOUR);
     sim.player.currentLocationId = 'us-ct-newhaven';
