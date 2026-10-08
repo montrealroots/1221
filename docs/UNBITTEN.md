@@ -459,7 +459,11 @@ part the tool cannot see.
   theatrical one (`systems/commercial.ts`), left on the commercials
   contract's own rule ($4,000 from commercials in 91 days); which agencies
   sign whom, how many auditions each sends and its renewal are SLATE's
-  estimate.
+  estimate. So are an agency's interest in an actor who approaches it, its
+  meeting and its silence (`interestOf`, `APPROACH`), its attention by where
+  a client stands against its roster (`rosterFit`), and how often a
+  production changes its dates (`SCHEDULE.chance`): no agency or production
+  publishes them.
 - **The weather decides the bills' energy and the flu's weeks, and more.**
   This said "and nothing else" until 2026-10-01. Since 2026-09-28 it also
   decides sleep lost to a hot night (`heatLoss`), whether a run or a swim can
@@ -881,12 +885,14 @@ same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
   part and could book across the run. Now they turn parts down, withdraw for
   another job before a run, and book nothing during one; and each job's
   first call is its table read (W2).
-- **An actor never moves up an agency on their own.** Seen in the replay at
-  `65b7c071`: signed by IAG at 29, the New York life stays there 45 years,
-  because a represented actor changes agency only when let go. The earlier
-  baseline's life reached CAA only by being dropped twice. Not a defect of
-  this work, and open: whether an actor's own move between agencies belongs
-  in SLATE is a design question.
+- **An actor never moved agency on their own.** Seen in the replay at
+  `65b7c071`: signed by IAG at 29, the New York life stayed there 45 years,
+  because a represented actor changed agency only when let go. The owner
+  settled the design question the same day: an actor may now approach another
+  agency, by submission or a friend's introduction, meet it and sign its offer
+  (X1 to X3), and a bigger agency gives a client well below its roster less
+  attention, so staying can be the better career. The probe replay still
+  doesn't approach agencies; `tools/social-lives.mjs` with `AGENCY` does.
 - **The acting-only economy.** The broke graduate was the social-lives
   script's doing: it never looked for work. With the lifetime probe's career
   habits the six actors book 48 to 72 jobs and end at −$13,637 to +$206,059.
