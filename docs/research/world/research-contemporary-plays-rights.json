@@ -153,10 +153,10 @@
       "licensor": {
         "us": {
           "name": "Dramatists Play Service",
-          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=4848",
-          "quote": "Disgraced",
-          "evidence": "search-result title only",
-          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it."
+          "source": "https://books.google.com/books?vid=ISBN9780822230427",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2015",
+          "retrieved": "2026-10-08",
+          "basis": "Dramatists Play Service publishes the acting edition of the plays it licenses; its acting edition is on record (Google Books), as for the 17 others. Third pass, 2026-10-08."
         },
         "uk": null
       },
@@ -236,10 +236,10 @@
       "licensor": {
         "us": {
           "name": "Dramatists Play Service",
-          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=5128",
-          "quote": "Constellations",
-          "evidence": "search-result title only",
-          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it. A second result, 'Nick Payne' at https://www.dramatists.com/cgi-bin/db/single.asp?index=0&key=5129, came back for the same search."
+          "source": "https://books.google.com/books?vid=ISBN9780822232827",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2016",
+          "retrieved": "2026-10-08",
+          "basis": "Dramatists Play Service publishes the acting edition of the plays it licenses; its acting edition is on record (Google Books), as for the 17 others. Third pass, 2026-10-08."
         },
         "uk": {
           "name": "Concord Theatricals (UK)",
@@ -289,7 +289,15 @@
         },
         "uk": null
       },
-      "firstPublished": null
+      "firstPublished": {
+        "year": 2012,
+        "publisher": "Oberon Books",
+        "edition": "trade edition",
+        "source": "https://openlibrary.org/isbn/9781849431453.json",
+        "quote": "publishers: Oberon Books; publish_date: 2012",
+        "retrieved": "2026-10-08",
+        "note": "Google Books’ record of the same ISBN gives 2012 too (under Bloomsbury, which later bought Oberon); retailers list September 2011 or February 2012. The two catalogue records are taken."
+      }
     },
     {
       "id": "the-flick",
@@ -542,10 +550,10 @@
       "licensor": {
         "us": {
           "name": "Dramatists Play Service",
-          "source": "https://www.dramatists.com/cgi-bin/db/single.asp?key=5667",
-          "quote": "The Children",
-          "evidence": "search-result title only",
-          "basis": "Weak: the only evidence is the title of a dramatists.com catalogue page returned by WebSearch for this play and author. The page itself redirects to concordtheatricals.com, which refuses this agent, and the search tool returns no verbatim snippet. Verify before relying on it."
+          "source": "https://books.google.com/books?vid=ISBN9780822237488",
+          "quote": "Publisher: Dramatists Play Service, Inc., 2018",
+          "retrieved": "2026-10-08",
+          "basis": "Dramatists Play Service publishes the acting edition of the plays it licenses; its acting edition is on record (Google Books), as for the 17 others. Third pass, 2026-10-08."
         },
         "uk": {
           "name": "Nick Hern Books (amateur rights)",
@@ -579,13 +587,27 @@
           "feeQuote": "Minimum £70 per performance plus VAT when applicable"
         }
       },
-      "firstPublished": null
+      "firstPublished": {
+        "year": 2009,
+        "publisher": "Methuen Drama (A&C Black)",
+        "edition": "trade edition",
+        "source": "https://books.google.com/books?vid=ISBN9781408124673",
+        "quote": "Publisher: A&C Black, 2009",
+        "retrieved": "2026-10-08",
+        "note": "Methuen Drama was an A&C Black imprint in 2009; the record’s 2009 is the edition published with the Chichester premiere’s year."
+      }
     },
     {
       "id": "escaped-alone",
       "title": "Escaped Alone",
       "licensor": {
-        "us": null,
+        "us": {
+          "name": "Samuel French (Concord Theatricals)",
+          "source": "https://www.shaking-the-tree.com/escaped-alone.html",
+          "quote": "\"Escaped Alone\" is presented by special arrangement with SAMUEL FRENCH, INC.",
+          "retrieved": "2026-10-08",
+          "basis": "The credit line a licensor requires of the companies it licenses, on a US producing theatre’s own page (Shaking the Tree Theatre, Portland, Oregon). Third pass, 2026-10-08."
+        },
         "uk": {
           "name": "Concord Theatricals (UK)",
           "source": "https://www.concordtheatricals.co.uk/p/59942/escaped-alone",
@@ -633,7 +655,13 @@
       "title": "Fleabag",
       "licensor": {
         "us": null,
-        "uk": null
+        "uk": null,
+        "withheld": {
+          "source": "https://www.nickhernbooks.co.uk/plays-to-perform/fleabag",
+          "quote": "UNLIKELY TO BE RELEASED FOR AMATEUR PERFORMANCE … Performing rights not held by Nick Hern Books",
+          "retrieved": "2026-10-08",
+          "basis": "Its publisher says it is unlikely to be released and the rights aren’t its own; Origin Theatrical (Australia) lists its performance rights as currently withdrawn. No licensor offers it."
+        }
       },
       "firstPublished": {
         "year": 2013,
@@ -675,7 +703,18 @@
       "title": "Black Watch",
       "licensor": {
         "us": null,
-        "uk": null
+        "uk": null,
+        "agent": {
+          "name": "Casarotto Ramsay & Associates",
+          "source": "https://www.casarotto.co.uk/clients/gregory-burke",
+          "quote": "His award winning plays include; GAGARIN WAY (Traverse/National Theatre, 2001) and BLACK WATCH (National Theatre of Scotland, World Tour, 2006).",
+          "also": {
+            "source": "https://www.casarotto.co.uk/performance-rights-enquiries",
+            "quote": "no performance of a protected play may be given in any form … without prior written consent from the copyright owner or their accredited agent."
+          },
+          "retrieved": "2026-10-08",
+          "basis": "No licensing house offers it; the author’s agency names it among his plays and takes performance-rights applications as his accredited agent. The rights page doesn’t name Black Watch itself."
+        }
       },
       "firstPublished": {
         "year": 2007,
@@ -691,22 +730,7 @@
     {
       "play": "jerusalem",
       "fact": "licensor.us",
-      "tried": "Google Books (only TCG 2011 and NHB editions, no DPS or Samuel French acting edition found); dramatists.com WebSearch (only Mojo and other Butterworth titles); Concord UK has only a shop page (/s/28376), no licensing page."
-    },
-    {
-      "play": "escaped-alone",
-      "fact": "licensor.us",
-      "tried": "Google Books (only NHB 2016); dramatists.com WebSearch (no match). Concord UK tags it 'A SAMUEL FRENCH, LTD. TITLE', which is the UK catalogue and says nothing about US rights."
-    },
-    {
-      "play": "fleabag",
-      "fact": "licensor.us and licensor.uk",
-      "tried": "Concord UK lists only shop pages (/s/61936, /s/66681), no licensing page; dramatists.com WebSearch (no match); research-contemporary-plays.json records NHB's 'Performing rights not held by Nick Hern Books'."
-    },
-    {
-      "play": "black-watch",
-      "fact": "licensor.us and licensor.uk",
-      "tried": "Concord UK lists only a shop page (/s/46052); dramatists.com WebSearch (no match); no acting edition found on Google Books."
+      "tried": "First and second passes as before; third pass (2026-10-08): no Dramatists Play Service or Samuel French acting edition on record; Concord UK’s page (/s/28376) names no catalogue or terms; the US productions found (The Rogue Theatre, Tucson; Edge Theater, Lakewood; The Wilbury Group, Providence) don’t print a licensing credit on their pages. Not recorded."
     },
     {
       "play": "doubt-a-parable, topdog-underdog, sweat, venus-in-fur, disgraced, water-by-the-spoonful, august-osage-county, the-humans, lungs, fairview, cost-of-living, gloria, rabbit-hole, between-riverside-and-crazy",
@@ -714,24 +738,25 @@
       "tried": "Concord UK WebSearch returns only shop (/s/) pages or nothing for these, never a licensing (/p/) page; Nick Hern Books pages (per research-contemporary-plays.json) read 'Performing rights not held by Nick Hern Books' where they exist. Absence of a licensing page is not recorded as a fact."
     },
     {
-      "play": "lungs",
-      "fact": "firstPublished",
-      "tried": "Oberon Books 2011 paperback (ISBN 9781849431453) appears only on retailer pages (AbeBooks, Amazon), which give conflicting dates (1 Sep 2011 and 28 Feb 2012); Google Books has only the DPS 2019 record; bloomsbury.com (Oberon's owner) is closed to this agent; WorldCat search is JavaScript-rendered and returned nothing; googleapis Books API returned HTTP 429."
-    },
-    {
-      "play": "enron",
-      "fact": "firstPublished",
-      "tried": "The Methuen Drama 2009 first edition was not found on any reachable page. Earliest verified record: 'Publisher: A&C Black, 2010', 'Edition: Modern Plays' (https://books.google.co.uk/books/about/Enron.html?id=qv4NRcCs7dgC&redir_esc=y), which is probably not the first. bloomsbury.com is closed to this agent."
-    },
-    {
-      "play": "disgraced, constellations, the-children",
-      "fact": "licensor.us (strength)",
-      "tried": "Recorded from dramatists.com search-result titles only, flagged evidence 'search-result title only'. The DPS acting edition of Disgraced (ISBN 9780822230427) has no Google Books record found; the Google Books search for that ISBN returned a Bloomsbury 2021 record."
-    },
-    {
       "play": "all",
       "fact": "licensor pages",
       "tried": "concordtheatricals.com (US) is refused to both WebFetch and WebSearch ('not accessible to our user agent'). dramatists.com, broadwaylicensing.com and playscripts.com all 301-redirect to concordtheatricals.com. faber.co.uk returned 403. Google Books in-book search hit Google's /sorry rate-limit page; googleapis.com/books returned 429 three times; worldcat.org returned 429 once and then a JavaScript shell; catalog.loc.gov redirects to a JavaScript search; catalogue.nla.gov.au is behind an Anubis bot challenge. concordtheatricals.co.uk (UK) and nickhernbooks.co.uk were readable."
     }
-  ]
+  ],
+  "thirdPass": {
+    "retrieved": "2026-10-08",
+    "resolved": [
+      "disgraced",
+      "constellations",
+      "the-children",
+      "escaped-alone",
+      "fleabag",
+      "black-watch",
+      "lungs",
+      "enron"
+    ],
+    "open": [
+      "jerusalem (US licensor)"
+    ]
+  }
 }
