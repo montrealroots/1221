@@ -51,7 +51,7 @@ export function SlateApp() {
       // eslint-disable-next-line no-restricted-syntax
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
       // A life begun here begins with the guide.
-      const { createSave, refreshMeta } = await import('@/engine');
+      const { createSave, loadPlacesFor, refreshMeta } = await import('@/engine');
       const sim = createSave(slot, seed, { ...config, tutorial: true });
       // The home country's holidays, which its banks keep as business days.
       await loadPlacesFor(sim.universe);
