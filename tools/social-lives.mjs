@@ -16,7 +16,8 @@
  *   out every second evening (the one least seen), takes another time offered;
  * - selective: prepares more and goes to bed at nine, says yes to its three closest only,
  *   politely no to the rest, asks one of them out a week;
- * All three look for work and keep their money as the lifetime probe does;
+ * All three look for work and keep their money as the lifetime probe does,
+ * and seek other representation by `AGENCY` (stay, climb or churn);
  * the engaged and the selective learn each part booked before it's played.
  * - unreliable: says yes to everything, then calls off a fifth at short
  *   notice and spends a Sunday in New York over a tenth of Sunday's (missing them), and from
@@ -32,6 +33,8 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/cor
 import { breaches } from '../src/engine/core/invariants.ts';
 import { suggestedSleep } from '../src/engine/systems/life.ts';
 import { queryRefusal } from '../src/engine/systems/career.ts';
+import { AGENCIES } from '../src/engine/content/career.ts';
+import { agencyOutlook } from '../src/engine/systems/representation.ts';
 import { learnPartRefusal, productionOf, productionsOf } from '../src/engine/systems/companies.ts';
 import { attributesOf } from '../src/engine/systems/attributes.ts';
 import { bankAccountsOf } from '../src/engine/systems/banking.ts';
@@ -44,6 +47,7 @@ import { freshnessOf } from '../src/engine/systems/learning.ts';
 import { planBy } from '../src/engine/systems/journey.ts';
 
 const [kind = 'engaged', seed = 'social-1', untilKey = '2031-06-01', out] = process.argv.slice(2);
+const AGENCY = process.env.AGENCY ?? 'stay';
 const until = Date.parse(`${untilKey}T12:00:00Z`);
 let sim = createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', wealth: 'modest', family: 'modest', firstName: 'Sam', lastName: 'Reyes', pronouns: 'they/them', tutorial: false });
 sim.player.automation = { unloadShopping: true, packForMe: true, laundry: true, washUp: true, tidy: true, restock: true, replaceClothes: true, feedPets: true };
@@ -103,6 +107,16 @@ function career() {
   // A part booked, learned before it's played: an hour an evening (the selective two), till it's known; the unreliable student comes in on book.
   if (c && kind !== 'unreliable') for (const b of c.bookings.filter((x) => x.status === 'accepted')) for (let n = 0; n < (kind === 'selective' ? 2 : 1); n += 1) { if (learnPartRefusal(sim, p, b.id) || (productionOf(p, b.id)?.lines ?? 0) >= 0.85) break; run('career.learn_part', { bookingId: b.id }); }
   if (!inSchool() && !queryRefusal(sim, p)) run('career.query_agencies');
+  // Representation, by the policy (`AGENCY` in the environment, from 2026-10-08): 'stay' never approaches another agency;
+  // 'climb' approaches those within reach or a stretch that reach further than its own; 'churn' approaches every one it may.
+  if (AGENCY !== 'stay' && c?.since !== undefined && !inSchool()) {
+    const mine = c.agencyId ? AGENCIES.find((a) => a.id === c.agencyId) : undefined;
+    for (const o of agencyOutlook(sim, p)) {
+      if (o.refusal) continue;
+      if (AGENCY === 'climb' && (o.chance === 'Out Of Reach' || (mine && o.agency.tier >= mine.tier))) continue;
+      run('career.approach_agency', { agencyId: o.agency.id, ...(o.referrer ? { via: 'referral' } : {}) });
+    }
+  }
 }
 
 /** Money, as the lifetime probe keeps it: a floor in the current account from savings, the cards paid, debts paid when there's money. */
@@ -254,6 +268,10 @@ function measure(label) {
     worth: Math.round(Object.values(sim.universe.accounts).filter((a) => a.ownerId === p.id).reduce((n, a) => n + a.balance, 0) / 100),
     city: p.home?.cityId, agency: p.career?.agencyId ?? null, credits: p.career?.credits.length ?? 0,
     reputation: Math.round(attributesOf(sim, p).reputation * 10) / 10,
+    approaches: (p.career?.approaches ?? []).reduce((m, a) => { m[a.status] = (m[a.status] ?? 0) + 1; return m; }, {}),
+    moves: (p.career?.approaches ?? []).filter((a) => a.status === 'signed').length,
+    proposals: productionsOf(p).flatMap((x) => x.proposals ?? []).reduce((m, x) => { const k = `${x.kind}:${x.status}`; m[k] = (m[k] ?? 0) + 1; return m; }, {}),
+    released: (p.career?.bookings ?? []).filter((b) => b.status === 'released').length,
     productions: productionsOf(p).length,
     offBook: productionsOf(p).filter((x) => x.history.some((h) => h.what === 'You came in off book')).length,
     declined: productionsOf(p).reduce((n, x) => n + x.history.filter((h) => / turned it down$/.test(h.what)).length, 0),
