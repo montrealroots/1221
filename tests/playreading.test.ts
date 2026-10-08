@@ -55,9 +55,12 @@ describe('the plays, as facts', () => {
     }
   });
 
-  it('says who licenses each, or that the author’s agent does, or that it isn’t released, for all but one; and every first edition', () => {
+  it('says who licenses each, or that the author’s agent does, or that it isn’t released; and every first edition', () => {
     expect(CONTEMPORARY_PLAYS.filter((p) => !p.published)).toEqual([]);
-    expect(CONTEMPORARY_PLAYS.filter((p) => !p.licensor?.us && !p.licensor?.agent && !p.licensor?.withheld).map((p) => p.id)).toEqual(['jerusalem']);
+    // Jerusalem, whose US licensor couldn't be found, was taken out (2026-10-08).
+    expect(playById('jerusalem')).toBeUndefined();
+    expect(CONTEMPORARY_PLAYS).toHaveLength(29);
+    expect(CONTEMPORARY_PLAYS.filter((p) => !p.licensor?.us && !p.licensor?.agent && !p.licensor?.withheld).map((p) => p.id)).toEqual([]);
   });
 
   it('none is played: no scene SLATE plays is from one, and the contemporary scenes are its own, said so', () => {
@@ -124,16 +127,16 @@ describe('reading one at school', () => {
   it('researched once, after a read, at the library: the first production and edition, and the craft once more', () => {
     let sim = life('pl-research');
     tended(sim, at(9, 5, 18));
-    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'jerusalem' } }).error).toBe('Read it first: research needs questions.');
-    sim.must({ kind: 'plays.read', payload: { playId: 'jerusalem' } });
+    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('Read it first: research needs questions.');
+    sim.must({ kind: 'plays.read', payload: { playId: 'the-children' } });
     sim = reload(sim);
     const s0 = sim.player.craft!.script;
-    const r = sim.must<{ minutes: number; note: string }>({ kind: 'plays.research', payload: { playId: 'jerusalem' } });
+    const r = sim.must<{ minutes: number; note: string }>({ kind: 'plays.research', payload: { playId: 'the-children' } });
     expect(r.minutes).toBe(PLAYREADING.minutes.research);
-    expect(r.note).toBe('First staged in 2009 at Royal Court Theatre, London. First published 2009, by Nick Hern Books. Licensed for performance in the UK by Nick Hern Books (amateur rights).');
+    expect(r.note).toBe('First staged in 2016 at Royal Court Theatre (Jerwood Theatre Downstairs), London. First published 2016, by Nick Hern Books. Licensed for performance in the US by Dramatists Play Service, in the UK by Nick Hern Books (amateur rights).');
     expect(sim.player.craft!.script).toBeGreaterThan(s0);
-    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'jerusalem' } }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
-    expect(reload(sim).player.plays!['jerusalem']!.researchedAt).toBeDefined();
+    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
+    expect(reload(sim).player.plays!['the-children']!.researchedAt).toBeDefined();
   });
 
   it('researched, a play no house licenses names the author’s agent, and one held back says so', () => {

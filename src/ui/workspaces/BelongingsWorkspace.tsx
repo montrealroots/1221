@@ -1106,7 +1106,7 @@ function PlaysToRead() {
   return (
     <Panel title="Plays To Read" subtitle={'library' in copy ? `A Copy From ${copy.library}` : 'No Copy To Hand'}>
       <div className="col gap-2">
-        <div className="xs dim">Thirty plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
+        <div className="xs dim">Twenty-nine plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Play</th><th scope="col">Cast</th><th scope="col">Read</th></tr></thead>
