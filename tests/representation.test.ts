@@ -14,7 +14,7 @@ import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
 import { AGENCIES } from '@/engine/content/career';
 import { beginCareer, careerOf, represent, rosterFit, standing, takesBack, weekOfAuditions, type Booking } from '@/engine/systems/career';
-import { APPROACH, agencyOutlook, answerOf, approachesOf, offersAfterMeeting, representationReview } from '@/engine/systems/representation';
+import { APPROACH, agencyOutlook, answerOf, approachesOf, interestOf, introducerFor, offersAfterMeeting, representationReview } from '@/engine/systems/representation';
 import { attributesOf } from '@/engine/systems/attributes';
 import { evenCraft } from '@/engine/systems/school';
 
@@ -258,5 +258,50 @@ describe('a save from before', () => {
     const old = loadSave(deserialise(JSON.stringify(raw)) as never);
     expect(old.execute({ kind: 'career.approach_agency', payload: { agencyId: 'caa' } }).ok).toBe(true);
     expect(breaches(old.universe)).toEqual([]);
+  });
+});
+
+describe('introductions by a manager and a casting office (from 2026-10-08, later)', () => {
+  it('a manager introduces to an American agency: read four points warmer, answered in ten days, and refused without one', () => {
+    let sim = actor('rep-manager', 75);
+    expect(sim.execute({ kind: 'career.approach_agency', payload: { agencyId: 'caa', via: 'manager' } }).error).toBe('You have no manager to introduce you.');
+    careerOf(sim.player).managerId = '3arts'; // SETUP: signed with a management firm, as the business would have it.
+    expect(interestOf(sim, sim.player, 'manager') - interestOf(sim, sim.player, 'submission')).toBe(APPROACH.introduction.manager);
+    // A manager's relationships read warmest, a friend's word next, a casting office's least, and all above a cold submission.
+    const read = (via: 'submission' | 'referral' | 'manager' | 'casting') => interestOf(sim, sim.player, via);
+    expect(read('manager') > read('referral') && read('referral') > read('casting') && read('casting') > read('submission')).toBe(true);
+    expect(agencyOutlook(sim, sim.player).find((o) => o.agency.id === 'caa')!.manager).toBe('3 Arts Entertainment');
+    const r = sim.must<{ answerBy: number }>({ kind: 'career.approach_agency', payload: { agencyId: 'caa', via: 'manager' } });
+    expect(r.answerBy - sim.now).toBe(APPROACH.answerDays.manager * MS_DAY);
+    sim = reload(sim);
+    const a = approachesOf(sim.player)[0]!;
+    expect([a.via, a.referrer, a.history[0]!.what]).toEqual(['manager', '3 Arts Entertainment', 'Introduced by your manager, 3 Arts Entertainment']);
+    expect(breaches(sim.universe)).toEqual([]);
+  });
+
+  it('a manager’s firm is American: it introduces to no agency in London', () => {
+    const sim = actor('rep-manager-uk', 75);
+    careerOf(sim.player).managerId = '3arts'; // SETUP
+    const uk = AGENCIES.find((a) => a.countryId === 'uk')!;
+    expect(introducerFor(sim, sim.player, uk.id, 'manager')).toBeUndefined();
+    expect(introducerFor(sim, sim.player, 'caa', 'manager')).toBe('3 Arts Entertainment');
+  });
+
+  it('a casting office met at a workshop introduces once a year, within two years of meeting, where you work', () => {
+    let sim = actor('rep-casting', 75);
+    expect(sim.execute({ kind: 'career.approach_agency', payload: { agencyId: 'gersh', via: 'casting' } }).error).toMatch(/^You haven’t met a casting office/);
+    const career = careerOf(sim.player);
+    career.castingContacts = [{ office: 'The Telsey Office', cityId: 'us-ny-newyork', at: sim.now - 800 * MS_DAY }]; // SETUP: met at a workshop, long ago.
+    expect(introducerFor(sim, sim.player, 'gersh', 'casting')).toBeUndefined();
+    career.castingContacts.push({ office: 'Tara Rubin Casting', cityId: 'us-ny-newyork', at: sim.now - 30 * MS_DAY }); // SETUP: and lately.
+    expect(interestOf(sim, sim.player, 'casting') - interestOf(sim, sim.player, 'submission')).toBe(APPROACH.introduction.casting);
+    sim.must({ kind: 'career.approach_agency', payload: { agencyId: 'gersh', via: 'casting' } });
+    expect(approachesOf(sim.player)[0]!.referrer).toBe('Tara Rubin Casting');
+    sim = reload(sim);
+    // The same office won't introduce them again within the year, to any agency.
+    expect(sim.execute({ kind: 'career.approach_agency', payload: { agencyId: 'paradigm', via: 'casting' } }).error).toMatch(/^No casting office you’ve met here/);
+    // Another town's office doesn't count where they work.
+    careerOf(sim.player).castingContacts!.push({ office: 'Nina Gold Casting', cityId: 'uk-eng-london', at: sim.now }); // SETUP
+    expect(introducerFor(sim, sim.player, 'paradigm', 'casting')).toBeUndefined();
   });
 });

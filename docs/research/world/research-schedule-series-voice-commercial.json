@@ -1,0 +1,620 @@
+{
+  "topic": "Cancelling, postponing and moving booked work for principal, series and voice performers (SAG-AFTRA Commercials, Audio Commercials, TV/Theatrical, Television Agreement series and term contracts, TV Animation, Interactive Media; UK Pact/Equity TV and cinema, FAA/Pact background); replacing a performer; and how managers and casting directors introduce actors to agents. Companion to research-agency-change-and-scheduling.json, which already holds the TV/Theatrical engagement-binding conditions, the noon-before cancel window, the TV/Theatrical rest periods and forced-call penalties, the commercials and background weather-permitting summaries, and Pact TV T18/T20/T21 from the 2004 text.",
+  "retrieved": "2026-10-08",
+  "findings": [
+    {
+      "id": "us-comm-engagement-definition",
+      "what": "SAG-AFTRA Commercials Contract (2016 text, still the base contract as amended by the 2019, 2022 and 2025 MOAs), Schedule A Part I, Section C.1: when a principal performer is definitely booked",
+      "value": "Booked on any of: written acceptance; producer-signed form contract delivered (or unsigned one executed and returned within 48 hours); script delivered (not for audition); fitted (not wardrobe test); verbal call accepted; told they will be used with no date set; told not to accept a competing commercial; asked to 'hold' a specific date",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "(e) When the principal performer is given a verbal call which he/she accepts; (f) When the principal performer is told he/she will be used but no date is set; (g) When the principal performer is told not to accept an engagement for a commercial advertising a competitive product or service. (h) A performer shall be definitely engaged if Producer requests the performer to \"hold\" a specific date.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-audition-not-engagement",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section C.2: auditions do not book the performer",
+      "value": "Auditions and interviews are never an engagement",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "Neither auditions nor interviews shall constitute an engagement.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-engaged-not-used",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section C.3: booked principal not used (the cancellation fee)",
+      "value": "One session fee or the performer's guarantee, whichever is greater, unless the cause is the performer's default, illness or incapacity; nothing if the performer is unavailable when called",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "When a principal performer is engaged and not used for any reason other than his/her default, illness or other incapacity, he/she shall be entitled to a session fee or his/her guarantee, whichever is greater. If the principal performer who is selected is unavailable when called to render actual services, he/she shall not be entitled to a session fee.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-hold-vs-avail-faq",
+      "what": "SAG-AFTRA/JPC guidance on 'hold' versus 'avail' (search-result text; sagaftra.org PDFs refuse the fetcher)",
+      "value": "A hold is a booking and earns a cancellation fee if cancelled; an avail (availability check) does not",
+      "market": "us",
+      "source": "https://www.sagaftra.org/sites/default/files/2026-05/Member%20Tips%20and%20Tools%20-%20Commercials%20Cheat%20Sheet%202026-2027.pdf (search snippet; PDF returned 403)",
+      "quote": "If a performer has been put on \"hold,\" the producer has engaged the performer and a cancellation fee is due if the producer cancels the engagement. A cancellation fee would not be paid when a performer is placed on an \"avail\" and not used.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-comm-force-majeure-cancel",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section D.1: cancellation for force majeure",
+      "value": "Producer may cancel any call without payment if production is impossible because of force majeure",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2015/08/2003-SAG-Commercials-Contract1.pdf",
+      "quote": "The Producer shall have the right to cancel any call without payment because of impossibility of production due to \"Force Majeure\".",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-postpone-call",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section D.2: moving a principal's session date (postponement). Text quoted from the 2003 contract because the 2016 e-book's font encoding drops the digits; the 2016 text that survives decoding matches it word for word, and the 2025 MOA does not amend D",
+      "value": "24 hours' notice (not given on a Saturday, Sunday or holiday); new date mutually acceptable and within 15 working days; half a session fee on postponement, another half fee and release if it does not happen in the 15 days; only one postponement; postponement payments not creditable against the session fee",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2015/08/2003-SAG-Commercials-Contract1.pdf",
+      "quote": "The Producer shall have the right upon 24 hours' notification (except that such notification may not be given on a Saturday, Sunday, or holiday) to postpone a call to a mutually acceptable date within a period of 15 working days after the original date. In the event of such postponement, an amount equal to one-half the applicable session fee shall be paid to the principal performer. In the event production does not take place within said 15-day period, then another payment equal to one-half the applicable session fee shall be paid to the principal performer and principal performer is thereupon released.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-postpone-once-not-creditable",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section D.2 (2016 text): one postponement only, and the payments are on top of the session fee",
+      "value": "Only one postponement per 15-working-day period; postponement/cancellation payments may not be credited against later session fees",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "Only one such postponement shall occur during the 15-working day period specified above. None of the payments provided for herein which become due by reason of postponement or cancellation of calls may be credited against session fees payable to principal performer as a result of services rendered when production does take place.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-off-camera-same-rules",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part II (off-camera, i.e. TV-commercial voice-over): engagement and postponement rules carried over",
+      "value": "Off-camera principals get definite calls for designated sessions that cannot be extended without consent; Part I sections D (postponement and cancellation) and E (rest period) apply",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "Principal performers called for off-camera sessions shall receive definite calls for designated sessions such as 10:00 A.M. to 12:00 Noon, or 10:00 A.M. to 4:00 P.M.. The call may not be extended unless agreed to by principal performer.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-weather-permitting-text",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section T: weather-permitting calls for principals (contract text; the sister file has only a SAG-AFTRA tip-sheet snippet)",
+      "value": "Not for studio stages; principals at 2x session fee or less get a half-check on cancellation, which buys 4 hours' hold, plus a half-check per further 4 hours; full daily wage if anything is photographed or recorded; not after photography has begun",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "A principal performer receiving 2 times the session fee per commercial per day or less shall be paid a half-check upon the cancellation of any weather permitting call. This check shall entitle the Producer to hold the principal performer for not exceeding 4 hours. The principal performer shall receive a half-check for each additional 4 hours, or portion thereof, during which he/she is held by the Producer.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-rest-period",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section E.1: rest period between days",
+      "value": "12 consecutive hours from final dismissal to next call (exceptions down to 10 hours for nearby exterior location or late arrival on overnight location)",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "The principal performer shall be entitled to a 12-hour consecutive rest period from the time he/she is finally dismissed until his/her first call thereafter, whether for makeup, wardrobe, hairdress or any other purpose.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-rest-period-violation",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section E.3: rest period waived or violated (2016 text; later MOAs not checked for a changed amount)",
+      "value": "Liquidated damages of a session fee or $500, whichever is less; automatic whenever the rest period is waived",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "The above liquidated damages of a session fee or $500, whichever is the lesser sum, shall be automatically incurred in any case in which the principal performer waives the rest period. The liquidated damages may not be waived without the consent of the Union.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-overtime",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section B: overtime for on-camera principals",
+      "value": "8-hour session day; time-and-a-half for hours 9-10, double time after (time-and-a-half only for performers above 2x session fee); prep time counts",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "A principal performer shall receive time-and-one-half for the 9th and 10th hours and double time thereafter, in hourly units.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-session-fee-2025",
+      "what": "SAG-AFTRA Commercials Contract session fee, 1 April 2025 to 31 March 2026 (JPC rate sheet)",
+      "value": "On-camera principal $822.30; off-camera principal $618.30",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2025/05/2025-Commercials-Contract-Rate-Sheets-Year-1.pdf",
+      "quote": "2025 SAG-AFTRA COMMERCIALS CONTRACT RATES EFFECTIVE 4/1/25 - 3/31/26 ... Session: $822.30 $618.30",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-contract-24h-before-call-2025",
+      "what": "2025 SAG-AFTRA Commercials MOA item 25, adding Schedule A.I.C.5 (the 2025 MOA adds to Engagement but leaves Postponement and Cancellation of Calls unchanged)",
+      "value": "Producer uses commercially reasonable efforts to give the employment contract at least 24 hours before call time",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2025/05/2025-Commercials-Contract-MOA.pdf",
+      "quote": "Producer shall use commercially reasonable efforts to provide all performers their employment contract(s), including any riders or addenda, for review not less than 24 hours in advance of their call time.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-replaced-principal",
+      "what": "SAG-AFTRA Commercials Contract Schedule A Part I, Section C.3: principal replaced after starting work",
+      "value": "Guarantee, or one session fee on top of pay for work done, whichever is greater (not if replaced for default, illness or incapacity)",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "A principal performer who is replaced in a commercial for reasons other than his/her default, illness or other incapacity, after commencement of his/her services pursuant to his/her engagement and before the completion of engagement, shall receive his/her guarantee, or a session fee in addition to payment for services rendered to that time, whichever is greater.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-comm-voice-replaced-notice",
+      "what": "SAG-AFTRA Commercials Contract Section 27.B.2: off-camera (voice) principal replaced in a commercial",
+      "value": "Must be told within 2 working days; until told, holding and use fees keep accruing",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Commercial_Cntrct_eBook.pdf",
+      "quote": "If an off-camera principal performer is replaced in a commercial, he/she shall be notified within 2 working days after the replacement is made. If timely notice is not given, the principal performer shall be paid all holding fees and use fees until notice is given.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-audio-comm-hold-is-booking",
+      "what": "SAG-AFTRA Audio (radio) Commercials Contract, 2016 e-book: a hold is a booking. The PDF's font encoding strips punctuation and digits; text recovered by decoding the shifted glyphs",
+      "value": "Placing a radio voice performer on hold engages them",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Audio_Commercial_Cntrct_eBook.pdf",
+      "quote": "Any performer who is placed on hold shall be considered engaged",
+      "confidence": "high"
+    },
+    {
+      "id": "us-audio-comm-cancelled-session",
+      "what": "SAG-AFTRA Audio Commercials Contract (2016 e-book), Cancelled or Postponed Sessions, subsection A: radio session cancelled",
+      "value": "Paid in full for all contracted time or contracted commercials, whichever is greater; only exception is dismissal for gross insubordination/misconduct with SAG-AFTRA's consent; producer bears the risk of the performer's incompetence once booked",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Audio_Commercial_Cntrct_eBook.pdf",
+      "quote": "Where the session is cancelled the Performer shall nevertheless be paid in full for all contracted time or contracted commercials whichever is greater as specified in this Agreement ... except where cancellation is for gross insubordination or misconduct and SAGAFTRA consents to such dismissal without payment Producer agrees that after the engagement is made the risk of the Performer s incompetence is assumed by the Producer",
+      "confidence": "high"
+    },
+    {
+      "id": "us-audio-comm-postponed-session",
+      "what": "SAG-AFTRA Audio Commercials Contract (2016 e-book), Cancelled or Postponed Sessions, subsection B: moving a radio session to another day",
+      "value": "Moving the call to another day counts as a cancellation (full pay); if the new date clashes with a prior commitment, the original booking is paid as cancelled. Unlike on-camera/TV commercials, there is no half-fee postponement",
+      "market": "us",
+      "source": "https://www.jointpolicycommittee.org/wp-content/uploads/2018/01/SAG_Audio_Commercial_Cntrct_eBook.pdf",
+      "quote": "If a postponed session involves a change in the call of the Performer to another day it shall be treated as a cancelled session In the event that such call for postponement conflicts with the Performer s prior commitments the original engagement shall be considered as a cancelled session for which the Performer shall be paid",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-day-performer-engaged-not-used",
+      "what": "SAG-AFTRA Codified Basic Agreement 2014, Schedule A (day performers), Section 3.E: engaged and not used (the TV/theatrical pay-or-play floor)",
+      "value": "One day's salary or the guarantee, whichever is greater (not for default, illness, incapacity); nothing if unavailable when called",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "When a performer is engaged and not used for any reason other than his default, illness, or other incapacity, he shall be entitled to one (1) day of salary or his guarantee, whichever is greater. If the performer who is selected is unavailable when called to render actual services, he shall not be entitled to a day of pay.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-day-performer-substitute-engagement",
+      "what": "CBA 2014 Schedule A, Section 3.E: day performer moved to a different part in the same production before starting",
+      "value": "May accept (not obliged) a substitute engagement at no less than original rate and guarantee; if a definite start date was given, the substitute must start that same date",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "If a performer has been engaged and his services pursuant to such engagement have not commenced, he may accept (but is not obligated so to do) a substitute engagement in the same photoplay, in which event he shall be paid only for the substitute engagement, but not less than his original rate of pay and guarantee; provided, however, that if he has received a definite starting date, the substitute engagement must have the same starting date.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-day-performer-replaced",
+      "what": "CBA 2014 Schedule A, Section 3.E: day performer replaced after starting, and notice of replacement",
+      "value": "Guarantee, or one day's pay plus pay for work done, whichever is greater; performer or agent must be told at the time of replacement",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "A day performer who is replaced in a photoplay for reasons other than his default, illness or other incapacity, after commencement of his services pursuant to his engagement and before the completion of his engagement, shall receive his guarantee, or one (1) day of salary in addition to payment for services rendered to that time, whichever is greater. ... In the event that a performer is replaced in the role, the performer, or performer's agent, shall be notified of this fact at the time of the replacement.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-weekly-freelance-termination",
+      "what": "CBA 2014 Schedule B (weekly freelance), Section 40: producer ends the engagement before or during the term",
+      "value": "Before start: full minimum guaranteed period, reduced by any other earnings in that period (mitigation). After start: pay owed plus one week's compensation",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "If the Producer elects to terminate the performer's employment under the freelance contract prior to the commencement of the term thereof, the Producer shall be obligated to pay the performer compensation during the minimum guaranteed period provided for in said freelance contract, but if the performer receives other employment during such period, the compensation received by the performer from such other employment shall be applied in reduction of the Producer's liability.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-on-or-about-start-date",
+      "what": "CBA 2014 Schedule B, Section 4: 'on or about' start dates for freelance (weekly) performers",
+      "value": "'On or about' allows 24 hours either side (excluding weekends/holidays), and only if the contract is delivered at least 7 days before start; otherwise a definite date is required",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "The phrase \"on or about,\" as used in a freelance performer's contract, shall allow a latitude of twenty-four (24) hours, exclusive of Saturdays, Sundays and holidays, either prior to or after the date specified in the contract, as the commencement of the term thereof.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-day-performer-weather-permitting",
+      "what": "CBA 2014 Schedule A, Section 25: weather-permitting calls for TV/theatrical day performers (the sister file recorded this as not found)",
+      "value": "Day performers at $750/day or less: half-check on cancellation, buys 4 hours' hold, further half-check per 4 hours; full day if photographed; not for studio stages (with listed waivers); not after photography starts",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+      "quote": "A day performer receiving $750 per day or less shall be paid a half (½) check upon the cancellation of any weather-permitting call. This check shall entitle the Producer to hold the day performer for not exceeding four (4) hours.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-force-majeure-day-performer",
+      "what": "SAG-AFTRA Television Agreement 2014, Section 61(a): production stopped by force majeure or cast/director illness, day performers",
+      "value": "Producer may terminate; one day's salary (or guarantee) if terminated before use or later replaced; may recall at same rate on resumption; an extra day's salary if the gap is under 14 days",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "if such termination occurs before the performer is used or (ii) if the performer is subsequently replaced in the picture (other than because of his unavailability), the performer shall be entitled, in addition to compensation for services previously rendered, if any, to one day's salary or his guarantee, whichever is greater. ... If such period of intervening time is less than fourteen (14) days, performer shall receive an additional one day's salary.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-force-majeure-weekly",
+      "what": "TV Agreement 2014, Section 61(b): force majeure suspension of weekly and three-day performers",
+      "value": "Producer must say in writing in week 1 whether it is discontinuing or postponing; may suspend at half salary; weekly performer may quit after 3 weeks at half salary (three-day performer after 2) unless producer resumes full pay",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "It shall be the duty of the Producer during the first week of any prevention, suspension or postponement to notify the performer in writing whether the Producer will entirely discontinue the production or further suspend or postpone it.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-force-majeure-series",
+      "what": "TV Agreement 2014, Section 61(c)(1)a): series regular suspended because production of the series is stopped by force majeure",
+      "value": "Half salary weekly for up to 5 weeks or the time needed to finish the remaining guaranteed episodes, whichever is shorter; not creditable against later pay; week = 5/6 of the episodic fee (one-hour) or the episodic fee (half-hour)",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "Should the Producer elect to suspend a series contract performer, the performer shall be paid at half-salary, on a weekly basis, for a period of up to five (5) weeks (assuming the prevention, suspension or postponement of production lasts that long) or for a period ending not later than performer's then-current guaranteed employment period, whichever is shorter. Said amount shall not be creditable against compensation due for services rendered after production resumes.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-force-majeure-series-terminate",
+      "what": "TV Agreement 2014, Section 61(c)(1)b) and (c)(4): series regular's right to leave after 5 weeks' suspension, producer's right to terminate, and the recall promise",
+      "value": "After the 5th week the performer may terminate by written notice unless the producer resumes full weekly pay for the rest of the guarantee (an advance against later episodes); producer may terminate (plus one week's pay if cause is cast/director illness); producer won't use force majeure as an excuse not to recall the performer",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "In the event of the resumption of production, the Producer will not use force majeure or illness as an excuse for not recalling the performer in the absence of supervening circumstances or conditions which make the continuation of his role impracticable.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-force-majeure-guarantee-already-met",
+      "what": "TV Agreement 2014, Section 61(c): series regular who has already been paid the episodic guarantee when production stops",
+      "value": "No right to terminate, no half-salary, no episodic pay during the force majeure period",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "a performer shall have no right to terminate his or her personal service contract if he or she has already worked and been paid, or has otherwise been paid, for his or her minimum episodic guarantee at the time the suspension of production commences.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-series-one-hour-13-guarantee",
+      "what": "TV Agreement 2014, Section 7(a): one-hour series regular with 13 episodes guaranteed",
+      "value": "13 episodes guaranteed within 22 consecutive weeks, work required in at most 16 workweeks (12 within 20 weeks 2 days if the pilot counts); layoffs at least 3 consecutive days; 2014-17 minimum per episode $3,674 to $3,898",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "The performer shall be guaranteed employment in not less than thirteen (13) episodes to be produced within an overall period of not more than twenty-two (22) consecutive weeks, during which period performer's services may be required for not more than sixteen (16) workweeks.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-series-short-order-guarantee",
+      "what": "TV Agreement 2014, Sections 6(a) and 8(a): series regular with fewer than 13 episodes guaranteed (the floor when an order is small or cut)",
+      "value": "Minimum guarantee 7 episodes (half-hour within 14 weeks; one-hour within 18 weeks); 6 episodes (may include pilot) if the producer's order is 6 or fewer",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "The performer shall be guaranteed employment in not less than seven (7) episodes to be made within an overall period of not more than eighteen (18) weeks, except that in the case of a series for which the Producer has an order of six (6) or fewer episodes, the performer need only be guaranteed six (6) episodes, which may include the pilot, to be performed within fifteen (15) weeks.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-series-next-episode-start-binding",
+      "what": "TV Agreement 2014, Section 7(f): moving a series regular's next episode start date",
+      "value": "First-series start date in the contract, or 5 days' written notice; after a layoff, 5 days' notice of the next episode, and once given that start date cannot be cancelled by the producer (may be 'on or about'); producer may bring it forward if the performer has no conflict",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "When a performer has completed services in an episode and is laid off, he shall be given at least five (5) days' advance notice of the starting date of the next episode. Such starting date, when given, commences his employment and cannot subsequently be cancelled by the Producer ... The Producer in all cases may accelerate a starting date, without penalty, if the performer does not have a conflicting commitment.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-series-span-not-held",
+      "what": "TV Agreement 2014, Section 7(a) and 7(h): holding a series regular for the whole span, and overrun",
+      "value": "Producers agree not to hold the performer for the whole span when no longer needed; weeks beyond 16 workweeks are paid weekly/daily; each episode beyond 13 adds 6 days to the 22-week span",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "Producers agree that performer will not be held for the entire span period in those instances when performer's services are no longer needed.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-series-recall-back-order",
+      "what": "TV Agreement 2014, Section 11: recalling a series regular for more episodes after the initial group (back order)",
+      "value": "Once per production year; must guarantee enough extra episodes to reach 22 (13+ guaranteed) or 12 (fewer than 13); must start within 60 days of finishing the initial group; 5 days' notice",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "Performer shall be guaranteed employment in a number of additional episodes equal to the difference between the number of guaranteed episodes in the initial employment period and twenty-two (22) episodes. (2) The employment period for such additional episodes shall commence not later than sixty (60) days after the completion of principal photography of the initial group.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-option-report-notice",
+      "what": "TV Agreement 2014, Section 43: notice to report after an option is picked up (series after pilot, more episodes after a gap, next contract year, term after hiatus)",
+      "value": "At least 30 days' written notice of report date; may be cut to 10 days if no conflict with a prior commitment; span and work time don't start until recalled",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "the performer shall, except as provided in Section 11(a)(3) and Section 11(b)(3), be given at least thirty (30) days' advance written notice of the date on which he is to report for work in the next series or in the next term, but such period of time may be reduced to ten (10) days if such shortened notice does not conflict with any other commitment previously made by the performer.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-holiday-hiatus",
+      "what": "TV Agreement 2014, Section 74(a): series holiday hiatus",
+      "value": "Customary 1-week Thanksgiving break and 1-2 weeks over Christmas/New Year don't count toward span",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "It is understood that some series customarily take a hiatus for one (1) week at Thanksgiving and for one (1) week which includes Christmas Day, or one (1) week which includes New Year's Day, or no more than two (2) weeks, which includes Christmas Day and New Year's Day. Such holiday breaks, if taken, shall not be counted in calculating the production span rules for any television series.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-term-contract-definition",
+      "what": "TV Agreement 2014, Section 15(a) and (d): term contracts and the term-contract hiatus",
+      "value": "At least 10 of 13 weeks guaranteed, no role or series specified; options consecutive except one hiatus of up to 13 weeks per 52 weeks after the original term, during which the performer is free to work elsewhere",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "All options attached to term contracts shall be for consecutive periods, except that the Producer may be allowed to take one hiatus period not to exceed thirteen (13) weeks at any time subsequent to the expiration of the original term, and not more than one (1) such period during each fifty-two (52) week period. During such hiatus period, the performer shall be free to engage in any other work",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-pilot-option-12-months",
+      "what": "TV Agreement 2014, Section 24(a): how long a producer may hold a pilot performer's series option, and the 6-month alternatives",
+      "value": "Option may not run beyond 12 months from end of pilot photography; for options over 6 months the contract picks one of three: pay 13 weeks' minimum if series shoots without exercising; performer free to take other work; or first-refusal pre-emption (7 days for jobs up to 4 weeks, 14 days for longer)",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "Such an option may not extend past twelve (12) months from the date of completion of principal photography of such pilot.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-season-option-period-2023",
+      "what": "2023 SAG-AFTRA/AMPTP MOA, revised TV Agreement Section 24(c)(2): option period between seasons for series regulars below the salary threshold (under $65,000/episode half-hour, $70,000 one-hour, $32,000 children's)",
+      "value": "Option runs 18 months from start of the season's photography; producer may extend up to 3 times by 3 months, paying one episodic fee each time (not creditable); option lapses at 27 months",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf",
+      "quote": "The option period shall begin upon commencement of principal photography of the first episode of the season of the series (excluding the pilot if the season has not yet been ordered when the pilot is produced) and shall end no later than eighteen (18) months thereafter, unless the Producer extends the option pursuant to subsection b) below.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-season-delay-fee-2023",
+      "what": "2023 MOA, new TV Agreement Section 24(d): next season picked up but production delayed",
+      "value": "No start within 3 months after the option period ends: one episodic fee ('Season Delay Fee', not creditable). No start within 5 months: performer may give written notice to terminate; producer has 5 business days to start full pay or the termination takes effect",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf",
+      "quote": "If the Producer has not commenced the performer's services for the subsequent season within three (3) months following the end of the prior option period, as it may be extended in accordance with subparagraph (c)(2)b) above, the Producer shall pay the performer an amount equal to the episodic fee specified in the performer's contract for the current season (`Season Delay Fee'). The Season Delay Fee may not be credited against future episodic fees.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-tv-term-force-majeure-limit",
+      "what": "TV Agreement 2014, Section 61(e): force majeure suspension of term-contract performers",
+      "value": "Individually bargained, but below double minimum: at most 4 consecutive weeks without salary and 8 more at half salary",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+      "quote": "with respect to any term contract performer engaged at less than double minimum, the Producer shall not have the right to suspend without salary for more than four (4) consecutive weeks nor at half (½) salary for more than eight (8) additional consecutive weeks.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-animation-session-rules",
+      "what": "SAG-AFTRA Television Animation Agreement 2014, Article I.C: session length for TV animation voice actors",
+      "value": "4 hours included per session (8 for a series' first session of the season; 6 for episodes over 30 minutes and ADR); 2014-16 session fee $859-$933; up to 3 voices per session",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Animation%20(%E2%80%9CTV%20Animation%E2%80%9D)%20Agreement.pdf",
+      "quote": "Subject to the exceptions listed below, the included work time per session shall be four (4) hours.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-animation-incorporates-tv-agreement",
+      "what": "SAG-AFTRA Television Animation Agreement 2014, Article XIV: where animation cancellation rules come from",
+      "value": "Has no cancellation/postponement article of its own; the Television Agreement applies unless the animation agreement says otherwise (so TV engagement, not-used and force majeure rules govern animation voice sessions)",
+      "market": "us",
+      "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Animation%20(%E2%80%9CTV%20Animation%E2%80%9D)%20Agreement.pdf",
+      "quote": "Except as herein otherwise expressly provided, all of the provisions of the 2014 SAG-AFTRA TELEVISION AGREEMENT shall be applicable, and said Agreement is incorporated herein by this reference and made a part hereof.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-ima-engaged-not-used",
+      "what": "AFTRA Interactive Media (video game) Agreement 2011-2014, Section 7.C (base agreement later amended by the 2017, 2020 and 2025 MOAs, not checked for this clause): booked game performer not used",
+      "value": "A day's pay or the guarantee, whichever is greater (not for default, illness, incapacity); nothing if unavailable when called",
+      "market": "us",
+      "source": "http://web.archive.org/web/20230526080554/https://www.sagaftra.org/files/2011%20-%202014%20AFTRA%20IMA%20and%20Sideletters%20-%20FINAL.pdf",
+      "quote": "When a Performer is engaged and not used for any reasons other than his/her default, illness or other incapacity, he/she shall be entitled to a day's pay or his/her guarantee, whichever is greater. If the Performer who is selected is unavailable when called to render actual services, he/she shall not be entitled to a days pay.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-ima-voice-session-length",
+      "what": "AFTRA Interactive Media Agreement 2011-2014, Section 6.B: voice-over session length (overtime starts sooner for voice)",
+      "value": "Voice performers booked on a 4-hour or 6-hour day; 4-hour day: time-and-a-half hours 5-6, double after 6; 6-hour day: time-and-a-half hours 7-8, double after 8",
+      "market": "us",
+      "source": "http://web.archive.org/web/20230526080554/https://www.sagaftra.org/files/2011%20-%202014%20AFTRA%20IMA%20and%20Sideletters%20-%20FINAL.pdf",
+      "quote": "Off-Camera (Voice-Over) Performers: Voice-over performers may be engaged based on either a four (4) hour day or a six (6) hour day.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-ima-day-player-cancel-noon",
+      "what": "AFTRA Interactive Media Agreement 2011-2014, Section 7.A.6: day player booked orally can be cancelled until noon the day before",
+      "value": "Either side may cancel an oral day-player booking until noon on the day before the call",
+      "market": "us",
+      "source": "http://web.archive.org/web/20230526080554/https://www.sagaftra.org/files/2011%20-%202014%20AFTRA%20IMA%20and%20Sideletters%20-%20FINAL.pdf",
+      "quote": "When a Day Player is given oral notice by the Employer and agrees to report on the commencement date for which the Call is given; however, until noon of the day preceding such commencement date, either the Employer or the Performer may cancel such employment.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-ima-replaced",
+      "what": "AFTRA Interactive Media Agreement 2011-2014, Section 7.D: game performer replaced after starting",
+      "value": "Guarantee, or a day's pay plus pay for work done, whichever is greater",
+      "market": "us",
+      "source": "http://web.archive.org/web/20230526080554/https://www.sagaftra.org/files/2011%20-%202014%20AFTRA%20IMA%20and%20Sideletters%20-%20FINAL.pdf",
+      "quote": "A Performer who is replaced in a production after commencement of his/her services pursuant to his/her engagement and before the completion of the engagement, for reasons other than his/her default, illness or other incapacity, shall receive his/her guarantee, or a day's pay in addition to payment for services rendered to that time, whichever is greater.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-ima-force-majeure-day-player",
+      "what": "AFTRA Interactive Media Agreement 2011-2014, Section 45.A: force majeure for game day players",
+      "value": "Producer may terminate; one day's salary if terminated before use or later replaced; may recall at same rate subject to availability",
+      "market": "us",
+      "source": "http://web.archive.org/web/20230526080554/https://www.sagaftra.org/files/2011%20-%202014%20AFTRA%20IMA%20and%20Sideletters%20-%20FINAL.pdf",
+      "quote": "Employer shall have the right to terminate the services of Day Players without further liability, except for compensation for services previously rendered provided however, that: (i) if such termination occurs before the Performer is used or (ii) if the Performer is subsequently replaced (other than because of his/her unavailability), the Performer shall be entitled to one days salary in addition to compensation for services previously rendered.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-tv-2021-cancelled-day",
+      "what": "Pact/Equity TV Agreement 2019 (updated September 2021), Clause T20: day cancelled for weather or reasons outside producer's control (current text; the sister file quoted the 2004 version)",
+      "value": "Artist gets the guaranteed payment (engagement fee or production day payment); producer must notify at the earliest opportunity with reason; weather re-attendance paid a production day payment, other re-attendance paid the guaranteed payment again; more re-attendance days than lost need a new engagement",
+      "market": "uk",
+      "source": "https://www.pact.co.uk/static/f460bca4-7b28-480b-9ca79f1b0c89a26f/AGREEMENT-Pact-Equity-TV-Agreement-2021-update-CLEAN.pdf?userDownload=true",
+      "quote": "For any day upon which the Artist is required to attend but is unable to work due to adverse weather or is not called to render their services as a result of any other circumstances outside the control of the Producer, the Artist shall receive their guaranteed payment, i.e. either their engagement fee(s) or production day payment(s)",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-tv-2021-second-call-notice",
+      "what": "Pact/Equity TV Agreement 2019 (2021 update), Clause T18.8-9: notice of a second-call date and cancelling it",
+      "value": "Must be told by 20.00 the day before; cancellable free up to 48 hours before; within 48 hours payment is due anyway",
+      "market": "uk",
+      "source": "https://www.pact.co.uk/static/f460bca4-7b28-480b-9ca79f1b0c89a26f/AGREEMENT-Pact-Equity-TV-Agreement-2021-update-CLEAN.pdf?userDownload=true",
+      "quote": "If the Artist's services are required, the Artist shall be notified not later than 20.00 hours on the day previous to the day on which their services are required ... Calls to the Artist made under these second call provisions may be cancelled without payment up to 48 hours before the date upon which the Artist's services are required. For any call given within 48 hours that is subsequently cancelled, payment becomes due in any event.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-tv-2021-break-between-calls",
+      "what": "Pact/Equity TV Agreement 2019 (2021 update), Clause T21.10: break between calls, current rate",
+      "value": "Normally 12 hours, 11 in special circumstances; £43.50 per hour or part by which the 11-hour break is cut",
+      "market": "uk",
+      "source": "https://www.pact.co.uk/static/f460bca4-7b28-480b-9ca79f1b0c89a26f/AGREEMENT-Pact-Equity-TV-Agreement-2021-update-CLEAN.pdf?userDownload=true",
+      "quote": "In the event that the eleven hour break between calls is infringed then the Artist shall receive a payment of £43.50 for each hour or part thereof that the eleven hour break is curtailed.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-tv-2021-force-majeure",
+      "what": "Pact/Equity TV Agreement 2019 (2021 update), Clause T45: production stopped by a cause beyond producer's control",
+      "value": "Producer may suspend, or cancel and terminate by written notice within 5 working days paying only for work done; after 3 weeks' suspension producer loses first call unless it says it is keeping it, and then pays the first-call amount weekly; guaranteed period extends by the suspension",
+      "market": "uk",
+      "source": "https://www.pact.co.uk/static/f460bca4-7b28-480b-9ca79f1b0c89a26f/AGREEMENT-Pact-Equity-TV-Agreement-2021-update-CLEAN.pdf?userDownload=true",
+      "quote": "whether or not the Artist's engagement shall have been suspended pursuant to sub-clause a) above, cancel the production and terminate the Artist's engagement as from the prevention or stoppage of production by notice in writing within five working days of the prevention or stoppage upon payment of all salary for services rendered prior to the date of prevention or stoppage.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-pact-cinema-force-majeure-retainer",
+      "what": "Pact/Equity Cinema Films Agreement 2021, Clause F38.2(d): second-call retainer during a long suspension",
+      "value": "If the producer keeps the artist on second call and suspension passes 3 weeks: at least £120 per 7-day period as a retainer (TV equivalent in 2004: £83.60)",
+      "market": "uk",
+      "source": "https://www.pact.co.uk/static/c00ac5e7-c037-4f76-8221c5258896569f/Pact-Equity-Cinema-Films-Agreement-2021-effective-from-6th-April-2021.pdf",
+      "quote": "If the Producer retains the Artist on second call and the suspension continues for more than three weeks, the Producer shall subject to the Artist's availability pay to the Artist not less than £120 as a retainer payment for each seven day period or part thereof following the three week suspension.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-faa-pact-background-cancellation",
+      "what": "UK background/walk-on cancellation under the FAA/Pact agreement, as published by an extras agency (agreement text itself not reached)",
+      "value": "Cancelled by noon the day before: nothing; noon to 15:00: 50% of the day rate; after 15:00: 100%; filming dates only, not fittings",
+      "market": "uk",
+      "source": "https://extra-people.com/rates",
+      "quote": "If a call is cancelled between midday 12:00 and no later than 15:00 on the day before the call - a cancellation fee of 50% of the negotiated rate for that day shall be payable. If a call is cancelled after 15:00 on the day before the call - a cancellation fee of 100% of the negotiated rate for that day shall be payable.",
+      "confidence": "medium"
+    },
+    {
+      "id": "uk-ipa-equity-commercials-break-between-calls",
+      "what": "IPA/Equity Agreed Document for Commercials (2011), clause 22.6, from the Casting Directors' Guild précis: rest between calls on a UK commercial",
+      "value": "12 hours normally; 1/5 of the Basic Studio Fee per hour the break is cut",
+      "market": "uk",
+      "source": "https://www.thecdg.co.uk/Secure/Commercials_Precis.pdf",
+      "quote": "Periods of not less than 12 hours shall normally be allowed between the end of any period of working time to the next call under the same contract. 22.6.2 In the event that unavoidable circumstances require this break to be curtailed the Featured Artist shall be paid at the rate of one-fifth of the BSF for each hour by which the 12-hour break is reduced.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-ipa-equity-commercials-status",
+      "what": "Status of the IPA/Equity Agreed Document for Commercials, and the voice-over session fee (Equity audio rates sheet as hosted by the CDG)",
+      "value": "Recommended best practice, not legally enforceable; voice-over £200 per hour session",
+      "market": "uk",
+      "source": "https://www.thecdg.co.uk/Secure/equity-audio-rates-last-updated-13-july-2023.pdf",
+      "quote": "The terms and conditions in the document are recommended best practice. Whilst the document itself is not legally enforceable",
+      "confidence": "high"
+    },
+    {
+      "id": "us-managers-introduce-to-agents",
+      "what": "SAG-AFTRA's own definition of a manager's job, which includes introducing clients to agents (Professional Representatives FAQ, archived copy)",
+      "value": "Managers do career direction, including introducing clients to agents and casting directors; agents negotiate and service contracts",
+      "market": "us",
+      "source": "http://web.archive.org/web/20250328033339/https://www.sagaftra.org/contracts-industry-resources/agents-managers/frequently-asked-questions",
+      "quote": "agents negotiate and service employment contracts, while managers are supposed to engage in career direction (i.e. advising clients on the presentation of artistic talents, introducing clients to agents and casting directors, etc..) and the overall management of the artist's career and business.",
+      "confidence": "high"
+    },
+    {
+      "id": "us-true-referral-cd-calls-agent",
+      "what": "Backstage 'Secret Agent Man' column (Feb 2023, archived copy): how a casting-director referral actually works",
+      "value": "A real referral is the casting director contacting the agent directly; the agent then always takes the meeting, but signing is a separate decision",
+      "market": "us",
+      "source": "http://web.archive.org/web/20251011170544/https://www.backstage.com/magazine/article/how-to-get-acting-agent-attention-75959/",
+      "quote": "A true referral is when Jason contacts me directly and tells me why I should meet you. And when that happens, I always take the meeting",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-referral-sources-list",
+      "what": "Backstage 'Secret Agent Man' column (Feb 2023): who refers actors to agents",
+      "value": "CDs, assistants, producers, directors, managers, teachers, publicists, lawyers and clients; the agent usually says yes to a meeting",
+      "market": "us",
+      "source": "http://web.archive.org/web/20251011170544/https://www.backstage.com/magazine/article/how-to-get-acting-agent-attention-75959/",
+      "quote": "Over the years, I've received countless referrals from CDs, assistants, producers, directors, managers, teachers, publicists, lawyers, and even clients. Unless there's a specific reason not to, I always say yes",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-referral-manager-not-guarantee",
+      "what": "Backstage '13 Ways to Find an Agent' (archived copy): referrals from friends, casting directors, writers, producers and managers; agency-wide sign-off",
+      "value": "A manager can be a referral source; a referral opens the door but many agencies need every agent to agree to sign",
+      "market": "us",
+      "source": "http://web.archive.org/web/20250330004015/https://www.backstage.com/magazine/article/backstage-experts-answer-ways-find-agent-7058/",
+      "quote": "If you have a manager, they can be used as a referral source as well. However, it's not a guarantee, as many agencies require everyone agree to take you on as a client.",
+      "confidence": "medium"
+    },
+    {
+      "id": "us-referral-cd-or-manager-meeting",
+      "what": "Backstage '13 Ways to Find an Agent': referral from a casting director or manager as a route to an agent meeting",
+      "value": "Referral from a friend, casting director or manager is named as a way to get an agent meeting",
+      "market": "us",
+      "source": "http://web.archive.org/web/20250330004015/https://www.backstage.com/magazine/article/backstage-experts-answer-ways-find-agent-7058/",
+      "quote": "A referral from a friend, a casting director, or a manager is another great way to get a meeting with an agent.",
+      "confidence": "medium"
+    },
+    {
+      "id": "uk-spotlight-recommendation-discretion",
+      "what": "Spotlight (UK) on professional recommendations (for joining Spotlight; CDG, CSA, CDA casting directors and registered agents may recommend)",
+      "value": "Recommendations are at the discretion of a professional who already knows the performer's work; performers should not cold-call for them",
+      "market": "uk",
+      "source": "https://www.spotlight.com/help-and-faqs/getting-started-in-the-industry/",
+      "quote": "recommendations are at the discretion of the professional with whom you have an existing professional relationship.",
+      "confidence": "high"
+    },
+    {
+      "id": "uk-cdg-workshops-not-casting",
+      "what": "Casting Directors' Guild (UK) Workshop Guidelines (amended 2022): what a paid CD workshop is not",
+      "value": "Workshops are educational; CDs take no CVs or headshots and may give general advice on seeking representation; contact rarely leads further",
+      "market": "uk",
+      "source": "https://www.thecdg.co.uk/wp-content/uploads/2016/01/WorkshopGuidelines.pdf",
+      "quote": "Contact with a Casting Director at a workshop rarely results in any further contact with that Casting Director or any company affiliated with that Casting Director.",
+      "confidence": "high"
+    }
+  ],
+  "notFound": [
+    {
+      "what": "Current (2025-2026) full text of the SAG-AFTRA Commercials, Audio Commercials, TV/Theatrical and Interactive Media agreements",
+      "tried": "sagaftra.org PDFs and pages refuse WebFetch and curl (403/Incapsula); used the 2016 commercials e-books and 2014 CBA/TVA/Animation texts hosted by jointpolicycommittee.org and amptp.org, the 2023 and 2025 MOAs, and Wayback copies of the 2011-14 IMA. The 2025 Commercials MOA was checked and adds no change to postponement/cancellation; the 2026 TV/Theatrical MOA and 2025 IMA were not reachable"
+    },
+    {
+      "what": "SAG-AFTRA Commercials rule on changing the time of call on the same day (as opposed to moving the date)",
+      "tried": "Searched the 2016 and 2003 commercials texts for time of call / changed call; only date postponement (D.2) and the off-camera 'call may not be extended unless agreed' rule exist"
+    },
+    {
+      "what": "A clause saying a series regular is paid for guaranteed episodes when the network cuts the order (outside force majeure)",
+      "tried": "TV Agreement 2014 Sections 5-15 and 61 read in full: the contract words this as a 'guarantee' of N episodes (and refers to a performer 'paid for ten, eleven or twelve episodes'), but no clause separately says 'paid if not produced'. Force majeure (61(c)) is the only cut-short rule found"
+    },
+    {
+      "what": "Interactive Media Agreement rule on postponing (not cancelling) a voice session",
+      "tried": "2011-14 IMA searched for postpon*; only force majeure (Section 45) and engaged-not-used (7.C) apply"
+    },
+    {
+      "what": "Union rule that a replacement/recast performer must be paid at least what the replaced performer got",
+      "tried": "CBA, TVA, Commercials and IMA texts searched for replace*; they protect the replaced performer (guarantee or one extra day/session fee; notice) and every hire is at least scale anyway; no minimum tied to the predecessor's rate"
+    },
+    {
+      "what": "IPA/Equity Commercials Agreed Document cancellation clause (featured artist shoot cancelled or moved)",
+      "tried": "equity.org.uk links to the Agreed Document PDF redirect to a JS-only rates page; the CDG précis covers only clause 22 (hours, overtime, breaks); IPA guidance pages are about production-company contracts. The only UK commercials-adjacent cancellation scale found is the FAA/Pact background one (recorded, medium)"
+    },
+    {
+      "what": "BBC/Equity Audio Agreement session cancellation",
+      "tried": "BBC/Equity Audio Agreement 2006/07 notice (fia-actors.com) and the Equity audio rates sheet 2023 contain no cancellation clause; the full 2022 BBC Audio Agreement was not found online"
+    },
+    {
+      "what": "CSA (Casting Society of America) published statement that casting directors may or may not recommend actors to agents",
+      "tried": "Searched castingsociety.com and Backstage CSA articles; nothing official found. Agent-written Backstage columns and SAG-AFTRA's manager definition (recorded) are the strongest sources reached"
+    },
+    {
+      "what": "BFI guidance on finding an agent",
+      "tried": "Not searched separately after Spotlight/CDG/PMA covered the UK route; no BFI page surfaced in agent searches"
+    }
+  ]
+}

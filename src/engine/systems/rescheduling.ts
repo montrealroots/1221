@@ -11,19 +11,31 @@
  * - **postpone** the start, or the calls left, by a week or two. The player
  *   answers by a date. Refused or unanswered, they're released, and paid as a
  *   cancellation: on stage LORT's two weeks' salary, four within four weeks
- *   of the start (Equity LORT); on screen, the booked days not worked, a firm
- *   booking being the producer's to pay (SLATE's estimate: SAG-AFTRA's text
- *   wasn't found);
+ *   of the start (Equity LORT); on screen, the booked days not worked. That
+ *   was SLATE's estimate until later on 2026-10-08, when SAG-AFTRA's own
+ *   text was found: a booking not used is paid its guarantee (Equity and
+ *   Pact's TV agreement says the same); for other unions it still is;
  * - **move a call's time**, on notice; answered only where it clashes. One
  *   that leaves less than twelve hours' rest after the call before is a
- *   forced call, paid the lesser of the day's rate and $900 (SAG-AFTRA);
+ *   forced call, paid the lesser of the day's rate and $900 (SAG-AFTRA), on a
+ *   commercial the lesser of a session fee and $500 (SAG-AFTRA Commercials);
  * - **add a day**, paid, on screen: the player's to take or not;
  * - **cut the calls left**, on notice: on stage a closing on two weeks'
  *   notice, a shorter notice paid out (LORT); on screen the days cut, paid
  *   (SLATE's estimate).
- * The player may ask, once a screen job, to move one call to the day after
- * its last; the production answers the next day. A run's performances don't
- * move for one actor.
+ * - **call it off** before anything's worked (from 2026-10-08, later), a
+ *   notice: they're released and paid the cancellation as below.
+ * The player may ask, once a screen job or a voice session, to move one call
+ * to the day after its last; the production answers the next day. A run's
+ * performances don't move for one actor, nor a series' or a commercial's.
+ *
+ * **Each kind of job its own changes** (`familyOf`, from 2026-10-08, later;
+ * until then a series, a commercial and a voice session were never changed).
+ * A series' season may start later, take a week's hiatus, move a call, have
+ * its episode order cut or be called off: its guaranteed episodes are paid
+ * either way, at the season's rate spread over its days, as the payroll pays
+ * them. A commercial's shoot and a voice session are a day or so: moved, a
+ * call's time changed, or called off and paid their booked fee.
  *
  * **Nothing double-booked.** A change is taken only with nothing the player
  * has on in its way: a call, a plan, a meeting, another job, a journey of
@@ -44,11 +56,19 @@ import type { Money } from '../core/money';
 import { formatMoney, saveCurrency } from '../core/money';
 import { MS_DAY, MS_HOUR, formatDate, formatTime, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
-import { PAY_KIND, STAY_KIND, TRAVEL_KIND, WORK_KIND, careerOf, finishJob, paydaysFor, roleById, schedulePay, sendHome, unitRate, usd, workCityOf, workDays, workMinutes, type Booking } from './career';
+import type { Role } from '../content/career';
+import { FITTING_KIND, PAY_KIND, STAY_KIND, TRAVEL_KIND, WORK_KIND, careerOf, finishJob, paydaysFor, roleById, schedulePay, sendHome, unitRate, usd, workCityOf, workDays, workMinutes, type Booking } from './career';
 import { playerReplaced, productionOf, productionsOf, type Production } from './companies';
 import { journeysOf, whereBy } from './journey';
 
-export type ChangeKind = 'postpone' | 'postpone_rest' | 'call_time' | 'add_day' | 'cut_rest' | 'request';
+export type ChangeKind = 'postpone' | 'postpone_rest' | 'call_time' | 'add_day' | 'cut_rest' | 'cancel' | 'request';
+/**
+ * The kind of job a change is read against (from 2026-10-08, later): a play's run, a screen job's days, a series'
+ * season or arc of episodes, a commercial's shoot, a voice session. Until then series, commercial and voice work
+ * wasn't rescheduled at all.
+ */
+export type JobFamily = 'stage' | 'screen' | 'series' | 'commercial' | 'voice';
+export const familyOf = (role: Role): JobFamily => role.medium === 'voice' ? 'voice' : role.medium === 'stage' ? 'stage' : role.series || role.arc ? 'series' : role.after?.kind === 'commercial' ? 'commercial' : 'screen';
 type Call = { at: Instant; week: number; rehearsal: boolean };
 export interface Proposal {
   id: string;
@@ -70,7 +90,14 @@ export interface Proposal {
 export const SCHEDULE = {
   /** A job whose production changes its schedule. SLATE's estimate. */
   chance: 0.12,
-  weights: { postpone: 3, postpone_rest: 2, call_time: 3, add_day: 2, cut_rest: 1 } as Record<Exclude<ChangeKind, 'request'>, number>,
+  /** The changes each kind of job sees, by weight. A commercial's shoot and a voice session are a day or two, so they're moved or called off, not cut or added to. */
+  weights: {
+    stage: { postpone: 3, postpone_rest: 2, call_time: 3, cut_rest: 1, cancel: 0.5 },
+    screen: { postpone: 3, postpone_rest: 2, call_time: 3, add_day: 2, cut_rest: 1, cancel: 0.5 },
+    series: { postpone: 3, postpone_rest: 2, call_time: 3, cut_rest: 1, cancel: 0.3 },
+    commercial: { postpone: 3, call_time: 3, cancel: 1 },
+    voice: { postpone: 3, call_time: 3, cancel: 1 },
+  } as Record<JobFamily, Partial<Record<Exclude<ChangeKind, 'request'>, number>>>,
   answerDays: 3, noticeDays: 2,
   /** Calls this near aren't moved, in days. */
   leadDays: 2,
@@ -78,11 +105,13 @@ export const SCHEDULE = {
   callHours: [-2, 2, 3] as const,
   /** SAG-AFTRA: twelve hours' rest between calls; a forced call paid the lesser of the day's rate and $900. */
   restHours: 12, forcedCallUsd: 900_00,
+  /** SAG-AFTRA Commercials: a session postponed pays half a session fee, not set against the fee; the rest waived, the lesser of a session fee and $500. */
+  commercial: { postponeShare: 0.5, restUsd: 500_00 },
   /** Equity LORT: a production canceled pays two weeks' salary, four within four weeks of the start; a closing, two weeks' notice. */
   lort: { earlyWeeks: 2, lateWeeks: 4, lateWithinDays: 28, closingNoticeDays: 14 },
   /** A request to move a call, granted at these odds where nothing's in the way. SLATE's estimate. */
   requestYes: 0.5,
-  source: 'research-agency-change-and-scheduling.json: SAG-AFTRA rest periods and forced calls; Equity LORT cancellation and closing notice. Pay for a firm screen booking canceled is SLATE’s estimate.',
+  source: 'research-agency-change-and-scheduling.json: SAG-AFTRA rest periods and forced calls; Equity LORT cancellation and closing notice. research-schedule-series-voice-commercial.json: a booking not used paid its guarantee (SAG-AFTRA TV, Interactive and Commercials; Equity/Pact TV), a commercial postponed half a session fee, its rest waived the lesser of a fee and $500. Where a union’s rule wasn’t found, SLATE’s estimate, and said so.',
 } as const;
 
 export const SCHEDULE_KIND = 'career.schedule_change';
@@ -95,20 +124,18 @@ const REASONS: Record<ChangeKind, readonly string[]> = {
   call_time: ['the light', 'a location’s permit', 'the scene order changed'],
   add_day: ['a scene needed another day', 'weather lost a day', 'the director wants a pickup'],
   cut_rest: ['the producers cut the schedule', 'ticket sales were slow', 'the budget was cut'],
+  cancel: ['the money fell through', 'the client pulled the campaign', 'the producers called it off'],
   request: ['you asked'],
 };
 
-const eligible = (booking: Booking) => { const role = roleById(booking.roleId); return !role.series && role.medium !== 'voice' && role.after?.kind !== 'commercial'; };
-
 /** Whether this job's production will change its schedule, which way, and when it says so (`career.schedule`). */
 export function changeFor(sim: Simulation, person: Person, booking: Booking): { kind: Exclude<ChangeKind, 'request'>; x: number } | undefined {
-  if (!eligible(booking)) return undefined;
   const rng = sim.rng('career.schedule', person.id, booking.id);
   if (rng.next() >= SCHEDULE.chance) return undefined;
-  const screen = roleById(booking.roleId).medium === 'screen';
-  const kinds = (Object.keys(SCHEDULE.weights) as Exclude<ChangeKind, 'request'>[]).filter((k) => k !== 'add_day' || screen);
-  let left = rng.next() * kinds.reduce((n, k) => n + SCHEDULE.weights[k], 0);
-  const kind = kinds.find((k) => (left -= SCHEDULE.weights[k]) <= 0) ?? kinds.at(-1)!;
+  const weights = SCHEDULE.weights[familyOf(roleById(booking.roleId))];
+  const kinds = Object.keys(weights) as Exclude<ChangeKind, 'request'>[];
+  let left = rng.next() * kinds.reduce((n, k) => n + weights[k]!, 0);
+  const kind = kinds.find((k) => (left -= weights[k]!) <= 0) ?? kinds.at(-1)!;
   return { kind, x: rng.next() };
 }
 
@@ -118,8 +145,8 @@ export function planChange(sim: Simulation, person: Person, booking: Booking): v
   if (!change) return;
   const calls = workDays(booking);
   const first = calls[0]!.at;
-  const when = change.kind === 'postpone' ? Math.max(sim.now + MS_HOUR, first - 10 * MS_DAY) : calls[Math.min(calls.length - 1, Math.floor(calls.length * 0.4))]!.at - 3 * MS_DAY;
-  if (when >= first - 2 * MS_HOUR && change.kind === 'postpone') return;
+  const when = change.kind === 'postpone' || change.kind === 'cancel' ? Math.max(sim.now + MS_HOUR, first - 10 * MS_DAY) : calls[Math.min(calls.length - 1, Math.floor(calls.length * 0.4))]!.at - 3 * MS_DAY;
+  if (when >= first - 2 * MS_HOUR && (change.kind === 'postpone' || change.kind === 'cancel')) return;
   sim.schedule({ at: Math.max(sim.now + MS_HOUR, when), kind: SCHEDULE_KIND, label: 'A Schedule Change', category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id, change: change.kind, x: change.x } });
 }
 
@@ -163,6 +190,8 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
   if (!ahead.length) return undefined;
   const role = roleById(booking.roleId);
   const zone = CITIES.require(workCityOf(booking)).timeZone;
+  // Called off before anything's worked: every call goes, and they're paid as the contract pays a cancellation.
+  if (kind === 'cancel') return fixed.length > 0 ? undefined : { to: [], affected: ahead.map((c) => c.at) };
   if (kind === 'postpone' || kind === 'postpone_rest') {
     if (kind === 'postpone' && fixed.length > 0) return undefined;
     const delta = (kind === 'postpone' ? SCHEDULE.postponeDays[x < 0.5 ? 0 : 1] : 7) * MS_DAY;
@@ -175,7 +204,8 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
     return { to: [...fixed, ...ahead.map((c, k) => (k === i ? moved : c))], affected: [ahead[i]!.at] };
   }
   if (kind === 'add_day' || kind === 'request') {
-    if (role.medium !== 'screen') return undefined;
+    // A voice session may be asked to move (from 2026-10-08, later), as a screen call may; a day's added on screen only.
+    if (familyOf(role) !== 'screen' && !(kind === 'request' && familyOf(role) === 'voice')) return undefined;
     const last = calls.at(-1)!;
     let at = last.at + MS_DAY;
     while ([0, 6].includes(zonedParts(at, zone).weekday)) at += MS_DAY;
@@ -198,6 +228,8 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
 
 /** A day's rate, or a stage week's, in the save's money. */
 const dayRate = (sim: Simulation, b: Booking) => unitRate(b, sim.now, saveCurrency(sim.universe));
+/** What one call is paid, as the payroll pays it (`career.pay`): a series regular's episodes spread over the season's days, else the day's rate. */
+const perCall = (sim: Simulation, b: Booking) => { const role = roleById(b.roleId); const rate = dayRate(sim, b); return role.series ? Math.round((rate * role.series.episodes) / (role.series.weeks * 5)) : rate; };
 const money = (sim: Simulation, m: Money) => formatMoney(m, saveCurrency(sim.universe));
 
 /** What a change pays or costs, in words, and the pay itself where it's owed on taking effect. */
@@ -209,15 +241,22 @@ function costsOf(sim: Simulation, booking: Booking, kind: ChangeKind, to: readon
     const i = sorted.findIndex((c) => !workDays(booking).some((o) => o.at === c.at));
     const prev = i > 0 ? sorted[i - 1] : undefined;
     if (prev && sorted[i]!.at - (prev.at + workMinutes(role, prev.rehearsal) * 60_000) < SCHEDULE.restHours * MS_HOUR) {
-      const owed = Math.min(rate, usd(SCHEDULE.forcedCallUsd, saveCurrency(sim.universe)));
-      return { words: `Less than ${SCHEDULE.restHours} hours’ rest after the call before: a forced call, paid ${money(sim, owed)} (the lesser of the day’s rate and $900, SAG-AFTRA).`, owed };
+      const commercial = familyOf(role) === 'commercial';
+      const owed = Math.min(rate, usd(commercial ? SCHEDULE.commercial.restUsd : SCHEDULE.forcedCallUsd, saveCurrency(sim.universe)));
+      return { words: `Less than ${SCHEDULE.restHours} hours’ rest after the call before: ${commercial ? 'the rest waived' : 'a forced call'}, paid ${money(sim, owed)} (the lesser of ${commercial ? 'a session fee and $500, SAG-AFTRA Commercials' : 'the day’s rate and $900, SAG-AFTRA'}).`, owed };
     }
+  }
+  // A commercial's session postponed (SAG-AFTRA Commercials): half a session fee, paid whatever comes of the new date.
+  if ((kind === 'postpone' || kind === 'postpone_rest') && role.union === 'sag' && role.after?.kind === 'commercial') {
+    const owed = Math.round(perCall(sim, booking) * SCHEDULE.commercial.postponeShare);
+    return { words: `Postponed, it pays half a session fee, ${money(sim, owed)} (SAG-AFTRA Commercials).`, owed };
   }
   if (kind === 'add_day') return { words: `One more day, paid at the day’s rate, ${money(sim, rate)}.`, owed: 0 };
   if (kind === 'cut_rest') {
     if (role.medium === 'stage') return { words: 'Closing on two weeks’ notice, the performances past it cut (Equity LORT).', owed: 0 };
-    const owed = rate * affected.length;
-    return { words: `${affected.length} ${affected.length === 1 ? 'day' : 'days'} cut, booked and so paid, ${money(sim, owed)} (SLATE’s estimate of a firm booking).`, owed };
+    const owed = perCall(sim, booking) * affected.length;
+    if (role.series) return { words: `The episode order cut: ${affected.length} of the season’s days go, and the episodes guaranteed are paid all the same, ${money(sim, owed)}.`, owed };
+    return { words: `${affected.length} ${affected.length === 1 ? 'day' : 'days'} cut, booked and so paid, ${money(sim, owed)} (${guaranteeSource(role)}).`, owed };
   }
   return { words: '', owed: 0 };
 }
@@ -232,8 +271,15 @@ function cancellationPay(sim: Simulation, booking: Booking): { words: string; ow
     return { words: `released, and paid ${weeks} weeks’ salary, ${money(sim, rate * weeks)} (Equity LORT)`, owed: rate * weeks };
   }
   const left = calls.length - done(booking);
-  return { words: `released, and paid the ${left} booked ${left === 1 ? 'day' : 'days'} not worked, ${money(sim, rate * left)} (SLATE’s estimate of a firm booking)`, owed: rate * left };
+  const owed = perCall(sim, booking) * left;
+  const family = familyOf(role);
+  if (family === 'series') return { words: `released, and paid the guaranteed episodes not made, ${money(sim, owed)}`, owed };
+  if (family === 'commercial' || family === 'voice') return { words: `released, and paid the booked ${family === 'voice' ? (left === 1 ? 'session’s fee' : 'sessions’ fees') : left === 1 ? 'day’s fee' : 'days’ fees'}, ${money(sim, owed)}`, owed };
+  return { words: `released, and paid the ${left} booked ${left === 1 ? 'day' : 'days'} not worked, ${money(sim, owed)} (${guaranteeSource(role)})`, owed };
 }
+
+/** Whose rule pays a booking not used its guarantee, or that it's SLATE's estimate where none was found. */
+const guaranteeSource = (role: Role) => role.union === 'sag' ? 'SAG-AFTRA: a booking not used is paid its guarantee' : role.union === 'equity-uk' ? 'Equity and Pact: the guaranteed payment' : 'SLATE’s estimate of a firm booking';
 
 function propose(sim: Simulation, person: Person, booking: Booking, kind: ChangeKind, x: number): Proposal | undefined {
   const p = productionOf(person, booking.id);
@@ -246,8 +292,8 @@ function propose(sim: Simulation, person: Person, booking: Booking, kind: Change
   const mustRespond = kind === 'postpone' || kind === 'postpone_rest' || kind === 'add_day' || (kind === 'call_time' && conflicts.length > 0);
   const firstAffected = Math.min(...made.affected);
   const dueAt = Math.max(sim.now + MS_HOUR, Math.min(sim.now + (mustRespond ? SCHEDULE.answerDays : SCHEDULE.noticeDays) * MS_DAY, firstAffected - MS_DAY));
-  const refusal = kind === 'postpone' || kind === 'postpone_rest' ? ` Refused or unanswered, you’re ${cancellationPay(sim, booking).words}.` : kind === 'add_day' || kind === 'call_time' ? ' Refused, the schedule stays as it is.' : '';
-  const travel = booking.location !== undefined ? ' The production’s travel moves with it.' : workCityOf(booking) !== (person.home?.cityId ?? person.currentLocationId) ? ' A room you’ve taken there isn’t moved or refunded for you: check it.' : '';
+  const refusal = kind === 'cancel' ? ` You’re ${cancellationPay(sim, booking).words}.` : kind === 'postpone' || kind === 'postpone_rest' ? ` Refused or unanswered, you’re ${cancellationPay(sim, booking).words}.` : kind === 'add_day' || kind === 'call_time' ? ' Refused, the schedule stays as it is.' : '';
+  const travel = kind === 'cancel' ? '' : booking.location !== undefined ? ' The production’s travel moves with it.' : workCityOf(booking) !== (person.home?.cityId ?? person.currentLocationId) ? ' A room you’ve taken there isn’t moved or refunded for you: check it.' : '';
   const reasons = REASONS[kind];
   const proposal: Proposal = {
     id: `${booking.id}-c${proposalsOf(p).length + 1}`, kind, reason: reasons[Math.floor(x * reasons.length) % reasons.length]!, made: sim.now, dueAt,
@@ -261,7 +307,7 @@ function propose(sim: Simulation, person: Person, booking: Booking, kind: Change
 /** A change in words: what, which calls, and why (the reason is the game's, simulated). */
 export function describe(sim: Simulation, pr: Proposal): string {
   const dates = pr.affected.map((t) => formatDate(t, sim.zone)).join(', ');
-  const what = pr.kind === 'postpone' ? 'the start postponed' : pr.kind === 'postpone_rest' ? 'the calls left postponed a week' : pr.kind === 'call_time' ? 'a call’s time moved' : pr.kind === 'add_day' ? 'a day added' : pr.kind === 'cut_rest' ? 'the calls left cut' : 'a call moved, as you asked';
+  const what = pr.kind === 'postpone' ? 'the start postponed' : pr.kind === 'postpone_rest' ? 'the calls left postponed a week' : pr.kind === 'call_time' ? 'a call’s time moved' : pr.kind === 'add_day' ? 'a day added' : pr.kind === 'cut_rest' ? 'the calls left cut' : pr.kind === 'cancel' ? 'the job called off' : 'a call moved, as you asked';
   return `${what} (${dates}), because ${pr.reason}`;
 }
 
@@ -288,7 +334,7 @@ export function applyProposal(sim: Simulation, person: Person, booking: Booking,
     const table = reads && k === 0;
     sim.schedule({
       at: c.at, kind: WORK_KIND,
-      label: role.medium === 'screen' ? `${table ? 'The Table Read, Then On Set' : 'On Set'}: ${role.label}` : `${table && c.rehearsal ? 'The Table Read' : c.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
+      label: role.medium === 'screen' ? `${table ? 'The Table Read, Then On Set' : 'On Set'}: ${role.label}` : role.medium === 'voice' ? `In The Booth: ${role.label}` : `${table && c.rehearsal ? 'The Table Read' : c.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
       category: 'career', priority: 34, requiresPlayer: true, durationMinutes: workMinutes(role, c.rehearsal), locationId: city,
       payload: { personId: person.id, bookingId: booking.id, callAt: c.at, ...(table ? { tableRead: true } : {}) },
     });
@@ -301,8 +347,12 @@ export function applyProposal(sim: Simulation, person: Person, booking: Booking,
   const ahead = booking.calls.slice(n);
   for (const when of paydaysFor(role, ahead.length ? ahead : booking.calls.slice(-1), CITIES.require(city).timeZone)) if (when > sim.now) schedulePay(sim, person, booking, when);
   schedulePay(sim, person, booking, Math.max(sim.now + 60_000, last + 7 * MS_DAY), true);
-  // The production's travel and the trip home, moved with the calls; a room already taken flagged, not changed.
-  for (const x of sim.universe.scheduled) {
+  // The production's travel and the trip home, moved with the calls; a room already taken flagged, not changed. Walked over
+  // a copy: a rescheduled item is put back further along the list, and until later on 2026-10-08 the walk met it again and
+  // moved it again, so a postponement of a week moved the travel out two or three.
+  for (const x of [...sim.universe.scheduled]) {
+    // The fitting before the first call moves with it (from 2026-10-08, later; until then it stayed on the old date).
+    if (x.status === 'pending' && x.kind === FITTING_KIND && x.payload.bookingId === booking.id && delta) { sim.timeline.reschedule(x.id, Math.max(sim.now + MS_HOUR, x.at + delta)); continue; }
     if (x.status !== 'pending' || x.payload.bookingId !== booking.id || (x.kind !== TRAVEL_KIND && x.kind !== STAY_KIND)) continue;
     if (delta && x.payload.direction === 'out') sim.timeline.reschedule(x.id, x.at + delta);
     if (x.payload.direction === 'back') sim.timeline.reschedule(x.id, Math.max(sim.now + MS_HOUR, last + MS_DAY));
@@ -347,14 +397,21 @@ export function refuseProposal(sim: Simulation, person: Person, booking: Booking
     p.history.push({ at: sim.now, what: `The change wasn’t taken (${how}); the schedule stands` });
     return;
   }
+  release(sim, person, booking, `the new dates were ${how}`, `The new dates for ${roleById(booking.roleId).label} were ${how}`);
+}
+
+/** Released from a job a change ended: the cancellation's pay owed and paid, its calls gone, home, and the part recast; what was worked stays paid. */
+function release(sim: Simulation, person: Person, booking: Booking, why: string, opening: string): void {
   const pay = cancellationPay(sim, booking);
   booking.status = 'released';
   booking.cancellationOwed = (booking.cancellationOwed ?? 0) + pay.owed;
-  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind === WORK_KIND && item.payload.bookingId === booking.id) sim.timeline.cancel(item.id, sim.now);
+  // Its calls and its fitting gone from the calendar. Until later on 2026-10-08 a released job's fitting stayed on it,
+  // doing nothing when it came and standing in the way of anything else at that hour.
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && (item.kind === WORK_KIND || item.kind === FITTING_KIND) && item.payload.bookingId === booking.id) sim.timeline.cancel(item.id, sim.now);
   schedulePay(sim, person, booking, sim.now + 60_000, true);
   sendHome(sim, booking);
-  playerReplaced(sim, person, booking.id, `released: the new dates were ${how}${booking.worked ? ` after ${booking.worked} ${booking.worked === 1 ? 'day' : 'days'} worked` : ''}`);
-  tell(sim, person, 'Released From The Job', `The new dates for ${roleById(booking.roleId).label} were ${how}: you’re ${pay.words}. What you worked is paid as it was.`);
+  playerReplaced(sim, person, booking.id, `released: ${why}${booking.worked ? ` after ${booking.worked} ${booking.worked === 1 ? 'day' : 'days'} worked` : ''}`);
+  tell(sim, person, 'Released From The Job', `${opening}: you’re ${pay.words}. What you worked is paid as it was.`);
 }
 
 export function registerRescheduling(sim: Simulation): void {
@@ -386,6 +443,14 @@ export function registerRescheduling(sim: Simulation): void {
     // The job gone meanwhile: the production withdraws it.
     if (booking.status !== 'accepted') { pr.status = 'withdrawn'; pr.closedAt = s.now; return; }
     if (pr.mustRespond) { refuseProposal(s, person, booking, pr, 'expired'); return; }
+    // Called off: nothing's worked, so there's nothing in its way; the actor is released and paid its cancellation.
+    if (pr.kind === 'cancel') {
+      pr.status = 'applied';
+      pr.closedAt = s.now;
+      productionOf(person, booking.id)!.history.push({ at: s.now, what: `Called off: ${describe(s, pr)}` });
+      release(s, person, booking, 'the production called it off', `${roleById(booking.roleId).label} was called off, because ${pr.reason}`);
+      return;
+    }
     // A notice takes effect at its date, unless something now stands in its way: then the production keeps the old time.
     try { applyProposal(s, person, booking, pr); tell(s, person, 'The Schedule Changed', `${roleById(booking.roleId).label}: ${describe(s, pr)}.`); }
     catch (e) { pr.status = 'withdrawn'; pr.closedAt = s.now; productionOf(person, booking.id)!.history.push({ at: s.now, what: `The production kept the old time: ${(e as Error).message}` }); }
@@ -431,8 +496,9 @@ export function registerRescheduling(sim: Simulation): void {
 /** Why a call can't be asked to move, or nothing. */
 export function requestRefusal(sim: Simulation, person: Person, booking: Booking | undefined, callAt: Instant): string | undefined {
   if (!booking || booking.status !== 'accepted') return 'That isn’t a job you’re booked for.';
-  if (roleById(booking.roleId).medium !== 'screen') return 'A run’s calls are the company’s: they don’t move for one actor.';
-  if (!eligible(booking)) return 'A series’ or a commercial’s calls aren’t yours to move.';
+  const family = familyOf(roleById(booking.roleId));
+  if (family === 'stage') return 'A run’s calls are the company’s: they don’t move for one actor.';
+  if (family === 'series' || family === 'commercial') return 'A series’ or a commercial’s calls aren’t yours to move.';
   if (booking.scheduleAsked) return 'You’ve asked once already on this job.';
   if (!workDays(booking).slice(done(booking)).some((c) => c.at === callAt)) return 'That isn’t one of its calls to come.';
   if (callAt - sim.now < 2 * MS_DAY) return 'Too near: a call is asked to move two days ahead or more.';

@@ -230,7 +230,7 @@ function SeekingRepresentation() {
   const review = representationReview(sim, person);
   const outlook = agencyOutlook(sim, person);
   const mine = (career.approaches ?? []).slice().sort((a, b) => b.sentAt - a.sentAt).slice(0, 8);
-  const approach = (agencyId: string, via: 'submission' | 'referral') => { const r = run<{ answerBy: number }>('career.approach_agency', { agencyId, via }); if (r.ok) toast(`Sent. ${agencyById(agencyId)!.name} answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); };
+  const approach = (agencyId: string, via: 'submission' | 'referral' | 'manager' | 'casting') => { const r = run<{ answerBy: number }>('career.approach_agency', { agencyId, via }); if (r.ok) toast(`Sent. ${agencyById(agencyId)!.name} answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); };
   return (
     <Panel title="Seeking Representation" subtitle={review ? 'What your agency has done, and the others' : 'The agencies where you work'}>
       <div className="col gap-3">
@@ -253,6 +253,8 @@ function SeekingRepresentation() {
                     <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
                       <Gated feature="career.approach_agency" disabled={Boolean(o.refusal)} title={o.refusal} onClick={() => approach(o.agency.id, 'submission')}>Submit</Gated>
                       {o.referrer && !o.refusal && <Gated feature="career.approach_agency" onClick={() => approach(o.agency.id, 'referral')}>Ask {o.referrer.split(' ')[0]} For An Introduction</Gated>}
+                      {o.manager && <Gated feature="career.approach_agency" title={o.manager} onClick={() => approach(o.agency.id, 'manager')}>Ask Your Manager To Introduce You</Gated>}
+                      {o.casting && <Gated feature="career.approach_agency" title={`Met at a workshop`} onClick={() => approach(o.agency.id, 'casting')}>Ask {o.casting} To Introduce You</Gated>}
                     </div>
                   </td>
                 </tr>
@@ -271,7 +273,7 @@ function SeekingRepresentation() {
             ))}
           </div>
         )}
-        <Fine>An agency’s chance and attention are SLATE’s estimates from where you stand against the clients it signs: a big agency’s newest name is sent less. Three approaches open at once; after a pass, a year before the same agency again; after no answer or an offer declined, six months.</Fine>
+        <Fine>An agency’s chance and attention are SLATE’s estimates from where you stand against the clients it signs: a big agency’s newest name is sent less. An introduction, by a friend the agency represents, your manager, or a casting office you met at a workshop in the last two years (once a year each), is read more warmly and answered sooner. Three approaches open at once; after a pass, a year before the same agency again; after no answer or an offer declined, six months.</Fine>
       </div>
     </Panel>
   );
@@ -529,7 +531,7 @@ function ScheduleChange({ bookingId }: { bookingId: string }) {
           )}
         </div>
       )}
-      {roleById(booking.roleId).medium === 'screen' && next && !ask && <Gated feature="career.request_schedule" onClick={() => { const r = run<{ answerBy: number }>('career.request_schedule', { bookingId, callAt: next.at }); if (r.ok) toast(`Asked. The production answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); }}>Ask To Move The Call On {formatDate(next.at, sim.zone)}</Gated>}
+      {next && !ask && <Gated feature="career.request_schedule" onClick={() => { const r = run<{ answerBy: number }>('career.request_schedule', { bookingId, callAt: next.at }); if (r.ok) toast(`Asked. The production answers by ${formatDate(r.value!.answerBy, sim.zone)}.`, 'positive'); }}>Ask To Move The Call On {formatDate(next.at, sim.zone)}</Gated>}
     </div>
   );
 }

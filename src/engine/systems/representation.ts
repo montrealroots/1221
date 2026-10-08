@@ -9,7 +9,9 @@
  * the auditions it sent, the work booked through it, the days worked that the
  * rule on leaving counts), look at the others (`agencyOutlook`), and approach
  * one (`career.approach_agency`): a submission, or an introduction by a
- * classmate it represents who's close to you. It answers by a date: it passes,
+ * classmate it represents who's close to you, by your manager, or by a
+ * casting office you met at a workshop (`introducerFor`; until later on
+ * 2026-10-08 only a classmate introduced anyone). It answers by a date: it passes,
  * it doesn't answer (the answer date passes without one), or it asks to meet,
  * in its town, on a weekday a week or more on. A meeting kept may bring an
  * offer, whose terms are shown (`AgencyTerms`) and stand for two weeks; it's
@@ -41,7 +43,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { AGENCIES, AGENT_COMMISSION, type Agency, type CareerCity } from '../content/career';
-import { AGENCY_TERM, LEAVING, agencyById, careerOf, daysWorkedIn, endRepresentation, mayLeave, present, represent, rosterFit, standing, takesBack, workCity, type Offer } from './career';
+import { AGENCY_TERM, LEAVING, agencyById, careerOf, managerById, daysWorkedIn, endRepresentation, mayLeave, present, represent, rosterFit, standing, takesBack, workCity, type Offer } from './career';
 import { earn } from './attributes';
 import { contactsOf, levelOf } from './people';
 import { reelCallback } from './footage';
@@ -60,7 +62,9 @@ export interface Approach {
   id: string;
   agencyId: string;
   cityId: CareerCity;
-  via: 'submission' | 'referral';
+  /** A submission, or an introduction: by a classmate the agency represents, the actor's manager, or a casting office met (from 2026-10-08, later). */
+  via: 'submission' | 'referral' | 'manager' | 'casting';
+  /** Who introduced them: a classmate's name, the manager's firm, the casting office. */
   referrer?: string;
   sentAt: Instant;
   answerAt: Instant;
@@ -73,11 +77,13 @@ export interface Approach {
 
 export const APPROACH = {
   open: 3,
-  answerDays: { submission: 28, referral: 10 },
+  answerDays: { submission: 28, referral: 10, manager: 10, casting: 14 },
   /** No answer at all, by the way it came. */
-  silence: { submission: 0.3, referral: 0.05 },
-  /** A referral's weight in the reading, in points of standing. */
-  referral: 3,
+  silence: { submission: 0.3, referral: 0.05, manager: 0.03, casting: 0.1 },
+  /** An introduction's weight in the reading, in points of standing: a manager's relationships most, a casting office's word least. */
+  introduction: { submission: 0, referral: 3, manager: 4, casting: 2 },
+  /** A casting office introduces someone it met within this many days, once a year. */
+  castingMetDays: 730, castingOnceDays: 365,
   /** Credits, to this many points, one a credit; the reel by its callback. */
   creditsMost: 3,
   /** Below the bar by more than this, a pass without a meeting. */
@@ -102,7 +108,24 @@ export function interestOf(sim: Simulation, person: Person, via: Approach['via']
   const career = careerOf(person);
   const credits = Math.min(APPROACH.creditsMost, career.credits.length);
   const reel = career.reelAt !== undefined ? (reelCallback(career.reelCut) - 1) * 10 : 0;
-  return standing(sim, person) + credits + reel + (via === 'referral' ? APPROACH.referral : 0);
+  return standing(sim, person) + credits + reel + APPROACH.introduction[via];
+}
+
+/**
+ * Who'd introduce them to this agency, by the way asked, or nothing: a
+ * classmate it represents (`referrerFor`); their manager, whose firm is
+ * American and introduces to American agencies; a casting office they met at
+ * a workshop where they work, within two years, and not one that introduced
+ * them anywhere in the last year.
+ */
+export function introducerFor(sim: Simulation, person: Person, agencyId: string, via: Approach['via']): string | undefined {
+  const career = careerOf(person);
+  if (via === 'referral') return referrerFor(person, agencyId);
+  if (via === 'manager') return career.managerId && (agencyById(agencyId)?.countryId ?? 'us') === 'us' ? managerById(career.managerId)?.name : undefined;
+  if (via !== 'casting') return undefined;
+  const city = workCity(person);
+  const lately = new Set(approachesOf(person).filter((a) => a.via === 'casting' && sim.now - a.sentAt < APPROACH.castingOnceDays * MS_DAY).map((a) => a.referrer));
+  return [...(career.castingContacts ?? [])].reverse().find((c) => c.cityId === city && sim.now - c.at <= APPROACH.castingMetDays * MS_DAY && !lately.has(c.office))?.office;
 }
 
 /** A classmate the agency represents who'd introduce you: a friend or closer, not a rival. */
@@ -146,6 +169,8 @@ export function approachRefusal(sim: Simulation, person: Person, agencyId: strin
     if (sim.now - last.closedAt! < wait * MS_DAY) return `${agency.name} ${last.status === 'passed' ? 'passed' : last.status === 'silent' ? 'didn’t answer' : last.status === 'missed' ? 'was stood up' : last.status === 'declined' ? 'was turned down' : last.status === 'lapsed' ? 'saw its offer lapse' : 'heard you withdraw'} on ${formatDate(last.closedAt!, sim.zone)}: approach them again from ${formatDate(last.closedAt! + wait * MS_DAY, sim.zone)}.`;
   }
   if (via === 'referral' && !referrerFor(person, agencyId)) return `Nobody close to you is with ${agency.name} to introduce you.`;
+  if (via === 'manager' && !introducerFor(sim, person, agencyId, via)) return career.managerId ? `Your manager’s firm works with American agencies; ${agency.name} isn’t one.` : 'You have no manager to introduce you.';
+  if (via === 'casting' && !introducerFor(sim, person, agencyId, via)) return (career.castingContacts ?? []).length ? 'No casting office you’ve met here in the last two years can introduce you now: each introduces you once a year.' : 'You haven’t met a casting office: a workshop is where actors meet them.';
   return undefined;
 }
 
@@ -226,6 +251,9 @@ export function agencyOutlook(sim: Simulation, person: Person) {
       chance: gap >= 3 ? 'Within Reach' : gap >= -APPROACH.meetBelow ? 'A Stretch' : 'Out Of Reach',
       fit: rosterFit(standing(sim, person), agency),
       referrer: referrerFor(person, agency.id),
+      /** The manager's firm, or the casting office, that'd introduce them, where one would now. */
+      manager: approachRefusal(sim, person, agency.id, 'manager') ? undefined : introducerFor(sim, person, agency.id, 'manager'),
+      casting: approachRefusal(sim, person, agency.id, 'casting') ? undefined : introducerFor(sim, person, agency.id, 'casting'),
       refusal: approachRefusal(sim, person, agency.id, 'submission'),
     } as const;
   });
@@ -248,15 +276,15 @@ export function offersAfterMeeting(sim: Simulation, person: Person, a: Pick<Appr
 export function registerRepresentation(sim: Simulation): void {
   sim.onCommand<{ agencyId: string; via?: Approach['via'] }, { answerBy: Instant }>('career.approach_agency', (p, { sim: s }) => {
     const person = s.player;
-    const via = p?.via === 'referral' ? 'referral' : 'submission';
+    const via: Approach['via'] = p?.via === 'referral' || p?.via === 'manager' || p?.via === 'casting' ? p.via : 'submission';
     const agencyId = String(p?.agencyId);
     const no = approachRefusal(s, person, agencyId, via);
     if (no) throw new CommandError(no);
     const career = careerOf(person);
     const id = `ap${(career.seq += 1)}`;
     const answerAt = s.now + APPROACH.answerDays[via] * MS_DAY;
-    const referrer = via === 'referral' ? referrerFor(person, agencyId) : undefined;
-    approachesOf(person).push({ id, agencyId, cityId: workCity(person), via, ...(referrer ? { referrer } : {}), sentAt: s.now, answerAt, status: 'waiting', history: [{ at: s.now, what: referrer ? `Introduced by ${referrer}` : 'Submitted: headshot, résumé and reel' }] });
+    const referrer = introducerFor(s, person, agencyId, via);
+    approachesOf(person).push({ id, agencyId, cityId: workCity(person), via, ...(referrer ? { referrer } : {}), sentAt: s.now, answerAt, status: 'waiting', history: [{ at: s.now, what: !referrer ? 'Submitted: headshot, résumé and reel' : via === 'manager' ? `Introduced by your manager, ${referrer}` : via === 'casting' ? `Introduced by ${referrer}, who met you at a workshop` : `Introduced by ${referrer}` }] });
     s.schedule({ at: answerAt, kind: AGENCY_ANSWER_KIND, label: `${name(agencyId)} Answers`, category: 'career', priority: 20, payload: { personId: person.id, approachId: id } });
     return { answerBy: answerAt };
   });

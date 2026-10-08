@@ -214,6 +214,7 @@ export const RESIDUAL_KIND = 'career.residual';
 export const TRAVEL_KIND = 'career.travel';
 export const RENEWAL_KIND = 'career.renewal';
 export const AGENCY_TERM_KIND = 'career.agency_term';
+/** A wardrobe fitting the day before the first call. A job released or recast takes its fitting off the calendar with its calls; until later on 2026-10-08 it stayed, and did nothing when it came. */
 export const FITTING_KIND = 'career.fitting';
 
 /**
@@ -1905,7 +1906,7 @@ export function registerCareer(sim: Simulation): void {
         }
         booking.status = 'released';
         playerReplaced(s, person, booking.id, 'recast while unable to work');
-        for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
+        for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === WORK_KIND || one.kind === FITTING_KIND) && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
         sendHome(s, booking);
         feel(person, 'recast');
@@ -1915,7 +1916,7 @@ export function registerCareer(sim: Simulation): void {
       booking.status = 'fired';
       playerReplaced(s, person, booking.id, 'replaced for not turning up');
       earn(s, person, ATTRIBUTES.reputation.fired);
-      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === WORK_KIND || one.kind === FITTING_KIND) && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
       sendHome(s, booking);
       feel(person, 'replaced');
@@ -2393,7 +2394,7 @@ export function registerCareer(sim: Simulation): void {
       if (!jobsClash(person, booking, other)) continue;
       if (!bound) throw new CommandError(`It clashes with ${roleById(other.roleId).label}.`);
       other.status = 'released';
-      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || ((one.kind === TRAVEL_KIND || one.kind === STAY_KIND) && one.payload.direction === 'out'))) s.timeline.cancel(one.id, s.now);
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || one.kind === FITTING_KIND || ((one.kind === TRAVEL_KIND || one.kind === STAY_KIND) && one.payload.direction === 'out'))) s.timeline.cancel(one.id, s.now);
       sendHome(s, other);
       if (other.owed > 0) schedulePay(s, person, other, s.now + 60_000, true);
       if (isPlayer(person)) s.notify({ category: 'career', title: 'Released For Your Series', body: `${roleById(other.roleId).label} clashed with the series’ new season, which has you first.`, importance: 75, route: '/workspace/career' });
