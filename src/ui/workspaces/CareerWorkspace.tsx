@@ -454,7 +454,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}</span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
@@ -956,7 +956,7 @@ function ReelRow() {
   );
 }
 
-/** A job's cast from its production (`systems/companies.ts`, from 2026-10-09): the classmates in it, by name and part. */
+/** A job's cast from its production (`systems/companies.ts`, from 2026-10-08): the classmates in it, by name and part. */
 function castLine(person: Person, bookingId: string): string {
   const p = productionOf(person, bookingId);
   const mates = (p?.slots ?? []).filter((x) => x.status === 'cast' && x.performer.kind === 'classmate').map((x) => `${person.school?.classmates[(x.performer as { i: number }).i]?.name ?? 'a classmate'} (${x.part})`);

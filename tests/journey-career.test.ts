@@ -257,7 +257,7 @@ describe('a working actor in New York', () => {
     const c = careerOf(sim.player);
     const done = c.bookings.find((b) => b.id === 'gs')!;
     expect(done).toMatchObject({ status: 'worked', worked: 8, owed: 0 });
-    // The credit names the production and the player's part (`systems/companies.ts`, from 2026-10-09).
+    // The credit names the production and the player's part (`systems/companies.ts`, from 2026-10-08).
     expect(c.credits).toContainEqual(expect.objectContaining({ roleId: 'guest-hour', year: 2026, cityId: NY, part: 'Your Part' }));
     expect(c.credits.find((x) => x.roleId === 'guest-hour')!.productionId).toMatch(/^prod-/);
     // Paid on the two Thursdays, each week's days: scale plus ten for the agent, the agency's tenth of scale,

@@ -268,7 +268,7 @@ export function bookRefusal(sim: Simulation, person: Person, fromCity: string, t
   if (!CITIES.get(toCity)) return 'SLATE doesn’t have that town.';
   if (legs[0]!.departAt <= sim.now) return 'That departure has gone.';
   if (!ownPlaceIn(person, toCity)) {
-    // A day there and back the same night asks no bed. Until 2026-10-09 it was refused for one, found by the social
+    // A day there and back the same night asks no bed. Until 2026-10-08 it was refused for one, found by the social
     // journeys (`tools/social-lives.mjs`): a Sunday in New York from New Haven couldn't be booked without a hotel.
     if (nights <= 0 && !dayTrip) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
     // Until later on 2026-09-30 a motorhome's trip to a town without hotel figures was refused, its campground offered and never bookable.

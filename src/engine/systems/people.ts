@@ -241,7 +241,7 @@ export function classAtSchool(sim: Simulation, person: Person): void {
     if ((mate.bond ?? 0) <= BONDS.rival) c.rival = true;
     else if ((mate.bond ?? 0) > BONDS.rival + 10) delete c.rival;
     // A friend at school is one by the bond, as the degree reads it (`knowTheClass`), not only by the evenings out: the
-    // days in class are time together. Until 2026-10-09 every classmate read as an acquaintance until the degree, however
+    // days in class are time together. Until 2026-10-08 every classmate read as an acquaintance until the degree, however
     // close, found by the social journeys (`tools/social-lives.mjs`): no classmate reached out at school, nor could be asked out.
     const bond = mate.bond ?? 0;
     c.hours = Math.max(c.hours, bond >= BONDS.close ? HALL.close : bond >= BONDS.friend ? HALL.friend : 0);
@@ -255,7 +255,7 @@ export const CLASS_SOCIAL = { bondPerHour: 1, missed: -3, cutShort: -1 } as cons
 export const atSchoolWith = (person: Person, c: Contact): boolean => c.classmate !== undefined && Boolean(person.school) && person.school!.standing !== 'graduated' && person.school!.standing !== 'dismissed';
 
 /**
- * A classmate's bond, moved by time spent together or let down: at school and after it. Until 2026-10-09 only at
+ * A classmate's bond, moved by time spent together or let down: at school and after it. Until 2026-10-08 only at
  * school, and after the degree an evening out moved nothing, so the social journeys (`tools/social-lives.mjs`) found
  * friends seen every month fading to even by the monthly drift (`RIVALS.fadePerMonth`) as if never seen.
  */
@@ -267,7 +267,7 @@ export function classBond(person: Person, c: Contact, by: number): void {
 
 /**
  * An answer to being asked, remembered once: the same answer again is the
- * latest, not another line. Until 2026-10-09 each was a line of its own, and
+ * latest, not another line. Until 2026-10-08 each was a line of its own, and
  * the social journeys (`tools/social-lives.mjs`) found a classmate holding
  * "Said no to a walk in the park: Imani lives in New Haven." fifteen times
  * among sixty memories, which pushed the evenings that happened out.
@@ -447,7 +447,7 @@ export function registerPeople(sim: Simulation): void {
     if (person.currentLocationId !== where || lateBy > SOCIAL_LATE.most) {
       c.stoodUp = item.at;
       classBond(person, c, CLASS_SOCIAL.missed);
-      // Something to make right with a classmate (`school.make_amends`, from 2026-10-09), at school or after it.
+      // Something to make right with a classmate (`school.make_amends`, from 2026-10-08), at school or after it.
       const mate = c.classmate !== undefined ? person.school?.classmates[c.classmate] : undefined;
       if (mate) noteIncident(mate, item.at, 'missed');
       c.memory.unshift({ at: item.at, what: holding && person.currentLocationId === where ? `Not there: held at ${holding.label}` : 'You didn’t come' });

@@ -1,6 +1,6 @@
 /**
  * Three students lived through school, the degree and the profession (from
- * 2026-10-09), each by public commands only, to measure the class as people
+ * 2026-10-08), each by public commands only, to measure the class as people
  * over years: who's close, who's a rival, what's remembered, how many
  * notices it takes. Living is the lifetime probe's: an hour at a time, sleep
  * and meals and washing through `life.look_after`, each decision taken its

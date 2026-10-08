@@ -1,11 +1,11 @@
 /**
- * SLATE — a professional production and the parts in it (from 2026-10-09;
+ * SLATE — a professional production and the parts in it (from 2026-10-08;
  * `systems/career.ts` keeps the booking, the days, the pay and the credit).
  *
  * **One production a job.** When the player takes a job, the production it
  * is gets an identity of its own (`Production`): its title, town, dates, and
  * the parts in it (`Slot`), each with its size, what it's cast on, who plays
- * it, its dates and its union. The player's booking is the player's part, and
+ * it and its dates. The player's booking is the player's part, and
  * only the player's is paid to the player; nothing here pays anybody.
  *
  * **The other parts.** A stage play casts its company (three more parts, an
@@ -24,7 +24,7 @@
  * a stage run (one company, one room), and on screen the days your scenes
  * met, more often the bigger their part (`COMPANY.sharedOnScreen`). Each such
  * day is two hours toward knowing each other and half a point of bond, and the
- * first and the last are remembered. Until 2026-10-09 a classmate in the job
+ * first and the last are remembered. Until 2026-10-08 a classmate in the job
  * was credited with the player's own part, and the whole job's hours came at
  * its end whatever was shared.
  *
@@ -53,12 +53,11 @@ export interface Slot {
   performer: Performer;
   from: Instant;
   until: Instant;
-  union: Role['union'];
   /** Days worked side by side with the player. */
   shared: number;
-  history: { at: Instant; what: string }[];
 }
-export interface Production { id: string; bookingId: string; roleId: string; title: string; cityId: string; medium: Role['medium']; from: Instant; until: Instant; slots: Slot[]; history: { at: Instant; what: string }[] }
+/** A production; its history, who was asked and who was replaced, is shown on the job (Career, Work). */
+export interface Production { id: string; bookingId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[] }
 
 export const COMPANY = {
   /** The other parts a production casts, by medium. */
@@ -95,14 +94,14 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
   read: (craft: Craft) => number, booked: (i: number) => void): Production {
   const year = new Date(from).getUTCFullYear();
   const p: Production = {
-    id: `prod-${booking.id}`, bookingId: booking.id, roleId: role.id, title: `${role.label}, ${CITIES.require(cityId).name} ${year}`, cityId, medium: role.medium, from, until, history: [],
-    slots: [{ id: `${booking.id}-0`, part: PART_WORDS.principal, size: 'principal', status: 'cast', performer: { kind: 'player' }, from, until, union: role.union, shared: 0, history: [{ at: sim.now, what: 'Cast: you' }] }],
+    id: `prod-${booking.id}`, bookingId: booking.id, title: `${role.label}, ${CITIES.require(cityId).name} ${year}`, medium: role.medium, history: [],
+    slots: [{ id: `${booking.id}-0`, part: PART_WORDS.principal, size: 'principal', status: 'cast', performer: { kind: 'player' }, from, until, shared: 0 }],
   };
   const school = person.school;
   const rng = sim.rng('career.company', person.id, `company-${booking.id}`);
   const inThis = new Set<number>();
   COMPANY.others[role.medium].forEach((size, k) => {
-    const slot: Slot = { id: `${booking.id}-${k + 1}`, part: PART_WORDS[size], size, status: 'cast', performer: { kind: 'company' }, from, until, union: role.union, shared: 0, history: [] };
+    const slot: Slot = { id: `${booking.id}-${k + 1}`, part: PART_WORDS[size], size, status: 'cast', performer: { kind: 'company' }, from, until, shared: 0 };
     const draw = rng.next();
     const order = rng.next();
     if (school?.standing === 'graduated' && draw < COMPANY.chance) {
@@ -127,7 +126,6 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
         }
       }
     }
-    slot.history.push({ at: sim.now, what: slot.performer.kind === 'classmate' ? `Cast: ${school!.classmates[slot.performer.i]!.name}` : 'Cast: a company actor' });
     p.slots.push(slot);
   });
   const all = productionsOf(person);
@@ -172,7 +170,6 @@ export function playerReplaced(sim: Simulation, person: Person, bookingId: strin
   const slot = p?.slots.find((s) => s.performer.kind === 'player' && s.status === 'cast');
   if (!p || !slot) return;
   slot.status = 'replaced';
-  slot.history.push({ at: sim.now, what: `You: ${why}` });
-  p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: { kind: 'company' }, from: sim.now, shared: 0, history: [{ at: sim.now, what: 'Cast: a company actor, replacing you' }] });
+  p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: { kind: 'company' }, from: sim.now, shared: 0 });
   p.history.push({ at: sim.now, what: `Your part recast: ${why}` });
 }

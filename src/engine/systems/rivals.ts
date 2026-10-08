@@ -174,12 +174,12 @@ export function metInTheRoom(sim: Simulation, person: Person, room: readonly { i
 
 /**
  * Casting a former classmate beside the player is a production's (`makeProduction`
- * in `systems/companies.ts`, from 2026-10-09): a part of their own in it, for a
+ * in `systems/companies.ts`, from 2026-10-08): a part of their own in it, for a
  * job of the player's. Until then one draw here cast a classmate as the player's
  * own part.
  */
 
-/** A job worked beside a former classmate, booked before productions (2026-10-08 to 2026-10-09): the contact they are keeps it at the end. */
+/** A job worked beside a former classmate, booked before productions (2026-10-08 to 2026-10-08): the contact they are keeps it at the end. */
 export function workedWith(sim: Simulation, person: Person, i: number, roleLabel: string, days: number): boolean {
   const c = contactsOf(person).find((x) => x.classmate === i);
   if (!c) return false;

@@ -481,7 +481,7 @@ export interface CareerRecord {
   lastBookedAt?: Instant;
   auditions: Audition[];
   bookings: Booking[];
-  credits: { roleId: string; year: number; cityId: CareerCity; /** The production and the part, from 2026-10-09 (`systems/companies.ts`). */ productionId?: string; part?: string }[];
+  credits: { roleId: string; year: number; cityId: CareerCity; /** The production and the part, from 2026-10-08 (`systems/companies.ts`). */ productionId?: string; part?: string }[];
   unions: {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
@@ -2338,7 +2338,7 @@ export function registerCareer(sim: Simulation): void {
     booking.status = 'accepted';
     career.lastBookedAt = s.now;
     const workCity = workCityOf(booking);
-    // The production it is, its parts and who plays them (`makeProduction`, from 2026-10-09): a former classmate in another
+    // The production it is, its parts and who plays them (`makeProduction`, from 2026-10-08): a former classmate in another
     // part now and then, where one fits it and is free. Until then a classmate was cast as the player's own part.
     if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at));
     const zone = zoneOf(workCity);

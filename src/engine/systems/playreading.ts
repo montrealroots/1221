@@ -1,5 +1,5 @@
 /**
- * SLATE — reading real plays, and researching them (from 2026-10-09; the
+ * SLATE — reading real plays, and researching them (from 2026-10-08; the
  * plays and their facts in `content/contemporary.ts`).
  *
  * **What's to be had.** A copy is borrowed where you are: at school, the Haas
@@ -53,7 +53,7 @@ export const PLAYREADING = {
   notesKept: 6,
 } as const;
 
-export interface PlayStudy { reads: number; firstAt: Instant; lastAt: Instant; noticed: string[]; researchedAt?: Instant; notes: { at: Instant; what: string }[] }
+export interface PlayStudy { reads: number; lastAt: Instant; noticed: string[]; researchedAt?: Instant; notes: { at: Instant; what: string }[] }
 
 export const playById = (id: string): ContemporaryPlay | undefined => CONTEMPORARY_PLAYS.find((p) => p.id === id);
 export const studiesOf = (person: Person): Record<string, PlayStudy> => (person.plays ??= {});
@@ -131,7 +131,7 @@ export function registerPlayReading(sim: Simulation): void {
     const focus = focusOf(person);
     s.advanceTo(s.now + minutes * 60_000);
     exerts(person, PLAYREADING.met, minutes / 60);
-    const study = before ?? { reads: 0, firstAt: s.now, lastAt: s.now, noticed: [], notes: [] };
+    const study = before ?? { reads: 0, lastAt: s.now, noticed: [], notes: [] };
     const fresh = !before || s.now - before.lastAt >= PLAYREADING.freshDays * MS_DAY;
     if (person.craft && fresh) grow(person.craft, 'script', focus, before ? PLAYREADING.weight.again : PLAYREADING.weight.read);
     const seen = aspects(person, p, s.now, s.zone);

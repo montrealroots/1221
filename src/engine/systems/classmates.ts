@@ -70,7 +70,7 @@ export const CLASS = {
   boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: 3 },
   /**
    * Making it right gives back what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the
-   * bond 2 of the 3 it cost), a plan called off late (the bond's 1; it took no trust). Until 2026-10-09 every one gave
+   * bond 2 of the 3 it cost), a plan called off late (the bond's 1; it took no trust). Until 2026-10-08 every one gave
    * trust 6 and bond 2 whatever it was, and the social journeys (`tools/social-lives.mjs`) found the student who called
    * off late and apologized ending school closer to the class than the one who kept every plan.
    */
@@ -302,7 +302,7 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
   const mate = person.school?.classmates[i];
   if (!mate) return 'There’s no such classmate.';
   if (!unrepaired(mate).length) return 'There’s nothing between you to make right.';
-  // Where they are: New Haven at school, after the degree the town the person they are lives in (from 2026-10-09).
+  // Where they are: New Haven at school, after the degree the town the person they are lives in (from 2026-10-08).
   const c = contactsOf(person).find((x) => x.classmate === i);
   const where = person.school!.standing === 'graduated' || person.school!.standing === 'dismissed' ? c?.cityId ?? YALE_DRAMA.cityId : YALE_DRAMA.cityId;
   if (person.currentLocationId !== where) return `${first(mate)} is in ${CITIES.require(where).name}.`;

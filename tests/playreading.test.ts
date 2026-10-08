@@ -1,5 +1,5 @@
 /**
- * Real plays from 2000 on (from 2026-10-09): their facts are the research's,
+ * Real plays from 2000 on (from 2026-10-08): their facts are the research's,
  * none is played, and each is read with a library's copy and researched,
  * which works the text craft the audition room reads. A read again knows the
  * last one.

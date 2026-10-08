@@ -1,6 +1,6 @@
 /**
  * SLATE — real plays from 2000 on, as facts to read and research by
- * (from 2026-10-09; `docs/research/world/research-contemporary-plays.json`,
+ * (from 2026-10-08; `docs/research/world/research-contemporary-plays.json`,
  * each fact read on 2026-10-07 from the producing theater's, the publisher's or
  * a trade paper's own page, the page and its words kept there).
  *

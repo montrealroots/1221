@@ -1,6 +1,6 @@
 /**
  * The long-term scenarios of the social life and the plays (from
- * 2026-10-09), each through public commands. What isn't a command is said:
+ * 2026-10-08), each through public commands. What isn't a command is said:
  * the setup lines are marked SETUP, and nothing under test is set by hand.
  *
  * The rest of the list is held elsewhere: overlapping obligations and

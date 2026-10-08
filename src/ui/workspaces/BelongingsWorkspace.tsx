@@ -1091,7 +1091,7 @@ function WatchingAndPlaying() {
 }
 
 /**
- * Real plays from 2000 on (`systems/playreading.ts`, from 2026-10-09): their
+ * Real plays from 2000 on (`systems/playreading.ts`, from 2026-10-08): their
  * facts on record, read with a library's copy and researched. None is played:
  * the scene work is public-domain plays and SLATE's own.
  */
