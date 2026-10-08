@@ -25,6 +25,7 @@ const life = (seed: string, title: 'actor' | 'actress' = 'actress') => {
 };
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
+const rights = JSON.parse(readFileSync('docs/research/world/research-contemporary-plays-rights.json', 'utf8')) as { plays: { id: string; licensor: { us: { name: string; source: string; quote: string; evidence?: string } | null; uk: { name: string; source: string; quote: string } | null } | null; firstPublished: { year: number; publisher: string; edition: string; source: string; quote: string } | null }[] };
 const research = JSON.parse(readFileSync('docs/research/world/research-contemporary-plays.json', 'utf8')) as { retrieved: string; plays: { id: string; title: string; playwright: string; premiere: { year: number; date?: string; venue: string; source: string; quote: string }; cast: { text: string } | null; setting: { period: string } | null; publication: { year: number; publisher: string } | null }[] };
 
 describe('the plays, as facts', () => {
@@ -40,7 +41,13 @@ describe('the plays, as facts', () => {
       expect([p.by, p.premiere.year, p.premiere.venue, p.premiere.date, p.source]).toEqual([r.playwright, r.premiere.year, r.premiere.venue, r.premiere.date, r.premiere.source]);
       expect(r.premiere.quote.length).toBeGreaterThan(20);
       if (p.cast) expect(p.cast.text).toBe(r.cast!.text.replace(/'/g, '’'));
-      if (p.published) expect(p.published).toEqual({ year: r.publication!.year, by: r.publication!.publisher });
+      const x = rights.plays.find((y) => y.id === p.id)!;
+      if (x.firstPublished) expect(p.published).toEqual({ year: x.firstPublished.year, by: x.firstPublished.publisher, acting: /acting/.test(x.firstPublished.edition) });
+      else expect(p.published).toBeUndefined();
+      const us = x.licensor?.us && x.licensor.us.evidence !== 'search-result title only' ? x.licensor.us : undefined;
+      expect(p.licensor?.us).toBe(us?.name);
+      expect(p.licensor?.uk).toBe(x.licensor?.uk?.name);
+      for (const fact of [us, x.licensor?.uk, x.firstPublished]) if (fact) expect([fact.source.startsWith('http'), fact.quote.length > 5]).toEqual([true, true]);
       expect(Boolean(p.setting)).toBe(Boolean(r.setting?.period));
     }
   });
@@ -115,7 +122,7 @@ describe('reading one at school', () => {
     const s0 = sim.player.craft!.script;
     const r = sim.must<{ minutes: number; note: string }>({ kind: 'plays.research', payload: { playId: 'jerusalem' } });
     expect(r.minutes).toBe(PLAYREADING.minutes.research);
-    expect(r.note).toBe('First staged in 2009 at Royal Court Theatre, London. First published 2009, by Nick Hern Books.');
+    expect(r.note).toBe('First staged in 2009 at Royal Court Theatre, London. First published 2009, by Nick Hern Books. Licensed for performance in the UK by Nick Hern Books (amateur rights).');
     expect(sim.player.craft!.script).toBeGreaterThan(s0);
     expect(sim.execute({ kind: 'plays.research', payload: { playId: 'jerusalem' } }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
     expect(reload(sim).player.plays!['jerusalem']!.researchedAt).toBeDefined();

@@ -23,8 +23,8 @@
  * read through everything on record, it says so.
  *
  * **Researching it** (`plays.research`, once a play, after a read, ninety
- * minutes at the library) finds its first production and first edition, and
- * trains the craft once more.
+ * minutes at the library) finds its first production, its first edition and
+ * who licenses it (the last from 2026-10-08), and trains the craft once more.
  *
  * Every number here is SLATE's estimate.
  */
@@ -165,7 +165,8 @@ export function registerPlayReading(sim: Simulation): void {
     s.advanceTo(s.now + minutes * 60_000);
     exerts(person, PLAYREADING.met, minutes / 60);
     if (person.craft) grow(person.craft, 'script', focus, PLAYREADING.weight.research);
-    const words = `First staged ${p.premiere.date ? `on ${p.premiere.date}` : `in ${p.premiere.year}`} at ${p.premiere.venue}.${p.published ? ` First published ${p.published.year}, by ${p.published.by}.` : ' Its first edition isn’t on record.'}`;
+    const rights = p.licensor ? ` Licensed for performance${p.licensor.us ? ` in the US by ${p.licensor.us}` : ''}${p.licensor.us && p.licensor.uk ? ',' : ''}${p.licensor.uk ? ` in the UK by ${p.licensor.uk}` : ''}.` : ' Who licenses it isn’t on record.';
+    const words = `First staged ${p.premiere.date ? `on ${p.premiere.date}` : `in ${p.premiere.year}`} at ${p.premiere.venue}.${p.published ? ` First published ${p.published.year}, by ${p.published.by}${p.published.acting ? ', an acting edition' : ''}.` : ' Its first edition isn’t on record.'}${rights}`;
     study.researchedAt = s.now;
     note(study, s.now, words);
     return { minutes, note: words };
