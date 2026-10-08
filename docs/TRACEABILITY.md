@@ -504,7 +504,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `career.travel` | `systems/career.ts` | systems/career.ts | travelOwed; stay; perDiemOwed | — | hotel | 4 |
 | `career.wardrobe_back` | `systems/fittings.ts` | systems/fittings.ts | — | — | — | 1 |
 | `career.week` | `systems/career.ts` | systems/career.ts | submitted; offers; managerOffers; auditions; auditions (added to) | — | career.audition | 10 |
-| `career.work` | `systems/career.ts` | systems/rescheduling.ts; systems/career.ts | status; missedNights; worked; owed; overtimeDays; and 2 more | — | — | 13 |
+| `career.work` | `systems/career.ts` | systems/career.ts; systems/rescheduling.ts | status; missedNights; worked; owed; overtimeDays; and 2 more | — | — | 13 |
 | `career.workshop` | `systems/career.ts` | systems/career.ts | status; publicist | — | — | 2 |
 | `child.birth` | `systems/children.ts` | systems/children.ts | childrenOf (added to) | Yes | travel.leave | 0 |
 | `child.month` | `systems/children.ts` | systems/adoption.ts; systems/children.ts | — | Yes | child.month | 1 |

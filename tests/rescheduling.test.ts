@@ -190,18 +190,29 @@ describe('notices and days', () => {
 
   it('cut part-way: the work done kept and paid, the cut days paid, the job finished once with its credit', () => {
     const sim = graduate('rs-cut');
-    const b = take(sim, 'p7', 'costar', 2);
-    workThrough(sim, 'p7', first + 2 * MS_HOUR);
+    const b = take(sim, 'p7', 'costar', 4);
+    const calls = workDays(b).map((c) => c.at);
+    workThrough(sim, 'p7', calls[0]! + 2 * MS_HOUR);
     expect(b.worked).toBe(1);
     decide(sim, 'p7', 'cut_rest');
     const pr = proposalsFor(sim.player, 'p7')[0]!;
-    expect(pr.affected).toEqual([workDays(b)[1]!.at]);
+    // The calls within two days stay; the one past them is cut.
+    expect(pr.affected).toEqual([calls[3]!]);
     workThrough(sim, 'p7', pr.dueAt + MS_HOUR);
-    expect([b.status, b.worked, workDays(b).length]).toEqual(['worked', 1, 1]);
+    expect(workDays(b).map((c) => c.at)).toEqual(calls.slice(0, 3));
     workThrough(sim, 'p7', sim.now + 14 * MS_DAY);
+    expect([b.status, b.worked]).toEqual(['worked', 3]);
     expect([b.owed, b.cancellationOwed]).toEqual([0, 0]);
     expect(careerOf(sim.player).credits.filter((c) => c.productionId === productionOf(sim.player, 'p7')!.id)).toHaveLength(1);
     expect(breaches(sim.universe)).toEqual([]);
+  });
+
+  it('calls within two days aren’t moved: nothing’s proposed that couldn’t be answered', () => {
+    const sim = graduate('rs-near');
+    const b = take(sim, 'p11', 'costar', 2);
+    workThrough(sim, 'p11', workDays(b)[0]!.at + 2 * MS_HOUR);
+    decide(sim, 'p11', 'postpone_rest');
+    expect(proposalsFor(sim.player, 'p11')).toEqual([]);
   });
 
   it('a call asked to move, once a screen job, answered the next day; a run’s don’t move for one actor', () => {

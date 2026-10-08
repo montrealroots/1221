@@ -106,6 +106,8 @@ function career() {
   }
   // A part booked, learned before it's played: an hour an evening (the selective two), till it's known; the unreliable student comes in on book.
   if (c && kind !== 'unreliable') for (const b of c.bookings.filter((x) => x.status === 'accepted')) for (let n = 0; n < (kind === 'selective' ? 2 : 1); n += 1) { if (learnPartRefusal(sim, p, b.id) || (productionOf(p, b.id)?.lines ?? 0) >= 0.85) break; run('career.learn_part', { bookingId: b.id }); }
+  // Headshots once the degree’s done, as a working actor has them; then the agencies written to where unrepresented.
+  if (!inSchool() && c && c.headshotsAt === undefined) run('career.headshots');
   if (!inSchool() && !queryRefusal(sim, p)) run('career.query_agencies');
   // Representation, by the policy (`AGENCY` in the environment, from 2026-10-08): 'stay' never approaches another agency;
   // 'climb' approaches those within reach or a stretch that reach further than its own; 'churn' approaches every one it may.

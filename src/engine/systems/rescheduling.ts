@@ -72,6 +72,8 @@ export const SCHEDULE = {
   chance: 0.12,
   weights: { postpone: 3, postpone_rest: 2, call_time: 3, add_day: 2, cut_rest: 1 } as Record<Exclude<ChangeKind, 'request'>, number>,
   answerDays: 3, noticeDays: 2,
+  /** Calls this near aren't moved, in days. */
+  leadDays: 2,
   postponeDays: [7, 14] as const,
   callHours: [-2, 2, 3] as const,
   /** SAG-AFTRA: twelve hours' rest between calls; a forced call paid the lesser of the day's rate and $900. */
@@ -152,20 +154,25 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
   const calls = workDays(booking);
   const n = done(booking);
   const past = calls.slice(0, n);
-  const ahead = calls.slice(n).filter((c) => c.at > sim.now + MS_HOUR);
-  if (!ahead.length || ahead.length !== calls.length - n) return undefined;
+  const left = calls.slice(n);
+  if (!left.length || left.some((c) => c.at <= sim.now + MS_HOUR)) return undefined;
+  // A call within two days isn't moved: a change leaves time to answer it (`SCHEDULE.leadDays`). Until 2026-10-08's
+  // ten-year runs it could, and one was proposed an hour before its answer was due, and expired unanswered.
+  const fixed = [...past, ...left.filter((c) => c.at <= sim.now + SCHEDULE.leadDays * MS_DAY)];
+  const ahead = left.filter((c) => c.at > sim.now + SCHEDULE.leadDays * MS_DAY);
+  if (!ahead.length) return undefined;
   const role = roleById(booking.roleId);
   const zone = CITIES.require(workCityOf(booking)).timeZone;
   if (kind === 'postpone' || kind === 'postpone_rest') {
-    if (kind === 'postpone' && n > 0) return undefined;
+    if (kind === 'postpone' && fixed.length > 0) return undefined;
     const delta = (kind === 'postpone' ? SCHEDULE.postponeDays[x < 0.5 ? 0 : 1] : 7) * MS_DAY;
-    return { to: [...past, ...ahead.map((c) => ({ ...c, at: c.at + delta }))], affected: ahead.map((c) => c.at) };
+    return { to: [...fixed, ...ahead.map((c) => ({ ...c, at: c.at + delta }))], affected: ahead.map((c) => c.at) };
   }
   if (kind === 'call_time') {
     const i = Math.min(ahead.length - 1, Math.floor(x * ahead.length));
     const hours = SCHEDULE.callHours[Math.floor((x * 7) % SCHEDULE.callHours.length)]!;
     const moved = { ...ahead[i]!, at: ahead[i]!.at + hours * MS_HOUR };
-    return { to: [...past, ...ahead.map((c, k) => (k === i ? moved : c))], affected: [ahead[i]!.at] };
+    return { to: [...fixed, ...ahead.map((c, k) => (k === i ? moved : c))], affected: [ahead[i]!.at] };
   }
   if (kind === 'add_day' || kind === 'request') {
     if (role.medium !== 'screen') return undefined;
@@ -175,18 +182,18 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
     if (kind === 'add_day') return { to: [...calls, { at, week: last.week, rehearsal: false }], affected: [at] };
     // A call asked to move goes to the day after the last.
     const i = Math.min(ahead.length - 1, Math.floor(x * ahead.length));
-    return { to: [...past, ...ahead.filter((_, k) => k !== i), { at, week: last.week, rehearsal: false }], affected: [ahead[i]!.at] };
+    return { to: [...fixed, ...ahead.filter((_, k) => k !== i), { at, week: last.week, rehearsal: false }], affected: [ahead[i]!.at] };
   }
   // Cut: on stage the performances past two weeks' notice; on screen the last half of what's left, at least one.
   if (role.medium === 'stage') {
     const keep = ahead.filter((c) => c.at <= sim.now + SCHEDULE.lort.closingNoticeDays * MS_DAY || c.rehearsal);
     if (keep.length === ahead.length) return undefined;
-    return { to: [...past, ...keep], affected: ahead.slice(keep.length).map((c) => c.at) };
+    return { to: [...fixed, ...keep], affected: ahead.slice(keep.length).map((c) => c.at) };
   }
   const cut = Math.max(1, Math.floor(ahead.length / 2));
   // Never cut to nothing: a job with no call worked keeps one.
-  if (n === 0 && ahead.length - cut < 1) return undefined;
-  return { to: [...past, ...ahead.slice(0, ahead.length - cut)], affected: ahead.slice(ahead.length - cut).map((c) => c.at) };
+  if (fixed.length === 0 && ahead.length - cut < 1) return undefined;
+  return { to: [...fixed, ...ahead.slice(0, ahead.length - cut)], affected: ahead.slice(ahead.length - cut).map((c) => c.at) };
 }
 
 /** A day's rate, or a stage week's, in the save's money. */
