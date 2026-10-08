@@ -874,8 +874,9 @@ same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
   pass (23 US licensors, 14 UK, 28 first editions) and read by researching a
   play. A third pass settled all but one: 27 US licensors, Black Watch's
   agent, Fleabag's rights withheld, and all 30 first editions
-  (`docs/REQUIREMENTS.md` W1). Jerusalem's US licensor is still not on
-  record.
+  (`docs/REQUIREMENTS.md` W1). Jerusalem, whose US licensor couldn't be
+  found, was then taken out of the catalog at the owner's word: 29 plays,
+  none with a fact missing.
 - **A classmate's side of a production.** A classmate cast always took the
   part and could book across the run. Now they turn parts down, withdraw for
   another job before a run, and book nothing during one; and each job's

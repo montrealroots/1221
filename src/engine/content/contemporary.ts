@@ -4,7 +4,7 @@
  * each fact read on 2026-10-07 from the producing theater's, the publisher's or
  * a trade paper's own page, the page and its words kept there).
  *
- * **What this is.** Thirty plays by thirty playwrights, first staged from 2000
+ * **What this is.** Twenty-nine plays by twenty-nine playwrights, first staged from 2000
  * to 2023 in the US and the UK: the title, who wrote it, its first production
  * (the year always; the day where a source names it), and where a source says
  * so its form, its cast as the publisher lists it, when and where it's set, and
@@ -20,17 +20,23 @@
  * own words, not its sources', and weren't brought in.
  *
  * **Its rights and its first edition** (from 2026-10-08, `research-contemporary-plays-rights.json`):
- * who licenses its performance in the US (27 of 30, from the licensor's own
+ * who licenses its performance in the US (27 of 29, from the licensor's own
  * acting edition record, or a US production's credit line that the licensor
- * requires) and in the UK (14); for Black Watch, which no licensing house
+ * requires) and in the UK (13); for Black Watch, which no licensing house
  * offers, the author's agent; for Fleabag, that its rights aren't released;
- * and its first edition (all 30), an acting edition or the trade one. Only
- * Jerusalem's US licensor isn't on record. They're facts about the play, kept
- * apart from its text, and what researching it finds. Until then a licensor
- * wasn't kept (the first research could confirm 4) and a first edition was
- * kept for 6; three of those were later than the first (Fleabag's 2016 was
- * 2013's). A second pass on 2026-10-08 found 23 US licensors and 28 first
- * editions; a third, the rest but Jerusalem's.
+ * and its first edition (all 29), an acting edition or the trade one. They're
+ * facts about the play, kept apart from its text, and what researching it
+ * finds. Until then a licensor wasn't kept (the first research could confirm
+ * 4) and a first edition was kept for 6; three of those were later than the
+ * first (Fleabag's 2016 was 2013's). A second pass on 2026-10-08 found 23 US
+ * licensors and 28 first editions; a third, the rest.
+ *
+ * Jez Butterworth's Jerusalem was the thirtieth until later on 2026-10-08. Its
+ * US licensor couldn't be found by three passes (no acting edition on record,
+ * Concord UK's page naming no terms, four US productions printing no credit),
+ * and the owner had it taken out rather than kept with a fact missing. Its
+ * research stays in the files as the record of what was tried; a save that
+ * read it keeps the reading, which nothing shows.
  *
  * So each play is, in SLATE: **known** (its facts, for research and planning),
  * **studied** (read with a copy borrowed from a library, and its first
@@ -71,7 +77,6 @@ export const CONTEMPORARY_PLAYS: readonly ContemporaryPlay[] = [
   { id: 'august-osage-county', title: 'August: Osage County', by: 'Tracy Letts', premiere: { year: 2007, venue: 'Steppenwolf Theatre Company, Chicago' }, form: 'black comedy', cast: { text: '7f 6m', f: 7, m: 6 }, setting: 'Oklahoma, the Weston family home, the time not given', published: { year: 2008, by: 'Theatre Communications Group', acting: false }, licensor: { us: 'Dramatists Play Service' }, source: 'https://www.nickhernbooks.co.uk/plays-to-perform/august-osage-county' },
   { id: 'the-humans', title: 'The Humans', by: 'Stephen Karam', premiere: { year: 2014, venue: 'American Theater Company, Chicago' }, form: 'drama', cast: { text: '4f 2m', f: 4, m: 2 }, setting: 'Thanksgiving (year not stated), an apartment in Lower Manhattan', published: { year: 2015, by: 'Theatre Communications Group', acting: false }, licensor: { us: 'Dramatists Play Service' }, source: 'https://www.nickhernbooks.co.uk/plays-to-perform/the-humans' },
   { id: 'constellations', title: 'Constellations', by: 'Nick Payne', premiere: { year: 2012, venue: 'Royal Court Theatre (Theatre Upstairs), London' }, form: 'a play about free will and friendship, built on multiverse theory', cast: { text: 'two characters (a quantum physicist and a beekeeper)', size: 2 }, published: { year: 2012, by: 'Faber & Faber', acting: false }, licensor: { us: 'Dramatists Play Service', uk: 'Concord Theatricals (UK)' }, source: 'https://www.faber.co.uk/product/9780571289080-constellations/' },
-  { id: 'jerusalem', title: 'Jerusalem', by: 'Jez Butterworth', premiere: { year: 2009, venue: 'Royal Court Theatre, London' }, form: 'comic, contemporary play', cast: { text: '5f 8m plus 1 boy', f: 5, m: 8 }, setting: 'St George’s Day, the morning of the local country fair (year not stated)', published: { year: 2009, by: 'Nick Hern Books', acting: false }, licensor: { uk: 'Nick Hern Books (amateur rights)' }, source: 'https://www.nickhernbooks.co.uk/plays-to-perform/jerusalem' },
   { id: 'lungs', title: 'Lungs', by: 'Duncan Macmillan', premiere: { year: 2011, venue: 'Studio Theatre, Washington, D.C.' }, form: 'drama', published: { year: 2012, by: 'Oberon Books', acting: false }, licensor: { us: 'Dramatists Play Service' }, source: 'https://www.studiotheatre.org/plays/play-detail/2011-2012-lungs' },
   { id: 'the-flick', title: 'The Flick', by: 'Annie Baker', premiere: { year: 2013, venue: 'Playwrights Horizons, New York (off-Broadway)' }, form: 'drama with comedy', cast: { text: '1f 3m', f: 1, m: 3 }, setting: 'a run-down movie theater in central Massachusetts, the time not given', published: { year: 2014, by: 'Theatre Communications Group', acting: false }, licensor: { us: 'Samuel French (Concord Theatricals)', uk: 'Concord Theatricals (UK)' }, source: 'https://www.playwrightshorizons.org/shows/production-history/2010s/2012-13/flick' },
   { id: 'fairview', title: 'Fairview', by: 'Jackie Sibblies Drury', premiere: { year: 2018, date: '2018-06-17', venue: 'Soho Rep, New York' }, published: { year: 2019, by: 'Theatre Communications Group', acting: false }, licensor: { us: 'Dramatists Play Service' }, source: 'https://playbill.com/article/jackie-sibblies-drurys-fairview-opens-at-soho-rep-june-17' },
