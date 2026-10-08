@@ -144,10 +144,10 @@ function social(dayIndex) {
   // The unreliable student's plans: a fifth called off late, a tenth missed for a day in New York; from the second spring, moved instead, and amends made.
   if (kind === 'unreliable') {
     const reformed = sim.now > Date.parse('2028-02-01');
-    for (const m of sim.universe.scheduled.filter((x) => x.kind === MEET_KIND && x.status === 'pending' && x.payload.personId === p.id && x.at - sim.now < MS_DAY && x.at > sim.now)) {
+    for (const m of sim.universe.scheduled.filter((x) => x.kind === MEET_KIND && x.status === 'pending' && x.payload.personId === p.id && x.at - sim.now < 2 * MS_DAY && x.at > sim.now)) {
       const r = rng(`plan-${m.id}`);
       if (reformed) { if (r < 0.2) run('social.reschedule', { itemId: m.id, at: m.at + MS_DAY }); continue; }
-      if (r < 0.2) run('social.cancel', { itemId: m.id });
+      if (r < 0.2) { if (m.at - sim.now < MS_DAY) run('social.cancel', { itemId: m.id }); }
       // A Sunday's plans missed for a day in New York, the noon train out and the seven o'clock back: in another town at their hour, and back for Monday.
       else if (r < 0.3 && inSchool() && zonedParts(m.at, sim.zone).weekday === 0) { const z = zonedParts(m.at, sim.zone); const day = instantFromZoned({ year: z.year, month: z.month, day: z.day, hour: 0, minute: 0 }, sim.zone); run('travel.book', { toCity: 'us-ny-newyork', day, by: 'mnr-nhv-gct', slot: 20, returnDay: day, returnSlot: 40 }); }
     }

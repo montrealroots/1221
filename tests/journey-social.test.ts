@@ -66,6 +66,24 @@ describe('a plan and a trip at once', () => {
   });
 });
 
+describe('a day there and back', () => {
+  it('a Sunday in New York, back that night, asks no hotel and is paid as the trains alone; one way still asks for a bed', () => {
+    const sim = life('js-daytrip');
+    tended(sim, at(9, 1, 12));
+    const route = railRoutes('us-ct-newhaven', 'us-ny-newyork').find((r) => r.id === 'mnr-nhv-gct')!;
+    const slot = (day: number, after: number) => Array.from({ length: route.perDay }, (_, i) => i).find((i) => { const legs = planBy(sim, route.id, 'us-ct-newhaven', 'us-ny-newyork', day, i, 0); return typeof legs !== 'string' && legs[0]!.departAt >= after; })!;
+    expect(sim.execute({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day: at(9, 6, 0), by: route.id, slot: slot(at(9, 6, 0), at(9, 6, 10)) } }).error).toMatch(/Somewhere to sleep/);
+    const trip = sim.must<{ journeyId: string; total: number }>({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day: at(9, 6, 0), by: route.id, slot: slot(at(9, 6, 0), at(9, 6, 10)), returnDay: at(9, 6, 0), returnSlot: slot(at(9, 6, 0), at(9, 6, 17)) } });
+    const j = sim.player.journeys!.find((x) => x.id === trip.journeyId)!;
+    expect(j.hotel).toBeUndefined();
+    tended(sim, at(9, 6, 15));
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+    tended(sim, at(9, 6, 23));
+    expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
+    expect(breaches(sim.universe)).toEqual([]);
+  });
+});
+
 describe('with no money', () => {
   it('a coffee kept is still paid, owed where the bank can’t: nothing is free', () => {
     const sim = life('js-broke');

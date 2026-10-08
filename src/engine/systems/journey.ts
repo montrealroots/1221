@@ -263,12 +263,14 @@ function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant, 
 }
 
 /** Why a journey can't be booked, or nothing. A night in one's own motorhome or caravan asks no hotel of the town; its stay's own price says where there's none. */
-export function bookRefusal(sim: Simulation, person: Person, fromCity: string, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0, sleepsInIt = false): string | undefined {
+export function bookRefusal(sim: Simulation, person: Person, fromCity: string, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0, sleepsInIt = false, dayTrip = false): string | undefined {
   if (typeof legs === 'string') return legs;
   if (!CITIES.get(toCity)) return 'SLATE doesn’t have that town.';
   if (legs[0]!.departAt <= sim.now) return 'That departure has gone.';
   if (!ownPlaceIn(person, toCity)) {
-    if (nights <= 0) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
+    // A day there and back the same night asks no bed. Until 2026-10-09 it was refused for one, found by the social
+    // journeys (`tools/social-lives.mjs`): a Sunday in New York from New Haven couldn't be booked without a hotel.
+    if (nights <= 0 && !dayTrip) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
     // Until later on 2026-09-30 a motorhome's trip to a town without hotel figures was refused, its campground offered and never bookable.
     if (!sleepsInIt && !nightRateFor(toCity)) return `SLATE doesn’t have ${CITIES.require(toCity).name}’s hotels yet, and you have no home there.`;
   }
@@ -592,7 +594,7 @@ export function registerJourneys(sim: Simulation): void {
     if (back && back[0]!.departAt <= arriveOut) throw new CommandError('The way home leaves before the way out arrives.');
     // A round trip's hotel runs from the night it lands to the morning it flies home.
     const nights = back ? nightsBetween(toCity, arriveOut, back[0]!.departAt) : Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
-    const no = bookRefusal(s, person, fromCity, toCity, out, Math.max(1, nights), nights, p?.stay === 'campground' || p?.stay === 'street');
+    const no = bookRefusal(s, person, fromCity, toCity, out, Math.max(1, nights), nights, p?.stay === 'campground' || p?.stay === 'street', Boolean(back) && nights === 0);
     if (no) throw new CommandError(no);
     if (back) {
       const noBack = bookRefusal(s, person, toCity, fromCity, back, 1, 1);
