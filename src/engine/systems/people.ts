@@ -70,6 +70,7 @@ import { incomeOf } from './marriage';
 import { atWork, atWorkReason } from './availability';
 import { mateBusy } from './coursework';
 import { noteIncident } from './classmates';
+import { whereBy } from './journey';
 import { childrenStay } from './support';
 import { LOOKING_AFTER, applyLookingAfter, dropInPrice } from './life';
 import { COURT_MET, TRAINING, courtRefusal, fineWeatherRefusal, homeCourts, type Court } from './dwelling';
@@ -283,6 +284,11 @@ export function metAtWork(sim: Simulation, person: Person, cityId: string, booki
   return c;
 }
 
+/** The town an evening is in: its restaurant's, its studio's, New Haven's for the school's outings, else yours, at home. */
+export function placeOf(person: Person, inv: Pick<Invitation, 'what' | 'restaurantId' | 'classId'>): string | undefined {
+  return inv.what === 'meal' ? restaurantById(inv.restaurantId ?? '')?.cityId : inv.what === 'class' ? DROP_INS.find((d) => d.id === inv.classId)?.cityId : inv.what === 'study' ? STUDY.cityId : inv.what === 'coffee' || inv.what === 'show' ? NEW_HAVEN_OUTINGS.cityId : person.home?.cityId;
+}
+
 /** Why a friend would say no to an invitation, or nothing where they'd come. */
 export function declines(person: Person, c: Contact, inv: Invitation, sim?: Simulation): string | undefined {
   const first = c.name.split(' ')[0];
@@ -290,7 +296,7 @@ export function declines(person: Person, c: Contact, inv: Invitation, sim?: Simu
   // What they care about (`caresFor` in `systems/enjoyment.ts`, from 2026-10-03).
   if (sim && !caresFor(sim, person, c, inv.what)) return `${first} doesn’t much care for ${inv.what === 'play' ? 'games' : 'classes like that'}.`;
   if (inv.what === 'study' && !atSchoolWith(person, c)) return `${first} isn’t at school with you.`;
-  const where = inv.what === 'meal' ? restaurantById(inv.restaurantId ?? '')?.cityId : inv.what === 'class' ? DROP_INS.find((d) => d.id === inv.classId)?.cityId : inv.what === 'study' ? STUDY.cityId : inv.what === 'coffee' || inv.what === 'show' ? NEW_HAVEN_OUTINGS.cityId : person.home?.cityId;
+  const where = placeOf(person, inv);
   if (where !== c.cityId) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
   if ((inv.what === 'visit' || inv.what === 'play') && c.hours < HALL.casual) return `${first} doesn’t know you well enough yet to come to your home.`;
   const hour = zonedParts(inv.at, CITIES.require(c.cityId).timeZone).hour;
@@ -371,6 +377,11 @@ export function inviteRefusal(sim: Simulation, person: Person, inv: Invitation):
   const ends = inv.at + minutesOf(inv) * 60_000;
   const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < ends && x.at + x.durationMinutes * 60_000 > inv.at);
   if (clash) return `You have ${clash.label} then.`;
+  // Somewhere you'll be (from 2026-10-08): where your journeys booked put you by then. Until then a life in Los Angeles asked
+  // friends to dinner in New York and never came, found by the social journeys (`tools/social-lives.mjs`): 44 times one friend.
+  const place = placeOf(person, inv);
+  const there = whereBy(person, inv.at);
+  if (place && there !== place) return `You’ll be in ${CITIES.require(there).name} then.`;
   return undefined;
 }
 

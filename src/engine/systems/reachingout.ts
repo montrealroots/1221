@@ -35,10 +35,13 @@ import type { Tier } from '../content/restaurants';
 import { DINING_MINUTES } from '../content/dining';
 import { diningQuote, restaurantById, restaurantsIn } from './dining';
 import { MEET_KIND, NEW_HAVEN_OUTINGS, PLAY_HOURS, STUDY, arrange, atSchoolWith, busyReason, contactsOf, declines, inviteRefusal, inviteWords, levelOf, type Contact, type Invitation } from './people';
+import { whereBy } from './journey';
 import { DROP_INS, DROP_IN_MINUTES } from '../content/dropins';
 import { homeCourts, type Court } from './dwelling';
 
 export const ANSWER_KIND = 'social.answer';
+/** How far ahead a plan you'll be away for is said. */
+export const AWAY_TOLD_DAYS = 3;
 
 /** How much of what happened a contact keeps, the latest first. SLATE's estimate. */
 export const MEMORY_KEPT = 60;
@@ -139,6 +142,17 @@ export function reachOut(sim: Simulation, person: Person): void {
     const school = c.memory.filter((m) => m.what.startsWith('At Yale')).slice(0, SCHOOL_KEPT);
     const rest = c.memory.filter((m) => !school.includes(m)).slice(0, MEMORY_KEPT - school.length);
     c.memory = [...rest, ...school].sort((x, y) => y.at - x.at);
+  }
+  // A plan you'll be away for, said once, three days ahead (from 2026-10-08): a journey or a job booked since takes you
+  // out of its town. Until then nothing said so, and the plan was missed without a word before it.
+  for (const item of sim.universe.scheduled) {
+    if (item.kind !== MEET_KIND || item.status !== 'pending' || item.payload.personId !== person.id || item.payload.awayTold || item.at - sim.now > AWAY_TOLD_DAYS * MS_DAY) continue;
+    const place = item.locationId;
+    const there = whereBy(person, item.at);
+    if (!place || there === place) continue;
+    item.payload.awayTold = true;
+    const c = contactsOf(person).find((x) => x.id === item.payload.contactId);
+    if (c && person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `You’ll Be Away For ${item.label}`, body: `You’ll be in ${CITIES.require(there).name} on ${formatDate(item.at, CITIES.require(place).timeZone)}. Call it off or move it, or ${c.name.split(' ')[0]} waits for you.`, importance: 60, route: '/workspace/people' });
   }
   for (const c of contactsOf(person)) {
     if (!c.ask || c.ask.at > sim.now) continue;

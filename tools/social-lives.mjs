@@ -188,6 +188,8 @@ function social(dayIndex) {
       if (r.ok && !r.value.accepted && r.value.counter) { count('counter offered'); run('social.invite', { ...inv, at: r.value.counter }); }
     }
   }
+  // A plan they'll be away for, called off when they're told (the engaged and the selective; the unreliable student lets it go).
+  if (kind !== 'unreliable') for (const m of sim.universe.scheduled.filter((x) => x.kind === MEET_KIND && x.status === 'pending' && x.payload.personId === p.id && x.payload.awayTold)) run('social.cancel', { itemId: m.id });
   // The unreliable student's plans: a fifth called off late, a tenth missed for a day in New York; from the second spring, moved instead, and amends made.
   if (kind === 'unreliable') {
     const reformed = sim.now > Date.parse('2028-02-01');
