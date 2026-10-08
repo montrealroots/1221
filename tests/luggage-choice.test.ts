@@ -100,7 +100,7 @@ describe('a room left', () => {
     g.at = { kind: 'inside', itemId: bag.id } as never;
     delete sim.player.stay;
     moveTo(sim, sim.player, 'uk-eng-london');
-    expect(bag.at.kind).toBe('held');
+    expect((bag.at as { kind: string }).kind).toBe('held');
     sim.advanceBy((HELD_DAYS + 1) * MS_DAY);
     expect(sim.player.items!.some((i) => i.id === bag.id || i.id === g.id)).toBe(false);
     expect(breaches(sim.universe)).toEqual([]);

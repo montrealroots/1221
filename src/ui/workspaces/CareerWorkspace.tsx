@@ -244,13 +244,11 @@ function SeekingRepresentation() {
         {review?.next && <p className="small" style={{ margin: 0 }}>Signed with {agencyById(review.next.agencyId)!.name}, from {formatDate(review.next.terms.effective, sim.zone)}, when this contract ends.</p>}
         <div className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Agency</th><th scope="col">Your Chance</th><th scope="col">Its Attention</th><th scope="col"><span className="sr-only">Approach</span></th></tr></thead>
+            <thead><tr><th scope="col">Agency</th><th scope="col"><span className="sr-only">Approach</span></th></tr></thead>
             <tbody>
               {outlook.map((o) => (
                 <tr key={o.agency.id}>
-                  <td><span className="small">{o.agency.name}</span><div className="xs dim">{pct(o.commission)} commission{o.referrer ? `; ${o.referrer} is with them` : ''}</div></td>
-                  <td className="small">{o.chance}</td>
-                  <td className="small">{o.fit >= 1.05 ? 'Among Its First Calls' : o.fit >= 0.9 ? 'A Regular Client' : 'A Newer Name'}</td>
+                  <td><span className="small">{o.agency.name}</span><div className="xs dim">{pct(o.commission)} commission{o.referrer ? `; ${o.referrer} is with them` : ''}</div><div className="xs">{o.chance}; {o.fit >= 1.05 ? 'among its first calls' : o.fit >= 0.9 ? 'a regular client' : 'a newer name'}</div></td>
                   <td>
                     <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
                       <Gated feature="career.approach_agency" disabled={Boolean(o.refusal)} title={o.refusal} onClick={() => approach(o.agency.id, 'submission')}>Submit</Gated>

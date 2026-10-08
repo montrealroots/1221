@@ -41,7 +41,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
-import { saveCurrency } from '../core/money';
+import { formatMoney, saveCurrency } from '../core/money';
 import { MS_DAY, MS_HOUR, formatDate, formatTime, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { PAY_KIND, STAY_KIND, TRAVEL_KIND, WORK_KIND, careerOf, finishJob, paydaysFor, roleById, schedulePay, sendHome, unitRate, usd, workCityOf, workDays, workMinutes, type Booking } from './career';
@@ -198,7 +198,7 @@ function changed(sim: Simulation, booking: Booking, kind: ChangeKind, x: number)
 
 /** A day's rate, or a stage week's, in the save's money. */
 const dayRate = (sim: Simulation, b: Booking) => unitRate(b, sim.now, saveCurrency(sim.universe));
-const money = (sim: Simulation, m: Money) => `${saveCurrency(sim.universe)} ${(m / 100).toFixed(2)}`;
+const money = (sim: Simulation, m: Money) => formatMoney(m, saveCurrency(sim.universe));
 
 /** What a change pays or costs, in words, and the pay itself where it's owed on taking effect. */
 function costsOf(sim: Simulation, booking: Booking, kind: ChangeKind, to: readonly Call[], affected: readonly Instant[]): { words: string; owed: Money } {
@@ -254,7 +254,6 @@ function propose(sim: Simulation, person: Person, booking: Booking, kind: Change
     to: made.to, affected: made.affected, conflicts, consequences: `${costs.words}${refusal}${travel}`.trim(), mustRespond, status: 'pending',
   };
   proposalsOf(p).push(proposal);
-  p.history.push({ at: sim.now, what: `The production proposed a change: ${describe(sim, proposal)}` });
   sim.schedule({ at: dueAt, kind: SCHEDULE_DUE_KIND, label: 'A Schedule Change Is Due', category: 'system', priority: 21, payload: { personId: person.id, bookingId: booking.id, proposalId: proposal.id } });
   return proposal;
 }
