@@ -19,7 +19,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatTime } from '../core/time';
+import { formatTime, zonedParts } from '../core/time';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS, familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
@@ -123,11 +123,15 @@ export function selfTape(sim: Simulation, person: Person, id: string): Evaluatio
   const focus = focusAt(sim, person, sim.now);
   const condition = conditionAt(sim, person, sim.now);
   const g = genreState(person, id);
-  const day = Math.floor(sim.now / MS_DAY);
+  // Each take its own piece, keyed by the home day and the take's number that day (from 2026-10-10): until then a
+  // second take the same day had the first's key and replaced it in the record, and the journey's best kept a score
+  // from a take no longer there; and the day was UTC's, so near midnight two days' takes could share one.
+  const p = zonedParts(sim.now, sim.homeZone);
+  const day = `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
   const again = repeatsToday(sim, person, `genre:${id}<tape`);
   const e = evaluate(sim, person, {
     task: TASK_PROFILES.camera!, techniques: tapeReads(id), prep: { genre: g.familiarity / 100 }, required: { genre: SELF_TAPE.genreComplete },
-    difficulty: SELF_TAPE.difficulty, condition, families: familiesOf([id]), key: `tape:${person.id}:${id}:${day}`,
+    difficulty: SELF_TAPE.difficulty, condition, families: familiesOf([id]), key: `tape:${person.id}:${id}:${day}:${again}`,
   });
   sim.advanceTo(sim.now + SELF_TAPE.minutes * 60_000);
   person.wellbeing.energy = clamp(person.wellbeing.energy - ENGAGEMENT.energy.desk, 0, 100);

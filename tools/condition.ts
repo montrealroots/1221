@@ -121,6 +121,7 @@ function playVariant(start: { save: string; id: string; due: string }, v: Varian
     sickDays,
     condition: rec?.inputs.condition,
     morning,
+    days: { classDays: sim.player.school?.tally.classDays, attended: sim.player.school?.tally.attended, excused: sim.player.school?.tally.excused },
     abilities: abilitiesOf(sim, sim.player),
     breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads,
   };

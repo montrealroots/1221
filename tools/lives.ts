@@ -64,12 +64,16 @@ const PROFILES: Profile[] = [
 
 import { life, evening, freeHour, practiceHour, keepCovered, lookAfter } from './policy';
 
-interface Result { journey?: Record<string, unknown>; cast?: Record<string, unknown>; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
+interface Result { policy?: string; startedOn?: string; endedOn?: string; monthly?: unknown[]; terms?: unknown[]; journey?: Record<string, unknown>; cast?: Record<string, unknown>; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 
 function play(profile: Profile, seed: string): Result {
   let sim: Simulation;
   try { sim = life(seed, profile.config); } catch (e) { return { profile: profile.name, seed, graduated: false, standing: 'none', parts: {}, wellbeing: {}, bank: 0, breaches: 0, unbalanced: 0, reloads: 0, error: String((e as Error).message ?? e) }; }
   const end = sim.now + YEARS * 365 * MS_DAY;
+  const startedOn = new Date(sim.now).toISOString().slice(0, 10);
+  // The body and the day each month (from 2026-10-10): fitness, condition, stress and morale on the first morning seen.
+  const monthly: { on: string; fitness: number; condition: number; stress: number; morale: number }[] = [];
+  let lastMonth = '';
   let reloads = 0;
   let lastReload = sim.now;
   const struck = new Set<string>();
@@ -96,6 +100,12 @@ function play(profile: Profile, seed: string): Result {
       }
       sim.advanceTo(sim.now + (profile.play === 'autopilot' ? MS_DAY : MS_HOUR));
       const p = zonedParts(sim.now, sim.zone);
+      const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+      if (month !== lastMonth) {
+        lastMonth = month;
+        const w = sim.player.wellbeing;
+        monthly.push({ on: `${month}-${String(p.day).padStart(2, '0')}`, fitness: Math.round(w.fitness * 10) / 10, condition: Math.round(w.condition * 10) / 10, stress: Math.round(w.stress), morale: Math.round(w.morale) });
+      }
       // Under pressure: the flu through the game's own care (its toll and its days) mid-term, on 15 October and 15
       // February, and an everyday injury on 1 March, each at the first hour seen that day or after (a night's sleep
       // passes hours unseen).
@@ -171,7 +181,9 @@ function play(profile: Profile, seed: string): Result {
     })(),
     work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length, held: top },
     abilities: Object.fromEntries(Object.entries(ab).map(([k, v]) => [k, Math.round(v)])),
-    profile: profile.name, seed, graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
+    profile: profile.name, seed, policy: profile.play, startedOn, endedOn: new Date(sim.now).toISOString().slice(0, 10), monthly,
+    terms: (school?.history ?? []).map((h) => ({ term: h.term, standing: h.standing, attendance: Math.round(h.attendance * 100) })),
+    graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
     wellbeing: { energy: Math.round(w.energy), stress: Math.round(w.stress), morale: Math.round(w.morale), condition: Math.round(w.condition), nourishment: Math.round(w.nourishment) },
     // An international graduate's status and cover at the end (from 2026-10-09: the marketplace asks lawful presence).
     usStatus: sim.player.usOutOfStatus !== undefined ? 'out of status' : 'in status or a citizen', cover: coverOn(sim.player, sim.now) ?? 'none',
