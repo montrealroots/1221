@@ -47,6 +47,8 @@ import { CITIES } from '../content/geography';
 import { NAMES } from '../content/people';
 import { ROLES, type CareerCity, type Role } from '../content/career';
 import { COMPANIES, MAJOR_SHARE, TITLE_WORDS, companyById, type IndustryCompany } from '../content/industry';
+import type { RealTitle } from '../world/database';
+import { LOOKUP } from '../world/lookup';
 
 export type ProjectFormat = 'film' | 'series' | 'play' | 'commercial' | 'animation' | 'game' | 'audiobook' | 'radio' | 'dub';
 export type ProjectStatus = 'development' | 'casting' | 'production' | 'post' | 'released' | 'cancelled';
@@ -119,6 +121,8 @@ export interface IndustryState {
   worked: Record<string, { jobs: number; lastAt: Instant }>;
   /** The month the last announcements were made, `YYYY-M`, by town. */
   announced: Record<string, string>;
+  /** Real titles looked up on Wikidata while playing, each with the day it was fetched, and the people in them (`world/lookup.ts`, from 2026-10-08). */
+  looked?: { titles: Record<string, RealTitle & { fetched: string }>; people: Record<string, string>; order: string[] };
 }
 
 export const INDUSTRY_WEEK_KIND = 'industry.week';
@@ -186,8 +190,8 @@ export function companiesFor(format: ProjectFormat, cityId: string): { company: 
 
 /** Who makes a project nobody SLATE names makes. */
 const INDEPENDENT: Record<ProjectFormat, string> = {
-  film: 'An independent producer', series: 'An independent producer', play: 'A theater company', commercial: 'An advertising production company',
-  animation: 'An independent animation studio', game: 'A game studio', audiobook: 'An audiobook publisher', radio: 'An audio drama producer', dub: 'A dubbing studio',
+  film: 'An independent producer', series: 'An independent producer', play: 'A theater company', commercial: 'A commercial production company',
+  animation: 'An independent animation studio', game: 'A game studio', audiobook: 'A publisher of audiobooks', radio: 'A producer of audio drama', dub: 'A dubbing studio',
 };
 
 const pick = <T,>(xs: readonly T[], x: number): T => xs[Math.min(xs.length - 1, Math.floor(x * xs.length))]!;
@@ -560,6 +564,32 @@ export function registerIndustry(sim: Simulation): void {
     industryOf(s).ratings[key] = { score, at: s.now };
     if (project) project.touched = true;
     return { score };
+  });
+
+  // Titles looked up on Wikidata, kept with the day they were fetched (`world/lookup.ts`). What's kept is checked for its
+  // shape, not trusted: an id is a Wikidata id, a name a string of a sane length, a list a list.
+  sim.onCommand<{ titles: RealTitle[]; people: Record<string, string>; fetched: string }, { kept: number }>('industry.keep_lookup', (q, { sim: s }) => {
+    const titles = Array.isArray(q?.titles) ? q.titles : [];
+    const fetched = String(q?.fetched ?? '');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(fetched)) throw new CommandError('A lookup keeps the day it was fetched.');
+    const isId = (x: unknown) => typeof x === 'string' && /^Q\d+$/.test(x);
+    const isName = (x: unknown) => typeof x === 'string' && x.length > 0 && x.length <= 200;
+    const ok = (t: RealTitle) => isId(t?.id) && isName(t.title) && Number.isFinite(t.year) && (t.kind === 'film' || t.kind === 'series' || t.kind === 'short')
+      && Array.isArray(t.cast) && t.cast.every((c) => isId(c.person)) && Array.isArray(t.directors) && t.directors.every(isId);
+    const good = titles.filter(ok).slice(0, LOOKUP.most);
+    if (titles.length && !good.length) throw new CommandError('None of that is a title SLATE can keep.');
+    const state = industryOf(s);
+    const looked = (state.looked ??= { titles: {}, people: {}, order: [] });
+    for (const t of good) {
+      looked.titles[t.id] = { ...t, fetched };
+      looked.order = [t.id, ...looked.order.filter((x) => x !== t.id)];
+    }
+    for (const [id, name] of Object.entries(q?.people ?? {})) if (isId(id) && isName(name)) looked.people[id] = name;
+    // Kept to its size, the longest unlooked-at let go, and the people no kept title names with them.
+    for (const gone of looked.order.splice(LOOKUP.kept)) delete looked.titles[gone];
+    const named = new Set(Object.values(looked.titles).flatMap((t) => [...t.cast.map((c) => c.person), ...t.directors]));
+    for (const id of Object.keys(looked.people)) if (!named.has(id)) delete looked.people[id];
+    return { kept: good.length };
   });
 
   sim.onCommand<{ kind: string; id: string }, { viewed: number }>('industry.view', (q, { sim: s }) => {

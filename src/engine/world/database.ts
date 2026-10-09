@@ -41,10 +41,32 @@ export interface RealTitle {
   basedOn: { id: string; name: string }[]; follows: { id: string; name: string }[]; followedBy: { id: string; name: string }[]; partOf: { id: string; name: string }[];
   locations: string[]; seasons?: number; episodes?: number; awards: string[]; nominations: string[];
 }
-export interface RealWorld { source: string; retrieved: string; scope: string; titles: RealTitle[]; people: Record<string, string> }
+export interface RealWorld { source: string; retrieved: string; scope: string; titles: RealTitle[]; people: Record<string, string>; /** Each of the ten companies' Wikidata entities, which a looked-up title's credits are read against. */ companyEntities?: Record<string, Record<string, string>> }
 
 /** One row of the index: what it is, its name, a line under it, a year, where it comes from. */
 export interface Entry { kind: EntryKind; id: string; name: string; sub: string; year?: number; source: Source; filmGenres?: readonly string[]; companyId?: string }
+
+/**
+ * The bundled records with the titles looked up in this save (`world/lookup.ts`), one list: a looked-up title the
+ * bundle has already isn't added twice. Either can be missing: the bundle still loading or unavailable, or nothing
+ * looked up yet.
+ */
+export function withLooked(real: RealWorld | undefined, looked: { titles: Record<string, RealTitle & { fetched: string }>; people: Record<string, string> } | undefined): RealWorld | undefined {
+  const extra = Object.values(looked?.titles ?? {});
+  if (!extra.length) return real;
+  const have = new Set((real?.titles ?? []).map((t) => t.id));
+  return {
+    source: real?.source ?? 'Wikidata (https://www.wikidata.org), structured data CC0 1.0',
+    retrieved: real?.retrieved ?? '',
+    scope: real?.scope ?? '',
+    companyEntities: real?.companyEntities ?? {},
+    titles: [...(real?.titles ?? []), ...extra.filter((t) => !have.has(t.id))],
+    people: { ...(looked?.people ?? {}), ...(real?.people ?? {}) },
+  };
+}
+
+/** When a title was fetched on Wikidata in this save, where it was looked up rather than bundled. */
+export const fetchedOn = (t: RealTitle): string | undefined => (t as RealTitle & { fetched?: string }).fetched;
 
 /** A route for an entry: the database's own address for it. */
 export const routeOf = (kind: EntryKind, id: string) => `/workspace/industry/${kind}/${encodeURIComponent(id)}`;
@@ -78,7 +100,7 @@ export function entries(sim: Simulation, real?: RealWorld): Entry[] {
   for (const [i, m] of (school?.classmates ?? []).entries()) out.push({ kind: 'classmate', id: String(i), name: m.name, sub: `Actor · Your class · In This Save`, source: 'save' });
   out.push({ kind: 'you', id: sim.player.id, name: sim.player.displayName, sub: 'You', source: 'save' });
   if (real) {
-    for (const t of real.titles) out.push({ kind: 'title', id: t.id, name: t.title, sub: `${t.kind === 'series' ? 'Series' : 'Film'} · ${t.year} · Real World`, year: t.year, source: 'real', filmGenres: t.filmGenres, ...(t.companies[0] ? { companyId: t.companies[0] } : {}) });
+    for (const t of real.titles) out.push({ kind: 'title', id: t.id, name: t.title, sub: `${t.kind === 'series' ? 'Series' : 'Film'} · ${t.year} · Real World${fetchedOn(t) ? `, fetched from Wikidata ${fetchedOn(t)}` : ''}`, year: t.year, source: 'real', filmGenres: t.filmGenres, ...(t.companies[0] ? { companyId: t.companies[0] } : {}) });
     for (const [id, name] of Object.entries(real.people)) out.push({ kind: 'person', id, name, sub: 'Real World', source: 'real' });
   }
   return out;

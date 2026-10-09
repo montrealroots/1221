@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-420 commands; 420 named by a test, 0 not.
+421 commands; 421 named by a test, 0 not.
 
 ## aircraft
 
@@ -404,6 +404,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
+| `industry.keep_lookup` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `journey-industry.test.ts` `lookup.test.ts` | The Industry |
 | `industry.list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
 | `industry.new_list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
 | `industry.rate` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |

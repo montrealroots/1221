@@ -25,7 +25,8 @@ import { COMPANIES, COMPANIES_SOURCE, companyById, type IndustryCompany } from '
 import { CITIES } from '@/engine/content/geography';
 import { agencyById, breakdownsOf, careerOf, roleById } from '@/engine/systems/career';
 import { industryOf, performerById, pitchRefusal, projectById, type PartHolder, type Project } from '@/engine/systems/industry';
-import { counts, entries, filmographies, formatWord, genreWord, saveHolds, routeOf, search, statusWord, suggest, titlesOf, type EntryKind, type Query, type RealTitle, type RealWorld } from '@/engine/world/database';
+import { lookUp, type Fetcher } from '@/engine/world/lookup';
+import { counts, entries, fetchedOn, filmographies, formatWord, genreWord, saveHolds, withLooked, routeOf, search, statusWord, suggest, titlesOf, type EntryKind, type Query, type RealTitle, type RealWorld } from '@/engine/world/database';
 
 // ---------------------------------------------------------------------------
 // The real-world records, loaded once when first wanted
@@ -50,6 +51,14 @@ function useReal(): Loaded {
   return state;
 }
 const realOf = (l: Loaded) => (l.status === 'ready' ? l.real : undefined);
+/** The real records as the save sees them: the bundle, with the titles looked up on Wikidata in this save (`world/lookup.ts`). */
+function useRealAll(l: Loaded): RealWorld | undefined {
+  const looked = useWorld((s) => industryOf(s).looked);
+  return useMemo(() => withLooked(realOf(l), looked), [l, looked]);
+}
+
+/** Wikidata's own answers, by the browser's fetch: no headers of our own, so each is a simple request Wikidata allows from a page. */
+const wikidata: Fetcher = (url) => fetch(url).then((r) => { if (!r.ok) throw new Error(`Wikidata answered ${r.status}`); return r.json() as Promise<unknown>; });
 
 // ---------------------------------------------------------------------------
 // Small pieces
@@ -144,7 +153,7 @@ export function IndustryWorkspace({ route }: { route: string }) {
 function IndustryHome({ loaded: l }: { loaded: Loaded }) {
   const [tab, setTab] = useKept<Tab>(tabKey('/workspace/industry'), 'find');
   useKeptScroll(`industry.${tab}`);
-  const n = useWorld((s) => counts(s, realOf(l)), [l]);
+  const n = useWorld((s) => counts(s, withLooked(realOf(l), industryOf(s).looked)), [l]);
   const panes: Record<Tab, JSX.Element> = { find: <FindPane loaded={l} />, projects: <ProjectsPane />, companies: <CompaniesPane loaded={l} />, releases: <ReleasesPane loaded={l} />, awards: <AwardsPane loaded={l} />, charts: <ChartsPane />, lists: <ListsPane loaded={l} /> };
   return (
     <>
@@ -193,7 +202,7 @@ function FindPane({ loaded: l }: { loaded: Loaded }) {
   const [sort, setSort] = useKept<NonNullable<Query['sort']>>('industry.find.sort', 'relevance');
   const [page, setPage] = useKept('industry.find.page', 1);
   const [focused, setFocused] = useState(false);
-  const all = useWorld((s) => entries(s, realOf(l)), [l]);
+  const all = useWorld((s) => entries(s, withLooked(realOf(l), industryOf(s).looked)), [l]);
   const q: Query = { text, kinds: KIND_FILTERS.find((k) => k.id === kind)!.kinds, ...(source ? { source } : {}), ...(from ? { from: Number(from) } : {}), ...(to ? { to: Number(to) } : {}), ...(genre ? { genre } : {}), ...(company ? { company } : {}), sort, page };
   const found = useMemo(() => search(all, q), [all, JSON.stringify(q)]); // eslint-disable-line react-hooks/exhaustive-deps
   const hints = focused ? suggest(all, text, 6) : [];
@@ -245,9 +254,48 @@ function FindPane({ loaded: l }: { loaded: Loaded }) {
             )}
           </>
         )}
+        <LookUp text={text} loaded={l} onFound={() => { setSource(''); setKind('all'); setPage(1); }} />
         {l.status === 'ready' && <RealNote real={l.real} />}
       </div>
     </Panel>
+  );
+}
+
+/**
+ * Not in SLATE's records? Search Wikidata, at the player's asking (option B, 2026-10-08): what it finds is kept in the
+ * save with the day it was fetched, and found by Find from then on, offline too. Where Wikidata can't be reached, it
+ * says so, and nothing is shown in its place.
+ */
+function LookUp({ text, loaded: l, onFound }: { text: string; loaded: Loaded; onFound: () => void }) {
+  const { run } = useGame();
+  const [state, setState] = useState<{ status: 'idle' } | { status: 'looking' } | { status: 'found'; n: number; names: string[] } | { status: 'none' } | { status: 'unavailable'; why: string }>({ status: 'idle' });
+  const asked = text.trim();
+  useEffect(() => { setState({ status: 'idle' }); }, [asked]);
+  if (asked.length < 3) return null;
+  const go = async () => {
+    setState({ status: 'looking' });
+    try {
+      const found = await lookUp(asked, wikidata, realOf(l)?.companyEntities ?? {});
+      if (!found.titles.length) { setState({ status: 'none' }); return; }
+      const kept = run<{ kept: number }>('industry.keep_lookup', { titles: found.titles, people: found.people, fetched: new Date().toISOString().slice(0, 10) });
+      if (kept.ok) { setState({ status: 'found', n: kept.value!.kept, names: found.titles.map((t) => `${t.title} (${t.year})`) }); onFound(); }
+      else setState({ status: 'unavailable', why: kept.error ?? 'it couldn’t be kept' });
+    } catch (e) {
+      setState({ status: 'unavailable', why: (e as Error).message || 'no connection' });
+    }
+  };
+  return (
+    <div className="lookup col gap-2" role="status" aria-live="polite">
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <span className="small">Not in SLATE’s records?</span>
+        <Gated feature="industry.keep_lookup" disabled={state.status === 'looking'} onClick={() => void go()}>{`Search Wikidata For “${asked}”`}</Gated>
+      </div>
+      {state.status === 'looking' && <p className="xs dim" style={{ margin: 0 }}>Asking Wikidata…</p>}
+      {state.status === 'found' && <p className="xs" style={{ margin: 0 }}>Found and kept in this save, dated today: {state.names.join(', ')}. They’re in the results above.</p>}
+      {state.status === 'none' && <p className="xs dim" style={{ margin: 0 }}>Wikidata has no film or series by that name.</p>}
+      {state.status === 'unavailable' && <p className="xs" style={{ margin: 0 }}>Wikidata couldn’t be reached ({state.why}). Nothing is shown in its place; what you looked up before is still here.</p>}
+      <p className="xs dim" style={{ margin: 0 }}>It needs the internet. Its facts are Wikidata’s, free to use, as they stood the day they were fetched.</p>
+    </div>
   );
 }
 
@@ -293,6 +341,7 @@ function ProjectsPane() {
 
 function CompaniesPane({ loaded: l }: { loaded: Loaded }) {
   const projects = useWorld((s) => industryOf(s).projects);
+  const real = useRealAll(l);
   return (
     <Panel title="The Ten Companies" subtitle="Chosen for what they make, how far it reaches, what they order, and what they mean to an actor here: a selection, not a ranking">
       <div className="grid grid-2">
@@ -301,7 +350,7 @@ function CompaniesPane({ loaded: l }: { loaded: Loaded }) {
             <To kind="company" id={c.id}>{c.short}</To>
             <span className="xs dim">{c.name}{c.parent ? `, part of ${c.parent}` : ''}</span>
             <span className="xs">{c.scale}</span>
-            <span className="xs dim">{titlesOf(realOf(l), c.id).length} real titles here · {projects.filter((p) => p.companyId === c.id).length} projects in this save</span>
+            <span className="xs dim">{titlesOf(real, c.id).length} real titles here · {projects.filter((p) => p.companyId === c.id).length} projects in this save</span>
           </div>
         ))}
       </div>
@@ -315,7 +364,7 @@ function ReleasesPane({ loaded: l }: { loaded: Loaded }) {
   const projects = useWorld((s) => industryOf(s).projects);
   const coming = projects.filter((p) => p.status !== 'released' && p.status !== 'cancelled' && p.releaseAt > sim.now).sort((a, b) => a.releaseAt - b.releaseAt).slice(0, 30);
   const out = projects.filter((p) => p.status === 'released').sort((a, b) => b.releaseAt - a.releaseAt).slice(0, 15);
-  const real = realOf(l);
+  const real = useRealAll(l);
   const realLately = real ? real.titles.filter((t) => t.released).sort((a, b) => (b.released! < a.released! ? -1 : 1)).slice(0, 20) : [];
   return (
     <div className="grid grid-2">
@@ -334,7 +383,7 @@ function ReleasesPane({ loaded: l }: { loaded: Loaded }) {
 
 function AwardsPane({ loaded: l }: { loaded: Loaded }) {
   const person = useWorld((s) => s.player);
-  const real = realOf(l);
+  const real = useRealAll(l);
   const yours = careerOf(person).awards ?? [];
   const [award, setAward] = useKept('industry.awards.award', '');
   const tally = useMemo(() => {
@@ -399,7 +448,7 @@ function ListsPane({ loaded: l }: { loaded: Loaded }) {
   const lists = useWorld((s) => industryOf(s).lists);
   const seen = useWorld((s) => industryOf(s).viewed);
   const [name, setName] = useState('');
-  const real = realOf(l);
+  const real = useRealAll(l);
   return (
     <div className="grid grid-2">
       {lists.map((list) => (
@@ -437,9 +486,11 @@ function ListsPane({ loaded: l }: { loaded: Loaded }) {
 function EntityPage({ kind, id, loaded: l }: { kind: EntryKind; id: string; loaded: Loaded }) {
   useKeptScroll(`industry.page.${kind}.${id}`);
   useViewed(kind, id);
-  const real = realOf(l);
+  const real = useRealAll(l);
   const needsReal = kind === 'title' || kind === 'person';
-  if (needsReal && !real) return l.status === 'loading' ? <p className="small dim" role="status">Loading the real-world records…</p> : <Empty title="Unavailable" body="The real-world records couldn’t be loaded, so this page can’t be shown. This save’s pages all can." />;
+  // A real page waits for the bundle: the save's lookups alone would call a bundled title missing while it loads.
+  if (needsReal && l.status === 'loading') return <p className="small dim" role="status">Loading the real-world records…</p>;
+  if (needsReal && !real) return l.status === 'loading' ?<p className="small dim" role="status">Loading the real-world records…</p> : <Empty title="Unavailable" body="The real-world records couldn’t be loaded, so this page can’t be shown. This save’s pages all can." />;
   if (kind === 'title') return <TitlePage real={real!} id={id} />;
   if (kind === 'person') return <PersonPage real={real!} id={id} />;
   if (kind === 'company') return <CompanyPage id={id} real={real} />;
@@ -470,7 +521,7 @@ function TitlePage({ real, id }: { real: RealWorld; id: string }) {
   const inRecords = (r: { id: string; name: string }) => real.titles.some((x) => x.id === r.id) ? <To kind="title" id={r.id}>{r.name}</To> : <span>{r.name}</span>;
   return (
     <>
-      <Head eyebrow="The Industry · Real World" title={t.title} source="real" line={[t.kind === 'series' ? 'Series' : 'Film', t.year, t.minutes ? `${t.minutes} minutes` : undefined, [...new Set(t.filmGenres.map(genreWord))].slice(0, 4).join(', ')].filter(Boolean).join(' · ')} />
+      <Head eyebrow={fetchedOn(t) ? `The Industry · Real World · Fetched From Wikidata ${fetchedOn(t)}` : 'The Industry · Real World'} title={t.title} source="real" line={[t.kind === 'series' ? 'Series' : 'Film', t.year, t.minutes ? `${t.minutes} minutes` : undefined, [...new Set(t.filmGenres.map(genreWord))].slice(0, 4).join(', ')].filter(Boolean).join(' · ')} />
       <div className="grid grid-2">
         <Panel title="The Facts">
           <Facts rows={[

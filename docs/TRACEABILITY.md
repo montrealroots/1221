@@ -16,10 +16,10 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 417
+- Verified (journey): 418
 - Implemented But Unverified: 3
 - Partially Implemented: 0
-- Commands in all: 420
+- Commands in all: 421
 
 ## Commands
 
@@ -274,6 +274,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `hygiene.style_every` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | Choose how often. | styles | — | — | 2 | journey-clothes.test.ts |
 | `hygiene.trim_nails` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | Nails are trimmed at home.; Fingers or toes. | nailsAt | — | — | 2 | journey-everyday-more.test.ts |
 | `hygiene.use_first` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | There’s no such product. | usesFirst | — | — | 2 | journey-clothes.test.ts |
+| `industry.keep_lookup` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A lookup keeps the day it was fetched.; None of that is a title SLATE can keep. | — | — | — | 2 | journey-industry.test.ts |
 | `industry.list` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | There’s no such list.; That can’t go on a list. | touched | — | — | 2 | journey-industry.test.ts |
 | `industry.new_list` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A list needs a name.; Twenty lists at most.; You have a list by that name. | lists (added to) | — | — | 2 | journey-industry.test.ts |
 | `industry.rate` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A rating is 1 to 10.; Only what’s been released can be rated.; That can’t be rated. | — | — | — | 2 | journey-industry.test.ts |

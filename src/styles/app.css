@@ -1415,3 +1415,4 @@ ol.results > .result::before { counter-increment: rank; content: counter(rank); 
   .rail-close { min-height: 40px; }
 }
 .rail-search .rail-find { padding-left: calc(var(--s3) + 18px + var(--s2)); }
+.lookup { padding: var(--s3); border: 1px dashed var(--line-strong); border-radius: var(--radius); }

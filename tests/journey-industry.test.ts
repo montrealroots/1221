@@ -1,7 +1,8 @@
 /**
  * A journey through the business (from 2026-10-08), by the public commands
  * `career.pitch`, `career.research_project`, `career.accept`,
- * `industry.view`, `industry.list`, `industry.new_list` and `industry.rate`:
+ * `industry.view`, `industry.list`, `industry.new_list`, `industry.rate` and
+ * `industry.keep_lookup`:
  * a project found in the database, its company looked up, the agent asked to
  * pitch, the audition researched and read, the part booked, the work done,
  * the release, and the credit; the database's one record of it the same at
@@ -18,7 +19,9 @@ import type { Simulation } from '@/engine/core/simulation';
 import { beginCareer, careerOf, represent, roleById } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 import { industryOf, industryWeek, projectById } from '@/engine/systems/industry';
-import { entries, search } from '@/engine/world/database';
+import { entries, search, withLooked } from '@/engine/world/database';
+import { readTitles, screenItems } from '@/engine/world/lookup';
+import recorded from './fixtures/lookup-carrie.json';
 
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 /** SETUP: the body kept going while the clock runs, up for each call and audition; the offer for one project taken. */
@@ -96,7 +99,11 @@ describe('a journey through the business', () => {
       sim.must({ kind: 'industry.rate', payload: { key: `project:${out.id}`, score: 8 } });
       const made = sim.must<{ list: string }>({ kind: 'industry.new_list', payload: { name: 'My Work' } });
       sim.must({ kind: 'industry.list', payload: { list: made.list, kind: 'project', id: out.id, on: true } });
+      // And a real film not in SLATE's records, looked up on Wikidata (its answer as recorded) and kept in the save.
+      const carrie = readTitles(screenItems(recorded.search).map((x) => x.id), recorded.facts, recorded.cast, recorded.runtime, {});
+      sim.must({ kind: 'industry.keep_lookup', payload: { titles: carrie.titles, people: carrie.people, fetched: '2026-10-08' } });
       sim = reload(sim);
+      expect(search(entries(sim, withLooked(undefined, industryOf(sim).looked)), { text: 'carrie', kinds: ['title'] }).total).toBe(carrie.titles.length);
       expect(industryOf(sim).ratings[`project:${out.id}`]!.score).toBe(8);
       expect(entries(sim).filter((e) => e.kind === 'project' && e.id === out.id)).toHaveLength(1);
       expect(careerOf(sim.player).credits.filter((c) => c.projectId === out.id)).toHaveLength(1);
