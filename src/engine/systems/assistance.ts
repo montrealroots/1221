@@ -56,7 +56,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
-import { earningsOf } from './earnings';
+import { earningsOf, workedBetween } from './earnings';
 import { citizenOf } from './documents';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
@@ -183,8 +183,9 @@ export function registerAssistance(sim: Simulation): void {
     let due = 0;
     if (claim.scheme === 'snap') {
       const age = (item.at - person.birthInstant) / YEAR;
-      // The month's hours worked were the career's days until the career went in the scope reset of 2026-10-09: none now.
-      const hours = 0;
+      // The month's hours worked: the career's days until the career went in the scope reset of 2026-10-09, and from
+      // 2026-10-10 the school's work-study and Summer Cabaret hours (`workedBetween`), which until then counted as none.
+      const hours = workedBetween(s, person, item.at - 30 * MS_DAY, item.at).hours;
       const key = monthKey(item.at);
       const within = (claim.counted ?? []).filter((m) => m > monthKey(item.at - SNAP.abawd.window * 30.44 * MS_DAY));
       const limited = age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;

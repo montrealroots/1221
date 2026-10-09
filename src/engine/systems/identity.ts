@@ -19,13 +19,11 @@ import { payFromBank } from './spending';
 import { addYears, citizenOf, documentsOf, inForce, licensingOf, numberFor, type PersonDocument } from './documents';
 
 const usd = (sim: Simulation, dollars: number): Money => { const c = Math.round(dollars * 100); const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
-const usIssued = (d: PersonDocument) => d.issuer.startsWith('us-');
 const inMoney = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 
-/** What the TSA takes at its checkpoint: a passport in force, from anywhere, or an American REAL ID license or ID card. */
-export function tsaAccepts(person: Person, at: Instant): PersonDocument | undefined {
-  return documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport' || ((d.kind === 'license' || d.kind === 'idcard') && usIssued(d) && d.realId === true)));
-}
+// What the TSA takes at its checkpoint (`tsaAccepts`: a passport in force, or an American REAL ID license or ID card)
+// was read by an ID card's look alone until 2026-10-10, which said the airport would read it while nothing flies; the
+// sentence and the rule went together.
 
 /** The state's ID card where they live. */
 export function idCardHere(person: Person): { jurisdiction: string; card: (typeof ID_CARDS)[string] } | undefined {
@@ -52,7 +50,7 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
 /** A Connecticut license made REAL ID before it renews, for the duplicate's fee. */
 // Making a Connecticut license REAL ID (`documents.real_id`) went in the connected world of 2026-10-09: REAL ID is
 // what the TSA and a federal building ask, and nothing in SLATE flies or goes into one since the scope reset. A
-// license that is REAL ID still says so (`tsaAccepts`).
+// license that is REAL ID still says so on its record (`realId`).
 
 /**
  * Why a lost license can't be replaced, or nothing (from 2026-10-09; `LICENSE_REPLACEMENT`, each issuer's page): it

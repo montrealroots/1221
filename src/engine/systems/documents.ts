@@ -13,9 +13,10 @@
  *   stay, as the destination's rule for that citizenship says
  *   (\`content/entry.ts\`); it is tied to the passport it was issued on, and
  *   ends with it;
- * - a driving license lets its holder drive, where the license's issuer's and
- *   the road's jurisdiction's rules allow (\`content/licenses.ts\`); it is not
- *   identity for a border, not permission to stay, and not permission to work.
+ * - a driving license said where its holder may drive, by the license's
+ *   issuer's and the road's jurisdiction's rules (\`content/licenses.ts\`), for
+ *   the car and the travel that went in the scope reset of 2026-10-09; it's
+ *   kept as identity, and its look still says the rule, which decides nothing.
  *
  * What SLATE doesn't have a rule for, it says it doesn't have, and doesn't
  * let the action through on a guess.
@@ -37,6 +38,13 @@ import { realIdShare } from '../content/identity';
 import { PASSPORTS, type PassportRule } from '../content/passports';
 
 export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp' | 'permit' | 'idcard';
+
+/**
+ * What can be reported lost or stolen: the cards and books a person carries (from 2026-10-10). A visa, a permit or an
+ * authorization is a status the government holds, and losing its paper doesn't end it; until then reporting one lost
+ * did, and a lost OPT stopped counting its days without work, and a lost residence freed a fresh grant.
+ */
+export const LOSABLE: ReadonlySet<DocumentKind> = new Set(['passport', 'license', 'idp', 'idcard']);
 
 export interface PersonDocument {
   id: string;
@@ -319,6 +327,7 @@ export function registerDocuments(sim: Simulation): void {
   sim.onCommand<{ documentId: string; stolen?: boolean }, { lost: boolean }>('documents.report_lost', (p, { sim: s }) => {
     const doc = documentsOf(s.player).find((d) => d.id === p.documentId);
     if (!doc || doc.status !== 'valid') throw new CommandError('That isn’t a document you hold.');
+    if (!LOSABLE.has(doc.kind)) throw new CommandError('A status isn’t lost with its paper: it holds.');
     doc.status = 'lost';
     if (p.stolen) doc.stolen = true;
     // A passport reported lost is canceled, and what was issued on it goes with it.

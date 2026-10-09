@@ -23,7 +23,6 @@ import { LICENSES } from '@/engine/content/licenses';
 import {
   documentsOf, inForce, mayDrive, mayEnter, passportOf, type PersonDocument,
 } from '@/engine/systems/documents';
-import { tsaAccepts } from '@/engine/systems/identity';
 import { VISITS } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -117,7 +116,8 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
       if (!live) return 'Nowhere lets you drive on it now.';
       const here = CITIES.get(person.currentLocationId)?.name ?? 'where you are';
       const may = mayDrive(person, person.currentLocationId, now, now, doc.vehicleClass ?? 'car');
-      return may.ok ? `In ${here}, you may drive on it.` : `In ${here}, you may not drive on it. ${may.why ?? ''}`.trim();
+      // Said, not played: nothing is driven since the car went in the scope reset of 2026-10-09.
+      return `${may.ok ? `In ${here}, it would let you drive.` : `In ${here}, it wouldn’t let you drive. ${may.why ?? ''}`.trim()} Nothing in SLATE is driven since the car went.`;
     }
     case 'idp':
       return live ? 'It goes beside your license abroad, where a country asks to read it in its own terms.' : 'Out of force, it goes beside your license nowhere.';
@@ -125,7 +125,7 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
       return live ? `It lets you work in ${where(doc.destination ?? doc.issuer)}${doc.bookingId ? ', for the one job it was issued for' : ''}.` : 'Nowhere lets you work on it now.';
     case 'idcard':
       return live
-        ? tsaAccepts(person, now)?.id === doc.id ? 'It proves who you are, and it’s what an American airport’s checkpoint will read.' : 'It proves who you are, anywhere a card is asked for.'
+        ? 'It proves who you are, anywhere a card is asked for.'
         : 'Out of force, it proves nothing to anybody.';
   }
 }

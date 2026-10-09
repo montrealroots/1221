@@ -56,7 +56,12 @@ export function f1Of(person: Person): PersonDocument | undefined {
 /** When their program ends: the F-1's end, less the grace after it. */
 export function programEnd(person: Person): Instant | undefined {
   const f1 = f1Of(person);
-  return f1?.expiresAt !== undefined ? f1.expiresAt - STARTING.graceDays * MS_DAY : undefined;
+  const planned = f1?.expiresAt !== undefined ? f1.expiresAt - STARTING.graceDays * MS_DAY : undefined;
+  // A dismissal ends the program that day (from 2026-10-10: until then a dismissed student's status ran to the end the
+  // degree would have had, and sixty days past it).
+  const school = person.school;
+  if (planned !== undefined && school?.standing === 'dismissed' && school.endedAt !== undefined) return Math.min(planned, school.endedAt);
+  return planned;
 }
 
 /** Whether they're a student still, at school. */
@@ -102,7 +107,7 @@ export function optRefusal(sim: Simulation, person: Person): string | undefined 
  * graduate out of permission stayed on in New York, refused every job,
  * with nothing said, and a played life starved there.
  */
-export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10 } as const;
+export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10, dismissed: 15 } as const;
 
 const usPermits = (person: Person) => documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US');
 
@@ -112,7 +117,9 @@ export function usStatusEnds(person: Person): Instant | undefined {
   if (!f1Of(person) || studying(person)) return undefined;
   const permits = usPermits(person);
   if (permits.some((d) => d.status === 'pending')) return undefined;
-  let ends = (programEnd(person) ?? 0) + STATUS_GRACE_DAYS.f1 * MS_DAY;
+  // Dismissed, fifteen days to leave, the period 8 CFR 214.2(f)(5)(iv) gives a withdrawal the school authorizes (SLATE's
+  // reading: a student who fails to maintain status gets none, and the school, not the student, ended this one).
+  let ends = (programEnd(person) ?? 0) + (person.school?.standing === 'dismissed' ? STATUS_GRACE_DAYS.dismissed : STATUS_GRACE_DAYS.f1) * MS_DAY;
   for (const d of permits) {
     if (d.status === 'valid' && d.expiresAt !== undefined) ends = Math.max(ends, d.expiresAt + (d.name.includes('OPT') ? STATUS_GRACE_DAYS.opt : STATUS_GRACE_DAYS.o1) * MS_DAY);
     if (d.endedAt !== undefined) ends = Math.max(ends, d.endedAt);
@@ -159,6 +166,8 @@ export function registerPermission(sim: Simulation): void {
     const id = s.nextId('document');
     documentsOf(person).push({ id, kind: 'permit', issuer: 'US', name: 'Employment Authorization, OPT', number: numberFor('IOE', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US' });
     s.schedule({ at: readyAt, kind: PERMISSION_KIND, label: 'OPT Decided', category: 'system', priority: 20, payload: { personId: person.id, documentId: id } });
+    // Applied for, the status's ending is answered (from 2026-10-10: until then its decision stayed open, offering OPT again).
+    for (const d of Object.values(s.universe.decisions)) if (d.refType === 'us-status' && !d.resolvedAt) d.resolvedAt = s.now;
     return { readyAt, fee };
   });
 
@@ -202,8 +211,9 @@ export function registerPermission(sim: Simulation): void {
           urgency: 90, category: 'personal', title: 'Your US Status Is Ending',
           detail: `Your permission to work in the United States has ended, and your status ends ${formatDate(ends, s.zone)}.${opt ? ' OPT can still be applied for before then.' : ''} After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.`,
           route: '/workspace/papers', dueAt: ends, refType: 'us-status', refId: String(ends),
-          // The move home went with the career's relocation on 2026-10-09.
-          actions: opt ? [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: { premium: true } }] : [],
+          // The move home went with the career's relocation on 2026-10-09. Standard, or premium said so (from 2026-10-10:
+          // until then the one button applied with premium processing, and its fee, without saying).
+          actions: opt ? [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: {} }, { label: 'Apply For OPT, Premium Processing', commandKind: 'documents.apply_opt', payload: { premium: true } }] : [],
         });
       }
       scheduleUsStatus(s, person);

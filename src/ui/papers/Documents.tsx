@@ -25,7 +25,7 @@ import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
-  passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
+  LOSABLE, passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal } from '@/engine/systems/identity';
 import { optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
@@ -60,7 +60,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                 <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
                 <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
                 <td>
-                  {d.status === 'valid' && !expired && (
+                  {d.status === 'valid' && !expired && LOSABLE.has(d.kind) && (
                     <><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id, stolen: true }).ok) toast(`${KIND_WORD[d.kind]} reported stolen and canceled.`, 'positive'); }}>Report Stolen</Gated></>
                   )}
                   {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('A police report filed.', 'positive'); }}>File A Police Report</Gated>; })()}
@@ -191,7 +191,7 @@ export function WorkPane() {
 
       <Panel title="OPT" subtitle={`${opt.form}, after the degree`}>
         <div className="col gap-3">
-          <p className="small" style={{ margin: 0 }}>Twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days between jobs in all. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
+          <p className="small" style={{ margin: 0 }}>Up to twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days without work in all. There’s no work to be had in SLATE after the degree since the career went, so an OPT approved ends after its {opt.unemploymentDays} days without work, and your US status ends with it: it keeps you here about {opt.unemploymentDays} days from its start. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
             <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT, premium')}>Apply With Premium Processing</Gated>
@@ -211,7 +211,7 @@ function ResidencePanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
-  const places = (['CA', 'IE', 'MX', 'GB', 'US'] as const).filter((iso) => iso !== (person.citizenshipId ?? '').toUpperCase() && !(person.naturalized ?? []).some((n) => n.iso === iso));
+  const places = (['CA', 'IE', 'MX', 'GB', 'US'] as const).filter((iso) => iso !== isoOfCountry(person.citizenshipId) && !(person.naturalized ?? []).some((n) => n.iso === iso));
   const act = (kind: string, iso: string, what: string) => { const a = run<{ paid: number }>(kind, { country: iso }); if (a.ok) toast(`${what}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); };
   return (
     <Panel title="Residence Abroad" subtitle="The right to make a home in another country">

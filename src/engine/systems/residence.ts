@@ -185,7 +185,8 @@ export function registerResidence(sim: Simulation): void {
 
   sim.onCommand<{ country: string }, { paid: Money }>('documents.renew_residence', (p, { sim: s }) => {
     const person = s.player;
-    const held = documentsOf(person).filter((d) => d.destination === 'MX' && d.route === 'mx-temporary' && d.status === 'valid').sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
+    // In force, not only valid (from 2026-10-10: until then a card run out was renewed as if it hadn't).
+    const held = documentsOf(person).filter((d) => d.destination === 'MX' && d.route === 'mx-temporary' && d.status === 'valid' && inForce(d, s.now)).sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
     if (String(p?.country ?? '').toUpperCase() !== 'MX' || !held) throw new CommandError('Only Mexican temporary residence is renewed, a year at a time.');
     if ((held.expiresAt ?? 0) - s.now > 30 * MS_DAY) throw new CommandError('It’s renewed within its last 30 days.');
     const fee = inSave(s, MEXICAN_RESIDENCE.temporary, 'MXN');

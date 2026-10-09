@@ -8,6 +8,7 @@
  */
 
 import type { Person } from '../domain/model';
+import type { Simulation } from '../core/simulation';
 import type { Money } from '../core/money';
 import { zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
@@ -145,6 +146,26 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   if (pay.sag) q.sag += pay.gross;
   // Where in the country they were earned, which state a claim goes to.
   (q.byState ??= {})[worked] = (q.byState[worked] ?? 0) + pay.gross;
+}
+
+/**
+ * The wages paid a person between two moments, gross, and the hours they were for, read from the ledger (from
+ * 2026-10-10): the school's work-study, its hours in the memo, and the Summer Cabaret's stipend, a company week taken
+ * as forty hours (SLATE's estimate). A week's unemployment and a month's SNAP read them; until then both took every
+ * week as workless once the career went, though the school still paid these.
+ */
+export function workedBetween(sim: Simulation, person: Person, from: Instant, to: Instant): { pay: Money; hours: number } {
+  let pay = 0;
+  let hours = 0;
+  for (const t of sim.universe.transactions) {
+    if (t.at < from || t.at >= to || t.category !== 'salary') continue;
+    if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
+    const gross = t.postings.filter((p) => sim.universe.accounts[p.accountId]?.kind === 'income' || (sim.universe.accounts[p.accountId]?.nominal && p.amount < 0)).reduce((s, p) => s - p.amount, 0);
+    pay += Math.max(0, gross);
+    const stated = /(\d+(?:\.\d+)?) hours/.exec(t.memo);
+    hours += stated ? Number(stated[1]) : t.memo.startsWith('Yale Summer Cabaret stipend') ? 40 : 0;
+  }
+  return { pay, hours };
 }
 
 /** A benefit paid: unemployment insurance, income for the return. */

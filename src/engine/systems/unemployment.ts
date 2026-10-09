@@ -30,7 +30,7 @@ import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Inst
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState, CONNECTICUT_UI } from '../content/safetynet';
-import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
+import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit, workedBetween } from './earnings';
 import { payeeAccount } from './cash';
 import { rateOn } from '../content/rates';
 import { claimCredit, livesInBritain } from './universalcredit';
@@ -197,9 +197,10 @@ export function registerUnemployment(sim: Simulation): void {
     // it paid only in the claim's state, and a New York claimant who moved to
     // Los Angeles was paid nothing for the rest of the benefit year.
     const available = CITIES.get(person.currentLocationId)?.countryId === 'us';
-    // The week's hours and pay worked were the career's days (`workedBetween`) until the career went on 2026-10-09:
-    // none is worked now, and the week is paid whole.
-    const due = available ? Math.min(weekBenefit(claim, 0, 0, cur), claim.maxTotal - claim.paid) : 0;
+    // The week's hours and pay worked: the career's days until the career went on 2026-10-09, and from 2026-10-10 the
+    // school's work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none.
+    const worked = workedBetween(s, person, item.at - 7 * MS_DAY, item.at);
+    const due = available ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
     const zone = CITIES.require(homeOf(person)).timeZone;
     const again = () => s.schedule({ at: nextSunday(item.at, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
     if (due <= 0) { again(); return; }

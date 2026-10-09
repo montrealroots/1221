@@ -90,6 +90,7 @@ import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
 import { lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork, type Assignment } from './coursework';
+import { scheduleUsStatus } from './permission';
 import { momentInClass } from './classmates';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
@@ -1100,6 +1101,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     }
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
+    // A dismissal ends an F-1 student's program now, and the look at their status comes with it (`programEnd`).
+    if (to === 'dismissed') scheduleUsStatus(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
   const chair = YALE_DRAMA.actingChair.name;
