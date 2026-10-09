@@ -25,7 +25,7 @@ import { COMPANIES, COMPANIES_SOURCE, companyById, type IndustryCompany } from '
 import { CITIES } from '@/engine/content/geography';
 import { agencyById, breakdownsOf, careerOf, roleById } from '@/engine/systems/career';
 import { industryOf, performerById, pitchRefusal, projectById, type PartHolder, type Project } from '@/engine/systems/industry';
-import { counts, entries, filmographies, formatWord, genreWord, routeOf, search, statusWord, suggest, titlesOf, type EntryKind, type Query, type RealTitle, type RealWorld } from '@/engine/world/database';
+import { counts, entries, filmographies, formatWord, genreWord, saveHolds, routeOf, search, statusWord, suggest, titlesOf, type EntryKind, type Query, type RealTitle, type RealWorld } from '@/engine/world/database';
 
 // ---------------------------------------------------------------------------
 // The real-world records, loaded once when first wanted
@@ -153,7 +153,7 @@ function IndustryHome({ loaded: l }: { loaded: Loaded }) {
         <h1>The Industry</h1>
         <p className="muted">
           {l.status === 'ready' ? `${plural(n.realTitles ?? 0, 'real film or series', 'real films and series')} and ${plural(n.realPeople ?? 0, 'person', 'people')} from Wikidata, ` : l.status === 'loading' ? 'The real-world records are loading; ' : 'The real-world records couldn’t be loaded; '}
-          {`the ${n.companies} companies, and this save’s ${n.projects} ${n.projects === 1 ? 'project' : 'projects'}, ${n.performers} ${n.performers === 1 ? 'performer' : 'performers'} and your class of ${n.classmates}.`}
+          {saveHolds(n)}
         </p>
         <div className="chip-row"><SourceChip source="real" /><SourceChip source="company" /><SourceChip source="save" /><span className="xs dim">Every page says which it is. In This Save is this save’s fiction.</span></div>
       </div>

@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { ROLES } from '@/engine/content/career';
 import { COMPANIES } from '@/engine/content/industry';
 import { castPerformer, industryOf, newProject } from '@/engine/systems/industry';
-import { counts, entries, filmographies, routeOf, search, suggest, titlesOf, type RealWorld } from '@/engine/world/database';
+import { counts, entries, filmographies, routeOf, saveHolds, search, suggest, titlesOf, type RealWorld } from '@/engine/world/database';
 import realFile from '@/engine/content/realworld/titles.json';
 
 const real = realFile as unknown as RealWorld;
@@ -98,5 +98,15 @@ describe('the index', () => {
     const took = performance.now() - t0;
     // Building the index once and five searches over it: well under what a keystroke can wait.
     expect(took).toBeLessThan(400);
+  });
+});
+
+describe('what the save holds, in a sentence', () => {
+  it('names the class where there is one, and leaves it out where the life never went to the school', () => {
+    expect(saveHolds({ companies: 10, projects: 1, performers: 2, classmates: 16 })).toBe('the 10 companies, and this save’s 1 project, 2 performers and your class of 16.');
+    expect(saveHolds({ companies: 10, projects: 114, performers: 80, classmates: 0 })).toBe('the 10 companies, and this save’s 114 projects and 80 performers.');
+    // As the screen reads it, from a life that started working and never went to the school.
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'db-no-class');
+    expect(saveHolds(counts(sim))).not.toMatch(/class/);
   });
 });

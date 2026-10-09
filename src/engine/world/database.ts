@@ -141,6 +141,18 @@ export function counts(sim: Simulation, real?: RealWorld) {
 /** A genre as a person says it: "drama film" is a drama, "science fiction television series" science fiction. */
 export const genreWord = (g: string) => { const w = g.replace(/ (film|television series|television program|series|show|fiction film)$/i, '').trim(); return w.charAt(0).toUpperCase() + w.slice(1); };
 
+/**
+ * What the save holds, said in a sentence: the companies, its projects and performers, and the class where there is
+ * one. A life that never went to the school has none, and until 2026-10-08 was told it had "your class of 0".
+ */
+export function saveHolds(n: { companies: number; projects: number; performers: number; classmates: number }): string {
+  const projects = `${n.projects} ${n.projects === 1 ? 'project' : 'projects'}`;
+  const performers = `${n.performers} ${n.performers === 1 ? 'performer' : 'performers'}`;
+  return n.classmates > 0
+    ? `the ${n.companies} companies, and this save’s ${projects}, ${performers} and your class of ${n.classmates}.`
+    : `the ${n.companies} companies, and this save’s ${projects} and ${performers}.`;
+}
+
 /** The real titles a company's studios, networks or streamers are credited on. */
 export const titlesOf = (real: RealWorld | undefined, companyId: string) => (real ? real.titles.filter((t) => t.companies.includes(companyId)) : []);
 /** The ten company, where a real credit's name is one of theirs. */
