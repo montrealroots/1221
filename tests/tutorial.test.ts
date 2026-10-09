@@ -87,7 +87,8 @@ describe('the coverage matrix', () => {
 
   it('gives every command a button that asks the guide first', () => {
     const onScreen = featuresOnScreen();
-    const commands = quickSave().commandKinds().filter((kind) => kind !== READ_KIND && kind !== 'world.set_preferences');
+    const commands = quickSave().commandKinds().filter((kind) => kind !== READ_KIND && kind !== 'world.set_preferences' && kind !== 'industry.view');
+    // `industry.view` (from 2026-10-08) is a page of The Industry remembering it was opened, as reading a chapter is: no button.
     expect(commands.filter((kind) => !onScreen.has(kind))).toEqual([]);
   });
 });

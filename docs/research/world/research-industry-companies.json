@@ -1,0 +1,418 @@
+{
+  "topic": "Ten leading companies relevant to film and television acting careers (US and UK), with corporate status as of October 2026",
+  "retrieved": "2026-10-08",
+  "criteria": "Companies were weighed on four things. (1) Production activity: whether the company itself develops and produces scripted film and television, and how much (films released per year, series in production). (2) Distribution reach: domestic (US/Canada) and UK-Ireland theatrical market share in 2025, and the last-published streaming subscriber count. (3) Commissioning influence: whether the company orders scripted series and films from other producers (a commissioner hires actors indirectly through its producers). (4) Relevance to an actor in New York, Los Angeles or London: membership of the AMPTP (the producers' bargaining group whose agreement with SAG-AFTRA covers US film and TV acting), a published Equity agreement in the UK, and owned or long-leased studio facilities in Los Angeles, the New York area or the London studio belt. Scale counts but is not decisive; a smaller company that is a major direct engager of UK actors (ITV) can outrank a larger one that mainly finances. This is a defensible working selection for a game world, NOT a universal ranking: the order is not a ranking, other reasonable lists exist, and several numbers are company-reported or last-published figures that the companies have since stopped disclosing.",
+  "scope": "Primary markets: United States (Los Angeles and New York) and United Kingdom (London and the wider UK). Units are counted once at the parent level, except where noted: NBCUniversal is listed under its parent Comcast; Sky (UK) is a division of Comcast; BBC Studios is a division of the BBC; ITV is listed at ITV plc level with ITV Studios as the part that survives the pending Sky deal; Sony Pictures Entertainment is chosen as the unit rather than Sony Group because Sony Group's other businesses (electronics, games, music) are not film/TV employers; Amazon MGM Studios and Apple's TV/studio unit are chosen as units rather than Amazon.com and Apple Inc. for the same reason. Paramount Skydance and Warner Bros. Discovery are counted as ONE company, Skydance Corporation, because the acquisition closed on 2026-10-06. Other markets noted where relevant: Canada (Toronto, Vancouver), New Mexico (Albuquerque), Wales (Cardiff), Northern England (Salford/Manchester).",
+  "selection": [
+    {
+      "id": "walt-disney",
+      "name": "The Walt Disney Company",
+      "parent": null,
+      "headquarters": { "city": "Burbank", "country": "United States" },
+      "kind": "conglomerate",
+      "whyChosen": "Largest US distributor by 2025 domestic box office share (27.5%) and the highest global studio gross in 2025 ($6.58bn); second in UK-Ireland (23.1%). Owns studios, broadcast and cable networks and two large streaming services (Disney+, Hulu, now wholly owned). AMPTP member through Walt Disney Studios and ABC. Holds a long-term lease on most of Pinewood Studios near London, where Lucasfilm shot Andor. CEO changed to Josh D'Amaro on 2026-03-18.",
+      "divisions": [
+        { "name": "Walt Disney Studios (Walt Disney Pictures, Walt Disney Animation Studios, Pixar, Marvel Studios, Lucasfilm, 20th Century Studios, Searchlight Pictures)", "role": "studio", "relationship": "wholly owned film labels" },
+        { "name": "ABC", "role": "network", "relationship": "wholly owned broadcast network" },
+        { "name": "FX, Disney Channel, Freeform, National Geographic", "role": "network", "relationship": "cable networks owned by Disney" },
+        { "name": "Disney+", "role": "streaming", "relationship": "wholly owned streaming service" },
+        { "name": "Hulu", "role": "streaming", "relationship": "wholly owned after Disney bought Comcast/NBCUniversal's remaining stake (final price set June 2025)" },
+        { "name": "ESPN", "role": "network", "relationship": "72% owned" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "distributes theatrically", "streams", "broadcasts", "sells internationally"],
+      "facilities": [
+        { "name": "The Walt Disney Studios lot", "city": "Burbank", "country": "United States" },
+        { "name": "Pinewood Studios (long-term lease of almost all stages)", "city": "Iver Heath, Buckinghamshire (near London)", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Lilo & Stitch", "year": 2025, "format": "film", "role": "produced", "partners": ["Walt Disney Studios"] },
+        { "title": "Zootopia 2", "year": 2025, "format": "film", "role": "produced", "partners": ["Walt Disney Studios"] },
+        { "title": "Avatar: Fire and Ash", "year": 2025, "format": "film", "role": "produced", "partners": ["20th Century Studios"] },
+        { "title": "Andor (season 2)", "year": 2025, "format": "series", "role": "produced", "partners": ["Lucasfilm", "Disney+"] },
+        { "title": "The Bear (season 4)", "year": 2025, "format": "series", "role": "produced", "partners": ["FX Productions", "FX on Hulu"] }
+      ]
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix, Inc.",
+      "parent": null,
+      "headquarters": { "city": "Los Gatos", "country": "United States" },
+      "kind": "streamer",
+      "whyChosen": "Largest subscription streamer (over 325M paid memberships, crossed in Q4 2025) and a very large commissioner and producer of scripted series and films in both the US and UK. AMPTP member (named among streaming services). Owns Albuquerque Studios, holds a long-term production hub at Shepperton (UK), and is building a 12-stage campus at Fort Monmouth, New Jersey for the New York market. It agreed to buy Warner Bros. in December 2025 but lost to Paramount Skydance in February 2026.",
+      "divisions": [
+        { "name": "Netflix (streaming service)", "role": "streaming", "relationship": "core business" },
+        { "name": "Netflix Studios Fort Monmouth", "role": "studio", "relationship": "owned production campus under construction" },
+        { "name": "Albuquerque Studios", "role": "studio", "relationship": "owned (acquired 2018)" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "streams", "sells internationally"],
+      "facilities": [
+        { "name": "Albuquerque Studios", "city": "Albuquerque", "country": "United States" },
+        { "name": "Shepperton Studios (long-term Netflix production hub)", "city": "Shepperton, Surrey (near London)", "country": "United Kingdom" },
+        { "name": "Netflix Studios Fort Monmouth (projected to open 2028)", "city": "Oceanport and Eatontown, New Jersey", "country": "United States" },
+        { "name": "Canadian headquarters", "city": "Toronto", "country": "Canada" }
+      ],
+      "titles": [
+        { "title": "Adolescence", "year": 2025, "format": "series", "role": "commissioned", "partners": ["Warp Films", "Matriarch Productions", "Plan B Entertainment"] },
+        { "title": "KPop Demon Hunters", "year": 2025, "format": "film", "role": "distributed", "partners": ["Sony Pictures Animation"] },
+        { "title": "Stranger Things (final season)", "year": 2025, "format": "series", "role": "streamed", "partners": [] },
+        { "title": "Frankenstein", "year": 2025, "format": "film", "role": "streamed", "partners": [] },
+        { "title": "Wake Up Dead Man: A Knives Out Mystery", "year": 2025, "format": "film", "role": "streamed", "partners": [] }
+      ]
+    },
+    {
+      "id": "comcast-nbcuniversal",
+      "name": "Comcast Corporation (NBCUniversal and Sky)",
+      "parent": null,
+      "headquarters": { "city": "Philadelphia", "country": "United States" },
+      "kind": "conglomerate",
+      "whyChosen": "Universal was third in 2025 US/Canada share (19.7%) and FIRST in UK-Ireland (25.1%). Owns NBC, Peacock (48M paid subscribers, June 2026), Universal Pictures, Focus Features, DreamWorks Animation and Universal Television in the US, and Sky with Sky Studios Elstree in the UK. AMPTP member through Universal Pictures and NBC. Corporate status is moving: cable networks were spun off as Versant on 2026-01-02; NBCUniversal and Sky are to be spun off as a separate company in about mid-2027; Sky has agreed to buy ITV's broadcast business (close expected H2 2027). NBCUniversal's own headquarters are at 30 Rockefeller Plaza, New York.",
+      "divisions": [
+        { "name": "NBCUniversal", "role": "studio", "relationship": "wholly owned by Comcast since 2013; planned spin-off announced 2026-06-29" },
+        { "name": "Universal Pictures, Focus Features, DreamWorks Animation", "role": "studio", "relationship": "film labels within Universal Filmed Entertainment Group" },
+        { "name": "Universal Television / Universal International Studios / Carnival Films", "role": "production", "relationship": "NBCUniversal television production" },
+        { "name": "NBC, Telemundo, Bravo", "role": "network", "relationship": "wholly owned networks retained after the Versant spin-off" },
+        { "name": "Peacock", "role": "streaming", "relationship": "wholly owned streaming service" },
+        { "name": "Sky (incl. Sky Studios, Sky Atlantic, NOW)", "role": "network", "relationship": "wholly owned UK/European pay-TV group; part of planned NBCUniversal spin-off" },
+        { "name": "Versant (MS NOW, CNBC, USA Network, Golf Channel, E!, SYFY, Oxygen)", "role": "network", "relationship": "FORMER division; separated into an independent public company on 2026-01-02" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "distributes theatrically", "streams", "broadcasts", "sells internationally"],
+      "facilities": [
+        { "name": "Universal Studios Lot", "city": "Universal City, California", "country": "United States" },
+        { "name": "Sky Studios Elstree", "city": "Borehamwood, Hertfordshire", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Wicked: For Good", "year": 2025, "format": "film", "role": "produced", "partners": ["Universal Pictures", "Marc Platt Productions"] },
+        { "title": "The Day of the Jackal", "year": 2024, "format": "series", "role": "produced", "partners": ["Sky Studios", "Universal International Studios", "Carnival Film and Television", "Sky Atlantic", "Peacock"] },
+        { "title": "The Super Mario Galaxy Movie", "year": 2026, "format": "film", "role": "distributed", "partners": [] },
+        { "title": "Obsession", "year": 2026, "format": "film", "role": "distributed", "partners": ["Focus Features"] }
+      ]
+    },
+    {
+      "id": "skydance-corporation",
+      "name": "Skydance Corporation (formerly Paramount Skydance; now including Warner Bros. Discovery)",
+      "parent": null,
+      "headquarters": { "city": "Los Angeles (5555 Melrose Avenue) and New York (One Astor Plaza)", "country": "United States" },
+      "kind": "conglomerate",
+      "whyChosen": "Formed on 2026-10-06 when Paramount Skydance closed its roughly $110bn acquisition of Warner Bros. Discovery, it combines two of the largest Hollywood studios (Paramount Pictures and Warner Bros., which had 21% of the 2025 domestic box office and 18.5% in UK-Ireland), CBS, HBO, CNN, and the Paramount+ (81.6M, June 2026) and HBO Max streaming services. Under a settlement with states it must release at least 30 films a year in US theaters in each of its first two years. AMPTP member through Paramount Pictures, Warner Bros. and CBS. It owns Warner Bros. Studios Leavesden (UK), where the HBO Harry Potter series shoots. It is counted once, at this level.",
+      "divisions": [
+        { "name": "Paramount Pictures", "role": "studio", "relationship": "wholly owned film studio" },
+        { "name": "Warner Bros. Pictures, New Line Cinema, DC Studios", "role": "studio", "relationship": "wholly owned since 2026-10-06; studios keep their own names" },
+        { "name": "CBS Studios, Paramount Television Studios, Warner Bros. Television", "role": "production", "relationship": "wholly owned TV production" },
+        { "name": "CBS, HBO, CNN, TNT, Nickelodeon, MTV, Cartoon Network", "role": "network", "relationship": "wholly owned networks" },
+        { "name": "Paramount+, HBO Max, Discovery+, Pluto TV", "role": "streaming", "relationship": "wholly owned; Paramount+ and HBO Max to unify into a single service over time (no date announced)" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "distributes theatrically", "streams", "broadcasts", "sells internationally"],
+      "facilities": [
+        { "name": "Paramount lot (5555 Melrose Avenue)", "city": "Hollywood, Los Angeles", "country": "United States" },
+        { "name": "Warner Bros. Studios Burbank", "city": "Burbank", "country": "United States" },
+        { "name": "Warner Bros. Studios Leavesden", "city": "Leavesden, Watford, Hertfordshire", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Mission: Impossible – The Final Reckoning", "year": 2025, "format": "film", "role": "produced", "partners": ["Paramount Pictures", "Skydance", "TC Productions"] },
+        { "title": "Superman", "year": 2025, "format": "film", "role": "distributed", "partners": ["DC Studios", "Warner Bros. Pictures"] },
+        { "title": "A Minecraft Movie", "year": 2025, "format": "film", "role": "distributed", "partners": ["Warner Bros."] },
+        { "title": "The Pitt", "year": 2025, "format": "series", "role": "produced", "partners": ["John Wells Productions", "Warner Bros. Television", "Max/HBO Max"] },
+        { "title": "House of the Dragon (season 3)", "year": 2026, "format": "series", "role": "produced", "partners": ["HBO"] }
+      ]
+    },
+    {
+      "id": "sony-pictures-entertainment",
+      "name": "Sony Pictures Entertainment Inc.",
+      "parent": "Sony Group Corporation",
+      "headquarters": { "city": "Culver City", "country": "United States" },
+      "kind": "studio",
+      "whyChosen": "A major Hollywood studio with no streaming service of its own, so it produces for others (it made KPop Demon Hunters for Netflix and The Last of Us for HBO) as well as for its own theatrical labels. 2025 global box office $1.47bn. Owns the 16-stage Sony Pictures Studios lot in Culver City and UK production companies Left Bank Pictures and Bad Wolf. AMPTP member (Sony Pictures). Chosen as the unit instead of Sony Group, whose other businesses are not film/TV employers.",
+      "divisions": [
+        { "name": "Columbia Pictures, TriStar Pictures, Screen Gems, Sony Pictures Classics", "role": "label", "relationship": "wholly owned film labels" },
+        { "name": "Sony Pictures Animation", "role": "studio", "relationship": "wholly owned" },
+        { "name": "Sony Pictures Television", "role": "production", "relationship": "wholly owned" },
+        { "name": "Left Bank Pictures, Bad Wolf", "role": "production", "relationship": "UK production companies under SPE" },
+        { "name": "Crunchyroll", "role": "streaming", "relationship": "owned by SPE" },
+        { "name": "Sony Pictures Releasing", "role": "distribution", "relationship": "SPE's theatrical distribution arm" }
+      ],
+      "functions": ["develops", "produces", "finances", "distributes theatrically", "streams", "sells internationally"],
+      "facilities": [
+        { "name": "Sony Pictures Studios", "city": "Culver City", "country": "United States" }
+      ],
+      "titles": [
+        { "title": "28 Years Later", "year": 2025, "format": "film", "role": "produced", "partners": ["Columbia Pictures", "Decibel Films", "DNA Films"] },
+        { "title": "KPop Demon Hunters", "year": 2025, "format": "film", "role": "produced", "partners": ["Netflix"] },
+        { "title": "The Last of Us (season 2)", "year": 2025, "format": "series", "role": "produced", "partners": ["PlayStation Productions", "Naughty Dog", "HBO"] },
+        { "title": "Project Hail Mary", "year": 2026, "format": "film", "role": "distributed", "partners": ["Amazon MGM Studios"] }
+      ]
+    },
+    {
+      "id": "amazon-mgm-studios",
+      "name": "Amazon MGM Studios",
+      "parent": "Amazon",
+      "headquarters": { "city": "Culver City", "country": "United States" },
+      "kind": "studio",
+      "whyChosen": "Amazon's film and television studio, theatrical distributor and the commissioner for Prime Video, which Amazon says reaches over 315M ad-supported viewers a month worldwide. AMPTP member (Amazon named among streaming services). It owns Bray Film Studios and holds nine exclusive stages at Shepperton in the UK, and took creative control of James Bond in 2025, a UK-made franchise. Chosen as the unit rather than Amazon.com.",
+      "divisions": [
+        { "name": "Metro-Goldwyn-Mayer, United Artists, Orion Pictures", "role": "studio", "relationship": "film units within Amazon MGM Studios" },
+        { "name": "Amazon MGM Studios Distribution", "role": "distribution", "relationship": "in-house theatrical distribution" },
+        { "name": "Prime Video", "role": "streaming", "relationship": "Amazon streaming service" },
+        { "name": "MGM+", "role": "streaming", "relationship": "premium channel/streaming" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "distributes theatrically", "streams", "sells internationally"],
+      "facilities": [
+        { "name": "The Culver Studios", "city": "Culver City", "country": "United States" },
+        { "name": "Bray Film Studios", "city": "Water Oakley, Berkshire", "country": "United Kingdom" },
+        { "name": "Shepperton Studios (nine exclusive stages)", "city": "Shepperton, Surrey", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Project Hail Mary", "year": 2026, "format": "film", "role": "distributed", "partners": ["Metro-Goldwyn-Mayer", "Sony Pictures Releasing International"] },
+        { "title": "Fallout (season 2)", "year": 2025, "format": "series", "role": "produced", "partners": ["Kilter Films", "Bethesda Game Studios", "Prime Video"] },
+        { "title": "The Lord of the Rings: The Rings of Power (season 2)", "year": 2024, "format": "series", "role": "produced", "partners": ["Prime Video"] }
+      ]
+    },
+    {
+      "id": "apple-tv",
+      "name": "Apple TV / Apple Studios (Apple Original Films)",
+      "parent": "Apple Inc.",
+      "headquarters": { "city": "Culver City (Apple Studios) / Cupertino (Apple Inc.)", "country": "United States" },
+      "kind": "streamer",
+      "whyChosen": "A high-budget commissioner and producer of scripted series and films, notably of UK-made series (Slow Horses) and New York-area productions (Severance). Its film F1 grossed $634.1M worldwide in 2025 through a theatrical partnership with Warner Bros. AMPTP member (Apple named among streaming services). The service was renamed from Apple TV+ to Apple TV on 2025-10-13. Its subscriber count is not officially disclosed, which counts against it on scale.",
+      "divisions": [
+        { "name": "Apple Studios LLC (Apple Original Films)", "role": "studio", "relationship": "wholly owned production company of Apple Inc." },
+        { "name": "Apple TV (formerly Apple TV+)", "role": "streaming", "relationship": "Apple's streaming service" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "streams"],
+      "facilities": [
+        { "name": "Apple Studios offices (8600 Hayden Place)", "city": "Culver City", "country": "United States" }
+      ],
+      "titles": [
+        { "title": "F1", "year": 2025, "format": "film", "role": "produced", "partners": ["Jerry Bruckheimer Films", "Plan B Entertainment", "Warner Bros. Pictures"] },
+        { "title": "Severance (season 2)", "year": 2025, "format": "series", "role": "commissioned", "partners": ["Red Hour Productions", "Fifth Season"] },
+        { "title": "Slow Horses", "year": 2022, "format": "series", "role": "commissioned", "partners": ["See-Saw Films"] }
+      ]
+    },
+    {
+      "id": "lionsgate-studios",
+      "name": "Lionsgate Studios Corp.",
+      "parent": null,
+      "headquarters": { "city": "Santa Monica (and Vancouver)", "country": "United States / Canada" },
+      "kind": "independent",
+      "whyChosen": "The largest standalone 'pure play' studio outside the conglomerates: it released 24 films theatrically in the US in the fiscal year to March 2026, holds a library of over 20,000 titles, self-distributes in the UK and Ireland through Lionsgate UK, and owns the talent management and production company 3 Arts. It became fully independent of Starz in May 2025. It is NOT an AMPTP member, which is why its films could use SAG-AFTRA interim agreements in the 2023 strike: a materially different relationship with the actors' union. Takeover interest from Banijay and Mediawan was reported in July 2026; no deal confirmed.",
+      "divisions": [
+        { "name": "Lionsgate Films / Motion Picture Group (incl. Summit Entertainment)", "role": "studio", "relationship": "wholly owned" },
+        { "name": "Lionsgate Television", "role": "production", "relationship": "wholly owned" },
+        { "name": "Lionsgate UK", "role": "distribution", "relationship": "self-distribution in the UK and Ireland" },
+        { "name": "eOne (Entertainment One)", "role": "production", "relationship": "wholly owned subsidiary" },
+        { "name": "3 Arts Entertainment", "role": "production", "relationship": "talent management and production company owned by Lionsgate" },
+        { "name": "Roadside Attractions", "role": "distribution", "relationship": "43% equity interest" }
+      ],
+      "functions": ["develops", "produces", "finances", "distributes theatrically", "sells internationally"],
+      "facilities": [],
+      "titles": [
+        { "title": "Ballerina", "year": 2025, "format": "film", "role": "distributed", "partners": [] },
+        { "title": "Now You See Me: Now You Don't", "year": 2025, "format": "film", "role": "distributed", "partners": [] },
+        { "title": "The Strangers – Chapter 2", "year": 2025, "format": "film", "role": "distributed", "partners": [] },
+        { "title": "Kill Bill: The Whole Bloody Affair", "year": 2025, "format": "film", "role": "distributed", "partners": [] }
+      ]
+    },
+    {
+      "id": "bbc",
+      "name": "British Broadcasting Corporation (BBC)",
+      "parent": null,
+      "headquarters": { "city": "London", "country": "United Kingdom" },
+      "kind": "broadcaster",
+      "whyChosen": "The UK's largest commissioner of original television (over £1.6bn on original UK TV content, from more than 300 production companies, in its 2024/25 commissioning report) and a direct employer of actors through BBC Studios' in-house drama (EastEnders, Casualty, Doctor Who), which runs under an Equity agreement with a 13% episodic fee rise from April 2025. Production bases in London, Borehamwood, Salford and Cardiff. Royal Charter expires 2027-12-31; Matt Brittin became Director-General on 2026-05-18.",
+      "divisions": [
+        { "name": "BBC One, BBC iPlayer and other BBC channels", "role": "network", "relationship": "public service channels and streaming, licence-fee funded" },
+        { "name": "BBC Studios Limited", "role": "production", "relationship": "wholly owned commercial subsidiary that produces, distributes and sells content worldwide" },
+        { "name": "BBC Studios Productions (incl. Continuing Drama)", "role": "production", "relationship": "in-house production within BBC Studios" },
+        { "name": "Baby Cow Productions, Sid Gentle Films, Lookout Point, Clerkenwell Films", "role": "production", "relationship": "wholly or majority owned BBC Studios labels" }
+      ],
+      "functions": ["develops", "commissions", "produces", "finances", "broadcasts", "streams", "sells internationally"],
+      "facilities": [
+        { "name": "Broadcasting House", "city": "London", "country": "United Kingdom" },
+        { "name": "Television Centre (BBC Studios HQ)", "city": "London", "country": "United Kingdom" },
+        { "name": "BBC Elstree Centre", "city": "Borehamwood, Hertfordshire", "country": "United Kingdom" },
+        { "name": "MediaCityUK", "city": "Salford", "country": "United Kingdom" },
+        { "name": "Roath Lock", "city": "Cardiff", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Doctor Who (series 15)", "year": 2025, "format": "series", "role": "commissioned", "partners": ["Bad Wolf", "BBC Studios", "Disney Branded Television", "Disney+"] },
+        { "title": "EastEnders", "year": 1985, "format": "series", "role": "produced", "partners": ["BBC Studios Continuing Drama Productions", "BBC One"] }
+      ]
+    },
+    {
+      "id": "itv",
+      "name": "ITV plc (ITV Studios; ITV Media & Entertainment)",
+      "parent": null,
+      "headquarters": { "city": "London", "country": "United Kingdom" },
+      "kind": "broadcaster",
+      "whyChosen": "The UK's main commercial public service broadcaster (ITV1, ITVX) and, through ITV Studios, a producer with about 60 labels in 12 countries, including the continuing dramas Coronation Street and Emmerdale, which are among the largest steady engagers of UK actors. Status is changing: on 2026-07-06 Sky (Comcast) agreed to buy ITV Media & Entertainment (ITV1-4, ITVX, UTV) for up to £1.6bn, expected to close in H2 2027; ITV Studios is excluded and will continue independently with a content supply agreement with Sky. Counted at ITV plc level until that closes.",
+      "divisions": [
+        { "name": "ITV Media & Entertainment (ITV1, ITV2, ITV3, ITV4, ITVX, UTV)", "role": "network", "relationship": "wholly owned; agreed sale to Sky announced 2026-07-06, pending" },
+        { "name": "ITV Studios", "role": "production", "relationship": "wholly owned production and distribution arm; excluded from Sky deal" },
+        { "name": "Mammoth Screen, World Productions, Big Talk Studios, Twofour, Tetra Media Studio, Leftfield Pictures, Little Gem", "role": "production", "relationship": "ITV Studios labels" },
+        { "name": "ITV Studios Continuing Drama", "role": "production", "relationship": "produces Coronation Street and Emmerdale" }
+      ],
+      "functions": ["develops", "commissions", "produces", "broadcasts", "streams", "sells internationally"],
+      "facilities": [
+        { "name": "MediaCityUK (Coronation Street set)", "city": "Trafford, Greater Manchester", "country": "United Kingdom" }
+      ],
+      "titles": [
+        { "title": "Mr Bates vs The Post Office", "year": 2024, "format": "series", "role": "produced", "partners": ["Little Gem", "ITV Studios", "ITV1"] },
+        { "title": "Betrayal", "year": 2026, "format": "series", "role": "produced", "partners": ["Mammoth Screen", "ITV1", "ITVX"] },
+        { "title": "Coronation Street", "year": 1960, "format": "series", "role": "produced", "partners": ["ITV Studios Continuing Drama"] }
+      ]
+    }
+  ],
+  "excluded": [
+    { "name": "Warner Bros. Discovery (as a separate company)", "why": "Ceased to be independent on 2026-10-06, when Paramount Skydance completed its acquisition; its assets are counted inside Skydance Corporation. Its planned split into 'Warner Bros.' and 'Discovery Global' did not happen, and Netflix's December 2025 agreement to buy Warner Bros. was overtaken by Paramount's superior offer (2026-02-26)." },
+    { "name": "Paramount Skydance (as a separate company)", "why": "Existed 2025-08-07 to 2026-10-06; restructured as Skydance Corporation on the WBD closing. Counted once, as Skydance Corporation." },
+    { "name": "A24", "why": "Influential New York independent (valued at $3.5bn in 2024) with strong awards-season relevance, but releases far fewer films than Lionsgate, owns no streaming service or studio facilities found in this research, and no full-year 2025 domestic share above about 7% was found. Lionsgate was preferred as the single 'independent' slot on volume." },
+    { "name": "Legendary Entertainment", "why": "A financier and producer (Dune, Godzilla) that relies on other studios for distribution; it does not commission series or run a network. Its reported 2025 interest in buying Lionsgate did not result in a deal." },
+    { "name": "Banijay Entertainment (now including All3Media)", "why": "The world's largest independent producer since the merger completed on 2026-07-09 (London HQ, 25 countries, over €4.3bn combined 2025 revenue), but its output is weighted toward unscripted formats; it neither distributes theatrically nor runs a channel. A strong candidate for an 11th place." },
+    { "name": "Fremantle (RTL Group / Bertelsmann)", "why": "London-based producer and distributor whose catalogue is dominated by non-scripted formats (Got Talent, Idols, The X Factor); its scripted drama business is growing but is smaller than the chosen broadcasters' or studios'." },
+    { "name": "Versant Media Group", "why": "Spun off from Comcast on 2026-01-02; a cable-network company (MS NOW, CNBC, USA Network, E!, SYFY, Oxygen, Golf Channel) whose schedules are mostly news, sport and unscripted, with little scripted commissioning." },
+    { "name": "Starz Entertainment", "why": "Separated from Lionsgate in May 2025; a premium channel and streamer of smaller scale that commissions fewer series than the chosen streamers." },
+    { "name": "Sky Group (as a separate entry)", "why": "Wholly owned by Comcast, so counted inside Comcast to avoid double-counting; it is, however, the most important UK commissioner after the BBC and ITV, and owns Sky Studios Elstree." },
+    { "name": "Channel 4", "why": "A publisher-broadcaster that commissions but by design does not produce in-house, and has a smaller drama budget than the BBC or ITV. Not researched in depth here." },
+    { "name": "Mediawan", "why": "A French producer expanding into English-language production (it acquired North Road / Chernin Entertainment); reported July 2026 interest in Lionsgate, unconfirmed. Not yet at the US/UK scale of the chosen ten." }
+  ],
+  "findings": [
+    { "id": "wbd-deal-closed", "what": "Paramount Skydance completed its acquisition of Warner Bros. Discovery", "value": "Closed 2026-10-06", "market": "global", "source": "https://en.wikipedia.org/wiki/Proposed_acquisition_of_Warner_Bros._Discovery_by_Paramount_Skydance", "quote": "The acquisition was completed on October 6, 2026, as planned.", "confidence": "high" },
+    { "id": "wbd-deal-name", "what": "Name of the combined company", "value": "Skydance Corporation", "market": "global", "source": "https://en.wikipedia.org/wiki/Proposed_acquisition_of_Warner_Bros._Discovery_by_Paramount_Skydance", "quote": "Ellison announced that the combined company would be known as Skydance Corporation.", "confidence": "high" },
+    { "id": "wbd-deal-pbs-close", "what": "Closing reported by PBS NewsHour / AP", "value": "Closed Tuesday 2026-10-06 under the name Skydance", "market": "us", "source": "https://www.pbs.org/newshour/economy/after-tumultuous-fight-paramount-completes-takeover-of-warner-bros-to-become-hollywood-giant-skydance", "quote": "The merger brings two of America's oldest moviemaking studios together under a new name: Skydance.", "confidence": "high" },
+    { "id": "wbd-deal-pbs-assets", "what": "Assets of the combined company", "value": "HBO Max, CNN, Paramount+, CBS", "market": "us", "source": "https://www.pbs.org/newshour/economy/after-tumultuous-fight-paramount-completes-takeover-of-warner-bros-to-become-hollywood-giant-skydance", "quote": "Paramount+, CBS and the likes of 'Top Gun' and 'The Godfather.'", "confidence": "medium" },
+    { "id": "wbd-deal-value", "what": "Deal value including debt", "value": "nearly $111 billion", "market": "global", "source": "https://www.pbs.org/newshour/economy/after-tumultuous-fight-paramount-completes-takeover-of-warner-bros-to-become-hollywood-giant-skydance", "quote": "Including billions of dollars in debt, the Warner acquisition amounts to nearly $111 billion.", "confidence": "high" },
+    { "id": "wbd-studios-keep-names", "what": "Paramount and Warner Bros. studio brands continue", "value": "Both studios keep their own names", "market": "global", "source": "https://www.thewrap.com/industry-news/deals-ma/skydance-paramount-warner-bros-merger-closes-ellison-staff-memo/", "quote": "Both studios will continue to operate under their own names, and audiences will still see the Paramount mountain and the Warner Bros. shield", "confidence": "high" },
+    { "id": "wbd-combined-revenue", "what": "Combined revenue of Skydance Corporation", "value": "nearly $70 billion", "market": "global", "source": "https://www.thewrap.com/industry-news/deals-ma/skydance-paramount-warner-bros-merger-closes-ellison-staff-memo/", "quote": "together one of the largest media and entertainment companies in the world, with nearly $70 billion in revenue", "confidence": "high" },
+    { "id": "wbd-settlement-films", "what": "Theatrical release commitment in the state settlement", "value": "At least 30 films a year in US theaters for the first two years, 32 a year for the following three", "market": "us", "source": "https://www.lawcommentary.com/articles/paramount-warner-bros-merger-cleared-october-6-closing", "quote": "The combined company must release at least 30 films in U.S. theaters during each of the first two years after closing and at least 32 annually during the following three years.", "confidence": "high" },
+    { "id": "wbd-settlement-windows", "what": "Theatrical window commitment", "value": "45 days in theaters; 90 days before subscription streaming", "market": "us", "source": "https://www.lawcommentary.com/articles/paramount-warner-bros-merger-cleared-october-6-closing", "quote": "Films used to meet those requirements generally must remain in theaters for at least 45 days and stay off subscription streaming services for at least 90 days after their initial U.S. theatrical release.", "confidence": "high" },
+    { "id": "wbd-settlement-court", "what": "Court approval of settlement", "value": "California judge approved the settlement, the final hurdle", "market": "us", "source": "https://www.nbcnews.com/business/media/judge-allows-paramount-close-110-billion-takeover-warner-bros-discover-rcna600780", "quote": "A California judge on Wednesday formally approved Paramount Skydance's settlement with California and other states, the final hurdle required for it to close its $110 billion takeover of Warner Bros. Discovery.", "confidence": "high" },
+    { "id": "wbd-netflix-deal", "what": "Netflix had agreed to buy Warner Bros. in December 2025", "value": "Netflix to acquire Warner Bros. film/TV studios, HBO Max and HBO", "market": "global", "source": "https://s22.q4cdn.com/959853165/files/doc_financials/2025/q4/FINAL-Q4-25-Shareholder-Letter.pdf", "quote": "In December, we announced that we'll acquire Warner Bros., including its film and television studios,", "confidence": "high" },
+    { "id": "wbd-netflix-withdrew", "what": "Netflix declined to raise its bid", "value": "Netflix withdrew after WBD found Paramount's bid superior (Feb 2026)", "market": "global", "source": "https://en.wikipedia.org/wiki/Proposed_acquisition_of_Warner_Bros._Discovery_by_Paramount_Skydance", "quote": "Netflix subsequently declined to increase its bid, and Sarandos and Greg Peters released a statement stating that the deal was 'no longer financially attractive'", "confidence": "high" },
+    { "id": "wbd-split-abandoned", "what": "WBD's planned split did not happen", "value": "Planned successors 'Warner Bros.' and 'Discovery Global'", "market": "global", "source": "https://en.wikipedia.org/wiki/Proposed_acquisition_of_Warner_Bros._Discovery_by_Paramount_Skydance", "quote": "The successor companies would have been named 'Warner Bros.,' comprising the Streaming & Studios division, and 'Discovery Global'", "confidence": "high" },
+    { "id": "skydance-hq", "what": "Skydance Corporation headquarters and ticker", "value": "Co-HQ 5555 Melrose Avenue (Los Angeles) and One Astor Plaza (New York); NYSE: SKYD", "market": "us", "source": "https://en.wikipedia.org/wiki/Skydance_Corporation", "quote": "Trades on NYSE under the ticker \"SKYD\"", "confidence": "medium" },
+    { "id": "skydance-divisions", "what": "Skydance Corporation streaming services", "value": "Paramount+, HBO Max, Discovery+, Pluto TV", "market": "global", "source": "https://en.wikipedia.org/wiki/Skydance_Corporation", "quote": "\"Paramount+,\" \"HBO Max,\" \"Discovery+,\" and \"Pluto TV\"", "confidence": "medium" },
+    { "id": "psky-formed", "what": "Paramount Skydance formed", "value": "2025-08-07 (Skydance Media + Paramount Global); succeeded by Skydance Corporation 2026-10-06", "market": "us", "source": "https://en.wikipedia.org/wiki/Paramount_Skydance", "quote": "CBS, MTV, Nickelodeon, Paramount Pictures, Paramount+ and Pluto TV", "confidence": "high" },
+    { "id": "paramount-plus-subs", "what": "Paramount+ subscribers", "value": "81.6 million worldwide (June 30, 2026)", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0002041610/000204161026000052/ex99_q226.htm", "quote": "81.6 million worldwide", "confidence": "high" },
+    { "id": "paramount-film-output", "what": "Paramount theatrical output before the WBD merger", "value": "15 films in 2026; 15+ planned in 2027", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0002041610/000204161026000052/ex99_q226.htm", "quote": "15 in 2026", "confidence": "medium" },
+    { "id": "cbs-studios-series", "what": "CBS Studios series slate", "value": "15 new and returning series", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0002041610/000204161026000052/ex99_q226.htm", "quote": "CBS Studios is producing or co-producing 15 new and returning series", "confidence": "high" },
+    { "id": "wbd-segments", "what": "WBD operating segments before the acquisition", "value": "Streaming, Studios, Global Linear Networks", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001437107/000143710726000072/wbd2q26earningsrelease08.htm", "quote": "Global Linear Networks", "confidence": "high" },
+    { "id": "hbo-max-uk", "what": "HBO Max launched in the UK in Q1 2026", "value": "Launched in UK, Germany, Italy in Q1 2026", "market": "uk", "source": "https://www.sec.gov/Archives/edgar/data/0001437107/000143710726000072/wbd2q26shareholderletter.htm", "quote": "continued subscriber momentum in the U.K., Germany and Italy after successful launches in the first quarter", "confidence": "high" },
+    { "id": "hbo-series-2026", "what": "HBO series named in Q2 2026 letter", "value": "The Pitt season 2; House of the Dragon season 3", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001437107/000143710726000072/wbd2q26shareholderletter.htm", "quote": "season 3 premiere of the global hit series House of the Dragon", "confidence": "high" },
+    { "id": "leavesden", "what": "Warner Bros. Studios Leavesden location and owner", "value": "Leavesden, Watford, Hertfordshire; owned by Skydance Corporation", "market": "uk", "source": "https://en.wikipedia.org/wiki/Warner_Bros._Studios,_Leavesden", "quote": "owned by Skydance Corporation under Warner Bros. Studio Facilities", "confidence": "medium" },
+    { "id": "wb-burbank", "what": "Warner Bros. Studios Burbank", "value": "4000 Warner Boulevard, Burbank; 35 sound stages by 2015", "market": "us", "source": "https://en.wikipedia.org/wiki/Warner_Bros._Studios,_Burbank", "quote": "By 2015, the studio had 35 sound stages.", "confidence": "high" },
+    { "id": "superman-2025", "what": "Superman (2025) companies and date", "value": "DC Studios; distributed by Warner Bros. Pictures; US release 2025-07-11", "market": "us", "source": "https://en.wikipedia.org/wiki/Superman_(2025_film)", "quote": "Warner Bros. Pictures", "confidence": "high" },
+    { "id": "the-pitt", "what": "The Pitt premiere and producers", "value": "2025-01-09 on Max; John Wells Productions, Warner Bros. Television", "market": "us", "source": "https://en.wikipedia.org/wiki/The_Pitt", "quote": "January 9, 2025", "confidence": "high" },
+    { "id": "mi-final-reckoning", "what": "Mission: Impossible – The Final Reckoning companies, UK filming", "value": "Paramount Pictures, Skydance, TC Productions; filmed at Longcross Studios, England; US release 2025-05-23", "market": "us", "source": "https://en.wikipedia.org/wiki/Mission:_Impossible_%E2%80%93_The_Final_Reckoning", "quote": "Longcross Studios", "confidence": "high" },
+    { "id": "minecraft-uk", "what": "A Minecraft Movie was the top UK-Ireland film of 2025 (Warner Bros.)", "value": "No.1 in UK-Ireland 2025", "market": "uk", "source": "https://www.sec.gov/Archives/edgar/data/0001437107/000143710726000072/wbd2q26earningsrelease08.htm", "quote": "A Minecraft Movie", "confidence": "medium" },
+    { "id": "box-office-us-2025-disney", "what": "Disney 2025 US/Canada box office share", "value": "$2.49bn, 27.5%", "market": "us", "source": "https://longbridge.com/en/news/272898094", "quote": "Disney accounted for the highest share of that haul with $2.49 billion in ticket sales, or 27.5%", "confidence": "high" },
+    { "id": "box-office-us-2025-wbd", "what": "Warner Bros. 2025 US/Canada box office share", "value": "$1.9bn, 21%", "market": "us", "source": "https://longbridge.com/en/news/272898094", "quote": "Warner Bros. Discovery, which tallied $1.9 billion domestically, or 21%", "confidence": "high" },
+    { "id": "box-office-us-2025-universal", "what": "Universal 2025 US/Canada box office share", "value": "$1.7bn, 19.7%", "market": "us", "source": "https://longbridge.com/en/news/272898094", "quote": "Universal, which took in $1.7 billion, or 19.7%", "confidence": "high" },
+    { "id": "box-office-us-2025-sony", "what": "Sony 2025 domestic share (as of 2025-12-31)", "value": "about $560M, about 6.5%", "market": "us", "source": "https://www.thewrap.com/industry-news/business/universal-sony-lionsgate-2025-box-office-review/", "quote": "with approximately $560 million in domestic grosses, Sony's market share dipped to around 6.5%", "confidence": "medium" },
+    { "id": "box-office-global-disney", "what": "Disney 2025 global box office", "value": "$6.58bn, highest-grossing studio", "market": "global", "source": "https://www.screendaily.com/news/disney-tops-2025-studio-rankings-with-658bn-global-box-office-take-warner-and-universal-follow/5212392.article", "quote": "Walt Disney Studios' $6.58bn global box office haul for 2025 has made it the highest-grossing Hollywood studio for another year", "confidence": "high" },
+    { "id": "box-office-global-wb", "what": "Warner Bros. 2025 global box office", "value": "$4.4bn, 13% share", "market": "global", "source": "https://www.screendaily.com/news/disney-tops-2025-studio-rankings-with-658bn-global-box-office-take-warner-and-universal-follow/5212392.article", "quote": "Warner Bros' $4.4bn gave it a 13% market share, said the company, and was up 33% on the studio's 2024 global total.", "confidence": "high" },
+    { "id": "box-office-global-sony", "what": "Sony Pictures 2025 global box office", "value": "$1.47bn", "market": "global", "source": "https://www.screendaily.com/news/disney-tops-2025-studio-rankings-with-658bn-global-box-office-take-warner-and-universal-follow/5212392.article", "quote": "Sony Pictures ended the year with a worldwide total of $1.47bn, made up of $858m from international markets and $610.8m from North America.", "confidence": "high" },
+    { "id": "box-office-global-paramount", "what": "Paramount Pictures 2025 global box office", "value": "$1.42bn", "market": "global", "source": "https://www.screendaily.com/news/disney-tops-2025-studio-rankings-with-658bn-global-box-office-take-warner-and-universal-follow/5212392.article", "quote": "Paramount Pictures amassed $1.42bn globally, with $865.7m from international and $553.4m from domestic.", "confidence": "high" },
+    { "id": "box-office-uk-2025", "what": "UK-Ireland 2025 distributor shares", "value": "Universal 25.1% (£269m), Disney 23.1% (£247m), Warner Bros 18.5% (£197m)", "market": "uk", "source": "https://www.screendaily.com/news/uk-ireland-box-office-rises-1-in-2025/5212465.article", "quote": "Universal was the best-performing distributor for the first time since 2021, achieving a market share of 25.1% (up from 19.5% last year) and a total gross of £269m. Disney was second (market share of 23.1%, total gross of £247m) and Warner Bros third (market share of 18.5%, total gross of £197m).", "confidence": "high" },
+    { "id": "box-office-uk-total", "what": "UK-Ireland 2025 total box office", "value": "£1.1bn, +1%", "market": "uk", "source": "https://www.screendaily.com/news/uk-ireland-box-office-rises-1-in-2025/5212465.article", "quote": "Ticket sales at the 2025 UK-Ireland box office increased by 1% year-on-year to hit £1.1bn in 2025.", "confidence": "high" },
+    { "id": "amptp-members", "what": "AMPTP member companies (the SAG-AFTRA TV/Theatrical bargaining counterpart)", "value": "Paramount, Sony, Universal, Disney, Warner Bros., ABC, CBS, NBC, Netflix, Apple, Amazon", "market": "us", "source": "https://en.wikipedia.org/wiki/Alliance_of_Motion_Picture_and_Television_Producers", "quote": "AMPTP member companies include the major motion picture studios (including Paramount Pictures, Sony Pictures, Universal Pictures, Walt Disney Studios and Warner Bros.), the principal broadcast television networks (including ABC, CBS, FOX and NBC), streaming services like Netflix, Apple, and Amazon, certain cable television networks, and other independent film and television production companies.", "confidence": "high" },
+    { "id": "amptp-role", "what": "What the AMPTP does", "value": "Represents producers in collective bargaining", "market": "us", "source": "https://www.amptp.org/", "quote": "The Alliance of Motion Picture and Television Producers (AMPTP) represents hundreds of motion picture, television and streaming producers in collective bargaining negotiations.", "confidence": "high" },
+    { "id": "sag-aftra-2026-contract", "what": "SAG-AFTRA 2026 TV/Theatrical Agreement term", "value": "Effective 2026-07-01 to 2030-06-30", "market": "us", "source": "https://www.shootonline.com/article/sag-aftra-members-approve-4-year-tv-theatrical-agreement/", "quote": "The agreement is effective on July 1, 2026, and expires June 30, 2030.", "confidence": "high" },
+    { "id": "sag-aftra-2026-vote", "what": "SAG-AFTRA 2026 ratification vote", "value": "91.42% to 8.58%", "market": "us", "source": "https://www.shootonline.com/article/sag-aftra-members-approve-4-year-tv-theatrical-agreement/", "quote": "by a vote of 91.42% to 8.58% with a return of 19.25%.", "confidence": "high" },
+    { "id": "lionsgate-not-amptp", "what": "Lionsgate is not an AMPTP member (as of 2023)", "value": "Eligible for SAG-AFTRA interim agreements during the 2023 strike", "market": "us", "source": "https://www.thewrap.com/hunger-games-ballad-songbirds-snakes-sag-aftra/", "quote": "Because it's not a member of the Alliance of Motion Picture and Television Producers, Lionsgate is eligible to have its films qualify for the interim agreement.", "confidence": "medium" },
+    { "id": "equity-bbc-agreement", "what": "Equity BBC TV agreement 2025", "value": "13% rise in episodic fees from 7 April 2025", "market": "uk", "source": "https://ca.news.yahoo.com/equity-bbc-ink-agreement-increasing-133048268.html", "quote": "The deal, which takes effect from April 7, will see a 13% increase to a performer's episodic fees alongside an increase in other costs such as production day payments and overtime fees.", "confidence": "high" },
+    { "id": "equity-bbc-coverage", "what": "Coverage of the Equity BBC TV agreement", "value": "In-house BBC drama, comedy and children's (EastEnders, Casualty, Doctor Who, Silent Witness)", "market": "uk", "source": "https://ca.news.yahoo.com/equity-bbc-ink-agreement-increasing-133048268.html", "quote": "The BBC TV agreement only covers performers working on in-house BBC drama, comedy, and children's productions such as Eastenders, Casualty, Doctor Who, and Silent Witness.", "confidence": "high" },
+    { "id": "equity-itv-pact", "what": "Equity negotiating with ITV and Pact (March 2025)", "value": "Separate agreements under negotiation", "market": "uk", "source": "https://ca.news.yahoo.com/equity-bbc-ink-agreement-increasing-133048268.html", "quote": "Equity is in the midst of negotiating separate agreements with ITV and producer trade body Pact, which covers the majority of other UK TV shows.", "confidence": "high" },
+    { "id": "equity-pact-film-tv", "what": "Equity–Pact collective agreements cover film and TV", "value": "Formal negotiations began 2024", "market": "uk", "source": "https://epcastingcommunity.co.uk/blog/equity-and-pact-start-negotiations-for-new-uk-artist-agreements", "quote": "started formal negotiations with producer trade body Pact to update their collective agreements for film and TV productions", "confidence": "medium" },
+    { "id": "disney-hq", "what": "Disney headquarters", "value": "Burbank, California", "market": "us", "source": "https://en.wikipedia.org/wiki/The_Walt_Disney_Company", "quote": "The Walt Disney Studios, the company's headquarters in Burbank, California", "confidence": "high" },
+    { "id": "disney-labels", "what": "Walt Disney Studios labels", "value": "Walt Disney Pictures, WDAS, Pixar, Marvel Studios, Lucasfilm, 20th Century, Searchlight", "market": "global", "source": "https://en.wikipedia.org/wiki/The_Walt_Disney_Company", "quote": "Walt Disney Studios includes Walt Disney Pictures, Walt Disney Animation Studios, Pixar, Marvel Studios, Lucasfilm, 20th Century Studios, 20th Century Animation, and Searchlight Pictures.", "confidence": "high" },
+    { "id": "disney-networks", "what": "Disney networks", "value": "ABC, Disney Channel, ESPN, Freeform, FX, National Geographic", "market": "us", "source": "https://en.wikipedia.org/wiki/The_Walt_Disney_Company", "quote": "ABC television network; cable television networks such as Disney Channel, ESPN, Freeform, FX, and National Geographic", "confidence": "high" },
+    { "id": "disney-ceo", "what": "Disney CEO succession", "value": "Josh D'Amaro CEO effective 2026-03-18 (announced 2026-02-03)", "market": "us", "source": "https://thewaltdisneycompany.com/news/disney-ceo-announcement/", "quote": "it elected Disney Experiences Chairman Josh D'Amaro to become Chief Executive Officer of The Walt Disney Company, effective at the upcoming Annual Meeting on March 18, 2026", "confidence": "high" },
+    { "id": "disney-plus-subs", "what": "Disney+ subscribers (last reported)", "value": "132 million at end of fiscal Q4 2025 (Sept 2025)", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000154/fy2025_q4xprxex991.htm", "quote": "132 million Disney+ subscribers, an increase of 3.8 million vs. Q3 fiscal 2025", "confidence": "high" },
+    { "id": "disney-hulu-subs", "what": "Disney+ and Hulu combined subscriptions (last reported)", "value": "196 million (fiscal Q4 2025)", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000154/fy2025_q4xprxex991.htm", "quote": "196 million Disney+ and Hulu subscriptions, an increase of 12.4 million vs. Q3 fiscal 2025", "confidence": "high" },
+    { "id": "disney-hulu-ownership", "what": "Disney took full ownership of Hulu", "value": "Paid NBCUniversal $438.7M for remaining stake (June 2025)", "market": "us", "source": "https://www.livenowfox.com/news/disney-buys-comcast-hulu-stake", "quote": "The Walt Disney Company will pay Comcast's NBCUniversal nearly $439 million for its remaining stake in Hulu, ending a years-long appraisal process and giving Disney full control of the streaming platform.", "confidence": "high" },
+    { "id": "disney-pinewood", "what": "Disney long-term lease at Pinewood Studios (2019, ~10 years)", "value": "Almost all stages, backlots and production accommodation", "market": "uk", "source": "https://www.tvbeurope.com/production-post/disney-signs-10-year-deal-with-pinewood-studios", "quote": "Disney has signed a long-term deal with Pinewood Studios that includes almost all of the facility's stages, backlots and other production accommodation.", "confidence": "high" },
+    { "id": "disney-2025-billion", "what": "Disney had three $1bn films in 2025", "value": "Avatar: Fire and Ash, Zootopia 2, Lilo & Stitch", "market": "global", "source": "https://thewaltdisneycompany.com/news/avatar-fire-and-ash-1-billion/", "quote": "the third $1 billion title released by The Walt Disney Studios in 2025 alongside _Zootopia 2_ and _Lilo & Stitch_.", "confidence": "high" },
+    { "id": "andor-s2", "what": "Andor season 2 date and UK filming", "value": "Premiered 2025-04-22 on Disney+; filmed at Pinewood Studios", "market": "uk", "source": "https://en.wikipedia.org/wiki/Andor_(TV_series)", "quote": "Filming took place at Pinewood Studios in London and on location around the UK.", "confidence": "high" },
+    { "id": "the-bear-s4", "what": "The Bear season 4", "value": "Premiered 2025-06-25 on FX on Hulu", "market": "us", "source": "https://en.wikipedia.org/wiki/The_Bear_season_4", "quote": "premiered with all 10 episodes on June 25, 2025, on FX on Hulu.", "confidence": "high" },
+    { "id": "netflix-hq", "what": "Netflix headquarters", "value": "Los Gatos, California", "market": "us", "source": "https://en.wikipedia.org/wiki/Netflix", "quote": "Headquarters: Los Gatos, California, US", "confidence": "high" },
+    { "id": "netflix-subs", "what": "Netflix paid memberships", "value": "Crossed 325M in Q4 2025 (letter dated 2026-01-20)", "market": "global", "source": "https://s22.q4cdn.com/959853165/files/doc_financials/2025/q4/FINAL-Q4-25-Shareholder-Letter.pdf", "quote": "In Q4, revenue increased 18% year over year, and we crossed the 325M paid memberships milestone during the quarter.", "confidence": "high" },
+    { "id": "netflix-titles-q4-2025", "what": "Netflix Q4 2025 film slate", "value": "Frankenstein, Wake Up Dead Man, A House of Dynamite, Jay Kelly, Train Dreams", "market": "global", "source": "https://s22.q4cdn.com/959853165/files/doc_financials/2025/q4/FINAL-Q4-25-Shareholder-Letter.pdf", "quote": "A broad slate of films: Guillermo del Toro's Frankenstein* (102M), Wake Up Dead Man: A Knives", "confidence": "high" },
+    { "id": "netflix-stranger-things", "what": "Stranger Things final season (Q4 2025)", "value": "120M views", "market": "global", "source": "https://s22.q4cdn.com/959853165/files/doc_financials/2025/q4/FINAL-Q4-25-Shareholder-Letter.pdf", "quote": "Returning Series: the massive final season of Stranger Things* (120M views2)", "confidence": "high" },
+    { "id": "netflix-shepperton", "what": "Netflix long-term production hub at Shepperton (announced 2021-11-16)", "value": "Doubling of hub; ~1M sq ft and 17 stages in expansion", "market": "uk", "source": "https://pinewoodgroup.com/news/pinewood-group-announces-expansion-of-shepperton-studios-and-long-term-agreement-with-netflix/", "quote": "it has agreed a long-term contract with Netflix to double the size of its existing production hub at Shepperton Studios.", "confidence": "high" },
+    { "id": "netflix-albuquerque", "what": "Netflix owns Albuquerque Studios", "value": "Acquired 2018; twelve sound stages", "market": "us", "source": "https://en.wikipedia.org/wiki/Albuquerque_Studios", "quote": "include twelve sound stages, production offices, and a backlot.", "confidence": "high" },
+    { "id": "netflix-fort-monmouth", "what": "Netflix Studios Fort Monmouth, New Jersey", "value": "~292 acres, 12 sound stages, projected to open 2028", "market": "us", "source": "https://en.wikipedia.org/wiki/Netflix_Studios_Fort_Monmouth", "quote": "The studio campus occupies approximately 292 acres of the former military base in the boroughs of Oceanport and Eatontown.", "confidence": "high" },
+    { "id": "netflix-toronto", "what": "Netflix Canadian headquarters", "value": "Toronto", "market": "global", "source": "https://en.wikipedia.org/wiki/Netflix", "quote": "On April 27, Netflix announced it was opening its first Canadian headquarters in Toronto", "confidence": "medium" },
+    { "id": "adolescence", "what": "Adolescence (Netflix, UK)", "value": "Released 2025-03-13; Warp Films, Matriarch, Plan B; shot in Yorkshire", "market": "uk", "source": "https://en.wikipedia.org/wiki/Adolescence_(TV_series)", "quote": "The interior scenes at the police station were shot at a specially constructed film set at the Production Park studio facility in South Kirkby.", "confidence": "high" },
+    { "id": "kpop-demon-hunters", "what": "KPop Demon Hunters relationship", "value": "Produced by Sony Pictures Animation, distributed by Netflix, 2025-06-20", "market": "global", "source": "https://en.wikipedia.org/wiki/KPop_Demon_Hunters", "quote": "Sony Pictures Animation", "confidence": "high" },
+    { "id": "comcast-versant", "what": "Comcast completed Versant spin-off", "value": "2026-01-02; MS NOW, CNBC, USA Network, Golf Channel, E!, SYFY, Oxygen", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000162828026049360/cmcsa-20260630.htm", "quote": "On January 2, 2026, we completed the previously announced separation of Versant into an independent, publicly traded company", "confidence": "high" },
+    { "id": "comcast-nbcu-spin", "what": "Comcast to spin off NBCUniversal and Sky", "value": "Announced 2026-06-29; expected in about one year", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000095010326009591/dp249094_ex9901.htm", "quote": "expected to be completed through a tax-free spin-off to Comcast shareholders in approximately one year", "confidence": "high" },
+    { "id": "comcast-nbcu-spin-assets", "what": "Assets of the planned NBCUniversal company", "value": "Theme parks, Universal studios, NBC, Telemundo, Peacock, Bravo, Sky", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000095010326009591/dp249094_ex9901.htm", "quote": "theme parks division, Universal film and television studios, NBC and Telemundo networks, Peacock, and Bravo", "confidence": "high" },
+    { "id": "comcast-nbcu-ceo", "what": "CEO of planned NBCUniversal company", "value": "Mike Cavanagh", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000095010326009591/dp249094_ex9901.htm", "quote": "Mike Cavanagh will lead the new NBCUniversal media and entertainment company as CEO.", "confidence": "high" },
+    { "id": "peacock-subs", "what": "Peacock paid subscribers", "value": "48 million (June 30, 2026)", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000162828026049274/ex991-6302026.htm", "quote": "Paid Subscribers Increased by 2 Million Net Additions in the Quarter to 48 Million", "confidence": "high" },
+    { "id": "universal-mario-2026", "what": "The Super Mario Galaxy Movie box office", "value": "Over $1bn worldwide year-to-date (Q2 2026)", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000162828026049274/ex991-6302026.htm", "quote": "The Super Mario Galaxy Movie Grossed Over $1 Billion in Worldwide Box Office Year-to-Date", "confidence": "high" },
+    { "id": "focus-obsession", "what": "Focus Features' Obsession (2026)", "value": "Over $400M worldwide; Focus's highest-grossing film", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0001166691/000162828026049274/ex991-6302026.htm", "quote": "Obsession Grossed Over $400 Million in Worldwide Box Office Year-to-Date, Becoming Focus Features' Highest-Grossing Film in History", "confidence": "high" },
+    { "id": "nbcu-hq", "what": "NBCUniversal headquarters", "value": "30 Rockefeller Plaza, New York", "market": "us", "source": "https://en.wikipedia.org/wiki/NBCUniversal", "quote": "the Comcast Building (former RCA Building at 30 Rockefeller Plaza)", "confidence": "high" },
+    { "id": "universal-lot", "what": "Universal Studios Lot", "value": "Universal City, California; owned by NBCUniversal; over 30 sound stages", "market": "us", "source": "https://en.wikipedia.org/wiki/Universal_Studios_Lot", "quote": "owned by Comcast through its subsidiary NBCUniversal", "confidence": "high" },
+    { "id": "sky-elstree", "what": "Sky Studios Elstree", "value": "Borehamwood; 13 stages; final stage opened March 2023", "market": "uk", "source": "https://en.wikipedia.org/wiki/Sky_Studios_Elstree", "quote": "The facility has 13 stages ranging from 10,000 sq ft to 30,000 sq ft.", "confidence": "high" },
+    { "id": "day-of-the-jackal", "what": "The Day of the Jackal producers and premiere", "value": "Sky Studios, Universal International Studios, Carnival; Sky Atlantic 2024-11-07; Peacock in US", "market": "uk", "source": "https://en.wikipedia.org/wiki/The_Day_of_the_Jackal_(TV_series)", "quote": "The first series premiered on Sky Atlantic on 7 November 2024.", "confidence": "high" },
+    { "id": "wicked-for-good", "what": "Wicked: For Good release and distributor", "value": "Universal Pictures, US release 2025-11-21", "market": "us", "source": "https://en.wikipedia.org/wiki/Wicked:_For_Good", "quote": "theatrically released by Universal Pictures in the United States on November 21, 2025.", "confidence": "high" },
+    { "id": "sky-itv-deal", "what": "Sky to acquire ITV's broadcasting and streaming business", "value": "£1.6bn; ITV1-4 and ITVX; UTV included; ITV Studios excluded", "market": "uk", "source": "https://www.sportspro.com/news/broadcast-ott/itv-sky-acquisition-comcast-broadcasting-uk-fta-july-2026/", "quote": "Sky will acquire ITV's linear broadcasting and streaming business, which includes ITV1, ITV2, ITV3, ITV4 and ITVX.", "confidence": "high" },
+    { "id": "sky-itv-exclusion", "what": "ITV Studios excluded from the Sky deal", "value": "ITV Studios stays outside", "market": "uk", "source": "https://www.sportspro.com/news/broadcast-ott/itv-sky-acquisition-comcast-broadcasting-uk-fta-july-2026/", "quote": "The deal also includes ITV subsidiary UTV but excludes Scotland's STV, which is a separate company, and the ITV Studios production arm.", "confidence": "high" },
+    { "id": "sky-itv-close", "what": "Expected close of the Sky–ITV deal", "value": "Second half of 2027, subject to regulatory approval", "market": "uk", "source": "https://www.sportspro.com/news/broadcast-ott/itv-sky-acquisition-comcast-broadcasting-uk-fta-july-2026/", "quote": "The transaction is expected to close in the second half of 2027", "confidence": "high" },
+    { "id": "itv-plc-announcement", "what": "ITV plc announced the sale on 2026-07-06", "value": "Media & Entertainment to Sky for £1.6bn", "market": "uk", "source": "https://en.wikipedia.org/wiki/ITV_plc", "quote": "its media and entertainment division to Sky", "confidence": "high" },
+    { "id": "itv-ceo", "what": "ITV chief executive", "value": "Dame Carolyn McCall", "market": "uk", "source": "https://en.wikipedia.org/wiki/ITV_plc", "quote": "Dame Carolyn McCall", "confidence": "medium" },
+    { "id": "itv-studios-scale", "what": "ITV Studios scale", "value": "12 countries, 60 labels", "market": "global", "source": "https://en.wikipedia.org/wiki/ITV_Studios", "quote": "based in 12 countries across 60 production labels, with local production offices in the UK, the US, Belgium, Australia, Germany, the Netherlands, Italy, Israel, France, Spain, and Scandinavia", "confidence": "medium" },
+    { "id": "itv-studios-role", "what": "ITV Studios' role", "value": "Produces and distributes for ITV and third parties", "market": "uk", "source": "https://en.wikipedia.org/wiki/ITV_Studios", "quote": "handles production and distribution of programmes broadcast on the ITV network and third-party broadcasters", "confidence": "high" },
+    { "id": "itv-continuing-drama", "what": "ITV continuing dramas", "value": "Coronation Street and Emmerdale by ITV Studios Continuing Drama", "market": "uk", "source": "https://en.wikipedia.org/wiki/ITV_Studios", "quote": "Coronation Street and Emmerdale", "confidence": "high" },
+    { "id": "coronation-street-location", "what": "Coronation Street filming location", "value": "MediaCityUK, Trafford", "market": "uk", "source": "https://en.wikipedia.org/wiki/Coronation_Street", "quote": "filmed at MediaCityUK", "confidence": "high" },
+    { "id": "mr-bates", "what": "Mr Bates vs The Post Office", "value": "ITV1, 1–4 January 2024; Little Gem and ITV Studios", "market": "uk", "source": "https://en.wikipedia.org/wiki/Mr_Bates_vs_The_Post_Office", "quote": "was broadcast on four consecutive days from 1 January 2024.", "confidence": "high" },
+    { "id": "betrayal-itv", "what": "Betrayal (ITV, 2026)", "value": "ITV1 and ITVX 2026-02-08; Mammoth Screen", "market": "uk", "source": "https://en.wikipedia.org/wiki/Betrayal_(2026_TV_series)", "quote": "The series aired on ITV1 and ITVX on 8 February 2026.", "confidence": "high" },
+    { "id": "bbc-hq", "what": "BBC legal form and headquarters", "value": "Chartered public service broadcaster; Broadcasting House, London", "market": "uk", "source": "https://en.wikipedia.org/wiki/BBC", "quote": "headquartered at Broadcasting House in London, England.", "confidence": "high" },
+    { "id": "bbc-charter", "what": "BBC Charter term", "value": "Expires 2027-12-31", "market": "uk", "source": "https://en.wikipedia.org/wiki/BBC", "quote": "took effect on 1 January 2017 and is set to expire on 31 December 2027.", "confidence": "high" },
+    { "id": "bbc-dg", "what": "BBC Director-General", "value": "Matt Brittin from 2026-05-18, replacing Tim Davie (announced 2026-03-25)", "market": "uk", "source": "https://radiotoday.co.uk/2026/03/matt-brittin-appointed-bbc-director-general/", "quote": "The former Google executive has been appointed as the Corporation's 18th Director-General, taking over on 18 May after a short handover period.", "confidence": "high" },
+    { "id": "bbc-commissioning", "what": "BBC original UK TV investment (2024/25 commissioning report)", "value": "More than £1.6bn; over 300 production companies", "market": "uk", "source": "https://www.advanced-television.com/2025/07/22/report-bbc-invests-1-6bn-in-original-tv-content/", "quote": "Over the past year, the BBC invested more than £1.6 billion in original UK television content", "confidence": "high" },
+    { "id": "bbc-studios-def", "what": "BBC Studios definition", "value": "Commercial subsidiary formed April 2018", "market": "uk", "source": "https://en.wikipedia.org/wiki/BBC_Studios", "quote": "a commercial subsidiary of the BBC that was formed in April 2018 through the merger of the BBC's commercial production arm and the BBC's commercial international distribution arm, BBC Worldwide.", "confidence": "high" },
+    { "id": "bbc-studios-functions", "what": "BBC Studios functions", "value": "Creates, develops, produces, distributes, broadcasts, finances, sells", "market": "global", "source": "https://en.wikipedia.org/wiki/BBC_Studios", "quote": "creates, develops, produces, distributes, broadcasts, finances and sells content around the world, returning around £200 million to the BBC annually in dividends and content investment.", "confidence": "high" },
+    { "id": "bbc-studios-hq", "what": "BBC Studios headquarters", "value": "Television Centre, London", "market": "uk", "source": "https://en.wikipedia.org/wiki/BBC_Studios", "quote": "Television Centre, London, England.", "confidence": "high" },
+    { "id": "doctor-who-s15", "what": "Doctor Who series 15", "value": "12 April–31 May 2025; BBC One/iPlayer in UK, Disney+ abroad; Bad Wolf, BBC Studios", "market": "uk", "source": "https://en.wikipedia.org/wiki/Doctor_Who_series_15", "quote": "BBC iPlayer and BBC One in the UK", "confidence": "medium" },
+    { "id": "eastenders", "what": "EastEnders production and location", "value": "BBC Studios Continuing Drama Productions; BBC Elstree Centre", "market": "uk", "source": "https://en.wikipedia.org/wiki/EastEnders", "quote": "filmed at the BBC Elstree Centre since its inception.", "confidence": "high" },
+    { "id": "sony-hq", "what": "Sony Pictures Entertainment legal name and HQ", "value": "Sony Pictures Entertainment Inc., Culver City", "market": "us", "source": "https://en.wikipedia.org/wiki/Sony_Pictures", "quote": "Poitier Building, 10202 West Washington Boulevard, Culver City, California.", "confidence": "high" },
+    { "id": "sony-parent", "what": "SPE parent", "value": "Sony Group Corporation", "market": "global", "source": "https://en.wikipedia.org/wiki/Sony_Pictures", "quote": "Sony Group Corporation", "confidence": "medium" },
+    { "id": "sony-uk", "what": "SPE UK production companies", "value": "Left Bank Pictures and Bad Wolf", "market": "uk", "source": "https://en.wikipedia.org/wiki/Sony_Pictures", "quote": "UK-based production companies under SPE include Left Bank Pictures and Bad Wolf", "confidence": "low" },
+    { "id": "sony-lot", "what": "Sony Pictures Studios lot", "value": "Culver City; sixteen sound stages", "market": "us", "source": "https://en.wikipedia.org/wiki/Sony_Pictures_Studios", "quote": "currently houses a total of sixteen separate sound stages", "confidence": "high" },
+    { "id": "28-years-later", "what": "28 Years Later", "value": "Columbia Pictures, Decibel Films, DNA Films; released June 2025; filmed in northern England", "market": "uk", "source": "https://en.wikipedia.org/wiki/28_Years_Later", "quote": "Columbia Pictures", "confidence": "high" },
+    { "id": "last-of-us-s2", "what": "The Last of Us season 2", "value": "HBO, 2025-04-13; Sony Pictures Television, PlayStation Productions", "market": "us", "source": "https://en.wikipedia.org/wiki/The_Last_of_Us_(TV_series)", "quote": "April 13, 2025 (2025-04-13)", "confidence": "high" },
+    { "id": "amazon-mgm-hq", "what": "Amazon MGM Studios HQ", "value": "The Culver Studios, Culver City", "market": "us", "source": "https://en.wikipedia.org/wiki/Amazon_MGM_Studios", "quote": "The Culver Studios", "confidence": "high" },
+    { "id": "amazon-bond", "what": "Amazon MGM Bond joint venture (2025)", "value": "Joint venture to manage James Bond rights", "market": "global", "source": "https://en.wikipedia.org/wiki/Amazon_MGM_Studios", "quote": "announced its intentions to form a joint venture to manage the franchise rights to James Bond.", "confidence": "medium" },
+    { "id": "amazon-bray", "what": "Amazon owns Bray Film Studios (2024-07-22)", "value": "Water Oakley, Berkshire; Rings of Power season 2", "market": "uk", "source": "https://www.aboutamazon.eu/news/retail/amazon-prime-video-acquires-the-iconic-bray-film-studios-in-the-uk", "quote": "Bray Film Studio has been the production home for the second season of the hit Prime Video series The Lord of the Rings: The Rings of Power since 2022.", "confidence": "high" },
+    { "id": "amazon-shepperton", "what": "Prime Video long-term deal at Shepperton (2022-02-09)", "value": "9 sound stages, ~450,000 sq ft", "market": "uk", "source": "https://press.aboutamazon.com/uk/2022/2/prime-video-strikes-deal-with-pinewood-group-to-take-uk-production-facilities-at-shepperton-studios", "quote": "9 sound stages, workshops and office accommodation, totalling approximately 450,000 square feet", "confidence": "high" },
+    { "id": "project-hail-mary", "what": "Project Hail Mary (2026)", "value": "Amazon MGM Studios (US/Canada), Sony Pictures Releasing International (overseas); filmed in UK incl. Shepperton", "market": "global", "source": "https://en.wikipedia.org/wiki/Project_Hail_Mary_(film)", "quote": "throughout 2024 in the United Kingdom", "confidence": "high" },
+    { "id": "fallout-s2", "what": "Fallout season 2", "value": "Prime Video 2025-12-16; Kilter Films, Bethesda, Amazon MGM Studios", "market": "global", "source": "https://en.wikipedia.org/wiki/Fallout_(American_TV_series)", "quote": "The second season was set to premiere on December 17, 2025, but later scheduled to release a day earlier on December 16, 2025 at 6 PM Pacific Time.", "confidence": "high" },
+    { "id": "apple-rename", "what": "Apple TV+ renamed Apple TV (2025-10-13)", "value": "Drop of the '+'", "market": "global", "source": "https://www.macrumors.com/2025/10/13/apple-tv-plus-rebrand/", "quote": "Apple TV+ is now simply Apple TV, with a vibrant new identity", "confidence": "high" },
+    { "id": "apple-studios", "what": "Apple Studios", "value": "Apple Studios LLC (Apple Original Films), Culver City; subsidiary of Apple Inc.", "market": "us", "source": "https://en.wikipedia.org/wiki/Apple_Studios", "quote": "Apple Studios LLC, commonly known as Apple Original Films, is an American film, television and in-house production company", "confidence": "high" },
+    { "id": "apple-subs", "what": "Apple TV paid memberships", "value": "over 60 million (2025, not officially disclosed by Apple)", "market": "global", "source": "https://en.wikipedia.org/wiki/Apple_TV_(streaming_service)", "quote": "over 60 million paid memberships", "confidence": "low" },
+    { "id": "f1-film", "what": "F1 (2025)", "value": "Apple Studios et al.; theatrical with Warner Bros. Pictures; $634.1M worldwide", "market": "global", "source": "https://en.wikipedia.org/wiki/F1_(film)", "quote": "the highest-grossing film by Apple", "confidence": "high" },
+    { "id": "severance-s2", "what": "Severance season 2", "value": "Apple TV+ 2025-01-17; Red Hour, Fifth Season; filmed NYC/NJ", "market": "us", "source": "https://en.wikipedia.org/wiki/Severance_(TV_series)", "quote": "January 17, 2025", "confidence": "high" },
+    { "id": "slow-horses", "what": "Slow Horses", "value": "Apple TV+ from 2022-04-01; See-Saw Films; filmed in UK", "market": "uk", "source": "https://en.wikipedia.org/wiki/Slow_Horses", "quote": "See-Saw Films", "confidence": "high" },
+    { "id": "lionsgate-separation", "what": "Lionsgate completed separation from Starz", "value": "2025-05-07 (Lionsgate); trades as LION on NYSE", "market": "us", "source": "https://www.tipranks.com/news/company-announcements/lionsgate-completes-strategic-separation-from-starz", "quote": "On May 7, 2025, Lions Gate Entertainment Corp. announced the completion of its separation from STARZ, resulting in two independent, publicly traded companies.", "confidence": "high" },
+    { "id": "lionsgate-business", "what": "Lionsgate business description (10-K FY ended 2026-03-31)", "value": "Pure play content company; 20,000+ title library", "market": "global", "source": "https://www.sec.gov/Archives/edgar/data/0002052959/000205295926000049/lion-20260331.htm", "quote": "one of the world's leading standalone, pure play content companies", "confidence": "high" },
+    { "id": "lionsgate-hq", "what": "Lionsgate executive offices", "value": "Santa Monica and Vancouver", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0002052959/000205295926000049/lion-20260331.htm", "quote": "2700 Colorado Avenue, Santa Monica, California 90404.", "confidence": "high" },
+    { "id": "lionsgate-releases", "what": "Lionsgate theatrical releases FY2026", "value": "24 films in US, incl. Ballerina, Now You See Me: Now You Don't, The Strangers – Chapter 2, Kill Bill: The Whole Bloody Affair", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0002052959/000205295926000049/lion-20260331.htm", "quote": "a more than 20,000-title film and television library", "confidence": "medium" },
+    { "id": "lionsgate-3arts", "what": "Lionsgate's 3 Arts Entertainment", "value": "Talent management and production company", "market": "us", "source": "https://www.sec.gov/Archives/edgar/data/0002052959/000205295926000049/lion-20260331.htm", "quote": "a premiere talent management and production powerhouse", "confidence": "high" },
+    { "id": "lionsgate-takeover-interest", "what": "Takeover interest in Lionsgate (July 2026)", "value": "Banijay and Mediawan; no deal certain", "market": "global", "source": "https://finance.yahoo.com/media-advertising/articles/banijay-mediawan-eye-lionsgate-studios-155744133.html", "quote": "No deal is guaranteed, and Lionsgate could ultimately choose to remain independent.", "confidence": "high" },
+    { "id": "banijay-all3media", "what": "Banijay and All3Media merger completed", "value": "2026-07-09; 50/50 Banijay Group and RedBird IMI; London HQ", "market": "global", "source": "https://www.banijay.com/blog/2026/07/09/banijay-entertainment-and-all3media-combination-creates-leading-global-media-and-entertainment-powerhouse/", "quote": "The combined Banijay Entertainment is headquartered in London", "confidence": "high" },
+    { "id": "banijay-revenue", "what": "Combined Banijay revenue 2025", "value": "over €4.3bn", "market": "global", "source": "https://www.banijay.com/blog/2026/07/09/banijay-entertainment-and-all3media-combination-creates-leading-global-media-and-entertainment-powerhouse/", "quote": "On a combined basis, in 2025, the new Banijay Entertainment would have generated over €4.3 billion in revenues and over €0.7 billion in adjusted EBITDA", "confidence": "high" },
+    { "id": "a24-profile", "what": "A24 profile", "value": "New York independent; $3.5bn valuation (June 2024)", "market": "us", "source": "https://en.wikipedia.org/wiki/A24", "quote": "an American independent entertainment company specializing in film and television production, as well as film distribution", "confidence": "high" },
+    { "id": "fremantle-profile", "what": "Fremantle profile", "value": "London-based; owned by RTL Group (Bertelsmann); format-led", "market": "uk", "source": "https://en.wikipedia.org/wiki/Fremantle_(company)", "quote": "a British multinational television production and distribution company based in London.", "confidence": "high" }
+  ],
+  "notFound": [
+    { "what": "PACT membership of each of the ten companies", "tried": "Searched for Pact member lists and Equity/Pact agreement coverage; Pact's digest pages returned 404 or did not name member companies. The BBC's in-house Equity agreement is verified; ITV's own Equity agreement outcome after March 2025 negotiations was not found." },
+    { "what": "Whether the Equity–Pact film/TV agreement negotiations that began in 2024 concluded, and on what terms", "tried": "Pact resource pages and trade press; only interim 2025-26 rate digests and the 2024 negotiation start were found. equity.org.uk is not reachable by the search tool." },
+    { "what": "AMPTP membership status of Lionsgate after 2023, and of Skydance Corporation as a merged entity", "tried": "AMPTP site does not list members; the Wikipedia list names Paramount Pictures and Warner Bros. separately; the Lionsgate non-membership source is from October 2023." },
+    { "what": "Netflix, Disney+, Apple TV current subscriber counts in 2026", "tried": "Netflix and Disney stopped quarterly subscriber reporting (Netflix from Q1 2025; Disney+ and Hulu from fiscal Q1 2026); Apple has never disclosed. The last-published figures are used and dated." },
+    { "what": "Combined HBO Max global subscriber total at June 30, 2026", "tried": "WBD Q2 2026 earnings release and shareholder letter as fetched did not state the total; a trade report of 125.7M (Media Play News) returned a server error and was not used." },
+    { "what": "Annual counts of original scripted series ordered per company (US/UK)", "tried": "No consistent published per-company count of scripted series orders for 2025 was found; CBS Studios' '15 new and returning series' is the only company-stated count used." },
+    { "what": "Skydance Corporation's official press release on closing (2026-10-06)", "tried": "Variety, Hollywood Reporter and CNBC returned paywall/403; closing confirmed through PBS/AP, The Wrap (staff memo), NBC News and Wikipedia instead." },
+    { "what": "Lionsgate owned studio facilities", "tried": "The 10-K excerpt fetched named executive offices only; a reported Yonkers studio interest was not verified, so facilities is left empty." },
+    { "what": "Wikipedia claim that Mediawan 'won' a bidding war for Lionsgate in July 2026 and was in 'phase 2 review' in October 2026", "tried": "Not corroborated by any news source found; the latest corroborated reporting (2026-07-15) says no deal is certain. Treated as unverified." }
+  ]
+}

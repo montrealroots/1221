@@ -28,6 +28,7 @@ import { CITIES } from '../content/geography';
 import { ROLES, type CareerCity } from '../content/career';
 import { attributesOf } from './attributes';
 import { AUDITION_KIND, careerOf, genreOf, nextOwnId, roleById, workCity, type Audition } from './career';
+import { attachAudition } from './industry';
 
 export interface CommercialAgency { id: string; name: string; cities: readonly CareerCity[]; bar: number; auditionsPerWeek: number }
 
@@ -121,6 +122,8 @@ export function scheduleCommercialWeek(sim: Simulation, person: Person, weekStar
   const career = careerOf(person);
   for (const one of commercialWeek(sim, person, weekStart)) {
     const audition: Audition = { ...one, id: nextOwnId(career, 'a'), status: 'ahead', ...genreOf(roleById(one.roleId), 0) };
+    // The commercial it's for (`systems/industry.ts`, from 2026-10-08).
+    if (person.id === sim.universe.playerId) attachAudition(sim, audition);
     career.auditions.push(audition);
     sim.schedule({ at: audition.at, kind: AUDITION_KIND, label: `Audition: ${roleById(audition.roleId).label}`, category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, locationId: audition.cityId, payload: { personId: person.id, auditionId: audition.id } });
   }

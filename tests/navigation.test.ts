@@ -107,11 +107,12 @@ describe('what was taken out', () => {
     // booked, kept on the calendar and taken (`systems/journey.ts`). Vehicles
     // came back the same day, at the owner's word, as Stage 3 of docs/WORLD.md:
     // a real car bought, taxed, insured and registered where one lives
-    // (`systems/vehicles.ts`).
+    // (`systems/vehicles.ts`). The Industry came back on 2026-10-08, at the owner's word, as the entertainment
+    // database over the game's own projects, companies and people (`systems/industry.ts`, `world/database.ts`).
     const removed = [
       'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
-      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
+      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
       'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
       'TrackWorkspace', 'WellbeingWorkspace', 'WorkWorkspace',

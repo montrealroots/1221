@@ -51,6 +51,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       { route: '/workspace/career', label: 'Your Career', detail: 'Your agency, auditions, work and unions', homeOnly: true },
       { route: '/workspace/school', label: 'Your School', detail: 'Your standing, classes, casting and terms', homeOnly: true },
+      { route: '/workspace/industry', label: 'The Industry', detail: 'Real films and series, the companies, and this save’s projects', homeOnly: true },
     ],
   },
   {

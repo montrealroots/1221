@@ -37,6 +37,10 @@ describe('an acting job on location, there and home', () => {
     const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    // SETUP: the production keeps its dates. Since series, voice and commercial work were given their own changes
+    // (b014236b), this job's draw is a cut of its last day, which sends the actor home before the repack this journey
+    // walks; `tests/rescheduling*.test.ts` hold what a change does.
+    for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
     const out = sim.universe.scheduled.find((i) => i.kind === 'career.travel' && i.payload.bookingId === 'tor' && i.payload.direction === 'out')!;
     expect(out).toBeDefined();
 

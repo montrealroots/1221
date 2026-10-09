@@ -12,6 +12,7 @@ import { ClothesWorkspace } from './ClothesWorkspace';
 import { FoodWorkspace } from './FoodWorkspace';
 import { RoutinesWorkspace } from './RoutinesWorkspace';
 import { PeopleWorkspace } from './PeopleWorkspace';
+import { IndustryWorkspace } from './IndustryWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
@@ -28,9 +29,12 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/food': FoodWorkspace,
   '/workspace/routines': RoutinesWorkspace,
   '/workspace/people': PeopleWorkspace,
+  '/workspace/industry': () => <IndustryWorkspace route="/workspace/industry" />,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {
+  // The Industry's pages each have an address of their own under it (from 2026-10-08).
+  if (route === '/workspace/industry' || route.startsWith('/workspace/industry/')) return <IndustryWorkspace route={route} />;
   const Workspace = WORKSPACES[route];
   if (!Workspace) {
     return (

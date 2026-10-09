@@ -27,6 +27,7 @@ import { classmatePresence, nudge } from './attributes';
 import { BONDS, bondMove, bondWord, type Classmate } from './school';
 import { classmateTakesJob } from './companies';
 import { contactsOf } from './people';
+import { castPart, projectById, projectFor } from './industry';
 
 export const RIVALS = {
   /** The chance a classmate, out of school, is in the room for one of the player's auditions. */
@@ -79,7 +80,7 @@ const NEWSWORTHY: Readonly<Record<string, { source: 'Deadline' | 'Playbill'; wor
 export interface NewsItem { at: Instant; source: string; headline: string; about: 'you' | 'class' }
 
 /** A classmate's life after the degree: their agency, and the work they've booked. */
-export interface ClassmateCareer { agencyId?: string; credits: { roleId: string; year: number }[]; /** On a job with the player until then (`castClassmate`, from 2026-10-08). */ busyUntil?: Instant }
+export interface ClassmateCareer { agencyId?: string; credits: { roleId: string; year: number; /** The project it was (`systems/industry.ts`, from 2026-10-08). */ projectId?: string }[]; /** On a job with the player until then (`castClassmate`, from 2026-10-08). */ busyUntil?: Instant }
 
 /** Something in the trades: kept on the player's record, the latest first, and a little recognition when it's them. */
 export function report(sim: Simulation, person: Person, source: string, headline: string, about: 'you' | 'class'): void {
@@ -203,10 +204,27 @@ function syncRival(person: Person, i: number): void {
 }
 
 /** A part a classmate booked: on their record, and in the trades where it makes them. */
-export function classmateBooked(sim: Simulation, person: Person, i: number, role: Role, when: Instant): void {
+/**
+ * A classmate booked: the credit, the trades, and how the player takes the news. The credit is a part in a project
+ * (from 2026-10-08, `systems/industry.ts`): the player's own production's, the part they read for against the player,
+ * or one casting in the town the classmate works in, the part theirs.
+ */
+export function classmateBooked(sim: Simulation, person: Person, i: number, role: Role, when: Instant, place?: { projectId?: string; partId?: string }): void {
   const m = person.school?.classmates[i];
   if (!m?.career) return;
-  m.career.credits.push({ roleId: role.id, year: zonedParts(when, sim.homeZone).year });
+  let projectId = place?.projectId;
+  if (person.id === sim.universe.playerId && !place?.projectId) {
+    const town = contactsOf(person).find((c) => c.classmate === i)?.cityId;
+    const cityId = town && role.cities.includes(town as never) ? town : role.cities[0]!;
+    const found = projectFor(sim, role, cityId, when, `class-${i}-${when}`, true);
+    castPart(found.project, found.part, { kind: 'classmate', i });
+    projectId = found.project.id;
+  } else if (place?.projectId && place.partId) {
+    const project = projectById(sim, place.projectId);
+    const part = project?.parts.find((x) => x.id === place.partId);
+    if (project && part && part.holder?.kind !== 'player') castPart(project, part, { kind: 'classmate', i });
+  }
+  m.career.credits.push({ roleId: role.id, year: zonedParts(when, sim.homeZone).year, ...(projectId ? { projectId } : {}) });
   m.career.credits = m.career.credits.slice(-30);
   const line = castLine(m.name, role);
   if (!line) return;

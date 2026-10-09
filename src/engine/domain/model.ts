@@ -701,4 +701,7 @@ export interface SaveUniverse {
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
 
+  /** The business outside the player's career: projects, performers, and the player's lists and ratings (`systems/industry.ts`, from 2026-10-08). Absent on a save from before, and made on first use. */
+  industry?: import('../systems/industry').IndustryState;
+
 }

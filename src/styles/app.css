@@ -1354,3 +1354,27 @@ td, th { overflow-wrap: break-word; }
 /* A statement's lines keep their columns, scrolling as one on a phone. */
 .statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .statement-lines > .row-between { min-width: 520px; }
+
+/* The Industry (from 2026-10-08): result lists, facts, the find box and its suggestions, the filters. */
+.results { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.result { display: flex; flex-direction: column; gap: 2px; padding: var(--s2) 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.result:last-child { border-bottom: 0; }
+.result > * { min-width: 0; overflow-wrap: anywhere; }
+ol.results { counter-reset: rank; }
+ol.results > .result { padding-left: var(--s6); position: relative; }
+ol.results > .result::before { counter-increment: rank; content: counter(rank); position: absolute; left: 0; top: var(--s2); color: var(--text-dim); font-size: var(--size-xs); }
+.facts { margin: 0; display: flex; flex-direction: column; gap: var(--s2); }
+.facts-row { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: var(--s3); align-items: baseline; }
+.facts-row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .facts-row { grid-template-columns: 1fr; gap: 2px; } }
+.find-box { position: relative; }
+.find-box .input { width: 100%; }
+.find-hints { list-style: none; margin: var(--s1) 0 0; padding: var(--s1); position: absolute; left: 0; right: 0; z-index: 20; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.3)); }
+.find-hint { display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: 44px; padding: var(--s2) var(--s3); background: none; border: 0; color: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm, 4px); }
+.find-hint:hover, .find-hint:focus-visible { background: var(--surface-2); }
+.find-hint > * { max-width: 100%; }
+.filters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: flex-end; }
+.filters label { display: flex; flex-direction: column; gap: var(--s1); min-width: 0; }
+.filters .input, .filters select { max-width: 100%; }
+.filters .row .input { width: 5.5em; }
+.result > button.link, .result > .row > button.link, .result button.link { align-self: flex-start; text-align: left; }

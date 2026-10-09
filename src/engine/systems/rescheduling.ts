@@ -58,7 +58,8 @@ import { MS_DAY, MS_HOUR, formatDate, formatTime, zonedParts, type Instant } fro
 import { CITIES } from '../content/geography';
 import type { Role } from '../content/career';
 import { FITTING_KIND, PAY_KIND, STAY_KIND, TRAVEL_KIND, WORK_KIND, careerOf, finishJob, paydaysFor, roleById, schedulePay, sendHome, unitRate, usd, workCityOf, workDays, workMinutes, type Booking } from './career';
-import { playerReplaced, productionOf, productionsOf, type Production } from './companies';
+import { performerName, playerReplaced, productionOf, productionsOf, replacementFor, type Production } from './companies';
+import { cancelProject, moveCommitments, projectById } from './industry';
 import { journeysOf, whereBy } from './journey';
 
 export type ChangeKind = 'postpone' | 'postpone_rest' | 'call_time' | 'add_day' | 'cut_rest' | 'cancel' | 'request';
@@ -373,11 +374,24 @@ export function applyProposal(sim: Simulation, person: Person, booking: Booking,
     if (!elsewhere) continue;
     const m = person.school!.classmates[i]!;
     slot.status = 'replaced';
-    p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: { kind: 'company' }, from: sim.now, shared: 0 });
-    p.history.push({ at: sim.now, what: `${m.name} couldn’t make the new dates and withdrew from ${slot.part.toLowerCase()}${slot.shared ? ` after ${slot.shared} ${slot.shared === 1 ? 'day' : 'days'} side by side` : ''}; a company actor plays it` });
+    const next = replacementFor(sim, p, slot, sim.now, last, 'couldn’t make the new dates');
+    p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: next, from: sim.now, shared: 0 });
+    p.history.push({ at: sim.now, what: `${m.name} couldn’t make the new dates and withdrew from ${slot.part.toLowerCase()}${slot.shared ? ` after ${slot.shared} ${slot.shared === 1 ? 'day' : 'days'} side by side` : ''}; ${performerName(sim, person, next)} plays it` });
     // Cast, not worked through: the casting's credit given back where nothing was worked.
     if (!slot.shared) { const credits = m.career?.credits ?? []; const k = credits.map((c) => c.roleId).lastIndexOf(p.roleId); if (k >= 0) credits.splice(k, 1); }
     tell(sim, person, `${m.name.split(' ')[0]} Withdrew`, `${m.name} couldn’t make ${p.title}’s new dates. A company actor plays ${slot.part.toLowerCase()}.`);
+  }
+  // The performers in the other parts: their commitments moved, and one with another part over the new dates gives this
+  // one up to a performer who's free (`moveCommitments`, from 2026-10-08).
+  const project = projectById(sim, p.projectId);
+  if (project) {
+    for (const line of moveCommitments(sim, project, first, last)) p.history.push({ at: sim.now, what: line });
+    for (const slot of [...p.slots]) {
+      const part = project.parts.find((x) => x.id === slot.partId);
+      if (slot.status !== 'cast' || slot.performer.kind !== 'company' || !slot.performer.id || part?.holder?.kind !== 'performer' || part.holder.id === slot.performer.id) continue;
+      slot.status = 'replaced';
+      p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: { kind: 'company', id: part.holder.id }, from: sim.now, shared: 0 });
+    }
   }
   pr.status = 'applied';
   pr.closedAt = sim.now;
@@ -401,7 +415,7 @@ export function refuseProposal(sim: Simulation, person: Person, booking: Booking
 }
 
 /** Released from a job a change ended: the cancellation's pay owed and paid, its calls gone, home, and the part recast; what was worked stays paid. */
-function release(sim: Simulation, person: Person, booking: Booking, why: string, opening: string): void {
+function release(sim: Simulation, person: Person, booking: Booking, why: string, opening: string, recast = true): void {
   const pay = cancellationPay(sim, booking);
   booking.status = 'released';
   booking.cancellationOwed = (booking.cancellationOwed ?? 0) + pay.owed;
@@ -410,7 +424,7 @@ function release(sim: Simulation, person: Person, booking: Booking, why: string,
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && (item.kind === WORK_KIND || item.kind === FITTING_KIND) && item.payload.bookingId === booking.id) sim.timeline.cancel(item.id, sim.now);
   schedulePay(sim, person, booking, sim.now + 60_000, true);
   sendHome(sim, booking);
-  playerReplaced(sim, person, booking.id, `released: ${why}${booking.worked ? ` after ${booking.worked} ${booking.worked === 1 ? 'day' : 'days'} worked` : ''}`);
+  if (recast) playerReplaced(sim, person, booking.id, `released: ${why}${booking.worked ? ` after ${booking.worked} ${booking.worked === 1 ? 'day' : 'days'} worked` : ''}`);
   tell(sim, person, 'Released From The Job', `${opening}: you’re ${pay.words}. What you worked is paid as it was.`);
 }
 
@@ -448,7 +462,8 @@ export function registerRescheduling(sim: Simulation): void {
       pr.status = 'applied';
       pr.closedAt = s.now;
       productionOf(person, booking.id)!.history.push({ at: s.now, what: `Called off: ${describe(s, pr)}` });
-      release(s, person, booking, 'the production called it off', `${roleById(booking.roleId).label} was called off, because ${pr.reason}`);
+      cancelProject(s, booking.projectId, pr.reason);
+      release(s, person, booking, 'the production called it off', `${roleById(booking.roleId).label} was called off, because ${pr.reason}`, false);
       return;
     }
     // A notice takes effect at its date, unless something now stands in its way: then the production keeps the old time.

@@ -65,9 +65,11 @@ import { occupiedAt } from './life';
 import { exerts } from './body';
 import { contactsOf } from './people';
 import { BONDS, bondMove, focusOf, type Craft } from './school';
+import { castPart, castPerformer, performerById, projectById, recastToPerformer, type Project } from './industry';
 
 export type SlotSize = 'principal' | 'supporting' | 'featured' | 'understudy';
-export type Performer = { kind: 'player' } | { kind: 'classmate'; i: number } | { kind: 'company' };
+/** A company actor is a performer from the business's pool, by id, from 2026-10-08 (`systems/industry.ts`); before, a part's performer with no name. */
+export type Performer = { kind: 'player' } | { kind: 'classmate'; i: number } | { kind: 'company'; id?: string };
 export interface Slot {
   id: string;
   part: string;
@@ -78,9 +80,11 @@ export interface Slot {
   until: Instant;
   /** Days worked side by side with the player. */
   shared: number;
+  /** The project's part it is (`systems/industry.ts`). */
+  partId?: string;
 }
 /** A production; its history, who was asked and who was replaced, is shown on the job (Career, Work). */
-export interface Production { id: string; bookingId: string; /** Its role, whose credit a classmate who withdraws gives back. */ roleId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** Changes to its schedule proposed, and what became of them (`systems/rescheduling.ts`, from 2026-10-08). */ proposals?: import('./rescheduling').Proposal[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
+export interface Production { id: string; bookingId: string; /** The project it is in the business (`systems/industry.ts`, from 2026-10-08). */ projectId?: string; /** Its role, whose credit a classmate who withdraws gives back. */ roleId: string; title: string; medium: Role['medium']; slots: Slot[]; history: { at: Instant; what: string }[]; /** Changes to its schedule proposed, and what became of them (`systems/rescheduling.ts`, from 2026-10-08). */ proposals?: import('./rescheduling').Proposal[]; /** The player's part's lines known, 0 to 1. */ lines?: number }
 
 export const COMPANY = {
   /** The other parts a production casts, by medium. */
@@ -118,17 +122,24 @@ function heldBetween(person: Person, i: number, from: Instant, until: Instant): 
  * taken once (`career.accept`, or a series picked up as a booking of its own).
  */
 export function makeProduction(sim: Simulation, person: Person, booking: { id: string; roleId: string }, role: Role, cityId: string, from: Instant, until: Instant,
-  read: (craft: Craft) => number, booked: (i: number) => void): Production {
+  read: (craft: Craft) => number, booked: (i: number) => void, project?: Project): Production {
   const year = new Date(from).getUTCFullYear();
+  // The project's title and parts where the job has one (from 2026-10-08, `systems/industry.ts`); a booking from before
+  // keeps the title it was always given.
+  const mine = project?.parts.find((x) => x.holder?.kind === 'player');
   const p: Production = {
-    id: `prod-${booking.id}`, bookingId: booking.id, roleId: role.id, title: `${role.label}, ${CITIES.require(cityId).name} ${year}`, medium: role.medium, history: [],
-    slots: [{ id: `${booking.id}-0`, part: PART_WORDS.principal, size: 'principal', status: 'cast', performer: { kind: 'player' }, from, until, shared: 0 }],
+    id: `prod-${booking.id}`, bookingId: booking.id, roleId: role.id, title: project?.title ?? `${role.label}, ${CITIES.require(cityId).name} ${year}`, medium: role.medium, history: [],
+    ...(project ? { projectId: project.id } : {}),
+    slots: [{ id: `${booking.id}-0`, part: mine?.name ?? PART_WORDS.principal, size: 'principal', status: 'cast', performer: { kind: 'player' }, from, until, shared: 0, ...(mine ? { partId: mine.id } : {}) }],
   };
+  // The project's other parts, by size, as the slots are made.
+  const theirs = project ? project.parts.filter((x) => x !== mine) : [];
   const school = person.school;
   const rng = sim.rng('career.company', person.id, `company-${booking.id}`);
   const inThis = new Set<number>();
   COMPANY.others[role.medium].forEach((size, k) => {
-    const slot: Slot = { id: `${booking.id}-${k + 1}`, part: PART_WORDS[size], size, status: 'cast', performer: { kind: 'company' }, from, until, shared: 0 };
+    const own = theirs.find((x) => x.size === size && !p.slots.some((s) => s.partId === x.id));
+    const slot: Slot = { id: `${booking.id}-${k + 1}`, part: own?.name ?? PART_WORDS[size], size, status: 'cast', performer: { kind: 'company' }, from, until, shared: 0, ...(own ? { partId: own.id } : {}) };
     const draw = rng.next();
     const order = rng.next();
     if (school?.standing === 'graduated' && draw < COMPANY.chance) {
@@ -146,6 +157,7 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
         else if (sim.rng('career.company', person.id, `decline-${slot.id}`).next() < COMPANY.declines[size]) p.history.push({ at: sim.now, what: `${pick.m.name} was offered ${slot.part.toLowerCase()}, and turned it down` });
         else {
           slot.performer = { kind: 'classmate', i: pick.i };
+          if (project && own) castPart(project, own, { kind: 'classmate', i: pick.i });
           inThis.add(pick.i);
           pick.m.career!.busyUntil = Math.max(pick.m.career!.busyUntil ?? 0, until);
           booked(pick.i);
@@ -155,12 +167,38 @@ export function makeProduction(sim: Simulation, person: Person, booking: { id: s
         }
       }
     }
+    // A company actor is somebody: a performer from the town's pool who's free over these dates (from 2026-10-08), or the
+    // one the project already cast in the part.
+    if (slot.performer.kind === 'company' && project && own) {
+      const held = own.holder?.kind === 'performer' ? performerById(sim, own.holder.id) : undefined;
+      const performer = held ?? castPerformer(sim, project, own, from, until, 'production');
+      if (!held) castPart(project, own, { kind: 'performer', id: performer.id });
+      slot.performer = { kind: 'company', id: performer.id };
+    }
     p.slots.push(slot);
   });
   const all = productionsOf(person);
   all.push(p);
   if (all.length > COMPANY.kept) all.splice(0, all.length - COMPANY.kept);
   return p;
+}
+
+/**
+ * Who takes a part given up: a performer from the town's pool free from now to its end, the project's part recast to
+ * them with why (from 2026-10-08); a production from before has no project, and a company actor nobody names.
+ */
+export function replacementFor(sim: Simulation, p: Production, slot: Slot, from: Instant, until: Instant, why: string): { kind: 'company'; id?: string } {
+  const project = projectById(sim, p.projectId);
+  const part = project?.parts.find((x) => x.id === slot.partId);
+  if (!project || !part || project.status === 'cancelled') return { kind: 'company' };
+  return { kind: 'company', id: recastToPerformer(sim, project, part, from, until, why).id };
+}
+
+/** A slot's performer in words, mid-sentence: you, a classmate, a performer by name, or a company actor nobody names. */
+export function performerName(sim: Simulation, person: Person, performer: Performer): string {
+  if (performer.kind === 'player') return person.displayName;
+  if (performer.kind === 'classmate') return person.school?.classmates[performer.i]?.name ?? 'A classmate';
+  return performerById(sim, performer.id)?.name ?? 'a company actor';
 }
 
 /** Learning a booked part: an hour, a share of what's left; off book from `offBook`; the day's reputation times up to `1 + reputation`. SLATE's estimates. */
@@ -219,8 +257,9 @@ export function classmateTakesJob(sim: Simulation, person: Person, i: number, wh
   const m = person.school!.classmates[i]!;
   for (const { p, s } of held) {
     s.status = 'replaced';
-    p.slots.push({ ...s, id: `${s.id}-r`, status: 'cast', performer: { kind: 'company' }, shared: 0 });
-    p.history.push({ at: sim.now, what: `${m.name} withdrew from ${s.part.toLowerCase()} for another job; a company actor plays it` });
+    const next = replacementFor(sim, p, s, Math.max(s.from, when), s.until, 'withdrew for another job');
+    p.slots.push({ ...s, id: `${s.id}-r`, status: 'cast', performer: next, shared: 0 });
+    p.history.push({ at: sim.now, what: `${m.name} withdrew from ${s.part.toLowerCase()} for another job; ${performerName(sim, person, next)} plays it` });
     const credits = m.career?.credits ?? [];
     const k = credits.map((c) => c.roleId).lastIndexOf(p.roleId);
     if (k >= 0) credits.splice(k, 1);
@@ -277,6 +316,7 @@ export function playerReplaced(sim: Simulation, person: Person, bookingId: strin
   const slot = p?.slots.find((s) => s.performer.kind === 'player' && s.status === 'cast');
   if (!p || !slot) return;
   slot.status = 'replaced';
-  p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: { kind: 'company' }, from: sim.now, shared: 0 });
-  p.history.push({ at: sim.now, what: `Your part recast: ${why}` });
+  const next = replacementFor(sim, p, slot, sim.now, slot.until, why);
+  p.slots.push({ ...slot, id: `${slot.id}-r`, status: 'cast', performer: next, from: sim.now, shared: 0 });
+  p.history.push({ at: sim.now, what: `Your part recast: ${why}${next.id ? `; ${performerName(sim, person, next)} plays it` : ''}` });
 }

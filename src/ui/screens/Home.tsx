@@ -40,6 +40,7 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
 import { agencyById } from '@/engine/systems/career';
+import { industryOf } from '@/engine/systems/industry';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
@@ -125,6 +126,7 @@ export function Home() {
     home: useFeature('ui.home').open,
     school: useFeature('ui.school').open,
     career: useFeature('ui.career').open,
+    industry: useFeature('ui.industry').open,
     papers: useFeature('ui.papers').open,
     travel: useFeature('ui.travel').open,
     vehicles: useFeature('ui.vehicles').open,
@@ -627,6 +629,19 @@ export function Home() {
           )}
         >
           <YourCareer cur={cur} />
+        </Panel>
+        ))}
+        {(!shows.industry ? <LockedPanel feature="ui.industry" title="The Industry" /> : (
+        <Panel
+          title="The Industry"
+          tight
+          actions={(
+            <Gated feature="ui.industry" className="btn btn-sm" onClick={() => navigate('/workspace/industry', 'The Industry')}>
+              The Industry
+            </Gated>
+          )}
+        >
+          <TheIndustry />
         </Panel>
         ))}
       </HomeGroup>
@@ -1280,5 +1295,19 @@ function InternetControl() {
         <Gated feature="home.internet" className="btn btn-sm btn-ghost" title={leaving > 0 ? `What's left of the contract, ${formatMoney(leaving, cur, { cents: false })}, is owed on leaving.` : `${chosen.source}.`} onClick={() => { if (run('home.internet', { planId: chosen.id }).ok) toast(`${chosen.provider} from now.`, 'positive'); }}>{`Switch To ${chosen.provider}`}</Gated>
       )}
     </div>
+  );
+}
+
+/** The business, at a glance: what's casting where you work, and what of yours is coming out. */
+function TheIndustry() {
+  const { sim } = useGame();
+  const projects = useWorld((s) => industryOf(s).projects);
+  const town = sim.player.career?.agencyCity ?? sim.player.home?.cityId ?? sim.player.currentLocationId;
+  const casting = projects.filter((p) => p.status === 'casting' && p.cityId === town).length;
+  const mine = projects.filter((p) => p.parts.some((x) => x.holder?.kind === 'player') && p.status !== 'released' && p.status !== 'cancelled');
+  return (
+    <p className="small" style={{ margin: 0 }}>
+      {casting} {casting === 1 ? 'project is' : 'projects are'} casting where you work. {mine.length ? `${mine.length} of yours ${mine.length === 1 ? 'is' : 'are'} on the way.` : 'Real films and series, the ten companies and this save’s projects, by name.'}
+    </p>
   );
 }

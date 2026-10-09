@@ -55,6 +55,7 @@ import { registerPlayReading } from './systems/playreading';
 import { registerCompanies } from './systems/companies';
 import { registerRepresentation } from './systems/representation';
 import { registerRescheduling } from './systems/rescheduling';
+import { armIndustry, registerIndustry } from './systems/industry';
 import { registerValuables } from './systems/valuables';
 import { registerPawn } from './systems/pawn';
 import { registerWatches } from './systems/watches';
@@ -284,6 +285,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCompanies(sim);
   registerRepresentation(sim);
   registerRescheduling(sim);
+  registerIndustry(sim);
   registerValuables(sim);
   registerPawn(sim);
   registerWatches(sim);
@@ -459,6 +461,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   startingDocuments(sim, sim.player);
   // A foreign student's status looked at when it can next change (`systems/permission.ts`, from 2026-10-01).
   scheduleUsStatus(sim, sim.player);
+  // The business's week (`systems/industry.ts`, from 2026-10-08).
+  armIndustry(sim);
   // The clothes the life begins with (`systems/clothing.ts`).
   starterWardrobe(sim, sim.player);
   // And the toiletries (`systems/hygiene.ts`).
@@ -497,6 +501,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId] && !sim.player.dayShortcuts) { sim.player.automation = { ...sim.player.automation, chooseOutfit: true, eatLeftovers: true }; sim.player.dayShortcuts = true; }
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
+  // A save from before the business's week is given it (`systems/industry.ts`, from 2026-10-08).
+  if (universe.people[universe.playerId]) armIndustry(sim);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
   for (const person of Object.values(universe.people)) {
     if (person.craft) upgradeCraft(person.craft);

@@ -101,6 +101,7 @@ import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type C
 import { RIVALS, classMonth, classmateBooked, inTheRoom, metInTheRoom, partTaken, report, reportBooking, signTheClass, workedWith, type NewsItem } from './rivals';
 import { moveTo as signAgency } from './representation';
 import { planChange } from './rescheduling';
+import { INDUSTRY, RESEARCH, afterlifeRule, attachAudition, bookPart, knownEdge, newSeason, openPart, pitchRefusal, projectById, seriesEnded, workedFor } from './industry';
 import { PART, makeProduction, partOnTheDay, playerReplaced, productionOf, tableRead, workedDay } from './companies';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
@@ -377,10 +378,15 @@ export interface Audition {
   via?: 'commercial';
   /** Submitted for from its breakdown, its genre and demands those it was read with (from 2026-10-06). */
   chosen?: true;
+  /** The project and the part it's for (`systems/industry.ts`, from 2026-10-08). */
+  projectId?: string;
+  partId?: string;
+  /** The project researched before it (`career.research_project`): a little better prepared. */
+  researched?: true;
 }
 
 /** A breakdown open to a submission: a part, the genre it's filed under and what it asks beside it (from 2026-10-06). */
-export interface Breakdown { roleId: string; genre?: string; demands?: (keyof Craft)[] }
+export interface Breakdown { roleId: string; genre?: string; demands?: (keyof Craft)[]; /** The project casting it, where the business has one open (from 2026-10-08). */ projectId?: string; partId?: string }
 
 export interface Booking {
   id: string;
@@ -440,6 +446,9 @@ export interface Booking {
   cancellationOwed?: Money;
   /** The player asked once to move a call. */
   scheduleAsked?: boolean;
+  /** The project and the part it's in (`systems/industry.ts`, from 2026-10-08); a booking from before has none. */
+  projectId?: string;
+  partId?: string;
 }
 
 /** A job's life after it's made, and what it has paid (`RESIDUALS`, `AFTERLIFE`). */
@@ -500,7 +509,7 @@ export interface CareerRecord {
   lastBookedAt?: Instant;
   auditions: Audition[];
   bookings: Booking[];
-  credits: { roleId: string; year: number; cityId: CareerCity; /** The production and the part, from 2026-10-08 (`systems/companies.ts`). */ productionId?: string; part?: string }[];
+  credits: { roleId: string; year: number; cityId: CareerCity; /** The production and the part, from 2026-10-08 (`systems/companies.ts`). */ productionId?: string; part?: string; /** The project it was (`systems/industry.ts`). */ projectId?: string }[];
   unions: {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
@@ -526,6 +535,8 @@ export interface CareerRecord {
   option?: { seriesId: string; decidedAt: Instant };
   /** Self-submissions this week, waiting on Monday. */
   submitted: number;
+  /** Parts the agent was asked to pitch them for, answered with the week (`career.pitch`, from 2026-10-08). */
+  pitches?: { projectId: string; partId: string; at: Instant }[];
   /** Of them, the breakdowns chosen and submitted for (`career.submit_for`, from 2026-10-06): the part, its genre and what it asks. */
   chosen?: Breakdown[];
   /** When the business began for them: the school's hold let go. */
@@ -982,7 +993,7 @@ function nextDayAt(from: Instant, zone: string, day: number, hour: number): Inst
  * Los Angeles nine months on. SLATE's estimate of a film's road; attending
  * it is the actor's to choose.
  */
-function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: Instant): void {
+function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: Instant): Instant {
   const studio = role.id === 'film-weekly';
   const cityId: CareerCity = studio ? 'us-ca-losangeles' : 'us-ny-newyork';
   const zone = zoneOf(cityId);
@@ -1003,6 +1014,7 @@ function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: 
   sim.schedule({ at: when, kind: FESTIVAL_KIND, label: `${label}: ${role.label}`, category: 'career', priority: 30, requiresPlayer: road !== 'streaming', durationMinutes: road === 'streaming' ? 0 : 180, locationId: cityId, payload: { personId: person.id, roleId: role.id, studio, road } });
   // A studio film's weekly performer does its press the week before (`PRESS`).
   if (studio) schedulePress(sim, person, role, when, cityId);
+  return when;
 }
 
 /** What a call costs in stress by its hour: before nine in the morning, or a performance that runs late. */
@@ -1257,7 +1269,9 @@ export function breakdownsOf(sim: Simulation, person: Person): Breakdown[] {
     const rng = sim.rng('career.booking', person.id, `breakdown-${week}-${role.id}`);
     const { genre } = genreOf(role, rng.next());
     const demands = demandsOf(role, genre, () => rng.next());
-    return { roleId: role.id, ...(genre ? { genre } : {}), ...(demands.length ? { demands } : {}) };
+    // The project posting it, where the business has one casting the part open to submissions (`systems/industry.ts`).
+    const open = openPart(sim, role.id, cityId);
+    return { roleId: role.id, ...(genre ? { genre } : {}), ...(demands.length ? { demands } : {}), ...(open ? { projectId: open.project.id, partId: open.part.id } : {}) };
   });
 }
 
@@ -1328,7 +1342,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     // out-of-town clients. Until 2026-09-27 a client who moved away from the
     // agency's city was booked into its rooms, missed them, and was let go.
     const room = rng.next() >= ESTIMATE.tapeShare && !(person.currentLocationId !== cityId && (mine || homeOf(person) !== cityId));
-    out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}), ...(breakdown ? { chosen: true as const, ...(breakdown.genre ? { genre: breakdown.genre } : {}), ...(breakdown.demands?.length ? { demands: breakdown.demands } : {}) } : {}) });
+    out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}), ...(breakdown ? { chosen: true as const, ...(breakdown.genre ? { genre: breakdown.genre } : {}), ...(breakdown.demands?.length ? { demands: breakdown.demands } : {}), ...(breakdown.projectId ? { projectId: breakdown.projectId, ...(breakdown.partId ? { partId: breakdown.partId } : {}) } : {}) } : {}) });
   }
   // A part passed along by a close friend from school who's signed with an agency (from 2026-10-08), now and then: the
   // class's years together reaching the profession. Its own draw, so the week's others are as they were.
@@ -1557,9 +1571,9 @@ export function finishJob(s: Simulation, person: Person, career: CareerRecord, b
     // Recognition comes when the work is seen: a commercial and Broadway as they run; television when it airs, by its audience; a film at its premiere or release (`FILM_ROAD`).
     const television = role.series !== undefined || role.arc === true || role.id.startsWith('guest') || role.id === 'costar';
     if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
-    if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
+    const premiere = role.id.startsWith('film') ? schedulePremiere(s, person, role, item.at) : undefined;
     const production = productionOf(person, booking.id);
-    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId, ...(production ? { productionId: production.id, part: production.slots.find((x) => x.performer.kind === 'player')?.part ?? 'Your Part' } : {}) });
+    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId, ...(production ? { productionId: production.id, part: production.slots.find((x) => x.performer.kind === 'player')?.part ?? 'Your Part' } : {}), ...(booking.projectId ? { projectId: booking.projectId } : {}) });
     // A castmate known from it (`systems/people.ts`, from 2026-10-01): the former classmate cast in it where there was one
     // (from 2026-10-08), the person you already know, never a second; otherwise somebody new.
     // A production with classmates who shared its days knows them already, day by day (`workedDay`); a booking from before
@@ -1567,6 +1581,8 @@ export function finishJob(s: Simulation, person: Person, career: CareerRecord, b
     const sharedWithClass = production?.slots.some((x) => x.performer.kind === 'classmate' && x.shared > 0);
     if (!sharedWithClass && (booking.castmate === undefined || production || !workedWith(s, person, booking.castmate, role.label, workDays(booking).length))) metAtWork(s, person, workCityOf(booking), booking.id, role.label);
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
+    // Its company remembers the work; the project's release is the career's own date for it (`systems/industry.ts`).
+    workedFor(s, booking.projectId, premiere ?? (role.after?.kind === 'commercial' ? item.at : life?.airsAt));
     if (television) {
       const a = FILM_ROAD.audience;
       const audience = life?.kind === 'network' ? a.network : life?.kind === 'svod' ? a[life.size ?? 'middle'] * (life.hit ? a.hit : 1) : 1;
@@ -1742,6 +1758,16 @@ export function registerCareer(sim: Simulation): void {
     const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
     const cityId = workCity(person);
     const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted, career.managerId !== undefined, career.chosen ?? []);
+    // The agent's pitches, answered: an audition for the part, at the agency's attention to them, or word they're seeing others (`INDUSTRY.pitch`).
+    for (const pitch of career.pitches ?? []) {
+      const project = projectById(s, pitch.projectId);
+      const part = project?.parts.find((x) => x.id === pitch.partId);
+      if (!project || !part) continue;
+      const yes = agency && part.status === 'open' && project.status === 'casting' && s.rng('career.auditions', person.id, `pitch-${pitch.projectId}-${pitch.partId}`).next() < INDUSTRY.pitch.chance * rosterFit(standing(s, person), agency);
+      if (yes) week.push({ roleId: part.roleId, at: at(item.at, zoneOf(cityId), 2, 11), mode: 'tape', cityId, projectId: project.id, partId: part.id });
+      else if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Agent Pitched You', body: `${project.title}: they’re seeing other actors for ${part.name}.`, importance: 40, route: '/workspace/industry' });
+    }
+    delete career.pitches;
     career.submitted = 0;
     delete career.chosen;
     for (const one of week) {
@@ -1755,6 +1781,8 @@ export function registerCareer(sim: Simulation): void {
         const demands = demandsOf(roleById(audition.roleId), audition.genre, () => asks.next());
         if (demands.length) audition.demands = demands;
       }
+      // The project and part it's for (`systems/industry.ts`): a breakdown's own where one was chosen, else one casting in the town.
+      if (isPlayer(person)) attachAudition(s, audition);
       career.auditions.push(audition);
       s.schedule({
         at: audition.at, kind: AUDITION_KIND, label: `${audition.mode === 'tape' ? 'Self-Tape' : 'Audition'}: ${roleById(audition.roleId).label}`,
@@ -1826,9 +1854,11 @@ export function registerCareer(sim: Simulation): void {
     metInTheRoom(s, person, room, role.label);
     const mine = auditionLevel(person.craft, role, audition.mode, audition.genre, audition.demands ?? []);
     const better = room.filter((r) => r.read > mine).sort((a, b) => b.read - a.read)[0];
-    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
+    // A producer who's worked with them before, and a project researched beforehand, read them a little better (`KNOWN`, `RESEARCH`).
+    const edge = (better ? RIVALS.outread : 1) * knownEdge(s, audition.projectId) * (audition.researched ? RESEARCH.edge : 1);
+    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), edge)) {
       if (better) {
-        classmateBooked(s, person, better.i, role, item.at);
+        classmateBooked(s, person, better.i, role, item.at, audition.projectId ? { projectId: audition.projectId, ...(audition.partId ? { partId: audition.partId } : {}) } : undefined);
         partTaken(person, better.i, item.at);
         if (isPlayer(person)) s.notify({ category: 'career', title: `The Part Went To ${better.name}`, body: `${role.label}: your classmate from Yale was in the room too, and booked it.`, importance: 55, route: '/workspace/career' });
       }
@@ -1862,6 +1892,7 @@ export function registerCareer(sim: Simulation): void {
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
       agentId: career.agencyId ?? null,
+      ...(audition.projectId ? { projectId: audition.projectId, ...(audition.partId ? { partId: audition.partId } : {}) } : {}),
     };
     // A name the public knows is quoted above scale, and the quote holds for the job (`attributes.ts`).
     const over = overscaleOf(attributesOf(s, person).recognition);
@@ -2347,6 +2378,7 @@ export function registerCareer(sim: Simulation): void {
     const odds = life?.kind === 'network' ? SERIES.renewal.network : season === 2 ? SERIES.renewal.svodFirst : SERIES.renewal.svod;
     const picked = season <= SERIES.maxSeasons && renewed(s, person, prior.id, odds);
     if (!picked) {
+      seriesEnded(s, prior.projectId, season);
       feel(person, 'canceled');
       if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Series Was Canceled', body: `${role.label}: the option wasn’t taken up. You’re free.`, importance: 80, route: '/workspace/career' });
       return;
@@ -2363,6 +2395,7 @@ export function registerCareer(sim: Simulation): void {
       ...(prior.agentId !== undefined ? { agentId: prior.agentId } : {}),
       rate: Math.max(rate, prior.rate ? Math.round(prior.rate * (1 + SERIES.raise)) : 0), season, seriesId: prior.seriesId ?? prior.id,
       ...(prior.location ? { location: prior.location } : {}),
+      ...(prior.projectId ? { projectId: prior.projectId, ...(prior.partId ? { partId: prior.partId } : {}) } : {}),
     };
     career.bookings.push(next);
     takeJob(s, person, next, true);
@@ -2406,7 +2439,10 @@ export function registerCareer(sim: Simulation): void {
     // part now and then, where one fits it and is free. Until then a classmate was cast as the player's own part.
     // Whether the production will change its schedule, and when it says so (`systems/rescheduling.ts`, from 2026-10-08).
     if (days.length) planChange(s, person, booking);
-    if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at));
+    // The project's part, the player's now, its dates the job's (`systems/industry.ts`); a later season the same project's.
+    if (days.length && (booking.season ?? 1) > 1) newSeason(s, booking.projectId, booking.season!, days[0]!.at, days.at(-1)!.at);
+    const project = days.length ? bookPart(s, booking.projectId, booking.partId, days[0]!.at, days.at(-1)!.at) : undefined;
+    if (days.length) makeProduction(s, person, booking, role, workCity, days[0]!.at, days.at(-1)!.at, (craft) => auditionLevel(craft, role, 'room'), (i) => classmateBooked(s, person, i, role, days[0]!.at, project ? { projectId: project.id } : undefined), project);
     const zone = zoneOf(workCity);
     // The first call of a stage or television job is its table read (`tableRead`, from 2026-10-08): the play's first
     // rehearsal, a television episode's first day.
@@ -2483,6 +2519,36 @@ export function registerCareer(sim: Simulation): void {
     career.chosen = [...(career.chosen ?? []), breakdownsOf(s, s.player).find((b) => b.roleId === roleId)!];
     career.submitted += 1;
     return { submitted: career.submitted };
+  });
+
+  // An agent asked to pitch them for a part in a project (from 2026-10-08, `systems/industry.ts`): answered with the week.
+  sim.onCommand<{ projectId: string; partId: string }, { answersBy: Instant }>('career.pitch', (p, { sim: s }) => {
+    const career = careerOf(s.player);
+    const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
+    const projectId = String(p?.projectId);
+    const partId = String(p?.partId);
+    if (career.since === undefined) throw new CommandError('An agent pitches once the career has begun.');
+    const auditioned = career.auditions.some((a) => a.projectId === projectId && a.partId === partId && a.status !== 'missed');
+    const no = pitchRefusal(s, s.player, projectId, partId, agency, career.pitches ?? [], auditioned);
+    if (no) throw new CommandError(no);
+    career.pitches = [...(career.pitches ?? []).filter((x) => s.now - x.at < 30 * MS_DAY), { projectId, partId, at: s.now }];
+    projectById(s, projectId)!.touched = true;
+    return { answersBy: nextMonday(s.now, zoneOf(workCity(s.player))) };
+  });
+
+  // A project looked into before its audition (`RESEARCH`): its company's other work, the people in it, the part.
+  sim.onCommand<{ projectId: string }, { researched: string }>('career.research_project', (p, { sim: s }) => {
+    const career = careerOf(s.player);
+    const project = projectById(s, String(p?.projectId));
+    if (!project) throw new CommandError('There’s no such project.');
+    const audition = career.auditions.find((a) => a.projectId === project.id && a.status === 'ahead');
+    if (!audition) throw new CommandError(`Research prepares you for an audition, and you have none for ${project.title}.`);
+    if (audition.researched) throw new CommandError(`You’ve looked into ${project.title} already.`);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    s.advanceTo(s.now + RESEARCH.minutes * 60_000);
+    audition.researched = true;
+    return { researched: project.title };
   });
 
   sim.onCommand<{ site: CastingSite; on: boolean }, { until: Instant; renews: boolean }>('career.subscribe', (p, { sim: s }) => {
@@ -3055,9 +3121,14 @@ export function afterlife(sim: Simulation, person: Person, booking: Booking, whe
     }
     residual = { ...base, perEpisode: unit, kind: 'commercial', airsAt: when, plan, uses };
   } else {
-    const network = rng.next() < AFTERLIFE.network;
+    // Drawn as ever, then the project's company's own rule where it has one (`afterlifeRule`, from 2026-10-08): a
+    // streaming company's episodes on its service, at its size; a broadcaster's on its channels. The draws are made either
+    // way, so the ones after them don't move.
+    const rule = afterlifeRule(sim, booking.projectId);
+    const network = rule.network ?? rng.next() < AFTERLIFE.network;
+    if (rule.network !== undefined) rng.next();
     const x = rng.next();
-    const size = x < AFTERLIFE.svodSize.small ? 'small' : x < AFTERLIFE.svodSize.small + AFTERLIFE.svodSize.middle ? 'middle' : 'large';
+    const size = rule.size ?? (x < AFTERLIFE.svodSize.small ? 'small' : x < AFTERLIFE.svodSize.small + AFTERLIFE.svodSize.middle ? 'middle' : 'large');
     residual = {
       ...base, kind: network ? 'network' : 'svod', airsAt: when + AFTERLIFE.airsAfterDays * MS_DAY,
       ...(network ? { rerun: rng.next() < AFTERLIFE.rerun, syndicated: rng.next() < AFTERLIFE.syndicated } : { size, hit: rng.next() < AFTERLIFE.successBonus }),

@@ -96,6 +96,7 @@ import { treadLife } from './systems/tires';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
 import { AGENCIES, ROLES, SERIES } from './content/career';
+import { castPerformer, industryWeek, newProject, projectById } from './systems/industry';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -1025,6 +1026,69 @@ defineDecider<{ sim: Simulation; craft: number; key: number }, string>({
       const answer = answerOf(sim, sim.player, one);
       return answer === 'meeting' ? (offersAfterMeeting(sim, sim.player, one) ? 'O' : 'm') : answer[0];
     })).join('');
+  },
+});
+
+defineDecider<{ sim: Simulation; city: number; role: number; key: number }, string>({
+  id: 'industry.project',
+  decides: 'A project made in the business: its company (one of the ten that make that work in that town, at its weight, or an independent producer), its title, and the names of its parts.',
+  drawnIn: 'src/engine/systems/industry.ts',
+  reads: {
+    // The town: which companies make work there.
+    city: (o, t) => ({ ...o, city: Math.min(6, Math.floor(t * 7)) }),
+    // The part it's made around: which format, so which companies.
+    role: (o, t) => ({ ...o, role: Math.min(ROLES.length - 1, Math.floor(t * ROLES.length)) }),
+    // Which project, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed % 5), city: seed % 7, role: seed % ROLES.length, key: seed * 3 }),
+  decide: ({ sim, city, role, key }) => {
+    const cities = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity', 'ca-on-toronto', 'ca-bc-vancouver'];
+    const r = ROLES[role]!;
+    const town = r.cities.includes(cities[city] as never) ? cities[city]! : r.cities[0]!;
+    return [0, 1, 2, 3].map((n) => { const p = newProject(sim, r, town, sim.now, `d${key}-${n}`); return `${p.companyId ?? '-'}:${p.title}:${p.parts.map((x) => x.name).join('/')}`; }).join(',');
+  },
+});
+
+defineDecider<{ sim: Simulation; key: number; parts: number }, string>({
+  id: 'industry.casting',
+  decides: 'Who from a town’s pool of performers is cast in a part: one who reads near its level and is free, or a new performer with their name, age and level.',
+  drawnIn: 'src/engine/systems/industry.ts',
+  reads: {
+    // Which casting, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    // How many parts were cast before: the pool they leave.
+    parts: (o, t) => ({ ...o, parts: Math.round(t * 12) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed % 5), key: seed * 11, parts: seed % 8 }),
+  decide: ({ sim, key, parts }) => {
+    const role = ROLES.find((r) => r.id === 'costar')!;
+    const out: string[] = [];
+    for (let n = 0; n < parts + 2; n += 1) {
+      const p = newProject(sim, role, 'us-ny-newyork', sim.now + n * 30 * 86_400_000, `c${key}-${n}`);
+      const performer = castPerformer(sim, p, p.parts[0]!, p.shootFrom, p.shootUntil, `d${key}`);
+      out.push(`${performer.name}:${performer.level}`);
+    }
+    return out.slice(-3).join(',');
+  },
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'industry.reception',
+  decides: 'A project’s reception at its release, SLATE’s own and labelled so: critics’ and audiences’ scores out of a hundred.',
+  drawnIn: 'src/engine/systems/industry.ts',
+  reads: {
+    // Which project, and so which draws.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed % 5), key: seed * 13 }),
+  decide: ({ sim, key }) => {
+    const role = ROLES.find((r) => r.id === 'costar')!;
+    const p = newProject(sim, role, 'us-ny-newyork', sim.now - 400 * 86_400_000, `r${key}`);
+    p.releaseAt = sim.now - 1;
+    industryWeek(sim, sim.player, 'us-ny-newyork', sim.now);
+    const done = projectById(sim, p.id)!;
+    return `${done.reception?.critics}/${done.reception?.audience}`;
   },
 });
 
