@@ -29,6 +29,9 @@ import { AWARD_DATES, EMMY_FIELDS, OTHER_FIELDS } from '@/engine/content/awards'
 import { bookingChance, expectedGross, roleById, unitRate, workCityOf, workDays, rateOf, WORK_KIND, type Booking } from '@/engine/systems/career';
 import { awardChances, categoryName, type AwardEntry } from '@/engine/systems/awards';
 import { focusOf } from '@/engine/systems/school';
+import { projectById } from '@/engine/systems/industry';
+import { companyById } from '@/engine/content/industry';
+import { representationReview } from '@/engine/systems/representation';
 import type { Contact } from '@/engine/systems/people';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -238,6 +241,10 @@ defineLook<TheJob>('job', {
     }
     for (const c of mates) ways.push({ to: at('contact', c.id), label: c.name, detail: `A castmate from it, who lives in ${townName(c.cityId)}` });
     for (const e of entries) ways.push({ to: at('award', `${e.bookingId}/${e.body}`), label: categoryName(person, e), detail: `Entered for ${e.year}, and what came of it` });
+    // The project it’s a part in, and its company (from 2026-10-08, `systems/industry.ts`): its dates, its cast, its fate.
+    const project = projectById(sim, b.projectId);
+    if (project) ways.push({ to: at('project', project.id), label: project.title, detail: 'The project: its parts and who plays them, its dates and its history' });
+    if (project?.companyId) ways.push({ to: at('company', project.companyId), label: companyById(project.companyId)?.short ?? project.companyId, detail: 'Its company, and how its work is seen' });
 
     return {
       name: role.label,
@@ -290,6 +297,9 @@ defineLook<Agency>('agency', {
     const commission = agency.commission ?? AGENT_COMMISSION.rate;
     const office = yours ? career?.agencyCity : offer?.cityId;
     const country = agency.countryId ?? 'us';
+    // Your history with it (from 2026-10-08): the approaches made, and what it has done since you signed.
+    const approaches = person ? (person.career?.approaches ?? []).filter((a) => a.agencyId === agency.id) : [];
+    const review = yours && person ? representationReview(sim, person) : undefined;
     const ways: Way[] = [];
     if (office) ways.push(...placeWay(office, yours ? 'Its office that represents you' : 'Its office whose offer stands'));
     if (yours && career?.signedAt !== undefined) ways.push({ to: at('day', dayOf(sim, career.signedAt)), label: formatDate(career.signedAt, sim.homeZone), detail: 'When you signed with it' });
@@ -312,6 +322,16 @@ defineLook<Agency>('agency', {
             Its reach is {REACH[agency.tier]}, and it sends a client to about {agency.auditionsPerWeek} auditions a week. It takes {pct(commission)} of what it books
             {country === 'us' ? ', and on SAG-AFTRA work at scale the producer pays that on top' : ''}. Its clients work in {countryWords(country)}.
           </p>
+          {approaches.length > 0 && (
+            <p className="small">
+              Your approaches to it: {approaches.map((a) => `${formatDate(a.sentAt, sim.homeZone)}, ${a.history.at(-1)!.what.toLowerCase()}`).join('; ')}.
+            </p>
+          )}
+          {review && (
+            <p className="small">
+              Since you signed it has sent you to {review.sent} {review.sent === 1 ? 'audition' : 'auditions'}, {review.sentBooked} booked, and {review.offers} {review.offers === 1 ? 'job' : 'jobs'} came through it. {review.mayLeave.ok ? 'You’re free to leave.' : 'The contract holds you for now.'}
+            </p>
+          )}
           <div className="grid grid-3">
             <Stat label="Showing It Needs" value={String(agency.bar)} note="At a showcase, or in the work" />
             <Stat label="Auditions A Week" value={`About ${agency.auditionsPerWeek}`} note="SLATE’s estimate of its reach" />

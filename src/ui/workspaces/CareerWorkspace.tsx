@@ -28,6 +28,7 @@ import { footageRefusal } from '@/engine/systems/footage';
 import { learnPartRefusal, productionOf, productionsOf } from '@/engine/systems/companies';
 import { agencyOutlook, representationReview } from '@/engine/systems/representation';
 import { describe, proposalsFor, requestRefusal } from '@/engine/systems/rescheduling';
+import { projectById } from '@/engine/systems/industry';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -426,7 +427,7 @@ function AuditionsPane() {
           <LookRegion className="col gap-3">
             {offered.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}${(person.genres ?? []).includes(b.genre) ? ', a genre you love' : ''}` : ''}: {spanOf(b)} from <When at={b.starts} zone={zoneOf(b.cityId)} />, answer by <When at={b.dueAt} zone={zoneOf(b.cityId)}>{formatDateTime(b.dueAt, zoneOf(b.cityId))}</When></span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}${(person.genres ?? []).includes(b.genre) ? ', a genre you love' : ''}` : ''}: {spanOf(b)} from <When at={b.starts} zone={zoneOf(b.cityId)} />, answer by <When at={b.dueAt} zone={zoneOf(b.cityId)}>{formatDateTime(b.dueAt, zoneOf(b.cityId))}</When><ProjectLine id={b.projectId} /></span>
                 <span className="row gap-2">
                   {acceptRefusal(sim, person, b)
                     ? <span className="xs dim">{acceptRefusal(sim, person, b)}</span>
@@ -445,7 +446,7 @@ function AuditionsPane() {
           <LookRegion className="col gap-2">
             {ahead.map((a) => (
               <div key={a.id} className="row-between small">
-                <span><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open>{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.referredBy ? `, passed along by ${a.referredBy}` : ''}{a.coached ? ', coached' : ''}</span>
+                <span><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open>{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.referredBy ? `, passed along by ${a.referredBy}` : ''}{a.coached ? ', coached' : ''}{a.researched ? ', researched' : ''}<ProjectLine id={a.projectId} /></span>
                 <span className="row gap-2">
                   <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : <>In The Room, <Town id={a.cityId} /></>}, <When at={a.at} zone={zoneOf(a.cityId)}>{formatDateTime(a.at, zoneOf(a.cityId))}</When></span>
                   {!a.coached && <Gated feature="career.coach" onClick={() => { if (run('career.coach', { auditionId: a.id }).ok) toast('An hour with a coach on it.', 'positive'); }}>Book A Coach</Gated>}
@@ -463,7 +464,7 @@ function AuditionsPane() {
               <thead><tr><th scope="col">Part</th><th scope="col">From</th><th scope="col">When</th><th scope="col">How</th><th scope="col">Result</th></tr></thead>
               <tbody>
                 {behind.map((a) => (
-                  <tr key={a.id}><td><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open></td><td>{a.self ? 'Submitted Yourself' : a.referredBy ? `Passed Along By ${a.referredBy}` : 'Your Agency'}</td><td><When at={a.at} zone={zoneOf(a.cityId)} /></td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
+                  <tr key={a.id}><td><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open><ProjectLine id={a.projectId} /></td><td>{a.self ? 'Submitted Yourself' : a.referredBy ? `Passed Along By ${a.referredBy}` : 'Your Agency'}</td><td><When at={a.at} zone={zoneOf(a.cityId)} /></td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -562,7 +563,7 @@ function WorkPane() {
           <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /><ScheduleChange bookingId={b.id} /></span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}{castLine(person, b.id)}<ProjectLine id={b.projectId} />{(productionOf(person, b.id)?.history ?? []).map((h) => <div key={h.at + h.what} className="xs dim">{h.what}.</div>)}<LearnPart bookingId={b.id} /><ScheduleChange bookingId={b.id} /></span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
@@ -601,7 +602,7 @@ function WorkPane() {
             <table>
               <thead><tr><th scope="col">Year</th><th scope="col">Part</th><th scope="col">City</th></tr></thead>
               <tbody>
-                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td><Open subject={at('part', c.roleId)}>{roleById(c.roleId).label}</Open>{c.productionId && <div className="xs dim">{productionsOf(person).find((p) => p.id === c.productionId)?.title ?? 'A production'}{c.part ? `: ${c.part}` : ''}</div>}</td><td><Town id={c.cityId} /></td></tr>)}
+                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td><Open subject={at('part', c.roleId)}>{roleById(c.roleId).label}</Open>{c.projectId ? <ProjectLine id={c.projectId} part={c.part} /> : c.productionId && <div className="xs dim">{productionsOf(person).find((p) => p.id === c.productionId)?.title ?? 'A production'}{c.part ? `: ${c.part}` : ''}</div>}</td><td><Town id={c.cityId} /></td></tr>)}
               </tbody>
             </table>
           </LookRegion>
@@ -887,7 +888,7 @@ function Breakdowns() {
         const no = submitForRefusal(sim, person, b.roleId);
         return (
           <div key={b.roleId} className="row-between small" style={{ flexWrap: 'wrap' }}>
-            <span><Open subject={at('part', b.roleId)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}` : ''}{b.demands?.length ? `, asks for ${b.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{chosen.has(b.roleId) ? ', submitted' : ''}</span>
+            <span><Open subject={at('part', b.roleId)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}` : ''}{b.demands?.length ? `, asks for ${b.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{chosen.has(b.roleId) ? ', submitted' : ''}<ProjectLine id={b.projectId} /></span>
             {!chosen.has(b.roleId) && <Gated feature="career.submit_for" disabled={Boolean(no)} title={no} onClick={() => { if (run('career.submit_for', { roleId: b.roleId }).ok) toast('Submitted for it. Any audition comes on Monday.', 'positive'); }}>Submit For It</Gated>}
           </div>
         );
@@ -1069,4 +1070,11 @@ function castLine(person: Person, bookingId: string): string {
   const p = productionOf(person, bookingId);
   const mates = (p?.slots ?? []).filter((x) => x.status === 'cast' && x.performer.kind === 'classmate').map((x) => `${person.school?.classmates[(x.performer as { i: number }).i]?.name ?? 'a classmate'} (${x.part})`);
   return mates.length ? `, with ${mates.join(' and ')} from your class` : '';
+}
+
+/** The project a line of the career is a part in, opening its look (from 2026-10-08): the production's title, not only the part's. */
+function ProjectLine({ id, part }: { id?: string; part?: string }) {
+  const project = useWorld((s) => projectById(s, id), [id]);
+  if (!project) return null;
+  return <div className="xs dim">For <Open subject={at('project', project.id)}>{project.title}</Open>{part ? `: ${part}` : ''}</div>;
 }

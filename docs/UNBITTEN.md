@@ -463,7 +463,15 @@ part the tool cannot see.
   meeting and its silence (`interestOf`, `APPROACH`), its attention by where
   a client stands against its roster (`rosterFit`), and how often a
   production changes its dates (`SCHEDULE.chance`): no agency or production
-  publishes them.
+  publishes them. And from later that day, the business's (`systems/industry.ts`,
+  `content/industry.ts`): how much of a town's work goes to one of the ten
+  companies and to which (`MAJOR_SHARE`, each company's `weight`), how
+  warmly a company the actor worked for reads them (`KNOWN`), what research
+  before an audition is worth (`RESEARCH`), an agent's pitch's odds
+  (`INDUSTRY.pitch`), a manager's and a casting office's introduction's
+  weight (`APPROACH.introduction`), and a project's reception, which is the
+  save's own and labelled so. The companies' facts are the research's; these
+  numbers are SLATE's.
 - **The weather decides the bills' energy and the flu's weeks, and more.**
   This said "and nothing else" until 2026-10-01. Since 2026-09-28 it also
   decides sleep lost to a hot night (`heatLoss`), whether a run or a swim can
@@ -889,8 +897,9 @@ same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
   `65b7c071`: signed by IAG at 29, the New York life stayed there 45 years,
   because a represented actor changed agency only when let go. The owner
   settled the design question the same day: an actor may now approach another
-  agency, by submission or a friend's introduction, meet it and sign its offer
-  (X1 to X3), and a bigger agency gives a client well below its roster less
+  agency, by submission or an introduction (a friend's, and from later that
+  day a manager's or a casting office's), meet it and sign its offer (X1 to
+  X3, Y1), and a bigger agency gives a client well below its roster less
   attention, so staying can be the better career. The probe replay still
   doesn't approach agencies; `tools/social-lives.mjs` with `AGENCY` does.
 - **The acting-only economy.** The broke graduate was the social-lives

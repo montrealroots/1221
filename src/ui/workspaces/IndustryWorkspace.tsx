@@ -625,7 +625,7 @@ function ProjectPage({ id }: { id: string }) {
         </Panel>
         {p.reception && <Panel title="Reception" subtitle="SLATE’s own, drawn at release: this save’s fiction"><div className="grid grid-2"><Stat label="Critics" value={`${p.reception.critics} / 100`} /><Stat label="Audiences" value={`${p.reception.audience} / 100`} /></div></Panel>}
         <Panel title="History">
-          <ul className="results">{p.history.slice().reverse().map((h, i) => <li key={`${h.at}-${i}`} className="result"><span className="small">{h.what}</span><span className="xs dim">{formatDate(h.at, sim.zone)}</span></li>)}</ul>
+          <ul className="results">{p.history.slice().sort((a, b) => b.at - a.at).map((h, i) => <li key={`${h.at}-${i}`} className="result"><span className="small">{h.what}</span><span className="xs dim">{formatDate(h.at, sim.zone)}</span></li>)}</ul>
         </Panel>
       </div>
       <Fine>This project is the save’s invention: its title, parts, dates and reception. {company ? `${company.short} is real; its part in this project is this save’s fiction, and nothing here is its policy.` : ''} How parts are cast and when it’s out are SLATE’s estimates.</Fine>

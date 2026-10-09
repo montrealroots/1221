@@ -109,7 +109,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `collaborators.test.ts` `fittings.test.ts` `industry.test.ts` `journey-acting-travel.test.ts` `journey-agency-schedule.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journeys.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `representation.test.ts` `rescheduling-families.test.ts` `rescheduling.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
+| `career.accept` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `arrears.test.ts` `border.test.ts` `cabenefits.test.ts` `cabusiness.test.ts` `capensions.test.ts` `career.test.ts` `careertrips.test.ts` `carried.test.ts` `collaborators.test.ts` `fittings.test.ts` `industry.test.ts` `journey-acting-travel.test.ts` `journey-agency-schedule.test.ts` `journey-career.test.ts` `journey-industry.test.ts` `journey-residence.test.ts` `journeys.test.ts` `marriage.test.ts` `mxbusiness.test.ts` `permission.test.ts` `playthrough-fixes.test.ts` `representation.test.ts` `rescheduling-families.test.ts` `rescheduling.test.ts` `rivals.test.ts` `safetynet.test.ts` `school.test.ts` `skills.test.ts` `worklife.test.ts` | The Business |
 | `career.answer_schedule` | `src/engine/systems/rescheduling.ts` | `CareerWorkspace.tsx` | `industry.test.ts` `journey-agency-schedule.test.ts` `rescheduling-families.test.ts` `rescheduling.test.ts` | The Business |
 | `career.approach_agency` | `src/engine/systems/representation.ts` | `CareerWorkspace.tsx` | `journey-agency-schedule.test.ts` `representation.test.ts` | The Business |
 | `career.attend_ceremony` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `ceremony.test.ts` `journey-everyday-more.test.ts` | The Business |
@@ -128,14 +128,14 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.leave` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.leave_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
 | `career.pass` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `playthrough-fixes.test.ts` | The Business |
-| `career.pitch` | `src/engine/systems/career.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` | The Industry |
+| `career.pitch` | `src/engine/systems/career.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
 | `career.publicist` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` `journey-career.test.ts` | The Business |
 | `career.query_agencies` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `mxbusiness.test.ts` | The Business |
 | `career.reel` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` `journey-career.test.ts` `reel.test.ts` | The Business |
 | `career.relocate` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` `journey-residence.test.ts` `journey-social.test.ts` `school.test.ts` `universalcredit.test.ts` | The Business |
 | `career.renew` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-career.test.ts` | The Business |
 | `career.request_schedule` | `src/engine/systems/rescheduling.ts` | `CareerWorkspace.tsx` | `journey-agency-schedule.test.ts` `rescheduling-families.test.ts` `rescheduling.test.ts` | The Business |
-| `career.research_project` | `src/engine/systems/career.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` | The Industry |
+| `career.research_project` | `src/engine/systems/career.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
 | `career.self_submit` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `costs.test.ts` `journey-career.test.ts` `journey-everyday-more.test.ts` `school.test.ts` | The Business |
 | `career.sign` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `career.test.ts` `journey-agency-schedule.test.ts` `journey-career.test.ts` `representation.test.ts` `skills.test.ts` | The Business |
 | `career.sign_manager` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `journey-career.test.ts` `safetynet.test.ts` | The Business |
@@ -404,10 +404,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `industry.list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` | The Industry |
-| `industry.new_list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` | The Industry |
-| `industry.rate` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` | The Industry |
-| `industry.view` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `tutorial.test.ts` | The Industry |
+| `industry.list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
+| `industry.new_list` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
+| `industry.rate` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` | The Industry |
+| `industry.view` | `src/engine/systems/industry.ts` | `IndustryWorkspace.tsx` | `industry.test.ts` `journey-industry.test.ts` `tutorial.test.ts` | The Industry |
 
 ## items
 

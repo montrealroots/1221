@@ -16,8 +16,8 @@ journey. **Implemented But Unverified**: on a screen and tested, but in no conne
 Implemented**: no screen offers it, or no test runs it. No status here says a screen was checked in the running app:
 SLATE has no tests of its screens, and nothing is deployed.
 
-- Verified (journey): 411
-- Implemented But Unverified: 9
+- Verified (journey): 417
+- Implemented But Unverified: 3
 - Partially Implemented: 0
 - Commands in all: 420
 
@@ -84,7 +84,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.set_over_limit` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Opting in to going over the limit is a US card’s choice. | — | — | — | 2 | journey-bank.test.ts |
 | `card.set_statement_day` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Pick a day from the 1st to the 28th. | — | — | — | 3 | journey-bank.test.ts |
 | `card.update_billers` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | Your bills already have your card’s number. | — | — | — | 2 | journey-bank.test.ts |
-| `career.accept` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open.; Another series holds an option on you until it’s decided.; It clashes with …. (also acceptRefusal, crossingRefusal, workRefusal) | stay; travelOwed; perDiemOwed; status; lastBookedAt; and 1 more | Yes | own; sublet; sofa; hotel; and 3 more | 28 | journey-acting-travel.test.ts; journey-agency-schedule.test.ts; journey-career.test.ts; and 2 more |
+| `career.accept` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open.; Another series holds an option on you until it’s decided.; It clashes with …. (also acceptRefusal, crossingRefusal, workRefusal) | stay; travelOwed; perDiemOwed; status; lastBookedAt; and 1 more | Yes | own; sublet; sofa; hotel; and 3 more | 29 | journey-acting-travel.test.ts; journey-agency-schedule.test.ts; journey-career.test.ts; and 3 more |
 | `career.answer_schedule` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/rescheduling.ts` | There’s no such change waiting on you.; It’s the production’s notice: it takes effect on its date. | — | — | — | 4 | journey-agency-schedule.test.ts |
 | `career.approach_agency` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/representation.ts` | — (also approachRefusal) | seq; status; offers; approachesOf (added to); history (added to); and 1 more | — | career.agency_answer; career.agency_meeting; career.agency_offer_lapse | 2 | journey-agency-schedule.test.ts |
 | `career.attend_ceremony` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/awards.ts` | — | — | — | — | 2 | journey-everyday-more.test.ts |
@@ -103,14 +103,14 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `career.leave` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | — | — | — | — | 2 | journey-career.test.ts |
 | `career.leave_manager` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | You have no manager.; The contract runs a year from …. | renewal | — | — | 2 | journey-career.test.ts |
 | `career.pass` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That offer isn’t open. | status | — | — | 2 | journey-career.test.ts |
-| `career.pitch` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/career.ts` | An agent pitches once the career has begun. (also pitchRefusal) | pitches | — | — | 1 | — |
+| `career.pitch` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/career.ts` | An agent pitches once the career has begun. (also pitchRefusal) | pitches | — | — | 2 | journey-industry.test.ts |
 | `career.publicist` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | You have no publicist.; You have a publicist.; A month is …, which the bank can’t cover. (also publicistRefusal) | publicist; status | — | — | 2 | journey-career.test.ts |
 | `career.query_agencies` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | — (also queryRefusal) | queriedAt | — | career.query_answer | 2 | journey-career.test.ts |
 | `career.reel` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | A reel is short: four pieces at most.; An edit is …, which the bank can’t cover. (also footageRefusal) | reelAt; reelCut | — | — | 3 | journey-career.test.ts |
 | `career.relocate` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | New York, Los Angeles, London, Dublin, Mexico City or New Haven${home ? ; You live there already.; Classes are in New Haven while the term is on; a move away waits for the summer or the deg; You’re away on a job: move when you’re home.; and 2 more (also crossingRefusal, residenceRefusal) | returnedHomeAt | Yes | — | 6 | journey-career.test.ts; journey-residence.test.ts; journey-social.test.ts |
 | `career.renew` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | No renewal is on offer. | renewal | — | — | 2 | journey-career.test.ts |
 | `career.request_schedule` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/rescheduling.ts` | — (also requestRefusal) | — | — | career.schedule_reply | 3 | journey-agency-schedule.test.ts |
-| `career.research_project` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/career.ts` | There’s no such project.; Research prepares you for an audition, and you have none for ….; You’ve looked into … already.; You’re at … until …. | — | — | — | 1 | — |
+| `career.research_project` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/career.ts` | There’s no such project.; Research prepares you for an audition, and you have none for ….; You’ve looked into … already.; You’re at … until …. | — | — | — | 2 | journey-industry.test.ts |
 | `career.self_submit` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | While classes are in session, the school’s work comes first; submissions start in the summ; You’ve made this week’s … submissions. | submitted | — | — | 5 | journey-career.test.ts; journey-everyday-more.test.ts |
 | `career.sign` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | That agency hasn’t an offer standing.; You’re with …. | — | — | — | 5 | journey-agency-schedule.test.ts; journey-career.test.ts |
 | `career.sign_manager` | Verified (journey) | The Business | CareerWorkspace.tsx | `systems/career.ts` | … manages you.; That firm hasn’t an offer standing. | managerId; managerSince; managerOffers | — | — | 2 | journey-career.test.ts |
@@ -274,10 +274,10 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `hygiene.style_every` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | Choose how often. | styles | — | — | 2 | journey-clothes.test.ts |
 | `hygiene.trim_nails` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/homegrooming.ts` | Nails are trimmed at home.; Fingers or toes. | nailsAt | — | — | 2 | journey-everyday-more.test.ts |
 | `hygiene.use_first` | Verified (journey) | Rent And A Roof | ClothesWorkspace.tsx | `systems/hygiene.ts` | There’s no such product. | usesFirst | — | — | 2 | journey-clothes.test.ts |
-| `industry.list` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | There’s no such list.; That can’t go on a list. | touched | — | — | 1 | — |
-| `industry.new_list` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A list needs a name.; Twenty lists at most.; You have a list by that name. | lists (added to) | — | — | 1 | — |
-| `industry.rate` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A rating is 1 to 10.; Only what’s been released can be rated.; That can’t be rated. | — | — | — | 1 | — |
-| `industry.view` | Implemented But Unverified | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | — | — | — | — | 2 | — |
+| `industry.list` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | There’s no such list.; That can’t go on a list. | touched | — | — | 2 | journey-industry.test.ts |
+| `industry.new_list` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A list needs a name.; Twenty lists at most.; You have a list by that name. | lists (added to) | — | — | 2 | journey-industry.test.ts |
+| `industry.rate` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | A rating is 1 to 10.; Only what’s been released can be rated.; That can’t be rated. | — | — | — | 2 | journey-industry.test.ts |
+| `industry.view` | Verified (journey) | The Industry | IndustryWorkspace.tsx | `systems/industry.ts` | — | — | — | — | 3 | journey-industry.test.ts |
 | `items.assemble` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/furnishings.ts` | You’re at … until …. (also assembleRefusal) | — | — | — | 4 | journey-belongings.test.ts; journey-holdings.test.ts; journeys.test.ts |
 | `items.discard` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/bulky.ts` | … is more than the bank can cover. (also bulkyRefusal) | bulkyYear; items | Yes | items.bulky_collected | 2 | journey-belongings.test.ts |
 | `items.give` | Verified (journey) | Rent And A Roof | BelongingsWorkspace.tsx | `systems/gifts.ts` | — (also giveRefusal) | items | — | — | 2 | journey-belongings.test.ts |

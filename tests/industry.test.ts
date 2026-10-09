@@ -213,13 +213,15 @@ describe('a project’s life', () => {
     expect(projectById(sim, kept.id)).toBeDefined();
   });
 
-  it('the town the player works in hears of a few projects a month, in development', () => {
+  it('the town the player works in hears of a few projects a month, spread over the months ahead', () => {
     const sim = actor('ind-announce');
     const before = industryOf(sim).projects.length;
     industryWeek(sim, sim.player, 'us-ny-newyork', sim.now);
-    const announced = () => industryOf(sim).projects.slice(before).filter((p) => p.history[0]!.what === 'Announced, in development');
+    const announced = () => industryOf(sim).projects.slice(before).filter((p) => p.history[0]!.what.startsWith('Announced'));
     expect(announced()).toHaveLength(INDUSTRY.announcePerMonth);
-    expect(announced().every((p) => p.status === 'development' && p.cityId === 'us-ny-newyork')).toBe(true);
+    // The first casting now, the others in development until their dates.
+    expect(announced().map((p) => p.status)).toEqual(['casting', 'development', 'development']);
+    expect(announced().every((p) => p.cityId === 'us-ny-newyork')).toBe(true);
     // Once a month: the next week's tick announces nothing more.
     industryWeek(sim, sim.player, 'us-ny-newyork', sim.now + 7 * MS_DAY);
     expect(announced()).toHaveLength(INDUSTRY.announcePerMonth);

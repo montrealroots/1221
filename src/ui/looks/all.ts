@@ -30,3 +30,4 @@ import './homes';
 import './land';
 import './belongings';
 import './receipt';
+import './industry';

@@ -132,6 +132,8 @@ export const INDUSTRY = {
   postDays: { film: 270, series: 150, play: 0, commercial: 30, animation: 300, game: 240, audiobook: 60, radio: 45, dub: 30 } as Record<ProjectFormat, number>,
   /** A month's projects announced in the town the player works in. */
   announcePerMonth: 3,
+  /** Days between a month's announcements' castings. */
+  announceApartDays: 21,
   /** Untouched projects leave the record this long after they end. */
   keepUntouchedDays: 365,
   /** At most this many projects on the record; the oldest untouched go first. */
@@ -234,10 +236,10 @@ export function newProject(sim: Simulation, role: Role, cityId: string, at: Inst
   parts[0]!.via = routeFor(role, parts[0]!.size);
   // The part an audition or a breakdown is for is never offer-only: it's being read for.
   if (parts[0]!.via === 'offer') parts[0]!.via = 'agent';
+  // The other parts are the same production's, on its contract: until the screens showed a LORT play cast beside a
+  // Broadway and an off-Broadway one on 2026-10-08, each was drawn from any role of its medium in the town.
   for (const [k, size] of OTHERS[role.medium].entries()) {
-    const other = ROLES.filter((r) => r.medium === role.medium && r.cities.includes(cityId as CareerCity) && formatOf(r) === format);
-    const r = other.length ? pick(other, rng.next()) : role;
-    parts.push({ id: `${id}-${k + 1}`, roleId: r.id, name: partName(size, cityId, rng.next(), rng.next(), rng.next()), size, via: routeFor(r, size), status: 'open' });
+    parts.push({ id: `${id}-${k + 1}`, roleId: role.id, name: partName(size, cityId, rng.next(), rng.next(), rng.next()), size, via: routeFor(role, size), status: 'open' });
   }
   const project: Project = {
     id, title, format, medium: role.medium, ...(company ? { companyId: company.id } : {}), producer: company?.short ?? INDEPENDENT[format], cityId,
@@ -395,7 +397,8 @@ function castTheRest(sim: Simulation, person: Person, p: Project): void {
     const performer = castPerformer(sim, p, part, p.shootFrom, p.shootUntil, 'shoot');
     castPart(p, part, { kind: 'performer', id: performer.id });
   }
-  p.history.push({ at: sim.now, what: 'Cast' });
+  // Cast by its first day, whenever the week's tick comes to it.
+  p.history.push({ at: Math.min(sim.now, p.shootFrom), what: 'Cast' });
   void person;
 }
 
@@ -474,10 +477,14 @@ function announce(sim: Simulation, cityId: string, when: Instant): void {
   const here = ROLES.filter((r) => r.cities.includes(cityId as CareerCity));
   if (!here.length) return;
   const rng = sim.rng('industry.project', cityId, `announce-${key}`);
+  // Spread over the months ahead: the first casting now, the others as their dates come. Until 2026-10-08 all three
+  // waited out their development, and a new career had nothing through agents to be pitched for, for two months.
   for (let n = 0; n < INDUSTRY.announcePerMonth; n += 1) {
     const role = pick(here, rng.next());
-    const p = newProject(sim, role, cityId, when + (INDUSTRY.developmentDays[formatOf(role)] + 7) * MS_DAY, `announce-${key}-${n}`, 'development');
+    const p = newProject(sim, role, cityId, when + (7 + n * INDUSTRY.announceApartDays) * MS_DAY, `announce-${key}-${n}`, 'development');
     p.announced = when;
+    p.status = statusAt(p, sim.now);
+    p.history = [{ at: when, what: p.status === 'casting' ? 'Announced, and casting' : 'Announced, in development' }];
   }
 }
 

@@ -21,6 +21,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { isValidElement, type ReactElement, type ReactNode } from 'react';
 import { quickSave } from '@/engine';
+import { bookPart, castPart, castPerformer, newProject } from '@/engine/systems/industry';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
@@ -116,7 +117,14 @@ function plantALife(sim: Simulation, player: Person): void {
     units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: now - 40 * MS_DAY, offeredAt: now - 45 * MS_DAY, worked: 2, owed: 0,
   });
   const booking = career.bookings[career.bookings.length - 1]!;
-  career.credits.push({ roleId: booking.roleId, year: zonedParts(booking.starts, 'America/New_York').year, cityId: booking.cityId });
+  // Its project, as the business makes one, the player's part in it and a performer in another (from 2026-10-08).
+  const project = newProject(sim, roleById('guest-hour'), 'us-ny-newyork', booking.starts, 'planted');
+  booking.projectId = project.id;
+  booking.partId = project.parts[0]!.id;
+  bookPart(sim, project.id, booking.partId, booking.starts, booking.starts + 2 * MS_DAY);
+  const other = project.parts[1]!;
+  castPart(project, other, { kind: 'performer', id: castPerformer(sim, project, other, booking.starts, booking.starts + 2 * MS_DAY, 'planted').id });
+  career.credits.push({ roleId: booking.roleId, year: zonedParts(booking.starts, 'America/New_York').year, cityId: booking.cityId, projectId: project.id });
   // Its castmate, as finishing the job makes one.
   metAtWork(sim, player, 'us-ny-newyork', booking.id, roleById(booking.roleId).label);
   // Entered for the Emmys, as a guest performer enters themselves.
