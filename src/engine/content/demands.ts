@@ -7,8 +7,10 @@
  * asks for (`DEMAND_TECHNIQUE`), each tag with the source that supports it
  * (`content/genre-demands.json`, generated from
  * `docs/research/attributes/research-genre-demands.json`), applied only where
- * the research reached medium or high confidence (`applied`): 64 of the 149
- * genres, 82 tags, on 2026-10-10. Where a work is of a
+ * the research reached medium or high confidence (`applied`): 41 of the 149
+ * genres, 52 tags, after the review of 2026-10-10, which lowered every entry
+ * that rested on one film, one director, one role or one subgenre (64 genres
+ * and 82 tags before it). Where a work is of a
  * genre (a play's kinds, a coursework scene's play, a self-tape's genre), its
  * demanded techniques join what the work reads (`withDemands`):
  *
@@ -51,6 +53,10 @@ export interface GenreDemand {
   confidence: 'high' | 'medium' | 'low';
   tags: readonly { tag: DemandTag; why: string }[];
   uncertainty: string;
+  /** Where the demand belongs instead of the whole genre (from 2026-10-10): a subgenre, a role, particular material. Never applied. */
+  belongsTo?: string;
+  /** `definition`: applied because the genre is defined by it (a comedy asks comic timing), SLATE's reading rather than a source's statement. */
+  basis?: 'definition';
 }
 
 /** A demanded technique's weight beside the work's own: SLATE's design choice. */

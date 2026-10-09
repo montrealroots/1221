@@ -212,7 +212,8 @@ defineLook<TheGenre>('genre', {
               <p className="small"><strong>What it asks of an actor.</strong> {demand.claim}</p>
               <p className="small"><strong>{applied(id) && demand.tags.length ? 'Applied as requirements.' : 'Not applied.'}</strong>{' '}
                 {applied(id) && demand.tags.length
-                  ? <>Work in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}</>
+                  ? <>Work in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}{demand.basis === 'definition' ? ' The genre is defined by it: that’s SLATE’s reading, not a source’s statement.' : ''}</>
+                  : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so work in it asks nothing past what all screen work does.`
                   : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what all screen work does.'}
               </p>
               <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>

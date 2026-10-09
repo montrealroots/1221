@@ -232,6 +232,8 @@ export const SELF_TAPE = { reads: { screen: 2, scene: 1 }, difficulty: 0.125, ge
 
 export function selfTapeRefusal(sim: Simulation, person: Person, id: string): string | undefined {
   if (!GENRE_DEFS[id] || !GENRE_BY_ID[id]) return 'There’s no such genre.';
+  // A craft is the School's to begin (`enroll`): a life with none (a test's or a tool's, never a new life's) is refused, where until 2026-10-10 the command threw.
+  if (!person.craft) return 'Your training hasn’t begun: there’s no craft to tape yet.';
   return hourRefusal(sim, person, false);
 }
 

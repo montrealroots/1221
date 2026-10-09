@@ -148,14 +148,22 @@ until the owner says otherwise.
   mechanics are its rest, its constraints and the one ability or technique it
   grows. A genre's demands were here too until 2026-10-10, when the ones the
   research established at medium or high confidence (64 genres, 82 tags) became
-  techniques its work reads (`content/demands.ts`); the 77 low-confidence
-  entries' tags are shown as not applied. Classmates were here as having no
+  techniques its work reads (`content/demands.ts`). The same day's review
+  lowered every applied entry that rested on one film, one director, one role
+  or one subgenre: 41 genres and 52 tags are applied. The 98 low entries'
+  tags, and what 41 of them belong to instead (a subgenre, a role, particular
+  material), are shown on the genre's page as not applied, and the ten held at
+  medium or high with no technique say why (`docs/GENRE-COVERAGE.md`). Classmates were here as having no
   abilities until the same day: they have the player's (`MateAbilities`), and
   the chair reads everyone's fit by the evaluation (`castFit`).
 - **Stamina is lost without training, and nothing else is (2026-10-09).** It is
   the body's fitness, which detrains as research says it does (Mujika & Padilla,
-  2000): 0.18 a day toward 35 without a workout. Sleep and a day's rest don't
-  lower it. The brief asked that rest erase no progress, and for the other
+  2000): 0.18 a day toward 35 without a workout. This said that sleep and a
+  day's rest didn't lower it, and until 2026-10-10 they did: the 0.18 fell at
+  every midnight, trained that day or not, and a student working out daily woke
+  under full every morning. Since then fitness holds for three days after a
+  workout (`FITNESS`, after Hickson & Rosenkoetter, 1981), so two workouts a
+  week keep it. The brief asked that rest erase no progress, and for the other
   eleven abilities and the techniques it doesn't; for stamina the body's own
   rule was kept, deconditioning told apart from rest, and the profile and the
   ability's look say what it is and what builds it back.

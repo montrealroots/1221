@@ -29,5 +29,5 @@
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "tests", "tools/lives.ts", "tools/policy.ts", "tools/fitness.ts", "tools/condition.ts", "tools/mastery.ts"]
+  "include": ["src", "tests", "tools/lives.ts", "tools/policy.ts", "tools/fitness.ts", "tools/condition.ts", "tools/mastery.ts", "tools/genre-coverage.ts"]
 }

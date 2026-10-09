@@ -4,7 +4,7 @@
   "source": "State Theatre Company South Australia, 'Beckett Trip' study guide, https://statetheatrecompany.com.au/wp-content/uploads/2022/05/Beckett-study-guide.pdf ; Wikipedia, 'Waiting for Godot' (pointer only), https://en.wikipedia.org/wiki/Waiting_for_Godot ; Northern Star, 'Beckett: Double acts, music hall and his relationship to theatre', https://northernstarcr.wordpress.com/2015/12/15/beckett-double-acts-music-hall-and-his-relationship-to-theatre/",
   "sourceSupports": "The study guide (as summarised by search): Beckett 'places strong emphasis on the rhythmic qualities of his plays, and like a composer, he is conscious of the importance of precisely timed silence'; his plays put actors in very difficult positions, some unable to speak and others unable to move; one actress says the voice must concentrate on 'timing, rhythm and the musicality of the text'. Wikipedia (as summarised by search) says Godot draws on 'the cross-talk tradition of the vaudeville stage, the burlesque, the music hall, and the movies of Charlie Chaplin, Buster Keaton, Laurel and Hardy', with hat games, dropped trousers and similar business. The Northern Star blog says Godot owes much of its form and rhythm to vaudeville and clown acts.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "comic",
@@ -15,21 +15,22 @@
     "why": "The Godot sources name clown and music-hall acts, Laurel and Hardy hat games and dropped trousers as part of the play's humour. This is shown for Godot only."
    }
   ],
-  "uncertainty": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film are not covered. The PDF could not be text-extracted, so the quotations come from the search engine's summary of it, not from my own reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words."
+  "uncertainty": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film are not covered. The PDF could not be text-extracted, so the quotations come from the search engine's summary of it, not from my own reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. Reviewed 2026-10-10: All of the evidence is Beckett, mostly Godot. Not applied genre-wide.",
+  "belongsTo": "Beckett’s plays (Waiting for Godot’s cross-talk and clown business)"
  },
  "adventure": {
-  "claim": "In the swashbuckling branch of adventure film, the stars were expected to be athletic and to do much of their own stunt work, with Fairbanks and Flynn as the models.",
-  "source": "Wikipedia, 'Swashbuckler film' (pointer only), https://en.wikipedia.org/wiki/Swashbuckler_film ; Simple English Wikipedia, 'Swashbuckler movie', https://simple.wikipedia.org/wiki/Swashbuckler_movie ; TCM, 'TCM Spotlight: Swashbucklers', https://www.tcm.com/articles/now-playing-newsletter/60231/tcm-spotlight-swashbucklers",
-  "sourceSupports": "From the search summary: swashbucklers feature 'adventure, romance, and daring stunts'; 'Fairbanks performed his own stunts', including a handspring balanced on a short dagger; Errol Flynn was chosen partly for 'youthfulness and athleticism', and it was clear he could do 'most if not all of his own stunts'. Which of the listed pages carries which sentence was not checked.",
-  "how": "search snippet",
-  "confidence": "low",
+  "claim": "A film reference work treats action and adventure cinema together as a form that foregrounds the body in motion and in combat, with a hero who must show physical endurance; in its swashbuckler strand the hero displays martial skill in extravagant swordplay, and stars such as Fairbanks did much of their own stunt work.",
+  "source": "Yvonne Tasker, Action and Adventure Films (Schirmer Encyclopedia of Film (ed. Barry Keith Grant), via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/action-and-adventure-films [fetched] ; Wisconsin Center for Film and Theater Research (blog post), Douglas Fairbanks: No Stuntman Required (WCFTR, University of Wisconsin-Madison, 2013), https://wcftr.commarts.wisc.edu/index.php/2013/05/16/douglas-fairbanks-no-stuntman-required/ [fetched] ; Jeffrey Richards, Swordsmen of the Screen: From Douglas Fairbanks to Michael York (Routledge & Kegan Paul (reissued Routledge 2014), 1977), https://en.wikipedia.org/wiki/Swashbuckler_film [snippet]",
+  "sourceSupports": "Action and Adventure Films: \"as a form that foregrounds the body in motion and in combat, action and adventure cinema advances a physical (frequently sexualized), imagery of heroism\"; \"the action or adventure hero is called upon to demonstrate courage, initiative and physical endurance\"; the swashbuckler hero is shown \"displaying martial skills in extravagant scenes of swordplay\"; Flynn's \"athletic performance came to define the romantic male exuberance of the swashbuckler.\" Douglas Fairbanks: No Stuntman Required: Fairbanks \"completed most stunts himself\" and secretly did the Robin Hood drawbridge stunt after agreeing to a double. Makes no claim about swashbuckler stars in general. Swordsmen of the Screen: From Douglas Fairbanks to Michael York: Quoted (via Wikipedia, not read directly) as saying that to understand a swashbuckler 'we must look at the art director, costume designer, fencing master, stunt arranger, cinematographer and actor'. The book's existence and authorship are confirmed by the Wikipedia citation; the quote itself was not seen on a fetched page.",
+  "how": "Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets",
+  "confidence": "medium",
   "tags": [
    {
     "tag": "stunt",
-    "why": "The sources say swashbuckler stars did their own stunts. That supports stunt for the swashbuckling subgenre, not for adventure as a whole."
+    "why": "genre-wide: Tasker's encyclopedia entry states at the level of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which is a genre-level convention of on-screen combat. One credible source, so medium, not high. Doing one's own stunts (Fairbanks, Flynn) remains a swashbuckler-star matter and is not what the tag is applied for."
    }
   ],
-  "uncertainty": "Nothing found speaks about adventure film in general, or about stamina for location work or a screen persona. The stunt tag rests on one subgenre and two stars. No primary source was read."
+  "uncertainty": "Tasker treats action and adventure as one form; scholars such as Brian Taves separate historical adventure from action, and some adventure films (travel or exploration stories) have little combat. Only one source states the genre-level point directly. The Richards quote was not read at source."
  },
  "alternate_history": {
   "claim": "No source was found that describes a performance demand particular to alternate history.",
@@ -87,18 +88,19 @@
   "uncertainty": "This is one film. Physical transformation is shown there but not established as a convention of the genre, so no transformation tag was given. 'Sustained fear, grief and desperation played truthfully' is not supported by any source found."
  },
  "art_house": {
-  "claim": "Art cinema, especially its 'slow cinema' strand, often uses long takes, minimal dialogue and nonprofessional actors. Bresson worked with 'models' and repeated takes until all signs of performance were gone.",
-  "source": "Wikipedia, 'Slow cinema' (pointer only), https://en.wikipedia.org/wiki/Slow_cinema ; Wikipedia, 'Notes on the Cinematographer' (pointer to Bresson's book), https://en.wikipedia.org/wiki/Notes_on_the_Cinematographer ; Offscreen, '\"Notes\" on Notes on the Cinematographer', https://offscreen.com/view/bresson_notes",
-  "sourceSupports": "From the search summary: slow cinema is 'a genre of art cinema characterized by minimalist and observational style with frequent use of long takes ... often using minimal dialogue and employing nonprofessional actors'. Bresson used 'models' instead of actors, defining the model as 'movement from the exterior to the interior', and had them repeat takes 'until all semblances of performance were stripped away'.",
-  "how": "search snippet",
+  "claim": "In the modernist strand of art cinema (Bresson, Antonioni), directors hold actors' physical and vocal expressivity so far down that framing, editing and sound carry the characters' inner life. Bresson called his performers 'models', not actors, and repeated lines until the 'acting' was gone.",
+  "source": "Cynthia Baron, Acting (Schirmer Encyclopedia of Film, ed. Barry Keith Grant (Schirmer Reference/Thomson Gale), via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/acting [fetched] ; Tom Ryall, Art Cinema (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/art-cinema [fetched] ; Donato Totaro, \"Notes\" on Notes on the Cinematographer (Offscreen, 2004), https://offscreen.com/view/bresson_notes [fetched] ; David Bordwell, The Art Cinema as a Mode of Film Practice (Film Criticism 4:1, 1979), http://hybridstyle.com/wp-content/uploads/2015/04/Bordwell-The-Art-Cinema-as-a-Mode-of-Film-Practice.pdf [snippet]",
+  "sourceSupports": "Acting: In modernist films by Bresson and Antonioni, 'actors' use of their physical and vocal expressivity is so delimited by the directors that glimpses of their characters' inner experiences often are more clearly conveyed by the directors' framing, editing, sound, and production design choices.' Also: 'The scale and quality of actors' physical and vocal expressions are also keyed to the film's style or genre.' Art Cinema: Says nothing about an acting method for art cinema as a whole; only that 'art films tended to delve into character psychology and sensibility, to investigate the drama of the interior'. This is evidence against a genre-wide acting convention. \"Notes\" on Notes on the Cinematographer: The Bressonian 'model' differs from an actor and 'encompasses an attitude ... which goes beyond performance'; repetition of lines is Bresson's way of 'recovering the automatism of real life' (quoting Bresson, Notes on the Cinematographer, p. 59). The Art Cinema as a Mode of Film Practice: Art cinema motivates its narratives by realism and authorial expressivity and uses 'realistic', psychologically complex characters. It describes characters and narration, not an acting technique.",
+  "how": "Reviewed 2026-10-10: 3 of 4 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "camera",
-    "why": "Slow cinema's long takes and observational style, and Bresson's stripping-out of performance, support restrained on-camera playing. The support covers this strand of art cinema, not all art-house film."
+    "why": "subgenre-or-role: The restrained, minimal playing is documented for modernist directors (Bresson, Antonioni) and, in Bresson's case, is explicitly anti-acting rather than naturalistic on-camera technique. The reference entry on art cinema itself names no acting convention, so it must not be applied to all art-house film."
    }
   ],
-  "uncertainty": "Art house is a market category, not one style, and much of it is not restrained or slow. The sources describe directors' methods and a subgenre. Bresson's book was not read, only summaries of it."
+  "uncertainty": "Art house is a market and exhibition category covering many styles. Bresson's book was not read directly, only quoted through Totaro. The 'camera' tag is an approximation: Bresson's models are closer to the absence of performance than to naturalistic screen acting.",
+  "belongsTo": "Modernist / auteur art cinema (Bresson, Antonioni) and the slow-cinema strand; director-specific methods"
  },
  "avant_garde": {
   "claim": "No source on performing in avant-garde film was found. Sources on experimental theatre (Grotowski) describe intensive physical and vocal actor training in place of naturalistic representation.",
@@ -114,14 +116,15 @@
   "source": "TCM, 'The Wild Angels', https://www.tcm.com/articles/220878/the-wild-angels ; Wikipedia, 'The Wild Angels' (pointer only), https://en.wikipedia.org/wiki/The_Wild_Angels",
   "sourceSupports": "From the search summary: 'Corman insisted that all the professional actors had to ride the bikes themselves because he wanted to be as authentic as possible. The principals are clearly seen doing all their own riding'. Also: 'since Chakiris didn't know how to ride a motorcycle, however, and refused to do the film without doubles and stuntmen, Corman then offered the role to Peter Fonda'. The TCM page returned 403 when fetched.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "The source treats the riding as work that would otherwise go to doubles and stuntmen, and says the actors had to do it themselves. Shown for one founding film."
    }
   ],
-  "uncertainty": "This is one film's casting rule, not a documented convention of the whole cycle. Riding skill fits 'stunt' only loosely, since the vocabulary has no driving or riding tag."
+  "uncertainty": "This is one film's casting rule, not a documented convention of the whole cycle. Riding skill fits 'stunt' only loosely, since the vocabulary has no driving or riding tag. Reviewed 2026-10-10: One film’s casting rule (The Wild Angels). Not applied genre-wide.",
+  "belongsTo": "productions that ask actors to ride, as The Wild Angels did"
  },
  "biographical": {
   "claim": "Playing a real person means working within documented fact: researching the subject and reproducing their voice, accent, mannerisms and movement, while trying to portray rather than impersonate.",
@@ -133,87 +136,84 @@
    {
     "tag": "transformation",
     "why": "The source describes reproducing a real person's movement, physicality and mannerisms (Chaplin, Lincoln)."
-   },
-   {
-    "tag": "accent",
-    "why": "The source describes voice-coach work to match a real person's voice and accent (Streep as Thatcher)."
    }
   ],
-  "uncertainty": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much."
+  "uncertainty": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much. Reviewed 2026-10-10: the accent tag was removed. An accent is asked only where the subject spoke differently from the actor, which belongs to the role, not the genre."
  },
  "black_comedy": {
-  "claim": "Advice on deadpan comedy says to remove obvious comic signals and play the situation straight, never commenting on the joke. No source was found that ties this specifically to black comedy.",
-  "source": "Vancouver Film School, 'Deadpan', https://vfs.edu/news/deadpan ; Backstage, 'How to Use Dry Humor In Your Comedy', https://www.backstage.com/magazine/article/dry-humor-comedy-advice-76705/",
-  "sourceSupports": "From the search summary: deadpan is 'the controlled removal of obvious comic signals'; the performer 'does not smile at the cleverness of the line'; 'Underneath that restraint, the character still wants something ... and believes in the situation'.",
-  "how": "search snippet",
+  "claim": "Reference works define black comedy as comedy that sets morbid or ghastly material against the comic, often through farce and low comedy. No credible source found states a specific acting technique (such as deadpan) for the genre; deadpan advice exists only for comedy in general.",
+  "source": "The Editors of Encyclopaedia Britannica, Black humour (Encyclopaedia Britannica), https://www.britannica.com/topic/black-humor [snippet] ; Richard Sheposh, Black comedy (EBSCO Research Starters, 2022), https://www.ebsco.com/research-starters/social-sciences-and-humanities/black-comedy/ [fetched] ; Vancouver Film School, Deadpan (VFS News, 2026), https://vfs.edu/news/deadpan [fetched]",
+  "sourceSupports": "Black humour: Black humour is writing that juxtaposes morbid or ghastly elements with comical ones; it 'often uses farce and low comedy'. (Fetch returned 403; seen via search snippet.) Defines the genre as comic; says nothing about acting. Black comedy: Treats black comedy as a form of comedy with film examples (Dr. Strangelove, Harold and Maude, Fargo, The Death of Stalin). Contains no discussion of performance, deadpan or timing. Deadpan: Advises sincere commitment to absurd situations ('The more absurd the situation becomes, the more useful sincere commitment can be'). Does not mention black or dark comedy.",
+  "how": "Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "comic",
-    "why": "Black comedy is comedy by definition, and the deadpan sources describe a comic-timing discipline. The link between deadpan and black comedy specifically is not made by the sources."
+    "why": "genre-wide: Credible reference works define black comedy as a kind of comedy (farce and low comedy per Britannica), so comic timing follows from the genre's definition across all of it. The support is definitional only: no acting source states it, and the deadpan link remains unsupported, so confidence stays low."
    }
   ],
-  "uncertainty": "The sources cover deadpan in general. No source found says black comedy requires deadpan playing, although that is a common critical view."
+  "uncertainty": "Britannica could not be fetched (snippet only). No acting or training source ties a particular comic technique to black comedy; the deadpan/play-it-straight idea appears only in general comedy advice and non-credible blogs. Genre-wide only by definition; no source states a technical convention, so it stays low."
  },
  "blaxploitation": {
-  "claim": "Pam Grier, the genre's best-known female star, did her own stunts in its 1970s action films.",
-  "source": "CBC, Q, 'How Pam Grier became Hollywood's 1st female action hero — and what she thinks about the term blaxploitation', https://www.cbc.ca/arts/q/how-pam-grier-became-hollywood-s-1st-female-action-hero-and-what-she-thinks-about-the-term-blaxploitation-1.7125607",
-  "sourceSupports": "Search summary: 'Pam Grier was doing her own stunts, chasing bad guys and seeking vigilante justice in low-budget \\'70s action movies.' The page returned 403 when fetched. Other results named Jim Kelly as a 'martial arts legend' in the genre but said nothing about stunts.",
-  "how": "search snippet",
+  "claim": "Scholarship characterises the blaxploitation movement by, among other things, excessive violence, and describes its black action cinema as heroes, male and female, deploying violence, guns and martial arts. Stars doing their own stunts is attested only for individuals such as Pam Grier.",
+  "source": "Novotny Lawrence, Blaxploitation Films of the 1970s: Blackness and Genre (Routledge, 2008), https://www.routledge.com/Blaxploitation-Films-of-the-1970s-Blackness-and-Genre/Lawrence/p/book/9780415540957 [fetched] ; Yvonne Tasker, Action and Adventure Films (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/action-and-adventure-films [fetched] ; Museum of UnCut Funk, Karate, Kung Fu and Blaxploitation (Google Arts & Culture, n.d.), https://artsandculture.google.com/story/karate-kung-fu-and-blaxploitation-museum-of-uncut-funk/rQXRbvxKvFtImw?hl=en [fetched]",
+  "sourceSupports": "Blaxploitation Films of the 1970s: Blackness and Genre: Publisher description: the movement \"is characterized by films that feature a black hero or heroine, black supporting characters, a predominately black urban setting, a display of black sexuality, excessive violence, and a contemporary rhythm and blues soundtrack.\" Also: \"Blaxploitation films were made across varying genres\" (detective, horror, gangster, cop action). Action and Adventure Films: \"The 1970s also saw the emergence of black action cinema (sometimes called 'blaxploitation') with both male and female heroes deploying violence, gun power, and martial arts against oppressive enemies and institutions.\" Karate, Kung Fu and Blaxploitation: \"The 1970's marked the beginning of the one-two combination of Blaxploitation and Kung Fu\"; Jim Kelly's \"superb karate skills\". Does not say how common fights were across the cycle or whether stars did their own.",
+  "how": "Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "The source says Grier did her own stunts in these films. That is one star, not a genre convention."
+    "why": "genre-wide: Two independent scholarly sources characterise the movement as a whole by violence (Lawrence: 'excessive violence' as a defining feature across the genres it spans; Tasker: heroes deploying violence, guns and martial arts). On-screen violence is staged combat, so fight and stunt work is a genre convention. Two sources and an inference from 'violence' to staged combat keep it at medium. Grier doing her own stunts is one star and is not the basis."
    }
   ],
-  "uncertainty": "There is one performer, and the page itself was not read. 'Charismatic, larger-than-life star presence' has no source. Not every film in the cycle is an action film."
+  "uncertainty": "Lawrence's 'excessive violence' comes from the publisher's description of his book, not a page of the book itself. Violence includes gunplay, which asks less of the actor than hand-to-hand fights. Horror entries such as Blacula fit the cycle but are not action films. 'Larger-than-life star presence' still has no source. The stunt demand is inferred from the cycle’s violence; no source states fight work for the genre as a whole, so it stays low."
  },
  "body_horror": {
   "claim": "Body horror built on practical effects puts its actors in heavy prosthetics for long makeup sessions, at real physical cost. The Substance had five- to eight-hour applications.",
   "source": "Backstage, 'How The Substance Created Its Body Horror With Practical Effects', https://www.backstage.com/magazine/article/the-substance-makeup-artist-effects-interview-78270/ ; CNN, 'Margaret Qualley says her skin took a year to recover from The Substance prosthetics', https://www.cnn.com/2025/01/16/style/margaret-qualley-the-substance-prosthetics-intl-scli",
   "sourceSupports": "From the search summary: full-body makeup took seven hours, more complex applications five to five and a half; Demi Moore or Margaret Qualley spent six to eight hours in makeup on the heaviest days; the production chose practical effects 'like those out of The Fly'. CNN: Qualley's skin took about a year to recover from the prosthetics.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "The sources describe prosthetic transformation as the actor's working condition on a body-horror film."
    }
   ],
-  "uncertainty": "There is one film, plus a reference to The Fly. Body horror done with digital effects would not ask this, so the tag rests on practical-effects practice. 'Conveying pain and loss of bodily control' is not supported by these sources."
+  "uncertainty": "There is one film, plus a reference to The Fly. Body horror done with digital effects would not ask this, so the tag rests on practical-effects practice. 'Conveying pain and loss of bodily control' is not supported by these sources. Reviewed 2026-10-10: One film’s practical-effects prosthetics. Not applied genre-wide.",
+  "belongsTo": "practical-effects roles in heavy prosthetics"
  },
  "buddy_comedy": {
-  "claim": "The buddy film rests on two contrasting characters whose friendship is the central relationship, and it has a long line of comic double acts from Laurel and Hardy onward.",
-  "source": "Wikipedia, 'Buddy film' (pointer only), https://en.wikipedia.org/wiki/Buddy_film",
-  "sourceSupports": "From the search summary: the buddy film is a subgenre 'in which two people go on an adventure, mission, or road trip', typically 'with contrasting personalities'; 'A friendship between the two people is the key relationship'; famous comic pairings include Laurel and Hardy and Pegg and Frost.",
-  "how": "search snippet",
+  "claim": "The buddy comedy is a comedy subgenre built on two contrasting leads, and its formula gives the actors room to show chemistry and comic timing. Comedy teams such as Laurel and Hardy and Hope and Crosby are part of its lineage.",
+  "source": "Backstage staff (byline not verified), The Best Buddy Cop Movies of All Time (Backstage, unknown), https://www.backstage.com/magazine/article/best-buddy-cop-movies-77133/ [snippet] ; Backstage staff (byline not verified), Film Genres: An Introduction to Basic Movie Categories (Backstage, unknown), https://www.backstage.com/magazine/article/movie-genres-76034/ [snippet] ; Wes D. Gehring, Comedy (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/comedy [fetched]",
+  "sourceSupports": "The Best Buddy Cop Movies of All Time: The buddy comedy formula involves two opposites coming together to fight crime and often each other, 'providing the actors playing them plenty of room to demonstrate chemistry and comedic timing'. Page returned 403; snippet only. Film Genres: An Introduction to Basic Movie Categories: Lists the 'buddy' picture among the subgenres of comedy, alongside slapstick, satire, farce, parody. Page returned 403; snippet only. Comedy: Discusses comedy teams, e.g. Laurel and Hardy's 'tit-for-tat exchanges of comic violence' and the 'inspired teaming' of Hope and Crosby in the Road pictures. It does not state an acting demand for buddy films specifically.",
+  "how": "Reviewed 2026-10-10: 1 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "comic",
-    "why": "Buddy comedy is comedy by definition, and the source names comic double acts as the form's lineage."
+    "why": "genre-wide: Buddy comedy is a comedy subgenre by definition, and a trade source for actors states directly that its formula asks the leads for comedic timing (and chemistry). Raised to medium only on that direct statement, with the caveat that it was read as a snippet."
    }
   ],
-  "uncertainty": "This is Wikipedia only, and it describes the genre, not what it asks of actors. Double-act chemistry and banter are a reasonable inference but are not stated as acting demands."
+  "uncertainty": "Both Backstage pages refused fetching (403), so the wording rests on search snippets, and the timing sentence comes from a buddy-cop list. Only one publisher states it. Chemistry is not a tag in the vocabulary. The buddy film outside comedy (buddy action, buddy drama) carries no comic demand. The one direct statement (Backstage) was read only as a search snippet, so it stays low; a buddy comedy is a comedy, but that is a definition, not evidence of a technical convention."
  },
  "buddy_cop": {
-  "claim": "Entertainment-press accounts put buddy-cop pairings down to the two leads' chemistry. Rush Hour paired one lead's stunt-fighting with the other's comic delivery.",
-  "source": "Screen Rant, 'The 10 Best Buddy Cop Movie Duos, Ranked', https://screenrant.com/best-buddy-cop-movie-duos-ranked-lethal-weapon-hot-fuzz/ ; Collider, 'The Best Buddy Cop Movies Ranked', https://collider.com/best-buddy-cop-movies-ranked/",
-  "sourceSupports": "From the search summary: 'The key to any great buddy cop pairing is on-screen chemistry shared by the two actors'; Rush Hour 'pairs Jackie Chan's action prowess with Chris Tucker's comedic chops', with Chan's stunt work and intricate fight scenes; the outtakes show the pair 'improvising'.",
-  "how": "search snippet",
+  "claim": "Academic studies describe the buddy-cop film as an action-comedy hybrid: known for action and best known for its comedy, with witty banter, snappy one-liners and over-the-top stunts as hallmarks.",
+  "source": "Briah Baker, Why Can't We Be Friends: The Legitimization of Police Violence in the Buddy-Cop Film Genre (University of Wisconsin-Milwaukee (MA thesis, Media Studies), 2021), https://minds.wisc.edu/bitstream/handle/1793/92734/Baker_uwm_0263M_13037.pdf [fetched] ; Sidney Garner (mentor Dr. Charlene Regester), On and Off Screen: Race in Buddy Cop Films (UNC Chapel Hill, MURAP 2020 paper (Carolina Digital Repository), 2020), https://cdr.lib.unc.edu/downloads/gf06gb38m?locale=en [fetched]",
+  "sourceSupports": "Why Can't We Be Friends: The Legitimization of Police Violence in the Buddy-Cop Film Genre: 'the witty banter, the over the top stunts, and the fast pace action that are hallmarks of the genre'; 'The action-comedy relies on the witty comebacks and snappy one-liners of the characters in the film to cut the tension in violent' scenes; Lethal Weapon 'features big explosions, car chases, extreme stunt-work'. On and Off Screen: Race in Buddy Cop Films: 'Known for its comradery, action, and comedy, this genre...'; 'The buddy cop genre, aside from action, is known best for its use of comedy.'",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "comic",
-    "why": "The sources describe one partner's comic delivery as half of the pairing's appeal (Tucker in Rush Hour; banter in Lethal Weapon)."
+    "why": "genre-wide: Two independent academic works state comedy (banter, one-liners) as a defining convention of the genre as a whole, not of one film."
    },
    {
     "tag": "stunt",
-    "why": "The sources describe stunt and fight work by one lead (Chan in Rush Hour)."
+    "why": "genre-wide: Both works name action as a genre convention; Baker names 'over the top stunts' and fast-paced action as hallmarks of the genre. The tag fits the leads' fight and action work; much stunt work is doubled in practice."
    }
   ],
-  "uncertainty": "These are listicles built on two or three examples. The split of comedy and action between partners is shown for Rush Hour only. The improvisation in the outtakes is not evidence of an improvising convention, so no improvisation tag was given."
+  "uncertainty": "Both sources are student works (an MA thesis and an undergraduate research paper), not peer-reviewed; Baker's 'hallmarks' line is in her personal preface. Neither speaks about what actors train for. The Rush Hour split of stunts and comedy between partners remains one franchise, not a convention. Comedy-led entries (e.g. Ride Along) may lean less on combat. Both sources are student works (an MA thesis and an undergraduate research paper); they do not establish a convention, so it stays low."
  },
  "caper": {
   "claim": "No credible source on performing in caper films was found.",
@@ -236,21 +236,22 @@
     "why": "The genre is defined by swordfights, and the tate source says actors memorise and perform the fight forms."
    }
   ],
-  "uncertainty": "Pages were not read directly, but the genre's own name entails the demand. Period movement, stillness and period speech are not supported by these sources, so no heightened tag was given."
+  "uncertainty": "Pages were not read directly, but the genre's own name entails the demand. Period movement, stillness and period speech are not supported by these sources, so no heightened tag was given.",
+  "basis": "definition"
  },
  "chase": {
-  "claim": "Only an example was found: Tom Cruise does his own running and chase stunts and trains with a coach for it.",
-  "source": "ESPN, 'Is Tom Cruise good at running? A super-scientific exploration', https://www.espn.com/olympics/story/_/id/33966556/tom-cruise-running-top-gun-maverick ; Parade, 'Tom Cruise Stunts', https://parade.com/movies/tom-cruise-stunts",
-  "sourceSupports": "From the search summary: Cruise has a major running scene in 44 of 52 films; after Collateral he hired a running coach; he broke his ankle during a chase scene in Mission: Impossible – Fallout.",
-  "how": "search snippet",
+  "claim": "Reference works define the chase film as an early and silent-era form in which a chase is the primary element, built on editing and on crowds running from one place to the next; its comic branch, from music-hall chase skits to Sennett's Keystone chases, is physical comedy. Nothing credible makes stunts or fight work a convention of the form.",
+  "source": "Charlie Keil, Early Cinema (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/early-cinema [fetched] ; Annette Kuhn and Guy Westwell, Chase film (entry in A Dictionary of Film Studies) (Oxford University Press (Oxford Reference), 2020), https://www.oxfordreference.com/display/10.1093/acref/9780198832096.001.0001/acref-9780198832096-e-0102 [snippet] ; Tamar Jeffers McDonald, Slapstick Comedy (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/slapstick-comedy [fetched]",
+  "sourceSupports": "Early Cinema: In chase films \"large groups of people run from one locale to the next, the cut introducing a new setting while sustaining the sense of frantic movement\"; the effect rests on \"the accelerated sensation of displacement and mobility editing helps to promote.\" Chase film (entry in A Dictionary of Film Studies): Snippet (page returned 403): chase films are films of the early and silent eras in which a chase is the primary element, with precedent in music-hall and vaudeville comedy chase skits 'punctuated with pratfalls and physical comedy'. Slapstick Comedy: Sennett realised \"the comic potential of the chase\"; his films ended with Kops and others who \"careen across the screen, fall over, collide, and generally create mayhem.\"",
+  "how": "Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "The source shows one actor doing chase running and stunts himself. That is one star, not a genre convention."
+    "why": "unsupported: The reference works define the chase film by editing and pursuit, not by what performers do. The only actor-level evidence found earlier (Tom Cruise running his own chases) is one star. The comic chase points to physical comedy, not fights and stunts, and that is a different tag that was not proposed."
    }
   ],
-  "uncertainty": "Nothing found covers the chase film as a genre and its performers. Many chase sequences are done by stunt drivers and doubles."
+  "uncertainty": "The Oxford entry was only seen as a snippet. Modern car-chase action films are usually classed as action films, not as 'chase films', and their driving is mostly done by stunt drivers."
  },
  "childrens": {
   "claim": "No source on the acting style of children's films was found. The sources found were about directing child actors.",
@@ -280,18 +281,19 @@
   "uncertainty": "These are examples, not a convention. Improvisation and camera tags were considered and withheld because the sources do not tie them to the genre."
  },
  "concert_film": {
-  "claim": "A concert film records an extended live music performance before an audience, so its performers are musicians performing live, not actors playing roles.",
-  "source": "Wikipedia, 'Concert film' (pointer only), https://en.wikipedia.org/wiki/Concert_film",
-  "sourceSupports": "From the search summary: a concert film 'showcases a live performance from the perspective of a concert goer, the subject of which is an extended live music performance', recording 'musicians, comedians, or other stage artists'.",
-  "how": "search snippet",
+  "claim": "A concert film records an extended live performance by musicians (bands, singers) or sometimes stand-up comedians, before an audience. Its performers are playing themselves live, not acting roles, and singing is common but not universal.",
+  "source": "Ron Deutsch, Docs That Really Rock: Music Documentaries Go Beyond the Performance (International Documentary Association (documentary.org), 2014), https://www.documentary.org/feature/docs-really-rock-music-documentaries-go-beyond-performance [fetched] ; Wikipedia contributors, Concert film (Wikipedia (pointer only), 2026), https://en.wikipedia.org/wiki/Concert_film [snippet]",
+  "sourceSupports": "Docs That Really Rock: Music Documentaries Go Beyond the Performance: The concert/performance film, with Woodstock (1970) as 'the basic template', may include interstitial sequences 'but it's primarily about watching a performance'. Jonathan Demme: it documents 'a musical event that happened and was attended by ticket-buying people'. Concert film: Pointer: defines the subject as an extended live music performance; other glossaries add stand-up comedians.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "song",
-    "why": "The definition makes live musical performance the content. It does not say singing: instrumental acts and comedians are also covered, so the tag is the closest available fit, not a stated requirement."
+    "why": "subgenre-or-role: Live musical performance is genre-wide, but singing is not: instrumental acts and comedians are covered. Singing belongs to concert films of vocal acts, and the performers are musicians performing as themselves, not actors executing a technique."
    }
   ],
-  "uncertainty": "This is Wikipedia only. Whether an actor-character in SLATE would be cast in a concert film is a design question. The song tag stretches 'music' to 'singing', and the vocabulary has no instrument tag."
+  "uncertainty": "No scholarly reference work defining the genre was read; the IDA article is a trade/professional source. The vocabulary has no instrument or live-music tag, so 'song' is a stretch. Whether an actor-character belongs in a concert film at all is a design question.",
+  "belongsTo": "Concert films of singers and vocal acts (the singing performers themselves)"
  },
  "conspiracy_thriller": {
   "claim": "Only critics' writing on one film was found: The Conversation, the high point of the 1970s paranoia thriller, is praised for Hackman's subdued, interior performance of rising paranoia.",
@@ -317,13 +319,8 @@
   "sourceSupports": "RADA (read directly): the course examines 'deportment, greetings, social interaction, clothing, and dance' and 'period-specific movement, style and codes of behaviour' from the Elizabethan and Jacobean courts to the 1920s. Search summary of the other results: 'A corset ... changes how you breathe, how you sit, how you bend'; actors consult 'a speech and voice teacher, as well as a movement teacher, to find the most specific tempos, rhythms, pronunciations, and specific physical movements that are truest to the period'. Which page carries the speech-teacher sentence was not checked.",
   "how": "read directly",
   "confidence": "medium",
-  "tags": [
-   {
-    "tag": "heightened",
-    "why": "The tag covers 'period' style. RADA supports period behaviour and movement directly, and a search snippet supports period pronunciation. Period language as such (verse, heightened text) is not shown."
-   }
-  ],
-  "uncertainty": "RADA's course is evidence that period movement is a taught skill. It does not say every costume drama demands it. Period dance appears in RADA's syllabus, but no dance tag was given because no source says costume dramas require dancing. The fit between 'heightened' and movement, rather than language, is loose."
+  "tags": [],
+  "uncertainty": "RADA's course is evidence that period movement is a taught skill. It does not say every costume drama demands it. Period dance appears in RADA's syllabus, but no dance tag was given because no source says costume dramas require dancing. The fit between 'heightened' and movement, rather than language, is loose. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period movement and deportment, which no tag in the vocabulary covers."
  },
  "courtroom_drama": {
   "claim": "Only weak sources were found: actor-training blogs note that a lawyer's closing argument should be played as rehearsed, polished and fully memorised.",
@@ -335,18 +332,19 @@
   "uncertainty": "Nothing credible ties long speeches or restraint under cross-examination to the genre as an acting demand. No tag fits."
  },
  "creature_feature": {
-  "claim": "Creature films ask human actors to react convincingly to monsters that are absent on set, often a tennis ball on a stick, and they employ specialist creature actors who perform inside suits and prosthetics.",
-  "source": "The Playground, 'Sci-Fi Acting: Reacting to Green Screen and CGI Elements', https://theplayground.com/sci-fi-acting-reacting-to-green-screen-and-cgi-elements/ ; befores & afters, 'Meet the true unsung hero of visual effects: the tennis ball', https://beforesandafters.com/2023/03/04/meet-the-true-unsung-hero-of-visual-effects-the-tennis-ball/ ; NPR, 'Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters', https://www.npr.org/2018/02/22/588069904/creature-actor-doug-jones-shares-how-he-transforms-into-movie-monsters",
-  "sourceSupports": "From the search summary: actors 'might be asked to stare in terror at a monster that will be added in post production months later'; holding focus on 'a tennis ball on a stick' takes discipline; the Game of Thrones dragons were tennis balls on sticks for Emilia Clarke to react to. NPR (title only seen): the creature actor Doug Jones on how he transforms into movie monsters.",
-  "how": "search snippet",
+  "claim": "Creature films with practical creatures have used a recognised specialty, the creature or prosthetic performer, who acts head to toe in suits and prosthetics with restricted sight and hearing. That demand belongs to the creature role, not to the human cast.",
+  "source": "James Ostime, Doug Jones, Unmasked (Interview Magazine, 2013), https://www.interviewmagazine.com/culture/doug-jones-falling-skies [fetched] ; Witney Seibold, The Shape Of Water And Pan's Labyrinth Were Very Different Prosthetics Experiences For Doug Jones (SlashFilm, 2022), https://www.slashfilm.com/1021091/the-shape-of-water-and-pans-labyrinth-were-very-different-prosthetics-experiences-for-doug-jones/ [fetched] ; NPR, Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters (NPR, 2018), https://www.npr.org/2018/02/22/588069904/creature-actor-doug-jones-shares-how-he-transforms-into-movie-monsters [snippet]",
+  "sourceSupports": "Doug Jones, Unmasked: Jones: 'I'm one of the top \"makeup actors\" in the movie business, appearing head to toe in prosthetic pieces and elaborate costumes.' The Shape Of Water And Pan's Labyrinth Were Very Different Prosthetics Experiences For Doug Jones: Jones: 'Any creature suit that I've worn over the last 31 years hampers your eyesight, your hearing'; Pan's Labyrinth makeup took five to six hours, The Shape of Water three. Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters: Title only (fetch timed out): names 'creature actor' as a role and transformation into monsters.",
+  "how": "Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
-    "why": "The NPR piece (title seen, body not read) documents creature-actor work in monster prosthetics, which the tag names explicitly. It applies to the creature performer, not the human cast."
+    "why": "subgenre-or-role: The sources document transformation as the job of the creature performer, a specialist role, and only where the creature is practical (suit or prosthetic). Human leads are not asked for it, and CGI creatures remove the role."
    }
   ],
-  "uncertainty": "The reaction-to-nothing evidence is about sci-fi and effects work in general, not creature features specifically, and no tag covers it. Many classic creature features used practical puppets or suits on set, so 'absent' is not universal."
+  "uncertainty": "Sources centre on one performer (Doug Jones) whose films (Pan's Labyrinth, The Shape of Water) are fantasy as much as creature features. No source states the suit performer as a convention of the creature feature as a whole. The reacting-to-nothing claim was general VFX practice and is dropped here.",
+  "belongsTo": "the creature performer role in practical-effects (suit or prosthetic) creature films"
  },
  "crime": {
   "claim": "No credible source on what the crime genre asks of actors was found.",
@@ -358,18 +356,19 @@
   "uncertainty": "The genre is too broad to carry a single performance demand. Grounded, morally ambiguous characterisation and menace remain unsourced. The definition entails no tag."
  },
  "cyberpunk": {
-  "claim": "Only one example was found: The Matrix had its four leads train for about four months in kung fu, fight choreography and wirework with Yuen Woo-ping so that they could perform much of the action themselves.",
-  "source": "South China Morning Post, 'Hong Kong martial arts cinema: how The Matrix's Yuen Woo-ping shaped the trilogy with his action choreography', https://www.scmp.com/lifestyle/entertainment/article/3043697/hong-kong-martial-arts-cinema-how-matrixs-yuen-woo-ping",
-  "sourceSupports": "From the search summary: the actors 'trained in a warehouse in Hollywood for four months with Yuen'; the four leads trained 'nearly every day from October 1997 to March 1998 in martial arts, fight choreography and wirework'; Yuen insisted on training them; Reeves and Fishburne 'are rarely doubled'.",
-  "how": "search snippet",
+  "claim": "Cyberpunk is defined by setting and theme (dystopian high-tech cities, corporate power, outsider protagonists, noir influence), not by fight work. The Matrix's cast trained for months with Yuen Woo-ping because the directors expected them to do many of their own stunts; that is one film.",
+  "source": "Mark Salisbury, The Matrix: how the Wachowskis changed sci-fi (BFI, 2019), https://www.bfi.org.uk/features/matrix-wachowskis-keanu-reeves [fetched] ; Rafael Abreu, What is Cyberpunk? Genre Definition, Origins & Examples (StudioBinder, 2025), https://www.studiobinder.com/blog/what-is-cyberpunk-definition/ [fetched]",
+  "sourceSupports": "The Matrix: how the Wachowskis changed sci-fi: \"The Wachowskis expected their cast to do many of their own stunts, and so Reeves and co spent months training with legendary Hong Kong martial arts choreographer and director Yuen Woo-ping.\" Its account of the film's influence is about cinematography, costume and comic-book films, not about cyberpunk acting. What is Cyberpunk? Genre Definition, Origins & Examples: Defines cyberpunk as \"a science-fiction sub-genre dealing with the integration of society and technology in dystopian settings\" and lists setting, technology, outsider protagonists, noir influence and transhumanist themes. Mentions no fights, martial arts or acting demands. (Industry education site, used only for the definition.)",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "The source documents the leads training for and performing fight and wire work. This is one film, so the support is for that film, not for cyberpunk as a genre."
+    "why": "subgenre-or-role: The documented fight and wire training belongs to The Matrix and the action strand it inspired, not to cyberpunk as defined. Definitions of the genre name no fight work, and core titles such as Blade Runner are not fight-driven."
    }
   ],
-  "uncertainty": "Cyberpunk is defined by setting, and many cyberpunk works (Blade Runner, for instance) are not fight-driven. Noir-inflected playing and effects-heavy environments are not supported by any source found."
+  "uncertainty": "No credible source was found that says post-Matrix cyberpunk films as a group adopted wire-fu; the claims seen to that effect were on fan or listicle sites. The SCMP page from the earlier pass returned 403 and was not re-read.",
+  "belongsTo": "Action-led cyberpunk in the mould of The Matrix (martial-arts and wirework set pieces), not the genre as a whole"
  },
  "dance": {
   "claim": "Screendance asks its performers for trained dance: choreographed movement made specifically to be filmed, shaped with the camera and the edit.",
@@ -390,14 +389,15 @@
   "source": "Collider, 'Doug Jones Interviewed' (Pan's Labyrinth) — https://collider.com/doug-jones-interviewed-pans-labyrinth/",
   "sourceSupports": "Jones: the Faun and Pale Man makeups 'were both about five hours'; 'I couldn't sit in a conventional chair... with the ram horns on the head, to hold my head up was like ugh, I can't take it anymore.' He learned his Spanish lines phonetically. Wikipedia's 'Dark fantasy' and 'Creature actor' pages (used only as pointers) define the genre as fantasy with horror's grim elements and a creature actor as one who plays a being of radically different appearance using suits or prosthetics.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "Jones describes five-hour prosthetic makeups and a leg contraption for creature roles in Pan's Labyrinth, a canonical dark fantasy."
    }
   ],
-  "uncertainty": "This is one actor in one film, and a creature-performer specialism; the source doesn't say that every lead in dark fantasy does prosthetic work. 'Morally ambiguous characterisation' from the earlier reading is unsourced."
+  "uncertainty": "This is one actor in one film, and a creature-performer specialism; the source doesn't say that every lead in dark fantasy does prosthetic work. 'Morally ambiguous characterisation' from the earlier reading is unsourced. Reviewed 2026-10-10: One actor in one creature role. Not applied genre-wide.",
+  "belongsTo": "creature roles in prosthetics"
  },
  "detective": {
   "claim": "Long-running detective roles have asked actors for exhaustive character research, and in some versions for an accent and for rapid, exact delivery of deduction speeches.",
@@ -413,14 +413,15 @@
   "source": "Prokerala, ''The Impossible' was physically and emotionally demanding: Naomi Watts' — https://www.prokerala.com/people/interviews/the-impossible-was-physically-and-emotionally-demanding-naomi-watts-interview.html",
   "sourceSupports": "Watts: 'I had to stay in a water tank for weeks. (So) it was quite physically demanding for me'; 'we were anchored into a chair with weights on us ... the chair starts spinning, and you have to do all your arm-acting and head-flipping'; underwater work meant holding her breath. Search snippets (NPR, not fetched; Wikipedia) add 'probably the most physically demanding thing I've ever done' and five weeks in the tank with Tom Holland.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "Watts describes performing weighted, spinning underwater sequences herself across weeks in a tank: sustained physical action by the actor."
    }
   ],
-  "uncertainty": "One film. A search snippet (a blog, secondhand) reports Ernest Borgnine calling The Poseidon Adventure his most physically demanding film; that is not verified. Nothing found on large-ensemble panic work as a convention."
+  "uncertainty": "One film. A search snippet (a blog, secondhand) reports Ernest Borgnine calling The Poseidon Adventure his most physically demanding film; that is not verified. Nothing found on large-ensemble panic work as a convention. Reviewed 2026-10-10: One film’s water-tank work. Not applied genre-wide.",
+  "belongsTo": "productions that shoot their peril practically"
  },
  "docudrama": {
   "claim": "Docudrama asks actors to stand in for real, often recent or living, people, and the audience judges the performance against what it already knows of them.",
@@ -487,18 +488,19 @@
   "uncertainty": "One film, unverified. Annihilation's genre placement as eco-horror is the search result's, not a scholarly one. 'Survival-driven physical performance' and reacting to effects-generated threats as a genre demand are unsourced."
  },
  "epic": {
-  "claim": "Epic leads have trained for combat and riding and taken injuries doing battle scenes; the genre is defined by scale, large casts and spectacle, not by an acting style.",
-  "source": "Steve Neale, 'Epic Films', Schirmer Encyclopedia of Film, via Encyclopedia.com — https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/epic-films ; search snippets on Russell Crowe's Gladiator training (Variety 20th-anniversary interview — https://variety.com/2020/film/news/russell-crowe-interview-gladiator-20th-anniversary-1234596980/, paywalled)",
-  "sourceSupports": "Neale (read): epics 'narrate stories that interweave the destinies of individual characters with the destinies of nations, empires, dynasties'; the entry says nothing about performance. Snippets (fitness and fan sites, secondhand): Crowe's preparation included 'fighting drills', he already rode, and he broke bones in his foot and hip during the shoot.",
-  "how": "secondhand",
+  "claim": "The epic is defined by scale, spectacle and large casts, not by an acting style. Physical prowess is tied to the hero in some strands (the Fairbanks swashbucklers, the sword-and-sandal peplum), and battle-heavy productions train their leads in combat, but no credible source makes combat a convention of the whole genre.",
+  "source": "Steve Neale, Epic Films (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/epic-films [fetched] ; David Chapman (attribution from search listing, not verified), Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules (ResearchGate / LA84 digital library, unknown), https://www.researchgate.net/publication/277775916_Breaking_the_Physique_Barrier_Steve_Reeves_and_the_Promotion_of_Hercules [snippet] ; Variety (byline not verified), Russell Crowe interview, Gladiator 20th anniversary (Variety, 2020), https://variety.com/2020/film/news/russell-crowe-interview-gladiator-20th-anniversary-1234596980/ [snippet]",
+  "sourceSupports": "Epic Films: Focuses on scale, spectacle, history and technology. On performers only: in Fairbanks's 1920s epics 'the power of the central character to effect change is, however fancifully, bound up with his physical prowess'. Nothing on battles, stunts or training as a genre requirement. Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules: After Hercules (1958), sword-and-sandal epics starred 'weight-trained actors'. Supports physique for the peplum subgenre, not combat for epics generally. Page returned 403. Russell Crowe interview, Gladiator 20th anniversary: Not read (paywall redirect). Earlier snippets say Crowe trained for fighting and was injured; one film only.",
+  "how": "Reviewed 2026-10-10: 1 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "Only secondhand: snippets report Crowe trained in fighting drills for Gladiator and was injured. Not verified from the Variety interview."
+    "why": "subgenre-or-role: The genre reference work names no combat or stunt convention. Combat training appears for battle-centred historical and sword-and-sandal epics and their warrior leads, documented film by film (Gladiator, Fairbanks), which is not a genre convention."
    }
   ],
-  "uncertainty": "The scholarly source supports nothing about actors. The stunt tag rests on unverified secondhand reports about one film. 'Oratory' and 'heightened presence' are unsourced, so no heightened tag."
+  "uncertainty": "Evidence for combat demands is anecdotal and per-production; the Variety interview and the peplum paper were not read. Many epics (biblical, biographical, romantic epics) have no combat lead.",
+  "belongsTo": "Battle and sword-and-sandal epics (warrior / swashbuckler leads)"
  },
  "erotic_thriller": {
   "claim": "Erotic thrillers put choreographed intimate scenes at the centre of the form, and productions now stage them with intimacy coordinators.",
@@ -524,18 +526,19 @@
   "uncertainty": "One film's approach. A 'camera' tag was considered and left off: the restraint is described for le Carré adaptations only, and the genre definition itself covers fantasy spy films. Accents, disguise and action work are unsourced as genre demands."
  },
  "experimental": {
-  "claim": "Experimental film has repeatedly used the performer's body and dance rather than character and story, as in Maya Deren's 'choreocinema'.",
-  "source": "BFI, 'Maya Deren: 7 films that guarantee her legend' — https://www.bfi.org.uk/features/maya-deren-meshes-of-the-afternoon ; EBSCO Research Starters, 'Experimental and Avant-Garde Film' (Bill Kte'pi) — https://www.ebsco.com/research-starters/film/experimental-and-avant-garde-film/",
-  "sourceSupports": "BFI: 'The term \"choreocinema\" was coined by New York Times dance critic John Martin to describe the way Deren linked dance and film'; 'Dancer Talley Beatty moves ... with careful choreographed movements.' EBSCO: Warhol's Sleep depicts 'poet John Giorno asleep ... in a continuous shot', i.e. a non-actor's presence rather than a role.",
-  "how": "read directly",
+  "claim": "One canonical strand of experimental film, Maya Deren's 'choreocinema', fused dance and film with trained dancers. Reference sources describe experimental film overall as non-narrative and convention-resisting, with no performance norm.",
+  "source": "Georgia Korossi, Maya Deren: 7 films that guarantee her legend (BFI, 2017), https://www.bfi.org.uk/features/maya-deren-meshes-of-the-afternoon [fetched] ; Bill Kte'pi, Experimental and Avant-Garde Film (EBSCO Research Starters, 2021), https://www.ebsco.com/research-starters/film/experimental-and-avant-garde-film/ [fetched]",
+  "sourceSupports": "Maya Deren: 7 films that guarantee her legend: Dance critic John Martin coined 'choreocinema' for 'the way Deren linked dance and film'; Deren worked with dancers Talley Beatty and Chao-Li Chi. Presented as Deren's distinctive contribution, not a general feature of experimental film. Experimental and Avant-Garde Film: Experimental film is 'principally non-narrative' and better understood as 'a type of method' than a genre; its only performance example is Warhol's Sleep (poet John Giorno asleep), not dance.",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "dance",
-    "why": "BFI documents dance as the performance mode of a canonical strand of experimental film (Deren's choreocinema), with trained dancers."
+    "why": "subgenre-or-role: Dance belongs to the dance-film / choreocinema strand (Deren and successors), not to experimental film as a whole, which the reference source says has no defining performance convention."
    }
   ],
-  "uncertainty": "Experimental film is defined by refusing conventions, so no demand holds across it; the dance tag fits one strand. The sources show non-actors (Giorno, Duchamp, Man Ray per a snippet) as often as performers."
+  "uncertainty": "Experimental film is defined by refusing conventions. Its documented performers include sleepers and non-actors as readily as dancers.",
+  "belongsTo": "dance film / choreocinema (screendance) strand of experimental film"
  },
  "exploitation": {
   "claim": "Exploitation films were shot in days on tiny budgets with unknown actors, and their selling point was nudity, sex and gore, which the performers supplied.",
@@ -574,7 +577,7 @@
   "source": "Elvish Linguistic Fellowship, 'Languages in The Lord of the Rings movie' — https://www.elvish.org/gwaith/movie_news.htm ; Daily Actor, 'Willem Dafoe on Becoming a Nine-Foot-Tall, Four-Armed Martian for John Carter' — https://www.dailyactor.com/film/willem-dafoe-john-carter/",
   "sourceSupports": "Elvish.org: Andrew Jack and Roisín Carty were credited as 'Dialect and Creative Language Coaches' and Jack wrote an 'Accent Rationale' for the groups in the films and documented 'How Elijah Wood Learned Elvish.' Dafoe: 'I'm walking around on stilts on location'; 'we had to develop a vocabulary of gesture and the Martian spoken language'; the role meant 'not only would I perform on three-foot stilts'.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "accent",
@@ -585,7 +588,8 @@
     "why": "Dafoe performed a nine-foot alien on stilts with motion capture and an invented gesture vocabulary."
    }
   ],
-  "uncertainty": "Two productions, not the genre as a whole. John Carter is science fantasy. Green-screen acting is supported only by a snippet (Luke Evans, Den of Geek) and no tag covers it. Combat training is unsourced."
+  "uncertainty": "Two productions, not the genre as a whole. John Carter is science fantasy. Green-screen acting is supported only by a snippet (Luke Evans, Den of Geek) and no tag covers it. Combat training is unsourced. Reviewed 2026-10-10: Two productions’ invented languages and transformations. Not applied genre-wide.",
+  "belongsTo": "particular productions with invented languages, and creature or motion-capture roles"
  },
  "film_noir": {
   "claim": "Film noir's performers carried the hard-boiled school's terse, cynical dialogue, and the genre leaned on first-person voice-over narration spoken by its protagonists.",
@@ -602,18 +606,19 @@
   "uncertainty": "Schrader's essay was seen only through reproductions and snippets, not the original. Britannica's film-noir entry returned 403. 'Cool, clipped delivery' as a performance demand is inferred from the dialogue style, not stated about actors."
  },
  "folk_horror": {
-  "claim": "In the genre's landmark, The Wicker Man, the community characters perform folk song and dance on screen as part of the ritual.",
-  "source": "Jesse Pasternack, 'The Diegetic Folk Horrors of The Wicker Man (1973)', Establishing Shot (Indiana University blogs) — https://blogs.iu.edu/establishingshot/2023/09/25/the-diegetic-folk-horrors-of-the-wicker-man-1973/",
-  "sourceSupports": "'one of the bar patrons starts playing a mini-accordion as another patron begins singing a bawdy song'; Howie 'gawks at the locals' rituals (most of which involve them singing)'; 'the characters perform their own music', i.e. diegetic musical numbers.",
-  "how": "read directly",
+  "claim": "Folk horror is defined by landscape, isolation, a community's skewed beliefs and a climactic ritual. In The Wicker Man the islanders perform folk songs and dance on screen, but that is one film, its lead's singing was not her own, and a scholar of the film calls horror films whose characters perform their own music exceptionally uncommon.",
+  "source": "Dawn Keetley, Introduction: Defining Folk Horror (Revenant: Critical and Creative Studies of the Supernatural, issue 5 (Folk Horror), 2020), https://www.revenantjournal.com/contents/introduction-defining-folk-horror-2/ [fetched] ; Jesse Pasternack, The Diegetic Folk Horrors of The Wicker Man (1973) (Establishing Shot (Indiana University blogs), 2023), https://blogs.iu.edu/establishingshot/2023/09/25/the-diegetic-folk-horrors-of-the-wicker-man-1973/ [fetched] ; Don Kaye, The Wicker Man: Britt Ekland Goes Behind the Making of a Folk Horror Classic (Den of Geek, 2023), https://www.denofgeek.com/movies/the-wicker-man-britt-ekland-building-pagan-icon-horror/ [fetched]",
+  "sourceSupports": "Introduction: Defining Folk Horror: Folk horror rests on invented folklore, deep landscape and a 'monstrous tribe' bound by belief; \"The rituals that often conclude folk horror narratives ... bond the communities\"; stresses \"embodied traditions and rituals\". Does not name song or dance as conventions. The Diegetic Folk Horrors of The Wicker Man (1973): Describes bar patrons playing and singing 'The Landlord's Daughter' and Willow joining a dance; notes that horror films whose characters perform their own music are exceptionally uncommon. The Wicker Man: Britt Ekland Goes Behind the Making of a Folk Horror Classic: Ekland's dialogue was dubbed by Annie Ross, and a body double was used for parts of the nude dance. (Search snippets add that Rachel Verney sang 'Willow's Song'; not read at source.)",
+  "how": "Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "song",
-    "why": "Pasternack documents the islanders singing on screen in The Wicker Man; the songs are diegetic performances by the characters."
+    "why": "subgenre-or-role: On-screen folk song belongs to The Wicker Man and material that stages its rituals as song, not to the genre: Keetley's definition names ritual but not song, and Pasternack calls character-performed music rare in horror. Even in The Wicker Man the lead's singing was dubbed."
    }
   ],
-  "uncertainty": "One film. Search snippets (Yahoo, Wikipedia) say Britt Ekland's singing and speaking voices were dubbed and a body double did part of her dance, so the singing was not necessarily the actors' own. No source shows song or dance as a convention across folk horror. No dance tag: the dancing is mentioned only in passing."
+  "uncertainty": "Scovell's 'folk horror chain' (Folk Horror: Hours Dreadful and Things Strange, Auteur, 2017) was seen only through secondary summaries and names no song or dance. Recent films such as Midsommar stage ritual dance, but no credible source was found that generalises it.",
+  "belongsTo": "Folk horror that stages its community ritual as performed folk song (The Wicker Man and films modelled on it)"
  },
  "gangster": {
   "claim": "The gangster film's stars defined a tough, physically marked performance style, and sound made hard-boiled dialogue and gunfire central to the form.",
@@ -629,56 +634,59 @@
   "source": "CineMedia, 'In What Tongue Do Gialli Speak? Dubbing, Language, and the Affective Experience in Giallo Cinema' (no author shown) — https://cinemedia.media/in-what-tongue-do-gialli-speak/",
   "sourceSupports": "'Italian films were almost exclusively shot without sync sound. Boom microphones were rarely used on set'; 'a British actor speaking English, an Italian actress speaking Italian, and a Spanish actor speaking Spanish—all in the very same take'; 'Voice actors were brought into recording booths to dub the dialogue into various languages.' A Backstage snippet (not fetched) adds that English dubs often used the lead English-speaking actors' own voices.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "voiceWork",
     "why": "The source makes post-synchronised voice performance in recording booths a standard part of how gialli were made. Caveat: much of it was done by dubbing actors rather than the on-screen cast."
    }
   ],
-  "uncertainty": "The voiceWork tag is weak for the on-screen actor; it is strongest for English-speaking leads who re-voiced themselves, a claim resting on a Backstage snippet. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author."
+  "uncertainty": "The voiceWork tag is weak for the on-screen actor; it is strongest for English-speaking leads who re-voiced themselves, a claim resting on a Backstage snippet. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author. Reviewed 2026-10-10: The voiceWork tag is weak for the on-screen actor, and rests on a snippet. Not applied genre-wide.",
+  "belongsTo": "English-speaking leads who re-voiced themselves in post-synchronisation"
  },
  "gothic_horror": {
-  "claim": "Gothic horror comes from Gothic melodrama, whose acting was heightened and declamatory: large gesture, projected voice, emotion shown rather than felt.",
-  "source": "Paul Ranger, Terror and Pity Reign in Every Breast: Gothic Drama in the London Patent Theatres, 1750-1820 (1991), excerpted in 'Performing Arts and the Gothic', Encyclopedia.com — https://www.encyclopedia.com/arts/culture-magazines/performing-arts-and-gothic ; The Drama Teacher, 'Gothic Theatre' — https://thedramateacher.com/gothic-theatre-conventions/ (snippet)",
-  "sourceSupports": "Ranger (read): Gothic stage casting was by type, and tragic figures needed bass voices capable of expressing 'a range of disturbed passions'; reviewers judged the actors' voices and enunciation. Drama Teacher (snippet): melodrama 'requires the use of strong facial expressions, large movements and gestures, and a clear and well-projected delivery'; Gothic theatre uses 'heightened, expressive movements'.",
-  "how": "read directly",
+  "claim": "No credible source found describes a heightened or declamatory acting convention for gothic horror film. Ranger's study of the Georgian Gothic stage records vocal and physical casting requirements (a bass voice for older tragic roles, a singing voice for the youthful hero), which concern the stage, not the film genre.",
+  "source": "Paul Ranger (excerpted), Performing Arts and the Gothic (excerpting Paul Ranger, 'Terror and Pity Reign in Every Breast': Gothic Drama in the London Patent Theatres, 1750-1820, 1991) (Encyclopedia.com (Gothic Literature reference), 1991 (excerpt)), https://www.encyclopedia.com/arts/culture-magazines/performing-arts-and-gothic [fetched] ; Peter Hutchings, Hammer and Beyond: The British Horror Film (Manchester University Press, 1993), https://books.google.com/books/about/Hammer_and_beyond.html?id=_HxZAAAAMAAJ [snippet]",
+  "sourceSupports": "Performing Arts and the Gothic (excerpting Paul Ranger, 'Terror and Pity Reign in Every Breast': Gothic Drama in the London Patent Theatres, 1750-1820, 1991): On the Gothic stage, 'a singing voice was a requisite for the part of the youthful hero' and older tragic roles needed 'a sturdy figure and a bass voice through which a range of disturbed passions could be expressed'. On reading the page, it does not describe a declamatory style as such, and says nothing about film. Hammer and Beyond: The British Horror Film: Title and author verified as the standard scholarly study of Hammer gothic; no passage on acting style was found in what could be accessed. Cited only to record that the search reached scholarship and found nothing on performance.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "heightened",
-    "why": "Both sources describe a heightened, stylised delivery as the Gothic stage convention. Caveat: they concern 18th-19th-century stage Gothic, not gothic horror film."
+    "why": "unsupported: The only scholarly source is about 18th-19th-century stage Gothic and, on reading, records casting requirements rather than a heightened delivery. Claims that Hammer films were 'theatrical' or 'melodramatic' came only from fan sites and Wikipedia, and none concern heightened language (verse, rhetoric), which is what the tag means."
    }
   ],
-  "uncertainty": "No source was found on acting in gothic horror film. The Hammer snippets are fan writing. Ranger also notes young heroes needed singing voices on the Gothic stage, which was not tagged because it is the historical stage, not the genre as defined here."
+  "uncertainty": "The earlier claim overstated the Ranger excerpt. Hutchings's book may discuss performance but was not readable. If anything, the theatrical style belongs to stage-melodrama-derived British horror (Tod Slaughter, Hammer), unsourced here."
  },
  "grindhouse": {
   "claim": "Grindhouse-style films have prized performers who do their own stunts, for the gut reaction of visibly real action, alongside the speed and lurid content of the exploitation films they imitate.",
   "source": "Rotten Tomatoes, 'Zoe Bell talks Death Proof with RT' — https://editorial.rottentomatoes.com/article/zoe-bell-talks-death-proof-with-rt ; Eric Schaefer, 'Exploitation Films', Schirmer Encyclopedia of Film — https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/exploitation-films",
   "sourceSupports": "Bell: doing her own stunts 'was like a stipulation! ... he said, \"That's part of the reason I'm casting you\"'; an actor doing her own stunts gives 'a gut reaction, a sense of reality'. Schaefer: exploitation shoots were 'less than a week', with 'stilted performances' and gore spectacle.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "Bell, cast in Death Proof (half of the 2007 Grindhouse), says doing her own stunts was a condition of the casting."
    }
   ],
-  "uncertainty": "Death Proof is a homage, and Bell is a stuntwoman by trade; the original grindhouse circuit's films are not shown to have used actor-performed stunts. 'Without retakes' is unsourced."
+  "uncertainty": "Death Proof is a homage, and Bell is a stuntwoman by trade; the original grindhouse circuit's films are not shown to have used actor-performed stunts. 'Without retakes' is unsourced. Reviewed 2026-10-10: A homage (Death Proof) and a stuntwoman by trade. Not applied genre-wide.",
+  "belongsTo": "stunt performers in homage films"
  },
  "hangout": {
-  "claim": "Hangout films rest on naturalistic dialogue and real cast chemistry; in Dazed and Confused, chemistry tested during the shoot reshaped the parts.",
-  "source": "BFI on Letterboxd, 'Dazed and Confused: how Richard Linklater created the ultimate high-school experience' — https://letterboxd.com/bfi/story/dazed-and-confused-how-richard-linklater/ (403; search snippet)",
-  "sourceSupports": "Snippets: Tarantino 'dubbed Dazed and Confused the ultimate \"hangout movie\"'; 'cast chemistry was proof-tested on and off set, reshaping the film as it shot'; roles were reduced for actors not 'gelling' with the others, and McConaughey's cameo expanded. A Collider snippet credits the film's 'naturalistic dialogue and subtle character work'.",
-  "how": "search snippet",
+  "claim": "The hangout film, a term Tarantino coined for Rio Bravo, favours character and vibe over plot, so the audience spends time with characters who feel like friends. No credible source makes naturalistic acting a convention of the whole form; naturalism belongs to Linklater-style and mumblecore-adjacent films.",
+  "source": "Chris Forrester, Howard Hawks, Rio Bravo, and the Hangout Film (Establishing Shot (Indiana University blog), 2024), https://blogs.iu.edu/establishingshot/2024/06/10/howard-hawks-rio-bravo-and-the-hangout-film/ [fetched] ; Dennis Lim, A Generation Finds Its Mumble (The New York Times, 2007), https://www.indiewire.com/2007/08/nyt-a-generation-finds-its-mumble-74060/ [snippet] ; BFI, Dazed and Confused: how Richard Linklater created the ultimate high-school experience (BFI on Letterboxd), https://letterboxd.com/bfi/story/dazed-and-confused-how-richard-linklater/ [snippet]",
+  "sourceSupports": "Howard Hawks, Rio Bravo, and the Hangout Film: The hangout film prioritises 'vibe and character over pure narrative momentum'; Rio Bravo 'is the film in reference to which Quentin Tarantino coined the term'. Says nothing about naturalistic acting; its exemplar is a 1959 studio western. A Generation Finds Its Mumble: Mumblecore deals with nonprofessional actors and quasi-improvised dialogue; narratives 'hinge less on plot points than on the tipping points in interpersonal relationships'. About mumblecore, a related but distinct form. Dazed and Confused: how Richard Linklater created the ultimate high-school experience: Fetch returned 403 again. Earlier snippet: Linklater's emphasis on naturalistic dialogue and cast chemistry. One director.",
+  "how": "Reviewed 2026-10-10: 1 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "camera",
-    "why": "The snippets describe naturalistic, low-key screen performance as what the hangout film's pleasure depends on. Weakly supported: from snippets about one director."
+    "why": "subgenre-or-role: Naturalistic, low-key screen acting is documented only for Linklater's films and mumblecore. The genre's defining source (Tarantino via Rio Bravo) is about time with characters, and its exemplar is not a naturalistic film."
    }
   ],
-  "uncertainty": "The BFI piece could not be fetched. The evidence is Linklater-specific. No source says improvisation was used, so no improvisation tag."
+  "uncertainty": "The hangout film is a critic's category, not an established genre with a scholarly literature. Chemistry is emphasised in listicles, but no tag covers chemistry.",
+  "belongsTo": "Linklater-style and mumblecore-adjacent naturalistic hangout films"
  },
  "heist": {
   "claim": "Heist films are built around a crew of specialists, each with one skill, so each actor must establish a distinct role within an ensemble.",
@@ -694,32 +702,34 @@
   "source": "Chris Lang (dialect coach), 'British RP Accent for Actors: What You Actually Need to Know' — https://www.dialectcoachchrislang.com/articles/british-rp-accent-for-actors",
   "sourceSupports": "'There's antique RP for period pieces. There's mid-century RP for postwar dramas'; 'An actor who learns one version and applies it to everything will sound off target in half their roles'; for British content 'the bar for authenticity is high.'",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "accent",
     "why": "A working dialect coach says period pieces call for a specific period accent (antique RP) that actors must learn."
    }
   ],
-  "uncertainty": "A practitioner's article about British productions only. Portraying real historical figures and period manners or bearing are unsourced here (see docudrama for portraying real people)."
+  "uncertainty": "A practitioner's article about British productions only. Portraying real historical figures and period manners or bearing are unsourced here (see docudrama for portraying real people). Reviewed 2026-10-10: One practitioner’s article about British productions. Not applied genre-wide.",
+  "belongsTo": "British period productions that ask for period Received Pronunciation"
  },
  "historical_fiction": {
-  "claim": "Costume fiction set in a real period has sent its cast to dance, voice and etiquette lessons to move and speak like the period's society.",
-  "source": "Casting Frontier blog, 'Epic Actor Training for the Bridgerton Series' — https://castingfrontier.com/blog/epic-actor-training-for-the-bridgerton-series/",
-  "sourceSupports": "'Dynevor and Page attended dancing, voice, and etiquette lessons' to learn 'how to talk, sit, eat, and walk like 1800's upper-class society'; training also covered 'dance, horseback riding, and general rehearsals', pistols and boxing. The blog cites Regé-Jean Page's interviews with The Sun and Netflix.",
-  "how": "read directly",
+  "claim": "A leading drama school teaches period movement as the etiquette of a period, including deportment and dance, and one period series sent its leads to dance, voice and etiquette lessons. No credible source says period fiction as a whole asks actors for dance or for heightened language.",
+  "source": "Royal Academy of Dramatic Art (taught by Francine Watson Coleman), Period Movement for Actors (short course) (RADA, n.d.), https://www.rada.ac.uk/short-courses/period-movement-actors/ [fetched] ; Casting Frontier blog, Epic Actor Training for the Bridgerton Series (Casting Frontier, 2021), https://castingfrontier.com/blog/epic-actor-training-for-the-bridgerton-series/ [fetched]",
+  "sourceSupports": "Period Movement for Actors (short course): Examines \"principles and rules of behaviour in three key periods of western social history, including deportment, greetings, social interaction, clothing, and dance\"; units on Elizabethan/Jacobean court behaviour (Shakespeare), Restoration comedy, and the 1920s Charleston. Training for period work generally, chiefly theatre. Epic Actor Training for the Bridgerton Series: \"Dynevor and Page attended dancing, voice, and etiquette lessons. Altogether, the duo learned how to talk, sit, eat, and walk like 1800's upper-class society.\" One series.",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "dance",
-    "why": "The cast took dance lessons for the period ballroom scenes."
+    "why": "subgenre-or-role: RADA treats period dance as part of period-movement training, and Bridgerton's leads learned ballroom dance, but both concern material with social-dance scenes (court, Regency and costume-romance settings), not historical fiction as a whole, which also covers war, ancient-world and other stories without dance."
    },
    {
     "tag": "heightened",
-    "why": "Voice and etiquette lessons to 'talk ... like 1800's upper-class society' are training in a period register of speech."
+    "why": "subgenre-or-role: Heightened language (verse, rhetoric) belongs to period texts such as Shakespeare and Restoration comedy, which RADA's course names. Voice and etiquette lessons for a period drama in modern prose are speech and manners, closer to accent work than to heightened language. Nothing credible makes it a convention of historical fiction."
    }
   ],
-  "uncertainty": "One series, reported by a casting-platform blog relying on press interviews. Bridgerton is a deliberately anachronistic romance, so it is a weak exemplar. The period-RP source under historical_drama also applies here."
+  "uncertainty": "The only film-specific source is a casting-platform blog about one deliberately anachronistic series. A trade article on period acting (Backstage, 'What is a Period Piece?') returned 403 and was not read. The period-RP convention, if real, would be an accent matter, not heightened language.",
+  "belongsTo": "dance: period stories with social-dance scenes (court, Regency, costume romance); heightened: adaptations of period dramatic texts (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric"
  },
  "holiday": {
   "claim": "Holiday films, the Hallmark kind especially, ask actors to play sentimental material with total sincerity rather than irony.",
@@ -744,14 +754,15 @@
   "source": "Frazer Shepherdson, 'A Comprehensive Guide to Acting in Horror Movies', StageMilk (16 July 2024), https://www.stagemilk.com/a-comprehensive-guide-to-acting-in-horror-movies/",
   "sourceSupports": "\"The amount of running, crawling and struggling in horror films is unparalleled\"; actors work in \"extreme vocal ranges: screaming, growling, shouting and crying\"; stage combat familiarity helps since \"you will have some instruction...but it helps to be familiar with the base concepts\"; actors must imagine e.g. \"a shapeshifting demon crawling towards you down a hallway\" when effects are minimal or absent. Search snippets (not opened, Mandy/Backstage pages returned 403) also quote Maika Monroe: \"the screaming and crying and running...every day is very tiresome.\"",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "StageMilk says the running, crawling and struggling in horror is 'unparalleled' and recommends stage combat grounding because fight instruction on set is limited."
    }
   ],
-  "uncertainty": "StageMilk is a practitioner acting-advice site, not a textbook or union source. Screaming is vocal stamina, which has no tag in the fixed vocabulary; voiceWork was not applied because the source is about on-camera screaming, not voice-only performance. The Mandy, StarNow and Backstage horror-acting articles were blocked (403) and were not read."
+  "uncertainty": "StageMilk is a practitioner acting-advice site, not a textbook or union source. Screaming is vocal stamina, which has no tag in the fixed vocabulary; voiceWork was not applied because the source is about on-camera screaming, not voice-only performance. The Mandy, StarNow and Backstage horror-acting articles were blocked (403) and were not read. Reviewed 2026-10-10: A practitioner acting-advice site generalising exertion and some fight work to all horror. Not applied genre-wide.",
+  "belongsTo": "chase-and-struggle roles (see slasher’s final girl)"
  },
  "horror_comedy": {
   "claim": "Horror comedy asks actors to play the horror element completely straight while the comedy comes from character and situation, so the cast must hold comic timing without winking at the threat.",
@@ -765,7 +776,8 @@
     "why": "Pegg describes the film as a romantic comedy colliding with a zombie film; the comedy (not the horror) is where the comic register sits. The genre's cited definition also entails comedy."
    }
   ],
-  "uncertainty": "One film's makers speaking about their own approach; generalising 'play the horror straight' to the whole genre is an inference. Other horror comedies (e.g. splatter comedies) may play the gore for laughs. The IndieWire oral history was paywalled and not read."
+  "uncertainty": "One film's makers speaking about their own approach; generalising 'play the horror straight' to the whole genre is an inference. Other horror comedies (e.g. splatter comedies) may play the gore for laughs. The IndieWire oral history was paywalled and not read.",
+  "basis": "definition"
  },
  "isekai": {
   "claim": "Isekai is predominantly an anime/light-novel form, so the screen performer is usually a voice actor, who may have to voice a modern adult's interior life inside a fantastical new body.",
@@ -779,7 +791,8 @@
     "why": "The cited performer's isekai role is voice-only animation voicing, and she describes the vocal problem of the role directly."
    }
   ],
-  "uncertainty": "One interview about one role. Live-action isekai exists but was not researched. The 'comic asides' in the previous text are not supported by anything found."
+  "uncertainty": "One interview about one role. Live-action isekai exists but was not researched. The 'comic asides' in the previous text are not supported by anything found.",
+  "basis": "definition"
  },
  "jukebox_musical": {
   "claim": "A jukebox musical asks actors to sing well-known popular songs as character, and in biographical cases performers report deliberately avoiding impersonation of the original artist.",
@@ -796,18 +809,18 @@
   "uncertainty": "Dance is not supported by anything found, though many jukebox musicals include it. A search snippet reports Jessie Mueller saying Beautiful is not a jukebox musical, so the example's classification is contested. The Bockel 'accent' is specific to a biographical role and does not support an accent tag for the genre."
  },
  "kitchen_sink": {
-  "claim": "Kitchen sink drama asked for a new naturalistic, working-class screen acting, typified by Albert Finney's Nottingham factory worker, with regional speech as part of its authenticity.",
-  "source": "BFI, 'Saturday Night and Sunday Morning (1960)', https://www.bfi.org.uk/film/06d680ab-95af-5606-a943-e664101045c7/saturday-night-and-sunday-morning; secondary: 'Kitchen Sink Drama (Realism)', Poem Analysis, https://poemanalysis.com/movement/kitchen-sink-drama/",
-  "sourceSupports": "BFI: \"Albert Finney's powerhouse performance as a Nottingham factory worker changed British screen acting.\" Poem Analysis (search snippet only): kitchen sink dramas were often set in the industrial North and \"used regional dialects and accents, adding to their authenticity\"; dialogue was \"colloquial and naturalistic.\"",
-  "how": "read directly",
-  "confidence": "low",
+  "claim": "Kitchen sink films of the British New Wave cast unknown regional actors and kept broad regional accents intact, breaking with earlier British films whose characters spoke in the accents of the educated London classes.",
+  "source": "Neil Mitchell, Where to begin with kitchen sink drama (BFI, 2016), https://www.bfi.org.uk/features/where-begin-with-kitchen-sink-drama [fetched] ; David Hanley, The British New Wave and Its Sources (Offscreen, vol. 15 no. 6, 2011), https://offscreen.com/view/british_new_wave [fetched]",
+  "sourceSupports": "Where to begin with kitchen sink drama: The films 'were predominantly focused on the lives of the working classes, with broad regional accents thankfully intact', and gave us 'some of the greatest performances and most searing dialogue yet seen in British cinema'. The British New Wave and Its Sources: The New Wave opposed mainstream British film by 'opting for location shooting and the employment of unknown regional actors' (citing John Hill), where before 'almost all characters were from London and spoke in the accents of the educated classes'; Saturday Night and Sunday Morning opens with Arthur greeting the audience 'in the accents of industrial Nottinghamshire'.",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
+  "confidence": "medium",
   "tags": [
    {
     "tag": "accent",
-    "why": "Only the Poem Analysis snippet (a general reference site, not opened) says the form used regional dialects and accents; the BFI page establishes the Nottingham setting but not the accent."
+    "why": "genre-wide: Two independent credible sources (BFI and Hanley, the latter drawing on John Hill's scholarship) state that regional accents and regional actors were a defining convention of the cycle as a whole, not of one film."
    }
   ],
-  "uncertainty": "The BFI page says Finney changed British screen acting but not how. The accent claim rests on a low-authority site seen only as a snippet. A snippet claim that Finney worked real factory shifts was not verified and was not used."
+  "uncertainty": "The sources describe regional speech as a convention, often met by casting actors with those accents rather than by accent technique. The claim that the form asked for a new naturalistic acting style was not sourced beyond snippets and is left out."
  },
  "legal_drama": {
   "claim": "Legal drama is reputed to ask actors for memorised, persuasive courtroom speeches such as closing arguments, but no performer or teacher source stating this was read.",
@@ -819,18 +832,18 @@
   "uncertainty": "No page was read. Nothing found supports 'technical' jargon delivery as a genre demand. No tag in the fixed vocabulary fits speechmaking."
  },
  "magical_realism": {
-  "claim": "Magical realism asks actors to treat the marvellous as ordinary, reacting to magic with a natural, unshocked realist register.",
-  "source": "Simon X., 'assessed essay: representing trauma in magical realist cinema', Medium, https://medium.com/@SimonXIX/magical-realism-essay-954e1cf7c205 (403 on fetch; seen via search snippet)",
-  "sourceSupports": "Search snippet: magical realism \"relies upon the matter-of-fact, realist tone of its narrative when presenting magical happenings\"; directors in the style \"direct their actors to act in a natural, laid-back way. Characters do not react particularly shocked to the magic that is happening.\"",
-  "how": "search snippet",
+  "claim": "Magic realism as a narrative mode presents fantastic elements in a matter-of-fact way within realistic fiction. No credible source found states that this translates into a particular acting register for film.",
+  "source": "The Editors of Encyclopaedia Britannica, Magic realism (Encyclopaedia Britannica), https://www.britannica.com/art/magic-realism [snippet] ; Simon X., assessed essay: representing trauma in magical realist cinema (Medium), https://medium.com/@SimonXIX/magical-realism-essay-954e1cf7c205 [snippet]",
+  "sourceSupports": "Magic realism: Magic realism is a narrative strategy characterised by 'the matter-of-fact inclusion of fantastic or mythical elements into seemingly realistic fiction'. Literary, not about acting. assessed essay: representing trauma in magical realist cinema: Student essay (not fetched, 403): directors have actors act in a 'natural, laid-back way' without shock at the magic. Not a credible source.",
+  "how": "Reviewed 2026-10-10: 0 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "camera",
-    "why": "The snippet says directors direct actors to act in a 'natural, laid-back way' without shock at the magic, i.e. a restrained naturalistic register; this is a student essay seen only as a snippet."
+    "why": "unsupported: The matter-of-fact convention is credibly established for literary narration only. Its transfer to screen acting rests on a student essay and blog posts (e.g. a Volver example), none credible."
    }
   ],
-  "uncertainty": "Source is a student essay on Medium, not read in full. Britannica's magic realism entry returned 403. The 'matter-of-fact tone' idea is well established for literature, but its transfer to screen acting rests on this one snippet."
+  "uncertainty": "A Buffalo State thesis on magical realist film turned up but returned 403. The inference that matter-of-fact narration implies naturalistic acting is plausible but unsourced."
  },
  "medical_drama": {
   "claim": "Medical drama asks actors to learn convincing procedural business (suturing, auscultation, intubation) and to master dense medical jargon, typically through a pre-production medical boot camp and drilled repetition.",
@@ -846,28 +859,30 @@
   "source": "Aaron Kassraie, 'Dale Dye: Hollywood's Go-To Military Advisor', AARP, https://www.aarp.org/veterans/hollywood-film-industry-military-adviser/",
   "sourceSupports": "Ron Livingston: the camp included \"weapons training, how to handle military gear and other squad-based tactics\" that needed to \"become second nature\"; Dye allowed \"up to two hours of sleep a night and two meals a day\"; Dye: he \"breaks actors down and builds them back up.\" Search snippets (Variety, not opened) add that Saving Private Ryan's cast did 10 days of pre-dawn reveille, five-mile runs and weapons training.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "The boot camps described are sustained physical training with weapons and squad tactics for combat scenes; note this is firearms and tactics, not choreographed fight work."
    }
   ],
-  "uncertainty": "Evidence is from one adviser's films (Platoon, Saving Private Ryan, Band of Brothers era); peacetime 'military life' films without combat were not researched. Drill and bearing as such are not named in the read source."
+  "uncertainty": "Evidence is from one adviser's films (Platoon, Saving Private Ryan, Band of Brothers era); peacetime 'military life' films without combat were not researched. Drill and bearing as such are not named in the read source. Reviewed 2026-10-10: One adviser’s films; peacetime military films were not researched. Not applied genre-wide.",
+  "belongsTo": "combat films with an adviser’s boot camp (see war)"
  },
  "monster_movie": {
   "claim": "Monster movies have a tradition of the creature itself being played by a performer in a suit, which demands heavy physical endurance and studied non-human movement.",
   "source": "Haruo Nakajima interview, 'MR. GODZILLA SPEAKS!', Vantage Point Interviews (18 May 2017), https://vantagepointinterviews.com/2017/05/18/mr-godzilla-speaks-suit-actor-haruo-nakajima-on-playing-the-king-of-the-monsters/; Dartmouth Library, 'Monsters in motion pictures', https://researchguides.dartmouth.edu/filmgenres/monsters",
   "sourceSupports": "Nakajima: \"the temperature of my suits reached 60 degrees Celsius\"; the 1954 suit weighed about 100 kg; \"I watched the movement of bears\"; \"you cannot complain because you are a professional actor; you have to act like there is no pain.\" Dartmouth guide notes Godzilla as \"actor Haruo Nakajima in a rubber suit\" and classes monster movies as a horror subgenre (Oxford Dictionary of Film Studies).",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "Nakajima describes performing a creature in a heavy suit and building its movement from animal study; the Dartmouth guide names suit performance as the tokusatsu foundation of the genre."
    }
   ],
-  "uncertainty": "Covers the creature performer, not the human leads. The earlier claim about reacting to a creature added later in effects was supported only by non-monster-movie snippets (Casper, Hobbit) and is not used. Suit work is one tradition (kaiju); many modern monster films use CGI."
+  "uncertainty": "Covers the creature performer, not the human leads. The earlier claim about reacting to a creature added later in effects was supported only by non-monster-movie snippets (Casper, Hobbit) and is not used. Suit work is one tradition (kaiju); many modern monster films use CGI. Reviewed 2026-10-10: The creature performer, not the human leads. Not applied genre-wide.",
+  "belongsTo": "the performer in the creature suit"
  },
  "mystery": {
   "claim": "A source on a modern whodunit says the form wants heightened, larger-than-life suspects who still read as real people; nothing found supports a distinct technique for withholding secrets.",
@@ -879,18 +894,19 @@
   "uncertainty": "One director on one comic whodunit. Nothing found says what mystery asks of actors generally; 'withholding and layering' remains the researcher's reading. Shannon's ad-libs do not establish improvisation as a convention of the form."
  },
  "neo_noir": {
-  "claim": "Noir, which neo-noir revives, is defined partly by first-person voice-over narration, so a lead may carry a narrating voice track; a secondary source describes its delivery as deadpan.",
-  "source": "Dartmouth Library, 'Film noir' research guide, quoting Kuhn & Westwell, A Dictionary of Film Studies (Oxford, 2020), https://researchguides.dartmouth.edu/filmgenres/noir; secondary: Voquent, 'Voice Over in Film Noir', https://www.voquent.com/blog/voice-over-in-film-noir/ (403; snippet only)",
-  "sourceSupports": "Oxford definition (via the guide) lists \"dreamlike first-person voice-over narration\" among noir's narrative strategies. Voquent snippet: the detective's internal monologue is \"delivered in a deadpan manner.\" The guide says nothing about acting style.",
-  "how": "secondhand",
+  "claim": "Film reference works name first-person voice-over narration as a convention of classic film noir. No credible source found says neo-noir keeps it as a convention; neo-noir is described by its self-consciousness and nostalgia for noir, and many neo-noirs have no narrator.",
+  "source": "Dartmouth College Library, Film noir (research guide, quoting A Dictionary of Film Studies, Kuhn and Westwell, Oxford, 2020) (Dartmouth Library Research Guides, n.d.), https://researchguides.dartmouth.edu/filmgenres/noir [fetched] ; William Luhr, Film Noir (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/film-noir [fetched]",
+  "sourceSupports": "Film noir (research guide, quoting A Dictionary of Film Studies, Kuhn and Westwell, Oxford, 2020): Quotes Kuhn and Westwell: noir is a cycle of 1940-1959 Hollywood crime films with \"dreamlike first-person voice-over narration, flashbacks, temporal ellipses, and often ambiguous endings.\" Gives no definition of neo-noir. Film Noir: Uses Double Indemnity's narrator voice-over as an example of classic noir; says \"neo-noir films display a self-consciousness alien to earlier ones\" and a \"conflicted nostalgia\" for the postwar era. Says nothing on voice-over in neo-noir.",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "voiceWork",
-    "why": "The Oxford definition names first-person voice-over narration as a noir convention; this is about classic noir, and its carry-over to neo-noir is inferred from neo-noir's definition as a revival of noir tropes."
+    "why": "subgenre-or-role: Voice-over narration is sourced as a classic-noir convention only. For neo-noir it belongs to the narrator role in those films that keep it (retro neo-noir pastiches and narrated films), not to the genre."
    }
   ],
-  "uncertainty": "No source about neo-noir acting specifically was found. 'Cool understatement' and 'controlled menace' are unsupported. Many neo-noirs drop the voice-over."
+  "uncertainty": "No source about neo-noir performance was found. Andrew Spicer (Film Noir, Longman, 2002) was seen only through a summary noting that noir devices such as voice-over appear in non-noir films too. 'Deadpan' delivery, 'cool understatement' and 'controlled menace' remain unsupported.",
+  "belongsTo": "The narrating lead in neo-noirs that retain classic noir's first-person voice-over"
  },
  "nordic_noir": {
   "claim": "The best-known Nordic noir lead describes a performance built from tight control of a closed, socially difficult character; the genre is characterised as slow and melancholic, but nothing found ties a specific acting style to the genre.",
@@ -902,22 +918,23 @@
   "uncertainty": "One character in one series; Saga's restraint is a character trait, not evidence of a genre-wide style. No scholarly source on Nordic noir performance was found. Bilingual productions (The Bridge) suggest language demands but no source said so."
  },
  "occult": {
-  "claim": "Possession scenes in occult horror have demanded extreme vocal and physical-makeup work, as in The Exorcist, where the demon's voice was a separate, punishing vocal performance and the possessed actor wore long-applied prosthetics.",
-  "source": "Jacob Slankard, 'The Actor Behind the Demon's Voice in The Exorcist Went to Hell and Back', Collider, https://collider.com/the-exorcist-demon-voice-mercedes-mccambridge/",
-  "sourceSupports": "Mercedes McCambridge \"insisted on being tightly bound to a chair, swallowing raw eggs and Jack Daniel's while smoking\" to get \"a wheezing, roughshod quality\"; lines were recorded multiple times with separate \"laughs, cries, and other animal noises\" added; Blair \"couldn't supply a suitable voice\". Search snippets (Looper, not opened) say Linda Blair spent two to five hours a day in makeup and was harnessed for the thrashing scenes.",
-  "how": "read directly",
+  "claim": "Possession and exorcism films have asked for extreme vocal and makeup work for the possessed role, as in The Exorcist, where a separate voice actress (Mercedes McCambridge) built the demon's voice under punishing conditions and the possessed actress wore prosthetics applied for hours daily. These are role-specific to possession films, not conventions of occult horror.",
+  "source": "Jacob Slankard, The Actor Behind the Demon's Voice in The Exorcist Went to Hell and Back (Collider, 2023), https://collider.com/the-exorcist-demon-voice-mercedes-mccambridge/ [fetched] ; Looper (byline not verified), Why Linda Blair Was Never The Same After The Exorcist (Looper, unknown), https://www.looper.com/171562/why-linda-blair-was-never-the-same-after-the-exorcist/ [snippet]",
+  "sourceSupports": "The Actor Behind the Demon's Voice in The Exorcist Went to Hell and Back: McCambridge voiced the demon, insisting on 'being tightly bound to a chair, swallowing raw eggs and Jack Daniel's while smoking'; Friedkin layered the recordings. The article does not mention Linda Blair's makeup. Why Linda Blair Was Never The Same After The Exorcist: Blair spent at least two hours, sometimes up to five, in the makeup chair daily for Dick Smith's prosthetics. Low-authority entertainment site, snippet only.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "voiceWork",
-    "why": "Collider documents the demon as a voice-only performance by a separate actor, built from extreme vocal technique."
+    "why": "subgenre-or-role: Documented for one film's demon voice, performed by a separate voice actor. It belongs to the possessing-entity role in possession films, not to occult horror generally."
    },
    {
     "tag": "transformation",
-    "why": "Only the Looper snippet (not opened) supports the multi-hour prosthetic makeup for the possessed character."
+    "why": "subgenre-or-role: Prosthetic makeup for the possessed character is snippet-only and from one film; it belongs to the possessed role in possession/exorcism films. Makeup is applied by the effects team, so it is an endurance demand more than an acting technique."
    }
   ],
-  "uncertainty": "A single film; whether possession scenes generally use these methods is not established. The prosthetic detail is snippet-only. 'Sustained dread and belief in unseen forces' is unsupported."
+  "uncertainty": "Single film. Searches for a source describing possession-film acting as a convention returned only listicles. Occult horror also covers witchcraft, cults and séance films with no possession role.",
+  "belongsTo": "Possession / exorcism films: the possessed role and the voice of the possessing entity"
  },
  "parody": {
   "claim": "Screen parody of the Airplane! school asks actors to deliver absurd material with complete dramatic seriousness, deadpan, oblivious to the gags around them.",
@@ -931,7 +948,8 @@
     "why": "The A.V. Club credits the comedy to Nielsen's deadpan delivery of ridiculous lines, i.e. verbal comic timing played straight."
    }
   ],
-  "uncertainty": "One school of parody (ZAZ). Parody that relies on mimicry of a specific performer (sketch parody) was not researched. 'Precise imitation of a recognisable style' is not directly supported."
+  "uncertainty": "One school of parody (ZAZ). Parody that relies on mimicry of a specific performer (sketch parody) was not researched. 'Precise imitation of a recognisable style' is not directly supported.",
+  "basis": "definition"
  },
  "picaresque": {
   "claim": "The model screen picaresque was carried by its lead's charm across an episodic, roistering narrative; nothing found generalises this into a performance demand.",
@@ -970,22 +988,23 @@
   "uncertainty": "Tinker Tailor is usually classed as a spy thriller, so it is an adjacent example, not a clean political-thriller one. Oldman does not use the words paranoia or restraint. No genre-level source found."
  },
  "post_apocalyptic": {
-  "claim": "Post-apocalyptic leads have required extended fight training and drastic weight loss to look survival-worn.",
-  "source": "Collider, 'Tom Hardy Interview MAD MAX: FURY ROAD; Training, His Look...', https://collider.com/tom-hardy-interview-mad-max-fury-road-training-look-shooting-schedule-filming-george-miller/",
-  "sourceSupports": "Hardy: \"I'll probably get three or four months of fight training out there. Seven days a week\"; \"I'm meant to drop 30 pounds\"; \"Imagine a hungry wolf.\" Search snippets (Spokesman-Review, Today, not opened) say Viggo Mortensen lost about 20-30 pounds for The Road.",
-  "how": "read directly",
+  "claim": "Leads in two post-apocalyptic films lost around 30 pounds for survival-worn looks (Hardy, Mad Max: Fury Road; Mortensen, The Road), and Hardy planned months of daily fight training. These are particular productions, not genre conventions.",
+  "source": "Steven Weintraub, Tom Hardy Interview MAD MAX: FURY ROAD; Training, His Look, Shooting Schedule, Filming with George Miller (Collider, 2010), https://collider.com/tom-hardy-interview-mad-max-fury-road-training-look-shooting-schedule-filming-george-miller/ [fetched] ; Sheila Roberts, Viggo Mortensen Interview THE ROAD (Collider, 2009), https://collider.com/viggo-mortensen-interview-the-road/ [fetched]",
+  "sourceSupports": "Tom Hardy Interview MAD MAX: FURY ROAD; Training, His Look, Shooting Schedule, Filming with George Miller: Hardy: 'I'm meant to drop 30 pounds... I've already dropped it'; 'I'll probably get three or four months of fight training out there. Seven days a week.' Viggo Mortensen Interview THE ROAD: Mortensen: 'from the clothes that didn't fit, I think it was around maybe 30 pounds'; 'I just ate a lot less.'",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "Hardy describes three to four months of daily fight training for the role."
+    "why": "subgenre-or-role: Fight training is documented only for Fury Road, an action-led entry. Many post-apocalyptic films (The Road) are not combat-driven; no source states combat as a genre-wide demand on actors."
    },
    {
     "tag": "transformation",
-    "why": "Hardy's planned 30-pound loss (read directly) and Mortensen's weight loss (snippet) are physical transformations for the look of the role."
+    "why": "subgenre-or-role: Weight loss is documented for two leads playing starving survivors. It belongs to those roles; no source states it as a genre convention."
    }
   ],
-  "uncertainty": "Two films; Fury Road is as much an action film as a post-apocalyptic one. The 'little dialogue / silent movie' claim appeared only in an unverified snippet and was not confirmed by the Collider page read."
+  "uncertainty": "Searches for genre conventions found only student slides and listicles (wasteland settings, scavenging, survival), nothing credible on actors' demands. The 'little dialogue' claim about Fury Road stays unconfirmed.",
+  "belongsTo": "stunt: action-led post-apocalyptic films (Mad Max lineage); transformation: individual starving-survivor lead roles"
  },
  "prison_film": {
   "claim": "Some prison films build performance from authenticity: casting formerly incarcerated people and shooting improvised, documentary-feel ensemble scenes, or shooting in real former prisons.",
@@ -1028,14 +1047,15 @@
   "source": "Collider, ''Kill Bill' Star... Reveals the Grueling Training Sessions', https://collider.com/uma-thurman-kill-bill-training-comments/",
   "sourceSupports": "Thurman trained \"three solid months, five days a week, nine to five\", learning \"knife-throwing, a little bit of target practice. Everything from fencing to samurai style, to Wushu style.\" Search snippets (Maxim, not opened) say Keanu Reeves trained eight hours a day for six months for John Wick.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "Thurman describes months of full-time fight and weapons training for the revenge story's fight sequences."
    }
   ],
-  "uncertainty": "Revenge dramas without action (e.g. slow-burn thrillers) exist and would not need this. 'Grief turning into obsession' is unsupported."
+  "uncertainty": "Revenge dramas without action (e.g. slow-burn thrillers) exist and would not need this. 'Grief turning into obsession' is unsupported. Reviewed 2026-10-10: Revenge action films; revenge dramas without action ask none of it. Not applied genre-wide.",
+  "belongsTo": "revenge action films and their fight-trained leads"
  },
  "road_movie": {
   "claim": "The road movie's in-car filming foregrounds dialogue between side-by-side travellers.",
@@ -1047,22 +1067,23 @@
   "uncertainty": "The Oxford text was read as quoted by the Dartmouth guide, not in the original. It describes the form's shooting and dialogue, not what it asks of actors; 'gradual character change' is a narrative feature, not a performance demand. No vocabulary tag fits."
  },
  "rockumentary": {
-  "claim": "A rockumentary is a documentary about rock musicians, so its subjects are real performers; where actors are involved, the touchstone is the fictional mock-rockumentary, made with improvised dialogue by actor-musicians.",
-  "source": "BFI, 'Rob Reiner: how we made This Is Spinal Tap', https://www.bfi.org.uk/interviews/rob-reiner-how-we-made-this-spinal-tap; definition: Merriam-Webster 'rockumentary' (403; snippet only), https://www.merriam-webster.com/dictionary/rockumentary",
-  "sourceSupports": "Reiner: \"The entire film was improvised. The only speech that's not improvised is Patrick Macnee\"; dialogue \"was completely improvised.\" Search snippets (not the BFI page) say Guest, McKean and Shearer played their own instruments and performed the songs. Definition snippet: a documentary about rock music or its musicians.",
-  "how": "read directly",
+  "claim": "A rockumentary is a documentary about rock music, so its subjects are real musicians, not actors. Acting demands come from the mock rockumentary: This Is Spinal Tap's dialogue was, its director says, entirely improvised, and (by secondary report) its leads played and sang the music themselves.",
+  "source": "Dictionary.com, rockumentary (Dictionary.com, n.d.), https://www.dictionary.com/browse/rockumentary [fetched] ; Lou Thomas (interviewer), Rob Reiner: how we made This Is Spinal Tap (BFI, 2022), https://www.bfi.org.uk/interviews/rob-reiner-how-we-made-this-spinal-tap [fetched] ; Wikipedia (pointer only), Spinal Tap (band) (Wikipedia, n.d.), https://en.wikipedia.org/wiki/Spinal_Tap_(band) [fetched]",
+  "sourceSupports": "rockumentary: \"a documentary about rock music\"; coined 1970-75 from rock + documentary. Rob Reiner: how we made This Is Spinal Tap: Reiner: \"The entire film was improvised. The only speech that's not improvised is Patrick Macnee.\" Physical gags (Stonehenge, the amp that goes to 11) were planned; dialogue was not. The page read does not quote anyone on the actors playing the music. Spinal Tap (band): \"The quintet played their own instruments throughout the film.\" Uncited; a pointer only. Search snippets (TCM 'Behind the Camera', 403 when fetched) say Guest, McKean and Shearer played and sang the music.",
+  "how": "Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "improvisation",
-    "why": "Reiner says This Is Spinal Tap's dialogue was entirely improvised; this applies to the mock form, not to real rockumentaries."
+    "why": "subgenre-or-role: Improvised dialogue is documented for This Is Spinal Tap, the mock form's touchstone, by its director. A real rockumentary has no scripted acting at all, so the demand belongs to the mock rockumentary, and the evidence is one film."
    },
    {
     "tag": "song",
-    "why": "Snippet-only: the Spinal Tap actors performed the songs themselves; real rockumentaries feature musicians performing, per the definition snippet."
+    "why": "subgenre-or-role: In a real rockumentary the singers are the musicians themselves, not actors. Actors singing belongs to the mock rockumentary's band roles, and even there the evidence is one film and secondary."
    }
   ],
-  "uncertainty": "For a true rockumentary there is no acted performance, so any actor demand comes from the mockumentary variant. The song tag rests on a snippet. The BFI page read does not mention the instruments."
+  "uncertainty": "The song claim for Spinal Tap rests on Wikipedia and snippets; TCM and Britannica returned 403. Other mock rockumentaries (e.g. Popstar: Never Stop Never Stopping, CB4) were not researched.",
+  "belongsTo": "The mock rockumentary (This Is Spinal Tap and its imitators): improvisation for the whole cast, song for the actor-musicians in the band roles"
  },
  "romance": {
   "claim": "Romance depends on believable chemistry between the leads, which casting tests with paired chemistry reads; nothing authoritative was read.",
@@ -1083,22 +1104,23 @@
   "uncertainty": "Snippet only, one film. A snippet claiming Before Sunrise's dialogue was largely improvised was not used: it is unattributed and conflicts with the film being scripted. 'Heightened, sustained emotion... culminating in loss' is unsupported."
  },
  "satire": {
-  "claim": "The defining screen satire Dr. Strangelove was built on one actor playing several caricatures, each found through voice and walk, and on largely improvised dialogue from characters unaware of their own absurdity.",
-  "source": "Far Out Magazine, 'Peter Sellers' defining performance in Dr Strangelove', https://faroutmagazine.co.uk/peter-sellers-stanley-kubrick-dr-strangelove/",
-  "sourceSupports": "Sellers played \"US President Merkin Muffley, Dr. Strangelove and Captain Lionel Mandrake of the RAF\"; Sellers: \"I start with the voice... It's through the way he speaks that I find out the rest about him\", then \"how the character walks\"; \"Playing characters who are entirely unaware of just how absurd they are, Sellers improvised a majority of his dialogue, with Kubrick incorporating his ad-libs.\"",
-  "how": "read directly",
+  "claim": "In Dr. Strangelove, Peter Sellers played three roles, building each from voice and then walk, and improvised much of his dialogue, which Kubrick kept. This is one film and one performer's method, not a convention of screen satire.",
+  "source": "Calum Russell, Peter Sellers' defining performance in 'Dr Strangelove' (Far Out Magazine, 2021), https://faroutmagazine.co.uk/peter-sellers-stanley-kubrick-dr-strangelove/ [fetched] ; Wes D. Gehring, Comedy (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/comedy [fetched]",
+  "sourceSupports": "Peter Sellers' defining performance in 'Dr Strangelove': Sellers: 'I start with the voice ... After that I establish how the character walks.' He played Muffley, Mandrake and Strangelove and improvised much of his dialogue, which Kubrick incorporated. Comedy: Distinguishes satire by its corrective aim ('Parody is essentially affectionate in nature, without satire's goal of offering a corrective to behavior'); states no acting technique for satire.",
+  "how": "Reviewed 2026-10-10: 2 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
-    "why": "Sellers built three distinct caricatures from voice and walk in one film, character work the source describes directly."
+    "why": "subgenre-or-role: Multi-role caricature is documented for Sellers in one film. It belongs to character-comedian satire, not to satire as a form."
    },
    {
     "tag": "improvisation",
-    "why": "The source says Sellers improvised most of his dialogue and Kubrick kept the ad-libs; this is one film, not shown to be a convention of satire."
+    "why": "subgenre-or-role: Improvisation is documented for Sellers in one film (and is a known feature of character-prank satire such as Borat, from snippets only). No source makes it a convention of satire."
    }
   ],
-  "uncertainty": "Single film and a magazine source. The 'playing it with a straight face' idea is supported only by 'characters entirely unaware of how absurd they are'. Accent is not tagged because the source does not say accents were required, though the roles imply them."
+  "uncertainty": "Far Out is a magazine, not a reference work; Britannica's entry refused fetching. The 'straight face' idea surfaced only from listicles. Satire is defined by aim, not by a performance mode, in the one reference work read.",
+  "belongsTo": "Character-comedian satire (Sellers in Dr. Strangelove; improvised character-prank satire)"
  },
  "science_fantasy": {
   "claim": "No source found on what science fantasy specifically asks of an actor. The nearest material is an actor's account of effects-driven science-fiction work in general.",
@@ -1145,56 +1167,58 @@
   "source": "Fangoria, 'Q&A: Taissa Farmiga Talks The Standout Satirical Slasher THE FINAL GIRLS', https://www.fangoria.com/taissa-farmiga-the-final-girls-interview/ ; also BuzzFeed, 'The Last Final Girl: How Danielle Harris Survived...', https://www.buzzfeed.com/louispeitzman/from-child-actor-to-scream-queen-how-danielle-harris-became",
   "sourceSupports": "Farmiga: 'I trained for the machete work in the fight scenes, and they had me practice a few times in the harness that would yank me backwards'; filming involved 'a lot of night work and being scared'. Harris (snippet): it was 'exhausting fighting these giant guys and kind of having to carry the movie physically as well as emotionally, because the Final Girl has to do both of those things.'",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "Farmiga trained for machete fight work and harness pulls; Harris describes fighting stunt performers as a requirement of the final-girl role."
    }
   ],
-  "uncertainty": "Farmiga read directly; Harris only via snippet. Both speak about the final-girl lead, not every slasher role. Screaming is described (scream queen) but has no vocabulary tag. The Final Girls is a satirical slasher."
+  "uncertainty": "Farmiga read directly; Harris only via snippet. Both speak about the final-girl lead, not every slasher role. Screaming is described (scream queen) but has no vocabulary tag. The Final Girls is a satirical slasher. Reviewed 2026-10-10: The final-girl lead, not every role. Not applied genre-wide.",
+  "belongsTo": "the final girl"
  },
  "slice_of_life": {
-  "claim": "Slice of life depicts everyday experience in a naturalistic manner, often without conventional plot or climax.",
-  "source": "Wikipedia, 'Slice of life', https://en.wikipedia.org/wiki/Slice_of_life (pointer only); Harvard Film Archive, 'Ozu 120', https://harvardfilmarchive.org/programs/the-complete-yasujiro-ozu",
-  "sourceSupports": "Wikipedia: slice of life 'refers to a storytelling style that depicts everyday experiences in a naturalistic manner'. Harvard Film Archive (snippet) describes Ozu's films as exchanging ideas 'through gestures, glances, and plain assertions'.",
-  "how": "search snippet",
+  "claim": "'Slice of life' comes from Jean Jullien's naturalist theatre (tranche de vie) and names everyday depiction without conventional plot. No source states a naturalistic acting demand for slice-of-life film. Its canonical film master, Ozu, dictated actors' every gesture, which runs against a naturalistic method.",
+  "source": "Ryu Chishu, There was a father: Ryu Chishu remembers Ozu Yasujiro (BFI, Sight and Sound, 1964), https://www.bfi.org.uk/sight-and-sound/interviews/there-was-father-ryu-chishu-remembers-ozu-yasujiro [fetched] ; Wikipedia contributors, Slice of life (Wikipedia (pointer only)), https://en.wikipedia.org/wiki/Slice_of_life [snippet]",
+  "sourceSupports": "There was a father: Ryu Chishu remembers Ozu Yasujiro: Ozu 'made up the complete picture in his head before he went on the set'; actors had to 'follow his directions, from the way we lifted and dropped our arms to the way we blinked our eyes'. Slice of life: Pointer: the term is a calque of Jullien's tranche de vie ('A play is a slice of life put onstage with art'); in theatre the term refers to naturalism. A storytelling definition, not about acting.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "camera",
-    "why": "The cited definition makes naturalistic depiction of everyday life the genre's defining trait; this is the definition entailing the tag, not an acting source."
+    "why": "unsupported: Only the definition (via Wikipedia) links the form to naturalism, and that is about subject and story. The one acting source found (Ryu on Ozu) describes a precisely dictated style. Nothing credible makes naturalistic acting a genre demand."
    }
   ],
-  "uncertainty": "Wikipedia is a pointer, and its definition is about storytelling, not acting. No acting source found. The camera tag rests on the definition only."
+  "uncertainty": "The theatre-naturalism origin is real, but whether that implies an acting technique on film is unsourced. Ozu's results read as natural on screen, so the counter-evidence is about method, not effect."
  },
  "space_opera": {
-  "claim": "Space opera takes its name from the melodrama of opera, and Star Wars' dialogue was deliberately written in an old-fashioned, melodramatic serial style that actors found hard to speak.",
-  "source": "Wikipedia, 'Space opera', https://en.wikipedia.org/wiki/Space_opera (pointer); FandomWire, 'Most people don't understand the style of Star Wars', https://fandomwire.com/most-people-dont-understand-the-style-of-star-wars-george-lucas-never-understood-a-star-wars-criticism-fueled-by-harrison-ford/",
-  "sourceSupports": "Wikipedia: the term refers to 'the melodrama, scope, and formulaic stories of operas'. FandomWire (snippet) quotes Lucas: the style is 'very much like a 1930s Western or Saturday matinee serial' and the dialogue was meant to represent filmmaking with 'a lot more melodrama'; Ford's line 'you can type this, but you can't say it' is widely quoted.",
-  "how": "search snippet",
+  "claim": "The term space opera began as a derogatory label for hackneyed pulp spaceship yarns, coined on the model of 'horse opera' and 'soap opera', and the BFI ties the genre to an over-the-top, camp approach to storytelling. Harrison Ford's on-set joke that Lucas's Star Wars lines could be typed but not said concerns one film's dialogue, not heightened or classical language.",
+  "source": "The Encyclopedia of Science Fiction (eds. John Clute, David Langford, Graham Sleight), Space Opera (SFE (sf-encyclopedia.com), n.d.), https://sf-encyclopedia.com/entry/space_opera [fetched] ; Wang Sum Luk, 10 great space opera films (BFI, 2023), https://www.bfi.org.uk/lists/10-great-space-opera-films [fetched] ; SlashFilm, Harrison Ford Wasn't Always A Fan Of George Lucas' Star Wars Writing (SlashFilm, 2023), https://www.slashfilm.com/1110034/harrison-ford-wasnt-always-a-fan-of-george-lucas-star-wars-writing/ [fetched]",
+  "sourceSupports": "Space Opera: Wilson Tucker coined 'space opera' in 1941 for the \"hacky, grinding, stinking, outworn, spaceship yarn\", after 'horse opera' and 'soap opera'. Says nothing about dialogue or acting in space opera films. 10 great space opera films: Space opera \"has long been tied to a silly, over-the-top approach to storytelling\"; cites Sontag on Flash Gordon as camp. Does not discuss dialogue or acting in general terms. Harrison Ford Wasn't Always A Fan Of George Lucas' Star Wars Writing: Ford's line \"George, you can type this s***, but you can't say it\" was an on-set joke he recounted to GQ in 2017; Lucas told Empire in 1999 that \"dialogue isn't my strength.\" Nothing about verse, rhetoric or a classical register.",
+  "how": "Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "heightened",
-    "why": "Lucas, as quoted, says Star Wars dialogue was deliberately stylised in a 1930s melodramatic serial register, which is stylised language."
+    "why": "unsupported: No credible source says space opera asks actors for heightened or classical language. The 'opera' in the name is a pulp-era insult, not a reference to operatic text; the BFI's 'over-the-top' is about storytelling and tone. The Star Wars evidence is one franchise's awkward dialogue, which is not verse or rhetoric, and the Lucas 'serial style' quote was only ever seen on a fan site."
    }
   ],
-  "uncertainty": "The Lucas quote reaches me through a fan site; one franchise stands for the genre. Wikipedia's 'melodrama' is about story, not acting. Action and effects work were not sourced."
+  "uncertainty": "A broader 'stylised, sincere melodrama' playing style may be real, but it is not the heightened-language technique and no credible acting source states it. Action and effects work were not researched."
  },
  "spaghetti_western": {
   "claim": "Leone's spaghetti westerns hold the actor's face in extreme close-up with little dialogue; Eastwood played the lead with an economy of words.",
   "source": "Wikipedia, 'Sergio Leone', https://en.wikipedia.org/wiki/Sergio_Leone (pointer); Remind Magazine, 'How Did Clint Eastwood Rise to Fame as a Spaghetti Western Antihero?', https://www.remindmagazine.com/article/41352/clint-eastwood-spaghetti-western-antihero-sergio-leone-dollars-trilogy/",
   "sourceSupports": "Wikipedia (snippet): Leone's style juxtaposes extreme close-ups with long shots; he 'had a fascination with faces and used little dialogue'. Remind (snippet): Eastwood wanted to play the Man With No Name 'with an economy of words' and felt 'the less he said, the stronger he became'.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "camera",
     "why": "The form's signature is the extreme close-up on a near-silent face, which asks for restrained on-camera playing; Eastwood's stated choice was minimal speech."
    }
   ],
-  "uncertainty": "Leone stands for the genre. Remind is a popular magazine. Neither source discusses gun or horse handling, which this genre likely shares with the Western."
+  "uncertainty": "Leone stands for the genre. Remind is a popular magazine. Neither source discusses gun or horse handling, which this genre likely shares with the Western. Reviewed 2026-10-10: Leone stands for the genre. Not applied genre-wide.",
+  "belongsTo": "Sergio Leone’s films"
  },
  "splatter": {
   "claim": "No source found on what splatter asks of the actor specifically. Sources describe effects work and blood rigs rather than performance.",
@@ -1210,14 +1234,15 @@
   "source": "NPR, 'How actors in The Boys in the Boat trained to appear believable as Olympic athletes', https://www.npr.org/2023/12/20/1220558981/how-actors-in-the-boys-in-the-boat-trained-to-appear-believable-as-olympic-athle ; The Hollywood Reporter, 'Grading 15 Actors' Sports Skills in Movies', https://www.hollywoodreporter.com/lists/grading-actors-sports-skills-movies/",
   "sourceSupports": "NPR headline and snippet: the actors trained to row like the 1936 U.S. Olympic crew in order to 'appear believable as Olympic athletes'. THR grades actors on the sports skill they display on screen.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
     "why": "The sources show sustained athletic physical action trained for the role, which the vocabulary's 'sustained physical action' covers."
    }
   ],
-  "uncertainty": "The NPR page timed out on fetch; headline and snippet only. 'stunt' maps to Stage Combat, which fits combat sports (boxing films) better than rowing or baseball; the fit is partial."
+  "uncertainty": "The NPR page timed out on fetch; headline and snippet only. 'stunt' maps to Stage Combat, which fits combat sports (boxing films) better than rowing or baseball; the fit is partial. Reviewed 2026-10-10: The stunt tag (Stage Combat) fits combat sports, not rowing or baseball. Not applied genre-wide.",
+  "belongsTo": "combat-sport films such as boxing films"
  },
  "spy": {
   "claim": "No source found that establishes cover-identity playing or stunt work as a convention of the spy genre for actors.",
@@ -1238,18 +1263,18 @@
   "uncertainty": "Costume is a design convention, not an acting demand. Period speech was not sourced for steampunk."
  },
  "stoner_comedy": {
-  "claim": "Stoner comedy is a comedy subgenre; its founding duo, Cheech and Chong, worked largely from improvisation.",
-  "source": "Wikipedia, 'Cheech & Chong', https://en.wikipedia.org/wiki/Cheech_&_Chong (pointer)",
-  "sourceSupports": "Snippet: 'Much of their live act and albums featured improvised dialogue'; Up in Smoke reportedly worked from a yellow legal pad with a 'loose roadmap'.",
-  "how": "search snippet",
+  "claim": "Stoner comedy is a comedy subgenre centred on cannabis culture, established on screen by Cheech and Chong. Its comic demand follows from its being comedy; no source was found stating an acting demand specific to it.",
+  "source": "Wikipedia contributors, Stoner film (Wikipedia (pointer only), 2026), https://en.wikipedia.org/wiki/Stoner_film [snippet] ; Backstage staff (byline not verified), Comedy Terms That Every Actor Should Know (Backstage, unknown), https://www.backstage.com/magazine/article/comedy-terms-every-actor-know-5682/ [snippet]",
+  "sourceSupports": "Stoner film: Pointer: a subgenre of comedy based on marijuana themes; Cheech and Chong's Up in Smoke (1978) set the template. Comedy Terms That Every Actor Should Know: Comedy in general asks actors for timing ('most comedy has clean beats'; 'with comedy, pick up your cues'). About comedy as a whole, not stoner comedy.",
+  "how": "Reviewed 2026-10-10: 0 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "comic",
-    "why": "The genre is defined as a subgenre of comedy; the tag follows from the definition, not from an acting source."
+    "why": "genre-wide: Inherited from comedy: the genre is comedy by definition and actor-training trade press treats timing as what comedy asks of actors. No stoner-specific source states it, so confidence stays low."
    }
   ],
-  "uncertainty": "Improvisation is documented for one duo only, not as a convention of the genre, so no improvisation tag. Wikipedia is a pointer."
+  "uncertainty": "Definition rests on Wikipedia; the comedy-timing source is a Backstage snippet about comedy generally (page 403). Improvisation is documented for Cheech and Chong only and is not tagged. Genre-wide only by definition; no source states a technical convention, so it stays low."
  },
  "superhero": {
   "claim": "Superhero roles ask for intensive physical training and learned fight choreography.",
@@ -1313,7 +1338,8 @@
     "why": "Months of sword training and falls for the genre's touchstone film; the definition itself centres on sword-wielding heroes in violent adventures."
    }
   ],
-  "uncertainty": "One film. Heightened mythic delivery was not sourced."
+  "uncertainty": "One film. Heightened mythic delivery was not sourced.",
+  "basis": "definition"
  },
  "techno_thriller": {
   "claim": "No source found on delivering technical jargon. One techno-thriller series had its cast attend hacking seminars and its lead learn to type code on camera.",
@@ -1343,25 +1369,26 @@
   "uncertainty": "No acting source. Restraint under pressure is a reasonable reading but is unsourced."
  },
  "time_travel": {
-  "claim": "In Looper, playing a younger version of another actor's character took daily prosthetics and close study of the older actor's mannerisms and voice.",
-  "source": "Screen Rant, 'How Looper Made Joseph Gordon-Levitt Look (& Sound) Like Bruce Willis', https://screenrant.com/looper-joseph-gordon-levitt-bruce-willis-face-effects/ ; The Hollywood Reporter, 'Looper: Joseph Gordon-Levitt Talks Physical Transformation', https://www.hollywoodreporter.com/movies/movie-news/dark-knight-joseph-gordon-levitt-looper-rian-johnson-bruce-willis-311133/",
-  "sourceSupports": "Snippets: a 3-hour daily prosthetic process (nose, lip pieces, eyebrows, contacts); Gordon-Levitt studied Willis's performances and Willis recorded some lines for him to hear.",
-  "how": "search snippet",
+  "claim": "In Looper, playing a younger version of Bruce Willis's character took three hours of prosthetics daily and study of recordings of Willis's lines and his films. That is one production, not a time-travel convention.",
+  "source": "Craig Elvy and Tom Russell, How Looper Made Joseph Gordon-Levitt Look (& Sound) Like Bruce Willis (Screen Rant, 2024), https://screenrant.com/looper-joseph-gordon-levitt-bruce-willis-face-effects/ [fetched] ; The Hollywood Reporter, Looper: Joseph Gordon-Levitt Talks Physical Transformation (The Hollywood Reporter), https://www.hollywoodreporter.com/movies/movie-news/dark-knight-joseph-gordon-levitt-looper-rian-johnson-bruce-willis-311133/ [snippet]",
+  "sourceSupports": "How Looper Made Joseph Gordon-Levitt Look (& Sound) Like Bruce Willis: A 3-hour daily makeup application (lip pieces, nose, eyebrows, contacts); 'Willis made recordings of younger Joe's lines so Gordon-Levitt could match his tone and inflection.' Looper: Joseph Gordon-Levitt Talks Physical Transformation: Redirected to a paywall gateway and not read; title only.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
-    "why": "Daily prosthetic makeup and studied mannerisms to become another actor's character, as documented for Looper."
+    "why": "subgenre-or-role: The demand belongs to the role of a character's past or future self played by a different actor. Many time-travel films have no such role, or handle it by casting or de-aging; no credible source states it as a genre convention (only TV Tropes and listicles)."
    }
   ],
-  "uncertainty": "One film; playing two versions of a character is not established as a genre convention."
+  "uncertainty": "Searches turned up only trope wikis and listicles on characters meeting younger or older selves. De-aging VFX (e.g. Tron: Legacy) can replace actor transformation entirely.",
+  "belongsTo": "roles playing another actor's character at a different age (past/future self)"
  },
  "tragedy": {
   "claim": "Classical tragedy is enacted in language 'enriched with ornaments' (Aristotle); Greek tragic actors wore masks and the choral parts were sung.",
   "source": "Wikipedia, 'Tragedy', https://en.wikipedia.org/wiki/Tragedy (pointer, quoting Aristotle's Poetics); Almeida Theatre, 'Greek Theatre: At A Glance', https://almeida.co.uk/get-involved/resource-hub/greek-theatre-at-a-glance/",
   "sourceSupports": "Wikipedia: Aristotle defines tragedy as enacted 'by means of language enriched [with ornaments]'; 'All actors were male and wore masks'; choral parts were sung. Almeida: masks 'allowing actors to play multiple roles' with exaggerated features read from a distance; tragic actors wore raised boots.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "heightened",
@@ -1372,21 +1399,23 @@
     "why": "Almeida and Wikipedia both state that Greek tragic actors performed in masks, often playing several roles."
    }
   ],
-  "uncertainty": "Both tags hold for classical (Greek and verse) tragedy, not for modern prose or film tragedy. Almeida's page did not mention verse when read; that came from Wikipedia's account of Aristotle."
+  "uncertainty": "Both tags hold for classical (Greek and verse) tragedy, not for modern prose or film tragedy. Almeida's page did not mention verse when read; that came from Wikipedia's account of Aristotle. Reviewed 2026-10-10: Both tags hold for classical Greek and verse tragedy, not for modern prose tragedy; applied to every tragedy they asked heightened language of Woyzeck, Miss Julie and Riders To The Sea. Not applied genre-wide.",
+  "belongsTo": "classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3)"
  },
  "true_crime": {
-  "claim": "Dramatised true crime means playing real people, which coaches treat as research into the person's voice, accent and mannerisms.",
-  "source": "StageMilk, 'Playing a Real-Life Person as an Actor', https://www.stagemilk.com/playing-a-real-life-person-as-an-actor/",
-  "sourceSupports": "Snippet: 'A lot of actors will jump straight to accent, and that is an important part of the process!'; if the person was recorded, watch to see how they spoke and presented themselves; study physical mannerisms.",
-  "how": "search snippet",
+  "claim": "Dramatised true crime casts actors as real people, and acting coaches treat matching a real person's speech, including accent where it differs, as one important part of preparing such a role, alongside voice quality and physicality. Accent is not required when the person's speech is close to the actor's, and much true crime is documentary with no actors at all.",
+  "source": "Alexander Lee-Rekers, Playing a Real-Life Person as an Actor (StageMilk, 2022), https://www.stagemilk.com/playing-a-real-life-person-as-an-actor/ [fetched] ; Boing Boing (on WIRED's 'Technique Critique' with dialect coach Erik Singer), A movie accent expert comments on 31 actors playing real people (Boing Boing, 2017), https://boingboing.net/2017/08/23/a-movie-accent-comments-on-31.html [snippet]",
+  "sourceSupports": "Playing a Real-Life Person as an Actor: \"A lot of actors will jump straight to accent, and that is an important part of the process! But it's not the only thing to consider.\" Recommends researching how the person actually spoke and moved; does not say accent is always required. About real-person roles generally, not true crime. A movie accent expert comments on 31 actors playing real people: Snippet: a dialect coach reviews accent work by actors playing real people. Shows accent work is a recurring part of real-person roles; says nothing about true crime as a genre.",
+  "how": "Reviewed 2026-10-10: 1 of 2 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "accent",
-    "why": "StageMilk names accent as an important part of preparing to play a real person, which dramatised true crime always involves."
+    "why": "subgenre-or-role: The demand comes from the role type (portraying a real person whose speech differs from the actor's), which is found in biopics and historical drama as much as in true crime, and it does not arise in documentary true crime or when the person sounds like the actor. No source ties accent to true crime as a genre."
    }
   ],
-  "uncertainty": "The source is about playing real people generally, not true crime specifically. The accent tag only applies when the real person's speech differs from the actor's."
+  "uncertainty": "StageMilk is an actor-training site, credible for practice but not a reference work. No trade or scholarly source on acting in dramatised true crime was found. That much true crime is documentary is common knowledge, not sourced here.",
+  "belongsTo": "Dramatised true crime roles portraying real people whose speech differs from the actor's own"
  },
  "vampire": {
   "claim": "Actors in vampire roles may have to learn to speak clearly in prosthetic fangs; several notable Draculas wore none.",
@@ -1426,32 +1455,34 @@
   "uncertainty": "The examples are mostly recent TV westerns. Horsemanship is not stage combat, so the stunt tag fits only part. Laconic manner was not sourced."
  },
  "whodunit": {
-  "claim": "For Murder on the Orient Express (2017), Branagh studied Belgian accents with a dialect coach three times a week to play Poirot.",
-  "source": "Agatha Christie Ltd, '9 Preparatory Steps Branagh Took To Play Hercule Poirot', https://www.agathachristie.com/film-and-tv/murder-on-the-orient-express/9-preparatory-steps-branagh-took-to-play-hercule-poirot",
-  "sourceSupports": "Snippet: Branagh listened to recordings of 27 Belgian accents and met a dialect coach three times a week to practise Poirot's accent.",
-  "how": "search snippet",
+  "claim": "For Murder on the Orient Express (2017), Kenneth Branagh worked with a dialect coach three times a week and listened to recordings of 27 Belgian accents to play Poirot. The accent belongs to that detective role, not to the whodunit form.",
+  "source": "Agatha Christie Ltd (no byline), 9 Preparatory Steps Branagh Took To Play Hercule Poirot (agathachristie.com, 2017), https://www.agathachristie.com/film-and-tv/murder-on-the-orient-express/9-preparatory-steps-branagh-took-to-play-hercule-poirot [fetched]",
+  "sourceSupports": "9 Preparatory Steps Branagh Took To Play Hercule Poirot: 'He met with a dialect coach three times a week to study and practice Poirot's accent'; he 'listened to recordings of 27 different Belgian accents'; he began learning French 'after Wallonian dialect defeated him'.",
+  "how": "Reviewed 2026-10-10: 1 of 1 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "accent",
-    "why": "The source documents dialect coaching for the detective in a canonical whodunit."
+    "why": "subgenre-or-role: One production, one role. The demand comes from the character (a Belgian detective played by an English-speaking actor), not from the whodunit structure; many whodunits have no accented lead."
    }
   ],
-  "uncertainty": "One production and one role. The accent belongs to Poirot, not to the whodunit form. Ensemble suspect-playing was not sourced."
+  "uncertainty": "The source is the rights-holder's promotional site, reliable for the facts but about one film. Ensemble suspect-playing was not sourced.",
+  "belongsTo": "Foreign-detective roles such as Poirot"
  },
  "yakuza": {
-  "claim": "Ninkyo (chivalry) yakuza films built their stars on stoic, sword-carrying honour; Fukasaku's 1970s jitsuroku films replaced this with rougher, more realistic fights.",
-  "source": "Wikipedia, 'Ken Takakura', https://en.wikipedia.org/wiki/Ken_Takakura (pointer); Wikipedia, 'Kinji Fukasaku', https://en.wikipedia.org/wiki/Kinji_Fukasaku (pointer); BFI, '10 great Japanese gangster films', https://www.bfi.org.uk/lists/10-great-japanese-gangster-films",
-  "sourceSupports": "Snippets: Takakura appeared as 'stoic, tattooed, katana-wielding tough guys' with a brooding, strong-but-silent style; Fukasaku's films were 'rough and violent with more realistic fights'.",
-  "how": "search snippet",
+  "claim": "The 1960s ninkyo (chivalry) yakuza film formulaically climaxed in the hero's katana showdown against a rival gang. The 1970s jitsuroku cycle replaced it with chaotic, unheroic brawls and gunplay. Sources describe the fights, not actors' training.",
+  "source": "David Hanley, Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s (Offscreen, 2011), https://offscreen.com/view/japanese_yakuza_films [fetched] ; David Wilentz, Yakuza Films at the Asia Society (The Brooklyn Rail, 2008), https://brooklynrail.org/2008/03/film/yakuza-films-at-the-asia-society/ [fetched] ; Jasper Sharp, 10 great Japanese gangster films (BFI, 2013), https://www.bfi.org.uk/lists/10-great-japanese-gangster-films [fetched]",
+  "sourceSupports": "Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s: Ninkyo climaxes feature 'the hero armed only with a traditional katana sword slicing his way through a gang of bad yakuza with guns'; in Battles Without Honor and Humanity yakuza's 'hands shake when they fire a gun'; 'a free-for-all brawl, with Tetsuya Watari fighting in a downpour'. Yakuza Films at the Asia Society: 1960s yakuza films were 'always climaxing in a showdown where the anti-hero takes down all nemeses with a katana', 'a bloody ballet of sword swinging'. 10 great Japanese gangster films: Ken Takakura as 'the stoic, tattooed, katana-wielding tough guy'; Fukasaku's jitsuroku style 'stripped away the mythos and surface sheen of the old-school ninkyo eiga of the 1960s'.",
+  "how": "Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets",
   "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
-    "why": "Both cycles as described involve fight action, sword-fighting in ninkyo and realistic brawls in jitsuroku."
+    "why": "subgenre-or-role: Two independent critics state the climactic sword fight as a formula of the ninkyo cycle, so the demand is supported for that subgenre and its leads. No source states fight work as a convention of yakuza film overall; jitsuroku and later films are described by violence and gunplay, not choreographed combat."
    }
   ],
-  "uncertainty": "The sources describe screen personas and film style, not what actors trained for. The stunt tag is inferred from described fight content, which makes it weak."
+  "uncertainty": "The sources are film criticism about screen content, not about what actors trained for. A whole-genre combat demand might be argued from violence across cycles, but no source says it, and much later yakuza cinema (e.g. Kitano) is not fight-choreography-led.",
+  "belongsTo": "ninkyo eiga (1960s chivalry yakuza films), the lead's climactic sword fight"
  },
  "action": {
   "claim": "The action genre is defined by fights, chases, shootouts and stunt work.",
@@ -1594,14 +1625,15 @@
   "source": "Wikipedia, 'Kaiju', https://en.wikipedia.org/wiki/Kaiju (pointer)",
   "sourceSupports": "Tsuburaya 'decided to attempt to create suits, called creature suits, for a human (suit actor) to wear and act in'; 'Due to the extreme stiffness of the latex or rubber suits, filming would often be done at double speed'; combined with miniature city sets.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "Suit actors perform as the creature inside full creature suits."
    }
   ],
-  "uncertainty": "The tag fits suit actors, not the human cast. Reacting to unseen threats was not sourced on this read."
+  "uncertainty": "The tag fits suit actors, not the human cast. Reacting to unseen threats was not sourced on this read. Reviewed 2026-10-10: The tag fits suit actors, not the human cast. Not applied genre-wide.",
+  "belongsTo": "the suit actor playing the creature"
  },
  "martial_arts": {
   "claim": "Martial-arts roles are often played by real martial artists; otherwise actors train for the role, helped by doubles, wire work and camera tricks.",
@@ -1650,13 +1682,9 @@
    {
     "tag": "camera",
     "why": "Naturalistic performance is called a key feature of almost all mumblecore films."
-   },
-   {
-    "tag": "improvisation",
-    "why": "Some films feature prominent improvisation, with the cast sharing script credits."
    }
   ],
-  "uncertainty": "Improvisation is 'some' films, not all; the page notes mostly scripted exceptions."
+  "uncertainty": "Improvisation is 'some' films, not all; the page notes mostly scripted exceptions. Reviewed 2026-10-10: the improvisation tag was removed. Improvisation is in some mumblecore films, not all; the naturalism (camera) is the convention."
  },
  "musical": {
   "claim": "A musical film integrates musical numbers into the plot; characters sing and dance.",
@@ -1695,14 +1723,15 @@
   "source": "Wikipedia, 'Italian neorealism', https://en.wikipedia.org/wiki/Italian_neorealism (pointer); previously cited: Britannica, 'Neorealism', https://www.britannica.com/art/Neorealism-Italian-art (not reachable)",
   "sourceSupports": "Wikipedia snippet: 'a style of film characterized by stories set amongst the poor and working class, filmed on location, frequently using nonprofessional actors'; where known actors were cast they played 'strongly against their normal character types'.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "camera",
     "why": "Non-professionals playing ordinary people on location is the movement's defining convention, which implies unadorned on-camera naturalism."
    }
   ],
-  "uncertainty": "The Britannica page could not be read (403), and searches returned Wikipedia and others instead. The camera tag is inferred from casting and location practice; no source here states a performance style in so many words."
+  "uncertainty": "The Britannica page could not be read (403), and searches returned Wikipedia and others instead. The camera tag is inferred from casting and location practice; no source here states a performance style in so many words. Reviewed 2026-10-10: The camera tag is inferred from casting and location practice; no source states a performance style. Not applied genre-wide.",
+  "belongsTo": "non-professional casting, which is the casting’s, not a technique asked of an actor"
  },
  "new_wave": {
   "claim": "The New Wave promoted a naturalistic style with location shooting, improvised dialogue and natural light.",
@@ -1728,13 +1757,8 @@
   "sourceSupports": "Snippets: Alastair Bruce advised Downton Abbey actors 'on how to speak, stand, sit, eat, drink, dress', posture and 'the use of vocabulary'; Lily James: 'The main thing I had to learn was posture'. DataCalculus (read) says dialect coaches evoke 'the culture, education, and social class of the period'.",
   "how": "search snippet",
   "confidence": "medium",
-  "tags": [
-   {
-    "tag": "heightened",
-    "why": "The Downton sources document coaching in period speech, vocabulary and manners as part of the work."
-   }
-  ],
-  "uncertainty": "The earlier source, DataCalculus, is a data-analytics company's blog and too weak to carry a tag, so no accent tag was given. The Downton evidence is one series."
+  "tags": [],
+  "uncertainty": "The earlier source, DataCalculus, is a data-analytics company's blog and too weak to carry a tag, so no accent tag was given. The Downton evidence is one series. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period speech, bearing and manners in one series, which the tag does not fit."
  },
  "romantic_comedy": {
   "claim": "Under the Hays Code, romantic comedies relied on verbal sparring and physical comedy.",
@@ -1748,7 +1772,8 @@
     "why": "The genre is comedy, and Britannica names verbal sparring as a defining resource."
    }
   ],
-  "uncertainty": "Britannica could not be fetched (403). Physical comedy is tied to the Hays-era films, so no physicalComedy tag for the genre as a whole. Chemistry has no tag."
+  "uncertainty": "Britannica could not be fetched (403). Physical comedy is tied to the Hays-era films, so no physicalComedy tag for the genre as a whole. Chemistry has no tag.",
+  "basis": "definition"
  },
  "samurai": {
   "claim": "Samurai films use tate, a stage swordplay of fixed forms that actors memorise and combine, with strict posture and etiquette.",
@@ -1805,7 +1830,7 @@
   "source": "No Film School, 'Ten Directing Lessons Inspired by Ken Loach', https://nofilmschool.com/directed-by-ken-loach ; Into Film, 'Ken Loach, social realism...', https://www.intofilm.org/news-and-views/articles/ken-loach-feature",
   "sourceSupports": "Snippets: Loach uses non-professionals, limits actors' access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "improvisation",
@@ -1816,7 +1841,8 @@
     "why": "The method aims at spontaneous, naturalistic on-camera behaviour."
    }
   ],
-  "uncertainty": "The Into Film page returned no text when fetched. One director's method stands for the genre."
+  "uncertainty": "The Into Film page returned no text when fetched. One director's method stands for the genre. Reviewed 2026-10-10: One director’s method (Ken Loach) stands for the genre. Not applied genre-wide.",
+  "belongsTo": "Ken Loach’s productions and those that work his way"
  },
  "swashbuckler": {
   "claim": "Fight directors such as Paddy Crean staged swashbuckler swordplay and taught actors sword work for stage and film.",
@@ -1837,7 +1863,7 @@
   "source": "Wikipedia, 'Suit actor', https://en.wikipedia.org/wiki/Suit_actor (pointer)",
   "sourceSupports": "'the suit actor does all of their stunts while in a full costume that normally obscures their identity'; roles 'may require extensive sword fights, actions and stunts within a physically restrictive environment'; 'extensive body language and pantomime are crucial'; 'the actor's voice is dubbed during after-recording'.",
   "how": "read directly",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "stunt",
@@ -1848,7 +1874,8 @@
     "why": "Full-costume performance with the face hidden, conveyed through body language."
    }
   ],
-  "uncertainty": "Applies to suit actors, not the unmasked cast. Voice dubbing is done to the suit actor, not by them, so no voiceWork tag."
+  "uncertainty": "Applies to suit actors, not the unmasked cast. Voice dubbing is done to the suit actor, not by them, so no voiceWork tag. Reviewed 2026-10-10: Suit actors, not the unmasked cast. Not applied genre-wide.",
+  "belongsTo": "the suit actor"
  },
  "tragicomedy": {
   "claim": "Tragicomedy holds tragic and comic elements side by side, with tone shifting between serious and comic, often within a scene.",
@@ -1862,21 +1889,23 @@
     "why": "By definition the form contains comedy the actor must play alongside tragic stakes."
    }
   ],
-  "uncertainty": "These are genre guides, not acting sources. The tag comes from the definition."
+  "uncertainty": "These are genre guides, not acting sources. The tag comes from the definition.",
+  "basis": "definition"
  },
  "werewolf": {
   "claim": "Werewolf roles can require long prosthetic transformations that the actor must perform through.",
   "source": "The Hollywood Reporter, 'Wolf Man Star Christopher Abbott Talks His 7-Hour Transformation', https://www.hollywoodreporter.com/movies/movie-features/wolf-man-star-christopher-abbott-1236109770/ ; IndieWire, 'Wolf Man: Christopher Abbott Needed 650 Prosthetic Pieces', https://www.indiewire.com/features/craft/wolf-man-christopher-abbott-650-prosthetic-pieces-interview-1235085626/",
   "sourceSupports": "Snippets: the final transformation stage took up to seven hours; Abbott called it 'tedious and arduous' and practised lines in a mirror to see 'how your face moves underneath the prosthetics'.",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "Heavy multi-stage prosthetic transformation the actor performs through."
    }
   ],
-  "uncertainty": "One film; earlier werewolf films vary (some used CGI)."
+  "uncertainty": "One film; earlier werewolf films vary (some used CGI). Reviewed 2026-10-10: One film’s prosthetic transformation; others used digital effects. Not applied genre-wide.",
+  "belongsTo": "the werewolf role in practical-effects productions"
  },
  "wuxia": {
   "claim": "Wuxia films by King Hu and the Shaw Brothers used wire- and trampoline-assisted acrobatics and choreographed sword action.",
@@ -1897,13 +1926,14 @@
   "source": "TheWrap, 'Army of the Dead: Zack Snyder Sent Hundreds of Extras to Zombie School', https://www.thewrap.com/army-of-the-dead-zack-snyder-extras-zombie-school/",
   "sourceSupports": "Snippet: about 200 extras attended 'Zombie School', where the stunt team taught them 'how to move and act like a zombie'. Walking Dead extras also attended a zombie school (Collider).",
   "how": "search snippet",
-  "confidence": "medium",
+  "confidence": "low",
   "tags": [
    {
     "tag": "transformation",
     "why": "Trained creature movement for undead roles, under makeup."
    }
   ],
-  "uncertainty": "Applies to undead performers (largely extras), not the living leads. Survival physicality for the living cast was not sourced."
+  "uncertainty": "Applies to undead performers (largely extras), not the living leads. Survival physicality for the living cast was not sourced. Reviewed 2026-10-10: Undead performers, largely extras, not the living leads. Not applied genre-wide.",
+  "belongsTo": "the performers playing the undead"
  }
 }

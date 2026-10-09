@@ -35,6 +35,8 @@ export function practicedToday(sim: Simulation, person: Person): number {
 /** Why an exercise can't be done now, or nothing. */
 export function practiceRefusal(sim: Simulation, person: Person, e: Exercise | undefined): string | undefined {
   if (!e) return 'There’s no such exercise.';
+  // A craft is the School's to begin (`enroll`): a life with none is refused, where until 2026-10-10 a technique's exercise threw.
+  if (!person.craft) return 'Your training hasn’t begun: there’s no craft to practice yet.';
   if (inHospital(person, sim.now)) return 'Not from a hospital bed.';
   const asleep = person.awakeSince !== undefined && person.awakeSince > sim.now;
   if (asleep) return 'You’re asleep.';

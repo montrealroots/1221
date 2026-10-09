@@ -180,7 +180,8 @@ describe('every genre', () => {
       else expect(genreTags(g.id), g.id).toEqual(d!.tags.map((t) => t.tag));
       if (genreTags(g.id).length) withRequirements += 1;
     }
-    expect(withRequirements).toBe(64);
+    // 64 until the review of 2026-10-10 lowered every entry resting on one film, one director, one role or one subgenre.
+    expect(withRequirements).toBe(41);
   });
 
   it('makes every applied demand a requirement of the work: raising its technique raises the work, and it counts once', () => {

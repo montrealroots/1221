@@ -223,11 +223,14 @@ describe('a play’s kinds asked of its work', () => {
   it('reads a coursework scene’s play’s demands in the scene’s judgement', () => {
     const sim = life('scene-demands');
     const person = sim.player;
-    const scene = SCENES.find((s) => s.play === 'Macbeth')!;
+    // Much Ado's romantic comedy asks comic timing, which scene study doesn't read on its own. Until the review of
+    // 2026-10-10 this was Macbeth's, whose tragedy and historical drama asked heightened language and an accent of every
+    // play of the kind; they no longer do (`docs/GENRE-COVERAGE.md`).
+    const scene = SCENES.find((s) => s.play === 'Much Ado About Nothing')!;
     const a = { id: 'm', course: 'X', template: 'scene-study', term: 0, setOn: '2026-09-01', dueOn: '2026-09-02', sceneId: scene.id, role: 0 as const, prep: { familiarity: 0, memorization: 0, interpretation: 0, rehearsal: 0, partner: 0, revision: 0 }, answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], status: 'done' } as unknown as Assignment;
     const e = judgeWork(sim, person, a, '2026-09-02', sim.now, 'm');
     const own = templateById('scene-study')!.reads as Partial<Record<string, number>>;
-    const demanded = demandTags(genresOfPlay('Macbeth') ?? []).map((t) => DEMAND_TECHNIQUE[t]);
+    const demanded = demandTags(genresOfPlay('Much Ado About Nothing') ?? []).map((t) => DEMAND_TECHNIQUE[t]);
     expect(demanded.some((s) => own[s] === undefined)).toBe(true);
     for (const s of demanded) expect(e.inputs.techniques[s], s).toBeDefined();
   });

@@ -221,6 +221,6 @@ writeFileSync('src/engine/content/engagement.ts', engagement);
 // The genres' demands: the research's own words, as data the engine imports (content/genre-demands.json), typed by
 // content/genre-demands.ts. Kept as JSON, so it is the research quoted, not the game's prose rewritten.
 const demands = json('docs/research/attributes/research-genre-demands.json').genres;
-const data = Object.fromEntries(demands.map((d) => [d.id, { claim: d.claim, source: d.source, sourceSupports: d.sourceSupports, how: d.how, confidence: confidence(d.confidence), tags: (d.tags ?? []).map((t) => ({ tag: t.tag, why: t.why })), uncertainty: d.uncertainty }]));
+const data = Object.fromEntries(demands.map((d) => [d.id, { claim: d.claim, source: d.source, sourceSupports: d.sourceSupports, how: d.how, confidence: confidence(d.confidence), tags: (d.tags ?? []).map((t) => ({ tag: t.tag, why: t.why })), uncertainty: d.uncertainty, ...(d.belongsTo ? { belongsTo: d.belongsTo } : {}), ...(d.basis ? { basis: d.basis } : {}) }]));
 writeFileSync('src/engine/content/genre-demands.json', JSON.stringify(data, null, 1) + '\n');
 console.log('wrote engagement.ts (' + ids.length + ' interests) and genre-demands.json (' + demands.length + ' genres)');

@@ -106,7 +106,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` | You As An Actor |
+| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
 
 ## health
 
@@ -137,7 +137,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `fitness.test.ts` `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## pension
@@ -161,8 +161,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` `engagement.test.ts` | You As An Actor |
-| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `attributes-complete.test.ts` `engagement.test.ts` | You As An Actor |
+| `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
+| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `attributes-complete.test.ts` `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
 
 ## school
 
@@ -173,7 +173,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` | Drama School |
 | `school.buy_ppe` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-everyday.test.ts` | Drama School |
 | `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `school.test.ts` | Drama School |
-| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-life.test.ts` `school.test.ts` | Drama School |
+| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `condition-reach.test.ts` `journey-life.test.ts` `school.test.ts` | Drama School |
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
