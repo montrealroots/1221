@@ -833,6 +833,16 @@ function StartingPointStep({ config, set, setConfig }: {
 
   return (
     <div className="col gap-5">
+      {/* First on the page, at the owner's word (2026-10-10). */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Your Body</h2>
+            <p className="muted small">Your height and weight on the first morning, in the units of where you were born.</p>
+          </div>
+        </div>
+        <BodyFields config={config} setConfig={setConfig} />
+      </div>
       <div className="card">
         <div className="panel-head">
           <div>
@@ -899,15 +909,6 @@ function StartingPointStep({ config, set, setConfig }: {
       </div>
 
       {/* Month By Month, the month's food, stood here until the owner took it off this screen on 2026-10-10. */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h2>Your Body</h2>
-            <p className="muted small">Your height and weight on the first morning, in the units of where you were born.</p>
-          </div>
-        </div>
-        <BodyFields config={config} setConfig={setConfig} />
-      </div>
 
       <div className="card">
         <div className="panel-head">

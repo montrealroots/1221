@@ -222,6 +222,9 @@ describe('Starting Point', () => {
   it('asks your height and weight, and shows no food', () => {
     const step = stepSource('function StartingPointStep', 'function BankChoice');
     expect(step).toContain('<BodyFields config={config} setConfig={setConfig} />');
+    // First on the page (2026-10-10): before Where It Begins and What Is Yours.
+    expect(step.indexOf('<h2>Your Body</h2>')).toBeLessThan(step.indexOf('<h2>{config.school'));
+    expect(step.indexOf('<h2>Your Body</h2>')).toBeLessThan(step.indexOf('<h2>What Is Yours</h2>'));
     expect(step).not.toContain('<MonthByMonth');
     expect(stepSource('function IdentityStep', 'function PersonalityStep')).not.toContain('<BodyFields');
     expect(SOURCE).not.toContain('function MonthByMonth');
