@@ -27,7 +27,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { rateOn } from '../content/career';
+import { rateOn } from '../content/rates';
 import { UNIVERSAL_CREDIT } from '../content/safetynet';
 import { earningsOf, homeOf, ukTaxYear } from './earnings';
 import { payeeAccount } from './cash';

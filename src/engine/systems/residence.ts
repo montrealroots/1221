@@ -44,6 +44,13 @@
  *   The card's renewal isn't charged, its ten years not read on USCIS's pages.
  * Citizenship by naturalization isn't kept: SLATE holds one citizenship.
  *
+ * From the connected world of 2026-10-09 neither the Global Talent visa nor
+ * the green card is applied for: each was endorsed or petitioned on the
+ * O-1's record, the career's credits, and the career went in the scope reset
+ * that day. Their fees, the Visa Bulletin's wait and the applications went;
+ * a save that holds either keeps it, and what it opens: the NHS, settlement,
+ * Medicaid after five years and naturalizing.
+ *
  * From 2026-10-06 each waits on its visit (`systems/papervisits.ts`): the
  * Global Talent visa is granted the day its biometrics are enrolled, and the
  * green card's decision waits on the I-485's biometrics, either ended if
@@ -57,29 +64,18 @@ import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { payFromBank, inTheBank } from './spending';
-import { DECIDED_KIND, citizenOf, documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
+import { citizenOf, documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
 import { CITIES } from '../content/geography';
 import { homeOf } from './earnings';
 import { earningsOf } from './earnings';
-import { bookVisit, ukEnrolment } from './papervisits';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 
-export const GLOBAL_TALENT = { endorsement: 561, visa: 205, ihsYear: 1_035, years: 5, settleAfter: 5, ilr: 3_226, evidence: 3 } as const;
+/** Settling from the Global Talent visa: indefinite leave after five years, £3,226. Its endorsement, visa and surcharge were here until 2026-10-09. */
+export const GLOBAL_TALENT = { settleAfter: 5, ilr: 3_226 } as const;
 export const MEXICAN_RESIDENCE = { uma: 117.31, savingsUma: 11_460, incomeUma: 680, temporary: 11_140.74, consularVisaUsd: 56, permanent: 13_578.96, permanentAfter: 4 } as const;
 
 export type Route = 'global-talent' | 'uk-settled' | 'mx-temporary' | 'mx-permanent' | 'us-green-card';
-
-const GREEN_CARD_ROUTE: Route = 'us-green-card';
-export const GREEN_CARD = { i140: 715, asylumFee: 300, i485: 1_440, premium: 2_965, i140Days: 31 * 30.44, premiumDays: 21, i485Days: 8.6 * 30.44, cutoffs: { CN: Date.UTC(2023, 6, 1), IN: Date.UTC(2023, 1, 1) } as Readonly<Record<string, number>>, bulletinAt: Date.UTC(2026, 9, 1) } as const;
-
-/** Days to a green card from applying now: the I-140's time, or the wait for the line to reach the date and the I-485's. */
-export function greenCardDays(person: Person, premium: boolean): number {
-  const born = CITIES.get(person.homeRegionId ?? '')?.countryId?.toUpperCase() ?? '';
-  const cutoff = GREEN_CARD.cutoffs[born];
-  const behind = cutoff === undefined ? 0 : Math.max(0, GREEN_CARD.bulletinAt - cutoff) / MS_DAY;
-  return Math.max(premium ? GREEN_CARD.premiumDays : GREEN_CARD.i140Days, behind + GREEN_CARD.i485Days);
-}
 
 const inSave = (sim: Simulation, units: number, from: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur) ?? c; };
 
@@ -136,10 +132,8 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
   return 'SLATE keeps routes to residence in Britain, Mexico and the United States.';
 }
 
-/** What applying costs, in the save's money. */
-export function residenceFee(sim: Simulation, iso: 'GB' | 'MX' | 'US', premium = false): Money {
-  if (iso === 'US') return inSave(sim, GREEN_CARD.i140 + GREEN_CARD.asylumFee + GREEN_CARD.i485 + (premium ? GREEN_CARD.premium : 0), 'USD');
-  if (iso === 'GB') return inSave(sim, GLOBAL_TALENT.endorsement + GLOBAL_TALENT.visa + GLOBAL_TALENT.ihsYear * GLOBAL_TALENT.years, 'GBP');
+/** What applying costs, in the save's money: Mexico's, the only route a student can take. */
+export function residenceFee(sim: Simulation): Money {
   return inSave(sim, MEXICAN_RESIDENCE.temporary, 'MXN') + inSave(sim, MEXICAN_RESIDENCE.consularVisaUsd, 'USD');
 }
 
@@ -165,32 +159,15 @@ function grant(sim: Simulation, person: Person, iso: string, route: Route, name:
 }
 
 export function registerResidence(sim: Simulation): void {
-  sim.onCommand<{ country: string; premium?: boolean }, { paid: Money }>('documents.residence', (p, { sim: s }) => {
+  sim.onCommand<{ country: string }, { paid: Money }>('documents.residence', (p, { sim: s }) => {
     const person = s.player;
     const iso = String(p?.country ?? '').toUpperCase();
     const no = routeRefusal(s, person, iso);
     if (no) throw new CommandError(no);
-    const fee = residenceFee(s, iso as 'GB' | 'MX' | 'US', p?.premium === true);
-    if (iso === 'US') {
-      if (!payFromBank(s, person, fee, 'A green card: the I-140, its fee and the I-485', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-      const id = s.nextId('document');
-      const readyAt = s.now + Math.round(greenCardDays(person, p?.premium === true)) * MS_DAY;
-      const doc: PersonDocument = { id, kind: 'permit', issuer: 'US', name: 'Permanent Resident Card', number: numberFor('R', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US', route: GREEN_CARD_ROUTE };
-      documentsOf(person).push(doc);
-      // The I-485's biometrics at an Application Support Center, which it waits on (from 2026-10-06, `systems/papervisits.ts`).
-      bookVisit(s, person, doc, 'us-biometrics');
-      s.schedule({ at: readyAt, kind: DECIDED_KIND, label: 'Green Card Decided', category: 'system', priority: 20, payload: { personId: person.id } });
-      return { paid: fee };
-    }
-    if (!payFromBank(s, person, fee, iso === 'GB' ? 'The Global Talent visa, its endorsement and the health surcharge' : 'Mexican temporary residence, the card and the visa', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    if (iso === 'GB') {
-      // Granted the day its biometrics are enrolled, for its five years (from 2026-10-06, `systems/papervisits.ts`);
-      // until then the day it was paid for.
-      const id = s.nextId('document');
-      const doc: PersonDocument = { id, kind: 'permit', issuer: 'GB', name: 'Global Talent Visa', number: numberFor('R', id), status: 'pending', appliedAt: s.now, destination: 'GB', route: 'global-talent' };
-      documentsOf(person).push(doc);
-      bookVisit(s, person, doc, ukEnrolment(person), undefined, { years: GLOBAL_TALENT.years });
-    } else grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);
+    // Only Mexico's is applied for since 2026-10-09: the US and British branches went with the career's record they read.
+    const fee = residenceFee(s);
+    if (!payFromBank(s, person, fee, 'Mexican temporary residence, the card and the visa', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);
     return { paid: fee };
   });
 

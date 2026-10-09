@@ -69,8 +69,8 @@ export interface City extends ReferenceRecord {
   // How much film and television work a town had, and the depth of its
   // ordinary job market, were SLATE's hand calibrations, printed on the place
   // card and Home and read by nothing else; they went on 2026-09-27. Where a
-  // job films comes from `LOCATION` in `content/career.ts`, from the trade's
-  // own production figures.
+  // job filmed came from the trade's own production figures in the career's
+  // content, until the career went on 2026-10-09.
   // A median home price (the rent times 320), a primary airport and the
   // neighborhoods of eight cities with their prestige and safety were
   // SLATE's estimates, and nothing owned a home, flew or chose a

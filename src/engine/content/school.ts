@@ -358,3 +358,16 @@ export const LABS = {
   minutes: 180,
   source: 'https://bulletin.yale.edu (School of Drama, 2026–2027: DRAM 50a, DRAM 51b, DRAM 363a, the acting plan of study)',
 } as const;
+
+/**
+ * Yale's cost of attendance grew, 2022–23 to 2026–27, 3.22% a year in
+ * tuition, 8.10% in the Yale Health plan and 5.82% in living expenses
+ * without it (the Bulletins, compounded). Later years aren't published, and
+ * SLATE carries each on at its rate. In `content/career.ts` until 2026-10-09.
+ */
+export const YALE_COST_GROWTH = {
+  tuition: 0.0322,
+  healthPlan: 0.0810,
+  living: 0.0582,
+  source: 'https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2022-2023.pdf through -2026-2027.pdf',
+} as const;

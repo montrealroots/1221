@@ -52,9 +52,11 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, coursesOn, focusOf, focusAt, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
+import { personalityOf } from './personality';
+import type { PersonalityKnob } from '../content/personality-traits';
 import { inHospital } from './health';
 import {
   ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
@@ -375,10 +377,8 @@ function needRefusal(sim: Simulation, person: Person, need: Need): string | unde
   switch (need) {
     case 'studio': if (!here) return 'The studios are in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the building yet: the tour shows you the studios.';
     case 'library': if (!here) return 'The Haas Arts Library is in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the library yet: the tour shows you it.';
-    // A phone that records, and clothes to move in, were the phones' and the wardrobe's to have (`systems/phones.ts`,
-    // `systems/wardrobe.ts`) until both went in the scope reset of 2026-10-09: each is taken as had.
-    case 'phone': return undefined;
-    case 'moveClothes': return undefined;
+    // On its feet: the energy, below (`SPENT`). Clothes to move in were the wardrobe's to have until 2026-10-09.
+    case 'feet': return undefined;
     case 'partner': return 'Work with your partner is a rehearsal you agree with them: ask them on the assignment.';
   }
 }
@@ -434,21 +434,27 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
   // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
-  if ((act.needs ?? []).some((n) => n === 'studio' || n === 'moveClothes') && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
+  if ((act.needs ?? []).some((n) => n === 'studio' || n === 'feet') && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   return undefined;
 }
 
+/** The trait knob each kind of preparation reads: interpretation is read around, lines drilled, a scene skimmed, a note revised. */
+export const PREP_KNOB: Partial<Record<PrepDim, PersonalityKnob>> = { interpretation: 'readsAround', memorization: 'drills', familiarity: 'skims', revision: 'revises' };
+
 /** A step done: its time taken, its part of the preparation moved, and its skill trained while the assignment allows. */
 export function prepare(sim: Simulation, person: Person, a: Assignment, activityId: string): { moved: number; dim: PrepDim; minutes: number } {
   const act = activitiesOf(a).find((x) => x.id === activityId)!;
   const minutes = minutesOf(a, act);
-  const focus = focusOf(person);
+  const focus = focusAt(sim, person, sim.now);
   sim.advanceTo(sim.now + minutes * 60_000);
-  exerts(person, (act.needs ?? []).some((n) => n === 'studio' || n === 'moveClothes') ? WORK.met.feet : WORK.met.desk, minutes / 60);
+  exerts(person, (act.needs ?? []).some((n) => n === 'studio' || n === 'feet') ? WORK.met.feet : WORK.met.desk, minutes / 60);
   const before = a.prep[act.dim];
-  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * (1 - before));
+  // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
+  // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
+  const knob = PREP_KNOB[act.dim];
+  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * (knob ? personalityOf(person, knob) : 1) * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {

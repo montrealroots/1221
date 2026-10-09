@@ -43,15 +43,50 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
  * what an early call or a late performance costs (`systems/career.ts`), and
  * how much of the work's costs a return can prove (`systems/taxreturn.ts`),
  * and since 2026-09-28 how a classmate grows closer or apart and what friends
- * in a cast are worth (`systems/school.ts`). A
- * trait that wants to move something else has to wait for the system it would
- * move.
+ * in a cast are worth (`systems/school.ts`). Since 2026-10-09 how sharp the
+ * mornings and the evenings are for school work (`morning`, `evening`, read
+ * by `focusAt` in `systems/school.ts`), what each kind of preparation moves
+ * (`readsAround`, `drills`, `skims`, `revises`, read by `prepare` in
+ * `systems/coursework.ts`) and how much a meal lifts the mood (`mealMood`,
+ * `systems/life.ts`): a night away and the career's calls went, and the traits
+ * that leaned on them lean on these. A trait that wants to move something else
+ * has to wait for the system it would move.
  */
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
   | 'hygieneDrift' | 'moraleSwing' | 'spending'
   | 'illnessToll' | 'receipts'
-  | 'bondWarmth' | 'bondWound' | 'company' | 'appetite';
+  | 'bondWarmth' | 'bondWound' | 'company' | 'appetite'
+  | 'morning' | 'evening' | 'readsAround' | 'drills' | 'skims' | 'revises' | 'mealMood';
+
+/**
+ * What each knob moves, in the world's words, and where: the trait look reads
+ * it to say what a trait does (from the connected world of 2026-10-09, when a
+ * trait first opened into a look of its own). A multiple above one is more of
+ * the thing named.
+ */
+export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
+  stressGain: 'How much stress a hard hour, a performance’s nerves or an injury adds',
+  stressRecovery: 'How fast stress clears, awake and with a workout or an hour unwinding',
+  sleepQuality: 'How good a night’s sleep is',
+  energyRecovery: 'How much energy a night puts back',
+  hygieneDrift: 'How fast you stop being clean',
+  moraleSwing: 'How far the mood moves, up and down',
+  spending: 'What the day’s food costs you',
+  illnessToll: 'How hard an illness hits, and how long an injury takes to mend',
+  receipts: 'How many of the work’s costs you keep a receipt for, which the tax return deducts',
+  bondWarmth: 'How fast you warm to a classmate',
+  bondWound: 'How hard a slight from a classmate cuts',
+  company: 'How much friends in a cast lift you, and how much their absence weighs',
+  appetite: 'How much you eat in a day, which your weight follows',
+  morning: 'How sharp you are before noon, at classes, calls and preparation',
+  evening: 'How sharp you are from five in the evening',
+  readsAround: 'How far a step on a part’s interpretation goes',
+  drills: 'How far a step on learning the lines goes',
+  skims: 'How far a step on knowing the play goes',
+  revises: 'How far a step on revising after a note goes',
+  mealMood: 'How much a meal lifts the mood',
+};
 
 export interface PersonalityTrait {
   id: string;
@@ -107,8 +142,8 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'detached', name: 'Detached', group: 'Temperament',
     description: 'You can put a thing down and walk away from it, including people.',
-    cost: 'Everything you have drifts unless you tend it. None of it keeps itself.',
-    systemMods: { stressGain: 0.85 },
+    cost: 'Everything you have drifts unless you tend it: a classmate comes closer more slowly.',
+    systemMods: { stressGain: 0.85, bondWarmth: 0.85 },
     conflictsWith: ['sentimental', 'loyal'],
   },
 
@@ -116,17 +151,17 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'early_riser', name: 'Early Riser', group: 'Habits',
     description: 'Up before anybody wants you, and the best hours of your day are over by ten.',
-    cost: 'No use at all after nine at night.',
+    cost: 'An evening call finds you flat: rehearsals and performances get less of you.',
     // A late call cost them three times, and an early one half (`lateCall`, `earlyCall`), until the career's calls went
-    // in the scope reset of 2026-10-09; the night's sleep is what's left of it.
-    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1 },
+    // in the scope reset of 2026-10-09; the school's mornings and evenings read them since (`morning`, `evening`).
+    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1, morning: 1.1, evening: 0.88 },
     conflictsWith: ['night_owl'],
   },
   {
     id: 'night_owl', name: 'Night Owl', group: 'Habits',
     description: 'The good hours start after midnight, and none of them are before noon.',
-    cost: 'Every early call is a fight with yourself, and you sleep badly.',
-    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94 },
+    cost: 'Every morning class is a fight with yourself, and you sleep badly.',
+    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94, morning: 0.88, evening: 1.1 },
     conflictsWith: ['early_riser'],
   },
   {
@@ -138,24 +173,24 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
-    description: 'The mess is genuinely invisible to you, and you know where everything is anyway.',
-    cost: 'It shows, and it costs you when somebody comes round.',
+    description: 'The mess is genuinely invisible to you, and it never weighs on you.',
+    cost: 'It shows on you sooner, and receipts go missing at tax time.',
     systemMods: { hygieneDrift: 1.3, stressGain: 0.92, receipts: 0.9 },
     conflictsWith: ['orderly'],
   },
   {
     id: 'homebody', name: 'Homebody', group: 'Habits',
-    description: 'Your own house, your own kitchen, your own bed. That’s where you recover.',
-    cost: 'Nowhere else puts it back the way home does.',
+    description: 'Your own bed is where you recover, and it puts more back than most.',
+    cost: 'A full room does less for you: friends in a cast lift you less.',
     // A night away put back a fifth less (`awayRecovery`) until the journeys went in the scope reset of 2026-10-09.
-    systemMods: { energyRecovery: 1.15 },
+    systemMods: { energyRecovery: 1.15, company: 0.8 },
     conflictsWith: ['restless'],
   },
   {
     id: 'restless', name: 'Restless', group: 'Habits',
-    description: 'One place for long is beyond you.',
-    cost: 'You don’t rest properly, anywhere, ever, though away is where you rest best.',
-    systemMods: { energyRecovery: 0.9 },
+    description: 'Stillness is beyond you, and a room full of people is where you come alive.',
+    cost: 'You don’t rest properly, and a cast without a friend in it weighs on you.',
+    systemMods: { energyRecovery: 0.9, company: 1.2 },
     conflictsWith: ['homebody'],
   },
 
@@ -197,8 +232,8 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'sleeps_anywhere', name: 'Sleeps Anywhere', group: 'Body',
-    description: 'Cars, planes, floors, the twenty minutes between two things. You take it where you find it.',
-    cost: 'Things get slept through, and some of them were people.',
+    description: 'Floors, chairs, the twenty minutes between two things. You take it where you find it.',
+    cost: 'None that SLATE draws. Like resilience, it’s luck.',
     systemMods: { sleepQuality: 1.18 },
     conflictsWith: ['light_sleeper'],
   },
@@ -206,17 +241,17 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   // --- Money: what they do with it -----------------------------------------
   {
     id: 'frugal', name: 'Frugal', group: 'Money',
-    description: 'You know what everything costs and you have never once been surprised by a bill.',
-    cost: 'The coach, the course, the help. None of it ever gets paid for.',
+    description: 'You know what everything costs, and the day’s food costs you less.',
+    cost: 'The cheap version every time: a meal does less for your mood.',
     conflictsWith: ['spender'],
-    systemMods: { spending: 0.85 },
+    systemMods: { spending: 0.85, mealMood: 0.85 },
   },
   {
     id: 'spender', name: 'Spender', group: 'Money',
-    description: 'Money is for turning into things, and you’re good at it.',
+    description: 'Money is for turning into things, and a good meal lifts you more than most.',
     cost: 'It goes out faster than it comes in, and it always has.',
     conflictsWith: ['frugal'],
-    systemMods: { spending: 1.25 },
+    systemMods: { spending: 1.25, mealMood: 1.15 },
   },
   {
     id: 'generous', name: 'Generous', group: 'Money',
@@ -228,9 +263,9 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',
     description: 'What you’re owed and by whom, down to the coffee, stays remembered, and every receipt with it.',
-    cost: 'So does everybody else, about you.',
+    cost: 'So does everybody else, about you: a slight cuts deeper both ways.',
     conflictsWith: ['generous'],
-    systemMods: { receipts: 1.3 },
+    systemMods: { receipts: 1.3, bondWound: 1.1 },
   },
 
   // --- People: how they are with others -------------------------------------
@@ -294,30 +329,30 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   // --- Mind: how they think -------------------------------------------------
   {
     id: 'curious', name: 'Curious', group: 'Mind',
-    description: 'The thing nobody asked you to read gets read, and it’s always useful eventually.',
+    description: 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.',
     cost: 'It isn’t useful now, and now is when the work is due.',
-    systemMods: { stressGain: 1.1 },
+    systemMods: { stressGain: 1.1, readsAround: 1.15 },
     conflictsWith: ['single_minded'],
   },
   {
     id: 'single_minded', name: 'Single Minded', group: 'Mind',
-    description: 'One thing at a time, all the way to the bottom of it, and nothing else exists.',
+    description: 'One thing at a time, all the way to the bottom of it: lines drilled until they’re yours.',
     cost: 'Everything else does exist, and it piles up while you’re down there.',
-    systemMods: { stressGain: 1.12 },
+    systemMods: { stressGain: 1.12, drills: 1.15 },
     conflictsWith: ['curious', 'scattered'],
   },
   {
     id: 'scattered', name: 'Scattered', group: 'Mind',
-    description: 'Six things at once, all of them moving, most of them fine.',
+    description: 'Six things at once, all of them moving: you get around a scene fast.',
     cost: 'Most of them. Something is always the one you dropped.',
-    systemMods: { stressGain: 1.1 },
+    systemMods: { stressGain: 1.1, skims: 1.15 },
     conflictsWith: ['single_minded'],
   },
   {
     id: 'self_critical', name: 'Self Critical', group: 'Mind',
-    description: 'You’re the harshest reader you’ll ever have, and the work is better for it.',
+    description: 'You’re the harshest reader you’ll ever have, and a revision is better for it.',
     cost: 'It isn’t free. It comes out of you.',
-    systemMods: { stressGain: 1.22, moraleSwing: 1.2 },
+    systemMods: { stressGain: 1.22, moraleSwing: 1.2, revises: 1.15 },
     conflictsWith: ['self_assured'],
   },
   {

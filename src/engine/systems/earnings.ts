@@ -25,29 +25,9 @@ export interface YearEarnings {
   interest?: Money;
   /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
   pension?: Money;
-  /**
-   * What a home put on the year (`systems/homes.ts`), from 2026-09-28: the
-   * mortgage interest, the American property tax and the mortgage insurance
-   * paid on a home kept; the rent in and the costs and depreciation of a home
-   * let; and a sale's gain, long-term or short, and what was kept free of tax.
-   */
-  homeInterest?: Money;
-  homeTax?: Money;
-  homePmi?: Money;
-  rentalRent?: Money;
-  rentalCosts?: Money;
-  homeGain?: Money;
-  homeGainShort?: Money;
-  homeGainExcluded?: Money;
-  /** Of a long-term gain, the depreciation taken while it was let, taxed as income to 25%; and whether a let home was sold, which frees its held-back losses. */
-  homeGain1250?: Money;
-  rentalDisposed?: number;
-  /** A lodger's rent in the year, and of it what was taxed outside America (`systems/lodgers.ts`), from 2026-09-30. */
-  lodgerRent?: Money;
-  lodgerTaxed?: Money;
-  /** Farm rent in the year, and of it what was taxed outside America (`systems/landlease.ts`), from 2026-09-30. */
-  farmRent?: Money;
-  farmTaxed?: Money;
+  // What a home put on the year (its mortgage interest and taxes, a let home's rent and costs, a sale's gain) and a
+  // lodger's rent were kept here from 2026-09-28 and 2026-09-30, until the homes and the lodgers went in the scope
+  // reset of 2026-10-09, and a farm's rent with the land the same day. A save that kept them sheds them (`migrate`, 91).
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;
@@ -205,21 +185,6 @@ export function recordPension(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
-}
-
-export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | 'rentalCosts' | 'homeGain' | 'homeGainShort' | 'homeGainExcluded' | 'homeGain1250' | 'rentalDisposed';
-
-/** Something a home put on the year, to the year it happened. */
-export function recordHome(person: Person, at: Instant, zone: string, line: HomeLine, amount: Money): void {
-  if (amount === 0) return;
-  const p = zonedParts(at, zone);
-  const y = yearOf(person, p.year);
-  y[line] = (y[line] ?? 0) + amount;
-  // Rent received is income for the programs that test current income, as wages are.
-  if (line === 'rentalRent') {
-    const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
-    earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
-  }
 }
 
 /** A scholarship's taxable part, to the year it's paid and where they lived. */

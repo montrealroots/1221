@@ -3,7 +3,7 @@
 > **Retired by the owner's scope reset of 2026-10-09.** The catalogs this counted went that day, and
 > tools/catalog-coverage.mjs left the gate with them; this is the last count, kept as history.
 
-Written by `tools/catalog-coverage.mjs` from the catalogs themselves; don't edit by hand. The hierarchy is
+Written by tools/catalog-coverage.mjs from the catalogs themselves; don't edit by hand. The hierarchy is
 src/engine/content/catalogtaxonomy.ts. The target for a brand category is at least
 50 real brands, each with at least 100 distinct real products where the brand's range reaches that
 many (the owner, 2026-10-03, corrected 2026-10-05: a hundred is a floor, not a ceiling). A brand whose researched

@@ -228,10 +228,9 @@ export interface Person {
   naturalizing?: { iso: string; readyAt: number };
   /** Registered for EI's special benefits as a self-employed Canadian (`systems/eiself.ts`, from 2026-09-30). */
   ei?: import('../systems/eiself').EiRecord;
-  /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
+  /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`). When they moved home from abroad was kept here too, until 2026-10-09: the career's move home wrote it. */
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;
-  returnedHomeAt?: number;
   /** A claim for assistance where they live: Ontario Works, BC Income Assistance or SNAP (`systems/assistance.ts`, from 2026-10-01). */
   assistance?: import('../systems/assistance').AssistanceClaim;
   /** When their US status ended while they stayed on, from 2026-10-01 (`systems/permission.ts`). */
@@ -412,10 +411,17 @@ export interface Preferences {
  * journeys, the cars, the land and the career went, and a save sheds what
  * they kept. A build at 89 would read a save with no home and charge it rent.
  *
+ * 91 is the connected world of 2026-10-09, the same day: what only the home,
+ * the career and the move home could reach goes too. A save sheds the rent's
+ * and the bills' ways of paying and its checks, the union health plans and
+ * COBRA, reputation and recognition, the return home, and a home's, a
+ * lodger's and a farm's lines on a year's earnings. A build at 90 would offer
+ * COBRA on a union plan nothing earns.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 90;
+export const SAVE_SCHEMA_VERSION = 91;
 
 export interface SaveMeta {
   id: Id;

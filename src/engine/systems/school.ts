@@ -71,8 +71,8 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, 
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { ATTRIBUTES, earn, nerves, nudge } from './attributes';
-import { YALE_COST_GROWTH } from '../content/career';
+import { ATTRIBUTES, attributesOf, nerves, nudge } from './attributes';
+import { YALE_COST_GROWTH } from '../content/school';
 import { recordScholarship, recordWages, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
@@ -297,9 +297,10 @@ export const ESTIMATE = {
    * 2026-09-28 every part asked 65, and a strong actor's nights were nearly
    * all remarkable from the second year. What a
    * band does: a strong or remarkable night lifts morale, and a remarkable
-   * one the presence and, at the Rep, the reputation; an off night stings.
+   * one the presence; an off night stings. A remarkable Rep night added to
+   * reputation too, until it went on 2026-10-09.
    */
-  nights: { par: { school: { lead: 62, supporting: 57, featured: 52 }, rep: { lead: 82, supporting: 76, featured: 70 } } as Record<'school' | 'rep', Record<PartSize, number>>, perPoint: 40, luck: 0.4, off: 0.75, solid: 0.98, strong: 1.18, lift: 3, sting: 3, presence: 0.02, reputation: 0.3 },
+  nights: { par: { school: { lead: 62, supporting: 57, featured: 52 }, rep: { lead: 82, supporting: 76, featured: 70 } } as Record<'school' | 'rep', Record<PartSize, number>>, perPoint: 40, luck: 0.4, off: 0.75, solid: 0.98, strong: 1.18, lift: 3, sting: 3, presence: 0.02 },
   /** What a day's classes, a rehearsal, a performance and a shift take out of a body, in energy. */
   energy: { classes: 6, rehearsal: 8, performance: 10, shift: 4 },
   /** The chance, each performance, that an understudy goes on. */
@@ -380,6 +381,12 @@ export function termLabel(term: number): string {
   const { date, fall } = termStart(term);
   return `${fall ? 'Fall' : 'Spring'} Term ${date.year}`;
 }
+
+/** A term's start, as the calendar names it: its season, not its year, which the day already says (from 2026-10-09; `Fall Term 2026 Begins` until then). */
+function termBegins(term: number): string {
+  return `The ${termStart(term).fall ? 'Fall' : 'Spring'} Term Begins`;
+}
+
 export function termWords(term: number): string {
   const { date, fall } = termStart(term);
   return `the ${fall ? 'fall' : 'spring'} term of ${date.year}`;
@@ -569,6 +576,23 @@ export function sessionGain(level: number, focus: number, weight = 1, ceiling = 
 /** How ready a person comes to a session, as a share of an ordinary day's. */
 export function focusOf(person: Person): number {
   return Math.min(1.2, Math.max(0.3, readiness(person) / 80));
+}
+
+/**
+ * How the hour suits this person (from 2026-10-09): before noon an early riser is sharper and a night owl flatter
+ * (`morning`), from five in the evening the other way round (`evening`); between, nobody's hour. Classes start at
+ * nine and rehearsals and performances in the evening, so the traits that promise mornings or nights read them.
+ */
+export function hourFit(person: Person, hour: number): number {
+  if (hour < 12) return personalityOf(person, 'morning');
+  if (hour >= 17) return personalityOf(person, 'evening');
+  return 1;
+}
+
+/** Focus for work at an instant, where it happens: readiness, then the hour's fit, inside focus's own bounds. */
+export function focusAt(sim: Simulation, person: Person, at: Instant): number {
+  const z = CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
+  return Math.min(1.2, Math.max(0.3, focusOf(person) * hourFit(person, zonedParts(at, z).hour)));
 }
 
 export function grow(craft: Craft, skill: Skill, focus: number, weight = 1): void {
@@ -891,7 +915,7 @@ export function enroll(sim: Simulation, person: Person): void {
   // A scholarship for living costs is income the US taxes, and the returns begin with school.
   armTaxes(sim, person);
   school.tally = freshTally(person, school);
-  sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termLabel(0) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
+  sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termBegins(0), category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
   planWeek(sim, person, sim.now);
   // The first week's sessions, each changing what's known or arranged (`systems/coursework.ts`, from 2026-10-07).
   scheduleOrientation(sim, person);
@@ -949,8 +973,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   if (to === 'dismissed' || to === 'graduated') school.endedAt = sim.now;
   if (to !== 'good') feel(person, to);
   if (to === 'dismissed' || to === 'graduated') {
-    // The degree is a line casting reads; a dismissal is one too (`attributes.ts`).
-    earn(sim, person, to === 'graduated' ? ATTRIBUTES.reputation.degree : ATTRIBUTES.reputation.dismissed);
+    // The degree added to reputation and a dismissal took from it until 2026-10-09, when what read it went with the career.
     keepCredit(sim, school);
     // The degree's filmed monologues, posted at the end of the final term.
     if (to === 'graduated') school.filmed = true;
@@ -1221,7 +1244,11 @@ export type Night = keyof typeof NIGHT_VALUE;
  */
 export function nightOf(sim: Simulation, person: Person, key: string, level: number, ready: number, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school'): Night {
   const n = ESTIMATE.nights;
-  const q = Math.min(1.2, ready) + (level - n.par[where][size]) / n.perPoint + n.luck * (sim.rng('school.night', person.id, key).next() - 0.5);
+  // The house sees presence as well as the craft (from 2026-10-09; a showcase showing was its only reader at school until
+  // the career went): a fifth of how far it stands from the middle of a Yale draw, ±2.5 points.
+  const { from, span } = ATTRIBUTES.presence;
+  const seen = level + ATTRIBUTES.showcaseShare * (attributesOf(sim, person).presence - (from + span / 2));
+  const q = Math.min(1.2, ready) + (seen - n.par[where][size]) / n.perPoint + n.luck * (sim.rng('school.night', person.id, key).next() - 0.5);
   return q < n.off ? 'off' : q < n.solid ? 'solid' : q < n.strong ? 'strong' : 'remarkable';
 }
 
@@ -1582,7 +1609,7 @@ export function registerSchool(sim: Simulation): void {
     // The last spring ended in the Actor Showcase for the agents until the career went on 2026-10-09; the degree's
     // filmed monologues are still posted at its end (`school.filmed`).
     schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(term)} Evaluation`, minutes: 0, payload: { term }, requiresPlayer: false });
-    if (term + 1 < YALE_DRAMA.terms) s.schedule({ at: Math.max(at(termStart(term + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termLabel(term + 1) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: term + 1 } });
+    if (term + 1 < YALE_DRAMA.terms) s.schedule({ at: Math.max(at(termStart(term + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termBegins(term + 1), category: 'school', priority: 30, payload: { personId: person.id, term: term + 1 } });
   });
 
   sim.onSchedule(WEEK_KIND, (item, s) => {
@@ -1616,7 +1643,7 @@ export function registerSchool(sim: Simulation): void {
     if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; return; }
     if (present(person, item.at)) {
       school.tally.attended += 1;
-      const focus = focusOf(person);
+      const focus = focusAt(s, person, item.at);
       const weights = meet(true, false);
       courses.forEach((course, i) => { for (const skill of course.skills) grow(person.craft!, skill, focus, weights[i]); });
       // The class, met in the room if not before.
@@ -1689,14 +1716,13 @@ export function registerSchool(sim: Simulation): void {
   const reckonNight = (s: Simulation, person: Person, casting: Run, item: { at: Instant; payload: Record<string, unknown> }, kept: number, rep: boolean): Night => {
     const n = ESTIMATE.nights;
     // An understudy plays the part they cover, which at the Rep is a lead.
-    const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusOf(person) * kept, casting.size ?? 'lead', rep ? 'rep' : 'school');
+    const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusAt(s, person, item.at) * kept, casting.size ?? 'lead', rep ? 'rep' : 'school');
     (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
     const w = person.wellbeing;
     if (night === 'off') w.morale = Math.max(0, w.morale - n.sting);
     else if (night !== 'solid') w.morale = Math.min(100, w.morale + n.lift);
     if (night === 'remarkable') {
       nudge(s, person, 'presence', n.presence, true);
-      if (rep) earn(s, person, n.reputation);
     }
     if (item.payload.last !== true) return night;
     // What to work on: the skill the play asks that's weakest in them.
@@ -1761,7 +1787,7 @@ export function registerSchool(sim: Simulation): void {
       }
       school.tally.answered += 1;
       const kept = nerves(s, person, 'performance') * nightFactor(casting);
-      playNight(person.craft, castingReads(casting), focusOf(person) * kept, 0.75);
+      playNight(person.craft, castingReads(casting), focusAt(s, person, item.at) * kept, 0.75);
       tire(person, ESTIMATE.energy.performance);
       const night = reckonNight(s, person, casting, item, kept, true);
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `You played ${casting.role} through for the director today: ${night === 'off' ? 'an off' : `a ${night}`} night.`, importance: 60, route: '/workspace/school' });
@@ -1774,9 +1800,8 @@ export function registerSchool(sim: Simulation): void {
       if (present(person, item.at)) {
         school.tally.answered += 1;
         casting.performed += 1;
-        // Sent on: nerves, and a night the Rep's company remembers (`attributes.ts`).
-        playNight(person.craft, castingReads(casting), focusOf(person) * nerves(s, person, 'performance'), 0.75);
-        earn(s, person, ATTRIBUTES.reputation.repPerformance);
+        // Sent on: nerves (`attributes.ts`).
+        playNight(person.craft, castingReads(casting), focusAt(s, person, item.at) * nerves(s, person, 'performance'), 0.75);
         tire(person, ESTIMATE.energy.performance);
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
         return;
@@ -1792,25 +1817,24 @@ export function registerSchool(sim: Simulation): void {
       exerts(person, BODY.met.acting, call === 'performance' ? 3 : 4, true);
       if (call === 'performance') {
         casting.performed += 1;
-        // Nerves before a house, and at the Rep a night the company remembers (`attributes.ts`).
+        // Nerves before a house (`attributes.ts`); at the Rep the night added to reputation too, until 2026-10-09.
         const kept = nerves(s, person, 'performance');
-        if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
         // Friends in the cast: a better night to be in.
         const friends = (casting.cast ?? []).filter((c) => (school.classmates.find((m) => m.name === c.name)?.bond ?? 0) >= BONDS.friend).length;
         person.wellbeing.morale = Math.max(0, Math.min(100, person.wellbeing.morale + castCompany(person, friends)));
         // The rehearsal process behind it: lines, blocking and notes taken (`nightFactor`, 1 for an actor who came to every call).
         const prepared = kept * nightFactor(casting);
-        playNight(person.craft, castingReads(casting), focusOf(person) * prepared);
+        playNight(person.craft, castingReads(casting), focusAt(s, person, item.at) * prepared);
         tire(person, ESTIMATE.energy.performance);
         reckonNight(s, person, casting, item, prepared, item.payload.which === 'rep');
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
         const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting));
-        rehearse(person.craft, focusOf(person) * weight);
+        rehearse(person.craft, focusAt(s, person, item.at) * weight);
         // The dress, played through as a night would be, with no house: its reading kept, nothing counted as a performance.
         if (stage === 'dress') {
-          const dress = nightOf(s, person, `${casting.production}-dress-${item.at}`, readOf(person.craft, castingReads(casting)), focusOf(person) * nightFactor(casting), casting.size ?? 'lead', item.payload.which === 'rep' ? 'rep' : 'school');
+          const dress = nightOf(s, person, `${casting.production}-dress-${item.at}`, readOf(person.craft, castingReads(casting)), focusAt(s, person, item.at) * nightFactor(casting), casting.size ?? 'lead', item.payload.which === 'rep' ? 'rep' : 'school');
           (casting as Casting & { process?: { dress?: string } }).process!.dress = dress;
         }
         tire(person, ESTIMATE.energy.rehearsal);
@@ -1886,15 +1910,15 @@ export function registerSchool(sim: Simulation): void {
       cab.performed += 1;
       // The week's process behind it (`nightFactor`, 1 for a show joined before 2026-10-08 or one every evening was kept).
       const kept = nerves(sim, person, 'performance') * nightFactor(cab);
-      playNight(person.craft, castingReads(run), focusOf(person) * kept);
+      playNight(person.craft, castingReads(run), focusAt(sim, person, item.at) * kept);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       reckonNight(sim, person, run, item, kept, false);
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
       const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run)) : 1;
-      rehearse(person.craft, focusOf(person) * weight);
-      if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, readOf(person.craft, castingReads(run)), focusOf(person) * nightFactor(cab), run.size ?? 'supporting', 'school');
+      rehearse(person.craft, focusAt(sim, person, item.at) * weight);
+      if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, readOf(person.craft, castingReads(run)), focusAt(sim, person, item.at) * nightFactor(cab), run.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
@@ -1968,15 +1992,15 @@ export function registerSchool(sim: Simulation): void {
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       const kept = nerves(s, person, 'performance') * nightFactor(show);
-      playNight(person.craft, castingReads(show), focusOf(person) * kept);
+      playNight(person.craft, castingReads(show), focusAt(s, person, item.at) * kept);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       reckonNight(s, person, show, item, kept, false);
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
       const weight = stage ? callAnswered(s, person, show, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(show)) : 1;
-      rehearse(person.craft, focusOf(person) * weight);
-      if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, readOf(person.craft, castingReads(show)), focusOf(person) * nightFactor(show), show.size ?? 'supporting', 'school');
+      rehearse(person.craft, focusAt(s, person, item.at) * weight);
+      if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, readOf(person.craft, castingReads(show)), focusAt(s, person, item.at) * nightFactor(show), show.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
@@ -1993,15 +2017,15 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     school.tally.answered += 1;
     if (item.payload.showing === true) {
-      grow(person.craft, 'scene', focusOf(person) * nerves(sim, person, 'performance'), 3);
+      grow(person.craft, 'scene', focusAt(sim, person, item.at) * nerves(sim, person, 'performance'), 3);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       return;
     }
-    grow(person.craft, 'scene', focusOf(person));
-    grow(person.craft, 'character', focusOf(person));
-    grow(person.craft, 'script', focusOf(person));
-    grow(person.craft, 'memorization', focusOf(person));
+    grow(person.craft, 'scene', focusAt(sim, person, item.at));
+    grow(person.craft, 'character', focusAt(sim, person, item.at));
+    grow(person.craft, 'script', focusAt(sim, person, item.at));
+    grow(person.craft, 'memorization', focusAt(sim, person, item.at));
     tire(person, ESTIMATE.energy.rehearsal);
     enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
   });

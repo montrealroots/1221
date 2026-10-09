@@ -1,14 +1,15 @@
 /**
- * The attributes (`systems/attributes.ts`): presence, composure, reputation
- * and recognition, each drawn or earned as the business has it, and each
- * read by an outcome.
+ * The attributes (`systems/attributes.ts`): presence and composure, each
+ * drawn as the business has it, and each read by an outcome. Reputation and
+ * recognition were tested here until 2026-10-09, when they went with the
+ * career that read them.
  */
 
 import { createSave,loadSave,quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { ATTRIBUTES,earn,fadeRecognition,nerves } from '@/engine/systems/attributes';
+import { ATTRIBUTES,nerves } from '@/engine/systems/attributes';
 import type { Craft } from '@/engine/systems/school';
-import { evaluate,evenCraft } from '@/engine/systems/school';
+import { evenCraft,nightOf } from '@/engine/systems/school';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { describe,expect,it } from 'vitest';
 
@@ -21,7 +22,7 @@ function pro(seed: string): Simulation {
 }
 
 describe('drawn at the start of a life', () => {
-  it('gives the faculty’s first choice a presence of 55 to 80, a composure by their stability, and no name yet', () => {
+  it('gives the faculty’s first choice a presence of 55 to 80, and a composure by their stability', () => {
     const presences: number[] = [];
     for (let n = 0; n < 20; n += 1) {
       const sim = life(`attr-draw-${n}`);
@@ -30,8 +31,7 @@ describe('drawn at the start of a life', () => {
       expect(a.presence).toBeGreaterThanOrEqual(55);
       expect(a.presence).toBeLessThanOrEqual(80);
       expect(a.composure).toBeCloseTo(ATTRIBUTES.composureStart.base + ATTRIBUTES.composureStart.perStability * sim.player.personality.emotionalStability, 0);
-      expect(a.reputation).toBe(0);
-      expect(a.recognition).toBe(0);
+      expect(Object.keys(a).sort()).toEqual(['composure', 'presence']);
     }
     // Two lives, two draws; the same life, the same draw.
     expect(new Set(presences).size).toBeGreaterThan(10);
@@ -58,7 +58,7 @@ describe('composure', () => {
 });
 
 describe('at school', () => {
-  it('puts nerves before a performance, and gives a Yale Rep night to the reputation', () => {
+  it('puts nerves before a performance, and grows composure by it', () => {
     const sim = life('attr-school-show');
     const p = sim.player;
     p.school!.casting = { production: 'A Test Play', role: 'A Part In A New Play', kind: 'carlotta', term: 0, performed: 0 };
@@ -71,68 +71,38 @@ describe('at school', () => {
     expect(p.school!.casting!.performed).toBe(1);
     expect(p.wellbeing.stress).toBeGreaterThan(0);
     expect(p.attrs!.composure).toBeGreaterThan(composure);
-    expect(p.attrs!.reputation).toBe(0);
-    sim.schedule({ at: sim.now + 60_000, kind: 'school.call', label: 'The Seagull: Performance', category: 'school', priority: 32, requiresPlayer: true, durationMinutes: 180, payload: { personId: p.id, call: 'performance', which: 'rep' } });
-    sim.advanceTo(sim.now + 2 * 60_000);
-    expect(p.attrs!.reputation).toBe(ATTRIBUTES.reputation.repPerformance);
+  });
+
+  it('reads a night by presence as well as the craft: the same night, read higher with more of it', () => {
+    // The falsifiability test: only presence moves, and the night's band moves with it somewhere in sixty nights.
+    const sim = life('attr-night');
+    const nights = (presence: number) => { sim.player.attrs!.presence = presence; return Array.from({ length: 60 }, (_, n) => nightOf(sim, sim.player, `p${n}`, 57, 1)); };
+    const rank = (x: string): number => ({ off: 0, solid: 1, strong: 2 } as Record<string, number>)[x] ?? 3;
+    const low = nights(55).map(rank);
+    const high = nights(80).map(rank);
+    expect(high.every((h, i) => h >= low[i]!)).toBe(true);
+    expect(high.reduce((a, b) => a + b, 0)).toBeGreaterThan(low.reduce((a, b) => a + b, 0));
+    // At the middle of the draw, presence moves nothing.
+    const mid = ATTRIBUTES.presence.from + ATTRIBUTES.presence.span / 2;
+    sim.player.attrs!.presence = mid;
+    const atMid = Array.from({ length: 60 }, (_, n) => nightOf(sim, sim.player, `p${n}`, 57, 1));
+    expect(atMid.filter((x) => x === 'remarkable').length).toBeGreaterThanOrEqual(nights(55).filter((x) => x === 'remarkable').length);
   });
 });
 
-describe('reputation', () => {
-  it('is earned less the nearer the top, and lost in points', () => {
-    const sim = pro('attr-earn');
-    earn(sim, sim.player, 10);
-    expect(sim.player.attrs!.reputation).toBe(10);
-    earn(sim, sim.player, 10);
-    expect(sim.player.attrs!.reputation).toBe(19);
-    earn(sim, sim.player, -25);
-    expect(sim.player.attrs!.reputation).toBe(0);
-  });
-
-  it('is given by the degree, and taken by a dismissal', () => {
-    const grad = life('attr-degree');
-    grad.player.school!.standing = 'good';
-    const p = grad.player;
-    for (const term of [0, 1, 2, 3, 4, 5]) { Object.assign(p.school!.tally, { classDays: 10, attended: 10, excused: 0, calls: 0, answered: 0, shifts: 0, worked: 0 }); p.school!.tally.craftAtStart = Object.fromEntries(Object.entries(p.craft!).map(([k, v]) => [k, v - 3])) as Craft; evaluate(grad, p, term); }
-    expect(p.school!.standing).toBe('good');
-    // Commencement, brought to now: the degree is on the record.
-    const commencement = grad.universe.scheduled.find((i) => i.kind === 'school.commencement' && i.status === 'pending')!;
-    grad.timeline.reschedule(commencement.id, grad.now + 60_000);
-    grad.advanceTo(grad.now + 2 * 60_000);
-    expect(p.school!.standing).toBe('graduated');
-    expect(p.attrs!.reputation).toBe(ATTRIBUTES.reputation.degree);
-    const out = life('attr-out');
-    const q = out.player;
-    q.attrs!.reputation = 20;
-    for (const term of [0, 1, 2]) { Object.assign(q.school!.tally, { classDays: 20, attended: 10, excused: 0 }); evaluate(out, q, term); }
-    expect(q.school!.standing).toBe('dismissed');
-    expect(q.attrs!.reputation).toBe(20 + ATTRIBUTES.reputation.dismissed);
-  });
-});
-
-describe('recognition', () => {
-
-  it('fades each month without new work', () => {
-    const sim = pro('attr-fade');
-    sim.player.attrs!.recognition = 50;
-    fadeRecognition(sim, sim.player);
-    expect(sim.player.attrs!.recognition).toBeCloseTo(50 * (1 - ATTRIBUTES.recognition.fadePerMonth), 2);
-  });
-});
-
-describe('building them on purpose', () => {
-
-  it('halves an audition’s nerves with a coach', () => {
-    const sim = pro('attr-coach');
+describe('nerves', () => {
+  it('cost less with more composure', () => {
+    const sim = pro('attr-composure');
     const p = sim.player;
     p.attrs!.composure = 30;
     p.wellbeing.stress = 0;
-    nerves(sim, p, 'audition');
-    const full = p.wellbeing.stress;
-    p.attrs!.composure = 30;
+    const shaky = nerves(sim, p, 'performance');
+    const shakyStress = p.wellbeing.stress;
+    p.attrs!.composure = 90;
     p.wellbeing.stress = 0;
-    const kept = nerves(sim, p, 'audition', ATTRIBUTES.build.coachedNerves);
-    expect(p.wellbeing.stress).toBeCloseTo(full / 2, 10);
-    expect(kept).toBeCloseTo(1 - ATTRIBUTES.nerves.focusCost * 0.7 * 0.5, 10);
+    const steady = nerves(sim, p, 'performance');
+    expect(steady).toBeGreaterThan(shaky);
+    expect(p.wellbeing.stress).toBeLessThan(shakyStress);
+    expect(shaky).toBeCloseTo(1 - ATTRIBUTES.nerves.focusCost * 0.7, 10);
   });
 });

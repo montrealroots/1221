@@ -30,8 +30,10 @@
  * reads other pensions from the last four weeks' and earnings from last
  * year's, a week's worth of each.
  *
- * **The Living Alone Increase**, €22 a week, to someone on either who lives
- * alone: SLATE has no partners, so a place of one's own or a home owned.
+ * The Living Alone Increase, €22 a week to someone on either who lives
+ * alone, was paid on a place of one's own or a home owned until the home went
+ * in the scope reset of 2026-10-09; nothing says who somebody lives with now,
+ * and from the connected world that day it isn't kept.
  * **The Fuel Allowance**, €38 a week for the 28 weeks from late September,
  * to someone on the means-tested pension; its own income limit, which the
  * sources disagree on, SLATE takes as met by the pension's means test.
@@ -76,7 +78,6 @@ export const IRISH_NCP = {
   disregard: 30_00,
   step: 2_50,
   earningsDisregard: 200_00,
-  livingAlone: 22_00,
   fuelWeekly: 38_00,
   fuelWeeks: 28,
   source: 'https://www.gov.ie/en/publication/state-pension-non-contributory/ (read through Citizens Information and search excerpts, 2026-09-29)',
@@ -141,16 +142,13 @@ export function nonContributoryWeekly(age: number, meansEur: Money): Money {
 
 const meansTested = (person: Person) => livesInIreland(person) && IRISH_RESIDENTS.has(isoOfCountry(person.citizenshipId) ?? '');
 
-/** The Irish pension's week as it's paid, in euro cents: the higher of the two, the Living Alone Increase, and the Fuel Allowance in its season. */
-export function irishWeekPaid(sim: Simulation, person: Person, contributoryEur: Money, at: Instant): { total: Money; means: boolean; fuel: Money; alone: Money } {
+/** The Irish pension's week as it's paid, in euro cents: the higher of the two, and the Fuel Allowance in its season. */
+export function irishWeekPaid(sim: Simulation, person: Person, contributoryEur: Money, at: Instant): { total: Money; means: boolean; fuel: Money } {
   const ncp = meansTested(person) ? nonContributoryWeekly(ageAt(person, at), irishMeans(sim, person)) : 0;
   const means = ncp > contributoryEur;
   const base = Math.max(ncp, contributoryEur);
-  // The Living Alone Increase was paid on a home of their own until the home went in the scope reset of 2026-10-09,
-  // and with it what says who they live with.
-  const alone = 0;
   const fuel = means && inFuelSeason(at) ? IRISH_NCP.fuelWeekly : 0;
-  return { total: base + alone + fuel, means, fuel, alone };
+  return { total: base + fuel, means, fuel };
 }
 
 /** The 28 weeks from the fourth Monday of September, SLATE's reading of "late September". */
@@ -201,7 +199,7 @@ export function registerHomePensions(sim: Simulation): void {
     const due = inSave(s, week.total, 'EUR');
     if (due > 0) {
       const account = payeeAccount(s, person);
-      s.post({ memo: `The State Pension (${week.means ? 'Non-Contributory' : 'Contributory'}), the week${week.alone ? ', living alone' : ''}${week.fuel ? ', and the Fuel Allowance' : ''}`, category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'State Pension (Ireland)').id, amount: -due }] });
+      s.post({ memo: `The State Pension (${week.means ? 'Non-Contributory' : 'Contributory'}), the week${week.fuel ? ', and the Fuel Allowance' : ''}`, category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'State Pension (Ireland)').id, amount: -due }] });
     }
     s.schedule({ at: item.at + 7 * MS_DAY, kind: IRISH_PENSION_KIND, label: 'State Pension (Ireland)', category: 'system', priority: 20, payload: { personId: person.id } });
   });

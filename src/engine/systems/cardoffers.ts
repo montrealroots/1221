@@ -22,12 +22,14 @@
  *   charges, as SLATE can't know the offer it would make on the day.
  * - **Rewards** (C39): the card's base rate on every purchase, counted at
  *   each statement from the ledger and redeemed onto the card; and, since
- *   2026-09-27, a card's bonus on the two things a card buys in SLATE, the
- *   groceries and the recurring bills, at the bank's rate to its cap
- *   (`BONUSES`). Until then the bonus categories were shown in the bank's
- *   words and not paid. A category SLATE's card never buys on (dining,
+ *   2026-09-27, a card's bonus on the groceries, at the bank's rate to its
+ *   cap (`BONUSES`). Until then the bonus categories were shown in the
+ *   bank's words and not paid. A category SLATE's card never buys on (dining,
  *   drugstores, gas, travel) is paid at the base rate, which is what it
- *   would earn.
+ *   would earn. The recurring bills had their bonus too, and the Korean
+ *   cards' only bonus was on the phone bill, after a month of spending; from
+ *   the connected world of 2026-10-09 nothing pays a bill, the home and its
+ *   phone gone, and the bills' bonuses and the phone's share of them went.
  *
  * A payment goes to the dearest balance first, a US card's minimum to the
  * cheapest, and a plan's balance last (`allocatePayment` in `systems/cash.ts`).
@@ -43,7 +45,6 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { cardFor, cardRoom, cardTerms, stateOf, type CardPlan, type CardState, type CardTerms, type CardTransfer } from './credit';
-import { ENERGY } from './seasons';
 import { INTEREST_PLANS, planPayment } from '../content/plans';
 import { cashOwedOn } from './cash';
 
@@ -57,55 +58,28 @@ export function planMonthsOf(card: Account): number[] {
 }
 
 /**
- * The bonus categories of the cards that have one on groceries or recurring
- * bills, read by hand from each bank's words in `content/cards.ts`: each
- * category's rate to a cap in a period, and the rate past it; and the rate
- * on everything else where it isn't the card's base rate. Caps in the bank's
- * currency's hundredths.
+ * The bonus categories of the cards that have one on groceries, read by hand
+ * from each bank's words in `content/cards.ts`: the rate to a cap in a period,
+ * and the rate past it; and the rate on everything else where it isn't the
+ * card's base rate. Caps in the bank's currency's hundredths.
  */
 export interface Bonus { rate: number; cap?: Money; after?: number }
-/**
- * The phone and internet's share of SLATE's bills: the part that isn't
- * energy (`ENERGY.share` in `systems/seasons.ts`) is the phone, the internet
- * and getting about, and Mexico's households spend 4.8% of what they spend
- * on communications against 19.5% on transport and communications together
- * (INEGI, ENIGH 2024, published July 2025), so communications are that
- * part's 4.8/19.5. It lived in `systems/telecom.ts` from 2026-10-01 until
- * the phone lines went in the scope reset of 2026-10-09, and came back here.
- */
-export const TELECOM_OF_BILLS = (1 - ENERGY.share) * (4.8 / 19.5);
 
-/**
- * Korea's: its households spent ₩167,000 a month on communications against
- * ₩337,000 on transport in 2025 (National Data Office, 가계동향조사, 26
- * February 2026), so communications are 167/504 of the bills' part that
- * isn't energy.
- */
-export const KOREA_TELECOM_OF_BILLS = (1 - ENERGY.share) * (167 / 504);
-
-/** A bills bonus that is a rate on the phone's share, held to a cap on the bonus itself, as the spend that reaches it. */
-const onPhone = (rate: number, share: number, bonusCap: Money): Bonus => ({ rate: rate * share, cap: Math.round(bonusCap / (rate * share)), after: 0 });
-
-export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean; priorMonth?: readonly (readonly [Money, number])[] }>> = {
-  // 10% off the phone bill, ₩5,000 a month at most, in a month after one of ₩400,000 on the card (card.kbcard.com, My WE:SH).
-  'kr-kb-kookmin': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[400_000_00, 1]] },
-  // 10% of the phone bill in points (₩1 each), to 5,000, 10,000 or 20,000 a month after one of ₩300,000, ₩500,000 or ₩1,000,000 (shinhancard.com, 처음).
-  'kr-shinhan': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[300_000_00, 1], [500_000_00, 2], [1_000_000_00, 4]] },
+export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; other?: Bonus; shared?: boolean }>> = {
   // 2% at grocery stores, on the first $2,500 of grocery and choice spending together a quarter; 1% on the rest.
   'us-bank-of-america': { per: 'quarter', food: { rate: 0.02, cap: 2_500_00, after: 0.01 } },
   // 2% on the first $6,000 of groceries, 1% after; 0.5% on the first $6,000 of the rest, 1% after.
-  'ca-rbc': { per: 'year', food: { rate: 0.02, cap: 6_000_00, after: 0.01 }, bills: { rate: 0.005, cap: 6_000_00, after: 0.01 }, other: { rate: 0.005, cap: 6_000_00, after: 0.01 } },
-  // 1% on grocery and recurring bills, the first $5,000 a year in each; 0.5% else.
-  'ca-td': { per: 'year', food: { rate: 0.01, cap: 5_000_00, after: 0.005 }, bills: { rate: 0.01, cap: 5_000_00, after: 0.005 } },
-  // 1% on grocery, recurring bills and the rest of its list, to $15,000 a year together; 0.5% else.
-  'ca-scotiabank': { per: 'year', food: { rate: 0.01, cap: 15_000_00, after: 0.005 }, bills: { rate: 0.01, cap: 15_000_00, after: 0.005 }, shared: true },
-  // 3% on groceries and 1% on recurring bills, each on up to $500 a statement cycle; 0.5% else.
-  'ca-bmo': { per: 'cycle', food: { rate: 0.03, cap: 500_00, after: 0.005 }, bills: { rate: 0.01, cap: 500_00, after: 0.005 } },
-  // 2% on groceries, 1% on recurring payments, no cap; 0.5% else.
-  'ca-cibc': { per: 'cycle', food: { rate: 0.02 }, bills: { rate: 0.01 } },
+  'ca-rbc': { per: 'year', food: { rate: 0.02, cap: 6_000_00, after: 0.01 }, other: { rate: 0.005, cap: 6_000_00, after: 0.01 } },
+  // 1% on grocery, the first $5,000 a year; 0.5% else.
+  'ca-td': { per: 'year', food: { rate: 0.01, cap: 5_000_00, after: 0.005 } },
+  // 1% on grocery and the rest of its list, to $15,000 a year together; 0.5% else.
+  'ca-scotiabank': { per: 'year', food: { rate: 0.01, cap: 15_000_00, after: 0.005 }, shared: true },
+  // 3% on groceries, on up to $500 a statement cycle; 0.5% else.
+  'ca-bmo': { per: 'cycle', food: { rate: 0.03, cap: 500_00, after: 0.005 } },
+  // 2% on groceries, no cap; 0.5% else.
+  'ca-cibc': { per: 'cycle', food: { rate: 0.02 } },
   // 1% at supermarkets, the whole cash back to $500 a month, which at 1% is $50,000 of groceries; nothing elsewhere but its named categories.
-  // Its 4% on telecoms on the phone and internet's share of the bills (`TELECOM_OF_BILLS`); until 2026-09-28 it wasn't paid, that share unknown.
-  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0.04 * TELECOM_OF_BILLS }, other: { rate: 0 } },
+  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, other: { rate: 0 } },
 };
 
 /** The period a bonus's cap runs over, as a key: a calendar quarter, year or month, or the statement cycle. */
@@ -176,12 +150,12 @@ export function statementOffers(sim: Simulation, card: Account, credit: CardStat
   const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
   if (terms.rewardsRate || bonus) {
     const from = credit.rewardsFrom ?? card.openedAt;
-    const spent = { food: 0, bills: 0, other: 0 };
+    const spent = { food: 0, other: 0 };
     const list = sim.universe.transactions;
     for (let i = list.length - 1; i >= 0 && list[i]!.at >= from; i -= 1) {
       const t = list[i]!;
       if (NOT_PURCHASES.has(t.category)) continue;
-      const kind = t.category === 'food' ? 'food' : t.category === 'bills' ? 'bills' : 'other';
+      const kind = t.category === 'food' ? 'food' : 'other';
       for (const p of t.postings) if (p.accountId === card.id && p.amount < 0) spent[kind] -= p.amount;
     }
     credit.rewards = (credit.rewards ?? 0) + bonusRewards(sim, card, credit, terms.rewardsRate ?? 0, spent, from);
@@ -189,44 +163,22 @@ export function statementOffers(sim: Simulation, card: Account, credit: CardStat
   credit.rewardsFrom = sim.now;
 }
 
-/** What went on a card in the last calendar month, as purchases. */
-export function lastMonthSpend(sim: Simulation, card: Account): Money {
-  const p = zonedParts(sim.now, sim.homeZone);
-  const month = p.month === 1 ? `${p.year - 1}-12` : `${p.year}-${String(p.month - 1).padStart(2, '0')}`;
-  let total = 0;
-  for (const t of sim.universe.transactions) {
-    if (NOT_PURCHASES.has(t.category)) continue;
-    const q = zonedParts(t.at, sim.homeZone);
-    if (`${q.year}-${String(q.month).padStart(2, '0')}` !== month) continue;
-    for (const one of t.postings) if (one.accountId === card.id && one.amount < 0) total -= one.amount;
-  }
-  return total;
-}
-
 /** A statement's rewards: each category at its bonus to the period's cap, the rate after past it, and the base rate where there's no bonus. */
-export function bonusRewards(sim: Simulation, card: Account, credit: CardState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
+export function bonusRewards(sim: Simulation, card: Account, credit: CardState, base: number, spent: { food: Money; other: Money }, from: number): Money {
   const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
-  if (!bonus) return Math.round((spent.food + spent.bills + spent.other) * base);
+  if (!bonus) return Math.round((spent.food + spent.other) * base);
   const currency = card.bankId ? bankById(card.bankId)?.currency ?? 'USD' : 'USD';
   const into = saveCurrency(sim.universe);
-  // A Korean card's bonus turns on last month's spending (전월실적), its caps by the tier reached; below the first, only the base rate.
-  let scale = 1;
-  if (bonus.priorMonth) {
-    const last = lastMonthSpend(sim, card);
-    const tier = [...bonus.priorMonth].reverse().find(([atLeast]) => last >= (exchange(atLeast, currency, into) ?? atLeast));
-    if (!tier) return Math.round((spent.food + spent.bills + spent.other) * base);
-    scale = tier[1];
-  }
   const period = bonusPeriod(sim, bonus.per, from);
   const used = (credit.bonusUsed ??= {});
   for (const key of Object.keys(used)) if (!key.endsWith(`@${period}`)) delete used[key];
   let total = 0;
-  for (const kind of ['food', 'bills', 'other'] as const) {
+  for (const kind of ['food', 'other'] as const) {
     const amount = spent[kind];
     const b = bonus[kind];
     if (!b) { total += amount * base; continue; }
     if (b.cap === undefined) { total += amount * b.rate; continue; }
-    const cap = (exchange(b.cap, currency, into) ?? b.cap) * scale;
+    const cap = exchange(b.cap, currency, into) ?? b.cap;
     const key = `${bonus.shared ? 'all' : kind}@${period}`;
     const room = Math.max(0, cap - (used[key] ?? 0));
     const within = Math.min(amount, room);

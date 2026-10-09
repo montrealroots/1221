@@ -956,7 +956,7 @@ same day, and they were (`docs/REQUIREMENTS.md` V1 to V6):
   day a manager's or a casting office's), meet it and sign its offer (X1 to
   X3, Y1), and a bigger agency gives a client well below its roster less
   attention, so staying can be the better career. The probe replay still
-  doesn't approach agencies; `tools/social-lives.mjs` with `AGENCY` does.
+  doesn't approach agencies; tools/social-lives.mjs with `AGENCY` does.
 - **The acting-only economy.** The broke graduate was the social-lives
   script's doing: it never looked for work. With the lifetime probe's career
   habits the six actors book 48 to 72 jobs and end at −$13,637 to +$206,059.

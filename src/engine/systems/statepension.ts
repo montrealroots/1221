@@ -27,7 +27,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { rateOn, type RateSteps } from '../content/career';
+import { rateOn, type RateSteps } from '../content/rates';
 import { earningsOf } from './earnings';
 import { payeeAccount } from './cash';
 

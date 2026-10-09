@@ -1,16 +1,13 @@
 /**
  * SLATE — health cover after school, illness, and the bills it brings
- * (`content/career.ts` `UNION_HEALTH`, `content/safetynet.ts`).
+ * (`content/safetynet.ts`).
  *
  * The Yale Health plan a student pays for covers the academic year, to the
- * end of July; after it an actor is covered by what they earn, what they
- * qualify for, or what they buy. SAG-AFTRA's plan looks at each twelve-month
- * base period ending a quarter: earnings under it at the year's threshold
- * give twelve months' cover from three months after, for a quarterly
- * premium. Equity-League's gives six months from two months after ten weeks
- * of Equity work in twelve. A union plan lost can be kept by COBRA, elected
- * within 60 days, back to the day it ended, for 18 months at its full cost,
- * three-quarters of it paid by New York for a year where the income is low.
+ * end of July; after it they're covered by what they qualify for, or what
+ * they buy. Until the connected world of 2026-10-09 an actor was covered by
+ * what they earned too: SAG-AFTRA's plan and Equity-League's, earned by
+ * acting work under each union, and COBRA to keep one lost. The career went
+ * in the scope reset of 2026-10-09, nothing earns them now, and they went.
  * On a low month's income, Medicaid (Medi-Cal in California) or New York's
  * Essential Plan takes them at any time; otherwise the marketplace's
  * benchmark plan, in open enrollment or within 60 days of losing cover,
@@ -41,12 +38,12 @@ import { MS_DAY, addYears, formatDate, instantFromZoned, normalDate, zonedParts,
 import { afterBusinessDays } from '../content/bankdays';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { UNION_HEALTH, rateOn } from '../content/career';
+import { rateOn } from '../content/rates';
 import {
-  BENCHMARK, BENEFIT_STATE, IRISH_CARE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
+  BENCHMARK, BENEFIT_STATE, IRISH_CARE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
-import { earningsOf, homeOf, quartersBefore } from './earnings';
+import { earningsOf, homeOf } from './earnings';
 import { payFromCurrent } from './spending';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
@@ -76,7 +73,7 @@ export interface Chronic {
 export const HEALTH_WEEK_KIND = 'health.week';
 export const BILL_KIND = 'health.bill';
 
-export type Cover = 'yale' | 'sag' | 'equity' | 'cobra' | 'medicaid' | 'essential' | 'marketplace';
+export type Cover = 'yale' | 'medicaid' | 'essential' | 'marketplace';
 export type DentalPlan = 'ca' | 'ny' | 'yale';
 export type Condition = 'depression' | 'asthma' | 'hypertension' | 'diabetes' | 'arthritis';
 export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depression', asthma: 'Asthma', hypertension: 'High Blood Pressure', diabetes: 'Diabetes', arthritis: 'Arthritis' };
@@ -119,15 +116,8 @@ export interface HealthRecord {
   /** Their own doctor, a practice in the town they live in (`systems/clinics.ts`, from 2026-10-01). */
   clinicId?: string;
   marketplace?: { from: Instant; until?: Instant; state: BenefitState };
-  sag?: { from: Instant; until: Instant };
-  equity?: { from: Instant; until: Instant };
   /** Medicaid, Medi-Cal or the Essential Plan, and when it's next renewed. */
   program?: { kind: 'medicaid' | 'essential'; state: BenefitState; from: Instant; until?: Instant; renewAt: Instant; band: 'low' | 'high'; /** California's state-funded Medi-Cal for someone without satisfactory status: kept from before 2026 in full, or restricted to emergencies (`MEDI_CAL_UIS`). */ scope?: 'state' | 'restricted'; /** Its premium's months unpaid. */ unpaid?: number };
-  cobra?: { plan: 'sag' | 'equity'; from: Instant; until: Instant; subsidized: boolean };
-  /** A union plan lost, and until when COBRA may be elected. */
-  cobraOffer?: { plan: 'sag' | 'equity'; lostAt: Instant; until: Instant };
-  /** The union plan that covered them last month, to see it end. */
-  lastUnion?: 'sag' | 'equity';
   /** The marketplace premiums paid each month, by year, for the premium tax credit. */
   premiums: Record<string, Money[]>;
   /** Months without cover while living in California, by year, for its penalty. */
@@ -205,9 +195,6 @@ export function yaleUntil(person: Person): Instant | undefined {
 export function coverOn(person: Person, at: Instant): Cover | undefined {
   const h = person.health;
   if (at < (yaleUntil(person) ?? 0)) return 'yale';
-  if (active(h?.sag, at)) return 'sag';
-  if (active(h?.equity, at)) return 'equity';
-  if (active(h?.cobra, at)) return 'cobra';
   if (active(h?.program, at)) return h!.program!.kind;
   if (active(h?.marketplace, at)) return 'marketplace';
   return undefined;
@@ -216,18 +203,15 @@ export function coverOn(person: Person, at: Instant): Cover | undefined {
 /** The plan design that covers them, for what care leaves them. */
 export function planOf(person: Person, at: Instant): PlanDesign | undefined {
   const cover = coverOn(person, at);
-  const h = person.health;
   if (!cover) return undefined;
-  if (cover === 'cobra') return PLANS[h!.cobra!.plan];
   return PLANS[planKey(person, at)!];
 }
 
-/** Which plan's tables apply: the union plan COBRA keeps, the state's marketplace, the Essential Plan's band. */
+/** Which plan's tables apply: the state's marketplace, the Essential Plan's band. */
 export function planKey(person: Person, at: Instant): string | undefined {
   const cover = coverOn(person, at);
   const h = person.health;
   if (!cover) return undefined;
-  if (cover === 'cobra') return h!.cobra!.plan;
   if (cover === 'essential') return h!.program!.state === 'ct' ? 'covered-ct' : `essential-${h!.program!.band}`;
   if (cover === 'marketplace') return `marketplace-${h!.marketplace!.state}`;
   // Medi-Cal and HUSKY D ask no copays, where New York's Medicaid asks a dollar at the pharmacy.
@@ -378,12 +362,6 @@ function nextMonday(from: Instant): Instant {
   return from + 7 * MS_DAY;
 }
 
-/** Months from one moment to another, counting each month's first it passes. */
-const monthsBetween = (from: Instant, to: Instant) => {
-  const a = zonedParts(from, HOME);
-  const b = zonedParts(to, HOME);
-  return Math.max(1, (b.year - a.year) * 12 + (b.month - a.month) + 1);
-};
 
 /**
  * The wages earned last month, for the work requirement. Its hours were the career's days worked until the career
@@ -397,10 +375,7 @@ const renewMonths = (at: Instant, state?: BenefitState) => rateOn(state === 'ct'
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 /**
- * A month's start. At a quarter's, SAG-AFTRA's plan reads the base period
- * that ended three months before. Each month, Equity-League's reads the last
- * twelve months' weeks; a union plan just lost is offered by COBRA; a
- * program comes up for renewal; the premiums fall due; and what covers them
+ * A month's start. Each month a program comes up for renewal; the premiums fall due; and what covers them
  * is settled, with a month uncovered in California counted.
  */
 /**
@@ -432,41 +407,9 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   onsetMonth(sim, person, at);
   const cur = saveCurrency(sim.universe);
   const p = zonedParts(at, HOME);
-  const record = earningsOf(person);
   const home = homeOf(person);
-  if (p.month % 3 === 1) {
-    const q = (p.month + 2) / 3;
-    const prev = q === 1 ? { y: p.year - 1, q: 4 } : { y: p.year, q: q - 1 };
-    const base = quartersBefore(prev.y, prev.q, 4);
-    const earned = base.reduce((sum, key) => sum + (record.quarters[key]?.sag ?? 0), 0);
-    const baseEnds = Number(base[3]!.slice(0, 4));
-    if (earned >= usd(rateOn(UNION_HEALTH.sagThreshold, `${baseEnds}-12-31`), cur)) {
-      const until = firstOf(p.year + 1, p.month);
-      h.sag = h.sag && h.sag.until >= at ? { from: h.sag.from, until } : { from: at, until };
-    }
-    // Unpaid, the plan ends, as COBRA and the marketplace do; until 2026-09-27 it kept covering.
-    if (active(h.sag, at) && !payFromCurrent(sim, person, usd(rateOn(UNION_HEALTH.sagPremium, `${p.year}-${String(p.month).padStart(2, '0')}-01`), cur), 'SAG-AFTRA Health Plan premium', 'health')) h.sag!.until = at;
-  }
-  const yearAgo = at - 365 * MS_DAY;
-  const weeks = record.equityWeeks.filter((key) => instantFromZoned({ year: Number(key.slice(0, 4)), month: Number(key.slice(5, 7)), day: Number(key.slice(8, 10)), hour: 12 }, HOME) >= yearAgo).length;
-  if (weeks >= UNION_HEALTH.equityWeeks && !(h.equity && h.equity.until > firstOf(p.year, p.month + 2))) {
-    const from = firstOf(p.year, p.month + 2);
-    h.equity = { from: h.equity && h.equity.until >= from ? h.equity.from : from, until: firstOf(p.year, p.month + 2 + UNION_HEALTH.equityMonths) };
-  }
-  // Equity-League's $300 a quarter, a third of it each month covered.
-  if (active(h.equity, at) && !payFromCurrent(sim, person, usd(Math.round(UNION_HEALTH.equityPremium / 3), cur), 'Equity-League Health premium', 'health')) h.equity!.until = at;
-  // A union plan just ended: COBRA may keep it.
-  const union = active(h.sag, at) ? 'sag' : active(h.equity, at) ? 'equity' : undefined;
-  if (h.lastUnion && !union && !active(h.cobra, at)) {
-    h.cobraOffer = { plan: h.lastUnion, lostAt: at, until: at + COBRA.electDays * MS_DAY };
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Can Keep Your Plan By COBRA', body: `Your ${PLANS[h.lastUnion]!.label} ended. Elect COBRA by ${formatDate(h.cobraOffer.until, HOME)} and it covers you from the day it ended, for up to ${COBRA.months} months, at ${formatMoney(usd(COBRA.premium[h.lastUnion], cur), cur)} a month.`, importance: 80, route: '/workspace/papers' });
-  }
-  h.lastUnion = union;
-  if (active(h.cobra, at)) {
-    const c = h.cobra!;
-    const share = c.subsidized && at < c.from + COBRA.newYorkMonths * 30.4375 * MS_DAY ? 1 - COBRA.newYorkShare : 1;
-    if (!payFromCurrent(sim, person, Math.round(usd(COBRA.premium[c.plan], cur) * share), 'COBRA premium', 'health')) c.until = at;
-  }
+  // The union plans read the quarter's and the twelve months' acting work here, and COBRA kept one lost, until
+  // 2026-10-09: nothing earns them since the career went.
   // A program's renewal: its income test, and from 2027 Medicaid's work.
   const prog = h.program;
   if (prog && active(prog, at)) {
@@ -1289,29 +1232,12 @@ export function registerHealth(sim: Simulation): void {
     const h = healthOf(s.player);
     const p = zonedParts(s.now, HOME);
     const until = firstOf(p.year, p.month + 1);
-    const plan = [h.marketplace, h.cobra, h.program].find((r) => r && (r.until === undefined || r.until > s.now));
+    const plan = [h.marketplace, h.program].find((r) => r && (r.until === undefined || r.until > s.now));
     if (!plan) throw new CommandError('You have no plan of your own to drop.');
     plan.until = until;
     return { until };
   });
 
-  sim.onCommand<Record<string, never>, { from: Instant; months: number }>('health.elect_cobra', (_p, { sim: s }) => {
-    const person = s.player;
-    const h = healthOf(person);
-    const offer = h.cobraOffer;
-    if (!offer || s.now > offer.until) throw new CommandError('You have no COBRA to elect.');
-    const cur = saveCurrency(s.universe);
-    const lastMonth = earningsOf(person).months[lastMonthKey(s.now)] ?? 0;
-    const subsidized = BENEFIT_STATE[homeOf(person)] === 'ny' && lastMonth <= usd(COBRA.newYorkIncome, cur);
-    // Back to the day it ended: the months since are due now.
-    const months = monthsBetween(offer.lostAt, s.now);
-    const owed = Math.round(usd(COBRA.premium[offer.plan], cur) * (subsidized ? 1 - COBRA.newYorkShare : 1) * months);
-    if (!payFromCurrent(s, person, owed, `COBRA premiums, ${months} ${months === 1 ? 'month' : 'months'}`, 'health')) throw new CommandError(`COBRA’s first ${months} ${months === 1 ? 'month' : 'months'} come to ${formatMoney(owed, cur)}, which the bank can’t cover.`);
-    const end = zonedParts(offer.lostAt, HOME);
-    h.cobra = { plan: offer.plan, from: offer.lostAt, until: firstOf(end.year, end.month + COBRA.months), subsidized };
-    delete h.cobraOffer;
-    return { from: offer.lostAt, months };
-  });
 
   sim.onCommand<{ chain: string }, { chain: string }>('health.choose_pharmacy', (p, { sim: s }) => {
     const chain = US_PHARMACIES.find((c) => c.id === String(p?.chain));
@@ -1399,6 +1325,6 @@ export function registerHealth(sim: Simulation): void {
 
 /** A cover's name, for the screens. */
 export const COVER_LABEL: Record<Cover, string> = {
-  yale: 'Yale Health', sag: 'SAG-AFTRA Health Plan', equity: 'Equity-League Health', cobra: 'COBRA',
+  yale: 'Yale Health',
   medicaid: 'Medicaid', essential: 'Essential Plan', marketplace: 'Marketplace Plan',
 };

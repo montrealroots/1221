@@ -30,7 +30,7 @@ import type { Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { cardCeilingRoom, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
-import { paymentsOf, setPaymentHooks } from './payments';
+import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
@@ -216,7 +216,7 @@ export function owe(sim: Simulation, person: Person, amount: Money, memo: string
 const EXPENSE_LINE: Record<string, string> = { food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School', documents: 'Documents And Their Fees' };
 export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other';
 
-setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amount) => chargeReturned(sim, person, amount) });
+
 
 /**
  * Pays an amount out of checking, then the card; what's left is owed where

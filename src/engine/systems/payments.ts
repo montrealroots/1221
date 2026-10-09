@@ -7,27 +7,23 @@
  * Now each is paid the way the character pays it (module 2 of
  * `docs/BANKING-FUNCTIONS.md`):
  *
- * - **Rent** by the country's usual way (`content/payments.ts`): a standing
- *   order, a direct debit, an online payment or a claim in the online bank,
- *   taken from the current account on the day (A63, A67, A74); or by check,
- *   posted on the due date and cashed a few days later where checks are how
- *   rent goes, or handed over post-dated in Canada (A56); or by hand, when
- *   the player pays the landlord themselves (A62, A69). A landlord takes no
- *   card.
- * - **Bills** the same way, or on the card as a recurring card payment
- *   (A68, C28).
- * - **Everyday spending**, the day's groceries, on the debit card or the
- *   credit card (C27).
- * - A payment the current account can't make, with its overdraft, goes back
- *   unpaid, with the bank's returned-item fee, and is owed (A107). Savings
- *   pays nothing directly: it backs the current account only where the
- *   holder links it as overdraft protection (A108, B13, B19).
+ * - **Everyday spending**, the day's groceries and a meal, on the debit card,
+ *   the credit card or in cash (C27), through `spend` in
+ *   `systems/spending.ts`.
+ * - Savings pays nothing directly: it backs the current account only where
+ *   the holder links it as overdraft protection (A108, B13, B19).
  * - **Standing orders** of the holder's own, into savings on a day each
  *   month (A67, B8), and **one-off payments** scheduled for a date (A70).
- * - **A check** can be stopped before it's cashed, for the bank's fee, and
- *   the bank confirms it (A60, A158).
- * - **A SEPA direct debit** can be taken back within eight weeks, no
- *   questions asked, and what it paid is owed again (A124).
+ *
+ * Until the connected world of 2026-10-09 the rent and the bills were paid
+ * here too, each the country's usual way (`content/payments.ts`): a
+ * standing order, a direct debit, a check posted and cashed days later, or
+ * by hand. A check could be stopped for the bank's fee, and a SEPA direct
+ * debit taken back within eight weeks. The home and its rent and bills went
+ * in the scope reset of 2026-10-09, nothing else in the game was paid by
+ * check or by direct debit, and those went with them: `bank.stop_check`,
+ * `bank.reclaim_debit`, the settings for the rent and the bills, and the
+ * countries' norms that set them.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -35,68 +31,24 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
-import { CITIES, COUNTRIES } from '../content/geography';
-import { PAYMENT_NORMS, CHECK_FEES, type PaymentMethod } from '../content/payments';
-import { bankById } from '../content/banks';
+import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { savingsDebit } from './accountlife';
-import { inSaveMoney } from './banking';
-
-export type RentWay = 'auto' | 'check' | 'manual';
-export type BillsWay = 'auto' | 'card' | 'manual';
 
 export interface StandingOrder { id: string; toId: string; amount: Money; day: number }
-export interface CheckInFlight { id: string; amount: Money; memo: string; category: string; clearsAt: Instant; itemId: string }
 
 export interface PaymentSettings {
-  rent: RentWay;
-  bills: BillsWay;
   everyday: 'debit' | 'credit' | 'cash';
   /** Savings backs the current account (overdraft protection). */
   linkSavings: boolean;
   standingOrders: StandingOrder[];
-  checks: CheckInFlight[];
-  /** Rent paid ahead of its day, by hand, held by the landlord against the next. */
-  rentCredit?: Money;
-  /** A checkbook was ordered, the first time rent went by check: it isn't bought again. */
-  checkbookBought?: boolean;
 }
 
 export const STANDING_ORDER_KIND = 'bank.standing_order';
 export const SCHEDULED_KIND = 'bank.scheduled_payment';
-export const CHECK_KIND = 'bank.check_clears';
 
-/** The euro area and the rest of SEPA, whose direct debits can be taken back within eight weeks. */
-const SEPA = new Set([
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
-  'IS', 'LI', 'NO', 'CH', 'MC', 'SM', 'VA', 'AD', 'GB',
-]);
-/** Britain is in SEPA for euro payments, but its own Direct Debits run under the Guarantee, not the eight weeks. */
-const SEPA_REFUND = new Set([...SEPA].filter((iso) => iso !== 'GB'));
-
-export function isoOf(cityId: string): string | undefined {
-  const city = CITIES.get(cityId);
-  const country = city ? COUNTRIES.get(city.countryId) : undefined;
-  return country?.iso2?.toUpperCase();
-}
-
-const CHECK_WAYS: readonly PaymentMethod[] = ['check', 'check_postdated'];
-
-/** The country's usual way to pay rent, as SLATE pays it. */
-export function usualRent(cityId: string): RentWay {
-  const norm = PAYMENT_NORMS[isoOf(cityId) ?? ''];
-  return norm && CHECK_WAYS.includes(norm.rentMost) ? 'check' : 'auto';
-}
-
-/** Whether checks are a way rent is paid here at all. */
-export function checksUsed(cityId: string): boolean {
-  const norm = PAYMENT_NORMS[isoOf(cityId) ?? ''];
-  return Boolean(norm?.rent.some((one) => CHECK_WAYS.includes(one)));
-}
-
-/** A new life's settings: the country's usual ways, the debit card, and savings unlinked, as a bank opens it. */
-export function freshPayments(cityId: string): PaymentSettings {
-  return { rent: usualRent(cityId), bills: 'auto', everyday: 'debit', linkSavings: false, standingOrders: [], checks: [] };
+/** A new life's settings: the debit card, and savings unlinked, as a bank opens it. */
+export function freshPayments(): PaymentSettings {
+  return { everyday: 'debit', linkSavings: false, standingOrders: [] };
 }
 
 /**
@@ -104,74 +56,13 @@ export function freshPayments(cityId: string): PaymentSettings {
  * way it ran: everything from the bank on the day, savings swept.
  */
 export function paymentsOf(person: Person): PaymentSettings {
-  return person.payments ?? { rent: 'auto', bills: 'auto', everyday: 'debit', linkSavings: true, standingOrders: [], checks: [] };
+  return person.payments ?? { everyday: 'debit', linkSavings: true, standingOrders: [] };
 }
 
 function settle(person: Person): PaymentSettings {
   if (!person.payments) person.payments = paymentsOf(person);
   return person.payments;
 }
-
-const METHOD_WORDS: Readonly<Record<PaymentMethod, string>> = {
-  check: 'check', check_postdated: 'post-dated checks', standing_order: 'standing order', direct_debit: 'direct debit',
-  bank_transfer: 'bank transfer', online_portal: 'the landlord’s online portal', p2p: 'a payment app', card: 'card',
-  claim: 'a claim paid in the online bank', cash: 'cash',
-};
-
-/** How rent and bills usually go here, in plain words, for the screens. */
-export function paymentWords(cityId: string): { usual: string; source: string } | undefined {
-  const norm = PAYMENT_NORMS[isoOf(cityId) ?? ''];
-  if (!norm) return undefined;
-  return { usual: `Rent here usually goes by ${METHOD_WORDS[norm.rentMost]}, and bills by ${METHOD_WORDS[norm.billsMost]}.`, source: norm.source };
-}
-
-/** Whether a direct debit here can be taken back within eight weeks (SEPA). */
-export function mayReclaim(cityId: string): boolean {
-  return SEPA_REFUND.has(isoOf(cityId) ?? '');
-}
-
-/** How many days a posted rent check takes to be cashed: a post-dated one is cashed on its date. */
-function checkDays(cityId: string): number {
-  return PAYMENT_NORMS[isoOf(cityId) ?? '']?.rentMost === 'check_postdated' ? 0 : 3;
-}
-
-/** The bank's check fees, in the save's money: until 2026-09-27 a Canadian stop was taken in the bank's own hundredths. */
-export function checkFees(sim: Simulation, person: Person) {
-  const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
-  const bank = current?.bankId ? bankById(current.bankId) : undefined;
-  const listed = bank ? CHECK_FEES[bank.id] : undefined;
-  const inSave = (x: Money | undefined) => (x === undefined || !bank ? x : inSaveMoney(sim, x, bank.currency));
-  const fees = listed ? { ...listed, checkbook: inSave(listed.checkbook), stopPayment: inSave(listed.stopPayment) } : undefined;
-  return { fees, bank, current };
-}
-
-/** Writes a check that's cashed on a date, and puts its clearing on the calendar. */
-export function writeCheck(sim: Simulation, person: Person, amount: Money, memo: string, category: string): CheckInFlight {
-  const pay = settle(person);
-  const days = checkDays(person.currentLocationId);
-  const clearsAt = sim.now + days * MS_DAY;
-  const id = sim.nextId('sched');
-  const item = sim.schedule({
-    at: clearsAt, kind: CHECK_KIND, label: `${memo} Check Cashed`, category: 'home', priority: 36,
-    payload: { personId: person.id, checkId: id },
-  });
-  const check = { id, amount, memo, category, clearsAt, itemId: item.id };
-  pay.checks.push(check);
-  return check;
-}
-
-export interface PaymentHooks {
-  /** Pays from the current account, its overdraft and any linked savings; all or nothing. */
-  fromCurrent(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean;
-  /** Owes it to the landlord. */
-  owe(sim: Simulation, person: Person, amount: Money, memo: string, category: string): void;
-  /** The bank's fee for an item it sent back unpaid. */
-  returned(sim: Simulation, person: Person, amount: Money): void;
-}
-
-let hooks: PaymentHooks | undefined;
-/** `systems/household.ts` hands these over, so the payments here draw on its accounts without importing it. */
-export function setPaymentHooks(h: PaymentHooks): void { hooks = h; }
 
 function nextOn(sim: Simulation, day: number, after: Instant): Instant {
   const zone = sim.zone;
@@ -187,22 +78,6 @@ function nextOn(sim: Simulation, day: number, after: Instant): Instant {
 }
 
 export function registerPayments(sim: Simulation): void {
-  // A check cashed: paid from the current account if it can be, or bounced.
-  sim.onSchedule(CHECK_KIND, (item, s) => {
-    const person = s.universe.people[String(item.payload.personId)];
-    if (!person || !hooks) return;
-    const pay = settle(person);
-    const check = pay.checks.find((one) => one.id === item.payload.checkId);
-    if (!check) return;
-    pay.checks = pay.checks.filter((one) => one.id !== check.id);
-    if (hooks.fromCurrent(s, person, check.amount, check.memo, check.category)) return;
-    hooks.returned(s, person, check.amount);
-    hooks.owe(s, person, check.amount, check.memo, check.category);
-    if (person.id === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'A Check Bounced', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} came back unpaid. It's owed, and the bank charged for it.`, importance: 80, route: '/workspace/bank' });
-    }
-  });
-
   // A standing order of the holder's own: made on its day if the current account can make it.
   sim.onSchedule(STANDING_ORDER_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
@@ -237,28 +112,9 @@ export function registerPayments(sim: Simulation): void {
     }
   });
 
-  sim.onCommand<{ rent?: RentWay; bills?: BillsWay; everyday?: 'debit' | 'credit' | 'cash'; linkSavings?: boolean }, { payments: PaymentSettings }>('bank.set_payments', (p, { sim: s }) => {
+  sim.onCommand<{ everyday?: 'debit' | 'credit' | 'cash'; linkSavings?: boolean }, { payments: PaymentSettings }>('bank.set_payments', (p, { sim: s }) => {
     const person = s.player;
     const pay = settle(person);
-    const cityId = person.currentLocationId;
-    if (p.rent !== undefined) {
-      if (!['auto', 'check', 'manual'].includes(p.rent)) throw new CommandError('Rent goes from the bank on its day, by check, or by hand.');
-      if (p.rent === 'check' && !checksUsed(cityId)) throw new CommandError('Rent isn’t paid by check here.');
-      if (p.rent === 'check' && !pay.checkbookBought) {
-        // A checkbook, once, where the bank charges for one and the first isn't free.
-        // Until 2026-09-27 it was bought again on every switch back to checks.
-        const { fees, current } = checkFees(s, person);
-        if (fees?.checkbook && !fees.firstFree && current) {
-          s.post({ memo: 'Checks ordered', category: 'bank_fee', postings: [{ accountId: current.id, amount: -fees.checkbook }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fees.checkbook }] });
-        }
-        pay.checkbookBought = true;
-      }
-      pay.rent = p.rent;
-    }
-    if (p.bills !== undefined) {
-      if (!['auto', 'card', 'manual'].includes(p.bills)) throw new CommandError('Bills go from the bank on their day, on the card, or by hand.');
-      pay.bills = p.bills;
-    }
     if (p.everyday !== undefined) {
       if (p.everyday !== 'debit' && p.everyday !== 'credit' && p.everyday !== 'cash') throw new CommandError('Everyday spending goes in cash, on the debit card or on the credit card.');
       pay.everyday = p.everyday;
@@ -312,45 +168,9 @@ export function registerPayments(sim: Simulation): void {
     s.timeline.cancel(item.id, s.now);
     return { id: p.id };
   });
-
-  sim.onCommand<{ id: string }, { fee: Money }>('bank.stop_check', (p, { sim: s }) => {
-    const person = s.player;
-    const pay = settle(person);
-    const check = pay.checks.find((one) => one.id === p.id);
-    if (!check) throw new CommandError('That check has been cashed, or was never written.');
-    const { fees, current } = checkFees(s, person);
-    const fee = fees?.stopPayment ?? 0;
-    if (fee > 0 && current) {
-      s.post({ memo: 'Stop payment fee', category: 'bank_fee', postings: [{ accountId: current.id, amount: -fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee }] });
-    }
-    pay.checks = pay.checks.filter((one) => one.id !== check.id);
-    const item = s.universe.scheduled.find((one) => one.id === check.itemId);
-    if (item) s.timeline.cancel(item.id, s.now);
-    // Stopped, it's still owed.
-    hooks?.owe(s, person, check.amount, check.memo, check.category);
-    s.notify({ category: 'bank', title: 'Check Stopped', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} won't be paid. It's owed to your landlord.${fee > 0 ? ` The bank charged ${formatMoney(fee, saveCurrency(s.universe))}.` : ''}`, importance: 40 });
-    return { fee };
-  });
-
-  sim.onCommand<{ transactionId: string }, { refunded: Money }>('bank.reclaim_debit', (p, { sim: s }) => {
-    const person = s.player;
-    if (!mayReclaim(person.currentLocationId)) throw new CommandError('A direct debit here comes back only if it was taken in error.');
-    const txn = s.universe.transactions.find((t) => t.id === p.transactionId);
-    const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    const taken = txn && current ? -txn.postings.filter((q) => q.accountId === current.id).reduce((a, q) => a + q.amount, 0) : 0;
-    if (!txn || !current || txn.category !== 'bills' || taken <= 0) throw new CommandError('Only a bills direct debit taken from your current account can be taken back.');
-    if (s.now - txn.at > 56 * MS_DAY) throw new CommandError(`That was ${formatDate(txn.at, s.zone)}; a direct debit comes back within eight weeks.`);
-    // Read from the debit itself, which names what took it back; until 2026-10-02 every transaction was scanned for it.
-    if (txn.reversedBy) throw new CommandError('That one has been taken back already.');
-    const back = s.post({ memo: 'Direct debit taken back', category: 'bills', postings: [{ accountId: current.id, amount: taken }, { accountId: s.nominalAccount('expense', 'Bills').id, amount: -taken }] });
-    back.reverses = txn.id;
-    txn.reversedBy = back.id;
-    hooks?.owe(s, person, taken, 'Bills', 'bills');
-    return { refunded: taken };
-  });
 }
 
-/** A standing order's and a check's calendar entries, for a save opened again. */
+/** A standing order's calendar entries, for a save opened again. */
 export function armPayments(sim: Simulation): void {
   for (const person of Object.values(sim.universe.people)) {
     if (!person.payments) continue;

@@ -31,8 +31,7 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
-import { HOME_TAX } from '../content/homes';
+import { computeAnnualTax } from '../content/tax';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
@@ -152,12 +151,12 @@ export interface ReturnFigures {
   interest?: Money;
   /** A pension paid. */
   pension?: Money;
-  /** Rent less its costs and depreciation, a loss only as far as it's allowed; a sale's gain taxed as income, and a long-term one; what was kept free. */
+  /** On a return filed before 2026-10-09: rent less its costs and depreciation, a loss only as far as it was allowed; a home sale's gain taxed as income, and a long-term one; what was kept free. */
   rental?: Money;
   gainShort?: Money;
   gainLong?: Money;
   gainExcluded?: Money;
-  /** Itemized deductions, where they beat the standard one; the tax on a long-term gain and investment income. */
+  /** Itemized deductions, where they beat the standard one, on a return filed before 2026-10-09; the net investment income tax, and a long-term gain's before then. */
   itemized?: Money;
   gainTax?: Money;
   income: Money;
@@ -306,58 +305,19 @@ export function ukTaxOn(gross: Money, into: string, allowed = false): Money {
   return exchange(tax, 'GBP', into) ?? tax;
 }
 
-/** Income before a home's rent and gains, which the passive loss allowance reads. */
-const incomeBefore = (person: Person, year: number): Money => {
-  const y = yearOf(person, year);
-  return y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0) + (y.pension ?? 0);
-};
-
 /**
- * A year's rent less its costs as the return takes it: a profit less any loss
- * carried from before; a loss only to $25,000 less half of income over
- * $100,000, the rest carried forward to the next profit.
+ * The 3.8% net investment income tax, on investment income over $200,000 of income (IRC §1411). A home's rent and
+ * gains, its mortgage interest, taxes and insurance itemized, the passive loss allowance and the 2025 act's cap on
+ * state and local taxes were on the return too, from 2026-09-28, until the homes went in the scope reset of
+ * 2026-10-09; nothing puts them on a year now. A return filed before keeps its lines.
  */
-export function rentalAllowed(person: Person, year: number, into = 'USD'): Money {
-  const years = Object.keys(earningsOf(person).years).map(Number).filter((y) => y <= year).sort((a, b) => a - b);
-  let carry = 0;
-  let allowed = 0;
-  for (const yr of years) {
-    const y = yearOf(person, yr);
-    const net = (y.rentalRent ?? 0) - (y.rentalCosts ?? 0);
-    if (y.rentalDisposed) {
-      // A let home sold: the losses held back are all let go against other income that year (§469(g)).
-      allowed = net - carry;
-      carry = 0;
-    } else if (net >= 0) {
-      const used = Math.min(carry, net);
-      carry -= used;
-      allowed = net - used;
-    } else {
-      const room = Math.max(0, usd(HOME_TAX.passiveAllowance, into) - HOME_TAX.passivePhaseRate * Math.max(0, incomeBefore(person, yr) - usd(HOME_TAX.passivePhaseFrom, into)));
-      allowed = -Math.round(Math.min(-net, room));
-      carry += -net + allowed;
-    }
-  }
-  return allowed;
-}
-
-/** The cap on state and local taxes a year: the 2025 act's, cut by 30% of income over its threshold, to $10,000. */
-export function saltCap(year: number, income: Money, into = 'USD'): Money {
-  const cap = HOME_TAX.saltCap[Math.max(2025, year)];
-  if (cap === undefined) return usd(HOME_TAX.saltFloor, into);
-  const from = HOME_TAX.saltPhaseFrom[Math.max(2025, year)]!;
-  return Math.max(usd(HOME_TAX.saltFloor, into), usd(cap, into) - Math.round(HOME_TAX.saltPhaseRate * Math.max(0, income - usd(from, into))));
-}
+export const NIIT = { rate: 0.038, from: 200_000_00 } as const;
 
 export function figuresFor(person: Person, year: number, into = 'USD', filedAt?: Instant): ReturnFigures {
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
-  const rental = rentalAllowed(person, year, into);
-  const gainShort = y.homeGainShort ?? 0;
-  const gainLong = y.homeGain ?? 0;
-  const gain1250 = y.homeGain1250 ?? 0;
-  const income = incomeBefore(person, year) + rental + gainShort;
+  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0) + (y.pension ?? 0);
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
@@ -395,14 +355,11 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   for (const [city, amount] of Object.entries(y.byResidence)) entry(stateOf(city), city).resident += amount;
   for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
   const lastState = stateOf(cityId);
-  // A home's rent and gains go to the state they lived in at the year's end, which taxes a long-term gain as income too.
-  const homeIncome = rental + gainShort + gainLong + gain1250;
-  if (homeIncome !== 0) entry(lastState, cityId).resident += homeIncome;
-  const stateTaxed = Math.max(0, taxed + gainLong + gain1250);
+  const stateTaxed = taxed;
   // California doesn't tax unemployment, which goes to where they lived at the year's end.
   const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
   // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
-  const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income) + (y.homeInterest ?? 0) + (y.homeTax ?? 0);
+  const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income);
   const extra = (state: string) => Math.max(0, itemized - usd(STATE_DEDUCTIONS.standard[state] ?? Number.POSITIVE_INFINITY, into));
   const full = (state: string) => {
     const base = Math.max(0, stateTaxed - benefitOut(state));
@@ -433,31 +390,12 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   // A city's own tax, New York City's, only on what came while living in it.
   const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)), 0) : 0;
   const stateAndLocal = stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
-  // Federal: itemized where a home's interest, its taxes and the state's to their cap, and from 2026 its mortgage insurance, beat the standard deduction.
-  const standard = usd(federalStandardDeduction(cityId, at), into);
-  const pmiShare = Math.max(0, 1 - 0.1 * Math.ceil(Math.max(0, income - usd(HOME_TAX.pmiPhaseFrom, into)) / usd(HOME_TAX.pmiPhaseStep, into)));
-  const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? Math.round((y.homePmi ?? 0) * pmiShare) : 0);
-  const itemizing = (y.homeInterest ?? 0) + (y.homeTax ?? 0) > 0 && itemizedFederal > standard;
-  const beyond = itemizing ? itemizedFederal - standard : 0;
+  // Federal, at the standard deduction: itemizing was a home's interest and taxes, which went on 2026-10-09.
   // Filed singly. A joint return for the married (`systems/marriage.ts`, from 2026-10-01) went with the marriages in the
   // scope reset of 2026-10-09.
-  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
-  // A long-term gain on top of the rest, at 0%, 15% and 20%; and 3.8% on investment income over $200,000.
-  const ordinary = Math.max(0, taxed - standard - beyond);
-  let gainTax = 0;
-  let from = 0;
-  for (const [upTo, rate] of HOME_TAX.ltcg[Math.min(2026, Math.max(2025, year))]!) {
-    const edge = upTo === Number.POSITIVE_INFINITY ? upTo : usd(upTo, into);
-    gainTax += Math.max(0, Math.min(ordinary + gainLong, edge) - Math.max(ordinary, from)) * rate;
-    from = edge;
-  }
-  // The recaptured depreciation: as income, but at 25% at most.
-  if (gain1250 > 0) {
-    const withIt = computeAnnualTax(taxed + gain1250, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
-    gainTax += Math.min(Math.round(gain1250 * HOME_TAX.recaptureRate), withIt - federalBefore);
-  }
-  const investment = gainLong + gain1250 + gainShort + Math.max(0, rental) + (y.interest ?? 0);
-  gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong + gain1250 - usd(HOME_TAX.niitFrom, into))));
+  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into }).federal;
+  // 3.8% on investment income, the banks' interest, over $200,000 of income.
+  const gainTax = Math.round(NIIT.rate * Math.min(y.interest ?? 0, Math.max(0, taxed - usd(NIIT.from, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
   // The Child Tax Credit and the adoption credit came off it (`systems/children.ts`, `systems/adoption.ts`) until the
   // children went in the scope reset of 2026-10-09.
@@ -480,7 +418,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
-    rental, gainShort, gainLong: gainLong + gain1250, gainExcluded: y.homeGainExcluded ?? 0, itemized: itemizing ? itemizedFederal : 0, gainTax, income, deduction,
+    gainTax, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit - stateAssistance,
   };

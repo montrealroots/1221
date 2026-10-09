@@ -1189,6 +1189,38 @@ describe('migrations and validation', () => {
   });
 
 
+  it('sheds at 91 what only the home, the career and a move home reached, keeping a rent paid ahead and the rest', () => {
+    const sim = quickSave();
+    const universe = JSON.parse(JSON.stringify(sim.universe)) as typeof sim.universe;
+    universe.meta.schemaVersion = 90;
+    const player = universe.people[universe.playerId]!;
+    // Test setup: what a save at 90 kept on its player.
+    Object.assign(player.payments as object, { rent: 'check', bills: 'card', checks: [], checkbookBought: true, rentCredit: 500_00 });
+    Object.assign(player.health as object, { sag: { from: 0, until: 1 }, cobraOffer: { plan: 'sag', lostAt: 0, until: 1 }, lastUnion: 'sag' });
+    Object.assign(player.attrs as object, { reputation: 12, recognition: 3 });
+    (player as unknown as Record<string, unknown>).returnedHomeAt = 0;
+    const year = Object.values(player.earnings?.years ?? {})[0] ?? ((player.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {}, ukYears: {} }).years[2026] = { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never);
+    Object.assign(year as object, { homeInterest: 100_00, rentalRent: 50_00, farmRent: 1_00 });
+    const presence = player.attrs!.presence;
+
+    const result = migrate(universe);
+
+    expect(result.migrated).toBe(true);
+    expect(result.problems).toEqual([]);
+    for (const k of ['rent', 'bills', 'checks', 'checkbookBought']) expect(k in player.payments!).toBe(false);
+    expect((player.payments as unknown as { rentCredit?: number }).rentCredit).toBe(500_00);
+    for (const k of ['sag', 'cobraOffer', 'lastUnion']) expect(k in player.health!).toBe(false);
+    expect(player.attrs).toEqual({ presence, composure: player.attrs!.composure });
+    expect('returnedHomeAt' in player).toBe(false);
+    for (const k of ['homeInterest', 'rentalRent', 'farmRent']) expect(k in (year as object)).toBe(false);
+    expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
+    // Opened, the rent paid ahead comes back, and the ledger balances.
+    const opened = loadSave(universe);
+    expect('rentCredit' in (opened.player.payments as object)).toBe(false);
+    expect(opened.ledger.audit()).toEqual([]);
+    expect(validateUniverse(opened.universe).ok).toBe(true);
+  });
+
   it('drops the heritage and the height and weight a save no longer reads', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 72;

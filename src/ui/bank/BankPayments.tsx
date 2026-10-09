@@ -3,10 +3,10 @@
  *
  * The day's spending, the way the character pays it; savings linked to the
  * current account or not; standing orders
- * into savings; payments set for a date; checks in the post, and stopping
- * one; and, in SEPA, a direct debit taken back within eight weeks
- * (`systems/payments.ts`). How the rent and the bills were paid was chosen
- * here too, until the home went in the scope reset of 2026-10-09.
+ * into savings; and payments set for a date (`systems/payments.ts`). How the
+ * rent and the bills were paid was chosen here too, checks in the post were
+ * stopped and SEPA direct debits taken back, until the home went in the scope
+ * reset of 2026-10-09.
  */
 
 import { useState } from 'react';
@@ -14,11 +14,9 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { dateKey, formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
+import { dateKey, formatDate, instantFromZoned } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import {
-  checkFees, mayReclaim, paymentsOf, SCHEDULED_KIND,
-} from '@/engine/systems/payments';
+import { paymentsOf, SCHEDULED_KIND } from '@/engine/systems/payments';
 import { FRENCH_CARDS, cardCeilingRoom } from '@/engine/systems/lending';
 
 export function BankPayments() {
@@ -27,17 +25,12 @@ export function BankPayments() {
   const money = (c: number) => formatMoney(c, cur);
   const person = useWorld((s) => s.player);
   const pay = useWorld((s) => paymentsOf(s.player));
-  const cityId = person.currentLocationId;
   const accounts = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term'));
   const savings = accounts.filter((a) => a.kind === 'savings');
   const current = accounts.find((a) => a.id === person.primaryAccountId);
   const scheduled = useWorld((s) => s.universe.scheduled.filter((i) => i.kind === SCHEDULED_KIND && i.status === 'pending' && i.payload.personId === s.player.id));
-  // In the save's money, as the bank charges them; until 2026-09-27 the bank's own hundredths.
-  const fees = checkFees(sim, person).fees;
   const ceiling = current?.bankId ? FRENCH_CARDS[current.bankId] : undefined;
   const ceilingRoom = cardCeilingRoom(sim, person);
-  const reclaimable = useWorld((s) => (mayReclaim(cityId) ? s.universe.transactions.filter((t) => t.category === 'bills' && s.now - t.at <= 56 * MS_DAY && !t.reversedBy && !t.reverses
-    && t.postings.some((p) => p.accountId === s.player.primaryAccountId && p.amount < 0)) : []));
 
   const [soAmount, setSoAmount] = useState('');
   const [soDay, setSoDay] = useState('1');
@@ -145,32 +138,7 @@ export function BankPayments() {
         </div>
       )}
 
-      {pay.checks.length > 0 && (
-        <div style={{ marginTop: 'var(--s4)' }}>
-          <div className="eyebrow">Checks Not Yet Cashed</div>
-          {pay.checks.map((check) => (
-            <div key={check.id} className="row-between small" style={{ padding: '3px 0' }}>
-              <span>{check.memo}, {money(check.amount)}, cashed around {formatDate(check.clearsAt, sim.zone)}</span>
-              <Gated feature="bank.stop_check" className="btn btn-sm btn-ghost" onClick={() => run('bank.stop_check', { id: check.id })}>
-                Stop It{fees?.stopPayment ? ` (${money(fees.stopPayment)})` : ''}
-              </Gated>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {reclaimable.length > 0 && (
-        <div style={{ marginTop: 'var(--s4)' }}>
-          <div className="eyebrow">Direct Debits You Can Take Back</div>
-          <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>A SEPA direct debit comes back within eight weeks, no questions asked, and what it paid is owed again.</p>
-          {reclaimable.map((t) => (
-            <div key={t.id} className="row-between small" style={{ padding: '3px 0' }}>
-              <span>{t.memo}, {formatDate(t.at, sim.zone)}</span>
-              <Gated feature="bank.reclaim_debit" className="btn btn-sm btn-ghost" onClick={() => run('bank.reclaim_debit', { transactionId: t.id })}>Take It Back</Gated>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Checks not yet cashed and direct debits to take back were listed here until 2026-10-09: only the rent and the bills went by them. */}
     </Panel>
   );
 }

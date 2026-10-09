@@ -7,7 +7,7 @@
  */
 import { quickSave } from '@/engine';
 import { exchange } from '@/engine/content/currency';
-import { ABROAD,CARE,CHRONIC,DENTAL_VISION,PHARMACY,STATE_DEDUCTIONS } from '@/engine/content/safetynet';
+import { ABROAD,CARE,CHRONIC,DENTAL_VISION,PHARMACY,PLANS,STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY,instantFromZoned,zonedParts } from '@/engine/core/time';
@@ -234,11 +234,13 @@ describe('the pharmacy, the dentist and the optician', () => {
     const when = at(2027, 3, 1);
     expect(rxShareOf(sim.player, false, when)).toBe(grown(PHARMACY.price.generic, 'rx', when));
     const h = healthOf(sim.player);
-    h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
-    expect(rxShareOf(sim.player, false, when)).toBe(Math.max(10_00, Math.round(0.1 * grown(PHARMACY.price.generic, 'rx', when))));
-    // SAG-AFTRA's $75 brand deductible first, the greater of $25 or 25% on top; then only the copay.
-    expect(rxShareOf(sim.player, true, when)).toBe(75_00 + Math.round(0.25 * grown(PHARMACY.price.brand, 'rx', when)));
-    expect(rxShareOf(sim.player, true, when)).toBe(Math.round(0.25 * grown(PHARMACY.price.brand, 'rx', when)));
+    // Access Health CT's Standard Silver; until 2026-10-09 this was SAG-AFTRA's plan, which went with the career.
+    h.marketplace = { from: at(2027, 1, 1, 0), state: 'ct' };
+    const plan = PHARMACY.plans['marketplace-ct']!;
+    expect(rxShareOf(sim.player, false, when)).toBe(plan.generic[0]);
+    // The $250 brand deductible first, the copay on top; then only the copay.
+    expect(rxShareOf(sim.player, true, when)).toBe(plan.brandDeductible + plan.brand[0]);
+    expect(rxShareOf(sim.player, true, when)).toBe(plan.brand[0]);
   });
 
   it('leave dental and vision to what each plan covers, and the uninsured the price', () => {
@@ -247,11 +249,16 @@ describe('the pharmacy, the dentist and the optician', () => {
     // From 2026-10-03 a New Yorker's cleaning is 209 NYC Dental's own $144, not the national average (`NAMED_TEETH_EYES`).
     expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(144_00);
     const h = healthOf(sim.player);
-    h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
+    // A marketplace plan pays none of it; New York's Medicaid all of it. Until 2026-10-09 SAG-AFTRA's plan stood here for
+    // a plan paying part, and none that's left does.
+    h.marketplace = { from: at(2027, 1, 1, 0), state: 'ny' };
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(144_00);
+    delete h.marketplace;
+    h.program = { kind: 'medicaid', state: 'ny', from: at(2027, 1, 1, 0), band: 'low', renewAt: at(2028, 1, 1, 0) };
     expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(0);
-    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(Math.round(grown(DENTAL_VISION.price.filling, 'dental', when) * 0.25));
-    expect(teethAndEyesShareOf(sim.player, 'exam', when)).toBe(10_00);
-    expect(shareOf(sim.player, 'glasses', when)).toBe(Math.round(grown(DENTAL_VISION.price.glasses, 'vision', when) * 0.8));
+    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(0);
+    expect(teethAndEyesShareOf(sim.player, 'exam', when)).toBe(0);
+    expect(shareOf(sim.player, 'glasses', when)).toBe(0);
   });
 
   it('bring the dentist to about three in five a year, and an eye exam only to those with lenses', () => {
@@ -295,11 +302,12 @@ describe('conditions carried', () => {
     const sim = pro('keep');
     const h = healthOf(sim.player);
     h.chronic = { depression: { treated: true }, hypertension: { treated: true } };
-    h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
+    // New York's Essential Plan at its higher band: $15 a visit, $6 a generic. SAG-AFTRA's stood here until 2026-10-09.
+    h.program = { kind: 'essential', state: 'ny', from: at(2026, 1, 1, 0), band: 'high', renewAt: at(2027, 1, 1, 0) };
     const when = at(2026, 3, 1, 1);
     // The month’s care, and its fill of medicine (`fillMedicine`, from 2026-10-02).
     const cost = keepUp(sim, sim.player, when) + fillMedicine(sim, sim.player, when);
-    expect(cost).toBe(2 * 25_00 + 2 * Math.max(10_00, Math.round(0.1 * PHARMACY.price.generic)));
+    expect(cost).toBe(2 * PLANS['essential-high']!.visit + 2 * PHARMACY.plans['essential-high']!.generic[0]);
     // With next to nothing and no card, the month's care goes unpaid.
     const poor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'nothing' }, 'keep-poor');
     const ph = healthOf(poor.player);

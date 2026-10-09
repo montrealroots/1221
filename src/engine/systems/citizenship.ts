@@ -38,7 +38,7 @@ import { residenceIn } from './residence';
 const YEAR_MS = 365.2425 * MS_DAY;
 export const NATURALIZE = {
   GB: { fee: 1_839 + 50, currency: 'GBP', years: 5, settledYears: 1, days: 182 },
-  MX: { fee: 9_502.01, currency: 'MXN', years: 5, artisticYears: 2, days: 56 },
+  MX: { fee: 9_502.01, currency: 'MXN', years: 5, days: 56 },
   US: { fee: 760, currency: 'USD', years: 5, days: 243 },
 } as const;
 export const CITIZENSHIP_KIND = 'citizenship.decided';
@@ -62,9 +62,9 @@ export function naturalizeRefusal(sim: Simulation, person: Person, iso: string):
     // Its five years' residence are met on the way: settlement comes after five on the Global Talent visa.
   }
   if (iso === 'MX') {
-    // Outstanding artistic work, read on the O-1's record, shortened it to two years until the career went on 2026-10-09.
-    const artistic = false;
-    if (years < (artistic ? NATURALIZE.MX.artisticYears : NATURALIZE.MX.years)) return artistic ? 'Outstanding artistic work asks two years’ residence.' : 'It asks five years’ residence in Mexico, or two for outstanding artistic work.';
+    // Outstanding artistic work, read on the O-1's record, shortened it to two years until the career went on 2026-10-09,
+    // and the refusal offered the two years until the connected world of that day.
+    if (years < NATURALIZE.MX.years) return 'It asks five years’ residence in Mexico.';
   }
   if (iso === 'US') {
     if (held.route !== 'us-green-card' || years < NATURALIZE.US.years) return 'It asks five years with a green card.';

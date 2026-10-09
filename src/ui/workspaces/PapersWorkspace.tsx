@@ -19,8 +19,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
-import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
-import { UNION_HEALTH } from '@/engine/content/career';
+import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
@@ -32,7 +31,7 @@ import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { PassportPane, WorkPane } from '@/ui/papers/Documents';
 import { creditRefusal, livesInBritain } from '@/engine/systems/universalcredit';
-import { CDMX_DESEMPLEO, IRISH_JA, desempleoRefusal, jobseekerRefusal, livesInIreland, livesInMexicoCity } from '@/engine/systems/homebenefits';
+import { CDMX_DESEMPLEO, IRISH_JA, jobseekerRefusal, livesInIreland, livesInMexicoCity } from '@/engine/systems/homebenefits';
 import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
 import { eiRefusal, eiWeekly } from '@/engine/systems/eiself';
 import { US_PHARMACIES } from '@/engine/content/carevisits';
@@ -197,12 +196,11 @@ function HealthPane() {
   const state = BENEFIT_STATE[homeOf(person)];
   const year = zonedParts(sim.now, sim.zone).year;
   const may = mayEnroll(person, sim.now, cur);
-  const ownPlan = [h.marketplace, h.cobra, h.program].find((r) => r && (r.until === undefined || r.until > sim.now));
+  const ownPlan = [h.marketplace, h.program].find((r) => r && (r.until === undefined || r.until > sim.now));
   const enrolled = ownPlan !== undefined;
   const plan = planOf(person, sim.now);
   const debt = medicalDebtOf(sim, person);
   const bills = [...h.bills].reverse().slice(0, 10);
-  const until = (r?: { from: number; until: number }) => (r && r.until > sim.now ? `${formatDate(r.from, sim.zone)} to ${formatDate(r.until, sim.zone)}` : 'None');
   return (
     <div className="col gap-5">
       <YourDoctor />
@@ -210,8 +208,6 @@ function HealthPane() {
       <Panel title="Your Cover">
         <div className="grid grid-3">
           <Stat label="This Month" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
-          <Stat label="SAG-AFTRA Health Plan" value={until(h.sag)} />
-          <Stat label="Equity-League Health" value={until(h.equity)} />
         </div>
       </Panel>
       <Panel
@@ -224,28 +220,15 @@ function HealthPane() {
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>
             {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
-            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} a month at renewal.{' '}
-            {enrolled && (cover === 'sag' || cover === 'equity') ? `${COVER_LABEL[cover]} covers you too, so the plan’s premium buys nothing more while it does. ` : ''}
+            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} earned a month at renewal, and SLATE counts what’s earned, work-study’s pay included.{' '}
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
             {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
           </p>
           <Fine>
-            The benchmark premiums are SLATE’s estimate from published rates. Earned union cover: SAG-AFTRA’s from 12 months’ earnings at its threshold, for a quarterly premium; Equity-League’s from {UNION_HEALTH.equityWeeks} weeks of Equity work in 12 months, {formatMoney(inSaveMoney(sim, UNION_HEALTH.equityPremium, 'USD'), cur)} a quarter. Source: {UNION_HEALTH.source}; {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
+            The benchmark premiums are SLATE’s estimate from published rates. Source: {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
           </Fine>
         </div>
       </Panel>
-
-      {h.cobraOffer && h.cobraOffer.until > sim.now && (
-        <Panel
-          title="COBRA"
-          subtitle={`Elect by ${formatDate(h.cobraOffer.until, sim.zone)}`}
-          actions={<Gated feature="health.elect_cobra" onClick={() => { if (run('health.elect_cobra').ok) toast('Elected: covered from the day your plan ended.', 'positive'); }}>Elect COBRA</Gated>}
-        >
-          <p className="small" style={{ margin: 0 }}>
-            Your {COVER_LABEL[h.cobraOffer.plan]} ended {formatDate(h.cobraOffer.lostAt, sim.zone)}. COBRA keeps it for up to {COBRA.months} months, back to that day, at {formatMoney(inSaveMoney(sim, COBRA.premium[h.cobraOffer.plan], 'USD'), cur)} a month; New York pays three-quarters of it for a year where last month’s income is {formatMoney(inSaveMoney(sim, COBRA.newYorkIncome, 'USD'), cur)} or less. Source: {COBRA.source}.
-          </p>
-        </Panel>
-      )}
 
       <ConditionsPanel />
       <DentalPanel />
@@ -402,14 +385,14 @@ function HomeClaimsPanel() {
       </>
     );
   }
-  if (livesInMexicoCity(person)) {
+  // Filing went on 2026-10-09 (`desempleoRefusal`): only a claim a save already holds is shown, as it's paid out.
+  if (livesInMexicoCity(person) && person.desempleo) {
     const d = person.desempleo;
-    const no = desempleoRefusal(sim, person);
     return (
-      <Panel title="Seguro De Desempleo" subtitle="Mexico City’s, for a Mexican come home from abroad" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>}>
+      <Panel title="Seguro De Desempleo" subtitle="Mexico City’s, paid out on the claim you filed">
         <div className="grid grid-3">
-          <Stat label="Claimed" value={d ? 'Yes' : 'Not Yet'} note={d ? `Filed ${formatDate(d.filedAt, sim.zone)}` : no ?? 'You can file now'} />
-          <Stat label="Paid" value={`${d?.payments ?? 0} Of ${CDMX_DESEMPLEO.payments}`} note="Months" />
+          <Stat label="Claimed" value="Yes" note={`Filed ${formatDate(d.filedAt, sim.zone)}`} />
+          <Stat label="Paid" value={`${d.payments} Of ${CDMX_DESEMPLEO.payments}`} note="Months" />
           <Stat label="A Month" value={formatMoney(inSaveMoney(sim, CDMX_DESEMPLEO.monthly, 'MXN'), cur)} note="The month’s UMA" />
         </div>
       </Panel>

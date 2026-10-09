@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
 import {
-  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, LOOKING_AFTER, lookAfterRefusal, minutesFor, costFor, labelFor, type LookAfter,
+  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, lookAfterOptions, labelFor, type LookAfter,
 } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -25,6 +25,11 @@ import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
+
+/** The dials, as the menu names them. */
+const DIAL_LABEL: Partial<Record<string, string>> = {
+  energy: 'Energy', stress: 'Stress', sleepDebt: 'Sleep Debt', nourishment: 'Nourishment', morale: 'Morale', hygiene: 'Hygiene', condition: 'Condition', fitness: 'Fitness',
+};
 
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
@@ -467,10 +472,12 @@ function useDropdown() {
 /**
  * Look after yourself: the things besides sleep a player does for their body.
  *
- * Each item says how long it takes and what it does, or, when the engine
- * would refuse it, why, and is greyed out. The menu asks the same question
- * the command does (`lookAfterRefusal`), so it never offers what the command
- * turns down.
+ * Each item says how long it takes, what it costs, why it stands where it
+ * does and what it would do to the dials, or, when the engine would refuse
+ * it, why, and is greyed out. The order is the engine's (`lookAfterOptions`,
+ * from 2026-10-09): what's costing the body every hour first, then by the
+ * readiness it gives back. Until then the menu was a fixed list. Nothing on it
+ * happens until it's chosen.
  */
 function LookAfterMenu() {
   const { sim, run, toast } = useGame();
@@ -478,9 +485,8 @@ function LookAfterMenu() {
   const gate = useFeature('ui.look-after');
   const doing = useFeature('life.look_after');
   // Asked again whenever the world changes, so a meal eaten or a clock moved since counts.
-  const refusals = useWorld((s) => Object.fromEntries(
-    (Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => [action, lookAfterRefusal(s, action)]),
-  ) as Record<LookAfter, string | undefined>);
+  const options = useWorld((s) => lookAfterOptions(s));
+  const cur = saveCurrency(sim.universe);
 
   const act = (action: LookAfter) => {
     setOpen(false);
@@ -504,15 +510,12 @@ function LookAfterMenu() {
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
-          {(Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => {
-            const { does } = LOOKING_AFTER[action];
-            const label = labelFor(sim, action);
-            const minutes = minutesFor(sim, action);
-            const cost = costFor(sim, action);
-            const refused = refusals[action];
+          {options.map((o, i) => {
+            const { action, refused } = o;
             // Said, because it changes what the hour gives: more mood and more
             // relief for somebody who loves it (`systems/enjoyment.ts`).
             const loved = lovedIn(sim.player, action).map((id) => INTEREST_BY_ID[id]?.label ?? id);
+            const first = i === 0 && !refused && (o.urgent || o.gain >= 0.5);
             return (
               <button
                 key={action}
@@ -522,10 +525,19 @@ function LookAfterMenu() {
                 disabled={refused !== undefined}
                 onClick={() => (doing.open ? act(action) : doing.ask())}
               >
-                <span className="menu-item-label">{label}</span>
-                <span className="menu-item-detail">
-                  {formatDuration(minutes * 60_000)}{cost > 0 ? ` · ${formatMoney(cost, saveCurrency(sim.universe))}` : ''} · {refused ?? does}
+                <span className="menu-item-label">
+                  {o.label}
+                  {first && <span className={`chip ${o.urgent ? 'chip-warning' : 'chip-accent'}`} style={{ marginLeft: 8 }}>{o.urgent ? 'Needed Now' : 'Most Worth It'}</span>}
                 </span>
+                <span className="menu-item-detail">
+                  {formatDuration(o.minutes * 60_000)}{o.cost > 0 ? ` · ${formatMoney(o.cost, cur)}` : ''} · {refused ?? o.why}
+                </span>
+                {!refused && o.changes.length > 0 && (
+                  <span className="menu-item-detail">
+                    {o.changes.map((c) => `${DIAL_LABEL[c.dial] ?? c.dial} ${Math.round(c.from)} → ${Math.round(c.to)}`).join(' · ')}
+                    {o.gain !== 0 ? ` · readiness ${o.gain > 0 ? '+' : ''}${o.gain.toFixed(1)}` : ''}
+                  </span>
+                )}
                 {!refused && loved.length > 0 && (
                   <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>
                 )}

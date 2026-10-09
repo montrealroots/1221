@@ -22,6 +22,7 @@ import {
   activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
+import { at } from '@/ui/looks/subject';
 import { PRIORITY_WORDS, amendsRefusal, personOf } from '@/engine/systems/classmates';
 import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 
@@ -92,7 +93,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
   const course = COURSES.find((c) => c.code === a.course)!;
   const weights = weightsOf(a);
   return (
-    <Panel title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`}>
+    <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`}>
       <div className="col gap-3">
         <div className="small">
           {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {scene.where}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>

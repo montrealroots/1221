@@ -8,7 +8,7 @@
  */
 
 import type { Money } from '../core/money';
-import type { RateSteps } from './career';
+import type { RateSteps } from './rates';
 
 /** The states SLATE pays unemployment in, by the city an actor lives in. */
 export type BenefitState = 'ny' | 'ca' | 'ct';
@@ -223,22 +223,8 @@ export const PUBLIC_COVER = {
   source: 'https://portal.ct.gov/dss/knowledge-base/articles/healthcare-coverage/husky-d; https://portal.ct.gov/dss/health-and-home-care/covered-connecticut-program; https://www.health.ny.gov/health_care/medicaid/; https://info.nystateofhealth.ny.gov/EssentialPlan; https://www.dhcs.ca.gov/services/medi-cal/; Pub. L. 119-21 (2025)',
 } as const;
 
-/**
- * COBRA: 60 days to elect after losing a plan, cover back to the day it was
- * lost, 18 months at most, at the plan's full cost. 2026, a month: SAG-AFTRA
- * $1,277; Equity-League's Tier 2 $1,348.50. New York pays 75% of an
- * entertainment worker's COBRA for up to 12 months where their income is
- * $5,217 a month or less. Yale Health has no continuation.
- */
-export const COBRA = {
-  electDays: 60,
-  months: 18,
-  premium: { sag: 1_277_00, equity: 1_348_50 },
-  newYorkShare: 0.75,
-  newYorkMonths: 12,
-  newYorkIncome: 5_217_00,
-  source: 'https://www.dol.gov/general/topic/health-plans/cobra; https://www.sagaftraplans.org/health/premiums; https://equityleague.org/health/premiums/',
-} as const;
+// COBRA's terms, and New York's share of an entertainment worker's, were here until 2026-10-09: it kept a union plan
+// lost, and the union plans went with the career.
 
 /**
  * What care costs and how often it comes, for an adult of 25 to 44: two
@@ -281,8 +267,7 @@ export const PLANS: Readonly<Record<string, PlanDesign>> = {
   // emergency room, $200 an admission to $1,000 a year, $9,100 a year at most. Until 2026-09-27 SLATE took it as free
   // throughout, and then for a while that day left out the $1,000.
   yale: { visit: 0, urgent: 0, emergency: 50_00, stayShare: 0, deductible: 0, outOfPocket: 9_100_00, stayCopay: 200_00, stayCopayCap: 1_000_00, label: 'Yale Health' },
-  sag: { visit: 25_00, urgent: 25_00, emergency: 100_00, stayShare: 0.1, deductible: 500_00, outOfPocket: 2_750_00, label: 'SAG-AFTRA Health Plan' },
-  equity: { visit: 25_00, urgent: 0, emergency: 100_00, stayShare: 0, deductible: 1_000_00, outOfPocket: 4_550_00, label: 'Equity-League Health, Tier 2' },
+  // SAG-AFTRA's and Equity-League's plans were here until 2026-10-09, and went with the career.
   'marketplace-ca': { visit: 50_00, urgent: 50_00, emergency: 400_00, stayShare: 0.3, deductible: 5_200_00, outOfPocket: 9_800_00, label: 'Covered California Silver 70' },
   'marketplace-ny': { visit: 30_00, urgent: 70_00, emergency: 500_00, stayShare: 0, deductible: 2_450_00, outOfPocket: 10_150_00, label: 'NY State Of Health Silver' },
   medicaid: { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Medicaid' },
@@ -456,8 +441,6 @@ export const PHARMACY = {
     'marketplace-ny': { generic: [15_00, 0], brand: [40_00, 0], brandDeductible: 0 },
     'marketplace-ct': { generic: [10_00, 0], brand: [50_00, 0], brandDeductible: 250_00 },
     'covered-ct': { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
-    sag: { generic: [10_00, 0.1], brand: [25_00, 0.25], brandDeductible: 75_00 },
-    equity: { generic: [10_00, 0.2], brand: [20_00, 0.25], brandDeductible: 100_00 },
     medicaid: { generic: [1_00, 0], brand: [1_00, 0], brandDeductible: 0 },
     'essential-low': { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
     'essential-high': { generic: [6_00, 0], brand: [15_00, 0], brandDeductible: 0 },
@@ -490,8 +473,6 @@ export const DENTAL_VISION = {
   plans: {
     // Yale Health: an eye exam a year at no charge; no routine dental, nor glasses.
     yale: { cleaning: 0, filling: 0, exam: 0, glasses: 0 },
-    sag: { cleaning: 1, filling: 0.75, exam: 10_00, glasses: 0.2 },
-    equity: { cleaning: 0, filling: 0, exam: 0, glasses: 1 },
     medicaid: { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
     'essential-low': { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
     'essential-high': { cleaning: 1, filling: 1, exam: 0, glasses: 1 },

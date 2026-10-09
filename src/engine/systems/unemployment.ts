@@ -32,7 +32,7 @@ import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState, CONNECTICUT_UI } from '../content/safetynet';
 import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
 import { payeeAccount } from './cash';
-import { rateOn } from '../content/career';
+import { rateOn } from '../content/rates';
 import { claimCredit, livesInBritain } from './universalcredit';
 import { claimAtHome, livesInIreland, livesInMexicoCity } from './homebenefits';
 

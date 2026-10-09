@@ -29,7 +29,10 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
-import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import { KNOB_READS, PERSONALITY_TRAIT_BY_ID, type PersonalityKnob } from '@/engine/content/personality-traits';
+import { personalityOf } from '@/engine/systems/personality';
+import { CONDITION_LABEL, type Condition } from '@/engine/systems/health';
+import { CHRONIC } from '@/engine/content/safetynet';
 import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 import { describeEthnicity } from '@/engine/content/ethnicity';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
@@ -109,6 +112,16 @@ defineLook<Person>('person', {
       label: 'Readiness',
       detail: 'What seven of the eight come to: your chance at an audition, and what a class, a day’s work or a workout builds',
     });
+    // The traits held and the conditions carried, each opening into what it does (from 2026-10-09: until then the
+    // traits were a sentence here and the conditions a row on Papers, and neither said what it moved).
+    for (const id of person.personalityTraits ?? []) {
+      const t = PERSONALITY_TRAIT_BY_ID[id];
+      if (t) ways.push({ to: at('trait', id), label: t.name, detail: t.description });
+    }
+    for (const c of Object.keys(person.health?.chronic ?? {}) as Condition[]) {
+      ways.push({ to: at('condition', c), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? 'Kept up, at what the plan leaves' : 'Left alone, and what that does' });
+    }
+    if (injuryOf(person, sim.now)) ways.push({ to: at('condition', 'injury'), label: 'An Injury', detail: 'What it is, till when, and what it keeps you from' });
     if (isYou) {
       ways.push({
         to: at('plans'),
@@ -344,4 +357,98 @@ defineLook<Ready>('readiness', {
     })),
     provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets the chance of booking an audition and what a class, a lab, a day’s work or a workout builds.',
   }),
+});
+
+// ---------------------------------------------------------------------------
+// A trait, and a condition carried (from the connected world of 2026-10-09)
+// ---------------------------------------------------------------------------
+
+interface HeldTrait { person: Person; id: string }
+
+defineLook<HeldTrait>('trait', {
+  gone: 'There’s no such trait.',
+  resolve: (sim, id) => (PERSONALITY_TRAIT_BY_ID[id] ? { person: sim.player, id } : undefined),
+  seeds: (sim) => [...(sim.player.personalityTraits ?? [])],
+  look: ({ person, id }) => {
+    const t = PERSONALITY_TRAIT_BY_ID[id]!;
+    const held = (person.personalityTraits ?? []).includes(id);
+    const mods = Object.entries(t.systemMods ?? {}) as [PersonalityKnob, number][];
+    const times = (x: number) => `${x >= 1 ? '+' : '−'}${Math.round(Math.abs(x - 1) * 100)}%`;
+    return {
+      name: t.name,
+      kind: held ? 'A Trait You Hold' : 'A Trait',
+      summary: t.description,
+      parent: at('person', person.id),
+      body: (
+        <div className="col gap-2">
+          {mods.length > 0 ? (
+            <table>
+              <tbody>
+                {mods.map(([knob, x]) => (
+                  <tr key={knob}>
+                    <td className="small">{KNOB_READS[knob]}</td>
+                    <td className="num mono">{times(x)}</td>
+                    {held && <td className="num mono dim">{times(personalityOf(person, knob))} with all you are</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="small">It moves nothing SLATE draws: it says who you are.</p>
+          )}
+          <p className="small"><span className="dim">Its cost. </span>{t.cost}</p>
+        </div>
+      ),
+      ways: [{ to: at('readiness', person.id), label: 'Readiness', detail: 'What the dials it moves come to' }],
+      provenance: 'Each figure is the trait’s own; “with all you are” is every trait and disposition you hold together, held inside its limits (`KNOB_LIMITS`).',
+    };
+  },
+});
+
+interface Carried { person: Person; key: Condition | 'injury' }
+
+/** What a condition left alone does, by the week, in the dials' words (`CHRONIC.untreated`). */
+function leftAlone(c: Condition): string {
+  const u = CHRONIC.untreated;
+  if (c === 'depression') return `Left alone, it takes ${u.moraleAWeek} morale a week.`;
+  if (c === 'asthma') return `Left alone, it makes an emergency ${u.asthmaEmergencies} times likelier.`;
+  if (c === 'diabetes') return `Left alone, type 1 makes an emergency ${u.diabetesEmergencies} times likelier, and either type takes ${u.diabetesConditionAWeek} condition a week.`;
+  if (c === 'arthritis') return `Left alone, it takes ${u.arthritisEnergyAWeek} energy a week.`;
+  return 'Left alone, SLATE draws nothing more from it than the care it goes without.';
+}
+
+defineLook<Carried>('condition', {
+  gone: 'You don’t carry that now.',
+  resolve: (sim, id) => {
+    const person = sim.player;
+    if (id === 'injury') return injuryOf(person, sim.now) ? { person, key: 'injury' } : undefined;
+    return person.health?.chronic?.[id as Condition] ? { person, key: id as Condition } : undefined;
+  },
+  seeds: (sim) => [...Object.keys(sim.player.health?.chronic ?? {}), ...(injuryOf(sim.player, sim.now) ? ['injury'] : [])],
+  look: ({ person, key }, { sim }) => {
+    if (key === 'injury') {
+      const hurt = injuryOf(person, sim.now)!;
+      return {
+        name: INJURY_KIND[hurt.kind].label,
+        kind: 'An Injury',
+        summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? ', and keeps you off work and training till then' : ''}.`,
+        parent: at('person', person.id),
+        ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: 'What a body is fit for, which an injury takes from' }],
+        provenance: 'How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).',
+      };
+    }
+    const state = person.health!.chronic![key]!;
+    const dial = key === 'depression' ? 'morale' : key === 'diabetes' ? 'condition' : key === 'arthritis' ? 'energy' : undefined;
+    return {
+      name: CONDITION_LABEL[key] + (key === 'diabetes' ? (state.typeOne ? ', Type 1' : ', Type 2') : ''),
+      kind: 'A Condition You Carry',
+      summary: state.treated
+        ? (state.lapsed ? 'You keep it up, but this month’s care went unpaid, so it’s been left alone till next month.' : 'You keep it up: its care is paid each month at what your plan leaves.')
+        : 'You leave it alone, which costs nothing and does what’s below.',
+      parent: at('person', person.id),
+      body: <p className="small">{leftAlone(key)} Kept up, it does none of that. Papers keeps it up or lets it go.</p>,
+      ways: dial ? [{ to: at('dial', `${person.id}/${dial}`), label: dial[0]!.toUpperCase() + dial.slice(1), detail: 'The dial it takes from, left alone' }] : [],
+      provenance: `Drawn once at the start of a life, at a young adult’s rates. Source: ${CHRONIC.source}.`,
+    };
+  },
 });

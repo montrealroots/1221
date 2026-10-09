@@ -38,13 +38,13 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { payeeAccount } from './cash';
 import { earningsOf, homeOf } from './earnings';
-import { citizenOf, citizenshipsOf } from './documents';
+import { citizenshipsOf } from './documents';
 import { computeAnnualTax } from '../content/tax';
 
 export const IRISH_JA = {
@@ -118,16 +118,16 @@ export function jobseekerRefusal(sim: Simulation, person: Person): string | unde
   return undefined;
 }
 
-export function desempleoRefusal(sim: Simulation, person: Person): string | undefined {
-  if (!livesInMexicoCity(person)) return 'The Seguro de Desempleo is Mexico City’s, for someone living there.';
-  if (!citizenOf(person, 'MX')) return 'Its track for those come home is for Mexican citizens.';
-  if (person.desempleo) return 'It’s paid once in a life, and you’ve had it.';
-  const age = (sim.now - person.birthInstant) / YEAR;
-  if (age < 18 || age > CDMX_DESEMPLEO.oldest) return 'It’s for someone of 18 to 64.';
-  const back = person.returnedHomeAt;
-  const since = Date.UTC(zonedParts(sim.now, 'America/Mexico_City').year - 1, 0, 1);
-  if (back === undefined || back < since) return 'Its track is for someone come home from abroad since the first of January of last year.';
-  return undefined;
+/**
+ * Mexico City's Seguro de Desempleo, filed for. Its track for a Mexican come
+ * home from abroad read `returnedHomeAt`, which the career's move home wrote;
+ * with the career gone in the scope reset, nothing comes home, and from the
+ * connected world of 2026-10-09 it isn't filed for. Its other tracks ask a
+ * formal job lost in the city, which SLATE has none of. A claim a save already
+ * holds is paid out (`DESEMPLEO_KIND`).
+ */
+export function desempleoRefusal(): string {
+  return 'Its tracks are for a job lost in the city or a Mexican come home from abroad, and neither is yours.';
 }
 
 /** A week's Jobseeker's Allowance, in euro cents: the days out of work, less the waiting days left, less the savings' means. */
@@ -146,11 +146,7 @@ export function claimAtHome(sim: Simulation, person: Person): { firstPaymentAt: 
     sim.schedule({ at: sim.now + 7 * MS_DAY, kind: JA_WEEK_KIND, label: 'Jobseeker’s Allowance: The Week', category: 'system', priority: 12, payload: { personId: person.id } });
     return { firstPaymentAt: sim.now + 7 * MS_DAY };
   }
-  const no = desempleoRefusal(sim, person);
-  if (no) throw new CommandError(no);
-  person.desempleo = { filedAt: sim.now, payments: 0 };
-  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: DESEMPLEO_KIND, label: 'Seguro De Desempleo', category: 'system', priority: 12, payload: { personId: person.id } });
-  return { firstPaymentAt: sim.now + 30 * MS_DAY };
+  throw new CommandError(desempleoRefusal());
 }
 
 function pay(sim: Simulation, person: Person, due: Money, memo: string, line: string): void {

@@ -2,26 +2,15 @@
  * How each thing is paid (`systems/payments.ts`), module 2 of
  * `docs/BANKING-FUNCTIONS.md`. Until 2026-09-26 every payment fell through
  * checking, savings, the card and then owing, and a landlord took a card.
+ * The rent's and the bills' ways, checks and SEPA debits taken back went with
+ * the home in 2026-10-09's scope reset.
  */
 import { quickSave } from '@/engine';
-import { CHECK_FEES,PAYMENT_NORMS,type CheckFees,type PaymentNorm } from '@/engine/content/payments';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY,instantFromZoned } from '@/engine/core/time';
 import { paymentsOf } from '@/engine/systems/payments';
 import { spend } from '@/engine/systems/spending';
-import { afterEach,describe,expect,it } from 'vitest';
-
-const norms = PAYMENT_NORMS as Record<string, PaymentNorm>;
-const checkFees = CHECK_FEES as Record<string, CheckFees>;
-const kept = new Map<string, unknown>();
-function withNorm(iso: string, norm: PaymentNorm) { if (!kept.has(iso)) kept.set(iso, norms[iso]); norms[iso] = norm; }
-afterEach(() => {
-  for (const [k, v] of kept) {
-    if (k.startsWith('fees:')) { const id = k.slice(5); if (v) checkFees[id] = v as CheckFees; else delete checkFees[id]; }
-    else if (v) norms[k] = v as PaymentNorm; else delete norms[k];
-  }
-  kept.clear();
-});
+import { describe,expect,it } from 'vitest';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'pay') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
@@ -36,48 +25,55 @@ const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) =>
   expect(answer.ok, `${kind}: ${answer.error}`).toBe(true);
   return answer;
 };
-const firstOf = (sim: Simulation, month: number, hour = 21) => instantFromZoned({ year: 2026, month, day: 1, hour }, sim.zone);
-const US_CHECKS: PaymentNorm = { rent: ['check', 'online_portal'], rentMost: 'check', bills: ['online_portal'], billsMost: 'online_portal', source: 'test' };
 
 describe('a new life', () => {
-  it('pays the country’s usual way, on the debit card, with savings not linked, as a bank opens it', () => {
-    withNorm('US', US_CHECKS);
+  it('pays the day on the debit card, with savings not linked, as a bank opens it', () => {
     const sim = lifeIn('us-ny-newyork', {}, 'pay-new');
-    expect(paymentsOf(sim.player)).toMatchObject({ rent: 'check', bills: 'auto', everyday: 'debit', linkSavings: false });
-    const is = lifeIn('is-39-mosfellsbr', {}, 'pay-new-is');
-    expect(paymentsOf(is.player).rent).toBe('auto');
+    expect(paymentsOf(sim.player)).toEqual({ everyday: 'debit', linkSavings: false, standingOrders: [] });
   });
 
-  it('keeps a save from before running as it ran: everything from the bank, savings swept', () => {
+  it('keeps a save from before running as it ran: savings swept', () => {
     const sim = lifeIn('is-39-mosfellsbr', {}, 'pay-old');
     delete sim.player.payments;
-    expect(paymentsOf(sim.player)).toMatchObject({ rent: 'auto', linkSavings: true });
+    expect(paymentsOf(sim.player)).toMatchObject({ everyday: 'debit', linkSavings: true });
+  });
+
+  it('takes no setting for the rent or the bills, which went with the home', () => {
+    const sim = lifeIn('is-39-mosfellsbr', {}, 'pay-no-rent');
+    run(sim, 'bank.set_payments', { rent: 'check', bills: 'card' });
+    expect(paymentsOf(sim.player)).toEqual({ everyday: 'debit', linkSavings: false, standingOrders: [] });
+    expect(sim.commandKinds()).not.toContain('bank.stop_check');
+    expect(sim.commandKinds()).not.toContain('bank.reclaim_debit');
   });
 });
 
-describe('rent from the bank', () => {
+describe('savings linked to the current account', () => {
+  it('pays from savings what the current account can’t, only where it’s linked', () => {
+    const pay = (link: boolean) => {
+      const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'pay-linked');
+      if (link) run(sim, 'bank.set_payments', { linkSavings: true });
+      setCurrent(sim, 1_000_00);
+      const savings = accountOf(sim, 'savings')!;
+      const before = savings.balance;
+      // A school bill bigger than the current account holds: from the current account first, then linked savings.
+      const paid = spend(sim, sim.player, 5_000_00, 'A test bill', 'school');
+      return { paid, fromSavings: before - savings.balance };
+    };
+    const linked = pay(true);
+    const unlinked = pay(false);
+    expect(linked.paid).toBe(true);
+    expect(linked.fromSavings).toBeGreaterThan(0);
+    expect(unlinked.fromSavings).toBe(0);
+  });
 
-  it('draws on savings only where it’s linked to the current account', () => {
-    const linked = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'pay-linked');
-    run(linked, 'bank.set_payments', { linkSavings: true });
-    setCurrent(linked, 1_000_00);
-    const savings = accountOf(linked, 'savings')!;
-    const before = savings.balance;
-    linked.advanceTo(firstOf(linked, 2));
-    expect(savings.balance).toBeLessThan(before);
-    expect(linked.universe.transactions.some((t) => t.memo === 'Rent, unpaid')).toBe(false);
+  it('refuses a link with no savings to make it', () => {
+    const sim = lifeIn('is-39-mosfellsbr', {}, 'pay-no-savings');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') a.closedAt = sim.now;
+    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toMatch(/no savings account/);
   });
 });
 
-describe('rent by check', () => {
-
-  it('isn’t offered where rent isn’t paid by check', () => {
-    const sim = lifeIn('is-39-mosfellsbr', {}, 'pay-no-check');
-    expect(sim.execute({ kind: 'bank.set_payments', payload: { rent: 'check' } }).ok).toBe(false);
-  });
-});
-
-describe('bills and the day’s spending', () => {
+describe('the day’s spending', () => {
 
   it('puts the groceries on the credit card first where that’s the choice', () => {
     const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'pay-everyday');

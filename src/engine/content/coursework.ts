@@ -30,8 +30,14 @@ import { ORIGINAL_SCENES } from './scenes-original';
 export type PrepDim = 'familiarity' | 'memorization' | 'interpretation' | 'rehearsal' | 'partner' | 'revision';
 export const PREP_DIMS: readonly PrepDim[] = ['familiarity', 'memorization', 'interpretation', 'rehearsal', 'partner', 'revision'];
 
-/** What a step needs to be done at all, beyond time: a partner present, a room at school, clothes to move in, a phone that records. */
-export type Need = 'partner' | 'studio' | 'moveClothes' | 'phone' | 'library';
+/**
+ * What a step needs to be done at all, beyond time: a partner present, a room at school, the library, or a body with
+ * the energy to work on its feet. Until 2026-10-09 a step on its feet needed clothes to move in and a recorded take a
+ * phone that records, which the wardrobe and the phones kept; both went in the scope reset, and a step needing them
+ * was let through every time. On its feet, it asks the energy it always did; a take is recorded on whatever phone
+ * a student has, which SLATE doesn't keep.
+ */
+export type Need = 'partner' | 'studio' | 'feet' | 'library';
 
 /**
  * A step of preparation: what it's called, how long it takes, which part of
@@ -1000,8 +1006,8 @@ export const TEMPLATES: readonly Template[] = [
     material: 'none', paired: false,
     dims: { interpretation: { label: 'The Score Made', weight: 0.4 }, rehearsal: { label: 'Rehearsed In The Body', weight: 0.6 } },
     activities: [
-      { id: 'devise', label: 'Devise The Score', minutes: 60, dim: 'interpretation', gain: 0.4, needs: ['studio', 'moveClothes'] },
-      { id: 'rehearse-score', label: 'Rehearse The Score', minutes: 45, dim: 'rehearsal', gain: 0.3, needs: ['studio', 'moveClothes'], requires: { dim: 'interpretation', at: 0.3, why: 'Make the score first.' }, trains: 'movement' },
+      { id: 'devise', label: 'Devise The Score', minutes: 60, dim: 'interpretation', gain: 0.4, needs: ['studio', 'feet'] },
+      { id: 'rehearse-score', label: 'Rehearse The Score', minutes: 45, dim: 'rehearsal', gain: 0.3, needs: ['studio', 'feet'], requires: { dim: 'interpretation', at: 0.3, why: 'Make the score first.' }, trains: 'movement' },
     ],
     reads: { movement: 2, dance: 1 }, dueAfter: 4, revised: false, par: 50,
     notes: {
@@ -1057,9 +1063,9 @@ export const TEMPLATES: readonly Template[] = [
     material: 'none', paired: true,
     dims: { familiarity: { label: 'The Choreography Learned', weight: 0.3 }, partner: { label: 'Drilled With Your Partner', weight: 0.5 }, rehearsal: { label: 'Alone', weight: 0.2 } },
     activities: [
-      { id: 'learn-fight', label: 'Learn The Choreography', minutes: 40, dim: 'familiarity', gain: 0.45, needs: ['moveClothes'] },
-      { id: 'shadow', label: 'Run It Alone, At Half Speed', minutes: 30, dim: 'rehearsal', gain: 0.35, needs: ['moveClothes'], requires: { dim: 'familiarity', at: 0.3, why: 'Learn the choreography first.' }, trains: 'combat' },
-      { ...withPartner, label: 'Drill It With Your Partner', minutes: 60, needs: ['partner', 'studio', 'moveClothes'], requires: { dim: 'familiarity', at: 0.4, why: 'Learn the choreography before drilling it together: a sequence isn’t found with a partner at speed.' } },
+      { id: 'learn-fight', label: 'Learn The Choreography', minutes: 40, dim: 'familiarity', gain: 0.45, needs: ['feet'] },
+      { id: 'shadow', label: 'Run It Alone, At Half Speed', minutes: 30, dim: 'rehearsal', gain: 0.35, needs: ['feet'], requires: { dim: 'familiarity', at: 0.3, why: 'Learn the choreography first.' }, trains: 'combat' },
+      { ...withPartner, label: 'Drill It With Your Partner', minutes: 60, needs: ['partner', 'studio', 'feet'], requires: { dim: 'familiarity', at: 0.4, why: 'Learn the choreography before drilling it together: a sequence isn’t found with a partner at speed.' } },
     ],
     reads: { combat: 2, intimacy: 1 }, dueAfter: 4, revised: false, par: 50, only: { 'DRAM 403a/b': 'spring' },
     notes: {
@@ -1120,7 +1126,7 @@ export const TEMPLATES: readonly Template[] = [
     id: 'self-tape', courses: ['DRAM 463a/b', 'DRAM 473b'], title: 'A Self-Tape', deliverable: 'A scene recorded on your phone and reviewed in class',
     material: 'scene', paired: false,
     dims: { memorization: { label: 'Lines', weight: 0.3 }, interpretation: { label: 'Choices', weight: 0.2 }, rehearsal: { label: 'Takes Recorded', weight: 0.5 } },
-    activities: [read, learn, { id: 'record', label: 'Record A Take', minutes: 45, dim: 'rehearsal', gain: 0.35, needs: ['phone'], requires: { dim: 'memorization', at: 0.4, why: 'Learn the lines before taping: a camera sees eyes on the page.' }, trains: 'screen' }],
+    activities: [read, learn, { id: 'record', label: 'Record A Take', minutes: 45, dim: 'rehearsal', gain: 0.35, requires: { dim: 'memorization', at: 0.4, why: 'Learn the lines before taping: a camera sees eyes on the page.' }, trains: 'screen' }],
     reads: { screen: 2, scene: 1 }, dueAfter: 3, revised: false, par: 55,
     notes: {
       memorization: 'The lines weren’t secure, and the lens saw it.',

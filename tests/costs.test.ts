@@ -89,8 +89,8 @@ describe('diabetes and arthritis', () => {
     expect(insulinShareOf(sim.player, when)).toBe(0);
     // Before the law, the plan's brand copay, under the makers' cap.
     expect(insulinShareOf(sim.player, at(2024, 6, 1))).toBe(Math.min(INSULIN.cashCap, rxShareOf(sim.player, true, at(2024, 6, 1))));
-    delete h.marketplace;
-    h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
+    // California's marketplace has no state cap SLATE draws, so the makers' $35. SAG-AFTRA's plan stood here until 2026-10-09.
+    h.marketplace = { from: at(2024, 1, 1, 0), state: 'ca' };
     expect(insulinShareOf(sim.player, when)).toBe(INSULIN.cashCap);
   });
 
@@ -105,11 +105,12 @@ describe('diabetes and arthritis', () => {
     expect(month(at(2026, 1, 1, 1))).toBe(monthly + shareOf(sim.player, 'visit', at(2026, 1, 1, 1)));
     expect(month(at(2026, 2, 1, 1))).toBe(monthly);
     // A plan's brand copay where it's less than the program; on Medicaid, its $1.
-    h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
-    // SAG-AFTRA's first brand fill carries its $75 deductible, over the program; after it, 25% is under it.
+    // Access Health CT's first brand fill goes to its $250 deductible, over the program; the next is what's left of it
+    // and the copay, under it. SAG-AFTRA's plan stood here until 2026-10-09.
+    h.marketplace = { from: at(2026, 1, 1, 0), state: 'ct' };
     expect(monitorShareOf(sim.player, at(2026, 3, 1))).toBe(INSULIN.monitor.program);
-    expect(monitorShareOf(sim.player, at(2026, 4, 1))).toBe(Math.round(0.25 * INSULIN.monitor.price));
-    delete h.sag;
+    expect(monitorShareOf(sim.player, at(2026, 4, 1))).toBe(250_00 - INSULIN.monitor.price + 50_00);
+    delete h.marketplace;
     h.program = { kind: 'medicaid', state: 'ny', from: at(2026, 1, 1, 0), band: 'low', renewAt: at(2027, 1, 1, 0) };
     expect(monitorShareOf(sim.player, at(2026, 3, 1))).toBe(1_00);
     delete h.program;
@@ -158,9 +159,9 @@ describe('a dental plan of their own', () => {
     healthOf(sim.player).dental!.paid[2027] = d.max - 10_00;
     expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(price - 10_00);
     expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(price);
-    // SAG-AFTRA's own dental pays first.
-    healthOf(sim.player).sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
-    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(Math.round(price * 0.25));
+    // A health plan that pays for teeth pays first: New York's Medicaid all of it. Until 2026-10-09, SAG-AFTRA's.
+    healthOf(sim.player).program = { kind: 'medicaid', state: 'ny', from: at(2027, 1, 1, 0), band: 'low', renewAt: at(2028, 1, 1, 0) };
+    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(0);
     expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'You have a dental plan.' });
     expect(sim.execute({ kind: 'health.dental', payload: { on: false } }).ok).toBe(true);
   });

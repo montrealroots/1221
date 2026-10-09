@@ -107,6 +107,13 @@ export const KNOB_LIMITS: Readonly<Record<PersonalityKnob, readonly [number, num
   bondWound: [0.6, 1.5],
   company: [0.4, 1.8],
   appetite: [0.9, 1.1],
+  morning: [0.8, 1.2],
+  evening: [0.8, 1.2],
+  readsAround: [0.8, 1.3],
+  drills: [0.8, 1.3],
+  skims: [0.8, 1.3],
+  revises: [0.8, 1.3],
+  mealMood: [0.7, 1.3],
 };
 
 /** A multiplier bent toward its limits: in log terms, a tanh of the lean. */

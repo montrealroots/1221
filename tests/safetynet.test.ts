@@ -1,12 +1,11 @@
 /**
- * What the business added after its first portion (`systems/career.ts`,
- * `systems/health.ts`, `systems/unemployment.ts`, `systems/taxreturn.ts`):
- * Off-Broadway and series regulars, overtime, managers, residuals, health
- * cover, unemployment insurance and the tax return, against the published
- * figures in `content/career.ts` and `content/safetynet.ts`.
+ * The safety net (`systems/health.ts`, `systems/unemployment.ts`,
+ * `systems/taxreturn.ts`): health cover, unemployment insurance and the tax
+ * return, against the published figures in `content/safetynet.ts`. The
+ * career's own work, which this file tested beside them, went in the scope
+ * reset of 2026-10-09, and its union health plans after it the same day.
  */
 import { quickSave } from '@/engine';
-import { UNION_HEALTH } from '@/engine/content/career';
 import { CALIFORNIA_MANDATE,CONNECTICUT_UI,INSULIN,NEW_YORK_UI,PLANS,POVERTY_LINE,RETURN,byYear } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
 import type { Simulation } from '@/engine/core/simulation';
@@ -33,43 +32,8 @@ const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, 
 
 describe('health cover', () => {
 
-  it('SAG-AFTRA’s: a base period’s earnings at the threshold give a year from three months after, for its premium', () => {
-    const sim = pro('sag-health');
-    const person = sim.player;
-    for (const q of ['2025-4', '2026-1', '2026-2', '2026-3']) earningsOf(person).quarters[q] = { wages: 7_100_00, sag: 7_100_00 };
-    healthMonth(sim, person, at(2027, 1, 1, 1));
-    expect(healthOf(person).sag).toEqual({ from: at(2027, 1, 1, 1), until: at(2028, 1, 1, 0) });
-    expect(sim.universe.transactions.some((t) => t.memo === 'SAG-AFTRA Health Plan premium')).toBe(true);
-    // On the ledger's line for care, not food's.
-    expect(sim.nominalAccount('expense', 'Medical Care').balance).toBeGreaterThan(0);
-    // A premium the bank can't pay ends the plan, as COBRA's would.
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === person.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
-    sim.universe.accounts[person.primaryAccountId!]!.balance = -100_000_00;
-    healthMonth(sim, person, at(2027, 4, 1, 1));
-    expect(healthOf(person).sag!.until).toBe(at(2027, 4, 1, 1));
-    // And Equity-League's.
-    healthOf(person).equity = { from: at(2027, 1, 1, 0), until: at(2027, 12, 1, 0) };
-    healthMonth(sim, person, at(2027, 5, 1, 1));
-    expect(healthOf(person).equity!.until).toBe(at(2027, 5, 1, 1));
-    const short = pro('sag-short');
-    for (const q of ['2025-4', '2026-1', '2026-2', '2026-3']) earningsOf(short.player).quarters[q] = { wages: 6_000_00, sag: 6_000_00 };
-    healthMonth(short, short.player, at(2027, 1, 1, 1));
-    expect(healthOf(short.player).sag).toBeUndefined();
-    expect(byYear(UNION_HEALTH.sagThreshold, 2026)).toBe(28_090_00);
-  });
-
-  it('Equity-League’s: ten weeks in a year give six months from two months after', () => {
-    const sim = pro('eq-health');
-    const weeks = earningsOf(sim.player).equityWeeks;
-    for (let n = 0; n < 10; n += 1) weeks.push(`2026-0${Math.floor(n / 4) + 7}-${String(1 + (n % 4) * 7).padStart(2, '0')}`);
-    healthMonth(sim, sim.player, at(2026, 10, 1, 1));
-    expect(healthOf(sim.player).equity).toEqual({ from: at(2026, 12, 1, 0), until: at(2027, 6, 1, 0) });
-    weeks.pop();
-    const fewer = pro('eq-fewer');
-    earningsOf(fewer.player).equityWeeks.push(...weeks);
-    healthMonth(fewer, fewer.player, at(2026, 10, 1, 1));
-    expect(healthOf(fewer.player).equity).toBeUndefined();
-  });
+  // SAG-AFTRA's and Equity-League's plans, earned by acting work, were tested here until 2026-10-09; the career went
+  // in the scope reset and nothing earns them.
 
   it('counts months without cover in California, and not in New York', () => {
     const la = pro('uncovered-la', 'us-ca-losangeles');

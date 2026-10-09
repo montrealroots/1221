@@ -77,15 +77,17 @@ describe('care at home', () => {
 });
 
 describe('the Seguro de Desempleo', () => {
-  it('pays a Mexican come home to the city three months of the UMA, once, and not one who never left', () => {
+  // Filing for a Mexican come home was tested here until 2026-10-09: nothing comes home since the career's move went.
+  it('isn’t filed for now, and a claim a save already holds is paid its three months, once', () => {
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'desempleo');
-    expect(desempleoRefusal(sim, sim.player)).toMatch(/come home from abroad/);
-    sim.player.returnedHomeAt = sim.now - 30 * MS_DAY;
-    expect(desempleoRefusal(sim, sim.player)).toBeUndefined();
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
+    const filed = sim.execute({ kind: 'benefits.claim', payload: {} });
+    expect(filed.ok).toBe(false);
+    expect(filed.error).toBe(desempleoRefusal());
+    // Test setup: a claim an older save filed, and its first month on the calendar, as filing left them.
+    sim.player.desempleo = { filedAt: sim.now, payments: 0 };
+    sim.schedule({ at: sim.now + 30 * MS_DAY, kind: 'benefits.desempleo_month', label: 'Seguro De Desempleo', category: 'system', priority: 12, payload: { personId: sim.player.id } });
     sim.advanceBy(100 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Seguro de Desempleo, the month').length).toBe(3);
-    expect(desempleoRefusal(sim, sim.player)).toMatch(/once in a life/);
     // Nothing left on the calendar after the third.
     expect(sim.universe.scheduled.some((i) => i.kind === 'benefits.desempleo_month' && i.status === 'pending')).toBe(false);
   }, 60_000);

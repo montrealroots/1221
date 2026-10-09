@@ -14,7 +14,7 @@ import { MS_DAY,instantFromZoned } from '@/engine/core/time';
 import type { Person } from '@/engine/domain/model';
 import { BREAK_NOTICE } from '@/engine/systems/accountlife';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { BONUSES,KOREA_TELECOM_OF_BILLS,bonusRewards,lastMonthSpend } from '@/engine/systems/cardoffers';
+import { BONUSES,bonusRewards } from '@/engine/systems/cardoffers';
 import type { CreditState } from '@/engine/systems/credit';
 import { recordJobCost,recordWages } from '@/engine/systems/earnings';
 import { DISPOSED,LOVED_WORK,enjoyWork,lovedInWork,takeTheRoom } from '@/engine/systems/enjoyment';
@@ -314,27 +314,20 @@ describe('a card’s bonus categories', () => {
   const card = (bankId: string) => ({ bankId } as unknown as Account);
   const cad = (c: number) => exchange(c, 'CAD', 'USD')!;
 
-  it('pays a Korean card’s phone-bill bonus only after a month of the spending it asks, its cap by the tier reached', () => {
-    const seoul = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'wealthy', bankId: 'kr-shinhan' }, 'kr-bonus');
-    const kb = Object.values(seoul.universe.accounts).find((a) => a.ownerId === seoul.player.id && a.kind === 'credit_card')!;
-    const bills = 3_000_000_00;
-    // Nothing on the card last month: no bonus.
-    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 1)).toBe(0);
-    // ₩600,000 on it last month: the second tier, 10,000 points at most.
-    seoul.post({ memo: 'Groceries', category: 'food', postings: [{ accountId: kb.id, amount: -600_000_00 }, { accountId: seoul.nominalAccount('expense', 'Food').id, amount: 600_000_00 }] });
-    seoul.advanceBy(32 * 86_400_000);
-    expect(lastMonthSpend(seoul, kb)).toBe(600_000_00);
-    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 2)).toBe(10_000_00);
-    // A small month's bill earns its 10% of the phone's share in full.
-    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills: 100_000_00, other: 0 }, 3)).toBe(Math.round(100_000_00 * 0.1 * KOREA_TELECOM_OF_BILLS));
+  // A Korean card's phone-bill bonus, after a month of the spending it asks, was tested here until 2026-10-09, when the
+  // bills' bonuses went: nothing pays a bill since the home and its phone went.
+  it('leaves the Korean cards and the bills without a bonus: nothing pays a bill now', () => {
+    expect(BONUSES['kr-kb-kookmin']).toBeUndefined();
+    expect(BONUSES['kr-shinhan']).toBeUndefined();
+    expect(Object.values(BONUSES).every((b) => !('bills' in b))).toBe(true);
   });
 
-  it('pays BMO’s 3% on groceries and 1% on bills to $500 a cycle each, and 0.5% past it and on the rest', () => {
+  it('pays BMO’s 3% on groceries to $500 a cycle, and 0.5% past it and on the rest', () => {
     const credit = {} as CreditState;
-    const got = bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(800_00), bills: cad(200_00), other: 10_000 }, 1);
-    expect(got).toBe(Math.round(cad(500_00) * 0.03 + (cad(800_00) - cad(500_00)) * 0.005 + cad(200_00) * 0.01 + 10_000 * 0.005));
+    const got = bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(800_00), other: 10_000 }, 1);
+    expect(got).toBe(Math.round(cad(500_00) * 0.03 + (cad(800_00) - cad(500_00)) * 0.005 + 10_000 * 0.005));
     // A new cycle, a new cap.
-    expect(bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(100_00), bills: 0, other: 0 }, 2)).toBe(Math.round(cad(100_00) * 0.03));
+    expect(bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(100_00), other: 0 }, 2)).toBe(Math.round(cad(100_00) * 0.03));
     // And the last cycle's tally is gone, not kept.
     expect(Object.keys(credit.bonusUsed!).every((k) => k.endsWith('@c2'))).toBe(true);
   });
@@ -342,27 +335,28 @@ describe('a card’s bonus categories', () => {
   it('pays RBC 1% past its first $6,000 of groceries a year, above its 0.5% base', () => {
     const credit = {} as CreditState;
     const big = cad(8_000_00);
-    expect(bonusRewards(sim, card('ca-rbc'), credit, 0.005, { food: big, bills: 0, other: 0 }, 1)).toBe(Math.round(cad(6_000_00) * 0.02 + (big - cad(6_000_00)) * 0.01));
+    expect(bonusRewards(sim, card('ca-rbc'), credit, 0.005, { food: big, other: 0 }, 1)).toBe(Math.round(cad(6_000_00) * 0.02 + (big - cad(6_000_00)) * 0.01));
   });
 
   it('holds Bank of America’s 2% on groceries to $2,500 a quarter across statements, and 1% past it', () => {
     const credit = {} as CreditState;
-    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 2_000_00, bills: 0, other: 0 }, 1)).toBe(4_000);
+    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 2_000_00, other: 0 }, 1)).toBe(4_000);
     // The same quarter: $500 more at 2%, the rest at 1%.
-    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 1_000_00, bills: 0, other: 500_00 }, 2)).toBe(Math.round(500_00 * 0.02 + 500_00 * 0.01 + 500_00 * 0.01));
+    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 1_000_00, other: 500_00 }, 2)).toBe(Math.round(500_00 * 0.02 + 500_00 * 0.01 + 500_00 * 0.01));
   });
 
-  it('shares Scotiabank’s $15,000 a year among its categories, and pays CIBC’s without a cap', () => {
+  it('holds Scotiabank’s 1% to $15,000 a year, and pays CIBC’s without a cap', () => {
     const credit = {} as CreditState;
     const big = cad(10_000_00);
-    expect(bonusRewards(sim, card('ca-scotiabank'), credit, 0.005, { food: big, bills: big, other: 0 }, 1)).toBe(Math.round(cad(15_000_00) * 0.01 + (2 * big - cad(15_000_00)) * 0.005));
-    expect(bonusRewards(sim, card('ca-cibc'), {} as CreditState, 0.005, { food: big, bills: big, other: 100_00 }, 1)).toBe(Math.round(big * 0.02 + big * 0.01 + 100_00 * 0.005));
+    expect(bonusRewards(sim, card('ca-scotiabank'), credit, 0.005, { food: big, other: 0 }, 1)).toBe(Math.round(big * 0.01));
+    expect(bonusRewards(sim, card('ca-scotiabank'), credit, 0.005, { food: big, other: 0 }, 1)).toBe(Math.round((cad(15_000_00) - big) * 0.01 + (2 * big - cad(15_000_00)) * 0.005));
+    expect(bonusRewards(sim, card('ca-cibc'), {} as CreditState, 0.005, { food: big, other: 100_00 }, 1)).toBe(Math.round(big * 0.02 + 100_00 * 0.005));
   });
 
-  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories but the bills’ telecoms', () => {
-    expect(bonusRewards(sim, card('us-chase'), {} as CreditState, 0.015, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(450);
+  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories', () => {
+    expect(bonusRewards(sim, card('us-chase'), {} as CreditState, 0.015, { food: 100_00, other: 200_00 }, 1)).toBe(450);
     expect(BONUSES['us-chase']).toBeUndefined();
-    // 1% of the groceries, and 4% of the phone and internet's share of the bills, INEGI's 4.8 of 19.5 of what isn't energy.
-    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100 + Math.round(100_00 * 0.04 * (84 / 180) * (4.8 / 19.5)));
+    // 1% of the groceries; the bills' 4% on telecoms went on 2026-10-09.
+    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, other: 200_00 }, 1)).toBe(100);
   });
 });

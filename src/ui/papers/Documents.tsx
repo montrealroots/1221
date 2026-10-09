@@ -241,11 +241,10 @@ function ResidencePanel() {
               return (
                 <tr key={iso}>
                   <td><Open subject={at('country', iso === 'GB' ? 'uk' : iso.toLowerCase())}>{name}</Open></td>
-                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim, iso as 'GB' | 'MX' | 'US'), cur)}`}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
+                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim), cur)}`}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
                   <td>
                     <div className="row gap-1" style={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                      {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, iso === 'GB' ? 'The Global Talent visa is granted' : iso === 'US' ? 'The petition is in' : 'Temporary residence is granted')}>Apply</Gated>}
-                      {!held && !no && iso === 'US' && <Gated feature="documents.residence" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('documents.residence', { country: iso, premium: true }); if (a.ok) toast(`The petition is in, premium, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); }}>Apply With Premium Processing</Gated>}
+                      {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, 'Temporary residence is granted')}>Apply</Gated>}
                       {!naturalize && <Gated feature="documents.naturalize" className="btn btn-sm btn-ghost" onClick={() => act('documents.naturalize', iso, 'Applied for citizenship')}>Naturalize</Gated>}
                       {held && !settle && <Gated feature="documents.settle" className="btn btn-sm btn-ghost" onClick={() => act('documents.settle', iso, 'Settled')}>Settle</Gated>}
                       {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" onClick={() => act('documents.renew_residence', iso, 'Renewed for a year')}>Renew</Gated>}

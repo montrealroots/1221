@@ -21,7 +21,7 @@ Both catalogs were rebuilt afterwards from fresh research in this account: washe
 ## The counting change of 2026-10-05
 
 The owner ruled that sizes, colors, storage tiers, configurations and duplicate listings are variants, never
-distinct products. `tools/catalog-coverage.mjs` had counted:
+distinct products. tools/catalog-coverage.mjs had counted:
 
 | Category | Counted as products | Before | After |
 |---|---|---|---|

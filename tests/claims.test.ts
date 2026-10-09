@@ -13,7 +13,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { appointmentsOf } from '@/engine/systems/appointments';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
-const onMarketplace = (sim: Simulation) => { const h = healthOf(sim.player); delete h.sag; h.marketplace = { from: sim.now - MS_DAY, state: 'ny' }; };
+const onMarketplace = (sim: Simulation) => { const h = healthOf(sim.player); h.marketplace = { from: sim.now - MS_DAY, state: 'ny' }; };
 
 /** A denied visit's bill, searching claims until one is denied. */
 function denied(seed: string): { sim: Simulation; billId: string } {

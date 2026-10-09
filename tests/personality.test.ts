@@ -35,6 +35,8 @@ import type { Simulation } from '@/engine';
 const KNOBS: readonly PersonalityKnob[] = [
   'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
   'illnessToll', 'receipts', 'bondWarmth', 'bondWound', 'company', 'appetite',
+  // From the connected world of 2026-10-09 (`tests/traits-connected.test.ts`).
+  'morning', 'evening', 'readsAround', 'drills', 'skims', 'revises', 'mealMood',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */
@@ -384,7 +386,7 @@ describe('what it does', () => {
       .toBeGreaterThan(personalityOf(person([], { conscientiousness: 5 }), 'sleepQuality'));
   });
 
-  it('keeps the four axes read elsewhere off the knobs, and Keeps Accounts to its receipts', () => {
+  it('keeps the four axes read elsewhere off the knobs, and Keeps Accounts to its receipts and its slights', () => {
     // Openness, extraversion and agreeableness are read by a day's work
     // (`systems/enjoyment.ts`), risk tolerance by the card: none by a knob.
     for (const axis of ['openness', 'extraversion', 'agreeableness', 'riskTolerance'] as const) {
@@ -393,7 +395,9 @@ describe('what it does', () => {
           .toBe(personalityOf(person([], { [axis]: 95 }), knob));
       }
     }
-    for (const knob of KNOBS.filter((k) => k !== 'receipts')) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+    // From 2026-10-09 somebody who keeps accounts keeps them on a slight too (`bondWound`).
+    for (const knob of KNOBS.filter((k) => k !== 'receipts' && k !== 'bondWound')) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+    expect(personalityOf(person(['keeps_accounts']), 'bondWound')).toBeGreaterThan(1);
     expect(personalityOf(person(['keeps_accounts']), 'receipts')).toBeGreaterThan(1.2);
   });
 
@@ -406,7 +410,8 @@ describe('what it does', () => {
     // And the other three money traits move nothing else, but that people remember a generous person fondly.
     expect(personalityOf(person(['generous']), 'bondWarmth')).toBeGreaterThan(1);
     for (const id of ['frugal', 'spender', 'generous']) {
-      for (const knob of KNOBS.filter((k) => k !== 'spending' && !(id === 'generous' && k === 'bondWarmth'))) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
+      // From 2026-10-09 a meal lifts a spender more and a frugal person less (`mealMood`).
+      for (const knob of KNOBS.filter((k) => k !== 'spending' && k !== 'mealMood' && !(id === 'generous' && k === 'bondWarmth'))) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
     }
   });
 

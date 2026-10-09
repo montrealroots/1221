@@ -209,7 +209,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   armWorldClock(sim);
   // A home was moved into here, its deposit held and its rent due on the first, until the home went on 2026-10-09.
-  player.payments = freshPayments(player.currentLocationId);
+  player.payments = freshPayments();
   openCredit(sim, player, wealth.creditScore);
   // The year's return for every life (`systems/taxreturn.ts`). It was armed by enrolling at the school and by the career's
   // start, and a life begun elsewhere had none, until the career went in the scope reset of 2026-10-09.
@@ -367,10 +367,12 @@ function returnTheHomesMoney(sim: Simulation): void {
       sim.post({ memo: 'The deposit back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: held.balance }, { accountId: held.id, amount: -held.balance }] });
       held.closedAt = sim.now;
     }
-    const ahead = person.payments?.rentCredit ?? 0;
-    if (ahead > 0 && person.payments) {
+    // Read off the save as it was written: the settings dropped it from their shape with the rent (schema 91).
+    const old = person.payments as unknown as { rentCredit?: number } | undefined;
+    const ahead = old?.rentCredit ?? 0;
+    if (ahead > 0 && old) {
       sim.post({ memo: 'Rent paid ahead, back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
-      delete person.payments.rentCredit;
+      delete old.rentCredit;
     }
   }
 }
@@ -396,6 +398,15 @@ const GONE_AT_90 = [
   'pensionStart', 'dressed', 'tvLicence', 'wornNow', 'clothesSince', 'billSplit', 'trying', 'suppliesSince', 'usesFirst', 'favorites',
   'ikeaCredit', 'lastShave', 'showerMinutes', 'lastMakeup', 'lastStyle', 'bulkyYear', 'nailsAt', 'pilotLicences',
 ] as const;
+
+/** What schema 91 takes off, by where it's kept: each read only by what went on 2026-10-09. */
+const GONE_AT_91 = {
+  payments: ['rent', 'bills', 'checks', 'checkbookBought'],
+  health: ['sag', 'equity', 'cobra', 'cobraOffer', 'lastUnion'],
+  attrs: ['reputation', 'recognition'],
+  person: ['returnedHomeAt'],
+  year: ['homeInterest', 'homeTax', 'homePmi', 'rentalRent', 'rentalCosts', 'homeGain', 'homeGainShort', 'homeGainExcluded', 'homeGain1250', 'rentalDisposed', 'lodgerRent', 'lodgerTaxed', 'farmRent', 'farmTaxed'],
+} as const;
 
 export interface MigrationResult {
   migrated: boolean;
@@ -793,6 +804,26 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Where it's unsafe to bring forward, it isn't: a ledger that doesn't reconcile is refused, and the slot left as it was.
     const unbalanced = probe.ledger.audit();
     if (unbalanced.length > 0) problems.push(`This save’s money doesn’t reconcile (${unbalanced[0]}), so it can’t be brought forward safely. It hasn’t been changed.`);
+  }
+
+  // 91, the connected world of 2026-10-09: what only the home, the career and the move home reached. Run on every
+  // open, as 90's is, so a save written between the two loses the same. A rent already paid ahead (`rentCredit`) is
+  // kept, for `returnTheHomesMoney` to give back.
+  {
+    let shed = 0;
+    const drop = (o: unknown, keys: readonly string[]) => {
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      for (const k of keys) if (k in r) { delete r[k]; shed += 1; }
+    };
+    for (const person of Object.values(universe.people ?? {})) {
+      drop(person.payments, GONE_AT_91.payments);
+      drop(person.health, GONE_AT_91.health);
+      drop(person.attrs, GONE_AT_91.attrs);
+      drop(person, GONE_AT_91.person);
+      for (const year of Object.values(person.earnings?.years ?? {})) drop(year, GONE_AT_91.year);
+    }
+    if (shed > 0) steps.push(`Let go ${plural(shed, 'thing', 'things')} only the home, the career and a move home reached.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film

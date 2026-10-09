@@ -20,6 +20,8 @@ import {
   STANDING_LABEL, ceilingOf, coursesOn, meanCraft, nextClasses, rankIn, termLabel, termOf, termStart, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Person } from '@/engine/domain/model';
+import { templateById, type PrepDim } from '@/engine/content/coursework';
+import { BAND_LABEL, assignmentById, courseworkOf, preparedParts, weightsOf, type Assignment } from '@/engine/systems/coursework';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, lookExists, type Way } from './registry';
@@ -170,6 +172,10 @@ defineLook<TheCourse>('course', {
     if (next !== undefined) {
       ways.push({ to: at('day', dateKey(next, sim.homeZone)), label: `Meets Next ${formatDate(next, schoolZone())}`, detail: 'Its next class day on the timetable, and what else is on it' });
     }
+    // Its work set and open, each opening into how far it’s prepared (from 2026-10-09).
+    for (const a of person ? (courseworkOf(sim, person)?.assignments ?? []).filter((x) => x.course === course.code && (x.status === 'open' || x.status === 'revising')) : []) {
+      ways.push({ to: at('assignment', a.id), label: templateById(a.template)?.title ?? 'Work Set', detail: `Set for this course, due ${a.status === 'revising' && a.revision ? a.revision.dueOn : a.dueOn}, and how far it’s prepared` });
+    }
     ways.push({ to: at('school', YALE_DRAMA.id), label: YALE_DRAMA.short, detail: school ? 'Where it’s taught, and where you stand there' : 'Where it’s taught, and in what town' });
 
     return {
@@ -265,6 +271,60 @@ defineLook<TheSkill>('skill', {
       ),
       ways,
       provenance: 'How much a session adds, and the scale, are SLATE’s; the ceiling is fitted to published studies of practice.',
+    };
+  },
+});
+
+// ---------------------------------------------------------------------------
+// A piece of coursework (from the connected world of 2026-10-09)
+// ---------------------------------------------------------------------------
+
+interface TheWork { person: Person; a: Assignment }
+
+const STATUS_WORD: Record<Assignment['status'], string> = { open: 'Open', revising: 'To Show Again', done: 'Shown', missed: 'Missed', lapsed: 'Let Lapse' };
+
+defineLook<TheWork>('assignment', {
+  gone: 'That work isn’t set, or was never yours.',
+  resolve: (sim, id) => {
+    const person = student(sim);
+    const a = person ? assignmentById(sim, person, id) : undefined;
+    return person && a ? { person, a } : undefined;
+  },
+  seeds: (sim) => { const p = student(sim); return p ? (courseworkOf(sim, p)?.assignments ?? []).slice(-3).map((a) => a.id) : []; },
+  look: ({ person, a }) => {
+    const t = templateById(a.template)!;
+    const course = COURSES.find((c) => c.code === a.course);
+    const due = a.status === 'revising' && a.revision ? a.revision.dueOn : a.dueOn;
+    const parts = preparedParts(person, a, due);
+    const weights = weightsOf(a);
+    const dims = (Object.keys(t.dims) as PrepDim[]).filter((d) => t.dims[d]);
+    const [y, m, d] = due.split('-').map(Number);
+    const dueAt = instantFromZoned({ year: y!, month: m!, day: d!, hour: 9 }, schoolZone());
+    const ways: Way[] = [];
+    if (course) ways.push({ to: at('course', course.code), label: course.name, detail: 'The course that set it, and what it trains' });
+    ways.push({ to: at('day', due), label: `Due ${formatDate(dueAt, schoolZone())}`, detail: 'The day it’s shown, and what else is on it' });
+    ways.push({ to: at('readiness', person.id), label: 'Readiness', detail: 'How sharp you come to the work, which each step of preparing it reads' });
+    return {
+      name: `${course?.name ?? a.course}: ${t.title}`,
+      kind: 'A Piece Of Coursework',
+      summary: `${STATUS_WORD[a.status]}. ${t.deliverable}, due ${formatDate(dueAt, schoolZone())}.${a.shown ? ` Shown: ${BAND_LABEL[a.shown.band]}.` : ''}`,
+      parent: course ? at('course', course.code) : undefined,
+      body: (
+        <table>
+          <thead><tr><th scope="col">Part</th><th scope="col" className="num">Prepared</th><th scope="col" className="num">Of The Showing</th></tr></thead>
+          <tbody>
+            {dims.map((k) => (
+              <tr key={k}>
+                <td className="small">{t.dims[k]!.label}</td>
+                <td className="num mono">{Math.round((parts[k] ?? a.prep[k] ?? 0) * 100)}%</td>
+                <td className="num mono dim">{Math.round((weights[k] ?? 0) * 100)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ),
+      ways,
+      provenance: 'Prepared is how far each part stands on the day it’s due, what fades by then taken off; the showing weighs each part by its share. The steps that prepare it are on the School’s coursework.',
     };
   },
 });

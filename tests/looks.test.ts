@@ -20,7 +20,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { isValidElement, type ReactElement, type ReactNode } from 'react';
-import { quickSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
@@ -28,6 +28,9 @@ import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 import { readiness, readinessParts } from '@/engine/systems/life';
+import { healthOf } from '@/engine/systems/health';
+import { setWork } from '@/engine/systems/coursework';
+import { newLifeConfig } from '@/engine/world/bootstrap';
 
 const UI = new URL('../src/ui/', import.meta.url);
 
@@ -45,9 +48,15 @@ const UI = new URL('../src/ui/', import.meta.url);
  * stay honest, and the two kinds are registered first because the engine
  * refuses to schedule anything nothing would handle.
  */
-function world(): Simulation {
-  const sim = quickSave();
+function world(student = false): Simulation {
+  // And a student, from 2026-10-09, so the school's own looks have coursework to open onto.
+  const sim = student ? createSave(1, 'looks', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' }) : quickSave();
   const player = sim.universe.people[sim.universe.playerId]!;
+
+  // A trait held, a condition carried and a piece of coursework set (from 2026-10-09), so their looks are crawled.
+  player.personalityTraits = ['curious'];
+  player.health = { ...healthOf(player), chronic: { ...healthOf(player).chronic, asthma: { treated: false } } };
+  setWork(sim, player, 'DRAM 103a/b', { year: 2026, month: 9, day: 28 });
 
   sim.onSchedule('life.appointment', () => {});
   sim.onSchedule('life.dinner', () => {});
@@ -179,8 +188,7 @@ describe('what’s costing readiness', () => {
 });
 
 describe('the shape of a look', () => {
-  const sim = world();
-  const looks = [...crawl(sim).seen.entries()];
+  const looks = [world(), world(true)].flatMap((one) => [...crawl(one).seen.entries()]);
 
   it('crawls something worth crawling', () => {
     expect(lookKinds().length).toBeGreaterThan(3);
@@ -294,8 +302,11 @@ describe('the shape of a look', () => {
 });
 
 describe('the graph', () => {
-  const sim = world();
-  const { broken, deadSeeds, seen } = crawl(sim);
+  const worlds = [world(), world(true)];
+  const crawls = worlds.map((one) => crawl(one));
+  const broken = crawls.flatMap((c) => c.broken);
+  const deadSeeds = crawls.flatMap((c) => c.deadSeeds);
+  const seen = new Map(crawls.flatMap((c) => [...c.seen.entries()]));
 
   it('opens onto something at every edge', () => {
     const lines = broken.map((b) => `${b.from} → ${b.way.label} (${subjectKey(b.way.to)})`);
@@ -308,11 +319,13 @@ describe('the graph', () => {
 
   it('never parents a thing to itself', () => {
     // trailTo throws on a cycle; walking every reachable subject proves none does.
-    for (const key of seen.keys()) {
-      const cut = key.indexOf(':');
-      const subject = cut < 0 ? at(key) : at(key.slice(0, cut), key.slice(cut + 1));
-      expect(() => trailTo(sim, subject), `${key} sits in a cycle`).not.toThrow();
-    }
+    worlds.forEach((sim, i) => {
+      for (const key of crawls[i]!.seen.keys()) {
+        const cut = key.indexOf(':');
+        const subject = cut < 0 ? at(key) : at(key.slice(0, cut), key.slice(cut + 1));
+        expect(() => trailTo(sim, subject), `${key} sits in a cycle`).not.toThrow();
+      }
+    });
   });
 
   it('reaches every declared kind from a seed', () => {

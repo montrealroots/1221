@@ -561,7 +561,8 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.nourishment = clamp(w.nourishment + eaten, 0, 100);
     // Ordered in: a restaurant's meal (`content/body.ts`).
     if (action === 'order') eatsOut(person);
-    w.morale = clamp(w.morale + eaten * 0.04 * swing, 0, 100);
+    // A meal's lift is the eater's too (`mealMood`, from 2026-10-09): the frugal take less from it, a spender more.
+    w.morale = clamp(w.morale + eaten * 0.04 * swing * personalityOf(person, 'mealMood'), 0, 100);
   } else if (action === 'wash') {
     const washed = 100 - (w.hygiene ?? 80);
     w.hygiene = 100;
@@ -582,6 +583,85 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
   }
+}
+
+/** One thing on the Look After Yourself menu, as the menu shows it and in the order it's shown (`lookAfterOptions`). */
+export interface LookAfterOption {
+  action: LookAfter;
+  label: string;
+  minutes: number;
+  cost: number;
+  /** Why it can't be done now, the command's own words (`lookAfterRefusal`). */
+  refused?: string;
+  /** Readiness points it gives back on what it does alone, the time it takes aside. */
+  gain: number;
+  /** Whether what it mends is costing the body every hour it's left: hunger, grime, stress past the line. */
+  urgent: boolean;
+  /** Why it's where it is, from the dials. */
+  why: string;
+  /** The dials it moves, from and to, on what it does alone. */
+  changes: { dial: keyof Wellbeing; from: number; to: number }[];
+}
+
+/**
+ * The Look After Yourself menu, from the connected world of 2026-10-09: each
+ * thing with its time, its cost and what it would do to the dials, and in the
+ * order of what it's worth now. Until then the menu was a fixed list.
+ *
+ * What it would do is `applyLookingAfter` on a copy of the person, so the
+ * preview is the command's own arithmetic; the time it takes costs what any
+ * waking time does on top. Its order: first what's costing the body every
+ * hour (`HUNGRY`, `GRIMY`, `OVERWROUGHT`, the lines `applyElapsedWellbeing`
+ * charges past), then by the readiness it gives back, then what gives back
+ * next to nothing, then what can't be done now; and within each, the fixed
+ * order of `LOOKING_AFTER`, so a tie never reshuffles the menu. Nothing on
+ * it happens by itself: it only orders what the player may choose.
+ */
+export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
+  const person = sim.player;
+  const w = person.wellbeing;
+  const before = readiness(person);
+  const order = Object.keys(LOOKING_AFTER) as LookAfter[];
+  const options = order.map((action): LookAfterOption => {
+    // A copy, without the body's tally, which a meal ordered in adds to (`eatsOut`).
+    const copy = { ...person, wellbeing: { ...w }, body: undefined } as Person;
+    applyLookingAfter(copy, action, sim.now, action === 'exercise' ? trainingAt(sim, person).builds : 1);
+    const changes = (Object.keys(w) as (keyof Wellbeing)[])
+      .filter((k) => typeof w[k] === 'number' && Math.round((copy.wellbeing[k] as number) * 10) !== Math.round((w[k] as number) * 10))
+      .map((k) => ({ dial: k, from: w[k] as number, to: copy.wellbeing[k] as number }));
+    const gain = Math.round((readiness(copy) - before) * 10) / 10;
+    const feeds = action === 'eat' || action === 'order';
+    const urgent = (feeds && w.nourishment < HUNGRY) || (action === 'wash' && (w.hygiene ?? 80) < GRIMY) || (action === 'unwind' && w.stress > OVERWROUGHT);
+    return {
+      action, label: labelFor(sim, action), minutes: minutesFor(sim, action), cost: costFor(sim, action),
+      refused: lookAfterRefusal(sim, action), gain, urgent, why: whyNow(person, action, gain, urgent), changes,
+    };
+  });
+  const band = (o: LookAfterOption) => (o.refused ? 3 : o.urgent ? 0 : o.gain >= 0.5 ? 1 : 2);
+  return options
+    .map((o, i) => ({ o, i }))
+    .sort((a, b) => band(a.o) - band(b.o) || (band(a.o) === 1 ? b.o.gain - a.o.gain : 0) || a.i - b.i)
+    .map(({ o }) => o);
+}
+
+/** Why a thing stands where it does on the menu, in the dials' words. */
+function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean): string {
+  const w = person.wellbeing;
+  const r = (x: number) => Math.round(x);
+  if (action === 'eat' || action === 'order') {
+    if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and mood.`;
+    return gain >= 0.5 ? `Nourishment at ${r(w.nourishment)} is costing readiness.` : `Nourishment at ${r(w.nourishment)}: there’s little to gain from a meal yet.`;
+  }
+  if (action === 'wash') {
+    if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on the mood.`;
+    return gain >= 0.5 ? `Hygiene at ${r(w.hygiene ?? 80)}, and stress at ${r(w.stress)} it would ease.` : `Hygiene at ${r(w.hygiene ?? 80)}: little to gain yet.`;
+  }
+  if (action === 'unwind') {
+    if (urgent) return `Stress at ${r(w.stress)}: every hour over ${OVERWROUGHT} costs condition.`;
+    return gain >= 0.5 ? `Stress at ${r(w.stress)} and morale at ${r(w.morale)} are costing readiness.` : `Stress at ${r(w.stress)}: little to gain yet.`;
+  }
+  // A workout's worth is mostly fitness, which readiness doesn't read the day it's built; it costs energy now.
+  return `Builds fitness, at ${r(w.fitness)} now, and eases stress; costs ${r(workoutCosts(person))} energy.`;
 }
 
 // ---------------------------------------------------------------------------
