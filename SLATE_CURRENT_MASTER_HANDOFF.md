@@ -1,3 +1,88 @@
+# Read First: The Connected Attributes Of 2026-10-09
+
+The owner's brief: "Implement SLATE's Connected Attributes, Interests, Genres, Player Profile And Navigation", and
+mid-turn: "Also put research behind any engine. (Always!)"
+
+## Where it is
+
+- Branch `claude/connected-attributes`, pushed, two commits on main's `e8dac9c3`: `e2708b32` (the work) and
+  `103467c7` (coursework pitched at a student). **Not merged to main**: this brief didn't say to, and CLAUDE.md
+  says not without the owner. **Not deployed.**
+- **Save schema 92.** `SAVE_SCHEMA_VERSION` and the guard's `SUPPORTED_SCHEMA_VERSION` moved together. A deployment
+  still on 91 refuses every save this branch writes, so deploy the backend with the client.
+- Untouched, as before: the stash, both worktrees, `backup/pre-scope-reset-2026-10-09`, and the untracked
+  `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt`, `out/`, `out2/`, `out25/` and `page.html` (which is back on disk; not
+  created by this work).
+
+## What was built, and where
+
+- **One evaluation** for finished work (`systems/evaluation.ts`, ruleset `evaluation-1`). Eleven task profiles
+  (`content/tasks.ts`) over six dimensions. Each limit is the points it cost, recomputed with that one input made
+  whole. Every result is kept with its inputs on `person.work` (160 kept). The bands are LAMDA's 50, 65 and 80.
+- **Abilities** (`content/abilities.ts`, `systems/attributes.ts`): twelve, each kept in one place.
+  - Four live in the craft: Emotional Depth, Memory, Vocal Expression, Physical Expression. Their skill labels
+    were renamed to match.
+  - Presence, composure and five new ones live in `attrs`.
+  - Stamina is `wellbeing.fitness`, full at the age's ceiling (99.3 at 25).
+  - The other 17 craft skills are techniques, mastered at 90.
+- **Development** (`develop`): classes, coursework steps, partner rehearsals, calls, nights, reading plays and
+  interests grow what they train, toward the reach. Twenty-five deliberate exercises (`practice.exercise`) go past
+  it to full. The same exercise again the same day gives half, and practice stops counting past four hours a day.
+  The ledger is `person.development`.
+- **Interests and genres** (`systems/engagement.ts`, `content/engagement.ts` and `content/genres.ts`, both generated
+  from the research):
+  - Interests: `interest.pursue`, with rest by kind, satiation and familiarity.
+  - Genres: `genre.study` and `practice.self_tape`, with familiarity and practice.
+  - Genre speed takes the best of a work's genres, never the sum.
+  - Families lean the dimensions, normalized.
+  - Only `enjoyment.ts` reads the character sheet's preferences (`lovesInterest`).
+- **Nights** are judged (`nightEvaluation`), with the process's lines, blocking and notes as preparation. Nerves
+  no longer take focus; composure is read in consistency.
+- **Coursework showings** are judged (`judgeWork`), with difficulty from the template's par, from −0.3 to 0.
+- **Migration 92** fills the five new abilities from `derivedAbilities`, counts credited nights as genre practice,
+  and starts empty histories. It is idempotent. Old showings and nights keep their bands.
+- **UI:**
+  - The Player Profile (`/workspace/profile`): eight sections, practice buttons and suggestions from the last
+    work's limits.
+  - Looks: `ability`, `interest`, `genre` and `work`.
+  - The rail: Profile, School, Money and Papers, each shown once its guide chapter has been read. The calendar
+    stays off the rail, by the earlier decision a test holds.
+  - Your name at the foot of the rail opens the profile.
+  - Hash history for Back and Forward; `p` opens the profile.
+  - Home's Where You Are went from eight tiles to two.
+  - A new guide chapter, "You As An Actor" (12th).
+- **Research:** `docs/research/attributes/` (three JSON files and a README).
+- **Matrix:** `docs/ATTRIBUTES-MATRIX.md`, generated (`tools/attributes-matrix.ts`) and test-held: 12/12
+  abilities, 17/17 techniques, 64/64 interests, 149/149 genres, 11/11 profiles, 25/25 exercises, 8/8 sections and
+  6/6 destinations.
+
+## Verified (2026-10-09)
+
+- **Gate:** passed, exit read from a file, at `103467c7`'s tree: 115 files, 1408 tests and all 15 checks. The build
+  passes.
+- **Mutations:** 20 of 20 killed (guarantee, variation, mastery scale, stamina ceiling, counted-once, family mean,
+  weakest-dimension blend, repeat halving, reach, four-hour cap, discipline once a day, satiation, loved ≠ practice,
+  genre sharing, best-not-sum, both migration steps, lead difficulty).
+- **Matched runs** (`tools/matched.ts`), rested and prepared, every profile: about 22 at level 30, 48 at 55, 76 at
+  80, and exactly 100 at 100. At full ability, half preparation gives 67.5, and being spent gives 75 to 85.
+- **Played lives** (`tools/lives.ts`, 3.3 years):
+  - 18 of 18 graduated with 0 breaches at `e2708b32` plus the lowered night difficulty.
+  - Nights averaged 55 to 58 attentive, 62 to 66 practicing (strong nights appearing) and 26 to 34 autopilot in
+    year one.
+  - Only 5 of 18 lives were rerun after `103467c7` before the system stopped the run for low memory: all 5
+    graduated, 0 breaches, scenes about 49 (half Working).
+  - **Rerun the full 18 when memory allows.**
+- **Screenshots** were taken at 1440 and 390 of the profile, the drawer and Home, from a played save. They are in
+  the session scratchpad only.
+
+## Known limits
+
+- The work history keeps 160 records, so a three-year life's `byYear` in the lives tool covers only the latest.
+- Stamina detrains as fitness does, the one exception to "rest erases nothing" (`docs/UNBITTEN.md`).
+- Genre demands and interest caveats are shown, not read. Classmates have no abilities; casting still reads the
+  craft.
+- 119 genres' demands and 28 interests are low-confidence research, and the looks say so.
+
 # Read First: The Connected World Of 2026-10-09
 
 **This section and the scope reset's below it supersede everything after them.** The owner's brief, the same day
