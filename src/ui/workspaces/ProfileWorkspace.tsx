@@ -27,7 +27,7 @@ import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
-import { conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
+import { classesGrow, conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
 import { SELF_TAPE, bestRest, minutesOf, pursueRefusal, restOf, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
@@ -206,7 +206,7 @@ function AbilitiesPanel() {
                     <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open></td>
                     <td className="num mono">{one(now)}</td>
                     <td className="num mono">{one(full)}</td>
-                    <td className="num mono">{one(Math.min(full, reachOf(person, d.id)))}</td>
+                    <td className="num mono" title={classesGrow(d.id) ? undefined : 'Classes don’t build it'}>{classesGrow(d.id) ? one(Math.min(full, reachOf(person, d.id))) : '—'}</td>
                     <td className="xs">{today.length ? today.join('; ') : 'Nothing holds it back'}</td>
                     <td className="xs">{[...new Set(readersOf(d.id).flatMap((r) => r.dims))].map((x) => DIMENSION_LABEL[x]).join(', ') || '—'}</td>
                     <td className="xs nowrap">{h ? `+${h.delta.toFixed(2)}, ${sourceWords(h.source)}` : 'None yet'}</td>

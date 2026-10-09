@@ -72,7 +72,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAY
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { ATTRIBUTES, abilityGain, classmatePresence, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
+import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
 import { recordScholarship, recordWages, yearOf } from './earnings';
@@ -652,6 +652,17 @@ export function reachOf(person: Person, target: Target): number {
   if (held) return ceilingOf(person.craft, held);
   const kin = ABILITY_KIN[id];
   return kin ? kin.reduce((s, k) => s + ceilingOf(person.craft!, k), 0) / kin.length : 100;
+}
+
+/**
+ * Whether classes grow it at all (from 2026-10-10): a technique, an ability kept in the craft, or one with kin among the
+ * craft (`ABILITY_KIN`). Presence and composure grow in front of people, discipline from practice kept up, and stamina
+ * from workouts; until 2026-10-10 the Profile showed each a "Classes Reach" of full, which classes never brought it to.
+ */
+export function classesGrow(target: Target): boolean {
+  const id = targetId(target);
+  if (!isAbility(id)) return true;
+  return Boolean(CRAFT_ABILITY[id] || ABILITY_KIN[id]);
 }
 
 /** Ordinary development from a piece of work (a class, a step, a call): toward the reach, never past it, recorded. */

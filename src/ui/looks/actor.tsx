@@ -20,7 +20,7 @@ import { INTEREST_DEFS, RECOVERY, phaseOf } from '@/engine/content/engagement';
 import { GENRE_DEFS } from '@/engine/content/genres';
 import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, levelOf, targetId } from '@/engine/systems/attributes';
-import { reachOf } from '@/engine/systems/school';
+import { classesGrow, reachOf } from '@/engine/systems/school';
 import { EVERYDAY_FITNESS, FITNESS } from '@/engine/systems/life';
 import { genreSpeed, playOfGenre, restOf, satiationNow } from '@/engine/systems/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
@@ -108,7 +108,7 @@ defineLook<TheAbility>('ability', {
         <>
           <div className="grid grid-3">
             <Stat label="Now" value={one(level)} note={level >= full ? 'Full: work that reads it asks nothing more' : `${one(full - level)} to full`} />
-            <Stat label="Classes Reach" value={one(reach)} note="Where ordinary work levels off; practice goes past it" />
+            <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Where ordinary work levels off; practice goes past it' : id === 'stamina' ? 'Classes don’t build it; workouts do' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; work in front of people does'} />
             <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : 'Nothing has moved it since the history began'} />
           </div>
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
@@ -214,8 +214,8 @@ defineLook<TheGenre>('genre', {
               <p className="small"><strong>{applied(id) && demand.tags.length ? 'Applied as requirements.' : 'Not applied.'}</strong>{' '}
                 {applied(id) && demand.tags.length
                   ? <>Work in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}{demand.basis === 'definition' ? ' The genre is defined by it: that’s SLATE’s reading, not a source’s statement.' : ''}</>
-                  : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so work in it asks nothing past what all screen work does.`
-                  : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what all screen work does.'}
+                  : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so work in it asks nothing past what the work itself reads.`
+                  : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what the work itself reads.'}
               </p>
               <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>
             </>

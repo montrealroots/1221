@@ -33,7 +33,8 @@ import { MS_DAY, MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { breaches } from '../src/engine/core/invariants';
 import { readiness, suggestedSleep } from '../src/engine/systems/life';
 import { inTheBank } from '../src/engine/systems/spending';
-import { coverOn, healthOf } from '../src/engine/systems/health';
+import { careFor, coverOn } from '../src/engine/systems/health';
+import { CARE } from '../src/engine/content/safetynet';
 import { mayHurt } from '../src/engine/systems/injury';
 import { journeyOf } from '../src/engine/systems/evaluation';
 import { abilitiesOf, developmentOf } from '../src/engine/systems/attributes';
@@ -53,8 +54,11 @@ const PROFILES: Profile[] = [
   // From 2026-10-09: attentive, and the hours left over spent as the Player Profile suggests (`practiceHour`).
   { name: 'new-york, practicing', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her', interests: ['nature', 'music'] }, play: 'practicing' },
   // TEST SETUP: a student without the wealthy family behind them, which the game's own new life always has.
-  // TEST SETUP: a student without the wealthy family behind them, and from 2026-10-10 under pressure: the flu at each
-  // term's start and an everyday injury each spring (`adverse`), so illness, injury and the recovery from them are played.
+  // TEST SETUP: a student without the wealthy family behind them, and from 2026-10-10 under pressure: the flu mid-term
+  // each term and an everyday injury each spring (`adverse`), so illness, injury and the recovery from them are played.
+  // Until the second pass of 2026-10-10 the flu came on 1 September and 1 January, a holiday, written straight onto the
+  // record without its toll on the body, and the student never called in sick: one life lost no counted work to any of
+  // it, which was the wrong measure. What's reported now is each event, and the work judged ill or hurt against the rest.
   { name: 'pressure: scraping, the flu and an injury, attentive', config: { homeRegionId: 'us-ca-losangeles', pronouns: 'he/him', wealth: 'scraping', family: undefined }, play: 'attentive', adverse: true },
 ];
 
@@ -68,6 +72,8 @@ function play(profile: Profile, seed: string): Result {
   const end = sim.now + YEARS * 365 * MS_DAY;
   let reloads = 0;
   let lastReload = sim.now;
+  const struck = new Set<string>();
+  const adverse: { at: string; what: string; days: number }[] = [];
   const ready: number[][] = [];
   let error: string | undefined;
   try {
@@ -90,9 +96,24 @@ function play(profile: Profile, seed: string): Result {
       }
       sim.advanceTo(sim.now + (profile.play === 'autopilot' ? MS_DAY : MS_HOUR));
       const p = zonedParts(sim.now, sim.zone);
-      // Under pressure: the flu for a week at each term's start, and an everyday injury on the first of March.
-      if (profile.adverse && p.hour === 9 && p.day === 1 && (p.month === 9 || p.month === 1)) healthOf(sim.player).fluUntil = sim.now + 7 * MS_DAY;
-      if (profile.adverse && p.hour === 9 && p.day === 1 && p.month === 3) mayHurt(sim, sim.player, 'fall', 1, sim.now);
+      // Under pressure: the flu through the game's own care (its toll and its days) mid-term, on 15 October and 15
+      // February, and an everyday injury on 1 March, each at the first hour seen that day or after (a night's sleep
+      // passes hours unseen).
+      if (profile.adverse) {
+        const key = (m: number, d: number) => (p.month === m && p.day >= d) || (p.month === m + 1 && p.day < d) ? `${p.year}-${m}` : undefined;
+        const flu = key(10, 15) ?? key(2, 15);
+        if (flu && !struck.has(`flu ${flu}`)) {
+          struck.add(`flu ${flu}`);
+          careFor(sim, sim.player, { care: 'visit', what: 'The flu', flu: true }, sim.now);
+          adverse.push({ at: `${p.year}-${p.month}-${p.day}`, what: 'flu', days: CARE.fluDays });
+        }
+        const hurt = key(3, 1);
+        if (hurt && !struck.has(`hurt ${hurt}`)) {
+          struck.add(`hurt ${hurt}`);
+          const i = mayHurt(sim, sim.player, 'fall', 1, sim.now);
+          adverse.push({ at: `${p.year}-${p.month}-${p.day}`, what: i ? i.kind : 'already hurt', days: i ? Math.round((i.until - i.at) / MS_DAY) : 0 });
+        }
+      }
       // Saved and opened again every thirty days (from 2026-10-10; each new year until then), as a player would between sessions.
       if (sim.now - lastReload >= 30 * MS_DAY && (profile.play === 'autopilot' || p.hour === 12)) {
         sim = loadSave(deserialise(serialise(sim.universe)) as never);
@@ -155,6 +176,11 @@ function play(profile: Profile, seed: string): Result {
     // An international graduate's status and cover at the end (from 2026-10-09: the marketplace asks lawful presence).
     usStatus: sim.player.usOutOfStatus !== undefined ? 'out of status' : 'in status or a citizen', cover: coverOn(sim.player, sim.now) ?? 'none',
     planEnded: sim.universe.notifications.some((n) => n.title === 'Your Marketplace Plan Has Ended'),
+    // The work judged ill, hurt or concussed against the rest, from the detail kept; and the days excused.
+    ...(profile.adverse ? { adverse, condition: (() => {
+      const of = (f: (c: Record<string, unknown>) => boolean) => { const xs = work.filter((x) => f(x.inputs.condition as never)); return { n: xs.length, mean: xs.length ? Math.round(xs.reduce((a, x) => a + x.overall, 0) / xs.length * 10) / 10 : null, tasks: [...new Set(xs.map((x) => x.task))] }; };
+      return { ill: of((c) => Boolean(c.ill)), injured: of((c) => Boolean(c.injured)), concussed: of((c) => Boolean(c.concussed)), well: of((c) => !c.ill && !c.injured && !c.concussed), days: { classDays: school?.tally?.classDays, attended: school?.tally?.attended, excused: school?.tally?.excused } };
+    })() } : {}),
     bank: Math.round(inTheBank(sim, sim.player) / 100), breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads, ...(error ? { error } : {}),
   };
 }
