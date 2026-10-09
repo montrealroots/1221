@@ -492,6 +492,16 @@ export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefi
   return undefined;
 }
 
+/**
+ * Why an hour of one's own can't start now: something on the calendar that wants the player begins inside it (from
+ * 2026-10-10). An hour of practice, an interest or study isn't lived across a class or a call: it's refused, and says
+ * what's coming and when.
+ */
+export function commitmentWithin(sim: Simulation, minutes: number): string | undefined {
+  const next = sim.timeline.between(sim.now, sim.now + minutes * 60_000).find((i) => i.requiresPlayer === true && i.status === 'pending');
+  return next ? `${next.label} starts at ${formatTime(next.at, sim.zone)}: there isn’t the time before it.` : undefined;
+}
+
 /** How long it takes. Until 2026-10-09 the laundry and the cleaning took as long as the home made them. */
 export function minutesFor(_sim: Simulation, action: LookAfter): number {
   return LOOKING_AFTER[action].minutes;

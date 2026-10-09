@@ -55,6 +55,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { rngFor } from '../core/rng';
 import { personalityOf } from './personality';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -71,7 +72,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAY
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
+import { ATTRIBUTES, abilityGain, classmatePresence, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
 import { recordScholarship, recordWages, yearOf } from './earnings';
@@ -79,15 +80,16 @@ import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
-import { bandOfQuality, evaluate as judge, recordWork, type Condition, type Evaluation } from './evaluation';
+import { bandOfQuality, evaluate as judgeWork, judge, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
+import { withDemands } from '../content/demands';
 import { practiceGenres } from './engagement';
 import { INJURY } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
+import { lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork } from './coursework';
 import { momentInClass } from './classmates';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
@@ -127,7 +129,16 @@ export interface TermTally {
 export interface Run { production: string; role: string; play?: string; by?: string; kind?: Casting['kind']; size?: PartSize; nights?: Partial<Record<Night, number>>; note?: string; noteSkill?: Skill; noteLevel?: number }
 
 /** A student's last part, which the chair reads when casting the next: its size, and how the nights went on average (`NIGHT_VALUE`). */
-export interface LastWork { size: PartSize; nights?: number; heeded?: boolean }
+export interface LastWork {
+  size: PartSize; nights?: number; heeded?: boolean;
+  /**
+   * How much of their ability they brought to it, 0 to 1 (from 2026-10-10): the player's, the mean of each night's
+   * preparation and condition as the evaluation found them; a classmate's, the share of calls they keep
+   * (`reliabilityOf`), as their calls aren't played one by one. What the chair reads of a last run since, in place
+   * of the nights' bands, which read the craft a second time.
+   */
+  delivery?: number;
+}
 
 /**
  * A classmate: a name, a craft, whether they're cast as an actor or an
@@ -135,8 +146,18 @@ export interface LastWork { size: PartSize; nights?: number; heeded?: boolean }
  * classmate's), and their last part. Until 2026-09-28 a classmate was a name
  * and a craft, all of them equally driven, and cast in nothing.
  */
+/**
+ * A classmate's abilities beside presence (from 2026-10-10), drawn once as the player's are (`mateAbilities`):
+ * composure by an emotional stability drawn for them, and the other four from their kin in the craft
+ * (`ABILITY_KIN`). Emotional Depth, Memory, Vocal and Physical Expression are their craft, as the player's are.
+ */
+export interface MateAbilities { composure: number; listening: number; imagination: number; focus: number; adaptability: number }
+
 export interface Classmate {
   name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork;
+  abilities?: MateAbilities;
+  /** Their last run, judged as the player's nights are (`classmateRun`): its whole, for the work's own record. */
+  shown?: { production: string; quality: number; at: Instant; runs: number };
   /** How far their craft can grow (`CEILING`). */
   ceiling?: Craft;
   /** Their presence, drawn once as the player's is (`classmatePresence`). */
@@ -224,6 +245,11 @@ export interface SchoolRecord {
   tally: TermTally;
   /** The player's last part, for the chair's next casting. */
   lastWork?: LastWork;
+  /**
+   * The chair's read of the cast the player is in, kept from 2026-10-10 for the screen: each student's fit for the
+   * play, how much of themselves they delivered last time, the balance of opportunity, the score and the part.
+   */
+  castRead?: { term: number; play: string; reads: Partial<Craft>; kinds: string[]; rows: { name: string; you: boolean; fit: number; delivery: number; balance: number; score: number; part: string; size: PartSize }[] };
   /** The term's casting across the class: who's in what, as which part. */
   around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[] };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
@@ -290,8 +316,13 @@ export const ESTIMATE = {
    * points against the next lead, a featured part two for it; and how the
    * last run's nights went, a point and a half a band. SLATE's estimate.
    */
-  /** And a director's note taken: the skill it named grown a point and a half by the next casting reads a point and a half better. SLATE's estimate. */
-  casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, nights: 1.5, heeded: 1.5, heedGain: 1.5 },
+  /**
+   * And from 2026-10-10 a fifth of a student's fit by how much of themselves they delivered in their last run
+   * (`LastWork.delivery`), in place of a point and a half a night's band and as much again for a director's note
+   * heeded, which read the craft again. A note heeded is still marked (`heedGain`, the skill grown a point and a half),
+   * for the record, and shows in the fit through the skill itself. SLATE's estimates.
+   */
+  casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, delivery: 0.2, heedGain: 1.5 },
   /**
    * What a night's band does (`nightOf`, judged by `systems/evaluation.ts` from 2026-10-09): a strong or remarkable
    * night lifts morale, and a remarkable one the presence; an off night stings. Until 2026-10-09 the band was readiness
@@ -628,6 +659,15 @@ export function ordinary(sim: Simulation, person: Person, target: Target, focus:
 /** The abilities a class grows besides its skills: those whose kin it trains (`ABILITY_KIN`), a share each. */
 export const classAbilities = (skills: readonly Skill[]): AbilityId[] => ABILITY_DEFS.filter((d) => (ABILITY_KIN[d.id] ?? []).some((k) => skills.includes(k))).map((d) => d.id);
 
+/** A classmate's ability grown as an ordinary session grows the player's, toward the mean of its kin's ceilings. */
+export function growMateAbility(sim: Simulation, person: Person, i: number, id: keyof MateAbilities, focus: number, weight: number): void {
+  const mate = person.school!.classmates[i]!;
+  const a = mateAbilities(sim, person, i);
+  const kin = ABILITY_KIN[id as AbilityId] ?? [];
+  const reach = kin.length ? kin.reduce((s, k) => s + ceilingOf(mate.craft, k), 0) / kin.length : 100;
+  a[id] = Math.min(100, a[id] + abilityGain(a[id], reach, { weight, focus, deliberate: false }));
+}
+
 /** What a class gives an ability it reaches through its skills, as a share of a session's weight: SLATE's estimate. */
 export const CLASS_ABILITY_SHARE = 0.5;
 
@@ -946,6 +986,8 @@ export function enroll(sim: Simulation, person: Person): void {
     workStudy: { electiveHours: 0, owedHours: 0 },
   };
   person.school = school;
+  // Each classmate's abilities, drawn as the class is admitted (from 2026-10-10, `mateAbilities`).
+  school.classmates.forEach((_, i) => mateAbilities(sim, person, i));
   // Illness comes at school too, with Yale Health to meet it; until 2026-09-27 it waited for the degree.
   armHealth(sim, person);
   // A scholarship for living costs is income the US taxes, and the returns begin with school.
@@ -1174,7 +1216,7 @@ export function readOf(craft: Craft, reads: Partial<Craft>): number {
  * slot, SLATE's estimate as the seasons aren't announced; a festival's new
  * plays unnamed, with parts by size for the class's share of the cast.
  */
-export function playOf(sim: Simulation, person: Person, production: { kind: Casting['kind']; n: number; runs: SchoolDate[] }): { title?: string; by?: string; parts: Part[]; reads: Partial<Craft> } {
+export function playOf(sim: Simulation, person: Person, production: { kind: Casting['kind']; n: number; runs: SchoolDate[] }): { title?: string; by?: string; parts: Part[]; reads: Partial<Craft>; kinds?: readonly string[] } {
   const year = production.runs[0]!.year;
   // Each save's own order of the plays, shuffled once (`school.class`), and
   // dealt out a slot at a time from the class's first year, so no student
@@ -1191,7 +1233,7 @@ export function playOf(sim: Simulation, person: Person, production: { kind: Cast
     const fall = production.runs[0]!.month >= 8 ? year : year - 1;
     const first = (person.school?.classOf ?? fall + 1) - 3;
     const play = production.kind === 'thesis' ? dealt(THESIS_PLAYS, 'thesis', (fall - first) * 3 + production.n) : dealt(SHAKESPEARE_PLAYS, 'shakespeare', (year - first - 1) * 3 + production.n);
-    return { title: play.title, by: play.by, parts: [...play.parts], reads: play.reads };
+    return { title: play.title, by: play.by, parts: [...play.parts], reads: play.reads, ...(play.kinds ? { kinds: play.kinds } : {}) };
   }
   return { parts: production.kind === 'hughes' ? unnamedParts(2, 3, 3) : unnamedParts(3, 6, 7), reads: NEW_PLAYS_READ };
 }
@@ -1211,7 +1253,9 @@ export function repPlayOf(sim: Simulation, person: Person, term: number): (typeo
 /** What a casting asks of the craft: its play's, a festival's new plays', or the Rep company's. */
 export function castingReads(c: { play?: string; kind?: Casting['kind'] }): Partial<Craft> {
   const play = c.play ? [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title === c.play) : undefined;
-  if (play) return play.reads;
+  // With what its kinds of play ask (`withDemands`, from 2026-10-10): a musical's singing and dancing, a farce's
+  // physical comedy, read by the casting, the rehearsals and every night.
+  if (play) return withDemands(play.reads, play.kinds ?? []);
   // The Rep's company without a named play asks a professional stage's; the rest are new work.
   return c.kind === 'role' || c.kind === 'understudy' ? COMPANY_READ : NEW_PLAYS_READ;
 }
@@ -1300,7 +1344,7 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   // Complete is what every call makes, but never asks less than a part's lines and blocking at their least.
   const par = completeFor(holder);
   const required: Record<string, number> = par ? { lines: Math.max(par.lines, NIGHT_LEAST.lines), blocking: Math.max(par.blocking, NIGHT_LEAST.blocking), notes: par.notes } : {};
-  return judge(sim, person, {
+  return judgeWork(sim, person, {
     task: E, techniques: castingReads(holder), prep, required, difficulty: NIGHT_DIFFICULTY[where][size],
     condition: conditionAt(sim, person, at), families: familiesOf(genresOfPlay(holder.play) ?? []), key: `night:${person.id}:${key}`,
   });
@@ -1358,12 +1402,98 @@ export function nightsMean(nights: Partial<Record<Night, number>>): number {
   return n ? all.reduce((sum, [b, c]) => sum + NIGHT_VALUE[b] * c, 0) / n : 0;
 }
 
-type Student = { i: number; name: string; craft: Craft; title: NonNullable<Classmate['title']>; last?: LastWork };
+type Student = { i: number; name: string; craft: Craft; title: NonNullable<Classmate['title']>; last?: LastWork; perf?: Performer };
 
-/** How a student reads to the chair for a play: its craft, the balance of opportunity, and how the last run went (`ESTIMATE.casting`). */
-export function castScore(s: { craft: Craft; last?: LastWork }, reads: Partial<Craft>): number {
+/**
+ * A classmate's abilities, drawn the first time they're asked for and kept (`MateAbilities`). From their craft as it
+ * stands then, so a class from before 2026-10-10 is drawn from the craft it has grown to, and the same save draws the
+ * same.
+ */
+export function mateAbilities(sim: Simulation, person: Person, i: number): MateAbilities {
+  const mate = person.school!.classmates[i]!;
+  mate.abilities ??= drawMateAbilities(sim.universe.meta.seed, person.id, i, mate.craft);
+  return mate.abilities;
+}
+
+/** The draw itself, by the save's seed, the player and the classmate's place: the same whenever it's made (migration 93 makes it). */
+export function drawMateAbilities(seed: string, personId: string, i: number, craft: Craft): MateAbilities {
+  const stability = 100 * rngFor(seed, 'attributes.composure', personId, `mate-${i}`).next();
+  const kin = (id: AbilityId) => { const k = ABILITY_KIN[id] ?? []; return Math.round(k.reduce((s, x) => s + craft[x], 0) / k.length * 10) / 10; };
+  return {
+    composure: Math.round((ATTRIBUTES.composureStart.base + ATTRIBUTES.composureStart.perStability * stability) * 10) / 10,
+    listening: kin('listening'), imagination: kin('imagination'), focus: kin('focus'), adaptability: kin('adaptability'),
+  };
+}
+
+/**
+ * A classmate's run, judged (from 2026-10-10): the same evaluation as the player's nights, by the same profile, of the
+ * play's reads, with the preparation their kept calls make (`reliabilityOf`, the share of the process they'd have)
+ * and a sufficient day, since a classmate's days aren't lived; kept on them as their work's record (`shown`), and
+ * their composure grown by the nights as the player's is (`ATTRIBUTES.composureGain`).
+ */
+export function classmateRun(sim: Simulation, person: Person, i: number, reads: Partial<Craft>, production: string, nights: number, at: Instant): void {
+  const mate = person.school!.classmates[i]!;
+  const kept = reliabilityOf(sim, person, i);
+  const e = judge(sim.universe.meta.seed, classmatePerformer(sim, person, i), {
+    task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept }, required: { lines: 1, blocking: 1, notes: 1 },
+    difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `mate:${i}:${production}`,
+  });
+  mate.shown = { production, quality: e.overall, at, runs: (mate.shown?.runs ?? 0) + 1 };
+  const a = mateAbilities(sim, person, i);
+  for (let n = 0; n < nights; n += 1) a.composure = Math.min(100, a.composure + (100 - a.composure) * ATTRIBUTES.composureGain.performance);
+}
+
+/** A classmate as the evaluation reads them: their craft, presence and abilities, on the same scales as the player's. */
+export function classmatePerformer(sim: Simulation, person: Person, i: number): Performer {
+  const mate = person.school!.classmates[i]!;
+  const held: Partial<Record<AbilityId, Skill>> = { emotionalDepth: 'emotion', memory: 'memorization', vocal: 'voice', physical: 'movement' };
+  return {
+    ability: (id) => {
+      const skill = held[id];
+      if (skill) return mate.craft[skill];
+      if (id === 'presence') return classmatePresence(sim, person, i);
+      if (id === 'discipline' || id === 'stamina') return 100;
+      return mateAbilities(sim, person, i)[id as keyof MateAbilities];
+    },
+    full: () => 100,
+    technique: (skill) => mate.craft[skill],
+  };
+}
+
+/**
+ * How a casting reads anybody (from 2026-10-10): the same, for the player and every classmate, but blind to a body's
+ * conditioning and a work habit (stamina and discipline count as full), since neither is simulated for the class;
+ * they show in the nights a student plays, not in the chair's read.
+ */
+export const castingPerformer = (p: Performer): Performer => ({
+  ability: (id) => (id === 'stamina' || id === 'discipline' ? p.full(id) : p.ability(id)),
+  full: (id) => p.full(id),
+  technique: (skill) => p.technique(skill),
+});
+
+/**
+ * A student's fit for a play (from 2026-10-10): the whole a night of it would be expected to come to, read by the
+ * evaluation (`performance`) from the abilities a night asks and the techniques the play reads, its kinds' demands
+ * among them; preparation complete and the day sufficient, and no draw. What each would bring if all went to plan.
+ */
+export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>, kinds: readonly string[], key: string): number {
+  return judge(sim.universe.meta.seed, castingPerformer(perf), {
+    task: TASK_PROFILES.performance!, techniques: reads, prep: {}, required: {}, difficulty: 0,
+    condition: { readiness: 100 }, families: familiesOf(kinds), key, expected: true,
+  }).overall;
+}
+
+/**
+ * How a student reads to the chair for a play (`ESTIMATE.casting`): their fit for it (`castFit`; the craft the play
+ * reads where nobody's been read yet), a fifth of it by how much of themselves they delivered in their last run, and
+ * the balance of opportunity. Until 2026-10-10 it was the craft against the play's reads, the last run's nights a
+ * point and a half a band and a director's note heeded another point and a half: the nights and the note read the
+ * craft a second and a third time, and they went.
+ */
+export function castScore(s: { craft: Craft; last?: LastWork; fit?: number }, reads: Partial<Craft>): number {
   const c = ESTIMATE.casting;
-  return readOf(s.craft, reads) + (s.last ? c.balance[s.last.size] + c.nights * (s.last.nights ?? 0) + (s.last.heeded ? c.heeded : 0) : 0);
+  const fit = s.fit ?? readOf(s.craft, reads);
+  return fit * (1 - c.delivery + c.delivery * (s.last?.delivery ?? 1)) + (s.last ? c.balance[s.last.size] : 0);
 }
 
 /**
@@ -1390,9 +1520,10 @@ export function castListRead(person: Person): void {
  * A production's parts given out: the best read first takes the biggest part
  * still open that's written for them; with none left for them, the company.
  */
-export function partsFor(students: readonly Student[], parts: readonly Part[], reads: Partial<Craft>): { s: Student; part: string; size: PartSize }[] {
+export function partsFor(students: readonly Student[], parts: readonly Part[], reads: Partial<Craft>, fit?: (s: Student) => number): { s: Student; part: string; size: PartSize }[] {
   const open = [...parts];
-  return [...students].sort((a, b) => castScore(b, reads) - castScore(a, reads)).map((s) => {
+  const score = (s: Student) => castScore({ ...s, ...(fit ? { fit: fit(s) } : {}) }, reads);
+  return [...students].sort((a, b) => score(b) - score(a)).map((s) => {
     const k = open.findIndex((p) => p.for === 'either' || p.for === s.title);
     // No part written for them left: the company, not a part written for somebody else.
     if (k < 0) return { s, part: 'In The Company', size: 'featured' as const };
@@ -1411,7 +1542,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
   // And whether the director's note was taken: the skill it named grown since.
   const c0 = school.casting;
   const heeded = c0?.noteSkill !== undefined && c0.noteLevel !== undefined && person.craft![c0.noteSkill] >= c0.noteLevel + ESTIMATE.casting.heedGain;
-  if (c0?.size) school.lastWork = { size: c0.size, ...(c0.nights ? { nights: nightsMean(c0.nights) } : {}), ...(heeded ? { heeded } : {}) };
+  const delivered = (c0 as Run & { delivered?: { sum: number; n: number } } | undefined)?.delivered;
+  if (c0?.size) school.lastWork = { size: c0.size, ...(c0.nights ? { nights: nightsMean(c0.nights) } : {}), ...(heeded ? { heeded } : {}), ...(delivered?.n ? { delivery: Math.round((delivered.sum / delivered.n) * 1000) / 1000 } : {}) };
   delete school.casting;
   delete school.rep;
   // A third-year a director asks into the Rep's company plays there that
@@ -1422,14 +1554,23 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const playerAtRep = company && school.standing === 'good' && actingOf(person.craft!) >= ESTIMATE.castAtRep;
   const matesAtRep = new Set(company ? school.classmates.map((m, i) => ({ m, i })).filter(({ m }) => actingOf(m.craft) >= ESTIMATE.castAtRep).map(({ i }) => i) : []);
   // The rest of the class is cast together, the player among them where they're in the pool.
-  const students: Student[] = school.classmates.flatMap((_, i) => { if (matesAtRep.has(i)) return []; const m = mateOf(sim, person, i); return [{ i, name: m.name, craft: m.craft, title: m.title, ...(m.last ? { last: m.last } : {}) }]; });
-  if (school.castable && !playerAtRep) students.push({ i: -1, name: 'You', craft: person.craft!, title: person.performerTitle === 'actress' ? 'actress' : 'actor', ...(school.lastWork ? { last: school.lastWork } : {}) });
+  const students: Student[] = school.classmates.flatMap((_, i) => { if (matesAtRep.has(i)) return []; const m = mateOf(sim, person, i); return [{ i, name: m.name, craft: m.craft, title: m.title, perf: classmatePerformer(sim, person, i), ...(m.last ? { last: m.last } : {}) }]; });
+  if (school.castable && !playerAtRep) students.push({ i: -1, name: 'You', craft: person.craft!, title: person.performerTitle === 'actress' ? 'actress' : 'actor', perf: performerOf(sim, person), ...(school.lastWork ? { last: school.lastWork } : {}) });
+  // Each student's fit for each play, worked out once (`castFit`).
+  const fits = new Map<string, number>();
+  const fitFor = (play: { title?: string; reads: Partial<Craft>; kinds?: readonly string[] }) => (s: Student) => {
+    const k = `${s.i}:${play.title ?? 'new'}`;
+    if (!fits.has(k)) fits.set(k, s.perf ? castFit(sim, s.perf, withDemands(play.reads, play.kinds ?? []), play.kinds ?? [], `cast:${term}:${k}`) : readOf(s.craft, play.reads));
+    return fits.get(k)!;
+  };
   const first = schoolProduction(term, 1);
   const around: { name: string; production: string; part: string; size?: PartSize }[] = [];
   let mine: { production: NonNullable<ReturnType<typeof schoolProduction>>; play: ReturnType<typeof playOf>; part: string; size: PartSize; cast: { name: string; part: string }[] } | undefined;
   if (first) {
     // Placed by how each reads for the first production's play, then cast within each.
-    const order = [...students].sort((a, b) => castScore(b, playOf(sim, person, first).reads) - castScore(a, playOf(sim, person, first).reads));
+    const firstPlay = playOf(sim, person, first);
+    const firstFit = fitFor(firstPlay);
+    const order = [...students].sort((a, b) => castScore({ ...b, fit: firstFit(b) }, firstPlay.reads) - castScore({ ...a, fit: firstFit(a) }, firstPlay.reads));
     const groups = new Map<string, { production: NonNullable<ReturnType<typeof schoolProduction>>; members: Student[] }>();
     order.forEach((s, k) => {
       const production = schoolProduction(term, k + 1)!;
@@ -1439,11 +1580,20 @@ function cast(sim: Simulation, person: Person, term: number): void {
     });
     for (const { production, members } of groups.values()) {
       const play = playOf(sim, person, production);
-      const given = partsFor(members, play.parts, play.reads);
+      const playFit = fitFor(play);
+      const given = partsFor(members, play.parts, play.reads, playFit);
       const shown = play.title ?? production.name;
       for (const g of given) around.push({ name: g.s.name, production: shown, part: partLabel(g.part, production.kind), size: g.size });
-      for (const g of given) if (g.s.i >= 0) school.classmates[g.s.i]!.last = { size: g.size };
+      // A classmate's delivery is the share of calls they keep (`reliabilityOf`): their calls aren't played one by one.
+      for (const g of given) if (g.s.i >= 0) school.classmates[g.s.i]!.last = { size: g.size, delivery: reliabilityOf(sim, person, g.s.i) };
       const me = given.find((g) => g.s.i < 0);
+      // The chair's read of this cast, kept for the screen: each student's fit, delivery, balance and the part.
+      if (me) {
+        school.castRead = {
+          term, play: shown, reads: withDemands(play.reads, play.kinds ?? []), kinds: [...(play.kinds ?? [])],
+          rows: given.map((g) => ({ name: g.s.name, you: g.s.i < 0, fit: Math.round(playFit(g.s) * 10) / 10, delivery: g.s.last?.delivery ?? 1, balance: g.s.last ? ESTIMATE.casting.balance[g.s.last.size] : 0, score: Math.round(castScore({ ...g.s, fit: playFit(g.s) }, play.reads) * 10) / 10, part: partLabel(g.part, production.kind), size: g.size })),
+        };
+      }
       if (me) mine = { production, play, part: me.part, size: me.size, cast: given.filter((g) => g.s.i >= 0).map((g) => ({ name: g.s.name, part: partLabel(g.part, production.kind) })) };
       // The cast they're in together: closer for the weeks shared, and apart where a lead written for the one went to the other.
       if (me) {
@@ -1463,7 +1613,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       // The classmates in it rehearse and play it too: grown once the run is over (`COMPANY_KIND`).
       const mates = given.filter((g) => g.s.i >= 0).map((g) => g.s.i);
       const last = production.runs[production.runs.length - 1]!;
-      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: play.reads } });
+      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: withDemands(play.reads, play.kinds ?? []), production: shown } });
     }
   }
   school.around = { term, list: around };
@@ -1692,7 +1842,13 @@ export function registerSchool(sim: Simulation): void {
     // The classmates, in class most days.
     const inClass = classmatesIn(s, person, keyOf(day));
     school.classmates.forEach((mate, i) => {
-      if (inClass[i]) for (const course of courses) for (const skill of course.skills) grow(mate.craft, skill, ESTIMATE.classmateFocus * (mate.drive ?? 1));
+      if (!inClass[i]) return;
+      const focus = ESTIMATE.classmateFocus * (mate.drive ?? 1);
+      for (const course of courses) {
+        for (const skill of course.skills) grow(mate.craft, skill, focus);
+        // Their abilities beside the craft (from 2026-10-10), by the same rule as the player's (`CLASS_ABILITY_SHARE`).
+        for (const ability of classAbilities(course.skills)) growMateAbility(s, person, i, ability as keyof MateAbilities, focus, CLASS_ABILITY_SHARE);
+      }
     });
     // Each course's work: due there, shown once (or moved on, excused), and what that makes of the meeting's growth in
     // place of an ordinary meeting's; then the course's next work set (`systems/coursework.ts`, from 2026-10-07).
@@ -1792,6 +1948,10 @@ export function registerSchool(sim: Simulation): void {
     const evaluation = nightEvaluation(s, person, `${casting.production}-${item.at}`, casting, item.at, casting.size ?? 'lead', rep ? 'rep' : 'school');
     const night = nightBand(evaluation.overall);
     recordWork(s, person, evaluation, { at: item.at, what: casting.play ?? casting.production, band: night });
+    // How much of themselves they brought (`LastWork.delivery`): each dimension's preparation and condition, averaged.
+    const d = (casting as Run & { delivered?: { sum: number; n: number } }).delivered ??= { sum: 0, n: 0 };
+    d.sum += evaluation.dimensions.reduce((a, x) => a + x.prepared * x.condition, 0) / Math.max(1, evaluation.dimensions.length);
+    d.n += 1;
     // A house answered night after night: listening grows by it (`content/abilities.ts`), and the play's kinds are
     // practiced, one night's worth shared among them (`practiceGenres`).
     ordinary(s, person, 'listening', focusAt(s, person, item.at), 0.5, 'night');
@@ -1804,6 +1964,9 @@ export function registerSchool(sim: Simulation): void {
       nudge(s, person, 'presence', n.presence, true);
     }
     if (item.payload.last !== true) return night;
+    // The run, kept for the journey whatever drops from the detail (`milestone`, from 2026-10-10).
+    const runNights = (person.work ?? []).filter((w) => w.task === 'performance' && w.what === (casting.play ?? casting.production) && w.at > item.at - 120 * MS_DAY);
+    milestone(person, { at: item.at, kind: 'run', what: `${casting.role}, ${casting.play ?? casting.production}`, overall: runNights.length ? Math.round(runNights.reduce((a, w) => a + w.overall, 0) / runNights.length * 10) / 10 : evaluation.overall, detail: Object.entries(casting.nights ?? {}).map(([b, n]) => `${n} ${b}`).join(', ') });
     // What to work on: the skill the play asks that's weakest in them.
     const reads = castingReads(casting);
     const weakest = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b])[0];
@@ -1818,7 +1981,7 @@ export function registerSchool(sim: Simulation): void {
   };
 
   // A production's run over: the classmates in it grew by its rehearsals and nights, as the player does by theirs.
-  sim.onSchedule(COMPANY_KIND, (item) => {
+  sim.onSchedule(COMPANY_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
     if (!school) return;
@@ -1829,6 +1992,7 @@ export function registerSchool(sim: Simulation): void {
       const f = ESTIMATE.classmateFocus * (m.drive ?? 1) * ESTIMATE.classmateAttendance;
       for (let n = 0; n < Number(item.payload.rehearsals); n += 1) rehearse(m.craft, f);
       for (let n = 0; n < Number(item.payload.performances); n += 1) playNight(m.craft, reads, f);
+      classmateRun(s, person, i, reads, String(item.payload.production ?? item.label), Number(item.payload.performances), item.at);
     }
   });
 

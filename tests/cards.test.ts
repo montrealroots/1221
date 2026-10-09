@@ -254,14 +254,18 @@ describe('a save from before', () => {
 });
 
 describe('the screens', () => {
-  it('run the card from the bank’s screen, and show it on Money at a glance', async () => {
+  it('run the card from the bank’s screen, and keep Home to a line of money (from 2026-10-10)', async () => {
     const { readFileSync } = await import('node:fs');
     const bank = readFileSync('src/ui/bank/BankCard.tsx', 'utf8');
     const home = readFileSync('src/ui/screens/Home.tsx', 'utf8');
     expect(bank).toContain('feature="finance.pay_card"');
     expect(bank).toContain('feature="finance.set_autopay"');
     expect(home).not.toContain('finance.pay_card');
-    expect(home).toContain('<CardSummary');
+    // Until 2026-10-10 Home showed the card and the credit record at a glance; the owner's brief of that day moved the
+    // detail to Money, leaving Home a line of it, and a card's trouble in What Needs You (`troubles`).
+    expect(home).not.toContain('<CardSummary');
+    expect(home).toContain('title="Money"');
+    expect(home).toContain('troubles(s, s.player)');
   });
 });
 

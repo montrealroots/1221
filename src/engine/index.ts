@@ -55,6 +55,8 @@ import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
+import { WORK_KEPT, countWork } from './systems/evaluation';
+import { drawMateAbilities } from './systems/school';
 import { bindCeiling, ceilingBefore, focusAt, ordinary, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
 import { registerClassmates } from './systems/classmates';
@@ -862,6 +864,30 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (filled > 0) steps.push(`Drew ${plural(filled, 'ability', 'abilities')} from what the craft and the character already held.`);
     if (practiced > 0) steps.push(`Counted ${plural(practiced, 'night', 'nights')} on stage as practice in their plays’ genres.`);
+  }
+
+  // 93, the attributes finished (2026-10-10). Run on every open, a no-op once done:
+  // - each classmate's abilities drawn and kept (`drawMateAbilities`), from their craft as it stands and the save's
+  //   seed, so casting reads them by the same rules as the player's;
+  // - the journey's durable counts built from the results the save holds (`countWork`). A save that had already
+  //   reached the 160 kept in detail lost the ones before its oldest: `detailBefore` says from when, and nothing is
+  //   made up for the time before it.
+  {
+    let mates = 0;
+    let counted = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      for (const [i, m] of (person.school?.classmates ?? []).entries()) {
+        if (m.abilities) continue;
+        m.abilities = drawMateAbilities(universe.meta.seed, person.id, i, m.craft);
+        mates += 1;
+      }
+      if (!person.journey && person.work?.length) {
+        for (const w of person.work) { countWork(person, w); counted += 1; }
+        if (person.work.length >= WORK_KEPT) person.journey!.detailBefore = person.work[0]!.at;
+      }
+    }
+    if (mates > 0) steps.push(`Drew ${plural(mates, 'classmate’s abilities', 'classmates’ abilities')} from their craft.`);
+    if (counted > 0) steps.push(`Counted ${plural(counted, 'judged piece of work', 'judged pieces of work')} into the journey’s lasting record.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film

@@ -170,6 +170,11 @@ export interface DevelopmentLedger {
   counts: Record<string, number>;
   /** The latest changes, newest last: what moved, by how much, from what, and when (bounded). */
   history: { at: number; id: string; delta: number; source: string }[];
+  /**
+   * The ids of actions already applied (from 2026-10-10, the latest `ACTIONS_KEPT`): an hour sent again with the same
+   * `actionId`, a retry after a lost answer, is refused rather than lived twice.
+   */
+  applied?: string[];
   /** Deliberate practice: today's hours, the days practised, and the last (`systems/practice.ts`). */
   practice?: { day: string; hours: number; days: number; last: string };
 }
@@ -201,6 +206,21 @@ export function repeatsToday(sim: Simulation, person: Person, key: string): numb
   const n = led.counts[key] ?? 0;
   led.counts[key] = n + 1;
   return n;
+}
+
+/** How many applied action ids are kept. */
+export const ACTIONS_KEPT = 200;
+
+/** Why an action can't be applied again, or nothing; and once it's applied (`markApplied`), it never is again. */
+export function alreadyApplied(person: Person, actionId: unknown): string | undefined {
+  if (typeof actionId !== 'string' || !actionId) return undefined;
+  return developmentOf(person).applied?.includes(actionId) ? 'That was already done.' : undefined;
+}
+export function markApplied(person: Person, actionId: unknown): void {
+  if (typeof actionId !== 'string' || !actionId) return;
+  const led = developmentOf(person);
+  (led.applied ??= []).push(actionId);
+  if (led.applied.length > ACTIONS_KEPT) led.applied.splice(0, led.applied.length - ACTIONS_KEPT);
 }
 
 /** Records a change, for the profile's history and an ability's look. */
@@ -239,12 +259,15 @@ export function develop(sim: Simulation, person: Person, target: Target, terms: 
   const level = levelOf(sim, person, id);
   const full = isAbility(id) ? abilityFull(sim, person, id) : 100;
   const disciplined = id === 'discipline' ? 1 : 1 + DEVELOPMENT.disciplineLift * (abilityOf(sim, person, 'discipline') - 50) / 50;
-  const gain = Math.min(full - level, abilityGain(level, Math.min(reach, full), terms) * disciplined * DEVELOPMENT.repeat ** n);
-  if (gain <= 0) return 0;
+  const raw = abilityGain(level, Math.min(reach, full), terms) * disciplined * DEVELOPMENT.repeat ** n;
+  if (raw <= 0 || level >= full) return 0;
+  // Arriving at full sets it exactly, so floating point never leaves it a hair under (from 2026-10-10).
+  const next = raw >= full - level ? full : level + raw;
+  const gain = next - level;
   const skill = isAbility(id) ? CRAFT_ABILITY[id] : (id as Skill);
-  if (skill) person.craft![skill] = level + gain;
-  else if (id === 'stamina') person.wellbeing.fitness = level + gain;
-  else (attributesOf(sim, person) as unknown as Record<string, number>)[id] = level + gain;
+  if (skill) person.craft![skill] = next;
+  else if (id === 'stamina') person.wellbeing.fitness = next;
+  else (attributesOf(sim, person) as unknown as Record<string, number>)[id] = next;
   recordDevelopment(sim, person, id, gain, terms.source);
   return gain;
 }

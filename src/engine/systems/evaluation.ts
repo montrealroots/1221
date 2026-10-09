@@ -62,6 +62,31 @@ import type { Skill } from '../content/school';
 
 export type { Dimension, TaskProfile } from '../content/tasks';
 
+/**
+ * Who does the work, as the evaluation reads them (from 2026-10-10): an ability's level and the level at which it's
+ * full, and the craft's techniques. The player is read through `performerOf`; a classmate through
+ * `classmatePerformer` (`systems/school.ts`); a kept result through `frozenPerformer`, from the levels it was judged
+ * at, so it works out again the same whatever has changed since.
+ */
+export interface Performer {
+  ability(id: AbilityId): number;
+  full(id: AbilityId): number;
+  technique(skill: Skill): number;
+}
+
+export const performerOf = (sim: Simulation, person: Person): Performer => ({
+  ability: (id) => abilityOf(sim, person, id),
+  full: (id) => abilityFull(sim, person, id),
+  technique: (skill) => person.craft?.[skill] ?? 0,
+});
+
+/** A result's own levels, as it was judged: what replaying it reads (`replay`). */
+export const frozenPerformer = (inputs: Evaluation['inputs']): Performer => ({
+  ability: (id) => inputs.abilities[id] ?? 0,
+  full: (id) => inputs.fulls?.[id] ?? 100,
+  technique: (skill) => inputs.levels?.[skill] ?? 0,
+});
+
 /** What a task asks on the day: its profile, the techniques it reads, its preparation, its difficulty and the day's condition. */
 export interface EvalContext {
   task: TaskProfile;
@@ -78,6 +103,8 @@ export interface EvalContext {
   families?: readonly string[];
   /** A stable key for the bounded draw: the same work on the same day draws the same. */
   key: string;
+  /** What the work would be expected to come to, with no draw: a casting read, which judges no night (from 2026-10-10). */
+  expected?: boolean;
 }
 
 /** The day's condition as the task meets it: readiness (with the hour's fit), and anything concrete that limits a dimension. */
@@ -119,7 +146,14 @@ export interface Evaluation {
   /** Every dimension's limits, the costliest first. */
   limits: Limit[];
   /** The inputs as they stood, to work it out again. */
-  inputs: { abilities: Partial<Record<AbilityId, number>>; techniques: Partial<Record<Skill, number>>; prep: Record<string, number>; required: Record<string, number>; difficulty: number; condition: Condition; families: readonly string[]; key: string };
+  inputs: {
+    abilities: Partial<Record<AbilityId, number>>; techniques: Partial<Record<Skill, number>>; prep: Record<string, number>; required: Record<string, number>; difficulty: number; condition: Condition; families: readonly string[]; key: string;
+    /** The technique levels and the abilities' full levels it was judged at (from 2026-10-10; a result from before has neither, and isn't replayed). */
+    levels?: Partial<Record<Skill, number>>;
+    fulls?: Partial<Record<AbilityId, number>>;
+    /** The save's seed the draw was keyed by. */
+    seed?: string;
+  };
 }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
@@ -153,14 +187,14 @@ export function leanedWeights(task: TaskProfile, families: readonly string[] = [
 interface Term { kind: 'ability' | 'technique'; what: string; label: string; weight: number; n: number }
 
 /** The terms of a dimension: its abilities, and the work's techniques sharing the techniques' weight as the work weights them. */
-function termsOf(spec: DimensionSpec, level: (a: AbilityId) => number, full: (a: AbilityId) => number, techniques: Partial<Record<Skill, number>>, craft: Partial<Record<Skill, number>>): Term[] {
+function termsOf(spec: DimensionSpec, level: (a: AbilityId) => number, full: (a: AbilityId) => number, techniques: Partial<Record<Skill, number>>, craft: (s: Skill) => number): Term[] {
   const techTotal = Object.values(techniques).reduce((a, b) => a + (b ?? 0), 0);
   const out: Term[] = [];
   for (const input of spec.inputs) {
     if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });
     else if (techTotal > 0) {
       for (const [skill, w] of Object.entries(techniques) as [Skill, number][]) {
-        out.push({ kind: 'technique', what: skill, label: TECHNIQUE_LABEL[skill], weight: (input.weight * w) / techTotal, n: clamp((craft[skill] ?? 0) / MASTERED, 0, 1) });
+        out.push({ kind: 'technique', what: skill, label: TECHNIQUE_LABEL[skill], weight: (input.weight * w) / techTotal, n: clamp(craft(skill) / MASTERED, 0, 1) });
       }
     }
   }
@@ -177,23 +211,38 @@ function dimensionQuality(terms: readonly Term[], difficulty: number, prepared: 
   return { capacity, shaped, variation, quality: clamp(100 * shaped * prepared * condition + variation, 0, 100) };
 }
 
-/** Judges a piece of work: each dimension, then the whole, with what carried it and what held it back. */
+/** Judges the player's piece of work (`judge`, through `performerOf`). */
 export function evaluate(sim: Simulation, person: Person, ctx: EvalContext): Evaluation {
+  return judge(sim.universe.meta.seed, performerOf(sim, person), ctx);
+}
+
+/** A kept result worked out again from its own inputs, under its seed: the same, whatever the person is now. */
+export function replay(record: { inputs: Evaluation['inputs']; task: string }, profile: TaskProfile): Evaluation | undefined {
+  const i = record.inputs;
+  if (!i.levels || !i.fulls || i.seed === undefined) return undefined;
+  return judge(i.seed, frozenPerformer(i), { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key });
+}
+
+/** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. */
+export function judge(seed: string, performer: Performer, ctx: EvalContext): Evaluation {
   const E = EVALUATION;
   const abilities: Partial<Record<AbilityId, number>> = {};
-  const level = (a: AbilityId) => (abilities[a] ??= abilityOf(sim, person, a));
+  const fulls: Partial<Record<AbilityId, number>> = {};
+  const levels: Partial<Record<Skill, number>> = {};
+  const level = (a: AbilityId) => (abilities[a] ??= performer.ability(a));
+  const full = (a: AbilityId) => (fulls[a] ??= performer.full(a));
+  const craftLevel = (s: Skill) => (levels[s] ??= performer.technique(s));
   // Only the learned techniques: a skill kept as an ability (Emotional Depth, Memory, Vocal and Physical Expression) is
   // read by the dimensions that name it, and counted there once.
   const techniques = Object.fromEntries(Object.entries(ctx.techniques).filter(([k, w]) => TECHNIQUES.includes(k as Skill) && (w ?? 0) > 0)) as Partial<Record<Skill, number>>;
-  const craft = person.craft ?? {};
   const dims: DimensionResult[] = [];
   const weights = leanedWeights(ctx.task, ctx.families);
   let mastery = true;
 
   for (const [d, spec] of Object.entries(ctx.task.dims) as [Dimension, DimensionSpec][]) {
-    const terms = termsOf(spec, level, (a) => abilityFull(sim, person, a), techniques, craft);
+    const terms = termsOf(spec, level, full, techniques, craftLevel);
     // The draw is the save's own, by its seed: two lives don't draw the same night.
-    const dr = draw(`${sim.universe.meta.seed}:${ctx.key}:${d}`);
+    const dr = ctx.expected ? 0 : draw(`${seed}:${ctx.key}:${d}`);
     // Preparation: each part it reads against what completes it; the least of them counts.
     const parts = (spec.prep ?? []).filter((p) => ctx.prep[p] !== undefined).map((p) => {
       const need = ctx.required[p] ?? 1;
@@ -239,7 +288,7 @@ export function evaluate(sim: Simulation, person: Person, ctx: EvalContext): Eva
   return {
     ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
     limits: dims.flatMap((x) => x.limits).sort((a, b) => b.by - a.by),
-    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key },
+    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed },
   };
 }
 
@@ -265,7 +314,67 @@ export interface WorkRecord {
 /** How many pieces of work the history keeps. */
 export const WORK_KEPT = 160;
 
-/** Keeps a judged piece of work on the person's history, once for its key: judged again, it replaces itself. */
+/**
+ * The journey's durable record (from 2026-10-10), beside the latest `WORK_KEPT` results in detail: every piece of work
+ * counted for life, by kind (`totals`) and by half-year (`byTerm`, "2027 Spring" and "2027 Fall", a few kinds each),
+ * and the milestones (a run's close, a first Strong or Distinction-level piece, a first at full mastery), bounded by
+ * `MILESTONES_KEPT`. It grows by a handful of numbers a half-year, so a long life's save stays small, and a lifetime's
+ * counts are read from it, never from the detail, which drops its oldest. `detailBefore` marks where a save from before
+ * this kept no record: results older than its first were discarded and aren't invented.
+ */
+export interface Tally { n: number; sum: number; best: number; bands: Partial<Record<string, number>>; mastery: number }
+export interface Journey {
+  totals: Partial<Record<string, Tally>>;
+  byTerm: Record<string, Partial<Record<string, Tally>>>;
+  milestones: { at: number; kind: 'run' | 'first-strong' | 'first-exceptional' | 'first-mastery'; what: string; overall: number; detail?: string }[];
+  since?: number;
+  detailBefore?: number;
+}
+export const MILESTONES_KEPT = 300;
+
+export const journeyOf = (person: Person): Journey => (person.journey ??= { totals: {}, byTerm: {}, milestones: [] });
+
+/** The half-year a moment falls in, by the calendar: what `Journey.byTerm` is keyed by. */
+export function halfOf(at: number): string {
+  const d = new Date(at);
+  return `${d.getUTCFullYear()} ${d.getUTCMonth() < 6 ? 'Spring' : 'Fall'}`;
+}
+
+const bandKey = (overall: number) => bandOfQuality(overall);
+function addTo(t: Tally | undefined, r: Pick<WorkRecord, 'overall' | 'mastery'>, sign: 1 | -1): Tally {
+  const out: Tally = t ?? { n: 0, sum: 0, best: 0, bands: {}, mastery: 0 };
+  out.n += sign;
+  out.sum = Math.round((out.sum + sign * r.overall) * 10) / 10;
+  if (sign > 0) out.best = Math.max(out.best, r.overall);
+  const b = bandKey(r.overall);
+  out.bands[b] = (out.bands[b] ?? 0) + sign;
+  if (r.mastery) out.mastery += sign;
+  return out;
+}
+
+/** A result counted in the journey (`sign` -1 to take one back out, when the same work is judged again). */
+export function countWork(person: Person, r: Pick<WorkRecord, 'at' | 'task' | 'overall' | 'mastery' | 'what'>, sign: 1 | -1 = 1): void {
+  const j = journeyOf(person);
+  j.since = Math.min(j.since ?? r.at, r.at);
+  j.totals[r.task] = addTo(j.totals[r.task], r, sign);
+  const term = (j.byTerm[halfOf(r.at)] ??= {});
+  term[r.task] = addTo(term[r.task], r, sign);
+  if (sign < 0) return;
+  // The firsts, once each.
+  const first = (kind: Journey['milestones'][number]['kind']) => !j.milestones.some((m) => m.kind === kind);
+  const band = bandKey(r.overall);
+  if ((band === 'strong' || band === 'exceptional') && first('first-strong')) milestone(person, { at: r.at, kind: 'first-strong', what: r.what, overall: r.overall });
+  if (band === 'exceptional' && first('first-exceptional')) milestone(person, { at: r.at, kind: 'first-exceptional', what: r.what, overall: r.overall });
+  if (r.mastery && first('first-mastery')) milestone(person, { at: r.at, kind: 'first-mastery', what: r.what, overall: r.overall });
+}
+
+export function milestone(person: Person, m: Journey['milestones'][number]): void {
+  const j = journeyOf(person);
+  j.milestones.push(m);
+  if (j.milestones.length > MILESTONES_KEPT) j.milestones.splice(0, j.milestones.length - MILESTONES_KEPT);
+}
+
+/** Keeps a judged piece of work on the person's history, once for its key: judged again, it replaces itself, in the counts too. */
 export function recordWork(_sim: Simulation, person: Person, e: Evaluation, at: { at: number; what: string; band?: string }): WorkRecord {
   const record: WorkRecord = {
     at: at.at, task: e.task, taskLabel: e.taskLabel, what: at.what, overall: e.overall, ...(at.band ? { band: at.band } : {}),
@@ -274,8 +383,9 @@ export function recordWork(_sim: Simulation, person: Person, e: Evaluation, at: 
   };
   const work = (person.work ??= []);
   const same = work.findIndex((w) => w.inputs.key === e.inputs.key);
-  if (same >= 0) work[same] = record;
+  if (same >= 0) { countWork(person, work[same]!, -1); work[same] = record; }
   else work.push(record);
+  countWork(person, record);
   if (work.length > WORK_KEPT) work.splice(0, work.length - WORK_KEPT);
   return record;
 }

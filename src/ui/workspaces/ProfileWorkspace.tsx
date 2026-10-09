@@ -1,15 +1,13 @@
 /**
- * SLATE — the Player Profile (from the connected attributes of 2026-10-09):
- * who this actor is, what they can do, what they love and have done about
- * it, how they are today, the school so far, and what’s changed.
+ * SLATE — the Player Profile (from the connected attributes of 2026-10-09, finished 2026-10-10): who this actor is,
+ * what they can do, what they love and have done about it, how they are today, the school so far, and what's changed.
  *
- * Every section reads where the engine keeps the thing: the character sheet
- * as it was made, the abilities from their one place each, the techniques
- * from the craft, interests and genres from the engagement record, the day
- * from wellbeing and the evaluation’s own condition, the school from its
- * record, the history from the development ledger and the finished work.
- * Nothing is drawn for the screen. What it suggests comes from the last
- * work’s limits and the hours already spent, and changes when they do.
+ * Every section reads where the engine keeps the thing: the character sheet as it was made, the abilities from their
+ * one place each, the techniques from the craft, interests and genres from the engagement record, the day from
+ * wellbeing and the evaluation's own condition, the school from its record, the history from the development ledger,
+ * the recent work and the journey's lasting counts. Nothing is drawn for the screen. What it suggests is worked out
+ * by the engine's own comparisons (`bestRest`, the last work's limits, the next part's play), and changes with them.
+ * Identity is shown as given and decides nothing: it is kept apart from every ability.
  */
 
 import { useState } from 'react';
@@ -17,30 +15,34 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine, Empty } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { targetLabel, targetSubject, sourceWords, masteredOf } from '@/ui/looks/actor';
+import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
 import { formatDate, ageOn } from '@/engine/core/time';
-import { CITIES, REGIONS, COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { exerciseFor, PRACTICE } from '@/engine/content/practice';
 import { INTEREST_DEFS, phaseOf } from '@/engine/content/engagement';
 import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
-import { EVALUATION } from '@/engine/content/tasks';
+import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
+import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
-import { pursueRefusal, restOf, satiationNow, selfTapeRefusal, studyRefusal } from '@/engine/systems/engagement';
-import { readiness } from '@/engine/systems/life';
+import { SELF_TAPE, bestRest, minutesOf, pursueRefusal, restOf, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
+import { EVERYDAY_FITNESS, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { coverOn } from '@/engine/systems/health';
 import { genresOfPlay } from '@/engine/content/plays';
+import { journeyOf, WORK_KEPT } from '@/engine/systems/evaluation';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
 
 const one = (x: number) => x.toFixed(1);
+const PAGE = 16;
 
-/** What the latest work was held back by most, summed over the last five: the next thing to practice. */
+/** What the latest work was held back by most, summed over the last five, and in how many of them: the next thing to practice. */
 export function nextPractice(person: Person): { what: string; kind: string; by: number; pieces: number } | undefined {
   const sums = new Map<string, { what: string; kind: string; by: number; pieces: number; seen?: unknown }>();
   for (const w of (person.work ?? []).slice(-5)) {
@@ -56,13 +58,12 @@ export function nextPractice(person: Person): { what: string; kind: string; by: 
   return best ? { what: best.what, kind: best.kind, by: best.by, pieces: best.pieces } : undefined;
 }
 
-/** An interest to spend an hour on now: loved and least satiated, else the restful one longest left. */
+/** An interest to spend an hour on now: the one whose rest is greatest of those that can be started (`bestRest`). */
 export function nextInterest(sim: Simulation, person: Person): string | undefined {
-  const by = (ids: string[]) => ids.filter((id) => INTEREST_DEFS[id]?.recovery).sort((a, b) => satiationNow(person.engagement?.byInterest[a], sim.now) - satiationNow(person.engagement?.byInterest[b], sim.now) || (person.engagement?.byInterest[a]?.lastAt ?? 0) - (person.engagement?.byInterest[b]?.lastAt ?? 0))[0];
-  return by(ALL_INTERESTS.filter((i) => restOf(person, i.id, sim.now).loved).map((i) => i.id)) ?? by(ALL_INTERESTS.map((i) => i.id));
+  return bestRest(sim, person)?.id;
 }
 
-/** A genre to study: the next part’s play’s kind least known, else a loved one least known. */
+/** A genre to study: the next part's play's kind least known, else a loved one least known. */
 export function nextGenre(person: Person): string | undefined {
   const fam = (id: string) => person.engagement?.byGenre[id]?.familiarity ?? 0;
   const casting = person.school?.casting as { play?: string } | undefined;
@@ -71,11 +72,24 @@ export function nextGenre(person: Person): string | undefined {
   return [...play].sort((a, b) => fam(a) - fam(b))[0] ?? [...loved].sort((a, b) => fam(a) - fam(b))[0];
 }
 
+/** What today's condition does to the dimensions an ability is read in: each named cause and the dimensions it reaches. */
+export function todayFor(sim: Simulation, person: Person, id: AbilityId): string[] {
+  const c = conditionAt(sim, person, sim.now);
+  const dims = new Set(readersOf(id).flatMap((r) => r.dims));
+  const reached = (cause: 'fatigue' | 'illness' | 'injury') => Object.values(TASK_PROFILES).flatMap((t) => (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][]).filter(([d, s]) => dims.has(d) && (s.conditions ?? []).includes(cause)).map(([d]) => d));
+  const out: string[] = [];
+  const say = (what: string, cause: 'fatigue' | 'illness' | 'injury') => { const d = [...new Set(reached(cause))]; if (d.length) out.push(`${what}: ${d.map((x) => DIMENSION_LABEL[x].toLowerCase()).join(', ')}`); };
+  if (c.readiness < EVALUATION.sufficientReadiness) say(`Readiness ${Math.round(c.readiness)}, under ${EVALUATION.sufficientReadiness}`, 'fatigue');
+  if (c.ill) say('The flu', 'illness');
+  if (c.injured) say('An injury mending', 'injury');
+  return out;
+}
+
 export function ProfileWorkspace() {
   const { open } = useFeature('ui.profile');
   const person = useWorld((s) => s.player);
-  if (!open) return <Empty title="Your Profile" body="It opens with its chapter in the guide." />;
-  if (!person.craft) return <Empty title="Your Profile" body="This life has no craft to read." />;
+  if (!open) return <Empty title="Your Profile" body="It opens with its chapter in the guide, “You As An Actor”." />;
+  if (!person.craft) return <Empty title="Your Profile" body="This life began outside drama school, so it has no craft to read." />;
   return (
     <>
       <LookRegion className="page-head">
@@ -99,28 +113,38 @@ export function ProfileWorkspace() {
 function IdentityPanel() {
   const { sim, navigate } = useGame();
   const person = useWorld((s) => s.player);
-  // Home is a town where one's known, else a region (`homeRegionId` holds either).
-  const home = CITIES.get(person.homeRegionId)?.name ?? REGIONS.get(person.homeRegionId)?.name;
+  const home = CITIES.get(person.homeRegionId);
   const country = COUNTRIES.get(person.citizenshipId);
   const cur = saveCurrency(sim.universe);
   const cover = coverOn(person, sim.now);
   const money = `Money, ${formatMoney(inTheBank(sim, person), cur)}`;
+  const full = [person.firstName, person.middleName, person.lastName].filter(Boolean).join(' ');
+  const said = [...(person.raceEthnicity ?? []).map((id) => ETHNICITIES.find((e) => e.id === id)?.label ?? id), ...(person.raceEthnicityOwn ? [person.raceEthnicityOwn] : [])];
+  const school = person.school;
   return (
     <Panel title="Identity And Background" subtitle="As the character was made">
-      <div className="col gap-3">
-        <div className="grid grid-3">
-          <Stat label="Age" value={String(ageOn(person.birthInstant, sim.now, sim.zone))} note={`Born ${formatDate(person.birthInstant, sim.zone)}`} />
-          <Stat label="From" value={home ?? 'Not On The Map'} note={country ? `A citizen of ${country.name}` : undefined} />
-          <Stat label="Pronouns" value={person.pronouns} note={person.performerTitle === 'actress' ? 'Billed as an actress' : 'Billed as an actor'} />
+      <div className="row gap-4 wrap" style={{ alignItems: 'flex-start' }}>
+        {person.portrait
+          ? <img src={person.portrait} alt={`${person.displayName}’s portrait`} width={128} height={160} style={{ borderRadius: 8, objectFit: 'cover' }} />
+          : <div className="small muted" style={{ width: 128 }}>No portrait chosen</div>}
+        <div className="col gap-3 grow" style={{ minWidth: 0 }}>
+          <div className="grid grid-3">
+            <Stat label="Full Name" value={full} note={person.displayName !== full ? `Called ${person.displayName}` : 'Called by it'} />
+            <Stat label="Pronouns" value={person.pronouns} note={person.performerTitle === 'actress' ? 'Billed as an actress' : 'Billed as an actor'} />
+            <Stat label="Age" value={String(ageOn(person.birthInstant, sim.now, sim.zone))} note={`Born ${formatDate(person.birthInstant, sim.zone)}`} />
+            <Stat label="From" value={home?.name ?? 'Not On The Map'} note={country ? `A citizen of ${country.name}` : undefined} />
+            <Stat label="School" value={school ? (school.standing === 'graduated' ? 'Graduated' : `Year ${yearOfStudy(person)}`) : 'None'} note={school ? `Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}` : undefined} />
+            <Stat label="Living In" value={CITIES.get(person.currentLocationId)?.name ?? '—'} />
+          </div>
+          {person.background && <p className="small" style={{ margin: 0 }}><strong>In their own words.</strong> {person.background}</p>}
+          {said.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Race and ethnicity, as given.</strong> {said.join(', ')}.</p>}
+          {person.personalityTraits.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t) => PERSONALITY_TRAIT_BY_ID[t]?.name ?? t).join(', ')}.</p>}
+          <div className="row gap-2 wrap">
+            <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{money}</button>
+            <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>{cover ? 'Papers, Covered' : 'Papers, No Health Cover'}</button>
+          </div>
+          <Fine>Who somebody is decides nothing about how good they are: no ability here is drawn from a name, a portrait, a race or ethnicity, or a gender. What’s shown here was set when the character was made, and isn’t edited after.</Fine>
         </div>
-        {person.personalityTraits.length > 0 && (
-          <p className="small" style={{ margin: 0 }}>Chosen at the start: {person.personalityTraits.map((t) => PERSONALITY_TRAIT_BY_ID[t]?.name ?? t).join(', ')}.</p>
-        )}
-        <div className="row gap-2 wrap">
-          <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{money}</button>
-          <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>{cover ? 'Papers, Covered' : 'Papers, No Health Cover'}</button>
-        </div>
-        <Fine>Who somebody is decides nothing about how good they are: no ability here is drawn from a name, a portrait, an ethnicity or a gender.</Fine>
       </div>
     </Panel>
   );
@@ -130,12 +154,15 @@ function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] })
   const { sim, run } = useGame();
   const person = useWorld((s) => s.player);
   const e = exerciseFor(id);
-  if (!e) return <span className="xs dim">{id === 'stamina' ? 'A workout, from Look After Yourself' : id === 'discipline' ? 'Practice kept up, day after day' : 'A house grows it'}</span>;
+  if (!e) return <span className="xs dim">{id === 'stamina' ? 'Work Out, under Look After Yourself' : 'Practice kept up, day after day'}</span>;
   const no = practiceRefusal(sim, person, e);
   return (
-    <Gated feature="practice.exercise" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? e.how} onClick={() => run('practice.exercise', { exercise: e.id })}>
-      {e.label}
-    </Gated>
+    <span className="col">
+      <Gated feature="practice.exercise" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? e.how} onClick={() => run('practice.exercise', { exercise: e.id })}>
+        {e.label}
+      </Gated>
+      {no && <span className="xs dim">{no}</span>}
+    </span>
   );
 }
 
@@ -143,27 +170,42 @@ function AbilitiesPanel() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const next = nextPractice(person);
+  const recent = developmentOf(person).history;
+  const last = (id: string) => [...recent].reverse().find((h) => h.id === id);
+  const staminaFull = abilityFull(sim, person, 'stamina');
   return (
     <Panel title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100; today’s practice ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`}>
       <div className="col gap-3">
         {next && <p className="small" style={{ margin: 0 }}>Your latest work was held back most by <Open subject={targetSubject(next.what as AbilityId)}>{targetLabel(next.what as AbilityId)}</Open>: {one(next.by / next.pieces)} points a piece, across its dimensions, in {next.pieces} of the last five.</p>}
         <LookRegion className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Ability</th><th scope="col" className="num">Now</th><th scope="col" className="num">Full</th><th scope="col" className="num">Classes Reach</th><th scope="col">Practice</th></tr></thead>
+            <thead><tr><th scope="col">Ability</th><th scope="col" className="num">Now</th><th scope="col" className="num">Full</th><th scope="col" className="num">Classes Reach</th><th scope="col">Today</th><th scope="col">It Shapes</th><th scope="col">Last Change</th><th scope="col">Practice</th></tr></thead>
             <tbody>
-              {ABILITY_DEFS.map((d) => (
-                <tr key={d.id}>
-                  <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open></td>
-                  <td className="num mono">{one(abilityOf(sim, person, d.id))}</td>
-                  <td className="num mono">{one(abilityFull(sim, person, d.id))}</td>
-                  <td className="num mono">{one(Math.min(abilityFull(sim, person, d.id), reachOf(person, d.id)))}</td>
-                  <td className="nowrap"><PracticeButton id={d.id} /></td>
-                </tr>
-              ))}
+              {ABILITY_DEFS.map((d) => {
+                const now = abilityOf(sim, person, d.id);
+                const full = abilityFull(sim, person, d.id);
+                const today = todayFor(sim, person, d.id);
+                const h = last(d.id);
+                return (
+                  <tr key={d.id}>
+                    <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open></td>
+                    <td className="num mono">{one(now)}</td>
+                    <td className="num mono">{one(full)}</td>
+                    <td className="num mono">{one(Math.min(full, reachOf(person, d.id)))}</td>
+                    <td className="xs">{today.length ? today.join('; ') : 'Nothing holds it back'}</td>
+                    <td className="xs">{[...new Set(readersOf(d.id).flatMap((r) => r.dims))].map((x) => DIMENSION_LABEL[x]).join(', ') || '—'}</td>
+                    <td className="xs nowrap">{h ? `+${h.delta.toFixed(2)}, ${sourceWords(h.source)}` : 'None yet'}</td>
+                    <td className="nowrap"><PracticeButton id={d.id} /></td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </LookRegion>
-        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
+        <p className="small" style={{ margin: 0 }}>
+          <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it. Without one it falls 0.18 a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); a night’s sleep and a day’s rest don’t lower it. It’s the one ability that fades without use: the others keep what they’ve earned.
+        </p>
+        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
       </div>
     </Panel>
   );
@@ -194,43 +236,71 @@ function TechniquesPanel() {
   );
 }
 
+/** A filter box, a choice of which to show, and the count: the full list of a kind, a page at a time. */
+function ListControls({ id, text, setText, show, setShow, options, count }: { id: string; text: string; setText: (s: string) => void; show: string; setShow: (s: string) => void; options: readonly string[]; count: number }) {
+  return (
+    <div className="row gap-2 wrap">
+      <label className="small" htmlFor={`${id}-find`}>Find</label>
+      <input id={`${id}-find`} type="search" value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a name" />
+      <label className="small" htmlFor={`${id}-show`}>Show</label>
+      <select id={`${id}-show`} value={show} onChange={(e) => setShow(e.target.value)}>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+      <span className="xs dim">{count} shown</span>
+    </div>
+  );
+}
+
 function InterestsPanel() {
   const { sim, run } = useGame();
   const person = useWorld((s) => s.player);
-  const suggested = nextInterest(sim, person);
-  const [pick, setPick] = useState<string>(suggested ?? ALL_INTERESTS[0]!.id);
-  const engaged = Object.entries(person.engagement?.byInterest ?? {}).sort((a, b) => (b[1].lastAt ?? 0) - (a[1].lastAt ?? 0));
-  const no = pursueRefusal(sim, person, pick);
+  const best = bestRest(sim, person);
+  const [text, setText] = useState('');
+  const [show, setShow] = useState('All');
+  const [limit, setLimit] = useState(PAGE);
+  const list = ALL_INTERESTS.filter((i) => i.label.toLowerCase().includes(text.toLowerCase())).filter((i) => {
+    if (show === 'Loved') return person.interests.includes(i.id);
+    if (show === 'Pursued') return Boolean(person.engagement?.byInterest[i.id]?.sessions);
+    if (show === 'Can Start Now') return !pursueRefusal(sim, person, i.id);
+    return true;
+  });
   return (
-    <Panel title="Interests" subtitle={`${person.interests.length} loved; ${engaged.length} pursued`}>
+    <Panel title="Interests" subtitle={`${person.interests.length} loved; ${Object.values(person.engagement?.byInterest ?? {}).filter((s) => s.sessions).length} of ${ALL_INTERESTS.length} pursued`}>
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>You love: {person.interests.length ? person.interests.map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('interest', id)}>{INTEREST_BY_ID[id]?.label ?? id}</Open></span>) : 'nothing chosen'}.{suggested ? <> An hour of <Open subject={at('interest', suggested)}>{INTEREST_BY_ID[suggested]!.label}</Open> would rest you most now.</> : null}</p>
-        <div className="row gap-2 wrap">
-          <label className="small" htmlFor="interest-pick">Interest</label>
-          <select id="interest-pick" value={pick} onChange={(e) => setPick(e.target.value)}>
-            {ALL_INTERESTS.map((i) => <option key={i.id} value={i.id}>{i.label}</option>)}
-          </select>
-          <Gated feature="interest.pursue" className="btn btn-sm" disabled={Boolean(no)} title={no ?? INTEREST_DEFS[pick]?.activity} onClick={() => run('interest.pursue', { interest: pick })}>Spend An Hour On It</Gated>
-        </div>
-        {engaged.length > 0 && (
-          <LookRegion className="table-scroll">
-            <table>
-              <thead><tr><th scope="col">Interest</th><th scope="col" className="num">Familiarity</th><th scope="col">Phase</th><th scope="col" className="num">Sessions</th><th scope="col" className="num">Satiated</th><th scope="col">Last</th></tr></thead>
-              <tbody>
-                {engaged.slice(0, 12).map(([id, s]) => (
-                  <tr key={id}>
-                    <td className="nowrap"><Open subject={at('interest', id)}>{INTEREST_BY_ID[id]?.label ?? id}</Open></td>
-                    <td className="num mono">{one(s.familiarity)}</td>
-                    <td>{phaseOf(s.familiarity)}</td>
-                    <td className="num mono">{s.sessions}</td>
-                    <td className="num mono">{Math.round(satiationNow(s, sim.now) * 100)}%</td>
-                    <td>{s.lastAt ? formatDate(s.lastAt, sim.zone) : ''}</td>
+        <p className="small" style={{ margin: 0 }}>
+          You love: {person.interests.length ? person.interests.map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('interest', id)}>{INTEREST_BY_ID[id]?.label ?? id}</Open></span>) : 'nothing chosen'}.{' '}
+          {best ? <>Of what you could start now, an hour of <Open subject={at('interest', best.id)}>{INTEREST_BY_ID[best.id]!.label}</Open> rests you most: {best.stress} less stress, {best.morale} more morale.</> : 'No restful hour can be started now.'}
+        </p>
+        <ListControls id="interests" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Pursued', 'Can Start Now']} count={Math.min(limit, list.length)} />
+        <LookRegion className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Interest</th><th scope="col">An Hour Now</th><th scope="col">Grows</th><th scope="col">Familiarity</th><th scope="col" className="num">Sessions</th><th scope="col">When</th><th scope="col">Spend</th></tr></thead>
+            <tbody>
+              {list.slice(0, limit).map((i) => {
+                const def = INTEREST_DEFS[i.id]!;
+                const s = person.engagement?.byInterest[i.id];
+                const r = restOf(person, i.id, sim.now);
+                const no = pursueRefusal(sim, person, i.id);
+                return (
+                  <tr key={i.id}>
+                    <td className="nowrap"><Open subject={at('interest', i.id)}>{i.label}</Open>{r.loved ? ', Loved' : ''}</td>
+                    <td className="xs">{def.recovery ? `−${r.stress} stress, ${Math.round(r.satiation * 100)}% satiated` : 'Work, not rest'}</td>
+                    <td className="xs nowrap"><Open subject={targetSubject(def.develops)}>{targetLabel(def.develops)}</Open></td>
+                    <td className="xs nowrap">{s ? `${one(s.familiarity)}, ${phaseOf(s.familiarity)}` : 'None yet'}</td>
+                    <td className="num mono">{s?.sessions ?? 0}</td>
+                    <td className="xs">{def.when ? `${def.when.why}${def.when.costUsd ? ` A ticket, $${def.when.costUsd / 100}.` : ''}` : `${minutesOf(i.id)} minutes, any time`}</td>
+                    <td className="nowrap">
+                      <Gated feature="interest.pursue" className="btn btn-sm" disabled={Boolean(no)} title={no ?? def.activity} onClick={() => run('interest.pursue', { interest: i.id })}>Spend {minutesOf(i.id) === 60 ? 'An Hour' : `${minutesOf(i.id)} Minutes`}</Gated>
+                      {no && <div className="xs dim">{no}</div>}
+                    </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </LookRegion>
-        )}
+                );
+              })}
+            </tbody>
+          </table>
+        </LookRegion>
+        {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
+        <Fine>Familiarity is what you’ve put into an interest, and a familiar one tires you of it more slowly. Sessions are its history. Loving an interest makes its hour better rest, and no better practice.</Fine>
       </div>
     </Panel>
   );
@@ -240,40 +310,49 @@ function GenresPanel() {
   const { sim, run } = useGame();
   const person = useWorld((s) => s.player);
   const suggested = nextGenre(person);
-  const [pick, setPick] = useState<string>(suggested ?? FILM_GENRES[0]!.id);
-  const engaged = Object.entries(person.engagement?.byGenre ?? {}).sort((a, b) => (b[1].lastAt ?? 0) - (a[1].lastAt ?? 0));
-  const study = studyRefusal(sim, person, pick);
-  const tape = selfTapeRefusal(sim, person, pick);
+  const [text, setText] = useState('');
+  const [show, setShow] = useState('All');
+  const [limit, setLimit] = useState(PAGE);
+  const list = FILM_GENRES.filter((g) => g.label.toLowerCase().includes(text.toLowerCase())).filter((g) => {
+    if (show === 'Loved') return (person.genres ?? []).includes(g.id);
+    if (show === 'Studied Or Practiced') return Boolean(person.engagement?.byGenre[g.id]);
+    if (show === 'With Requirements') return genreTags(g.id).length > 0;
+    return true;
+  });
   return (
-    <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${engaged.length} studied or practiced`}>
+    <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or practiced`}>
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested)}>{GENRE_BY_ID[suggested]!.label}</Open> is the one your work asks for next, least known.</> : null}</p>
-        <div className="row gap-2 wrap">
-          <label className="small" htmlFor="genre-pick">Genre</label>
-          <select id="genre-pick" value={pick} onChange={(e) => setPick(e.target.value)}>
-            {FILM_GENRES.map((g) => <option key={g.id} value={g.id}>{g.label}</option>)}
-          </select>
-          <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half with a work of the kind'} onClick={() => run('genre.study', { genre: pick })}>Study It</Gated>
-          <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? 'Tape a scene in it, judged as finished work'} onClick={() => run('practice.self_tape', { genre: pick })}>Tape A Scene In It</Gated>
-        </div>
-        {engaged.length > 0 && (
-          <LookRegion className="table-scroll">
-            <table>
-              <thead><tr><th scope="col">Genre</th><th scope="col" className="num">Familiarity</th><th scope="col" className="num">Practice</th><th scope="col">Last</th></tr></thead>
-              <tbody>
-                {engaged.slice(0, 12).map(([id, g]) => (
-                  <tr key={id}>
-                    <td className="nowrap"><Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></td>
-                    <td className="num mono">{one(g.familiarity)}</td>
-                    <td className="num mono">{one(g.practice)}</td>
-                    <td>{g.lastAt ? formatDate(g.lastAt, sim.zone) : ''}</td>
+        <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested)}>{GENRE_BY_ID[suggested]!.label}</Open> is the kind your next work asks for, least known.</> : null}</p>
+        <ListControls id="genres" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Studied Or Practiced', 'With Requirements']} count={Math.min(limit, list.length)} />
+        <LookRegion className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Genre</th><th scope="col">It Asks For</th><th scope="col" className="num">Familiarity</th><th scope="col" className="num">Practice</th><th scope="col">Study Or Tape</th></tr></thead>
+            <tbody>
+              {list.slice(0, limit).map((g) => {
+                const e = person.engagement?.byGenre[g.id];
+                const tags = genreTags(g.id);
+                const d = GENRE_DEMANDS[g.id];
+                const study = studyRefusal(sim, person, g.id);
+                const tape = selfTapeRefusal(sim, person, g.id);
+                return (
+                  <tr key={g.id}>
+                    <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}</td>
+                    <td className="xs">{tags.length ? tags.map((t) => `${DEMAND_LABEL[t]} (${TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]} ${one(person.craft![DEMAND_TECHNIQUE[t]])} of ${MASTERED})`).join('; ') : d && !applied(g.id) && d.tags.length ? 'Not established: the research rests on one example' : 'Nothing past the camera’s own'}</td>
+                    <td className="num mono">{one(e?.familiarity ?? 0)}</td>
+                    <td className="num mono">{one(e?.practice ?? 0)}</td>
+                    <td className="nowrap">
+                      <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half with a work of the kind'} onClick={() => run('genre.study', { genre: g.id })}>Study It</Gated>{' '}
+                      <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? `Tape a scene in it: reads ${Object.keys(tapeReads(g.id)).map((k) => TECHNIQUE_LABEL[k as keyof typeof TECHNIQUE_LABEL]).join(', ')}`} onClick={() => run('practice.self_tape', { genre: g.id })}>Tape A Scene In It</Gated>
+                      {(study ?? tape) && <div className="xs dim">{study ?? tape}</div>}
+                    </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </LookRegion>
-        )}
-        <Fine>Loving a genre makes a day of work in it better. Knowing it and having worked in it make its work quicker to prepare; neither caps it.</Fine>
+                );
+              })}
+            </tbody>
+          </table>
+        </LookRegion>
+        {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
+        <Fine>What a genre asks for is a technique its work reads, shown before you begin: mastered at {MASTERED}, it asks nothing more. A self-tape also asks you to know the genre: familiarity {SELF_TAPE.genreComplete * 100} counts as complete, and Study It builds it. Loving a genre makes a day of work in it better; knowing it and having worked in it make its work quicker to prepare; neither caps it.</Fine>
       </div>
     </Panel>
   );
@@ -293,7 +372,7 @@ function ConditionPanel() {
           <Stat label="For Work" value={sufficient && !c.ill && !c.injured ? 'Sufficient' : 'Held Back'} tone={sufficient && !c.ill && !c.injured ? undefined : 'warning'} note={!sufficient ? `Under ${EVALUATION.sufficientReadiness}: fatigue holds back the work that reads it` : c.ill ? 'The flu holds back the voice' : c.injured ? 'An injury holds back the body' : 'Nothing today holds the work back'} />
           <Stat label="Energy, Stress" value={`${Math.round(w.energy)}, ${Math.round(w.stress)}`} note={`Sleep owed ${Math.round(w.sleepDebt)} hours`} />
         </div>
-        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s execution, consistency and responsiveness and leaves its interpretation be.</Fine>
+        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s execution, consistency and responsiveness and leaves its interpretation be. None of it lowers an ability: it’s today’s, and passes with rest.</Fine>
       </div>
     </Panel>
   );
@@ -303,17 +382,38 @@ function JourneyPanel() {
   const { sim, navigate } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school;
-  const work = (person.work ?? []).slice(-8).reverse();
+  const j = journeyOf(person);
+  const [limit, setLimit] = useState(10);
+  const work = [...(person.work ?? [])].reverse();
+  const terms = Object.entries(j.byTerm);
   return (
     <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}`).join('; ')}.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
+        {terms.length > 0 && (
+          <LookRegion className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Half-Year</th>{Object.keys(j.totals).map((t) => <th key={t} scope="col" className="num">{TASK_PROFILES[t]?.label ?? t}</th>)}</tr></thead>
+              <tbody>
+                {terms.map(([term, by]) => (
+                  <tr key={term}><td className="nowrap">{term}</td>{Object.keys(j.totals).map((t) => <td key={t} className="num mono">{by[t] ? `${by[t]!.n} at ${one(by[t]!.sum / by[t]!.n)}` : '—'}</td>)}</tr>
+                ))}
+                <tr className="strong"><td>All Of It</td>{Object.entries(j.totals).map(([t, x]) => <td key={t} className="num mono">{x ? `${x.n} at ${one(x.sum / x.n)}, best ${one(x.best)}` : '—'}</td>)}</tr>
+              </tbody>
+            </table>
+          </LookRegion>
+        )}
+        {j.milestones.length > 0 && (
+          <ul className="small" style={{ margin: 0 }}>
+            {[...j.milestones].reverse().slice(0, 12).map((m, i) => <li key={i}>{formatDate(m.at, sim.zone)}: {m.kind === 'run' ? `${m.what}, the run averaged ${one(m.overall)}${m.detail ? ` (${m.detail})` : ''}` : m.kind === 'first-strong' ? `First strong work: ${m.what}, ${one(m.overall)}` : m.kind === 'first-exceptional' ? `First distinction-level work: ${m.what}, ${one(m.overall)}` : `First work at full mastery: ${m.what}, ${one(m.overall)}`}</li>)}
+          </ul>
+        )}
         {work.length ? (
           <LookRegion className="table-scroll">
             <table>
               <thead><tr><th scope="col">Work</th><th scope="col">What</th><th scope="col" className="num">Whole</th><th scope="col">Band</th><th scope="col">When</th></tr></thead>
               <tbody>
-                {work.map((w) => (
+                {work.slice(0, limit).map((w) => (
                   <tr key={w.inputs.key}>
                     <td className="nowrap"><Open subject={at('work', w.inputs.key)}>{w.what}</Open></td>
                     <td>{w.taskLabel}</td>
@@ -326,6 +426,8 @@ function JourneyPanel() {
             </table>
           </LookRegion>
         ) : <p className="small muted" style={{ margin: 0 }}>No finished work judged yet: a showing, a night or a self-tape is.</p>}
+        {work.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + 20)}>Show Older Work</button>}
+        <Fine>The latest {WORK_KEPT} pieces are kept in full, each with what it was judged from; every piece ever judged is counted above, by half-year and for good.{j.detailBefore ? ` This save kept no detail of work before ${formatDate(j.detailBefore, sim.zone)}: its counts begin there, and nothing is made up for the time before.` : ''}</Fine>
       </div>
     </Panel>
   );
@@ -334,16 +436,18 @@ function JourneyPanel() {
 function HistoryPanel() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
-  const history = developmentOf(person).history.slice(-15).reverse();
+  const [limit, setLimit] = useState(15);
+  const history = [...developmentOf(person).history].reverse();
   return (
-    <Panel title="Development History" subtitle="The latest changes, newest first">
+    <Panel title="Development History" subtitle="Every change kept, newest first">
       {history.length ? (
         <LookRegion>
           <ul className="small" style={{ margin: 0 }}>
-            {history.map((h, i) => (
+            {history.slice(0, limit).map((h, i) => (
               <li key={i}>{formatDate(h.at, sim.zone)}: <Open subject={targetSubject(h.id as AbilityId)}>{targetLabel(h.id as AbilityId)}</Open> +{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>
             ))}
           </ul>
+          {history.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + 30)}>Show Earlier Changes</button>}
         </LookRegion>
       ) : <p className="small muted" style={{ margin: 0 }}>Nothing yet: the history begins with the first class, step or hour of practice.</p>}
     </Panel>

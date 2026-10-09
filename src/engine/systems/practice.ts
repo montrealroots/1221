@@ -16,9 +16,9 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatTime, zonedParts } from '../core/time';
 import { EXERCISE_BY_ID, PRACTICE, type Exercise } from '../content/practice';
-import { develop, developmentOf, levelOf, targetId } from './attributes';
+import { alreadyApplied, develop, developmentOf, levelOf, markApplied, targetId } from './attributes';
 import { focusAt } from './school';
-import { SPENT, occupiedAt } from './life';
+import { SPENT, commitmentWithin, occupiedAt } from './life';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { inHospital } from './health';
@@ -40,6 +40,8 @@ export function practiceRefusal(sim: Simulation, person: Person, e: Exercise | u
   if (asleep) return 'You’re asleep.';
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
+  const ahead = commitmentWithin(sim, PRACTICE.minutes);
+  if (ahead) return ahead;
   if (practicedToday(sim, person) >= PRACTICE.dailyHours) return `You’ve practiced ${PRACTICE.dailyHours} hours today: past that, more stops helping. Tomorrow.`;
   if (e.feet) {
     if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
@@ -62,16 +64,18 @@ export function practiceHour(sim: Simulation, person: Person, e: Exercise): { ga
   const day = today(sim);
   const first = led.practice?.day !== day;
   led.practice = { day, hours: (first ? 0 : led.practice!.hours) + PRACTICE.minutes / 60, days: (led.practice?.days ?? 0) + (first ? 1 : 0), ...(first ? { last: day } : { last: led.practice!.last }) };
-  const discipline = first ? develop(sim, person, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: false, source: 'practice-day' }) : 0;
+  // Deliberate, so a habit kept up reaches its full and doesn't stall a hair under it (from 2026-10-10).
+  const discipline = first ? develop(sim, person, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' }) : 0;
   return { gained, level: levelOf(sim, person, targetId(e.trains)), discipline };
 }
 
 export function registerPractice(sim: Simulation): void {
-  sim.onCommand<{ exercise: string }, { gained: number; level: number; discipline: number }>('practice.exercise', (p, { sim: s }) => {
+  sim.onCommand<{ exercise: string; actionId?: string }, { gained: number; level: number; discipline: number }>('practice.exercise', (p, { sim: s }) => {
     const person = s.player;
     const e = EXERCISE_BY_ID[String(p?.exercise)];
-    const no = practiceRefusal(s, person, e);
+    const no = alreadyApplied(person, p?.actionId) ?? practiceRefusal(s, person, e);
     if (no) throw new CommandError(no);
+    markApplied(person, p?.actionId);
     return practiceHour(s, person, e!);
   });
 }

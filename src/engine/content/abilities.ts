@@ -80,7 +80,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Learning lines, the recall drill, and learning a part.',
     affects: 'How fast lines are learned, and execution wherever lines are spoken.',
     derivedFrom: 'The craft’s Memorization, which it is.',
-    source: 'Noice & Noice on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
+    source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
   },
   {
     id: 'adaptability', label: 'Adaptability',
@@ -112,7 +112,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'The movement and Alexander classes, movement scores, fights, and the movement exercise.',
     affects: 'Execution in movement, fights, intimacy work and performance.',
     derivedFrom: 'The craft’s Movement, which it is.',
-    source: 'Laban, The Mastery of Movement (1950); Lecoq, The Moving Body (2000); kept in the craft as Movement until 2026-10-09',
+    source: 'Laban, The Mastery of Movement on the Stage (1950); Lecoq, The Moving Body (2000); kept in the craft as Movement until 2026-10-09',
   },
   {
     id: 'discipline', label: 'Discipline', general: true,
@@ -128,7 +128,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Workouts, and more on a run in fine weather; lost without them, as fitness is.',
     affects: 'Consistency in movement, fights, songs and every night on stage.',
     derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
-    source: 'Hickson et al. (1981): aerobic fitness gains halve in 10 to 11 days and level off by three weeks at a constant load; Mujika & Padilla (2000) on detraining',
+    source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Mujika & Padilla (2000) on detraining',
   },
 ];
 
@@ -163,7 +163,8 @@ export const MASTERED = 90;
  * How abilities and techniques grow (`develop` in `systems/attributes.ts`). SLATE's calibration, on the shape of the
  * research in `docs/research/attributes/research-acting-engine.json`, topic 2:
  * - a session's gain falls as the level rises (`exponent`): "improvement is rapid at first but decreases as the
- *   practitioner becomes more skilled" (Ericsson et al. 1993). Heathcote, Brown & Mewhort (2000) found an exponential
+ *   practitioner becomes more skilled" (Heathcote, Brown & Mewhort 2000, p. 185; credited to Ericsson et al. until
+ *   2026-10-10, whose full text doesn't contain it). Heathcote, Brown & Mewhort (2000) found an exponential
  *   curve fits each learner better than a power law; the classes' exponent of 1.5, kept, slows late gains more than
  *   either, which is SLATE's choice for a school whose classes level off;
  * - ordinary work levels off at the student's reach, and deliberate practice goes past it (`deliberate`, `floor`):

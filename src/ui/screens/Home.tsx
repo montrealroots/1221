@@ -15,7 +15,7 @@ import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/sy
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
+import { Panel, Stat, Meter, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
@@ -25,7 +25,7 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
+import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { troubles } from '@/engine/systems/spending';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -33,7 +33,6 @@ import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
-import { homeOf } from '@/engine/systems/earnings';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -432,71 +431,40 @@ export function Home() {
         </div>
       </div>
 
-      <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
-        {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
-        <Panel
-          title="Money"
-          tight
-          look={at('networth', player.id)}
-          actions={(
-            <Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Your Bank')}>
-              {primary?.institution ?? 'Your Bank'}
-            </Gated>
-          )}
-        >
-          <LookRegion className="col gap-3">
-            <Stat
-              label={primary?.name ?? 'No account'}
-              value={<MoneyText amount={primary?.balance ?? 0} currency={cur} />}
-              note={`Your money is kept in ${cur}`}
-              look={primary ? at('account', primary.id) : undefined}
+      {/* Your affairs, in a line each (from 2026-10-10): money, the school and the papers were three panels of their own
+          here, each with three or four tiles, the same figures as their workspaces. Each is a summary now, with only what
+          needs doing as an alert, and its workspace for the rest. */}
+      <Panel title="Your Affairs" tight look={at('networth', player.id)}>
+        <div className="col gap-3">
+          {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
+            <AffairLine
+              title="Money"
+              line={`${primary?.name ?? 'No account'}: ${formatMoney(primary?.balance ?? 0, cur)}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
+              alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
+              action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
             />
-            <Stat
-              label="Net Worth"
-              value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
-              look={at('networth', player.id)}
-            />
-            {worth.liabilities > 0 && (
-              <Stat
-                label="Owed"
-                value={<span className="mono negative">{formatMoney(worth.liabilities, cur, { cents: false })}</span>}
-                look={at('debt', player.id)}
-              />
-            )}
-            <CardSummary cur={cur} />
-          </LookRegion>
-        </Panel>
-        )}
-        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
-        <Panel
-          title="School"
-          tight
-          actions={(
-            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
-              {YALE_DRAMA.short}
-            </Gated>
           )}
-        >
-          <YourSchool />
-        </Panel>
-        ))}
-        {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
-        {player.school && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
-        <Panel
-          title="Papers"
-          tight
-          actions={(
-            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>
-              Papers
-            </Gated>
-          )}
-        >
-          <YourPapers cur={cur} />
-        </Panel>
-        ))}
-      </div>
+          {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : <SchoolLine />)}
+          {player.school && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : <PapersLine cur={cur} />)}
+        </div>
+      </Panel>
     </>
+  );
+}
+
+/** One of your affairs on Home: what it is, one line of where it stands, what needs doing if anything, and the way in. */
+function AffairLine({ title, line, alert, action }: { title: string; line: string; alert?: string; action: React.ReactNode }) {
+  return (
+    <div className="row gap-3 wrap" style={{ alignItems: 'baseline' }}>
+      <strong className="small" style={{ minWidth: 64 }}>{title}</strong>
+      <span className="small grow" style={{ minWidth: 0 }}>{line}{alert && <span className="xs" style={{ display: 'block', color: 'var(--warning)' }}>{alert}</span>}</span>
+      {action}
+    </div>
+  );
+}
+
+/**
+ * Where the life began:    </>
   );
 }
 
@@ -506,8 +474,8 @@ export function Home() {
  * 2026-09-26 it said what scholarship the next term paid in, which a family
  * with means isn't paid.
  */
-function YourSchool() {
-  const { sim } = useGame();
+function SchoolLine() {
+  const { sim, navigate } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school;
   if (!school) return null;
@@ -519,17 +487,15 @@ function YourSchool() {
   const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
   const classes = enrolled ? nextClasses(sim.now) : undefined;
   const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
+  const where = school.standing === 'graduated' ? 'Graduated' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`;
+  const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
   return (
-    <div className="col gap-3">
-      <Stat
-        label={`${YALE_DRAMA.degree} In ${YALE_DRAMA.program}`}
-        value={school.standing === 'graduated' ? 'Graduated' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`}
-        note={`Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}`}
-        tone={school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed' ? 'warning' : undefined}
-      />
-      <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every skill" />
-      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, zone)} />}
-    </div>
+    <AffairLine
+      title="School"
+      line={`${where}, ${STANDING_LABEL[school.standing].toLowerCase()}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
+      alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}: the School screen says why.` : undefined}
+      action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>{YALE_DRAMA.short}</Gated>}
+    />
   );
 }
 
@@ -537,8 +503,8 @@ function YourSchool() {
  * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
-function YourPapers({ cur }: { cur: string }) {
-  const { sim } = useGame();
+function PapersLine({ cur }: { cur: string }) {
+  const { sim, navigate } = useGame();
   const person = useWorld((s) => s.player);
   const cover = coverOn(person, sim.now);
   const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined);
@@ -546,48 +512,19 @@ function YourPapers({ cur }: { cur: string }) {
   const penalty = open && open.figures.balance > 0 && sim.now > open.due ? latePenalty(open.figures.balance, open.due, sim.now, cur) : 0;
   const owedTax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0), 0);
   const claim = person.unemployment?.claim;
+  // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line.
+  const alerts = [
+    !cover ? 'You have no health cover.' : '',
+    open ? `The ${open.year} return is due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${open.figures.balance > 0 ? `, ${formatMoney(open.figures.balance + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
+    owedTax > 0 ? `${formatMoney(owedTax, cur, { cents: false })} of tax owed, growing half a percent a month.` : '',
+  ].filter(Boolean);
   return (
-    <div className="col gap-3">
-      <Stat label="Health Cover" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
-      <Stat label="Tax Return" value={open ? `${open.year}, Due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}` : owedTax > 0 ? `Owed: ${formatMoney(owedTax, cur, { cents: false })}` : 'None Open'} note={open ? (open.figures.balance > 0 ? `${formatMoney(open.figures.balance + penalty, cur, { cents: false })} owed${penalty > 0 ? `, ${formatMoney(penalty, cur, { cents: false })} of it the late penalty so far` : ''}` : `${formatMoney(-open.figures.balance, cur, { cents: false })} back`) : owedTax > 0 ? 'Filed, and growing half a percent a month until it’s paid' : undefined} tone={(open && sim.now > open.due) || owedTax > 0 ? 'warning' : undefined} />
-      <Stat label="Unemployment" value={claim ? `${formatMoney(claim.weekly, cur, { cents: false })} A Week` : 'No Claim'} note={claim ? 'Less for a week you work' : undefined} />
-    </div>
-  );
-}
-
-/**
- * The card and the record, at a glance: what the card owes of its limit, and
- * the record a lender reads, as a number where lenders use one and a word
- * elsewhere. The card is the bank's, and paying it and its autopay are on the
- * bank's screen (`ui/bank/BankCard.tsx`); they were here until 2026-09-26.
- */
-function CardSummary({ cur }: { cur: string }) {
-  const { sim } = useGame();
-  const card = useWorld((s) => cardOf(s, s.player));
-  const cards = useWorld((s) => cardsOf(s, s.player));
-  const credit = useWorld((s) => s.player.credit);
-  if (!credit) return null;
-  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(Math.round(credit.score)) : scoreWord(credit.score);
-  const terms = card ? cardTerms(sim, card, credit.score) : undefined;
-  return (
-    <>
-      {cards.length > 1 && (
-        // Several, as one figure, as the bureaus read them together: until 2026-09-28 a person held one card.
-        <Stat
-          label="Credit Cards"
-          value={<span className="mono">{formatMoney(cards.reduce((sum, c) => sum + Math.max(0, -c.balance), 0), cur, { cents: false })}</span>}
-          note={`Owed of ${formatMoney(cards.reduce((sum, c) => sum + (c.creditLimit ?? 0), 0), cur, { cents: false })} in limits, on ${cards.length} cards`}
-        />
-      )}
-      {cards.length === 1 && card && terms && (
-        <Stat
-          label={terms.name}
-          value={<span className="mono">{formatMoney(Math.max(0, -card.balance), cur, { cents: false })}</span>}
-          note={`Owed of a ${formatMoney(card.creditLimit ?? 0, cur, { cents: false })} limit${terms.kind === 'charge' ? ', taken in full each month' : `, at ${Number((terms.apr * 100).toFixed(2))}% a year on what's carried`}`}
-        />
-      )}
-      <Stat label="Credit Record" value={record} />
-    </>
+    <AffairLine
+      title="Papers"
+      line={`Cover: ${cover ? COVER_LABEL[cover] : 'none'}.${claim ? ` Unemployment, ${formatMoney(claim.weekly, cur, { cents: false })} a week.` : ''}`}
+      alert={alerts.length ? alerts.join(' ') : undefined}
+      action={<Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>Papers</Gated>}
+    />
   );
 }
 

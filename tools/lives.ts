@@ -37,7 +37,9 @@ import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, occupiedAt, readiness, suggestedSleep } from '../src/engine/systems/life';
 import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { inTheBank } from '../src/engine/systems/spending';
-import { coverOn, mayEnroll } from '../src/engine/systems/health';
+import { coverOn, healthOf, mayEnroll } from '../src/engine/systems/health';
+import { mayHurt } from '../src/engine/systems/injury';
+import { journeyOf } from '../src/engine/systems/evaluation';
 import { nextInterest, nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
 import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
 import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
@@ -49,7 +51,7 @@ const flag = (name: string) => process.argv.includes(`--${name}`);
 const SEEDS = arg('seeds', 4);
 const YEARS = arg('years', 3);
 
-interface Profile { name: string; config: Partial<NewSaveConfig>; play: 'attentive' | 'autopilot' | 'practicing' }
+interface Profile { name: string; config: Partial<NewSaveConfig>; play: 'attentive' | 'autopilot' | 'practicing'; adverse?: boolean }
 
 const PROFILES: Profile[] = [
   { name: 'new-york, attentive', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her' }, play: 'attentive' },
@@ -59,7 +61,9 @@ const PROFILES: Profile[] = [
   // From 2026-10-09: attentive, and the hours left over spent as the Player Profile suggests (`practiceHour`).
   { name: 'new-york, practicing', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her', interests: ['nature', 'music'] }, play: 'practicing' },
   // TEST SETUP: a student without the wealthy family behind them, which the game's own new life always has.
-  { name: 'test setup: scraping, no family money, attentive', config: { homeRegionId: 'us-ca-losangeles', pronouns: 'he/him', wealth: 'scraping', family: undefined }, play: 'attentive' },
+  // TEST SETUP: a student without the wealthy family behind them, and from 2026-10-10 under pressure: the flu at each
+  // term's start and an everyday injury each spring (`adverse`), so illness, injury and the recovery from them are played.
+  { name: 'pressure: scraping, the flu and an injury, attentive', config: { homeRegionId: 'us-ca-losangeles', pronouns: 'he/him', wealth: 'scraping', family: undefined }, play: 'attentive', adverse: true },
 ];
 
 function life(seed: string, p: Partial<NewSaveConfig>): Simulation {
@@ -144,13 +148,14 @@ function lookAfter(sim: Simulation) {
   }
 }
 
-interface Result { work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
+interface Result { journey?: Record<string, unknown>; cast?: Record<string, unknown>; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 
 function play(profile: Profile, seed: string): Result {
   let sim: Simulation;
   try { sim = life(seed, profile.config); } catch (e) { return { profile: profile.name, seed, graduated: false, standing: 'none', parts: {}, wellbeing: {}, bank: 0, breaches: 0, unbalanced: 0, reloads: 0, error: String((e as Error).message ?? e) }; }
   const end = sim.now + YEARS * 365 * MS_DAY;
   let reloads = 0;
+  let lastReload = sim.now;
   const ready: number[][] = [];
   let error: string | undefined;
   try {
@@ -172,11 +177,15 @@ function play(profile: Profile, seed: string): Result {
         }
       }
       sim.advanceTo(sim.now + (profile.play === 'autopilot' ? MS_DAY : MS_HOUR));
-      // Saved and opened again each new year, as a player would between sessions.
       const p = zonedParts(sim.now, sim.zone);
-      if (p.month === 1 && p.day === 1 && (profile.play === 'autopilot' || p.hour === 12)) {
+      // Under pressure: the flu for a week at each term's start, and an everyday injury on the first of March.
+      if (profile.adverse && p.hour === 9 && p.day === 1 && (p.month === 9 || p.month === 1)) healthOf(sim.player).fluUntil = sim.now + 7 * MS_DAY;
+      if (profile.adverse && p.hour === 9 && p.day === 1 && p.month === 3) mayHurt(sim, sim.player, 'fall', 1, sim.now);
+      // Saved and opened again every thirty days (from 2026-10-10; each new year until then), as a player would between sessions.
+      if (sim.now - lastReload >= 30 * MS_DAY && (profile.play === 'autopilot' || p.hour === 12)) {
         sim = loadSave(deserialise(serialise(sim.universe)) as never);
         reloads += 1;
+        lastReload = sim.now;
       }
     }
   } catch (e) {
@@ -207,6 +216,26 @@ function play(profile: Profile, seed: string): Result {
   const top = Object.fromEntries(Object.entries(held).sort((p, q) => q[1] - p[1]).slice(0, 10).map(([k, v]) => [k, Math.round(v)]));
   const ab = abilitiesOf(sim, sim.player);
   return {
+    // A lifetime's figures from the journey's lasting counts (from 2026-10-10), and whether they agree with themselves.
+    journey: (() => {
+      const j = journeyOf(sim.player);
+      const termN = Object.values(j.byTerm).reduce((s, t) => s + Object.values(t).reduce((a, x) => a + (x?.n ?? 0), 0), 0);
+      const totalN = Object.values(j.totals).reduce((a, x) => a + (x?.n ?? 0), 0);
+      return {
+        totals: Object.fromEntries(Object.entries(j.totals).map(([k, x]) => [k, `${x!.n} @ ${(x!.sum / x!.n).toFixed(1)}, best ${x!.best}, ${JSON.stringify(x!.bands)}`])),
+        terms: Object.fromEntries(Object.entries(j.byTerm).map(([t, by]) => [t, Object.fromEntries(Object.entries(by).map(([k, x]) => [k, `${x!.n} @ ${(x!.sum / x!.n).toFixed(1)}`]))])),
+        runs: j.milestones.filter((m) => m.kind === 'run').map((m) => `${m.what}: ${m.overall} (${m.detail})`),
+        firsts: j.milestones.filter((m) => m.kind !== 'run').map((m) => `${m.kind} ${m.overall}`),
+        consistent: termN === totalN, total: totalN, keptInDetail: work.length,
+      };
+    })(),
+    cast: (() => {
+      const r = sim.player.school?.castRead;
+      if (!r) return undefined;
+      const me = r.rows.find((x) => x.you);
+      const order = [...r.rows].sort((a, b) => b.score - a.score);
+      return me ? { play: r.play, fit: me.fit, delivery: me.delivery, part: me.part, rank: `${order.indexOf(me) + 1} of ${order.length}`, best: order[0]!.fit } : undefined;
+    })(),
     work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length, held: top },
     abilities: Object.fromEntries(Object.entries(ab).map(([k, v]) => [k, Math.round(v)])),
     profile: profile.name, seed, graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,

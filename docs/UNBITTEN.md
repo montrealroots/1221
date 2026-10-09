@@ -142,19 +142,23 @@ until the owner says otherwise.
 
 ## Dead: declared, and nothing reads it
 
-- **The connected attributes' words that are said, not read (2026-10-09).** Each
-  genre's performer demands and each interest's caveat and actor's use are
-  shown on their looks and read by nothing: what a genre does is its families'
-  lean and its familiarity and practice, and what an interest does is its rest
-  and the one ability or technique it grows. Classmates have no abilities of
-  their own past presence: the evaluation judges only the player's work, and
-  the chair still casts by the craft (`readOf`), not by finished work's
-  quality, by the brief that kept quality apart from casting decisions.
+- **The connected attributes' words that are said, not read.** Each
+  interest's caveat and actor's use are shown on its look and read by nothing:
+  they are the research's uncertainty, shown as uncertainty, and an interest's
+  mechanics are its rest, its constraints and the one ability or technique it
+  grows. A genre's demands were here too until 2026-10-10, when the ones the
+  research established at medium or high confidence (64 genres, 82 tags) became
+  techniques its work reads (`content/demands.ts`); the 77 low-confidence
+  entries' tags are shown as not applied. Classmates were here as having no
+  abilities until the same day: they have the player's (`MateAbilities`), and
+  the chair reads everyone's fit by the evaluation (`castFit`).
 - **Stamina is lost without training, and nothing else is (2026-10-09).** It is
   the body's fitness, which detrains as research says it does (Mujika & Padilla,
-  2000). The brief asked that rest erase no progress, and for the other eleven
-  abilities and the techniques it doesn't; for stamina the body's own rule was
-  kept over it, and the ability's look says what builds it back.
+  2000): 0.18 a day toward 35 without a workout. Sleep and a day's rest don't
+  lower it. The brief asked that rest erase no progress, and for the other
+  eleven abilities and the techniques it doesn't; for stamina the body's own
+  rule was kept, deconditioning told apart from rest, and the profile and the
+  ability's look say what it is and what builds it back.
 
 - **What a player chooses and only sees.** Kept on purpose, each a choice a
   real buyer makes that SLATE gives no consequence because none is published:

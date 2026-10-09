@@ -327,6 +327,45 @@ const NIGHT_WORD = { remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid',
 /** Whether the kind's words only say the production's name again, as the festivals' do. */
 const repeats = (c: { production: string; kind: string }) => c.production.startsWith((KIND_WORDS[c.kind] ?? '-').replace(/^(A|The) /, ''));
 
+/**
+ * Why this cast (from 2026-10-10): the chair's read of the production the player is in (`SchoolRecord.castRead`),
+ * each student's fit for the play, how much of themselves they delivered last time, the balance of opportunity and
+ * the part given. Fit is what a night would come to, read the same for everyone; it isn't anybody's recorded work,
+ * which stays as it was judged.
+ */
+function CastReadPanel() {
+  const person = useWorld((s) => s.player);
+  const read = person.school?.castRead;
+  if (!read) return null;
+  const rows = [...read.rows].sort((a, b) => b.score - a.score);
+  const asks = Object.keys(read.reads).map((k) => SKILLS.find((x) => x.id === k)?.label ?? k).join(', ');
+  return (
+    <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`}>
+      <div className="col gap-3">
+        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their last run, and balances who had the big parts last time; the best read takes the biggest part written for them.</p>
+        <LookRegion className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Student</th><th scope="col" className="num">Fit</th><th scope="col" className="num">Delivered</th><th scope="col" className="num">Balance</th><th scope="col" className="num">Read</th><th scope="col">Part</th></tr></thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.name} className={r.you ? 'strong' : undefined}>
+                  <td>{r.name}</td>
+                  <td className="num mono">{r.fit.toFixed(1)}</td>
+                  <td className="num mono">{Math.round(r.delivery * 100)}%</td>
+                  <td className="num mono">{r.balance > 0 ? `+${r.balance}` : r.balance}</td>
+                  <td className="num mono">{r.score.toFixed(1)}</td>
+                  <td>{r.part}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </LookRegion>
+        <Fine>Fit is the evaluation’s night for the play, with preparation complete and a sufficient day; stamina and discipline count as full for everyone, since the class’s bodies and habits aren’t simulated. A classmate’s delivery is the share of calls they keep. Who somebody is plays no part.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 function CastingPane() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
@@ -341,6 +380,7 @@ function CastingPane() {
 
   return (
     <div className="col gap-5">
+      <CastReadPanel />
       {castings.map((casting) => {
         // A production whose calls are all behind it reads as done: until 2026-09-27 a closed run said there were none ahead, and that you were on call at all nought of them.
         const mine = (c: { label: string }) => c.label.startsWith(casting.production);

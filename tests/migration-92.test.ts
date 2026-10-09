@@ -35,7 +35,7 @@ function at91(seed: string) {
 
 describe('schema 92', () => {
   it('is the one version the engine and the guard both name', () => {
-    expect(SAVE_SCHEMA_VERSION).toBe(92);
+    expect(SAVE_SCHEMA_VERSION).toBe(93);
     expect(SUPPORTED_SCHEMA_VERSION).toBe(SAVE_SCHEMA_VERSION);
   });
 
@@ -51,7 +51,7 @@ describe('schema 92', () => {
     expect(p.development).toEqual({ day: '', counts: {}, history: [] });
     expect(p.work).toEqual([]);
     expect(p.engagement).toEqual({ byInterest: {}, byGenre: {} });
-    expect(u.meta.schemaVersion).toBe(92);
+    expect(u.meta.schemaVersion).toBe(93);
   });
 
   it('counts each night a credit records as practice in its play’s genres, and nothing for a credit it can’t place', () => {

@@ -22,7 +22,8 @@ import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engin
 import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, levelOf, targetId } from '@/engine/systems/attributes';
 import { reachOf } from '@/engine/systems/school';
 import { genreSpeed, playOfGenre, restOf, satiationNow } from '@/engine/systems/engagement';
-import { chiefLimit, type WorkRecord } from '@/engine/systems/evaluation';
+import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
+import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
 import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
@@ -111,7 +112,8 @@ defineLook<TheAbility>('ability', {
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
           <p className="small"><strong>What it does.</strong> {readers.length ? readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ') : def.affects}.</p>
-          {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how}</p>}
+          {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(SLATE’s own exercise.)' : exercise.kind === 'named' ? '(A named exercise of real pedagogy.)' : '(A composite of real practice.)'}</p>}
+          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it; without one it falls 0.18 a day toward 35, as an untrained body’s does. Rest doesn’t lower it.</p>}
           {recent.length > 0 && (
             <ul className="small">
               {recent.map((h, i) => <li key={i}>{formatDate(h.at, zoneOf(sim))}: +{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>)}
@@ -191,6 +193,7 @@ defineLook<TheGenre>('genre', {
     const speed = genreSpeed(person, [id]);
     const play = playOfGenre(id);
     const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`tape:${person.id}:${id}:`)).slice(-3).reverse();
+    const demand = GENRE_DEMANDS[id];
     return {
       name: GENRE_BY_ID[id]!.label,
       kind: loved ? 'A Genre You Love' : 'A Genre',
@@ -203,14 +206,27 @@ defineLook<TheGenre>('genre', {
             <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="The best of the two, never a cap on the work" />
           </div>
           <p className="small"><strong>Its conventions.</strong> {def.conventions}</p>
-          <p className="small"><strong>What it asks of an actor.</strong> {def.demands}{def.demandsConfidence === 'low' ? ' (The researcher’s reading of its conventions; no source says it outright.)' : ''}</p>
+          {demand && (
+            <>
+              <p className="small"><strong>What it asks of an actor.</strong> {demand.claim}</p>
+              <p className="small"><strong>{applied(id) && demand.tags.length ? 'Applied as requirements.' : 'Not applied.'}</strong>{' '}
+                {applied(id) && demand.tags.length
+                  ? <>Work in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}</>
+                  : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what all screen work does.'}
+              </p>
+              <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>
+            </>
+          )}
           <p className="small"><strong>To study it.</strong> {play ? `Read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of the kind the game has, or watch a film of the kind.` : 'Watch a film of the kind.'} A self-tape in it is finished work, judged as a camera scene leaning to its families ({def.families.join(', ')}).</p>
-          <p className="xs dim">Its source: {def.source}.{def.demandsSource ? ` Its demands: ${def.demandsSource}.` : ''}</p>
+          <p className="xs dim">Its definition’s source: {def.source}.{demand ? ` Its demands’ source: ${demand.source}.` : ''}</p>
           <p className="small">{loved ? 'You love it: a day of work in it is a better day. Loving it doesn’t speed the work or cap it.' : 'Loving a genre makes a day of work in it better; it doesn’t make you better at it.'}</p>
         </>
       ),
-      ways: tapes.map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${one(w.overall)}, ${formatDate(w.at, zoneOf(sim))}` })),
-      provenance: `From docs/research/attributes/research-genres.json: its definition ${def.how === 'read directly' ? 'read at the source' : 'from a search’s summary'}, its demands at ${def.demandsConfidence} confidence.`,
+      ways: [
+        ...(applied(id) ? (demand?.tags ?? []).map((t) => ({ to: at('skill', DEMAND_TECHNIQUE[t.tag]), label: TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]], detail: `What it asks for: ${DEMAND_LABEL[t.tag]}` })) : []),
+        ...tapes.map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${one(w.overall)}, ${formatDate(w.at, zoneOf(sim))}` })),
+      ],
+      provenance: `From docs/research/attributes/: its definition ${def.how === 'read directly' ? 'read at the source' : 'from a search’s summary'}, its demands at ${demand?.confidence ?? 'low'} confidence.`,
     };
   },
 });
@@ -233,6 +249,8 @@ defineLook<TheWorkDone>('work', {
     const dims = Object.entries(w.dims) as [Dimension, number][];
     const chief = chiefLimit(w);
     const abilities = Object.keys(w.inputs.abilities) as AbilityId[];
+    const profile = TASK_PROFILES[w.task];
+    const again = profile ? replay(w, profile) : undefined;
     return {
       name: w.what,
       kind: w.taskLabel,
@@ -251,7 +269,7 @@ defineLook<TheWorkDone>('work', {
         </>
       ),
       ways: abilities.map((a) => ({ to: at('ability', a), label: abilityDef(a).label, detail: `Read at ${one(w.inputs.abilities[a]!)}` })),
-      provenance: `Judged under ${w.ruleset} (systems/evaluation.ts). A result keeps the rules it was judged by.`,
+      provenance: again ? `Judged under ${w.ruleset}; worked out again from its own inputs, ${one(again.overall)}.` : `Judged under ${w.ruleset}, before results kept their levels (2026-10-10), so it isn’t worked out again.`,
     };
   },
 });

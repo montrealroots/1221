@@ -195,6 +195,8 @@ export interface Person {
   engagement?: import('../systems/engagement').Engagement;
   /** Finished work judged, newest last (`systems/evaluation.ts`, from 2026-10-09). */
   work?: import('../systems/evaluation').WorkRecord[];
+  /** The journey's durable counts and milestones, beside the recent detail (`Journey`, from 2026-10-10). */
+  journey?: import('../systems/evaluation').Journey;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
   /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */
@@ -426,7 +428,7 @@ export interface Preferences {
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 92;
+export const SAVE_SCHEMA_VERSION = 93;
 
 export interface SaveMeta {
   id: Id;

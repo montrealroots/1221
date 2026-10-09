@@ -1,0 +1,472 @@
+{
+  "checked": "2026-10-09. Every verdict below rests on the source URL given; 'verified' means the bibliographic details were confirmed and, where a figure is listed, the figure was found in the text, the publisher's abstract or an indexed abstract.",
+  "citations": [
+    {
+      "file": "src/engine/content/practice.ts; src/engine/content/abilities.ts",
+      "cited": "Roediger & Karpicke (2006), the testing effect: 61% kept a week later against 40%",
+      "verdict": "verified",
+      "correct": "Roediger, H. L., III, & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. Psychological Science, 17(3), 249-255.",
+      "figure": "1 week: STTT 61% vs SSSS 40% (Exp. 2)",
+      "figureVerdict": "verified",
+      "source": "https://colinallen.dnsalias.org/Readings/2006_Roediger_Karpicke_PsychSci.pdf",
+      "note": "Read in the full text, p. 252: 'The STTT group recalled more than the SSST group (61% vs. 56%), who in turn recalled more than the SSSS group (40%).' The material was prose passages scored in idea units, not lines; at 5 minutes the order reversed (83/78/71%)."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Macnamara et al. 2014: deliberate practice explains 21% of the variance in music and 18% in sport",
+      "verdict": "verified",
+      "correct": "Macnamara, B. N., Hambrick, D. Z., & Oswald, F. L. (2014). Deliberate practice and performance in music, games, sports, education, and professions: A meta-analysis. Psychological Science, 25(8), 1608-1618. doi:10.1177/0956797614535810",
+      "figure": "21% music, 18% sports",
+      "figureVerdict": "verified",
+      "source": "https://gwern.net/doc/psychology/2014-macnamara.pdf",
+      "note": "Abstract: '26% of the variance in performance for games, 21% for music, 18% for sports, 4% for education, and less than 1% for professions.'"
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Ericsson, Krampe & Tesch-Römer 1993: the best sustained about four hours a day; less from each hour past two",
+      "verdict": "verified",
+      "correct": "Ericsson, K. A., Krampe, R. T., & Tesch-Römer, C. (1993). The role of deliberate practice in the acquisition of expert performance. Psychological Review, 100(3), 363-406.",
+      "figure": "about 4 h/day; reduced benefit past 2 h; 7,410 h by 18 for the best violinists",
+      "figureVerdict": "verified",
+      "source": "https://graphics8.nytimes.com/images/blogs/freakonomics/pdf/DeliberatePractice(PsychologicalReview).pdf",
+      "note": "Full text: 'essentially no benefit from durations exceeding 4 hr per day and reduced benefits from practice exceeding 2 hr'; 'The daily amount of around 4 hr of deliberate practice was also found for the expert pianists ... sustained over extended time without exhaustion'; 'the best young violinists had accumulated an average of 7,410 hr of practice' by 18. Note the paper found no difference in current daily practice between the best and the good violinists; the difference was accumulated hours."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "\"improvement is rapid at first but decreases as the practitioner becomes more skilled\" (Ericsson et al. 1993)",
+      "verdict": "corrected",
+      "correct": "Heathcote, A., Brown, S., & Mewhort, D. J. K. (2000). The power law repealed: The case for an exponential law of practice. Psychonomic Bulletin & Review, 7(2), 185-207, p. 185 (who cite Thorndike, 1913)",
+      "figure": "the quoted sentence",
+      "figureVerdict": "wrong",
+      "source": "https://link.springer.com/article/10.3758/BF03212979",
+      "note": "MISATTRIBUTED QUOTE. The sentence is the first line of Heathcote, Brown & Mewhort's introduction: 'The benefits from practice follow a nonlinear function: Improvement is rapid at first but decreases as the practitioner becomes more skilled (see, e.g., Thorndike, 1913).' A text search of the full Ericsson et al. (1993) paper found no such sentence. The research JSON carries the quote under the Heathcote finding; the code moved it to Ericsson."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Heathcote, Brown & Mewhort (2000) found an exponential curve fits each learner better than a power law",
+      "verdict": "verified",
+      "correct": "Heathcote, A., Brown, S., & Mewhort, D. J. K. (2000). The power law repealed: The case for an exponential law of practice. Psychonomic Bulletin & Review, 7(2), 185-207.",
+      "figure": "exponential fit better in all unaveraged data sets (40 sets, 7,910 series, 475 subjects)",
+      "figureVerdict": "verified",
+      "source": "https://link.springer.com/article/10.3758/BF03212979",
+      "note": "Abstract: 'The exponential function fit better than the power function in all the unaveraged data sets. Averaging produced a bias in favor of the power function.' 'Each learner' is a fair gloss of 'unaveraged'."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Arthur et al. 1998: skill decays with long disuse",
+      "verdict": "verified",
+      "correct": "Arthur, W., Jr., Bennett, W., Jr., Stanush, P. L., & McNelly, T. L. (1998). Factors that influence skill decay and retention: A quantitative review and analysis. Human Performance, 11(1), 57-101.",
+      "figure": "n/a in code (research JSON: d = -0.01 to -1.4)",
+      "figureVerdict": "n/a",
+      "source": "https://gwern.net/doc/psychology/spaced-repetition/1998-arthur.pdf",
+      "note": "Indexed abstract: 189 data points from 53 articles; skill loss from d = -0.01 immediately after training to -1.4 after more than 365 days of nonuse."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Hickson et al. (1981): aerobic fitness gains halve in 10 to 11 days and level off by three weeks at a constant load",
+      "verdict": "corrected",
+      "correct": "Hickson, R. C., Hagberg, J. M., Ehsani, A. A., & Holloszy, J. O. (1981). Time course of the adaptive responses of aerobic power and heart rate to training. Medicine and Science in Sports and Exercise, 13(1), 17-20.",
+      "figure": "half-times 10.3 and 10.8 days; plateau after 3 weeks at constant work rate",
+      "figureVerdict": "wrong",
+      "source": "https://profiles.wustl.edu/en/publications/time-course-of-the-adaptive-responses-of-aerobic-power-and-heart-/",
+      "note": "The numbers are right but the wording inverts them. The abstract: 'The half times (t1/2) of the increases in VO2max during the two periods were 10.3 and 10.8 days' — i.e. half of the eventual gain arrives within 10-11 days; the gains do not 'halve'. Should read e.g. 'aerobic fitness gains are half made in 10 to 11 days'. 'VO2max increased for the first 3 wk and then remained constant' unless the training stimulus was raised: verified. Only 9 subjects."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Mujika & Padilla (2000) on detraining",
+      "verdict": "verified",
+      "correct": "Mujika, I., & Padilla, S. (2000). Detraining: loss of training-induced physiological and performance adaptations. Part I: Short term insufficient training stimulus. Sports Medicine, 30(2), 79-87; Part II: Long term insufficient training stimulus. Sports Medicine, 30(3), 145-154.",
+      "figure": "none quoted in code",
+      "figureVerdict": "n/a",
+      "source": "https://link.springer.com/article/10.2165/00007256-200030030-00001",
+      "note": "Two-part review; the code's single '(2000)' covers both."
+    },
+    {
+      "file": "src/engine/content/abilities.ts",
+      "cited": "Costa & McCrae, NEO PI-R Professional Manual (1992), self-discipline as a facet of conscientiousness",
+      "verdict": "verified",
+      "correct": "Costa, P. T., Jr., & McCrae, R. R. (1992). Revised NEO Personality Inventory (NEO PI-R) and NEO Five-Factor Inventory (NEO-FFI) professional manual. Odessa, FL: Psychological Assessment Resources.",
+      "figure": "Self-Discipline is facet C5 of Conscientiousness",
+      "figureVerdict": "verified",
+      "source": "https://sjdm.org/dmidi/NEO_PI-R.html",
+      "note": "Conscientiousness facets: Competence, Order, Dutifulness, Achievement-Striving, Self-Discipline, Deliberation."
+    },
+    {
+      "file": "src/engine/content/tasks.ts; docs/research/attributes/README.md",
+      "cited": "LAMDA's Pass, Merit and Distinction (its 2024 Performance Syllabus): working 50, strong 65, exceptional 80",
+      "verdict": "verified",
+      "correct": "LAMDA (2024). Performance Graded Examinations Syllabus, with effect from 1 August 2024.",
+      "figure": "Pass 50-64, Merit 65-79, Distinction 80+",
+      "figureVerdict": "verified",
+      "source": "https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf",
+      "note": "Bands confirmed from LAMDA's 2024 performance syllabus via search of the LAMDA documents; the PDF itself was not opened in this check. SLATE's labels (working/strong/exceptional) are its own names for the bands."
+    },
+    {
+      "file": "docs/research/attributes/README.md",
+      "cited": "Lim & Dinges (2010)",
+      "verdict": "verified",
+      "correct": "Lim, J., & Dinges, D. F. (2010). A meta-analysis of the impact of short-term sleep deprivation on cognitive variables. Psychological Bulletin, 136(3), 375-389. doi:10.1037/a0018883",
+      "figure": "none quoted in the files read",
+      "figureVerdict": "n/a",
+      "source": "https://www.med.upenn.edu/uep/assets/user-content/documents/LimDinges2010MetaAnalysis.pdf",
+      "note": "Bibliographic details confirmed. Not cited with a figure in the files read. A search summary gave lapses g = -0.776 where the research JSON says 0.762; not resolved here because the code does not use the number."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "Galak, Kruger & Loewenstein 2011: enjoyment of a song played again at once fell by the sixth time, and a gap restored it",
+      "verdict": "corrected",
+      "correct": "Galak, J., Kruger, J., & Loewenstein, G. (2011). Is variety the spice of life? It all depends on the rate of consumption. Judgment and Decision Making, 6(3), 230-238 — reporting Ratner, R. K., Kahn, B. E., & Kahneman, D. (1999), Experiment 1, for the sixth-play finding",
+      "figure": "decline after the 6th of back-to-back plays; a short gap reverses satiation",
+      "figureVerdict": "verified",
+      "source": "https://www.cmu.edu/dietrich/sds/docs/loewenstein/VarietySpiceLife.pdf",
+      "note": "The paper exists as cited and the gap finding is Galak et al.'s own (in Exp. 1 'a delay of a mere 60 seconds' between plays reversed the preference). But the 'sixth time' figure is not theirs: p. 230 says the favourite song 'became decidedly less so after only the 6th iteration (Ratner, Kahn & Kahneman, 1999, Experiment 1)'. Cite it as Ratner et al. (1999), reported in Galak et al. (2011)."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "Bennett, Bakker & Field 2018: detachment −.39, relaxation −.35 (correlations with fatigue), mastery least (−.18)",
+      "verdict": "verified",
+      "correct": "Bennett, A. A., Bakker, A. B., & Field, J. G. (2018). Recovery from work-related effort: A meta-analysis. Journal of Organizational Behavior, 39(3), 262-275. doi:10.1002/job.2217",
+      "figure": "corrected rho with fatigue: detachment -.39, relaxation -.35, control -.30, mastery -.18",
+      "figureVerdict": "verified",
+      "source": "https://www.isonderhouden.nl/doc/pdf/arnoldbakker/articles/articles_arnold_bakker_476.pdf",
+      "note": "Full text, Results: 'psychological detachment (rho = -.39) and relaxation (rho = -.35) ... stronger relationships than control (rho = -.30) and mastery (rho = -.18)'. Correlational, as the code says. In the regression weights (Table 5) mastery is not the weakest (control is -.01), but the code quotes the correlations, so it stands."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "Hunter et al. 2019: nature lowered cortisol 21.3% an hour past its daily fall",
+      "verdict": "verified",
+      "correct": "Hunter, M. R., Gillespie, B. W., & Chen, S. Y.-P. (2019). Urban nature experiences reduce stress in the context of daily life based on salivary biomarkers. Frontiers in Psychology, 10, 722. doi:10.3389/fpsyg.2019.00722",
+      "figure": "21.3%/hour drop beyond the 11.7% diurnal drop",
+      "figureVerdict": "verified",
+      "source": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.00722/full",
+      "note": "Abstract: 'For salivary cortisol, an NE produced a 21.3%/hour drop beyond that of the hormone's 11.7% diurnal drop.' 36 urban dwellers over 8 weeks."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "a 90-minute walk lowered rumination (Bratman et al. 2015)",
+      "verdict": "verified",
+      "correct": "Bratman, G. N., Hamilton, J. P., Hahn, K. S., Daily, G. C., & Gross, J. J. (2015). Nature experience reduces rumination and subgenual prefrontal cortex activation. PNAS, 112(28), 8567-8572. doi:10.1073/pnas.1510459112",
+      "figure": "90-minute nature walk lowered self-reported rumination; urban walk did not",
+      "figureVerdict": "verified",
+      "source": "https://natureandhealth.uw.edu/publications/nature-experience-reduces-rumination-and-subgenual-prefrontal-cortex-activation",
+      "note": "38 participants. Volume/pages given from my knowledge of the paper, not from a page read in this check; the title, authors, year and 90-minute finding were confirmed."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "music reduced stress at d = .38 to .55 (de Witte et al. 2020)",
+      "verdict": "verified",
+      "correct": "de Witte, M., Spruit, A., van Hooren, S., Moonen, X., & Stams, G. J. (2020). Effects of music interventions on stress-related outcomes: a systematic review and two meta-analyses. Health Psychology Review, 14(2), 294-324. doi:10.1080/17437199.2019.1627897",
+      "figure": "d = .380 physiological, d = .545 psychological",
+      "figureVerdict": "verified",
+      "source": "https://pure.uva.nl/ws/files/58927620/Effects_of_music_interventions_on_stress_related_outcomes_a_systematic_review_and_two_meta_analyses.pdf",
+      "note": "Abstract: 104 RCTs, 327 effect sizes, N = 9,617; 'physiological (d = .380) and psychological (d = .545) outcomes'."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "a brief gallery visit lowered cortisol (Clow & Fredhoi 2006)",
+      "verdict": "verified",
+      "correct": "Clow, A., & Fredhoi, C. (2006). Normalisation of salivary cortisol levels and self-report stress by a brief lunchtime visit to an art gallery by London City workers. Journal of Holistic Healthcare, 3(2), 29-32.",
+      "figure": "cortisol and self-reported stress fell after a lunchtime gallery visit",
+      "figureVerdict": "verified",
+      "source": "https://www.researchgate.net/publication/252281628_Normalisation_of_salivary_cortisol_levels_and_self-report_stress_by_a_brief_lunchtime_visit_to_an_art_gallery_by_London_City_workers",
+      "note": "Confirmed from search-indexed abstract (ResearchGate page itself returned 403): 28 participants, Guildhall Art Gallery; cortisol fell significantly. Volume 3 and pp. 29-32 confirmed; the issue number (2) was not confirmed. Small, uncontrolled study in a non-indexed practitioner journal: weak evidence."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "expressive writing has a small positive effect (Frattaroli 2006)",
+      "verdict": "verified",
+      "correct": "Frattaroli, J. (2006). Experimental disclosure and its moderators: A meta-analysis. Psychological Bulletin, 132(6), 823-865.",
+      "figure": "average r = .075 over 146 randomized studies",
+      "figureVerdict": "verified",
+      "source": "https://eric.ed.gov/?id=EJ746868",
+      "note": "ERIC abstract: 'a positive and significant average r-effect size of 0.075'. Note this is experimental disclosure in general (written and spoken), not expressive writing alone."
+    },
+    {
+      "file": "src/engine/content/engagement.ts",
+      "cited": "Hidi & Renninger's (2006) four phases of interest: Triggered, Maintained, Emerging, Well Developed",
+      "verdict": "verified",
+      "correct": "Hidi, S., & Renninger, K. A. (2006). The four-phase model of interest development. Educational Psychologist, 41(2), 111-127. doi:10.1207/s15326985ep4102_4",
+      "figure": "four phases: triggered situational, maintained situational, emerging individual, well-developed individual interest",
+      "figureVerdict": "verified",
+      "source": "https://eric.ed.gov/?id=EJ736298",
+      "note": "The labels are shortened faithfully. The familiarity thresholds (0/25/50/75) are SLATE's; the model sets none."
+    },
+    {
+      "file": "src/ui/components/AttributesPanel.tsx (named in the brief; not one of the content files)",
+      "cited": "Performance anxiety falls with exposure (Reeves et al., 2022)",
+      "verdict": "verified",
+      "correct": "Reeves, R., Curran, D., Gleeson, A., & Hanna, D. (2022). A meta-analysis of the efficacy of virtual reality and in vivo exposure therapy as psychological interventions for public speaking anxiety. Behavior Modification, 46(4), 937-965. doi:10.1177/0145445521991102",
+      "figure": "VRET -1.39, IVET -1.41 vs control; 11 studies, 508 participants",
+      "figureVerdict": "verified",
+      "source": "https://pureadmin.qub.ac.uk/ws/files/232320026/meta.pdf",
+      "note": "Read in the accepted manuscript. The studied population is public-speaking anxiety under therapy, not actors' stage fright; the code's use is an extrapolation, which the panel calls SLATE's estimate."
+    },
+    {
+      "file": "src/engine/content/practice.ts; src/engine/content/abilities.ts",
+      "cited": "Noice & Noice (2006), active experiencing",
+      "verdict": "verified",
+      "correct": "Noice, H., & Noice, T. (2006). What studies of actors and acting can tell us about memory and cognitive functioning. Current Directions in Psychological Science, 15(1), 14-18.",
+      "figure": "none quoted in code (research JSON: active experiencing 60% vs memorisation 50%)",
+      "figureVerdict": "n/a",
+      "source": "https://homepage.villanova.edu/diego.fernandezduque/Teaching/CognitivePsychology/Lectures_and_Labs/sssAppliedIssues/CurrDirActing.pdf",
+      "note": "abilities.ts cites 'Noice & Noice on actors' elaborative learning' with no year; it should carry (2006)."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Stanislavski, An Actor Prepares (1936): emotion memory, given circumstances, magic if, imagination, concentration of attention and circles of attention",
+      "verdict": "verified",
+      "correct": "Stanislavski, C. (1936). An Actor Prepares (trans. E. R. Hapgood). New York: Theatre Arts Books.",
+      "figure": "chapters 'Concentration of Attention' (circles of attention) and 'Emotion Memory'",
+      "figureVerdict": "verified",
+      "source": "https://en.wikipedia.org/wiki/An_Actor_Prepares",
+      "note": "Concepts and chapters confirmed secondhand. 'Units and objectives' and 'through-line and superobjective' (practice.ts, scene-work and script-analysis) are Stanislavski's terms in the Hapgood translation; cited without a work, which is acceptable."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Meisner & Longwell, Sanford Meisner on Acting (1987), the repetition exercise",
+      "verdict": "verified",
+      "correct": "Meisner, S., & Longwell, D. (1987). Sanford Meisner on Acting. New York: Vintage.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://www.penguinrandomhouse.com/books/113022/sanford-meisner-on-acting-by-sanford-meisner-and-dennis-longwell-with-an-introduction-by-sydney-pollack/",
+      "note": ""
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Chekhov, To the Actor (1953): psychological gesture, imaginary center",
+      "verdict": "verified",
+      "correct": "Chekhov, M. (1953). To the Actor: On the Technique of Acting. New York: Harper & Row.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://en.wikipedia.org/wiki/Michael_Chekhov",
+      "note": "Psychological gesture and imaginary centre are both in the book. 'An animal' is not Chekhov's; practice.ts credits animal work separately to research topic 9, correctly."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Johnstone, Impro (1979), accepting offers",
+      "verdict": "verified",
+      "correct": "Johnstone, K. (1979). Impro: Improvisation and the Theatre. London: Faber and Faber.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://en.wikipedia.org/wiki/Impro:_Improvisation_and_the_Theatre",
+      "note": "Offers, accepting and blocking are Johnstone's. But practice.ts also uses it as the source of the 'Adjustments' exercise, which is not in Impro — see exercises."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Linklater, Freeing the Natural Voice (1976)",
+      "verdict": "verified",
+      "correct": "Linklater, K. (1976). Freeing the Natural Voice. New York: Drama Book Specialists.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://en.wikipedia.org/wiki/Kristin_Linklater",
+      "note": ""
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Berry, Voice and the Actor (1973)",
+      "verdict": "verified",
+      "correct": "Berry, C. (1973). Voice and the Actor. London: Harrap.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://openlibrary.org/books/OL19926052M/Voice_and_the_actor",
+      "note": ""
+    },
+    {
+      "file": "src/engine/content/practice.ts",
+      "cited": "Berry, The Actor and the Text (1987)",
+      "verdict": "corrected",
+      "correct": "Berry, C. (1987). The Actor and His Text. London: Harrap — retitled The Actor and the Text in the revised edition of 1992",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://openlibrary.org/authors/OL763804A/Cicely_Berry",
+      "note": "Title and year do not match one edition: either 'The Actor and His Text (1987)' or 'The Actor and the Text (1992)'."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Laban, The Mastery of Movement (1950); Laban's efforts: space, weight, time and flow",
+      "verdict": "corrected",
+      "correct": "Laban, R. (1950). The Mastery of Movement on the Stage. London: Macdonald & Evans — retitled The Mastery of Movement in the 2nd edition (1960, revised by Lisa Ullmann)",
+      "figure": "effort factors space, weight, time, flow",
+      "figureVerdict": "verified",
+      "source": "https://monoskop.org/images/c/cf/Laban_The_Mastery_of_Movement_3rd_ed_1971.pdf",
+      "note": "Title and year belong to different editions: either 'The Mastery of Movement on the Stage (1950)' or 'The Mastery of Movement (1960)'. The four motion factors are Laban's."
+    },
+    {
+      "file": "src/engine/content/abilities.ts; src/engine/content/practice.ts",
+      "cited": "Lecoq, The Moving Body (2000), the clown",
+      "verdict": "verified",
+      "correct": "Lecoq, J., with Carasso, J.-G., & Lallias, J.-C. (2000). The Moving Body (Le Corps poétique): Teaching Creative Theatre (trans. D. Bradby). London: Methuen.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://www.cambridge.org/core/journals/new-theatre-quarterly/article/abs/moving-body-le-corps-poetique-teaching-creative-theatre-by-jacques-lecoq-with-jeangabriel-carasso-and-jeanclaude-lallias-trans-david-bradby-london-methuen-2000-169-p-isbn-041377194/DAA56B3A764D4DFBED55EF8AA995BDB8",
+      "note": "English translation of Le Corps poétique (1997)."
+    },
+    {
+      "file": "src/engine/content/practice.ts",
+      "cited": "Hagen, Respect for Acting (1973)",
+      "verdict": "verified",
+      "correct": "Hagen, U., with Frankel, H. (1973). Respect for Acting. New York: Macmillan.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://archive.org/details/respectforacting00hage",
+      "note": ""
+    },
+    {
+      "file": "src/engine/content/practice.ts",
+      "cited": "Spolin, Improvisation for the Theater (1963)",
+      "verdict": "verified",
+      "correct": "Spolin, V. (1963). Improvisation for the Theater. Evanston, IL: Northwestern University Press.",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://catalog.hathitrust.org/Record/000226600",
+      "note": ""
+    },
+    {
+      "file": "src/engine/content/practice.ts",
+      "cited": "Bergson, Laughter (1900)",
+      "verdict": "verified",
+      "correct": "Bergson, H. (1900). Le Rire: Essai sur la signification du comique. Paris: Alcan. (English: Laughter: An Essay on the Meaning of the Comic, 1911.)",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://en.wikipedia.org/wiki/Laughter_(book)",
+      "note": "Bergson's is a theory of the comic; it contains no timing exercise (see comic-timing)."
+    },
+    {
+      "file": "src/engine/content/practice.ts",
+      "cited": "RADA's textual strand (research topic 9)",
+      "verdict": "unverifiable",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "not found",
+      "source": "https://www.rada.ac.uk/documents/1176/BA_Acting_Programme_Specification_May_2024.pdf",
+      "note": "RADA's BA Acting programme specification (May 2024) does list text analysis among the studio classes (confirmed from a search summary), but the phrase 'textual strand' was not found; the PDF was not opened."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 123a/b Speech And Accents I (Julie Foh), 223a/b II (Amanda Quaid), 323a/b III (Julie Foh, Amanda Quaid)",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Matches the 2026-2027 David Geffen School of Drama bulletin (323 is '(Class, Tutorials)'). The 123 description ('broaden the actor's range of imaginative vocal expression') does not mention 'standard American speech', which speech-drill asserts: unverified."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 743b Professional Preparation And Audition Workshop (Tamilla Woodard)",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Description: students 'receive sides to prepare, work with a reader, and are asked to make adjustments in real time' — supports both audition-pieces and cold-reading."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 203a/b Acting II: Plays Of Extended And Heightened Language (Mary Lou Rosato)",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Description centres on Shakespeare's heightened language; supports verse-speaking."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 463a/b On-Camera Acting Technique (Ellen Novack)",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "'This three-session course gives students experience working on camera. Brief scenes ... are filmed, watched, discussed.' Supports self-tape-practice; weak support for cold-reading."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 133a/b and 233a/b The Body As Source I and II (Erica Fae), cited for 'A Dance Class: barre, center and a combination'",
+      "verdict": "corrected",
+      "correct": "Course exists as named; it is not a dance class. Closest Yale fit is DRAM 273a / 373a Movement Invention II / III (Andrea Miller), which is also not a barre class.",
+      "figure": "n/a",
+      "figureVerdict": "wrong",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Code, title and teacher match. But the bulletin describes 133 as bringing 'awareness and integration to the physical, mental, emotional, and energetic aspects of the actor' and 233 as 'training of the energetic body'. Nothing about barre, centre or combinations. Movement Invention is 'improvisation, physical research, phrase work, and composition'. The dance-class exercise is real dance pedagogy, but no Yale acting course in the bulletin is a technique dance class."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 403a/b Acting Intimacy And Combat For The Stage (Kelsey Rainwater, Michael Rossmy)",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "'techniques and safety measures employed in the practice of theatrical violence and intimacy' (first year)."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 405a/b Advanced Principles Of Acting Stage Combat (Kelsey Rainwater, Michael Rossmy), cited for 'footwork, falls and unarmed technique'",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Course verified, but 405 is 'armed theatrical violence'. The unarmed technique the drill describes is DRAM 403's first-year work; combat-drill's 'unarmed' wording fits 403, not 405."
+    },
+    {
+      "file": "src/engine/content/school.ts (cited by practice.ts)",
+      "cited": "Yale DRAM 413a/b Singing II And Tutorials (Glenn Seven Allen); DRAM 423a/b Acting Through Song (Lonny Price)",
+      "verdict": "verified",
+      "correct": "Bulletin titles: 'Singing II (Class, Tutorials)'; 'Acting Through Song (Class, Tutorials)'",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Codes and teachers match; SLATE's 'Singing II And Tutorials' is a paraphrase of the parenthetical."
+    },
+    {
+      "file": "src/engine/content/school.ts",
+      "cited": "The rest of YALE_DRAMA's course list: DRAM 103, 113, 143, 153a, 163b, 873, 163a, 213, 243, 263, 273a, 293b, 353a, 190a, 253a, 303a, 313, 343, 363a, 373a, 473b, 273b, 793b",
+      "verdict": "verified",
+      "correct": "",
+      "figure": "n/a",
+      "figureVerdict": "n/a",
+      "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate",
+      "note": "Every code, title, year and listed teacher matches the 2026-2027 bulletin, apart from parenthetical title suffixes ('(Class and Tutorials)', '(Tutorials)') and DRAM 873's 'Paul Walsh and Faculty'. DRAM 273b has no individual instructor in the bulletin; SLATE's 'Acting faculty' is consistent. The bulletin also lists Year One courses SLATE omits (DRAM 4b, 53a, 180a, 533a/b, 563a 'Activated Analysis' by Annelise Lawson, 863b)."
+    }
+  ],
+  "exercises": [
+    { "id": "sense-memory", "label": "Sense Memory", "kind": "named pedagogy exercise", "basis": "Recreating a remembered object or sensation until feeling follows is Lee Strasberg's sense-memory exercise, which he developed from Stanislavski's 'emotion memory' chapter. The name and the method are Strasberg's, not Stanislavski's.", "source": "https://www.stagemilk.com/sense-memory-exercises-for-actors/ ; https://en.wikipedia.org/wiki/Affective_memory" },
+    { "id": "repetition", "label": "The Repetition Exercise", "kind": "named pedagogy exercise", "basis": "Meisner's repetition exercise, accurately described.", "source": "https://en.wikipedia.org/wiki/Meisner_technique" },
+    { "id": "given-circumstances", "label": "The Given Circumstances", "kind": "composite of real practice", "basis": "Stanislavski's given circumstances and magic if, written out in the who/where/when/what-do-I-want form of Hagen's character questions. A standard homework task, but not a single named exercise.", "source": "https://en.wikipedia.org/wiki/An_Actor_Prepares ; https://archive.org/details/respectforacting00hage" },
+    { "id": "concentration", "label": "Circles Of Attention", "kind": "named pedagogy exercise", "basis": "Stanislavski's small, medium and large circles of attention, from 'Concentration of Attention' in An Actor Prepares.", "source": "https://en.wikipedia.org/wiki/An_Actor_Prepares" },
+    { "id": "recall-drill", "label": "A Recall Drill", "kind": "SLATE's own", "basis": "Retrieval practice from Roediger & Karpicke (2006) applied to learning a speech by its meaning (Noice & Noice 2006). Both are laboratory findings; no actor-training text names this drill. The label 'A Recall Drill' already reads as generic.", "source": "https://colinallen.dnsalias.org/Readings/2006_Roediger_Karpicke_PsychSci.pdf" },
+    { "id": "adjustments", "label": "Adjustments", "kind": "composite of real practice", "basis": "Replaying a speech under changing adjustments is common studio practice, and 'adjustment' is Meisner-technique vocabulary. The cited source, Johnstone's 'accepting offers', is about accepting a partner's offer in improvisation, not reworking a speech under a note. The attribution is weak; Meisner would be the closer source.", "source": "https://www.studiobinder.com/blog/meisner-technique/ ; https://en.wikipedia.org/wiki/Impro:_Improvisation_and_the_Theatre" },
+    { "id": "voice-work", "label": "Voice Work", "kind": "composite of real practice", "basis": "Breath, release and resonance, then text on the breath: a generic voice warm-up in the Linklater/Berry tradition, not one named exercise.", "source": "https://en.wikipedia.org/wiki/Kristin_Linklater" },
+    { "id": "movement-work", "label": "Movement Work", "kind": "composite of real practice", "basis": "Laban effort work through the four motion factors (space, weight, time, flow) is real Laban practice; moving from there to a character's walk is a common studio extension.", "source": "https://monoskop.org/images/c/cf/Laban_The_Mastery_of_Movement_3rd_ed_1971.pdf" },
+    { "id": "dialect-drill", "label": "Dialect Drill", "kind": "composite of real practice", "basis": "Working from a recorded native speaker through sound changes and the music of the accent is standard dialect coaching. Yale's Speech and Accents sequence exists.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "audition-pieces", "label": "Audition Pieces", "kind": "composite of real practice", "basis": "Two contrasting monologues is the standard audition requirement. DRAM 743b exists, though its description stresses sides and a reader rather than monologues.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "character-work", "label": "Character Work", "kind": "composite of real practice", "basis": "Joins named techniques: Chekhov's psychological gesture and imaginary centre, and animal work, a conservatory staple that is not Chekhov's.", "source": "https://en.wikipedia.org/wiki/Michael_Chekhov" },
+    { "id": "verse-speaking", "label": "Verse Speaking", "kind": "composite of real practice", "basis": "Scansion, line endings and antithesis is standard Shakespeare verse work (Berry, and also Barton's Playing Shakespeare). DRAM 203 exists and is about heightened language.", "source": "https://openlibrary.org/authors/OL763804A/Cicely_Berry ; https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "clown-practice", "label": "Clown Practice", "kind": "composite of real practice", "basis": "Lecoq red-nose clown work. The 'flop' is Lecoq's 'le bide'; entrances in the nose are a standard clown-class exercise.", "source": "https://jpcook.dk/def_le_bide.html ; https://en.wikipedia.org/wiki/Jacques_Lecoq" },
+    { "id": "cold-reading", "label": "Cold Reading", "kind": "composite of real practice", "basis": "Cold reading of unseen sides is standard audition-class practice and matches DRAM 743b's description (sides, reader, real-time adjustments).", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "comic-timing", "label": "Comic Timing", "kind": "SLATE's own", "basis": "Bergson's Laughter is a philosophical theory of the comic ('the mechanical encrusted on the living') and holds no timing exercise. The set-up/pause/turn drill is SLATE's own framing of common rehearsal practice and should be labelled as the game's own, with Bergson as background at most.", "source": "https://en.wikipedia.org/wiki/Laughter_(book)" },
+    { "id": "dance-class", "label": "A Dance Class", "kind": "composite of real practice", "basis": "Barre, centre and combination is the standard structure of a ballet or jazz technique class. But the cited Yale courses (The Body as Source, DRAM 133/233) are not dance classes (see citations).", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "improv-session", "label": "An Improv Session", "kind": "composite of real practice", "basis": "Scenes from a suggestion, accepting offers: standard improvisation practice in the Johnstone and Spolin traditions.", "source": "https://en.wikipedia.org/wiki/Impro:_Improvisation_and_the_Theatre ; https://catalog.hathitrust.org/Record/000226600" },
+    { "id": "intimacy-study", "label": "Intimacy Practice", "kind": "composite of real practice", "basis": "Boundaries, consent and choreographed intimacy are the tools of contemporary intimacy direction. DRAM 403 covers 'theatrical violence and intimacy'.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "self-tape-practice", "label": "Self-Tape Practice", "kind": "composite of real practice", "basis": "Self-taping and reviewing playback is current industry practice. DRAM 463 films scenes and watches them back.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "scene-work", "label": "Scene Work", "kind": "composite of real practice", "basis": "Beats (Stanislavski's units), objectives and playable actions: standard scene-study method.", "source": "https://en.wikipedia.org/wiki/An_Actor_Prepares" },
+    { "id": "script-analysis", "label": "Script Analysis", "kind": "composite of real practice", "basis": "Events, through-line and superobjective: standard textual analysis built on Stanislavski's terms. The RADA 'textual strand' phrase was not found.", "source": "https://www.rada.ac.uk/documents/1176/BA_Acting_Programme_Specification_May_2024.pdf" },
+    { "id": "singing-practice", "label": "Singing Practice", "kind": "composite of real practice", "basis": "Scales, then a song worked for acting and notes: standard voice-studio and acting-through-song practice. DRAM 413/423 exist.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "speech-drill", "label": "Speech Drill", "kind": "composite of real practice", "basis": "Articulation drills, then a speech for clarity at size: standard speech training. 'Standard American speech' is not in the DRAM 123 description and was not verified as Yale's approach.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "combat-drill", "label": "Combat Drill", "kind": "composite of real practice", "basis": "Footwork, falls and unarmed technique at half then full speed is standard stage-combat training. The unarmed work is DRAM 403; 405 is armed.", "source": "https://bulletin.yale.edu/bulletins/drama/acting-mfa-and-certificate" },
+    { "id": "copy-reading", "label": "Copy Reading", "kind": "composite of real practice", "basis": "Reading commercial and narration copy to a microphone and listening back is ordinary voice-over practice. The code already says it has no published curriculum behind it, which is accurate.", "source": "none (the code cites none, and none was sought)" }
+  ],
+  "summary": [
+    "abilities.ts attributes the quotation 'improvement is rapid at first but decreases as the practitioner becomes more skilled' to Ericsson et al. (1993). It is the opening sentence of Heathcote, Brown & Mewhort (2000), p. 185. It does not appear in Ericsson et al.",
+    "abilities.ts (stamina) says Hickson et al. found aerobic gains 'halve in 10 to 11 days'. The paper reports half-times of the increase of 10.3 and 10.8 days: half the gain is made in that time. The plateau at three weeks is correct.",
+    "engagement.ts credits the 'sixth play' satiation figure to Galak, Kruger & Loewenstein (2011). Galak et al. report it from Ratner, Kahn & Kahneman (1999). The 'gap restores it' finding is Galak et al.'s own.",
+    "Edition mismatches: Berry's 1987 book was 'The Actor and His Text' ('The Actor and the Text' is the 1992 retitling). Laban's 1950 book was 'The Mastery of Movement on the Stage' ('The Mastery of Movement' is the 1960 second edition).",
+    "Yale citations: every course code, title and teacher in school.ts matches the 2026-2027 bulletin. Two practice.ts uses misfit the course descriptions. 'A Dance Class' (barre, centre, combination) cites The Body as Source (DRAM 133/233), which is energetic-body work, not a dance class. 'Combat Drill' (unarmed) cites DRAM 405, which is armed combat; the unarmed work is DRAM 403.",
+    "Exercise labelling: 'Comic Timing' (sourced to Bergson's theory) and 'A Recall Drill' (a lab finding applied) are SLATE's own and should say so. 'Adjustments' is sourced to Johnstone's accepting offers, which does not describe it; Meisner's adjustments would be closer. 'Sense Memory' is Strasberg's exercise, built on Stanislavski's emotion memory. Repetition (Meisner) and Circles of Attention (Stanislavski) are accurately named pedagogy exercises.",
+    "Everything else checked was verified, figure included: Roediger & Karpicke 61% vs 40%; Macnamara et al. 21%/18%; Ericsson et al. ~4 h/day, 2 h, 7,410 h; Heathcote et al.; Bennett et al. -.39/-.35/-.18; Hunter et al. 21.3%/h; de Witte et al. d = .380/.545; Frattaroli r = .075; Reeves et al. -1.39/-1.41; LAMDA 50/65/80; Hidi & Renninger; Costa & McCrae; Arthur et al.; Mujika & Padilla; Clow & Fredhoi; Bratman et al.; Lim & Dinges; Noice & Noice.",
+    "Not fully verified: the Clow & Fredhoi issue number; Bratman et al.'s volume and pages, which come from memory; RADA's 'textual strand' wording; 'standard American speech' as Yale's DRAM 123 content."
+  ]
+}

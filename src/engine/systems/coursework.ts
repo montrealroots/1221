@@ -59,6 +59,7 @@ import type { AbilityId } from '../content/abilities';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
 import { familiesOf } from '../content/genres';
+import { withDemands } from '../content/demands';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
 import { enjoyCrafts } from './enjoyment';
@@ -659,14 +660,15 @@ export const difficultyOf = (t: Template): number => Math.max(-0.5, Math.min(1, 
  * A piece of coursework judged (`systems/evaluation.ts`), from 2026-10-09: the template's task profile
  * (`TEMPLATE_TASK`), the techniques it reads, its parts of preparation against `EVALUATION.complete.coursework`
  * (a round's parts only, for work shown in rounds), its par as difficulty, the day's condition at the meeting, and
- * its scene's play's kinds leaning what counts, where the game has the play.
+ * its scene's play's kinds leaning what counts and adding what they demand (`withDemands`), where the game has the play.
  */
 export function judgeWork(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant, key: string): Evaluation {
   const t = templateById(a.template)!;
   const w = weightsOf(a);
   const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
   const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
-  return evaluate(sim, person, { task: TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!, techniques: t.reads, prep: parts, required, difficulty: difficultyOf(t), condition: conditionAt(sim, person, when), families: familiesOf(a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : []), key });
+  const genres = a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : [];
+  return evaluate(sim, person, { task: TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!, techniques: withDemands(t.reads, genres), prep: parts, required, difficulty: difficultyOf(t), condition: conditionAt(sim, person, when), families: familiesOf(genres), key });
 }
 
 /** A showing's band from its whole, a smaller piece no better than Working (`approach`). */
