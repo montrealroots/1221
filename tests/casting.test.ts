@@ -11,7 +11,7 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
 import { COURSES } from '@/engine/content/school';
-import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightEvaluation, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
@@ -155,22 +155,42 @@ describe('a night’s growth', () => {
 describe('a night’s reading', () => {
   it('goes better rested and stronger for the part: off when spent and weak for it, remarkable when fresh and strong', () => {
     const sim = life('nights-bands');
-    const count = (level: number, ready: number) => {
+    const p = sim.player;
+    // One level in every ability and technique, and an energy: what the evaluation reads (`nightEvaluation`).
+    const at = (level: number, energy: number) => {
+      p.craft = evenCraft(level);
+      p.attrs = { presence: level, composure: level, listening: level, imagination: level, focus: level, adaptability: level, discipline: level };
+      // Spent is spent all through: no energy, and the stress and the sleep owed that go with it.
+      Object.assign(p.wellbeing, energy < 30 ? { energy, stress: 80, sleepDebt: 20, nourishment: 50, morale: 40 } : { energy, stress: 10, sleepDebt: 0, nourishment: 80, morale: 60 });
+    };
+    const count = (level: number, energy: number) => {
+      at(level, energy);
       const out = { off: 0, solid: 0, strong: 0, remarkable: 0 };
-      for (let n = 0; n < 200; n += 1) out[nightOf(sim, sim.player, `k${n}`, level, ready)] += 1;
+      for (let n = 0; n < 200; n += 1) out[nightOf(sim, p, `k${n}`, {}, sim.now)] += 1;
       return out;
     };
-    const spent = count(45, 0.4);
-    const fresh = count(90, 1.2);
+    const spent = count(40, 5);
+    const fresh = count(92, 100);
     expect(spent.off).toBeGreaterThan(150);
     expect(fresh.remarkable).toBeGreaterThan(150);
     // The same actor, rested or not.
-    expect(count(65, 1.1).strong + count(65, 1.1).remarkable).toBeGreaterThan(count(65, 0.7).strong + count(65, 0.7).remarkable);
+    const rested = count(72, 95);
+    const tired = count(72, 10);
+    expect(rested.strong + rested.remarkable).toBeGreaterThan(tired.strong + tired.remarkable);
     // A night reads against what the part asks: a lead more than a featured part, and the Rep's professional parts more than the School's.
     const V = { off: 0, solid: 1, strong: 2, remarkable: 3 } as const;
-    const sum = (size: 'lead' | 'featured', where: 'school' | 'rep') => Array.from({ length: 200 }, (_, n) => V[nightOf(sim, sim.player, 'p' + n, 75, 1, size, where)]).reduce((a: number, b) => a + b, 0);
+    at(75, 90);
+    const sum = (size: 'lead' | 'featured', where: 'school' | 'rep') => Array.from({ length: 200 }, (_, n) => V[nightOf(sim, p, 'p' + n, {}, sim.now, size, where)]).reduce((a: number, b) => a + b, 0);
+    // In the bands, across the line at 65 (`NIGHT_DIFFICULTY`), and in the whole the bands are cut from, every night.
+    at(66, 90);
     expect(sum('featured', 'school')).toBeGreaterThan(sum('lead', 'school'));
+    at(72, 90);
     expect(sum('lead', 'school')).toBeGreaterThan(sum('lead', 'rep'));
+    const whole = (size: 'lead' | 'featured', where: 'school' | 'rep', n: number) => nightEvaluation(sim, p, 'w' + n, {}, sim.now, size, where).overall;
+    for (let n = 0; n < 20; n += 1) {
+      expect(whole('featured', 'school', n)).toBeGreaterThan(whole('lead', 'school', n));
+      expect(whole('lead', 'school', n)).toBeGreaterThan(whole('lead', 'rep', n));
+    }
     expect(directorsNote(2)).not.toBe(directorsNote(-1));
     expect(nightsMean({ strong: 2, off: 2 })).toBe(0);
   });
@@ -205,6 +225,8 @@ describe('what a night does', () => {
       const sim = life('nights-presence');
       play(sim, on(2027, 1, 6));
       sim.player.craft = evenCraft(level);
+      // The abilities with the craft (`content/abilities.ts`): a night reads both since 2026-10-09. Presence keeps its draw.
+      Object.assign(sim.player.attrs!, { composure: level, listening: level, imagination: level, focus: level, adaptability: level, discipline: level });
       const shows = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.call === 'performance' && i.payload.which !== 'rep');
       play(sim, shows[0]!.at - 60_000);
       const start = sim.player.attrs!.presence;

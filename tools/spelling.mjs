@@ -128,6 +128,8 @@ const REAL_NAMES = [
   'G Licence', 'P1 Licence', 'P2 Licence', 'M1 Licence', 'M2 Licence', 'M Licence', 'Class 6 Licence',
   // The managers' body the UK Theatre/Equity agreements are named for.
   'UK Theatre',
+  // A journal an interest's research cites, by its own title (`content/engagement.ts`, from 2026-10-09).
+  'Theatre, Dance and Performance Training',
   // Where the real plays were first staged, as each theater spells its own name (`content/contemporary.ts`).
   'Manhattan Theatre Club', 'Biltmore Theatre', 'Steppenwolf Theatre Company', 'Royal Court Theatre', 'Theatre Upstairs', 'Jerwood Theatre Downstairs', 'Studio Theatre', 'Williamstown Theatre Festival', 'Vineyard Theatre', 'Laura Pels Theatre', 'Chichester Festival Theatre', 'Denver Center Theatre Company', 'National Theatre of Scotland', 'Soho Theatre', 'Almeida Theatre', 'Ricketson Theatre', 'Theatre Communications Group',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.

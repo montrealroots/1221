@@ -7,7 +7,9 @@
  * The rail down the left is every destination, always in reach, with Home at
  * the top wearing the count of what is waiting on you. It is words only: no
  * icons. Below a
- * laptop it folds into a drawer behind the Menu button.
+ * laptop it folds into a drawer behind the Menu button. A destination joins
+ * the rail when the guide’s chapter that opens it is read; your name at the
+ * foot opens the Player Profile.
  *
  * The bar across the top keeps its two sides apart on purpose. Left is the
  * world: the mark, the clock, and the controls that move it. Right is you:
@@ -18,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { LifeEnded } from './LifeEnded';
 import { RAIL_DESTINATIONS } from './destinations';
+import { isOpen } from '@/engine/world/tutorial';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
@@ -33,6 +36,9 @@ export function GameShell() {
   const [railOpen, setRailOpen] = useState(false);
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
+  // The destinations the guide has opened, by group, none left empty.
+  const railGroups = useWorld((s) => RAIL_DESTINATIONS.map((g) => ({ ...g, items: g.items.filter((i) => isOpen(s, i.feature)) })).filter((g) => g.items.length > 0));
+  const profileOpen = useWorld((s) => isOpen(s, 'ui.profile'));
 
   // Escape closes the drawer, the way it closes the dialogs. Without it the
   // only ways out were the Menu button and a shade the drawer covers most of,
@@ -119,7 +125,7 @@ export function GameShell() {
             </button>
           </div>
 
-          {RAIL_DESTINATIONS.map((group) => (
+          {railGroups.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>
               {group.items.map((item) => (
@@ -138,12 +144,22 @@ export function GameShell() {
 
           <div className="rail-group rail-player">
             <div className="rail-group-label">You</div>
-            <div className="rail-you">
-              <div className="small strong truncate">{sim.player.displayName}</div>
-              <div className="xs dim truncate">
-                {PERFORMER_NOUN[sim.player.performerTitle]} · {unread > 0 ? `${unread} Unread` : 'All Read'}
-              </div>
-            </div>
+            <button
+              type="button"
+              className="rail-you rail-item"
+              aria-current={route === '/workspace/profile' ? 'page' : undefined}
+              aria-label={`${sim.player.displayName}, Open Your Player Profile`}
+              disabled={!profileOpen}
+              title={profileOpen ? 'Your Player Profile' : 'Opens with “You As An Actor” in the guide'}
+              onClick={() => go('/workspace/profile', 'Player Profile')}
+            >
+              <span className="col">
+                <span className="small strong truncate">{sim.player.displayName}</span>
+                <span className="xs dim truncate">
+                  {PERFORMER_NOUN[sim.player.performerTitle]} · {unread > 0 ? `${unread} Unread` : 'All Read'}
+                </span>
+              </span>
+            </button>
           </div>
         </nav>
 

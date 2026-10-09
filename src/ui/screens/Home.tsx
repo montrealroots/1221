@@ -9,7 +9,6 @@
  */
 
 import { formatDaylight } from '@/engine/core/sun';
-import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
@@ -34,7 +33,6 @@ import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
-import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
 
 export function Home() {
@@ -369,53 +367,11 @@ export function Home() {
                   note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
                   look={at('daylight', place.city.id)}
                 />
-                <Stat
-                  label="Currency"
-                  value={`${place.currency.symbol} ${place.currency.code}`}
-                  note={`${place.currency.name}${place.currency.unitsPerUsd !== undefined && place.currency.code !== 'USD' ? ` · ${place.currency.unitsPerUsd} per $1` : ''}`}
-                  look={at('currency', place.currency.code)}
-                />
-                <Stat
-                  label="Cost Of Living"
-                  value={place.costOfLivingIndex}
-                  note={`A one-bedroom about ${place.localRent ?? formatAtlasCompact(place.medianRentCents)}/mo`}
-                  look={at('place', place.city.id)}
-                />
-                <Stat
-                  label="Tax On A Wage"
-                  value={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
-                  note={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No table for this country yet'}
-                  look={at('place', place.city.id)}
-                />
-                <Stat
-                  label="Sales Tax"
-                  value={`${(place.salesTax * 100).toFixed(1)}%`}
-                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners`}
-                  look={at('place', place.city.id)}
-                />
-                <Stat
-                  label="Languages"
-                  value={place.languages[0] ?? '—'}
-                  note={place.languages.slice(1).join(', ') || 'Official language'}
-                  look={at('country', place.city.countryId)}
-                />
-                <Stat
-                  label={place.countryName}
-                  value={place.capital || place.continent}
-                  note={`${place.continent} · ${place.countryPopulation >= 1_000_000 ? `${(place.countryPopulation / 1_000_000).toFixed(1)}M people` : `${place.countryPopulation.toLocaleString('en-US')} people`}${place.phone ? ` · +${place.phone}` : ''}`}
-                  look={at('country', place.city.countryId)}
-                />
                 </div>
+                {/* Let Home breathe (from 2026-10-09): the currency, the cost of living, the taxes, the languages, the
+                    country and its roads were six more tiles here; each is on the place’s and the country’s looks. */}
                 <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
-                  <Open subject={at('country', place.city.countryId)}>
-                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometers'}, temperatures in °{place.units.temperature}.
-                  </Open>
-                  {place.currency.code !== 'USD' ? (
-                    <>
-                      {' '}
-                      <Open subject={at('currency', place.currency.code)}>{RATES_NOTE}</Open>
-                    </>
-                  ) : ''}
+                  <Open subject={at('place', place.city.id)}>Its money, costs, taxes and languages</Open>
                 </p>
               </LookRegion>
             </Panel>

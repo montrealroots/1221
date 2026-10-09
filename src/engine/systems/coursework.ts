@@ -52,7 +52,13 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, coursesOn, focusOf, focusAt, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, conditionAt, ordinary, coursesOn, focusOf, focusAt, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bandOfQuality, evaluate, recordWork, type Evaluation } from './evaluation';
+import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK } from '../content/tasks';
+import type { AbilityId } from '../content/abilities';
+import { genreSpeed } from './engagement';
+import { genresOfPlay } from '../content/plays';
+import { familiesOf } from '../content/genres';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
 import { enjoyCrafts } from './enjoyment';
@@ -72,14 +78,13 @@ export const WORK = {
   /** The steps of an assignment that train their skill, at most, and how much one does against a class meeting's. */
   trainingSteps: 3, trainingWeight: 0.25,
   /**
-   * A showing's reading: preparation, the craft against the work's par (a point worth a fortieth), readiness, and luck
-   * either side. Craft and readiness count only as far as the work was prepared, to half of it, since nobody shows
-   * their craft in a scene they don't know: until a first played test, a rested, able student who'd done nothing
-   * showed as Working.
+   * A showing is judged by the evaluation from 2026-10-09 (`show`, `systems/evaluation.ts`): until then it was half
+   * preparation, three tenths the craft against the work's par at a fortieth a point, a fifth readiness, and luck of
+   * 0.08 either side, cut at 0.4, 0.58 and 0.74. The craft against the par at a fortieth a point is kept for the note
+   * on a skill (`craftScore`); the par is the work's difficulty now (`difficultyOf`).
    */
-  showing: { prep: 0.5, craft: 0.3, ready: 0.2, perPoint: 40, luck: 0.08, carries: 0.5 },
-  /** The bands, and what each makes of the meeting's growth against an ordinary meeting. */
-  bands: { unready: 0.4, working: 0.58, strong: 0.74 },
+  showing: { perPoint: 40 },
+  /** What each band makes of the meeting's growth against an ordinary meeting. */
   weight: { unready: 0.85, working: 1, strong: 1.1, exceptional: 1.2 },
   /** A revision's meeting, the note taken or not. */
   revision: { applied: 1.1, notApplied: 0.95, dimRise: 0.2, dimEnough: 0.8, worked: 0.6 },
@@ -441,6 +446,13 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   return undefined;
 }
 
+/**
+ * The ability each kind of preparation is practice in (from 2026-10-09): getting to know the material is attention,
+ * drilling lines is memory, the table work is imagination, a partner's evenings are listening, and a revision from a
+ * note is taking direction. Rehearsal trains the work's own technique (`Activity.trains`).
+ */
+export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'focus', memorization: 'memory', interpretation: 'imagination', partner: 'listening', revision: 'adaptability' };
+
 /** The trait knob each kind of preparation reads: interpretation is read around, lines drilled, a scene skimmed, a note revised. */
 export const PREP_KNOB: Partial<Record<PrepDim, PersonalityKnob>> = { interpretation: 'readsAround', memorization: 'drills', familiarity: 'skims', revision: 'revises' };
 
@@ -468,13 +480,19 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   const before = a.prep[act.dim];
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
-  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * (1 - before));
+  // Work in a genre known goes faster (`genreSpeed`, from 2026-10-09): the scene's play's kinds, the best of them.
+  const speed = genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined);
+  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {
     grow(person.craft, act.trains, focus, WORK.trainingWeight);
     a.trained += 1;
   }
+  // The ability this kind of step is practice in (`PREP_ABILITY`, from 2026-10-09), a step's training weight, while
+  // the step still moves the work.
+  const ability = PREP_ABILITY[act.dim];
+  if (ability && a.prep[act.dim] > before) ordinary(sim, person, ability, focus, WORK.trainingWeight, `prepare:${act.dim}`);
   return { moved: a.prep[act.dim] - before, dim: act.dim, minutes };
 }
 
@@ -628,10 +646,28 @@ export function feedbackWords(kind: NoteKind, body: string, before?: { on: strin
 
 const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
 
-function bandOf(score: number): Band {
-  const b = WORK.bands;
-  return score < b.unready ? 'unready' : score < b.working ? 'working' : score < b.strong ? 'strong' : 'exceptional';
+/** How hard a piece of work is, by its par: 50 asks nothing more, each point past it a fortieth more (`EvalContext.difficulty`). */
+export const difficultyOf = (t: Template): number => clamp01((t.par - 50) / WORK.showing.perPoint);
+
+/**
+ * A piece of coursework judged (`systems/evaluation.ts`), from 2026-10-09: the template's task profile
+ * (`TEMPLATE_TASK`), the techniques it reads, its parts of preparation against `EVALUATION.complete.coursework`
+ * (a round's parts only, for work shown in rounds), its par as difficulty, the day's condition at the meeting, and
+ * its scene's play's kinds leaning what counts, where the game has the play.
+ */
+export function judgeWork(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant, key: string): Evaluation {
+  const t = templateById(a.template)!;
+  const w = weightsOf(a);
+  const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
+  const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
+  return evaluate(sim, person, { task: TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!, techniques: t.reads, prep: parts, required, difficulty: difficultyOf(t), condition: conditionAt(sim, person, when), families: familiesOf(a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : []), key });
 }
+
+/** A showing's band from its whole, a smaller piece no better than Working (`approach`). */
+const bandFor = (a: Assignment, overall: number): Band => {
+  const b = bandOfQuality(overall);
+  return a.approach?.kind === 'smaller' && (b === 'strong' || b === 'exceptional') ? 'working' : b;
+};
 
 /** The showing reckoned once: its band and parts, what helped, and the note. */
 export function show(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant): Showing {
@@ -642,10 +678,8 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + (w[dim] ?? 0) * v, 0);
   const craft = craftScore(person, t);
   const ready = clamp01((focusOf(person) - 0.3) / 0.9);
-  const luck = (sim.rng('school.coursework', person.id, `show-${a.id}-${onDay}`).next() * 2 - 1) * WORK.showing.luck;
-  const s = WORK.showing;
-  const carried = Math.min(1, prep / s.carries);
-  const score = s.prep * prep + (s.craft * craft + s.ready * ready) * carried + luck;
+  const judged = judgeWork(sim, person, a, onDay, when, `show:${person.id}:${a.id}:${onDay}`);
+  const score = judged.overall / 100;
   const strengths = (Object.entries(parts) as [PrepDim, number][]).filter(([, v]) => v >= 0.75).map(([dim]) => `${t.dims[dim]!.label} was there`);
   if (craft >= 0.65) strengths.push(`Your ${(Object.keys(t.reads) as Skill[]).map((k) => labelOf(k).toLowerCase()).join(' and ')} carried it`);
   if (ready >= 0.75) strengths.push('You came rested and ready');
@@ -662,7 +696,8 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   for (const key of taken) strengths.push(`The note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()} is taken`);
   if (taken.length) a.taken = taken;
   // A smaller piece shown is no better than Working (`approach`).
-  const band = a.approach?.kind === 'smaller' && ['strong', 'exceptional'].includes(bandOf(score)) ? 'working' : bandOf(score);
+  const band = bandFor(a, judged.overall);
+  recordWork(sim, person, judged, { at: when, what: t.title, band });
   const showing: Showing = { band, score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
   // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
   const pick = noteCandidates(person, a, parts, craft, notes)[0];
@@ -757,7 +792,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     revising.revision!.applied = applied;
     // Shown again, reckoned as a showing: its band kept (the showcase reads the last one, `showcaseSceneSeen`). Until
     // 2026-10-08 the second showing was only taken or not, and its band was never set.
-    revising.revision!.band = reshow(sim, person, revising, key);
+    revising.revision!.band = reshow(sim, person, revising, key, when);
     if (applied && revising.feedback) resolveNote(notesOf(courseworkOf(sim, person)!), noteKey(revising.feedback.focus), key, revising.id, courseOf(course)?.name ?? course);
     revising.status = 'done';
     if (mine) sim.notify({ category: 'school', title: applied ? 'The Note Was Taken' : 'The Note Wasn’t Taken Yet', body: `${templateById(revising.template)!.title}, shown again: ${applied ? 'what held it back last time was worked on, and it showed.' : `${revising.feedback?.text ?? ''} It’s still there.`}`, importance: 50, route: '/workspace/school' });
@@ -766,18 +801,12 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   return 1;
 }
 
-/** The revised work's band: read as a showing is, without a new note (the note given stands until the next work). */
-function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string): Band {
-  const t = templateById(a.template)!;
-  const parts = preparedParts(person, a, onDay);
-  const w = weightsOf(a);
-  const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + (w[dim] ?? 0) * v, 0);
-  const craft = craftScore(person, t);
-  const ready = clamp01((focusOf(person) - 0.3) / 0.9);
-  const luck = (sim.rng('school.coursework', person.id, `reshow-${a.id}-${onDay}`).next() * 2 - 1) * WORK.showing.luck;
-  const s = WORK.showing;
-  const b = bandOf(s.prep * prep + (s.craft * craft + s.ready * ready) * Math.min(1, prep / s.carries) + luck);
-  return a.approach?.kind === 'smaller' && (b === 'strong' || b === 'exceptional') ? 'working' : b;
+/** The revised work's band: judged as a showing is, without a new note (the note given stands until the next work). */
+function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant = sim.now): Band {
+  const judged = judgeWork(sim, person, a, onDay, when, `reshow:${person.id}:${a.id}:${onDay}`);
+  const band = bandFor(a, judged.overall);
+  recordWork(sim, person, judged, { at: when, what: `${templateById(a.template)!.title}, revised`, band });
+  return band;
 }
 
 /** Work still open when its term's classes end lapses: there's no meeting left to show it. */
@@ -899,6 +928,8 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   }
   r.status = 'kept';
   m.kept = (m.kept ?? 0) + 1;
+  // An evening of working off a partner is listening practice (`content/abilities.ts`).
+  ordinary(sim, person, 'listening', focusOf(person), 1, 'partner-rehearsal');
   const t = templateById(a.template)!;
   const act = t.activities.find((x) => x.dim === 'partner');
   const before = a.prep.partner;

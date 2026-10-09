@@ -54,11 +54,14 @@ import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { registerInjury } from './systems/injury';
-import { attributesOf } from './systems/attributes';
-import { bindCeiling, ceilingBefore, focusAt, grow, upgradeCraft } from './systems/school';
+import { attributesOf, derivedAbilities } from './systems/attributes';
+import { bindCeiling, ceilingBefore, focusAt, ordinary, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
 import { registerClassmates } from './systems/classmates';
 import { registerProduction } from './systems/production';
+import { registerPractice } from './systems/practice';
+import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
+import { genresOfPlay } from './content/plays';
 import { registerPlayReading } from './systems/playreading';
 import { registerAppointments } from './systems/appointments';
 import { registerTherapy } from './systems/therapy';
@@ -108,7 +111,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerSchool(sim);
   registerCoursework(sim);
   registerClassmates(sim);
-  registerProduction(sim, grow, focusAt);
+  registerProduction(sim, focusAt, ordinary);
+  registerPractice(sim);
+  registerEngagement(sim);
   registerPlayReading(sim);
   registerHealth(sim);
   registerAppointments(sim);
@@ -824,6 +829,39 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     for (const account of Object.values(universe.accounts ?? {})) drop(account.plastic, GONE_AT_91.plastic);
     if (shed > 0) steps.push(`Let go ${plural(shed, 'thing', 'things')} only the home, the career and a move home reached.`);
+  }
+
+  // 92, the connected attributes of 2026-10-09. Run on every open, and a no-op once done: each step fills only what's
+  // missing. Nothing is rerolled and no past is invented:
+  // - the five new abilities, for anybody with a craft and drawn attributes, from what's already true of them
+  //   (`derivedAbilities`: the mean of their kin in the craft, and discipline from conscientiousness);
+  // - genre practice from the save's own record: each night a credit says was played, in its play's kinds, one
+  //   night's practice shared among them; familiarity, sessions and interests begin at nothing, which is what the save
+  //   records of them;
+  // - the development history and the work history begin empty: the showings and nights judged before keep their
+  //   bands as they were judged (`Showing`, `Run.nights`), under the rules of their time, and aren't judged again.
+  {
+    let filled = 0;
+    let practiced = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      if (!person.craft) continue;
+      const a = person.attrs as (Record<string, number | undefined> & object) | undefined;
+      if (a) {
+        const d = derivedAbilities(person) as unknown as Record<string, number>;
+        for (const k of Object.keys(d)) if (a[k] === undefined) { a[k] = d[k]; filled += 1; }
+      }
+      if (!person.engagement) {
+        person.engagement = { byInterest: {}, byGenre: {} };
+        for (const credit of person.school?.credits ?? []) {
+          const genres = genresOfPlay(playOfCredit(credit.production)) ?? [];
+          for (let n = 0; n < (credit.wentOn ?? 0) && genres.length; n += 1) { addPractice(person, genres); practiced += 1; }
+        }
+      }
+      person.development ??= { day: '', counts: {}, history: [] };
+      person.work ??= [];
+    }
+    if (filled > 0) steps.push(`Drew ${plural(filled, 'ability', 'abilities')} from what the craft and the character already held.`);
+    if (practiced > 0) steps.push(`Counted ${plural(practiced, 'night', 'nights')} on stage as practice in their plays’ genres.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film

@@ -25,6 +25,7 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
+import { selfTape } from '@/engine/systems/engagement';
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 import { readiness, readinessParts } from '@/engine/systems/life';
@@ -57,6 +58,8 @@ function world(student = false): Simulation {
   player.personalityTraits = ['curious'];
   player.health = { ...healthOf(player), chronic: { ...healthOf(player).chronic, asthma: { treated: false } } };
   setWork(sim, player, 'DRAM 103a/b', { year: 2026, month: 9, day: 28 });
+  // And a self-tape taped, so a piece of finished work is on the record to open (from 2026-10-09).
+  if (student) selfTape(sim, player, 'comedy');
 
   sim.onSchedule('life.appointment', () => {});
   sim.onSchedule('life.dinner', () => {});

@@ -20,3 +20,4 @@ import './plans';
 import './bank';
 import './papers';
 import './school';
+import './actor';

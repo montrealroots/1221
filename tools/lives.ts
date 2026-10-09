@@ -38,19 +38,26 @@ import { lookAfterOptions, occupiedAt, readiness, suggestedSleep } from '../src/
 import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { inTheBank } from '../src/engine/systems/spending';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
+import { nextInterest, nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
+import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
+import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
+import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
+import { abilitiesOf, abilityOf, developmentOf } from '../src/engine/systems/attributes';
 
 const arg = (name: string, d: number) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? Number(process.argv[i + 1]) : d; };
 const flag = (name: string) => process.argv.includes(`--${name}`);
 const SEEDS = arg('seeds', 4);
 const YEARS = arg('years', 3);
 
-interface Profile { name: string; config: Partial<NewSaveConfig>; play: 'attentive' | 'autopilot' }
+interface Profile { name: string; config: Partial<NewSaveConfig>; play: 'attentive' | 'autopilot' | 'practicing' }
 
 const PROFILES: Profile[] = [
   { name: 'new-york, attentive', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her' }, play: 'attentive' },
   { name: 'mexico-city, attentive', config: { homeRegionId: 'mx-cmx-mexicocity', pronouns: 'he/him' }, play: 'attentive' },
   { name: 'london, early riser and curious, attentive', config: { homeRegionId: 'uk-eng-london', pronouns: 'they/them', personalityTraits: ['early_riser', 'curious'] }, play: 'attentive' },
   { name: 'reykjavik, autopilot', config: { homeRegionId: 'is-39-reykjavik', pronouns: 'she/her' }, play: 'autopilot' },
+  // From 2026-10-09: attentive, and the hours left over spent as the Player Profile suggests (`practiceHour`).
+  { name: 'new-york, practicing', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her', interests: ['nature', 'music'] }, play: 'practicing' },
   // TEST SETUP: a student without the wealthy family behind them, which the game's own new life always has.
   { name: 'test setup: scraping, no family money, attentive', config: { homeRegionId: 'us-ca-losangeles', pronouns: 'he/him', wealth: 'scraping', family: undefined }, play: 'attentive' },
 ];
@@ -103,6 +110,25 @@ function freeHour(sim: Simulation): boolean {
   return false;
 }
 
+/**
+ * A free hour the practicing player spends on themselves (from 2026-10-09): stressed, an hour of a restful interest
+ * the Profile suggests; else practice on what the last work was held back by most, else the ability furthest from full.
+ */
+function practiceHour(sim: Simulation): boolean {
+  const person = sim.player;
+  if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 40) return false;
+  if (person.wellbeing.stress > 45) {
+    const id = nextInterest(sim, person);
+    if (id && sim.execute({ kind: 'interest.pursue', payload: { interest: id } }).ok) return true;
+  }
+  if (practicedToday(sim, person) >= PRACTICE.dailyHours) return false;
+  const limit = nextPractice(person);
+  const target = limit?.what ?? ABILITY_DEFS.map((d) => d.id).filter((id) => exerciseFor(id)).sort((a, b) => abilityOf(sim, person, a) - abilityOf(sim, person, b))[0];
+  const e = target ? exerciseFor(target as AbilityId) : undefined;
+  if (e && !practiceRefusal(sim, person, e)) return sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok;
+  return false;
+}
+
 /** Cover kept, as a graduate keeps it: with none, enrolled where the papers allow (`mayEnroll`), checked at noon. */
 function keepCovered(sim: Simulation) {
   if (coverOn(sim.player, sim.now) || !mayEnroll(sim.player, sim.now).ok) return;
@@ -118,7 +144,7 @@ function lookAfter(sim: Simulation) {
   }
 }
 
-interface Result { profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
+interface Result { work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 
 function play(profile: Profile, seed: string): Result {
   let sim: Simulation;
@@ -131,13 +157,14 @@ function play(profile: Profile, seed: string): Result {
     while (sim.now < end && sim.universe.meta.endedAt === undefined) {
       const hour = zonedParts(sim.now, sim.zone).hour;
       if (flag('why') && hour === 9) { const w = sim.player.wellbeing; ready.push([readiness(sim.player), w.energy, w.stress, w.sleepDebt, w.nourishment, w.morale, w.condition]); }
-      if (profile.play === 'attentive') {
+      if (profile.play === 'attentive' || profile.play === 'practicing') {
         lookAfter(sim);
         if (hour === 12) keepCovered(sim);
         if (hour === 20 && sim.player.currentLocationId === 'us-ct-newhaven') evening(sim);
         // Free hours from the end of classes to ten, and the weekend's from ten.
         const weekend = [0, 6].includes(new Date(sim.now).getUTCDay());
         if (hour >= (weekend ? 10 : 15) && hour < 22 && freeHour(sim)) continue;
+        if (profile.play === 'practicing' && hour >= (weekend ? 10 : 15) && hour < 22 && practiceHour(sim)) continue;
         // To bed at eleven, or when the night's call lets them go: a player whose rehearsal runs late goes to bed after it.
         if ((hour >= 23 || hour < 5) && (sim.player.awakeSince ?? 0) <= sim.now) {
           const r = sim.execute({ kind: 'life.sleep', payload: { hours: suggestedSleep(sim).hours } });
@@ -161,7 +188,23 @@ function play(profile: Profile, seed: string): Result {
   const parts: Record<string, number> = {};
   for (const c of school?.credits ?? []) parts[c.size ?? 'unsized'] = (parts[c.size ?? 'unsized'] ?? 0) + 1;
   const w = sim.player.wellbeing;
+  // What the evaluation made of the work (from 2026-10-09): each kind's mean whole by school year, the bands, and how
+  // much the development history recorded.
+  const work = sim.player.work ?? [];
+  const first = work[0]?.at ?? sim.now;
+  const byYear: Record<string, { n: number; mean: number }> = {};
+  for (const x of work) {
+    const k = `${x.task} y${1 + Math.floor((x.at - first) / (365 * MS_DAY))}`;
+    const b = (byYear[k] ??= { n: 0, mean: 0 });
+    b.mean = (b.mean * b.n + x.overall) / (b.n + 1);
+    b.n += 1;
+  }
+  const bands: Record<string, number> = {};
+  for (const x of work) if (x.band) bands[`${x.task}:${x.band}`] = (bands[`${x.task}:${x.band}`] ?? 0) + 1;
+  const ab = abilitiesOf(sim, sim.player);
   return {
+    work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length },
+    abilities: Object.fromEntries(Object.entries(ab).map(([k, v]) => [k, Math.round(v)])),
     profile: profile.name, seed, graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
     wellbeing: { energy: Math.round(w.energy), stress: Math.round(w.stress), morale: Math.round(w.morale), condition: Math.round(w.condition), nourishment: Math.round(w.nourishment) },
     // An international graduate's status and cover at the end (from 2026-10-09: the marketplace asks lawful presence).
@@ -175,7 +218,8 @@ if (flag('why')) {
   const at = process.argv.indexOf('--seed');
   const seed = at > 0 ? process.argv[at + 1]! : 'lives-0';
   const he = flag('he');
-  const r = play(he ? { name: 'actor', config: { homeRegionId: 'us-ny-newyork', pronouns: 'he/him' }, play: 'attentive' } : PROFILES[0]!, seed);
+  const named = PROFILES.find((p) => p.name === process.argv[process.argv.indexOf('--profile') + 1]);
+  const r = play(he ? { name: 'actor', config: { homeRegionId: 'us-ny-newyork', pronouns: 'he/him' }, play: 'attentive' } : named ?? PROFILES[0]!, seed);
   console.log(JSON.stringify(r));
 } else if (flag('pairs')) {
   // The same seed as an actor and as an actress, otherwise alike: what casting gives each.

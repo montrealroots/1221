@@ -1210,7 +1210,10 @@ describe('migrations and validation', () => {
     for (const k of ['rent', 'bills', 'checks', 'checkbookBought']) expect(k in player.payments!).toBe(false);
     expect((player.payments as unknown as { rentCredit?: number }).rentCredit).toBe(500_00);
     for (const k of ['sag', 'cobraOffer', 'lastUnion']) expect(k in player.health!).toBe(false);
-    expect(player.attrs).toEqual({ presence, composure: player.attrs!.composure });
+    // Presence and composure kept, reputation and recognition shed; the six abilities of 2026-10-09 beside them (92).
+    expect(player.attrs).toMatchObject({ presence, composure: player.attrs!.composure });
+    expect('reputation' in player.attrs!).toBe(false);
+    expect('recognition' in player.attrs!).toBe(false);
     for (const k of ['returnedHomeAt', 'mobility', 'parkingPermit']) expect(k in player).toBe(false);
     for (const k of ['homeInterest', 'rentalRent', 'farmRent']) expect(k in (year as object)).toBe(false);
     expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);

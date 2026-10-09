@@ -146,7 +146,7 @@ night that a stop in its first hour left unpaid. `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
 move during a day of play and midnight no longer charges the day ahead.
 
-The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school` and `/workspace/papers`; Home is served by the shell itself. The career's, the homes', travel's, the cars', the land's and the line of 2026-10-09's other screens went on 2026-10-09, and `/workspace/work` with the job engine.
+The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/papers` and, from 2026-10-09, `/workspace/profile`, each kept in the address's hash so the browser's Back and Forward move between them; Home is served by the shell itself. The career's, the homes', travel's, the cars', the land's and the line of 2026-10-09's other screens went on 2026-10-09, and `/workspace/work` with the job engine.
 
 ## The guide, chapter by chapter
 
@@ -167,14 +167,15 @@ chapter or to two, or if a chapter opens nothing.
 | 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
 | 10 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
 | 11 | Drama School | `ui.school` `school.call_in_sick` `school.take_shift` `school.cabaret` `school.summer_cabaret` `school.orientation` `school.prepare` `school.choose` `school.read_feedback` `school.ask_partner` `school.answer_partner` `school.respond` `school.make_amends` `school.buy_ppe` `school.approach` `school.cancel_rehearsal` `school.learn_part` `school.review_blocking` `school.work_note` `plays.read` `plays.research` `look.school` `look.course` `look.skill` `look.assignment` |
-| 12 | Cover, Benefits And Returns | `ui.papers` `health.therapy` `documents.police_report` `health.appeal` `health.extra_supply` `health.enroll` `health.drop` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `health.book` `health.cancel_appointment` `health.prepay` `benefits.claim` `benefits.ei_register` `benefits.assistance` `pension.social_security` `pension.state` `pension.ie_state` `pension.imss` `pension.bienestar` `tax.file` `tax.pay` `health.choose_pharmacy` |
-| 13 | Passports And ID | `documents.apply_passport` `documents.replace_idcard` `documents.report_lost` `documents.apply_idcard` `documents.replace_license` `documents.apply_opt` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `look.document` |
-| 14 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
-| 15 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` `look.bank` `look.transaction` |
-| 16 | A Whole Life | `look.person` |
+| 12 | You As An Actor | `ui.profile` `practice.exercise` `interest.pursue` `genre.study` `practice.self_tape` `look.ability` `look.interest` `look.genre` `look.work` |
+| 13 | Cover, Benefits And Returns | `ui.papers` `health.therapy` `documents.police_report` `health.appeal` `health.extra_supply` `health.enroll` `health.drop` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `health.book` `health.cancel_appointment` `health.prepay` `benefits.claim` `benefits.ei_register` `benefits.assistance` `pension.social_security` `pension.state` `pension.ie_state` `pension.imss` `pension.bienestar` `tax.file` `tax.pay` `health.choose_pharmacy` |
+| 14 | Passports And ID | `documents.apply_passport` `documents.replace_idcard` `documents.report_lost` `documents.apply_idcard` `documents.replace_license` `documents.apply_opt` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `look.document` |
+| 15 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
+| 16 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` `look.bank` `look.transaction` |
+| 17 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 109 commands, 64 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 4 routes.
+Generated by `node tools/inventory.mjs --markdown`. 113 commands, 64 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 5 routes.
 
 ### Commands
 
@@ -187,10 +188,13 @@ Generated by `node tools/inventory.mjs --markdown`. 109 commands, 64 scheduled k
 | cash | `cash.deposit` `cash.withdraw` | `src/engine/systems/cash.ts` |
 | documents | `documents.apply_idcard` `documents.apply_opt` `documents.apply_passport` `documents.naturalize` `documents.police_report` `documents.renew_residence` `documents.replace_idcard` `documents.replace_license` `documents.report_lost` `documents.residence` `documents.settle` | `src/engine/systems/citizenship.ts`, `src/engine/systems/documents.ts`, `src/engine/systems/identity.ts`, `src/engine/systems/permission.ts`, `src/engine/systems/residence.ts` |
 | finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
+| genre | `genre.study` | `src/engine/systems/engagement.ts` |
 | health | `health.appeal` `health.apply_aid` `health.book` `health.cancel_appointment` `health.choose_clinic` `health.choose_pharmacy` `health.dental` `health.drop` `health.enroll` `health.extra_supply` `health.pay_bill` `health.prepay` `health.therapy` `health.treat` | `src/engine/systems/appointments.ts`, `src/engine/systems/health.ts`, `src/engine/systems/therapy.ts` |
+| interest | `interest.pursue` | `src/engine/systems/engagement.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
 | pension | `pension.bienestar` `pension.ie_state` `pension.imss` `pension.social_security` `pension.state` | `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
 | plays | `plays.read` `plays.research` | `src/engine/systems/playreading.ts` |
+| practice | `practice.exercise` `practice.self_tape` | `src/engine/systems/engagement.ts`, `src/engine/systems/practice.ts` |
 | school | `school.answer_partner` `school.approach` `school.ask_partner` `school.buy_ppe` `school.cabaret` `school.call_in_sick` `school.cancel_rehearsal` `school.choose` `school.learn_part` `school.make_amends` `school.orientation` `school.prepare` `school.read_feedback` `school.respond` `school.review_blocking` `school.summer_cabaret` `school.take_shift` `school.work_note` | `src/engine/systems/classmates.ts`, `src/engine/systems/coursework.ts`, `src/engine/systems/production.ts`, `src/engine/systems/school.ts` |
 | tax | `tax.file` `tax.pay` | `src/engine/systems/taxreturn.ts` |
 | tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
@@ -239,5 +243,5 @@ Generated by `node tools/inventory.mjs --markdown`. 109 commands, 64 scheduled k
 
 ### Routes
 
-`/workspace/bank` · `/workspace/calendar` · `/workspace/papers` · `/workspace/school`
+`/workspace/bank` · `/workspace/calendar` · `/workspace/papers` · `/workspace/profile` · `/workspace/school`
 <!-- inventory:end -->

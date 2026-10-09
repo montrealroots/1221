@@ -40,6 +40,9 @@ import { exerts } from './body';
 import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
 import { courseworkOf, notesOf } from './coursework';
 import { recordNote, type NoteFocus as LedgerFocus } from './learning';
+import { develop, type Target } from './attributes';
+import { genreSpeed } from './engagement';
+import { genresOfPlay } from '../content/plays';
 
 export const PROCESS = {
   /** What a call attended does to lines and blocking, as a share of what's left. */
@@ -133,6 +136,11 @@ const attend = (p: Kept, stage: Stage) => {
 
 /** The score of an actor who came to all of a run of calls and did nothing more: the par a night is measured against. */
 export function parFor(of: number, understudy = false, format: Format = 'production'): number {
+  return scoreOf(parProcess(of, understudy, format));
+}
+
+/** What every call attended and no more makes of a process: its lines, blocking and notes. */
+function parProcess(of: number, understudy = false, format: Format = 'production') {
   const p = { lines: 0, blocking: 0, blockingMissed: 0, notes: [] as { kind: NoteFocus['kind']; taken?: boolean }[] };
   const stages = understudy ? Array.from({ length: of }, (): Stage => 'understudy') : stagesFor(of, format);
   stages.forEach((stage, i) => {
@@ -141,7 +149,31 @@ export function parFor(of: number, understudy = false, format: Format = 'product
     if (last && last.taken === undefined) last.taken = takenUnworked(p, last.kind);
     if (stage === 'work') p.notes.push({ kind: noteKind(p, i + 1, of) });
   });
-  return scoreOf(p);
+  return p;
+}
+
+/**
+ * What makes a night's preparation complete (`prepOf`, `content/tasks.ts` `performance`), from 2026-10-09: what
+ * every call attended makes of the lines, the blocking and the notes, as the par did for the night's factor before.
+ * An actor who came to every call is fully prepared; a call missed leaves a gap, and the actor's own work (an hour on
+ * the part, the book, a note) is how it's made up.
+ */
+export function completeFor(holder: Holder | undefined): { lines: number; blocking: number; notes: number } | undefined {
+  if (!hasProcess(holder)) return undefined;
+  const p = holder.process;
+  const par = parProcess(p.of ?? 0, p.understudy, p.format);
+  return { lines: par.lines, blocking: par.blocking, notes: par.notes.length ? notesShare(par) : 1 };
+}
+
+/**
+ * The process as a night's preparation (`content/tasks.ts` `performance`): the lines, the blocking, less a missed
+ * blocking call not caught up, and the share of notes taken. None for a casting from before the process, whose
+ * preparation the evaluation doesn't read.
+ */
+export function prepOf(holder: Holder | undefined): { lines: number; blocking: number; notes: number } | undefined {
+  if (!hasProcess(holder)) return undefined;
+  const p = holder.process;
+  return { lines: p.lines, blocking: p.blocking, notes: p.notes.length ? notesShare(p) : 1 };
 }
 
 /** A night's readiness factor from the process: 1 for an actor who came to every call and did no more; 1 for a casting from before the process. */
@@ -177,6 +209,8 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   p.of = of;
   p.understudy = stage === 'understudy';
   attend(p, stage);
+  // A call kept is discipline kept, a quarter of a session's worth (from 2026-10-09).
+  develop(sim, person, 'discipline', { weight: 0.25, focus: 1, deliberate: false, source: 'call' });
   // The last note, taken or not at this call.
   let weight = 1;
   const last = p.notes.at(-1);
@@ -238,7 +272,10 @@ export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, wh
   return undefined;
 }
 
-export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: Skill, focus: number, weight: number) => void, focusAt: (sim: Simulation, person: Person, at: number) => number): void {
+/** Ordinary development from a step of the actor's own work (`ordinary` in `systems/school.ts`), injected as `grow` is. */
+type Ordinary = (sim: Simulation, person: Person, target: Target, focus: number, weight: number, source: string) => number;
+
+export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, person: Person, at: number) => number, ordinary: Ordinary): void {
   const take = (s: Simulation, person: Person) => {
     s.advanceTo(s.now + PROCESS.own.minutes * 60_000);
     exerts(person, 1.5, PROCESS.own.minutes / 60);
@@ -252,8 +289,11 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
     // At the hour it's learned (`focusAt`, from 2026-10-09), as every other step of the work is.
     const focus = focusAt(s, person, s.now);
     take(s, person);
-    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * (1 - proc.lines));
-    if (proc.trained < PROCESS.own.trainsAtMost && person.craft) { grow(person.craft, 'memorization', focus, PROCESS.own.trainingWeight); proc.trained += 1; }
+    // A play of a kind known is learned faster (`genreSpeed`, from 2026-10-09).
+    const holder = holderFor(s, person, which) as { play?: string };
+    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay(holder.play)) * (1 - proc.lines));
+    // Memory, recorded on the development history from 2026-10-09 (it was grown unrecorded before, the same amount).
+    if (proc.trained < PROCESS.own.trainsAtMost && person.craft) { ordinary(s, person, 'memory', focus, PROCESS.own.trainingWeight, 'learn-part'); proc.trained += 1; }
     return { lines: proc.lines };
   });
   sim.onCommand<{ which?: Which }, { blocking: number }>('school.review_blocking', (p, { sim: s }) => {
@@ -262,7 +302,10 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
     const no = ownWorkRefusal(s, person, which, 'blocking');
     if (no) throw new CommandError(no);
     const proc = processOf(holderFor(s, person, which)!);
+    const focus = focusAt(s, person, s.now);
     take(s, person);
+    // The moves learned from the book are memory too (from 2026-10-09).
+    ordinary(s, person, 'memory', focus, PROCESS.own.trainingWeight, 'blocking');
     proc.blockingMissed -= 1;
     proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
     return { blocking: proc.blocking };
@@ -274,8 +317,11 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
     if (no) throw new CommandError(no);
     const proc = processOf(holderFor(s, person, which)!);
     const note = proc.notes.at(-1)!;
+    const focus = focusAt(s, person, s.now);
     take(s, person);
     note.worked = true;
+    // A director's note taken into the work is practice in taking direction (from 2026-10-09).
+    ordinary(s, person, 'adaptability', focus, PROCESS.own.trainingWeight, 'work-note');
     // Working a lines or blocking note is the work itself.
     if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * (1 - proc.lines));
     if (note.focus.kind === 'blocking') proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));

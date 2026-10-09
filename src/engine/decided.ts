@@ -29,7 +29,7 @@ import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
-import { admittedClass, classmatesIn, goesOn, meanCraft, nightOf } from './systems/school';
+import { admittedClass, classmatesIn, goesOn, meanCraft, nightBand, nightEvaluation } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
@@ -290,9 +290,18 @@ defineDecider<{ sim: Simulation; day: number }, string>({
   decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
 });
 
+/** A student set at one level in every ability and technique, and at an energy: what a night's decider reads. */
+function atLevel(sim: Simulation, level: number, energy: number): Simulation {
+  const p = sim.player;
+  for (const k of Object.keys(p.craft!) as (keyof NonNullable<typeof p.craft>)[]) p.craft![k] = level;
+  p.attrs = { presence: level, composure: level, listening: level, imagination: level, focus: level, adaptability: level, discipline: level };
+  p.wellbeing.energy = energy;
+  return sim;
+}
+
 defineDecider<{ sim: Simulation; level: number; ready: number }, string>({
   id: 'school.night',
-  decides: 'How a night on stage goes: off, solid, strong or remarkable, by readiness, the part on the craft, and the night’s luck.',
+  decides: 'How a night on stage goes: off, solid, strong or remarkable, by the evaluation of the part on the abilities and techniques, the day’s condition and its bounded variation.',
   drawnIn: 'src/engine/systems/school.ts',
   reads: {
     // The part on their craft.
@@ -302,7 +311,7 @@ defineDecider<{ sim: Simulation; level: number; ready: number }, string>({
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
   sample: (seed) => ({ sim: atYale(seed), level: 50 + (seed % 30), ready: 0.6 + (seed % 5) / 10 }),
-  decide: ({ sim, level, ready }) => Array.from({ length: 60 }, (_, n) => nightOf(sim, sim.player, `d${n}`, level, ready)[0]).join(''),
+  decide: ({ sim, level, ready }) => { atLevel(sim, level, Math.min(100, ready * 80)); return Array.from({ length: 60 }, (_, n) => { const e = nightEvaluation(sim, sim.player, `d${n}`, {}, sim.now); return `${nightBand(e.overall)[0]}${Math.round(e.overall)}`; }).join(' '); },
 });
 
 defineDecider<{ sim: Simulation; night: number }, string>({

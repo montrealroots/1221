@@ -79,6 +79,13 @@ export function lovedIn(person: Pick<Person, 'interests'>, action: LookAfter): s
   return LOVED_IN[action].filter((id) => theirs.includes(id));
 }
 
+/**
+ * Whether somebody loves an interest, for an hour of it as rest (`systems/engagement.ts`, from 2026-10-09): read
+ * here, where the character sheet's preferences are read, so loving a thing changes how much somebody gets out of it
+ * and never how good they are at it.
+ */
+export const lovesInterest = (person: Person, id: string): boolean => person.interests.includes(id);
+
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */
 export interface WorkDay {
   medium: 'screen' | 'stage' | 'voice';

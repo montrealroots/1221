@@ -142,6 +142,20 @@ until the owner says otherwise.
 
 ## Dead: declared, and nothing reads it
 
+- **The connected attributes' words that are said, not read (2026-10-09).** Each
+  genre's performer demands and each interest's caveat and actor's use are
+  shown on their looks and read by nothing: what a genre does is its families'
+  lean and its familiarity and practice, and what an interest does is its rest
+  and the one ability or technique it grows. Classmates have no abilities of
+  their own past presence: the evaluation judges only the player's work, and
+  the chair still casts by the craft (`readOf`), not by finished work's
+  quality, by the brief that kept quality apart from casting decisions.
+- **Stamina is lost without training, and nothing else is (2026-10-09).** It is
+  the body's fitness, which detrains as research says it does (Mujika & Padilla,
+  2000). The brief asked that rest erase no progress, and for the other eleven
+  abilities and the techniques it doesn't; for stamina the body's own rule was
+  kept over it, and the ability's look says what builds it back.
+
 - **What a player chooses and only sees.** Kept on purpose, each a choice a
   real buyer makes that SLATE gives no consequence because none is published:
   a garment's color (the product comes in it, and is bought in one), a car

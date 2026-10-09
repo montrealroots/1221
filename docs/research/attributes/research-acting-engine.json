@@ -1,0 +1,635 @@
+{
+  "meta": {
+    "compiled": "2026-10-09",
+    "purpose": "Sourced research base for the SLATE acting engine. Every figure below is quoted as published. 'how' says how the claim was verified: 'read directly' means the primary text (full PDF, official syllabus, or the published abstract itself for the abstract-level figure) was read in this session; 'abstract only' means only the published abstract was read and the claim goes no further than it; 'read secondhand' means the claim was taken from a search-engine summary, encyclopedia snippet or secondary write-up and the primary was not opened.",
+    "caveats": [
+      "Britannica pages returned HTTP 403 to direct fetch; Britannica-sourced genre claims are search-snippet summaries ('read secondhand').",
+      "Stanislavski, Meisner, Chekhov, Laban, Linklater, Berry and Rodenburg primary books were not available in full text; claims about them are via secondary sources and are marked so.",
+      "Several findings are correlational (deliberate practice, recovery experiences); the engine should not read them as causal dose-response curves without saying so."
+    ]
+  },
+  "topics": {
+    "1_acting_abilities_taxonomy": [
+      {
+        "claim": "LAMDA Graded Examinations in Performance: Acting state the qualification develops three skill families: (1) Interpretive skills, (2) Technical skills, (3) Knowledge of the performance process. Interpretive = explore style, form, character, subtext and context; engage with character and situation 'in order to create a sense of reality'. Technical = 'Develop skills in voice and diction and movement'.",
+        "value": "3 assessment families",
+        "source": "LAMDA (2024). Performance Graded Examinations Syllabus, with effect from 01 August 2024. London Academy of Music & Dramatic Art. https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "LAMDA Grade 7/8 Acting marking scheme: each of three scenes is marked Interpretation 15 + Technique 10 (25 per scene), plus Knowledge 25, total 100. Bands: Pass 50-64, Merit 65-79, Distinction 80+. At Level 1 and Grade 6 the split is Interpretation 20 / Technique 20 per scene. Interpretation is weighted above technique at the top grades.",
+        "value": "Interpretation 45%, Technique 30%, Knowledge 25% (Grade 7/8); Pass 50, Merit 65, Distinction 80",
+        "source": "LAMDA (2024). Performance Graded Examinations Syllabus, Level 3 Marking Scheme, pp. 52-53. https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "LAMDA Grade 8 (Gold Medal) Acting assessment criteria name: understanding of text and subtext (1.1); communicating characters' intentions and objectives (1.2); 'Perform from memory with fluency, focus and spontaneity' (1.3); sustain vocal control to the end of phrases (2.1); effective modulation (2.2); clarity of diction (2.3); respond vocally to the demands of characterisation (2.4); movement, posture, body language and facial expression for the period (3.1); effective use of performance space (3.2); explaining character development and context (4.x); a practitioner's principles (5.x).",
+        "value": null,
+        "source": "LAMDA (2024). Performance Graded Examinations Syllabus, Assessment and Grading Criteria: Grade 8 - Gold Medal Acting, p. 51. https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Trinity College London Acting graded exams assess three areas: Technical skills ('The use of voice, body and space appropriate to the performance materials, to convey narrative, meaning and character to the audience'); Engagement with the material (understanding of character, narrative and context; 'The ability to interpret the material through acting choices'); Performance & audience awareness (communicating meaning to engage the audience, delivered 'in an increasingly secure, confident and creative manner'). At Grade 8 each of three contrasting extracts is marked out of 20, plus a 20-mark character-development modification and a 20-mark reflection.",
+        "value": "3 assessment areas; Grade 8: 3x20 performance + 20 character development + 20 reflection = 100",
+        "source": "Trinity College London. Acting: Syllabus specifications for graded exams (face-to-face and digital). https://www.trinitycollege.com/resource?id=8854",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "RADA BA (Hons) Acting aims to 'Develop students' embodied capacity for the vocal, physical, emotional, creative and imaginative skills required for professional acting'. Named skill outcomes include: create an 'actively relaxed, expressive physical life and character' (B2); 'Work reflectively, receiving, recording, responding to and sustaining direction' (B3); ensemble practice (B4); curiosity to fuel 'creativity, imagination and innovation' (B5); 'Approach a range of genres, styles and performance contexts with flexibility and adaptability' (B6); 'Critically analyse text and make informed acting choices' (B7); 'Work with challenging and demanding material confidently' (C3); resilience. Programme is at least 35 contact hours per week, at least 3600 total learning hours over 3 years.",
+        "value": ">=35 contact h/week; >=3600 learning h; 3 years",
+        "source": "RADA (2024). BA Acting (Hons) Programme Specification, May 2024. Royal Academy of Dramatic Art / King's College London. https://www.rada.ac.uk/documents/1176/BA_Acting_Programme_Specification_May_2024.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Myford's 36-item Judging Acting Ability Inventory divides standards of good acting into three facets: 11 items on the actor's voice, 11 on the body, 14 on characterization, each rated on a six-point scale ('very poorly' to 'very well'). Experts (casting directors, drama teachers) rated more harshly than theatre buffs and novices and had higher test-retest reliability; experts rated lower on 'Understands the meaning of the lines' and 'Integrates movement and text; actions suit words'.",
+        "value": "36 items: voice 11, body 11, characterization 14; 6-point scale; N=27 judges",
+        "source": "Myford, C. M. (1991). Assessment of Acting Ability. Paper presented at AERA, Chicago, April 1991. ERIC ED333033. https://files.eric.ed.gov/fulltext/ED333033.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Noice & Noice open from the definition 'The art of acting has been defined as the ability to live truthfully under imaginary circumstances' (Meisner's formulation) and report that actors analyse before rehearsal but in rehearsal 'try to devote all their conscious awareness to remaining in the present moment by attending to the other actors'. Directors and teachers distinguish true involvement from 'indicating' (imitating outward signs), which they call 'a defining skill possessed by almost all professional directors and acting teachers'.",
+        "value": null,
+        "source": "Noice, H., & Noice, T. (2006). What studies of actors and acting can tell us about memory and cognitive functioning. Current Directions in Psychological Science, 15(1), from p. 14. https://homepage.villanova.edu/diego.fernandezduque/Teaching/CognitivePsychology/Lectures_and_Labs/sssAppliedIssues/CurrDirActing.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Stanislavski's system (Method of Physical Actions) comprises: units and objectives; through-line and superobjective; analysis through action; truth, belief and the 'Magic If'; imagination; subtext; motivation; concentration; relaxation; communion; adaptation; tempo-rhythm; the physical apparatus. Concentration was trained by 'Circles of Concentration' of varying size, the smallest called 'Solitude in Public'.",
+        "value": "13 elements",
+        "source": "Sawoski, P. The Stanislavski System: Growth and Methodology (2nd ed.), course text, University of Delaware. https://bpb-us-w2.wpmucdn.com/sites.udel.edu/dist/b/8050/files/2018/06/Stanislavski.pdf (summarising Stanislavski, An Actor Prepares, 1936)",
+        "how": "read directly",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Meisner technique: 'living truthfully under imaginary circumstances'; the Repetition Exercise has two actors repeat a phrase about each other's observed behaviour, training listening and moment-to-moment response to the partner rather than to a plan.",
+        "value": null,
+        "source": "Meisner, S., & Longwell, D. Sanford Meisner on Acting. Summarised via Encyclopaedia Britannica, 'Meisner technique', https://www.britannica.com/art/Meisner-technique and Backstage, https://www.backstage.com/magazine/article/meisner-technique-exercises-76063/",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Michael Chekhov's technique builds character through imagination and the body rather than personal emotional memory: the Psychological Gesture, the Imaginary Body, Atmospheres, centres, radiating.",
+        "value": null,
+        "source": "Chekhov, M. To the Actor: On the Technique of Acting. Harper & Row. Summarised via https://www.actingcoachscotland.co.uk/to-the-actor-on-the-technique-of-acting-by-michael-chekhov",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Laban effort: four motion factors, each with two poles: Space (direct/indirect), Time (quick/sustained), Weight (heavy/light), Flow (bound/free). Space, Weight and Time combine into eight Effort Actions: Punch/Thrust, Slash, Dab, Flick, Press, Glide, Float, Wring. Used in UK actor training (e.g., ALRA, LIPA, Manchester School of Theatre).",
+        "value": "4 factors x 2 poles; 8 effort actions",
+        "source": "Laban, R. The Mastery of Movement. Summarised via Wikipedia, 'Laban movement analysis', https://en.wikipedia.org/wiki/Laban_movement_analysis",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Voice pedagogy: Linklater aims to free the natural voice by releasing habitual tension and connecting breath to impulse; Berry stresses breath support and connecting voice to (Shakespearean) text; Rodenburg ties voice to presence. All three include body, breath and voice awareness.",
+        "value": null,
+        "source": "Linklater, K. Freeing the Natural Voice. Drama Book Publishers; Berry, C. Voice and the Actor. Harrap; Rodenburg, P. The Right to Speak. Methuen. Summarised via https://actorstoolkit.co.uk/unlock-your-acting-potential-explore-the-techniques-of-influential-voice-practitioners/ and VCU thesis https://scholarscompass.vcu.edu/cgi/viewcontent.cgi?article=6465&context=etd",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Acting training (but not other arts training) produced significant gains in empathy over 1 year in children and adolescents; adolescents also gained on a naturalistic theory-of-mind measure (Empathic Accuracy Paradigm). Evidence that the social-cognitive capacities acting uses are trainable.",
+        "value": "1 year of training",
+        "source": "Goldstein, T. R., & Winner, E. (2012). Enhancing empathy and theory of mind. Journal of Cognition and Development, 13(1), 19-37. https://eric.ed.gov/?id=EJ955776",
+        "how": "abstract only",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Juilliard's four-year Actor Training Program trains movement, voice, speech, Alexander Technique (all four years), singing (three years from year 2), scene study, improvisation, masks and acting on camera; movement classes target 'balance, coordination, flexibility, and agility' and 'physical stamina and focused concentration'.",
+        "value": "4 years",
+        "source": "The Juilliard School, Drama Division catalog and BFA pages: https://catalog.juilliard.edu/content.php?catoid=55&navoid=6295 ; https://www.juilliard.edu/drama/acting/drama-bachelor-fine-arts",
+        "how": "read secondhand",
+        "confidence": "medium"
+      }
+    ],
+    "2_skill_acquisition_and_growth": [
+      {
+        "claim": "Deliberate practice explained 26% of the variance in performance for games, 21% for music, 18% for sports, 4% for education, and less than 1% for professions. Overall meta-analytic r = .35 (95% CI [.30, .39]), i.e. 12% of variance (88% unexplained); an alternative model gave 14% [11%, 18%]. Variance explained was larger for highly predictable activities (24%) than moderately (12%) or low (4%) predictable ones.",
+        "value": "games 26%, music 21%, sports 18%, education 4%, professions <1%; overall 12% (r=.35)",
+        "source": "Macnamara, B. N., Hambrick, D. Z., & Oswald, F. L. (2014). Deliberate practice and performance in music, games, sports, education, and professions: A meta-analysis. Psychological Science (OnlineFirst 1 July 2014). doi:10.1177/0956797614535810. https://gwern.net/doc/psychology/2014-macnamara.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Best violinists had accumulated an average of 7,410 h of solitary practice by age 18, good violinists 5,301 h, music teachers 3,420 h; expert pianists 7,606 h vs amateurs 1,606 h by 18. Experts sustained roughly 4 h/day of deliberate practice, which the authors suggest is a general ceiling sustainable without exhaustion; training studies showed 'essentially no benefit from durations exceeding 4 hr per day and reduced benefits from practice exceeding 2 hr'. Deliberate practice 'requires effort and is not inherently enjoyable'. Best violinists napped 2.8 h/week vs 0.9 for teachers.",
+        "value": "7,410 / 5,301 / 3,420 h by age 18; ~4 h/day ceiling",
+        "source": "Ericsson, K. A., Krampe, R. T., & Tesch-Romer, C. (1993). The role of deliberate practice in the acquisition of expert performance. Psychological Review, 100(3), 363-406. https://graphics8.nytimes.com/images/blogs/freakonomics/pdf/DeliberatePractice(PsychologicalReview).pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Ericsson et al. cite Simon & Chase (1973): nobody reached international chess master level 'with less than about a decade's intense preparation', and Hayes (1981): 10 years' experience was necessary in musical composition (the 'ten-year rule').",
+        "value": "~10 years",
+        "source": "Ericsson, Krampe & Tesch-Romer (1993), Psychological Review 100(3), 363-406, citing Simon & Chase (1973) and Hayes (1981).",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "A double-blind replication of Ericsson et al. (1993) did not replicate the core finding that accumulated deliberate practice corresponded to each skill level; the effect was 'substantial, but considerably smaller than the original study's effect size'.",
+        "value": null,
+        "source": "Macnamara, B. N., & Maitra, M. (2019). The role of deliberate practice in expert performance: revisiting Ericsson, Krampe & Tesch-Romer (1993). Royal Society Open Science. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6731745/",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Practice gains are nonlinear: 'Improvement is rapid at first but decreases as the practitioner becomes more skilled'. Newell & Rosenbloom (1981) championed the power law of practice; but fitting 40 data sets (7,910 learning series, 475 subjects, 24 experiments), Heathcote et al. found 'The exponential function fit better than the power function in all the unaveraged data sets'; the power law is an artifact of averaging. Individual learners follow exponential (or APEX) curves.",
+        "value": "exponential beat power in 40/40 unaveraged data sets",
+        "source": "Heathcote, A., Brown, S., & Mewhort, D. J. K. (2000). The power law repealed: The case for an exponential law of practice. Psychonomic Bulletin & Review, 7(2), 185-207. https://link.springer.com/content/pdf/10.3758/BF03212979.pdf ; Newell, A., & Rosenbloom, P. S. (1981). Mechanisms of skill acquisition and the law of practice. In J. R. Anderson (Ed.), Cognitive Skills and Their Acquisition (pp. 1-55). Erlbaum.",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "VO2max/aerobic analogue of a practice curve: under constant training load, gains plateau after ~3 weeks unless the stimulus is increased (see topic 6, Hickson et al. 1981). In skilled performance, plateaus and 'dips' can mark exploration of new methods, followed by 'leaps' above the smooth log-log curve.",
+        "value": null,
+        "source": "Gray, W. D., & Lindstedt, J. K. (2017). Plateaus, dips, and leaps: Where to look for inventions and discoveries during skilled performance. Cognitive Science, 41(7), 1838-1870. doi:10.1111/cogs.12412",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Desirable difficulties: conditions that slow apparent progress but improve durable learning include 'varying the conditions of learning', 'interleaving instruction on separate topics', 'spacing, rather than massing, study sessions', and using tests rather than re-presentation. Performance during training 'can be a highly unreliable index of whether learning has occurred' (learning vs performance distinction).",
+        "value": null,
+        "source": "Bjork, E. L., & Bjork, R. A. (2011/2014). Making things hard on yourself, but in a good way: Creating desirable difficulties to enhance learning. In M. A. Gernsbacher et al. (Eds.), Psychology and the Real World (pp. 56-64). Worth. https://burrell.edu/wp-content/uploads/2020/09/EBjorkRBjork_FABBSchapter2014-2nd-ed._WithCoverPage.pdf ; origin: Bjork, R. A. (1994), Metacognition: Knowing about Knowing, MIT Press, pp. 185-205",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Skill decays with non-use: across 189 data points from 53 articles, skill loss ranged from d = -0.01 immediately after training to d = -1.4 at long retention intervals; retention interval, degree of overlearning and task type (e.g., physical vs cognitive, closed vs open-loop) moderate decay.",
+        "value": "d from -0.01 to -1.4",
+        "source": "Arthur, W., Jr., Bennett, W., Jr., Stanush, P. L., & McNelly, T. L. (1998). Factors that influence skill decay and retention: A quantitative review and analysis. Human Performance.",
+        "how": "read secondhand",
+        "confidence": "medium"
+      }
+    ],
+    "3_line_learning_and_memory": [
+      {
+        "claim": "Testing effect: after 1 week, students who had restudied a passage 4 times (SSSS) recalled 40%, read 3x + 1 test (SSST) 56%, read once + 3 tests (STTT) 61%; but at 5 minutes the order reversed (SSSS 83%, SSST 78%, STTT 71%). In Experiment 1, tested vs restudy: 5 min 75% vs 81%; 2 days 68% vs 54%; 1 week 56% vs 42%. Restudy raised confidence but not retention.",
+        "value": "1 week: 61% (3 tests) vs 40% (4 readings)",
+        "source": "Roediger, H. L., III, & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. Psychological Science, 17(3), 249-255. https://gwern.net/doc/psychology/spaced-repetition/2006-roediger.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Spacing: meta-analysis of 839 assessments in 317 experiments (184 articles); inter-study interval (ISI) and retention interval interact, and 'the ISI producing maximal retention increased as retention interval increased'.",
+        "value": "839 assessments / 317 experiments",
+        "source": "Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. Psychological Bulletin, 132, 354-380. https://escholarship.org/uc/item/3rr6q10c",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Optimal spacing gap: over 1350 learners, retention first rose then fell as the gap between study sessions grew; 'The optimum gap value was about 20% of the test delay for delays of a few weeks, falling to about 5% when delay was one year.'",
+        "value": "optimal gap ~20% of retention interval (weeks) to ~5% (1 year)",
+        "source": "Cepeda, N. J., Vul, E., Rohrer, D., Wixted, J. T., & Pashler, H. (2008). Spacing effects in learning: A temporal ridgeline of optimal retention. Psychological Science, 19(11), 1095-1102. https://files.eric.ed.gov/fulltext/ED505660.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Professional actors rarely learn lines by rote; they process script for meaning (beats, goals, elaboration). In undergraduates, the actors' analytic strategy alone gave 33% retention vs 57% for deliberate memorisation; but 'active experiencing' (meaning the words to a real or imagined partner) gave 60% vs 50% for memorisation. Full active experiencing (verbal + motivated movement) beat partial (verbal only) and memorisation.",
+        "value": "active experiencing 60% vs memorisation 50%; analysis-only 33% vs memorisation 57%",
+        "source": "Noice, H., & Noice, T. (2006). What studies of actors and acting can tell us about memory and cognitive functioning. Current Directions in Psychological Science, 15(1), from p. 14. https://homepage.villanova.edu/diego.fernandezduque/Teaching/CognitivePsychology/Lectures_and_Labs/sssAppliedIssues/CurrDirActing.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "During performance actors rendered the script with approximately 98% accuracy; three months after the final performance, having learned and performed new roles meanwhile, ~90% of the text was still recalled verbatim or within narrow limits. Motoric cues (moving as in performance) aided long-term verbal recall.",
+        "value": "98% accuracy in performance; ~90% at 3 months",
+        "source": "Noice, H., & Noice, T. (1999). Long-term retention of theatrical roles. Memory. doi:10.1080/096582199387977",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Four repertory actors re-performing Sartre's No Exit after more than 5 months recalled 85% of the play; 32% of output was paraphrase or inference, consistent with meaning-based rather than rote learning; spatial-visual performance context helped only to a limited extent.",
+        "value": "85% recall at >5 months; 32% paraphrase",
+        "source": "Schmidt, H. G., Boshuizen, H. P., & van Breukelen, G. J. (2002). Long-term retention of a theatrical script by repertory actors: the role of context. Memory. doi:10.1080/09658210143000146",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Very long-term verbatim memory of roles was tested from 4 months to 28 years; recall 12 and 20 months after last access was at or near ceiling for many actors.",
+        "value": "near ceiling at 12-20 months",
+        "source": "Noice, H., & Noice, T. (2002). Very long-term recall and recognition of well-learned material. Applied Cognitive Psychology. doi:10.1002/acp.785",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Overlearning has a moderate overall effect on retention, moderated by degree of overlearning, task type and retention interval; the advantage shrinks at longer retention intervals.",
+        "value": null,
+        "source": "Driskell, J. E., Willis, R. P., & Copper, C. (1992). Effect of overlearning on retention. Journal of Applied Psychology, 77, 615-622.",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "An acting-based (active experiencing) 4-week course for adults aged 65-90 improved word recall and problem solving relative to visual-arts and no-training controls, and the gains 'persisted for 4 months without reinstatement of the training'.",
+        "value": "4 weeks training; gains persisted 4 months",
+        "source": "Noice & Noice (2006), Current Directions in Psychological Science 15(1), from p. 14, reporting Noice, Noice & Staines (2004).",
+        "how": "read directly",
+        "confidence": "high"
+      }
+    ],
+    "4_performance_anxiety_and_composure": [
+      {
+        "claim": "Among 178 senior drama students at six London colleges, 9.6% reported stage fright as a severe problem and 36.7% as a moderate problem; stage fright correlated positively with neuroticism and negatively with extraversion.",
+        "value": "severe 9.6%, moderate 36.7%, N=178",
+        "source": "Steptoe, A., Malik, F., Pay, C., Pearson, P., Price, C., & Win, Z. (1995). The impact of stage fright on student actors. British Journal of Psychology, 86, 27-39. doi:10.1111/j.2044-8295.1995.tb02544.x",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "In 151 elite professional actors, stage fright was predicted by low emotional stability, gender (female) and external locus of control; stage fright is reported as an issue for a majority of actors.",
+        "value": "N=151",
+        "source": "Goodman, G., & Kaufman, J. C. (2014). Gremlins in my head: Predicting stage fright in elite actors. Empirical Studies of the Arts, 32(2). doi:10.2190/EM.32.2.b",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Systematic review of 43 studies: 'The prevalence of MPA was between 16.5% and 60%. More women than men were affected and musicians older than 45-50 years reported less MPA than younger musicians.' CBT showed beneficial results.",
+        "value": "16.5%-60% prevalence",
+        "source": "Fernholz, I., Mumm, J. L. M., Plag, J., et al. (2019). Performance anxiety in professional musicians: a systematic review on prevalence, risk factors and clinical treatment effects. Psychological Medicine. doi:10.1017/S0033291719001910",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "In the ICSOM survey of more than 2000 professional orchestral musicians, 24% suffered from stage fright; solo performance triggers the highest MPA. Performance anxiety is 'energising at optimal levels' but 'impairs performance quality when excessive'; anxiety is likely reduced through task mastery that makes a work familiar.",
+        "value": "24% stage fright (N>2000)",
+        "source": "Matei, R., & Ginsborg, J. (2017). Music performance anxiety in classical musicians - what we know about what works. BJPsych International, 14(2), 33-35, citing Fishbein et al. (1988). https://pmc.ncbi.nlm.nih.gov/articles/PMC5618811/",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Exposure reduces performance anxiety: meta-analysis of 11 studies (508 participants) on public speaking anxiety; virtual-reality exposure reduced anxiety vs control by -1.39 and in-vivo exposure by -1.41 (large effects).",
+        "value": "SMD -1.39 (VR), -1.41 (in vivo)",
+        "source": "Reeves, R., Curran, D., Gleeson, A., & Hanna, D. (2022). A meta-analysis of the efficacy of virtual reality and in vivo exposure therapy as psychological interventions for public speaking anxiety. Behavior Modification. doi:10.1177/0145445521991102",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Yerkes & Dodson (1908): with dancing mice learning a discrimination, 'neither a weak nor a strong electrical stimulus is as favorable to the acquisition of the white-black habit as is a medium stimulus'; the optimum depended on discrimination difficulty (harder discrimination -> lower optimal stimulus). The original concerns stimulus strength and habit-formation speed, not 'arousal' and 'performance'; Teigen (1994) documents how the law was later broadened.",
+        "value": "inverted-U; optimum shifts lower for harder tasks",
+        "source": "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482. https://psychclassics.yorku.ca/Yerkes/Law/ ; Teigen, K. H. (1994). Yerkes-Dodson: A law for all seasons. Theory & Psychology, 4(4), 525-547.",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Kenny et al. found even highly anxious professional orchestral musicians rarely experienced performance catastrophes; social phobia symptoms in 33%; 31% reported beta-blocker use for MPA.",
+        "value": "social phobia 33%; beta-blockers 31%",
+        "source": "Kenny, D., Driscoll, T., & Ackermann, B. (2014). Psychological well-being in professional orchestral musicians in Australia: A descriptive population study. Psychology of Music.",
+        "how": "read secondhand",
+        "confidence": "medium"
+      }
+    ],
+    "5_fatigue_sleep_and_stress": [
+      {
+        "claim": "Meta-analysis of 70 articles / 147 tests on 24-48 h total sleep deprivation. Combined effect sizes (Hedges g): simple attention lapses 0.762, simple attention RT 0.732; complex attention accuracy 0.479, RT 0.312; processing speed accuracy 0.245 (ns), RT 0.302; working memory accuracy 0.555, RT 0.515; short-term memory recall 0.383, recognition 0.378; reasoning accuracy 0.125 (ns). Vigilance is hit hardest; reasoning is largely spared.",
+        "value": "g: lapses 0.762; WM 0.555; reasoning 0.125",
+        "source": "Lim, J., & Dinges, D. F. (2010). A meta-analysis of the impact of short-term sleep deprivation on cognitive variables. Psychological Bulletin, 136(3), 375-389. doi:10.1037/a0018883. https://www.med.upenn.edu/uep/assets/user-content/documents/LimDinges2010MetaAnalysis.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Chronic restriction to 6 h or less per night for 14 days produced cumulative, dose-dependent cognitive deficits 'equivalent to up to 2 nights of total sleep deprivation', while subjective sleepiness barely rose after the first days (people under-perceive the deficit). Lapses rose near-linearly with cumulative wakefulness beyond 15.84 h per day.",
+        "value": "6 h x 14 nights ~ 2 nights total deprivation; threshold 15.84 h awake",
+        "source": "Van Dongen, H. P., Maislin, G., Mullington, J. M., & Dinges, D. F. (2003). The cumulative cost of additional wakefulness. Sleep. doi:10.1093/sleep/26.2.117",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Recovery from restriction is slow: after 7 days at 5 or 7 h time in bed, performance did not recover over 3 days of 8 h recovery sleep; after 3 h nights, it recovered rapidly after the first recovery night but incompletely.",
+        "value": "no recovery within 3 nights after 5-7 h x 7 nights",
+        "source": "Belenky, G., Wesensten, N. J., Thorne, D. R., et al. (2003). Patterns of performance degradation and restoration during sleep restriction and subsequent recovery: a sleep dose-response study. Journal of Sleep Research. doi:10.1046/j.1365-2869.2003.00337.x",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Sleep deprivation (max 2 h sleep) reduced positive emotion in vocal expression and increased negative emotion by rater judgment, and lowered pitch, intensity in some high bands and vocal 'sharpness'; adolescents were more affected than adults.",
+        "value": "N=55; <=2 h sleep",
+        "source": "McGlinchey, E. L., Talbot, L. S., Chang, K. H., et al. (2011). The effect of sleep deprivation on vocal expression of emotion in adolescents and adults. Sleep. doi:10.5665/sleep.1246",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Total sleep deprivation blunted recognition of angry and happy facial expressions at moderate intensity (sad unaffected); the deficit was ameliorated after one night of recovery sleep.",
+        "value": "recovers after 1 night",
+        "source": "van der Helm, E., Gujar, N., & Walker, M. P. (2010). Sleep deprivation impairs the accurate recognition of human emotions. Sleep. doi:10.1093/sleep/33.3.335",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "After 31 h of wakefulness (following a short night), people were rated by 65 untrained observers as less healthy (VAS mean 63 vs 68), less attractive and more tired than after 8 h sleep — fatigue is visible to an audience.",
+        "value": "health rating 63 vs 68 (100 mm VAS)",
+        "source": "Axelsson, J., Sundelin, T., Ingre, M., et al. (2010). Beauty sleep: experimental study on the perceived health and attractiveness of sleep deprived people. BMJ. doi:10.1136/bmj.c6614",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "After a 2-hour vocal loading task (oral reading), 86 adults showed 90% voice recovery within 4 to 6 hours and full recovery at 12 to 18 hours.",
+        "value": "90% at 4-6 h; 100% at 12-18 h",
+        "source": "Hunter, E. J., & Titze, I. R. (2009). Quantifying vocal fatigue recovery: dynamic vocal recovery trajectories after a vocal loading exercise. Annals of Otology, Rhinology & Laryngology. doi:10.1177/000348940911800608",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "When vocally fatigued, actors rated 'power' aspects (e.g., projection) as most affected; causes cited were vocal misuse, being 'run down', high performance demands, and high pitch/volume.",
+        "value": "10 actors, 10 singers",
+        "source": "Kitch, J. A., & Oates, J. (1994). The perceptual features of vocal fatigue as self-reported by a group of actors and singers. Journal of Voice. doi:10.1016/s0892-1997(05)80291-7",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "In 95 professional musical-theatre actors, 91% reported vocal fatigue; perceived stress was the strongest predictor of vocal fatigue (OR = 7.2).",
+        "value": "91% vocal fatigue; stress OR 7.2",
+        "source": "Campagnolo, A., Priston, J., & Benninger, M. S. (2026). Lifestyle factors and vocal health in professional theater actors: associations with vocal fatigue and reflux symptoms. Journal of Voice. doi:10.1016/j.jvoice.2026.07.031",
+        "how": "abstract only",
+        "confidence": "medium"
+      }
+    ],
+    "6_physical_training_and_stamina": [
+      {
+        "claim": "Training 40 min/day, 6 days/week: VO2max rose for the first 3 weeks and then plateaued unless work rate was raised; half-times of the increase were 10.3 and 10.8 days; total VO2max gain over 9 weeks (with one load increase) was 23%.",
+        "value": "t1/2 ~10-11 days; plateau after ~3 weeks at fixed load; +23% in 9 weeks",
+        "source": "Hickson, R. C., Hagberg, J. M., Ehsani, A. A., & Holloszy, J. O. (1981). Time course of the adaptive responses of aerobic power and heart rate to training. Medicine and Science in Sports and Exercise. doi:10.1249/00005768-198101000-00012",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Meta-analysis of 28 controlled trials (723 adults, mean baseline 40.8 mL/kg/min): endurance training raised VO2max by 4.9 mL/kg/min and HIT by 5.5 mL/kg/min vs no-exercise controls; larger gains for lower baseline fitness and longer interventions.",
+        "value": "+4.9 (endurance), +5.5 (HIT) mL/kg/min",
+        "source": "Milanovic, Z., Sporis, G., & Weston, M. (2015). Effectiveness of high-intensity interval training (HIT) and continuous endurance training for VO2max improvements. Sports Medicine. doi:10.1007/s40279-015-0365-0",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Across 37 interval-training studies (334 subjects, 6-13 weeks, >=3 days/week), VO2max rose by 0.51 L/min (95% CI 0.43-0.60); longer-interval protocols gave ~0.8-0.9 L/min.",
+        "value": "+0.51 L/min over 6-13 weeks",
+        "source": "Bacon, A. P., Carter, R. E., Ogle, E. A., & Joyner, M. J. (2013). VO2max trainability and high intensity interval training in humans: a meta-analysis. PLoS ONE. doi:10.1371/journal.pone.0073182",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Detraining: short-term (<4 weeks) loss of training stimulus brings a rapid decline in VO2max and blood volume in highly trained athletes, more moderate in recently trained people; over longer detraining (>4 weeks) 'recently acquired VO2max gains are completely lost', while strength declines slowly. Adaptations can be retained with reduced volume if intensity is maintained.",
+        "value": "recent gains fully lost after >4 weeks off",
+        "source": "Mujika, I., & Padilla, S. (2000). Detraining: loss of training-induced physiological and performance adaptations. Part I and Part II. Sports Medicine. doi:10.2165/00007256-200030020-00002 ; doi:10.2165/00007256-200030030-00001",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Final-year pre-professional musical-theatre performers had peak VO2 of 67.6 (male) vs 55.6 (female) mL/kg/min, higher than other theatre-dance genres; singing while dancing a Chorus Line section reduced breathing frequency and raised blood lactate relative to dancing alone.",
+        "value": "VO2peak 67.6 M / 55.6 F mL/kg/min",
+        "source": "Stephens, N., & Wyon, M. (2020). Physiological characteristics of musical theatre performers and the effect on cardiorespiratory demand whilst singing and dancing. Medical Problems of Performing Artists. doi:10.21091/mppa.2020.1007",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Conservatory actor training explicitly targets stamina: Juilliard movement classes aim to 'increase physical stamina and focused concentration'; RADA requires students to 'Sustain embodied core acting, movement and voice skills ... safely'.",
+        "value": null,
+        "source": "Juilliard Drama Division catalog (https://catalog.juilliard.edu/content.php?catoid=55&navoid=6295); RADA BA Acting Programme Specification 2024 (https://www.rada.ac.uk/documents/1176/BA_Acting_Programme_Specification_May_2024.pdf)",
+        "how": "read secondhand",
+        "confidence": "medium"
+      }
+    ],
+    "7_hedonic_adaptation_satiation_interest": [
+      {
+        "claim": "Enjoyment of a favourite 45-second song played 15 times in quick succession became 'decidedly less' enjoyable after only the 6th iteration.",
+        "value": "decline by 6th of 15 back-to-back repetitions",
+        "source": "Ratner, R. K., Kahn, B. E., & Kahneman, D. (1999), Experiment 1, as reported in Galak, Kruger & Loewenstein (2011), Judgment and Decision Making 6(3), 230-238. https://www.cmu.edu/dietrich/sds/docs/loewenstein/VarietySpiceLife.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Variety is preferred to repetition of a better-liked single stimulus when consumption is continuous, but the preference reverses when repetitions are spaced; in Experiment 1 'a delay of a mere 60 seconds' between nine song plays reversed it (interaction F(1,102)=47.29, partial eta^2 = .32). Time alone, without distraction, was sufficient to reset adaptation. Satiation still occurred for weekly pasta meals over 10 weeks (Zandstra et al. 2000), so the needed gap is stimulus-specific.",
+        "value": "60 s gap reversed preference for 45-s songs; weekly gap insufficient for repeated meals",
+        "source": "Galak, J., Kruger, J., & Loewenstein, G. (2011). Is variety the spice of life? It all depends on the rate of consumption. Judgment and Decision Making, 6(3), 230-238. https://www.cmu.edu/dietrich/sds/docs/loewenstein/VarietySpiceLife.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Repetition can also increase liking (mere exposure; sensitization): Kahneman & Snell (1992) found repetition decreased liking of a liked song but increased liking of an initially disliked yogurt.",
+        "value": null,
+        "source": "Galak, Kruger & Loewenstein (2011), Judgment and Decision Making 6(3), discussing Zajonc (1980) and Kahneman & Snell (1992).",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Satiation is partly constructed: recalling past variety accelerated recovery from satiation.",
+        "value": null,
+        "source": "Galak, J., Redden, J. P., & Kruger, J. (2009). Variety amnesia: Recalling past variety can accelerate recovery from satiation. Journal of Consumer Research, 36 (December 2009). https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1344541",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Categorising repeated experiences at a finer level (subcategorisation) increased perceived variety and reduced satiation for both cognitive (studying) and sensory (snacks) experiences.",
+        "value": null,
+        "source": "Redden, J. P. (2008). Reducing satiation: The role of categorization level. Journal of Consumer Research, 34(5), 624-634.",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Four-phase model of interest development: triggered situational interest -> maintained situational interest -> emerging (less-developed) individual interest -> well-developed individual interest; 'Affective as well as cognitive factors are considered.'",
+        "value": "4 phases",
+        "source": "Hidi, S., & Renninger, K. A. (2006). The four-phase model of interest development. Educational Psychologist, 41(2), 111-127. doi:10.1207/s15326985ep4102_4. ERIC EJ736298.",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Deliberate practice is 'not inherently enjoyable'; individuals are motivated to practise because it improves performance — enjoyment of the activity and growth of skill are distinct.",
+        "value": null,
+        "source": "Ericsson, Krampe & Tesch-Romer (1993), Psychological Review 100(3), 363-406.",
+        "how": "read directly",
+        "confidence": "high"
+      }
+    ],
+    "8_leisure_and_recovery": [
+      {
+        "claim": "Four distinct recovery experiences: psychological detachment from work, relaxation, mastery, and control (CFA, total N=930); measured with 4-item scales.",
+        "value": "4 experiences x 4 items",
+        "source": "Sonnentag, S., & Fritz, C. (2007). The Recovery Experience Questionnaire: development and validation of a measure for assessing recuperation and unwinding from work. Journal of Occupational Health Psychology. doi:10.1037/1076-8998.12.3.204",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Meta-analysis (299 effect sizes, 54 samples, N=26,592): corrected correlations with after-work fatigue were detachment -.39, relaxation -.35, control -.30, mastery -.18; control experiences had the strongest positive relation with vigor. Correlational.",
+        "value": "rho with fatigue: detachment -.39, relaxation -.35, control -.30, mastery -.18",
+        "source": "Bennett, A. A., Bakker, A. B., & Field, J. G. (2018). Recovery from work-related effort: A meta-analysis. Journal of Organizational Behavior, 39(3), 262-275. doi:10.1002/job.2217. https://www.isonderhouden.nl/doc/pdf/arnoldbakker/articles/articles_arnold_bakker_476.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Over 8 weeks, 36 urban dwellers' nature experiences reduced salivary cortisol by 21.3%/hour beyond its 11.7% diurnal drop, and alpha-amylase by 28.1%/h; cortisol-reduction efficiency was 'greatest between 20 and 30 min, after which benefits continued to accrue, but at a reduced rate'.",
+        "value": "20-30 min optimal; cortisol -21.3%/h",
+        "source": "Hunter, M. R., Gillespie, B. W., & Chen, S. Y.-P. (2019). Urban nature experiences reduce stress in the context of daily life based on salivary biomarkers. Frontiers in Psychology, 10, 722. doi:10.3389/fpsyg.2019.00722",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "A 90-min walk in a natural setting decreased self-reported rumination and subgenual prefrontal cortex activity; a 90-min urban walk did not.",
+        "value": "90 min",
+        "source": "Bratman, G. N., Hamilton, J. P., Hahn, K. S., Daily, G. C., & Gross, J. J. (2015). Nature experience reduces rumination and subgenual prefrontal cortex activation. PNAS. doi:10.1073/pnas.1510459112",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Two multilevel meta-analyses of 104 RCTs (327 effect sizes, 9,617 participants): music interventions reduced stress with d = .380 on physiological and d = .545 on psychological outcomes; heart rate d = .456, blood pressure d = .343, hormones d = .349.",
+        "value": "d = .380 physiological; d = .545 psychological",
+        "source": "de Witte, M., Spruit, A., van Hooren, S., Moonen, X., & Stams, G. J. (2020). Effects of music interventions on stress-related outcomes: a systematic review and two meta-analyses. Health Psychology Review. doi:10.1080/17437199.2019.1627897",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "In 22 health-science students, one 30-minute session each of yoga, humor and reading all lowered systolic and diastolic blood pressure and heart rate, with no intervention more effective than another; no effect on self-reported daily stress.",
+        "value": "30 min; N=22",
+        "source": "Rizzolo, D., Zipp, G. P., Stiskal, D., & Simpkins, S. (2009). Stress management strategies for students: The immediate effects of yoga, humor, and reading on stress. Journal of College Teaching & Learning (December 2009). ERIC EJ895082.",
+        "how": "read secondhand",
+        "confidence": "low"
+      },
+      {
+        "claim": "Expert violinists spent 3.5 h/day on leisure vs 4.7 h for good violinists, compared with an estimated 5.2 h/day for adults aged 18-29; both best groups slept more (napping 2.8 h/week) than music teachers.",
+        "value": "leisure 3.5 h/day (best) vs 4.7 (good)",
+        "source": "Ericsson, Krampe & Tesch-Romer (1993), Psychological Review 100(3), 363-406.",
+        "how": "read directly",
+        "confidence": "high"
+      }
+    ],
+    "9_acting_uses_of_interests": [
+      {
+        "claim": "Lecoq's two-year course: year one begins with movement technique and analysis of movement 'applied to the human body and nature'; the neutral mask gives 'tools and reference points to create characters using the movements of animals, insects, the elements, colours or materials'. Year two applies movement to 'dramatic territories': melodrama, commedia dell'arte, bouffons, Greek tragedy and clown. Example given: Blanche (Streetcar) developed via the movement dynamics of silk or air.",
+        "value": "2 years; 5 dramatic territories",
+        "source": "Everett, L. (2008). Moving bodies: Jacques Lecoq and drama education in Australia. NJ (Drama Australia Journal), 31(2). https://njdrama.scholasticahq.com/article/33377-moving-bodies-jacques-lecoq-and-drama-education-in-australia/attachment/84814.pdf (citing Lecoq, The Moving Body, 2000, and Callery, 2001)",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "LAMDA requires period research to feed performance: at Grade 7/8 candidates must 'Explain how your research into the dramatic style of the period of the piece affected the way you performed' (4.3) and show 'movement, posture, body language and facial expression required to portray the periods in which the scenes are set' (3.1); scenes come from set periods (Ancient Greek and Roman; Elizabethan and Jacobean; Restoration and Post-Restoration; 1800-1979).",
+        "value": "4 period bands",
+        "source": "LAMDA (2024). Performance Graded Examinations Syllabus. https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Animal work (studying an animal's movement, tempo and centre of gravity, then embodying it) is a Method/Stanislavski-lineage exercise associated with Maria Ouspenskaya.",
+        "value": null,
+        "source": "Acting Magazine, 'What are Animal Exercises?' https://actingmagazine.com/2019/06/what-are-animal-exercises/ ; Backstage, https://www.backstage.com/magazine/article/8-actors-who-use-animal-work-to-construct-their-characters-73703/",
+        "how": "read secondhand",
+        "confidence": "low"
+      },
+      {
+        "claim": "Uta Hagen's object exercises (ten) train attention, sensory awareness, endowment of objects, 'historical identification' and character action; her technique roots character in observation of daily life and uses substitution.",
+        "value": "10 object exercises",
+        "source": "Hagen, U. (1973). Respect for Acting. Macmillan. Summarised via Backstage, https://www.backstage.com/magazine/article/the-definitive-guide-to-uta-hagens-acting-technique-68922/",
+        "how": "read secondhand",
+        "confidence": "low"
+      },
+      {
+        "claim": "RADA's contextual strand: 'Contextual studies - historical, political, cultural, social, textual, self-reflective' is one of four core strands; outcomes include 'Expansive, cross-cultural knowledge of texts, writers, genres, performance styles and contexts' (A5) and 'Utilise curiosity to fuel creativity, imagination and innovation' (B5).",
+        "value": null,
+        "source": "RADA (2024). BA Acting (Hons) Programme Specification. https://www.rada.ac.uk/documents/1176/BA_Acting_Programme_Specification_May_2024.pdf",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Stanislavski likened tempo-rhythm of actions to music and held that his technique was useful only with a 'fertile imagination'; imagination fills in subtext.",
+        "value": null,
+        "source": "Sawoski, P. The Stanislavski System: Growth and Methodology (2nd ed.). https://bpb-us-w2.wpmucdn.com/sites.udel.edu/dist/b/8050/files/2018/06/Stanislavski.pdf",
+        "how": "read directly",
+        "confidence": "medium"
+      },
+      {
+        "claim": "No peer-reviewed study was found measuring whether an actor's personal interests (visual art, music, history) improve performance quality. The link is pedagogical practice (LAMDA, RADA, Lecoq, Hagen), not measured effect.",
+        "value": null,
+        "source": "Search of web and Europe PMC, 2026-10-09; no measured study located.",
+        "how": "read directly",
+        "confidence": "low"
+      }
+    ],
+    "10_genre_conventions": [
+      {
+        "claim": "Tragedy (Aristotle): 'an imitation of an action that is serious, complete, and of a certain magnitude ... through pity and fear effecting the proper purgation of these emotions.' Comedy: 'an imitation of characters of a lower type', the Ludicrous being 'some defect or ugliness which is not painful or destructive'. Performer demand: sustained serious emotion (pity, fear) vs. painless defect.",
+        "value": null,
+        "source": "Aristotle. Poetics (S. H. Butcher, trans.). Project Gutenberg #1974. https://www.gutenberg.org/cache/epub/1974/pg1974.txt",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Bergson: the comic demands 'something like a momentary anesthesia of the heart. Its appeal is to intelligence, pure and simple'; its central image is 'Something mechanical encrusted on the living'; 'This rigidity is the comic, and laughter is its corrective.' Stage devices: 'the periodical repetition of a word or a scene, the systematic inversion of the parts, the geometrical development of a farcical misunderstanding'. Performer demand: rigidity/automatism made visible, emotional detachment, precise repetition.",
+        "value": null,
+        "source": "Bergson, H. (1900/1911). Laughter: An Essay on the Meaning of the Comic (C. Brereton & F. Rothwell, trans.). Project Gutenberg #4352. https://www.gutenberg.org/cache/epub/4352/pg4352.txt",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Comic timing measured: in jokes performed in conversation, mean pause length in the setup was longer than before the punch line by 0.094 s (not significant); speakers did not mark punch lines prosodically (pitch, volume, pauses or speech rate). The commonly assumed 'pause before the punch line' was not found in conversational joke telling.",
+        "value": "0.094 s difference, ns",
+        "source": "Attardo, S., & Pickering, L. (2011). Timing in the performance of jokes. Humor: International Journal of Humor Research, 24(2), 233-250. doi:10.1515/humr.2011.015",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Farce: 'a comic dramatic piece that uses highly improbable situations, stereotyped characters, extravagant exaggeration, and violent horseplay'; plots of 'improbable contrivance', often mistaken identity, 'worked out in great detail without any consequent loss of speed'. Performer demand: physicality, pace, precision.",
+        "value": null,
+        "source": "Encyclopaedia Britannica, 'Farce'. https://www.britannica.com/art/farce",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Melodrama: sentimental form emphasising exciting incidents and spectacular staging over character development; stock characters (noble hero, long-suffering heroine, cold-blooded villain), improbable plots, exaggerated emotion; in music, lines spoken to musical accompaniment. Performer demand: heightened, clear, externally legible emotion.",
+        "value": null,
+        "source": "Encyclopaedia Britannica, 'Melodrama'. https://www.britannica.com/art/melodrama",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Comedy of manners: 'witty, cerebral' comedy satirising the manners and affectations of a society; plot subordinate to 'brittle atmosphere, witty dialogue, and pungent commentary'; peak in English Restoration (Wycherley, Congreve). Performer demand: verbal wit, period manners and deportment.",
+        "value": null,
+        "source": "Encyclopaedia Britannica, 'Comedy of manners'. https://www.britannica.com/art/comedy-of-manners",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Naturalism/realism: the Moscow Art Theatre (1898, Stanislavsky and Nemirovich-Danchenko) was a theatre of naturalism; Stanislavsky developed training to perform realistically in any role. The 'fourth wall' arose with 19th-century naturalism (Antoine): the environment behind it 'as authentic as possible'. Realistic acting emerged in the early 20th century in contrast to earlier stylised performance.",
+        "value": "1898",
+        "source": "Encyclopaedia Britannica, 'Moscow Art Theatre' and 'Fourth wall' (https://www.britannica.com/topic/Moscow-Art-Theatre ; https://www.britannica.com/art/fourth-wall); Goldstein, T. R., & Bloom, P. (2011). The mind on stage: why cognitive scientists should study acting. Trends in Cognitive Sciences, 15, 141-142. doi:10.1016/j.tics.2011.02.003",
+        "how": "read secondhand",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Horror films are 'calculated to cause intense repugnance, fear, or dread' and may use atmosphere to build suspense. Tension/suspense arise from 'states of conflict, instability, dissonance, or uncertainty that trigger predictive processes directed at future events of emotional significance'. Performer demand: sustaining anticipation and uncertainty rather than discharge.",
+        "value": null,
+        "source": "Encyclopaedia Britannica, 'Horror film' (https://www.britannica.com/art/horror-film), read secondhand; Lehne, M., & Koelsch, S. (2015). Toward a general psychological model of tension and suspense. Frontiers in Psychology. doi:10.3389/fpsyg.2015.00079 (abstract only)",
+        "how": "abstract only",
+        "confidence": "medium"
+      },
+      {
+        "claim": "Musical theatre combines acting, singing and dancing; singing while dancing is at least moderate-intensity cardiorespiratory work and singing alters breathing and lactate relative to dancing alone (see topic 6). Performer demand: aerobic capacity plus vocal control under exertion.",
+        "value": "VO2peak 67.6 M / 55.6 F mL/kg/min in pre-professional MT performers",
+        "source": "Stephens, N., & Wyon, M. (2020). Medical Problems of Performing Artists. doi:10.21091/mppa.2020.1007",
+        "how": "abstract only",
+        "confidence": "high"
+      },
+      {
+        "claim": "Period/costume demands: LAMDA assesses 'movement, posture, body language and facial expression required to portray the periods in which the scenes are set' and research into the period's dramatic style; Trinity requires contrasting extracts differing in 'style, language, mood or genre'. RADA requires approaching 'a range of genres, styles and performance contexts with flexibility and adaptability'.",
+        "value": null,
+        "source": "LAMDA Performance Syllabus 2024 (https://www.lamda.ac.uk/wp-content/uploads/2026/08/LAMDA_Performance_Syllabus.pdf); Trinity College London Acting syllabus (https://www.trinitycollege.com/resource?id=8854); RADA BA Acting Programme Specification 2024",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Stylised forms in conservatory curricula: Lecoq's second year treats melodrama, commedia dell'arte, bouffons, Greek tragedy and clown as 'dramatic territories' each laying down 'principal theatrical structures in the body'; LAMDA lists practitioners spanning naturalism to stylisation (Stanislavski, Brecht, Grotowski, Artaud, Katie Mitchell, Kneehigh, among others).",
+        "value": null,
+        "source": "Everett (2008), NJ 31(2) (https://njdrama.scholasticahq.com/article/33377-moving-bodies-jacques-lecoq-and-drama-education-in-australia/attachment/84814.pdf); LAMDA Performance Syllabus 2024",
+        "how": "read directly",
+        "confidence": "high"
+      },
+      {
+        "claim": "Satire and slapstick were not sourced to a primary or peer-reviewed text in this pass; Britannica's comedy-of-manners entry calls Restoration comedy 'always satirical'. Treat satire/slapstick demands as unsourced beyond Bergson's mechanism-of-the-comic account.",
+        "value": null,
+        "source": "Encyclopaedia Britannica, 'Comedy of manners' (secondhand); no further source located.",
+        "how": "read secondhand",
+        "confidence": "low"
+      }
+    ]
+  }
+}

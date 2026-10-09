@@ -8,14 +8,22 @@
  * Entries are text. No emoji, no glyph icons: a symbol that renders as a
  * picture on one platform and a box on another is not a label, and a
  * screen reader has nothing to say about it. A destination that existed and
- * didn't open, `locked`, went on 2026-09-27: none had been for a long time.
+ * didn’t open, `locked`, went on 2026-09-27: none had been for a long time.
+ *
+ * From the connected attributes of 2026-10-09 the Player Profile, the
+ * school, money and the papers are on the rail as well as on Home, each once
+ * the guide’s chapter that opens it (`feature`) is read. Until then they
+ * were `homeOnly`, reached only from their panels, and the rail held Home
+ * alone; the calendar still is.
  */
 
 export interface Destination {
   route: string;
   label: string;
-  /** One line on what is behind it, shown on the tile. */
+  /** One line on what is behind it, shown as the rail item’s title. */
   detail: string;
+  /** The guide’s id that opens it (`content/tutorial.ts`): the rail carries it once the chapter’s been read. */
+  feature: string;
   /**
    * Offered on Home and kept off the rail. The calendar describes the day you
    * are standing in, so it belongs beside the day rather than in a list of
@@ -31,44 +39,40 @@ export interface DestinationGroup {
 
 export const DESTINATIONS: readonly DestinationGroup[] = [
   {
+    label: 'You',
+    items: [
+      { route: '/workspace/profile', label: 'Player Profile', detail: 'Your abilities, techniques, interests, genres, condition and history', feature: 'ui.profile' },
+    ],
+  },
+  {
     label: 'Your Day',
     items: [
-      { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
+      { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', feature: 'ui.calendar', homeOnly: true },
       // Travel, Cars and Land were opened from their panels here until the scope reset of 2026-10-09.
     ],
   },
   {
     label: 'Your Training',
     items: [
-      // Opened from the School panel, for a life that began at drama school.
-      { route: '/workspace/school', label: 'Your School', detail: 'Your standing, classes, casting and terms', homeOnly: true },
+      { route: '/workspace/school', label: 'School', detail: 'Your standing, classes, coursework, casting and terms', feature: 'ui.school' },
     ],
   },
-  // Your Work, the career's, went in the scope reset of 2026-10-09.
+  // Your Work, the career’s, went in the scope reset of 2026-10-09.
   {
-    label: 'Your Money',
-    items: [
-      // Opened from the Money panel, which names the bank it goes to.
-      { route: '/workspace/bank', label: 'Your Bank', detail: 'Your accounts, and moving money between them', homeOnly: true },
-      // Homes, opened from the Home panel, went in the scope reset of 2026-10-09.
-    ],
-  },
-  {
-    // Until 2026-09-29 Papers sat under Your Money; with the passport and the license it's more than money.
     label: 'Your Affairs',
     items: [
-      // Opened from the Papers panel.
-      { route: '/workspace/papers', label: 'Papers', detail: 'Your returns, health cover, unemployment, passport and ID', homeOnly: true },
+      { route: '/workspace/bank', label: 'Money', detail: 'Your accounts, and moving money between them', feature: 'ui.bank' },
+      // Until 2026-09-29 Papers sat under Your Money; with the passport and the license it’s more than money.
+      { route: '/workspace/papers', label: 'Papers', detail: 'Your returns, health cover, unemployment, passport and ID', feature: 'ui.papers' },
+      // Homes, opened from the Home panel, went in the scope reset of 2026-10-09.
     ],
   },
 ];
 
 /**
  * What the rail offers: everything except the ones Home keeps, and no group
- * left standing with nothing under it.
- *
- * One list still, so nothing can disagree about what exists — only about where
- * it is offered.
+ * left standing with nothing under it. One list still, so nothing can
+ * disagree about what exists, only about where it is offered.
  */
 export const RAIL_DESTINATIONS: readonly DestinationGroup[] = DESTINATIONS
   .map((group) => ({ ...group, items: group.items.filter((item) => !item.homeOnly) }))
@@ -76,4 +80,3 @@ export const RAIL_DESTINATIONS: readonly DestinationGroup[] = DESTINATIONS
 
 /** Every destination, flat. */
 export const ALL_DESTINATIONS: readonly Destination[] = DESTINATIONS.flatMap((g) => g.items);
-

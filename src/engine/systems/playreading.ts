@@ -18,7 +18,9 @@
  *
  * **What a read leaves** is a note on what was read, from the play's own facts:
  * its form, its cast as published and whether there's a part in it for you by
- * the cast's women and men and its youngest age, its setting. Read again, the
+ * the cast's women and men and its youngest age, its setting. From 2026-10-09
+ * a read grows imagination as well as the text craft, each kept on the
+ * development history (`ordinary`). Read again, the
  * note says when the last read was and turns to what wasn't noticed before;
  * read through everything on record, it says so.
  *
@@ -35,7 +37,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, ageOn, formatDate, formatTime, type Instant } from '../core/time';
 import { CONTEMPORARY_PLAYS, type ContemporaryPlay } from '../content/contemporary';
 import { exerts } from './body';
-import { focusAt, grow } from './school';
+import { focusAt, ordinary } from './school';
 import { READ_CRAFTS, enjoyCrafts } from './enjoyment';
 import { occupiedAt } from './life';
 
@@ -131,7 +133,11 @@ export function registerPlayReading(sim: Simulation): void {
     exerts(person, PLAYREADING.met, minutes / 60);
     const study = before ?? { reads: 0, lastAt: s.now, noticed: [], notes: [] };
     const fresh = !before || s.now - before.lastAt >= PLAYREADING.freshDays * MS_DAY;
-    if (person.craft && fresh) grow(person.craft, 'script', focus, before ? PLAYREADING.weight.again : PLAYREADING.weight.read);
+    // The text craft, and imagination with it (from 2026-10-09, `content/abilities.ts`), recorded on the development history.
+    if (person.craft && fresh) {
+      ordinary(s, person, 'script', focus, before ? PLAYREADING.weight.again : PLAYREADING.weight.read, `read:${id}`);
+      ordinary(s, person, 'imagination', focus, before ? PLAYREADING.weight.again : PLAYREADING.weight.read, `read:${id}`);
+    }
     const seen = aspects(person, p, s.now, s.zone);
     let words: string;
     if (!before) {
@@ -163,7 +169,7 @@ export function registerPlayReading(sim: Simulation): void {
     s.advanceTo(s.now + minutes * 60_000);
     enjoyCrafts(person, READ_CRAFTS);
     exerts(person, PLAYREADING.met, minutes / 60);
-    if (person.craft) grow(person.craft, 'script', focus, PLAYREADING.weight.research);
+    if (person.craft) ordinary(s, person, 'script', focus, PLAYREADING.weight.research, `research:${id}`);
     const L = p.licensor;
     const rights = L?.withheld ? ' Its performing rights aren’t released.' : L?.agent ? ` Its rights are by application to the author’s agent, ${L.agent}.` : L?.us || L?.uk ? ` Licensed for performance${L.us ? ` in the US by ${L.us}` : ''}${L.us && L.uk ? ',' : ''}${L.uk ? ` in the UK by ${L.uk}` : ''}.` : ' Who licenses it isn’t on record.';
     const words = `First staged ${p.premiere.date ? `on ${p.premiere.date}` : `in ${p.premiere.year}`} at ${p.premiere.venue}.${p.published ? ` First published ${p.published.year}, by ${p.published.by}${p.published.acting ? ', an acting edition' : ''}.` : ' Its first edition isn’t on record.'}${rights}`;

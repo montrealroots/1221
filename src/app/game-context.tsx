@@ -220,7 +220,12 @@ export function GameProvider({
     }
   }, [sim, toast, refresh, halt]);
 
-  const navigate = useCallback((next: string, label?: string) => {
+  /**
+   * Where the screen is, kept in the browser's history from 2026-10-09: each move pushes an entry under the address's
+   * hash, so the browser's Back and Forward move between screens, and a reload or a link to `#/workspace/school`
+   * opens there. `moved` is the state change alone, for a move the browser already made.
+   */
+  const moved = useCallback((next: string, label?: string) => {
     setRoute(next);
     const entry: NavEntry = { route: next, label: label ?? labelForRoute(next) };
     setBreadcrumbs((crumbs) => {
@@ -231,14 +236,30 @@ export function GameProvider({
     setRecent((list) => [entry, ...list.filter((r) => r.route !== next)].slice(0, 10));
   }, []);
 
+  const navigate = useCallback((next: string, label?: string) => {
+    moved(next, label);
+    try {
+      if (window.location.hash !== `#${next}`) window.history.pushState({ route: next, label }, '', `#${next}`);
+    } catch { /* no history to keep: the screen moves all the same */ }
+  }, [moved]);
+
+  useEffect(() => {
+    const onPop = (event: PopStateEvent) => {
+      const state = event.state as { route?: string; label?: string } | null;
+      const fromHash = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home';
+      moved(state?.route ?? fromHash, state?.label);
+    };
+    // Where the game opens: an address's own screen, else Home, written into history as the first entry.
+    const start = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home';
+    try { window.history.replaceState({ route: start }, '', `#${start}`); } catch { /* as above */ }
+    if (start !== '/home') moved(start);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [moved]);
+
+  /** Back a screen: the browser's own Back, so its Forward still returns. */
   const back = useCallback(() => {
-    setBreadcrumbs((crumbs) => {
-      if (crumbs.length <= 1) return crumbs;
-      const next = crumbs.slice(0, -1);
-      const target = next[next.length - 1];
-      if (target) setRoute(target.route);
-      return next;
-    });
+    try { window.history.back(); } catch { /* nothing behind */ }
   }, []);
 
   const toggleFavourite = useCallback((entry: NavEntry) => {
@@ -367,6 +388,7 @@ export function GameProvider({
       if (typing) return;
       if (event.key.toLowerCase() === 'h' && !event.metaKey && !event.ctrlKey) navigate('/home', 'Home');
       if (event.key.toLowerCase() === 'c' && !event.metaKey && !event.ctrlKey) navigate('/workspace/calendar', 'Calendar');
+      if (event.key.toLowerCase() === 'p' && !event.metaKey && !event.ctrlKey) navigate('/workspace/profile', 'Player Profile');
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -392,16 +414,15 @@ export function GameProvider({
 
 // ---------------------------------------------------------------------------
 
+// The career's, travel's, the cars', the land's and the homes' labels went with their screens; they were left here
+// until 2026-10-09.
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
   '/workspace/school': 'Your School',
-  '/workspace/career': 'Your Career',
+  '/workspace/bank': 'Money',
   '/workspace/papers': 'Papers',
-  '/workspace/travel': 'Travel',
-  '/workspace/vehicles': 'Cars',
-  '/workspace/land': 'Land',
-  '/workspace/homes': 'Homes',
+  '/workspace/profile': 'Player Profile',
 };
 
 export function labelForRoute(route: string): string {

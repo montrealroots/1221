@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-109 commands; 109 named by a test, 0 not.
+113 commands; 113 named by a test, 0 not.
 
 ## bank
 
@@ -102,6 +102,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `finance.pay_card` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `interest.test.ts` | Your Bank |
 | `finance.set_autopay` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `cards.test.ts` `journey-money.test.ts` `several-cards.test.ts` | Your Bank |
 
+## genre
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` | You As An Actor |
+
 ## health
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
@@ -120,6 +126,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Cover, Benefits And Returns |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Cover, Benefits And Returns |
+
+## interest
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `interest.pursue` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` | You As An Actor |
 
 ## life
 
@@ -144,6 +156,13 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `plays.read` | `src/engine/systems/playreading.ts` | `SchoolWorkspace.tsx` | `journey-life.test.ts` `playreading.test.ts` | Drama School |
 | `plays.research` | `src/engine/systems/playreading.ts` | `SchoolWorkspace.tsx` | `playreading.test.ts` | Drama School |
+
+## practice
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` | You As An Actor |
+| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` | You As An Actor |
 
 ## school
 

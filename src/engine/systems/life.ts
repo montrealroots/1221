@@ -787,7 +787,7 @@ export function applySleep(
 }
 
 /** Whole years between two instants. */
-function yearsSince(birthInstant: number, at: number): number {
+export function yearsSince(birthInstant: number, at: number): number {
   return Math.max(0, (at - birthInstant) / (365.2425 * MS_DAY));
 }
 
