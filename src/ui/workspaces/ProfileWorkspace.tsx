@@ -236,6 +236,24 @@ function TechniquesPanel() {
   );
 }
 
+/** An interest's constraints in a few words, its source's reason on hover: when, how long, with whom, at what price. */
+export function whenShort(id: string): string {
+  const w = INTEREST_DEFS[id]?.when;
+  const minutes = `${minutesOf(id)} min`;
+  if (!w) return `${minutes}, any time`;
+  const DAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const hour = (h: number) => (h === 12 ? 'noon' : h > 12 ? `${h - 12} pm` : `${h} am`);
+  const parts = [
+    w.daylight ? 'By daylight' : '',
+    w.days ? (w.days.length === 1 ? `${DAY[w.days[0]!]}s` : `Not ${DAY.filter((_, i) => !w.days!.includes(i)).join(', ')}`) : '',
+    w.from !== undefined && w.to !== undefined ? `starts ${hour(w.from)} to ${hour(w.to)}` : '',
+    w.partnered ? 'with others' : '',
+    w.costUsd ? `a $${w.costUsd / 100} ticket` : '',
+    minutes,
+  ].filter(Boolean);
+  return parts.join(', ').replace(/^./, (c) => c.toUpperCase());
+}
+
 /** A filter box, a choice of which to show, and the count: the full list of a kind, a page at a time. */
 function ListControls({ id, text, setText, show, setShow, options, count }: { id: string; text: string; setText: (s: string) => void; show: string; setShow: (s: string) => void; options: readonly string[]; count: number }) {
   return (
@@ -288,7 +306,7 @@ function InterestsPanel() {
                     <td className="xs nowrap"><Open subject={targetSubject(def.develops)}>{targetLabel(def.develops)}</Open></td>
                     <td className="xs nowrap">{s ? `${one(s.familiarity)}, ${phaseOf(s.familiarity)}` : 'None yet'}</td>
                     <td className="num mono">{s?.sessions ?? 0}</td>
-                    <td className="xs">{def.when ? `${def.when.why}${def.when.costUsd ? ` A ticket, $${def.when.costUsd / 100}.` : ''}` : `${minutesOf(i.id)} minutes, any time`}</td>
+                    <td className="xs nowrap" title={def.when?.why}>{whenShort(i.id)}</td>
                     <td className="nowrap">
                       <Gated feature="interest.pursue" className="btn btn-sm" disabled={Boolean(no)} title={no ?? def.activity} onClick={() => run('interest.pursue', { interest: i.id })}>Spend {minutesOf(i.id) === 60 ? 'An Hour' : `${minutesOf(i.id)} Minutes`}</Gated>
                       {no && <div className="xs dim">{no}</div>}

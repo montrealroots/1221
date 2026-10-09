@@ -10,13 +10,16 @@ import { createSave, migrate } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, MS_DAY, instantFromZoned } from '@/engine/core/time';
-import { CALL_KIND, ESTIMATE, castFit, castScore, classmatePerformer, evenCraft, mateAbilities } from '@/engine/systems/school';
+import { CALL_KIND, ESTIMATE, castingReads, castFit, castScore, classmatePerformer, evenCraft, mateAbilities } from '@/engine/systems/school';
 import { WORK_KEPT, evaluate, journeyOf, performerOf, recordWork, replay } from '@/engine/systems/evaluation';
 import { abilityFull, develop, levelOf } from '@/engine/systems/attributes';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES } from '@/engine/content/abilities';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { EXERCISES } from '@/engine/content/practice';
-import { genreTags, withDemands } from '@/engine/content/demands';
+import { DEMAND_TECHNIQUE, DEMAND_WEIGHT, demandTags, genreTags, withDemands } from '@/engine/content/demands';
+import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
+import { SCENES, templateById } from '@/engine/content/coursework';
+import { judgeWork, type Assignment } from '@/engine/systems/coursework';
 import { FILM_GENRES } from '@/engine/content/interests';
 import { genreState, SELF_TAPE } from '@/engine/systems/engagement';
 
@@ -197,5 +200,35 @@ describe('the guarantee, with a genre’s demands in the work', () => {
       const r = sim.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: id } });
       expect(r.ok && r.value!.overall, id).toBe(100);
     }
+  });
+});
+
+describe('a play’s kinds asked of its work', () => {
+  const plays = [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS];
+
+  it('puts every technique a play’s kinds demand into its casting and its nights, beside its own reads', () => {
+    let added = 0;
+    for (const p of plays) {
+      const r = castingReads({ play: p.title });
+      for (const t of demandTags(p.kinds ?? [])) {
+        const skill = DEMAND_TECHNIQUE[t];
+        expect(r[skill], `${p.title} reads ${skill}`).toBeDefined();
+        if ((p.reads as Partial<Record<string, number>>)[skill] === undefined) { added += 1; expect(r[skill]).toBe(DEMAND_WEIGHT); }
+        else expect(r[skill]).toBe((p.reads as Partial<Record<string, number>>)[skill]);
+      }
+    }
+    expect(added).toBeGreaterThan(0);
+  });
+
+  it('reads a coursework scene’s play’s demands in the scene’s judgement', () => {
+    const sim = life('scene-demands');
+    const person = sim.player;
+    const scene = SCENES.find((s) => s.play === 'Macbeth')!;
+    const a = { id: 'm', course: 'X', template: 'scene-study', term: 0, setOn: '2026-09-01', dueOn: '2026-09-02', sceneId: scene.id, role: 0 as const, prep: { familiarity: 0, memorization: 0, interpretation: 0, rehearsal: 0, partner: 0, revision: 0 }, answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], status: 'done' } as unknown as Assignment;
+    const e = judgeWork(sim, person, a, '2026-09-02', sim.now, 'm');
+    const own = templateById('scene-study')!.reads as Partial<Record<string, number>>;
+    const demanded = demandTags(genresOfPlay('Macbeth') ?? []).map((t) => DEMAND_TECHNIQUE[t]);
+    expect(demanded.some((s) => own[s] === undefined)).toBe(true);
+    for (const s of demanded) expect(e.inputs.techniques[s], s).toBeDefined();
   });
 });
