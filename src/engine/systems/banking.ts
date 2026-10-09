@@ -34,14 +34,13 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
 import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
-import { ageOn } from './mortality';
+import { ageOn } from './age';
 import { accountNumber } from './banknumber';
 import { ACCOUNT_LIFE } from '../content/accountlife';
 import { statementReady } from './statements';
 import { savingsLeftThisMonth } from './cash';
 import type { ScheduledItem } from '../core/scheduler';
 import { savingsDebit } from './accountlife';
-import { recordInterest } from './earnings';
 import { marksFallOff } from './credit';
 
 export const MONTH_END_KIND = 'bank.month_end';
@@ -470,8 +469,7 @@ function payInterest(sim: Simulation, account: Account, memo: string): void {
   if (tax > 0) postings.push({ accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
   sim.post({ memo, category: 'interest', postings });
   account.accrued = (account.accrued ?? 0) - earned;
-  const owner = account.ownerId ? sim.universe.people[account.ownerId] : undefined;
-  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);
+  // Until 2026-10-09 it was entered on the owner's year for the tax return too; the returns went in the scope reset.
 }
 
 function scheduleMonthEnd(sim: Simulation, after: Instant): void {

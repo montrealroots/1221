@@ -23,10 +23,23 @@ import { BEDDING_NIGHTS, BEDDING_SETS, type BeddingSet } from '../content/beddin
 import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { addItem, homeKeyOf, itemsOf, type Item } from './items';
-import { bedAtHome } from './furniture';
 import { atHome } from './dwelling';
+import { DEFAULT_BED_SIZE } from '../content/beds';
 
 type Bedding = Item & { bedding: NonNullable<Item['bedding']> };
+
+/**
+ * The bed at home: the one that came with the place, its country's usual double (`DEFAULT_BED_SIZE`), and none on a
+ * sofa. Until the scope reset of 2026-10-09 it was the bed they'd bought (`systems/furniture.ts`), of whatever size;
+ * the furniture went with it, and a bed bought before then is still the one counted, by its size.
+ */
+export function bedAtHome(person: Person): { size: string } | undefined {
+  if (!person.home || person.home.kind === 'sofa') return undefined;
+  const home = homeKeyOf(person.home);
+  const own = itemsOf(person).find((i) => i.kind === 'furniture:bed' && i.at.kind === 'home' && i.at.home === home);
+  const country = own?.bed?.country ?? CITIES.get(person.home.cityId)?.countryId ?? 'us';
+  return { size: own?.bed?.size ?? DEFAULT_BED_SIZE[country] ?? 'queen' };
+}
 
 /** The bedding sets they own at the home they live in. */
 export const beddingOf = (person: Person): Bedding[] => {

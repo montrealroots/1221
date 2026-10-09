@@ -40,7 +40,6 @@ import { inSaveMoney } from './banking';
 import { payWith, payWithRefusal, spend, type PayWith } from './household';
 import { closedNow, shutAllDay } from './errands';
 import { addItem, homeKeyOf, itemsOf, reachable, type Item } from './items';
-import { stow } from './trips';
 
 /** What makes an item a supply: its kind, its unit and how much is left. */
 export interface Supply { kind: string; unit: 'g' | 'ml' | 'ct'; left: number }
@@ -293,9 +292,10 @@ export function buyToiletries(sim: Simulation, person: Person, id: string, quant
 
 export function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
   // A toothbrush is one brush a count; anything else is its size.
-  // Carried, or in the car, until a trip out is home (`stow`).
+  // Put away at home where they live in the town. Until the scope reset of 2026-10-09 it was carried, or in the car,
+  // until a trip out was home (`stow` in `systems/trips.ts`); the trips went with the travel.
   const home = person.home && person.home.cityId === person.currentLocationId ? homeKeyOf(person.home) : undefined;
-  stow(sim, person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: home ? { kind: 'home', home, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' } : { kind: 'person' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
+  addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: home ? { kind: 'home', home, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' } : { kind: 'person' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } });
 }
 
 /** The cheapest of a kind, a gram or a brush: in a store in reach of the town, or anywhere in its market. Nothing where SLATE keeps none. */

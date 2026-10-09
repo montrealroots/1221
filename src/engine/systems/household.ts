@@ -42,13 +42,10 @@
  * nobody had paid.
  */
 
-import { carryCars } from './vehicles';
-import { hapRefusal, hapSplit, netWeeklyEur } from './homebenefits';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { CITIES } from '../content/geography';
-import { PET_TENANCY, type PetTenancy } from '../content/pettenancy';
 import { exchange } from '../content/currency';
 import { salesTaxRate } from '../content/tax';
 import { rentAt, type RentFigure } from '../content/rents';
@@ -63,23 +60,10 @@ import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 import { billsFactor, energyYear } from './seasons';
-import { deadline, latePenalty } from './taxreturn';
 import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
-import { wasteFeeOf } from './waste';
-import { emptyHomeIn, moveIntoOwned } from './homes';
-import { carryFurniture } from './furniture';
 import { followTheMove, leavingHome } from './items';
-import { carryBoat } from './boats';
-import { mealsFromHelp } from './foodhelp';
 import { mealsFromStock } from './pantry';
 import { isOn } from './automation';
-import { partnerStays } from './people';
-import { billShare } from './marriage';
-import { TELECOM_OF_BILLS, billedApart, telecomLines } from './telecom';
-import { electricityAdjustment } from './electricity';
-import { gasAdjustment } from './gas';
-import { waterBillOf } from './water';
-import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
 
@@ -105,8 +89,6 @@ export interface HomeState {
    * landlord counted the old one's debt and could evict over it.
    */
   arrearsAtStart?: Money;
-  /** Window locks and lamp timers fitted to a rented home, left behind on moving out (`systems/homesecurity.ts`, from 2026-09-30). */
-  security?: import('./homesecurity').Device[];
 }
 
 /** What a friend's sofa is, for the screens. */
@@ -130,30 +112,11 @@ export const HOUSING: Readonly<Record<Housing, { label: string; billsUsd: number
 export const OWNED = { label: 'A Home You Own', billsUsd: 250 };
 
 /**
- * A home they own's bills grow with its size, from 1,500 square feet, at the
- * seven-tenths power, since a bigger home is heated and lit more but not in
- * proportion; solar panels halve them, and a pool's upkeep adds $120 a month.
- * SLATE's estimates.
- */
-// A tennis court's upkeep, Fixr's $1,800 a year (research-facilities.json, from 2026-10-01), a month's share with the pool's.
-// A hot tub's running, HomeGuide's middles: energy $480 and chemicals $175 a year, and a $70 filter every year and a half; a putting
-// green's upkeep, the middle of $250 to $550 a year (research-facilities.json, from 2026-10-02).
-const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120, tennisUsd: 1_800 / 12, hotTubUsd: (480 + 175 + 70 / 1.5) / 12, greenUsd: 400 / 12 };
-function ownedBillsFactor(person: Person): { factor: number; poolUsd: number } {
-  const facts = person.homes?.find((h) => h.id === person.home?.homeId)?.facts;
-  if (!facts) return { factor: 1, poolUsd: 0 };
-  const factor = Math.pow(facts.size / OWNED_BILLS.size, OWNED_BILLS.power) * (facts.features.includes('solar') ? OWNED_BILLS.solar : 1);
-  return { factor, poolUsd: (facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0) + (facts.features.includes('tennisCourt') ? OWNED_BILLS.tennisUsd : 0) + (facts.features.includes('hotTub') ? OWNED_BILLS.hotTubUsd : 0) + (facts.features.includes('puttingGreen') ? OWNED_BILLS.greenUsd : 0) };
-}
-
-/**
  * Leaves the home they own and live in: its time lived in ends, and it stands
  * empty for them to let, sell or come back to. The home is theirs still.
  */
-export function leaveOwnedHome(sim: Simulation, person: Person): void {
-  const owned = person.home?.kind === 'owned' ? person.homes?.find((h) => h.id === person.home?.homeId) : undefined;
-  const open = owned?.occupied.find((o) => o.to === undefined);
-  if (open) open.to = sim.now;
+export function leaveOwnedHome(_sim: Simulation, _person: Person): void {
+  // The home's record of who lived in it went with the homes system in the scope reset of 2026-10-09.
 }
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
@@ -218,23 +181,10 @@ const costsOf = (sim: Simulation, person: Person): LivingCosts | undefined =>
  */
 export function rentOf(sim: Simulation, person: Person): Money {
   const rent = costsOf(sim, person)?.rent ?? 0;
-  // Pet rent is rent, a pet a month, where the place's landlords ask it (`content/pettenancy.ts`, from 2026-10-04).
-  const pets = person.pets?.length ?? 0;
-  if (rent === 0 || pets === 0 || (person.home?.kind !== 'shared' && person.home?.kind !== 'own')) return rent;
-  const t = petTenancyAt(person.home.cityId);
-  return t && t.petRent > 0 ? rent + inSave(sim, t.petRent, t.currency) * pets : rent;
+  // Pet rent went with the pets in the scope reset of 2026-10-09.
+  return rent;
 }
 
-/** A tenant-with-a-pet's terms where a town is: its region's, or its country's; none where SLATE has read no rule. */
-export function petTenancyAt(cityId: string): PetTenancy | undefined {
-  const city = CITIES.get(cityId);
-  return city ? PET_TENANCY[city.parentId] ?? PET_TENANCY[city.countryId] : undefined;
-}
-const inSave = (sim: Simulation, amount: number, currency: string): Money => {
-  const cents = Math.round(amount * 100);
-  const into = saveCurrency(sim.universe);
-  return currency === into ? cents : exchange(cents, currency, into) ?? cents;
-};
 
 /**
  * The month's bills: power, heat, phone, internet and getting about, and from
@@ -244,25 +194,13 @@ const inSave = (sim: Simulation, amount: number, currency: string): Money => {
  * month's was the same.
  */
 export function billsOf(sim: Simulation, person: Person): Money {
-  // Where the internet and the phone are billed by their providers, their part comes out (`systems/telecom.ts`, from 2026-10-01);
-  // the rubbish collection goes in, where the town charges for it (`systems/waste.ts`, from 2026-10-02).
-  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person)) + wasteFeeOf(sim, person) + waterOf(sim, person);
+  return atlasBillsOf(sim, person);
 }
 
 /** The month a bill on the 1st is for: the month just gone, or this one on any other day. */
 function billedMonth(sim: Simulation, person: Person): number {
   const p = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   return p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
-}
-
-/** The month's water and sewer, where the town bills this home for it. */
-export const waterOf = (sim: Simulation, person: Person): Money => (person.home ? waterBillOf(sim, person, billedMonth(sim, person)) : 0);
-
-/** The atlas's estimate of the phone and internet in a home's bills, where their providers bill them instead; nothing elsewhere. */
-export function telecomPartOf(sim: Simulation, person: Person): Money {
-  if (!person.home || person.home.kind === 'sofa' || !billedApart(person.home.cityId)) return 0;
-  const base = person.home.kind === 'owned' ? OWNED.billsUsd : HOUSING[person.home.kind].billsUsd;
-  return Math.round(atTown(person.home.cityId, base, saveCurrency(sim.universe)) * TELECOM_OF_BILLS);
 }
 
 /** The month's bills as the atlas has them, the phone and internet in them. */
@@ -274,12 +212,7 @@ export function atlasBillsOf(sim: Simulation, person: Person): Money {
   const place = homePlace(sim, person);
   const cooling = place?.fixtures.cooling ?? 'central';
   const machines = atTown(person.home.cityId, machineUsd(person), saveCurrency(sim.universe));
-  // The electricity used at the utility's tariff, against the typical month the atlas carries (`systems/electricity.ts`, from 2026-10-02).
-  // And the gas the same way (`systems/gas.ts`, from 2026-10-03).
-  const used = electricityAdjustment(sim, person, billed) + gasAdjustment(sim, person, billed);
-  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines + used;
-  const { factor, poolUsd } = ownedBillsFactor(person);
-  return Math.round(flat * factor * billsFactor(person.home.cityId, billed, cooling) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe))) + machines + used;
+  return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines;
 }
 
 /**
@@ -453,18 +386,6 @@ function onCard(sim: Simulation, person: Person, amount: Money, memo: string, ca
   return true;
 }
 
-/** What the council pays of a month's rent under HAP, posted, in the save's money; nothing without it. */
-function hapPaid(sim: Simulation, person: Person, full: Money): Money {
-  if (!person.hap || hapRefusal(sim, { ...person, hap: undefined })) return 0;
-  const cur = saveCurrency(sim.universe);
-  const eur = (c: Money) => (cur === 'EUR' ? c : exchange(c, cur, 'EUR') ?? c);
-  const back = (c: Money) => (cur === 'EUR' ? c : exchange(c, 'EUR', cur) ?? c);
-  const split = hapSplit(eur(full), person.home?.kind === 'own', netWeeklyEur(sim, person));
-  const council = Math.min(full, back(split.council));
-  if (council > 0) sim.post({ memo: 'Housing Assistance Payment: Dublin City Council paid the landlord', category: 'rent', postings: [{ accountId: sim.nominalAccount('expense', 'Rent').id, amount: council }, { accountId: sim.nominalAccount('income', 'Housing Assistance Payment').id, amount: -council }] });
-  return council;
-}
-
 /** The month's rent, the way it's paid. */
 function payRent(sim: Simulation, person: Person, full: Money): void {
   const pay = paymentsOf(person);
@@ -629,24 +550,10 @@ export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
   }
   const bought = cost === 0 || spend(sim, person, cost, 'Groceries', 'food');
   if (bought) { person.home.fedOn = sim.now; if (person.foodHelp) person.foodHelp.helping = false; return true; }
-  // Unpaid, the day's meals from a soup kitchen or a pantry where they are (`systems/foodhelp.ts`, from 2026-10-01).
-  const meals = mealsFromHelp(sim, person);
-  const record = (person.foodHelp ??= { store: 0, visits: [] });
-  record.today = meals;
-  const fed = meals >= 3;
-  if (fed) person.home.fedOn = sim.now;
-  if (person.id === sim.universe.playerId && (!meals || !record.helping)) {
-    sim.notify({
-      category: 'money',
-      title: meals ? 'Fed By Help Today' : 'No Money For Food Today',
-      body: meals
-        ? `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. A soup kitchen or a pantry here gave ${meals >= 3 ? 'the day’s three meals' : `${meals} of the day’s three meals`}.`
-        : `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. It's what's in the cupboard today, and not enough of it.`,
-      importance: 70,
-    });
-  }
-  record.helping = meals > 0;
-  return fed;
+  // Unpaid, the day's food isn't bought. Soup kitchens and pantries (`systems/foodhelp.ts`) went with the benefits in the
+  // scope reset of 2026-10-09.
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'No Money For Food', body: 'The day’s groceries couldn’t be paid for.', importance: 75 });
+  return false;
 }
 
 /**
@@ -681,35 +588,15 @@ function depositAccount(sim: Simulation, person: Person): Account | undefined {
  * The deposit a landlord asks here: a month's rent, or two for a record under
  * 620, never past what the place's law allows (`depositCapMonths`).
  */
-export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId, pets = person.pets?.length ?? 0): Money {
+export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
   const rent = costsAt(where, kind, saveCurrency(sim.universe), sim.now).rent;
   const months = (person.credit?.score ?? 650) < POOR_RECORD ? 2 : 1;
   const cap = Math.round(rent * depositCapMonths(where));
   const base = Math.min(rent * months, cap);
-  // A pet's deposit, once however many (from 2026-10-04): inside the cap where the place's law counts it there (New York's
-  // and California's month), on top of it where it doesn't (Connecticut's), half the month's rent in British Columbia.
-  const t = pets > 0 ? petTenancyAt(where) : undefined;
-  if (!t) return base;
-  const pet = t.deposit === 'halfMonth' ? Math.round(rent / 2) : inSave(sim, t.deposit, t.currency);
-  return t.withinCap ? Math.min(base + pet, cap) : base + pet;
+  // A pet's deposit went with the pets in the scope reset of 2026-10-09.
+  return base;
 }
 
-/**
- * A pet come to a rented home already lived in (from 2026-10-04): the part of
- * the deposit its coming adds, held with the rest and back with it on moving
- * out, as British Columbia's "when the pet arrives" has it. Nothing where the
- * home is owned, a sofa, or the place asks nothing more.
- */
-export function petArrives(sim: Simulation, person: Person): Money {
-  const home = person.home;
-  if (!home || (home.kind !== 'shared' && home.kind !== 'own')) return 0;
-  const n = person.pets?.length ?? 0;
-  const more = depositFor(sim, person, home.kind, home.cityId, n) - depositFor(sim, person, home.kind, home.cityId, n - 1);
-  const held = depositAccount(sim, person);
-  if (more <= 0 || !held) return 0;
-  sim.post({ memo: 'A pet deposit', category: 'rent', postings: [...drawFromBank(sim, person, more, false, true).postings, { accountId: held.id, amount: more }] });
-  return more;
-}
 
 /**
  * The most a landlord may take as a deposit where a home is, in months of
@@ -823,11 +710,10 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
   leaveOwnedHome(sim, person);
   refundRentAhead(sim, person);
   const carried = arrearsOf(sim, person);
-  const left = person.home?.cityId;
   const fromHome = leavingHome(person);
   person.home = { kind, cityId: where, since: sim.now, unit: drawRental(sim, person, where, kind === 'shared', sim.now), ...(carried > 0 ? { arrearsAtStart: carried } : {}), ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
-  // Movers, or one's own van, bring one's own bed and sofa (`systems/furniture.ts`), and then the car comes along where a road reaches (`systems/vehicles.ts`).
-  if (left) { carryFurniture(sim, person, left, where, fromHome); carryCars(sim, person, left, where); carryBoat(sim, person, left, where); carryCaravans(sim, person, left, where); }
+  // What they own comes with them (`systems/items.ts`). The furniture movers, the car and the boat went with their systems.
+  followTheMove(person, fromHome);
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
@@ -956,18 +842,6 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
     const owed = accountsOf(sim, person).filter((a) => a.category === kind && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
     if (owed > 0) out.push({ kind, amount: owed });
   }
-  const tax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0), 0);
-  if (tax > 0) out.push({ kind: 'tax', amount: tax });
-  // A return past its day with a balance, not filed, its penalty building:
-  // until 2026-09-27 it counted for nothing until it was filed.
-  const cur = saveCurrency(sim.universe);
-  const late = Object.values(person.returns ?? {})
-    .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > deadline(r.year))
-    .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, deadline(r.year), sim.now, cur), 0);
-  if (late > 0) out.push({ kind: 'return_late', amount: late });
-  // Payments owed on a home they own (`systems/homes.ts`), from 2026-09-28.
-  const onHome = (person.homes ?? []).reduce((sum, h) => sum + h.owed.reduce((s, one) => s + one.amount + (one.escrow ? one.escrow.tax + one.escrow.insurance + one.escrow.pmi : 0), 0), 0);
-  if (onHome > 0) out.push({ kind: 'home', amount: onHome });
   // England's council tax a renter owes, from 2026-09-28.
   const council = accountsOf(sim, person).filter((a) => a.category === 'council' && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
   if (council > 0) out.push({ kind: 'council', amount: council });
@@ -993,19 +867,12 @@ export function registerHousehold(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
     if (!person?.home) return;
     const currency = saveCurrency(s.universe);
-    // A partner living with them pays half the rent and the bills, and one who stayed behind on a move doesn't (`systems/people.ts`, from 2026-10-01).
-    partnerStays(s, person);
-    // Your share: evenly, or by what you each earn (`systems/marriage.ts`).
-    const share = billShare(s, person);
-    const full = Math.round(rentOf(s, person) * share);
-    // With Dublin's Housing Assistance Payment the council pays its part to the landlord (`systems/homebenefits.ts`).
-    const rent = full - hapPaid(s, person, full);
-    const bills = Math.round(billsOf(s, person) * share);
+    // All theirs: a partner's share and Dublin's Housing Assistance went with their systems in the scope reset of 2026-10-09.
+    const rent = rentOf(s, person);
+    const bills = billsOf(s, person);
     const before = arrearsOf(s, person);
     // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
-    // The internet and the phone, each by its provider, the internet shared as the bills are (`systems/telecom.ts`).
-    for (const line of telecomLines(s, person, item.at)) payBills(s, person, line.shared ? Math.round(line.amount * share) : line.amount, line.memo);
     if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; delete person.living.showers; delete person.living.baths; delete person.living.extraKwh; delete person.living.tvKwh; delete person.living.lightKwh; delete person.living.guestDays; delete person.living.lawnL; }
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
@@ -1033,12 +900,7 @@ export function registerHousehold(sim: Simulation): void {
       if (person.home.kind === 'sofa') {
         w.stress = clamp(w.stress + HOMELESS_STRESS * personalityOf(person, 'stressGain'), 0, 100);
         const buffer = foodOf(s, person) * 30;
-        // A home of their own in town, empty, before any room.
-        const own = person.currentLocationId === person.home.cityId ? emptyHomeIn(person, person.home.cityId) : undefined;
-        if (own) {
-          moveIntoOwned(s, person, own);
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Home Again', body: `Off the sofa and into your own home at ${own.facts.address}.`, importance: 70 });
-        } else if (person.currentLocationId === person.home.cityId && inTheBank(s, person) >= moveCost(s, person, 'shared') + buffer) {
+        if (person.currentLocationId === person.home.cityId && inTheBank(s, person) >= moveCost(s, person, 'shared') + buffer) {
           move(s, person, 'shared');
           if (person.id === s.universe.playerId) {
             s.notify({ category: 'money', title: 'You Found A Room', body: 'You took a room as soon as you could pay for it: the deposit and the rest of the month are paid. Off the sofa.', importance: 70 });

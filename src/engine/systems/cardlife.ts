@@ -36,7 +36,7 @@ import { MS_DAY } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
-import { ageOn } from './mortality';
+import { ageOn } from './age';
 import { inTheBank } from './household';
 import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';

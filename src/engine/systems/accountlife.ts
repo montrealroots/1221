@@ -49,7 +49,6 @@ import { inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
 import { ensurePrimary, stateOf } from './credit';
-import { recordInterest } from './earnings';
 
 /** The months to its end a term deposit was opened for. */
 function termMonths(term: Account): number {
@@ -274,7 +273,7 @@ export function registerAccountLife(sim: Simulation): void {
     if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
     s.post({ memo: `Interest: ${term.name}`, category: 'interest', postings });
     term.accrued = (term.accrued ?? 0) - earned;
-    recordInterest(person, s.now, s.homeZone, earned);
+    // Until 2026-10-09 it was entered on their year for the tax return too; the returns went in the scope reset.
     return { paid: earned - tax };
   });
 
