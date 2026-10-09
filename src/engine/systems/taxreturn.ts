@@ -2,13 +2,16 @@
  * SLATE — the income tax return (`content/safetynet.ts` `RETURN`).
  *
  * Each February a year's return is ready for anybody the year left owing or
- * owed: its income (acting wages with residuals, work-study, unemployment),
- * less the performing artist deduction where the year qualifies, and with a
- * home's rent less its costs and a sale's short gain (`systems/homes.ts`),
- * itemized where a home's interest and taxes beat the standard deduction,
- * and a long-term gain taxed at its own rates; the tax on
- * it where they last lived, with California leaving unemployment out, and
- * payroll tax on the acting wages; the premium tax credit on the marketplace
+ * owed: its income (work-study, a scholarship's taxable part, the banks'
+ * interest, unemployment, a pension), and the net investment income tax on
+ * the interest over its threshold; the tax on it where they last lived, with
+ * California leaving unemployment out. Acting wages with residuals, the
+ * performing artist deduction and payroll tax on the wages, and the work
+ * done abroad, are still on it and read nought: only the career paid any,
+ * and it went in the scope reset of 2026-10-09. A home's rent and gains and
+ * its itemized interest and taxes were on it too, from 2026-09-28, until the
+ * connected world of that day took them off with the homes. The premium tax
+ * credit on the marketplace
  * months; California's penalty on the months without cover; and against it
  * all, what was withheld. Filed, a balance is paid from the bank, or owed
  * until it is; a refund arrives 21 days on. Filed after 15 April's deadline

@@ -55,6 +55,7 @@ import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, temp
 import { bondMove, classPeriod, coursesOn, focusOf, focusAt, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
+import { enjoyCrafts } from './enjoyment';
 import { personalityOf } from './personality';
 import type { PersonalityKnob } from '../content/personality-traits';
 import { inHospital } from './health';
@@ -443,6 +444,17 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
 /** The trait knob each kind of preparation reads: interpretation is read around, lines drilled, a scene skimmed, a note revised. */
 export const PREP_KNOB: Partial<Record<PrepDim, PersonalityKnob>> = { interpretation: 'readsAround', memorization: 'drills', familiarity: 'skims', revision: 'revises' };
 
+/** How far this kind of step goes for this person, by the knob `PREP_KNOB` names: each read where it's asked, so `tools/wired.mjs` sees it. */
+function prepLean(person: Person, dim: PrepDim): number {
+  switch (dim) {
+    case 'interpretation': return personalityOf(person, 'readsAround');
+    case 'memorization': return personalityOf(person, 'drills');
+    case 'familiarity': return personalityOf(person, 'skims');
+    case 'revision': return personalityOf(person, 'revises');
+    default: return 1;
+  }
+}
+
 /** A step done: its time taken, its part of the preparation moved, and its skill trained while the assignment allows. */
 export function prepare(sim: Simulation, person: Person, a: Assignment, activityId: string): { moved: number; dim: PrepDim; minutes: number } {
   const act = activitiesOf(a).find((x) => x.id === activityId)!;
@@ -450,11 +462,13 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   const focus = focusAt(sim, person, sim.now);
   sim.advanceTo(sim.now + minutes * 60_000);
   exerts(person, (act.needs ?? []).some((n) => n === 'studio' || n === 'feet') ? WORK.met.feet : WORK.met.desk, minutes / 60);
+  // Work in a craft they love is a better hour, and no better work (`Template.crafts`, from 2026-10-09).
+  const crafts = templateById(a.template)?.crafts;
+  if (crafts) enjoyCrafts(person, crafts);
   const before = a.prep[act.dim];
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
-  const knob = PREP_KNOB[act.dim];
-  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * (knob ? personalityOf(person, knob) : 1) * (1 - before));
+  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {

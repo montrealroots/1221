@@ -24,6 +24,9 @@ import { PREP_DIMS, type PrepDim } from '@/engine/content/coursework';
 import { activitiesOf, courseworkOf, setWork, PREP_KNOB } from '@/engine/systems/coursework';
 import { bondMove, castCompany, focusAt } from '@/engine/systems/school';
 import { personalityOf } from '@/engine/systems/personality';
+import { enjoyWork, interestsRead } from '@/engine/systems/enjoyment';
+import { ALL_INTERESTS } from '@/engine/content/interests';
+import { genresOfPlay } from '@/engine/content/plays';
 
 const ZONE = 'America/New_York';
 const life = (seed: string, traits: string[] = []) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personalityTraits: traits });
@@ -107,6 +110,62 @@ describe('the table', () => {
     expect(spender).toBeGreaterThan(plain);
     expect(plain).toBeGreaterThan(frugal);
   });
+});
+
+describe('the films you love, in a play', () => {
+  it('makes a rehearsal of a comedy a better hour for somebody who loves comedies, and no other kind of play', () => {
+    // The falsifiability test on the genres, which from 2026-10-09 a play carries (`genresOfPlay`).
+    const hour = (genres: string[], play: string) => {
+      const p = life('tc-genre').player;
+      p.genres = genres;
+      Object.assign(p.wellbeing, { morale: 50, stress: 40 });
+      enjoyWork(p, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(play) });
+      return { morale: p.wellbeing.morale, stress: p.wellbeing.stress };
+    };
+    expect(genresOfPlay('Twelfth Night')).toContain('comedy');
+    const loves = hour(['comedy'], 'Twelfth Night');
+    const not = hour(['western'], 'Twelfth Night');
+    expect(loves.morale).toBeGreaterThan(not.morale);
+    expect(loves.stress).toBeLessThan(not.stress);
+    // A tragedy is nothing more to a comedy lover than to anybody.
+    expect(hour(['comedy'], 'Macbeth')).toEqual(hour(['western'], 'Macbeth'));
+    // A festival's new play is unnamed, and has no kind to love.
+    expect(genresOfPlay(undefined)).toBeUndefined();
+  });
+});
+
+describe('what you care about, at school', () => {
+  it('makes a speech drill a better hour for somebody who loves dialect work, and the drill no further along', () => {
+    const drill = (interests: string[]) => {
+      const sim = life('tc-craft');
+      sim.player.interests = interests;
+      steady(sim);
+      const cw = courseworkOf(sim, sim.player)!;
+      for (const a of cw.assignments) if (a.status === 'open' || a.status === 'revising') a.status = 'done';
+      const a = setWork(sim, sim.player, 'DRAM 123a/b', { year: 2026, month: 9, day: 28 })!;
+      const morale = sim.player.wellbeing.morale;
+      sim.must({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'transcribe' } });
+      return { lift: sim.player.wellbeing.morale - morale, prep: a.prep.interpretation };
+    };
+    const loves = drill(['dialect_coaching']);
+    const not = drill(['cars']);
+    expect(loves.lift).toBeGreaterThan(not.lift);
+    expect(loves.prep).toBe(not.prep);
+  });
+
+  it('moves nothing for an interest said back only: a week lived with it and without is the same week', () => {
+    const { interests } = interestsRead();
+    const inert = ALL_INTERESTS.map((i) => i.id).filter((id) => !interests.has(id));
+    expect(inert).toContain('cars');
+    expect(inert).not.toContain('stage_combat');
+    const week = (extra: string[]) => {
+      const sim = life('tc-inert');
+      sim.player.interests = [...sim.player.interests, ...extra];
+      sim.advanceBy(7 * 24 * MS_HOUR);
+      return { w: sim.player.wellbeing, money: sim.universe.transactions.length };
+    };
+    expect(week(inert)).toEqual(week([]));
+  }, 60_000);
 });
 
 describe('other people', () => {

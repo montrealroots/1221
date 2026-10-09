@@ -56,8 +56,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
             <div key={account.id} className="col gap-2">
               <div className="strong small"><Open subject={at('account', account.id)}>{which === 'debit' ? 'Debit card' : account.name} ending {p.last4}</Open>, expires <Open subject={at('day', dateKey(p.expiresAt, sim.homeZone))}>{formatDate(p.expiresAt, sim.zone)}</Open></div>
               {p.stopped && <p className="small" style={{ margin: 0 }}>{WHY_WORDS[p.stopped]}: stopped. A new one arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
-              {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new goes on it; the bills already on it still do.</p>}
-              {p.billersStale && <p className="small" style={{ margin: 0 }}>The bills on the old number are being declined until they have this one.</p>}
+              {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new goes on it.</p>}
               {which === 'debit' && ceiling && (
                 <p className="small" style={{ margin: 0 }}>
                   It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}, SLATE’s estimate: the lowest the bank sets. {room !== undefined ? `${money(room)} is left. ` : ''}Past it a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}.
@@ -83,7 +82,6 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                     )}
                   </>
                 )}
-                {p.billersStale && <Gated feature="card.update_billers" className="btn btn-sm" onClick={() => run('card.update_billers', { accountId: account.id })}>Give The Bills The New Number</Gated>}
               </div>
               <Fine>
                 {fee === undefined && own?.replaceWords ? `The bank’s terms: ${own.replaceWords} SLATE charges none. ` : ''}

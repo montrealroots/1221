@@ -35,7 +35,8 @@ import type { Person } from '../domain/model';
 import { MS_DAY, ageOn, formatDate, formatTime, type Instant } from '../core/time';
 import { CONTEMPORARY_PLAYS, type ContemporaryPlay } from '../content/contemporary';
 import { exerts } from './body';
-import { focusOf, grow } from './school';
+import { focusAt, grow } from './school';
+import { READ_CRAFTS, enjoyCrafts } from './enjoyment';
 import { occupiedAt } from './life';
 
 export const PLAYREADING = {
@@ -124,8 +125,9 @@ export function registerPlayReading(sim: Simulation): void {
     const all = studiesOf(person);
     const before = all[id];
     const minutes = Math.round((short(p) ? PLAYREADING.minutes.short : PLAYREADING.minutes.full) * (before ? PLAYREADING.again : 1));
-    const focus = focusOf(person);
+    const focus = focusAt(s, person, s.now);
     s.advanceTo(s.now + minutes * 60_000);
+    enjoyCrafts(person, READ_CRAFTS);
     exerts(person, PLAYREADING.met, minutes / 60);
     const study = before ?? { reads: 0, lastAt: s.now, noticed: [], notes: [] };
     const fresh = !before || s.now - before.lastAt >= PLAYREADING.freshDays * MS_DAY;
@@ -157,8 +159,9 @@ export function registerPlayReading(sim: Simulation): void {
     const p = playById(id)!;
     const study = studiesOf(person)[id]!;
     const minutes = PLAYREADING.minutes.research;
-    const focus = focusOf(person);
+    const focus = focusAt(s, person, s.now);
     s.advanceTo(s.now + minutes * 60_000);
+    enjoyCrafts(person, READ_CRAFTS);
     exerts(person, PLAYREADING.met, minutes / 60);
     if (person.craft) grow(person.craft, 'script', focus, PLAYREADING.weight.research);
     const L = p.licensor;

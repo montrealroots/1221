@@ -88,11 +88,10 @@ export function plasticView(sim: Simulation, account: Account, which: Which): Pl
   return { last4: account.last4 ?? last4For(account.id), expiresAt, issued: 1 };
 }
 
-/** Whether a card can be used: a new purchase needs it unlocked and not stopped; a bill already on it needs it not stopped, and its number given to the biller. */
-export function cardWorks(account: Account | undefined, recurring = false): boolean {
+/** Whether a card can be used for something new: unlocked and not stopped. A bill already on it was asked about too, until 2026-10-09. */
+export function cardWorks(account: Account | undefined): boolean {
   const p = account?.plastic;
   if (!account || p?.stopped) return false;
-  if (recurring) return !p?.billersStale;
   return !p?.locked;
 }
 
@@ -174,17 +173,17 @@ export function registerSecurity(sim: Simulation): void {
     const which = item.payload.which as Which;
     if (!account || account.closedAt || !account.plastic) return;
     const p = account.plastic;
-    const rules = account.bankId ? SECURITY[account.bankId] : undefined;
     p.last4 = nextLast4(p);
     p.issued = (p.issued ?? 1) + 1;
     delete p.stopped;
     delete p.replacementAt;
     delete p.locked;
     p.expiresAt = s.now + yearsFor(account, which) * 365.25 * MS_DAY;
-    // A new number reaches the bills on the card only where the bank passes it on.
-    if (which === 'credit' && rules?.updaterToBills !== true) p.billersStale = true;
+    // A new number reached the bills on the card only where the bank passed it on, and the rest were declined until
+    // they had it (`card.update_billers`), until 2026-10-09: nothing has charged a card as a bill since the home and
+    // its bills went, so the connected world that day let the stale billers and their command go (schema 91 sheds them).
     if (account.ownerId === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Ending ${p.last4}.`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -244,13 +243,6 @@ export function registerSecurity(sim: Simulation): void {
       s.post({ memo: label, category: p.which === 'debit' ? 'bank_fee' : 'fees', postings: [{ accountId: account.id, amount: -fee }, { accountId: s.nominalAccount('expense', p.which === 'debit' ? 'Bank Fees' : 'Card Fees').id, amount: fee }] });
     }
     return { arrivesAt, fee };
-  });
-
-  sim.onCommand<{ accountId?: string }, { updated: boolean }>('card.update_billers', (p, { sim: s }) => {
-    const card = cardFor(s, s.player, p?.accountId);
-    if (!card?.plastic?.billersStale) throw new CommandError('Your bills already have your card’s number.');
-    delete card.plastic.billersStale;
-    return { updated: true };
   });
 
   sim.onCommand<Record<string, never>, { number: string }>('bank.new_number', (_p, { sim: s }) => {

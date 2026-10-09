@@ -210,12 +210,11 @@ export interface Person {
   wornNow?: { itemIds: string[]; since: number };
   /** A course of therapy under way (`systems/therapy.ts`, from 2026-10-03). */
   therapy?: import('../systems/therapy').Course;
-  /** A home machine broken and waiting for its repair (`systems/appliancefaults.ts`, from 2026-10-02). */
-  /** Getting about in a wheelchair, and a disability parking permit (`systems/access.ts`, from 2026-10-02). */
-  mobility?: 'wheelchair';
+  // A wheelchair said on Papers and a disability parking permit were kept here from 2026-10-02 (`systems/access.ts`), read
+  // only by the hotels and the parking meters; those went in the scope reset of 2026-10-09, and in the connected world
+  // that day the two went after them, schema 91 shedding them.
   /** The real plays read and researched, by play (`systems/playreading.ts`, from 2026-10-08). */
   plays?: Record<string, import('../systems/playreading').PlayStudy>;
-  parkingPermit?: { cityId: string; at: number };
   /** When their fingernails and toenails were last trimmed at home (`systems/homegrooming.ts`, from 2026-10-06). */
   nailsAt?: { fingers?: number; toes?: number };
   /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */

@@ -62,7 +62,6 @@ import { registerProduction } from './systems/production';
 import { registerPlayReading } from './systems/playreading';
 import { registerAppointments } from './systems/appointments';
 import { registerTherapy } from './systems/therapy';
-import { registerAccess } from './systems/access';
 import { registerAssistance } from './systems/assistance';
 import { registerEiSelfEmployed } from './systems/eiself';
 import { registerCitizenship } from './systems/citizenship';
@@ -114,7 +113,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerHealth(sim);
   registerAppointments(sim);
   registerTherapy(sim);
-  registerAccess(sim);
   registerInjury(sim);
   registerUnemployment(sim);
   registerUniversalCredit(sim);
@@ -404,7 +402,8 @@ const GONE_AT_91 = {
   payments: ['rent', 'bills', 'checks', 'checkbookBought'],
   health: ['sag', 'equity', 'cobra', 'cobraOffer', 'lastUnion'],
   attrs: ['reputation', 'recognition'],
-  person: ['returnedHomeAt'],
+  person: ['returnedHomeAt', 'mobility', 'parkingPermit'],
+  plastic: ['billersStale'],
   year: ['homeInterest', 'homeTax', 'homePmi', 'rentalRent', 'rentalCosts', 'homeGain', 'homeGainShort', 'homeGainExcluded', 'homeGain1250', 'rentalDisposed', 'lodgerRent', 'lodgerTaxed', 'farmRent', 'farmTaxed'],
 } as const;
 
@@ -823,6 +822,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       drop(person, GONE_AT_91.person);
       for (const year of Object.values(person.earnings?.years ?? {})) drop(year, GONE_AT_91.year);
     }
+    for (const account of Object.values(universe.accounts ?? {})) drop(account.plastic, GONE_AT_91.plastic);
     if (shed > 0) steps.push(`Let go ${plural(shed, 'thing', 'things')} only the home, the career and a move home reached.`);
   }
 

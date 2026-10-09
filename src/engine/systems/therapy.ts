@@ -14,6 +14,13 @@
  * (MX$800). In England NHS Talking Therapies is free, its first session six
  * weeks on, the standard 90.5% of its patients were seen within in March 2025.
  *
+ * From the connected world of 2026-10-09, Yale Mental Health & Counseling in
+ * New Haven too, the school's own: free to a student Yale Health covers, as its
+ * Basic Plan's mental health care is, and to nobody else; SLATE takes its first
+ * appointment a week on, as a private practice's, and its course as a private
+ * one's. Until then New Haven, where every student lives, had no therapist,
+ * and a student's depression could only be kept up by its medicine.
+ *
  * A session missed, away from the town, is held the next week. The course
  * done, the depression lifts at the published rate: NHS Talking Therapies'
  * 48.5% reliable recovery (NHS England, March 2025), or for a private course
@@ -30,11 +37,13 @@ import { MS_DAY, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
 import { owe, payFromBank } from './spending';
-import { healthOf } from './health';
+import { coverOn, healthOf } from './health';
 
-export interface Therapist { cityId: string; name: string; price: number; currency: string; minutes: number; nhs?: boolean }
+/** A practice: where, what a session costs and how long it runs; whether it's the NHS's, or the school's (only for a student Yale Health covers). */
+export interface Therapist { cityId: string; name: string; price: number; currency: string; minutes: number; nhs?: boolean; yale?: boolean }
 export const THERAPISTS: readonly Therapist[] = [
   { cityId: 'us-ny-newyork', name: 'The Center for CBT', price: (260 + 385) / 2, currency: 'USD', minutes: 45 },
+  { cityId: 'us-ct-newhaven', name: 'Yale Mental Health & Counseling', price: 0, currency: 'USD', minutes: 50, yale: true },
   { cityId: 'us-ca-losangeles', name: 'UCLA Psychology Clinic', price: (30 + 150) / 2, currency: 'USD', minutes: 60 },
   { cityId: 'uk-eng-london', name: 'NHS Talking Therapies', price: 0, currency: 'GBP', minutes: 60, nhs: true },
   { cityId: 'uk-eng-london', name: 'Priory', price: 124, currency: 'GBP', minutes: 50 },
@@ -51,9 +60,10 @@ export interface Course { therapist: string; cityId: string; done: number; at: I
 export const therapistsIn = (cityId: string): Therapist[] => THERAPISTS.filter((t) => t.cityId === cityId);
 export const sessionPrice = (sim: Simulation, t: Therapist): Money => inSaveMoney(sim, Math.round(t.price * 100), t.currency);
 
-export function therapyRefusal(person: Person, name: string): string | undefined {
+export function therapyRefusal(person: Person, name: string, at: Instant): string | undefined {
   const t = THERAPISTS.find((x) => x.name === name && x.cityId === person.currentLocationId);
   if (!t) return 'Choose a therapist where you live.';
+  if (t.yale && coverOn(person, at) !== 'yale') return 'Yale Mental Health & Counseling sees students Yale Health covers.';
   if (!healthOf(person).chronic?.depression) return 'A course of therapy here is for depression.';
   if (person.therapy) return 'You’re in a course already.';
   return undefined;
@@ -71,7 +81,7 @@ function scheduleSession(sim: Simulation, person: Person, t: Therapist, at: Inst
 export function registerTherapy(sim: Simulation): void {
   sim.onCommand<{ therapist: string }, { first: Instant }>('health.therapy', (p, { sim: s }) => {
     const person = s.player;
-    const no = therapyRefusal(person, String(p?.therapist));
+    const no = therapyRefusal(person, String(p?.therapist), s.now);
     if (no) throw new CommandError(no);
     const t = THERAPISTS.find((x) => x.name === p.therapist && x.cityId === person.currentLocationId)!;
     const first = s.now + (t.nhs ? THERAPY.nhsWaitDays : 7) * MS_DAY;

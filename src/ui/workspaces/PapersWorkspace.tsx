@@ -23,7 +23,6 @@ import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
-import { PERMITS, permitRefusal, usesWheelchair } from '@/engine/systems/access';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -204,7 +203,6 @@ function HealthPane() {
   return (
     <div className="col gap-5">
       <YourDoctor />
-      <GettingAbout />
       <Panel title="Your Cover">
         <div className="grid grid-3">
           <Stat label="This Month" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
@@ -270,12 +268,12 @@ function TherapyRow() {
   if (person.therapy) return <div className="small">{`Therapy with ${person.therapy.therapist}: ${person.therapy.done} of ${THERAPY.sessions} sessions`}</div>;
   if (here.length === 0) return null;
   const t = here.find((x) => x.name === name) ?? here[0]!;
-  const no = therapyRefusal(person, t.name);
+  const no = therapyRefusal(person, t.name, sim.now);
   return (
     <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
       <div className="field" style={{ margin: 0 }}>
         <label htmlFor="therapist">Therapist</label>
-        <select id="therapist" value={t.name} onChange={(e) => setName(e.target.value)}>{here.map((x) => <option key={x.name} value={x.name}>{x.price > 0 ? `${x.name}, ${formatMoney(sessionPrice(sim, x), saveCurrency(sim.universe), { cents: false })} A Session` : `${x.name}, Free`}</option>)}</select>
+        <select id="therapist" value={t.name} onChange={(e) => setName(e.target.value)}>{here.map((x) => <option key={x.name} value={x.name}>{x.price > 0 ? `${x.name}, ${formatMoney(sessionPrice(sim, x), saveCurrency(sim.universe), { cents: false })} A Session` : `${x.name}, Free${x.yale ? ' With Yale Health' : ''}`}</option>)}</select>
       </div>
       <Gated feature="health.therapy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ first: number }>('health.therapy', { therapist: t.name }); if (r.ok) toast(`The first session, ${formatDate(r.value!.first, sim.zone)}.`, 'positive'); }}>{`Begin A Course Of ${THERAPY.sessions}`}</Gated>
     </div>
@@ -506,29 +504,6 @@ function BenefitsPane() {
 }
 
 /** Their own doctor, from the practices in the town they live in, and where urgent and emergency care is had here. */
-/** A wheelchair, and a disability parking permit where you live (`systems/access.ts`). */
-function GettingAbout() {
-  const { sim, run, toast } = useGame();
-  const person = useWorld((s) => s.player);
-  const wheelchair = usesWheelchair(person);
-  const permit = PERMITS[person.currentLocationId];
-  const no = permitRefusal(person);
-  const cur = saveCurrency(sim.universe);
-  const fee = permit?.fee ? formatMoney(inSaveMoney(sim, Math.round(permit.fee * 100), permit.currency), cur) : permit?.fee === 0 ? 'Free' : 'Fee Not Published';
-  return (
-    <Panel title="Getting About" subtitle={wheelchair ? 'You use a wheelchair' : undefined}>
-      <div className="col gap-2">
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <Gated feature="health.mobility" className="btn btn-sm btn-ghost" onClick={() => { if (run('health.mobility', { wheelchair: !wheelchair }).ok) toast(wheelchair ? 'Noted.' : 'Noted: hotels without wheelchair access won’t be booked.', 'positive'); }}>{wheelchair ? 'I Don’t Use A Wheelchair' : 'I Use A Wheelchair'}</Gated>
-          {wheelchair && permit && person.parkingPermit?.cityId !== person.currentLocationId && <Gated feature="health.parking_permit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('health.parking_permit', {}).ok) toast(`${permit.name}, issued.`, 'positive'); }}>{`Apply For ${permit.name}, ${fee}`}</Gated>}
-          {person.parkingPermit && <span className="small">{permit?.name ?? 'A permit'}{permit?.freeMeters ? ', parking free at meters here' : ', meters still paid here'}</span>}
-        </div>
-        <div className="xs dim">A hotel whose own pages say it can’t take a wheelchair isn’t booked; one that doesn’t say is. With a permit, a meter is free where the town lets holders park free: New York, Los Angeles, Toronto, Dublin and Mexico City, not Westminster, New Haven or Vancouver.</div>
-      </div>
-    </Panel>
-  );
-}
-
 function YourDoctor() {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);

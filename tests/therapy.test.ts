@@ -5,7 +5,9 @@
  * rate.
  */
 import { describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { coverOn } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -20,9 +22,9 @@ describe('a course of therapy', () => {
     const sim = life('us-ny-newyork', 'therapy-ny');
     // Starting without depression: conditions are drawn at the start of every life since 2026-10-09.
     delete healthOf(sim.player).chronic?.depression;
-    expect(therapyRefusal(sim.player, 'The Center for CBT')).toBe('A course of therapy here is for depression.');
+    expect(therapyRefusal(sim.player, 'The Center for CBT', sim.now)).toBe('A course of therapy here is for depression.');
     depressed(sim);
-    expect(therapyRefusal(sim.player, 'Priory')).toBe('Choose a therapist where you live.');
+    expect(therapyRefusal(sim.player, 'Priory', sim.now)).toBe('Choose a therapist where you live.');
     expect(sessionPrice(sim, THERAPISTS.find((t) => t.name === 'The Center for CBT')!)).toBe(inSaveMoney(sim, 322_50, 'USD'));
     const r = sim.must<{ first: number }>({ kind: 'health.therapy', payload: { therapist: 'The Center for CBT' } });
     expect(r.first - sim.now).toBe(7 * MS_DAY);
@@ -51,4 +53,26 @@ describe('a course of therapy', () => {
     expect(sim.player.therapy).toBeUndefined();
     expect(sim.universe.transactions.some((t) => t.memo.startsWith('NHS Talking Therapies'))).toBe(false);
   });
+});
+
+describe('at school', () => {
+  it('is Yale Mental Health & Counseling’s for a student Yale Health covers, free, eight sessions to the end', () => {
+    // From 2026-10-09: New Haven had no therapist, and a student's depression only its medicine.
+    const sim = createSave(1, 'therapy-yale', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    depressed(sim);
+    sim.advanceBy(10 * MS_DAY);
+    expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
+    expect(coverOn(sim.player, sim.now)).toBe('yale');
+    expect(therapyRefusal(sim.player, 'Yale Mental Health & Counseling', sim.now)).toBeUndefined();
+    const before = sim.universe.transactions.length;
+    sim.must({ kind: 'health.therapy', payload: { therapist: 'Yale Mental Health & Counseling' } });
+    // Attended, as a player who keeps the appointments: the sessions run weekly to the eighth.
+    for (let w = 0; w < 10 && sim.player.therapy; w += 1) sim.advanceBy(7 * MS_DAY);
+    expect(sim.player.therapy).toBeUndefined();
+    expect(sim.universe.transactions.slice(before).some((t) => t.memo.includes('Yale Mental Health'))).toBe(false);
+    // Not covered by Yale Health, it's refused, and says why.
+    const outside = life('us-ct-newhaven', 'therapy-not-yale');
+    depressed(outside);
+    expect(therapyRefusal(outside.player, 'Yale Mental Health & Counseling', outside.now)).toBe('Yale Mental Health & Counseling sees students Yale Health covers.');
+  }, 120_000);
 });

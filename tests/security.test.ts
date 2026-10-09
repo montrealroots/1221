@@ -23,13 +23,12 @@ const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAcc
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => sim.execute({ kind, payload });
 
 describe('locking a card', () => {
-  it('stops new purchases on it but not the bills already on it, and a locked debit card buys on the credit card', () => {
+  it('stops new purchases on it, and a locked debit card buys on the credit card', () => {
     const sim = lifeIn('us-ny-newyork', 'us-chase', 'sec-lock');
     const card = cardOf(sim, sim.player)!;
     const room = cardRoom(sim.player, card);
     sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
     expect(cardRoom(sim.player, card)).toBe(0);
-    expect(cardRoom(sim.player, card, true)).toBe(room);
     sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: false } });
     expect(cardRoom(sim.player, card)).toBe(room);
     sim.must({ kind: 'card.lock', payload: { which: 'debit', locked: true } });
@@ -80,21 +79,16 @@ describe('a card reported lost, stolen or damaged', () => {
     expect(es2.must<{ fee: number }>({ kind: 'card.report', payload: { which: 'debit', why: 'lost' } }).fee).toBe(5_00);
   });
 
-  it('declines the bills on a replaced card until they have its number, where the bank doesn’t pass it on', () => {
+  // A replaced card's bills declined until they had its number (`card.update_billers`) were tested here until
+  // 2026-10-09, when nothing charged a card as a bill any more.
+  it('takes a replaced card for anything new once it arrives, and has no billers to tell', () => {
     const gb = lifeIn('uk-eng-london', 'gb-santander', 'sec-billers');
     const card = cardOf(gb, gb.player)!;
     const at = gb.must<{ arrivesAt: number }>({ kind: 'card.report', payload: { which: 'credit', why: 'lost' } }).arrivesAt;
-    expect(cardRoom(gb.player, card, true)).toBe(0);
+    expect(cardRoom(gb.player, card)).toBe(0);
     gb.advanceTo(at + 1000);
-    expect(card.plastic!.billersStale).toBe(true);
-    expect(cardRoom(gb.player, card, true)).toBe(0);
     expect(cardRoom(gb.player, card)).toBeGreaterThan(0);
-    gb.must({ kind: 'card.update_billers', payload: {} });
-    expect(cardRoom(gb.player, card, true)).toBeGreaterThan(0);
-    const us = lifeIn('us-ny-newyork', 'us-chase', 'sec-updater');
-    const chase = cardOf(us, us.player)!;
-    us.advanceTo(us.must<{ arrivesAt: number }>({ kind: 'card.report', payload: { which: 'credit', why: 'lost' } }).arrivesAt + 1000);
-    expect(chase.plastic!.billersStale).toBeUndefined();
+    expect(gb.commandKinds()).not.toContain('card.update_billers');
   });
 });
 

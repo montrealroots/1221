@@ -831,6 +831,12 @@ export interface Template {
   reads: Partial<Record<Skill, number>>;
   /** How many of the course's meetings after it's set it's shown. */
   dueAfter: number;
+  /**
+   * The crafts the work is done in, by the interests' ids: preparing it is a better hour for somebody who loves one
+   * (`enjoyCrafts`), and no better work. From the connected world of 2026-10-09, when the screen's crafts' readers went
+   * with the career: a fight's stage combat, a speech drill's dialects, a self-tape's camera.
+   */
+  crafts?: readonly string[];
   /** Whether it's taken again, revised, at the next meeting after its feedback. */
   revised: boolean;
   /** How hard the work is against the class's year: what a skill at this level shows as ordinary. */
@@ -986,7 +992,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'speech-drill', courses: ['DRAM 123a/b', 'DRAM 223a/b', 'DRAM 323a/b'], title: 'Sound Changes And A Text', deliverable: 'A text transcribed and spoken with the term’s sound changes',
+    id: 'speech-drill', crafts: ['dialect_coaching'], courses: ['DRAM 123a/b', 'DRAM 223a/b', 'DRAM 323a/b'], title: 'Sound Changes And A Text', deliverable: 'A text transcribed and spoken with the term’s sound changes',
     material: 'none', paired: false,
     dims: { interpretation: { label: 'Transcription', weight: 0.35 }, memorization: { label: 'The Text', weight: 0.2 }, rehearsal: { label: 'Drills', weight: 0.45 } },
     activities: [
@@ -1002,7 +1008,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'movement-score', courses: ['DRAM 133a/b', 'DRAM 233a/b', 'DRAM 273a', 'DRAM 373a', 'DRAM 273b'], title: 'A Movement Score', deliverable: 'A short movement score of your own, shown',
+    id: 'movement-score', crafts: ['choreography'], courses: ['DRAM 133a/b', 'DRAM 233a/b', 'DRAM 273a', 'DRAM 373a', 'DRAM 273b'], title: 'A Movement Score', deliverable: 'A short movement score of your own, shown',
     material: 'none', paired: false,
     dims: { interpretation: { label: 'The Score Made', weight: 0.4 }, rehearsal: { label: 'Rehearsed In The Body', weight: 0.6 } },
     activities: [
@@ -1030,7 +1036,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'play-game', courses: ['DRAM 153a', 'DRAM 353a', 'DRAM 363a'], title: 'A Game Played Through', deliverable: 'An improvised game played in class',
+    id: 'play-game', crafts: ['improvisation'], courses: ['DRAM 153a', 'DRAM 353a', 'DRAM 363a'], title: 'A Game Played Through', deliverable: 'An improvised game played in class',
     material: 'none', paired: true,
     dims: { partner: { label: 'Played Together', weight: 0.6 }, rehearsal: { label: 'Built On', weight: 0.4 } },
     activities: [
@@ -1059,7 +1065,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'fight-sequence', courses: ['DRAM 403a/b', 'DRAM 405a/b'], title: 'A Choreographed Sequence', deliverable: 'A short combat sequence shown at speed, safely, with a partner',
+    id: 'fight-sequence', crafts: ['stage_combat'], courses: ['DRAM 403a/b', 'DRAM 405a/b'], title: 'A Choreographed Sequence', deliverable: 'A short combat sequence shown at speed, safely, with a partner',
     material: 'none', paired: true,
     dims: { familiarity: { label: 'The Choreography Learned', weight: 0.3 }, partner: { label: 'Drilled With Your Partner', weight: 0.5 }, rehearsal: { label: 'Alone', weight: 0.2 } },
     activities: [
@@ -1075,7 +1081,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'intimacy-practice', courses: ['DRAM 403a/b'], title: 'Consent And Intimacy Practice', deliverable: 'A short choreographed moment of intimacy shown, with its boundaries agreed and kept',
+    id: 'intimacy-practice', crafts: ['intimacy_coordination'], courses: ['DRAM 403a/b'], title: 'Consent And Intimacy Practice', deliverable: 'A short choreographed moment of intimacy shown, with its boundaries agreed and kept',
     material: 'none', paired: true, only: { 'DRAM 403a/b': 'fall' },
     dims: { familiarity: { label: 'The Practice Learned', weight: 0.3 }, partner: { label: 'Practiced Together', weight: 0.5 }, rehearsal: { label: 'The Score Recalled', weight: 0.2 } },
     activities: [
@@ -1107,7 +1113,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'song', courses: ['DRAM 413a/b', 'DRAM 423a/b'], title: 'A Song Worked Through', deliverable: 'A song sung for the class, acted',
+    id: 'song', crafts: ['music'], courses: ['DRAM 413a/b', 'DRAM 423a/b'], title: 'A Song Worked Through', deliverable: 'A song sung for the class, acted',
     material: 'none', paired: false,
     dims: { memorization: { label: 'Music And Words Learned', weight: 0.35 }, interpretation: { label: 'What It’s About', weight: 0.25 }, rehearsal: { label: 'Practice', weight: 0.4 } },
     activities: [
@@ -1123,7 +1129,7 @@ export const TEMPLATES: readonly Template[] = [
     },
   },
   {
-    id: 'self-tape', courses: ['DRAM 463a/b', 'DRAM 473b'], title: 'A Self-Tape', deliverable: 'A scene recorded on your phone and reviewed in class',
+    id: 'self-tape', crafts: ['cinematography'], courses: ['DRAM 463a/b', 'DRAM 473b'], title: 'A Self-Tape', deliverable: 'A scene recorded on your phone and reviewed in class',
     material: 'scene', paired: false,
     dims: { memorization: { label: 'Lines', weight: 0.3 }, interpretation: { label: 'Choices', weight: 0.2 }, rehearsal: { label: 'Takes Recorded', weight: 0.5 } },
     activities: [read, learn, { id: 'record', label: 'Record A Take', minutes: 45, dim: 'rehearsal', gain: 0.35, requires: { dim: 'memorization', at: 0.4, why: 'Learn the lines before taping: a camera sees eyes on the page.' }, trains: 'screen' }],

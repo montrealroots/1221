@@ -532,12 +532,13 @@ export function scoreWord(score: number): string {
  * yet arrived; its free limit otherwise, and a tenth more for somebody in the
  * US who opted in to going over it (C38, C60).
  */
-export function cardRoom(person: Person, card: Account | undefined, recurring = false): Money {
+export function cardRoom(person: Person, card: Account | undefined): Money {
   const credit = person.credit && card ? stateOf(person, card) : undefined;
   if (!card || card.closedAt || credit?.suspended || credit?.closing !== undefined) return 0;
-  // Locked, lost or stolen: nothing new on it; a bill already on it, unless the card's stopped or the biller hasn't its new number (`systems/security.ts`).
+  // Locked, lost or stolen: nothing new on it (`systems/security.ts`). A bill already on it went on while it was locked
+  // until 2026-10-09, when nothing charged a card as a bill any more.
   const p = card.plastic;
-  if (p?.stopped || (recurring ? p?.billersStale : p?.locked)) return 0;
+  if (p?.stopped || p?.locked) return 0;
   // Only a US holder can opt in (`card.set_over_limit`).
   const over = credit?.overLimitOptIn ? Math.round((card.creditLimit ?? 0) * OVER_LIMIT_SHARE) : 0;
   const held = (credit?.paymentHolds ?? []).reduce((sum, one) => sum + one.amount, 0);

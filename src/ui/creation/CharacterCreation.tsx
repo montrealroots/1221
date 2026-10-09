@@ -34,6 +34,7 @@ import {
 import {
   ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
 } from '@/engine/content/interests';
+import { interestsRead } from '@/engine/systems/enjoyment';
 import { PERFORMER_NOUN, PERFORMER_TITLES, settledTitle, type PerformerTitle } from '@/engine/core/performer';
 import type { Personality } from '@/engine/domain/model';
 import {
@@ -295,7 +296,7 @@ function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (
           </>
         )}
       </div>
-      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank to be drawn from where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} From here your weight follows what you eat against what you do.</p>
+      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank to be drawn from where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} From here your weight follows what you eat against what you do, and a heavier body meets diabetes, high blood pressure and arthritis more often as the years go, at the published rates; a weight far from the middle, either way, shortens the odds on a long life the same way.</p>
     </>
   );
 }
@@ -616,9 +617,9 @@ function PersonalityStep({ config, setConfig }: {
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
               the nights go, Ambition adds to how quickly every stress arrives, work’s and money’s alike,
               and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
-              Extraversion sets how an audition in the room sits with you, Openness how a job away
-              from home does, and Agreeableness how a rehearsal does. None of them makes you better
-              or worse at anything.
+              Extraversion sets how a house watching you sits with you, Openness how rehearsing new
+              work does, a festival’s new play or a Cabaret piece, and Agreeableness how a rehearsal
+              does. None of them makes you better or worse at anything.
             </p>
           </div>
         </div>
@@ -650,12 +651,13 @@ function PersonalityStep({ config, setConfig }: {
             <p className="muted small">
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
-              you sleep, how much a night puts back (and a night away from home), how quickly you
-              stop being clean, how far your mood swings, what illness takes out of you and how an
-              early call or a late performance sits. Each description and cost is written for a whole
-              life, and the game charges only the part of it that touches those. Frugal, Spender and
-              Generous change what your food costs, and Keeps Accounts how much of what your work
-              costs you can deduct.
+              you sleep, how much a night puts back, how quickly you stop being clean, how far your
+              mood swings, what illness takes out of you, how sharp you are in the morning or the
+              evening, which part of preparing a scene goes furthest, and how you warm to classmates.
+              Each description and cost is written for a whole life, and the game charges only the
+              part of it that touches those. Frugal, Spender and Generous change what your food costs
+              and how much a meal lifts you, and Keeps Accounts how much of what your work costs you
+              can deduct. Once you’re playing, each opens from your own page into what it moves.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -734,10 +736,13 @@ function PersonalStep({
   };
 
   // One chip, whichever list it came from.
-  const Chips = ({ options, chosen, onToggle }: {
+  // Which of them something reads (`interestsRead`, from 2026-10-09): the rest are said back, and the chip says so.
+  const read = interestsRead();
+  const Chips = ({ options, chosen, onToggle, moves }: {
     options: readonly Interest[];
     chosen: readonly string[];
     onToggle: (id: string) => void;
+    moves: ReadonlySet<string>;
   }) => (
     <div className="chip-row" style={{ gap: 'var(--s2)' }}>
       {options.map((option) => {
@@ -750,9 +755,10 @@ function PersonalStep({
               ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
               : undefined}
             aria-pressed={on}
+            title={moves.has(option.id) ? undefined : 'Said back on your page; nothing in a student’s life reads it now'}
             onClick={() => onToggle(option.id)}
           >
-            {option.label}
+            {option.label}{moves.has(option.id) ? '' : <span className="dim" aria-label=", said back only"> ·</span>}
           </button>
         );
       })}
@@ -786,11 +792,13 @@ function PersonalStep({
               What you care about when nobody is paying you to. Take as many as are true.
             </p>
             <p className="muted small">
-              Some change how much you get out of looking after yourself: Cooking for a meal,
-              Fitness and Sport for a workout, and what you’d spend an evening on for an hour
-              unwinding. Film, Television, Theater, Voice Acting and Travel do the same for a day of
-              work in them, or away. They lift your mood more and ease more stress. None makes you
-              better at anything.
+              Some change how much you get out of an hour: Cooking a meal, Fitness and Sport a
+              workout, and what you’d spend an evening on an hour unwinding; Theater and the stage’s
+              crafts a rehearsal; Reading a play read; and a craft a piece of coursework is done in,
+              Stage Combat a fight, Choreography a movement score. They lift your mood more and ease
+              more stress. None makes you better at anything. One marked · is said back on your
+              page and moves nothing: the screen’s crafts, the road and the booth went with the
+              career.
             </p>
           </div>
           <span className="chip chip-accent">{config.interests.length} Chosen</span>
@@ -800,13 +808,13 @@ function PersonalStep({
           <span className="eyebrow">Film And Television</span>
           <AllOrNothing field="interests" options={CRAFT_INTERESTS} chosen={config.interests} />
         </div>
-        <Chips options={CRAFT_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
+        <Chips options={CRAFT_INTERESTS} chosen={config.interests} onToggle={toggleInterest} moves={read.interests} />
 
         <div className="row-between" style={{ margin: 'var(--s4) 0 var(--s2)' }}>
           <span className="eyebrow">Everything Else</span>
           <AllOrNothing field="interests" options={GENERAL_INTERESTS} chosen={config.interests} />
         </div>
-        <Chips options={GENERAL_INTERESTS} chosen={config.interests} onToggle={toggleInterest} />
+        <Chips options={GENERAL_INTERESTS} chosen={config.interests} onToggle={toggleInterest} moves={read.interests} />
       </div>
 
       <div className="card">
@@ -814,8 +822,10 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love. Take as many as are true — there’s no limit here. A day on a job in
-              one of them lifts your mood and eases your stress; it doesn’t make you any better in it.
+              The films you love. Take as many as are true — there’s no limit here. A rehearsal or a
+              show of a play of that kind, a comedy or a tragedy, lifts your mood and eases your
+              stress; it doesn’t make you any better in it. One marked · has no play of its kind
+              here, and is said back only.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
@@ -823,7 +833,7 @@ function PersonalStep({
             <AllOrNothing field="genres" options={FILM_GENRES} chosen={config.genres} />
           </div>
         </div>
-        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} />
+        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} moves={read.genres} />
       </div>
 
       {/*

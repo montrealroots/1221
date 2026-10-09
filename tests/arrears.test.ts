@@ -17,7 +17,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { BONUSES,bonusRewards } from '@/engine/systems/cardoffers';
 import type { CreditState } from '@/engine/systems/credit';
 import { recordJobCost,recordWages } from '@/engine/systems/earnings';
-import { DISPOSED,LOVED_WORK,enjoyWork,lovedInWork,takeTheRoom } from '@/engine/systems/enjoyment';
+import { DISPOSED,LOVED_WORK,enjoyWork,lovedInWork,takeTheHouse } from '@/engine/systems/enjoyment';
 import { careFor } from '@/engine/systems/health';
 import { CHEX,FRENCH_CARDS,cardCeilingRoom,chargeForItem,closeForOverdraft,declines,lowestFirst,monthOrder,overdraftRoom,termsOf } from '@/engine/systems/lending';
 import { freshWellbeing } from '@/engine/systems/life';
@@ -65,13 +65,18 @@ describe('a day of work, enjoyed', () => {
     const shy = body({ personality: { ...body().personality, extraversion: 5 } });
     const bold = body({ personality: { ...body().personality, extraversion: 95 } });
     const even = body();
-    for (const one of [shy, bold, even]) takeTheRoom(one);
+    // A house watching, from 2026-10-09; an audition's room until then.
+    for (const one of [shy, bold, even]) takeTheHouse(one);
     expect(shy.wellbeing.stress).toBeCloseTo(50 + DISPOSED.room * 0.9, 10);
     expect(bold.wellbeing.stress).toBeCloseTo(50 - DISPOSED.room * 0.9, 10);
     expect(even.wellbeing.stress).toBe(50);
     const open = body({ personality: { ...body().personality, openness: 95, agreeableness: 5 } });
     enjoyWork(open, { medium: 'stage', away: true });
     expect(open.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);
+    // New work, from 2026-10-09, as the road.
+    const fresh = body({ personality: { ...body().personality, openness: 95, agreeableness: 50 } });
+    enjoyWork(fresh, { medium: 'stage', away: false, novel: true });
+    expect(fresh.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);
     const home = body({ personality: { ...body().personality, openness: 95, agreeableness: 5 } });
     enjoyWork(home, { medium: 'stage', away: false, rehearsal: true });
     expect(home.wellbeing.morale).toBeCloseTo(50 - DISPOSED.rehearsal * 0.9, 10);

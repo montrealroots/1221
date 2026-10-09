@@ -1198,7 +1198,7 @@ describe('migrations and validation', () => {
     Object.assign(player.payments as object, { rent: 'check', bills: 'card', checks: [], checkbookBought: true, rentCredit: 500_00 });
     Object.assign(player.health as object, { sag: { from: 0, until: 1 }, cobraOffer: { plan: 'sag', lostAt: 0, until: 1 }, lastUnion: 'sag' });
     Object.assign(player.attrs as object, { reputation: 12, recognition: 3 });
-    (player as unknown as Record<string, unknown>).returnedHomeAt = 0;
+    Object.assign(player as object, { returnedHomeAt: 0, mobility: 'wheelchair', parkingPermit: { cityId: 'us-ny-newyork', at: 0 } });
     const year = Object.values(player.earnings?.years ?? {})[0] ?? ((player.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {}, ukYears: {} }).years[2026] = { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never);
     Object.assign(year as object, { homeInterest: 100_00, rentalRent: 50_00, farmRent: 1_00 });
     const presence = player.attrs!.presence;
@@ -1211,7 +1211,7 @@ describe('migrations and validation', () => {
     expect((player.payments as unknown as { rentCredit?: number }).rentCredit).toBe(500_00);
     for (const k of ['sag', 'cobraOffer', 'lastUnion']) expect(k in player.health!).toBe(false);
     expect(player.attrs).toEqual({ presence, composure: player.attrs!.composure });
-    expect('returnedHomeAt' in player).toBe(false);
+    for (const k of ['returnedHomeAt', 'mobility', 'parkingPermit']) expect(k in player).toBe(false);
     for (const k of ['homeInterest', 'rentalRent', 'farmRent']) expect(k in (year as object)).toBe(false);
     expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
     // Opened, the rent paid ahead comes back, and the ledger balances.

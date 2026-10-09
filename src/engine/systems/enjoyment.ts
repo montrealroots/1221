@@ -20,12 +20,24 @@
  * kind of reader: extraversion how the room is taken, openness the road, and
  * agreeableness the company of a rehearsal. None of them makes anybody better
  * at anything either.
+ *
+ * The career went in the scope reset of 2026-10-09, and with it the screen
+ * days, the road and the audition room, so in the connected world that day
+ * each found the school's own counterpart, under the same rule: extraversion
+ * how a house or a class watching is taken (`takeTheHouse`, at every
+ * performance's nerves), openness how new work is (a festival's new play, a
+ * Cabaret piece), the genres a play of that kind (`genresOfPlay`), and the
+ * crafts a piece of coursework that works in one (`Template.crafts`) or a
+ * play read. What has no counterpart in a student's life is said back at
+ * creation as reading nothing (`interestsRead`).
  */
 
 import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
+import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
+import { TEMPLATES } from '../content/coursework';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
 const LOVED_IN: Record<LookAfter, readonly string[]> = {
@@ -35,8 +47,27 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   exercise: ['fitness', 'sport'],
   // An hour to yourself goes on what you'd spend an evening on.
   // Film History and Film Preservation are an evening with the old films.
-  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
+  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing', 'reading', 'politics'],
 };
+// Reading and Politics joined the evening's on 2026-10-09: until then nothing read either.
+
+/** The crafts a play read puts somebody among (`plays.read`, `plays.research`), from 2026-10-09. */
+export const READ_CRAFTS = ['reading'] as const;
+
+/**
+ * Every interest and genre something in a student's life reads now, from the same lists the readers use: what
+ * creation says moves something, the rest said back as reading nothing (from the connected world of 2026-10-09).
+ * The screen's crafts, the road, the voice booth and the audition room went with the career.
+ */
+export function interestsRead(): { interests: Set<string>; genres: Set<string> } {
+  const genres = new Set([...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].flatMap((p) => p.kinds ?? []));
+  const interests = new Set<string>([
+    ...Object.values(LOVED_IN).flat(), 'theatre', ...CRAFTS_AT.stage, ...CRAFTS_AT.rehearsal, ...READ_CRAFTS,
+    ...TEMPLATES.flatMap((t) => t.crafts ?? []),
+    ...GENRE_CRAFTS.filter(([g]) => g.some((x) => genres.has(x))).flatMap(([, c]) => c),
+  ]);
+  return { interests, genres };
+}
 
 /** How much more of the mood, and of the stress relief, an hour gives somebody who loves it. */
 export const LOVED_MOOD = 1.5;
@@ -53,6 +84,10 @@ export interface WorkDay {
   medium: 'screen' | 'stage' | 'voice';
   after?: 'tv' | 'film' | 'commercial';
   genre?: string;
+  /** New work, from 2026-10-09: a festival's new play or a Cabaret piece, taken by openness as the road was. */
+  novel?: boolean;
+  /** A play's kinds of story, from 2026-10-09 (`genresOfPlay`). */
+  genres?: readonly string[];
   away: boolean;
   /** The role's id, where the kind of voice work decides a craft: an animated series, a video game. */
   role?: string;
@@ -112,7 +147,8 @@ export function craftsOf(day: WorkDay): string[] {
     if (day.role === 'animation') out.push(...CRAFTS_AT.animation);
     if (day.role === 'game') out.push(...CRAFTS_AT.game);
   }
-  for (const [genres, crafts] of GENRE_CRAFTS) if (day.genre && genres.includes(day.genre)) out.push(...crafts);
+  // A play's kinds bring theirs too (from 2026-10-09): a history's dialect coach, a fairy tale's puppets.
+  for (const [genres, crafts] of GENRE_CRAFTS) if ((day.genre && genres.includes(day.genre)) || (day.genres ?? []).some((g) => genres.includes(g))) out.push(...crafts);
   return [...new Set(out)];
 }
 
@@ -136,6 +172,9 @@ export function lovedInWork(person: Pick<Person, 'interests' | 'genres'>, day: W
   if (medium && theirs.includes(medium)) out.push(medium);
   if (day.away && theirs.includes('travel')) out.push('travel');
   if (day.genre && (person.genres ?? []).includes(day.genre)) out.push(day.genre);
+  // A play's kinds of story (from 2026-10-09, `genresOfPlay`): the first they love.
+  const kind = (day.genres ?? []).find((g) => g !== day.genre && (person.genres ?? []).includes(g));
+  if (kind) out.push(kind);
   const craft = lovedCraft(person, craftsOf(day));
   if (craft) out.push(craft);
   return out;
@@ -152,6 +191,7 @@ export const LOVED_WORK = { mood: 1.5, relief: 1.5 } as const;
  * agreeableness. Fifty is neither.
  */
 export const DISPOSED = { room: 4, away: 2, rehearsal: 2 } as const;
+// From 2026-10-09 `room` is a house or a class watching a performance, and `away` new work as well as the road.
 
 const lean = (axis: number | undefined) => ((axis ?? 50) - 50) / 50;
 
@@ -160,7 +200,7 @@ export function enjoyWork(person: Person, day: WorkDay): void {
   const w = person.wellbeing;
   const loved = lovedInWork(person, day).length;
   let mood = loved * LOVED_WORK.mood;
-  if (day.away) mood += DISPOSED.away * lean(person.personality?.openness);
+  if (day.away || day.novel) mood += DISPOSED.away * lean(person.personality?.openness);
   if (day.rehearsal) mood += DISPOSED.rehearsal * lean(person.personality?.agreeableness);
   w.morale = clamp(w.morale + mood, 0, 100);
   w.stress = clamp(w.stress - loved * LOVED_WORK.relief, 0, 100);
@@ -196,11 +236,14 @@ export function feel(person: Person, turn: keyof typeof TURNS): void {
   w.stress = clamp(w.stress + (stress > 0 ? stress * personalityOf(person, 'stressGain') : stress), 0, 100);
 }
 
-/** An audition in the room, taken as the disposition takes it, and a casting office enjoyed by somebody who loves Casting. A self-tape, made alone, takes nothing. */
-export function takeTheRoom(person: Person): void {
+/**
+ * A house, or a class, watching: taken as the disposition takes it, up to 4 of stress either way by extraversion
+ * (`DISPOSED.room`). Read at every performance's nerves (`nerves` in `systems/attributes.ts`), from 2026-10-09;
+ * until then it was an audition in the room (`takeTheRoom`), and with a casting office for somebody who loved Casting.
+ */
+export function takeTheHouse(person: Person): void {
   const w = person.wellbeing;
   w.stress = clamp(w.stress - DISPOSED.room * lean(person.personality?.extraversion), 0, 100);
-  enjoyCrafts(person, CRAFTS_AT.room);
 }
 
 /** Some trades met outside a day's work (the casting room, an improv class, the finished work seen): one loved among them lifts as a day's does. */

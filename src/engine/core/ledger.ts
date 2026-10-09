@@ -35,7 +35,6 @@ export interface Plastic {
   locked?: boolean;
   stopped?: 'lost' | 'stolen' | 'damaged' | 'fraud';
   replacementAt?: Instant;
-  billersStale?: boolean;
 }
 
 export interface Account {

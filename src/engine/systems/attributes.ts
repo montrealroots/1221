@@ -30,6 +30,7 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
+import { takeTheHouse } from './enjoyment';
 
 export interface Attributes {
   /** 0 to 100. Drawn once; the house's read. */
@@ -103,6 +104,8 @@ export function nerves(sim: Simulation, person: Person, event: Event): number {
   const a = attributesOf(sim, person);
   const unsettled = 1 - a.composure / 100;
   person.wellbeing.stress = clamp(person.wellbeing.stress + ATTRIBUTES.eventWeight[event] * unsettled * personalityOf(person, 'stressGain'), 0, 100);
+  // A house watching, taken as the disposition takes it (from 2026-10-09).
+  takeTheHouse(person);
   const kept = 1 - ATTRIBUTES.nerves.focusCost * unsettled;
   nudge(sim, person, 'composure', ATTRIBUTES.composureGain[event], true);
   nudge(sim, person, 'presence', ATTRIBUTES.presenceGain, true);

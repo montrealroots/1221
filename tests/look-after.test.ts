@@ -30,6 +30,19 @@ describe('the order', () => {
     expect(order(at('lay-stressed', { stress: 90 }))[0]).toBe('unwind');
   });
 
+  it('puts what costs every hour ahead of what gives more readiness back', () => {
+    // Unwashed past the line, which wears on the mood every hour, beside stress short of its line, which costs more
+    // readiness: the shower first, though unwinding gives more back.
+    const sim = at('lay-urgent-first', { hygiene: 48, stress: 74, morale: 30 });
+    const options = lookAfterOptions(sim);
+    const wash = options.find((o) => o.action === 'wash')!;
+    const unwind = options.find((o) => o.action === 'unwind')!;
+    expect(wash.urgent).toBe(true);
+    expect(unwind.urgent).toBe(false);
+    expect(unwind.gain).toBeGreaterThan(wash.gain);
+    expect(options[0]!.action).toBe('wash');
+  });
+
   it('moves with the dials: the same life, fed and then hungry, reorders', () => {
     const sim = at('lay-move', { nourishment: 85, stress: 60 });
     const fed = order(sim);

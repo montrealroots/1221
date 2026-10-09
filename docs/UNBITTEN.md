@@ -61,50 +61,62 @@ school and the papers of 2026-10-09, and took out the home, the rented room,
 the travel, the cars, the land and the career. Every entry below this section
 was written for the line that ran to that day: those about the systems that
 went are settled by deletion, and those about the banking, the school, the
-papers and the body stand. What the reset itself leaves declared and biting
-nothing, each with which kind it is:
+papers and the body stand.
 
-- **Checks, and a direct debit taken back.** Unreachable. A check was written
-  for the rent, and a SEPA debit taken back was a bills debit; with neither,
-  `bank.stop_check` and `bank.reclaim_debit` have nothing to act on, and
-  the screen's sections for them never appear. The fees and the countries'
-  norms behind them (`content/payments.ts`) are read only there. Build a
-  payment that goes by check or by debit, or delete them.
-- **How the rent and the bills are paid.** Dead. `PaymentSettings.rent` and
-  `.bills` are still kept and still set by `bank.set_payments`, and nothing
-  reads them; their controls left the screen on 2026-10-09.
-- **A card's bonus on the bills.** Unreachable. The cards that pay more on
-  recurring bills (`BONUSES` in `systems/cardoffers.ts`, with
-  `TELECOM_OF_BILLS`) read a month's spending on bills, and no bill is paid.
-- **The union health plans, and COBRA after one.** Unreachable. SAG-AFTRA's
-  and Equity-League's plans are reached by a year's acting earnings under
-  them, which only the career paid.
-- **A week worked while claiming.** Dead in part. Unemployment's partial week,
-  Ireland's days worked, Universal Credit's earnings taper and SNAP's work
-  hours all read a career's days, which are now none (`systems/unemployment.ts`,
-  `homebenefits.ts`, `universalcredit.ts`, `assistance.ts`); each reads
-  nought, and says so where it does.
-- **The talent routes to residence.** Dead. Britain's Global Talent visa and the
-  green card by extraordinary ability read the O-1's record, which was the
-  career's credits; `routeRefusal` refuses both now, and their fees,
-  enrolment and decisions in `systems/residence.ts` can't be reached. Mexico's
-  shorter wait for artistic work (`citizenship.ts`) is the same.
-- **Ireland's Living Alone Increase.** Dead. It was paid on a home of one's
-  own, and what says who somebody lives with went with the home.
-- **A return home from abroad.** Unreachable. `returnedHomeAt`, which
-  Ireland's and Mexico City's claims read, was written by the career's move
-  home.
-- **A phone that records, and clothes to move in.** Dead. Coursework's needs
-  `phone` and `moveClothes` are taken as had, the phones and the wardrobe gone.
-- **Presence, reputation and recognition.** Dead. The school still draws
-  presence and adds reputation for calls kept, a performance and the degree
-  (`systems/school.ts`), and only the career read the three: an audition, the
-  showcase, an agency's sends, a quote over scale. The School screen shows
-  composure alone, which a performance's nerves read.
-- **Homebody's cost.** Dead. "Nowhere else puts it back the way home does" was
-  a night away putting back less (`awayRecovery`); the trait's text stays and
-  bites nothing, as early riser's "No use at all after nine at night" does
-  without the career's late calls.
+The reset left eleven things declared and biting nothing, listed here that
+day. The connected world, later the same day, settled each, by connecting it
+to what's kept or by retiring it with the reason, and never quietly:
+
+- **Checks, and a direct debit taken back.** Retired: `bank.stop_check`,
+  `bank.reclaim_debit` and the countries' norms (content/payments.ts) went.
+- **How the rent and the bills are paid.** Retired: `PaymentSettings` keeps
+  the everyday card and the savings link; schema 91 sheds the rest.
+- **A card's bonus on the bills.** Retired: `BONUSES` pays on groceries only,
+  and the Korean cards, whose only bonus was the phone bill, have none.
+- **The union health plans, and COBRA after one.** Retired, the plans' tables
+  with them; the tests that used them use a marketplace plan, the Essential
+  Plan and Medicaid.
+- **A week worked while claiming.** Still dead in part, and kept as it is:
+  each claim reads nought for the days worked, and says so where it does. A
+  student's work-study pay is what a claim could read, and no claim a student
+  can reach is in the game (`docs/capabilities.json`, the benefits row).
+- **The talent routes to residence.** Retired: the Global Talent visa's and
+  the green card's applications and fees went, and Mexico's shorter wait for
+  artistic work. A save holding either keeps it and what it opens.
+- **Ireland's Living Alone Increase.** Retired.
+- **A return home from abroad.** Retired, and filing for the Seguro de
+  Desempleo with it, the only reader; a claim a save holds is paid out.
+- **A phone that records, and clothes to move in.** Connected: both needs went
+  and a step on its feet keeps the energy it asked, as the need `feet`.
+- **Presence, reputation and recognition.** Presence connected: a night's
+  reading weighs it (`nightOf`). Reputation and recognition retired.
+- **Homebody's cost.** Connected: homebody and restless lean on what company in
+  a cast is worth (`company`).
+
+What the same day found and settled besides:
+
+- **Extraversion and Openness read nothing.** Their readers were the audition
+  room and the road. Connected: extraversion reads a house watching at every
+  performance's nerves (`takeTheHouse`); openness, new work (a festival's new
+  play, a Cabaret piece).
+- **Thirty-seven interests and most genres read nothing.** Connected where a
+  student's life has the thing: the plays are filed by kind (`genresOfPlay`),
+  coursework by the craft it's done in (`Template.crafts`), a play read by
+  Reading, and Reading and Politics joined an evening unwinding. The rest are
+  marked · at creation as said back only (`interestsRead`).
+- **Getting About.** Retired: the wheelchair and the parking permit were read
+  only by the hotels and the meters.
+- **A replaced card's billers.** Retired: nothing charges a card as a bill.
+- **New Haven had no therapist.** Connected: Yale Mental Health & Counseling,
+  free to a student Yale Health covers.
+- **The tax return's home lines.** Retired with content/homes.ts.
+
+Still open from it, each in the coverage matrix's limits
+(`docs/capabilities.json`): the foreign banks' rights, the pensions and most
+benefits are out of a student's reach; a visa issued is read by nothing that
+crosses a border; OPT always ends, and the US status with it, which waits on
+the owner's call on a life's income after school; REAL ID and a police report
+are read only by their own looks.
 
 ---
 

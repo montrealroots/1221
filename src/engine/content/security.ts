@@ -28,8 +28,8 @@ export interface BankSecurity {
   cardYearsCredit?: number;
   /** Whether the holder can lock the card and unlock it themselves. */
   lockInApp?: boolean;
-  /** Whether a replaced card's new number reaches the bills on it by itself. */
-  updaterToBills?: boolean;
+  // Whether a replaced card's new number reached the bills on it by itself (`updaterToBills`, still in the research
+  // below) was read until 2026-10-09, when nothing charged a card as a bill any more.
   /** Whether the bank moves a compromised account to a new number itself. */
   newNumberOnFraud?: boolean;
   lostCardWords?: string;

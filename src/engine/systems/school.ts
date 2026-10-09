@@ -67,7 +67,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
-import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
+import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
@@ -1838,7 +1838,7 @@ export function registerSchool(sim: Simulation): void {
           (casting as Casting & { process?: { dress?: string } }).process!.dress = dress;
         }
         tire(person, ESTIMATE.energy.rehearsal);
-        enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+        enjoyWork(person, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(casting.play), novel: casting.kind === 'hughes' || casting.kind === 'carlotta' });
       }
       return;
     }
@@ -1906,13 +1906,14 @@ export function registerSchool(sim: Simulation): void {
     // A show joined before 2026-09-28 has no part yet: the company's, now.
     if (!cab.role) Object.assign(cab, { production: cabaretSeason(cab.term), ...companyPart(person, NEW_PLAYS_READ) });
     const run = cab as typeof cab & Run;
+    // A Cabaret piece is new work, taken by openness (from 2026-10-09, `WorkDay.novel`).
     if (item.payload.call === 'performance') {
       cab.performed += 1;
       // The week's process behind it (`nightFactor`, 1 for a show joined before 2026-10-08 or one every evening was kept).
       const kept = nerves(sim, person, 'performance') * nightFactor(cab);
       playNight(person.craft, castingReads(run), focusAt(sim, person, item.at) * kept);
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { medium: 'stage', away: false });
+      enjoyWork(person, { medium: 'stage', away: false, novel: true });
       reckonNight(sim, person, run, item, kept, false);
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
@@ -1920,7 +1921,7 @@ export function registerSchool(sim: Simulation): void {
       rehearse(person.craft, focusAt(sim, person, item.at) * weight);
       if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, readOf(person.craft, castingReads(run)), focusAt(sim, person, item.at) * nightFactor(cab), run.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
-      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+      enjoyWork(person, { medium: 'stage', away: false, novel: true, rehearsal: true });
     }
     // The closing night played: on the résumé (a show never played never reaches here).
     if (item.payload.last === true) {
@@ -1994,7 +1995,7 @@ export function registerSchool(sim: Simulation): void {
       const kept = nerves(s, person, 'performance') * nightFactor(show);
       playNight(person.craft, castingReads(show), focusAt(s, person, item.at) * kept);
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { medium: 'stage', away: false });
+      enjoyWork(person, { medium: 'stage', away: false, genres: genresOfPlay(show.play) });
       reckonNight(s, person, show, item, kept, false);
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
@@ -2002,7 +2003,7 @@ export function registerSchool(sim: Simulation): void {
       rehearse(person.craft, focusAt(s, person, item.at) * weight);
       if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, readOf(person.craft, castingReads(show)), focusAt(s, person, item.at) * nightFactor(show), show.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
-      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(show.play) });
     }
   });
 
