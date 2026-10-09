@@ -30,7 +30,7 @@ import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attribut
 import { conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
 import { SELF_TAPE, bestRest, minutesOf, pursueRefusal, restOf, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
-import { EVERYDAY_FITNESS, FITNESS, readiness } from '@/engine/systems/life';
+import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { coverOn } from '@/engine/systems/health';
@@ -156,7 +156,20 @@ function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] })
   const { sim, run } = useGame();
   const person = useWorld((s) => s.player);
   const e = exerciseFor(id);
-  if (!e) return <span className="xs dim">{id === 'stamina' ? 'Work Out, under Look After Yourself' : 'Practice kept up, day after day'}</span>;
+  if (id === 'stamina') {
+    // A workout's own refusal now, and whether fitness is holding (`FITNESS.heldDays`) or falling.
+    const no = lookAfterRefusal(sim, 'exercise');
+    const held = fitnessHeldUntil(person);
+    const falling = person.wellbeing.fitness > EVERYDAY_FITNESS;
+    return (
+      <span className="col xs dim">
+        <span>Work Out, under Look After Yourself</span>
+        {no && <span>{no}</span>}
+        <span>{held !== undefined && held > sim.now ? `Held until ${formatDate(held, sim.zone)}` : falling ? `Falling ${FITNESS.perDay} a day` : 'At what an everyday life keeps'}</span>
+      </span>
+    );
+  }
+  if (!e) return <span className="xs dim">Practice kept up, day after day</span>;
   const no = practiceRefusal(sim, person, e);
   return (
     <span className="col">

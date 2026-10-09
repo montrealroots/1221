@@ -63,6 +63,7 @@ function run() {
   const refused: Record<string, number> = {};
   const weekly: number[] = [];
   let reachedOn: number | undefined;
+  let struck: { day: number; fitness: number } | undefined;
   let dayDone = '';
   let doneToday = 0;
   const ready: number[] = [];
@@ -87,8 +88,13 @@ function run() {
     const key = `${p.year}-${p.month}-${p.day}`;
     if (key !== dayDone) { dayDone = key; doneToday = 0; }
     const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
-    if (SCENARIO === 'injured' && day === 60 && p.hour === 6) hurt(sim, 'sprain');
-    if (SCENARIO === 'ill' && day === 60 && p.hour === 6) careFor(sim, sim.player, { care: 'visit', what: 'The flu', flu: true }, sim.now);
+    // The first hour seen on day 60 or after: a night's sleep passes six in the morning unseen, and until 2026-10-10 a
+    // check for six o'clock exactly put nothing in, so these two scenarios played out as 'daily'.
+    if (!struck && day >= 60 && (SCENARIO === 'injured' || SCENARIO === 'ill')) {
+      struck = { day, fitness: Math.round(sim.player.wellbeing.fitness * 100) / 100 };
+      if (SCENARIO === 'injured') hurt(sim, 'sprain');
+      else careFor(sim, sim.player, { care: 'visit', what: 'The flu', flu: true }, sim.now);
+    }
     // The workout: at seven before classes, or the first free hour from three to nine.
     const want = plan(day, weekday) && doneToday < (SCENARIO === 'twice-daily' ? 2 : 1) && (sim.player.awakeSince ?? 0) <= sim.now && (p.hour === 7 || (p.hour >= 15 && p.hour < 21));
     if (want) {
@@ -135,6 +141,7 @@ function run() {
     ageAtEnd: Math.round(((sim.now - person.birthInstant) / (365.2425 * MS_DAY)) * 10) / 10,
     fitness: { start: weekly[0], end: Math.round(person.wellbeing.fitness * 100) / 100, full: abilityFull(sim, person, 'stamina'), reachedFullOnDay: reachedOn ?? null, at: fitAt, weekly },
     workouts: { done, plannedDays: wanted, refused },
+    ...(struck ? { struck } : {}),
     readinessAt9: Math.round(ready.reduce((a, b) => a + b, 0) / Math.max(1, ready.length) * 10) / 10,
     school: { standing: school?.standing, attendance: school?.history?.map((h) => Math.round(h.attendance * 100)), warnings: school?.history?.filter((h) => h.standing !== 'good').length },
     staminaWork: Object.fromEntries(Object.entries(reads).filter(([, r]) => r.n >= 3).map(([k, r]) => [k, Math.round((r.sum / r.n) * 10) / 10])),

@@ -59,6 +59,7 @@ export function sourceWords(source: string): string {
   if (kind === 'class') return `Class: ${rest}`;
   if (kind === 'prepare') return `Coursework: ${rest}`;
   if (kind === 'interest') return INTEREST_BY_ID[rest ?? '']?.label ?? 'An interest';
+  if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
   if (kind === 'read' || kind === 'research') return 'Reading a play';
   return ({ 'practice-day': 'A day of practice kept', call: 'A call answered', night: 'A night on stage', 'partner-rehearsal': 'Rehearsing with a partner', 'learn-part': 'Learning the part', blocking: 'The blocking book', 'work-note': 'A director’s note worked', 'self-tape': 'A self-tape' } as Record<string, string>)[kind] ?? kind;
 }

@@ -106,3 +106,23 @@ describe('full, and kept full', () => {
     expect(sim.player.wellbeing.fitness).toBe(abilityFull(sim, sim.player, 'stamina'));
   });
 });
+
+describe('a workout sent twice', () => {
+  it('is lived once with the same actionId, the time, the fitness and the history with it, and twice with two', () => {
+    const sim = body('fit-retry', 60);
+    const send = (actionId: string) => sim.execute({ kind: 'life.look_after', payload: { action: 'exercise', actionId } });
+    expect(send('w-1').ok).toBe(true);
+    const after = { now: sim.now, fitness: sim.player.wellbeing.fitness, history: developmentOf(sim.player).history.length };
+    expect(send('w-1').error).toBe('That was already done.');
+    expect({ now: sim.now, fitness: sim.player.wellbeing.fitness, history: developmentOf(sim.player).history.length }).toEqual(after);
+    clear(sim);
+    sim.player.wellbeing.energy = 90;
+    expect(send('w-2').ok).toBe(true);
+    expect(sim.player.wellbeing.fitness).toBeGreaterThan(after.fitness);
+    // Saved and loaded, the first id is still spent.
+    const again = reload(sim);
+    clear(again);
+    again.player.wellbeing.energy = 90;
+    expect(again.execute({ kind: 'life.look_after', payload: { action: 'exercise', actionId: 'w-1' } }).error).toBe('That was already done.');
+  });
+});

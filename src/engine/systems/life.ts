@@ -29,7 +29,7 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
 import { heatIndexC, weatherAt } from './weather';
-import { developmentOf, recordDevelopment, repeatsToday } from './attributes';
+import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsToday } from './attributes';
 import { DEVELOPMENT } from '../content/abilities';
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
@@ -96,6 +96,12 @@ export const EVERYDAY_FITNESS = 35;
  *   how much less, so half is SLATE's.
  */
 export const FITNESS = { heldDays: 3, perDay: 0.18 } as const;
+
+/** Whether fitness is held now, and until when (`FITNESS.heldDays` after the last workout), for the profile; none before a first workout. */
+export function fitnessHeldUntil(person: Person): Instant | undefined {
+  const at = person.development?.workout?.at;
+  return at === undefined ? undefined : at + FITNESS.heldDays * MS_DAY;
+}
 /**
  * Where morale settles, and how much of the way back a night brings it.
  *
@@ -411,13 +417,16 @@ export function registerLife(sim: Simulation): void {
 
   // --- Looking after yourself ---------------------------------------------
 
-  sim.onCommand<{ action: LookAfter }, { doneAt: number; changed: Partial<Wellbeing> }>(
+  sim.onCommand<{ action: LookAfter; actionId?: string }, { doneAt: number; changed: Partial<Wellbeing> }>(
     'life.look_after',
     (p, { sim: s }) => {
       const action = LOOKING_AFTER[p.action] ? p.action : undefined;
       if (!action) throw new CommandError('That isn’t something you can do for yourself here.');
-      const refused = lookAfterRefusal(s, action);
+      // The same hour sent twice with one `actionId` (a retry after a lost answer) is lived once (from 2026-10-10), as
+      // practice, study and a tape already were: until then a retried workout was a second workout.
+      const refused = alreadyApplied(s.player, p.actionId) ?? lookAfterRefusal(s, action);
       if (refused) throw new CommandError(refused);
+      markApplied(s.player, p.actionId);
 
       // The hour is lived first, and charged as waking like any other, so
       // what it does is on top of what the hour already cost.
