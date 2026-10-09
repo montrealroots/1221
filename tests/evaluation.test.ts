@@ -46,7 +46,7 @@ describe('the maximum-mastery guarantee', () => {
     const sim = life('eval-max');
     at(sim, 100, MASTERED);
     for (const task of Object.keys(TASK_PROFILES) as (keyof typeof TASK_PROFILES)[]) {
-      for (const difficulty of [0, 0.45, 1]) for (let k = 0; k < 8; k += 1) {
+      for (const difficulty of [-0.5, -0.3, 0, 0.45, 1]) for (let k = 0; k < 8; k += 1) {
         const e = evaluate(sim, sim.player, ctx(task, { difficulty, key: `max:${task}:${difficulty}:${k}`, condition: { readiness: EVALUATION.sufficientReadiness } }));
         expect(e.overall, `${task} ${difficulty} ${k}`).toBe(100);
         for (const d of e.dimensions) { expect(d.quality).toBe(100); expect(d.variation).toBe(0); }
@@ -102,7 +102,7 @@ describe('quality and its inputs', () => {
       const task = (Object.keys(TASK_PROFILES) as (keyof typeof TASK_PROFILES)[])[n % Object.keys(TASK_PROFILES).length]!;
       at(sim, 10 + rng.next() * 85, 10 + rng.next() * 85);
       const share = rng.next();
-      const base = ctx(task, { ...prepFor(task, share), difficulty: rng.next(), condition: { readiness: rng.next() * 100, ill: rng.next() < 0.3, injured: rng.next() < 0.3 }, key: `mono:${n}` });
+      const base = ctx(task, { ...prepFor(task, share), difficulty: rng.next() * 1.5 - 0.5, condition: { readiness: rng.next() * 100, ill: rng.next() < 0.3, injured: rng.next() < 0.3 }, key: `mono:${n}` });
       const before = evaluate(sim, sim.player, base);
       // Raise one input of each kind in turn.
       const ability = ABILITY_DEFS[n % ABILITY_DEFS.length]!.id;

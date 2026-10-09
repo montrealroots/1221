@@ -646,8 +646,14 @@ export function feedbackWords(kind: NoteKind, body: string, before?: { on: strin
 
 const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
 
-/** How hard a piece of work is, by its par: 50 asks nothing more, each point past it a fortieth more (`EvalContext.difficulty`). */
-export const difficultyOf = (t: Template): number => clamp01((t.par - 50) / WORK.showing.perPoint);
+/**
+ * How hard a piece of work is, by its par (`EvalContext.difficulty`): the showcase's 62 asks what a professional's
+ * work does, and each point under it a fortieth less, so a first-year scene at 50 is pitched at a first-year (-0.3).
+ * It was 0 at a par of 50 and rose from there for an hour of 2026-10-09, until a played attentive life's prepared
+ * scenes came out at 45, under LAMDA's pass, for two years running, held back by abilities, not preparation: a class
+ * exercise was being judged as a professional night.
+ */
+export const difficultyOf = (t: Template): number => Math.max(-0.5, Math.min(1, (t.par - 62) / WORK.showing.perPoint));
 
 /**
  * A piece of coursework judged (`systems/evaluation.ts`), from 2026-10-09: the template's task profile

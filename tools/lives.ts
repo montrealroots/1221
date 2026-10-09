@@ -201,9 +201,13 @@ function play(profile: Profile, seed: string): Result {
   }
   const bands: Record<string, number> = {};
   for (const x of work) if (x.band) bands[`${x.task}:${x.band}`] = (bands[`${x.task}:${x.band}`] ?? 0) + 1;
+  // What held each kind of work back most, summed: the reasons as the evaluation gave them.
+  const held: Record<string, number> = {};
+  for (const x of work) for (const l of x.limits) held[`${x.task} ${l.kind}:${l.what}`] = (held[`${x.task} ${l.kind}:${l.what}`] ?? 0) + l.by;
+  const top = Object.fromEntries(Object.entries(held).sort((p, q) => q[1] - p[1]).slice(0, 10).map(([k, v]) => [k, Math.round(v)]));
   const ab = abilitiesOf(sim, sim.player);
   return {
-    work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length },
+    work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length, held: top },
     abilities: Object.fromEntries(Object.entries(ab).map(([k, v]) => [k, Math.round(v)])),
     profile: profile.name, seed, graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
     wellbeing: { energy: Math.round(w.energy), stress: Math.round(w.stress), morale: Math.round(w.morale), condition: Math.round(w.condition), nourishment: Math.round(w.nourishment) },

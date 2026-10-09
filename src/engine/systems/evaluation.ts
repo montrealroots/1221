@@ -19,7 +19,8 @@
  *               the level at which a technique counts as mastered, shown on
  *               its look);
  *   shaped    = capacity^(1 + difficulty), so harder work asks more of the
- *               same capacity, and at full capacity asks nothing more;
+ *               same capacity and work pitched at a student (a difficulty
+ *               under 0) less, and at full capacity asks nothing more;
  *   prepared  = for each part it reads, prepFloor + (1 − prepFloor) ×
  *               min(1, part / complete), the least of them, and 1 when every
  *               part it reads is complete;
@@ -70,7 +71,7 @@ export interface EvalContext {
   prep: Record<string, number>;
   /** How far each must stand to be complete, 0 to 1 (1 when not given). */
   required: Record<string, number>;
-  /** 0 (light) to 1 (the hardest the task comes). */
+  /** -0.5 (work pitched under a professional's: a class exercise) to 1 (the hardest the task comes); 0 a professional's. */
   difficulty: number;
   condition: Condition;
   /** Genre families the material belongs to, which lean the dimensions' weights (`content/tasks.ts`, normalized). */
