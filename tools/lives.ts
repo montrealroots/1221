@@ -37,6 +37,7 @@ import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, occupiedAt, readiness, suggestedSleep } from '../src/engine/systems/life';
 import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { inTheBank } from '../src/engine/systems/spending';
+import { coverOn, mayEnroll } from '../src/engine/systems/health';
 
 const arg = (name: string, d: number) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? Number(process.argv[i + 1]) : d; };
 const flag = (name: string) => process.argv.includes(`--${name}`);
@@ -102,6 +103,12 @@ function freeHour(sim: Simulation): boolean {
   return false;
 }
 
+/** Cover kept, as a graduate keeps it: with none, enrolled where the papers allow (`mayEnroll`), checked at noon. */
+function keepCovered(sim: Simulation) {
+  if (coverOn(sim.player, sim.now) || !mayEnroll(sim.player, sim.now).ok) return;
+  sim.execute({ kind: 'health.enroll', payload: {} });
+}
+
 /** What the menu puts first and urgent, done; nothing done that isn't. */
 function lookAfter(sim: Simulation) {
   for (let n = 0; n < 3; n += 1) {
@@ -111,7 +118,7 @@ function lookAfter(sim: Simulation) {
   }
 }
 
-interface Result { profile: string; seed: string; graduated: boolean; standing: string; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
+interface Result { profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 
 function play(profile: Profile, seed: string): Result {
   let sim: Simulation;
@@ -126,6 +133,7 @@ function play(profile: Profile, seed: string): Result {
       if (flag('why') && hour === 9) { const w = sim.player.wellbeing; ready.push([readiness(sim.player), w.energy, w.stress, w.sleepDebt, w.nourishment, w.morale, w.condition]); }
       if (profile.play === 'attentive') {
         lookAfter(sim);
+        if (hour === 12) keepCovered(sim);
         if (hour === 20 && sim.player.currentLocationId === 'us-ct-newhaven') evening(sim);
         // Free hours from the end of classes to ten, and the weekend's from ten.
         const weekend = [0, 6].includes(new Date(sim.now).getUTCDay());
@@ -156,6 +164,9 @@ function play(profile: Profile, seed: string): Result {
   return {
     profile: profile.name, seed, graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
     wellbeing: { energy: Math.round(w.energy), stress: Math.round(w.stress), morale: Math.round(w.morale), condition: Math.round(w.condition), nourishment: Math.round(w.nourishment) },
+    // An international graduate's status and cover at the end (from 2026-10-09: the marketplace asks lawful presence).
+    usStatus: sim.player.usOutOfStatus !== undefined ? 'out of status' : 'in status or a citizen', cover: coverOn(sim.player, sim.now) ?? 'none',
+    planEnded: sim.universe.notifications.some((n) => n.title === 'Your Marketplace Plan Has Ended'),
     bank: Math.round(inTheBank(sim, sim.player) / 100), breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads, ...(error ? { error } : {}),
   };
 }

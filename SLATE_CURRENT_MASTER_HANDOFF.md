@@ -77,8 +77,13 @@ system could reach was retired with its reason, never quietly.
    terms, readiness 94 at nine. Rerun, the actor/actress pairs (eight seeds each, three years): **16 of 16
    graduated**, 0 breaches, 0 unbalanced ledgers; parts cast, actor 22 leads, 16 supporting, 2 featured; actress 28,
    9, 3. Neither is held back; the sample is small. `school.learn_part` now reads the hour (`focusAt`), as every
-   other step does. The profile rerun was stopped by Claude Code for low memory before it finished, and wasn't
-   restarted: repeat it with `npx vite-node tools/lives.ts -- --seeds 3 --years 3`.
+   other step does. The profile rerun, one seed a profile for 3.3 years so the months after the degree are in it,
+   the graduate enrolling in cover when Yale Health ends (`keepCovered`): all five graduated, 0 breaches, 0
+   unbalanced ledgers. The two US citizens went on Medicaid; the Mexican, British and Icelandic graduates fell out of
+   status at the grace period's end and were refused cover, as the marketplace's lawful-presence rule has it. Each
+   wealthy life ended with about $75,000 in the bank: savings untouched for three years went to Connecticut as
+   unclaimed property (`accountlife.ts`, three years, as the state's law has it), told as dormant first and claimable
+   back (`bank.claim_unclaimed`). The three-year runs before it stopped just short of that.
 2. **Papers connected to the kept world:** a new bank asks for a photo ID in force (`photoIdOf`, 31 CFR 1020.220);
    the marketplace, the Essential Plan and Covered Connecticut ask lawful presence (`lawfullyPresent`, 45 CFR
    155.305), so OPT and falling out of status now change a graduate's cover; New Haven takes a police report online
