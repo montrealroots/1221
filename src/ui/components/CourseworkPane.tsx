@@ -24,10 +24,6 @@ import {
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { PRIORITY_WORDS, amendsRefusal, personOf } from '@/engine/systems/classmates';
 import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
-import { garmentsOf } from '@/engine/systems/wardrobe';
-import { phonesOf } from '@/engine/systems/phones';
-import { routinesOf } from '@/engine/systems/routines';
-import { itemsOf } from '@/engine/systems/items';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
@@ -44,7 +40,6 @@ export function CourseworkPane() {
   return (
     <div className="col gap-5">
       {!cw.orientation.behind && <FirstWeek />}
-      <Arrangements />
       {open.length === 0
         ? <Panel title="Work Set"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
@@ -82,26 +77,8 @@ function FirstWeek() {
   );
 }
 
-/** What daily life at school needs, read from where things stand, each with what the game does with it. */
-function Arrangements() {
-  const person = useWorld((s) => s.player);
-  const homeHere = person.home?.cityId === YALE_DRAMA.cityId;
-  const food = itemsOf(person).some((i) => (i as { food?: unknown }).food && i.at.kind === 'home');
-  const moving = garmentsOf(person).some((g) => g.garment.slot === 'active') ? 'Activewear' : garmentsOf(person).some((g) => g.garment.slot === 'top') ? 'A Top Will Do' : 'None';
-  const phone = phonesOf(person).length > 0;
-  const morning = routinesOf(person).some((r) => r.at && r.at.hour < 9 && r.at.days.some((d) => d >= 1 && d <= 5));
-  return (
-    <Panel title="Arrangements" subtitle="What the term’s days run on">
-      <div className="grid grid-3">
-        <Stat label="A Home In New Haven" value={homeHere ? 'Yes' : 'No'} note="Classes are at nine; the studios and library are here" />
-        <Stat label="Food At Home" value={food ? 'Yes' : 'None'} note="Hungry, you come less ready" />
-        <Stat label="Clothes To Move In" value={moving} note="Movement and combat work wear them" />
-        <Stat label="A Phone That Records" value={phone ? 'Yes' : 'No'} note="On-camera work is taped on it" />
-        <Stat label="A Weekday Morning Routine" value={morning ? 'Set' : 'Not Set'} note="On Routines: set one before nine" />
-      </div>
-    </Panel>
-  );
-}
+// The Arrangements panel said whether there was a home in New Haven, food at home, clothes to move in, a phone that
+// records and a weekday morning routine, until those systems went in the scope reset of 2026-10-09.
 
 function AssignmentCard({ a }: { a: Assignment }) {
   const { sim, run, toast } = useGame();

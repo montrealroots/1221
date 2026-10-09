@@ -3,24 +3,18 @@
  *
  * Startup, then the save slots, then either character creation or straight into
  * a world. Only one universe is ever live at a time.
- *
- * The heavy phases — save slots, character creation, and the game itself — are
- * lazy-loaded so the startup screen only pulls in the persistence adapter. The
- * engine (every system, every content table) loads on demand when the player
- * starts or continues a game, not when the page opens.
  */
 
-import { lazy, Suspense, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StartupSequence, type StartupResult } from '@/ui/startup/StartupSequence';
-import type { Simulation } from '@/engine';
+import { SaveSlots } from '@/ui/saves/SaveSlots';
+import { CharacterCreation } from '@/ui/creation/CharacterCreation';
+import { GameShell } from '@/ui/shell/GameShell';
+import { GameProvider } from './game-context';
+import { createSave, loadPlacesFor, loadSave, refreshMeta, type Simulation } from '@/engine';
 import type { NewSaveConfig } from '@/engine/world/bootstrap';
 import type { SaveAdapter, Slot } from '@/engine/persistence/adapter';
 import type { SaveUniverse } from '@/engine/domain/model';
-
-const SaveSlots = lazy(() => import('@/ui/saves/SaveSlots').then(m => ({ default: m.SaveSlots })));
-const CharacterCreation = lazy(() => import('@/ui/creation/CharacterCreation').then(m => ({ default: m.CharacterCreation })));
-const GameShell = lazy(() => import('@/ui/shell/GameShell').then(m => ({ default: m.GameShell })));
-const GameProvider = lazy(() => import('./game-context').then(m => ({ default: m.GameProvider })));
 
 type Phase =
   | { kind: 'startup' }
@@ -51,7 +45,6 @@ export function SlateApp() {
       // eslint-disable-next-line no-restricted-syntax
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
       // A life begun here begins with the guide.
-      const { createSave, loadPlacesFor, refreshMeta } = await import('@/engine');
       const sim = createSave(slot, seed, { ...config, tutorial: true });
       // The home country's holidays, which its banks keep as business days.
       await loadPlacesFor(sim.universe);
@@ -71,7 +64,6 @@ export function SlateApp() {
       // or the school, the wage floor, the state assessment and the cost of
       // living all quietly fall back to the country. Creation and the pickers
       // already do this; resuming did not.
-      const { loadPlacesFor, loadSave } = await import('@/engine');
       await loadPlacesFor(universe);
       const sim = loadSave(universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
@@ -103,47 +95,34 @@ export function SlateApp() {
     );
   }
 
-  return (
-    <Suspense fallback={
-      <div className="startup">
-        <div className="startup-inner">
-          <span className="clapper" role="img" aria-label="SLATE">🎬</span>
-          <div className="wordmark">SLATE</div>
-        </div>
-      </div>
-    }>
-      {(() => {
-        switch (phase.kind) {
-          case 'startup':
-            return <StartupSequence onReady={onReady} />;
+  switch (phase.kind) {
+    case 'startup':
+      return <StartupSequence onReady={onReady} />;
 
-          case 'saves':
-            return (
-              <SaveSlots
-                adapter={phase.startup.adapter}
-                initialSlots={phase.startup.slots}
-                onNew={(slot) => beginNew(phase.startup, slot)}
-                onContinue={(universe) => resume(phase.startup, universe)}
-              />
-            );
+    case 'saves':
+      return (
+        <SaveSlots
+          adapter={phase.startup.adapter}
+          initialSlots={phase.startup.slots}
+          onNew={(slot) => beginNew(phase.startup, slot)}
+          onContinue={(universe) => resume(phase.startup, universe)}
+        />
+      );
 
-          case 'creation':
-            return (
-              <CharacterCreation
-                slot={phase.slot}
-                onCancel={() => setPhase({ kind: 'saves', startup: phase.startup })}
-                onStart={(config) => void start(phase.startup, phase.slot, config)}
-              />
-            );
+    case 'creation':
+      return (
+        <CharacterCreation
+          slot={phase.slot}
+          onCancel={() => setPhase({ kind: 'saves', startup: phase.startup })}
+          onStart={(config) => void start(phase.startup, phase.slot, config)}
+        />
+      );
 
-          case 'playing':
-            return (
-              <GameProvider sim={phase.sim} adapter={phase.adapter} onExit={() => void exit()}>
-                <GameShell />
-              </GameProvider>
-            );
-        }
-      })()}
-    </Suspense>
-  );
+    case 'playing':
+      return (
+        <GameProvider sim={phase.sim} adapter={phase.adapter} onExit={() => void exit()}>
+          <GameShell />
+        </GameProvider>
+      );
+  }
 }

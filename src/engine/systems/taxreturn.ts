@@ -36,12 +36,9 @@ import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
-import { drawFromBank, expenseFor, payFromBank } from './household';
+import { drawFromBank, expenseFor, payFromBank } from './spending';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
-import { spouseIncomeFor } from './marriage';
-import { childTaxCredit } from './children';
-import { adoptionCredit } from './adoption';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -442,12 +439,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? Math.round((y.homePmi ?? 0) * pmiShare) : 0);
   const itemizing = (y.homeInterest ?? 0) + (y.homeTax ?? 0) > 0 && itemizedFederal > standard;
   const beyond = itemizing ? itemizedFederal - standard : 0;
-  // Married at the year's end, filed jointly (`systems/marriage.ts`, from 2026-10-01): the joint brackets and standard deduction are
-  // twice the single ones to the 35% band, so the joint tax is twice a single tax on half of what you both made, and yours is your share of it.
-  const spouse = spouseIncomeFor(person, year, into);
-  const federalBefore = spouse !== undefined && taxed + spouse > 0
-    ? Math.round(2 * computeAnnualTax(Math.round((taxed + spouse) / 2), cityId, at, { currency: into, ...(beyond > 0 ? { deductions: Math.round(beyond / 2) } : {}) }).federal * (taxed / (taxed + spouse)))
-    : computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
+  // Filed singly. A joint return for the married (`systems/marriage.ts`, from 2026-10-01) went with the marriages in the
+  // scope reset of 2026-10-09.
+  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
   // A long-term gain on top of the rest, at 0%, 15% and 20%; and 3.8% on investment income over $200,000.
   const ordinary = Math.max(0, taxed - standard - beyond);
   let gainTax = 0;
@@ -465,14 +459,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const investment = gainLong + gain1250 + gainShort + Math.max(0, rental) + (y.interest ?? 0);
   gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong + gain1250 - usd(HOME_TAX.niitFrom, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
-  // The Child Tax Credit (`systems/children.ts`, from 2026-10-01): off the tax, and the refundable part of what's left paid back.
-  const kids = childTaxCredit(person, year, income + (spouse ?? 0), spouse !== undefined, into);
-  // And the federal adoption credit, for an adoption made final this year (`systems/adoption.ts`, from 2026-10-02).
-  const adopt = adoptionCredit(person, year, income + (spouse ?? 0), into);
-  const ctc = { credit: kids.credit + adopt.credit, refundable: kids.refundable + adopt.refundable };
-  const before = federalBefore - foreignCredit + gainTax;
-  const offTax = Math.min(Math.max(0, before), ctc.credit);
-  const federal = before - offTax - Math.min(ctc.credit - offTax, ctc.refundable);
+  // The Child Tax Credit and the adoption credit came off it (`systems/children.ts`, `systems/adoption.ts`) until the
+  // children went in the scope reset of 2026-10-09.
+  const federal = federalBefore - foreignCredit + gainTax;
   const incomeTax = federal + stateAndLocal;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
   const payroll = computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;

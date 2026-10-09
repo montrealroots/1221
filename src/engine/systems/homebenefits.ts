@@ -38,7 +38,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -62,16 +62,8 @@ export const CDMX_DESEMPLEO = {
   source: 'Gaceta Oficial de la Ciudad de México, 8 June 2026: Reglas de Operación, Seguro de Desempleo',
 } as const;
 
-export const HAP = {
-  limitOwn: 660_00,
-  limitShared: 500_00,
-  discretion: 0.35,
-  share: 0.18,
-  disregardWeekly: 55_00,
-  minimumWeekly: 35_82,
-  incomeLimit: 40_000_00,
-  source: 'https://www.dublincity.ie/residential/housing/housing-assistance-payment (Dublin City Council, 2026-09-29)',
-} as const;
+// Dublin's Housing Assistance Payment (`HAP`, `hapRefusal`, `hapSplit`, `benefits.hap`) paid part of a renter's rent until
+// the home and its rent went in the scope reset of 2026-10-09.
 
 export const JA_WEEK_KIND = 'benefits.ja_week';
 export const DESEMPLEO_KIND = 'benefits.desempleo_month';
@@ -99,33 +91,7 @@ export function netWeeklyEur(sim: Simulation, person: Person): Money {
   return Math.round(eur(gross - tax) / 52) + Math.round(eur(coming) / 4);
 }
 
-/** A month's differential rent, in euro cents: 18% of net weekly income over €55, at least €35.82 a week. */
-export function differentialRent(netWeeklyEur: Money): Money {
-  const weekly = Math.max(HAP.minimumWeekly, Math.round((netWeeklyEur - HAP.disregardWeekly) * HAP.share));
-  return Math.round((weekly * 52) / 12);
-}
-
 export const livesInDublinCity = (person: Person) => homeOf(person) === 'ie-lei-dublin';
-
-export function hapRefusal(sim: Simulation, person: Person): string | undefined {
-  if (!livesInDublinCity(person)) return 'SLATE keeps Dublin City Council’s scheme: it’s for someone renting in Dublin.';
-  if (!citizenshipsOf(person).some((c) => EU.has(c))) return 'On a visa, Ireland’s social housing support isn’t yours.';
-  if (person.home?.kind !== 'own' && person.home?.kind !== 'shared') return 'It pays a landlord: it’s for someone renting.';
-  if (person.hap) return 'You have it.';
-  if (netWeeklyEur(sim, person) * 52 > HAP.incomeLimit) return 'Your net income is over the council’s €40,000 a year.';
-  return undefined;
-}
-
-/**
- * A month's rent with HAP, in euro cents: what the council pays the landlord,
- * and what the tenant pays, the differential rent and anything over the limit.
- */
-export function hapSplit(rentEur: Money, own: boolean, netWeekly: Money): { council: Money; tenant: Money } {
-  const limit = Math.round((own ? HAP.limitOwn : HAP.limitShared) * (1 + HAP.discretion));
-  const covered = Math.min(rentEur, limit);
-  const differential = Math.min(covered, differentialRent(netWeekly));
-  return { council: covered - differential, tenant: differential + Math.max(0, rentEur - limit) };
-}
 
 export const livesInIreland = (person: Person) => CITIES.get(homeOf(person))?.countryId === 'ie';
 export const livesInMexicoCity = (person: Person) => { const c = CITIES.get(homeOf(person)); return c?.countryId === 'mx' && (c.parentId === 'mx-09' || c.id.startsWith('mx-cmx')); };
@@ -193,20 +159,13 @@ function pay(sim: Simulation, person: Person, due: Money, memo: string, line: st
 }
 
 export function registerHomeBenefits(sim: Simulation): void {
-  sim.onCommand<Record<string, never>, { council: Money }>('benefits.hap', (_p, { sim: s }) => {
-    const person = s.player;
-    const no = hapRefusal(s, person);
-    if (no) throw new CommandError(no);
-    person.hap = { since: s.now };
-    return { council: 0 };
-  });
-
   sim.onSchedule(JA_WEEK_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const claim = person?.jobseekers;
     if (!person || !claim || claim.closedAt !== undefined) return;
     if (!livesInIreland(person)) { claim.closedAt = s.now; return; }
-    const worked = new Set((person.career?.days ?? []).filter((d) => d.at >= item.at - 7 * MS_DAY && d.at < item.at).map((d) => formatDate(d.at, 'Europe/Dublin'))).size;
+    // The days worked in the week were the career's until it went on 2026-10-09: none now.
+    const worked = 0;
     const cur = saveCurrency(s.universe);
     const savingsEur = cur === 'EUR' ? deposits(s, person) : exchange(deposits(s, person), cur, 'EUR') ?? deposits(s, person);
     const week = jobseekerWeek(worked, IRISH_JA.waitingDays - claim.waited, savingsEur);

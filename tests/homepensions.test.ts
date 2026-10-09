@@ -2,13 +2,13 @@
  * Ireland's State Pension (Contributory) and Mexico's Pensión para el
  * Bienestar (`systems/homepensions.ts`).
  */
-import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
-import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
+import { saveCurrency } from '@/engine/core/money';
+import { MS_DAY } from '@/engine/core/time';
 import { recordWages } from '@/engine/systems/earnings';
-import { IRISH_NCP, bienestarRefusal, inFuelSeason, irishContributions, irishMeans, irishPensionRefusal, irishWeekPaid, irishWeekly, nonContributoryWeekly } from '@/engine/systems/homepensions';
+import { bienestarRefusal,irishContributions,irishPensionRefusal,irishWeekPaid,irishWeekly,nonContributoryWeekly } from '@/engine/systems/homepensions';
+import { describe,expect,it } from 'vitest';
 
 const YEAR = 365.2425 * MS_DAY;
 
@@ -67,29 +67,6 @@ describe('Ireland’s means-tested pension', () => {
     expect(nonContributoryWeekly(70, 400_00)).toBe(0);
   });
 
-  it('gives a Dubliner with no Irish record and no savings the means-tested pension, the higher of the two, with €22 for living alone and the Fuel Allowance in winter', () => {
-    const { sim, inCur } = at('ie-lei-dublin', 'ncp-claim');
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')) a.balance = 0;
-    sim.player.birthInstant = sim.now - 66.2 * YEAR;
-    expect(irishMeans(sim, sim.player)).toBe(0);
-    expect(irishPensionRefusal(sim, sim.player)).toBeUndefined();
-    sim.player.home = { ...sim.player.home!, kind: 'own' };
-    const january = Date.UTC(2027, 0, 10);
-    const july = Date.UTC(2027, 6, 10);
-    expect(inFuelSeason(january)).toBe(true);
-    expect(inFuelSeason(july)).toBe(false);
-    const winter = irishWeekPaid(sim, sim.player, 0, january);
-    expect(winter.means).toBe(true);
-    expect(winter.total).toBe(288_00 + IRISH_NCP.livingAlone + IRISH_NCP.fuelWeekly);
-    expect(irishWeekPaid(sim, sim.player, 0, july).total).toBe(288_00 + IRISH_NCP.livingAlone);
-    // A full contributory pension is the higher, and no Fuel Allowance comes with it.
-    expect(irishWeekPaid(sim, sim.player, 299_30, january)).toMatchObject({ means: false, total: 299_30 + IRISH_NCP.livingAlone });
-    // Savings over €20,000 are means: €50,000 is €10 + €20 + €40 a week.
-    const acct = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'checking')!;
-    acct.balance = inCur(50_000_00, 'EUR');
-    expect(Math.abs(irishMeans(sim, sim.player) - 70_00)).toBeLessThanOrEqual(1_00);
-  });
-
   it('isn’t paid to someone living abroad without an Irish record', () => {
     const { sim } = at('us-ny-newyork', 'ncp-abroad');
     sim.player.citizenshipId = 'ie';
@@ -102,22 +79,6 @@ describe('Ireland’s means-tested pension', () => {
 });
 
 describe('the Pensión para el Bienestar', () => {
-  it('pays a Mexican of 65 in Mexico City MXN 6,400 every two months, and not before 65', () => {
-    const { sim, inCur } = at('mx-cmx-mexicocity', 'bien-claim');
-    sim.player.citizenshipId = 'mx';
-    sim.player.birthInstant = sim.now - 64.9 * YEAR;
-    expect(bienestarRefusal(sim, sim.player)).toBe('From 65.');
-    sim.player.birthInstant = sim.now - 65.05 * YEAR;
-    const r = sim.execute<{ bimonthly: number }>({ kind: 'pension.bienestar', payload: {} });
-    expect(r.ok, r.error).toBe(true);
-    expect(r.value!.bimonthly).toBe(inCur(6_400_00, 'MXN'));
-    sim.advanceBy(125 * MS_DAY);
-    expect(sim.universe.transactions.filter((t) => t.memo === 'Pensión para el Bienestar, two months').length).toBe(2);
-    // Held while they live abroad.
-    sim.player.home = { ...sim.player.home!, cityId: 'us-ny-newyork' };
-    sim.advanceBy(125 * MS_DAY);
-    expect(sim.universe.transactions.filter((t) => t.memo === 'Pensión para el Bienestar, two months').length).toBe(2);
-  });
 
   it('isn’t a Mexican’s living abroad, nor a foreigner’s in Mexico', () => {
     const { sim } = at('mx-cmx-mexicocity', 'bien-who');

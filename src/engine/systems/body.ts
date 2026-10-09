@@ -39,8 +39,6 @@ const MS_YEAR = 365.2425 * MS_DAY;
 export interface Body {
   heightCm: number;
   weightKg: number;
-  /** A pregnancy's gain carried today, kg, apart from the weight (`pregnancyGainKg`, from 2026-10-03). */
-  bumpKg?: number;
   /** The weight they began at, which Hall's extra cost of a heavier body is reckoned from. */
   startKg?: number;
   /** A day's eating by habit, kcal: what held the weight they started at, at the age they started. */
@@ -48,8 +46,7 @@ export interface Body {
   /** The day so far: eaten beyond the habit, spent beyond the sedentary day, and whether it was a day they couldn't pay for. */
   intake: number;
   extra: number;
-  /** A day they couldn't pay for, and the share of the habit it ate where help gave some of it (`systems/foodhelp.ts`). */
-  short?: boolean | number;
+  short?: boolean;
 }
 
 const ageOf = (person: Person, at: Instant) => Math.max(18, (at - person.birthInstant) / MS_YEAR);
@@ -104,9 +101,9 @@ export function eatsOut(person: Person): void {
   if (person.body) person.body.intake += BODY.eatenOut;
 }
 
-/** A day they couldn't pay for: it eats a broke day's share of the habit (`BODY.shortDay`), or more where a soup kitchen or a pantry gave some of its meals. */
-export function eatsShort(person: Person, share?: number): void {
-  if (person.body) person.body.short = share !== undefined && share > BODY.shortDay ? share : true;
+/** A day they couldn't pay for: it eats a broke day's share of the habit (`BODY.shortDay`). */
+export function eatsShort(person: Person): void {
+  if (person.body) person.body.short = true;
 }
 
 /** Hunger eaten back: what a workout's own hunger or a day's work asked for, in kcal. */
@@ -132,36 +129,13 @@ export function exerts(person: Person, met: number, hours: number, hungry = fals
 export function bodyDay(person: Person, at: Instant): void {
   const body = person.body;
   if (!body) return;
-  const eaten = body.habitKcal * personalityOf(person, 'appetite') * (body.short === undefined || body.short === false ? 1 : typeof body.short === 'number' ? body.short : BODY.shortDay) + body.intake;
+  const eaten = body.habitKcal * personalityOf(person, 'appetite') * (body.short ? BODY.shortDay : 1) + body.intake;
   const gap = eaten - spentOn(body, ageOf(person, at));
   const perKg = BODY.kcalPerKgDay * (BODY.halfLifeDays / Math.LN2);
   body.weightKg = clamp(Math.round((body.weightKg + gap / perKg) * 1000) / 1000, 30, 250);
   body.intake = 0;
   body.extra = 0;
   delete body.short;
-  // A pregnancy's gain, carried while it lasts (from 2026-10-03).
-  const bump = pregnancyGainKg(person, at);
-  if (bump > 0) body.bumpKg = bump; else delete body.bumpKg;
-}
-
-/**
- * The weight a pregnancy puts on by a day (from 2026-10-03), by the Institute
- * of Medicine's 2009 guidelines for the body mass index before it: the
- * first trimester's 0.5 to 2 kg, its middle, by week 13; then the weekly
- * rate for the second and third, the middle of each band: 0.51 kg under a
- * BMI of 18.5, 0.42 to 24.9, 0.28 to 29.9 and 0.22 above. A normal BMI comes
- * to about 12.6 kg at term, inside the IOM's 11.5 to 16. Carried apart from
- * the weight, it's what makes clothes tight; it's gone at the birth, SLATE's
- * reading, as no figure for the weight kept after it was read.
- */
-export const IOM_GAIN = { firstTrimesterKg: 1.25, firstTrimesterWeeks: 13, weeklyKg: [[18.5, 0.51], [25, 0.42], [30, 0.28], [Infinity, 0.22]] as readonly (readonly [number, number])[] } as const;
-export function pregnancyGainKg(person: Person, at: Instant): number {
-  const p = person.pregnancy;
-  if (!p || p.carrier !== 'you' || !person.body) return 0;
-  const week = Math.max(0, Math.min(40, 40 - (p.due - at) / (7 * 86_400_000)));
-  const rate = IOM_GAIN.weeklyKg.find(([below]) => bmiOf(person.body!) < below)![1];
-  const first = (Math.min(week, IOM_GAIN.firstTrimesterWeeks) / IOM_GAIN.firstTrimesterWeeks) * IOM_GAIN.firstTrimesterKg;
-  return Math.round((first + Math.max(0, week - IOM_GAIN.firstTrimesterWeeks) * rate) * 100) / 100;
 }
 
 /** The body mass index's category, as the WHO names them. */

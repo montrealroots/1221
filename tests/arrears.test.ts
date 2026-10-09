@@ -3,39 +3,35 @@
  * declared, written or said back and changed nothing, and each test moves
  * the input and watches the outcome move.
  */
-import { describe, expect, it } from 'vitest';
-import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
-import { MS_DAY, instantFromZoned } from '@/engine/core/time';
-import { GENRES } from '@/engine/content/career';
-import { DISPOSED, LOVED_WORK, enjoyWork, lovedInWork, takeTheRoom } from '@/engine/systems/enjoyment';
-import { OFFER_KIND, beginCareer, callStress, careerOf, genreOf, roleById, type Booking } from '@/engine/systems/career';
-import { computeAnnualTax } from '@/engine/content/tax';
-import type { Person } from '@/engine/domain/model';
-import { CALLS } from '@/engine/content/career';
-import { RECEIPTS } from '@/engine/content/safetynet';
-import { applySleep, freshWellbeing } from '@/engine/systems/life';
-import { careFor } from '@/engine/systems/health';
-import { recordJobCost, recordWages } from '@/engine/systems/earnings';
-import { figuresFor } from '@/engine/systems/taxreturn';
-import { personalityOf } from '@/engine/systems/personality';
-import type { Simulation } from '@/engine/core/simulation';
-import type { Account } from '@/engine/core/ledger';
 import { bankById } from '@/engine/content/banks';
-import { CHEX, ESTIMATE, FRANCE, FRENCH_CARDS, cardCeilingRoom, chargeForItem, lowestFirst, monthOrder, closeForOverdraft, declines, overdraftRoom, termsOf } from '@/engine/systems/lending';
-import { spend } from '@/engine/systems/household';
-import { inSaveMoney } from '@/engine/systems/banking';
-import { BREAK_NOTICE } from '@/engine/systems/accountlife';
-import { BONUSES, KOREA_TELECOM_OF_BILLS, bonusRewards, lastMonthSpend } from '@/engine/systems/cardoffers';
 import { exchange } from '@/engine/content/currency';
+import { RECEIPTS } from '@/engine/content/safetynet';
+import { computeAnnualTax } from '@/engine/content/tax';
+import type { Account } from '@/engine/core/ledger';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY,instantFromZoned } from '@/engine/core/time';
+import type { Person } from '@/engine/domain/model';
+import { BREAK_NOTICE } from '@/engine/systems/accountlife';
+import { inSaveMoney } from '@/engine/systems/banking';
+import { BONUSES,KOREA_TELECOM_OF_BILLS,bonusRewards,lastMonthSpend } from '@/engine/systems/cardoffers';
 import type { CreditState } from '@/engine/systems/credit';
+import { recordJobCost,recordWages } from '@/engine/systems/earnings';
+import { DISPOSED,LOVED_WORK,enjoyWork,lovedInWork,takeTheRoom } from '@/engine/systems/enjoyment';
+import { careFor } from '@/engine/systems/health';
+import { CHEX,FRENCH_CARDS,cardCeilingRoom,chargeForItem,closeForOverdraft,declines,lowestFirst,monthOrder,overdraftRoom,termsOf } from '@/engine/systems/lending';
+import { freshWellbeing } from '@/engine/systems/life';
+import { personalityOf } from '@/engine/systems/personality';
+import { evenCraft } from '@/engine/systems/school';
+import { spend } from '@/engine/systems/spending';
+import { figuresFor } from '@/engine/systems/taxreturn';
+import { describe,expect,it } from 'vitest';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, extra: Record<string, unknown> = {}): Simulation {
   const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy', ...extra }, seed);
   sim.player.craft = evenCraft(50);
-  beginCareer(sim, sim.player);
   return sim;
 }
 const body = (over: Partial<Person> = {}) => ({
@@ -80,39 +76,6 @@ describe('a day of work, enjoyed', () => {
     enjoyWork(home, { medium: 'stage', away: false, rehearsal: true });
     expect(home.wellbeing.morale).toBeCloseTo(50 - DISPOSED.rehearsal * 0.9, 10);
   });
-
-  it('files a job under a genre by its medium, and a commercial under none', () => {
-    const count: Record<string, number> = {};
-    for (let n = 0; n < 2000; n += 1) { const g = genreOf(roleById('costar'), (n + 0.5) / 2000).genre!; count[g] = (count[g] ?? 0) + 1; }
-    for (const [genre, share] of GENRES.screen) expect(count[genre]! / 2000).toBeCloseTo(share, 2);
-    expect(genreOf(roleById('commercial'), 0.3)).toEqual({});
-    expect(genreOf(roleById('audiobook'), 0.3)).toEqual({});
-    expect(genreOf(roleById('animation'), 0.3)).toEqual({ genre: 'animated' });
-    expect(['drama', 'comedy', 'musical']).toContain(genreOf(roleById('broadway'), 0.9).genre);
-    // An offer that comes in is filed under one.
-    const sim = pro('filed');
-    careerOf(sim.player).auditions.push({ id: 'a1', roleId: 'costar', at: sim.now, mode: 'room', cityId: 'us-ny-newyork', status: 'booked' });
-    sim.schedule({ at: sim.now + 60_000, kind: OFFER_KIND, label: 'An Offer', category: 'system', priority: 20, payload: { personId: sim.player.id, auditionId: 'a1' } });
-    sim.advanceTo(sim.now + 120_000);
-    expect(GENRES.screen.map(([g]) => g)).toContain(careerOf(sim.player).bookings.at(-1)!.genre);
-  });
-
-  it('on a played job: a rehearsal day in a loved genre leaves the mood higher and the craft the same', () => {
-    const run = (genres: string[]) => {
-      const sim = pro('loved-day', { genres });
-      const b: Booking = { id: 'j', roleId: 'lort-b', cityId: 'us-ny-newyork', starts: at(2026, 1, 12, 8), units: 1, rehearsalWeeks: 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, genre: 'western' };
-      careerOf(sim.player).bookings.push(b);
-      expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'j' } }).ok).toBe(true);
-      const until = at(2026, 1, 13, 15);
-      while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * 3_600_000));
-      expect(b.worked).toBe(1);
-      return sim.player;
-    };
-    const loves = run(['western']);
-    const plain = run([]);
-    expect(loves.wellbeing.morale).toBeGreaterThan(plain.wellbeing.morale);
-    expect(loves.craft).toEqual(plain.craft);
-  }, 60_000);
 });
 
 describe('what a trait costs, where the game now reaches it', () => {
@@ -130,29 +93,6 @@ describe('what a trait costs, where the game now reaches it', () => {
     const resilient = hit(['resilient']);
     expect(resilient / plain).toBeCloseTo(personalityOf(traited(['resilient']), 'illnessToll'), 6);
     expect(resilient).toBeLessThan(plain);
-  });
-
-  it('puts back less for a homebody on a night away, and more for a restless one', () => {
-    const away = { home: { cityId: 'us-ny-newyork' }, currentLocationId: 'us-ga-atlanta' } as Partial<Person>;
-    const home = { home: { cityId: 'us-ny-newyork' }, currentLocationId: 'us-ny-newyork' } as Partial<Person>;
-    const night = (traits: string[], where: Partial<Person>) => { const p = traited(traits, where); p.wellbeing.energy = 20; applySleep(p, 7, 0.8); return p.wellbeing.energy; };
-    expect(night(['homebody'], away)).toBeLessThan(night(['homebody'], home));
-    expect(night(['restless'], away)).toBeGreaterThan(night(['restless'], home));
-    expect(night([], away)).toBe(night([], home));
-  });
-
-  it('charges a night owl more for an early call and an early riser more for a late one', () => {
-    const owl = personalityOf(traited(['night_owl']), 'earlyCall');
-    const lark = personalityOf(traited(['early_riser']), 'earlyCall');
-    expect(owl).toBeGreaterThan(1);
-    expect(lark).toBeLessThan(1);
-    expect(personalityOf(traited(['early_riser']), 'lateCall')).toBeGreaterThan(personalityOf(traited(['night_owl']), 'lateCall'));
-    // A seven o'clock screen call, an evening's performance, an eleven o'clock rehearsal.
-    expect(callStress(traited(['night_owl']), 7, false)).toBeCloseTo(CALLS.early * owl, 10);
-    expect(callStress(traited([]), 7, false)).toBe(CALLS.early);
-    expect(callStress(traited(['early_riser']), 19, true)).toBeCloseTo(CALLS.late * personalityOf(traited(['early_riser']), 'lateCall'), 10);
-    expect(callStress(traited(['early_riser']), 11, false)).toBe(0);
-    expect(callStress(traited([]), 9, false)).toBe(0);
   });
 
   it('deducts every receipt for somebody who keeps accounts, and fewer for the chaotic', () => {
@@ -233,44 +173,6 @@ describe('the banks’ open rules', () => {
     // Its own fee and no other: the ordinary account's isn't charged beside it.
     expect(sim.universe.transactions.some((t) => t.memo === `Monthly fee: ${acct.name}`)).toBe(false);
   }, 60_000);
-
-  it('in France: writes at a month past the limit, gives notice at sixty days, offers a loan at three months, and closes two months after the notice', () => {
-    const sim = lifeIn('fr-idf-paris', 'fr-bnp-paribas', 'fr-overrun');
-    sim.player.home = undefined;
-    // Nothing at the bank to set off against it.
-    for (const one of Object.values(sim.universe.accounts)) if (one.ownerId === sim.player.id && one.kind === 'savings') set(sim, one, 0);
-    const acct = current(sim);
-    acct.overdraftLimit = undefined;
-    set(sim, acct, -800_00);
-    const titled = (t: string) => sim.universe.notifications.some((n) => n.title === t);
-    sim.advanceBy((FRANCE.informAfterDays + 2) * MS_DAY);
-    expect(titled('BNP Paribas Wrote About Your Overrun')).toBe(true);
-    sim.advanceBy((ESTIMATE.closeAfterDays - FRANCE.informAfterDays) * MS_DAY);
-    expect(acct.closingNoticed).toBe(true);
-    expect(acct.creditOffered).toBeUndefined();
-    expect(acct.closedAt).toBeUndefined();
-    sim.advanceBy((FRANCE.offerAfterDays - ESTIMATE.closeAfterDays + 1) * MS_DAY);
-    expect(acct.creditOffered?.months).toBe(FRANCE.offerMonths);
-    expect(acct.closedAt).toBeUndefined();
-    expect(acct.closedAt).toBeUndefined();
-    sim.advanceBy((ESTIMATE.closeAfterDays + FRANCE.closingNoticeDays - FRANCE.offerAfterDays) * MS_DAY);
-    expect(acct.closedAt).toBeDefined();
-  }, 120_000);
-
-  it('in France: taking the offered loan clears the overrun into a loan', () => {
-    const sim = lifeIn('fr-idf-paris', 'fr-bnp-paribas', 'fr-take');
-    sim.player.home = undefined;
-    const acct = current(sim);
-    acct.overdraftLimit = undefined;
-    set(sim, acct, -800_00);
-    sim.advanceBy((FRANCE.offerAfterDays + 3) * MS_DAY);
-    const offer = acct.creditOffered!;
-    const before = acct.balance;
-    sim.must({ kind: 'bank.take_overrun_loan', payload: {} });
-    expect(acct.balance).toBe(before + offer.amount);
-    expect(acct.creditOffered).toBeUndefined();
-    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: {} }).ok).toBe(false);
-  }, 120_000);
 
   it('in France: a debit card pays against its ceiling, not the balance, and past the ceiling declines', () => {
     const sim = lifeIn('fr-idf-paris', 'fr-bnp-paribas', 'fr-ceiling', 'wealthy');
@@ -382,20 +284,6 @@ describe('the banks’ open rules', () => {
     expect(monthOrder(chase, chase.player, 2_000_00, 150_00)).toEqual(['rent', 'bills']);
     expect(monthOrder(chase, chase.player, 100_00, 150_00)).toEqual(['bills', 'rent']);
   });
-
-  it('on the 1st, posts the bills before the rent at a bank that takes the lowest first', () => {
-    const order = (bankId: string) => {
-      const sim = lifeIn('us-ny-newyork', bankId, `ties-${bankId}`, 'wealthy');
-      // Rent from the bank on its day, where the norm here is a check, which clears later.
-      sim.must({ kind: 'bank.set_payments', payload: { rent: 'auto', bills: 'auto' } });
-      const first = instantFromZoned({ year: 2026, month: 2, day: 1, hour: 21 }, NY);
-      while (sim.now < first) sim.advanceTo(Math.min(first, sim.now + 6 * 3_600_000));
-      const month = sim.universe.transactions.filter((t) => t.at >= first - 2 * 3_600_000 && (t.category === 'rent' || t.category === 'bills'));
-      return month.map((t) => t.category);
-    };
-    expect(order('us-wells-fargo').slice(0, 2)).toEqual(['bills', 'rent']);
-    expect(order('us-chase').slice(0, 2)).toEqual(['rent', 'bills']);
-  }, 120_000);
 
   it('at NatWest: an early close on 35 days’ notice, closed when it runs', () => {
     const sim = lifeIn('uk-eng-london', 'gb-natwest', 'nw-notice', 'wealthy');

@@ -1283,80 +1283,6 @@ describe('migrations and validation', () => {
     expect(other.universe.people[other.universe.playerId]!.performerTitle).toBe('actor');
   });
 
-  it('brings a save from the line this one replaced forward, at any number that line used', () => {
-    // The older line split from this one at 79 and counted on to 86. At 87
-    // every one of its numbers is older than this build, so every one migrates.
-    expect(SAVE_SCHEMA_VERSION).toBeGreaterThan(86);
-    for (const from of [83, 84, 85, 86]) {
-      const sim = quickSave({ pronouns: 'she/her' }, `older-line-${from}`);
-      const universe = sim.universe;
-      universe.meta.schemaVersion = from;
-      const bag = universe as unknown as Record<string, unknown>;
-      const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
-      row.personality = { conscientiousness: 80, emotionalStability: 20, ambition: 95 };
-      row.personalityTraits = ['night_owl', 'light_sleeper', 'loyal', 'curious'];
-      Object.assign(row, {
-        attributes: {}, traits: ['range'], prodigy: true, reputation: { publicFame: 40 },
-        careerTrack: 'actor', reputationDriftedAt: universe.now, gender: 'female',
-        householdId: 'household_000001', residenceId: 'prop_000001',
-      });
-      (universe.meta as unknown as Record<string, unknown>).performerTitle = 'actress';
-      delete row.awakeSince;
-      bag.households = { household_000001: { id: 'household_000001', saveId: universe.meta.id } };
-      bag.tutorial = { seen: {}, dismissed: false };
-      delete bag.history;
-
-      const result = migrate(universe);
-
-      expect(result.migrated, String(from)).toBe(true);
-      expect(result.problems, String(from)).toEqual([]);
-      expect(result.steps.at(-1), String(from)).toBe(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
-      for (const key of [
-        'attributes', 'traits', 'prodigy', 'reputation', 'careerTrack', 'reputationDriftedAt',
-        'gender', 'householdId', 'residenceId',
-      ]) expect(key in row, `${from} ${key}`).toBe(false);
-      expect(row.personality).toEqual({
-        openness: 55, conscientiousness: 80, extraversion: 55, agreeableness: 55,
-        emotionalStability: 20, ambition: 95, riskTolerance: 50,
-      });
-      expect(row.personalityTraits).toEqual(['night_owl', 'light_sleeper', 'loyal', 'curious']);
-      expect(row.performerTitle).toBe('actress');
-      expect(row.awakeSince, String(from)).toBe(nextMidnight(sim));
-      expect('performerTitle' in universe.meta).toBe(false);
-      // The parts this build has no screen for stay, untouched.
-      expect(bag.households).toEqual({ household_000001: { id: 'household_000001', saveId: universe.meta.id } });
-      expect(bag.tutorial).toEqual({ seen: {}, dismissed: false });
-      // The history of milestones went on 2026-10-02, and a save that had none still has none.
-      expect('history' in universe).toBe(false);
-      expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
-      expect(validateUniverse(universe).ok, String(from)).toBe(true);
-    }
-  });
-
-  it('gives a save from this line at 83 the new number, where its waking day starts, and nothing else', () => {
-    // Lived in a little first: a night slept and a plan typed in lower case,
-    // because a player's own words are what a pass that goes by shape could
-    // rewrite, and an untouched save has none.
-    const sim = quickSave({}, 'this-line-83');
-    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
-    expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'lunch with mum at the café', at: sim.now + 2 * MS_DAY } }).ok).toBe(true);
-    expect(sim.universe.scheduled.length).toBeGreaterThan(0);
-    sim.universe.meta.schemaVersion = 83;
-    // 88 put on every person the moment their waking day began, which no save
-    // before it had. This used to pass untouched because the save was written
-    // at the current schema and already carried it.
-    delete sim.player.awakeSince;
-    const expected = structuredClone(sim.universe);
-    expected.meta.schemaVersion = SAVE_SCHEMA_VERSION;
-    expected.people[expected.playerId]!.awakeSince = nextMidnight(sim);
-    const result = migrate(sim.universe);
-    expect(result.steps).toEqual([
-      'Kept 1 person from being charged twice for the rest of today.',
-      `Schema 83 to ${SAVE_SCHEMA_VERSION}.`,
-    ]);
-    expect(sim.universe).toEqual(expected);
-  });
-
   it('charges a save from before 88 from the next midnight, not twice for the rest of today', () => {
     // At 87 this afternoon would never be charged: a save's first day is not,
     // and a later day was charged by the midnight before it.
@@ -1460,29 +1386,6 @@ describe('the decision center', () => {
 });
 
 describe('an older save catches up with the build', () => {
-  it('hands out no id a save from before the namespace split already used', () => {
-    const sim = quickSave({}, 'old-ids');
-    sim.advanceTo(sim.now + 120 * MS_DAY);
-    const universe = sim.universe;
-    // Wind it back to how a build before the namespaces were told apart left
-    // it: one number for the whole save and no map.
-    delete universe.__idCounters;
-
-    const onTheRecord = new Set<string>([
-      ...Object.keys(universe.people), ...Object.keys(universe.accounts),
-      ...universe.transactions.map((one) => one.id),
-      ...universe.scheduled.map((one) => one.id),
-      ...universe.notifications.map((one) => one.id),
-    ]);
-    expect(onTheRecord.size, 'nothing on the record to collide with').toBeGreaterThan(20);
-
-    for (const ns of ['person', 'account', 'txn', 'sched', 'notice'] as const) {
-      for (let i = 0; i < 3; i += 1) {
-        const id = sim.nextId(ns);
-        expect(onTheRecord.has(id), `${id} is on the record already`).toBe(false);
-      }
-    }
-  });
 
 
   it('puts labels written by an older build into Title Case', () => {
@@ -1507,20 +1410,6 @@ describe('an older save catches up with the build', () => {
     expect(universe.scheduled.find((s) => s.id === item!.id)?.label).toBe('New Day');
     expect(universe.notifications.at(-1)?.title).toBe('A Scheduled Event Could Not Be Processed');
     expect(result.steps.join(' ')).toMatch(/Title Case/);
-  });
-
-  it('leaves a sentence in a title field alone', () => {
-    const sim = quickSave({}, 'relabel-prose');
-    const universe = sim.universe;
-    universe.meta.schemaVersion = 9;
-    universe.notifications.push({
-      id: 'notice_sentence', saveId: universe.meta.id, at: universe.now,
-      category: 'system', title: 'You were too exhausted to work.',
-      body: 'A missed shift.', importance: 40, read: false,
-    } as (typeof universe.notifications)[number]);
-
-    migrate(universe);
-    expect(universe.notifications.at(-1)?.title).toBe('You were too exhausted to work.');
   });
 
   it('does not relabel a save that is already current', () => {

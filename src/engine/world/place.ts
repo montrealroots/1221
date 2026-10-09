@@ -101,7 +101,7 @@ export interface PlaceProfile {
  */
 export function homeCityOf(sim: Simulation): City | undefined {
   const player = sim.player;
-  return CITIES.get(player.home?.cityId ?? player.currentLocationId) ?? CITIES.get(player.homeRegionId);
+  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);
 }
 
 export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | undefined {

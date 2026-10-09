@@ -55,7 +55,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { earningsOf, homeOf } from './earnings';
 import { payeeAccount } from './cash';
-import { citizenOf, citizenshipsOf } from './documents';
+import { isoOfCountry } from './documents';
 import { capitalMeans, livesInIreland } from './homebenefits';
 
 export const IRISH_PENSION = {
@@ -139,15 +139,16 @@ export function nonContributoryWeekly(age: number, meansEur: Money): Money {
   return Math.max(0, rate - Math.ceil(over / IRISH_NCP.step) * IRISH_NCP.step);
 }
 
-const meansTested = (person: Person) => livesInIreland(person) && citizenshipsOf(person).some((c) => IRISH_RESIDENTS.has(c));
-const livesAlone = (person: Person) => person.home?.kind === 'own' || person.home?.kind === 'owned';
+const meansTested = (person: Person) => livesInIreland(person) && IRISH_RESIDENTS.has(isoOfCountry(person.citizenshipId) ?? '');
 
 /** The Irish pension's week as it's paid, in euro cents: the higher of the two, the Living Alone Increase, and the Fuel Allowance in its season. */
 export function irishWeekPaid(sim: Simulation, person: Person, contributoryEur: Money, at: Instant): { total: Money; means: boolean; fuel: Money; alone: Money } {
   const ncp = meansTested(person) ? nonContributoryWeekly(ageAt(person, at), irishMeans(sim, person)) : 0;
   const means = ncp > contributoryEur;
   const base = Math.max(ncp, contributoryEur);
-  const alone = base > 0 && livesAlone(person) && livesInIreland(person) ? IRISH_NCP.livingAlone : 0;
+  // The Living Alone Increase was paid on a home of their own until the home went in the scope reset of 2026-10-09,
+  // and with it what says who they live with.
+  const alone = 0;
   const fuel = means && inFuelSeason(at) ? IRISH_NCP.fuelWeekly : 0;
   return { total: base + alone + fuel, means, fuel, alone };
 }
@@ -175,7 +176,7 @@ export const livesInMexico = (person: Person) => CITIES.get(homeOf(person))?.cou
 
 export function bienestarRefusal(sim: Simulation, person: Person): string | undefined {
   if (person.bienestarFrom !== undefined) return 'You’re drawing it.';
-  if (!citizenOf(person, 'MX')) return 'It’s for Mexicans.';
+  if (isoOfCountry(person.citizenshipId) !== 'MX') return 'It’s for Mexicans.';
   if (!livesInMexico(person)) return 'It’s for Mexicans living in Mexico.';
   if (ageAt(person, sim.now) < BIENESTAR.age) return 'From 65.';
   return undefined;

@@ -244,7 +244,7 @@ export function ukTaxYear(at: Instant): string {
 }
 
 /** Where they live: their home's town, or where they are without one. */
-export const homeOf = (person: Person): string => person.home?.cityId ?? person.currentLocationId;
+export const homeOf = (person: Person): string => person.currentLocationId;
 
 /** A town's state or region, `us-ny`. */
 export const stateOf = (cityId: string): string => CITIES.get(cityId)?.parentId ?? cityId;

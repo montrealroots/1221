@@ -4,17 +4,16 @@
  * which works the text craft the audition room reads. A read again knows the
  * last one.
  */
-import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
-import { createSave, loadSave } from '@/engine';
-import { newLifeConfig } from '@/engine/world/bootstrap';
-import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
-import type { Simulation } from '@/engine/core/simulation';
+import { createSave,loadSave } from '@/engine';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { SCENES } from '@/engine/content/coursework';
-import { PLAYREADING, partFor, playById, studiesOf } from '@/engine/systems/playreading';
-import { auditionLevel, roleById } from '@/engine/systems/career';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_HOUR,instantFromZoned } from '@/engine/core/time';
+import { deserialise,serialise } from '@/engine/persistence/adapter';
+import { PLAYREADING,partFor,playById,studiesOf } from '@/engine/systems/playreading';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { readFileSync } from 'node:fs';
+import { describe,expect,it } from 'vitest';
 
 const zone = 'America/New_York';
 const at = (month: number, day: number, hour = 9, year = 2026) => instantFromZoned({ year, month, day, hour, minute: 0 }, zone);
@@ -152,23 +151,5 @@ describe('reading one at school', () => {
     tended(sim, at(9, 5, 18));
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('A copy is at the Haas Arts Library, in New Haven.');
-  });
-});
-
-describe('after school', () => {
-  it('a copy is the library card’s, in its town; and the craft read moves the audition room', () => {
-    const sim = life('pl-after');
-    tended(sim, at(9, 5, 18));
-    sim.player.school!.standing = 'graduated';
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'the-humans' } }).error).toBe('A copy is borrowed from a library: a card where you live (Belongings).');
-    sim.player.libraryCard = 'us-ny-newyork';
-    sim.player.currentLocationId = 'us-ct-newhaven';
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'the-humans' } }).error).toBe('Your library card is for New York.');
-    sim.player.currentLocationId = 'us-ny-newyork';
-    const role = roleById('lort-b');
-    const before = auditionLevel(sim.player.craft!, role, 'room');
-    for (const id of ['the-humans', 'gloria', 'the-flick', 'proof']) sim.must({ kind: 'plays.read', payload: { playId: id } });
-    expect(auditionLevel(sim.player.craft!, role, 'room')).toBeGreaterThan(before);
-    void MS_DAY;
   });
 });

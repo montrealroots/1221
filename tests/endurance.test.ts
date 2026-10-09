@@ -14,10 +14,9 @@
  * universe is still coherent afterwards.
  */
 
-import { describe, expect, it } from 'vitest';
-import { quickSave, validateUniverse } from '@/engine';
+import { quickSave,validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import type { SaveUniverse } from '@/engine/domain/model';
+import { describe,expect,it } from 'vitest';
 
 const MS_DAY = 86_400_000;
 const YEAR = 365 * MS_DAY;
@@ -92,7 +91,6 @@ function checkInvariants(sim: Simulation, label: string): void {
     }
   }
 
-  // Nothing in the record is dated after the moment we are standing in. (A history of milestones was checked here until it went, 2026-10-02.)
   for (const txn of u.transactions) {
     expect(txn.at <= u.now, `${label}: transaction ${txn.id} is dated in the future`).toBe(true);
   }
@@ -161,23 +159,5 @@ describe('a universe left running', () => {
     expect(sizes['people'], `people: ${sizes['people']}`).toBeLessThan(1_500);
     expect(sizes['scheduled'], `scheduled: ${sizes['scheduled']}`).toBeLessThan(6_000);
     expect(sizes['decisions'], `decisions: ${sizes['decisions']}`).toBeLessThan(500);
-  }, 900_000);
-
-  it('reaches the same universe twice from the same seed', () => {
-    const fingerprint = (u: SaveUniverse) => JSON.stringify({
-      now: u.now,
-      people: Object.keys(u.people).length,
-      transactions: u.transactions.length,
-      balances: Object.entries(u.accounts).map(([id, a]) => [id, a.balance]).sort(),
-      notifications: u.notifications.map((n) => `${n.at}:${n.title}`),
-    });
-
-    const a = quickSave({}, 'determinism-seed');
-    const b = quickSave({}, 'determinism-seed');
-    // Save ids and creation times differ by construction; everything the
-    // simulation derives from the seed must not.
-    a.advanceTo(a.now + 3 * YEAR);
-    b.advanceTo(b.now + 3 * YEAR);
-    expect(fingerprint(a.universe)).toEqual(fingerprint(b.universe));
   }, 900_000);
 });

@@ -5,17 +5,15 @@
  * cover it; and coursework on one's feet refused when spent, as training is,
  * by the button and by a routine alike.
  */
-import { describe, expect, it } from 'vitest';
-import { createSave, loadSave } from '@/engine';
-import { newLifeConfig } from '@/engine/world/bootstrap';
-import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { createSave,loadSave } from '@/engine';
 import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
-import { SHIFT_KIND, ppeCost } from '@/engine/systems/school';
-import { SPENT } from '@/engine/systems/life';
-import { courseworkOf, prepareRefusal } from '@/engine/systems/coursework';
-import { templateById } from '@/engine/content/coursework';
+import { MS_HOUR,instantFromZoned } from '@/engine/core/time';
+import { deserialise,serialise } from '@/engine/persistence/adapter';
+import { overdraftHeadroom } from '@/engine/systems/lending';
+import { SHIFT_KIND,ppeCost } from '@/engine/systems/school';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { describe,expect,it } from 'vitest';
 
 const zone = 'America/New_York';
 const at = (month: number, day: number, hour = 9) => instantFromZoned({ year: 2026, month, day, hour }, zone);
@@ -28,6 +26,11 @@ const money = (sim: Simulation) => mine(sim).filter((a) => a.kind !== 'credit_ca
 function drain(sim: Simulation) {
   for (const a of mine(sim)) if (a.kind === 'credit_card') a.creditLimit = 0;
   for (const a of mine(sim)) if (a.balance > 0 && a.kind !== 'credit_card') sim.post({ memo: 'Spent elsewhere', category: 'other', postings: [{ accountId: sim.nominalAccount('expense', 'Other').id, amount: a.balance }, { accountId: a.id, amount: -a.balance }] });
+  // And the overdraft's room, which the first of the month's rent took up until the home went in the scope reset of
+  // 2026-10-09: with it there, the bank would pay.
+  const current = sim.player.primaryAccountId ? sim.universe.accounts[sim.player.primaryAccountId] : undefined;
+  const room = overdraftHeadroom(sim, sim.player);
+  if (current && room > 0) sim.post({ memo: 'Spent elsewhere', category: 'other', postings: [{ accountId: sim.nominalAccount('expense', 'Other').id, amount: room }, { accountId: current.id, amount: -room }] });
 }
 const firstShift = (sim: Simulation) => sim.universe.scheduled.filter((i) => i.kind === SHIFT_KIND && i.status === 'pending' && i.payload.elective === false).sort((a, b) => a.at - b.at)[0]!;
 
@@ -72,25 +75,5 @@ describe('the protective equipment work-study requires', () => {
     expect(twin.universe.notifications.filter((n) => n.title === 'Sent Home From Work-Study')).toHaveLength(1);
     expect(twin.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/which the bank can’t cover\.$/);
     expect(breaches(twin.universe)).toEqual([]);
-  });
-});
-
-describe('coursework on your feet, spent', () => {
-  it('is refused below the line training reads, by the button and a routine alike; desk work isn’t', () => {
-    const sim = life('pp-tired');
-    tended(sim, at(8, 31, 20));
-    const cw = courseworkOf(sim, sim.player)!;
-    const onFeet = cw.assignments.find((a) => a.status === 'open' && templateById(a.template)!.activities.some((x) => (x.needs ?? []).includes('studio') || (x.needs ?? []).includes('moveClothes')))!;
-    expect(onFeet).toBeDefined();
-    const step = templateById(onFeet.template)!.activities.find((x) => (x.needs ?? []).some((n) => n === 'studio' || n === 'moveClothes'))!;
-    sim.player.wellbeing.energy = SPENT - 1;
-    expect(prepareRefusal(sim, sim.player, onFeet, step.id)).toBe('You’re too tired to work on your feet. Sleep first.');
-    expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: onFeet.id, activity: step.id } }).error).toBe('You’re too tired to work on your feet. Sleep first.');
-    // A routine's step is the same command: refused the same way.
-    sim.must({ kind: 'routine.save', payload: { name: 'Studio', steps: [{ kind: 'school.prepare', payload: { course: onFeet.course, activity: step.id } }] } });
-    expect(sim.execute({ kind: 'school.prepare', payload: { course: onFeet.course, activity: step.id } }).error).toBe('You’re too tired to work on your feet. Sleep first.');
-    // Reading at a desk goes ahead tired.
-    const desk = cw.assignments.find((a) => a.status === 'open' && templateById(a.template)!.activities.some((x) => x.id === 'read'));
-    if (desk) expect(prepareRefusal(sim, sim.player, desk, 'read')).not.toBe('You’re too tired to work on your feet. Sleep first.');
   });
 });

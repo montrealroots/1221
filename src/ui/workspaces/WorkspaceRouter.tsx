@@ -1,40 +1,17 @@
 import { CalendarWorkspace } from './CalendarWorkspace';
 import { BankWorkspace } from './BankWorkspace';
 import { SchoolWorkspace } from './SchoolWorkspace';
-import { CareerWorkspace } from './CareerWorkspace';
 import { PapersWorkspace } from './PapersWorkspace';
-import { HomesWorkspace } from './HomesWorkspace';
-import { TravelWorkspace } from './TravelWorkspace';
-import { VehiclesWorkspace } from './VehiclesWorkspace';
-import { LandWorkspace } from './LandWorkspace';
-import { BelongingsWorkspace } from './BelongingsWorkspace';
-import { ClothesWorkspace } from './ClothesWorkspace';
-import { FoodWorkspace } from './FoodWorkspace';
-import { RoutinesWorkspace } from './RoutinesWorkspace';
-import { PeopleWorkspace } from './PeopleWorkspace';
-import { IndustryWorkspace } from './IndustryWorkspace';
 
+// The career's, the homes', travel's, the cars' and the land's screens went in the scope reset of 2026-10-09.
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
   '/workspace/bank': BankWorkspace,
   '/workspace/school': SchoolWorkspace,
-  '/workspace/career': CareerWorkspace,
   '/workspace/papers': PapersWorkspace,
-  '/workspace/homes': HomesWorkspace,
-  '/workspace/travel': TravelWorkspace,
-  '/workspace/vehicles': VehiclesWorkspace,
-  '/workspace/land': LandWorkspace,
-  '/workspace/belongings': BelongingsWorkspace,
-  '/workspace/clothes': ClothesWorkspace,
-  '/workspace/food': FoodWorkspace,
-  '/workspace/routines': RoutinesWorkspace,
-  '/workspace/people': PeopleWorkspace,
-  '/workspace/industry': () => <IndustryWorkspace route="/workspace/industry" />,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {
-  // The Industry's pages each have an address of their own under it (from 2026-10-08).
-  if (route === '/workspace/industry' || route.startsWith('/workspace/industry/')) return <IndustryWorkspace route={route} />;
   const Workspace = WORKSPACES[route];
   if (!Workspace) {
     return (

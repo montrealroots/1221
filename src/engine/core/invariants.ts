@@ -52,28 +52,7 @@ export function breaches(u: SaveUniverse, now: Instant = u.now): Breach[] {
 
   // People and their things.
   for (const p of Object.values(u.people)) {
-    const items = p.items ?? [];
-    const ids = new Set<string>();
-    const vehicles = new Set((p.vehicles ?? []).map((v) => v.id));
-    const orders = new Set((p.orders ?? []).map((o) => o.id));
-    const owned = new Set((p.homes ?? []).map((h) => `owned:${h.id}`));
-    for (const i of items) {
-      if (ids.has(i.id)) add('item id held twice', `${p.id}: ${i.id} ${i.label}`);
-      ids.add(i.id);
-    }
-    for (const i of items) {
-      const what = `${p.id}: ${i.label} (${i.id})`;
-      if (!Number.isFinite(i.quantity) || i.quantity < 0) add('item quantity not a count', `${what}: ${i.quantity}`);
-      if (!Number.isFinite(i.condition) || i.condition < -1e-9 || i.condition > 1 + 1e-9) add('item condition off its scale', `${what}: ${i.condition}`);
-      const at = i.at;
-      if (at.kind === 'vehicle' && !vehicles.has(at.vehicleId)) add('item in a vehicle they don’t have', `${what}: ${at.vehicleId}`);
-      if (at.kind === 'order' && !orders.has(at.orderId)) add('item on an order that doesn’t exist', `${what}: ${at.orderId}`);
-      if (at.kind === 'inside' && (at.itemId === i.id || !ids.has(at.itemId))) add('item inside something that isn’t there', `${what}: ${at.itemId}`);
-      if (at.kind === 'home' && at.home.startsWith('owned:') && !owned.has(at.home)) add('item at a home they don’t own', `${what}: ${at.home}`);
-    }
-    for (const v of p.vehicles ?? []) {
-      if (v.fuelLevel !== undefined && (!Number.isFinite(v.fuelLevel) || v.fuelLevel < -1e-9 || v.fuelLevel > 1 + 1e-9)) add('tank off its scale', `${p.id}: ${v.modelId} ${v.fuelLevel}`);
-    }
+    // Their things, the cars' tanks and the homes' items were checked here until those went in the scope reset of 2026-10-09.
     for (const [k, v] of Object.entries(p.wellbeing ?? {})) {
       if (typeof v === 'number' && (!Number.isFinite(v) || v < -0.001 || v > 100.001)) add('wellbeing off its scale', `${p.id}: ${k} ${v}`);
     }

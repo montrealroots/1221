@@ -16,7 +16,6 @@ import type { Simulation, CommandResult } from '@/engine';
 import type { AdvanceResult } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { refreshMeta } from '@/engine';
-import { ROUTINE_DUE_KIND, runRoutine } from '@/engine/systems/routines';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -36,8 +35,6 @@ export interface GameContextValue {
   version: number;
   /** Runs a command and refreshes the UI. Failures surface as a toast. */
   run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { silent?: boolean }) => CommandResult<R>;
-  /** Runs a command sequence all or none (`Simulation.executeAll`, from 2026-10-06) and refreshes the UI; a refusal surfaces as a toast. */
-  runAll: (run: (sim: Simulation) => { ok: true } | { ok: false; at: number; error: string }) => boolean;
   /** Advances world time through the one advancement path. */
   advance: (ms: number) => AdvanceResult | undefined;
   /** `resumes` carries on a jump a stop broke off: where that jump was sent from. */
@@ -166,14 +163,6 @@ export function GameProvider({
     return result;
   }, [sim, toast, refresh]);
 
-  const runAll = useCallback((go: (s: Simulation) => { ok: true } | { ok: false; at: number; error: string }): boolean => {
-    const result = go(sim);
-    if (!result.ok) toast(`Number ${result.at + 1} would be refused, so none of them was done. ${result.error}`, 'negative');
-    else dirty.current = true;
-    refresh();
-    return result.ok;
-  }, [sim, toast, refresh]);
-
   /**
    * Moving the clock from a screen always stops at something that wants you.
    *
@@ -197,21 +186,9 @@ export function GameProvider({
    */
   const halt = useCallback((result: AdvanceResult, wanted: number) => {
     if (!result.interruptedBy) return;
-    // A routine set for this moment is run now, step by step as Run It does, each step its own command and
-    // undone if it fails; then the clock goes on to where it was going (`systems/routines.ts`, from 2026-10-02).
-    let stop: AdvanceResult = result;
-    for (let n = 0; stop.interruptedBy?.kind === ROUTINE_DUE_KIND && n < 50; n += 1) {
-      const routineId = String(stop.interruptedBy.payload.routineId);
-      const name = (sim.player.routines ?? []).find((r) => r.id === routineId)?.name ?? 'A routine';
-      const ran = runRoutine(sim, routineId);
-      toast(ran.stopped ? `${name} stopped at ${ran.stopped.label}: ${ran.stopped.error}` : `${name}, done.`, ran.stopped ? 'negative' : 'positive');
-      const onTo = Math.max(wanted, sim.now);
-      stop = sim.advanceTo(onTo, { stopOnPlayerRequired: true });
-    }
-    if (!stop.interruptedBy) return;
     sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
-    setStandingAt({ item: stop.interruptedBy, wanted, sentFrom: stop.sentFrom });
-  }, [sim, toast]);
+    setStandingAt({ item: result.interruptedBy, wanted, sentFrom: result.sentFrom });
+  }, [sim]);
 
   const advance = useCallback((ms: number): AdvanceResult | undefined => {
     if (ms <= 0) return undefined;
@@ -395,12 +372,14 @@ export function GameProvider({
     return () => window.removeEventListener('keydown', onKey);
   }, [navigate]);
 
+  // SLATE's own reduced-motion setting went on 2026-10-02: nothing could change it, and the system's preference stands.
+
   const exitToMenu = useCallback(() => {
     void saveNow().then(onExit);
   }, [saveNow, onExit]);
 
   const value: GameContextValue = {
-    sim, version, run, runAll, advance, advanceTo, refresh,
+    sim, version, run, advance, advanceTo, refresh,
     standingAt, clearStandingAt: () => setStandingAt(null),
     route, navigate, back, breadcrumbs, recent, favourites, toggleFavourite,
     toasts, toast,

@@ -221,38 +221,6 @@ describe('the monthly fee', () => {
     expect(feeFor(sim, account, monthStartOf(sim, sim.now)).fee).toBe(15_00);
   });
 
-  it('is charged for a month the balance dipped under the line for a day, and not for the next', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
-    const account = current(sim);
-    const zone = sim.homeZone;
-    const move = (amount: number) => sim.post({
-      memo: 'Test', category: 'test',
-      postings: [{ accountId: account.id, amount }, { accountId: sim.nominalAccount('equity', 'Test').id, amount: -amount }],
-    });
-    // After February's rent, which is due on the first.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 2, hour: 6 }, zone));
-    // No home, so no rent or food to move it; $3,000 keeps the average across
-    // the linked accounts under Chase's $5,000, so only the daily balance counts.
-    sim.player.home = undefined;
-    const saver = bankAccountsOf(sim, sim.player).find((a) => a.kind === 'savings');
-    if (saver) holding(sim, saver, 0);
-    holding(sim, account, 3_000_00);
-    // Under $1,500 over one night in the middle of February, then back.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 20 }, zone));
-    move(1_000_00 - account.balance);
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 11, hour: 9 }, zone));
-    move(3_000_00 - account.balance);
-    // January's is charged too: the life started under the line. Only February on counts here.
-    const since = instantFromZoned({ year: 2026, month: 2, day: 2, hour: 7 }, zone);
-    const fees = () => sim.universe.transactions.filter((t) => t.category === 'bank_fee' && t.at > since)
-      .flatMap((t) => t.postings).filter((p) => p.accountId === account.id).map((p) => p.amount);
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 1, hour: 6 }, zone));
-    expect(fees()).toEqual([-15_00]);
-    // March, above the line throughout: nothing.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 4, day: 1, hour: 6 }, zone));
-    expect(fees()).toEqual([-15_00]);
-  });
-
   it('is waived by wages paid in, and by age where the bank waives it for the young', () => {
     const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
     const account = current(sim);

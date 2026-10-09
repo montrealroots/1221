@@ -4,23 +4,20 @@
  * Mexico's temporary residence by solvency and its permanent residence; and
  * no route in Canada, Ireland or, for a green card, the United States.
  */
-import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
-import type { Simulation } from '@/engine/core/simulation';
-import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { documentsOf, residenceRefusal } from '@/engine/systems/documents';
-import { publicCareShareOf } from '@/engine/systems/health';
-import { careerOf } from '@/engine/systems/career';
-import { earningsOf, yearOf } from '@/engine/systems/earnings';
-import { GLOBAL_TALENT, MEXICAN_RESIDENCE, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
+import { saveCurrency } from '@/engine/core/money';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY } from '@/engine/core/time';
+import { residenceRefusal } from '@/engine/systems/documents';
+import { earningsOf } from '@/engine/systems/earnings';
+import { MEXICAN_RESIDENCE,residenceIn,routeRefusal,settleRefusal } from '@/engine/systems/residence';
+import { describe,expect,it } from 'vitest';
 
 const YEAR = 365.2425 * MS_DAY;
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 /** An American living in New York, wealthy. */
 const american = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
-const record = (sim: Simulation) => { careerOf(sim.player).credits.push(...['broadway', 'lort-b', 'guest-hour'].map((roleId) => ({ roleId, year: 2030, cityId: 'us-ny-newyork' as const }))); };
 
 describe('a route to residence', () => {
   it('is refused where none is open to an actor, with the reason', () => {
@@ -29,39 +26,6 @@ describe('a route to residence', () => {
     expect(routeRefusal(sim, sim.player, 'IE')).toMatch(/employer’s offer/);
     expect(routeRefusal(sim, sim.player, 'US')).toMatch(/citizen/);
     expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toMatch(/route to residence/);
-  });
-
-  it('gives an endorsed actor Britain’s Global Talent visa: to live and work there, and the NHS', () => {
-    const sim = american('res-gt');
-    expect(routeRefusal(sim, sim.player, 'GB')).toMatch(/three kinds/);
-    record(sim);
-    expect(routeRefusal(sim, sim.player, 'GB')).toBeUndefined();
-    const r = sim.execute<{ paid: number }>({ kind: 'documents.residence', payload: { country: 'gb' } });
-    expect(r.ok, r.error).toBe(true);
-    expect(r.value!.paid).toBe(inSave(sim, (561 + 205 + 5 * 1_035) * 100, 'GBP'));
-    // From 2026-10-06 it waits on the biometrics, enrolled at a visa application center where they live (until then
-    // it was granted the day it was paid for): kept, it's granted for its five years.
-    expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toBeDefined();
-    expect(routeRefusal(sim, sim.player, 'GB')).toBe('Your application waits on its biometrics.');
-    const pending = documentsOf(sim.player).find((d) => d.route === 'global-talent')!;
-    expect(pending.visit).toMatchObject({ rule: 'uk-enrolment-abroad', cityId: 'us-ny-newyork' });
-    sim.advanceTo(pending.visit!.at + 3_600_000);
-    expect(pending).toMatchObject({ status: 'valid', issuedAt: pending.visit!.keptAt });
-    expect(pending.expiresAt! - pending.issuedAt!).toBe(GLOBAL_TALENT.years * YEAR);
-    expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toBeUndefined();
-    // Living in London on it, the NHS is theirs.
-    sim.player.home = { kind: 'shared', cityId: 'uk-eng-london', since: sim.now };
-    expect(publicCareShareOf(sim.player, 'stay', sim.now, saveCurrency(sim.universe))).toBe(0);
-    // Five years on, and with pay earned in Britain, settlement.
-    expect(settleRefusal(sim, sim.player, 'GB')).toMatch(/five years/);
-    // Five years on: the visa taken out five years ago.
-    const visa = residenceIn(sim.player, 'GB', sim.now)!;
-    visa.issuedAt! -= GLOBAL_TALENT.settleAfter * YEAR;
-    expect(settleRefusal(sim, sim.player, 'GB')).toMatch(/earned money in Britain/);
-    yearOf(sim.player, 2031).bySource = { uk: 10_000_00 };
-    expect(settleRefusal(sim, sim.player, 'GB')).toBeUndefined();
-    expect(sim.execute({ kind: 'documents.settle', payload: { country: 'GB' } }).ok).toBe(true);
-    expect(residenceIn(sim.player, 'GB', sim.now + 30 * YEAR)?.route).toBe('uk-settled');
   });
 
   it('gives Mexican temporary residence on the solvency test, and permanent residence after four years', () => {

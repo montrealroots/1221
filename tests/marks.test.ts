@@ -80,12 +80,4 @@ describe('a mark on the record', () => {
     // Seven idle years bring marks of their own; the first is gone.
     expect((sim.player.credit!.marks ?? []).some((m) => m.at === at)).toBe(false);
   });
-
-  it('is taken by a repossession, an eviction and a charged-off card as they happen', () => {
-    const sim = save('us-ny-newyork', 'marks-kinds');
-    const record = sim.player.credit!;
-    record.marks = [];
-    markRecord(sim.player, 70, sim.now, sim.player.home?.cityId ?? sim.player.currentLocationId);
-    expect(record.marks![0]!.country).toBe('us');
-  });
 });

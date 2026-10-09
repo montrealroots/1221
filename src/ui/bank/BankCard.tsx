@@ -25,7 +25,7 @@ import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
 import { limitFor } from '@/engine/systems/cardlife';
 import { useState } from 'react';
-import { inTheBank } from '@/engine/systems/household';
+import { inTheBank } from '@/engine/systems/spending';
 import { PENDING } from '@/engine/content/pending';
 import { FIRST_LATE_FEE } from '@/engine/content/latefees';
 import { bankOf, inSaveMoney } from '@/engine/systems/banking';

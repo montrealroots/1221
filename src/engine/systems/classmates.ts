@@ -52,8 +52,6 @@ import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
 import { occupiedAt } from './life';
-import { contactsOf, inviteRefusal } from './people';
-import { diningQuote, restaurantsIn } from './dining';
 import { exerts } from './body';
 
 export const CLASS = {
@@ -302,10 +300,9 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
   const mate = person.school?.classmates[i];
   if (!mate) return 'There’s no such classmate.';
   if (!unrepaired(mate).length) return 'There’s nothing between you to make right.';
-  // Where they are: New Haven at school, after the degree the town the person they are lives in (from 2026-10-08).
-  const c = contactsOf(person).find((x) => x.classmate === i);
-  const where = person.school!.standing === 'graduated' || person.school!.standing === 'dismissed' ? c?.cityId ?? YALE_DRAMA.cityId : YALE_DRAMA.cityId;
-  if (person.currentLocationId !== where) return `${first(mate)} is in ${CITIES.require(where).name}.`;
+  // In New Haven. After the degree they were in the town the person they are lived in (from 2026-10-08), until the
+  // people they are went in the scope reset of 2026-10-09 (`systems/people.ts`).
+  if (person.currentLocationId !== YALE_DRAMA.cityId) return `${first(mate)} is in ${CITIES.require(YALE_DRAMA.cityId).name}.`;
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   return undefined;
@@ -396,9 +393,6 @@ export function registerClassmates(sim: Simulation): void {
     for (const x of open) x.repaired = s.now;
     move(person, mate, open.reduce((n, x) => n + CLASS.amends[x.kind].trust, 0), open.reduce((n, x) => n + CLASS.amends[x.kind].bond, 0));
     remember(s, mate, 'You made it right with them');
-    // The person they are hears it too: a meeting missed or called off late no longer keeps them from making plans.
-    const c = contactsOf(person).find((x) => x.classmate === i);
-    if (c) { delete c.stoodUp; delete c.cutShort; c.memory.unshift({ at: s.now, what: 'You made it right with them' }); }
     return { repaired: open.length };
   });
 
@@ -443,28 +437,3 @@ export const momentInClass = (sim: Simulation, person: Person, when: Instant): M
   return classMoment(sim, person, { year: p.year, month: p.month, day: p.day });
 };
 
-/**
- * After a closing night (from 2026-10-08): a classmate in the cast who isn't
- * a rival asks you out to eat half an hour after the show, at a place in
- * town they'd spend on and a dish with a price (New Haven has no published
- * pint price, so a first version asking for a pint was never offered), as a friend's ask is made
- * (`systems/reachingout.ts`): yes, no, another time, or left to lapse. The
- * one least recently out with you asks, so it isn't the same friend each run.
- */
-export function celebrate(sim: Simulation, person: Person, cast: readonly { name: string }[], after: Instant, title: string): void {
-  const names = new Set(cast.map((x) => x.name));
-  const mates = contactsOf(person).filter((c) => c.classmate !== undefined && names.has(c.name) && !c.rival && !c.ask);
-  if (!mates.length) return;
-  const at = after + 30 * 60_000;
-  const c = [...mates].sort((a, b) => (a.kinds?.meal ?? 0) - (b.kinds?.meal ?? 0))[0]!;
-  const tiers = ['fast', 'casual', 'mid', 'upscale'];
-  const place = restaurantsIn(c.cityId).filter((x) => tiers.indexOf(x.tier) <= tiers.indexOf(c.spends) && x.menu.some((m) => m.price !== null && diningQuote(sim, x, [m.item], 'in'))).sort((a, b) => tiers.indexOf(a.tier) - tiers.indexOf(b.tier))[0];
-  const dish = place?.menu.find((m) => m.price !== null && diningQuote(sim, place, [m.item], 'in'));
-  if (!place || !dish) return;
-  const inv = { contactId: c.id, at, what: 'meal' as const, restaurantId: place.id, item: dish.item };
-  if (inviteRefusal(sim, person, inv)) return;
-  c.ask = { at, what: 'meal', restaurantId: place.id, item: dish.item, made: sim.now, about: `after the closing of ${title}` };
-  c.askedAt = sim.now;
-  c.memory.unshift({ at: sim.now, what: `Asked you out after the closing of ${title}` });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${c.name.split(' ')[0]} Asks You Out After The Closing`, body: `${c.name} would like to eat at ${place.name} after the closing of ${title}, at ${formatTime(at, zone())}.`, importance: 45, route: '/workspace/people' });
-}

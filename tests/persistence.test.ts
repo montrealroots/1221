@@ -215,21 +215,6 @@ describe('opening a slot', () => {
     expect((await adapter.restoreBackup(slot))!.now).toBe(newer);
   });
 
-  it('brings forward a save that carries the build’s own number but not its shape', async () => {
-    const adapter = new LocalSaveAdapter();
-    const sim = quickSave({}, 'same-number');
-    const slot = sim.universe.meta.slot;
-    sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
-    delete (sim.universe as unknown as Record<string, unknown>).notifications;
-    await adapter.save(sim.universe);
-
-    const opened = await openSlot(adapter, slot);
-    if ('error' in opened) throw new Error(opened.error);
-    expect(opened.migration.steps).toContain('Created the notifications.');
-    expect(opened.universe.notifications).toEqual([]);
-    expect((await adapter.load(slot))!.notifications).toEqual([]);
-  });
-
   it('opens a current save without writing it again', async () => {
     const adapter = new LocalSaveAdapter();
     const sim = quickSave({}, 'current');

@@ -29,9 +29,6 @@
  *   includes the ill: 0.8 of the table. Worn to nothing, it is three times it,
  *   about what poor self-rated health carries in the survey studies.
  *
- * - Living alone, from 2026-10-01, at Holt-Lunstad's odds, spread so the
- *   table stays everybody's (`livingFactor` in `systems/people.ts`).
- *
  * None of it is shown. Nothing on a screen says how likely the end is or when.
  */
 
@@ -44,7 +41,6 @@ import { clamp } from '../core/rng';
 import { homeOf } from './earnings';
 import { bmiOf } from './body';
 import { BMI_SURVIVAL_LIMIT, bmiHazard } from '../content/body';
-import { livingFactor } from './people';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -97,9 +93,9 @@ export function frailty(condition: number, age: number): number {
   return 0.8 + 2.2 * short ** 1.5;
 }
 
-/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in, their weight (`bmiHazard`) and, from 2026-10-01, whether they live alone (`livingFactor`). */
+/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in and their weight (`bmiHazard`). */
 export function chanceOfEndingYear(person: Person, age: number, countryId: string | undefined): number {
-  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1) * livingFactor(person));
+  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1));
 }
 
 /**
@@ -131,29 +127,10 @@ export function decideStretch(sim: Simulation, person: Person, from: Instant, to
 }
 
 /** Whole years between their birth and an instant, as a birthday counts them. */
-/**
- * The day in a year the law counts as a birthday (from 2026-10-06, `docs/research/world/research-leap-day-birthday.json`):
- * the day born, and for the 29th of February in a year without one, the 1st of March in the United Kingdom (Scotland's
- * Age of Legal Capacity Act 1991 s.6(2) says so; England's practice, as the Electoral Commission applies it, is the
- * same) and the 28th elsewhere: British Columbia's Interpretation Act s.25(3) says so, New York's and California's laws
- * on counting a year point to it, and Ireland, Canada, Mexico and Connecticut leave it unsettled, where it's SLATE's reading.
- */
-export function birthdayIn(year: number, born: { month: number; day: number }, countryId: string | undefined): { month: number; day: number } {
-  const leap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  if (born.month !== 2 || born.day !== 29 || leap) return born;
-  return countryId === 'uk' ? { month: 3, day: 1 } : { month: 2, day: 28 };
-}
-
-/**
- * Their age at an instant: the years since they were born, the year's birthday counted on the day the law counts it
- * where they are (`birthdayIn`). Until 2026-10-06 a 29th-of-February birthday was counted on the 1st of March
- * everywhere, while the birthday on the calendar said it was the 28th, and for that day the two disagreed.
- */
 export function ageOn(sim: Simulation, person: Person, at: Instant): number {
   const born = zonedParts(person.birthInstant, sim.homeZone);
   const then = zonedParts(at, sim.homeZone);
-  const day = birthdayIn(then.year, born, CITIES.get(person.currentLocationId)?.countryId);
-  const had = then.month > day.month || (then.month === day.month && then.day >= day.day);
+  const had = then.month > born.month || (then.month === born.month && then.day >= born.day);
   return then.year - born.year - (had ? 0 : 1);
 }
 

@@ -3,82 +3,15 @@
  * bills by the home's heating and cooling, and the flu's weeks by the town's
  * cold or wet ones, each keeping its year's total.
  */
-import { describe, expect, it } from 'vitest';
-import { HEATER_SHARE } from '@/engine/systems/hotwater';
-import { LIGHTING_NORM } from '@/engine/content/lighting';
-import { homePlace, machineUsd } from '@/engine/systems/dwelling';
 import { quickSave } from '@/engine';
-import { instantFromZoned } from '@/engine/core/time';
-import { saveCurrency } from '@/engine/core/money';
 import { CARE } from '@/engine/content/safetynet';
-import { billsFactor, degreeDays, energyByMonth, energyScale, energyYear, ENERGY, fluByWeek, weekOfYear } from '@/engine/systems/seasons';
-import { CITIES } from '@/engine/content/geography';
-import { atTown, billsOf, costsAt, telecomPartOf } from '@/engine/systems/household';
-import { ENERGY_ABROAD_USD, ENERGY_PRICES_SINCE } from '@/engine/content/energy-world';
+import { instantFromZoned } from '@/engine/core/time';
 import { illnessWeek } from '@/engine/systems/health';
+import { fluByWeek,weekOfYear } from '@/engine/systems/seasons';
+import { describe,expect,it } from 'vitest';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const peakWeek = (xs: number[]) => xs.indexOf(Math.max(...xs));
-
-describe('the bills', () => {
-  it('swing their energy with the town’s heating and cooling, keep the year’s total, and in the US take the state’s', () => {
-    for (const city of ['us-ny-newyork', 'us-fl-miami', 'au-nsw-sydney', 'is-39-mosfellsbr']) {
-      expect(sum(energyByMonth(city))).toBeCloseTo(1, 9);
-      expect(sum(Array.from({ length: 12 }, (_, m) => billsFactor(city, m + 1)))).toBeCloseTo(12, 9);
-    }
-    expect(energyScale('au-nsw-sydney')).toBe(1);
-    // A year's energy in the US is the state's spending against the nation's, the town's cost of living taken off,
-    // at the last full year's prices (from 2026-10-02, `ENERGY_PRICES_SINCE`).
-    const ny = CITIES.require('us-ny-newyork');
-    expect(energyScale('us-ny-newyork')).toBeCloseTo((2_319 / 1_884) * (100 / ny.costOfLivingIndex) * ENERGY_PRICES_SINCE.us!, 9);
-    // Abroad, a province's or a country's own survey, the same way: Ontario's, and Mexico's.
-    const tor = CITIES.require('ca-on-toronto');
-    expect(energyScale('ca-on-toronto')).toBeCloseTo((ENERGY_ABROAD_USD['ca-08']! / 1_884) * (100 / tor.costOfLivingIndex) * ENERGY_PRICES_SINCE['ca-08']!, 9);
-    const mex = CITIES.require('mx-cmx-mexicocity');
-    expect(energyScale('mx-cmx-mexicocity')).toBeCloseTo((ENERGY_ABROAD_USD.mx! / 1_884) * (100 / mex.costOfLivingIndex), 9);
-    const perCol = (id: string) => energyScale(id) * CITIES.require(id).costOfLivingIndex;
-    expect(perCol('us-ct-newhaven')).toBeGreaterThan(perCol('us-fl-miami'));
-    // And the year's bills, which creation shows, carry it.
-    const flat = (id: string) => atTown(id, 180, 'USD');
-    expect(costsAt('us-ny-newyork', 'own', 'USD', Date.UTC(2026, 9, 1)).bills).toBe(Math.round(flat('us-ny-newyork') * energyYear('us-ny-newyork') / 100) * 100);
-    expect(costsAt('au-nsw-sydney', 'own', 'USD', Date.UTC(2026, 9, 1)).bills).toBe(flat('au-nsw-sydney'));
-    // New York heats in January and cools in July, more than it does either in May.
-    expect(billsFactor('us-ny-newyork', 1)).toBeGreaterThan(billsFactor('us-ny-newyork', 5));
-    expect(billsFactor('us-ny-newyork', 7)).toBeGreaterThan(billsFactor('us-ny-newyork', 5));
-    // Miami never heats, and cools most in its summer; Sydney heats in July, the south's winter.
-    expect(sum(degreeDays('us-fl-miami').hdd)).toBe(0);
-    expect(billsFactor('us-fl-miami', 8)).toBeGreaterThan(billsFactor('us-fl-miami', 1));
-    expect(degreeDays('au-nsw-sydney').hdd[6]).toBeGreaterThan(degreeDays('au-nsw-sydney').hdd[0]!);
-    // Only the energy part moves: the rest of a month's bills holds.
-    for (const city of ['us-ny-newyork', 'is-39-mosfellsbr']) for (let m = 1; m <= 12; m += 1) expect(billsFactor(city, m)).toBeGreaterThan(1 - ENERGY.share);
-  });
-
-  it('are paid on the 1st for the month just gone, at the home', () => {
-    // A home whose water isn't heated electrically or by gas: an electric heater's showers are metered (`systems/hotwater.ts`), from
-    // 2026-10-06 a gas heater's too, and this life takes none.
-    const share = HEATER_SHARE.us!;
-    const was = share.electric;
-    const wasGas = share.gas;
-    (share as { electric: number }).electric = 0;
-    (share as { gas: number }).gas = 0;
-    // And no lighting (`systems/lighting.ts`, from 2026-10-05), whose January's long nights bill past the typical month's.
-    const lights = LIGHTING_NORM.us!;
-    const lit = lights.share;
-    (lights as { share: number }).share = 0;
-    try {
-      const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true });
-      const flat = costsAt('us-ny-newyork', sim.player.home!.kind, saveCurrency(sim.universe), sim.now).bills;
-      // The home's air conditioning decides the cooling in them, and its own machines' loads are added (`systems/dwelling.ts`).
-      const cooling = homePlace(sim, sim.player)!.fixtures.cooling;
-      const machines = () => atTown('us-ny-newyork', machineUsd(sim.player), saveCurrency(sim.universe));
-      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, 'America/New_York'));
-      // Less the phone and internet, billed by their providers from 2026-10-01 (`telecomPartOf`).
-      expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
-      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
-      expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
-    } finally { (share as { electric: number }).electric = was; (share as { gas: number }).gas = wasGas; (lights as { share: number }).share = lit; }
-  });
-});
 
 describe('the flu', () => {
   it('comes in the town’s cold weeks, the south’s in its winter, and a year’s chance stays the same', () => {

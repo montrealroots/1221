@@ -47,7 +47,7 @@ import {
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
-import { payFromCurrent } from './household';
+import { payFromCurrent } from './spending';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
 import { bmiOf } from './body';
@@ -62,7 +62,6 @@ import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
 import { appointmentsOf, book } from './appointments';
 import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
-import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -196,7 +195,7 @@ export function yaleUntil(person: Person): Instant | undefined {
   const school = person.school;
   if (!school) return undefined;
   if (school.standing !== 'graduated' && school.standing !== 'dismissed') return Number.POSITIVE_INFINITY;
-  const since = person.career?.since;
+  const since = school.endedAt;
   if (since === undefined) return Number.POSITIVE_INFINITY;
   const p = zonedParts(since, HOME);
   return firstOf(p.month >= 8 ? p.year + 1 : p.year, 8);
@@ -348,6 +347,16 @@ export function inHospital(person: Person, at: Instant): boolean {
   return (person.health?.inHospitalUntil ?? 0) > at;
 }
 
+/**
+ * Whether they're there for something at an instant: awake, not in hospital, not laid up by an injury, and in its
+ * town where it has one. It was the career's (`systems/career.ts`) until that went in the scope reset of 2026-10-09,
+ * and the school, the clinics and the paper offices still ask it.
+ */
+export function present(person: Person, when: Instant, cityId?: string): boolean {
+  const asleep = person.awakeSince !== undefined && person.awakeSince > when;
+  return !asleep && !inHospital(person, when) && !laidUp(person, when) && (cityId === undefined || person.currentLocationId === cityId);
+}
+
 export function armHealth(sim: Simulation, person: Person): void {
   healthOf(person);
   drawChronic(sim, person);
@@ -376,11 +385,12 @@ const monthsBetween = (from: Instant, to: Instant) => {
   return Math.max(1, (b.year - a.year) * 12 + (b.month - a.month) + 1);
 };
 
-/** The hours worked and wages earned last month, for the work requirement. */
-function lastMonthWork(person: Person, at: Instant): { hours: number; earnings: Money } {
-  const key = lastMonthKey(at);
-  const hours = (person.career?.days ?? []).filter((d) => monthKey(d.at) === key).reduce((s, d) => s + d.hours, 0);
-  return { hours, earnings: earningsOf(person).months[key] ?? 0 };
+/**
+ * The wages earned last month, for the work requirement. Its hours were the career's days worked until the career
+ * went in the scope reset of 2026-10-09; what's earned (work-study's, `systems/school.ts`) is what's left to meet it.
+ */
+function lastMonthWork(person: Person, at: Instant): { earnings: Money } {
+  return { earnings: earningsOf(person).months[lastMonthKey(at)] ?? 0 };
 }
 
 const renewMonths = (at: Instant, state?: BenefitState) => rateOn(state === 'ct' ? PUBLIC_COVER.renewMonthsCt : PUBLIC_COVER.renewMonths, monthKey(at) + '-01');
@@ -464,7 +474,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     else if (at >= prog.renewAt) {
       const still = programFor(person, at, cur);
       const work = lastMonthWork(person, at);
-      const worksEnough = prog.kind !== 'medicaid' || prog.scope !== undefined || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
+      const worksEnough = prog.kind !== 'medicaid' || prog.scope !== undefined || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
       if (still?.kind === prog.kind && worksEnough) {
         prog.band = still.band;
         if (still.scope) prog.scope = still.scope; else delete prog.scope;
@@ -1132,10 +1142,9 @@ export function extraSupplyRefusal(person: Person, days: number): string | undef
 }
 
 /**
- * What care would cost them where they are now, before it's had (from
- * 2026-10-02): their share at home, by their plan or the public system; or,
- * away in another country, travel insurance's or the place's price for a
- * visitor (`careAway`). The bill for care had is this same figure.
+ * What care would cost them before it's had (from 2026-10-02): their share at home, by their plan or the public
+ * system. Away in another country it was travel insurance's or the place's price for a visitor (`careAway`), until
+ * the journeys went in the scope reset of 2026-10-09. The bill for care had is this same figure.
  */
 /** What care costs uninsured, in the save's money: SLATE's American price at the uninsured markup. */
 export const uninsuredPrice = (sim: Simulation, c: 'visit' | 'urgent' | 'emergency' | 'stay', at: Instant): Money => Math.round(usd(grown(CARE.price[c], c as 'visit', at), saveCurrency(sim.universe)) * CARE.uninsuredMarkup);
@@ -1149,12 +1158,7 @@ export function appealRefusal(bill: MedicalBill | undefined, at: Instant): strin
 }
 
 export function careQuote(sim: Simulation, person: Person, care: Care, at: Instant = sim.now): Money {
-  const cur = saveCurrency(sim.universe);
-  const amount = shareOf(person, care, at, cur);
-  if (!MEDICAL.includes(care)) return amount;
-  const c = care as 'visit' | 'urgent' | 'emergency' | 'stay';
-  const usUninsured = Math.round(usd(grown(CARE.price[c], c as 'visit', at), cur) * CARE.uninsuredMarkup);
-  return careAway(sim, person, c, amount, usUninsured, CARE.stayDays, canadianShareOf(person, c, at) !== undefined, at);
+  return shareOf(person, care, at, saveCurrency(sim.universe));
 }
 
 export function registerHealth(sim: Simulation): void {

@@ -30,8 +30,6 @@ import { CITIES } from '../content/geography';
 import { rateOn } from '../content/career';
 import { UNIVERSAL_CREDIT } from '../content/safetynet';
 import { earningsOf, homeOf, ukTaxYear } from './earnings';
-import { rentOf } from './household';
-import { workedBetween } from './career';
 import { payeeAccount } from './cash';
 import { citizenOf } from './documents';
 import { residenceIn } from './residence';
@@ -70,17 +68,14 @@ export function creditRefusal(sim: Simulation, person: Person): string | undefin
 }
 
 /** An assessment period's award, in pounds, and how it was reached. */
-export function creditAward(sim: Simulation, person: Person, from: Instant, to: Instant): { award: Money; lines: string[] } {
+export function creditAward(sim: Simulation, person: Person, _from: Instant, to: Instant): { award: Money; lines: string[] } {
   const age = (to - person.birthInstant) / YEAR;
   const standard = rateOn(age < 25 ? UNIVERSAL_CREDIT.standardUnder25 : UNIVERSAL_CREDIT.standard, dayKey(to));
   const lines = [`Standard allowance ${formatMoney(standard, 'GBP')}`];
-  let housing = 0;
-  if (person.home && (person.home.kind === 'shared' || person.home.kind === 'own') && CITIES.get(person.home.cityId)?.name === 'London') {
-    const rate = age < 35 ? UNIVERSAL_CREDIT.lhaLondon.sharedRoom : UNIVERSAL_CREDIT.lhaLondon.oneBed;
-    housing = Math.min(inGbp(sim, rentOf(sim, person)), Math.round(rate * 100));
-    lines.push(`Housing ${formatMoney(housing, 'GBP')}`);
-  }
-  const earned = inGbp(sim, workedBetween(person, from, to).pay);
+  // The housing element paid London's rent to its local housing allowance, and the period's earnings were the career's
+  // days, until the home and the career went in the scope reset of 2026-10-09: there's no rent to meet, and no pay.
+  const housing = 0;
+  const earned = 0;
   const taper = Math.round(earned * UNIVERSAL_CREDIT.taper);
   if (taper) lines.push(`Less 55% of ${formatMoney(earned, 'GBP')} earned`);
   const capital = capitalOf(sim, person);

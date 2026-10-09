@@ -30,19 +30,4 @@ describe('a lost ID card', () => {
     sim.advanceTo(r.readyAt + MS_DAY);
     expect(fresh.status).toBe('valid');
   });
-
-  it('is free from 62 in California, and replaced only where it was issued', () => {
-    const sim = life('us-ca-losangeles', 'id-replace-ca');
-    const p = sim.player;
-    expect(idReplaceFee(sim, p, 'us-ca')).toBe(inSaveMoney(sim, 40_00, 'USD'));
-    p.birthInstant = sim.now - 63 * 365.25 * MS_DAY;
-    expect(idReplaceFee(sim, p, 'us-ca')).toBe(0);
-    // An ID card of theirs, issued there.
-    documentsOf(p).push({ id: 'idc', kind: 'idcard', issuer: 'us-ca', name: 'ID Card', number: 'I1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3e11 });
-    const card = documentsOf(p).find((d) => d.id === 'idc')!;
-    sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id } });
-    p.home = { ...p.home!, cityId: 'us-ny-newyork' };
-    expect(idReplaceRefusal(p, card.id)).toBe('It’s replaced where it was issued, for someone living there.');
-    expect(idReplaceRefusal(p, 'nothing')).toBe('That isn’t an ID card of yours.');
-  });
 });

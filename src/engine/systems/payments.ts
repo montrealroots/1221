@@ -148,7 +148,7 @@ export function checkFees(sim: Simulation, person: Person) {
 /** Writes a check that's cashed on a date, and puts its clearing on the calendar. */
 export function writeCheck(sim: Simulation, person: Person, amount: Money, memo: string, category: string): CheckInFlight {
   const pay = settle(person);
-  const days = checkDays(person.home?.cityId ?? person.currentLocationId);
+  const days = checkDays(person.currentLocationId);
   const clearsAt = sim.now + days * MS_DAY;
   const id = sim.nextId('sched');
   const item = sim.schedule({
@@ -240,7 +240,7 @@ export function registerPayments(sim: Simulation): void {
   sim.onCommand<{ rent?: RentWay; bills?: BillsWay; everyday?: 'debit' | 'credit' | 'cash'; linkSavings?: boolean }, { payments: PaymentSettings }>('bank.set_payments', (p, { sim: s }) => {
     const person = s.player;
     const pay = settle(person);
-    const cityId = person.home?.cityId ?? person.currentLocationId;
+    const cityId = person.currentLocationId;
     if (p.rent !== undefined) {
       if (!['auto', 'check', 'manual'].includes(p.rent)) throw new CommandError('Rent goes from the bank on its day, by check, or by hand.');
       if (p.rent === 'check' && !checksUsed(cityId)) throw new CommandError('Rent isn’t paid by check here.');
@@ -334,7 +334,7 @@ export function registerPayments(sim: Simulation): void {
 
   sim.onCommand<{ transactionId: string }, { refunded: Money }>('bank.reclaim_debit', (p, { sim: s }) => {
     const person = s.player;
-    if (!mayReclaim(person.home?.cityId ?? person.currentLocationId)) throw new CommandError('A direct debit here comes back only if it was taken in error.');
+    if (!mayReclaim(person.currentLocationId)) throw new CommandError('A direct debit here comes back only if it was taken in error.');
     const txn = s.universe.transactions.find((t) => t.id === p.transactionId);
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     const taken = txn && current ? -txn.postings.filter((q) => q.accountId === current.id).reduce((a, q) => a + q.amount, 0) : 0;

@@ -51,7 +51,7 @@ export function selfPayAt(clinic: Clinic | undefined, into: string): Money | und
 export function clinicRefusal(person: Person, clinicId: string): string | undefined {
   const c = clinicById(clinicId);
   if (!c) return 'No such practice.';
-  if (c.cityId !== person.home?.cityId) return 'Your doctor is in the town you live in.';
+  if (c.cityId !== person.currentLocationId) return 'Your doctor is in the town you live in.';
   if (!DOCTOR_KINDS.includes(c.kind)) return 'That isn’t a doctor’s practice.';
   return undefined;
 }

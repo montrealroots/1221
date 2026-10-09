@@ -47,14 +47,6 @@ describe('an account’s entries', () => {
     expect(b.opening + b.moneyIn - b.moneyOut).toBe(b.closing);
     expect(c.closing).toBe(current(sim).balance);
   });
-
-  it('say what each entry was: the rent, the day’s food, the interest', () => {
-    const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'st-what');
-    sim.advanceBy(40 * MS_DAY);
-    const memos = activity(sim, current(sim), 0, sim.now + 1).lines.map((l) => l.category);
-    expect(memos).toContain('rent');
-    expect(memos).toContain('food');
-  });
 });
 
 describe('the periods', () => {
@@ -195,17 +187,6 @@ describe('alerts', () => {
     give(sim, -10_000_000_00);
     sim.advanceBy(2 * MS_DAY);
     expect(lows()).toBe(2);
-  });
-
-  it('tell of a payment over the line, and nothing under it', () => {
-    const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'st-large');
-    sim.execute({ kind: 'bank.set_alerts', payload: { largePayment: 50_000_00 } });
-    sim.advanceBy(40 * MS_DAY);
-    const large = sim.universe.notifications.filter((n) => n.title === 'A Large Payment');
-    // The rent, and not the day’s groceries.
-    expect(large.length).toBeGreaterThan(0);
-    expect(large.some((n) => /rent/i.test(n.body))).toBe(true);
-    expect(large.every((n) => !/groceries/i.test(n.body))).toBe(true);
   });
 
   it('tell when a statement is ready, and stop when turned off', () => {

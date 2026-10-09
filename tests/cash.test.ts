@@ -9,7 +9,7 @@ import { CARDS, type CardProduct } from '@/engine/content/cards';
 import { CASH } from '@/engine/content/cash';
 import { cardOf, STATEMENT_KIND } from '@/engine/systems/credit';
 import { allocatePayment, walletOf } from '@/engine/systems/cash';
-import { spend } from '@/engine/systems/household';
+import { spend } from '@/engine/systems/spending';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
 const kept = new Map<string, unknown>();

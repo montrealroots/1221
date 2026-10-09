@@ -47,9 +47,6 @@ function lockedRoutes(): Set<string> {
   return locked;
 }
 
-/** The residence routes a document carries, read from the `Route` union in residence.ts. */
-const PAPER_ROUTES = new Set([...(read('engine/systems/residence.ts').match(/export type Route = ([^;]+);/)?.[1] ?? '').matchAll(/'([^']+)'/g)].map((m) => m[1]!));
-
 /** Every route string the engine hands to a notification or a decision. */
 function enginesRoutes(): { file: string; route: string }[] {
   const dir = new URL('engine/systems/', ROOT);
@@ -57,13 +54,8 @@ function enginesRoutes(): { file: string; route: string }[] {
   for (const file of readdirSync(dir)) {
     if (!file.endsWith('.ts')) continue;
     const source = readFileSync(new URL(file, dir), 'utf8');
-    for (const match of source.matchAll(/route:\s*'([^']+)'/g)) {
-      // A document's immigration route (`Route` in residence.ts) shares the key, not the meaning (from 2026-10-06,
-      // when a pending Global Talent permit was first written as a literal); any other word without a slash is still
-      // taken as a screen and fails.
-      if (!match[1]!.startsWith('/') && PAPER_ROUTES.has(match[1]!)) continue;
-      out.push({ file, route: match[1]! });
-    }
+    // A screen's route starts at the root; a document's `route` (`systems/residence.ts`) is the way it was granted.
+    for (const match of source.matchAll(/route:\s*'(\/[^']*)'/g)) out.push({ file, route: match[1]! });
   }
   const world = read('engine/world/world.ts');
   for (const match of world.matchAll(/route:\s*'([^']+)'/g)) out.push({ file: 'world.ts', route: match[1]! });
@@ -107,12 +99,11 @@ describe('what was taken out', () => {
     // booked, kept on the calendar and taken (`systems/journey.ts`). Vehicles
     // came back the same day, at the owner's word, as Stage 3 of docs/WORLD.md:
     // a real car bought, taxed, insured and registered where one lives
-    // (`systems/vehicles.ts`). The Industry came back on 2026-10-08, at the owner's word, as the entertainment
-    // database over the game's own projects, companies and people (`systems/industry.ts`, `world/database.ts`).
+    // (`systems/vehicles.ts`).
     const removed = [
       'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
-      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace',
+      'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
       'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
       'TrackWorkspace', 'WellbeingWorkspace', 'WorkWorkspace',
@@ -151,11 +142,10 @@ describe('what was taken out', () => {
 
   it('gives the calendar a section of Home rather than a tile pointing at one', () => {
     // The calendar describes the day you are standing in, so it is a section
-    // of the hub, and Home doesn't list it among the places to go. The rail
-    // didn't carry it either until 2026-10-08, when the owner's brief asked
-    // for a rail that makes every place easy to find: it's under Your Day.
+    // of the hub. The rail does not carry it and Home does not list it among
+    // the places to go — Home *is* where it is.
     const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
-    expect(railRoutes).toContain('/workspace/calendar');
+    expect(railRoutes).not.toContain('/workspace/calendar');
     expect(ALL_DESTINATIONS.map((d) => d.route)).toContain('/workspace/calendar');
     for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
 

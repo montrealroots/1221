@@ -5,75 +5,29 @@
  * dentist and the optician (`systems/career.ts`, `systems/health.ts`,
  * `systems/taxreturn.ts`).
  */
-import { documentsOf, passportOf } from '@/engine/systems/documents';
-import { describe, expect, it } from 'vitest';
-import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
-import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { exchange } from '@/engine/content/currency';
+import { ABROAD,CARE,CHRONIC,DENTAL_VISION,PHARMACY,STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { MEAL_PENALTY } from '@/engine/content/career';
-import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, t1287Quote, unitRate, type Booking } from '@/engine/systems/career';
-import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
-import { grown, healthOf, keepUp, fillMedicine, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
-import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukAllowed, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
-import { TURNS } from '@/engine/systems/enjoyment';
-import { occupiedAt } from '@/engine/systems/life';
+import { MS_DAY,instantFromZoned,zonedParts } from '@/engine/core/time';
 import { payeeAccount } from '@/engine/systems/cash';
-import { catching } from '@/engine/systems/health';
-import { costsAt, foodOf, mealOf, rentOf } from '@/engine/systems/household';
-import { personalityOf } from '@/engine/systems/personality';
+import { documentsOf,passportOf } from '@/engine/systems/documents';
+import { earningsOf,recordInterest,recordWages,yearOf } from '@/engine/systems/earnings';
+import { catching,fillMedicine,grown,healthOf,illnessWeek,keepUp,rxShareOf,shareOf,teethAndEyesShareOf } from '@/engine/systems/health';
+import { canadaElected,connecticutTax,figuresFor,settleUkYears,ukAllowed,ukTaxOn } from '@/engine/systems/taxreturn';
+import { describe,expect,it } from 'vitest';
 
 const NY = 'America/New_York';
-const instantParts = (t: number) => new Date(t).getUTCFullYear();
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
-  beginCareer(sim, sim.player);
   // An actor sent abroad holds a passport, and nothing here is about papers (docs/WORLD.md, stage 1b).
   if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - 86_400_000, expiresAt: sim.now + 3650 * 86_400_000 });
   return sim;
 }
 
-describe('Canada’s Form T1287', () => {
-  it('lowers what a job there withholds to the tax on its net, filed before the work, and only for work in Canada', () => {
-    const sim = pro('t1287');
-    const job = { id: 'b-tor', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: sim.now + 30 * 86_400_000, units: 5, rehearsalWeeks: 0, status: 'accepted', dueAt: 0, offeredAt: 0, worked: 0, owed: 0 } as unknown as Booking;
-    careerOf(sim.player).bookings.push(job);
-    const quote = t1287Quote(sim, sim.player, job);
-    expect('rate' in quote && quote.rate).toBeLessThan(ABROAD.canada.rate);
-    sim.must({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } });
-    expect(job.t1287Rate).toBe((quote as { rate: number }).rate);
-    expect(foreignWithholding(sim.player, 'ca-on-toronto', 10_000_00, at(2027, 3, 1), 'USD', { id: 'b-tor', expected: 0 })).toBe(Math.round(10_000_00 * job.t1287Rate!));
-    // Once filed, not again; a job at home has nothing to file; nor one begun.
-    expect(sim.execute({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } }).ok).toBe(false);
-    const home = { ...job, id: 'b-ny', location: undefined, t1287Rate: undefined } as unknown as Booking;
-    expect(t1287Quote(sim, sim.player, home)).toEqual({ refused: 'It’s for work in Canada.' });
-    const begun = { ...job, id: 'b-begun', starts: sim.now - 1, t1287Rate: undefined } as unknown as Booking;
-    expect(t1287Quote(sim, sim.player, begun)).toMatchObject({ refused: expect.stringMatching(/before the work/) });
-  });
-});
-
 describe('working abroad', () => {
-  it('withholds Canada’s 23% from every check, and the UK’s 20% from a payer expected past £12,570', () => {
-    const sim = pro('abroad');
-    const threshold = exchange(ABROAD.uk.payerThresholdGbp, 'GBP', 'USD')!;
-    expect(foreignWithholding(sim.player, 'ca-bc-vancouver', 10_000_00, at(2027, 3, 1), 'USD')).toBe(2_300_00);
-    // A payer expected under the threshold takes nothing; one expected past it, 20% from the first payment.
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 1), 'USD', { id: 'p1', expected: threshold - 100_00 })).toBe(0);
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 1), 'USD', { id: 'p2', expected: threshold + 100_00 })).toBe(1_000_00);
-    recordWages(sim.player, at(2027, 3, 1), NY, { gross: threshold - 1_000_00, where: 'uk-eng-london', employer: 'p1' });
-    // Paid past it after all: the next payment is withheld.
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 8), 'USD', { id: 'p1', expected: threshold - 100_00 })).toBe(1_000_00);
-    // Another payer's is its own.
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 8), 'USD', { id: 'p3', expected: 6_000_00 })).toBe(0);
-    expect(foreignWithholding(sim.player, 'us-ga-atlanta', 10_000_00, at(2027, 4, 1), 'USD')).toBe(0);
-    // Work abroad is the country's, not a state's.
-    expect(yearOf(sim.player, 2027).foreign).toEqual({ uk: { gross: threshold - 1_000_00, withheld: 0 } });
-    expect(yearOf(sim.player, 2027).elsewhere).toEqual({});
-  });
 
   it('credits the foreign tax against the US’s on that income, and has Canada’s back under CAD 15,000', () => {
     const sim = pro('ftc');
@@ -104,25 +58,6 @@ describe('working abroad', () => {
 });
 
 describe('the UK’s tax year, and Canada’s tax on residuals', () => {
-  it('counts a payer’s total over the UK year from 6 April', () => {
-    const sim = pro('uk-year');
-    const threshold = exchange(ABROAD.uk.payerThresholdGbp, 'GBP', 'USD')!;
-    recordWages(sim.player, at(2027, 3, 20), NY, { gross: threshold, where: 'uk-eng-london', employer: 'p' });
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 1_000_00, at(2027, 4, 1), 'USD', { id: 'p', expected: 0 })).toBe(200_00);
-    // From 6 April the UK's year starts again.
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 1_000_00, at(2027, 4, 10), 'USD', { id: 'p', expected: 0 })).toBe(0);
-  });
-
-  it('expects a booking’s whole pay at its rate: days on screen, weeks with rehearsal on stage, episodes for a series', () => {
-    const base = { cityId: 'us-ny-newyork' as const, starts: at(2027, 3, 1), status: 'accepted' as const, dueAt: 0, offeredAt: 0, worked: 0, owed: 0 };
-    const screen: Booking = { ...base, id: 's', roleId: 'costar', units: 3, rehearsalWeeks: 0 };
-    const stage: Booking = { ...base, id: 't', roleId: 'lort-b', units: 6, rehearsalWeeks: 4 };
-    const series: Booking = { ...base, id: 'r', roleId: 'series-hour', units: 1, rehearsalWeeks: 0 };
-    const when = at(2027, 3, 1);
-    expect(expectedGross(screen, when, 'USD')).toBe(unitRate(screen, when, 'USD') * 3);
-    expect(expectedGross(stage, when, 'USD')).toBe(unitRate(stage, when, 'USD') * 10);
-    expect(expectedGross(series, when, 'USD')).toBe(unitRate(series, when, 'USD') * roleById('series-hour').series!.episodes);
-  });
 
   it('takes the province’s tax where the work was done: BC’s in Vancouver, Ontario’s and its surtax in Toronto, the 48% only on what no province takes', () => {
     const cad = (usd: number) => exchange(usd, 'USD', 'CAD')!;
@@ -211,91 +146,6 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     expect(earningsOf(sim.player).ukSettled).toEqual(['2027']);
     expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(-3_000_00);
   });
-
-  it('withholds Canada’s 23% from a residual for work done there', () => {
-    const sim = pro('ca-residual');
-    const b: Booking = { id: 'can', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-bc-vancouver', starts: sim.now, units: 8, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 8, owed: 0 };
-    let r = afterlife(sim, sim.player, b, sim.now)!;
-    for (let n = 0; r.kind === 'network' && !r.rerun && n < 40; n += 1) r = afterlife(sim, sim.player, { ...b, id: `can${n}` }, sim.now)!;
-    const first = sim.universe.scheduled.filter((i) => i.kind === 'career.residual' && i.payload.residualId === r.id).sort((x, y) => x.at - y.at)[0]!;
-    sim.advanceTo(first.at + 60_000);
-    const ca = yearOf(sim.player, instantParts(first.at)).foreign.ca!;
-    expect(ca.gross).toBeGreaterThan(0);
-    expect(ca.withheld).toBe(Math.round(ca.gross * ABROAD.canada.rate));
-  });
-});
-
-describe('US tax on work abroad', () => {
-  it('is withheld as at home, not by the country’s own tables', () => {
-    const sim = pro('home-withholding');
-    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    while (sim.now < at(2026, 10, 16, 12)) sim.advanceTo(Math.min(at(2026, 10, 16, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    const y = yearOf(sim.player, 2026);
-    expect(y.foreign.ca!.gross).toBe(y.acting);
-    expect(y.withheld).toBe(computeAnnualTax(y.acting, 'us-ny-newyork', at(2026, 10, 15)).total);
-    expect(y.foreign.ca!.withheld).toBe(Math.round(y.acting * ABROAD.canada.rate));
-  });
-});
-
-describe('home from a job, however it went', () => {
-  it('brings an actor fired on location home at its end', () => {
-    const sim = pro('fired-away');
-    sim.player.craft = evenCraft(50);
-    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
-    while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    expect(sim.player.currentLocationId).toBe('ca-on-toronto');
-    // Asleep through the first call: replaced, and felt.
-    sim.player.awakeSince = call.at + 3_600_000;
-    sim.player.wellbeing.morale = 50;
-    sim.advanceTo(call.at + 60_000);
-    expect(b.status).toBe('fired');
-    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.replaced.morale / 2);
-    // Home on the next day's flight (from 2026-09-29, when it lands, not the moment the job's done), not at the day the job would have ended.
-    const fired = sim.now;
-    while (sim.now < fired + 36 * 3_600_000) sim.advanceTo(Math.min(fired + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-  }, 60_000);
-
-  it('recasts an actor in hospital on screen without the agency dropping them, and keeps them on stage', () => {
-    const sim = pro('hospital-set');
-    sim.player.craft = evenCraft(50);
-    const career = careerOf(sim.player);
-    career.agencyId = 'caa';
-    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    career.bookings.push(b);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')!;
-    while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    healthOf(sim.player).inHospitalUntil = call.at + 3_600_000;
-    sim.player.wellbeing.morale = 50;
-    sim.advanceTo(call.at + 60_000);
-    expect(b.status).toBe('released');
-    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.recast.morale / 2);
-    // Recast on location, home on the next day's flight.
-    const recast = sim.now;
-    while (sim.now < recast + 36 * 3_600_000) sim.advanceTo(Math.min(recast + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    expect(career.agencyId).toBe('caa');
-    expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);
-    // On stage, the understudy covers the night and the run goes on.
-    const stage = pro('hospital-stage');
-    stage.player.craft = { ...sim.player.craft! };
-    const run: Booking = { id: 'run', roleId: 'lort-a-plus', cityId: 'us-ny-newyork', starts: at(2026, 10, 6, 8), units: 2, rehearsalWeeks: 1, status: 'offered', dueAt: stage.now + 2 * MS_DAY, offeredAt: stage.now, worked: 0, owed: 0 };
-    careerOf(stage.player).bookings.push(run);
-    expect(stage.execute({ kind: 'career.accept', payload: { bookingId: run.id } }).ok).toBe(true);
-    const first = stage.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'run')!;
-    while (stage.now < first.at - 3_600_000) stage.advanceTo(Math.min(first.at - 3_600_000, stage.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    healthOf(stage.player).inHospitalUntil = first.at + 3_600_000;
-    stage.advanceTo(first.at + 60_000);
-    expect(run.status).toBe('accepted');
-    expect(run.worked).toBe(0);
-    expect(first.status).toBe('missed');
-  }, 60_000);
 });
 
 describe('catching the flu', () => {
@@ -316,84 +166,7 @@ describe('catching the flu', () => {
   });
 });
 
-describe('food', () => {
-  it('is bought at the prices where they are, the meal allowance’s town on location', () => {
-    const sim = pro('food-away');
-    const home = foodOf(sim, sim.player);
-    sim.player.currentLocationId = 'us-tx-houston';
-    expect(foodOf(sim, sim.player)).not.toBe(home);
-    expect(foodOf(sim, sim.player)).toBe(Math.round(costsAt('us-tx-houston', sim.player.home!.kind, 'USD', sim.now).day * personalityOf(sim.player, 'spending')));
-    expect(mealOf(sim, sim.player)).toBe(Math.round(costsAt('us-tx-houston', sim.player.home!.kind, 'USD', sim.now).meal * personalityOf(sim.player, 'spending')));
-    // The rent is still the home's.
-    expect(rentOf(sim, sim.player)).toBe(costsAt('us-ny-newyork', sim.player.home!.kind, 'USD', sim.now).rent);
-  });
-});
-
-describe('a day on set', () => {
-  it('takes its hours: no sleep, shower, workout or unwinding in the middle of it, though a meal fits; and costs energy by them', () => {
-    const sim = pro('on-set');
-    sim.player.craft = evenCraft(50);
-    const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
-    // SETUP: the production keeps its schedule (a change is `rescheduling.test.ts`'s).
-    for (const x of sim.universe.scheduled) if (x.kind === 'career.schedule_change' && x.status === 'pending') sim.timeline.cancel(x.id, sim.now);
-    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'day')!;
-    while (sim.now < call.at - 60_000) sim.advanceTo(Math.min(call.at - 60_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    const before = sim.player.wellbeing.energy;
-    sim.player.wellbeing.hygiene = 90;
-    sim.advanceTo(call.at);
-    const hours = careerOf(sim.player).days.at(-1)!.hours;
-    expect(before - sim.player.wellbeing.energy).toBeCloseTo(hours, 0);
-    // And soils them by the hours, under lights and in costume.
-    expect(90 - sim.player.wellbeing.hygiene).toBeCloseTo(hours * 1.6 * personalityOf(sim.player, 'hygieneDrift'), 0);
-    // A television job's first day: the table read, then on set (`tableRead`, from 2026-10-08).
-    sim.advanceTo(call.at + 2 * 3_600_000);
-    const sleep = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
-    expect(sleep.ok).toBe(false);
-    expect(sleep.error).toMatch(/You’re at The Table Read, Then On Set/);
-    for (const action of ['wash', 'exercise', 'unwind']) expect(sim.execute({ kind: 'life.look_after', payload: { action } }).error ?? '').toMatch(/You’re at The Table Read, Then On Set/);
-    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'eat' } }).error ?? '').not.toMatch(/You’re at/);
-    // A sleep set for after the day is fine.
-    sim.advanceTo(call.at + 12 * 3_600_000 + 60_000);
-    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 1 } }).ok).toBe(true);
-    // A call missed holds nobody, and nor does somebody else's.
-    const other = { ...call, id: 'other', at: sim.now - 60_000, status: 'done' as const, payload: { ...call.payload, personId: 'someone-else' } };
-    const missed = { ...call, id: 'missed', at: sim.now - 60_000, status: 'missed' as const };
-    sim.universe.scheduled.push(other, missed);
-    expect(occupiedAt(sim, sim.now)).toBeUndefined();
-  }, 60_000);
-});
-
 describe('a paycheck', () => {
-  it('withholds a city’s resident tax only from its residents', () => {
-    const role = roleById('costar');
-    const base = { scale: 5_000_00, role, rehearsal: false, represented: false, before: 20_000_00, cityId: 'us-ny-newyork', at: at(2027, 3, 1) };
-    const resident = paycheck({ ...base, resident: true });
-    const visitor = paycheck({ ...base, resident: false });
-    const local = computeAnnualTax(25_000_00, 'us-ny-newyork', at(2027, 3, 1)).local - computeAnnualTax(20_000_00, 'us-ny-newyork', at(2027, 3, 1)).local;
-    expect(local).toBeGreaterThan(0);
-    expect(resident.withheld - visitor.withheld).toBe(local);
-  });
-
-  it('keeps New York City’s tax off a New Haven actor’s check for a job in the city', () => {
-    const sim = pro('commuter');
-    sim.player.craft = evenCraft(50);
-    sim.player.home = { kind: 'shared', cityId: 'us-ct-newhaven', since: sim.now };
-    // Earlier in the year, enough to be past the city's deduction.
-    yearOf(sim.player, 2026).acting = 50_000_00;
-    const b: Booking = { id: 'nyc', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
-    sim.player.currentLocationId = 'us-ny-newyork';
-    while (sim.now < at(2026, 10, 16, 12)) sim.advanceTo(Math.min(at(2026, 10, 16, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
-    const y = yearOf(sim.player, 2026);
-    expect(y.acting).toBeGreaterThan(50_000_00);
-    const owing = (income: number) => { const t = computeAnnualTax(income, 'us-ny-newyork', at(2026, 10, 15)); return { all: t.total, local: t.local }; };
-    const [after, prior] = [owing(y.acting), owing(50_000_00)];
-    expect(after.local - prior.local).toBeGreaterThan(0);
-    expect(y.withheld).toBe(after.all - after.local - (prior.all - prior.local));
-  }, 60_000);
 
   it('comes by check into the wallet when there’s no current account open', () => {
     const sim = pro('no-account');
@@ -452,17 +225,6 @@ describe('the states’ job-expense deductions', () => {
     const small = pro('it196-small');
     recordWages(small.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 5_000_00 });
     expect(figuresFor(small.player, 2027).states.find((s) => s.state === 'us-ny')!.tax).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12)).regional);
-  });
-});
-
-describe('meal penalties', () => {
-  it('come on about a fifth of shooting days, a half hour or an hour late, at $25 and then $35', () => {
-    const sim = pro('meals');
-    const all = Array.from({ length: 4000 }, (_, n) => mealPenalty(sim, sim.player, `d${n}`));
-    const late = all.filter((x) => x > 0);
-    expect(late.length / 4000).toBeGreaterThan(MEAL_PENALTY.chance * 0.85);
-    expect(late.length / 4000).toBeLessThan(MEAL_PENALTY.chance * 1.15);
-    expect(new Set(late)).toEqual(new Set([25_00, 60_00]));
   });
 });
 

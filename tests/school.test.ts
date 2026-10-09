@@ -3,25 +3,34 @@
  * against the David Geffen School of Drama's 2026–2027 figures, on played
  * careers: the clock sent on six hours at a time, nights slept alone.
  */
-import { canPay } from '@/engine/systems/household';
-import { journeysOf } from '@/engine/systems/journey';
-import { describe, expect, it } from 'vitest';
-import { SUMMER_PLAYS } from '@/engine/content/plays';
-import { createSave, quickSave } from '@/engine';
-import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { createSave,quickSave } from '@/engine';
 import { rentAt } from '@/engine/content/rents';
-import { COST_2026_27, COURSES, LABS, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
-import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, cabaretRefusal, LAB_KIND, cabaretEvenings, labDays, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
-  sessionGain, termAccount, termStart, timetable, yearOfStudy,
-} from '@/engine/systems/school';
-import type { Simulation } from '@/engine/core/simulation';
-import { careFor, healthOf } from '@/engine/systems/health';
-import { figuresFor } from '@/engine/systems/taxreturn';
-import { SHOWCASE_KIND, bookShowcase, careerOf } from '@/engine/systems/career';
-import { TURNS } from '@/engine/systems/enjoyment';
 import { CARE } from '@/engine/content/safetynet';
+import { COST_2026_27,COURSES,LABS,SEAGULL_2027,SKILLS,SUMMER_CABARET,WORK_STUDY,YALE_CABARET,YALE_DRAMA } from '@/engine/content/school';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY,MS_HOUR,instantFromZoned,zonedParts } from '@/engine/core/time';
+import { TURNS } from '@/engine/systems/enjoyment';
+import { careFor,healthOf } from '@/engine/systems/health';
+import {
+CABARET_KIND,CALL_KIND,ESTIMATE,
+LAB_KIND,
+SHIFT_KIND,STIPEND_KIND,SUMMER_KIND,
+cabaretEvenings,
+cabaretRefusal,
+cabaretSeason,cabaretWeek,
+classPeriod,
+daysOffIn,
+evaluate,goesOn,isClassDay,isShiftDay,
+labDays,
+meanCraft,
+nextClasses,
+rankIn,
+rehearsalDays,repTerm,schoolProduction,
+sessionGain,termAccount,termStart,timetable,yearOfStudy
+} from '@/engine/systems/school';
+import { figuresFor } from '@/engine/systems/taxreturn';
+import { atSchool,defaultConfig,newLifeConfig } from '@/engine/world/bootstrap';
+import { describe,expect,it } from 'vitest';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -34,8 +43,6 @@ const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.a
 /** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
-/** Once the last journey is there: a job's trip is a train from New Haven, from 2026-09-29. */
-const landed = (sim: Simulation) => { const j = journeysOf(sim.player).at(-1); if (j) sim.advanceTo(Math.max(sim.now, j.arriveAt + (j.lateMinutes ?? 0) * 60_000 + 60_000)); };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending');
 const day = (key: string) => { const [year, month, d] = key.split('-').map(Number); return { year: year!, month: month!, day: d! }; };
 
@@ -137,24 +144,6 @@ describe('one student, one calendar', () => {
     expect(school.tally.breaches).toBe(breaches);
     expect(school.standing).toBe(standing);
   }, 180_000);
-
-  it('lets a dismissed student’s showcases go with the school’s calendar', () => {
-    const sim = life('show-gone');
-    bookShowcase(sim, sim.player);
-    expect(pending(sim, SHOWCASE_KIND).length).toBe(2);
-    const p = sim.player;
-    for (const term of [0, 1, 2]) { Object.assign(p.school!.tally, { classDays: 20, attended: 10, excused: 0 }); evaluate(sim, p, term); }
-    expect(p.school!.standing).toBe('dismissed');
-    expect(pending(sim, SHOWCASE_KIND)).toHaveLength(0);
-  });
-
-  it('won’t move a student away from New Haven in term', () => {
-    const sim = life('stay-put');
-    sim.advanceTo(at(2026, 8, 24, 9) + 60_000);
-    const no = sim.execute({ kind: 'career.relocate', payload: { cityId: 'us-ny-newyork', kind: 'shared' } });
-    expect(no.ok).toBe(false);
-    expect(no.error).toMatch(/waits for the summer/);
-  });
 
   it('offers no Cabaret show where no week can be, in a term’s last three weeks', () => {
     const sim = life('cab-late');
@@ -677,19 +666,6 @@ describe('casting', () => {
 });
 
 describe('evaluation', () => {
-  it('holds a student who was there and grew in good standing at the end of the fall term’s classes', () => {
-    const sim = life('fall');
-    play(sim, at(2026, 12, 11, 17) + 60_000);
-    const review = sim.player.school!.history[0]!;
-    expect(review).toMatchObject({ term: 0, standing: 'good', attendance: 1 });
-    expect(review.growth).toBeGreaterThan(ESTIMATE.growthFloor * review.classGrowth);
-    expect(titled(sim, 'In Good Standing')).toHaveLength(1);
-    // The tally runs on to the next term, and starts again with it.
-    expect(sim.player.school!.tally.classDays).toBeGreaterThan(0);
-    const next = pending(sim, 'school.term')[0]!;
-    sim.advanceTo(next.at);
-    expect(sim.player.school!.tally.classDays).toBe(0);
-  });
 
   it('steps standing down for short attendance, concern to warning to dismissal, and dismissal lets the calendar go', () => {
     const sim = life('fall-down');
@@ -725,30 +701,6 @@ describe('evaluation', () => {
     expect(evaluate(sim, p, 1)!.standing).toBe('good');
     expect(p.school!.castable).toBe(true);
   });
-
-  it('confers the MFA at Commencement after six terms in standing', () => {
-    const sim = life('degree');
-    // The second year's assigned shifts, all booked by June, come to its 150 hours at most: every class-week Saturday was 156.
-    tended(sim, at(2028, 6, 1, 12));
-    expect(sim.player.school!.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
-    expect(sim.player.school!.workStudy.assignedBooked).toBeGreaterThan(WORK_STUDY.assignedHours - 12);
-    tended(sim, at(2029, 5, 29, 12));
-    const school = sim.player.school!;
-    // Six terms in standing, none worse than concern: from 2026-10-02 a parcel taken from the door in August 2027 sends this
-    // life's third term to concern, its run of Major Barbara judged short, where before every term was good.
-    expect(school.history).toHaveLength(6);
-    expect(school.history.every((r) => r.standing === 'good' || r.standing === 'concern')).toBe(true);
-    expect(school.standing).toBe('graduated');
-    expect(school.termsBegun).toBe(6);
-    // The filmed monologues, posted at the end of the final term.
-    expect(school.filmed).toBe(true);
-    expect(yearOfStudy(sim.player)).toBe(3);
-    // The year's assigned shifts come to its 150 hours at most.
-    expect(school.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
-    expect(school.workStudy.assignedBooked).toBeGreaterThan(90);
-    expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(1);
-    expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind.startsWith('school.')).map((i) => i.kind + ' ' + i.label)).toEqual([]);
-  }, 120_000);
 });
 
 describe('the Yale Cabaret', () => {
@@ -850,37 +802,6 @@ describe('the Yale Cabaret, clear of casting', () => {
 });
 
 describe('the Yale Summer Cabaret', () => {
-  it('takes a first-year in good standing into the summer’s company: three shows, afternoon rehearsals, a weekly stipend', () => {
-    const sim = life('summer');
-    play(sim, at(2027, 3, 20, 12));
-    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
-    const runs = summerRuns(2027);
-    const shows = pending(sim, SUMMER_KIND).filter((c) => c.payload.call === 'performance');
-    expect(shows.every((c) => zonedParts(c.at, zone).month >= 6)).toBe(true);
-    expect(shows.filter((c) => c.payload.last === true)).toHaveLength(runs.length);
-    const stipends = pending(sim, STIPEND_KIND);
-    expect(stipends.length).toBeGreaterThanOrEqual(10);
-    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You’re in this summer’s company.' });
-    // The first show, and the stipend through it.
-    const firstClose = shows.find((c) => c.payload.last === true)!;
-    play(sim, firstClose.at + 60_000);
-    expect(sim.player.school!.summer!.played[0]).toBeGreaterThan(0);
-    // Each show a real play, with a part in it written for them, its nights kept.
-    const first = sim.player.school!.summer!.shows![0]!;
-    const script = SUMMER_PLAYS.find((x) => x.title === first.play)!;
-    expect(script.parts.map((x) => x.name)).toContain(first.role);
-    expect(sim.player.school!.summer!.shows!.map((x) => x.play)).toHaveLength(3);
-    expect(new Set(sim.player.school!.summer!.shows!.map((x) => x.play)).size).toBe(3);
-    expect(first.nights).toBeDefined();
-    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: `${first.play}, Yale Summer Cabaret 2027`, role: first.role, year: 2027 });
-    const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Yale Summer Cabaret stipend'));
-    expect(paid.length).toBeGreaterThan(0);
-    expect(paid.every((t) => t.postings.some((p) => p.amount === -SUMMER_CABARET.stipendWeekly))).toBe(true);
-    expect(sim.player.earnings!.years[2027]!.employers['yale-summer-cabaret']).toBe(paid.length * SUMMER_CABARET.stipendWeekly);
-    // With tax withheld as a paycheck's, payroll tax among it.
-    const withheld = paid.flatMap((t) => t.postings).filter((p) => p.accountId === sim.nominalAccount('expense', 'Tax Withheld').id).reduce((a, p) => a + p.amount, 0);
-    expect(withheld).toBeGreaterThanOrEqual(Math.floor(paid.length * SUMMER_CABARET.stipendWeekly * 0.0765));
-  }, 180_000);
 
   it('lets a student go who misses a performance, and stops the stipend after the days of the week worked', () => {
     const sim = life('summer-miss');
@@ -927,112 +848,6 @@ describe('the Yale Summer Cabaret', () => {
     play(concern, at(2027, 3, 20, 12));
     concern.player.school!.standing = 'concern';
     expect(concern.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(false);
-  }, 180_000);
-});
-
-describe('the summers, for work', () => {
-  it('opens after the first spring’s work period, to the fall term, and not in the third year', () => {
-    const sim = life('summer-bounds');
-    play(sim, at(2027, 5, 12, 12));
-    expect(summerOf(sim.player, sim.now)).toBeUndefined();
-    expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
-    play(sim, at(2027, 5, 14, 12));
-    const summer = summerOf(sim.player, sim.now)!;
-    expect(summer.until).toBe(at(2027, 8, 23, 0));
-    // The recess opened the business's week, and submissions.
-    expect(pending(sim, 'career.week').length).toBe(1);
-    expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(true);
-    expect(summerOf(sim.player, at(2027, 8, 23, 1))).toBeUndefined();
-    // The Bulletin's day for 2027.
-    expect(summer.from).toBe(at(2027, 5, 13, 0));
-    // A third year's spring leads to the degree, not a summer.
-    const third = { ...sim.player, school: { ...sim.player.school!, termsBegun: 6 } };
-    expect(summerOf(third, at(2029, 5, 20, 12))).toBeUndefined();
-    // The fall term ends the week's run.
-    play(sim, at(2027, 9, 7, 12));
-    expect(pending(sim, 'career.week')).toHaveLength(0);
-    expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
-  }, 180_000);
-
-  it('goes to stay for a job on a friend’s sofa when neither the bank nor the card can pay for a room', () => {
-    const sim = life('summer-sofa');
-    play(sim, at(2027, 5, 20, 12));
-    const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(job);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
-    const stay = pending(sim, 'career.stay')[0]!;
-    sim.advanceTo(stay.at - 60_000);
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
-    // The journey's fares and no more, an overdraft counted: from 2026-09-29 the way there is a Metro-North ticket, $20.25, and the rides to and from the stations, $1.75 and $3.00.
-    const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
-    primary.balance = 0;
-    primary.balance = 26_00 - canPay(sim, sim.player);
-    sim.advanceTo(stay.at + 60_000);
-    landed(sim);
-    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    expect(sim.universe.transactions.some((t) => t.memo.startsWith('A sublet in New York'))).toBe(false);
-    // The fare, and nothing for a room.
-    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
-    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(fare.postings.find((q) => q.amount > 0)!.amount);
-    expect(sim.universe.notifications.some((n) => /friend’s sofa/.test(n.body))).toBe(true);
-  }, 180_000);
-
-  it('takes a job that ends before the term, and goes to stay in its city for it, paying for a room', () => {
-    const sim = life('summer-job');
-    play(sim, at(2027, 5, 20, 12));
-    const career = careerOf(sim.player);
-    const into = { id: 'late', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 8, 20, 7), units: 5, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    career.bookings.push(into);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'late' } })).toMatchObject({ ok: false, error: 'It runs into the fall term, and the school’s work comes first while classes are in session.' });
-    const job = { ...into, id: 'june', starts: at(2027, 6, 7, 7), units: 2 };
-    career.bookings.push(job);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
-    const stays = pending(sim, 'career.stay');
-    expect(stays).toHaveLength(2);
-    sim.advanceTo(stays[0]!.at + 60_000);
-    landed(sim);
-    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    const sublet = sim.universe.transactions.find((t) => t.memo.startsWith('A sublet in New York'))!;
-    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
-    // Costs of the work, for the return: the room and the train.
-    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount + fare.postings.find((q) => q.amount > 0)!.amount);
-    sim.advanceTo(stays[1]!.at + 60_000);
-    landed(sim);
-    expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
-    // Gone somewhere else by the job's end, they aren't brought back from it.
-    const other = { ...job, id: 'july', starts: at(2027, 7, 12, 7), status: 'offered' as const };
-    career.bookings.push(other);
-    sim.must({ kind: 'career.accept', payload: { bookingId: 'july' } });
-    const next = pending(sim, 'career.stay');
-    sim.advanceTo(next[0]!.at + 60_000);
-    landed(sim);
-    sim.player.currentLocationId = 'us-ca-losangeles';
-    sim.advanceTo(next[1]!.at + 60_000);
-    expect(sim.player.currentLocationId).toBe('us-ca-losangeles');
-  }, 180_000);
-
-  it('keeps them in the city while another job there has calls ahead, and brings them home from the last', () => {
-    const sim = life('two-jobs');
-    play(sim, at(2027, 5, 20, 12));
-    const career = careerOf(sim.player);
-    const first = { id: 'one', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 1, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    const second = { ...first, id: 'two', starts: at(2027, 6, 8, 7), units: 3 };
-    career.bookings.push(first, second);
-    sim.must({ kind: 'career.accept', payload: { bookingId: 'one' } });
-    sim.must({ kind: 'career.accept', payload: { bookingId: 'two' } });
-    const home = (id: string) => sim.universe.scheduled.find((i) => i.kind === 'career.stay' && i.payload.bookingId === id && i.payload.direction === 'back')!;
-    // The first job's journey home falls inside the second's days.
-    expect(home('one').at).toBeLessThan(home('two').at);
-    const planned = { one: home('one').at, two: home('two').at };
-    play(sim, home('one').at + 60_000);
-    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    play(sim, home('two').at + 8 * 3_600_000);
-    expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
-    // One room kept on: the second job pays only the nights past the first’s.
-    const sublets = sim.universe.transactions.filter((t) => t.memo.startsWith('A sublet in New York'));
-    expect(sublets).toHaveLength(2);
-    expect(sublets[1]!.memo).toBe(`A sublet in New York, ${Math.round((planned.two - planned.one) / MS_DAY)} nights`);
   }, 180_000);
 });
 

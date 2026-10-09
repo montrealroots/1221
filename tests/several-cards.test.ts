@@ -9,7 +9,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { cardOf, cardsOf, DUE_KIND, stateOf, STATEMENT_KIND } from '@/engine/systems/credit';
-import { troubles } from '@/engine/systems/household';
+import { troubles } from '@/engine/systems/spending';
 import { cashOwedOn } from '@/engine/systems/cash';
 
 const lifeIn = (seed: string) =>

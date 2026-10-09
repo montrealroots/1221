@@ -26,7 +26,7 @@ export function BankPayments() {
   const money = (c: number) => formatMoney(c, cur);
   const person = useWorld((s) => s.player);
   const pay = useWorld((s) => paymentsOf(s.player));
-  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const cityId = person.currentLocationId;
   const accounts = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term'));
   const savings = accounts.filter((a) => a.kind === 'savings');
   const current = accounts.find((a) => a.id === person.primaryAccountId);

@@ -33,9 +33,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, ageOn, formatDate, formatTime, type Instant } from '../core/time';
-import { CITIES } from '../content/geography';
 import { CONTEMPORARY_PLAYS, type ContemporaryPlay } from '../content/contemporary';
-import { libraryIn } from './reading';
 import { exerts } from './body';
 import { focusOf, grow } from './school';
 import { occupiedAt } from './life';
@@ -68,10 +66,8 @@ export function copyAt(person: Person): { library: string } | { no: string } {
     if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'The library isn’t known to you yet: the tour shows you it.' };
     return { library: 'The Haas Arts Library' };
   }
-  const card = person.libraryCard;
-  if (!card) return { no: 'A copy is borrowed from a library: a card where you live (Belongings).' };
-  if (card !== person.currentLocationId) return { no: `Your library card is for ${CITIES.require(card).name}.` };
-  return { library: libraryIn(card)?.name ?? 'The library' };
+  // After the school a town's library card lent one (`systems/reading.ts`), until the cards went in the scope reset of 2026-10-09.
+  return { no: 'A copy is borrowed from the Haas Arts Library, which lends to students.' };
 }
 
 /** Whether there's a part in it for this person by the published cast: yes, no or not on record. */

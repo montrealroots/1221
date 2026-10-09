@@ -12,7 +12,6 @@ import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange, hasRate } from '../content/currency';
 import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
-import type { Housing } from '../systems/household';
 import { instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
@@ -91,8 +90,8 @@ export interface NewSaveConfig {
   background: string;
   // `beforeActing` (the body they started with, and the day job it led to)
   // and `dayJob` were asked here until 2026-09-26, when the job engine went.
-  /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
-  housing: Housing;
+  // Where they slept, a room in a shared flat or a place of their own, was asked here until the home went in the
+  // scope reset of 2026-10-09.
 
   /**
    * Where the life begins: drama school (`content/school.ts`), which sets
@@ -143,7 +142,6 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(), personalityTraits: [],
     interests: ['film', 'television'], genres: [],
     background: '',
-    housing: 'shared',
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.

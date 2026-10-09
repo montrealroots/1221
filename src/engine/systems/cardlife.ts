@@ -37,7 +37,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { inTheBank } from './household';
+import { inTheBank } from './spending';
 import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';

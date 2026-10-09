@@ -149,7 +149,7 @@ defineLook<Person>('person', {
       person.body && (
         <p key="body" className="small">
           <span className="dim">{isYou ? 'Your body. ' : 'Their body. '}</span>
-          {bodyWords(person.body, CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId === 'us')}.
+          {bodyWords(person.body, CITIES.get(person.currentLocationId)?.countryId === 'us')}.
         </p>
       ),
       // An injury mending, and whether it keeps them off work (`systems/injury.ts`).

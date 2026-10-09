@@ -21,7 +21,6 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { isValidElement, type ReactElement, type ReactNode } from 'react';
 import { quickSave } from '@/engine';
-import { bookPart, castPart, castPerformer, newProject } from '@/engine/systems/industry';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
@@ -29,16 +28,6 @@ import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 import { readiness, readinessParts } from '@/engine/systems/life';
-import type { Person } from '@/engine/domain/model';
-import { zonedParts } from '@/engine/core/time';
-import { careerOf, nextOwnId, roleById } from '@/engine/systems/career';
-import { contactsOf, metAtWork } from '@/engine/systems/people';
-import { entriesOf } from '@/engine/systems/awards';
-import { childrenOf } from '@/engine/systems/children';
-import { meetParents } from '@/engine/systems/parents';
-import { routinesOf } from '@/engine/systems/routines';
-import { modelById, renewal, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
-import { journeysOf, planJourney } from '@/engine/systems/journey';
 
 const UI = new URL('../src/ui/', import.meta.url);
 
@@ -93,62 +82,7 @@ function world(): Simulation {
     importance: 60,
   });
 
-  plantALife(sim, player);
   return sim;
-}
-
-/**
- * What a fresh life hasn't lived yet.
- *
- * A `quickSave()` starts in Iceland before any of it: no work done, nobody
- * known, no children, no car, no flight booked. So `job`, `award`, `contact`,
- * `child`, `parent`, `routine`, `vehicle` and `journey` would be declared and
- * never once resolved. Each is planted here through the engine’s own
- * constructors where there is one — `careerOf`, `metAtWork`, `meetParents`,
- * `vehiclesOf` with `renewal`, `planJourney` — and as the record’s own shape
- * where the engine only ever writes it inside a command.
- */
-function plantALife(sim: Simulation, player: Person): void {
-  const now = sim.now;
-  const career = careerOf(player);
-  // A guest part worked in New York a month ago, two days, paid.
-  career.bookings.push({
-    id: nextOwnId(career, 'b'), roleId: 'guest-hour', cityId: 'us-ny-newyork', starts: now - 30 * MS_DAY,
-    units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: now - 40 * MS_DAY, offeredAt: now - 45 * MS_DAY, worked: 2, owed: 0,
-  });
-  const booking = career.bookings[career.bookings.length - 1]!;
-  // Its project, as the business makes one, the player's part in it and a performer in another (from 2026-10-08).
-  const project = newProject(sim, roleById('guest-hour'), 'us-ny-newyork', booking.starts, 'planted');
-  booking.projectId = project.id;
-  booking.partId = project.parts[0]!.id;
-  bookPart(sim, project.id, booking.partId, booking.starts, booking.starts + 2 * MS_DAY);
-  const other = project.parts[1]!;
-  castPart(project, other, { kind: 'performer', id: castPerformer(sim, project, other, booking.starts, booking.starts + 2 * MS_DAY, 'planted').id });
-  career.credits.push({ roleId: booking.roleId, year: zonedParts(booking.starts, 'America/New_York').year, cityId: booking.cityId, projectId: project.id });
-  // Its castmate, as finishing the job makes one.
-  metAtWork(sim, player, 'us-ny-newyork', booking.id, roleById(booking.roleId).label);
-  // Entered for the Emmys, as a guest performer enters themselves.
-  entriesOf(player).push({ bookingId: booking.id, body: 'emmys', year: zonedParts(now, 'America/Los_Angeles').year + 1, category: 'guest-drama', entered: now, byThem: true });
-  // A child with the castmate, and the parents a life begins with.
-  const mate = contactsOf(player)[0]!;
-  childrenOf(player).push({ id: sim.nextId('contact'), name: `Ana ${player.displayName.split(' ').slice(-1)[0]}`, born: now - 5 * 365 * MS_DAY, otherParentId: mate.id });
-  meetParents(sim, player, now);
-  // A routine of two steps.
-  routinesOf(player).push({ id: sim.nextId('routine'), name: 'Weekday Morning', steps: [{ kind: 'food.eat_ready', payload: {} }, { kind: 'life.look_after', payload: { action: 'wash' } }] });
-  // A car, bought new in New York and registered there.
-  const model = modelById('us-toyota-camry')!;
-  const car: OwnedVehicle = { id: sim.nextId('vehicle'), modelId: model.id, boughtAt: now, ageAtPurchase: 0, listPrice: model.price, jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'full', registrationDue: 0 };
-  car.registrationDue = renewal(car, now).next;
-  vehiclesOf(player).push(car);
-  // A shirt bought in a store in New York, with its receipt.
-  (player.clothesBought ??= []).push({ id: 'buy-1', productId: 'us-everlane-the-premium-weight-crew', retailerId: 'us-everlane', how: 'store', at: now - 3 * MS_DAY, goods: 48_00, count: 1, size: 'M' });
-  // A flight booked to New York next week, planned as booking plans one.
-  const legs = planJourney(sim, player.currentLocationId, 'us-ny-newyork', now + 7 * MS_DAY, 0, 1);
-  if (typeof legs === 'string') throw new Error(`No journey plans to New York: ${legs}`);
-  journeysOf(player).push({
-    id: sim.nextId('journey'), fromCity: player.currentLocationId, toCity: 'us-ny-newyork', legs, status: 'booked', bookedAt: now, bags: 1,
-    total: legs.reduce((sum, l) => sum + l.fare, 0), leaveAt: legs[0]!.departAt, arriveAt: legs[legs.length - 1]!.arriveAt,
-  });
 }
 
 /**
@@ -537,10 +471,10 @@ describe('the sentence the player wrote', () => {
     player.interests = [];
     player.genres = [];
 
-    // Only the body and the papers, which a person always has (the body from the first day since 2026-10-01, when clothes were fitted to it): no empty line where the background, the interests and the films would be.
+    // Only the papers, which a person always has: no empty line where the background, the interests and the films would be.
     const found = resolveLook(sim, at('person', player.id)) as Looked;
     const kids = (found.body as { props: { children: { key: string }[] } }).props.children.filter(Boolean);
-    expect(kids.map((k) => k.key)).toEqual(['body', 'papers']);
+    expect(kids.map((k) => k.key)).toEqual(['papers']);
   });
 });
 

@@ -18,6 +18,8 @@ const depressed = (sim: Simulation) => { (healthOf(sim.player).chronic ??= {}).d
 describe('a course of therapy', () => {
   it('is for depression, at a practice where you live, at its price', () => {
     const sim = life('us-ny-newyork', 'therapy-ny');
+    // Starting without depression: conditions are drawn at the start of every life since 2026-10-09.
+    delete healthOf(sim.player).chronic?.depression;
     expect(therapyRefusal(sim.player, 'The Center for CBT')).toBe('A course of therapy here is for depression.');
     depressed(sim);
     expect(therapyRefusal(sim.player, 'Priory')).toBe('Choose a therapist where you live.');

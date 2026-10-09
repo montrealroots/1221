@@ -5,233 +5,33 @@
  * cover, unemployment insurance and the tax return, against the published
  * figures in `content/career.ts` and `content/safetynet.ts`.
  */
-import { attributesOf } from '@/engine/systems/attributes';
-import { evenCraft } from '@/engine/systems/school';
-import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { UNION_HEALTH } from '@/engine/content/career';
+import { CALIFORNIA_MANDATE,CONNECTICUT_UI,INSULIN,NEW_YORK_UI,PLANS,POVERTY_LINE,RETURN,byYear } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { AGENCIES, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, UNION_HEALTH, rateOn } from '@/engine/content/career';
-import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS, POVERTY_LINE } from '@/engine/content/safetynet';
-import {
-  RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, mealPenalty, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
-  type Booking,
-} from '@/engine/systems/career';
-import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
-import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil, programFor, benchmarkFor, planKey, shareOf, insulinShareOf } from '@/engine/systems/health';
-import { basePeriodFor, claimStateFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
-import { applicablePercent, deadline, figuresFor, latePenalty, returnsOf } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY,MS_HOUR,instantFromZoned,zonedParts } from '@/engine/core/time';
+import { earningsOf,recordBenefit,recordWages,yearOf } from '@/engine/systems/earnings';
+import { benchmarkFor,healthMonth,healthOf,insulinShareOf,mayEnroll,planKey,programFor,shareOf } from '@/engine/systems/health';
 import type { Craft } from '@/engine/systems/school';
-import { hoursOf } from '@/engine/systems/career';
-
-const hoursOfDay = (sim: Simulation, n: number) => hoursOf(sim, sim.player, `spread-${n}`);
+import { evenCraft } from '@/engine/systems/school';
+import { applicablePercent,deadline,figuresFor,latePenalty,returnsOf } from '@/engine/systems/taxreturn';
+import { basePeriodFor,claimStateFor,monetary,unemploymentOf,weekBenefit,type Claim } from '@/engine/systems/unemployment';
+import { describe,expect,it } from 'vitest';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
 const craft = (level: number): Craft => (evenCraft(level));
-const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 
 function pro(seed: string, city = 'us-ny-newyork', level = 75): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
   sim.player.craft = craft(level);
-  beginCareer(sim, sim.player);
   return sim;
-}
-function booking(sim: Simulation, roleId: string, units: number, starts = sim.now + 7 * MS_DAY, rehearsalWeeks = 0): Booking {
-  const b: Booking = { id: `t${careerOf(sim.player).bookings.length}`, roleId, cityId: 'us-ny-newyork', starts, units, rehearsalWeeks, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-  careerOf(sim.player).bookings.push(b);
-  return b;
 }
 const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, waited: true, basePeriod: [] });
 
-describe('new parts', () => {
-  it('pay Off-Broadway’s minimums from the audition notices, and a series regular by the episode', () => {
-    expect(rateOn(roleById('offb-commercial').steps, '2027-01-01')).toBe(868_00);
-    expect(rateOn(roleById('offb-nonprofit').steps, '2026-01-01')).toBe(1_076_00);
-    expect(rateOn(roleById('offb-nonprofit').steps, '2027-01-01')).toBe(1_129_00);
-    expect(rateOn(roleById('series-hour').steps, '2026-07-01')).toBe(5_361_00);
-    expect(rateOn(roleById('series-half').steps, '2029-07-01')).toBe(4_870_00);
-  });
-
-  it('put a series regular’s season in its workweeks, Monday to Friday, and pay it by the episode over them', () => {
-    const sim = pro('series');
-    const b = booking(sim, 'series-hour', 13, at(2026, 10, 5, 8));
-    const days = workDays(b);
-    expect(days).toHaveLength(16 * 5);
-    expect(new Set(days.map((d) => new Date(d.at - 5 * MS_HOUR).getUTCDay()))).toEqual(new Set([1, 2, 3, 4, 5]));
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    play(sim, at(2026, 10, 15, 18));
-    const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Series Regular'))[0]!;
-    const scale = Math.round((5_361_00 * 13 * 5) / 80);
-    // The Thursday pays the week to the Saturday before: the first five days, and their overtime.
-    const overtime = careerOf(sim.player).days.slice(0, 5).reduce((s, d, n) => s + overtimeFor(roleById('series-hour'), 5_361_00, 1_283_00, d.hours, '2026-10-05') + mealPenalty(sim, sim.player, `${b.id}-${n + 1}`), 0);
-    // Unrepresented: scale, with no agency's 10% on it.
-    expect(-pay.postings.find((q) => q.amount < 0)!.amount).toBe(scale + overtime);
-  });
-});
-
-describe('overtime', () => {
-  it('pays a day player’s ninth and tenth hours at time and a half and the rest at double, on the day over eight', () => {
-    const costar = roleById('costar');
-    const hourly = 1_283_00 / 8;
-    expect(overtimeFor(costar, 1_283_00, 1_283_00, 8, '2026-10-01')).toBe(0);
-    expect(overtimeFor(costar, 1_283_00, 1_283_00, 10, '2026-10-01')).toBe(Math.round(hourly * 3));
-    expect(overtimeFor(costar, 1_283_00, 1_283_00, 12, '2026-10-01')).toBe(Math.round(hourly * 7));
-    // The base is capped at twice the day minimum.
-    expect(overtimeFor(costar, 5_000_00, 1_283_00, 9, '2026-10-01')).toBe(Math.round(((2 * 1_283_00) / 8) * 1.5));
-  });
-
-  it('pays a weekly performer double past ten hours on the week over 44, and above the money break at its rate', () => {
-    const film = roleById('film-weekly');
-    // A studio film's weekly scale, $4,456, is under the break.
-    expect(overtimeFor(film, 891_20, 1_283_00, 12, '2026-10-01')).toBe(Math.round(2 * ((2 * 891_20 * 5) / 44)));
-    // A guest star's major role, $1,411 a day, is a $7,056 week: over the break, at $236 an hour.
-    expect(overtimeFor(roleById('guest-hour'), 1_411_25, 1_283_00, 11, '2026-10-01')).toBe(OVERTIME.moneyBreak[0]![2]);
-    expect(overtimeFor(roleById('guest-hour'), 1_411_25, 1_283_00, 11, '2028-08-01')).toBe(OVERTIME.moneyBreak[1]![2]);
-    // A series regular's week is five-sixths of an hour episode's fee, under the break.
-    expect(overtimeFor(roleById('series-hour'), 5_361_00, 1_283_00, 12, '2026-10-01')).toBe(Math.round(2 * ((2 * 5_361_00 * 5) / 6 / 44)));
-    expect(overtimeFor(roleById('series-half'), 4_456_00, 1_283_00, 12, '2026-10-01')).toBe(Math.round(2 * ((2 * 4_456_00) / 44)));
-    // A stage part has none.
-    expect(overtimeFor(roleById('lort-b'), 1_213_00, 1_283_00, 14, '2026-10-01')).toBe(0);
-  });
-
-  it('logs a rehearsal day at eight hours and a performance at three', () => {
-    const sim = pro('stage-hours');
-    const b = booking(sim, 'lort-b', 1, at(2026, 10, 5, 8), 1);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    play(sim, at(2026, 10, 14, 23));
-    expect(careerOf(sim.player).days.map((d) => d.hours)).toEqual([8, 8, 8, 8, 8, 8, 3, 3]);
-  });
-
-  it('draws each shooting day at ten to twelve hours', () => {
-    const sim = pro('hours');
-    const b = booking(sim, 'costar', 2, at(2026, 10, 5, 8));
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
-    play(sim, at(2026, 10, 7, 12));
-    const days = careerOf(sim.player).days;
-    expect(days).toHaveLength(2);
-    const spread = new Set(Array.from({ length: 40 }, (_, n) => hoursOfDay(sim, n)));
-    expect(spread).toEqual(new Set([10, 11, 12]));
-    for (const d of days) expect(d.hours).toBeGreaterThanOrEqual(OVERTIME.dayHours[0]);
-    for (const d of days) expect(d.hours).toBeLessThanOrEqual(OVERTIME.dayHours[1]);
-  });
-});
-
-describe('managers', () => {
-  it('offer only where their bar is cleared, and are signed only on a standing offer', () => {
-    const sim = pro('mgr');
-    expect(managerOffersFor(sim, sim.player, 60, 'x')).toEqual([]);
-    let seen = 0;
-    for (let n = 0; n < 30; n += 1) {
-      const got = managerOffersFor(sim, sim.player, 70.5, `k${n}`);
-      for (const id of got) expect(MANAGERS.find((m) => m.id === id)!.bar).toBeLessThanOrEqual(70.5);
-      seen += got.length;
-    }
-    expect(seen).toBeGreaterThan(0);
-    expect(sim.execute({ kind: 'career.sign_manager', payload: { managerId: '3arts' } }).ok).toBe(false);
-    careerOf(sim.player).managerOffers.push({ managerId: '3arts', until: sim.now + MS_DAY });
-    expect(sim.execute({ kind: 'career.sign_manager', payload: { managerId: '3arts' } }).ok).toBe(true);
-    expect(careerOf(sim.player)).toMatchObject({ managerId: '3arts', managerOffers: [] });
-  });
-
-  it('take 10% beside an agent and 15% without one', () => {
-    const role = roleById('lort-b');
-    const args = { scale: 1_000_00, role, rehearsal: false, before: 0, cityId: 'us-ny-newyork', at: at(2026, 10, 1) };
-    expect(paycheck({ ...args, represented: true, managed: true })).toMatchObject({ agent: 100_00, manager: 100_00, commission: 200_00 });
-    expect(paycheck({ ...args, represented: false, managed: true })).toMatchObject({ agent: 0, manager: 150_00 });
-    expect(paycheck({ ...args, represented: true, managed: false }).manager).toBe(0);
-  });
-
-  it('can be left after the first year, not before', () => {
-    const sim = pro('mgr-leave');
-    const career = careerOf(sim.player);
-    career.managerId = 'e360';
-    career.managerSince = sim.now - 100 * MS_DAY;
-    expect(sim.execute({ kind: 'career.leave_manager', payload: {} }).ok).toBe(false);
-    career.managerSince = sim.now - MANAGEMENT.minimumDays * MS_DAY;
-    expect(sim.execute({ kind: 'career.leave_manager', payload: {} }).ok).toBe(true);
-    expect(career.managerId).toBeUndefined();
-  });
-
-  it('add auditions a week, and find an unrepresented client agencies', () => {
-    const sim = pro('mgr-work');
-    attributesOf(sim, sim.player).reputation = 50;
-    let without = 0;
-    let withOne = 0;
-    for (let w = 0; w < 100; w += 1) {
-      without += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 0, false).length;
-      withOne += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 0, true).length;
-    }
-    expect(without).toBe(0);
-    expect(withOne / 100).toBeGreaterThan(MANAGEMENT.auditionsPerWeek * 0.7);
-    expect(withOne / 100).toBeLessThan(MANAGEMENT.auditionsPerWeek * 1.3);
-    let found = 0;
-    for (const seed of ['f1', 'f2', 'f3']) {
-      const life = pro(seed, 'us-ny-newyork', 90);
-      careerOf(life.player).managerId = 'brillstein';
-      careerOf(life.player).managerSince = life.now;
-      play(life, life.now + 200 * MS_DAY);
-      found += careerOf(life.player).offers.length + (careerOf(life.player).agencyId ? 1 : 0);
-    }
-    expect(found).toBeGreaterThan(0);
-    expect(AGENCIES.length).toBeGreaterThan(0);
-  }, 120_000);
-});
-
-describe('residuals', () => {
-  it('pay a network rerun what was paid, to the ceiling; syndication a share of the minimum by the run', () => {
-    const sim = pro('res');
-    const base = { id: 'r', bookingId: 'b', roleId: 'guest-hour', kind: 'network' as const, perEpisode: 11_290_00, episodes: 1, days: 8, airsAt: 0, paid: 0, payments: 0 };
-    expect(residualAmount(base, 'rerun', 2, sim.now, NY, 'USD')).toBe(RESIDUALS.networkCeiling.hour);
-    expect(residualAmount({ ...base, perEpisode: 2_000_00 }, 'rerun', 2, sim.now, NY, 'USD')).toBe(2_000_00);
-    expect(residualAmount(base, 'syndication', 2, sim.now, NY, 'USD')).toBe(Math.round(11_290_00 * 0.4));
-    expect(residualAmount(base, 'syndication', 13, sim.now, NY, 'USD')).toBe(Math.round(11_290_00 * 0.05));
-    expect(residualAmount({ ...base, episodes: 13 }, 'syndication', 3, sim.now, NY, 'USD')).toBe(Math.round(11_290_00 * 0.3) * 13);
-  });
-
-  it('pay streaming each year by its share and the service’s size, to the ceiling, and a hit its bonus', () => {
-    const r = { id: 'r', bookingId: 'b', roleId: 'series-hour', kind: 'svod' as const, size: 'large' as const, perEpisode: 5_361_00, episodes: 13, days: 80, airsAt: 0, paid: 0, payments: 0 };
-    const when = at(2026, 10, 1);
-    expect(residualAmount(r, 'svod', 1, when, NY, 'USD')).toBe(Math.round(4_562_00 * 0.45 * 1.5) * 13);
-    expect(residualAmount({ ...r, size: 'small' }, 'svod', 2, when, NY, 'USD')).toBe(Math.round(4_562_00 * 0.40 * 0.65) * 13);
-    expect(residualAmount(r, 'svod', 20, when, NY, 'USD')).toBe(Math.round(4_562_00 * 0.015 * 1.5) * 13);
-    expect(residualAmount(r, 'bonus', 1, when, NY, 'USD')).toBe(Math.round(residualAmount(r, 'svod', 1, when, NY, 'USD') * 1.1 * 0.75));
-  });
-
-  it('share a film’s television and streaming money by the cast’s units', () => {
-    const sim = pro('film');
-    const r = { id: 'r', bookingId: 'b', roleId: 'film-low', kind: 'film' as const, perEpisode: 834_00 * 5, episodes: 1, days: 5, airsAt: 0, paid: 0, payments: 0 };
-    // A week: one time unit and one salary unit, of 40, of 3.6% of a quarter of a $1.35 million budget.
-    expect(residualAmount(r, 'film', 1, sim.now, NY, 'USD')).toBe(Math.round((1_350_000_00 * 0.25 * 0.036 * 2) / 40));
-    expect(residualAmount(r, 'film', 2, sim.now, NY, 'USD')).toBe(Math.round((1_350_000_00 * 0.125 * 0.036 * 2) / 40));
-  });
-
-  it('are scheduled when a job’s done, and paid as wages with tax withheld and no commission', () => {
-    const sim = pro('paid-res');
-    const b = { ...booking(sim, 'guest-hour', 8), status: 'worked' as const, worked: 8 };
-    let r = afterlife(sim, sim.player, b, sim.now)!;
-    for (let n = 0; r.kind !== 'svod' && n < 30; n += 1) r = afterlife(sim, sim.player, { ...b, id: `x${n}` }, sim.now)!;
-    expect(r.kind).toBe('svod');
-    const first = pending(sim, RESIDUAL_KIND).find((i) => i.payload.residualId === r.id && i.payload.stream === 'svod')!;
-    expect(first.at).toBeGreaterThan(r.airsAt + 90 * MS_DAY);
-    play(sim, first.at + MS_HOUR);
-    const pay = sim.universe.transactions.find((t) => t.memo.startsWith('Residuals'))!;
-    expect(pay.category).toBe('salary');
-    expect(pending(sim, RESIDUAL_KIND).some((i) => i.payload.residualId === r.id && i.payload.n === 2)).toBe(true);
-  });
-});
-
 describe('health cover', () => {
-  it('Yale’s runs to the end of July after school ends', () => {
-    const sim = pro('yale');
-    sim.player.school = { standing: 'graduated' } as never;
-    careerOf(sim.player).since = at(2029, 5, 28);
-    expect(yaleUntil(sim.player)).toBe(at(2029, 8, 1, 0));
-    expect(coverOn(sim.player, at(2029, 7, 31))).toBe('yale');
-    expect(coverOn(sim.player, at(2029, 8, 2))).toBeUndefined();
-  });
 
   it('SAG-AFTRA’s: a base period’s earnings at the threshold give a year from three months after, for its premium', () => {
     const sim = pro('sag-health');
@@ -269,30 +69,6 @@ describe('health cover', () => {
     earningsOf(fewer.player).equityWeeks.push(...weeks);
     healthMonth(fewer, fewer.player, at(2026, 10, 1, 1));
     expect(healthOf(fewer.player).equity).toBeUndefined();
-  });
-
-  it('the marketplace: in open enrollment or 60 days from losing cover, the benchmark each month, ending on leaving the state', () => {
-    const sim = pro('market');
-    const person = sim.player;
-    // A month's income over what the programs allow: the marketplace, in its windows.
-    for (const m of ['2025-12', '2026-04', '2026-05', '2026-06', '2026-10', '2026-12']) earningsOf(person).months[m] = 5_000_00;
-    expect(mayEnroll(person, at(2026, 6, 1)).ok).toBe(false);
-    expect(mayEnroll(person, at(2026, 11, 2)).ok).toBe(true);
-    expect(mayEnroll(person, at(2027, 1, 10)).ok).toBe(true);
-    healthOf(person).lostAt = at(2026, 5, 1);
-    expect(mayEnroll(person, at(2026, 6, 20)).ok).toBe(true);
-    expect(mayEnroll(person, at(2026, 7, 5)).ok).toBe(false);
-    healthOf(person).lostAt = sim.now;
-    expect(sim.execute({ kind: 'health.enroll', payload: {} }).ok).toBe(true);
-    const from = healthOf(person).marketplace!.from;
-    healthMonth(sim, person, from + MS_HOUR);
-    expect(healthOf(person).premiums[zonedParts(from, NY).year]).toEqual([byYear(BENCHMARK.ny, zonedParts(from, NY).year)]);
-    expect(coverOn(person, from + MS_HOUR)).toBe('marketplace');
-    // Moving home out of the state ends a state's plan.
-    person.currentLocationId = 'us-ct-newhaven';
-    person.home = { ...person.home!, cityId: 'us-ct-newhaven' };
-    healthMonth(sim, person, from + 32 * MS_DAY);
-    expect(healthOf(person).marketplace!.until).toBeDefined();
   });
 
   it('counts months without cover in California, and not in New York', () => {
@@ -427,35 +203,8 @@ describe('unemployment', () => {
     expect(unemploymentOf(person).claim!.paid).toBe(2 * 384_00);
     expect(yearOf(person, 2026).unemployment).toBe(2 * 384_00);
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Unemployment insurance')).every((t) => t.category === 'benefit')).toBe(true);
-    // Out of the state, the claim goes on as an interstate claim; abroad, a week pays nothing.
-    person.currentLocationId = 'us-ct-newhaven';
-    play(sim, sim.now + 7 * MS_DAY);
-    expect(unemploymentOf(person).claim!.paid).toBe(3 * 384_00);
-    person.currentLocationId = 'ca-on-toronto';
-    play(sim, sim.now + 7 * MS_DAY);
-    expect(unemploymentOf(person).claim!.paid).toBe(3 * 384_00);
-    // The week is certified on the home state's Sunday evening, wherever they are.
-    person.currentLocationId = 'us-ca-losangeles';
-    play(sim, sim.now + 7 * MS_DAY);
-    const week = sim.universe.scheduled.find((i) => i.kind === 'benefits.week' && i.status === 'pending')!;
-    expect(zonedParts(week.at, 'America/New_York').hour).toBe(20);
-  });
-
-  it('isn’t filed while on a job, or outside New York, California and Connecticut', () => {
-    const sim = pro('on-job');
-    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(sim.player).quarters[q] = { wages: 10_000_00, sag: 0 };
-    const b = booking(sim, 'lort-b', 3, sim.now - MS_DAY, 2);
-    b.status = 'accepted';
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
-    // A refused command puts back a copy of the world, so the booking is looked up again.
-    careerOf(sim.player).bookings.find((one) => one.id === b.id)!.status = 'worked';
-    // Filed where they live: standing in New Haven with a New York home, it's New York's.
-    sim.player.currentLocationId = 'us-ct-newhaven';
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
-    delete unemploymentOf(sim.player).claim;
-    sim.player.home!.cityId = 'us-tx-houston';
-    sim.player.currentLocationId = 'us-ny-newyork';
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
+    // Out of the state and abroad, it went on as an interstate claim and paid nothing a week abroad, until the journeys
+    // went in the scope reset of 2026-10-09: where they are is where they live now.
   });
 });
 

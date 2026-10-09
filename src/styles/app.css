@@ -204,13 +204,20 @@ body {
   overscroll-behavior: none;
 }
 
-/* Respect the reader's motion preference. SLATE's own setting, which nothing could change, went on 2026-10-02. */
+/* Respect the reader's motion preference, and SLATE's own setting. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
+}
+body[data-reduced-motion="true"] *,
+body[data-reduced-motion="true"] *::before,
+body[data-reduced-motion="true"] *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
 }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
@@ -275,20 +282,13 @@ a:hover { text-decoration: underline; }
 }
 .btn-primary:hover:not(:disabled) { background: var(--accent-strong); border-color: var(--accent-strong); }
 
-/* A quiet button is its words, with no box and no side padding, so they start exactly where the line above starts. Until 2026-10-02 it was an invisible box, and its words sat a padding's width in from the text above: Tinder under its heading, Rent A Room under the home it was in. An outline was tried that day and lined the boxes up but not the words. */
-.btn-ghost {
-  background: transparent; border-color: transparent; color: var(--accent-strong);
-  padding-left: 0; padding-right: 0; border-left-width: 0; border-right-width: 0;
-}
-.btn-ghost:hover:not(:disabled) { background: transparent; border-color: transparent; color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
-/* Words side by side need the room the box used to give them. */
-.row > .btn-ghost + .btn-ghost, .row > * + .btn-ghost { margin-left: var(--s2); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
+.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
 
 .btn-danger { color: var(--negative); border-color: var(--line-strong); }
 .btn-danger:hover:not(:disabled) { background: var(--negative-dim); border-color: var(--negative); }
 
 .btn-sm { padding: var(--s1) var(--s3); font-size: var(--size-xs); }
-.btn-sm.btn-ghost, .btn-lg.btn-ghost { padding-left: 0; padding-right: 0; }
 .btn-lg { padding: var(--s3) var(--s6); font-size: var(--size-md); }
 .btn-block { width: 100%; justify-content: center; }
 
@@ -312,29 +312,12 @@ a:hover { text-decoration: underline; }
 .panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
 /* Four actions do not fit across a phone. They wrap onto a second line rather
    than pushing the card open and bleeding out of its right edge. */
-.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
-/* A panel that passes its own row of actions wraps the same way: Home's grew to five and ran past the card's edge. */
-.panel-head > .row > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
+.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {
   font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
   text-transform: uppercase; color: var(--text-dim);
-}
-
-/* Home's groups: one heading per part of life, the panels under it filling each row (from 2026-10-02). */
-.home-group { margin-bottom: var(--s5); }
-.home-group-lead { margin-bottom: var(--s4); }
-/* Narrower columns than a grid elsewhere, so the five small panels of a day sit in one row and none is left alone on the next. */
-.home-group > .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); }
-/* A grouped panel puts its one button under its title, every one the same way, so a row lines up whatever the titles' lengths. */
-.home-group .panel-head { flex-direction: column; align-items: flex-start; }
-/* Stacked, the title's 12rem basis would be a height, not a width. */
-.home-group .panel-head > :first-child { flex: none; }
-.home-group-label {
-  font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--text-dim);
-  margin: 0 0 var(--s3); padding-bottom: var(--s2); border-bottom: 1px solid var(--line);
 }
 
 .muted { color: var(--text-muted); }
@@ -448,8 +431,6 @@ input:not([type]), input[type="text"], input[type="number"], input[type="date"],
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-/* A choice beside small buttons in a table row, sized as a .btn-sm is so the row stays even. */
-select.select-sm { width: auto; padding: var(--s1) var(--s3); font-size: var(--size-xs); }
 /* A field that reports rather than asks. Kept the same shape so the form still
    lines up, and visibly not one you can type in — styled the same as the rest,
    it read as a box somebody had simply not filled in yet. */
@@ -529,9 +510,6 @@ input[type="range"] {
 
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
-/* A table's first column starts on the panel's own edge, under its title, and its last ends on the other (from 2026-10-02). */
-th:first-child, td:first-child { padding-left: 0; }
-th:last-child, td:last-child { padding-right: 0; }
 th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
 .master-detail > *, .side-by-side > * { min-width: 0; }
 @media (max-width: 900px) { }
@@ -539,9 +517,6 @@ th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-/* A cell of buttons laid out as a row stays a table cell, so its row's line and height are the row's (from 2026-10-05; as a flex box it drew its own line, off the row's where a neighbour wrapped). */
-td.row { display: table-cell; white-space: nowrap; vertical-align: middle; }
-td.row > * + * { margin-left: var(--s2); }
 .table-scroll { overflow-x: auto; }
 
 .empty {
@@ -732,8 +707,6 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 .topbar-brand {
   display: flex; align-items: center; gap: var(--s2);
   font-weight: 600; letter-spacing: .18em; font-size: var(--size-sm);
-  /* The mark, not an action: it keeps the quiet color a quiet button gave up on 2026-10-02. */
-  color: var(--text-muted);
 }
 /* The clock reads across, not down. Stacking the date under the time made a
    tall, narrow column that crowded everything beside it in the bar. */
@@ -774,6 +747,18 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 }
 
 /* Below a laptop the rail folds away and comes back as a drawer. */
+@media (max-width: 900px) {
+  /* Closed, the drawer is off the left edge and hidden outright, so nothing
+     in it can take focus or be read as spilling out of the page. */
+  .rail {
+    position: fixed; top: var(--nav-h); bottom: 0; left: 0; width: 260px;
+    z-index: 30; transform: translateX(-100%); visibility: hidden;
+    transition: transform .2s, visibility 0s linear .2s;
+    box-shadow: var(--shadow-lg);
+  }
+  .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
+  .rail-shade { display: block; }
+}
 @media (min-width: 901px) {
   .rail-toggle { display: none; }
 }
@@ -785,69 +770,40 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 
 /*
   The rail: every destination, always in reach, down the left of every screen.
-  A locked room says Locked in a chip rather than showing a padlock. It had no
-  icons until 2026-10-08, because a glyph that is a picture on one platform and
-  a box on another is not a label; since then each group has a drawn picture,
-  the same everywhere, beside its name and never instead of it.
+  Words only. A locked room says Locked in a chip rather than showing a padlock,
+  and there are no icons, because a glyph that is a picture on one platform and
+  a box on another is not a label.
 */
 .rail {
-  width: var(--rail-w); flex-shrink: 0; overflow-y: auto; overscroll-behavior: contain;
+  width: var(--rail-w); flex-shrink: 0; overflow-y: auto;
   background: var(--surface); border-right: 1px solid var(--line);
   padding: var(--s3) var(--s2);
-  display: flex; flex-direction: column; gap: var(--s1);
+  display: flex; flex-direction: column;
 }
-/* The rail's lists are lists, and their rows its buttons (from 2026-10-08). */
-.rail-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-.rail-group { margin-top: var(--s2); }
+.rail-group { margin-bottom: var(--s4); }
 .rail-group-label {
-  display: flex; align-items: center; gap: var(--s2);
   font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .1em;
   color: var(--text-dim); font-weight: 650; padding: var(--s2) var(--s3);
 }
-/* Every row the same: a picture's column, its name, anything after it at the end. A name wraps rather than being cut short. */
-.rail-item, .rail-group-head {
-  display: flex; align-items: center; gap: var(--s2); width: 100%; min-height: 40px;
+.rail-item {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
   padding: var(--s2) var(--s3); border-radius: var(--radius-sm);
   background: transparent; border: 0; color: var(--text-muted);
   font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
-  border-left: 3px solid transparent;
 }
-.rail-label { flex: 1; min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
-.rail-icon { flex: none; width: 18px; height: 18px; color: var(--text-dim); }
-.rail-group-head { color: var(--text); font-weight: 600; }
-.rail-group-head .rail-chevron { flex: none; color: var(--text-dim); transition: transform .15s; }
-.rail-group-head[aria-expanded="false"] .rail-chevron { transform: rotate(-90deg); }
-/* A group's places sit under its name, in line with it, past the picture's column. */
-.rail-items > li > .rail-item { padding-left: calc(var(--s3) + 18px + var(--s2)); }
-.rail-sections { list-style: none; margin: 0; padding: 0; }
-.rail-sections .rail-item { padding-left: calc(var(--s3) + 18px + var(--s2) + var(--s4)); min-height: 36px; font-size: var(--size-xs); }
-.rail-item:hover, .rail-group-head:hover { background: var(--surface-2); color: var(--text); }
-.rail-item:focus-visible, .rail-group-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.rail-group[data-current="true"] > .rail-group-head { color: var(--accent-strong); }
-.rail-group[data-current="true"] > .rail-group-head .rail-icon { color: var(--accent-strong); }
-.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; border-left-color: var(--accent); }
-.rail-item[aria-current="location"] { color: var(--text); font-weight: 600; border-left-color: var(--accent-line); }
-.rail-section[aria-current="true"] { color: var(--accent-strong); font-weight: 600; }
-.rail-home .rail-icon { color: inherit; }
-.rail-chip { flex: none; font-size: var(--size-xs); }
-/* The rail's search sits where its items do, as wide, so it lines up with them. */
-.rail-search { position: relative; display: flex; align-items: center; margin: var(--s1) 0; }
-.rail-search .rail-icon { position: absolute; left: var(--s3); pointer-events: none; }
-.rail-find { width: 100%; font-size: var(--size-sm); padding: var(--s2) var(--s3) var(--s2) calc(var(--s3) + 18px + var(--s2)); min-height: 40px; }
-.rail-empty { padding: var(--s2) var(--s3); }
+.rail-item:hover { background: var(--surface-2); color: var(--text); }
+.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;
   background: var(--negative); color: #fff; border-radius: 100px;
-  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px; flex: none;
+  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px;
 }
-.rail-player { margin-top: auto; padding-top: var(--s3); }
+.rail-player { margin-top: auto; margin-bottom: 0; }
 .rail-you { padding: var(--s2) var(--s3); }
-/* The drawer's own heading and Close, shown only where the rail is a drawer. */
-.rail-head { display: none; }
 /* Below a laptop the rail is a drawer, and this is what you press to close it. */
 .rail-shade {
-  display: none; position: fixed; inset: 0; z-index: 59;
-  background: rgba(0, 0, 0, 0.45); border: 0; cursor: pointer;
+  display: none; position: fixed; inset: var(--nav-h) 0 0 0; z-index: 29;
+  background: rgba(0, 0, 0, 0.35); border: 0; cursor: pointer;
 }
 
 /* The two sides of the bar. Left is the world; right is you. */
@@ -867,9 +823,6 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap;
   font-size: var(--size-xs); color: var(--text-dim); margin-bottom: var(--s4);
 }
-/* The breadcrumbs and the page's pin share one row, level (from 2026-10-01); the row keeps the space beneath. */
-.crumb-row { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); margin-bottom: var(--s4); }
-.crumb-row .breadcrumbs { margin-bottom: 0; }
 .breadcrumbs button {
   background: none; border: 0; color: var(--text-muted); font: inherit;
   cursor: pointer; padding: 0;
@@ -879,13 +832,12 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 .page-head { margin-bottom: var(--s5); }
 .page-head h1 { margin-bottom: var(--s1); }
 
-/* A tab is its words and the line under them, spaced by the strip's gap, so the first starts under the page's heading (from 2026-10-02; until then each was padded, and the first sat 16 pixels in). */
 .tabs {
-  display: flex; gap: var(--s5); border-bottom: 1px solid var(--line);
+  display: flex; gap: var(--s1); border-bottom: 1px solid var(--line);
   margin-bottom: var(--s5); overflow-x: auto;
 }
 .tab {
-  padding: var(--s3) 0; background: none; border: 0;
+  padding: var(--s3) var(--s4); background: none; border: 0;
   border-bottom: 2px solid transparent; color: var(--text-muted);
   font: inherit; font-size: var(--size-sm); font-weight: 550;
   cursor: pointer; white-space: nowrap;
@@ -1368,51 +1320,3 @@ td, th { overflow-wrap: break-word; }
 /* A statement's lines keep their columns, scrolling as one on a phone. */
 .statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .statement-lines > .row-between { min-width: 520px; }
-
-/* The Industry (from 2026-10-08): result lists, facts, the find box and its suggestions, the filters. */
-.results { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.result { display: flex; flex-direction: column; gap: 2px; padding: var(--s2) 0; border-bottom: 1px solid var(--line); min-width: 0; }
-.result:last-child { border-bottom: 0; }
-.result > * { min-width: 0; overflow-wrap: anywhere; }
-ol.results { counter-reset: rank; }
-ol.results > .result { padding-left: var(--s6); position: relative; }
-ol.results > .result::before { counter-increment: rank; content: counter(rank); position: absolute; left: 0; top: var(--s2); color: var(--text-dim); font-size: var(--size-xs); }
-.facts { margin: 0; display: flex; flex-direction: column; gap: var(--s2); }
-.facts-row { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: var(--s3); align-items: baseline; }
-.facts-row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-@media (max-width: 560px) { .facts-row { grid-template-columns: 1fr; gap: 2px; } }
-.find-box { position: relative; }
-.find-box .input { width: 100%; }
-.find-hints { list-style: none; margin: var(--s1) 0 0; padding: var(--s1); position: absolute; left: 0; right: 0; z-index: 20; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.3)); }
-.find-hint { display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: 44px; padding: var(--s2) var(--s3); background: none; border: 0; color: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm, 4px); }
-.find-hint:hover, .find-hint:focus-visible { background: var(--surface-2); }
-.find-hint > * { max-width: 100%; }
-.filters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: flex-end; }
-.filters label { display: flex; flex-direction: column; gap: var(--s1); min-width: 0; }
-.filters .input, .filters select { max-width: 100%; }
-.filters .row .input { width: 5.5em; }
-.result > button.link, .result > .row > button.link, .result button.link { align-self: flex-start; text-align: left; }
-
-/* The drawer's rules come after the rail's own, so they win where the rail is a drawer: until they were moved here on
-   2026-10-08 the rail's width and its hidden heading, written further down, overrode them on a phone. */
-@media (max-width: 900px) {
-  /* Closed, the drawer is off the left edge and hidden outright, so nothing
-     in it can take focus or be read as spilling out of the page. Open, it's
-     over the whole height, the bar included, with its own Close: until
-     2026-10-08 it opened under the bar's first line, and on a phone, where the
-     bar wraps to three, its top was under the bar's second and third. */
-  .rail {
-    position: fixed; top: 0; bottom: 0; left: 0; width: min(320px, 88vw);
-    z-index: 60; transform: translateX(-100%); visibility: hidden;
-    transition: transform .2s, visibility 0s linear .2s;
-    box-shadow: var(--shadow-lg);
-    padding-top: var(--s2);
-  }
-  .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
-  .rail-shade { display: block; }
-  .rail-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: var(--s1) var(--s3) var(--s2); border-bottom: 1px solid var(--line); margin-bottom: var(--s1); }
-  .rail-title { font-weight: 650; font-size: var(--size-sm); }
-  .rail-close { min-height: 40px; }
-}
-.rail-search .rail-find { padding-left: calc(var(--s3) + 18px + var(--s2)); }
-.lookup { padding: var(--s3); border: 1px dashed var(--line-strong); border-radius: var(--radius); }

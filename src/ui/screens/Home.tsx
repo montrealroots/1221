@@ -3,64 +3,39 @@
  *
  * Immediate life. Where am I, what day is it, what happens next, what needs
  * attention, how am I doing. A command surface, not a place to bury depth.
+ *
+ * Its Home, Career, Travel, Cars and Land panels went with those systems in
+ * the scope reset of 2026-10-09; the rest is as it stood on 2026-09-29.
  */
 
-import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
-import { landValue, parcelsOf } from '@/engine/systems/land';
-import { inSaveMoney } from '@/engine/systems/banking';
-import { LAND_MARKETS } from '@/engine/content/land';
-import { journeysOf } from '@/engine/systems/journey';
 import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
-import { Children, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { petsOf, sheltersIn } from '@/engine/systems/pets';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
-import { OWN_UNITS_IN, PORTABLE_LABEL, applianceCost, portableCost, portableRefusal, unitsRefusal, type Portable } from '@/engine/systems/appliances';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
-import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
-import { wasteFeeOf } from '@/engine/systems/waste';
-import { waterOf } from '@/engine/systems/household';
+import { troubles } from '@/engine/systems/spending';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
-import { agencyById } from '@/engine/systems/career';
-import { industryOf } from '@/engine/systems/industry';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
-import { TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
-import { holdQuote, holdRefusal, holdRuleFor, sitterFee, sitterRefusal } from '@/engine/systems/away';
-import { FURNISHABLE, closetUsedL, furnishedM2, roomsOf } from '@/engine/systems/rooms';
-import { cleanOutfits, dryCleanDirty, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
-import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
-import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
-import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
-import { chargerQuote } from '@/engine/systems/charging';
-import { billedApart, internetIn, internetShare, leavingCost, telecomOf } from '@/engine/systems/telecom';
-import { levelOf } from '@/engine/systems/people';
-import { kitchenStock } from '@/engine/systems/kitchen';
-import { mealsReady } from '@/engine/systems/pantry';
-import { groupLabelOf } from '@/ui/shell/destinations';
-import { leftPartway, underWay } from '@/engine/systems/underway';
-import { MACHINE_LABEL, faultsOf, repairBill, repairRefusal, type Machine } from '@/engine/systems/appliancefaults';
-import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -76,14 +51,12 @@ export function Home() {
   // month. "All Clear" was said over all of them, and until 2026-09-27 it
   // read only the rent of the money.
   const weighing = useWorld((s) => {
-    const notice = s.player.home?.noticeUntil;
     const clash = entriesBetween(s, s.now, s.now + 30 * MS_DAY).some((e) => e.conflicted);
     const cur = saveCurrency(s.universe);
     const m = (cents: number) => formatMoney(cents, cur, { cents: false });
     const said: string[] = [];
-    if (notice !== undefined) said.push(`A notice to pay or quit runs until ${formatDate(notice, s.zone)}.`);
     for (const t of troubles(s, s.player)) {
-      if (t.kind === 'landlord') said.push(`You owe your landlord ${m(t.amount)}.`);
+      if (t.kind === 'owed') said.push(`You owe ${m(t.amount)} that went unpaid.`);
       else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
       else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
       else if (t.kind === 'card_behind') {
@@ -96,8 +69,6 @@ export function Home() {
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
-      else if (t.kind === 'home') said.push(`You’re behind on your homes, ${m(t.amount)} owed.`);
-      else if (t.kind === 'council') said.push(`You owe ${m(t.amount)} of council tax.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');
@@ -123,19 +94,8 @@ export function Home() {
     where: useFeature('ui.where').open,
     weather: useFeature('ui.weather').open,
     money: useFeature('ui.money').open,
-    home: useFeature('ui.home').open,
     school: useFeature('ui.school').open,
-    career: useFeature('ui.career').open,
-    industry: useFeature('ui.industry').open,
     papers: useFeature('ui.papers').open,
-    travel: useFeature('ui.travel').open,
-    vehicles: useFeature('ui.vehicles').open,
-    land: useFeature('ui.land').open,
-    people: useFeature('ui.people').open,
-    food: useFeature('ui.food').open,
-    clothes: useFeature('ui.clothes').open,
-    routines: useFeature('ui.routines').open,
-    belongings: useFeature('ui.belongings').open,
   };
 
   return (
@@ -430,7 +390,7 @@ export function Home() {
                 <Stat
                   label="Sales Tax"
                   value={`${(place.salesTax * 100).toFixed(1)}%`}
-                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners${player.home?.kind === 'owned' ? ', which you pay' : ': you rent'}`}
+                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -516,184 +476,7 @@ export function Home() {
         </div>
       </div>
 
-      {/*
-        Every place in the life opens from Home, under the group it belongs to,
-        the same groups the rail and the screens' eyebrows name
-        (`ui/shell/destinations.ts`). From 2026-10-08 People, and Your Things
-        (belongings and land), have groups of their own; they were under Your
-        Day and Your Money.
-        Until 2026-10-02 eight panels sat in one grid in no order, and the Home
-        panel carried five other places as buttons in its corner.
-      */}
-      <HomeGroup label={groupLabelOf('/workspace/calendar')} lead={!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
-        <Panel
-          title="Home"
-          tight
-          actions={(
-            <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
-              Homes
-            </Gated>
-          )}
-        >
-          <div className="grid grid-2">
-            <div><YourHome cur={cur} /></div>
-            <div><YourPlace cur={cur} /></div>
-          </div>
-        </Panel>
-        )}>
-        {!shows.food ? <LockedPanel feature="ui.food" title="Food" /> : (
-        <Panel
-          title="Food"
-          tight
-          actions={(
-            <Gated feature="ui.food" className="btn btn-sm" onClick={() => navigate('/workspace/food', 'Food')}>
-              Food
-            </Gated>
-          )}
-        >
-          <YourFood />
-        </Panel>
-        )}
-        {!shows.clothes ? <LockedPanel feature="ui.clothes" title="Clothes" /> : (
-        <Panel
-          title="Clothes"
-          tight
-          actions={(
-            <Gated feature="ui.clothes" className="btn btn-sm" onClick={() => navigate('/workspace/clothes', 'Clothes')}>
-              Clothes
-            </Gated>
-          )}
-        >
-          <YourClothes />
-        </Panel>
-        )}
-        {!shows.routines ? <LockedPanel feature="ui.routines" title="Routines" /> : (
-        <Panel
-          title="Routines"
-          tight
-          actions={(
-            <Gated feature="ui.routines" className="btn btn-sm" onClick={() => navigate('/workspace/routines', 'Routines')}>
-              Routines
-            </Gated>
-          )}
-        >
-          <YourRoutines />
-        </Panel>
-        )}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/people')}>
-        {!shows.people ? <LockedPanel feature="ui.people" title="People" /> : (
-        <Panel
-          title="People"
-          tight
-          actions={(
-            <Gated feature="ui.people" className="btn btn-sm" onClick={() => navigate('/workspace/people', 'People')}>
-              People
-            </Gated>
-          )}
-        >
-          <YourPeople />
-        </Panel>
-        )}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/career')}>
-        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
-        <Panel
-          title="School"
-          tight
-          actions={(
-            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
-              {YALE_DRAMA.short}
-            </Gated>
-          )}
-        >
-          <YourSchool />
-        </Panel>
-        ))}
-        {player.career && (!shows.career ? <LockedPanel feature="ui.career" title="Career" /> : (
-        <Panel
-          title="Career"
-          tight
-          actions={(
-            <Gated feature="ui.career" className="btn btn-sm" onClick={() => navigate('/workspace/career', 'Your Career')}>
-              Career
-            </Gated>
-          )}
-        >
-          <YourCareer cur={cur} />
-        </Panel>
-        ))}
-        {(!shows.industry ? <LockedPanel feature="ui.industry" title="The Industry" /> : (
-        <Panel
-          title="The Industry"
-          tight
-          actions={(
-            <Gated feature="ui.industry" className="btn btn-sm" onClick={() => navigate('/workspace/industry', 'The Industry')}>
-              The Industry
-            </Gated>
-          )}
-        >
-          <TheIndustry />
-        </Panel>
-        ))}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/travel')}>
-        {(player.career || player.school) && (!shows.travel ? <LockedPanel feature="ui.travel" title="Travel" /> : (
-        <Panel
-          title="Travel"
-          tight
-          actions={(
-            <Gated feature="ui.travel" className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>
-              Travel
-            </Gated>
-          )}
-        >
-          <YourTravel />
-        </Panel>
-        ))}
-        {(player.career || player.school || (player.vehicles ?? []).some((v) => v.soldAt === undefined)) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
-        <Panel
-          title="Cars"
-          tight
-          actions={(
-            <Gated feature="ui.vehicles" className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Cars')}>
-              Cars
-            </Gated>
-          )}
-        >
-          <YourCars />
-        </Panel>
-        ))}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/belongings')}>
-        {!shows.belongings ? <LockedPanel feature="ui.belongings" title="Belongings" /> : (
-        <Panel
-          title="Belongings"
-          tight
-          actions={(
-            <Gated feature="ui.belongings" className="btn btn-sm" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
-              Belongings
-            </Gated>
-          )}
-        >
-          <YourBelongings />
-        </Panel>
-        )}
-        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
-        <Panel
-          title="Land"
-          tight
-          actions={(
-            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
-              Land
-            </Gated>
-          )}
-        >
-          <YourLand />
-        </Panel>
-        ))}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/bank')}>
+      <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
         {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
         <Panel
           title="Money"
@@ -715,7 +498,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}${worth.home > 0 ? `, a home worth ${formatMoney(worth.home, cur, { cents: false })}` : ''}`}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
@@ -729,10 +512,21 @@ export function Home() {
           </LookRegion>
         </Panel>
         )}
-      </HomeGroup>
-      <HomeGroup label={groupLabelOf('/workspace/papers')}>
+        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
+        <Panel
+          title="School"
+          tight
+          actions={(
+            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
+              {YALE_DRAMA.short}
+            </Gated>
+          )}
+        >
+          <YourSchool />
+        </Panel>
+        ))}
         {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
-        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
+        {player.school && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
         <Panel
           title="Papers"
           tight
@@ -745,109 +539,8 @@ export function Home() {
           <YourPapers cur={cur} />
         </Panel>
         ))}
-      </HomeGroup>
+      </div>
     </>
-  );
-}
-
-/** A heading for one part of life, a panel that takes the whole row where one is given, and the rest laid out to fill each row; nothing at all where none of them is shown. */
-function HomeGroup({ label, lead, children }: { label: string; lead?: ReactNode; children: ReactNode }) {
-  const shown = Children.toArray(children);
-  if (shown.length === 0 && !lead) return null;
-  return (
-    <section className="home-group" aria-label={label}>
-      <h2 className="home-group-label">{label}</h2>
-      {lead && <div className="home-group-lead">{lead}</div>}
-      {shown.length > 0 && <div className="grid grid-3">{children}</div>}
-    </section>
-  );
-}
-
-/** Who you know: how many, the close ones, and who you’re seeing. */
-function YourPeople() {
-  const contacts = useWorld((s) => s.player.contacts ?? []);
-  const close = contacts.filter((c) => levelOf(c) === 'Close Friend').length;
-  const partner = contacts.find((c) => c.dating);
-  return <Stat label="Who You Know" value={String(contacts.length)} note={`${close} ${close === 1 ? 'close friend' : 'close friends'}${partner ? `; seeing ${partner.name}` : ''}`} />;
-}
-
-/** What there is to eat: meals ready, and the food fresh in the kitchen. */
-function YourFood() {
-  const ready = useWorld((s) => mealsReady(s, s.player).length);
-  const stock = useWorld((s) => kitchenStock(s, s.player).length);
-  return <Stat label="Ready To Eat" value={String(ready)} note={`${stock} ${stock === 1 ? 'thing' : 'things'} fresh in the kitchen`} tone={ready === 0 ? 'warning' : undefined} />;
-}
-
-/** What there is to wear: clean outfits, and what’s in the wash. */
-function YourClothes() {
-  const outfits = useWorld((s) => cleanOutfits(s, s.player));
-  const wash = useWorld((s) => washableDirty(s, s.player).length);
-  return <Stat label="Clean Outfits" value={String(outfits)} note={wash ? `${wash} ${wash === 1 ? 'garment' : 'garments'} to wash` : 'Nothing to wash'} tone={outfits <= 2 ? 'warning' : undefined} />;
-}
-
-/** The routines saved, by name. */
-function YourRoutines() {
-  const routines = useWorld((s) => s.player.routines ?? []);
-  return <Stat label="Saved" value={String(routines.length)} note={routines.length ? routines.map((r) => r.name).slice(0, 3).join(', ') : 'None saved yet'} />;
-}
-
-/** A machine at home that's broken, and its repair booked (`systems/appliancefaults.ts`). */
-function BrokenMachines() {
-  const { sim, run, toast } = useGame();
-  const person = useWorld((s) => s.player);
-  const broken = Object.keys(faultsOf(person)) as Machine[];
-  if (broken.length === 0) return null;
-  const cur = saveCurrency(sim.universe);
-  return (
-    <div className="col gap-1">
-      <div className="small muted">Broken At Home</div>
-      {broken.map((m) => {
-        const f = faultsOf(person)[m]!;
-        const bill = repairBill(sim, person, m);
-        const no = repairRefusal(sim, person, m);
-        return (
-          <div key={m} className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-            <span className="small">{MACHINE_LABEL[m]}{f.fixAt !== undefined ? <span className="xs dim">{` · mended ${formatDate(f.fixAt, sim.zone)}${f.landlord ? ', the landlord’s' : ''}`}</span> : null}</span>
-            {f.fixAt === undefined && <Gated feature="home.repair_machine" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.repair_machine', { machine: m }).ok) toast('A technician comes tomorrow.', 'positive'); }}>{bill !== undefined ? `Book The Repair, ${formatMoney(bill, cur, { cents: false })}` : 'Book The Repair'}</Gated>}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/** What you own besides clothes and food, and how much of it is at home. */
-function YourBelongings() {
-  const { sim, run, toast } = useGame();
-  const things = useWorld((s) => (s.player.items ?? []).filter((i) => !i.garment && !i.food));
-  const atHome = things.filter((i) => i.at.kind === 'home').length;
-  // Everything in progress, soonest first (`systems/underway.ts`, from 2026-10-02).
-  const pending = useWorld((s) => underWay(s, s.player));
-  // What was stopped partway, each picked up where it was left (from 2026-10-03).
-  const partway = useWorld((s) => leftPartway(s.player, s.now));
-  return (
-    <div className="col gap-2">
-      <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />
-      {pending.length > 0 && (
-        <div className="col gap-1">
-          <div className="small muted">Under Way</div>
-          {pending.slice(0, 6).map((u) => <div key={`${u.kind}-${u.label}-${u.until}`} className="small">{u.label}<span className="xs dim">{` · ${formatDate(u.until, sim.zone)}`}</span></div>)}
-          {pending.length > 6 && <div className="xs dim">{`And ${pending.length - 6} more`}</div>}
-        </div>
-      )}
-      {partway.length > 0 && (
-        <div className="col gap-1">
-          <div className="small muted">Left Partway</div>
-          {partway.slice(0, 4).map((x) => (
-            <div key={`${x.kind}-${x.label}`} className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
-              <span className="small">{x.label}<span className="xs dim">{` · ${x.note}`}</span></span>
-              <Gated feature={x.resume.command} className="btn btn-sm btn-ghost" onClick={() => { if (run(x.resume.command, x.resume.payload).ok) toast(`${x.label}, picked up.`, 'positive'); }}>{x.resume.label}</Gated>
-            </div>
-          ))}
-        </div>
-      )}
-      <BrokenMachines />
-    </div>
   );
 }
 
@@ -888,48 +581,6 @@ function YourSchool() {
  * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
-/** The cars they own, and when the first's registration is next due (`systems/vehicles.ts`). */
-function YourCars() {
-  const { sim } = useGame();
-  const person = useWorld((s) => s.player);
-  const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
-  const first = owned[0];
-  const m = first ? modelById(first.modelId) : undefined;
-  return (
-    <div className="col gap-3">
-      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Car' : 'Cars'}` : 'None'} note={m ? `${m.make} ${m.model}` : undefined} />
-      <Stat label="Registration" value={first ? formatDateTime(first.registrationDue, sim.zone).split(' at ')[0]! : '—'} note={first ? 'Next due' : undefined} />
-    </div>
-  );
-}
-
-/** The land they own, and what it's worth (`systems/land.ts`). */
-function YourLand() {
-  const { sim } = useGame();
-  const person = useWorld((s) => s.player);
-  const owned = parcelsOf(person).filter((p) => p.soldAt === undefined);
-  const cur = saveCurrency(sim.universe);
-  const worth = owned.reduce((a, p) => { const m = LAND_MARKETS[p.market]!; return a + inSaveMoney(sim, landValue(m, p.acres, sim.now), m.currency); }, 0);
-  return (
-    <div className="col gap-3">
-      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Parcel' : 'Parcels'}` : 'None'} note={owned[0] ? LAND_MARKETS[owned[0].market]!.label : undefined} />
-      <Stat label="Worth" value={owned.length ? formatMoney(worth, cur, { cents: false }) : '—'} note={owned.some((p) => p.selling) ? 'Some of it for sale' : undefined} />
-    </div>
-  );
-}
-
-/** Where they are, and the next journey booked (`systems/journey.ts`). */
-function YourTravel() {
-  const person = useWorld((s) => s.player);
-  const next = journeysOf(person).filter((j) => j.status === 'booked' || j.status === 'underway').sort((a, b) => a.leaveAt - b.leaveAt)[0];
-  return (
-    <div className="col gap-3">
-      <Stat label="In" value={CITIES.get(person.currentLocationId)?.name ?? person.currentLocationId} />
-      <Stat label="Next Journey" value={next ? `To ${CITIES.get(next.toCity)?.name ?? next.toCity}` : 'None Booked'} note={next ? formatDateTime(next.leaveAt, CITIES.require(next.fromCity).timeZone) : undefined} />
-    </div>
-  );
-}
-
 function YourPapers({ cur }: { cur: string }) {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
@@ -949,268 +600,6 @@ function YourPapers({ cur }: { cur: string }) {
 }
 
 /**
- * The working life (`systems/career.ts`): who represents them, what's next
- * on the calendar for it, and the year's wages.
- */
-function YourCareer({ cur }: { cur: string }) {
-  const { sim } = useGame();
-  const person = useWorld((s) => s.player);
-  const career = person.career;
-  if (!career) return null;
-  const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
-  const next = sim.universe.scheduled
-    .filter((item) => item.status === 'pending' && item.category === 'career' && item.requiresPlayer && item.payload.personId === person.id)
-    .sort((x, y) => x.at - y.at)[0];
-  const year = String(zonedParts(sim.now, sim.zone).year);
-  // A manager's offer is one to answer too: until 2026-09-27 it wasn't counted.
-  const offers = career.offers.filter((o) => o.until > sim.now).length + career.managerOffers.filter((o) => o.until > sim.now).length + career.bookings.filter((b) => b.status === 'offered').length;
-  return (
-    <div className="col gap-3">
-      <Stat label="Representation" value={agency?.name ?? 'None'} note={offers ? `${offers} ${offers === 1 ? 'offer' : 'offers'} to answer` : `${career.credits.length} ${career.credits.length === 1 ? 'credit' : 'credits'}`} tone={offers ? 'warning' : undefined} />
-      <Stat label="Earned This Year" value={formatMoney(person.earnings?.years[year]?.acting ?? 0, cur, { cents: false })} note="Before commission and tax" />
-      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, sim.zone)} />}
-    </div>
-  );
-}
-
-/**
- * The home, run by hand: where they live, what it costs, any notice standing,
- * and moving (`home.move`), with what moving takes from the bank. It was
- * Work And Home until 2026-09-26, with the day job's week, extra shifts,
- * hours, quitting and looking for work above it; the job engine went.
- */
-/**
- * The place they live as it is inside (`systems/dwelling.ts`): what kind of
- * home, what it has, how many clean clothes are left and what's drying, how
- * tidy it is, and a cleaner every week.
- */
-const SECURITY_LABEL: Readonly<Record<Device, string>> = { windows: 'Fit Window Locks', timers: 'Buy Lamp Timers', lights: 'Fit An Outside Motion Light' };
-
-function YourPlace({ cur }: { cur: string }) {
-  const { sim, run, toast } = useGame();
-  const place = useWorld((s) => placeOf(s, s.player));
-  const living = useWorld((s) => ({ ...livingOf(s.player) }));
-  const cleaner = useWorld((s) => cleanerCost(s, s.player));
-  // The wardrobe's state (`systems/wardrobe.ts`): whole clean outfits to hand, and what's in the wash, drying or for the dry cleaner.
-  const clothes = useWorld((s) => ({
-    outfits: cleanOutfits(s, s.player),
-    toWash: washableDirty(s, s.player).length,
-    toDryClean: dryCleanDirty(s, s.player).length,
-    drying: garmentsOf(s.player).filter((g) => (g.garment.dryUntil ?? 0) > s.now).length,
-  }));
-  const premium = useWorld((s) => rentersPremium(s, s.player));
-  // The rooms' floor and built-in storage (`systems/rooms.ts`).
-  const rooms = useWorld((s) => { const r = roomsOf(s, s.player); return r ? { room: r.floorM2 * FURNISHABLE, taken: furnishedM2(s.player), closet: r.closetL, used: closetUsedL(s.player), flatmates: r.flatmates } : undefined; });
-  const hasAlarm = useWorld((s) => alarmed(s.player));
-  const noAlarm = useWorld((s) => alarmRefusal(s.player));
-  const home = useWorld((s) => s.player.home);
-  const noUnits = useWorld((s) => unitsRefusal(s, s.player));
-  // A charger for an electric car, on a house they own that hasn't one (`systems/charging.ts`).
-  const charger = useWorld((s) => { const q = chargerQuote(s, s.player); return typeof q === 'string' ? undefined : q.cost; });
-  // Locks, a light and timers, where they're priced and the home could take them (`systems/homesecurity.ts`).
-  const security = useWorld((s) => (['windows', 'timers', 'lights'] as Device[]).flatMap((device) => {
-    const cost = deviceCost(s, s.player, device);
-    const no = securityRefusal(s.player, device);
-    return cost === undefined || (no && /has them|not a flat|landlord|of your own/.test(no)) ? [] : [{ device, cost, no }];
-  }));
-  // A machine offered where it's priced and the home lacks it: a dryer once there's a washer.
-  const portables = useWorld((s) => (['dishwasher', 'washer', 'dryer'] as Portable[]).flatMap((kind) => {
-    const cost = s.player.home ? portableCost(s, s.player.home.cityId, kind) : undefined;
-    const no = portableRefusal(s, s.player, kind);
-    return cost === undefined || (no && /has one|beside a washer/.test(no)) ? [] : [{ kind, cost, no }];
-  }));
-  const unitsCost = useWorld((s) => (s.player.home && OWN_UNITS_IN.has(CITIES.get(s.player.home.cityId)?.countryId ?? '') ? applianceCost(s, s.player.home.cityId, 'ac-units') : undefined));
-  if (!place || !home) return null;
-  const country = CITIES.get(home.cityId)?.countryId ?? 'us';
-  const f = place.fixtures;
-  const has = [f.bathtub ? 'Bath And Shower' : 'Shower', f.dishwasher ? 'Dishwasher' : 'No Dishwasher', LAUNDRY_LABEL[f.laundry], COOLING_LABEL[f.cooling], OUTDOOR_LABEL[f.outdoor], GYM_LABEL[f.gym]];
-  const kind = home.kind === 'sofa' ? 'A friend’s place' : place.shared ? `A room in a shared ${typeLabel(place.type, country, true).toLowerCase()}` : typeLabel(place.type, country, !place.owned);
-  return (
-    <div className="col gap-2 small">
-      <div>{kind} · {sizeText(place.size, country)}</div>
-      <div className="muted">{has.join(' · ')}</div>
-      <div className="stats">
-        <Stat label="Clean Outfits" value={`${clothes.outfits}`} note={clothes.drying > 0 ? `${clothes.drying} drying` : clothes.toWash > 0 ? `${clothes.toWash} to wash` : clothes.toDryClean > 0 ? `${clothes.toDryClean} for the dry cleaner` : 'All washed'} tone={clothes.outfits <= 2 ? 'warning' : undefined} />
-        {rooms && <Stat label="Floor Furnished" value={`${rooms.taken.toFixed(1)} m²`} note={`Of ${rooms.room.toFixed(1)} m² there's room to furnish`} tone={rooms.taken > rooms.room * 0.9 ? 'warning' : undefined} />}
-        {rooms && <Stat label="Built-In Storage" value={`${Math.round(rooms.used)} L`} note={`Of ${Math.round(rooms.closet)} L${rooms.flatmates ? `; a bathroom shared with ${rooms.flatmates}` : ''}`} tone={rooms.used > rooms.closet * 0.9 ? 'warning' : undefined} />}
-        {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
-      </div>
-      {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          {living.rentersInsurance
-            ? <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => run('home.renters_insurance', { on: false })}>Cancel Renters Insurance</Gated>
-            : <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.renters_insurance', { on: true }).ok) toast('Your things are insured.', 'positive'); }}>Get Renters Insurance ({formatMoney(premium, cur, { cents: false })} A Month)</Gated>}
-          {hasAlarm
-            ? <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => run('home.alarm', { on: false })}>Switch Off The Alarm</Gated>
-            : !noAlarm && <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.alarm', { on: true }).ok) toast('The alarm is fitted and monitored; your insurer takes its discount off.', 'positive'); }}>Fit A Burglar Alarm</Gated>}
-        </div>
-      )}
-      {place.keeps && home.kind !== 'sofa' && portables.length > 0 && (
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          {portables.map(({ kind, cost, no }) => <Gated key={kind} feature="home.buy_portable" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_portable', { kind }).ok) toast('Yours, and it moves with you.', 'positive'); }}>{`Buy ${PORTABLE_LABEL[kind]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
-        </div>
-      )}
-      {place.keeps && home.kind !== 'sofa' && (security.length > 0 || charger !== undefined) && (
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          {security.map(({ device, cost, no }) => <Gated key={device} feature="home.security" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.security', { device }).ok) toast(device === 'timers' ? 'Lamps on a timer, as if somebody were home.' : 'Fitted. A burglar has a harder way in.', 'positive'); }}>{`${SECURITY_LABEL[device]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
-          {charger !== undefined && <Gated feature="home.charger" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.charger', {}).ok) toast('Charged at home now, overnight, at the home’s price.', 'positive'); }}>{`Fit A Home Charger (${formatMoney(charger, cur, { cents: false })})`}</Gated>}
-        </div>
-      )}
-      {place.keeps && home.kind !== 'sofa' && place.fixtures.cooling === 'none' && unitsCost !== undefined && (
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <Gated feature="home.buy_units" className="btn btn-sm btn-ghost" disabled={Boolean(noUnits)} title={noUnits} onClick={() => { if (run('home.buy_units', {}).ok) toast('Yours, and they move with you.', 'positive'); }}>Buy Air Conditioning Units ({formatMoney(unitsCost, cur, { cents: false })})</Gated>
-        </div>
-      )}
-      {place.keeps && (
-        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          {living.cleaner
-            ? <><Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated><Gated feature="home.cleaner_key" className="btn btn-sm btn-ghost" title="Without a key the cleaner gets in only when you or a partner are home at ten" onClick={() => { if (run('home.cleaner_key', { give: !living.cleaner!.key }).ok) toast(living.cleaner!.key ? 'The key back.' : 'They let themselves in now.', 'positive'); }}>{living.cleaner.key ? 'Take The Key Back' : 'Give The Cleaner A Key'}</Gated></>
-            : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
-        </div>
-      )}
-      {place.keeps && (living.cleanerLog?.length ?? 0) > 0 && (
-        <p className="xs dim" style={{ margin: 0 }}>{`The cleaner’s visits: ${living.cleanerLog!.slice(0, 4).map((v) => `${formatDate(v.at, sim.zone)}, ${v.paid !== undefined ? formatMoney(v.paid, cur, { cents: false }) : v.unpaid ? 'not paid, so not cleaned' : 'couldn’t get in'}`).join('; ')}.`}</p>
-      )}
-      {home.kind !== 'sofa' && <WhileAway cur={cur} />}
-      {home.kind !== 'sofa' && <YourPets cur={cur} />}
-    </div>
-  );
-}
-
-/**
- * The home while it's empty (`systems/away.ts`): the post held for some
- * days, and a house sitter for some nights, each somebody or something that
- * keeps a parcel from the door.
- */
-/** A dog or a cat of your own, adopted at a shelter where you live (`systems/pets.ts`). */
-function YourPets({ cur }: { cur: string }) {
-  const { sim, run, toast } = useGame();
-  const pets = useWorld((s) => [...petsOf(s.player)]);
-  const here = useWorld((s) => sheltersIn(s.player.home?.cityId ?? ''));
-  const [petName, setPetName] = useState('');
-  if (here.length === 0 && pets.length === 0) return null;
-  return (
-    <div className="col gap-1">
-      {pets.length > 0 && <span className="small">{`Your pets: ${pets.map((p) => `${p.name}, a ${p.species}`).join('; ')}. On a trip, someone stays or they come along.`}</span>}
-      {here.length > 0 && (
-        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <div className="field" style={{ margin: 0 }}>
-            <label htmlFor="pet-name">A Name For It</label>
-            <input id="pet-name" value={petName} onChange={(e) => setPetName(e.target.value)} style={{ width: '10rem' }} />
-          </div>
-          {here.map((s) => (
-            <Gated key={s.id} feature="pets.adopt" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.adopt', { shelterId: s.id, name: petName }).ok) { toast(`Adopted from ${s.name}.`, 'positive'); setPetName(''); } }}>{`Adopt A ${s.species === 'dog' ? 'Dog' : 'Cat'}, ${s.name}${s.fee > 0 ? `, ${formatMoney(inSaveMoney(sim, Math.round(s.fee * 100), s.currency), cur, { cents: false })}${s.confirmed ? '' : ', Read Secondhand'}` : ''}`}</Gated>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function WhileAway({ cur }: { cur: string }) {
-  const { sim, run, toast } = useGame();
-  const [days, setDays] = useState(7);
-  const [nights, setNights] = useState(7);
-  const hold = useWorld((s) => (s.player.mailHold && s.player.mailHold.releaseAt > s.now ? { ...s.player.mailHold } : undefined));
-  const rule = useWorld((s) => holdRuleFor(s.player));
-  const quote = useWorld((s) => holdQuote(s, s.player, days), [days]);
-  const noHold = useWorld((s) => holdRefusal(s, s.player, days), [days]);
-  const sitter = useWorld((s) => (s.player.sitter && s.player.sitter.until > s.now ? { ...s.player.sitter } : undefined));
-  const noSitter = useWorld((s) => sitterRefusal(s.player, nights, s.now), [nights]);
-  const sitterCost = useWorld((s) => sitterFee(s, s.player, nights), [nights]);
-  return (
-    <div className="col gap-2">
-      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        {hold
-          ? <><span className="small">{`${hold.service} holds the post from ${formatDate(hold.from, sim.zone)} to ${formatDate(hold.until, sim.zone)}; it comes ${formatDate(hold.releaseAt, sim.zone)}${hold.parcels ? '' : ', parcels delivered meanwhile'}.`}</span>
-            <Gated feature="home.end_hold" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_hold', {}).ok) toast('The post comes again.', 'positive'); }}>End The Hold</Gated></>
-          : rule && <><div className="field" style={{ margin: 0 }}>
-              <label htmlFor="hold-days">Days To Hold The Post</label>
-              <input id="hold-days" type="number" style={{ width: '8rem' }} min={rule.leastDays} max={rule.mostDays ?? 365} value={days} onChange={(e) => setDays(Math.max(1, Math.min(rule.mostDays ?? 365, Number(e.target.value) || 1)))} />
-            </div>
-            <Gated feature="home.hold_mail" className="btn btn-sm" disabled={Boolean(noHold)} title={noHold ?? (quote ? `From ${formatDate(quote.from, sim.zone)}${rule.parcels ? ', parcels too' : ', letters only'}${rule.confirmed ? '' : '; its prices read secondhand'}` : undefined)} onClick={() => { if (run('home.hold_mail', { days }).ok) toast('The post is held.', 'positive'); }}>{`Hold The Post (${quote && quote.fee > 0 ? formatMoney(quote.fee, cur) : 'Free'})`}</Gated></>}
-      </div>
-      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        {sitter
-          ? <><span className="small">{`A house sitter stays to ${formatDate(sitter.until, sim.zone)}.`}</span>
-            <Gated feature="home.end_sitter" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_sitter', {}).ok) toast('The sitter’s gone.', 'positive'); }}>Send The Sitter Home</Gated></>
-          : <><div className="field" style={{ margin: 0 }}>
-              <label htmlFor="sitter-nights">Nights Of House Sitting</label>
-              <input id="sitter-nights" type="number" style={{ width: '8rem' }} min={1} max={90} value={nights} onChange={(e) => setNights(Math.max(1, Math.min(90, Number(e.target.value) || 1)))} />
-            </div>
-            <Gated feature="home.sitter" className="btn btn-sm" disabled={Boolean(noSitter)} title={noSitter ?? 'Somebody home to take parcels in and let the cleaner in'} onClick={() => { if (run('home.sitter', { nights }).ok) toast('A sitter’s staying.', 'positive'); }}>{`Book A House Sitter${sitterCost > 0 ? ` (${formatMoney(sitterCost, cur)})` : ''}`}</Gated></>}
-      </div>
-    </div>
-  );
-}
-
-function YourHome({ cur }: { cur: string }) {
-  const { sim, run, toast } = useGame();
-  const [paying, setPaying] = useState('');
-  const owed = useWorld((s) => arrearsOf(s, s.player));
-  const ahead = useWorld((s) => s.player.payments?.rentCredit ?? 0);
-  const payLandlord = () => {
-    const answer = run('home.pay_landlord', { amount: centsFromTyped(paying) });
-    if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
-  };
-  const home = useWorld((s) => s.player.home);
-  // Away on a job or a stay, a home is found back where they live (`home.move`).
-  const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
-  const rent = useWorld((s) => rentOf(s, s.player));
-  const bills = useWorld((s) => billsOf(s, s.player));
-  const bins = useWorld((s) => wasteFeeOf(s, s.player));
-  const water = useWorld((s) => waterOf(s, s.player));
-  const council = useWorld((s) => Math.round(rentersCouncilTax(s, s.player) / 10));
-  const checking = useWorld((s) => Math.max(0, s.universe.accounts[s.player.primaryAccountId ?? '']?.balance ?? 0));
-  // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
-  const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared') - depositBack(s, s.player), own: moveCost(s, s.player, 'own') - depositBack(s, s.player) }));
-  const refused = useWorld((s) => ({ shared: moveRefusal(s, s.player, 'shared'), own: moveRefusal(s, s.player, 'own') }));
-  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
-  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : home.kind === 'owned' ? OWNED.label : HOUSING[home.kind].label) : 'Nowhere';
-  return (
-    <div className="col gap-3">
-      <Stat
-        label="Where You Sleep"
-        value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${bins > 0 || water > 0 ? ` (${[bins > 0 ? `${money(bins)} of it the bins` : '', water > 0 ? `${money(water)} the water` : ''].filter(Boolean).join(', ')})` : ''}${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
-      />
-      <InternetControl />
-      {home && home.kind !== 'sofa' && home.kind !== 'owned' && (
-        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <div className="field" style={{ margin: 0 }}>
-            <label htmlFor="pay-landlord">{owed > 0 ? `Owed: ${money(owed)}` : ahead > 0 ? `Paid Ahead: ${money(ahead)}` : 'Pay The Landlord'} ({cur})</label>
-            <input id="pay-landlord" inputMode="decimal" value={paying} onChange={(e) => setPaying(e.target.value)} />
-          </div>
-          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying || centsFromTyped(paying) > checking}>Pay The Landlord</Gated>
-        </div>
-      )}
-      {home?.noticeUntil !== undefined && (
-        <div className="callout callout-warning small">
-          A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
-        </div>
-      )}
-      {home?.kind === 'owned' ? null : away ? (
-        <div className="small muted">You’re away: a new home is found back in {CITIES.get(away)?.name ?? 'your town'}.</div>
-      ) : (
-      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-        {home?.kind !== 'shared' && (
-          <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.shared)} onClick={() => run('home.move', { kind: 'shared' })}>
-            Rent A Room ({money(costs.shared)} To Move In)
-          </Gated>
-        )}
-        {home?.kind !== 'own' && (
-          <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.own)} onClick={() => run('home.move', { kind: 'own' })}>
-            Rent A One-Bedroom ({money(costs.own)} To Move In)
-          </Gated>
-        )}
-      </div>
-      )}
-      {!away && home?.kind !== 'owned' && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
-    </div>
-  );
-}
-
-/**
  * The card and the record, at a glance: what the card owes of its limit, and
  * the record a lender reads, as a number where lenders use one and a word
  * elsewhere. The card is the bank's, and paying it and its autopay are on the
@@ -1222,7 +611,6 @@ function CardSummary({ cur }: { cur: string }) {
   const cards = useWorld((s) => cardsOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
-  // Read as it’s read where they live, not where a job has them.
   const record = scoreIsANumberIn(homeOf(sim.player)) ? String(Math.round(credit.score)) : scoreWord(credit.score);
   const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
@@ -1274,47 +662,4 @@ function calledBy(person: { firstName: string; lastName: string; middleName?: st
   const full = [person.firstName, person.middleName, person.lastName].filter(Boolean).join(' ');
   const plain = `${person.firstName} ${person.lastName}`;
   return person.displayName && person.displayName !== full && person.displayName !== plain ? person.displayName : person.firstName;
-}
-
-/** The home's internet provider and the other offers in town (`systems/telecom.ts`). */
-function InternetControl() {
-  const { run, toast, sim } = useGame();
-  const cur = saveCurrency(sim.universe);
-  const home = sim.player.home;
-  const [planId, setPlanId] = useState('');
-  if (!home || !billedApart(home.cityId) || internetShare(home.kind) === 0) return null;
-  const now = telecomOf(sim.player).internet;
-  const offers = internetIn(home.cityId);
-  const current = offers.find((x) => x.id === now?.planId && now?.cityId === home.cityId);
-  const others = offers.filter((x) => x.id !== current?.id);
-  const chosen = others.find((x) => x.id === planId) ?? others[0];
-  const priced = (x: (typeof offers)[number]) => `${x.provider}, ${x.plan}, ${formatMoney(Math.round(x.monthly * 100), x.currency)} A Month${x.months && x.after !== undefined ? ` For ${x.months} Months, Then ${formatMoney(Math.round(x.after * 100), x.currency)}` : ''}`;
-  const leaving = leavingCost(sim, sim.player, sim.now);
-  return (
-    <div className="field-row">
-      <span className="small">{current ? `Internet: ${priced(current)}` : `Internet: ${priced(offers[0]!)}, From The First`}</span>
-      {chosen && others.length > 1 && (
-        <select aria-label="Internet Offer" value={chosen.id} onChange={(e) => setPlanId(e.target.value)} style={{ width: 'auto' }}>
-          {others.map((x) => <option key={x.id} value={x.id}>{priced(x)}</option>)}
-        </select>
-      )}
-      {chosen && current && (
-        <Gated feature="home.internet" className="btn btn-sm btn-ghost" title={leaving > 0 ? `What's left of the contract, ${formatMoney(leaving, cur, { cents: false })}, is owed on leaving.` : `${chosen.source}.`} onClick={() => { if (run('home.internet', { planId: chosen.id }).ok) toast(`${chosen.provider} from now.`, 'positive'); }}>{`Switch To ${chosen.provider}`}</Gated>
-      )}
-    </div>
-  );
-}
-
-/** The business, at a glance: what's casting where you work, and what of yours is coming out. */
-function TheIndustry() {
-  const { sim } = useGame();
-  const projects = useWorld((s) => industryOf(s).projects);
-  const town = sim.player.career?.agencyCity ?? sim.player.home?.cityId ?? sim.player.currentLocationId;
-  const casting = projects.filter((p) => p.status === 'casting' && p.cityId === town).length;
-  const mine = projects.filter((p) => p.parts.some((x) => x.holder?.kind === 'player') && p.status !== 'released' && p.status !== 'cancelled');
-  return (
-    <p className="small" style={{ margin: 0 }}>
-      {casting} {casting === 1 ? 'project is' : 'projects are'} casting where you work. {mine.length ? `${mine.length} of yours ${mine.length === 1 ? 'is' : 'are'} on the way.` : 'Real films and series, the ten companies and this save’s projects, by name.'}
-    </p>
-  );
 }

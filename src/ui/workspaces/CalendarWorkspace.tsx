@@ -5,12 +5,10 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
-import { dateKey, formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
-import { LookRegion, Open, at } from '@/ui/looks';
+import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
-import { groupLabelOf } from '@/ui/shell/destinations';
 import { canPlan, dayLabel, firstFreeSlot, hiddenIn, holidayChips, openSlots, roomFor, standingIn, stillStands } from './cell';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -60,7 +58,7 @@ export function CalendarWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">{groupLabelOf('/workspace/calendar')}</div>
+        <div className="eyebrow">Calendar</div>
         <h1>Every Commitment You Have.</h1>
         <p className="muted">
           Everything on your calendar, and the holidays kept where you’re
@@ -73,15 +71,13 @@ export function CalendarWorkspace() {
       {conflicts.length > 0 && (
         <div className="callout callout-negative" style={{ marginBottom: 'var(--s5)' }}>
           <strong>{collisions === 1 ? 'A collision' : `${collisions} collisions`} in the next month.</strong>
-          <LookRegion>
-            <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
-              {conflicts.slice(0, 6).map((entry) => (
-                <li key={entry.id}>
-                  <Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open> — <Open subject={at('day', dateKey(entry.at, sim.homeZone))}>{formatDate(entry.at, sim.homeZone)}</Open> at <Open subject={at('entry', entry.id)}>{formatTime(entry.at, sim.homeZone)}</Open>
-                </li>
-              ))}
-            </ul>
-          </LookRegion>
+          <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
+            {conflicts.slice(0, 6).map((entry) => (
+              <li key={entry.id}>
+                {titleCaseLabel(entry.title)} — {formatDate(entry.at, sim.homeZone)} at {formatTime(entry.at, sim.homeZone)}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -153,7 +149,6 @@ export function CalendarWorkspace() {
       {selectedDay && (
         <Panel
           title={formatDate(selectedDay.date, sim.homeZone)}
-          look={at('day', selectedDay.key)}
           subtitle={selectedDay.holidays.length > 0 ? selectedDay.holidays.map(holidayLabel).join(' · ') : `${selectedDay.season}`}
           flush
           actions={(
@@ -175,28 +170,27 @@ export function CalendarWorkspace() {
                 : 'That day was entirely yours.'}
             />
           ) : (
-            <LookRegion className="list">
+            <div className="list">
               {selectedDay.entries.map((entry) => (
-                <div key={entry.id} className="list-item">
+                <button key={entry.id} className="list-item" onClick={() => setDetail(entry)}>
                   <span
                     className="cal-swatch"
                     style={{ background: LEGEND_BY_CATEGORY[entry.category]?.colour, width: 4, height: 32, borderRadius: 2 }}
                     aria-hidden="true"
                   />
                   <div className="grow">
-                    <div className="small strong"><Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open></div>
+                    <div className="small strong">{titleCaseLabel(entry.title)}</div>
                     <div className="xs dim">
-                      <Open subject={at('entry', entry.id)}>{formatTime(entry.at, sim.homeZone)}</Open>
-                      {entry.durationMinutes ? <> · <Open subject={at('stretch', entry.id)}>{formatDuration(entry.durationMinutes * MS_MINUTE)}</Open></> : ''}
-                      {entry.locationId && CITIES.get(entry.locationId) ? <> · <Open subject={at('place', entry.locationId)}>{CITIES.get(entry.locationId)!.name}</Open></> : ''}
+                      {formatTime(entry.at, sim.homeZone)}
+                      {entry.durationMinutes ? ` · ${formatDuration(entry.durationMinutes * MS_MINUTE)}` : ''}
+                      {entry.locationId ? ` · ${CITIES.get(entry.locationId)?.name ?? ''}` : ''}
                     </div>
                   </div>
                   {entry.conflicted && <span className="chip chip-negative">Clash</span>}
                   {statusOf(entry) !== 'pending' && <span className="chip">{statusWords(statusOf(entry))}</span>}
-                  <CallOff entry={entry} onAsk={() => setDetail(entry)} />
-                </div>
+                </button>
               ))}
-            </LookRegion>
+            </div>
           )}
         </Panel>
       )}
@@ -209,26 +203,25 @@ export function CalendarWorkspace() {
             body="No plans or commitments in the next thirty days. Holidays are marked on the month above, not listed here."
           />
         ) : (
-          <LookRegion className="list">
+          <div className="list">
             {next30.slice(0, 20).map((entry) => (
-              <div key={entry.id} className="list-item">
+              <button key={entry.id} className="list-item" onClick={() => setDetail(entry)}>
                 <span
                   className="cal-swatch"
                   style={{ background: LEGEND_BY_CATEGORY[entry.category]?.colour }}
                   aria-hidden="true"
                 />
                 <div className="grow">
-                  <div className="small"><Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open></div>
+                  <div className="small">{titleCaseLabel(entry.title)}</div>
                   <div className="xs dim">
-                    <Open subject={at('day', dateKey(entry.at, sim.homeZone))}>{formatDate(entry.at, sim.homeZone)}</Open> · <Open subject={at('entry', entry.id)}>{formatTime(entry.at, sim.homeZone)}</Open>
+                    {formatDate(entry.at, sim.homeZone)} · {formatTime(entry.at, sim.homeZone)}
                   </div>
                 </div>
                 {entry.requiresPlayer && <span className="chip">You</span>}
                 {entry.conflicted && <span className="chip chip-negative">Clash</span>}
-                <CallOff entry={entry} onAsk={() => setDetail(entry)} />
-              </div>
+              </button>
             ))}
-          </LookRegion>
+          </div>
         )}
       </Panel>
 
@@ -334,31 +327,18 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
   );
 }
 
-/**
- * Calling off a plan you made, from its row. Until 2026-10-02 every row was a
- * button that opened a modal saying what the entry was; reading an entry is
- * the entry look's now, where its name stands, and the modal is kept for the
- * one thing it does that a look can't: taking a plan of yours off the calendar.
- */
-function CallOff({ entry, onAsk }: { entry: CalendarEntry; onAsk: () => void }) {
-  const mine = useWorld((s) => s.timeline.get(entry.id)?.kind === PLAN_KIND && entry.status === 'pending', [entry.id, entry.status]);
-  if (!mine) return null;
-  return <Gated feature="calendar.cancel" className="btn btn-sm btn-ghost" onClick={onAsk}>Call It Off</Gated>;
-}
-
 /** An entry's own state, in the word the screen shows. */
 function statusOf(entry: CalendarEntry): string {
   return entry.status === 'done' ? 'completed' : entry.status;
 }
 
 /**
- * Calling off a plan of yours, asked first.
+ * One entry, opened.
  *
- * What it is, when it is, how long it runs and what state it is in, above the
- * question. Until 2026-10-02 this opened for every entry and was how an entry
- * was read; reading is the entry look's now, and this opens only for a plan
- * you made, the one thing on the calendar you can argue with — a holiday is a
- * country's and a world event belongs to the clock.
+ * What it is, when it is, how long it runs and what state it is in. The one
+ * thing here that is yours is a plan you made: you can call it off, and
+ * nothing else on the calendar can be argued with — a holiday is a country's
+ * and a world event belongs to the clock.
  */
 function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
   const { sim, run, refresh } = useGame();

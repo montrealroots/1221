@@ -37,7 +37,7 @@ import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, 
 import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
 import { clinicFor } from './clinics';
 import { citizenOf } from './documents';
-import { present } from './career';
+import { present } from './health';
 
 export const APPOINTMENT_KIND = 'health.appointment';
 
@@ -72,7 +72,7 @@ export function mayRefer(sim: Simulation, person: Person, a: Appointment, odds?:
 export interface Appointment { id: string; at: Instant; what: string; clinicId?: string }
 export const appointmentsOf = (person: Person): Appointment[] => (healthOf(person).appointments ??= []);
 
-const homeCity = (person: Person) => person.home?.cityId ?? person.currentLocationId;
+const homeCity = (person: Person) => person.currentLocationId;
 
 /** The days a doctor's appointment is waited for where they live, drawn where it's a distribution (`health.appointment`); nothing where no wait is published. */
 export function waitDays(sim: Simulation, person: Person, key: string): number | undefined {

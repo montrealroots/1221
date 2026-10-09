@@ -20,7 +20,7 @@ import {
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import { RATES_NOTE } from '@/engine/content/currency';
-import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
+import { foodAt } from '@/engine/systems/spending';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
@@ -504,6 +504,10 @@ function IdentityStep({ config, set, setConfig }: {
 
       <hr className="divider" />
 
+      <BodyFields config={config} setConfig={setConfig} />
+
+      <hr className="divider" />
+
       <div className="panel-head">
         <div>
           <h3>Place Of Birth</h3>
@@ -867,16 +871,6 @@ function StartingPointStep({ config, set, setConfig }: {
 
   return (
     <div className="col gap-5">
-      {/* The body as it is the day the life begins, with where it begins: until 2026-10-02 it was asked under Identity, beside a name. */}
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h2>Your Body Today</h2>
-            <p className="muted small">Your height and weight as the life begins. From here they’re yours to change.</p>
-          </div>
-        </div>
-        <BodyFields config={config} setConfig={setConfig} />
-      </div>
       <div className="card">
         <div className="panel-head">
           <div>
@@ -942,7 +936,7 @@ function StartingPointStep({ config, set, setConfig }: {
         )}
       </div>
 
-      <MonthByMonth config={config} set={set} cur={cur} />
+      <MonthByMonth config={config} cur={cur} />
 
       <div className="card">
         <div className="panel-head">
@@ -1033,18 +1027,18 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
  *
  * It was what a month paid too, until 2026-09-26: the day job, its employer's
  * rate, the tax withheld and the tips. The job engine went, and nothing comes
- * in now.
+ * in now. Rent and bills went with the home on 2026-10-09, and so did choosing
+ * where to sleep: what goes out a month is the food.
  */
 function monthOf(config: NewSaveConfig, cur: string) {
   const at = Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12);
-  const costs = costsAt(config.startLocationId, config.housing, cur, at);
+  const costs = foodAt(config.startLocationId, cur, at);
   const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
   const food = Math.round(costs.day * spending * 365 / 12);
-  const out = costs.rent + costs.bills + food;
-  return { at, costs, spending, food, out };
+  return { at, costs, spending, food, out: food };
 }
 
-function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
+function MonthByMonth({ config, cur }: { config: NewSaveConfig; cur: string }) {
   const { costs, spending, food, out } = monthOf(config, cur);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
 
@@ -1053,24 +1047,11 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       <div className="panel-head">
         <div>
           <h2>Month By Month</h2>
-          <p className="muted small">What living here costs. Rent and bills are due on the first; the bills here are the year’s average month, and a winter’s or a summer’s run higher by what the climate asks of the heating and the cooling.</p>
+          <p className="muted small">What living here costs: the day’s food, bought every morning.</p>
         </div>
       </div>
-
-      <div className="field">
-        <label htmlFor="housing">Where You Sleep</label>
-        <select id="housing" value={config.housing} onChange={(e) => set('housing', e.target.value as Housing)}>
-          {(Object.keys(HOUSING) as Housing[]).map((kind) => <option key={kind} value={kind}>{HOUSING[kind].label}</option>)}
-        </select>
-      </div>
-      <div className="callout">{HOUSING[config.housing].note}</div>
 
       <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
-        <div className="stat">
-          <span className="stat-label">Rent And Bills</span>
-          <span className="stat-value mono">{money(costs.rent + costs.bills)}</span>
-          <span className="stat-note">{money(costs.rent)} rent, {money(costs.bills)} bills</span>
-        </div>
         <div className="stat">
           <span className="stat-label">Food</span>
           <span className="stat-value mono">{money(food)}</span>
@@ -1083,14 +1064,11 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
           ? (!findsNeed(config)
             ? `About ${money(out)} going out a month, from your bank, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} each term for your Yale Health plan. Tuition is covered; Yale’s aid for living costs goes by need.`
             : `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`)
-          : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.`}
+          : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card.`}
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. Source: ${costs.rentFigure.source}. `}
-        {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
-        {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
-        Bills and food are SLATE's estimates, not published figures.
+        Food is SLATE's estimate, not a published figure.
       </p>
     </div>
   );
@@ -1152,7 +1130,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           {wealth.cardLimit > 0 && (
             <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
           )}
-          <Line label="Where You Sleep" value={HOUSING[config.housing].label} />
           <Line label="Going Out A Month" value={formatMoney(month.out, cur, { cents: false })} />
         </div>
       </div>

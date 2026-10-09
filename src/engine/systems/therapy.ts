@@ -29,7 +29,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
-import { owe, payFromBank } from './household';
+import { owe, payFromBank } from './spending';
 import { healthOf } from './health';
 
 export interface Therapist { cityId: string; name: string; price: number; currency: string; minutes: number; nhs?: boolean }
@@ -52,7 +52,7 @@ export const therapistsIn = (cityId: string): Therapist[] => THERAPISTS.filter((
 export const sessionPrice = (sim: Simulation, t: Therapist): Money => inSaveMoney(sim, Math.round(t.price * 100), t.currency);
 
 export function therapyRefusal(person: Person, name: string): string | undefined {
-  const t = THERAPISTS.find((x) => x.name === name && x.cityId === person.home?.cityId);
+  const t = THERAPISTS.find((x) => x.name === name && x.cityId === person.currentLocationId);
   if (!t) return 'Choose a therapist where you live.';
   if (!healthOf(person).chronic?.depression) return 'A course of therapy here is for depression.';
   if (person.therapy) return 'You’re in a course already.';
@@ -73,7 +73,7 @@ export function registerTherapy(sim: Simulation): void {
     const person = s.player;
     const no = therapyRefusal(person, String(p?.therapist));
     if (no) throw new CommandError(no);
-    const t = THERAPISTS.find((x) => x.name === p.therapist && x.cityId === person.home!.cityId)!;
+    const t = THERAPISTS.find((x) => x.name === p.therapist && x.cityId === person.currentLocationId)!;
     const first = s.now + (t.nhs ? THERAPY.nhsWaitDays : 7) * MS_DAY;
     person.therapy = { therapist: t.name, cityId: t.cityId, done: 0, at: s.now };
     scheduleSession(s, person, t, first);

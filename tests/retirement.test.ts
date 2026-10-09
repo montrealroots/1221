@@ -5,43 +5,15 @@
  * owed tens of thousands each year, and the bill was refused as more than
  * the bank could cover with millions in savings.
  */
-import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { computeAnnualTax } from '@/engine/content/tax';
-import { earningsOf, yearOf } from '@/engine/systems/earnings';
-import { SAG_PENSION, armPension, pensionOf } from '@/engine/systems/pension';
-import { payFromBank } from '@/engine/systems/household';
+import { MS_DAY,instantFromZoned } from '@/engine/core/time';
 import { recordWages } from '@/engine/systems/earnings';
-import { beginCareer } from '@/engine/systems/career';
-import { instantFromZoned } from '@/engine/core/time';
-import { SUBSTITUTE, TAX_NOTICE_KIND, armCollection, latePenalty, owedOn, returnsOf } from '@/engine/systems/taxreturn';
+import { payFromBank } from '@/engine/systems/spending';
+import { SUBSTITUTE,TAX_NOTICE_KIND,armCollection,latePenalty,owedOn,returnsOf } from '@/engine/systems/taxreturn';
+import { describe,expect,it } from 'vitest';
 
 const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
-function earned(sim: Simulation, byYear: Record<number, number>): void {
-  const years = earningsOf(sim.player).years;
-  for (const [y, sag] of Object.entries(byYear)) years[y] = { acting: sag, residuals: 0, sag, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never;
-}
-
-describe('the pension, retired', () => {
-  it('has federal tax withheld each month, as for somebody single on the year the month makes, and credits it to the return', () => {
-    const sim = life('pension-withheld');
-    const years: Record<number, number> = {};
-    for (let y = 1990; y < 2026; y += 1) years[y] = 200_000_00;
-    earned(sim, years);
-    sim.player.birthInstant = sim.now + MS_DAY - Math.round(SAG_PENSION.age * 365.2425 * MS_DAY);
-    armPension(sim, sim.player);
-    sim.advanceBy(2 * MS_DAY);
-    const month = Math.round(pensionOf(sim, sim.player).yearly / 12);
-    const paid = sim.universe.transactions.find((t) => t.memo === 'SAG-Producers Pension Plan, the month')!;
-    const withheld = Math.round(computeAnnualTax(month * 12, 'us-ny-newyork', sim.now, { currency: 'USD' }).federal / 12);
-    expect(withheld).toBeGreaterThan(1_000_00);
-    expect(paid.postings.find((x) => x.accountId === sim.nominalAccount('expense', 'Tax Withheld').id)!.amount).toBe(withheld);
-    expect(Math.max(...paid.postings.map((x) => x.amount))).toBe(month - withheld);
-    expect(yearOf(sim.player, new Date(sim.now).getUTCFullYear()).withheld).toBe(withheld);
-  });
-});
 
 describe('a bill the person pays', () => {
   it('reaches savings when checking is short, linked or not', () => {
@@ -62,7 +34,6 @@ describe('a balance left owing', () => {
   /** A 2026 return filed with nothing in the bank to pay it. */
   function owing(seed: string): { sim: Simulation; zero: () => void } {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
-    beginCareer(sim, sim.player);
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const zero = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
     while (sim.now < instantFromZoned({ year: 2027, month: 2, day: 1, hour: 12 }, 'America/New_York')) sim.advanceTo(sim.now + 6 * 3_600_000);
@@ -116,7 +87,6 @@ describe('a return never filed', () => {
   it('is filed by the IRS a year after it was due, answerable for 120 days, then assessed and collected', () => {
     // Until 2026-09-28 a return never filed was never asked for.
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'never-filed');
-    beginCareer(sim, sim.player);
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
     step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));
@@ -141,7 +111,6 @@ describe('a return never filed', () => {
 
   it('is left to them if they file in the months the IRS gives', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'files-late');
-    beginCareer(sim, sim.player);
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
     step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));

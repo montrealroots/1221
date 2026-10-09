@@ -10,7 +10,7 @@ import { cardOf, cardTerms, DUE_KIND, minimumDue, STATEMENT_KIND } from '@/engin
 import { allocatePayment } from '@/engine/systems/cash';
 import { planLeftOf } from '@/engine/systems/cardoffers';
 import { payingTheMinimum } from '@/engine/systems/statements';
-import { spend } from '@/engine/systems/household';
+import { spend } from '@/engine/systems/spending';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'co') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', ...extra }, seed);

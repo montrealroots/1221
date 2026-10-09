@@ -5,9 +5,9 @@
  * preserved: the breadcrumbs survive moving around.
  *
  * The rail down the left is every destination, always in reach, with Home at
- * the top wearing the count of what is waiting on you (`Rail.tsx`). It was
- * words only until 2026-10-08, when its groups got drawn pictures beside their
- * names. Below a laptop it's a drawer over the screen behind the Menu button.
+ * the top wearing the count of what is waiting on you. It is words only: no
+ * icons. Below a
+ * laptop it folds into a drawer behind the Menu button.
  *
  * The bar across the top keeps its two sides apart on purpose. Left is the
  * world: the mark, the clock, and the controls that move it. Right is you:
@@ -17,23 +17,22 @@
 import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { LifeEnded } from './LifeEnded';
-import { Rail } from './Rail';
-import { useKeptScroll } from '@/ui/kept';
+import { RAIL_DESTINATIONS } from './destinations';
+import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
-import { AssistantButton } from '@/ui/assistant/Assistant';
 import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 
 
 export function GameShell() {
   const game = useGame();
-  const { sim, route, navigate, breadcrumbs, toasts, favourites, toggleFavourite } = game;
-  // Places kept from 2026-10-01: pinned ones, and the last few visited, now in the rail (`Rail.tsx`).
-  const here = breadcrumbs[breadcrumbs.length - 1];
-  const pinned = favourites.some((f) => f.route === route);
+  const { sim, route, navigate, breadcrumbs, toasts } = game;
   const [railOpen, setRailOpen] = useState(false);
+  const waiting = useWorld((s) => openDecisions(s).length);
+  const unread = useWorld((s) => unreadNotifications(s).length);
 
   // Escape closes the drawer, the way it closes the dialogs. Without it the
   // only ways out were the Menu button and a shade the drawer covers most of,
@@ -45,22 +44,13 @@ export function GameShell() {
     return () => window.removeEventListener('keydown', onKey);
   }, [railOpen]);
 
-  // "/" anywhere outside a field opens the rail at its search, to go back to a place by name (from 2026-10-02).
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const t = event.target as HTMLElement | null;
-      if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey) return;
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
-      event.preventDefault();
-      setRailOpen(true);
-      window.setTimeout(() => document.getElementById('rail-find')?.focus(), 0);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
   // A life that has ended opens onto how it ended, and nothing else.
   const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
+
+  const go = (to: string, label: string) => {
+    navigate(to, label);
+    setRailOpen(false);
+  };
 
   if (ended) return <LifeEnded />;
 
@@ -103,7 +93,6 @@ export function GameShell() {
         <span className="topbar-divider" aria-hidden="true" />
 
         <div className="topbar-group" role="group" aria-label="Your Save">
-          <AssistantButton />
           <GuideButton />
           <SaveIndicator />
 
@@ -114,7 +103,49 @@ export function GameShell() {
       </header>
 
       <div className="shell-body">
-        <Rail open={railOpen} onClose={() => setRailOpen(false)} />
+        <nav className="rail" id="rail" data-open={railOpen} aria-label="Main Navigation">
+          <div className="rail-group">
+            <button
+              className="rail-item"
+              aria-current={route === '/home' ? 'page' : undefined}
+              onClick={() => go('/home', 'Home')}
+            >
+              <span className="grow truncate">Home</span>
+              {waiting + unread > 0 && (
+                <span className="rail-badge" aria-label={`${waiting + unread} Waiting On You`}>
+                  {waiting + unread > 99 ? '99+' : waiting + unread}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {RAIL_DESTINATIONS.map((group) => (
+            <div key={group.label} className="rail-group">
+              <div className="rail-group-label">{group.label}</div>
+              {group.items.map((item) => (
+                <button
+                  key={item.route}
+                  className="rail-item"
+                  aria-current={route === item.route ? 'page' : undefined}
+                  title={item.detail}
+                  onClick={() => go(item.route, item.label)}
+                >
+                  <span className="grow truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+
+          <div className="rail-group rail-player">
+            <div className="rail-group-label">You</div>
+            <div className="rail-you">
+              <div className="small strong truncate">{sim.player.displayName}</div>
+              <div className="xs dim truncate">
+                {PERFORMER_NOUN[sim.player.performerTitle]} · {unread > 0 ? `${unread} Unread` : 'All Read'}
+              </div>
+            </div>
+          </div>
+        </nav>
 
         {railOpen && (
           <button
@@ -129,7 +160,6 @@ export function GameShell() {
           <div className="main-inner">
             <GuideStrip />
             {breadcrumbs.length > 1 && (
-              <div className="crumb-row">
               <nav className="breadcrumbs" aria-label="Breadcrumb">
                 {breadcrumbs.map((crumb, index) => (
                   <span key={crumb.route + index} className="row gap-2">
@@ -142,8 +172,6 @@ export function GameShell() {
                   </span>
                 ))}
               </nav>
-              {route !== '/home' && here && <button type="button" className="btn btn-sm btn-ghost" aria-pressed={pinned} onClick={() => toggleFavourite(here)}>{pinned ? 'Unpin This Page' : 'Pin This Page'}</button>}
-              </div>
             )}
 
             <Screen route={route} />
@@ -162,8 +190,6 @@ export function GameShell() {
 }
 
 function Screen({ route }: { route: string }) {
-  // Each screen opens where it was left, scrolled as it was (`ui/kept.ts`, from 2026-10-08); The Industry keeps its own pages'.
-  useKeptScroll(route, !route.startsWith('/workspace/industry'));
   if (route === '/home') return <Home />;
   if (route.startsWith('/workspace/')) return <WorkspaceRouter route={route} />;
   return <Home />;

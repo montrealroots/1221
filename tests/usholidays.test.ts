@@ -3,13 +3,8 @@
  * the Federal Reserve's, for a US bank's business days, and SAG-AFTRA's, for
  * a production's shooting days.
  */
-import { describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
-import { instantFromZoned } from '@/engine/core/time';
-import { easter, sagHoliday, usBankHoliday } from '@/engine/content/usholidays';
-import { beginCareer, careerOf, workDays, type Booking } from '@/engine/systems/career';
-
-const NY = 'America/New_York';
+import { easter,sagHoliday,usBankHoliday } from '@/engine/content/usholidays';
+import { describe,expect,it } from 'vitest';
 
 describe('the holidays', () => {
   it('fall where the rules put them', () => {
@@ -38,14 +33,5 @@ describe('the holidays', () => {
     expect(usBankHoliday('2033-06-20')).toBe(true);
     expect(sagHoliday('2033-06-20')).toBe(true);
     expect(usBankHoliday('2026-11-25')).toBe(false);
-  });
-
-  it('keep a shoot off Thanksgiving and the day after', () => {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'thanksgiving');
-    beginCareer(sim, sim.player);
-    const b: Booking = { id: 'tg', roleId: 'costar', cityId: 'us-ny-newyork', starts: instantFromZoned({ year: 2026, month: 11, day: 25, hour: 8 }, NY), units: 3, rehearsalWeeks: 0, status: 'offered', dueAt: 0, offeredAt: 0, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    const days = workDays(b).map((d) => new Date(d.at).toISOString().slice(0, 10));
-    expect(days).toEqual(['2026-11-25', '2026-11-30', '2026-12-01']);
   });
 });

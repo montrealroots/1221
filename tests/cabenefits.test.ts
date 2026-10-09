@@ -4,19 +4,16 @@
  * 2026-09-30): Ontario's Drug Benefit and Trillium, BC's Fair PharmaCare, and
  * EI's sickness benefit for a self-employed Canadian who registers.
  */
-import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
-import type { Simulation } from '@/engine/core/simulation';
-import { saveCurrency } from '@/engine/core/money';
-import { exchange } from '@/engine/content/currency';
 import { FAIR_PHARMACARE } from '@/engine/content/cabenefits';
+import { exchange } from '@/engine/content/currency';
+import { saveCurrency } from '@/engine/core/money';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY } from '@/engine/core/time';
 import { yearOf } from '@/engine/systems/earnings';
-import { armHealth, rxShareOf } from '@/engine/systems/health';
-import { eiOnCheck, eiRefusal, eiWeek, eiWeekly } from '@/engine/systems/eiself';
-import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
-import { evenCraft } from '@/engine/systems/school';
-import { instantFromZoned, zonedParts } from '@/engine/core/time';
+import { eiOnCheck,eiRefusal,eiWeek,eiWeekly } from '@/engine/systems/eiself';
+import { armHealth,rxShareOf } from '@/engine/systems/health';
+import { describe,expect,it } from 'vitest';
 
 const YEAR = 365.2425 * MS_DAY;
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -24,7 +21,7 @@ const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveC
 const aged = (sim: Simulation, years: number) => { (sim.player as { birthInstant: number }).birthInstant = sim.now - years * YEAR; };
 const earned = (sim: Simulation, cad: number) => { yearOf(sim.player, new Date(sim.now).getUTCFullYear() - 1).acting = inSave(sim, cad * 100, 'CAD'); };
 /** The prescription's price with no plan: an American's in Toronto. */
-const price = (brand: boolean) => { const us = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'us-ny-newyork' }, 'rx-price'); us.player.home = { kind: 'shared', cityId: 'ca-on-toronto', since: us.now }; return rxShareOf(us.player, brand, us.now, saveCurrency(us.universe)); };
+const price = (brand: boolean) => { const us = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'us-ny-newyork' }, 'rx-price'); return rxShareOf(us.player, brand, us.now, saveCurrency(us.universe)); };
 
 describe('Ontario’s drug plans', () => {
   it('asks a senior the Drug Benefit’s $100 a year and then up to $6.11, or $2 on a low income', () => {
@@ -121,22 +118,6 @@ describe('EI for a self-employed Canadian', () => {
     sim.player.health!.injury = { kind: 'fracture', at: sim.now, until: sim.now + 60 * MS_DAY, offWorkUntil: sim.now + 40 * MS_DAY } as never;
     sim.advanceBy(21 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'EI sickness benefit, the week')).toBe(true);
-  });
-
-  it('takes its premium from a Toronto check', () => {
-    const sim = life('ca-on-toronto', 'ei-check');
-    sim.player.craft = evenCraft(80);
-    beginCareer(sim, sim.player);
-    expect(sim.execute({ kind: 'benefits.ei_register', payload: {} }).ok).toBe(true);
-    const p = zonedParts(sim.now + 5 * MS_DAY, 'America/Toronto');
-    const starts = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 8 }, 'America/Toronto');
-    const b: Booking = { id: 'job', roleId: 'ca-theater', cityId: 'ca-on-toronto', starts, units: 3, rehearsalWeeks: 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
-    careerOf(sim.player).bookings.push(b);
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'job' } }).ok).toBe(true);
-    const until = b.starts + 35 * MS_DAY;
-    while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * 3_600_000));
-    const premiums = sim.universe.transactions.flatMap((t) => t.postings).filter((x) => x.accountId === sim.nominalAccount('expense', 'EI Premiums').id);
-    expect(premiums.length).toBeGreaterThan(0);
   });
 
   it('is paid from the health tick for a week in hospital', () => {

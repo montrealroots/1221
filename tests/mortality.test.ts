@@ -18,8 +18,6 @@ import {
 } from '@/engine/systems/mortality';
 import { BIRTHDAY_KIND, END_BAND, ageOn, redrawIfChanged } from '@/engine/systems/birthdays';
 import { healthOf } from '@/engine/systems/health';
-import { bmiHazard } from '@/engine/content/body';
-import { bmiOf } from '@/engine/systems/body';
 import { checkConflicts, entriesBetween, skipTargets, upcoming } from '@/engine/world/calendar';
 
 const MS_YEAR = 365.2425 * MS_DAY;
@@ -72,8 +70,7 @@ describe('the chance of the end', () => {
 
   it('ends lives about as often as the table says, drawn one by one', () => {
     // Two thousand people of seventy in the US, at their best: the table's
-    // 0.018 a year, times 0.8, and not living alone (a room in a shared flat),
-    // the table spread over those who do (`livingFactor`, from 2026-10-01).
+    // 0.018 a year, times 0.8.
     const sim = quickSave({}, 'end-count');
     const from = sim.now;
     let ended = 0;
@@ -84,23 +81,9 @@ describe('the chance of the end', () => {
       if (endBetween(sim, person, from, from + MS_YEAR) !== undefined) ended += 1;
     }
     const want = 2000 * chanceOfEndingYear({ ...sim.player, wellbeing: { ...sim.player.wellbeing, condition: 100 } }, 70, 'us');
-    // And the weight's own hazard: a life has its body from the first day since 2026-10-01 (`bmiHazard`).
-    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8 / (1 + 0.32 * 38.5 / 262) * bmiHazard(bmiOf(sim.player.body!)), 0);
+    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8, 0);
     // Three standard deviations of a binomial count.
     expect(Math.abs(ended - want)).toBeLessThan(3 * Math.sqrt(want));
-  });
-
-  it('prices a year on the life table of where they live, not where a birthday finds them', () => {
-    const sim = quickSave({}, 'end-where');
-    expect(countryFactor('uk')).not.toBe(countryFactor('us'));
-    let home = 0;
-    let abroad = 0;
-    for (let i = 0; i < 2000; i += 1) {
-      const one = { ...sim.player, id: `w${i}`, birthInstant: sim.now - 80 * MS_YEAR };
-      if (endBetween(sim, one, sim.now, sim.now + MS_YEAR) !== undefined) home += 1;
-      if (endBetween(sim, { ...one, currentLocationId: 'uk-eng-london' }, sim.now, sim.now + MS_YEAR) !== undefined) abroad += 1;
-    }
-    expect(abroad).toBe(home);
   });
 
   it('draws the rest of the year again when the body moves a band, and not otherwise', () => {

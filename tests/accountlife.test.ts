@@ -15,7 +15,7 @@ import { bankAccountsOf, feeFor, settleFees, inSaveMoney, monthStartOf, savingsN
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { paymentsOf } from '@/engine/systems/payments';
 import { termsOf } from '@/engine/systems/lending';
-import { inTheBank, payFromCurrent, spend } from '@/engine/systems/household';
+import { inTheBank, payFromCurrent, spend } from '@/engine/systems/spending';
 import { breakQuote, idleAccounts, inCoolingOff, roundUpOf, savingsDebit, savingsWithdrawalFee, termEndOf } from '@/engine/systems/accountlife';
 import { yearOf } from '@/engine/systems/earnings';
 

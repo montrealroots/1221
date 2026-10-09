@@ -31,7 +31,6 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState, CONNECTICUT_UI } from '../content/safetynet';
 import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
-import { workedBetween, working } from './career';
 import { payeeAccount } from './cash';
 import { rateOn } from '../content/career';
 import { claimCredit, livesInBritain } from './universalcredit';
@@ -173,7 +172,7 @@ export function registerUnemployment(sim: Simulation): void {
     if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to have worked or live.');
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You have a claim open.');
-    if (working(s, person)) throw new CommandError('You’re on a job: a claim is for the weeks between them.');
+    // A claim was refused on a job until the career went in the scope reset of 2026-10-09; there are no jobs to be on.
     const cur = saveCurrency(s.universe);
     const base = basePeriodFor(person, state, s.now, cur);
     if (!base.result.ok) throw new CommandError(`${base.result.why} Your base period’s quarters paid ${base.wages.map((w) => formatMoney(w, cur)).join(', ')}.`);
@@ -198,8 +197,9 @@ export function registerUnemployment(sim: Simulation): void {
     // it paid only in the claim's state, and a New York claimant who moved to
     // Los Angeles was paid nothing for the rest of the benefit year.
     const available = CITIES.get(person.currentLocationId)?.countryId === 'us';
-    const worked = workedBetween(person, item.at - 7 * MS_DAY, item.at);
-    const due = available ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
+    // The week's hours and pay worked were the career's days (`workedBetween`) until the career went on 2026-10-09:
+    // none is worked now, and the week is paid whole.
+    const due = available ? Math.min(weekBenefit(claim, 0, 0, cur), claim.maxTotal - claim.paid) : 0;
     const zone = CITIES.require(homeOf(person)).timeZone;
     const again = () => s.schedule({ at: nextSunday(item.at, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
     if (due <= 0) { again(); return; }

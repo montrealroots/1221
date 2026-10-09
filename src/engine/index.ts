@@ -5,102 +5,16 @@
  * rehydrates an existing one. Both return a Simulation with every system
  * registered, which is the only object the UI ever talks to.
  *
- * What is registered here is now short: wellbeing and sleep, and the world
- * itself. The industry, the shops, the schools and everything else that used
- * to hang off this file went with the screens that showed them.
+ * What is registered here is the scope the owner set on 2026-10-09: the life
+ * as it stood on 2026-09-29 (wellbeing, sleep, food, weather, the world),
+ * with the banking, the school and the papers as they stood on 2026-10-09.
+ * The home and its rent, the journeys, the cars, the land and the career went
+ * that day, and `migrate` takes what they kept off a save (schema 90).
  */
 
-import { registerVehicles } from './systems/vehicles';
-import { registerLeasing } from './systems/leasing';
-import { registerIdentity } from './systems/identity';
-import { registerLandLease } from './systems/landlease';
-import { registerCompensation } from './systems/compensation';
-import { registerAlarm } from './systems/alarm';
-import { registerHomeSecurity } from './systems/homesecurity';
-import { registerCharging } from './systems/charging';
-import { registerResidence } from './systems/residence';
-import { registerPaperVisits } from './systems/papervisits';
-import { registerCanadaPensions } from './systems/capensions';
-import { registerCitizenship } from './systems/citizenship';
-import { registerEiSelfEmployed } from './systems/eiself';
-import { registerTires } from './systems/tires';
-import { registerLand } from './systems/land';
-import { registerConstruction } from './systems/construction';
-import { registerAppliances, registerOwnUnits, registerPortables } from './systems/appliances';
-import { registerLodgers } from './systems/lodgers';
-import { registerMattress } from './systems/furniture';
-import { registerFurniture } from './systems/furniture';
-import { registerRentals } from './systems/rentals';
-import { registerAviation, registerOwnedAircraft } from './systems/aviation';
-import { registerBoats } from './systems/boats';
-import { registerCaravans } from './systems/caravans';
-import { itemsOf, registerItems } from './systems/items';
-import { registerOrders } from './systems/orders';
-import { registerLuggage } from './systems/luggage';
-import { registerSneakers } from './systems/sneakers';
-import { registerPhones } from './systems/phones';
-import { registerHomeLife } from './systems/homelife';
-import { registerAppointments } from './systems/appointments';
-import { registerCompanions } from './systems/companions';
-import { registerRoadside } from './systems/roadside';
-import { registerFurnishings } from './systems/furnishings';
-import { registerHosting } from './systems/hosting';
-import { registerHotelBreakfast } from './systems/hotelbreakfast';
-import { registerApplianceFaults } from './systems/appliancefaults';
-import { registerAccess } from './systems/access';
-import { registerGifts } from './systems/gifts';
-import { registerCleanerKey } from './systems/dwelling';
-import { registerReading } from './systems/reading';
-import { registerPlayReading } from './systems/playreading';
-import { registerCompanies } from './systems/companies';
-import { registerRepresentation } from './systems/representation';
-import { registerRescheduling } from './systems/rescheduling';
-import { armIndustry, registerIndustry } from './systems/industry';
-import { registerValuables } from './systems/valuables';
-import { registerPawn } from './systems/pawn';
-import { registerWatches } from './systems/watches';
-import { registerClubs } from './systems/clubs';
-import { registerAway } from './systems/away';
-import { registerPets } from './systems/pets';
-import { registerProgrammes } from './systems/programmes';
-import { registerTelevisions } from './systems/televisions';
-import { registerLighting } from './systems/lighting';
-import { registerMowers } from './systems/mowers';
-import { registerComputers } from './systems/computers';
-import { registerPaint } from './systems/paint';
-import { registerChildPassports } from './systems/childpassports';
-import { registerSpeakers } from './systems/speakers';
-import { registerBaggage } from './systems/baggage';
-import { registerCatalog } from './systems/catalog';
-import { registerCommissions } from './systems/commissions';
-import { registerTherapy } from './systems/therapy';
-import { registerSchoolRun } from './systems/schoolrun';
-import { registerReservations } from './systems/reservations';
-import { registerBulky } from './systems/bulky';
-import { registerClothing, starterWardrobe } from './systems/clothing';
-import { registerAlcohol } from './systems/alcohol';
-import { registerKitchen } from './systems/kitchen';
-import { registerRoutines } from './systems/routines';
-import { registerPartners, registerPeople } from './systems/people';
-import { registerHygiene, starterCleaning, starterSupplies } from './systems/hygiene';
-import { registerShoppingCart } from './systems/shoppingcart';
-import { registerFittings } from './systems/fittings';
-import { starterLuggage } from './systems/luggage';
-import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
-import { registerGarden } from './systems/garden';
-import { registerRooms } from './systems/rooms';
-import { registerHouseguests } from './systems/houseguests';
-import { registerBedding } from './systems/bedding';
-import { registerHomeGrooming } from './systems/homegrooming';
-import { registerReachingOut } from './systems/reachingout';
-import { registerSportsGear } from './systems/sportsgear';
-import { registerAwards } from './systems/awards';
-import { registerUtilities } from './systems/utilities';
-import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
 import { registerHomeBenefits } from './systems/homebenefits';
-import { registerAssistance } from './systems/assistance';
 import { registerSocialSecurity } from './systems/socialsecurity';
 import { registerStatePension } from './systems/statepension';
 import { registerUniversalCredit } from './systems/universalcredit';
@@ -124,7 +38,7 @@ import { isHolidaysLoaded, loadCountryHolidays } from './content/holidays';
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
-import { armHousehold, moveIn, registerHousehold, spend } from './systems/household';
+import { registerSpending } from './systems/spending';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
@@ -139,48 +53,30 @@ import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
-import { registerCoursework } from './systems/coursework';
-import { registerClassmates } from './systems/classmates';
-import { registerSocialPlans } from './systems/people';
-import { registerProduction } from './systems/production';
-import { focusOf, grow } from './systems/school';
-import { agencyById, closeStaleBookings, registerCareer } from './systems/career';
-import { registerPension } from './systems/pension';
-import { registerCommercial } from './systems/commercial';
-import { homeById, registerHomes } from './systems/homes';
-import { homePlace, registerDwelling } from './systems/dwelling';
 import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
-import { bindCeiling, ceilingBefore, upgradeCraft } from './systems/school';
-import { registerHealth } from './systems/health';
+import { bindCeiling, ceilingBefore, focusOf, grow, upgradeCraft } from './systems/school';
+import { registerCoursework } from './systems/coursework';
+import { registerClassmates } from './systems/classmates';
+import { registerProduction } from './systems/production';
+import { registerPlayReading } from './systems/playreading';
+import { registerAppointments } from './systems/appointments';
+import { registerTherapy } from './systems/therapy';
+import { registerAccess } from './systems/access';
+import { registerAssistance } from './systems/assistance';
+import { registerEiSelfEmployed } from './systems/eiself';
+import { registerCitizenship } from './systems/citizenship';
+import { registerResidence } from './systems/residence';
+import { registerPaperVisits } from './systems/papervisits';
+import { registerIdentity } from './systems/identity';
+import { armHealth, registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
-import { armCollection, registerTaxReturn } from './systems/taxreturn';
+import { armCollection, armTaxes, registerTaxReturn } from './systems/taxreturn';
 import { registerDocuments, startingDocuments } from './systems/documents';
-import { registerLicensing } from './systems/licensing';
 import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
-import { registerJourneys } from './systems/journey';
-import { registerLocalStays } from './systems/localstay';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
-import { registerGyms } from './systems/gyms';
-import { registerTrips } from './systems/trips';
-import { registerFuelTank } from './systems/fueltank';
-import { registerMarriage } from './systems/marriage';
-import { registerChildren } from './systems/children';
-import { registerDating } from './systems/dating';
-import { registerTailoring } from './systems/tailoring';
-import { registerTravelInsurance } from './systems/travelinsurance';
-import { registerTelecom } from './systems/telecom';
-import { registerPropertyManagers } from './systems/propertymanagers';
-import { registerAdoption } from './systems/adoption';
-import { registerParents } from './systems/parents';
-import { registerTrainers } from './systems/trainers';
-import { registerLateCheckOut } from './systems/latecheckout';
-import { registerResale } from './systems/resale';
-import { registerLawns } from './systems/lawns';
-import { registerTheater } from './systems/theater';
-import { registerElectricity } from './systems/electricity';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -197,8 +93,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
-  registerHousehold(sim);
-  registerTelecom(sim, (s, person, amount, memo) => spend(s, person, amount, memo, 'bills'));
+  registerSpending(sim);
   registerCredit(sim);
   registerBirthdays(sim);
   registerMortality(sim);
@@ -214,136 +109,30 @@ export function registerAllSystems(sim: Simulation): void {
   registerSchool(sim);
   registerCoursework(sim);
   registerClassmates(sim);
-  registerSocialPlans(sim);
   registerProduction(sim, grow, focusOf);
-  registerCareer(sim);
-  registerPension(sim);
-  registerCommercial(sim);
-  registerHomes(sim);
-  registerPropertyManagers(sim, homeById);
-  registerDwelling(sim);
+  registerPlayReading(sim);
   registerHealth(sim);
+  registerAppointments(sim);
+  registerTherapy(sim);
+  registerAccess(sim);
   registerInjury(sim);
   registerUnemployment(sim);
   registerUniversalCredit(sim);
   registerStatePension(sim);
   registerSocialSecurity(sim);
   registerHomeBenefits(sim);
-  registerAssistance(sim);
   registerHomePensions(sim);
   registerImss(sim);
-  registerVehicles(sim);
-  registerLeasing(sim);
-  registerIdentity(sim);
-  registerLandLease(sim);
-  registerCompensation(sim);
-  registerAlarm(sim);
-  registerHomeSecurity(sim);
-  registerCharging(sim);
-  registerResidence(sim);
-  registerCanadaPensions(sim);
-  registerCitizenship(sim);
+  registerAssistance(sim);
   registerEiSelfEmployed(sim);
-  registerTires(sim);
-  registerLand(sim);
-  registerConstruction(sim);
-  registerAppliances(sim);
-  registerOwnUnits(sim);
-  registerPortables(sim);
-  registerLodgers(sim);
-  registerMattress(sim);
-  registerFurniture(sim);
-  registerRentals(sim, { journeysOf: journeysFor, partnerOf: partnerFor });
-  registerTravelInsurance(sim);
-  registerLateCheckOut(sim);
-  registerResale(sim);
-  registerLawns(sim, homeById);
-  registerTheater(sim);
-  registerElectricity(sim);
-  registerAviation(sim);
-  registerOwnedAircraft(sim);
-  registerBoats(sim);
-  registerCaravans(sim);
-  registerItems(sim);
-  registerOrders(sim);
-  registerLuggage(sim);
-  registerSneakers(sim);
-  registerPhones(sim);
-  registerHomeLife(sim);
-  registerAppointments(sim);
-  registerCompanions(sim);
-  registerRoadside(sim);
-  registerFurnishings(sim);
-  registerHosting(sim);
-  registerHotelBreakfast(sim);
-  registerApplianceFaults(sim);
-  registerAccess(sim);
-  registerGifts(sim);
-  registerCleanerKey(sim);
-  registerReading(sim);
-  registerPlayReading(sim);
-  registerCompanies(sim);
-  registerRepresentation(sim);
-  registerRescheduling(sim);
-  registerIndustry(sim);
-  registerValuables(sim);
-  registerPawn(sim);
-  registerWatches(sim);
-  registerClubs(sim);
-  registerAway(sim);
-  registerPets(sim);
-  registerProgrammes(sim);
-  registerTelevisions(sim);
-  registerLighting(sim);
-  registerMowers(sim);
-  registerComputers(sim);
-  registerPaint(sim);
-  registerChildPassports(sim);
-  registerSpeakers(sim);
-  registerBaggage(sim);
-  registerCatalog(sim);
-  registerCommissions(sim);
-  registerTherapy(sim);
-  registerSchoolRun(sim);
-  registerReservations(sim);
-  registerBulky(sim);
-  registerClothing(sim);
-  registerAlcohol(sim);
-  registerKitchen(sim);
-  registerRoutines(sim);
-  registerPeople(sim);
-  registerPartners(sim);
-  registerGyms(sim);
-  registerTrips(sim);
-  registerAutomation(sim);
-  registerGarden(sim);
-  registerRooms(sim);
-  registerHouseguests(sim);
-  registerBedding(sim);
-  registerHomeGrooming(sim);
-  registerReachingOut(sim);
-  registerSportsGear(sim);
-  registerFuelTank(sim);
-  registerMarriage(sim);
-  registerChildren(sim);
-  registerAdoption(sim);
-  registerParents(sim);
-  registerTrainers(sim);
-  registerDating(sim);
-  registerTailoring(sim);
-  registerHygiene(sim);
-  registerShoppingCart(sim);
-  registerFittings(sim);
-  registerAwards(sim);
-  registerUtilities(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
-  registerLicensing(sim);
+  registerIdentity(sim);
+  registerResidence(sim);
+  registerCitizenship(sim);
   registerPermission(sim);
   registerPaperVisits(sim);
-  registerJourneys(sim);
-  registerLocalStays(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -419,9 +208,14 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
-  moveIn(sim, player, config.housing);
+  // A home was moved into here, its deposit held and its rent due on the first, until the home went on 2026-10-09.
   player.payments = freshPayments(player.currentLocationId);
   openCredit(sim, player, wealth.creditScore);
+  // The year's return for every life (`systems/taxreturn.ts`). It was armed by enrolling at the school and by the career's
+  // start, and a life begun elsewhere had none, until the career went in the scope reset of 2026-10-09.
+  armTaxes(sim, player);
+  // And the health record and its months (`systems/health.ts`), armed the same two ways until the same day.
+  armHealth(sim, player);
   armBirthdays(sim);
   armBanking(sim);
   // A life that begins at drama school, where it's in the school's town.
@@ -438,11 +232,11 @@ export function refreshMeta(sim: Simulation): void {
   // A finished life says so on its slot, on every adapter, since the slot
   // list the server sends carries the labels and not the rest of the meta.
   const ended = sim.universe.meta.endedAge;
-  // Where the life is: the year at school, or the agency after it. Until
-  // 2026-09-27 it was the title alone, Actor or Actress, whatever the life.
+  // Where the life is: the year at school, or how the school ended. Until
+  // 2026-09-27 it was the title alone, Actor or Actress, whatever the life;
+  // until 2026-10-09 the agency after the school, which went with the career.
   const school = player.school;
-  const agency = player.career?.agencyId ? agencyById(player.career.agencyId)?.name : undefined;
-  const where = school && school.standing !== 'graduated' && school.standing !== 'dismissed' ? `, Yale Drama Year ${yearOfStudy(player)}` : agency ? `, With ${agency}` : '';
+  const where = !school ? '' : school.standing === 'graduated' ? ', Yale Drama Graduate' : school.standing === 'dismissed' ? ', Left Yale Drama' : `, Yale Drama Year ${yearOfStudy(player)}`;
   sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + where + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
@@ -461,22 +255,6 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   startingDocuments(sim, sim.player);
   // A foreign student's status looked at when it can next change (`systems/permission.ts`, from 2026-10-01).
   scheduleUsStatus(sim, sim.player);
-  // The business's week (`systems/industry.ts`, from 2026-10-08).
-  armIndustry(sim);
-  // The clothes the life begins with (`systems/clothing.ts`).
-  starterWardrobe(sim, sim.player);
-  // And the toiletries (`systems/hygiene.ts`).
-  starterSupplies(sim, sim.player);
-  starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
-  // And a suitcase to pack them in (`systems/luggage.ts`).
-  starterLuggage(sim, sim.player);
-  // No shortcut is on in a new life until it's chosen (from 2026-10-03).
-  // From 2026-10-06 but two: the day's outfit put together and the day's meals eaten from what's ready, which every life
-  // had done for it until then, are shortcuts too, on in a new life and turned off on Your Shortcuts. Off by default was
-  // tried and measured that day: a top lasts one wear, so a new life was undressed from its second day, at the cost to
-  // its mood and in the cold, and 21 tests of played days in 9 files moved. That default is the owner's to change.
-  sim.player.automation = { chooseOutfit: true, eatLeftovers: true };
-  sim.player.dayShortcuts = true;
   return sim;
 }
 
@@ -488,21 +266,10 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
-  // A save from before 2026-10-01 counted outfits: its wardrobe of garments is given, its dirty ones worn into it (`systems/clothing.ts`).
-  if (universe.people[universe.playerId]) starterWardrobe(sim, sim.player);
-  // A save from before 2026-10-01 kept no toiletries: its set is given (`systems/hygiene.ts`).
-  if (universe.people[universe.playerId]) starterSupplies(sim, sim.player);
-  // And from 2026-10-02 its detergents.
-  if (universe.people[universe.playerId]) starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
-  if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
-  // A save from before 2026-10-03 packed, unpacked and put the shopping away on its own: it keeps those, now as shortcuts it can turn off.
-  if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { ...EVERY_SHORTCUT };
-  // A save from before 2026-10-06 had its day's outfit and meals chosen for it: it keeps both, as shortcuts it can turn off.
-  if (universe.people[universe.playerId] && !sim.player.dayShortcuts) { sim.player.automation = { ...sim.player.automation, chooseOutfit: true, eatLeftovers: true }; sim.player.dayShortcuts = true; }
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
-  // A save from before the business's week is given it (`systems/industry.ts`, from 2026-10-08).
-  if (universe.people[universe.playerId]) armIndustry(sim);
+  // What a home held of theirs comes back, once, on the first opening after the home went (schema 90).
+  returnTheHomesMoney(sim);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
   for (const person of Object.values(universe.people)) {
     if (person.craft) upgradeCraft(person.craft);
@@ -570,13 +337,14 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
-  // Anybody with a home has a rent due. Until 2026-09-26 anybody with a job
+  // Anybody with a home had a rent due until the home went on 2026-10-09. Until 2026-09-26 anybody with a job
   // had their rota two weeks out and a payday ahead too.
-  armHousehold(sim);
   armPayments(sim);
   armCardLife(sim);
   armCredit(sim);
-  for (const person of Object.values(sim.universe.people)) { armCollection(sim, person); closeStaleBookings(sim, person); }
+  for (const person of Object.values(sim.universe.people)) armCollection(sim, person);
+  // A life the career used to arm the returns for, and one begun outside the school, has them armed now (schema 90).
+  if (sim.universe.people[sim.universe.playerId]) { armTaxes(sim, sim.player); armHealth(sim, sim.player); }
   armBirthdays(sim);
   // A save from before the banks banked at "Northbank", which never existed.
   rebank(sim);
@@ -584,9 +352,50 @@ export function loadSave(universe: SaveUniverse): Simulation {
   return sim;
 }
 
+/**
+ * What a home held of theirs, given back once its home is gone (schema 90): the deposit the landlord held
+ * (`category: 'deposit'`), into the current account, and rent paid ahead (`payments.rentCredit`), the same way. What
+ * was owed on rent and bills stays owed, in the account it was kept in, and is paid off from the bank as anything
+ * unpaid is (`systems/spending.ts`). The ledger keeps every posting the home made; nothing is taken out of it.
+ */
+function returnTheHomesMoney(sim: Simulation): void {
+  for (const person of Object.values(sim.universe.people)) {
+    const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+    if (!current) continue;
+    for (const held of Object.values(sim.universe.accounts)) {
+      if (held.ownerId !== person.id || held.kind !== 'escrow' || held.category !== 'deposit' || held.closedAt || held.balance <= 0) continue;
+      sim.post({ memo: 'The deposit back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: held.balance }, { accountId: held.id, amount: -held.balance }] });
+      held.closedAt = sim.now;
+    }
+    const ahead = person.payments?.rentCredit ?? 0;
+    if (ahead > 0 && person.payments) {
+      sim.post({ memo: 'Rent paid ahead, back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
+      delete person.payments.rentCredit;
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Migrations
 // ---------------------------------------------------------------------------
+
+/**
+ * What schema 90 takes off a person: every field the home, the journeys, the cars, the land, the career, and the
+ * shops, belongings, people, family and industry of the line of 2026-10-09 kept, and nothing in this build reads.
+ */
+const GONE_AT_90 = [
+  'acUnits', 'adopted', 'aircraft', 'alcohol', 'applianceFaults', 'automation', 'bagClaims', 'basket', 'boat', 'boatCertificates',
+  'boats', 'bodyClock', 'building', 'buying', 'caPensions', 'caravans', 'career', 'cart', 'children', 'cleaningSince', 'clothesBought',
+  'clubs', 'commissions', 'confirmIdUntil', 'contacts', 'cooking', 'counter', 'datingApp', 'dayShortcuts', 'driving', 'exclusionUsedAt',
+  'familyPath', 'foodHelp', 'furniture', 'garmentsToReplace', 'goingBags', 'groomedAt', 'gym', 'hap', 'home', 'homes', 'homesOwned',
+  'inspectedUsed', 'items', 'journeys', 'land', 'landBuying', 'laundryDry', 'libraryCard', 'licensing', 'living', 'luggageId', 'mailHold',
+  'makeup', 'marriage', 'mattressAt', 'measures', 'motoLicensing', 'moveBy', 'offersMade', 'orders', 'outfits', 'packingLists', 'parents',
+  'pawns', 'pets', 'pilot', 'pilotTraining', 'planes', 'portables', 'powerCut', 'pregnancy', 'rentals', 'reservations', 'roadside',
+  'routines', 'shaves', 'sitter', 'stay', 'styles', 'subscriptions', 'supplyCuts', 'telecom', 'testDriven', 'training', 'trip',
+  'utilitiesAt', 'vehicles', 'watching', 'owned',
+  'pensionStart', 'dressed', 'tvLicence', 'wornNow', 'clothesSince', 'billSplit', 'trying', 'suppliesSince', 'usesFirst', 'favorites',
+  'ikeaCredit', 'lastShave', 'showerMinutes', 'lastMakeup', 'lastStyle', 'bulkyYear', 'nailsAt', 'pilotLicences',
+] as const;
 
 export interface MigrationResult {
   migrated: boolean;
@@ -641,9 +450,9 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
+  list('notifications', 'the notifications');
   // The history of milestones went on 2026-10-02: only a night's sleep was written to it, and nothing read it.
   if ('history' in universe) { delete (universe as unknown as Record<string, unknown>).history; steps.push('Dropped the history: nothing read it.'); }
-  list('notifications', 'the notifications');
   if ('engineFailures' in universe) { delete (universe as unknown as Record<string, unknown>).engineFailures; steps.push('Dropped the failure log: a failure is said to the player as it happens.'); }
 
   if (typeof universe.__idCounter !== 'number') {
@@ -688,17 +497,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
 
-  // A home owned was `owned` on the day homes came in, 2026-09-28, and is the first of `homes` since.
-  for (const person of Object.values(universe.people)) {
-    const row = person as unknown as Record<string, unknown>;
-    const old = row.owned as (Record<string, unknown> & { owed?: unknown[] }) | undefined;
-    if (!old) continue;
-    const id = 'home-1';
-    person.homes = [{ investment: false, closing: 0, occupied: [{ from: Number(old.boughtAt) }], tenancies: [], claims: [], depreciated: 0, ...old, id } as unknown as NonNullable<typeof person.homes>[number]];
-    if (person.home?.kind === 'owned') person.home.homeId = id;
-    delete row.owned;
-    steps.push('Moved a home owned into the list of homes.');
-  }
+  // A home owned was `owned` on the day homes came in, 2026-09-28, and the first of `homes` until the homes went on
+  // 2026-10-09: `owned` is on schema 90's list of fields to drop.
 
   // Schema 73 took heritage, the parents' heritages, and the adult height and
   // weight off the character. Nothing ever read them after creation, so they
@@ -929,12 +729,9 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       steps.push(`Took the day job off ${plural(cleared, 'person', 'people')}, and ${plural(dropped, 'shift or payday', 'shifts and paydays')} off the calendar.`);
     }
   }
+  // 89 gave a save without a home a room in a shared flat; the home went at 90.
   if (from < 89) {
     const worker = universe.people?.[universe.playerId];
-    if (worker && !worker.home) {
-      worker.home = { kind: 'shared', cityId: worker.currentLocationId, since: universe.now };
-      steps.push('Gave the character a room in a shared flat, and the rent that goes with it.');
-    }
     if (worker && !worker.credit) {
       const carried = Object.values(universe.accounts ?? {}).some((a) => a.ownerId === worker.id && a.kind === 'credit_card' && a.balance < 0);
       worker.credit = { score: 650, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, carrying: carried };
@@ -961,14 +758,42 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (tied > 0) steps.push(`Made ${plural(tied, 'card', 'cards')} the bank’s own.`);
   }
 
-  // A bed, a sofa and gear kept as timestamps become items at the home they live in (`systems/items.ts`, 2026-10-01).
-  let pieces = 0;
-  for (const person of Object.values(universe.people ?? {})) {
-    if (!person.furniture || !Object.keys(person.furniture).length) continue;
-    pieces += Object.keys(person.furniture).length;
-    itemsOf(person);
+  // 90 is the scope the owner set on 2026-10-09: the home and its rent, the journeys, the cars, the land and the
+  // career went, and the shops, the belongings, the people, the family and the industry that the line of
+  // 2026-10-09 carried went with them. A save from either line sheds what they kept on its people, the calendar's
+  // events and the decisions nothing handles now, and a classmate's career. Its identity, its money and every posting
+  // in its ledger, its school, its papers and its body are kept. The morning a home had its food bought becomes the
+  // person's (`fedOn`), and what the home held of theirs is given back when the save is opened (`returnTheHomesMoney`).
+  {
+    let shedFrom = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const p = person as unknown as Record<string, unknown>;
+      const home = p.home as { fedOn?: number } | undefined;
+      if (home && typeof home.fedOn === 'number' && p.fedOn === undefined) p.fedOn = home.fedOn;
+      let dropped = false;
+      for (const key of GONE_AT_90) if (key in p) { delete p[key]; dropped = true; }
+      for (const mate of person.school?.classmates ?? []) { const m = mate as unknown as Record<string, unknown>; if ('career' in m) { delete m.career; dropped = true; } }
+      if (dropped) shedFrom += 1;
+    }
+    if (shedFrom > 0) steps.push(`Took the home, the journeys, the cars, the land, the career and what went with them off ${plural(shedFrom, 'person', 'people')}.`);
+    // The calendar and the decisions: what this build has no handler for is let go, never run late.
+    const probe = new Simulation(universe);
+    registerAllSystems(probe);
+    const kinds = new Set(probe.scheduleKinds());
+    const before = universe.scheduled.length;
+    universe.scheduled = universe.scheduled.filter((item) => item.status !== 'pending' || kinds.has(item.kind));
+    const unscheduled = before - universe.scheduled.length;
+    if (unscheduled > 0) steps.push(`Let go ${plural(unscheduled, 'event', 'events')} on the calendar that nothing here runs.`);
+    let undecided = 0;
+    for (const [id, decision] of Object.entries(universe.decisions ?? {})) {
+      if (decision.resolvedAt !== undefined || decision.dismissedAt !== undefined) continue;
+      if ((decision.actions ?? []).some((a) => a.commandKind && !probe.hasCommand(a.commandKind))) { delete universe.decisions[id]; undecided += 1; }
+    }
+    if (undecided > 0) steps.push(`Let go ${plural(undecided, 'decision', 'decisions')} that nothing here can carry out.`);
+    // Where it's unsafe to bring forward, it isn't: a ledger that doesn't reconcile is refused, and the slot left as it was.
+    const unbalanced = probe.ledger.audit();
+    if (unbalanced.length > 0) problems.push(`This save’s money doesn’t reconcile (${unbalanced[0]}), so it can’t be brought forward safely. It hasn’t been changed.`);
   }
-  if (pieces > 0) steps.push(`Moved ${plural(pieces, 'piece', 'pieces')} of furniture into belongings.`);
 
   // The slot's career line is the player's title. Before 80 it named the film
   // career, and under 80 it was left empty.

@@ -23,17 +23,9 @@
  */
 
 import type { Person } from '../domain/model';
-import type { Simulation } from '../core/simulation';
-import type { Contact } from './people';
-import { GENERAL_INTERESTS } from '../content/interests';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
-import type { Piece } from '../content/furniture';
-import { homeKeyOf } from './items';
-import { SCREEN_KIND } from './theater';
-import { computerForGames } from './computers';
-import { hasSomethingToRead } from './reading';
 import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
@@ -41,58 +33,20 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   eat: ['cooking'],
   order: [],
   wash: [],
-  bathe: [],
   exercise: ['fitness', 'sport'],
-  ride: ['fitness', 'sport', 'nature'],
-  trail: ['nature', 'sport'],
-  swim: ['fitness', 'sport'],
-  court: ['fitness', 'sport'],
-  dance: ['dance', 'fitness'],
-  outside: ['nature'],
-  boat: ['nature', 'sport'],
-  charter: ['nature', 'sport'],
-  laundry: ['fashion'],
-  tidy: ['design'],
-  washup: [],
-  // A lawn is time outdoors, and a garden's (from 2026-10-02).
-  mow: ['nature'],
-  // A sauna is an hour to yourself's kind of time; none of the interests kept is a sauna's own (from 2026-10-04).
-  sauna: [],
-  // Painting a room is a home's decorating, a designer's pleasure (from 2026-10-05).
-  paint: ['design'],
   // An hour to yourself goes on what you'd spend an evening on.
   // Film History and Film Preservation are an evening with the old films.
-  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'reading', 'technology', 'television', 'theatre', 'writing'],
+  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
 };
 
 /** How much more of the mood, and of the stress relief, an hour gives somebody who loves it. */
 export const LOVED_MOOD = 1.5;
 export const LOVED_RELIEF = 1.25;
 
-/**
- * What an interest needs at home to be enjoyed there (from 2026-09-30): a
- * screen for film and television, a console for games, a speaker for music
- * (`content/furniture.ts`). Away from home, a hotel's or a sublet's TV does.
- * From 2026-10-05 games are played on a computer with a graphics card of its
- * own too, any computer or tablet (`computerForGames` in `systems/computers.ts`).
- */
-export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_history: 'tv', film_preservation: 'tv', television: 'tv', games: 'console', music: 'speaker' };
-
-/** The interests of theirs this is, by id, in the order the list above gives them; at home, those whose gear they own. */
-export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'items' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
+/** The interests of theirs this is, by id, in the order the list above gives them. */
+export function lovedIn(person: Pick<Person, 'interests'>, action: LookAfter): string[] {
   const theirs = person.interests ?? [];
-  const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
-  // A reader's gear is something to read: a library card of the town, a book or an e-reader (`systems/reading.ts`, from 2026-10-02).
-  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || (id === 'reading' ? hasSomethingToRead(person as Person) : !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!) || (id === 'games' && computerForGames(person)))));
-}
-
-/**
- * Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items; from
- * 2026-10-06 a home theater's screen is a screen (`systems/theater.ts`).
- */
-function hasGear(person: Partial<Pick<Person, 'furniture' | 'items' | 'home'>>, piece: Piece): boolean {
-  const home = homeKeyOf(person.home);
-  return person.furniture?.[piece] !== undefined || (person.items ?? []).some((i) => (i.kind === `furniture:${piece}` || (piece === 'tv' && i.kind === SCREEN_KIND)) && i.at.kind === 'home' && i.at.home === home);
+  return LOVED_IN[action].filter((id) => theirs.includes(id));
 }
 
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */
@@ -264,25 +218,3 @@ export function enjoyCrafts(person: Person, crafts: readonly string[]): boolean 
   w.stress = clamp(w.stress - LOVED_WORK.relief, 0, 100);
   return true;
 }
-
-/**
- * What a person you know cares about, from 2026-10-03 (the master plan's
- * §52.7–9): three of the creation screen's general interests, drawn the
- * first time it matters, SLATE's reading, no survey giving how many a
- * person has. Read only for what they'd enjoy, as the player's are: asked
- * to a game, they say yes if sport or fitness is one; to a class, sport,
- * fitness or dance.
- */
-export const CONTACT_INTERESTS = 3;
-export function interestsOf(sim: Simulation, person: Person, c: Contact): string[] {
-  if (c.interests) return c.interests;
-  const rng = sim.rng('social.cares', person.id, c.id);
-  const pool = GENERAL_INTERESTS.map((i) => i.id);
-  const out: string[] = [];
-  while (out.length < CONTACT_INTERESTS && out.length < pool.length) { const id = pool[Math.floor(rng.next() * pool.length)]!; if (!out.includes(id)) out.push(id); }
-  c.interests = out;
-  return out;
-}
-const CARES_FOR: Readonly<Record<string, readonly string[]>> = { play: ['sport', 'fitness'], class: ['sport', 'fitness', 'dance'] };
-/** Whether they'd enjoy being asked to it: always, but to a game or a class, by what they care about. */
-export const caresFor = (sim: Simulation, person: Person, c: Contact, what: string): boolean => { const want = CARES_FOR[what]; return !want || interestsOf(sim, person, c).some((i) => want.includes(i)); };

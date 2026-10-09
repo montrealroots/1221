@@ -51,7 +51,7 @@ import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
-import { drawFromBank, inTheBank } from './household';
+import { drawFromBank, inTheBank } from './spending';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
@@ -815,7 +815,7 @@ export function registerCredit(sim: Simulation): void {
       if (reported) {
         record.late = [...record.late.filter((when) => s.now - when < 365 * 86_400_000), s.now];
         move -= 50;
-        (record.marks ??= []).push({ at: s.now, points: 50, country: CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId ?? '' });
+        (record.marks ??= []).push({ at: s.now, points: 50, country: CITIES.get(person.currentLocationId)?.countryId ?? '' });
         const cut = Math.max(Math.max(0, -card.balance), Math.round((card.creditLimit ?? 0) * 0.7 / 100) * 100);
         if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
       }
@@ -1041,7 +1041,7 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: CardS
   credit.cashAccrued = 0;
   credit.transfers = [];
   credit.plans = [];
-  markRecord(person, CHARGED_OFF, sim.now, person.home?.cityId ?? person.currentLocationId, pesos(sim, owed));
+  markRecord(person, CHARGED_OFF, sim.now, person.currentLocationId, pesos(sim, owed));
   delete credit.suspended;
   delete credit.hardship;
   credit.missed = 0;

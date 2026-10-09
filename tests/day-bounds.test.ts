@@ -22,21 +22,23 @@
  * evening in the week before a 23-hour day it skipped that day.
  */
 
-import { readFileSync } from 'node:fs';
-import { beforeAll, describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
+import { quickSave } from '@/engine';
 import { addCountryCities } from '@/engine/content/geography';
 import {
-  dateKey, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_MINUTE,
+dateKey,formatTime,instantFromZoned,
+MS_HOUR,MS_MINUTE,
+startOfDay,startOfNextDay,zonedParts,
 } from '@/engine/core/time';
 import { sleepQuality } from '@/engine/systems/life';
-import { forecastFor, hoursOn } from '@/engine/systems/weather';
-import { monthGrid, type CalendarDay } from '@/engine/world/calendar';
+import { forecastFor,hoursOn } from '@/engine/systems/weather';
+import { monthGrid,type CalendarDay } from '@/engine/world/calendar';
 import '@/ui/looks/all';
-import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { resolveLook,type Looked } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
-import { canPlan, firstFreeSlot, openSlots } from '@/ui/workspaces/cell';
+import { canPlan,firstFreeSlot,openSlots } from '@/ui/workspaces/cell';
+import { readFileSync } from 'node:fs';
+import { beforeAll,describe,expect,it } from 'vitest';
 
 interface Jump { place: string; year: number; month: number; day: number }
 
@@ -72,9 +74,6 @@ function dateOf(jump: Jump, offset: number): { year: number; month: number; day:
 function wall(sim: Simulation, jump: Jump, offset: number, hour: number, minute = 0): number {
   return instantFromZoned({ ...dateOf(jump, offset), hour, minute }, sim.homeZone);
 }
-
-/** A save at home in `jump.place` from half past seven `offset` days from `jump`. */
-const dayOf = (jump: Jump, offset: number) => { const d = dateOf(jump, offset); return { startYear: d.year, startMonth: d.month, startDay: d.day }; };
 
 function saveIn(jump: Jump, offset: number, seed = 'bounds'): Simulation {
   const d = dateOf(jump, offset);
@@ -125,31 +124,6 @@ describe('a bedtime in the first hour of the day of the jump', () => {
     const one = wall(sim, LA, 4, 1);
     expect(sleepQuality(sim, sim.player, one)).toBeCloseTo(sleepQuality(sim, sim.player, one - 1) - 0.08, 10);
   });
-
-  it('leaves a life on autopilot through the jump where one in Los Angeles is, morning by morning', () => {
-    // Measured before the fix: the night into the day of the jump put back
-    // 0.11 condition and 0.54 morale where Los Angeles's put back 0.64 and
-    // 1.47, and the gap held 21 days in condition and 24 in morale. Within a
-    // twentieth now: a day of twenty-three hours is still an hour shorter, and
-    // the four zones whose clocks jump on another night from Los Angeles's read
-    // 0.009 condition and 0.016 morale off it the morning after, where Havana,
-    // whose clocks jump the same night, reads the same.
-    for (const jump of JUMPS) {
-      // Money behind both, so owing weighs on neither: the two are compared on the day's bounds alone.
-      const here = quickSave({ ...dayOf(jump, -3), startLocationId: jump.place, wealth: 'inherited' }, 'autopilot');
-      const d = dateOf(jump, -3);
-      const la = quickSave({ startYear: d.year, startMonth: d.month, startDay: d.day, startLocationId: LA.place, wealth: 'inherited' }, 'autopilot');
-      // The same flat in both, so the two differ by the day's bounds alone and not by what's in their homes.
-      if (here.player.home && la.player.home?.unit) here.player.home.unit = structuredClone(la.player.home.unit);
-      for (let offset = -2; offset <= 6; offset += 1) {
-        here.advanceTo(wall(here, jump, offset, 7));
-        la.advanceTo(instantFromZoned({ ...dateOf(jump, offset), hour: 7 }, la.homeZone));
-        const label = `${jump.place} ${keyOf(jump, offset)}`;
-        expect(here.player.wellbeing.condition, label).toBeCloseTo(la.player.wellbeing.condition, 1);
-        expect(here.player.wellbeing.morale, label).toBeCloseTo(la.player.wellbeing.morale, 1);
-      }
-    }
-  });
 });
 
 describe('the Day look and the entry look', () => {
@@ -177,10 +151,10 @@ describe('the Day look and the entry look', () => {
 
   it('keep the whole of a 25-hour day, its last hour included', () => {
     const sim = saveIn(LA_BACK, -1);
-    // The first of November's rent falls due at eight that evening, inside
-    // the day, and it is the next thing after the meeting.
-    const rent = sim.timeline.pending().find((item) => item.kind === 'home.rent')!.id;
     const morning = plan(sim, 'Morning Meeting', wall(sim, LA_BACK, 0, 10));
+    // A plan at eight that evening, inside the day, the next thing after the meeting. It was the first of November's
+    // rent until the home went in the scope reset of 2026-10-09.
+    const rent = plan(sim, 'Evening Talk', wall(sim, LA_BACK, 0, 20), 30);
     const late = plan(sim, 'Late Drink', wall(sim, LA_BACK, 0, 23, 30), 30);
     expect(waysTo(looked(sim, 'day', keyOf(LA_BACK, 0)), 'entry')).toEqual([morning, rent, late]);
     const next = (looked(sim, 'entry', morning).ways ?? []).find((way) => way.detail.startsWith('Next thing that day'));

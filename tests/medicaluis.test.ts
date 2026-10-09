@@ -107,21 +107,4 @@ describe('California’s state-funded Medi-Cal', () => {
     expect(r.ok, r.error).toBe(true);
     expect(healthOf(fresh.player).program?.scope).toBe('restricted');
   });
-
-  it('renews state-funded cover without the federal work rule, and a citizen’s at renewal as federal Medicaid', () => {
-    const sim = angeleno('uis-renew');
-    enrolled(sim, Date.UTC(2025, 11, 1), 'state');
-    healthOf(sim.player).program!.renewAt = Date.UTC(2027, 1, 1);
-    armHealth(sim, sim.player);
-    sim.advanceTo(Date.UTC(2027, 2, 15));
-    const p = healthOf(sim.player).program!;
-    expect(p.until).toBeUndefined();
-    expect(p.scope).toBe('state');
-    // Naturalized, the next renewal finds federal Medicaid: the scope goes, and the work rule with it.
-    sim.player.citizenshipId = 'us';
-    p.renewAt = sim.now + 20 * 86_400_000;
-    sim.player.career = { ...(sim.player.career ?? {}), days: Array.from({ length: 12 }, (_, i) => ({ at: sim.now - i * 2 * 86_400_000 })) } as never;
-    sim.advanceBy(60 * 86_400_000);
-    expect(p.scope).toBeUndefined();
-  });
 });

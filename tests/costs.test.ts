@@ -5,31 +5,26 @@
  * own cost-sharing (`systems/career.ts`, `systems/health.ts`,
  * `content/safetynet.ts`).
  */
-import { describe, expect, it } from 'vitest';
-import { evenCraft } from '@/engine/systems/school';
-import { createSave, quickSave } from '@/engine';
-import { newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
-import { computeAnnualTax, salesTaxRate } from '@/engine/content/tax';
-import { attributesOf } from '@/engine/systems/attributes';
+import { createSave,quickSave } from '@/engine';
 import { exchange } from '@/engine/content/currency';
-import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
-import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
-import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, withSalesTax, workCostsWeek } from '@/engine/systems/career';
-import { recordJobCost, recordWages, yearOf } from '@/engine/systems/earnings';
-import { drawChronic, grown, healthMonth, monitorShareOf, healthOf, illnessWeek, insulinShareOf, keepUp, fillMedicine, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
-import { figuresFor } from '@/engine/systems/taxreturn';
+import { CARE,CHRONIC,DENTAL_PLANS,DENTAL_VISION,INSULIN,PHARMACY,RECEIPTS,STATE_DEDUCTIONS,medicalGrowth } from '@/engine/content/safetynet';
+import { computeAnnualTax } from '@/engine/content/tax';
 import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY,instantFromZoned,zonedParts } from '@/engine/core/time';
+import { recordJobCost,recordWages } from '@/engine/systems/earnings';
+import { drawChronic,fillMedicine,grown,healthMonth,healthOf,illnessWeek,insulinShareOf,keepUp,monitorShareOf,rxShareOf,shareOf,teethAndEyesShareOf } from '@/engine/systems/health';
+import { evenCraft } from '@/engine/systems/school';
+import { figuresFor } from '@/engine/systems/taxreturn';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { describe,expect,it } from 'vitest';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
   sim.player.craft = evenCraft(50);
-  beginCareer(sim, sim.player);
   return sim;
 }
-const yearNow = (sim: Simulation) => zonedParts(sim.now, NY).year;
 
 describe('tax on money that isn’t dollars', () => {
   it('is worked out on what it comes to in dollars, and said in its own money', () => {
@@ -52,115 +47,6 @@ describe('tax on money that isn’t dollars', () => {
 });
 
 describe('an actor’s working costs', () => {
-  it('pays a casting site a year from the bank, counts it for the return, and renews it unless told not to', () => {
-    const sim = pro('site');
-    expect(sim.execute({ kind: 'career.subscribe', payload: { site: 'actors-access', on: true } }).ok).toBe(true);
-    expect(yearOf(sim.player, yearNow(sim)).jobCosts).toBe(WORK_COSTS.sites['actors-access'].price);
-    const held = careerOf(sim.player).sites!['actors-access']!;
-    expect(held).toEqual({ until: sim.now + 365 * MS_DAY, renews: true });
-    // A year on, it renews for another.
-    const year = held.until;
-    workCostsWeek(sim, sim.player, year + MS_DAY);
-    expect(held.until).toBe(year + 365 * MS_DAY);
-    expect(sim.execute({ kind: 'career.subscribe', payload: { site: 'actors-access', on: false } }).ok).toBe(true);
-    workCostsWeek(sim, sim.player, held.until + MS_DAY);
-    expect(held.until).toBe(year + 365 * MS_DAY);
-    expect(sim.execute({ kind: 'career.subscribe', payload: { site: 'nowhere', on: true } })).toMatchObject({ ok: false, error: 'No such site.' });
-  });
-
-  it('has a paid site’s submissions seen twice as often, the reel’s breakdowns shut without one, the sites’ own listings take more, and old headshots cost a fifth of auditions', () => {
-    const sim = pro('seen');
-    // A middling reputation: the sites' own rates, neither raised nor cut by it.
-    attributesOf(sim, sim.player).reputation = 50;
-    const career = careerOf(sim.player);
-    const self = () => { let got = 0; for (let w = 0; w < 600; w += 1) got += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5).length; return got / 3000; };
-    const free = self();
-    career.sites = { 'casting-networks': { until: sim.now + 5_000 * MS_DAY, renews: true } };
-    career.reelAt = sim.now;
-    const reel = self();
-    delete career.reelAt;
-    const bare = self();
-    expect(reel).toBeCloseTo(ESTIMATE.selfSubmitCallback, 1);
-    expect(free / reel).toBeGreaterThan(WORK_COSTS.freeSubmissionShare - 0.1);
-    expect(free / reel).toBeLessThan(WORK_COSTS.freeSubmissionShare + 0.1);
-    expect(bare / reel).toBeGreaterThan(1 - WORK_COSTS.wantReel - 0.1);
-    expect(bare / reel).toBeLessThan(1 - WORK_COSTS.wantReel + 0.1);
-    delete career.sites['casting-networks'];
-    expect(submissionsAWeek(career, sim.now)).toBe(ESTIMATE.selfSubmitsAWeek);
-    career.sites.backstage = { until: sim.now + MS_DAY, renews: false };
-    expect(submissionsAWeek(career, sim.now)).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions);
-    career.sites['casting-networks'] = { until: sim.now + MS_DAY, renews: false };
-    expect(submissionsAWeek(career, sim.now, 'us-ca-losangeles')).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions + WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']);
-    expect(submissionsAWeek(career, sim.now, 'us-ny-newyork')).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions + WORK_COSTS.castingNetworksSubmissions.other);
-    // In Los Angeles, Submit Yourself takes Casting Networks' five more.
-    const la = pro('seen-la', 'us-ca-losangeles');
-    careerOf(la.player).sites = { 'casting-networks': { until: la.now + 5_000 * MS_DAY, renews: true } };
-    for (let n = 0; n < ESTIMATE.selfSubmitsAWeek + WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']; n += 1) expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(true);
-    expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
-    // A reel takes screen footage.
-    expect(sim.execute({ kind: 'career.reel', payload: {} })).toMatchObject({ ok: false, error: 'A reel is cut from footage, and you have none: a screen credit, a self-tape from class, or the school’s film monologue.' });
-    career.credits.push({ roleId: 'lort-b', year: 2026, cityId: 'us-ny-newyork' });
-    expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(false);
-    // The school's filmed monologues are footage too.
-    const graduate = pro('filmed');
-    graduate.player.school = { filmed: true } as unknown as NonNullable<typeof graduate.player.school>;
-    expect(graduate.execute({ kind: 'career.reel', payload: {} }).ok).toBe(true);
-    career.credits.push({ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' });
-    expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(true);
-    expect(career.reelAt).toBe(sim.now);
-    // The showcase's headshots, from when the business began, go out of date two years on.
-    expect(staleHeadshots(career, sim.now + (WORK_COSTS.headshotsLastDays - 1) * MS_DAY)).toBe(false);
-    expect(staleHeadshots(career, sim.now + (WORK_COSTS.headshotsLastDays + 1) * MS_DAY)).toBe(true);
-    const agency = AGENCIES[0]!;
-    const count = () => { let n = 0; for (let w = 0; w < 600; w += 1) n += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, agency, 'us-ny-newyork', 0).length; return n; };
-    career.headshotsAt = sim.now + 10_000 * MS_DAY;
-    const fresh = count();
-    career.headshotsAt = sim.now - (WORK_COSTS.headshotsLastDays + 1) * MS_DAY;
-    const stale = count();
-    expect(stale / fresh).toBeGreaterThan(WORK_COSTS.staleHeadshots - 0.1);
-    expect(stale / fresh).toBeLessThan(WORK_COSTS.staleHeadshots + 0.1);
-    expect(sim.execute({ kind: 'career.headshots', payload: {} }).ok).toBe(true);
-    expect(career.headshotsAt).toBe(sim.now);
-  }, 60_000);
-
-  it('reads a tape a fifth worse without a kit, and books a coached audition a quarter more often', () => {
-    const sim = pro('kit');
-    const craft = { ...sim.player.craft! };
-    const role = ROLES.find((r) => r.id === 'costar')!;
-    expect(bookingChance(craft, role, 1, 'tape', false) / bookingChance(craft, role, 1, 'tape', true)).toBeCloseTo(WORK_COSTS.noKit, 6);
-    expect(bookingChance(craft, role, 1, 'room', true, true) / bookingChance(craft, role, 1, 'room', true)).toBeCloseTo(WORK_COSTS.coached, 6);
-    expect(sim.execute({ kind: 'career.buy_kit', payload: {} }).ok).toBe(true);
-    expect(careerOf(sim.player).kit).toBe(true);
-    expect(sim.execute({ kind: 'career.buy_kit', payload: {} })).toMatchObject({ ok: false, error: 'You have a kit.' });
-    careerOf(sim.player).auditions.push({ id: 'x1', roleId: 'costar', at: sim.now + MS_DAY, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' });
-    const t0 = sim.now;
-    expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(true);
-    // The session is the hour it's paid for (from 2026-10-03).
-    expect(sim.now - t0).toBe(60 * 60_000);
-    expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(false);
-    // The kit is goods, and New York City's 8.875% is on top.
-    expect(yearOf(sim.player, yearNow(sim)).jobCosts).toBe(Math.round(WORK_COSTS.kit * (1 + salesTaxRate('us-ny-newyork', sim.now, 'goods'))) + WORK_COSTS.coach);
-    expect(withSalesTax(sim.player, sim.now, 100_00)).toBe(Math.round(100_00 * (1 + salesTaxRate('us-ny-newyork', sim.now, 'goods'))));
-    expect(salesTaxRate('us-ny-newyork', sim.now, 'goods')).toBeGreaterThan(0.08);
-    // Headshots: the session untaxed, the prints taxed.
-    const before = yearOf(sim.player, yearNow(sim)).jobCosts!;
-    sim.execute({ kind: 'career.headshots', payload: {} });
-    expect(yearOf(sim.player, yearNow(sim)).jobCosts! - before).toBe(WORK_COSTS.headshots - WORK_COSTS.prints + withSalesTax(sim.player, sim.now, WORK_COSTS.prints));
-  });
-
-  it('bills a class each month and grows acting each week, against a life without it', () => {
-    const sim = pro('class');
-    const control = pro('class');
-    expect(sim.execute({ kind: 'career.class', payload: { on: true } }).ok).toBe(true);
-    const start = sim.now;
-    const until = start + 40 * MS_DAY;
-    for (const s of [sim, control]) while (s.now < until) s.advanceTo(Math.min(until, s.now + 6 * 3_600_000));
-    expect(sim.player.craft!.scene).toBeGreaterThan(control.player.craft!.scene);
-    const months = new Set([zonedParts(start, NY).month, zonedParts(until, NY).month]).size;
-    expect(yearOf(sim.player, yearNow(sim)).jobCosts ?? 0).toBeGreaterThanOrEqual(WORK_COSTS.classMonthly * (months - 1));
-    expect(sim.execute({ kind: 'career.class', payload: { on: false } }).ok).toBe(true);
-    expect(careerOf(sim.player).scene).toBeUndefined();
-  }, 120_000);
 
   it('counts the work’s costs in New York’s itemized deduction, above 2% of income', () => {
     const sim = pro('itemize');

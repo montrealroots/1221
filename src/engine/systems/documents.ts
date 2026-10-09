@@ -32,7 +32,7 @@ import { exchange } from '../content/currency';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { ENTRY, type Authorization, type EntryRule } from '../content/entry';
 import { LICENSES, type LicenseRule } from '../content/licenses';
-import { payFromBank } from './household';
+import { payFromBank } from './spending';
 import { realIdShare } from '../content/identity';
 import { PASSPORTS, type PassportRule } from '../content/passports';
 
@@ -653,8 +653,7 @@ export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt 
   if (car && car.issuer === here) cls = 'car';
   const license = licenseOf(person, at, cls, here);
   if (!license) return { ok: false, why: cls === 'motorcycle' ? `You don’t hold a motorcycle license in force: earn one on the Papers screen.` : `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
-  // Points that suspended it (`systems/driving.ts`, from 2026-09-29).
-  if ((person.driving?.suspendedUntil ?? 0) > at) return { ok: false, why: `Your license is suspended until ${new Date(person.driving!.suspendedUntil!).toISOString().slice(0, 10)}.` };
+  // Points suspended it (`systems/driving.ts`, from 2026-09-29) until the driving went in the scope reset of 2026-10-09.
   if (license.alone === false) return { ok: false, why: `${license.name} lets you drive only with a licensed driver beside you.` };
   if (license.issuer === here) return { ok: true };
   const from = license.issuer.split('-')[0]!;

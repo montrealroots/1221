@@ -16,7 +16,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
-import { spend } from '@/engine/systems/household';
+import { spend } from '@/engine/systems/spending';
 import { bankAccountsOf, feeFor, inSaveMoney, monthStartOf, rateOf } from '@/engine/systems/banking';
 import { bankById, banksIn } from '@/engine/content/banks';
 import { WORLD_FEES } from '@/engine/content/banks-world-fees';
@@ -36,7 +36,19 @@ function set(sim: Simulation, account: Account | undefined, amount: number): voi
 }
 const charged = (sim: Simulation, account: Account, memo: string) => sim.universe.transactions
   .filter((t) => t.memo === memo).flatMap((t) => t.postings).filter((p) => p.accountId === account.id).map((p) => p.amount);
-const noHome = (sim: Simulation) => { sim.player.home = undefined; };
+/**
+ * The day's groceries bought off a full EBT card, so nothing the test doesn't buy comes from the bank, and what it
+ * buys still goes on the debit card, and nothing else is paid. It was no home (`home = undefined`), which bought no food, until the home
+ * went in the scope reset of 2026-10-09 and every life bought its day's food.
+ */
+const noSpending = (sim: Simulation) => {
+  const ebt = sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', category: 'ebt', name: 'Groceries For The Tests', ownerId: sim.player.id, institution: 'Tests', openedAt: sim.now });
+  sim.post({ memo: 'Groceries for the tests', category: 'opening', postings: [{ accountId: ebt.id, amount: 10_000_000_00 }, { accountId: sim.nominalAccount('income', 'Gift').id, amount: -10_000_000_00 }] });
+  sim.player.assistance = { scheme: 'snap', since: sim.now, months: 0, ebtAccountId: ebt.id, closedAt: sim.now };
+  // And no care to pay for: every life has had its health armed since 2026-10-09, where a life begun outside the
+  // school had none before the career began.
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind.startsWith('health.')) sim.timeline.cancel(item.id, sim.now);
+};
 
 describe('France', () => {
   it('charges €8 an operation past zero, and no more than €80 a month', () => {
@@ -69,7 +81,7 @@ describe('Spain’s descubierto', () => {
 
   it('takes interest and a commission on the month’s deepest point, no more together than the law allows', () => {
     const sim = lifeIn('es-md-madrid', { bankId: 'es-santander' });
-    noHome(sim);
+    noSpending(sim);
     set(sim, savings(sim), 0);
     const account = current(sim);
     set(sim, account, 0);
@@ -90,7 +102,7 @@ describe('Spain’s descubierto', () => {
 
   it('cuts the commission to what the cap leaves, even under its €15 floor', () => {
     const sim = lifeIn('es-md-madrid', { bankId: 'es-santander' });
-    noHome(sim);
+    noSpending(sim);
     set(sim, savings(sim), 0);
     const account = current(sim);
     set(sim, account, 0);
@@ -158,7 +170,7 @@ describe('a dormant account', () => {
 describe('Santander México’s quiet month', () => {
   it('is charged for a month with under two transactions, and not for one with wages', () => {
     const sim = lifeIn('mx-cmx-mexicocity', { bankId: 'mx-santander' });
-    noHome(sim);
+    noSpending(sim);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 1, hour: 6 }, sim.homeZone));
     expect(charged(sim, current(sim), 'Quiet month fee').length).toBeGreaterThanOrEqual(1);
     const before = charged(sim, current(sim), 'Quiet month fee').length;
@@ -191,7 +203,7 @@ describe('an introductory rate', () => {
 describe('Iceland’s assessment', () => {
   it('gives back the tax on the first 300,000 kr of last year’s interest, on 1 June', () => {
     const sim = lifeIn('is-39-mosfellsbr', { bankId: 'is-landsbankinn', wealth: 'modest' });
-    noHome(sim);
+    noSpending(sim);
     const account = current(sim);
     // 500,000 kr of interest in 2026, as the bank would have paid it.
     sim.post({ memo: 'Interest', category: 'interest', postings: [
@@ -277,7 +289,7 @@ describe('the waivers outside the thirteen', () => {
   // is the bank's, in the save's euros.
   const at = (bankId: string, birthYear: number) => {
     const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-aib', birthYear, wealth: 'modest' });
-    sim.player.home = undefined;
+    noSpending(sim);
     const account = current(sim);
     account.bankId = bankId;
     return { sim, account, fee: () => feeFor(sim, account, monthStartOf(sim, sim.now)), bank: bankById(bankId)! };
@@ -339,7 +351,7 @@ describe('an overdraft past its limit, or with none', () => {
   it('charges Deutsche Bank’s higher rate on the part beyond the Dispo, and lets the account go there', () => {
     const run = (limit: number) => {
       const sim = lifeIn('de-be-berlin', { bankId: 'de-deutsche-bank', birthYear: 1985 });
-      noHome(sim);
+      noSpending(sim);
       wages(sim, 3_000_00);
       if (limit > 0) sim.must({ kind: 'bank.arrange_overdraft', payload: { limit } });
       set(sim, savings(sim), 0);
@@ -358,7 +370,7 @@ describe('an overdraft past its limit, or with none', () => {
   it('charges BNZ’s unarranged fee for a month more than $20 overdrawn, and not at $20 or under 19', () => {
     const month = (overdrawn: number, birthYear = 1985) => {
       const sim = lifeIn('nz-akl-auckland', { bankId: 'nz-bnz', birthYear });
-      noHome(sim);
+      noSpending(sim);
       set(sim, savings(sim), 0);
       set(sim, current(sim), 0);
       sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 10, hour: 12 }, sim.homeZone));
@@ -375,7 +387,7 @@ describe('an overdraft past its limit, or with none', () => {
 
   it('charges ANZ’s past the limit only after more than a day', () => {
     const sim = lifeIn('nz-akl-auckland', { bankId: 'nz-anz', birthYear: 1985 });
-    noHome(sim);
+    noSpending(sim);
     set(sim, savings(sim), 0);
     set(sim, current(sim), 0);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 10, hour: 12 }, sim.homeZone));
@@ -420,7 +432,7 @@ describe('the waivers as the banks write them', () => {
 
   it('starts the average again each month', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi', wealth: 'modest' });
-    sim.player.home = undefined;
+    noSpending(sim);
     const saver = savings(sim)!;
     set(sim, saver, 2_000_00);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
@@ -444,7 +456,7 @@ describe('the waivers as the banks write them', () => {
 
   it('asks Santander Spain for three bills or six card payments beside the nómina', () => {
     const sim = lifeIn('es-md-madrid', { bankId: 'es-santander', birthYear: 1985 });
-    sim.player.home = undefined;
+    noSpending(sim);
     set(sim, current(sim), 5_000_00);
     set(sim, savings(sim), 0);
     wagesInto(sim, 1_000_00);
@@ -457,7 +469,7 @@ describe('the waivers as the banks write them', () => {
 
   it('asks CaixaBank for three bills or card payments together', () => {
     const sim = lifeIn('es-md-madrid', { bankId: 'es-caixabank', birthYear: 1985 });
-    sim.player.home = undefined;
+    noSpending(sim);
     set(sim, current(sim), 5_000_00);
     set(sim, savings(sim), 0);
     wagesInto(sim, 1_000_00);

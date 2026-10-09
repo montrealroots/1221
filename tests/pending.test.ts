@@ -7,7 +7,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { cardOf } from '@/engine/systems/credit';
-import { payFromCurrent, spend } from '@/engine/systems/household';
+import { payFromCurrent, spend } from '@/engine/systems/spending';
 import { ESTIMATE_PENDING_DAYS, pendingDaysOf, pendingOn, postedBalance } from '@/engine/systems/pending';
 import { activity } from '@/engine/systems/statements';
 import { afterBusinessDays } from '@/engine/content/bankdays';

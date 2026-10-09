@@ -60,7 +60,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { businessDay } from '../content/bankdays';
-import { present } from './career';
+import { present } from './health';
 import { DECIDED_KIND, documentsOf, type PersonDocument } from './documents';
 import { scheduleUsStatus } from './permission';
 
@@ -144,14 +144,14 @@ function schedule(sim: Simulation, person: Person, doc: PersonDocument): void {
 
 /** Books the visit a pending document waits on, so many days on, where they live; returns when. */
 export function bookVisit(sim: Simulation, person: Person, doc: PersonDocument, rule: VisitRule, days: number = VISIT_LEAD_DAYS, more: { years?: number; decidedBy?: string; after?: number } = {}): Instant {
-  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const cityId = person.currentLocationId;
   doc.visit = { rule, at: slot(sim, person, cityId, sim.now + days * MS_DAY), cityId, ...more };
   schedule(sim, person, doc);
   return doc.visit.at;
 }
 
 /** Britain's enrolment for one living there, or abroad. */
-export const ukEnrolment = (person: Person): VisitRule => (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId === 'uk' ? 'uk-enrolment-home' : 'uk-enrolment-abroad');
+export const ukEnrolment = (person: Person): VisitRule => (CITIES.get(person.currentLocationId)?.countryId === 'uk' ? 'uk-enrolment-home' : 'uk-enrolment-abroad');
 
 export function registerPaperVisits(sim: Simulation): void {
   sim.onSchedule(VISIT_KIND, (item, s) => {

@@ -67,12 +67,10 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
-import type { ClassmateCareer } from './rivals';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
-import { payFromCurrent, spend } from './household';
+import { payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
 import { ATTRIBUTES, earn, nerves, nudge } from './attributes';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages, yearOf } from './earnings';
@@ -83,11 +81,9 @@ import { chanceOver, laidUp, mayHurt } from './injury';
 import { INJURY } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
-import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
 import { lapseTerm, meetingWeight, mateRecord, partnerAsks, scheduleOrientation, setWork } from './coursework';
-import { celebrate, momentInClass } from './classmates';
-import { classAtSchool } from './people';
+import { momentInClass } from './classmates';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, nightFactor, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -142,8 +138,6 @@ export interface Classmate {
   presence?: number;
   /** Where they stand with the player, -100 to 100: a cast shared draws them closer, a lead taken from the other apart (`BONDS`). */
   bond?: number;
-  /** Their life after the degree: an agency, and the work they book (`systems/rivals.ts`). */
-  career?: ClassmateCareer;
   /**
    * As a partner in class work (`systems/coursework.ts`, from 2026-10-07): how reliably they come, how far they trust
    * you, the rehearsals kept with you, the ones they missed and the ones you did, when you met, and what's happened.
@@ -214,6 +208,11 @@ export interface SchoolRecord {
   classOf: number;
   termsBegun: number;
   standing: Standing;
+  /**
+   * When the degree or a dismissal ended it (from 2026-10-09), which the Yale Health plan runs on from. It was the day
+   * the career began until the career went; a save from before has neither, and its plan runs on.
+   */
+  endedAt?: Instant;
   /** In the casting pool: out after missed rehearsal calls, back after a good evaluation. */
   castable: boolean;
   classmates: Classmate[];
@@ -939,10 +938,15 @@ function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
   schedule(sim, person, at(dayOnOrAfter(next.year, next.month, next.day, 5), 17), { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
 }
 
-/** The actor's standing moved: a notice, and on dismissal or the degree the school's hold on the calendar let go, and the career begun. */
+/**
+ * The actor's standing moved: a notice, and on dismissal or the degree the school's hold on the calendar let go.
+ * Until the scope reset of 2026-10-09 the degree or a dismissal began the career (`systems/career.ts`) and the class
+ * was known for life after it (`systems/people.ts`); both went, and a life now ends its school at the results.
+ */
 function setStanding(sim: Simulation, person: Person, to: Standing, reason: string): void {
   const school = person.school!;
   school.standing = to;
+  if (to === 'dismissed' || to === 'graduated') school.endedAt = sim.now;
   if (to !== 'good') feel(person, to);
   if (to === 'dismissed' || to === 'graduated') {
     // The degree is a line casting reads; a dismissal is one too (`attributes.ts`).
@@ -950,16 +954,11 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     keepCredit(sim, school);
     // The degree's filmed monologues, posted at the end of the final term.
     if (to === 'graduated') school.filmed = true;
-    // The class, known for life after it (`systems/people.ts`, from 2026-10-01).
-    if (to === 'graduated') knowTheClass(sim, person, school.classmates);
     for (const item of sim.universe.scheduled) {
-      // The showcase too: until 2026-09-27 a student dismissed between New York's and Los Angeles's still had the second, and the clock stopped at it.
-      if (item.status === 'pending' && (item.kind.startsWith('school.') || item.kind === SHOWCASE_KIND) && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
+      if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
     }
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
-    // The business, from here (`systems/career.ts`).
-    beginCareer(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
   const chair = YALE_DRAMA.actingChair.name;
@@ -1576,12 +1575,12 @@ export function registerSchool(sim: Simulation): void {
         importance: 55, route: '/workspace/school',
       });
     }
-    // A first or second year's spring ends in a summer that's theirs: its first Monday, the business's week begins (`systems/career.ts`).
+    // A first or second year's spring ends in a summer that's theirs. Until 2026-10-09 its first Monday began the business's week (`systems/career.ts`).
     if (!termStart(term).fall && yearOfTerm(term) < 3) schedule(s, person, at(recessStart(term), 9), { kind: RECESS_KIND, label: 'Summer Recess', minutes: 0, requiresPlayer: false });
     scheduleLabs(s, person, term);
     if (term >= 1) cast(s, person, term);
-    // The last spring ends in the Actor Showcase.
-    if (term === YALE_DRAMA.terms - 1) bookShowcase(s, person);
+    // The last spring ended in the Actor Showcase for the agents until the career went on 2026-10-09; the degree's
+    // filmed monologues are still posted at its end (`school.filmed`).
     schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(term)} Evaluation`, minutes: 0, payload: { term }, requiresPlayer: false });
     if (term + 1 < YALE_DRAMA.terms) s.schedule({ at: Math.max(at(termStart(term + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termLabel(term + 1) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: term + 1 } });
   });
@@ -1624,8 +1623,6 @@ export function registerSchool(sim: Simulation): void {
       for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
       // And maybe one of them brings something (`systems/classmates.ts`, from 2026-10-08).
       momentInClass(s, person, item.at);
-      // The class as people, known since the first week (`classAtSchool`, `systems/people.ts`, from 2026-10-08).
-      classAtSchool(s, person);
       tire(person, ESTIMATE.energy.classes);
       return;
     }
@@ -1710,9 +1707,8 @@ export function registerSchool(sim: Simulation): void {
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
     // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).
     reflect(s, person, casting, casting.play ?? casting.production);
-    // And a classmate in the cast may ask you out after it (`celebrate`, from 2026-10-08).
-    const cast = (casting as Run & { cast?: { name: string }[] }).cast;
-    if (cast) celebrate(s, person, cast, item.at + 150 * 60_000, casting.play ?? casting.production);
+    // A classmate in the cast asked you out after it from 2026-10-08 (`celebrate`), until the people they are and the
+    // restaurants went in the scope reset of 2026-10-09.
     return night;
   };
 
@@ -2013,8 +2009,7 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(RECESS_KIND, (item, s) => {
     const person = personOf(item);
     if (!person || !summerOf(person, item.at)) return;
-    armSummerWork(s, person);
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term. The Bulletin limits outside work only while they’re in session: Submit Yourself for jobs that end before the term, and a job in another city means a sublet there.', importance: 60, route: '/workspace/career' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term.', importance: 60, route: '/workspace/school' });
   });
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {

@@ -56,12 +56,11 @@ import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { payFromBank, inTheBank } from './household';
+import { payFromBank, inTheBank } from './spending';
 import { DECIDED_KIND, citizenOf, documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
 import { CITIES } from '../content/geography';
 import { homeOf } from './earnings';
 import { earningsOf } from './earnings';
-import { o1Evidence } from './permission';
 import { bookVisit, ukEnrolment } from './papervisits';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -118,15 +117,15 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
     if (residenceIn(person, 'US', sim.now)) return 'You hold a green card.';
     if (documentsOf(person).some((d) => d.route === 'us-green-card' && d.status === 'pending')) return 'Your petition is being decided.';
     if (CITIES.get(homeOf(person))?.countryId !== 'us') return 'A green card is applied for from inside the United States, in status.';
-    if (o1Evidence(sim, person).filter((e) => e.met).length < 3) return 'Extraordinary ability asks three kinds of the evidence an O-1 asks, which your record doesn’t show yet.';
-    return undefined;
+    // Extraordinary ability was read on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
+    return 'Extraordinary ability is shown on a career’s record, and there’s none to show.';
   }
   if (iso === 'GB') {
     if (own === 'IE') return 'An Irish citizen lives in Britain under the Common Travel Area.';
     if (residenceIn(person, 'GB', sim.now)) return 'You hold permission to live there.';
     if (documentsOf(person).some((d) => d.destination === 'GB' && d.route === 'global-talent' && d.status === 'pending')) return 'Your application waits on its biometrics.';
-    if (o1Evidence(sim, person).filter((e) => e.met).length < GLOBAL_TALENT.evidence) return 'Arts Council England endorses exceptional talent or promise: three kinds of the evidence an O-1 asks, which your record doesn’t show yet.';
-    return undefined;
+    // Endorsed on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
+    return 'Arts Council England endorses talent shown in a career’s record, and there’s none to show.';
   }
   if (iso === 'MX') {
     if (residenceIn(person, 'MX', sim.now)) return 'You hold residence there.';

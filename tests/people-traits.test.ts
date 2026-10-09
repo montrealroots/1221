@@ -6,11 +6,10 @@
  * in the cast, and a cast without one weighs on them.
  */
 
-import { describe, expect, it } from 'vitest';
 import type { Person } from '@/engine/domain/model';
-import { bondMove, castCompany, BONDS } from '@/engine/systems/school';
 import { personalityOf } from '@/engine/systems/personality';
-import { partTaken } from '@/engine/systems/rivals';
+import { bondMove,BONDS,castCompany } from '@/engine/systems/school';
+import { describe,expect,it } from 'vitest';
 
 const who = (traits: string[]) => ({ personalityTraits: traits, personality: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50 } } as unknown as Person);
 
@@ -43,16 +42,5 @@ describe('the people traits', () => {
     expect(castCompany(who([]), 0)).toBe(0);
     expect(castCompany(who(['independent']), 0)).toBe(0);
     expect(castCompany(who(['needs_people']), 0)).toBeLessThan(0);
-  });
-
-  it('set a part lost to a classmate after school between them, by how the player takes a slight', () => {
-    const apart = (traits: string[]) => {
-      const p = { ...who(traits), school: { classmates: [{ name: 'A', bond: 30 }] } } as unknown as Person;
-      partTaken(p, 0);
-      return 30 - p.school!.classmates[0]!.bond!;
-    };
-    expect(apart([])).toBe(BONDS.leadTaken);
-    expect(apart(['holds_grudges'])).toBeGreaterThan(apart([]));
-    expect(apart(['forgiving'])).toBeLessThan(apart([]));
   });
 });

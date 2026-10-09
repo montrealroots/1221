@@ -9,18 +9,16 @@
  * the player.
  */
 
-import { describe, expect, it } from 'vitest';
-import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
-import { wearTheDay } from '@/engine/systems/wardrobe';
-import type { Person, Personality } from '@/engine/domain/model';
-import {
-  LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, mendsTo, minutesFor, readiness, type LookAfter,
-} from '@/engine/systems/life';
 import { ceilingAt } from '@/engine/content/lifespan';
-import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
-
-const ACTIONS = Object.keys(LOOKING_AFTER) as LookAfter[];
+import { MS_DAY,MS_HOUR,MS_MINUTE } from '@/engine/core/time';
+import type { Person,Personality } from '@/engine/domain/model';
+import { injuryOf } from '@/engine/systems/injury';
+import {
+LOOKING_AFTER,applyLookingAfter,freshWellbeing,lookAfterRefusal,mendsTo,
+readiness,type LookAfter
+} from '@/engine/systems/life';
+import { describe,expect,it } from 'vitest';
 
 const NEUTRAL: Personality = {
   openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50,
@@ -36,28 +34,6 @@ function doIt(sim: ReturnType<typeof quickSave>, action: LookAfter) {
 }
 
 describe('looking after yourself', () => {
-  for (const action of ACTIONS) {
-    it(`${action} spends exactly its own time on the clock, where the place and the weather allow it`, () => {
-      const sim = quickSave();
-      const w = sim.player.wellbeing;
-      w.nourishment = 40; w.hygiene = 50; w.energy = 70;
-      // Clothes to wash, a place to clean and dishes in the sink.
-      sim.player.living = { tidy: 30, dishes: 2 };
-      for (let i = 0; i < 7; i += 1) wearTheDay(sim, sim.player);
-      // A bath, a pool, a court, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
-      // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
-      // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).
-      // A lawn is a home's with a yard (`systems/lawns.ts`, tested in `tests/lawns.test.ts`); a dance studio a home's made one (tested in `tests/courts.test.ts`); a sauna a home's with one (`tests/special-rooms.test.ts`); painting a home owned with its paint bought (`tests/paint.test.ts`).
-      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'court', 'dance', 'outside', 'boat', 'charter', 'ride', 'trail', 'mow', 'sauna', 'paint'].includes(action)) return;
-      const minutes = minutesFor(sim, action);
-      const before = sim.now;
-      const result = doIt(sim, action);
-      expect(result.ok, result.error).toBe(true);
-      expect(sim.now).toBe(before + minutes * MS_MINUTE);
-      expect(result.value?.doneAt).toBe(sim.now);
-    });
-  }
-
   it('a meal feeds, and leaves readiness above the same afternoon without one', () => {
     const fed = quickSave();
     const skipped = quickSave();
@@ -145,9 +121,7 @@ describe('looking after yourself', () => {
       }
       const a = trained.player.wellbeing;
       const b = idle.player.wellbeing;
-      // From 2026-10-03 the cold no longer keeps a run indoors where it's dressed for (`coldRefusal`): this life, in
-      // Iceland, runs most days, and a run's injuries cost it workouts. Until then the gap here was over 30.
-      expect(a.fitness - b.fitness).toBeGreaterThan(15);
+      expect(a.fitness - b.fitness).toBeGreaterThan(30);
       // Condition follows what the fitness supports (`mendsTo`): the trained
       // body at its higher mark, the idle one sliding 2% a day toward its lower.
       // Until 2026-09-27 the idle one slid toward 74 and the gap here was five.

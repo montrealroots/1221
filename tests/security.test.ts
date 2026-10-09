@@ -9,7 +9,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { FRAUD_LAW, SECURITY, type FraudLaw } from '@/engine/content/security';
 import { cardOf, cardRoom } from '@/engine/systems/credit';
-import { spend } from '@/engine/systems/household';
+import { spend } from '@/engine/systems/spending';
 import { cardAccount, fraudOn, liabilityFor, plasticOf } from '@/engine/systems/security';
 
 const laws = FRAUD_LAW as Record<string, FraudLaw>;
@@ -46,20 +46,6 @@ describe('locking a card', () => {
     const wallet = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'cash')!;
     sim.post({ memo: 'test', category: 'test', postings: [{ accountId: wallet.id, amount: -wallet.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: wallet.balance }] });
     expect(spend(sim, sim.player, 20_00, 'Groceries', 'food')).toBe(false);
-  });
-
-  it('still pays the month’s bills on a locked credit card', () => {
-    const sim = lifeIn('us-ny-newyork', 'us-chase', 'sec-lock-bills');
-    const card = cardOf(sim, sim.player)!;
-    sim.must({ kind: 'bank.set_payments', payload: { bills: 'card' } });
-    sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
-    const from = sim.now;
-    sim.advanceBy(40 * MS_DAY);
-    const bills = sim.universe.transactions.filter((t) => t.at >= from && t.category === 'bills');
-    expect(bills.length).toBeGreaterThan(0);
-    // The bills, and from 2026-10-01 the internet and the phone by their providers (`systems/telecom.ts`).
-    expect(bills.every((t) => /^(Bills|Internet, |Phone, )/.test(t.memo) && t.postings.some((p) => p.accountId === card.id))).toBe(true);
-    expect(bills.some((t) => t.memo.startsWith('Internet, '))).toBe(true);
   });
 });
 

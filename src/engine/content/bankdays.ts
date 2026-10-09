@@ -19,7 +19,7 @@ import { bankById } from './banks';
 /** Whose days an account keeps: its bank's country, and the region its holder lives in. */
 export function daysOfAccount(account: { bankId?: string }, holder?: { home?: { cityId: string }; homeRegionId?: string; currentLocationId?: string }): { countryId: string; regionId?: string } {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
-  const city = holder ? CITIES.get(holder.home?.cityId ?? holder.homeRegionId ?? holder.currentLocationId ?? '') : undefined;
+  const city = holder ? CITIES.get(holder.currentLocationId ?? holder.homeRegionId ?? '') : undefined;
   return { countryId: bank ? countryOfIso(bank.iso) : '', ...(city ? { regionId: city.parentId } : {}) };
 }
 

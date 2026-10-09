@@ -9,7 +9,7 @@ import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
 import { cardOf, cardRoom, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, STATEMENT_KIND } from '@/engine/systems/credit';
 import { PENDING } from '@/engine/content/pending';
-import { canPay } from '@/engine/systems/household';
+import { canPay } from '@/engine/systems/spending';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
 const kept = new Map<string, unknown>();

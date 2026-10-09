@@ -58,7 +58,6 @@ import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
 import { earningsOf } from './earnings';
 import { citizenOf } from './documents';
-import { billsOf, rentOf } from './household';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
 
@@ -85,7 +84,7 @@ export type AssistanceScheme = 'ontario-works' | 'bc-assistance' | 'snap';
 export interface AssistanceClaim { scheme: AssistanceScheme; since: Instant; months: number; /** SNAP: the months counted against the time limit, by 'YYYY-MM'. */ counted?: string[]; ebtAccountId?: string; closedAt?: Instant }
 
 const YEAR = 365.2425 * MS_DAY;
-const regionOf = (person: Person) => CITIES.get(person.home?.cityId ?? person.currentLocationId)?.parentId ?? '';
+const regionOf = (person: Person) => CITIES.get(person.currentLocationId)?.parentId ?? '';
 
 /** The scheme where they live, if SLATE keeps one. */
 export function schemeFor(person: Person): AssistanceScheme | undefined {
@@ -148,13 +147,12 @@ export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant, shelte
   return Math.max(0, fy.max * 100 - Math.round(Math.max(0, before - shelter) * SNAP.share));
 }
 
-/** The shelter costs SNAP counts a month, in dollar cents: the rent, and the state's utility allowance where they pay bills. */
-export function snapShelter(sim: Simulation, person: Person): Money {
-  const city = person.home?.cityId ?? person.currentLocationId;
-  const state = CITIES.get(city)?.parentId ?? '';
-  const pays = billsOf(sim, person) > 0;
-  const utilities = !pays ? 0 : SNAP.nyc.includes(city) ? SNAP.utilitiesNyc : SNAP.utilities[state] ?? 0;
-  return inLocal(sim, rentOf(sim, person), 'USD') + utilities * 100;
+/**
+ * The shelter costs SNAP counts a month, in dollar cents: the rent, and the state's utility allowance where they paid
+ * bills, until the home, its rent and its bills went in the scope reset of 2026-10-09. None is counted now.
+ */
+export function snapShelter(_sim: Simulation, _person: Person): Money {
+  return 0;
 }
 
 function schedule(sim: Simulation, person: Person, at: Instant): void {
@@ -185,7 +183,8 @@ export function registerAssistance(sim: Simulation): void {
     let due = 0;
     if (claim.scheme === 'snap') {
       const age = (item.at - person.birthInstant) / YEAR;
-      const hours = (person.career?.days ?? []).filter((d) => d.at >= item.at - 30 * MS_DAY && d.at < item.at).length * 8;
+      // The month's hours worked were the career's days until the career went in the scope reset of 2026-10-09: none now.
+      const hours = 0;
       const key = monthKey(item.at);
       const within = (claim.counted ?? []).filter((m) => m > monthKey(item.at - SNAP.abawd.window * 30.44 * MS_DAY));
       const limited = age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
@@ -194,7 +193,7 @@ export function registerAssistance(sim: Simulation): void {
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }
-      due = toSave(s, snapMonth(inLocal(s, earned, 'USD'), inLocal(s, earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.home?.cityId ?? person.currentLocationId)?.parentId), 'USD');
+      due = toSave(s, snapMonth(inLocal(s, earned, 'USD'), inLocal(s, earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
       if (due > 0) {
         if (limited) claim.counted = [...within, key];
         const ebt = claim.ebtAccountId ? s.universe.accounts[claim.ebtAccountId] : undefined;
@@ -206,7 +205,7 @@ export function registerAssistance(sim: Simulation): void {
       const liquidCad = inLocal(s, liquid(s, person), 'CAD');
       const limit = (claim.scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets) * 100;
       if (liquidCad <= limit) {
-        due = toSave(s, provincialMonth(claim.scheme, inLocal(s, rentOf(s, person), 'CAD'), inLocal(s, earned, 'CAD'), claim.months), 'CAD');
+        due = toSave(s, provincialMonth(claim.scheme, 0, inLocal(s, earned, 'CAD'), claim.months), 'CAD');
         if (due > 0) s.post({ memo: `${claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income assistance'}, the month`, category: 'benefit', postings: [{ accountId: person.primaryAccountId!, amount: due }, { accountId: s.nominalAccount('income', claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income Assistance').id, amount: -due }] });
       }
     }

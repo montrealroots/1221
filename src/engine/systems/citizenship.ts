@@ -32,8 +32,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { citizenOf, documentsOf } from './documents';
-import { payFromBank } from './household';
-import { o1Evidence } from './permission';
+import { payFromBank } from './spending';
 import { residenceIn } from './residence';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -63,7 +62,8 @@ export function naturalizeRefusal(sim: Simulation, person: Person, iso: string):
     // Its five years' residence are met on the way: settlement comes after five on the Global Talent visa.
   }
   if (iso === 'MX') {
-    const artistic = o1Evidence(sim, person).filter((e) => e.met).length >= 3;
+    // Outstanding artistic work, read on the O-1's record, shortened it to two years until the career went on 2026-10-09.
+    const artistic = false;
     if (years < (artistic ? NATURALIZE.MX.artisticYears : NATURALIZE.MX.years)) return artistic ? 'Outstanding artistic work asks two years’ residence.' : 'It asks five years’ residence in Mexico, or two for outstanding artistic work.';
   }
   if (iso === 'US') {

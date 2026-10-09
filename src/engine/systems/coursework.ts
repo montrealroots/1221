@@ -55,9 +55,6 @@ import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, temp
 import { bondMove, classPeriod, coursesOn, focusOf, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
-import { wearForExercise } from './wardrobe';
-import { phonesOf } from './phones';
-import { reachable } from './items';
 import { inHospital } from './health';
 import {
   ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
@@ -65,7 +62,6 @@ import {
 } from './learning';
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
-import { classAtSchool } from './people';
 import { laidUp } from './injury';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -379,8 +375,10 @@ function needRefusal(sim: Simulation, person: Person, need: Need): string | unde
   switch (need) {
     case 'studio': if (!here) return 'The studios are in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the building yet: the tour shows you the studios.';
     case 'library': if (!here) return 'The Haas Arts Library is in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the library yet: the tour shows you it.';
-    case 'phone': return phonesOf(person).some((p) => reachable(sim, person, p.at)) ? undefined : 'It needs a phone that records, to hand.';
-    case 'moveClothes': return undefined; // read as the step is done (`wearForExercise`), since it puts a wear on them
+    // A phone that records, and clothes to move in, were the phones' and the wardrobe's to have (`systems/phones.ts`,
+    // `systems/wardrobe.ts`) until both went in the scope reset of 2026-10-09: each is taken as had.
+    case 'phone': return undefined;
+    case 'moveClothes': return undefined;
     case 'partner': return 'Work with your partner is a rehearsal you agree with them: ask them on the assignment.';
   }
 }
@@ -445,7 +443,6 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
 /** A step done: its time taken, its part of the preparation moved, and its skill trained while the assignment allows. */
 export function prepare(sim: Simulation, person: Person, a: Assignment, activityId: string): { moved: number; dim: PrepDim; minutes: number } {
   const act = activitiesOf(a).find((x) => x.id === activityId)!;
-  if ((act.needs ?? []).includes('moveClothes') && !wearForExercise(sim, person)) throw new CommandError('Nothing clean to move in: clothes for a workout, and underwear and socks.');
   const minutes = minutesOf(a, act);
   const focus = focusOf(person);
   sim.advanceTo(sim.now + minutes * 60_000);
@@ -800,7 +797,6 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
     }
     case 'classmates': {
       for (const mate of school.classmates) mateRecord(mate).met ??= sim.now;
-      classAtSchool(sim, person);
       return `You met the ${school.classmates.length} others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.`;
     }
     case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${[...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))].join(', ')}.`;

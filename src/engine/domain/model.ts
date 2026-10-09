@@ -13,15 +13,11 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
-import type { HomeState } from '../systems/household';
-import type { Counter, OwnedHome, Purchase } from '../systems/homes';
-import type { Living, Stay } from '../systems/dwelling';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
 import type { Craft, SchoolRecord } from '../systems/school';
 import type { Attributes } from '../systems/attributes';
-import type { CareerRecord } from '../systems/career';
 import type { EarningsRecord } from '../systems/earnings';
 import type { HealthRecord } from '../systems/health';
 import type { UnemploymentRecord } from '../systems/unemployment';
@@ -145,52 +141,17 @@ export interface Person {
    * would be worse than not asking.
    */
   background: string;
-  // `beforeActing`, the day job (`job`) and the pay record behind benefits
-  // and tax returns (`earnings`) were here until 2026-09-26, when the owner
-  // kept SLATE to acting and the job engine was taken out. `migrate` in
-  // `engine/index.ts` takes them off a save from before.
-  /**
-   * Where they live and what kind of home it is (`systems/household.ts`):
-   * the rent and bills due on the first, and the town the food is bought in.
-   * Given to every character from schema 89.
-   */
-  home?: HomeState;
-  /**
-   * The homes they own, lived in, let or empty; the one they're buying, until
-   * it closes; a seller's counter standing; and offers made on each listing
-   * (`systems/homes.ts`). From 2026-09-28; `owned`, a single home, was the
-   * first day's, and `migrate` makes it the first of `homes`.
-   */
-  homes?: OwnedHome[];
-  buying?: Purchase;
-  counter?: Counter;
-  offersMade?: Record<string, number>;
-  /**
-   * Where they're staying away from home on a job: a production's hotel, a
-   * sublet room, a friend's sofa, or a home of their own there
-   * (`systems/career.ts`); `systems/dwelling.ts` reads what it has.
-   */
-  stay?: Stay;
-  /** Their clothes, the state of the place, and a cleaner (`systems/dwelling.ts`). From 2026-09-28. */
-  living?: Living;
   /**
    * The papers they hold, each a record with its issuer, number, dates and
    * status: passports, travel authorizations, visas and permissions to stay
    * or work, driving licenses (`systems/documents.ts`). From 2026-09-29.
    */
   documents?: import('../systems/documents').PersonDocument[];
-  /** Journeys booked and taken (`systems/journey.ts`). */
-  journeys?: import('../systems/journey').Journey[];
-  /** Their progress toward a driving license where they live (`systems/licensing.ts`). */
-  licensing?: import('../systems/licensing').LicensingRecord;
-  /** The motorcycle license's path, kept apart from the car's (`systems/licensing.ts`, from 2026-09-30). */
-  motoLicensing?: import('../systems/licensing').LicensingRecord;
-  /** ConfirmID paid at a TSA checkpoint, good until then (`systems/identity.ts`, from 2026-09-30). */
-  confirmIdUntil?: number;
-  /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
-  exclusionUsedAt?: number;
-  /** How many homes they've bought: England's first-time buyer's relief is for the first. */
-  homesOwned?: number;
+  /**
+   * The morning whose food was bought (`buyTheDaysFood` in `systems/spending.ts`). It was the home's
+   * (`home.fedOn`) until the home went in the scope reset of 2026-10-09, and `migrate` moves it here.
+   */
+  fedOn?: Instant;
   /**
    * Their credit record and how the card is paid (`systems/credit.ts`). Not
    * `creditScore`: `migrate` sheds a field by that name that builds before 80
@@ -228,8 +189,6 @@ export interface Person {
    * every save, the old line's sheet and its standing, so neither name is free.
    */
   attrs?: Attributes;
-  /** Their working life as an actor: representation, auditions, jobs, the unions (`systems/career.ts`). */
-  career?: CareerRecord;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
   /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */
@@ -247,194 +206,28 @@ export interface Person {
   /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
   irishPension?: { from: number; weeklyEur: number };
   bienestarFrom?: number;
-  /** The cars they own and have owned (`systems/vehicles.ts`). */
-  vehicles?: import('../systems/vehicles').OwnedVehicle[];
-  /** The land they own and have owned (`systems/land.ts`). */
-  land?: import('../systems/land').Parcel[];
-  /** An offer on land accepted, a seller's counter, and the offers made (`systems/land.ts`). */
-  landBuying?: import('../systems/land').LandBuying;
-  /** A house being built on land they own (`systems/construction.ts`). */
-  building?: import('../systems/construction').Build;
-  /** What they own, and where each thing is (`systems/items.ts`, from 2026-10-01). */
-  items?: import('../systems/items').Item[];
-  /** Things bought to be delivered, and their deliveries (`systems/orders.ts`, from 2026-10-01). */
-  orders?: import('../systems/orders').Order[];
-  /** The outfit they chose to wear, and the one they have on (`systems/wardrobe.ts`, from 2026-10-01). */
-  dressed?: string[];
-  /** Streaming, music and game services paid monthly, and a TV license (`systems/homelife.ts`, from 2026-10-02). */
-  subscriptions?: import('../systems/homelife').Subscription[];
-  tvLicence?: { until: number };
-  /** Clothes put in the basket to check out together, a retailer at a time (`systems/clothing.ts`, from 2026-10-02). */
-  basket?: import('../systems/clothing').BasketLine[];
   /** What they have on now, and since when: the day's outfit as it's put on, or what they changed into (`systems/wardrobe.ts`, from 2026-10-02). */
   wornNow?: { itemIds: string[]; since: number };
-  /** Outfits they've put together and named, the clothes they bought, and when their own wardrobe began (`systems/clothing.ts`, from 2026-10-01). */
-  outfits?: import('../systems/clothing').Outfit[];
-  clothesBought?: import('../systems/clothing').ClothesPurchase[];
-  clothesSince?: number;
-  /** Their blood alcohol as it stood, and the night's highest (`systems/alcohol.ts`, from 2026-10-01). */
-  alcohol?: import('../systems/alcohol').Alcohol;
-  /** Routines they've saved (`systems/routines.ts`, from 2026-10-01). */
-  routines?: import('../systems/routines').Routine[];
-  /** The people they know, met at school and at work (`systems/people.ts`, from 2026-10-01). */
-  contacts?: import('../systems/people').Contact[];
-  /** A gym they're a member of (`systems/gyms.ts`, from 2026-10-01). */
-  gym?: import('../systems/gyms').Membership;
-  /** A trip out on errands, while it's under way (`systems/trips.ts`, from 2026-10-01). */
-  trip?: import('../systems/trips').Trip;
-  /** The internet at home and the phone, by provider (`systems/telecom.ts`, from 2026-10-01). */
-  telecom?: import('../systems/telecom').Telecom;
-  /** A marriage, and a divorce under way (`systems/marriage.ts`, from 2026-10-01). */
-  marriage?: import('../systems/marriage').Marriage;
-  /** How a couple living together splits the rent and the bills: evenly unless by income. */
-  billSplit?: 'income';
-  /** Children, a child on the way, and trying for one (`systems/children.ts`, from 2026-10-01). */
-  children?: import('../systems/children').Child[];
-  pregnancy?: import('../systems/children').Pregnancy;
-  trying?: boolean;
-  /** An adoption or a surrogacy under way, and the adoptions made, for the return (`systems/adoption.ts`, from 2026-10-02). */
-  familyPath?: import('../systems/adoption').FamilyPath;
-  /** Your mother and father (`systems/parents.ts`, from 2026-10-02). */
-  parents?: import('../systems/parents').Parent[];
-  /** A personal trainer booked (`systems/trainers.ts`, from 2026-10-02). */
-  training?: import('../systems/trainers').Training;
-  /** This month's pre-purchase inspection of a used car (`systems/usedcars.ts`, from 2026-10-02). */
-  inspectedUsed?: import('../systems/usedcars').Inspected;
-  adopted?: import('../systems/adoption').Adopted[];
-  /** A dating app they're on (`systems/dating.ts`, from 2026-10-01). */
-  datingApp?: import('../systems/dating').DatingApp;
-  /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
-  suppliesSince?: number;
-  /** The toiletry of each kind they use first and buy again, by its id (`hygiene.use_first`, from 2026-10-02). */
-  usesFirst?: Record<string, string>;
-  /** A dog or a cat of their own (`systems/pets.ts`, from 2026-10-03). */
-  pets?: import('../systems/pets').Pet[];
-  /** Where each program was left, by its id (`systems/programmes.ts`, from 2026-10-03). */
-  watching?: Record<string, import('../systems/programmes').Watching>;
-  /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
-  favorites?: Record<string, string[]>;
   /** A course of therapy under way (`systems/therapy.ts`, from 2026-10-03). */
   therapy?: import('../systems/therapy').Course;
-  /** IKEA refund card credit, from pieces sold back (`systems/furnishings.ts`, from 2026-10-03), in the save's money. */
-  ikeaCredit?: number;
-  /** Pieces of jewelry commissioned and not yet ready (`systems/commissions.ts`, from 2026-10-03). */
-  commissions?: import('../systems/commissions').Commission[];
-  /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
-  supplyCuts?: { water?: import('../systems/utilities').SupplyCut; gas?: import('../systems/utilities').SupplyCut };
-  /** The day's power cut at home, from when to when (`powerDay`, from 2026-10-06; until then a cut had no time of day). */
-  powerCut?: import('../systems/utilities').SupplyCut & { told?: true; spoiled?: number };
-  /** A recipe stopped partway, the food left part-done (`systems/kitchen.ts`, from 2026-10-06). */
-  cooking?: import('../systems/kitchen').Cooking;
-  /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
-  shaves?: import('../systems/hygiene').ShaveEvery;
-  lastShave?: number;
-  /** How long they shower, minutes, chosen (`hygiene.shower_minutes`, from 2026-10-06); the country's average where unset. */
-  showerMinutes?: number;
-  /** Makeup worn at home, how often and which (from 2026-10-05); hair styled, how often. Neither where unset. */
-  makeup?: { every: import('../systems/hygiene').ShaveEvery; kinds: import('../systems/hygiene').MakeupKind[] };
-  lastMakeup?: number;
-  styles?: import('../systems/hygiene').ShaveEvery;
-  lastStyle?: number;
-  /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
-  pawns?: import('../systems/pawn').Pawn[];
-  /** This month's test drive of a used car (`systems/usedcars.ts`, from 2026-10-03). */
-  testDriven?: import('../systems/usedcars').Driven;
-  /** The year of their last bulky collection, for New Haven's first free one (`systems/bulky.ts`). */
-  bulkyYear?: number;
-  /** Tables booked ahead (`systems/reservations.ts`, from 2026-10-03). */
-  reservations?: import('../systems/reservations').Reservation[];
-  /** The post held at home, and a house sitter staying (`systems/away.ts`, from 2026-10-03). */
-  mailHold?: import('../systems/away').MailHold;
-  sitter?: import('../systems/away').SitterStay;
-  /** Clubs joined: parkrun, a running club, a league (`systems/clubs.ts`, from 2026-10-03). */
-  clubs?: import('../systems/clubs').Membership[];
-  /**
-   * The shortcuts they've chosen (from 2026-10-03, the owner's expansion):
-   * each one does what its manual action does, on the same rules, only when
-   * set. None is on unless chosen.
-   */
-  automation?: Partial<Record<import('../systems/automation').Shortcut, true>>;
-  /** The day's outfit and meals asked as shortcuts (from 2026-10-06): a save without it had both done for it, and is given both on opening. */
-  dayShortcuts?: true;
-  /** The bags that go away with them (from 2026-10-03); none chosen, the one suitcase. */
-  goingBags?: string[];
-  /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */
-  garmentsToReplace?: { kind: string; slot: import('../content/garmentcare').Slot; care: import('./../systems/wardrobe').Garment['care']; label: string }[];
-  /** When their laundry and dishwasher detergent began to be counted (`systems/hygiene.ts`, from 2026-10-02). */
-  cleaningSince?: number;
-  /** Breakdown cover with a motoring club (`systems/roadside.ts`, from 2026-10-02). */
-  roadside?: import('../systems/roadside').Roadside;
   /** A home machine broken and waiting for its repair (`systems/appliancefaults.ts`, from 2026-10-02). */
   /** Getting about in a wheelchair, and a disability parking permit (`systems/access.ts`, from 2026-10-02). */
   mobility?: 'wheelchair';
-  /** Measurements given, and the department sized by (`systems/tailoring.ts`, from 2026-10-02). */
-  measures?: import('../systems/tailoring').Measures;
-  /** The bag that goes away with them, where more than one is owned (`systems/luggage.ts`, from 2026-10-02). */
-  luggageId?: string;
-  /** Checked bags the airline mishandled, and the claims on them (`systems/baggage.ts`, from 2026-10-05). */
-  bagClaims?: import('../systems/baggage').BagClaim[];
-  /** Groceries and toiletries in the basket, checked out a chain at a time (`systems/shoppingcart.ts`, from 2026-10-04). */
-  cart?: import('../systems/shoppingcart').CartLine[];
-  /** Packing lists kept to pack again, each a name and the things in it (`systems/luggage.ts`, from 2026-10-04). */
-  packingLists?: { id: string; name: string; itemIds: string[] }[];
-  /** The town whose library card they hold (`systems/reading.ts`, from 2026-10-02). */
-  libraryCard?: string;
   /** The real plays read and researched, by play (`systems/playreading.ts`, from 2026-10-08). */
   plays?: Record<string, import('../systems/playreading').PlayStudy>;
   parkingPermit?: { cityId: string; at: number };
-  applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
-  groomedAt?: number;
   /** When their fingernails and toenails were last trimmed at home (`systems/homegrooming.ts`, from 2026-10-06). */
   nailsAt?: { fingers?: number; toes?: number };
-  /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
-  utilitiesAt?: string;
-  /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */
-  furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
-  /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */
-  foodHelp?: import('../systems/foodhelp').FoodHelpRecord;
-  /** When the mattress in their bed was replaced, if it has been (`systems/furniture.ts`). */
-  mattressAt?: number;
-  /** A move made in a rented truck they drive, not by movers (`truckFor` in `systems/furniture.ts`). */
-  moveBy?: 'truck';
-  /** How their own machines' washes are dried, chosen (`clothes.dry_by`, from 2026-10-06): on the rack; in the dryer where unset. */
-  laundryDry?: 'rack';
-  /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
-  acUnits?: number;
-  /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */
-  portables?: Partial<Record<import('../systems/appliances').Portable, number>>;
-  /** Cars rented on journeys (`systems/rentals.ts`). */
-  rentals?: import('../systems/rentals').Rental[];
-  /** A private pilot's certificate, and the training toward it (`systems/aviation.ts`). */
-  pilot?: import('../systems/aviation').PilotCertificate;
-  pilotTraining?: import('../systems/aviation').PilotTraining;
   /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */
   pilotLicences?: { authority: string; country: string; issuedAt: number; /** When its medical runs out, from 2026-10-01. */ medicalUntil?: number }[];
-  /** A plane of their own (`systems/aviation.ts`). */
-  /** The planes they own (`systems/aviation.ts`). A save from before 2026-10-01 held one, as `aircraft`, moved into the list on opening. */
-  planes?: import('../systems/aviation').OwnedAircraft[];
-  aircraft?: import('../systems/aviation').OwnedAircraft;
-  /** The boats they own, and the states whose operator's certificate they hold (`systems/boats.ts`). A save from before 2026-10-01 held one, as `boat`, moved into the list on opening. */
-  boats?: import('../systems/boats').OwnedBoat[];
-  /** Travel trailers and touring caravans of their own (`systems/caravans.ts`, from 2026-09-30). */
-  caravans?: import('../systems/caravans').OwnedCaravan[];
-  boat?: import('../systems/boats').OwnedBoat;
-  boatCertificates?: import('../content/boats').BoatState[];
-  /** Their driving record: points and a suspension (`systems/driving.ts`). */
-  driving?: import('../systems/driving').DrivingRecord;
-  /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
-  hap?: { since: number };
   /** Their IMSS record under the 1997 law: days contributed, the AFORE account, the pension claimed (`systems/imss.ts`). */
   imss?: import('../systems/imss').ImssRecord;
-  /** Canada's CPP paid in by year, and the pensions claimed (`systems/capensions.ts`, from 2026-09-30). */
-  caPensions?: import('../systems/capensions').CanadaPensions;
   /** Citizenships taken since birth, by naturalization (`systems/citizenship.ts`, from 2026-09-30). */
   naturalized?: { iso: string; at: number }[];
   /** A naturalization being decided. */
   naturalizing?: { iso: string; readyAt: number };
   /** Registered for EI's special benefits as a self-employed Canadian (`systems/eiself.ts`, from 2026-09-30). */
   ei?: import('../systems/eiself').EiRecord;
-  /** The body's clock a journey left out, and since when (`systems/jetlag.ts`). */
-  bodyClock?: import('../systems/jetlag').BodyClock;
   /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;
@@ -615,10 +408,14 @@ export interface Preferences {
  * euros. A build at 88 would print a save's krónur as euros, which is why the
  * number moved. A save from before 89 has no currency and keeps its euros.
  *
+ * 90 is the scope the owner set on 2026-10-09: the home and its rent, the
+ * journeys, the cars, the land and the career went, and a save sheds what
+ * they kept. A build at 89 would read a save with no home and charge it rent.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 89;
+export const SAVE_SCHEMA_VERSION = 90;
 
 export interface SaveMeta {
   id: Id;
@@ -701,7 +498,5 @@ export interface SaveUniverse {
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
 
-  /** The business outside the player's career: projects, performers, and the player's lists and ratings (`systems/industry.ts`, from 2026-10-08). Absent on a save from before, and made on first use. */
-  industry?: import('../systems/industry').IndustryState;
 
 }

@@ -30,7 +30,7 @@ import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { inSaveMoney } from './banking';
-import { spend } from './household';
+import { spend } from './spending';
 
 /** A permit's fee where you live, in its money, null where not published; and whether a meter is free with it. */
 export const PERMITS: Readonly<Record<string, { name: string; fee: number | null; currency: string; freeMeters: boolean }>> = {
@@ -51,7 +51,7 @@ export const meterFree = (person: Person, cityId: string): boolean => person.par
 
 export function permitRefusal(person: Person): string | undefined {
   if (!usesWheelchair(person)) return 'A permit is for a wheelchair user.';
-  const city = person.home?.cityId;
+  const city = person.currentLocationId;
   if (!city || !PERMITS[city]) return 'SLATE doesn’t have the permit where you live.';
   if (person.parkingPermit?.cityId === city) return 'You have one.';
   return undefined;
@@ -69,7 +69,7 @@ export function registerAccess(sim: Simulation): void {
     const person = s.player;
     const no = permitRefusal(person);
     if (no) throw new CommandError(no);
-    const city = person.home!.cityId;
+    const city = person.currentLocationId;
     const permit = PERMITS[city]!;
     const paid = permit.fee ? inSaveMoney(s, Math.round(permit.fee * 100), permit.currency) : 0;
     if (paid > 0 && !spend(s, person, paid, `${permit.name}, ${CITIES.require(city).name}`, 'vehicle')) throw new CommandError('The payment didn’t go through.');

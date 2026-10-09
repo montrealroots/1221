@@ -23,40 +23,28 @@
  * The flu: its chance a year stays `CARE.flu`, and its weeks follow the town:
  * the coldest weeks where the coldest month is under 18 °C, the wettest where
  * it's over 21 °C, and a blend between (Tamerius et al., 2013). SLATE's
- * climate normals hold no humidity, so temperature stands in for "cold and
- * dry", and wet-day frequency for "humid and rainy". The day's weather draws
- * one from its climate type, which the heat index reads (`heatIndexC`).
+ * climate has no humidity, so temperature stands in for "cold and dry", and
+ * wet-day frequency for "humid and rainy".
  */
 
 import { CITIES } from '../content/geography';
 import { normalFor } from '../content/climate';
-import { ENERGY_ABROAD_USD, ENERGY_PRICES_SINCE } from '../content/energy-world';
 import { US_ENERGY_AVERAGE, US_ENERGY_BY_STATE } from '../content/energy-us';
 
 /**
  * What a year's energy comes to in a town against SLATE's flat bills: in the
  * US its state's household spending over the nation's, with the town's cost
  * of living taken back off it, since the state's figure carries its prices;
- * elsewhere one. From 2026-10-02 each is at its last full year's prices
- * (`ENERGY_PRICES_SINCE`), where until then America's stayed at 2020's; and
- * Canada's provinces, Britain, Ireland and Mexico read their own household
- * surveys the same way (`tools/data/energy.mjs`), where until then their
- * energy was America's at their cost of living, Mexico City's four times
- * what its households spend.
+ * elsewhere one.
  */
 /** A year of a town's bills against SLATE's flat figure: the rest as it is, the energy by `energyScale`. */
 export const energyYear = (cityId: string): number => (1 - ENERGY.share) + ENERGY.share * energyScale(cityId);
 
 export function energyScale(cityId: string): number {
   const city = CITIES.get(cityId);
-  if (!city || !city.costOfLivingIndex) return 1;
-  const state = US_ENERGY_BY_STATE[city.parentId];
-  if (state !== undefined) return (state / US_ENERGY_AVERAGE) * (100 / city.costOfLivingIndex) * ENERGY_PRICES_SINCE.us!;
-  // From 2026-10-02, a province's or a country's own household survey, the same way (`content/energy-world.ts`).
-  const key = ENERGY_ABROAD_USD[city.parentId] !== undefined ? city.parentId : city.countryId;
-  const abroad = ENERGY_ABROAD_USD[key];
-  if (abroad === undefined) return 1;
-  return (abroad / US_ENERGY_AVERAGE) * (100 / city.costOfLivingIndex) * ENERGY_PRICES_SINCE[key]!;
+  const state = city ? US_ENERGY_BY_STATE[city.parentId] : undefined;
+  if (!city || state === undefined || !city.costOfLivingIndex) return 1;
+  return (state / US_ENERGY_AVERAGE) * (100 / city.costOfLivingIndex);
 }
 
 /**

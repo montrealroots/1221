@@ -14,7 +14,6 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { EVERY_SHORTCUT } from '@/engine/systems/automation';
 import { createSave, defaultConfig, migrate, quickSave, validateUniverse } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
@@ -30,6 +29,7 @@ import {
 } from '@/engine/systems/life';
 import { MS_DAY, addDays, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { ceilingAt } from '@/engine/content/lifespan';
+import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
@@ -104,8 +104,10 @@ function build(c: Case, birthYear: number, seed: string): Simulation {
     personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
     wealth: 'inherited',
   }, seed);
-  // Left on autopilot: every shortcut chosen, as a hands-off player would (from 2026-10-03 none is on unless chosen).
-  sim.player.automation = { ...EVERY_SHORTCUT };
+  // Nothing but the personality: no illness and no condition carried. Every life has had its health armed since the
+  // scope reset of 2026-10-09; a life begun outside the school had none before the career began, and these were those.
+  healthOf(sim.player).chronic = {};
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind.startsWith('health.')) sim.timeline.cancel(item.id, sim.now);
   return sim;
 }
 

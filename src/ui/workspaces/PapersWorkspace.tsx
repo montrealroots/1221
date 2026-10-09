@@ -1,10 +1,11 @@
 /**
  * SLATE — papers: the returns, health cover after school, unemployment
- * insurance, and since 2026-09-29 the passport, travel and driving papers (`systems/taxreturn.ts`, `systems/health.ts`,
+ * insurance, and since 2026-09-29 the passport and permission to work (`systems/taxreturn.ts`, `systems/health.ts`,
  * `systems/unemployment.ts`), in three tabs. Every figure is one those
  * systems read or write: each year's return worked out line by line, what
  * covers them this month and what it costs, and a claim's weekly benefit and
- * what it has paid.
+ * what it has paid. Its Driving tab and Dublin's Housing Assistance went with the cars and the home in the
+ * scope reset of 2026-10-09.
  */
 
 import { useState } from 'react';
@@ -29,25 +30,28 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { working } from '@/engine/systems/career';
-import { DrivingPane, PassportPane, WorkPane } from '@/ui/papers/Documents';
+import { PassportPane, WorkPane } from '@/ui/papers/Documents';
 import { creditRefusal, livesInBritain } from '@/engine/systems/universalcredit';
-import { CDMX_DESEMPLEO, HAP, IRISH_JA, desempleoRefusal, hapRefusal, hapSplit, jobseekerRefusal, livesInDublinCity, livesInIreland, livesInMexicoCity, netWeeklyEur } from '@/engine/systems/homebenefits';
-import { rentOf } from '@/engine/systems/household';
+import { CDMX_DESEMPLEO, IRISH_JA, desempleoRefusal, jobseekerRefusal, livesInIreland, livesInMexicoCity } from '@/engine/systems/homebenefits';
 import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
 import { eiRefusal, eiWeekly } from '@/engine/systems/eiself';
 import { US_PHARMACIES } from '@/engine/content/carevisits';
 import { EI_SELF_EMPLOYED } from '@/engine/content/cabenefits';
+import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
+import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
+import { BIENESTAR, IRISH_PENSION, bienestarRefusal, irishContributions, irishPensionRefusal, irishWeekly } from '@/engine/systems/homepensions';
+import { IMSS, grownTo, imssRefusal, weeksNeeded } from '@/engine/systems/imss';
+import { isoOfCountry } from '@/engine/systems/documents';
 import { exchange } from '@/engine/content/currency';
 
-type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
+type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
 const PAPERS_TABS = SECTIONS['/workspace/papers'] as readonly { id: PapersTab; label: string }[];
 
 export function PapersWorkspace() {
   const [tab, setTab] = useKept<PapersTab>(tabKey('/workspace/papers'), 'returns');
-  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, work: <WorkPane />, driving: <DrivingPane /> };
+  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, work: <WorkPane /> };
   return (
     <>
       <div className="page-head">
@@ -278,7 +282,7 @@ const AID_WORD: Record<string, string> = { free: 'Free Care', discount: '67% Off
 function TherapyRow() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
-  const here = therapistsIn(person.home?.cityId ?? '');
+  const here = therapistsIn(person.currentLocationId);
   const [name, setName] = useState('');
   if (person.therapy) return <div className="small">{`Therapy with ${person.therapy.therapist}: ${person.therapy.done} of ${THERAPY.sessions} sessions`}</div>;
   if (here.length === 0) return null;
@@ -386,10 +390,6 @@ function HomeClaimsPanel() {
   if (livesInIreland(person)) {
     const ja = person.jobseekers;
     const no = jobseekerRefusal(sim, person);
-    const hapNo = hapRefusal(sim, person);
-    const rent = person.home && (person.home.kind === 'own' || person.home.kind === 'shared') ? rentOf(sim, person) : 0;
-    const rentEur = cur === 'EUR' ? rent : exchange(rent, cur, 'EUR') ?? rent;
-    const split = livesInDublinCity(person) && rent > 0 ? hapSplit(rentEur, person.home?.kind === 'own', netWeeklyEur(sim, person)) : undefined;
     return (
       <>
         <Panel title="Jobseeker’s Allowance" subtitle="Ireland’s, a week at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>}>
@@ -399,18 +399,6 @@ function HomeClaimsPanel() {
             <Stat label="Full Week" value={eur(IRISH_JA.weekly)} note="Less a fifth a day worked, and savings over €20,000" />
           </div>
         </Panel>
-        {livesInDublinCity(person) && (
-          <Panel title="Housing Assistance Payment" subtitle="Dublin City Council pays your landlord" actions={hapNo ? undefined : <Gated feature="benefits.hap" onClick={() => { if (run('benefits.hap').ok) toast('On the council’s scheme from next month’s rent.', 'positive'); }}>Apply For HAP</Gated>}>
-            <div className="col gap-3">
-              <div className="grid grid-3">
-                <Stat label="HAP" value={person.hap ? 'Yes' : 'Not Yet'} note={person.hap ? `Since ${formatDate(person.hap.since, sim.zone)}` : hapNo ?? 'You can apply now'} />
-                <Stat label="The Council Pays" value={split ? eur(split.council) : '—'} note="A month, of your rent" />
-                <Stat label="You Pay" value={split ? eur(split.tenant) : '—'} note="The differential rent, and any over the limit" />
-              </div>
-              <Fine>The council pays the rent to its limit, a single adult’s {eur(HAP.limitOwn)} a month for a place of your own and {eur(HAP.limitShared)} for a room, and {Math.round(HAP.discretion * 100)}% more at its discretion; you pay it 18% of your net weekly income over €55, at least €35.82 a week. SLATE takes an application as joining the social housing list, whose wait it doesn’t keep. Source: {HAP.source}.</Fine>
-            </div>
-          </Panel>
-        )}
       </>
     );
   }
@@ -496,10 +484,11 @@ function BenefitsPane() {
       <HomeClaimsPanel />
       <AssistancePanel />
       <EiPanel />
+      <PensionsPanel />
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}
-        actions={claim || !state || !preview?.result.ok || working(sim, person) ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
+        actions={claim || !state || !preview?.result.ok ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
       >
         <div className="col gap-3">
           {claim ? (
@@ -539,7 +528,7 @@ function GettingAbout() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const wheelchair = usesWheelchair(person);
-  const permit = PERMITS[person.home?.cityId ?? ''];
+  const permit = PERMITS[person.currentLocationId];
   const no = permitRefusal(person);
   const cur = saveCurrency(sim.universe);
   const fee = permit?.fee ? formatMoney(inSaveMoney(sim, Math.round(permit.fee * 100), permit.currency), cur) : permit?.fee === 0 ? 'Free' : 'Fee Not Published';
@@ -548,7 +537,7 @@ function GettingAbout() {
       <div className="col gap-2">
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Gated feature="health.mobility" className="btn btn-sm btn-ghost" onClick={() => { if (run('health.mobility', { wheelchair: !wheelchair }).ok) toast(wheelchair ? 'Noted.' : 'Noted: hotels without wheelchair access won’t be booked.', 'positive'); }}>{wheelchair ? 'I Don’t Use A Wheelchair' : 'I Use A Wheelchair'}</Gated>
-          {wheelchair && permit && person.parkingPermit?.cityId !== person.home?.cityId && <Gated feature="health.parking_permit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('health.parking_permit', {}).ok) toast(`${permit.name}, issued.`, 'positive'); }}>{`Apply For ${permit.name}, ${fee}`}</Gated>}
+          {wheelchair && permit && person.parkingPermit?.cityId !== person.currentLocationId && <Gated feature="health.parking_permit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('health.parking_permit', {}).ok) toast(`${permit.name}, issued.`, 'positive'); }}>{`Apply For ${permit.name}, ${fee}`}</Gated>}
           {person.parkingPermit && <span className="small">{permit?.name ?? 'A permit'}{permit?.freeMeters ? ', parking free at meters here' : ', meters still paid here'}</span>}
         </div>
         <div className="xs dim">A hotel whose own pages say it can’t take a wheelchair isn’t booked; one that doesn’t say is. With a permit, a meter is free where the town lets holders park free: New York, Los Angeles, Toronto, Dublin and Mexico City, not Westminster, New Haven or Vancouver.</div>
@@ -566,8 +555,8 @@ function YourDoctor() {
   const bookAgain = useFeature('health.book');
   const prepay = useFeature('health.prepay');
   const cancelAppt = useFeature('health.cancel_appointment');
-  const american = (person.home?.cityId ?? '').startsWith('us-');
-  const practices = clinicsIn(person.home?.cityId ?? '').filter((c) => DOCTOR_KINDS.includes(c.kind));
+  const american = person.currentLocationId.startsWith('us-');
+  const practices = clinicsIn(person.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
   if (practices.length === 0) return null;
   const doctor = clinicFor(person, 'visit');
   const urgent = clinicFor(person, 'urgent');
@@ -616,5 +605,82 @@ function YourDoctor() {
         <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
       </div>
     </Panel>
+  );
+}
+
+/**
+ * The state pensions a record earns, and claiming them: Social Security, the UK's and Ireland's State Pensions, the
+ * IMSS pension and the Pensión para el Bienestar. They were on the Career screen's Unions And Pay until the career
+ * went in the scope reset of 2026-10-09, and the SAG-AFTRA pension beside them went with it.
+ */
+function PensionsPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  return (
+    <>
+      {(socialSecurityOf(person, cur).credits > 0 || person.socialSecurity) && (() => {
+        const ss = socialSecurityOf(person, cur);
+        const no = socialSecurityRefusal(sim, person);
+        const usd = (d: number) => money(cur === 'USD' ? d * 100 : exchange(d * 100, 'USD', cur) ?? d * 100);
+        return (
+          <Panel title="Social Security" subtitle="Your US earnings record" actions={no ? undefined : <Gated feature="pension.social_security" onClick={() => { const r = run<{ monthly: number; factor: number }>('pension.social_security'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month, ${Math.round(r.value!.factor * 1000) / 10}% of the full benefit.`, 'positive'); }}>Claim Social Security</Gated>}>
+            <div className="col gap-3">
+              <div className="grid grid-3">
+                <Stat label="Credits" value={String(ss.credits)} note="Forty qualify" />
+                <Stat label="At 67, A Month" value={usd(ss.pia)} note={`62: ${usd(Math.floor(ss.pia * claimFactor(-60)))}; 70: ${usd(Math.floor(ss.pia * claimFactor(36)))}`} />
+                <Stat label="Claimed" value={person.socialSecurity ? usd(person.socialSecurity.monthlyUsd) : 'Not Yet'} note={person.socialSecurity ? `A month since ${formatDate(person.socialSecurity.from, sim.zone)}` : no ?? 'You can claim it now'} />
+              </div>
+              <Fine>Your highest 35 years of US wages, each to its year’s taxable maximum and indexed by the national wage index to the year you turn 60, averaged a month, then 90%, 32% and 15% across SSA’s 2026 bend points. Claimed early it’s cut, delayed it rises 8% a year to 70. SLATE holds what SSA hasn’t published at the last it did. Source: {SOCIAL_SECURITY.source}.</Fine>
+            </div>
+          </Panel>
+        );
+      })()}
+      {(qualifyingYears(person, cur).length > 0 || person.statePensionFrom !== undefined) && (
+        <Panel title="State Pension" subtitle="The UK’s, on your National Insurance record" actions={statePensionRefusal(sim, person) ? undefined : <Gated feature="pension.state" onClick={() => { const r = run<{ weekly: number }>('pension.state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week, paid every four weeks.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Qualifying Years" value={String(qualifyingYears(person, cur).length)} note={`Ten for any, ${STATE_PENSION.yearsForFull} for the full rate`} />
+              <Stat label="A Week" value={money(weeklyPension(person, sim.now, cur))} note={person.statePensionFrom !== undefined ? `Claimed ${formatDate(person.statePensionFrom, sim.zone)}` : `From ${formatDate(statePensionAge(person), sim.zone)}`} />
+              <Stat label="Claimed" value={person.statePensionFrom !== undefined ? 'Yes' : 'Not Yet'} note={statePensionRefusal(sim, person) ?? 'You can claim it now'} />
+            </div>
+            <Fine>A tax year qualifies with UK earnings at the Lower Earnings Limit, {formatMoney(STATE_PENSION.lowerEarningsLimit, 'GBP', { cents: false })} in 2026/27, or with the credits Universal Credit gives; each is a thirty-fifth of the full {formatMoney(STATE_PENSION.weekly[STATE_PENSION.weekly.length - 1]![1], 'GBP')} a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, by the Pensions Act 2007. SLATE holds the limit and the rate at 2026/27’s. Source: {STATE_PENSION.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {(irishContributions(person, cur) > 0 || person.irishPension || livesInIreland(person)) && (
+        <Panel title="State Pension (Ireland)" subtitle="Ireland’s, on your PRSI contributions" actions={irishPensionRefusal(sim, person) ? undefined : <Gated feature="pension.ie_state" onClick={() => { const r = run<{ weekly: number }>('pension.ie_state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Contributions" value={String(irishContributions(person, cur))} note={`${IRISH_PENSION.paidNeeded} for any, ${IRISH_PENSION.forFull.toLocaleString('en-US')} for the full rate`} />
+              <Stat label="A Week At 66" value={formatMoney(inSaveMoney(sim, person.irishPension?.weeklyEur ?? irishWeekly(irishContributions(person, cur), IRISH_PENSION.age), 'EUR'), cur)} note={person.irishPension ? `Claimed ${formatDate(person.irishPension.from, sim.zone)}` : 'More claimed at 67, and at 68'} />
+              <Stat label="Claimed" value={person.irishPension ? 'Yes' : 'Not Yet'} note={irishPensionRefusal(sim, person) ?? 'You can claim it now'} />
+            </div>
+            <Fine>A calendar year of Irish earnings at €5,000 or more counts as 52 contributions; the week is the full rate times your contributions over 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). A short record or none, living in Ireland: the means-tested pension instead, €288 a week (€298 from 80) less your means over €30, whichever is higher; €22 more living alone, and the Fuel Allowance, €38 a week through the winter, with the means-tested one. SLATE holds the rates at 2026’s. Source: {IRISH_PENSION.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {(person.imss?.days ?? 0) > 0 && (
+        <Panel title="IMSS Pension" subtitle="Mexico’s, on your IMSS weeks and AFORE account" actions={imssRefusal(sim, person) ? undefined : <Gated feature="pension.imss" onClick={() => { const r = run<{ monthly: number }>('pension.imss'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Weeks" value={String(Math.floor(person.imss!.days / 7))} note={`${weeksNeeded(new Date(sim.now).getUTCFullYear())} needed this year`} />
+              <Stat label="AFORE Account" value={formatMoney(inSaveMoney(sim, grownTo(person.imss!, sim.now), 'MXN'), cur)} note="At CONSAR’s 4% real, less its fee" />
+              <Stat label="Claimed" value={person.imss!.claimedAt !== undefined ? 'Yes' : 'Not Yet'} note={imssRefusal(sim, person) ?? 'You can claim it now'} />
+            </div>
+            <Fine>A day’s work in Mexico is a day registered with IMSS, and its pay puts the year’s retirement contribution for its band into your AFORE account; weeks are days over seven. From 65 with the year’s weeks, the account buys a pension, never less than the guaranteed floor, topped up by the Fondo de Pensiones para el Bienestar to your last year’s wage, to MXN 17,885.85 a month. The account’s annuity is SLATE’s estimate. Source: {IMSS.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {isoOfCountry(person.citizenshipId) === 'MX' && (
+        <Panel title="Pensión Para El Bienestar" subtitle="Mexico’s, for every Mexican living there from 65" actions={bienestarRefusal(sim, person) ? undefined : <Gated feature="pension.bienestar" onClick={() => { const r = run<{ bimonthly: number }>('pension.bienestar'); if (r.ok) toast(`Claimed: ${money(r.value!.bimonthly)} every two months.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <Stat label="Claimed" value={person.bienestarFrom !== undefined ? 'Yes' : 'Not Yet'} note={bienestarRefusal(sim, person) ?? 'You can claim it now'} />
+            <Fine>MXN 6,400 every two months, not contributory, paid while you live in Mexico (2026 rules). Source: {BIENESTAR.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+    </>
   );
 }
