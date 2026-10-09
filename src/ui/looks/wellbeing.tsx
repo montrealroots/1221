@@ -255,7 +255,7 @@ function sentenceFor(dial: Dial, now: number): string {
         : n > 40 ? `${n}. Enough for what today asks, not much more.`
           : `${n}. You’re running down, and it shows in everything else.`;
     case 'stress':
-      return n < 25 ? `${n}, and not much is adding to it. Running on empty adds to it, and so do money trouble and a night on a sofa.`
+      return n < 25 ? `${n}, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.`
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
           : `${n}. High enough that sleep is going badly and it feeds itself.`;
     case 'sleepDebt':
@@ -345,7 +345,7 @@ defineLook<Ready>('readiness', {
       label: d.name,
       detail: `At ${Math.round(d.value)}, and pulling on the rest`,
     })),
-    provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets the chance of booking an audition and what a class, a lab, a day’s work or a workout builds.',
+    provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.',
   }),
 });
 
@@ -423,7 +423,7 @@ defineLook<Carried>('condition', {
         kind: 'An Injury',
         summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? ', and keeps you off work and training till then' : ''}.`,
         parent: at('person', person.id),
-        ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: 'What a body is fit for, which an injury takes from' }],
+        ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: 'What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits' }],
         provenance: 'How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).',
       };
     }

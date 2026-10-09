@@ -30,13 +30,14 @@ export interface CalendarLegendEntry {
  * It used to run to nineteen categories, one for every system that could book
  * the player. Those systems are gone, and a legend that names colors nothing
  * can ever be drawn in is a legend that lies about the game. Work, for the
- * day job's shifts, tips and paydays, went with the job engine on 2026-09-26.
+ * day job's shifts, tips and paydays, went with the job engine on 2026-09-26, and its second meaning (auditions,
+ * a job's days, residuals) with the career on 2026-10-09; from 2026-10-10 it isn't in the legend, nothing being
+ * drawn in it. Home, which was rent and bills, is the money's since the home went.
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
   { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s evaluation, the showcase and Commencement.' },
-  { category: 'career', label: 'Work', colour: '#c9a14a', description: 'Auditions, self-tapes, the days of a job you’ve taken, its travel and paydays, residuals and the unions’ dues.' },
-  { category: 'home', label: 'Home', colour: '#8ca86b', description: 'Rent and bills on the first, and the card’s statement and payment.' },
+  { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, and a savings account’s notice.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];

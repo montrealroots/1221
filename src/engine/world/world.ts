@@ -47,8 +47,14 @@ export function registerWorld(sim: Simulation): void {
     (p, { sim: s }) => {
       const decision = s.universe.decisions[p.decisionId];
       if (!decision) throw new CommandError('No such decision.');
+      // Once: a decision already acted on or dismissed isn't acted on again (from 2026-10-10; until then it was).
+      if (decision.resolvedAt !== undefined) throw new CommandError('That’s been done already.');
+      if (decision.dismissedAt !== undefined) throw new CommandError('It’s dismissed.');
       const action = decision.actions[p.actionIndex];
       if (!action) throw new CommandError('That action isn’t available on this item.');
+      // The command it runs is the player's, so the guide's chapters hold it as they would given directly.
+      const held = s.guardedBecause({ kind: action.commandKind, payload: action.payload });
+      if (held) throw new CommandError(held);
 
       const result = s.execute<{ ok?: boolean; error?: string }>({
         kind: action.commandKind, payload: action.payload,

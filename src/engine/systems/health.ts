@@ -80,6 +80,8 @@ export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depress
 
 export interface MedicalBill {
   id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean;
+  /** Unpaid when it fell due, and owed as medical debt since (from 2026-10-10; until then such a bill was marked paid). */
+  inDebt?: boolean;
   /** A hospital's bill, which its charity may take in, and the town it was billed in; and what an application for it came to. */
   hospital?: boolean;
   cityId?: string;
@@ -352,6 +354,16 @@ export function present(person: Person, when: Instant, cityId?: string): boolean
   return !asleep && !inHospital(person, when) && !laidUp(person, when) && (cityId === undefined || person.currentLocationId === cityId);
 }
 
+/**
+ * At an appointment for their own care (from 2026-10-10): awake, out of hospital and in town. An injury that keeps
+ * them off work and out of class doesn't keep them from their doctor or their therapist; until then it did, and a
+ * broken bone missed every appointment it lasted.
+ */
+export function presentForCare(person: Person, when: Instant, cityId?: string): boolean {
+  const asleep = person.awakeSince !== undefined && person.awakeSince > when;
+  return !asleep && !inHospital(person, when) && (cityId === undefined || person.currentLocationId === cityId);
+}
+
 export function armHealth(sim: Simulation, person: Person): void {
   healthOf(person);
   drawChronic(sim, person);
@@ -501,23 +513,28 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   let total = 0;
   for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, Chronic][]) {
     if (!state.treated) continue;
-    // The medicine is filled as a supply (`fillMedicine`, from 2026-10-02); the month's care beside it is paid here.
-    let cost = 0;
-    if (condition === 'depression' && publicCareShareOf(person, 'visit', at, cur) !== 0) {
-      const plan = planOf(person, at);
-      const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
-      cost += CHRONIC.therapyPerMonth * session;
-    } else if (condition === 'asthma') {
-      if (sim.rng('health.chronic', person.id, `asthma-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
-    } else if (condition === 'diabetes') {
-      if (zonedParts(at, HOME).month % 3 === 1) cost += shareOf(person, 'visit', at, cur);
-    } else if (condition === 'arthritis') {
-      if (sim.rng('health.chronic', person.id, `arthritis-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
-    }
+    const cost = monthCareCost(sim, person, condition, at, cur);
     state.lapsed = cost > 0 && !payFromCurrent(sim, person, cost, `Care for ${CONDITION_LABEL[condition].toLowerCase()}`, 'health');
     if (!state.lapsed) total += cost;
   }
   return total;
+}
+
+/**
+ * A treated condition's month of care beside its medicine (which is filled as a supply, `fillMedicine`). Depression's
+ * is two therapy sessions, except while a course of therapy runs, whose every session is paid as it's held
+ * (`systems/therapy.ts`): until 2026-10-10 a month in a course paid for both.
+ */
+export function monthCareCost(sim: Simulation, person: Person, condition: Condition, at: Instant, cur: string): Money {
+  if (condition === 'depression' && !person.therapy && publicCareShareOf(person, 'visit', at, cur) !== 0) {
+    const plan = planOf(person, at);
+    const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
+    return CHRONIC.therapyPerMonth * session;
+  }
+  if (condition === 'asthma') return sim.rng('health.chronic', person.id, `asthma-${at}`).next() < 2 / 12 ? shareOf(person, 'visit', at, cur) : 0;
+  if (condition === 'diabetes') return zonedParts(at, HOME).month % 3 === 1 ? shareOf(person, 'visit', at, cur) : 0;
+  if (condition === 'arthritis') return sim.rng('health.chronic', person.id, `arthritis-${at}`).next() < 2 / 12 ? shareOf(person, 'visit', at, cur) : 0;
+  return 0;
 }
 
 /** A condition kept up: treated, its care paid and its medicine not run out (from 2026-10-02, until when a month's care paid was all). */
@@ -1168,9 +1185,11 @@ export function registerHealth(sim: Simulation): void {
   sim.onSchedule(BILL_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const bill = person ? healthOf(person).bills.find((b) => b.id === item.payload.billId) : undefined;
-    if (!person || !bill || bill.paid) return;
-    bill.paid = true;
-    if (payFromCurrent(s, person, bill.amount, `Medical bill: ${bill.what}`, 'health')) return;
+    if (!person || !bill || bill.paid || bill.inDebt) return;
+    // Paid only if the payment goes through (from 2026-10-10): until then the bill was marked paid first, so one that
+    // went to debt read "Settled" on Papers, and an appeal won later refunded money that was never paid.
+    if (payFromCurrent(s, person, bill.amount, `Medical bill: ${bill.what}`, 'health')) { bill.paid = true; return; }
+    bill.inDebt = true;
     // Unpaid, a debt.
     const h = healthOf(person);
     const debt = medicalDebtOf(s, person) ?? s.openAccount({ id: s.nextId('account'), kind: 'loan', category: 'medical', name: 'Owed For Medical Care', ownerId: person.id, institution: 'Your Providers', openedAt: s.now });
@@ -1196,9 +1215,15 @@ export function registerHealth(sim: Simulation): void {
     const upheld = s.rng('health.appeal', person.id, bill.id).next() < DENIALS.upheld;
     bill.denied.outcome = upheld ? 'upheld' : 'overturned';
     if (!upheld) {
-      // Overturned: only the plan's share is owed, and what was paid over it comes back.
+      // Overturned: only the plan's share is owed. What was paid over it comes back; what went to debt over it is taken
+      // off the debt (from 2026-10-10: until then a bill gone to debt was refunded as if paid, and its debt stayed).
       const over = bill.amount - bill.denied.share;
       if (bill.paid && over > 0 && person.primaryAccountId) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: person.primaryAccountId, amount: over }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -over }] });
+      const debt = bill.inDebt ? medicalDebtOf(s, person) : undefined;
+      if (debt && over > 0) {
+        const off = Math.min(over, Math.max(0, -debt.balance));
+        if (off > 0) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: off }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -off }] });
+      }
       bill.amount = bill.denied.share;
     }
     if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${bill.what.toLowerCase()}.` : `The plan reversed its denial for ${bill.what.toLowerCase()}: you owe its share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
@@ -1274,8 +1299,14 @@ export function registerHealth(sim: Simulation): void {
   sim.onCommand<{ condition: Condition; on: boolean }, { treated: boolean }>('health.treat', (p, { sim: s }) => {
     const state = healthOf(s.player).chronic?.[p.condition];
     if (!state) throw new CommandError('You don’t have that.');
+    const was = state.treated;
     state.treated = p.on === true;
-    state.lapsed = false;
+    // Switched on, the month's care is paid now, as the 1st would have; if it can't be, it's lapsed (from 2026-10-10:
+    // until then switching it off and on cleared a lapse for nothing, and a month untreated on the 1st paid no care).
+    if (state.treated && !was) {
+      const cost = monthCareCost(s, s.player, p.condition, s.now, saveCurrency(s.universe));
+      state.lapsed = cost > 0 && !payFromCurrent(s, s.player, cost, `Care for ${CONDITION_LABEL[p.condition].toLowerCase()}`, 'health');
+    }
     return { treated: state.treated };
   });
 
@@ -1335,7 +1366,11 @@ export function registerHealth(sim: Simulation): void {
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.balance < amount) throw new CommandError('Your current account can’t cover it.');
     s.post({ memo: 'Paid toward medical debt', category: 'health', postings: [{ accountId: current.id, amount: -amount }, { accountId: debt.id, amount }] });
-    if (debt.balance >= 0) delete healthOf(person).debtSince;
+    // The debt cleared, every bill that had gone to it is settled.
+    if (debt.balance >= 0) {
+      delete healthOf(person).debtSince;
+      for (const b of healthOf(person).bills) if (b.inDebt) { b.paid = true; delete b.inDebt; }
+    }
     return { paid: amount };
   });
 }

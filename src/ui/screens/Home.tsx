@@ -464,11 +464,6 @@ function AffairLine({ title, line, alert, action }: { title: string; line: strin
 }
 
 /**
- * Where the life began:    </>
-  );
-}
-
-/**
  * Where the life began: the year and standing, the place in the class, and
  * the next thing the school has on the calendar (`systems/school.ts`). Until
  * 2026-09-26 it said what scholarship the next term paid in, which a family

@@ -2249,6 +2249,12 @@ export function registerSchool(sim: Simulation): void {
     // A company joined before 2026-09-28 has no plays yet: the summer's, now.
     summer.shows ??= summerPlaysOf(s, person, summer.year).slice(0, summer.played.length).map((p, n) => ({ production: `Yale Summer Cabaret ${summer.year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(person, p.reads, p.parts) }));
     const show = summer.shows[run]!;
+    // A call's risk to the body, as the School's calls carry it (from 2026-10-10; until then the Summer Cabaret's calls
+    // carried none). The company pays a stipend, so this is paid work: hurt badly enough to be kept off it, workers'
+    // compensation pays two-thirds of the week's stipend (`compWeek`), the one place in the game a wage and a stage meet.
+    const cur = saveCurrency(s.universe);
+    const weeklyWage = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
+    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage });
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       nerves(s, person, 'performance');

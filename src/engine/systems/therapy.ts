@@ -33,11 +33,12 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { CITIES } from '../content/geography';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
-import { owe, payFromBank } from './spending';
-import { coverOn, healthOf } from './health';
+import { payFromBank } from './spending';
+import { billCare, coverOn, healthOf, presentForCare } from './health';
 
 /** A practice: where, what a session costs and how long it runs; whether it's the NHS's, or the school's (only for a student Yale Health covers). */
 export interface Therapist { cityId: string; name: string; price: number; currency: string; minutes: number; nhs?: boolean; yale?: boolean }
@@ -74,6 +75,22 @@ export function therapyLifts(sim: Simulation, person: Person, nhs: boolean, at: 
   return sim.rng('health.therapy', person.id, String(at)).next() < (odds ?? (nhs ? THERAPY.recovery.nhs : THERAPY.recovery.private));
 }
 
+/**
+ * A session's hour (from 2026-10-10): five in the afternoon, after classes, on the weekday on or after the day it's
+ * due, in the practice's town. Until then a session was booked at whatever hour the course was asked for, so a course
+ * asked for at breakfast met at half past seven every week, and once a session slept through stopped counting
+ * (`presentForCare`) that course could never end.
+ */
+export const SESSION_HOUR = 17;
+function sessionSlot(t: Therapist, on: Instant): Instant {
+  const zone = CITIES.require(t.cityId).timeZone;
+  const p = zonedParts(on, zone);
+  let at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: SESSION_HOUR, minute: 0 }, zone);
+  if (at < on - MS_DAY / 2) at += MS_DAY;
+  for (let i = 0; i < 3 && [0, 6].includes(zonedParts(at, zone).weekday); i += 1) at += MS_DAY;
+  return at;
+}
+
 function scheduleSession(sim: Simulation, person: Person, t: Therapist, at: Instant): void {
   sim.schedule({ at, kind: THERAPY_SESSION_KIND, label: `Therapy, ${t.name}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: t.minutes, locationId: t.cityId, payload: { personId: person.id } });
 }
@@ -84,7 +101,7 @@ export function registerTherapy(sim: Simulation): void {
     const no = therapyRefusal(person, String(p?.therapist), s.now);
     if (no) throw new CommandError(no);
     const t = THERAPISTS.find((x) => x.name === p.therapist && x.cityId === person.currentLocationId)!;
-    const first = s.now + (t.nhs ? THERAPY.nhsWaitDays : 7) * MS_DAY;
+    const first = sessionSlot(t, s.now + (t.nhs ? THERAPY.nhsWaitDays : 7) * MS_DAY);
     person.therapy = { therapist: t.name, cityId: t.cityId, done: 0, at: s.now };
     scheduleSession(s, person, t, first);
     return { first };
@@ -95,10 +112,13 @@ export function registerTherapy(sim: Simulation): void {
     const course = person?.therapy;
     if (!person || !course) return;
     const t = THERAPISTS.find((x) => x.name === course.therapist && x.cityId === course.cityId)!;
-    // Away, the session is held next week.
-    if (person.currentLocationId !== t.cityId) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
+    // Away, asleep or in hospital, the session is held next week: until 2026-10-10 only away was, and a session slept
+    // through was paid, counted and could lift the depression.
+    if (!presentForCare(person, item.at, t.cityId)) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
     const price = sessionPrice(s, t);
-    if (price > 0 && !payFromBank(s, person, price, `${t.name}, a session`, 'medical')) owe(s, person, price, `${t.name}, a session`, 'medical');
+    // Unpaid, a medical bill like any other care's, which goes to the medical debt if it's still unpaid when due
+    // (from 2026-10-10; until then it went to the general bills owed, which the medical debt never saw).
+    if (price > 0 && !payFromBank(s, person, price, `${t.name}, a session`, 'medical')) billCare(s, person, `${t.name}, a session`, price, item.at);
     course.done += 1;
     if (course.done < THERAPY.sessions) { scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
     delete person.therapy;

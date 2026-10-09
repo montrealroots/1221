@@ -9,10 +9,10 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { coverOn } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { healthOf } from '@/engine/systems/health';
-import { THERAPY, THERAPISTS, sessionPrice, therapyLifts, therapyRefusal } from '@/engine/systems/therapy';
+import { SESSION_HOUR, THERAPY, THERAPISTS, sessionPrice, therapyLifts, therapyRefusal } from '@/engine/systems/therapy';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const depressed = (sim: Simulation) => { (healthOf(sim.player).chronic ??= {}).depression = { treated: false }; };
@@ -27,7 +27,11 @@ describe('a course of therapy', () => {
     expect(therapyRefusal(sim.player, 'Priory', sim.now)).toBe('Choose a therapist where you live.');
     expect(sessionPrice(sim, THERAPISTS.find((t) => t.name === 'The Center for CBT')!)).toBe(inSaveMoney(sim, 322_50, 'USD'));
     const r = sim.must<{ first: number }>({ kind: 'health.therapy', payload: { therapist: 'The Center for CBT' } });
-    expect(r.first - sim.now).toBe(7 * MS_DAY);
+    // A week on, at five in the afternoon on a weekday, in the practice's town (from 2026-10-10: until then at the hour it was asked for).
+    expect(r.first - sim.now).toBeGreaterThanOrEqual(6.5 * MS_DAY);
+    expect(r.first - sim.now).toBeLessThan(10 * MS_DAY);
+    expect(zonedParts(r.first, 'America/New_York').hour).toBe(SESSION_HOUR);
+    expect([0, 6]).not.toContain(zonedParts(r.first, 'America/New_York').weekday);
     expect(sim.execute({ kind: 'health.therapy', payload: { therapist: 'The Center for CBT' } }).error).toBe('You’re in a course already.');
     // Eight weeks on, the course is done, paid session by session.
     sim.advanceBy(9 * 7 * MS_DAY);
@@ -39,7 +43,9 @@ describe('a course of therapy', () => {
     const sim = life('uk-eng-london', 'therapy-ldn');
     depressed(sim);
     const r = sim.must<{ first: number }>({ kind: 'health.therapy', payload: { therapist: 'NHS Talking Therapies' } });
-    expect(r.first - sim.now).toBe(42 * MS_DAY);
+    expect(r.first - sim.now).toBeGreaterThanOrEqual(41.5 * MS_DAY);
+    expect(r.first - sim.now).toBeLessThan(45 * MS_DAY);
+    expect(zonedParts(r.first, 'Europe/London').hour).toBe(SESSION_HOUR);
     expect(therapyLifts(sim, sim.player, true, 1, 1)).toBe(true);
     expect(therapyLifts(sim, sim.player, true, 1, 0)).toBe(false);
     // Over many courses, near its 48.5% and a private course's 36%.

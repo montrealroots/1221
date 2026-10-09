@@ -37,7 +37,7 @@ import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, 
 import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
 import { clinicFor } from './clinics';
 import { citizenOf } from './documents';
-import { present } from './health';
+import { presentForCare } from './health';
 
 export const APPOINTMENT_KIND = 'health.appointment';
 
@@ -128,7 +128,7 @@ export function registerAppointments(sim: Simulation): void {
     const a = person ? appointmentsOf(person).find((x) => x.id === item.payload.appointmentId) : undefined;
     if (!person || !a) return;
     healthOf(person).appointments = appointmentsOf(person).filter((x) => x.id !== a.id);
-    if (!present(person, item.at, homeCity(person))) {
+    if (!presentForCare(person, item.at, homeCity(person))) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
       if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again when you can.`, importance: 60, route: '/workspace/papers' });

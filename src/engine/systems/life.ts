@@ -24,6 +24,7 @@ import { personalityOf } from './personality';
 import { bodyDay, bodyOf, eatsOut, eatsShort, exerts } from './body';
 import { starvedPastTheLimit } from './mortality';
 import { chanceOver, mayHurt, trainingRefusal } from './injury';
+import { inHospital } from './health';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
@@ -357,9 +358,14 @@ export function registerLife(sim: Simulation): void {
     'life.sleep',
     (p, { sim: s }) => {
       const person = s.player;
-      const hours = clamp(p.hours, 0.5, 16);
+      // Hours that are a number, and a start within the day ahead (from 2026-10-10: until then a value that wasn't a
+      // number passed the clamp, and a start any distance ahead was taken).
+      if (!Number.isFinite(Number(p.hours))) throw new CommandError('Say how long to sleep.');
+      const hours = clamp(Number(p.hours), 0.5, 16);
       const start = p.startAt ?? s.now;
+      if (!Number.isFinite(start)) throw new CommandError('Say when to sleep.');
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
+      if (start > s.now + MS_DAY) throw new CommandError('A night can be planned a day ahead at most.');
       const busy = occupiedAt(s, start);
       if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
       const wakeAt = start + Math.round(hours * MS_HOUR);
@@ -557,6 +563,9 @@ export function costFor(sim: Simulation, action: LookAfter): number {
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
   const person = sim.player;
+  // In hospital the ward does all of it (from 2026-10-10): until then a workout could be had from a hospital bed, and
+  // roll a gym injury there, where practice and a genre's hour already refused.
+  if (inHospital(person, sim.now)) return 'Not from a hospital bed.';
   const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
@@ -564,6 +573,9 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
+  // Down with the flu, rest (from 2026-10-10): its fever and aches are the systemic symptoms the usual guidance says
+  // to rest through, SLATE's reading of it; until then a workout went ahead with the flu as with nothing.
+  if (action === 'exercise' && (person.health?.fluUntil ?? 0) > sim.now) return 'Not with the flu: rest until it passes.';
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
   if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;

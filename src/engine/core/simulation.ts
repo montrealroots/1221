@@ -251,6 +251,19 @@ export class Simulation {
     return this;
   }
 
+  /**
+   * What the guards would say to a command the player gives through another (from 2026-10-10): a decision's button
+   * runs its command inside `world.take_decision_action`, where the guards don't ask, so until then a decision could
+   * file a return or apply for OPT while the guide still held that chapter shut.
+   */
+  guardedBecause(command: Command<Record<string, unknown>, unknown>): string | undefined {
+    for (const guard of this.commandGuards) {
+      const refused = guard(command);
+      if (refused !== undefined) return refused;
+    }
+    return undefined;
+  }
+
   hasCommand(kind: string): boolean {
     return this.commandHandlers.has(kind);
   }

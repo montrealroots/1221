@@ -11,7 +11,9 @@
  * how stress arrives and clears, ambition how much running on empty costs,
  * conscientiousness how orderly the nights are. Risk tolerance leans no knob;
  * the card reads it directly (`systems/credit.ts`). The other three are read
- * by nothing yet.
+ * where a person meets the work (`systems/enjoyment.ts`): extraversion how a
+ * house watching is taken, openness new work, agreeableness a rehearsal's
+ * company. This said until 2026-10-10 that they were read by nothing.
  */
 
 import type { Person, Personality } from '../domain/model';

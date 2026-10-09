@@ -70,7 +70,8 @@ export function redrawIfChanged(sim: Simulation, person: Person): void {
   h.endBand = band;
   const birthday = sim.universe.scheduled.find((one) => one.kind === BIRTHDAY_KIND && one.status === 'pending' && one.payload.personId === person.id);
   if (!birthday) return;
-  for (const one of sim.universe.scheduled) if (one.kind === END_KIND && one.status === 'pending' && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
+  // The year's drawn end is redrawn; a starved body's end (`starvedPastTheLimit`) isn't a draw, and stands.
+  for (const one of sim.universe.scheduled) if (one.kind === END_KIND && one.status === 'pending' && one.payload.personId === person.id && one.payload.cause !== 'starved') sim.timeline.cancel(one.id, sim.now);
   decideStretch(sim, person, sim.now, birthday.at);
 }
 

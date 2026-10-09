@@ -138,7 +138,9 @@ export function ageOn(sim: Simulation, person: Person, at: Instant): number {
 export function starvedPastTheLimit(sim: Simulation, person: Person): boolean {
   if (!person.body || bmiOf(person.body) >= BMI_SURVIVAL_LIMIT || sim.universe.meta.endedAt !== undefined) return false;
   if (sim.universe.scheduled.some((i) => i.kind === END_KIND && i.status === 'pending' && (i.payload.personId ?? sim.universe.playerId) === person.id && i.at <= sim.now + MS_DAY)) return false;
-  sim.schedule({ at: sim.now + 60_000, kind: END_KIND, label: 'World Simulation', category: 'system', priority: 1, payload: { personId: person.id } });
+  // Marked as the body's own end, which a redraw of the year's chance doesn't call off (from 2026-10-10: until then
+  // the birthday's redraw that same midnight could cancel it, and starvation had to arm it again the next night).
+  sim.schedule({ at: sim.now + 60_000, kind: END_KIND, label: 'World Simulation', category: 'system', priority: 1, payload: { personId: person.id, cause: 'starved' } });
   return true;
 }
 
