@@ -8,7 +8,8 @@ main at `d7daddf5`.
 - Branch `claude/attributes-complete`, pushed. Its code is in two commits on main's `d7daddf5`, followed by handoff commits:
   - `986ac341`, the work;
   - `c9af11c0`, tests for the two mutations that survived, and the profile's When column.
-- **Not merged** and **not deployed**: both wait for the owner.
+- **Merged to main** on 2026-10-09 at the owner's word ("Merge it."), as a fast-forward from `d7daddf5` to `92a53bd7`,
+  nothing force-pushed. **Not deployed**: that waits for the owner.
 - **Save schema 93.** `SAVE_SCHEMA_VERSION` and the guard's `SUPPORTED_SCHEMA_VERSION` moved together. Migration 93
   draws each classmate's abilities and counts the journey from the work already stored. It is idempotent.
   A deployment still on 92 refuses every save this branch writes, so deploy the backend with the client.
