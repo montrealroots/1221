@@ -17,9 +17,7 @@ import type { Person } from '@/engine/domain/model';
 import { applyLookingAfter, freshWellbeing } from '@/engine/systems/life';
 import { defaultPersonality } from '@/engine/systems/personality';
 import { describeEthnicity } from '@/engine/content/ethnicity';
-import {
-  CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
-} from '@/engine/content/interests';
+import { FILM_GENRES, isAlphabetical } from '@/engine/content/film-genres';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { TURNS, feel } from '@/engine/systems/enjoyment';
 import { personalityOf } from '@/engine/systems/personality';
@@ -42,7 +40,6 @@ function duplicates<T>(items: readonly T[], key: (item: T) => string): string[] 
 describe('nothing is defined twice', () => {
   it('keeps every registry id unique', () => {
     expect(duplicates(COUNTRIES.all(), (c) => c.id)).toEqual([]);
-    expect(duplicates([...CRAFT_INTERESTS, ...GENERAL_INTERESTS], (one) => one.id)).toEqual([]);
     expect(duplicates(FILM_GENRES, (one) => one.id)).toEqual([]);
   });
 });
@@ -220,28 +217,14 @@ describe('a turn in the career or at school', () => {
   });
 });
 
-describe('the interests and the genres', () => {
-  it('offers film and television, and the trades that make them', () => {
-    const general = GENERAL_INTERESTS.map((one) => one.id);
-    expect(general).toContain('film');
-    expect(general).toContain('television');
-    const crafts = CRAFT_INTERESTS.map((one) => one.id);
-    for (const trade of [
-      'cinematography', 'screenwriting', 'editing', 'sound_design', 'costume_design',
-      'production_design', 'stunts', 'visual_effects', 'casting', 'directing',
-      'producing', 'showrunning', 'voice_acting', 'film_scoring',
-    ]) expect(crafts, `${trade} is a trade film and television have`).toContain(trade);
-  });
-
-  it('keeps every list in the order a reader would look in', () => {
-    for (const [name, list] of [
-      ['crafts', CRAFT_INTERESTS], ['general', GENERAL_INTERESTS], ['genres', FILM_GENRES],
-    ] as const) {
-      const labels = list.map((one) => one.label);
-      const sorted = [...labels].sort((a, b) => a.localeCompare(b, 'en'));
-      expect(labels, `${name} is out of alphabetical order`).toEqual(sorted);
-      expect(isAlphabetical(list)).toBe(true);
-    }
+describe('the genres', () => {
+  // The interests were here too until 2026-10-10: the trades of film and television and the pastimes, in their own
+  // lists, read only by enjoyment. The owner removed them, and the question at creation with them.
+  it('keeps the list in the order a reader would look in', () => {
+    const labels = FILM_GENRES.map((one) => one.label);
+    const sorted = [...labels].sort((x, y) => x.localeCompare(y, 'en'));
+    expect(labels, 'the genres are out of alphabetical order').toEqual(sorted);
+    expect(isAlphabetical(FILM_GENRES)).toBe(true);
   });
 
   it('names every genre once, and enough of them to be worth the word every', () => {
@@ -257,65 +240,42 @@ describe('the interests and the genres', () => {
     ]) expect(labels).toContain(label);
   });
 
-  it('puts both on the player, and only enjoyment reads the interests and the genres', () => {
-    const sim = createSave(1, 'interests', {
-      ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
-    });
+  it('puts them on the player; only enjoyment reads them, and nothing reads interests but the migration that drops them', () => {
+    const sim = createSave(1, 'genres', { ...defaultConfig(), genres: ['film_noir', 'western'] });
     const player = sim.universe.people[sim.universe.playerId]!;
-    expect(player.interests).toEqual(['cinematography', 'film']);
     expect(player.genres).toEqual(['film_noir', 'western']);
+    expect('interests' in player).toBe(false);
 
-    // `core/taste.ts` was the one reader, and it went with the attributes.
-    // Then the rule was the one race and ethnicity keep: the moment something
-    // in the engine branches on them they stop being who somebody is and
-    // start being a stat. On 2026-09-24 the owner narrowed it for the
-    // interests: they may change how much somebody gets out of doing a thing,
-    // never how good they are at it. That lives in one file, and the test
-    // below holds what it may move. The genres waited for the film career, and
-    // since 2026-09-27 the same file reads them, for a job's genre.
+    // The rule race and ethnicity keep: the moment something in the engine branches on what somebody loves, it stops
+    // being who they are and starts being a stat. On 2026-09-24 the owner narrowed it: a preference may change how
+    // much somebody gets out of doing a thing, never how good they are at it. That lives in one file.
     const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
-      .filter((f) => f.endsWith('.ts'))
-      .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
-      .filter((f) => statSync(f).isFile())
-      .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f));
-    const reading = (field: string) => engine.filter((f) => new RegExp(`\\.${field}\\b`).test(readFileSync(f, 'utf8')));
-    expect(reading('interests'), 'these read somebody’s interests out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
+      .filter((one) => one.endsWith('.ts'))
+      .map((one) => `src/engine/${one.replace(/\\/g, '/')}`)
+      .filter((one) => statSync(one).isFile())
+      .filter((one) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(one));
+    const reading = (field: string) => engine.filter((one) => new RegExp(`\\.${field}\\b`).test(readFileSync(one, 'utf8')));
     expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
+    expect(reading('interests'), 'these read somebody’s interests out of a save').toEqual(['src/engine/index.ts']);
   });
 
-  it('lets an interest change how much an action gives the mood and the relief, and nothing else', () => {
-    // Everything each of the four does, loved and not, from the same start.
-    // Only morale and stress may differ: fitness, energy, food and hygiene
-    // are how good the hour was for the body, and loving it doesn't change that.
-    for (const [action, interest] of [['eat', 'cooking'], ['exercise', 'fitness'], ['exercise', 'sport'], ['unwind', 'music']] as const) {
-      const make = (interests: string[]) => ({
-        personality: defaultPersonality(), personalityTraits: [], interests, birthInstant: 0,
-        wellbeing: { ...freshWellbeing(), nourishment: 30, stress: 60, morale: 50 },
+  it('changes nothing an hour of looking after yourself gives: loving a genre is no better meal, workout or rest', () => {
+    for (const action of ['eat', 'exercise', 'unwind', 'wash'] as const) {
+      const make = (genres: string[]) => ({
+        personality: defaultPersonality(), personalityTraits: [], genres, birthInstant: 0,
+        wellbeing: { ...freshWellbeing(), nourishment: 30, stress: 60, morale: 50, hygiene: 60 },
       } as unknown as Person);
       const plain = make([]);
-      const loves = make([interest]);
+      const loves = make(['comedy', 'drama', 'musical']);
       applyLookingAfter(plain, action);
       applyLookingAfter(loves, action);
-      expect(loves.wellbeing.morale, `${interest} on ${action}`).toBeGreaterThan(plain.wellbeing.morale);
-      if (action !== 'eat') expect(loves.wellbeing.stress, `${interest} on ${action}`).toBeLessThan(plain.wellbeing.stress);
-      for (const dial of ['energy', 'sleepDebt', 'condition', 'fitness', 'nourishment', 'hygiene'] as const) {
-        expect(loves.wellbeing[dial], `${interest} changed ${dial} on ${action}`).toBe(plain.wellbeing[dial]);
-      }
+      expect(loves.wellbeing, action).toEqual(plain.wellbeing);
     }
-    // And an interest that isn't the thing being done changes nothing.
-    const cook = { personality: defaultPersonality(), personalityTraits: [], interests: ['cooking'], birthInstant: 0, wellbeing: freshWellbeing() } as unknown as Person;
-    const none = { personality: defaultPersonality(), personalityTraits: [], interests: [], birthInstant: 0, wellbeing: freshWellbeing() } as unknown as Person;
-    applyLookingAfter(cook, 'exercise');
-    applyLookingAfter(none, 'exercise');
-    expect(cook.wellbeing).toEqual(none.wellbeing);
   });
 
-  it('drops an id that is not on any list', () => {
-    const sim = createSave(1, 'interests-junk', {
-      ...defaultConfig(), interests: ['film', 'not-real'], genres: ['western', 'not-a-genre'],
-    });
+  it('drops an id that is not on the list', () => {
+    const sim = createSave(1, 'genres-junk', { ...defaultConfig(), genres: ['western', 'not-a-genre'] });
     const player = sim.universe.people[sim.universe.playerId]!;
-    expect(player.interests).toEqual(['film']);
     expect(player.genres).toEqual(['western']);
   });
 });

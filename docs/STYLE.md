@@ -105,7 +105,7 @@ question, a colon and the thing itself.
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
 schedule kinds and event names are not renamed to improve a label. A label
-map (`LEGEND_BY_CATEGORY`, `INTEREST_BY_ID`) sits between the id and the
+map (`LEGEND_BY_CATEGORY`, `GENRE_BY_ID`) sits between the id and the
 screen.
 
 ## What holds it in place

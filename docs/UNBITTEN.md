@@ -102,8 +102,10 @@ What the same day found and settled besides:
 - **Thirty-seven interests and most genres read nothing.** Connected where a
   student's life has the thing: the plays are filed by kind (`genresOfPlay`),
   coursework by the craft it's done in (`Template.crafts`), a play read by
-  Reading, and Reading and Politics joined an evening unwinding. The rest are
-  marked · at creation as said back only (`interestsRead`).
+  Reading, and Reading and Politics joined an evening unwinding. The rest were
+  marked · at creation as said back only (`interestsRead`). On 2026-10-10 the
+  owner removed the interests, with the crafts' readers; the genres no play is
+  of are still marked · (`genresRead`).
 - **Getting About.** Retired: the wheelchair and the parking permit were read
   only by the hotels and the meters.
 - **A replaced card's billers.** Retired: nothing charges a card as a bill.
@@ -143,10 +145,9 @@ until the owner says otherwise.
 ## Dead: declared, and nothing reads it
 
 - **The connected attributes' words that are said, not read.** Each
-  interest's caveat and actor's use are shown on its look and read by nothing:
-  they are the research's uncertainty, shown as uncertainty, and an interest's
-  mechanics are its rest, its constraints and the one ability or technique it
-  grows. A genre's demands were here too until 2026-10-10, when the ones the
+  interest's caveat and actor's use were shown on its look and read by nothing,
+  until the owner removed the interests on 2026-10-10. A genre's demands were
+  here too until the same day, when the ones the
   research established at medium or high confidence (64 genres, 82 tags) became
   techniques its work reads (`content/demands.ts`). The same day's review
   lowered every applied entry that rested on one film, one director, one role
@@ -923,7 +924,8 @@ class; and the finished work at its premiere, on air or streaming, with the
 festival and the reviews. Film History and Film Preservation are an evening
 with the old films. One loved craft lifts a day, however many are there,
 under the owner's rule: mood and stress, never how good anybody is.
-`tests/crafts.test.ts` holds that every craft is met somewhere.
+A test held that every craft was met somewhere, until the owner removed
+the interests, and the crafts with them, on 2026-10-10.
 
 The tax engine: every part of it is charged. Its income and payroll tax
 since the career (acting wages withheld through it, each year's return

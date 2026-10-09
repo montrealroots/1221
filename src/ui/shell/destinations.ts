@@ -41,7 +41,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
   {
     label: 'You',
     items: [
-      { route: '/workspace/profile', label: 'Player Profile', detail: 'Your abilities, techniques, interests, genres, condition and history', feature: 'ui.profile' },
+      { route: '/workspace/profile', label: 'Player Profile', detail: 'Your abilities, techniques, genres, condition and history', feature: 'ui.profile' },
     ],
   },
   {

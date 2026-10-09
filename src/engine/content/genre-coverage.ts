@@ -5,7 +5,7 @@
  * `tests/genre-coverage.test.ts`, which also plays every genre through `genre.study` and `practice.self_tape`.
  */
 
-import { FILM_GENRES } from './interests';
+import { FILM_GENRES } from './film-genres';
 import { GENRE_DEFS } from './genres';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from './demands';
 import { TECHNIQUE_LABEL } from './abilities';

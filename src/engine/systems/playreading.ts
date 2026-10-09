@@ -38,7 +38,6 @@ import { MS_DAY, ageOn, formatDate, formatTime, type Instant } from '../core/tim
 import { CONTEMPORARY_PLAYS, type ContemporaryPlay } from '../content/contemporary';
 import { exerts } from './body';
 import { focusAt, ordinary } from './school';
-import { READ_CRAFTS, enjoyCrafts } from './enjoyment';
 import { occupiedAt } from './life';
 
 export const PLAYREADING = {
@@ -129,7 +128,6 @@ export function registerPlayReading(sim: Simulation): void {
     const minutes = Math.round((short(p) ? PLAYREADING.minutes.short : PLAYREADING.minutes.full) * (before ? PLAYREADING.again : 1));
     const focus = focusAt(s, person, s.now);
     s.advanceTo(s.now + minutes * 60_000);
-    enjoyCrafts(person, READ_CRAFTS);
     exerts(person, PLAYREADING.met, minutes / 60);
     const study = before ?? { reads: 0, lastAt: s.now, noticed: [], notes: [] };
     const fresh = !before || s.now - before.lastAt >= PLAYREADING.freshDays * MS_DAY;
@@ -167,7 +165,6 @@ export function registerPlayReading(sim: Simulation): void {
     const minutes = PLAYREADING.minutes.research;
     const focus = focusAt(s, person, s.now);
     s.advanceTo(s.now + minutes * 60_000);
-    enjoyCrafts(person, READ_CRAFTS);
     exerts(person, PLAYREADING.met, minutes / 60);
     if (person.craft) ordinary(s, person, 'script', focus, PLAYREADING.weight.research, `research:${id}`);
     const L = p.licensor;

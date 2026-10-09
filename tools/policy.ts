@@ -9,11 +9,11 @@ import { newLifeConfig, type NewSaveConfig } from '../src/engine/world/bootstrap
 import { templateById } from '../src/engine/content/coursework';
 import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
-import { lookAfterOptions, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
+import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
 import { MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
-import { nextInterest, nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
+import { nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
 import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
 import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
@@ -68,15 +68,15 @@ export function freeHour(sim: Simulation): boolean {
 }
 
 /**
- * A free hour the practicing player spends on themselves (from 2026-10-09): stressed, an hour of a restful interest
- * the Profile suggests; else practice on what the last work was held back by most, else the ability furthest from full.
+ * A free hour the practicing player spends on themselves (from 2026-10-09): stressed, an hour unwinding (an hour of
+ * the restful interest the Profile suggested until the owner removed the interests on 2026-10-10); else practice on
+ * what the last work was held back by most, else the ability furthest from full.
  */
 export function practiceHour(sim: Simulation): boolean {
   const person = sim.player;
   if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 40) return false;
   if (person.wellbeing.stress > 45) {
-    const id = nextInterest(sim, person);
-    if (id && sim.execute({ kind: 'interest.pursue', payload: { interest: id } }).ok) return true;
+    if (!lookAfterRefusal(sim, 'unwind') && sim.execute({ kind: 'life.look_after', payload: { action: 'unwind' } }).ok) return true;
   }
   if (practicedToday(sim, person) >= PRACTICE.dailyHours) return false;
   const limit = nextPractice(person);

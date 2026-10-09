@@ -28,7 +28,7 @@ import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
-import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { KNOB_READS, PERSONALITY_TRAIT_BY_ID, type PersonalityKnob } from '@/engine/content/personality-traits';
 import { personalityOf } from '@/engine/systems/personality';
 import { CONDITION_LABEL, type Condition } from '@/engine/systems/health';
@@ -137,12 +137,8 @@ defineLook<Person>('person', {
     const before = (person.background ?? '').trim();
     // What they did before acting was said here until 2026-09-26, when the
     // question went with the job engine.
-    // What they care about and the films they love, said back for the same
-    // reason. Nothing in the simulation read either until the interests were
-    // let change how much an hour of looking after yourself gives the mood
-    // (`systems/enjoyment.ts`), and since 2026-09-27 the same file reads the
-    // genres, and the interests again, for what a day of work gives.
-    const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
+    // The films they love, said back for the same reason; `systems/enjoyment.ts` reads them for what a day of work
+    // gives. What they cared about was said here too until 2026-10-10, when the owner removed the interests.
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
     // The traits they picked. Most of them, unlike the rest of this, move the
     // dials below: the nights of a light sleeper and the stress of an even
@@ -190,12 +186,6 @@ defineLook<Person>('person', {
         <p key="before" className="small">
           <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
           {before}
-        </p>
-      ),
-      cares.length > 0 && (
-        <p key="cares" className="small">
-          <span className="dim">{isYou ? 'What you care about. ' : 'What they care about. '}</span>
-          {spokenList(cares)}.
         </p>
       ),
       loves.length > 0 && (

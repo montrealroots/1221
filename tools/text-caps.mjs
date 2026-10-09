@@ -354,7 +354,7 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
 
   for (const [step, screen] of [
     ['dispositions and traits', '03-dispositions-and-traits'],
-    ['interests and background', '04-interests-and-background'],
+    ['genres and background', '04-genres-and-background'],
     ['starting point', '05-starting-point'],
     ['review', '06-review'],
   ]) {

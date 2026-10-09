@@ -1,8 +1,9 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Dispositions & Traits, Interests & Background, Starting Point and
- * Review, then Begin.
+ * Identity, Dispositions & Traits, Genres & Background, Starting Point and
+ * Review, then Begin. The third step was Interests & Background until
+ * 2026-10-10, when the owner removed the interests and the question with them.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -31,10 +32,8 @@ import { citizenshipFor } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
-import {
-  ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
-} from '@/engine/content/interests';
-import { interestsRead } from '@/engine/systems/enjoyment';
+import { FILM_GENRES, type Genre } from '@/engine/content/film-genres';
+import { genresRead } from '@/engine/systems/enjoyment';
 import { PERFORMER_NOUN, PERFORMER_TITLES, settledTitle, type PerformerTitle } from '@/engine/core/performer';
 import type { Personality } from '@/engine/domain/model';
 import {
@@ -67,7 +66,7 @@ export function latestBirthYear(config: Pick<NewSaveConfig, 'startYear' | 'schoo
   return config.startYear - (config.school ? YALE_DRAMA.minimumAge : BIRTH_YEARS_BEFORE_START);
 }
 
-const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Dispositions & Traits', 'Genres & Background', 'Starting Point', 'Review'] as const;
 
 /**
  * Which step is which, by name rather than by number.
@@ -191,7 +190,7 @@ export function CharacterCreation({
 
         {step === STEP.Identity && <IdentityStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Dispositions & Traits'] && <PersonalityStep config={config} setConfig={setConfig} />}
-        {step === STEP['Interests & Background'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
+        {step === STEP['Genres & Background'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP.Review && <ReviewStep config={config} />}
 
@@ -586,7 +585,7 @@ export function blockedTraitReason(held: readonly string[], id: string): string 
  * Who they are, before what they like: the seven dispositions and up to four
  * traits.
  *
- * Its own step, Dispositions & Traits, ahead of Interests & Background,
+ * Its own step, Dispositions & Traits, ahead of Genres & Background,
  * because it is the part of the character chosen as a disposition, and the
  * page says which parts of it do something and which are only kept.
  */
@@ -707,15 +706,6 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
-  const toggleInterest = (interest: string) => {
-    setConfig((c) => ({
-      ...c,
-      interests: c.interests.includes(interest)
-        ? c.interests.filter((i) => i !== interest)
-        : [...c.interests, interest],
-    }));
-  };
-
   const toggleGenre = (genre: string) => {
     setConfig((c) => ({
       ...c,
@@ -725,21 +715,19 @@ function PersonalStep({
     }));
   };
 
-  // Take a whole list at once, or put it back. `field` names which of the two
-  // lists is being set, so one control serves both.
-  const setAll = (field: 'interests' | 'genres', options: readonly Interest[], on: boolean) => {
+  // Take the whole list at once, or put it back.
+  const setAll = (options: readonly Genre[], on: boolean) => {
     setConfig((c) => {
       const ids = options.map((o) => o.id);
-      const rest = c[field].filter((id) => !ids.includes(id));
-      return { ...c, [field]: on ? [...rest, ...ids] : rest };
+      const rest = c.genres.filter((id) => !ids.includes(id));
+      return { ...c, genres: on ? [...rest, ...ids] : rest };
     });
   };
 
-  // One chip, whichever list it came from.
-  // Which of them something reads (`interestsRead`, from 2026-10-09): the rest are said back, and the chip says so.
-  const read = interestsRead();
+  // Which of them something reads (`genresRead`, from 2026-10-09): the rest are said back, and the chip says so.
+  const read = genresRead();
   const Chips = ({ options, chosen, onToggle, moves }: {
-    options: readonly Interest[];
+    options: readonly Genre[];
     chosen: readonly string[];
     onToggle: (id: string) => void;
     moves: ReadonlySet<string>;
@@ -765,9 +753,8 @@ function PersonalStep({
     </div>
   );
 
-  const AllOrNothing = ({ field, options, chosen }: {
-    field: 'interests' | 'genres';
-    options: readonly Interest[];
+  const AllOrNothing = ({ options, chosen }: {
+    options: readonly Genre[];
     chosen: readonly string[];
   }) => {
     const every = options.every((o) => chosen.includes(o.id));
@@ -775,7 +762,7 @@ function PersonalStep({
       <button
         type="button"
         className="btn btn-sm"
-        onClick={() => setAll(field, options, !every)}
+        onClick={() => setAll(options, !every)}
       >
         {every ? 'Clear These' : 'Select All'}
       </button>
@@ -784,39 +771,6 @@ function PersonalStep({
 
   return (
     <div className="col gap-5">
-      <div className="card">
-        <div className="panel-head">
-          <div>
-            <h2>Interests</h2>
-            <p className="muted small">
-              What you care about when nobody is paying you to. Take as many as are true.
-            </p>
-            <p className="muted small">
-              Some change how much you get out of an hour: Cooking a meal, Fitness and Sport a
-              workout, and what you’d spend an evening on an hour unwinding; Theater and the stage’s
-              crafts a rehearsal; Reading a play read; and a craft a piece of coursework is done in,
-              Stage Combat a fight, Choreography a movement score. They lift your mood more and ease
-              more stress. None makes you better at anything. One marked · is said back on your
-              page and moves nothing: the screen’s crafts, the road and the booth went with the
-              career.
-            </p>
-          </div>
-          <span className="chip chip-accent">{config.interests.length} Chosen</span>
-        </div>
-
-        <div className="row-between" style={{ marginBottom: 'var(--s2)' }}>
-          <span className="eyebrow">Film And Television</span>
-          <AllOrNothing field="interests" options={CRAFT_INTERESTS} chosen={config.interests} />
-        </div>
-        <Chips options={CRAFT_INTERESTS} chosen={config.interests} onToggle={toggleInterest} moves={read.interests} />
-
-        <div className="row-between" style={{ margin: 'var(--s4) 0 var(--s2)' }}>
-          <span className="eyebrow">Everything Else</span>
-          <AllOrNothing field="interests" options={GENERAL_INTERESTS} chosen={config.interests} />
-        </div>
-        <Chips options={GENERAL_INTERESTS} chosen={config.interests} onToggle={toggleInterest} moves={read.interests} />
-      </div>
-
       <div className="card">
         <div className="panel-head">
           <div>
@@ -830,10 +784,10 @@ function PersonalStep({
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
             <span className="chip chip-accent">{config.genres.length} Chosen</span>
-            <AllOrNothing field="genres" options={FILM_GENRES} chosen={config.genres} />
+            <AllOrNothing options={FILM_GENRES} chosen={config.genres} />
           </div>
         </div>
-        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} moves={read.genres} />
+        <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} moves={read} />
       </div>
 
       {/*
@@ -1174,8 +1128,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests &amp; Background</div>
-        <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Genres &amp; Background</div>
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
@@ -1198,7 +1151,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 }
 
 /** The chosen ones, in the order the list offers them, or an em dash. */
-function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
+function namesOf(all: readonly Genre[], chosen: readonly string[]): string {
   const named = all.filter((one) => chosen.includes(one.id)).map((one) => one.label);
   return named.length > 0 ? named.join(', ') : '—';
 }

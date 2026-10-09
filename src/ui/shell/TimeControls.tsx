@@ -19,10 +19,7 @@ import {
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
-import { lovedIn } from '@/engine/systems/enjoyment';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { INTEREST_BY_ID } from '@/engine/content/interests';
-import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 
@@ -512,9 +509,6 @@ function LookAfterMenu() {
         <div className="menu" role="menu" aria-label="Look After Yourself">
           {options.map((o, i) => {
             const { action, refused } = o;
-            // Said, because it changes what the hour gives: more mood and more
-            // relief for somebody who loves it (`systems/enjoyment.ts`).
-            const loved = lovedIn(sim.player, action).map((id) => INTEREST_BY_ID[id]?.label ?? id);
             const first = i === 0 && !refused && (o.urgent || o.gain >= 0.5);
             return (
               <button
@@ -537,9 +531,6 @@ function LookAfterMenu() {
                     {o.changes.map((c) => `${DIAL_LABEL[c.dial] ?? c.dial} ${Math.round(c.from)} → ${Math.round(c.to)}`).join(' · ')}
                     {o.gain !== 0 ? ` · readiness ${o.gain > 0 ? '+' : ''}${o.gain.toFixed(1)}` : ''}
                   </span>
-                )}
-                {!refused && loved.length > 0 && (
-                  <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>
                 )}
               </button>
             );

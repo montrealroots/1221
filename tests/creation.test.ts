@@ -7,7 +7,8 @@
  * questions again. Citizenship is not: the place of birth decides it. The
  * performer's title went with the revamp and came back: the pronouns settle
  * it, and under they/them the player picks. The personality came back too, as
- * its own step, Dispositions & Traits, ahead of Interests & Background.
+ * its own step, Dispositions & Traits, ahead of Genres & Background (Interests & Background until the owner removed the
+ * interests on 2026-10-10).
  *
  * So this holds the shape rather than the wording. What each step asks, and
  * what comes out the other end in the save.
@@ -39,7 +40,6 @@ function filled() {
     raceEthnicity: ['white', 'asian'],
     homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
     startLocationId: 'us-ny-newyork',
-    interests: ['film', 'television', 'cinematography'],
     genres: ['film_noir', 'western'],
     background: 'Raised by the sea.',
     wealth: 'wealthy',
@@ -59,8 +59,8 @@ function stepSource(from: string, to?: string): string {
 }
 
 describe('the steps', () => {
-  it('are the five there are, Dispositions & Traits before Interests & Background', () => {
-    expect(SOURCE).toContain("const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;");
+  it('are the five there are, Dispositions & Traits before Genres & Background', () => {
+    expect(SOURCE).toContain("const STEPS = ['Identity', 'Dispositions & Traits', 'Genres & Background', 'Starting Point', 'Review'] as const;");
   });
 
   it('leave no trace of the ones that went', () => {
@@ -198,18 +198,19 @@ describe('the title', () => {
   });
 });
 
-describe('Interests & Background', () => {
-  it('asks for interests, genres and a background, and nothing with a number on it', () => {
+describe('Genres & Background', () => {
+  it('asks for genres and a background, no interests, and nothing with a number on it', () => {
     const step = stepSource('function PersonalStep', 'function StartingPointStep');
-    for (const card of ['Interests', 'Genres', 'Background']) {
+    for (const card of ['Genres', 'Background']) {
       expect(step, `${card} is gone`).toContain(`<h2>${card}</h2>`);
     }
+    expect(step, 'the interests are back').not.toContain('<h2>Interests</h2>');
     expect(step, 'a slider is back').not.toContain('type="range"');
   });
 
-  it('carries the interests, the genres and the background', () => {
+  it('carries the genres and the background, and no interests', () => {
     const p = filled().universe.people[filled().universe.playerId]!;
-    expect(p.interests).toEqual(expect.arrayContaining(['film', 'television', 'cinematography']));
+    expect('interests' in p).toBe(false);
     expect(p.genres).toEqual(['film_noir', 'western']);
     expect(p.background).toBe('Raised by the sea.');
   });
@@ -249,10 +250,12 @@ describe('Review', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Dispositions &amp; Traits',
-      'Where You Live', 'Checking', 'Savings', 'Credit Record', 'Interests', 'Genres', 'Background',
+      'Where You Live', 'Checking', 'Savings', 'Credit Record', 'Genres', 'Background',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }
+    // The interests' line went with them (2026-10-10).
+    expect(step, 'Review shows interests again').not.toContain('label="Interests"');
     // Every disposition, and every trait held, not only the card's heading.
     expect(step, 'Review stopped listing the dispositions')
       .toContain('<Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />');

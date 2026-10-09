@@ -26,7 +26,6 @@ import { starvedPastTheLimit } from './mortality';
 import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
-import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
 import { heatIndexC, weatherAt } from './weather';
 import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsToday } from './attributes';
@@ -597,11 +596,9 @@ export function workoutCosts(person: Person): number {
  */
 export function applyLookingAfter(person: Person, action: LookAfter, at?: number, training = 1): void {
   const w = person.wellbeing;
-  // Somebody who loves what they're doing gets more of the mood and the
-  // relief out of it, and nothing else (`systems/enjoyment.ts`).
-  const loved = lovedIn(person, action).length > 0;
-  const swing = personalityOf(person, 'moraleSwing') * (loved ? LOVED_MOOD : 1);
-  const relief = loved ? LOVED_RELIEF : 1;
+  // Until 2026-10-10 somebody who loved what they were doing (Cooking a meal, Fitness a workout, an evening's
+  // pastime an hour unwinding) got half again the mood and a quarter again the relief; the interests went that day.
+  const swing = personalityOf(person, 'moraleSwing');
   if (action === 'eat' || action === 'order') {
     const eaten = Math.min(MEAL, 100 - w.nourishment);
     w.nourishment = clamp(w.nourishment + eaten, 0, 100);
@@ -622,11 +619,11 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.energy = clamp(w.energy - costs, 0, 100);
     w.nourishment = clamp(w.nourishment - 6, 0, 100);
     w.hygiene = clamp((w.hygiene ?? 80) - 20 * personalityOf(person, 'hygieneDrift'), 0, 100);
-    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
+    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery'), 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
   } else {
     // Unwinding. Until 2026-10-09 it was less on the floor of an empty home with no sofa (`systems/furniture.ts`).
-    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
+    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery'), 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
   }
 }

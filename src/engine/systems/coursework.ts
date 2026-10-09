@@ -62,7 +62,6 @@ import { familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
 import { SPENT, occupiedAt } from './life';
 import { exerts } from './body';
-import { enjoyCrafts } from './enjoyment';
 import { personalityOf } from './personality';
 import type { PersonalityKnob } from '../content/personality-traits';
 import { inHospital } from './health';
@@ -475,9 +474,7 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   const focus = focusAt(sim, person, sim.now);
   sim.advanceTo(sim.now + minutes * 60_000);
   exerts(person, (act.needs ?? []).some((n) => n === 'studio' || n === 'feet') ? WORK.met.feet : WORK.met.desk, minutes / 60);
-  // Work in a craft they love is a better hour, and no better work (`Template.crafts`, from 2026-10-09).
-  const crafts = templateById(a.template)?.crafts;
-  if (crafts) enjoyCrafts(person, crafts);
+  // Work in a craft they loved was a better hour (`Template.crafts`) from 2026-10-09 until the interests went on 2026-10-10.
   const before = a.prep[act.dim];
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.

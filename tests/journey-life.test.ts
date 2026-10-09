@@ -30,7 +30,7 @@ const ok = <T,>(sim: Simulation, kind: string, payload: Record<string, unknown> 
 describe('journey: a student’s life around the school', () => {
   it('carries every choice through to where it’s read, across a save, a leap day and two winters', () => {
     // Made and opened at once: what creation wrote is what the game reads.
-    let sim = reload(createSave(1, 'jr-life', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personalityTraits: ['early_riser', 'curious'], interests: ['reading', 'stage_combat'] }));
+    let sim = reload(createSave(1, 'jr-life', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personalityTraits: ['early_riser', 'curious'] }));
     expect(sim.player.personalityTraits).toEqual(['early_riser', 'curious']);
     expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === 'school.orientation')).toBe(true);

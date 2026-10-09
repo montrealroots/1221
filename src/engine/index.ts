@@ -853,7 +853,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
         for (const k of Object.keys(d)) if (a[k] === undefined) { a[k] = d[k]; filled += 1; }
       }
       if (!person.engagement) {
-        person.engagement = { byInterest: {}, byGenre: {} };
+        person.engagement = { byGenre: {} };
         for (const credit of person.school?.credits ?? []) {
           const genres = genresOfPlay(playOfCredit(credit.production)) ?? [];
           for (let n = 0; n < (credit.wentOn ?? 0) && genres.length; n += 1) { addPractice(person, genres); practiced += 1; }
@@ -888,6 +888,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (mates > 0) steps.push(`Drew ${plural(mates, 'classmate’s abilities', 'classmates’ abilities')} from their craft.`);
     if (counted > 0) steps.push(`Counted ${plural(counted, 'judged piece of work', 'judged pieces of work')} into the journey’s lasting record.`);
+  }
+
+  // 94, the interests removed (2026-10-10, at the owner's word): each person's interests on the character sheet, and
+  // what they'd done of them (`engagement.byInterest`: familiarity, sessions, satiation), dropped. Nothing else read
+  // them. The genres, their familiarity and practice, and every ticket already paid on the ledger stay as they were.
+  {
+    let dropped = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const p = person as unknown as { interests?: unknown; engagement?: { byInterest?: unknown } };
+      if (p.interests !== undefined) { delete p.interests; dropped += 1; }
+      if (p.engagement && p.engagement.byInterest !== undefined) delete p.engagement.byInterest;
+    }
+    if (dropped > 0) steps.push(`Let go of ${plural(dropped, 'person’s interests', 'people’s interests')}: the game no longer keeps them.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film

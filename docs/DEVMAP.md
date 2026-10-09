@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-113 commands; 113 named by a test, 0 not.
+112 commands; 112 named by a test, 0 not.
 
 ## bank
 
@@ -106,7 +106,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
+| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` `genre-coverage.test.ts` `migration-94.test.ts` | You As An Actor |
 
 ## health
 
@@ -126,12 +126,6 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Cover, Benefits And Returns |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Cover, Benefits And Returns |
-
-## interest
-
-| Command | Handled In | Screens | Tests | Guide Chapter |
-|---|---|---|---|---|
-| `interest.pursue` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` | You As An Actor |
 
 ## life
 

@@ -2097,7 +2097,7 @@ export function registerSchool(sim: Simulation): void {
           (casting as Casting & { process?: { dress?: string } }).process!.dress = dress;
         }
         tire(person, ESTIMATE.energy.rehearsal);
-        enjoyWork(person, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(casting.play), novel: casting.kind === 'hughes' || casting.kind === 'carlotta' });
+        enjoyWork(person, { rehearsal: true, genres: genresOfPlay(casting.play), novel: casting.kind === 'hughes' || casting.kind === 'carlotta' });
       }
       return;
     }
@@ -2172,7 +2172,7 @@ export function registerSchool(sim: Simulation): void {
       nerves(sim, person, 'performance');
       playNight(person.craft, castingReads(run), focusAt(sim, person, item.at) * nightFactor(cab));
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { medium: 'stage', away: false, novel: true });
+      enjoyWork(person, { novel: true });
       reckonNight(sim, person, run, item, false);
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
@@ -2180,7 +2180,7 @@ export function registerSchool(sim: Simulation): void {
       rehearse(person.craft, focusAt(sim, person, item.at) * weight);
       if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, run, item.at, run.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
-      enjoyWork(person, { medium: 'stage', away: false, novel: true, rehearsal: true });
+      enjoyWork(person, { novel: true, rehearsal: true });
     }
     // The closing night played: on the résumé (a show never played never reaches here).
     if (item.payload.last === true) {
@@ -2254,7 +2254,7 @@ export function registerSchool(sim: Simulation): void {
       nerves(s, person, 'performance');
       playNight(person.craft, castingReads(show), focusAt(s, person, item.at) * nightFactor(show));
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { medium: 'stage', away: false, genres: genresOfPlay(show.play) });
+      enjoyWork(person, { genres: genresOfPlay(show.play) });
       reckonNight(s, person, show, item, false);
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
@@ -2262,7 +2262,7 @@ export function registerSchool(sim: Simulation): void {
       rehearse(person.craft, focusAt(s, person, item.at) * weight);
       if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, show, item.at, show.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
-      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(show.play) });
+      enjoyWork(person, { rehearsal: true, genres: genresOfPlay(show.play) });
     }
   });
 
@@ -2280,7 +2280,7 @@ export function registerSchool(sim: Simulation): void {
       nerves(sim, person, 'performance');
       grow(person.craft, 'scene', focusAt(sim, person, item.at), 3);
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { medium: 'stage', away: false });
+      // A showing lifted somebody who loved theater (`enjoyWork`'s medium) until the interests went on 2026-10-10.
       return;
     }
     grow(person.craft, 'scene', focusAt(sim, person, item.at));
@@ -2288,7 +2288,7 @@ export function registerSchool(sim: Simulation): void {
     grow(person.craft, 'script', focusAt(sim, person, item.at));
     grow(person.craft, 'memorization', focusAt(sim, person, item.at));
     tire(person, ESTIMATE.energy.rehearsal);
-    enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+    enjoyWork(person, { rehearsal: true });
   });
 
   sim.onSchedule(RECESS_KIND, (item, s) => {

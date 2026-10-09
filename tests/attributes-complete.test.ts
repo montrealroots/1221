@@ -20,7 +20,7 @@ import { DEMAND_TECHNIQUE, DEMAND_WEIGHT, demandTags, genreTags, withDemands } f
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { judgeWork, type Assignment } from '@/engine/systems/coursework';
-import { FILM_GENRES } from '@/engine/content/interests';
+import { FILM_GENRES } from '@/engine/content/film-genres';
 import { genreState, SELF_TAPE } from '@/engine/systems/engagement';
 
 const life = (seed: string, title: 'she/her' | 'he/him' = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: title });

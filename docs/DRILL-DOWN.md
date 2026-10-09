@@ -108,7 +108,7 @@ Measured in the running app, every screen, at 1440×950:
 |---|---|
 | Save slots | 23% |
 | Creation — Identity | 30% |
-| Creation — Who You Are (the step called Interests & Background now) | 84% |
+| Creation — Who You Are (the step called Interests & Background, and Genres & Background from 2026-10-10) | 84% |
 | Creation — Starting Point | 7% |
 | Creation — Review | 6% |
 | **Home** | **1%** — one live element in ninety-four |

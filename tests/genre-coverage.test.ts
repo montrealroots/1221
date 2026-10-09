@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { FILM_GENRES } from '@/engine/content/interests';
+import { FILM_GENRES } from '@/engine/content/film-genres';
 import { DEMAND_TECHNIQUE, applied, genreTags } from '@/engine/content/demands';
 import { GENRE_DEMANDS } from '@/engine/content/genre-demands';
 import { NO_TECHNIQUE, genreCoverage } from '@/engine/content/genre-coverage';

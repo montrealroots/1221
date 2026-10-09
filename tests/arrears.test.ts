@@ -35,29 +35,29 @@ function pro(seed: string, extra: Record<string, unknown> = {}): Simulation {
   return sim;
 }
 const body = (over: Partial<Person> = {}) => ({
-  interests: [], genres: [], personality: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50 },
+  genres: [], personality: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50 },
   wellbeing: { energy: 70, sleepDebt: 0, condition: 80, fitness: 50, nourishment: 70, hygiene: 70, stress: 50, morale: 50 },
   ...over,
 } as unknown as Person);
 
 describe('a day of work, enjoyed', () => {
-  it('finds what of theirs a job is: its medium, its genre, and the road', () => {
-    const who = { interests: ['film', 'theatre', 'travel', 'voice_acting'], genres: ['horror'] };
-    expect(lovedInWork(who, { medium: 'screen', after: 'film', genre: 'horror', away: true })).toEqual(['film', 'travel', 'horror']);
-    expect(lovedInWork(who, { medium: 'screen', after: 'tv', genre: 'drama', away: false })).toEqual([]);
-    expect(lovedInWork(who, { medium: 'stage', away: false })).toEqual(['theatre']);
-    expect(lovedInWork(who, { medium: 'voice', away: false })).toEqual(['voice_acting']);
-    expect(lovedInWork({ interests: ['television'], genres: [] }, { medium: 'screen', after: 'tv', away: false })).toEqual(['television']);
+  // Until 2026-10-10 a job's medium, the road and its crafts were matched against the interests too; the owner removed them.
+  it('finds the first of a play’s kinds they love, once however many they love', () => {
+    const who = { genres: ['horror', 'comedy', 'tragedy'] };
+    expect(lovedInWork(who, { genres: ['tragedy', 'comedy'] })).toEqual(['tragedy']);
+    expect(lovedInWork(who, { genres: ['drama'] })).toEqual([]);
+    expect(lovedInWork(who, {})).toEqual([]);
+    expect(lovedInWork({ genres: [] }, { genres: ['comedy'] })).toEqual([]);
   });
 
-  it('lifts the mood and eases the stress for each, and moves nothing else', () => {
+  it('lifts the mood and eases the stress once for a loved kind, and moves nothing else', () => {
     const plain = body();
-    const loves = body({ interests: ['film'], genres: ['horror'] });
-    const day = { medium: 'screen' as const, after: 'film' as const, genre: 'horror', away: false };
+    const loves = body({ genres: ['comedy', 'tragedy'] });
+    const day = { genres: ['comedy', 'tragedy'] };
     enjoyWork(plain, day);
     enjoyWork(loves, day);
-    expect(loves.wellbeing.morale - plain.wellbeing.morale).toBeCloseTo(2 * LOVED_WORK.mood, 10);
-    expect(plain.wellbeing.stress - loves.wellbeing.stress).toBeCloseTo(2 * LOVED_WORK.relief, 10);
+    expect(loves.wellbeing.morale - plain.wellbeing.morale).toBeCloseTo(LOVED_WORK.mood, 10);
+    expect(plain.wellbeing.stress - loves.wellbeing.stress).toBeCloseTo(LOVED_WORK.relief, 10);
     for (const dial of ['energy', 'sleepDebt', 'condition', 'fitness', 'nourishment', 'hygiene'] as const) expect(loves.wellbeing[dial]).toBe(plain.wellbeing[dial]);
   });
 
@@ -71,14 +71,14 @@ describe('a day of work, enjoyed', () => {
     expect(bold.wellbeing.stress).toBeCloseTo(50 - DISPOSED.room * 0.9, 10);
     expect(even.wellbeing.stress).toBe(50);
     const open = body({ personality: { ...body().personality, openness: 95, agreeableness: 5 } });
-    enjoyWork(open, { medium: 'stage', away: true });
+    enjoyWork(open, { away: true });
     expect(open.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);
     // New work, from 2026-10-09, as the road.
     const fresh = body({ personality: { ...body().personality, openness: 95, agreeableness: 50 } });
-    enjoyWork(fresh, { medium: 'stage', away: false, novel: true });
+    enjoyWork(fresh, { novel: true });
     expect(fresh.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);
     const home = body({ personality: { ...body().personality, openness: 95, agreeableness: 5 } });
-    enjoyWork(home, { medium: 'stage', away: false, rehearsal: true });
+    enjoyWork(home, { rehearsal: true });
     expect(home.wellbeing.morale).toBeCloseTo(50 - DISPOSED.rehearsal * 0.9, 10);
   });
 });

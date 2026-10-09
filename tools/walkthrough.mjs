@@ -198,7 +198,7 @@ if (await upload.count()) {
 
 const STEPS = [
   ['creation-2-dispositions-and-traits', 'step 2 of 5: seven dispositions and up to four traits'],
-  ['creation-3-interests-and-background', 'step 3 of 5: interests, genres and background'],
+  ['creation-3-genres-and-background', 'step 3 of 5: genres and background'],
   ['creation-4-starting-point', 'step 4 of 5: where you live and the money'],
   ['creation-5-review', 'step 5 of 5: all of it, before it becomes a save'],
 ];

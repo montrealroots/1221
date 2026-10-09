@@ -31,15 +31,17 @@ describe('the order', () => {
   });
 
   it('puts what costs every hour ahead of what gives more readiness back', () => {
-    // Unwashed past the line, which wears on the mood every hour, beside stress short of its line, which costs more
-    // readiness: the shower first, though unwinding gives more back.
-    const sim = at('lay-urgent-first', { hygiene: 48, stress: 74, morale: 30 });
+    // Unwashed past the line, which wears on the mood every hour, beside an appetite short of hunger's line, which a
+    // meal would give more readiness back for: the shower first. Until 2026-10-10 this was unwinding against the
+    // shower, and it held only because the test's character loved film and television, which made an hour unwinding
+    // half again the lift; the owner removed the interests that day.
+    const sim = at('lay-urgent-first', { hygiene: 45, stress: 50, nourishment: 25, morale: 20 });
     const options = lookAfterOptions(sim);
     const wash = options.find((o) => o.action === 'wash')!;
-    const unwind = options.find((o) => o.action === 'unwind')!;
+    const eat = options.find((o) => o.action === 'eat')!;
     expect(wash.urgent).toBe(true);
-    expect(unwind.urgent).toBe(false);
-    expect(unwind.gain).toBeGreaterThan(wash.gain);
+    expect(eat.urgent).toBe(false);
+    expect(eat.gain).toBeGreaterThan(wash.gain);
     expect(options[0]!.action).toBe('wash');
   });
 

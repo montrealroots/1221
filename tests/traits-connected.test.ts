@@ -24,8 +24,8 @@ import { PREP_DIMS, type PrepDim } from '@/engine/content/coursework';
 import { activitiesOf, courseworkOf, setWork, PREP_KNOB } from '@/engine/systems/coursework';
 import { bondMove, castCompany, focusAt } from '@/engine/systems/school';
 import { personalityOf } from '@/engine/systems/personality';
-import { enjoyWork, interestsRead } from '@/engine/systems/enjoyment';
-import { ALL_INTERESTS } from '@/engine/content/interests';
+import { enjoyWork, genresRead } from '@/engine/systems/enjoyment';
+import { FILM_GENRES } from '@/engine/content/film-genres';
 import { genresOfPlay } from '@/engine/content/plays';
 
 const ZONE = 'America/New_York';
@@ -119,7 +119,7 @@ describe('the films you love, in a play', () => {
       const p = life('tc-genre').player;
       p.genres = genres;
       Object.assign(p.wellbeing, { morale: 50, stress: 40 });
-      enjoyWork(p, { medium: 'stage', away: false, rehearsal: true, genres: genresOfPlay(play) });
+      enjoyWork(p, { rehearsal: true, genres: genresOfPlay(play) });
       return { morale: p.wellbeing.morale, stress: p.wellbeing.stress };
     };
     expect(genresOfPlay('Twelfth Night')).toContain('comedy');
@@ -134,33 +134,17 @@ describe('the films you love, in a play', () => {
   });
 });
 
-describe('what you care about, at school', () => {
-  it('makes a speech drill a better hour for somebody who loves dialect work, and the drill no further along', () => {
-    const drill = (interests: string[]) => {
-      const sim = life('tc-craft');
-      sim.player.interests = interests;
-      steady(sim);
-      const cw = courseworkOf(sim, sim.player)!;
-      for (const a of cw.assignments) if (a.status === 'open' || a.status === 'revising') a.status = 'done';
-      const a = setWork(sim, sim.player, 'DRAM 123a/b', { year: 2026, month: 9, day: 28 })!;
-      const morale = sim.player.wellbeing.morale;
-      sim.must({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'transcribe' } });
-      return { lift: sim.player.wellbeing.morale - morale, prep: a.prep.interpretation };
-    };
-    const loves = drill(['dialect_coaching']);
-    const not = drill(['cars']);
-    expect(loves.lift).toBeGreaterThan(not.lift);
-    expect(loves.prep).toBe(not.prep);
-  });
-
-  it('moves nothing for an interest said back only: a week lived with it and without is the same week', () => {
-    const { interests } = interestsRead();
-    const inert = ALL_INTERESTS.map((i) => i.id).filter((id) => !interests.has(id));
-    expect(inert).toContain('cars');
-    expect(inert).not.toContain('stage_combat');
-    const week = (extra: string[]) => {
+describe('a genre no play is of', () => {
+  // Until 2026-10-10 this was the interests: a speech drill a better hour for somebody who loved dialect work, and a
+  // week the same with an interest said back only. The owner removed the interests that day; the genres' half stays.
+  it('moves nothing: a week lived loving it and without is the same week', () => {
+    const read = genresRead();
+    const inert = FILM_GENRES.map((g) => g.id).filter((id) => !read.has(id));
+    expect(inert).toContain('western');
+    expect(inert).not.toContain('comedy');
+    const week = (genres: string[]) => {
       const sim = life('tc-inert');
-      sim.player.interests = [...sim.player.interests, ...extra];
+      sim.player.genres = genres;
       sim.advanceBy(7 * 24 * MS_HOUR);
       return { w: sim.player.wellbeing, money: sim.universe.transactions.length };
     };

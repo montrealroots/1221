@@ -4,17 +4,16 @@
  * `docs/ATTRIBUTES-MATRIX.md` is this function's output, and
  * `tests/attributes-matrix.test.ts` fails when the two differ.
  *
- * One row per ability, technique, interest, genre, task profile, profile
- * section and destination, each with where its state is saved, the action
+ * One row per ability, technique, genre, task profile, profile section and
+ * destination (an interest's too, until the owner removed them on 2026-10-10), each with where its state is saved, the action
  * that reaches it, the calculation that reads it, where its result shows, what
  * reads it downstream, and the test that holds it.
  */
 
 import { ABILITY_DEFS, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from './abilities';
 import { EXERCISES, exerciseFor } from './practice';
-import { INTEREST_DEFS } from './engagement';
 import { GENRE_DEFS } from './genres';
-import { ALL_INTERESTS, FILM_GENRES } from './interests';
+import { FILM_GENRES } from './film-genres';
 import { TASK_PROFILES, TEMPLATE_TASK, DIMENSION_LABEL, type Dimension } from './tasks';
 import { DEMAND_TECHNIQUE, GENRE_DEMANDS, genreTags } from './demands';
 
@@ -47,14 +46,6 @@ export function attributesMatrix(): string {
     out.push(row([TECHNIQUE_LABEL[t], `\`craft.${t}\``, `classes; coursework steps that train it; ${e ? `\`practice.exercise\` ${e.label}` : 'no exercise'}`, '`develop`; read by `evaluate` as level / 90 where the work reads it', 'Player Profile, Techniques; `look.skill`', `the ${work} coursework templates and every play that reads it; casting (\`readOf\`)`, '`tests/development.test.ts` (its exercise), `tests/evaluation.test.ts`']));
   }
 
-  out.push('', `## Interests: ${ALL_INTERESTS.filter((i) => INTEREST_DEFS[i.id]).length} of ${ALL_INTERESTS.length}`, '', HEAD);
-  for (const i of ALL_INTERESTS) {
-    const d = INTEREST_DEFS[i.id];
-    if (!d) { out.push(row([i.label, 'none', 'none', 'none', 'none', 'none', 'none'])); continue; }
-    const target = (ABILITY_DEFS.find((a) => a.id === d.develops)?.label) ?? TECHNIQUE_LABEL[d.develops as (typeof TECHNIQUES)[number]];
-    out.push(row([`${i.label} (${d.confidence})`, '`engagement.byInterest` (familiarity, sessions, satiation)', `\`interest.pursue\`: ${d.when ? d.when.why : 'any free hour'}`, `rest: ${d.recovery ?? 'none (a trade studied)'}, less satiation, eased by familiarity; grows ${target}`, 'Player Profile, Interests; `look.interest`', `${d.recovery ? 'stress and morale; ' : ''}${target} (the evaluation)`, '`tests/engagement.test.ts` (every interest, at a time it can be had)']));
-  }
-
   out.push('', `## Genres: ${FILM_GENRES.filter((g) => GENRE_DEFS[g.id]).length} of ${FILM_GENRES.length}`, '', HEAD);
   for (const g of FILM_GENRES) {
     const d = GENRE_DEFS[g.id];
@@ -83,8 +74,8 @@ export function attributesMatrix(): string {
   out.push(row(['Milestones', '`journey.milestones`', 'a run’s close; a first strong, distinction-level or mastered piece', '`milestone`', 'School Journey', 'the profile', '`tests/attributes-complete.test.ts`']));
   out.push(row(['Replay', 'each result’s levels, fulls and seed', 'any kept piece', '`replay`', '`look.work`', 'the explanation', '`tests/attributes-complete.test.ts`: after ratings and age change']));
 
-  out.push('', '## Profile Sections: 8 of 8', '', row(['Section', 'Reads']), '| --- | --- |');
-  for (const [s, r] of [['Identity And Background', 'the character sheet, the bank, the cover'], ['Attributes And Craft', '`abilityOf`, `abilityFull`, `reachOf`, today’s condition, the development history, the last five pieces’ limits'], ['Techniques', '`craft`, `reachOf`, `MASTERED`'], ['Interests', '`interests`, `engagement.byInterest`, `restOf`'], ['Genres', '`genres`, `engagement.byGenre`, the next part’s play'], ['Current Condition', '`readiness`, `conditionAt`'], ['School Journey', '`school`, `journey`, `work`'], ['Development History', '`development.history`']] as const) out.push(row([s, r]));
+  out.push('', '## Profile Sections: 7 of 7', '', row(['Section', 'Reads']), '| --- | --- |');
+  for (const [s, r] of [['Identity And Background', 'the character sheet, the bank, the cover'], ['Attributes And Craft', '`abilityOf`, `abilityFull`, `reachOf`, today’s condition, the development history, the last five pieces’ limits'], ['Techniques', '`craft`, `reachOf`, `MASTERED`'], ['Genres', '`genres`, `engagement.byGenre`, the next part’s play'], ['Current Condition', '`readiness`, `conditionAt`'], ['School Journey', '`school`, `journey`, `work`'], ['Development History', '`development.history`']] as const) out.push(row([s, r]));
 
   out.push('', '## Navigation Destinations: 6 of 6', '', row(['Destination', 'Route', 'Where']), '| --- | --- | --- |');
   for (const [n, r, w] of [['Home', '/home', 'the rail’s top, the brand, `h`'], ['Player Profile', '/workspace/profile', 'the rail, your name at its foot, `p`'], ['Calendar', '/workspace/calendar', 'Home’s Calendar section, `c` (kept off the rail by an earlier decision)'], ['School', '/workspace/school', 'the rail, Home’s Your Affairs'], ['Money', '/workspace/bank', 'the rail, Home’s Your Affairs'], ['Papers', '/workspace/papers', 'the rail, Home’s Your Affairs']] as const) out.push(row([n, `\`${r}\``, w]));

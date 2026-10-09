@@ -16,7 +16,8 @@ describe('the itemized matrix', () => {
     expect(doc).toBe(built);
     expect(built).toContain('## Abilities: 12 of 12');
     expect(built).toContain('## Techniques: 17 of 17');
-    expect(built).toContain('## Interests: 64 of 64');
+    // The interests' section went with them (2026-10-10).
+    expect(built).not.toContain('## Interests');
     expect(built).toContain('## Genres: 149 of 149');
     expect(built).not.toMatch(/\| none \| none \| none \|/);
   });

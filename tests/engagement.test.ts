@@ -1,168 +1,46 @@
 /**
- * Interests and genres pursued (`systems/engagement.ts`, `content/demands.ts`): every one of the 64 interests and the
- * 149 genres reached by its command and doing what it says; the constraints the sources state, refused with their
- * reason; satiation, familiarity and loving a thing each doing only what they should; an action sent twice lived
- * once; an hour that would cross a commitment refused; and every applied genre demand changing the work it's in.
+ * Genres studied and worked in (`systems/engagement.ts`, `content/demands.ts`): every one of the 149 reached by its
+ * command and doing what it says; an action sent twice lived once; an hour that would cross a commitment refused; and
+ * every applied genre demand changing the work it's in. Until 2026-10-10 this held the 64 interests too, each pursued
+ * at a time it could be had and resting as its kind did; the owner removed the interests that day.
  */
 
 import { describe, expect, it } from 'vitest';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { ALL_INTERESTS, FILM_GENRES } from '@/engine/content/interests';
-import { INTEREST_DEFS, RECOVERY, ENGAGEMENT } from '@/engine/content/engagement';
+import { FILM_GENRES } from '@/engine/content/film-genres';
+import { ENGAGEMENT } from '@/engine/content/engagement';
 import { GENRE_DEFS } from '@/engine/content/genres';
 import { DEMAND_TECHNIQUE, GENRE_DEMANDS, demandReads, genreTags, withDemands } from '@/engine/content/demands';
-import { bestRest, engagementOf, genreSpeed, minutesOf, practiceGenres, pursueRefusal, restOf, satiationAdded, satiationNow, tapeReads, whenRefusal } from '@/engine/systems/engagement';
-import { developmentOf, levelOf } from '@/engine/systems/attributes';
-import { reachOf } from '@/engine/systems/school';
-import { inTheBank } from '@/engine/systems/spending';
-import { MS_HOUR, MS_DAY, instantFromZoned } from '@/engine/core/time';
+import { engagementOf, genreSpeed, practiceGenres, tapeReads } from '@/engine/systems/engagement';
+import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 
-const life = (seed: string, interests: string[] = []) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', interests });
+const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 /** A Sunday evening at the start of the first term, rested: nothing scheduled. */
 const sunday = (sim: Simulation) => play(sim, instantFromZoned({ year: 2026, month: 9, day: 6, hour: 17 }, 'America/New_York'));
 const rested = (sim: Simulation) => Object.assign(sim.player.wellbeing, { energy: 95, stress: 50, sleepDebt: 0, nourishment: 85, morale: 50 });
-/** Forward an hour at a time, awake and rested, until the interest can be started (at most a fortnight). */
-function whenItCan(sim: Simulation, id: string): string | undefined {
-  for (let n = 0; n < 24 * 14; n += 1) {
-    rested(sim);
-    sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now - MS_HOUR);
-    const no = pursueRefusal(sim, sim.player, id);
-    if (!no) return undefined;
-    sim.advanceTo(sim.now + MS_HOUR);
-  }
-  return pursueRefusal(sim, sim.player, id);
-}
-
-describe('every interest', () => {
-  it('has its research, an activity to do, and an effect chosen for it: not one bonus for all', () => {
-    expect(ALL_INTERESTS).toHaveLength(64);
-    for (const i of ALL_INTERESTS) {
-      const d = INTEREST_DEFS[i.id];
-      expect(d, i.id).toBeDefined();
-      expect(d!.activity.length, i.id).toBeGreaterThan(20);
-      if (d!.activitySource) expect(d!.activitySource, i.id).toMatch(/http|library|Yale|book|Corson|Murch|Shurtleff|Chekhov|Stanislavski|de Witte/i);
-      expect(d!.actorUse.length, i.id).toBeGreaterThan(20);
-    }
-    const effects = new Set(Object.values(INTEREST_DEFS).map((d) => `${d.develops}/${d.recovery ?? '-'}`));
-    expect(effects.size).toBeGreaterThan(35);
-    // The festival that ended in 2023 is no longer offered as if it ran.
-    expect(INTEREST_DEFS.film_festivals!.activity).toMatch(/ended/);
-  });
-
-  it('is pursued by a command at a time it can be had, rests as its kind does, grows what it names and is kept', () => {
-    for (const [n, i] of ALL_INTERESTS.entries()) {
-      const sim = life(`interest-${n}`);
-      sunday(sim);
-      const blocked = whenItCan(sim, i.id);
-      expect(blocked, `${i.id}: ${blocked}`).toBeUndefined();
-      const def = INTEREST_DEFS[i.id]!;
-      const before = levelOf(sim, sim.player, def.develops);
-      const reach = reachOf(sim.player, def.develops);
-      const stress = sim.player.wellbeing.stress;
-      const at = sim.now;
-      const bank = inTheBank(sim, sim.player);
-      const r = sim.execute<{ stress: number; developed: number }>({ kind: 'interest.pursue', payload: { interest: i.id } });
-      expect(r.ok, `${i.id}: ${r.ok ? '' : r.error}`).toBe(true);
-      // It took its own time: an hour, or what its source says (a 90-minute walk, a screening, a show).
-      expect(sim.now - at, i.id).toBe(minutesOf(i.id) * 60_000);
-      const s = engagementOf(sim.player).byInterest[i.id]!;
-      expect(s.sessions).toBe(1);
-      expect(s.familiarity).toBeGreaterThan(0);
-      expect(s.satiation).toBeGreaterThan(0);
-      if (def.recovery) expect(sim.player.wellbeing.stress, i.id).toBeLessThan(stress);
-      else expect(r.ok && r.value!.stress).toBe(0);
-      if (def.when?.costUsd) expect(inTheBank(sim, sim.player), i.id).toBeLessThan(bank);
-      if (before < reach - 0.01) expect(levelOf(sim, sim.player, def.develops), `${i.id} ${def.develops}`).toBeGreaterThan(before);
-      if (before < reach - 0.01) expect(developmentOf(sim.player).history.some((h) => h.source === `interest:${i.id}`), i.id).toBe(true);
-    }
-  }, 300_000);
-
-  it('is refused, with its reason, where its source says it can’t be had: after dark, off its day, outside its hours', () => {
-    const sim = life('interest-when');
-    sunday(sim);
-    // Sunday at 5: the galleries are open, the debate isn't on, the architecture gallery is shut.
-    expect(whenRefusal(sim, sim.player, INTEREST_DEFS.politics!.when)).toMatch(/Sunday.*Tuesdays/);
-    expect(whenRefusal(sim, sim.player, INTEREST_DEFS.design!.when)).toMatch(/Sunday/);
-    // Late at night, the park is shut.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 9, day: 6, hour: 23 }, 'America/New_York'));
-    expect(whenRefusal(sim, sim.player, INTEREST_DEFS.nature!.when)).toMatch(/after dark/);
-    // A Monday at noon: the galleries are closed.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 9, day: 7, hour: 12 }, 'America/New_York'));
-    expect(whenRefusal(sim, sim.player, INTEREST_DEFS.art!.when)).toMatch(/Monday/);
-    // A Tuesday evening: the Political Union.
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 9, day: 8, hour: 19 }, 'America/New_York'));
-    expect(whenRefusal(sim, sim.player, INTEREST_DEFS.politics!.when)).toBeUndefined();
-    // Interests no source constrains have no rule invented for them.
-    expect(INTEREST_DEFS.voice_acting!.when).toBeUndefined();
-  });
-
-  it('rests less the more satiated, recovers with time, and a familiar interest tires of itself more slowly', () => {
-    const sim = life('interest-satiation');
-    sunday(sim);
-    rested(sim);
-    const first = restOf(sim.player, 'television', sim.now);
-    sim.execute({ kind: 'interest.pursue', payload: { interest: 'television' } });
-    const second = restOf(sim.player, 'television', sim.now);
-    expect(second.stress).toBeLessThan(first.stress);
-    const s = engagementOf(sim.player).byInterest.television!;
-    expect(satiationNow(s, sim.now + 4 * MS_DAY)).toBeCloseTo(s.satiation / 4, 5);
-    // Familiarity's use: each session adds less satiation the more familiar the interest is.
-    expect(satiationAdded(80)).toBeLessThan(satiationAdded(0));
-    expect(satiationAdded(100)).toBeCloseTo(ENGAGEMENT.satiation.perSession * (1 - ENGAGEMENT.satiation.familiarityEases), 9);
-    expect(RECOVERY.nature.stress).toBeGreaterThan(RECOVERY.mastery.stress);
-  });
-
-  it('recommends the rest that is greatest of those that can be started now, by the same calculation the hour uses', () => {
-    const sim = life('interest-best', ['music']);
-    sunday(sim);
-    rested(sim);
-    const best = bestRest(sim, sim.player)!;
-    expect(best).toBeDefined();
-    for (const [id, def] of Object.entries(INTEREST_DEFS)) {
-      if (!def.recovery || pursueRefusal(sim, sim.player, id)) continue;
-      expect(restOf(sim.player, id, sim.now).stress, id).toBeLessThanOrEqual(best.stress);
-    }
-    const r = sim.execute<{ stress: number }>({ kind: 'interest.pursue', payload: { interest: best.id } });
-    expect(r.ok && r.value!.stress).toBe(best.stress);
-  });
-
-  it('lets loving an interest make it better rest and no better practice; choosing or dropping one gives nothing', () => {
-    const loved = life('interest-loved', ['television']);
-    const plain = life('interest-loved', []);
-    for (const sim of [loved, plain]) { sunday(sim); rested(sim); sim.player.craft!.script = 50; }
-    const a = loved.execute<{ stress: number; developed: number }>({ kind: 'interest.pursue', payload: { interest: 'television' } });
-    const b = plain.execute<{ stress: number; developed: number }>({ kind: 'interest.pursue', payload: { interest: 'television' } });
-    expect(a.ok && b.ok).toBe(true);
-    if (a.ok && b.ok) {
-      expect(a.value!.stress).toBeCloseTo(b.value!.stress * ENGAGEMENT.loved, 5);
-      expect(a.value!.developed).toBeCloseTo(b.value!.developed, 9);
-    }
-    const before = JSON.stringify(engagementOf(plain.player));
-    const craft = JSON.stringify(plain.player.craft);
-    plain.player.interests.push('nature', 'art');
-    plain.player.interests.splice(0);
-    expect(JSON.stringify(engagementOf(plain.player))).toBe(before);
-    expect(JSON.stringify(plain.player.craft)).toBe(craft);
-  });
-
+describe('an hour of a genre', () => {
+  // Until 2026-10-10 this was an interest's hour (`interest.pursue`); the owner removed the interests that day.
   it('lives an action sent twice once, and refuses an hour that would run into a commitment', () => {
-    const sim = life('interest-twice');
+    const sim = life('genre-twice');
     sunday(sim);
     rested(sim);
-    const once = sim.execute({ kind: 'interest.pursue', payload: { interest: 'television', actionId: 'a-1' } });
-    const state = JSON.stringify(engagementOf(sim.player).byInterest.television);
-    const twice = sim.execute({ kind: 'interest.pursue', payload: { interest: 'television', actionId: 'a-1' } });
+    const once = sim.execute({ kind: 'genre.study', payload: { genre: 'comedy', actionId: 'a-1' } });
+    const state = JSON.stringify(engagementOf(sim.player).byGenre.comedy);
+    const when = sim.now;
+    const twice = sim.execute({ kind: 'genre.study', payload: { genre: 'comedy', actionId: 'a-1' } });
     expect(once.ok).toBe(true);
     expect(twice.ok).toBe(false);
     expect(twice.ok ? '' : twice.error).toMatch(/already done/);
-    expect(JSON.stringify(engagementOf(sim.player).byInterest.television)).toBe(state);
-    // Something on the calendar in half an hour: an hour of anything won't fit before it.
+    expect(JSON.stringify(engagementOf(sim.player).byGenre.comedy)).toBe(state);
+    expect(sim.now).toBe(when);
+    // Something on the calendar in half an hour: an hour and a half of study, or an hour of anything, won't fit before it.
     sim.onSchedule('test.commitment', () => {});
     sim.schedule({ at: sim.now + 30 * 60_000, kind: 'test.commitment', label: 'A Test Call', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 60, payload: { personId: sim.player.id } });
-    expect(pursueRefusal(sim, sim.player, 'television')).toMatch(/A Test Call starts/);
+    expect(sim.execute({ kind: 'genre.study', payload: { genre: 'drama' } }).error).toMatch(/A Test Call starts/);
+    expect(sim.execute({ kind: 'practice.self_tape', payload: { genre: 'drama' } }).error).toMatch(/A Test Call starts/);
     expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'concentration' } }).ok).toBe(false);
   });
 });

@@ -16,13 +16,12 @@ import { formatDate } from '@/engine/core/time';
 import { ABILITY_DEFS, ABILITY_KIN, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { DIMENSION_LABEL, DIMENSION_MEANS, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { EXERCISES, exerciseFor } from '@/engine/content/practice';
-import { INTEREST_DEFS, RECOVERY, phaseOf } from '@/engine/content/engagement';
 import { GENRE_DEFS } from '@/engine/content/genres';
-import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
-import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, levelOf, targetId } from '@/engine/systems/attributes';
+import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
+import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, targetId } from '@/engine/systems/attributes';
 import { classesGrow, reachOf } from '@/engine/systems/school';
 import { EVERYDAY_FITNESS, FITNESS } from '@/engine/systems/life';
-import { genreSpeed, playOfGenre, restOf, satiationNow } from '@/engine/systems/engagement';
+import { genreSpeed, playOfGenre } from '@/engine/systems/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
 import type { Skill } from '@/engine/content/school';
@@ -58,7 +57,7 @@ export function sourceWords(source: string): string {
   if (kind === 'practice') return EXERCISES.find((e) => e.id === rest)?.label ?? 'Practice';
   if (kind === 'class') return `Class: ${rest}`;
   if (kind === 'prepare') return `Coursework: ${rest}`;
-  if (kind === 'interest') return INTEREST_BY_ID[rest ?? '']?.label ?? 'An interest';
+  if (kind === 'interest') return 'An interest, from before they were removed';
   if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
   if (kind === 'read' || kind === 'research') return 'Reading a play';
   return ({ 'practice-day': 'A day of practice kept', call: 'A call answered', night: 'A night on stage', 'partner-rehearsal': 'Rehearsing with a partner', 'learn-part': 'Learning the part', blocking: 'The blocking book', 'work-note': 'A director’s note worked', 'self-tape': 'A self-tape' } as Record<string, string>)[kind] ?? kind;
@@ -125,52 +124,6 @@ defineLook<TheAbility>('ability', {
       ),
       ways,
       provenance: def.source.length < 200 ? `${def.source}.` : 'Its sources are in docs/research/attributes/research-acting-engine.json.',
-    };
-  },
-});
-
-// ---------------------------------------------------------------------------
-// An interest
-// ---------------------------------------------------------------------------
-
-interface TheInterest { id: string; person: Person }
-
-defineLook<TheInterest>('interest', {
-  gone: 'That isn’t one of the interests.',
-  resolve: (sim, id) => {
-    const p = player(sim);
-    return p && INTEREST_DEFS[id] && INTEREST_BY_ID[id] ? { id, person: p } : undefined;
-  },
-  seeds: () => ALL_INTERESTS.map((i) => i.id),
-  look: ({ id, person }, { sim }) => {
-    const def = INTEREST_DEFS[id]!;
-    const s = person.engagement?.byInterest[id];
-    const rest = restOf(person, id, sim.now);
-    const familiarity = s?.familiarity ?? 0;
-    const sat = satiationNow(s, sim.now);
-    const develops = targetLabel(def.develops);
-    return {
-      name: INTEREST_BY_ID[id]!.label,
-      kind: rest.loved ? 'An Interest You Love' : 'An Interest',
-      summary: s?.sessions
-        ? `${s.sessions === 1 ? 'Once' : `${s.sessions} times`} so far, the last on ${formatDate(s.lastAt!, zoneOf(sim))}: ${phaseOf(familiarity).toLowerCase()}, at ${one(familiarity)} familiarity.`
-        : `You haven’t spent an hour on it yet. ${def.definition}`,
-      body: (
-        <>
-          <div className="grid grid-3">
-            <Stat label="Familiarity" value={one(familiarity)} note={`${phaseOf(familiarity)} (Hidi & Renninger’s phases)`} />
-            <Stat label="An Hour Now" value={def.recovery ? `−${rest.stress} Stress` : 'Work, Not Rest'} note={def.recovery ? `${rest.morale > 0 ? `+${rest.morale} morale, ` : ''}${Math.round(sat * 100)}% satiated${rest.loved ? ', loved' : ''}` : 'A trade studied, not a rest'} />
-            <Stat label="It Grows" value={develops} note={`Now ${one(levelOf(sim, person, def.develops))}, toward its reach`} />
-          </div>
-          <p className="small"><strong>The hour.</strong> {def.activity}</p>
-          <p className="small"><strong>To an actor.</strong> {def.actorUse}</p>
-          {def.recovery && <p className="small"><strong>As rest.</strong> {RECOVERY[def.recovery].source}. Satiation halves every two days without it; loving it makes the hour better rest and no better practice.</p>}
-          {def.notes && <p className="xs dim">The researcher’s caveat: {def.notes}</p>}
-          <p className="xs dim">{def.activitySource ? `The activity: ${def.activitySource}. ` : 'The activity is done at home, and no source names a place. '}{def.actorUseSource ? `Its use: ${def.actorUseSource}.` : 'Its use to an actor has no source: SLATE’s reading.'}</p>
-        </>
-      ),
-      ways: [{ to: targetSubject(def.develops), label: develops, detail: 'What an hour of it grows' }],
-      provenance: `From docs/research/attributes/research-interests.json, at ${def.confidence} confidence.`,
     };
   },
 });

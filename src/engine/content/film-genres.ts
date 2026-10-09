@@ -1,121 +1,23 @@
 /**
- * SLATE — what a person is into.
+ * SLATE — every genre a film gets filed under: the broad ones a listings page uses, the subgenres a critic uses, the
+ * national traditions with their own names, and the movements that ended up as genres because everybody kept making
+ * them. Sorted by name, and held that way by a test: a list this long is only usable if a reader can guess where a word
+ * will be.
  *
- * Three lists. Interests and genres are on the character sheet because a
- * person has them, not because the game reads them to decide how good anybody
- * is at anything. None of them did anything until 2026-09-24, when the owner
- * let an interest change how much somebody gets out of doing a thing:
- * Cooking, Fitness, Sport and the evening pastimes lift the mood and ease the
- * stress of the hour they go with (`systems/enjoyment.ts`). The crafts and
- * the genres waited for the career until 2026-09-27: a day on a job in a
- * genre somebody loves, or of Voice Acting for one who loves that, lifts
- * the mood the same way. The other crafts were trades an actor's jobs don't
- * do, and were said back, until 2026-09-28: since then each is met where the
- * work really puts an actor beside it (a set, a stage, a booth, the casting
- * room, the finished film; `CRAFTS_AT` in `systems/enjoyment.ts`), and Film
- * History and Film Preservation are an evening with the old films.
- *
- * The crafts are the ones film and television are actually made of, from the
- * ones everybody can name to the ones only a crew knows. It says something
- * about somebody which of the trades they care about.
- *
- * The genres are the genres. Sorted by name, and held that way by a test:
- * a list this long is only usable if a reader can guess where a word will be.
+ * Until 2026-10-10 this list lived in `content/interests.ts` beside the character sheet's interests (the trades of
+ * film and television, and some forty pastimes). The owner removed the interests that day, and the question at
+ * creation with them; the genres stayed, with what each is (`content/genres.ts`), what it asks (`content/demands.ts`)
+ * and what's done in it (`systems/engagement.ts`).
  */
 
-export interface Interest {
+export interface Genre {
   id: string;
   label: string;
 }
 
-const of = (id: string, label: string): Interest => ({ id, label });
+const of = (id: string, label: string): Genre => ({ id, label });
 
-/**
- * The trades that make a film or a television show.
- *
- * Alphabetical, like the genres, because there is no other order that means
- * anything: a grip's work is not above or below a colourist's.
- */
-export const CRAFT_INTERESTS: readonly Interest[] = [
-  of('animation', 'Animation'),
-  of('art_direction', 'Art Direction'),
-  of('casting', 'Casting'),
-  of('choreography', 'Choreography'),
-  of('cinematography', 'Cinematography'),
-  of('color_grading', 'Color Grading'),
-  of('costume_design', 'Costume Design'),
-  of('creature_effects', 'Creature Effects'),
-  of('dialect_coaching', 'Dialect Coaching'),
-  of('directing', 'Directing'),
-  of('editing', 'Editing'),
-  of('film_criticism', 'Film Criticism'),
-  of('film_festivals', 'Film Festivals'),
-  of('film_history', 'Film History'),
-  of('film_preservation', 'Film Preservation'),
-  of('film_scoring', 'Film Scoring'),
-  of('foley', 'Foley'),
-  of('hair_and_makeup', 'Hair And Makeup'),
-  of('improvisation', 'Improvisation'),
-  of('intimacy_coordination', 'Intimacy Coordination'),
-  of('lighting', 'Lighting'),
-  of('location_scouting', 'Location Scouting'),
-  of('miniatures', 'Miniatures'),
-  of('motion_capture', 'Motion Capture'),
-  of('music_supervision', 'Music Supervision'),
-  of('practical_effects', 'Practical Effects'),
-  of('producing', 'Producing'),
-  of('production_design', 'Production Design'),
-  of('props', 'Props'),
-  of('puppetry', 'Puppetry'),
-  of('screenwriting', 'Screenwriting'),
-  of('script_supervision', 'Script Supervision'),
-  of('set_decoration', 'Set Decoration'),
-  of('showrunning', 'Showrunning'),
-  of('sound_design', 'Sound Design'),
-  of('sound_mixing', 'Sound Mixing'),
-  of('stage_combat', 'Stage Combat'),
-  of('storyboarding', 'Storyboarding'),
-  of('stunts', 'Stunts'),
-  of('title_design', 'Title Design'),
-  of('visual_effects', 'Visual Effects'),
-  of('voice_acting', 'Voice Acting'),
-  of('writers_rooms', 'Writers’ Rooms'),
-];
-
-/** Everything else a person can be into. The ids predate the labels. */
-export const GENERAL_INTERESTS: readonly Interest[] = [
-  of('animals', 'Animals'),
-  of('art', 'Art'),
-  of('cars', 'Cars'),
-  of('cooking', 'Cooking'),
-  of('design', 'Design'),
-  of('fashion', 'Fashion'),
-  of('film', 'Film'),
-  of('fitness', 'Fitness'),
-  of('games', 'Games'),
-  of('history', 'History'),
-  of('music', 'Music'),
-  of('nature', 'Nature'),
-  of('photography', 'Photography'),
-  of('politics', 'Politics'),
-  // From 2026-10-02: a reader, whose hour unwinding at home needs something to read (`systems/reading.ts`).
-  of('reading', 'Reading'),
-  of('sport', 'Sport'),
-  of('technology', 'Technology'),
-  of('television', 'Television'),
-  of('theatre', 'Theater'),
-  of('travel', 'Travel'),
-  of('writing', 'Writing'),
-];
-
-/**
- * Every genre a film gets filed under.
- *
- * The broad ones a listings page uses, the subgenres a critic uses, the
- * national traditions with their own names, and the movements that ended up
- * as genres because everybody kept making them.
- */
-export const FILM_GENRES: readonly Interest[] = [
+export const FILM_GENRES: readonly Genre[] = [
   of('absurdist', 'Absurdist'),
   of('action', 'Action'),
   of('action_comedy', 'Action Comedy'),
@@ -267,19 +169,12 @@ export const FILM_GENRES: readonly Interest[] = [
   of('zombie', 'Zombie'),
 ];
 
-/** Every interest the creation screen offers, craft and general together. */
-export const ALL_INTERESTS: readonly Interest[] = [...CRAFT_INTERESTS, ...GENERAL_INTERESTS];
-
-export const INTEREST_BY_ID: Readonly<Record<string, Interest>> = Object.fromEntries(
-  ALL_INTERESTS.map((one) => [one.id, one]),
-);
-
-export const GENRE_BY_ID: Readonly<Record<string, Interest>> = Object.fromEntries(
+export const GENRE_BY_ID: Readonly<Record<string, Genre>> = Object.fromEntries(
   FILM_GENRES.map((one) => [one.id, one]),
 );
 
 /** Whether a list of names is in the order a reader would look for them in. */
-export function isAlphabetical(items: readonly Interest[]): boolean {
+export function isAlphabetical(items: readonly Genre[]): boolean {
   for (let i = 1; i < items.length; i++) {
     if (items[i - 1]!.label.localeCompare(items[i]!.label, 'en') > 0) return false;
   }

@@ -123,13 +123,13 @@ export interface Person {
    */
   personalityTraits: string[];
   /**
-   * What they care about, and below it the genres they love. On the
-   * character sheet because a person has them, and the person look says both
-   * back. The interests change how much an hour of looking after yourself
-   * gives the mood (`systems/enjoyment.ts`), never how good anybody is at
-   * anything, and since 2026-09-27 what a day of work gives, with the genres.
+   * The genres they love. On the character sheet because a person has them,
+   * and the person look says them back. A rehearsal or a night of a play of a
+   * kind they love lifts the mood (`systems/enjoyment.ts`), never how good
+   * anybody is at anything. Beside them until 2026-10-10 were their
+   * interests, which the owner removed with the question at creation;
+   * migration 94 dropped them from every save.
    */
-  interests: string[];
   genres?: string[];
   /**
    * The life before this one, in the player's own words.
@@ -191,7 +191,7 @@ export interface Person {
   attrs?: Attributes;
   /** What moved in the abilities and techniques, and today's practice counted against farming (`systems/attributes.ts`, from 2026-10-09). */
   development?: import('../systems/attributes').DevelopmentLedger;
-  /** Interests pursued and genres studied and practiced (`systems/engagement.ts`, from 2026-10-09). */
+  /** Genres studied and practiced (`systems/engagement.ts`, from 2026-10-09; interests pursued until 2026-10-10). */
   engagement?: import('../systems/engagement').Engagement;
   /** Finished work judged, newest last (`systems/evaluation.ts`, from 2026-10-09). */
   work?: import('../systems/evaluation').WorkRecord[];
@@ -428,7 +428,7 @@ export interface Preferences {
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 93;
+export const SAVE_SCHEMA_VERSION = 94;
 
 export interface SaveMeta {
   id: Id;

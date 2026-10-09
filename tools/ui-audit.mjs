@@ -321,7 +321,7 @@ for (const size of WIDTHS) {
   await shoot('02-creation-identity');
   scrollsSideways = (await probe('creation, identity')) || scrollsSideways;
 
-  const STEPS = ['dispositions and traits', 'interests and background', 'starting point', 'review'];
+  const STEPS = ['dispositions and traits', 'genres and background', 'starting point', 'review'];
   for (const step of STEPS) {
     if (!(await click(/^Continue$/))) break;
     await page.waitForTimeout(900);

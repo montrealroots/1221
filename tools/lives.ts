@@ -52,7 +52,7 @@ const PROFILES: Profile[] = [
   { name: 'london, early riser and curious, attentive', config: { homeRegionId: 'uk-eng-london', pronouns: 'they/them', personalityTraits: ['early_riser', 'curious'] }, play: 'attentive' },
   { name: 'reykjavik, autopilot', config: { homeRegionId: 'is-39-reykjavik', pronouns: 'she/her' }, play: 'autopilot' },
   // From 2026-10-09: attentive, and the hours left over spent as the Player Profile suggests (`practiceHour`).
-  { name: 'new-york, practicing', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her', interests: ['nature', 'music'] }, play: 'practicing' },
+  { name: 'new-york, practicing', config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her', genres: ['comedy', 'tragedy'] }, play: 'practicing' },
   // TEST SETUP: a student without the wealthy family behind them, which the game's own new life always has.
   // TEST SETUP: a student without the wealthy family behind them, and from 2026-10-10 under pressure: the flu mid-term
   // each term and an everyday injury each spring (`adverse`), so illness, injury and the recovery from them are played.

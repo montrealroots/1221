@@ -16,7 +16,7 @@ import { instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
-import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+import { GENRE_BY_ID } from '../content/film-genres';
 import { ceilingAt } from '../content/lifespan';
 
 /** The ids on a list this build recognises, deduplicated, in the order given. */
@@ -82,9 +82,8 @@ export interface NewSaveConfig {
   personality: Personality;
   personalityTraits: string[];
 
-  /** Interests & Background */
-  interests: string[];
-  /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
+  /** Genres & Background. The interests were asked here too until 2026-10-10. */
+  /** Genres they love: a rehearsal or a night of a play of the kind is a better day (`systems/enjoyment.ts`). */
   genres: string[];
   /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
@@ -140,7 +139,7 @@ export function defaultConfig(): NewSaveConfig {
     raceEthnicity: [],
     homeRegionId: DEFAULT_CITY_ID, livesWhereBorn: true,
     personality: defaultPersonality(), personalityTraits: [],
-    interests: ['film', 'television'], genres: [],
+    genres: [],
     background: '',
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
@@ -346,7 +345,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     personalityTraits: cleanPersonalityTraits(config.personalityTraits),
     // Cleaned by the same rule the engine reads them by, so what is written
     // and what is read can never drift apart.
-    interests: known(config.interests, INTEREST_BY_ID),
     genres: known(config.genres, GENRE_BY_ID),
     // Kept as the player wrote it, and printed back on their own page. It
     // decides nothing, and the step says so; what they did before, beside it,

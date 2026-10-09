@@ -1,176 +1,57 @@
 /**
- * SLATE — interests and genres pursued (from the connected attributes of
- * 2026-10-09).
+ * SLATE — genres studied and worked in (from the connected attributes of 2026-10-09).
  *
- * The character sheet says what somebody loves; this keeps what they've
- * done about it, apart from that (`person.engagement`):
+ * The character sheet says which genres somebody loves; this keeps what they've done about them, apart from that
+ * (`person.engagement`): each genre's familiarity (`genre.study`: a film of the kind, or a play of it the game has)
+ * and practice (work done in it: a night of a play of the kind, a self-tape in it, `practice.self_tape`).
+ * Familiarity and practice speed the preparation of work in the genre (`genreSpeed`), the best of a work's genres
+ * and never their sum, and a self-tape reads familiarity as its "knowing the genre". Neither caps what work can reach.
  *
- * - each interest's familiarity, sessions, the last one and how satiated it
- *   is (`interest.pursue`): an hour of its activity (`content/engagement.ts`)
- *   rests as its kind of rest does, less the more satiated, and a quarter
- *   more for an interest loved; and it grows the ability or technique its
- *   actor's use names, a little, toward the reach, loved or not;
- * - each genre's familiarity (`genre.study`: a film of the kind, or a play of
- *   it the game has) and practice (work done in it: a night of a play of the
- *   kind, a self-tape in it). Familiarity and practice speed the preparation
- *   of work in the genre (`genreSpeed`), the best of a work's genres and
- *   never their sum, and a self-tape reads familiarity as its "knowing the
- *   genre". Neither caps what work can reach.
+ * What stops farming: each is an hour that passes, the same study or tape again the same day gives half, a work's
+ * genres share one session's practice, and choosing or dropping a genre on the character sheet gives nothing: only
+ * the hours do.
  *
- * What stops farming: each is an hour that passes, satiation falls only with
- * time, the same development again the same day gives half (`develop`), a
- * work's genres share one session's practice, and choosing or dropping an
- * interest on the character sheet gives nothing: only the hours do.
+ * Until 2026-10-10 this kept the interests too (`interest.pursue`: an hour of one rested as its kind of rest did,
+ * less the more satiated, and grew one ability a little; its familiarity, sessions and satiation in
+ * `engagement.byInterest`). The owner removed them that day, and migration 94 dropped their record from every save.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatTime, zonedParts } from '../core/time';
-import { ENGAGEMENT, INTEREST_DEFS, RECOVERY, phaseOf, type When } from '../content/engagement';
-import { CITIES } from '../content/geography';
-import { sunTimes } from '../core/sun';
-import { spend } from './spending';
-import { inSaveMoney } from './banking';
+import { MS_DAY, formatTime } from '../core/time';
+import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS, familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
-import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+import { GENRE_BY_ID } from '../content/film-genres';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
 import { TASK_PROFILES } from '../content/tasks';
 import { alreadyApplied, markApplied, repeatsToday } from './attributes';
 import { conditionAt, focusAt, ordinary } from './school';
 import { evaluate, recordWork, type Evaluation } from './evaluation';
-import { SPENT, commitmentWithin, occupiedAt } from './life';
-import { exerts } from './body';
-import { trainingRefusal } from './injury';
+import { commitmentWithin, occupiedAt } from './life';
 import { inHospital } from './health';
-import { lovesInterest } from './enjoyment';
 
-export interface InterestState { familiarity: number; sessions: number; lastAt?: number; satiation: number; satiatedAt?: number }
 export interface GenreState { familiarity: number; practice: number; lastAt?: number }
-/** Kept apart from the character sheet's `interests` and `genres`, which only `systems/enjoyment.ts` reads. */
-export interface Engagement { byInterest: Record<string, InterestState>; byGenre: Record<string, GenreState> }
+/** Kept apart from the character sheet's `genres`, which only `systems/enjoyment.ts` reads. */
+export interface Engagement { byGenre: Record<string, GenreState> }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
 const r2 = (x: number) => Math.round(x * 100) / 100;
 
 export function engagementOf(person: Person): Engagement {
-  person.engagement ??= { byInterest: {}, byGenre: {} };
+  person.engagement ??= { byGenre: {} };
   return person.engagement;
 }
-export const interestState = (person: Person, id: string): InterestState => (engagementOf(person).byInterest[id] ??= { familiarity: 0, sessions: 0, satiation: 0 });
 export const genreState = (person: Person, id: string): GenreState => (engagementOf(person).byGenre[id] ??= { familiarity: 0, practice: 0 });
 
-/** Satiation now: what the last session left, halved every two days since (Galak et al. 2011). */
-export function satiationNow(s: InterestState | undefined, now: number): number {
-  if (!s?.satiatedAt) return s?.satiation ?? 0;
-  return s.satiation * 0.5 ** ((now - s.satiatedAt) / (ENGAGEMENT.satiation.halfLifeDays * MS_DAY));
-}
-
-/** What's common to an hour away from the work: awake, free, out of hospital, and able if it's on your feet. */
-function hourRefusal(sim: Simulation, person: Person, feet: boolean, minutes: number = ENGAGEMENT.minutes): string | undefined {
+/** What's common to an hour away from the work: awake, free, out of hospital, and nothing on the calendar inside it. */
+function hourRefusal(sim: Simulation, person: Person, minutes: number): string | undefined {
   if (inHospital(person, sim.now)) return 'Not from a hospital bed.';
   if (person.awakeSince !== undefined && person.awakeSince > sim.now) return 'You’re asleep.';
   const busy = occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  const ahead = commitmentWithin(sim, minutes);
-  if (ahead) return ahead;
-  if (feet) {
-    if (person.wellbeing.energy < SPENT) return 'You’re too tired for it. Sleep first.';
-    const hurt = trainingRefusal(person, sim.now);
-    if (hurt) return hurt;
-  }
-  return undefined;
-}
-
-export function pursueRefusal(sim: Simulation, person: Person, id: string): string | undefined {
-  const def = INTEREST_DEFS[id];
-  if (!def || !INTEREST_BY_ID[id]) return 'There’s no such interest.';
-  return whenRefusal(sim, person, def.when) ?? hourRefusal(sim, person, Boolean(def.feet), minutesOf(id));
-}
-
-/** How long an hour of an interest is: its `when`'s, where a source gives one, else an hour. */
-export const minutesOf = (id: string): number => INTEREST_DEFS[id]?.when?.minutes ?? ENGAGEMENT.minutes;
-
-const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-/**
- * Why an interest can't be had now, by the constraints its sources state (`When`, from 2026-10-10): by daylight, on
- * its days, starting within its hours and with a classmate; a ticket is paid as the hour begins (`pursue`), and refused
- * there, with nothing lived, when it can't be paid. Said with the reason.
- */
-export function whenRefusal(sim: Simulation, person: Person, when: When | undefined): string | undefined {
-  if (!when) return undefined;
-  const city = CITIES.get(person.currentLocationId);
-  const zone = city?.timeZone ?? sim.homeZone;
-  const p = zonedParts(sim.now, zone);
-  const day = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
-  if (when.daylight && city) {
-    const sun = sunTimes(sim.now, city.latitude, city.longitude, zone);
-    const up = sun.polar === 'day' || (sun.polar !== 'night' && sun.sunrise !== undefined && sun.sunset !== undefined && sim.now >= sun.sunrise && sim.now < sun.sunset);
-    if (!up) return `Not after dark. ${when.why}`;
-  }
-  if (when.days && !when.days.includes(day)) return `Not on a ${WEEKDAY[day]}. ${when.why}`;
-  if ((when.from !== undefined && p.hour < when.from) || (when.to !== undefined && p.hour >= when.to)) return `Not at this hour. ${when.why}`;
-  if (when.partnered && !person.school?.classmates.length) return `It takes others, and you have no class to ask. ${when.why}`;
-  return undefined;
-}
-
-export interface Pursued { stress: number; morale: number; developed: number; familiarity: number; phase: string; satiation: number }
-
-/** What one session adds to satiation, by familiarity: what familiarity is for, besides being kept. */
-export const satiationAdded = (familiarity: number): number => ENGAGEMENT.satiation.perSession * (1 - ENGAGEMENT.satiation.familiarityEases * familiarity / 100);
-
-/**
- * The interest an hour of which would rest the player most now, of those they could start now (from 2026-10-10): each
- * one's own rest as `restOf` works it out (its kind, less satiation, more if loved), the stress it eases first and
- * the morale it lifts after. None where no restful one can be started.
- */
-export function bestRest(sim: Simulation, person: Person): { id: string; stress: number; morale: number } | undefined {
-  let best: { id: string; stress: number; morale: number } | undefined;
-  for (const [id, def] of Object.entries(INTEREST_DEFS)) {
-    if (!def.recovery || pursueRefusal(sim, person, id)) continue;
-    const r = restOf(person, id, sim.now);
-    if (!best || r.stress > best.stress || (r.stress === best.stress && r.morale > best.morale)) best = { id, stress: r.stress, morale: r.morale };
-  }
-  return best;
-}
-
-/** What an hour of an interest would rest, now: its kind's, less satiation, more loved. For its look before it's done. */
-export function restOf(person: Person, id: string, now: number): { stress: number; morale: number; satiation: number; loved: boolean } {
-  const def = INTEREST_DEFS[id]!;
-  const sat = satiationNow(engagementOf(person).byInterest[id], now);
-  const loved = lovesInterest(person, id);
-  const k = (1 - sat) * (loved ? ENGAGEMENT.loved : 1);
-  const r = def.recovery ? RECOVERY[def.recovery] : { stress: 0, morale: 0 };
-  return { stress: r2(r.stress * k), morale: r2(r.morale * k), satiation: r2(sat), loved };
-}
-
-/** An hour of an interest: the time, the energy, the rest it is, what it grows, and its history. */
-export function pursue(sim: Simulation, person: Person, id: string): Pursued {
-  const def = INTEREST_DEFS[id]!;
-  const focus = focusAt(sim, person, sim.now);
-  const rest = restOf(person, id, sim.now);
-  const minutes = minutesOf(id);
-  // A ticket, where it costs one (`When.costUsd`): paid before the evening, or the hour doesn't happen.
-  if (def.when?.costUsd !== undefined && !spend(sim, person, inSaveMoney(sim, def.when.costUsd, 'USD'), `A ticket: ${INTEREST_BY_ID[id]!.label}`, 'entertainment')) throw new CommandError('You can’t pay for the ticket.');
-  sim.advanceTo(sim.now + minutes * 60_000);
-  exerts(person, def.feet ? ENGAGEMENT.met.feet : ENGAGEMENT.met.desk, minutes / 60);
-  const w = person.wellbeing;
-  w.energy = clamp(w.energy - (def.feet ? ENGAGEMENT.energy.feet : ENGAGEMENT.energy.desk) * minutes / 60, 0, 100);
-  w.stress = clamp(w.stress - rest.stress, 0, 100);
-  w.morale = clamp(w.morale + rest.morale, 0, 100);
-  const developed = ordinary(sim, person, def.develops, focus, ENGAGEMENT.weight, `interest:${id}`);
-  const s = interestState(person, id);
-  const again = repeatsToday(sim, person, `interest:${id}<familiarity`);
-  s.familiarity = r2(s.familiarity + 100 * ENGAGEMENT.familiarity * 0.5 ** again * (1 - s.familiarity / 100));
-  s.sessions += 1;
-  s.lastAt = sim.now;
-  // A developed interest sustains itself (Hidi & Renninger 2006): each session satiates less the more familiar it is,
-  // by up to half at full familiarity (`ENGAGEMENT.satiation.familiarityEases`, SLATE's number).
-  s.satiation = r2(Math.min(1, rest.satiation + satiationAdded(s.familiarity)));
-  s.satiatedAt = sim.now;
-  return { stress: rest.stress, morale: rest.morale, developed, familiarity: s.familiarity, phase: phaseOf(s.familiarity), satiation: s.satiation };
+  return commitmentWithin(sim, minutes);
 }
 
 /** The plays the game has, with their kinds: a genre's studied in one of these where one is of it (no title invented). */
@@ -182,7 +63,7 @@ export function playOfGenre(id: string): { title: string; by?: string } | undefi
 
 export function studyRefusal(sim: Simulation, person: Person, id: string): string | undefined {
   if (!GENRE_DEFS[id] || !GENRE_BY_ID[id]) return 'There’s no such genre.';
-  return hourRefusal(sim, person, false, ENGAGEMENT.genre.minutes);
+  return hourRefusal(sim, person, ENGAGEMENT.genre.minutes);
 }
 
 /** An hour and a half with a work of the genre: a play of it the game has, read, or a film of the kind. Familiarity, less the same day again. */
@@ -234,7 +115,7 @@ export function selfTapeRefusal(sim: Simulation, person: Person, id: string): st
   if (!GENRE_DEFS[id] || !GENRE_BY_ID[id]) return 'There’s no such genre.';
   // A craft is the School's to begin (`enroll`): a life with none (a test's or a tool's, never a new life's) is refused, where until 2026-10-10 the command threw.
   if (!person.craft) return 'Your training hasn’t begun: there’s no craft to tape yet.';
-  return hourRefusal(sim, person, false);
+  return hourRefusal(sim, person, SELF_TAPE.minutes);
 }
 
 /** A self-tape in a genre: a scene taped at home and judged as finished work, practice in the genre and the camera. */
@@ -259,13 +140,6 @@ export function selfTape(sim: Simulation, person: Person, id: string): Evaluatio
 
 export function registerEngagement(sim: Simulation): void {
   // Each with an optional `actionId` (from 2026-10-10): the same action sent twice is lived once.
-  sim.onCommand<{ interest: string; actionId?: string }, Pursued>('interest.pursue', (p, { sim: s }) => {
-    const id = String(p?.interest);
-    const no = alreadyApplied(s.player, p?.actionId) ?? pursueRefusal(s, s.player, id);
-    if (no) throw new CommandError(no);
-    markApplied(s.player, p?.actionId);
-    return pursue(s, s.player, id);
-  });
   sim.onCommand<{ genre: string; actionId?: string }, { familiarity: number; with: string }>('genre.study', (p, { sim: s }) => {
     const id = String(p?.genre);
     const no = alreadyApplied(s.player, p?.actionId) ?? studyRefusal(s, s.player, id);

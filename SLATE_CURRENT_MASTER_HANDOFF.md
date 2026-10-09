@@ -1,3 +1,37 @@
+# Read First: The Interests Removed, 2026-10-10
+
+The owner's word: "Yes delete it, and no", meaning remove the Interests engine, and don't keep the interests
+question at character creation.
+
+- On `claude/gameplay-balance`, after the balance pass. **Save schema 94**, moved in `model.ts` and `guard.js`
+  together. Migration 94 drops each person's `interests` and `engagement.byInterest`. The genres, their familiarity
+  and practice, and tickets already paid on the ledger stay. It is idempotent (`tests/migration-94.test.ts`).
+  **Not deployed:** a backend on 93 refuses every save this writes, so deploy the backend with the client.
+- **What went:**
+  - `interest.pursue`, the 64 interest definitions, the rest table, satiation and the interests' phases.
+  - The interest page and the Profile's Interests panel.
+  - The interests' lift on meals, workouts, unwinding, coursework crafts, a play read and a stage's crafts. With
+    them went `CRAFTS_AT`, `GENRE_CRAFTS`, `Template.crafts` and `interestsRead`.
+  - Creation's Interests card. The step is now "Genres & Background".
+  - `research-interests.json` and its review (git keeps both).
+  - `tests/crafts.test.ts`.
+- **What stays:**
+  - Loved genres: a rehearsal or night of a play of that kind lifts the mood once (`lovedInWork`).
+  - The dispositions.
+  - Genre study, practice and self-tapes.
+  - `content/film-genres.ts` holds the genre list, which `content/interests.ts` used to hold.
+- **Policy change:** the lives tool's practicing student unwinds when stressed, where it took an interest's hour.
+- **Verified:**
+  - The gate passed, exit 0 from a file: 120 files and 1434 tests.
+  - Mutations: 5 of 5 killed (scratchpad `mutate5.cjs`).
+  - A schema-93 save with interests opened in the built app: the upgrade notice showed, and the Profile has no
+    Interests section.
+  - Creation step 3 was photographed at 1440 wide, showing Genres and Background only.
+- **Still owed:** the 18 lives. They're now owed on this final commit, not `5d64d860`. The practicing profile
+  changed, and loved genres replaced loved interests.
+
+---
+
 # Read First: Gameplay Verification And Balance, 2026-10-10
 
 The owner's brief: "Finish SLATE's Remaining Gameplay Verification And Balance", from main at `fcac6b6e`.

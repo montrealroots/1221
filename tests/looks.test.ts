@@ -472,11 +472,11 @@ describe('the sentence the player wrote', () => {
     expect(wordsIn(found.body).join(' ')).toContain('never went in');
   });
 
-  it('prints what they care about and the films they love beside it', () => {
-    const sim = quickSave({ interests: ['cinematography'], genres: ['western'] }, 'taste-reader');
+  // What they cared about was printed beside the films until the owner removed the interests on 2026-10-10.
+  it('prints the films they love', () => {
+    const sim = quickSave({ genres: ['western'] }, 'taste-reader');
     const found = resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
     const words = wordsIn(found.body).join(' ');
-    expect(words).toContain('Cinematography');
     expect(words).toContain('Western');
   });
 
@@ -484,7 +484,6 @@ describe('the sentence the player wrote', () => {
     const sim = quickSave({}, 'background-empty');
     const player = sim.universe.people[sim.universe.playerId]!;
     player.background = '   ';
-    player.interests = [];
     player.genres = [];
 
     // Only the papers, which a person always has: no empty line where the background, the interests and the films would be.

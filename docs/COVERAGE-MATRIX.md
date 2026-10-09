@@ -21,7 +21,7 @@ the papers, with the engine they need. Nothing below claims otherwise.
 | --- | --- | --- | --- |
 | Startup sequence | Implemented — the mark, the storage it picks, the schema it reads, and the slots it hands on | `src/ui/startup/StartupSequence.tsx` | `persistence`, `base44-adapter` |
 | Save slots | Implemented — three slots, each its own universe, with migration and validation on the way in, and a backup that says which world date it holds so restoring and deleting are not blind | `src/ui/saves/SaveSlots.tsx` | `integrity`, `persistence` |
-| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, a personality of seven dispositions and up to four traits, race or ethnicity, where the player was born and so which country they are a citizen of, where they live, interests (the general ones change how much looking after yourself lifts the mood), genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
+| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, a personality of seven dispositions and up to four traits, race or ethnicity, where the player was born and so which country they are a citizen of, where they live, genres (a play of a kind they love is a better day; the interests beside them were removed on 2026-10-10), a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
 | The geography map | Implemented — every country drawn from the projected world map, 170,911 cities behind it, loaded a country at a time, on the creation screen twice | `src/ui/creation/WorldMap.tsx`, `src/ui/creation/LocationPicker.tsx`, `src/engine/content/geography.ts` | `geography`, `world-map` |
 | Portrait | Implemented — a headshot cropped to a fixed frame and carried on the person | `src/ui/creation/PortraitPicker.tsx` | `portrait` |
 | Performer title | Implemented — actor or actress, settled by the pronouns and picked under they/them, stored on the player and said back on Home, the rail and the save slot. It is a word and decides nothing else | `src/engine/core/performer.ts` | `creation`, `simulation` |
@@ -105,7 +105,9 @@ in the ledger. 90 (2026-10-09) sheds what the home, the journeys, the cars, the
 land, the career and what went with them kept, the calendar's and the
 decisions' leftovers nothing handles, and a classmate's career; a home's
 deposit and rent paid ahead come back to the bank, and a save whose ledger
-doesn't reconcile is refused unchanged.
+doesn't reconcile is refused unchanged. 94 (2026-10-10) drops each person's
+interests and what they'd done of them, at the owner's word; their genres, and
+the tickets paid on the ledger, stay.
 
 ## The engine, as it now stands
 
@@ -167,7 +169,7 @@ chapter or to two, or if a chapter opens nothing.
 | 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
 | 10 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
 | 11 | Drama School | `ui.school` `school.call_in_sick` `school.take_shift` `school.cabaret` `school.summer_cabaret` `school.orientation` `school.prepare` `school.choose` `school.read_feedback` `school.ask_partner` `school.answer_partner` `school.respond` `school.make_amends` `school.buy_ppe` `school.approach` `school.cancel_rehearsal` `school.learn_part` `school.review_blocking` `school.work_note` `plays.read` `plays.research` `look.school` `look.course` `look.skill` `look.assignment` |
-| 12 | You As An Actor | `ui.profile` `practice.exercise` `interest.pursue` `genre.study` `practice.self_tape` `look.ability` `look.interest` `look.genre` `look.work` |
+| 12 | You As An Actor | `ui.profile` `practice.exercise` `genre.study` `practice.self_tape` `look.ability` `look.genre` `look.work` |
 | 13 | Cover, Benefits And Returns | `ui.papers` `health.therapy` `documents.police_report` `health.appeal` `health.extra_supply` `health.enroll` `health.drop` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `health.book` `health.cancel_appointment` `health.prepay` `benefits.claim` `benefits.ei_register` `benefits.assistance` `pension.social_security` `pension.state` `pension.ie_state` `pension.imss` `pension.bienestar` `tax.file` `tax.pay` `health.choose_pharmacy` |
 | 14 | Passports And ID | `documents.apply_passport` `documents.replace_idcard` `documents.report_lost` `documents.apply_idcard` `documents.replace_license` `documents.apply_opt` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `look.document` |
 | 15 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
@@ -175,7 +177,7 @@ chapter or to two, or if a chapter opens nothing.
 | 17 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 113 commands, 64 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 5 routes.
+Generated by `node tools/inventory.mjs --markdown`. 112 commands, 64 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 5 routes.
 
 ### Commands
 
@@ -190,7 +192,6 @@ Generated by `node tools/inventory.mjs --markdown`. 113 commands, 64 scheduled k
 | finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
 | genre | `genre.study` | `src/engine/systems/engagement.ts` |
 | health | `health.appeal` `health.apply_aid` `health.book` `health.cancel_appointment` `health.choose_clinic` `health.choose_pharmacy` `health.dental` `health.drop` `health.enroll` `health.extra_supply` `health.pay_bill` `health.prepay` `health.therapy` `health.treat` | `src/engine/systems/appointments.ts`, `src/engine/systems/health.ts`, `src/engine/systems/therapy.ts` |
-| interest | `interest.pursue` | `src/engine/systems/engagement.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
 | pension | `pension.bienestar` `pension.ie_state` `pension.imss` `pension.social_security` `pension.state` | `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
 | plays | `plays.read` `plays.research` | `src/engine/systems/playreading.ts` |

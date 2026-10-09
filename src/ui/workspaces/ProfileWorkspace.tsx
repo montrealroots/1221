@@ -3,11 +3,12 @@
  * what they can do, what they love and have done about it, how they are today, the school so far, and what's changed.
  *
  * Every section reads where the engine keeps the thing: the character sheet as it was made, the abilities from their
- * one place each, the techniques from the craft, interests and genres from the engagement record, the day from
- * wellbeing and the evaluation's own condition, the school from its record, the history from the development ledger,
- * the recent work and the journey's lasting counts. Nothing is drawn for the screen. What it suggests is worked out
- * by the engine's own comparisons (`bestRest`, the last work's limits, the next part's play), and changes with them.
- * Identity is shown as given and decides nothing: it is kept apart from every ability.
+ * one place each, the techniques from the craft, the genres from the engagement record, the day from wellbeing and
+ * the evaluation's own condition, the school from its record, the history from the development ledger, the recent
+ * work and the journey's lasting counts. Nothing is drawn for the screen. What it suggests is worked out by the
+ * engine's own comparisons (the last work's limits, the next part's play), and changes with them. Identity is shown as
+ * given and decides nothing: it is kept apart from every ability. An Interests section stood between the techniques
+ * and the genres until 2026-10-10, when the owner removed the interests.
  */
 
 import { useState } from 'react';
@@ -20,8 +21,7 @@ import { formatDate, ageOn } from '@/engine/core/time';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { exerciseFor, PRACTICE } from '@/engine/content/practice';
-import { INTEREST_DEFS, phaseOf } from '@/engine/content/engagement';
-import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
@@ -29,7 +29,7 @@ import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } fro
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
-import { SELF_TAPE, bestRest, minutesOf, pursueRefusal, restOf, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
+import { SELF_TAPE, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -56,11 +56,6 @@ export function nextPractice(person: Person): { what: string; kind: string; by: 
   }
   const best = [...sums.values()].sort((a, b) => b.by - a.by)[0];
   return best ? { what: best.what, kind: best.kind, by: best.by, pieces: best.pieces } : undefined;
-}
-
-/** An interest to spend an hour on now: the one whose rest is greatest of those that can be started (`bestRest`). */
-export function nextInterest(sim: Simulation, person: Person): string | undefined {
-  return bestRest(sim, person)?.id;
 }
 
 /** A genre to study: the next part's play's kind least known, else a loved one least known. */
@@ -102,7 +97,6 @@ export function ProfileWorkspace() {
         <IdentityPanel />
         <AbilitiesPanel />
         <TechniquesPanel />
-        <InterestsPanel />
         <GenresPanel />
         <ConditionPanel />
         <JourneyPanel />
@@ -251,24 +245,6 @@ function TechniquesPanel() {
   );
 }
 
-/** An interest's constraints in a few words, its source's reason on hover: when, how long, with whom, at what price. */
-export function whenShort(id: string): string {
-  const w = INTEREST_DEFS[id]?.when;
-  const minutes = `${minutesOf(id)} min`;
-  if (!w) return `${minutes}, any time`;
-  const DAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const hour = (h: number) => (h === 12 ? 'noon' : h > 12 ? `${h - 12} pm` : `${h} am`);
-  const parts = [
-    w.daylight ? 'By daylight' : '',
-    w.days ? (w.days.length === 1 ? `${DAY[w.days[0]!]}s` : `Not ${DAY.filter((_, i) => !w.days!.includes(i)).join(', ')}`) : '',
-    w.from !== undefined && w.to !== undefined ? `starts ${hour(w.from)} to ${hour(w.to)}` : '',
-    w.partnered ? 'with others' : '',
-    w.costUsd ? `a $${w.costUsd / 100} ticket` : '',
-    minutes,
-  ].filter(Boolean);
-  return parts.join(', ').replace(/^./, (c) => c.toUpperCase());
-}
-
 /** A filter box, a choice of which to show, and the count: the full list of a kind, a page at a time. */
 function ListControls({ id, text, setText, show, setShow, options, count }: { id: string; text: string; setText: (s: string) => void; show: string; setShow: (s: string) => void; options: readonly string[]; count: number }) {
   return (
@@ -281,61 +257,6 @@ function ListControls({ id, text, setText, show, setShow, options, count }: { id
       </select>
       <span className="xs dim">{count} shown</span>
     </div>
-  );
-}
-
-function InterestsPanel() {
-  const { sim, run } = useGame();
-  const person = useWorld((s) => s.player);
-  const best = bestRest(sim, person);
-  const [text, setText] = useState('');
-  const [show, setShow] = useState('All');
-  const [limit, setLimit] = useState(PAGE);
-  const list = ALL_INTERESTS.filter((i) => i.label.toLowerCase().includes(text.toLowerCase())).filter((i) => {
-    if (show === 'Loved') return person.interests.includes(i.id);
-    if (show === 'Pursued') return Boolean(person.engagement?.byInterest[i.id]?.sessions);
-    if (show === 'Can Start Now') return !pursueRefusal(sim, person, i.id);
-    return true;
-  });
-  return (
-    <Panel title="Interests" subtitle={`${person.interests.length} loved; ${Object.values(person.engagement?.byInterest ?? {}).filter((s) => s.sessions).length} of ${ALL_INTERESTS.length} pursued`}>
-      <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>
-          You love: {person.interests.length ? person.interests.map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('interest', id)}>{INTEREST_BY_ID[id]?.label ?? id}</Open></span>) : 'nothing chosen'}.{' '}
-          {best ? <>Of what you could start now, an hour of <Open subject={at('interest', best.id)}>{INTEREST_BY_ID[best.id]!.label}</Open> rests you most: {best.stress} less stress, {best.morale} more morale.</> : 'No restful hour can be started now.'}
-        </p>
-        <ListControls id="interests" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Pursued', 'Can Start Now']} count={Math.min(limit, list.length)} />
-        <LookRegion className="table-scroll">
-          <table>
-            <thead><tr><th scope="col">Interest</th><th scope="col">An Hour Now</th><th scope="col">Grows</th><th scope="col">Familiarity</th><th scope="col" className="num">Sessions</th><th scope="col">When</th><th scope="col">Spend</th></tr></thead>
-            <tbody>
-              {list.slice(0, limit).map((i) => {
-                const def = INTEREST_DEFS[i.id]!;
-                const s = person.engagement?.byInterest[i.id];
-                const r = restOf(person, i.id, sim.now);
-                const no = pursueRefusal(sim, person, i.id);
-                return (
-                  <tr key={i.id}>
-                    <td className="nowrap"><Open subject={at('interest', i.id)}>{i.label}</Open>{r.loved ? ', Loved' : ''}</td>
-                    <td className="xs">{def.recovery ? `−${r.stress} stress, ${Math.round(r.satiation * 100)}% satiated` : 'Work, not rest'}</td>
-                    <td className="xs nowrap"><Open subject={targetSubject(def.develops)}>{targetLabel(def.develops)}</Open></td>
-                    <td className="xs nowrap">{s ? `${one(s.familiarity)}, ${phaseOf(s.familiarity)}` : 'None yet'}</td>
-                    <td className="num mono">{s?.sessions ?? 0}</td>
-                    <td className="xs nowrap" title={def.when?.why}>{whenShort(i.id)}</td>
-                    <td className="nowrap">
-                      <Gated feature="interest.pursue" className="btn btn-sm" disabled={Boolean(no)} title={no ?? def.activity} onClick={() => run('interest.pursue', { interest: i.id })}>Spend {minutesOf(i.id) === 60 ? 'An Hour' : `${minutesOf(i.id)} Minutes`}</Gated>
-                      {no && <div className="xs dim">{no}</div>}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </LookRegion>
-        {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>Familiarity is what you’ve put into an interest, and a familiar one tires you of it more slowly. Sessions are its history. Loving an interest makes its hour better rest, and no better practice.</Fine>
-      </div>
-    </Panel>
   );
 }
 
