@@ -36,4 +36,4 @@ env var is also passed through from the platform.
 - `curl localhost:3000` should return the SLATE HTML shell.
 - The app renders a startup screen with three save slots.
 - `npm run validate` runs typecheck + lint + tests.
-- `npm run gate` is the full verification gate (validate + 16 doc/code checks).
+- `npm run gate` is the full verification gate (validate + 15 doc/code checks; 16 until catalog-coverage left it on 2026-10-09).

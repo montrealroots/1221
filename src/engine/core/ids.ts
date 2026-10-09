@@ -20,16 +20,14 @@ export type Id = string;
  *
  * Seven once, and a hundred and twenty-five before that. A namespace nothing
  * issues is a table the game never fills, so the list holds only the nouns
- * something in this build actually creates. Since 2026-10-01 that is the
- * player, money, the clock, the logs (two since the history went, 2026-10-02), documents, journeys, vehicles,
- * land, possessions and their orders (`systems/items.ts`), clothes bought and outfits
- * put together (`systems/clothing.ts`), routines (`systems/routines.ts`), the people a life knows (`systems/people.ts`),
- * from later on 2026-10-02 pledges at a pawnbroker (`systems/pawn.ts`), from 2026-10-03 pets
- * adopted (`systems/pets.ts`), from 2026-10-04 packing lists kept (`systems/luggage.ts`), and from 2026-10-07 a course's
- * assignments and the rehearsals agreed for them (`systems/coursework.ts`).
+ * something in this build actually creates: the player, money, the clock, the logs (two since the history went,
+ * 2026-10-02), documents, and from 2026-10-07 a course's assignments and the rehearsals agreed for them
+ * (`systems/coursework.ts`). Journeys, vehicles, land, possessions and their orders, clothes and outfits, routines,
+ * the people a life knew, pawn pledges, pets and packing lists had theirs until those went in the scope reset of
+ * 2026-10-09; a save's counters for them are kept and read by nothing.
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit', 'routine', 'contact', 'pawn', 'pet', 'packlist', 'assignment', 'rehearsal',
+  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'assignment', 'rehearsal',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

@@ -177,7 +177,7 @@ const SPREAD_OF_BANKS = ['nl-ing', 'br-itau-unibanco', 'ch-ubs', 'ng-access-bank
 
 defineDecider<Opening, string>({
   id: 'bank.number',
-  decides: 'The number a bank account is opened under.',
+  decides: 'A bank account’s number, as it’s opened.',
   drawnIn: 'src/engine/systems/banknumber.ts',
   reads: {
     // The bank: its country's format and its own code.
@@ -247,7 +247,7 @@ defineDecider<{ sim: Simulation; born: string }, string>({
 
 defineDecider<{ sim: Simulation }, string>({
   id: 'attributes.presence',
-  decides: 'The presence a student is given: 55 to 80, most near the middle, for the faculty’s first choice.',
+  decides: 'A student’s presence: 55 to 80, most near the middle, for the faculty’s first choice.',
   drawnIn: 'src/engine/systems/attributes.ts',
   reads: {
     // Two saves are two people.

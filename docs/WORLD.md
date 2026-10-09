@@ -1,5 +1,10 @@
 # The World: Land, Homes, Building, Vehicles, Travel, Stays, Documents
 
+> **Retired by the owner's scope reset of 2026-10-09.** The land, the homes, building, the vehicles, the travel and
+> the stays this file scopes went that day, with their tests; only the documents (the passport, the ID card, a
+> student's status and OPT) remain, on Papers. What follows is the record of what was built, kept as history: a path
+> it names without backticks is one that went. An instruction here to build or restore any of it is superseded.
+
 The owner's instruction of 2026-09-29 asks for land, housing, construction,
 vehicles, transport, travel, accommodation and identity to be one connected,
 researched world simulation, built in verified stages. This file is the
@@ -39,7 +44,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 
 Asked what of the instruction hadn't been built, the owner said: "Add it all and don't stop until its done." What's missing was set down on 2026-10-01, section by section, and each is built below as its research comes in, with its evidence in the stage it belongs to.
 
-- **Ownership limits (done 2026-10-01).** A person owned one boat and one plane, a second refused with "You own a boat." and "You own a plane.", a limit no law, lender or marina sets. Now each is a list (`boatsOf`, `planesOf`): each boat and plane its own record, months, loan and repossession, sold on its own, carried along on a move, counted in net worth. A save's single one is moved into the list on opening, and its months, scheduled before they named one, still charge it. The limits left are the bank, the lender's record and, for a lodger, New York City's two boarders. Tests: `tests/boats.test.ts` (a third boat bought, one sold, the months of each; two carried; a save from before), `tests/aviation.test.ts` (a second plane).
+- **Ownership limits (done 2026-10-01).** A person owned one boat and one plane, a second refused with "You own a boat." and "You own a plane.", a limit no law, lender or marina sets. Now each is a list (`boatsOf`, `planesOf`): each boat and plane its own record, months, loan and repossession, sold on its own, carried along on a move, counted in net worth. A save's single one is moved into the list on opening, and its months, scheduled before they named one, still charge it. The limits left are the bank, the lender's record and, for a lodger, New York City's two boarders. Tests: tests/boats.test.ts (a third boat bought, one sold, the months of each; two carried; a save from before), tests/aviation.test.ts (a second plane).
 
 - **Kinds of stay and their terms (done 2026-10-01, `content/staytypes.ts`, `systems/stays.ts`, researched in `docs/research/world/research-stays-rentals.json`).**
   - **Kinds:** besides a town's average hotel, what was read there. A hostel's bed is sold by the person: New York, Los Angeles, London, Toronto, Vancouver and Mexico City, on Hostelworld. A motel in New Haven and Los Angeles. A budget chain's cheapest night in London and Dublin, said to be its "from" price. An extended-stay suite or serviced apartment in New York, Edinburgh and Dublin. The town's taxes apply to each. A kind a town hasn't is refused with the reason, not swapped for another. Mexico City's hotels have an average, Monex's MXN 1,600, and Vancouver's 2.5% major-events tax to 2030 is charged, GST on it all.
@@ -47,14 +52,14 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **Refunds:** a flexible rate is refunded whole until a day before arrival. After that, a late cancellation or a no-show keeps the first night and the rest is released, as hotels do. Until then a late cancellation or a missed journey forfeited every night.
   - **Parking:** a car driven to a New York hotel pays its valet parking at $85 a night, the middle of what its hotels list. No other town's was read.
   - **Round trips by car:** the way home of a round trip by one's own car is planned from where the car will be, the town it was driven to. Until then a round trip by car was refused with "The car is in" the town it left from.
-  - **Tests:** `tests/staytypes.test.ts` (7).
+  - **Tests:** tests/staytypes.test.ts (7).
   - **Not kept:** early check-in and late check-out fees, read again later on 2026-09-30 (`research-sweep4.json`). Only Maldron prices them: €10 an hour to 3 p.m. at Kevin Street, and £20 an hour in Belfast. Premier Inn's and Travelodge's £10 were read only from excerpts, and America's chains publish no hours. An hour in the room before a train changes nothing SLATE keeps, so none is sold, by design. Incidental holds, and resort and rural rates, weren't published or read. Room types beyond one room or one bed, with occupancy limits being fire codes and not a published rule.
 
 - **A rental's class and its borders (done 2026-10-01, `RENTAL_CLASSES` and `RENTAL_CROSSINGS` in `content/rentals.ts`).**
   - **Classes:** a midsize, a full-size, an SUV, a pickup, a van, a convertible and a luxury car beside the small one, at Kayak's average a day for each at the airport (read 2026-09-30, in the money Kayak shows; Toronto's, Vancouver's and Mexico City's show in dollars). A class with no average at an airport isn't offered there. The company's terms (age, deposit, taxes) apply to each, and mileage is unlimited, as Enterprise's US terms have it.
   - **Borders:** a US rental may be driven into Canada, as Enterprise's and Budget's terms allow, but not into Mexico, which Enterprise forbids and Budget allows only on a corporate account.
   - **Not kept:** one-way drop fees, since SLATE's rentals go back where they were picked up; an additional driver, since nobody else drives; and a fuel policy's refueling charge, since SLATE refuels as it drives.
-  - **Tests:** `tests/rentals.test.ts` (2 more).
+  - **Tests:** tests/rentals.test.ts (2 more).
 
 - **Assistance where a person lives (done 2026-10-01, `systems/assistance.ts`, researched in `docs/research/world/research-welfare.json` and `research-documents-safetynet.json`).** Found by a Toronto life that starved at 35, claiming nothing.
   - **Ontario Works:** CAD 343 and the actual rent to CAD 390 a month. Liquid assets to CAD 10,000. Earnings come off whole for three months, then CAD 200 and half the rest are kept. Decided in four working days.
@@ -88,7 +93,7 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **The GIS top-up's** own 25 cents a dollar over $2,048, to $10,352 (its threshold from a 2022 report, its end confirmed for 2026). **BC's Senior's Supplement** comes from its 100-row table, $99.30 a month at most, with the GIS in British Columbia.
   - **Not kept:** taxing the pensions.
   - **Replayed with them,** the Toronto life dies at 87 worth +$54,242, not −$16,007. Its hungry days fell from 604 to 86, all at 61 to 64, before the life-player claims at 65.
-  - **Tests:** `tests/capensions.test.ts` (6). 12 mutations, all killed once four tests were added.
+  - **Tests:** tests/capensions.test.ts (6). 12 mutations, all killed once four tests were added.
   - **Tests:** `tests/homebenefits.test.ts`, the Canadian case. 5 mutations, all killed.
 
 ## Acceptance criteria
@@ -107,14 +112,14 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
 - **Passports.** `content/passports.ts`, fifteen countries' offices: standard fee, days, the expedited service and its extra where one is sold, the young adult's shorter term (Germany under 24, Spain under 30, Latvia under 20). A new passport cancels the old and what was issued on it; a lost one cancels the same. Tests: `tests/documents.test.ts` (a US passport, $165 in 42 days, expedited $225 in 21; a Spaniard's five years; the date to the day).
 - **Entry.** `content/entry.ts`, fifteen destinations by fifteen citizenships: free, an authorization first (ESTA, the UK's ETA, eTA, K-ETA, NZeTA, Australia's eVisitor and ETA, Brazil's e-Visa), or a visa; the passport's validity past leaving and Schengen's ten-year issue rule; the stay's length. What's missing is named, with how to get it. A pair SLATE lacks is refused and says so. Tests: the ETA flow and its loss with the passport; Schengen; a Mexican citizen's US visa; Irish free movement; Nigeria, not covered.
 - **Licenses.** `content/licenses.ts` (nineteen jurisdictions' authorities, fees, terms, visitor rules and permit issuers) and `content/licensepaths.ts` (each one's steps, in order: office visits, courses, written and road tests, the law's waits between them, retakes and their fees, fees that cover some attempts, passes that lapse, date-changed rules, age rules). `systems/licensing.ts` books each step on a business day in the town, clear of every other commitment, pays it, keeps it on the calendar, and passes a test at the authority's published rate or, where none is published, at the mean of the published rates of that kind, said so on screen. A learner may drive only with somebody beside them. Renewal in the last six months at the authority's fee; the International Driving Permit at home, for its term and no longer than the license.
-- **Played evidence.** `tests/licensing.test.ts` walks every jurisdiction a town reaches to a full license through its real waits, retakes and fees: Ontario 791 days (G1, G2 and G), British Columbia 1,185, New South Wales 1,463 (under 25), New Zealand 674; the ledger's documents fees matched the published fees to the cent (Great Britain £181 with one practical retake; Germany €3,811 with four theory attempts; California $46). Also: a missed test forfeits its fee; a short bank refuses and takes nothing; Connecticut's 90 days after the permit; California's three attempts on an application; British Columbia's fee change of 19 October 2026; New Zealand's reform of 25 January 2027; a save and reload mid-booking. 18 mutations of the licensing rules, all killed.
+- **Played evidence.** tests/licensing.test.ts walks every jurisdiction a town reaches to a full license through its real waits, retakes and fees: Ontario 791 days (G1, G2 and G), British Columbia 1,185, New South Wales 1,463 (under 25), New Zealand 674; the ledger's documents fees matched the published fees to the cent (Great Britain £181 with one practical retake; Germany €3,811 with four theory attempts; California $46). Also: a missed test forfeits its fee; a short bank refuses and takes nothing; Connecticut's 90 days after the permit; California's three attempts on an application; British Columbia's fee change of 19 October 2026; New Zealand's reform of 25 January 2027; a save and reload mid-booking. 18 mutations of the licensing rules, all killed.
 - **Screens.** Papers, tabs Passport And Travel and Driving: every button runs a command or is disabled with the reason in its title.
 
 - **The research.** `docs/research/world/`: entry rules, licenses, passports, the shares holding them, pass rates and course prices, each with its sources, dates and what it couldn’t confirm. `tools/build-entry.mjs`, `tools/build-licenses.mjs` and `tools/build-passports.mjs` build the content from it.
 
 #### Stage 1b: done, 2026-09-29, with what stays open
 
-- **Done, 2026-09-29: the border is checked.** A job across a border is taken only if the actor could go on its travel day and come home after (`borderRefusal` in `systems/career.ts`, read by `acceptRefusal`, so an offer says why it can't be taken). On the travel day it's asked again: papers lost or run out since, and the actor is turned back and the production recasts. A home abroad is lived in, or bought to live in, only with the right to live there (`residenceRefusal`): a citizen, free movement (the EU and EEA's, the Common Travel Area's), or a visa for the country in force. Until then a production in London, Vancouver or Toronto flew an actor out with no passport asked, and an actor on a London shoot could move into a London home they owned. Tests: `tests/border.test.ts`; 10 mutations, all killed.
+- **Done, 2026-09-29: the border is checked.** A job across a border is taken only if the actor could go on its travel day and come home after (`borderRefusal` in `systems/career.ts`, read by `acceptRefusal`, so an offer says why it can't be taken). On the travel day it's asked again: papers lost or run out since, and the actor is turned back and the production recasts. A home abroad is lived in, or bought to live in, only with the right to live there (`residenceRefusal`): a citizen, free movement (the EU and EEA's, the Common Travel Area's), or a visa for the country in force. Until then a production in London, Vancouver or Toronto flew an actor out with no passport asked, and an actor on a London shoot could move into a London home they owned. Tests: tests/border.test.ts; 10 mutations, all killed.
 - **Done, 2026-09-29: permission to work, apart from entry** (`systems/permission.ts`, `content/workrules.ts`, the research in `docs/research/world/research-workpermission.json`). A job is refused where the actor may not work, at the offer and on the travel day. In the United States: an F-1 student doesn't work off campus while studying; OPT after the degree (Form I-765, $470, or $2,250 with premium processing decided in 30 business days), filed from 90 days before the program's end to 60 after, twelve months from the later of the end and the approval, ended by more than 90 days in all without work; then an O-1B the agency petitions for ($1,055, the $600 Asylum Program Fee and SAG-AFTRA's $300 opinion; premium $2,965 in 15 business days), approved on three of the kinds of evidence of 8 CFR 214.2(o)(3)(v)(B) that the career shows, for three years, extended a year at a time, denied on fewer with the fees gone. In the United Kingdom a location shoot for an overseas production is a visitor's. In Canada a C14 work permit, tied to the production: a US citizen's issued at the border for CAD 155, anyone else's applied for ahead with biometrics. An Irish citizen works in the UK under the Common Travel Area. Tests: `tests/permission.test.ts` (11); 17 mutations, all killed. Screens: Papers, the Permission To Work tab.
 - **Done, 2026-09-30: Canada as an acting market** (`content/career.ts`, researched in `docs/research/world/research-canada-acting.json`). Until then Toronto and Vancouver weren't career cities, and a Canadian actor worked through New York.
   - **Rates, the agreements' own:** in Toronto the IPA's principal day (35.25, then 72.75 and ,006.75), its lesser actor category and a principal's week on a feature; the page read didn't say on which day in 2026 and 2027 the rises start, and SLATE starts them on 1 January. In Vancouver the BCMPA's, each from its own published day (54.40 from 29 March 2026). On stage in both, the Canadian Theatre Agreement's Category A week (,332 from 22 June 2026); which companies are Category A the booklet doesn't say.
@@ -128,7 +133,7 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
     - **Commercials** under the NCA: $939.50 on camera or $685 by voice, with a year of national television use at the chart's least.
     - **Animation voice** under the IPA: $681.75 a day.
   - **Not kept:** the 3.6% of a distributor's gross after the prepaid years. It was read later on 2026-09-30 in the IPA itself (B501 to B512, `research-sweep4.json`): one pool for the cast, shared by units of a day's minimum to 20, paid from reports every six months for two years and then yearly, once an advance is recouped. SLATE keeps no production's distributor gross to take 3.6% of, so the producer's other choice, the prepaid use, is the one kept; the NCA's permits. EI's special benefits were built the same day (`systems/eiself.ts`).
-  - Tests: `tests/cabusiness.test.ts` (6); 9 mutations, all killed.
+  - Tests: tests/cabusiness.test.ts (6); 9 mutations, all killed.
 - **Done, 2026-09-29: a foreign-born life has somewhere to work after OPT without an O-1.** Until then it was the largest open item. Found by lives played to death on 2026-09-29: a British, an Irish and a Mexican graduate each worked their OPT year, weren't approved for an O-1 on the evidence a first year shows, and were broke from about thirty for the rest of their lives; the British one starved past the survival limit (its run crossed the limit before the limit existed, and ended when it took effect). In life they'd go home and work there. SLATE's acting business is in the United States only, a move home to another country isn't one SLATE offers, and a destitute person isn't fed by a pantry (docs/UNBITTEN.md). What would close it: the business in another country (the UK's first), a move home, and a citizen's own safety net there. **Since 2026-09-29, the second and third are in for Britain:** a citizen can move home to the town they were born in (`homeTownOf`, the flight one way and the border asked), and Universal Credit is the claim for a British or Irish citizen living there (`systems/universalcredit.ts`). The O-1's experts' letters are read from three productions' directors, as immigration firms advise and the Administrative Appeals Office requires, not from reputation. And the first is in too: London's acting business, at Equity's minimums in pounds, with London's agencies and Spotlight (`tests/ukbusiness.test.ts`), so a British graduate who goes home can work. A US return is asked only of someone the US taxes (`owesUsReturn`). Ireland's and Mexico's businesses and safety nets followed the same day: Dublin's and Mexico City's acting work, Jobseeker's Allowance and the Seguro de Desempleo, their public care and their pensions; played lives of each passed. A life begun outside the US stays a hard one, as it is for many foreign actors, but no longer for want of a place to work.
 - **Done, 2026-10-01: a graduate's US status, and its end** (`usStatusEnds` and `US_STATUS_KIND` in `systems/permission.ts`). Found by a Mexico City life played to death on the final code of 2026-10-01. A Mexican graduate's OPT ran out, they stayed on in New York, every job was refused, nothing was said, and they starved at 31. The scripted player never went home: `homeTownOf` leaves out the business's own cities, and Mexico City became one on 2026-09-29, so a Mexican born there had no home to go to. Now:
   - A student's F-1 status holds while they study and for 60 days after the program ends (8 CFR 214.2(f)(5)(iv)). OPT's holds for 60 days after it runs out, but not after it ends for too long without work, a violation that leaves no grace. An O-1's holds for 10 days past its term (8 CFR 214.1(l)(1)). An application pending holds it open.
@@ -136,7 +141,7 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - Staying past it, they're out of status. No work can be had while they stay, and an O-1 waits for a consulate at home. The F-1 visa is void (INA 222(g)). The Visa Waiver Program is closed to them for good (INA 217(a)(7)), so a British or Irish citizen's ESTA is refused, and one already held no longer counts.
   - Unlawful presence, and the three- and ten-year bars it brings, isn't counted: a student admitted for the duration of status accrues none until the government finds the violation (Guilford College v. Wolf, 2020), which SLATE doesn't draw.
   - Tests: `tests/permission.test.ts` (4 more); 17 mutations, all killed after two redundant checks were removed.
-- **Done, 2026-10-01: writing to the agencies** (`career.query_agencies`, `QUERY` in `systems/career.ts`). An unrepresented actor who has started working can Submit To Agencies once they have headshots. The submission, a headshot, a résumé and the reel, goes to the agencies where they live. Each agency reads it as it reads a showcase, against its bar and its own interest, and those interested answer about four weeks on with an offer. A submission can be sent again six months on. The four weeks and six months are SLATE's estimates. Until then an agency came only from a showcase, a job it noticed, or a manager's meetings. The Mexico City life that went home had no agency for 27 months, and starved, in the city where the country's television is made. Tests: `tests/mxbusiness.test.ts` (2 more); 10 mutations, all killed after one unreachable refusal was removed. Still wrong on the Career screen, and older than this: a Mexico City actor is offered the American casting sites and Spotlight, since no Mexican casting site was researched, and the showcase table lists the American agencies.
+- **Done, 2026-10-01: writing to the agencies** (`career.query_agencies`, `QUERY` in `systems/career.ts`). An unrepresented actor who has started working can Submit To Agencies once they have headshots. The submission, a headshot, a résumé and the reel, goes to the agencies where they live. Each agency reads it as it reads a showcase, against its bar and its own interest, and those interested answer about four weeks on with an offer. A submission can be sent again six months on. The four weeks and six months are SLATE's estimates. Until then an agency came only from a showcase, a job it noticed, or a manager's meetings. The Mexico City life that went home had no agency for 27 months, and starved, in the city where the country's television is made. Tests: tests/mxbusiness.test.ts (2 more); 10 mutations, all killed after one unreachable refusal was removed. Still wrong on the Career screen, and older than this: a Mexico City actor is offered the American casting sites and Spotlight, since no Mexican casting site was researched, and the showcase table lists the American agencies.
 - **Done, 2026-09-29: visa applications.** Until then SLATE named the visa a citizenship needed and didn't take the application. Now the ten pairs that need one apply on Papers (`content/visas.ts`, `documents.apply_visa`): the US's B-1/B-2 for Mexicans and Brazilians ($185, the Mexico City interview's five-month wait), Canada's visitor visa (CAD 100 and 85 for biometrics), Australia's subclass 600 (AUD 250), Mexico's electronic visa for Brazilians (US$10, 180 days) and Brazil's e-Visa for Americans, Canadians and Australians (US$80.90); each paid, decided after its wait and good for its term and no longer than the passport. Not kept: Canada's eTA for a Mexican or Brazilian holding a US visa, the US's Visa Integrity Fee (its collection at these posts unconfirmed), and a refusal at interview. Tests: `tests/visas.test.ts`; 3 mutations, all killed.
 - Northern Ireland's license path was set down with no town in SLATE's list to reach it until 2026-09-29, when Belfast was added.
 - **Done, 2026-09-29: a license exchanged on moving.** New York (a US state's or Canadian province's), Connecticut (those, Germany's and France's, $124), Ontario, British Columbia and New South Wales (their published lists) exchange a full license from elsewhere without the tests, and the old one is surrendered (`LICENSE_EXCHANGES`, `documents.exchange_license`). California's exchange for another state's license wasn't confirmed, and it's refused with that reason. Found by a played life: a British graduate with Connecticut's license took New York's tests again after moving. The same life showed an O-1 read too narrowly: regional and Off-Broadway companies are distinguished organizations, and the experts' letters a petition carries are read from reputation.
@@ -162,10 +167,10 @@ Researched in `docs/research/world/research-documents-safetynet.json` and `resea
   - Ontario's Photo Card and BC's BCID, CA$35 each (the BCID's from search summaries).
   - Mexico's INE, free to a Mexican of 18.
   - Ireland's passport card, €35, for five years or to the passport book's expiry, to a holder of an Irish passport.
-  - The Ontario, BC and INE cards' terms weren't read, and they don't expire in SLATE. Tests: `tests/boardingid.test.ts` (4); 9 mutations, all killed.
+  - The Ontario, BC and INE cards' terms weren't read, and they don't expire in SLATE. Tests: tests/boardingid.test.ts (4); 9 mutations, all killed.
 - Residence documents abroad were built later the same day (stages 1d and 1e). Ireland's IRP card stays unbuilt, since no route reaches it.
 
-Evidence: `tests/identity.test.ts` (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
+Evidence: tests/identity.test.ts (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
 
 #### Stage 1d: the right to live in another country (done 2026-09-30)
 
@@ -217,7 +222,7 @@ Researched in `docs/research/world/research-citizenship.json`.
 - **Easements aren't built.** Their recording fees were read (ACRIS, Connecticut, Los Angeles County, Ontario, BC, HM Land Registry, Tailte Éireann), but nothing makes a parcel need one: no share of parcels without legal access, and no price effect of one, is published.
 - A character is still created with one citizenship, from the birthplace (`70f3df7`). A second is only ever earned.
 
-Evidence: `tests/naturalize.test.ts` (6), `tests/foreignbuyers.test.ts`. 11 mutations: 10 killed once two tests were added, and one redundant guard removed (Britain's five years, which settlement already asks).
+Evidence: `tests/naturalize.test.ts` (6), tests/foreignbuyers.test.ts. 11 mutations: 10 killed once two tests were added, and one redundant guard removed (Britain's five years, which settlement already asks).
 
 ### Stage 2: Journeys
 
@@ -229,24 +234,24 @@ Evidence: `tests/naturalize.test.ts` (6), `tests/foreignbuyers.test.ts`. 11 muta
 - Somewhere to stay: a hotel at the town's published average rate and its taxes, or one's own home there.
 - Tests: a full journey out and back across a border; the bank short; a passport lost before the day; a clash on the calendar; a missed departure; a delay and a cancellation; save and reload mid-journey.
 
-Evidence: `systems/journey.ts`, `systems/airports.ts`, `systems/stays.ts`, `content/air.ts`, `content/airfares.ts` (DOT Q1 2026, built by `tools/build-airfares.mjs`), `content/airports.ts` (3,266 OurAirports airports, built by `tools/build-airports.mjs`), `content/stays.ts`; the research in `docs/research/world/` (air, hubs, hotels, per diem). `tests/journey.test.ts` (12): New York to London on the ETA with a bag and five hotel nights and home again, the town and clock changing on arrival; the DOT's New York–Los Angeles fare to the cent and the $45 bag; no bed, the bank short, a journey or a plan on the calendar in the way; a passport lost before check-in; a player not there; the DOT's 24-hour refund and the hotel's day; BTS's rates of late and canceled flights over 20,000 draws; a night kept on at check-out; a journey saved and opened mid-flight. 18 mutations, all killed. Screens: Travel, from Home's Travel panel, opened by the guide's chapter Getting Around.
+Evidence: `systems/journey.ts`, `systems/airports.ts`, `systems/stays.ts`, `content/air.ts`, `content/airfares.ts` (DOT Q1 2026, built by `tools/build-airfares.mjs`), `content/airports.ts` (3,266 OurAirports airports, built by `tools/build-airports.mjs`), `content/stays.ts`; the research in `docs/research/world/` (air, hubs, hotels, per diem). tests/journey.test.ts (12): New York to London on the ETA with a bag and five hotel nights and home again, the town and clock changing on arrival; the DOT's New York–Los Angeles fare to the cent and the $45 bag; no bed, the bank short, a journey or a plan on the calendar in the way; a passport lost before check-in; a player not there; the DOT's 24-hour refund and the hotel's day; BTS's rates of late and canceled flights over 20,000 draws; a night kept on at check-out; a journey saved and opened mid-flight. 18 mutations, all killed. Screens: Travel, from Home's Travel panel, opened by the guide's chapter Getting Around.
 
 #### Stage 2b: the career's own trips, flown (done 2026-09-29)
 - A location shoot flies out on the production's ticket, on the latest of the day's departures that lands ten hours before the first call, and home on the first after the job; a job in another city with no production travel is reached on the actor's own fare, a cost of the work, and the fare home too. Each is a journey (`careerFlight`, `startCareerJourney` in `systems/journey.ts`), with the flights' delays and cancellations, and the town changes when it lands. A trip under 400 km isn't flown (SLATE's estimate) and is still instant until rail is kept.
 
-Evidence: `tests/careertrips.test.ts` (3): the plan to London, none already gone and none to New York from New Haven; Toronto on the production's ticket, there when it lands and home again; Los Angeles to New York on the actor's own fare, recorded as a cost of the work. 7 mutations, all killed.
+Evidence: tests/careertrips.test.ts (3): the plan to London, none already gone and none to New York from New Haven; Toronto on the production's ticket, there when it lands and home again; Los Angeles to New York on the actor's own fare, recorded as a cost of the work. 7 mutations, all killed.
 
 #### Stage 2c: a journey by train (done 2026-09-29)
 - Eleven routes among SLATE's towns: Amtrak's Acela and Northeast Regional (New York to Washington, Boston, Philadelphia and New Haven; Boston to Washington), Metro-North's New Haven Line, Eurostar (London to Paris, Brussels and Amsterdam), Avanti (London to Manchester), Irish Rail (Dublin to Cork) and the Pacific Surfliner (Los Angeles to San Diego). Times are the weekday medians of the operators' own 2026 timetables; punctuality is each operator's on its own measure; fares are the MTA's, Avanti's and Irish Rail's published fares, Amtrak's derived from its FY2025 ticket revenue per passenger-mile (it publishes none), Eurostar's from its 2025 revenue over its passengers (its "from" fares are floors). Each canceled ticket comes back by its operator's rule.
 - Travel's By offers the trains where any run; a job's trips take the train where one runs, the fastest on the production's ticket and the cheapest on the actor's own.
 - SLATE's model, and said so: when in the day trains leave (the weekday count spread from six to nine), the rides to and from the station (thirty minutes by transit, the fare not kept), how late a late train is (a mean of twenty minutes past the operator's line), Philadelphia's, New Haven's and the Surfliner's miles.
 
-Evidence: `content/rail.ts`, `systems/rail.ts`, `docs/research/world/research-rail.json`; `tests/rail.test.ts` (8): Amtrak's fares from its own figures, Metro-North's peak, every route both ways, Eurostar's legs and border before boarding, trains late at the operator's rate, a booked Acela to Washington, Amtrak's refund. 12 mutations, all killed.
+Evidence: `content/rail.ts`, `systems/rail.ts`, `docs/research/world/research-rail.json`; tests/rail.test.ts (8): Amtrak's fares from its own figures, Metro-North's peak, every route both ways, Eurostar's legs and border before boarding, trains late at the operator's rate, a booked Acela to Washington, Amtrak's refund. 12 mutations, all killed.
 
 #### Stage 2f: jet lag (done 2026-09-29)
 - The body keeps the clock it left with and catches up at the CDC's rates, an hour a day east and an hour and a half west (`systems/jetlag.ts`). What it changes is sleep, as the studies of ordinary travelers found (Willoughby 2025's 64,847 trips; Beaumont 2004): a night restores less while the clock is out, SLATE's estimate of how much, 0.015 of a night's quality an hour east and half that west. Travel shows the body clock.
 
-Evidence: `tests/jetlag.test.ts` (4) and the New York to London journey. 5 mutations, all killed.
+Evidence: tests/jetlag.test.ts (4) and the New York to London journey. 5 mutations, all killed.
 
 #### Stage 2e: coaches, the ride to the station, cancellations, three more towns (done 2026-09-29)
 - Coaches on thirteen corridors, one operator each (FlixBus and Greyhound, National Express, Bus Éireann, Dublin Express, Caminante, Estrella Roja, Primera Plus), at the operators' fastest times and lowest fares, which most pay more than, said so. Where a coach operator publishes no punctuality, National Express's network-wide 86.9% is SLATE's estimate; Flix and Greyhound refund only in vouchers, which SLATE doesn't keep.
@@ -254,12 +259,12 @@ Evidence: `tests/jetlag.test.ts` (4) and the New York to London journey. 5 mutat
 - A train is canceled at its operator's published share (ORR's for Avanti and LNER, MTA's counts for Metro-North, Irish Rail's), and the traveler takes the next; Amtrak and Eurostar publish none, so none is kept.
 - Belfast, Edinburgh and Toluca are SLATE's towns, with the Enterprise, LNER and El Insurgente to them, and Belfast's and Edinburgh's hotels; Northern Ireland's license path can be reached.
 
-Evidence: `tests/rail.test.ts` (coaches, transit and cancellations). 5 mutations, all killed.
+Evidence: tests/rail.test.ts (coaches, transit and cancellations). 5 mutations, all killed.
 
 #### Stage 2d: business or first (done 2026-09-29)
 - A flight can be booked business or first, at IATA's premium fares, about five times economy's worldwide (26 July 2024), with two checked bags that come with it (SLATE's reading of the carriers' "complimentary"). No one publishes the multiple by route or for the US alone. The DOT's average fare, which SLATE carries as economy, counts first-class fares too, by a share it doesn't publish; each fare now says so.
 
-Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; `tests/journey.test.ts` (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
+Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; tests/journey.test.ts (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
 
 Open in Stage 2 until 2026-09-29: a car of one's own as a leg, which waited for Stage 3; stage 3c made it one.
 #### Stage 2e: what an airline owes for a flight three hours late (done 2026-09-30)
@@ -274,7 +279,7 @@ Researched in `docs/research/world/research-travel-2.json` and `research-travel-
 - Paid a month after the arrival, the thirty days the APPR gives an airline to answer, taken for every law.
 - Not kept: an EU carrier's flight into the EU from outside it, SLATE keeping no carriers; a small carrier's lower APPR amounts; meals and hotels while waiting, the right to care.
 
-Evidence: `tests/compensation.test.ts` (5). 7 mutations, all killed in the end. Two first survived and needed tests: the airline's fault, which the first test stopped before it could see, and the journey's claim, now tested end to end with every flight canceled.
+Evidence: tests/compensation.test.ts (5). 7 mutations, all killed in the end. Two first survived and needed tests: the airline's fault, which the first test stopped before it could see, and the journey's claim, now tested end to end with every flight canceled.
 
 #### Stage 2f: a ferry between towns (done 2026-09-30)
 Researched in `docs/research/world/research-travel-2.json`, `research-travel-3.json` and `research-victoria.json`.
@@ -285,16 +290,16 @@ Researched in `docs/research/world/research-travel-2.json`, `research-travel-3.j
   - Its terminals are far out, so the route runs town to town: TransLink's three zones (C$6.70) and bus 620 to Tsawwassen, and BC Transit's 70 (C$3.00) from Swartz Bay. The Canada Line's own minutes weren't read and aren't counted.
 - Victoria joined SLATE's towns for it, with its hotels: the Greater Victoria Hotel Development Working Group's 2025 average, C$224, on CoStar's data, taxed at GST, PST and the 3% MRDT, and Ocean Island Inn's dormitory bed.
 - Not kept yet:
-  - A car on the ferry, until later on 2026-09-30. Before that, a drive to Victoria crossed the strait free, as if by road. Now a car, or a car and driver, pays BC Ferries' C$89 for the car and C$21 for its driver with the 5% surcharge, and the 95 minutes across (`CAR_FERRY`, `crossesByCarFerry`). A longer motorhome's and a motorcycle's fares weren't read, and they pay a car's. Tests: `tests/ferries.test.ts`; 5 mutations, all killed.
+  - A car on the ferry, until later on 2026-09-30. Before that, a drive to Victoria crossed the strait free, as if by road. Now a car, or a car and driver, pays BC Ferries' C$89 for the car and C$21 for its driver with the 5% surcharge, and the 95 minutes across (`CAR_FERRY`, `crossesByCarFerry`). A longer motorhome's and a motorcycle's fares weren't read, and they pay a car's. Tests: tests/ferries.test.ts; 5 mutations, all killed.
   - Horseshoe Bay to Nanaimo, for want of Nanaimo as a town.
   - Dublin to London by SailRail, until later on 2026-09-30, when it was built from `research-sailrail.json`:
     - The Single costs €58 and is refunded for £5 unused. It takes 502 minutes, 08:15 to Euston at 16:37, with four weekday connections on Seat 61's normal timetable, which it warns 2026 runs short of.
     - Check-in closes 40 minutes before the sailing. Avanti's 57.4% within three minutes and 5.6% canceled are the ORR's for 2025–26.
     - From 28 September 2026 every passenger on the Irish Sea ferries shows a passport or a passport card, which the check at departure asks.
-    - Tests: `tests/ferries.test.ts`; 3 mutations, all killed.
+    - Tests: tests/ferries.test.ts; 3 mutations, all killed.
   - The city ferries (Staten Island, NYC Ferry, Toronto Island), since SLATE's journeys run between towns.
 
-Evidence: `tests/ferries.test.ts` (2). 2 mutations, both killed.
+Evidence: tests/ferries.test.ts (2). 2 mutations, both killed.
 
 ### Stage 3: Vehicles
 
@@ -303,10 +308,10 @@ Evidence: `tests/ferries.test.ts` (2). 2 mutations, both killed.
 - **Buying** where one lives, in eight jurisdictions (`content/vehiclefees.ts`): New York's, Connecticut's and California's sales tax, title and registration (New York by weight, Connecticut's 7.75% over $50,000, Los Angeles's rise on 1 October 2026); Britain's on-the-road price; Ireland's price with VAT and VRT and the motor tax by CO2; Ontario's HST; British Columbia's GST and PST; Mexico City's plates. Outright, or on a loan at the published rate: Experian's US rates by credit tier, the Bank of Canada's, Banxico's, the Central Bank of Ireland's, the Bank of England's £10,000 personal loan rate.
 - **Keeping it**: a month's insurance at the place's average paid (the NAIC's for the US states, full cover or liability only; the ABI's; the Central Bank's; FSRA's; ICBC's; Mexico City's only a comparison site's quote, said so), the loan's payment, the registration renewing on its term, and a month's everyday driving at the place's published mileage (the FHWA's, the DfT's, the CSO's, Statistics Canada's; Mexico's none, SLATE's mean), fuel at the week's pump prices by the car's official economy, and AAA's upkeep a mile.
 - **Its value** falls on iSeeCars' published points, straight lines between (SLATE's); a used car is the catalog at an age on the same curve; Sell It sells at that value, the loan paid off first, and a loan bigger than the car paid from the bank.
-- A trade-in wasn't kept until 2026-09-29, and is now (`tradeInFor` in `systems/vehicles.ts`, researched in `docs/research/world/research-repossession.json`). The old car goes to the dealer at its value, in Britain about 4% less, the part-exchange gap Auto Express published (secondary; America publishes none). Its loan is paid off from that value, and the rest comes off what's due. New York and Connecticut tax only the price less the trade-in's value; California taxes the whole (CDTFA). Evidence: `tests/tradein.test.ts` (2); 4 mutations, all killed.
+- A trade-in wasn't kept until 2026-09-29, and is now (`tradeInFor` in `systems/vehicles.ts`, researched in `docs/research/world/research-repossession.json`). The old car goes to the dealer at its value, in Britain about 4% less, the part-exchange gap Auto Express published (secondary; America publishes none). Its loan is paid off from that value, and the rest comes off what's due. New York and Connecticut tax only the price less the trade-in's value; California taxes the whole (CDTFA). Evidence: tests/tradein.test.ts (2); 4 mutations, all killed.
 - Repossession wasn't kept until 2026-09-29 (stage 3e, below). A car counted in net worth, and its loan among the debts, weren't until 2026-09-29 (`systems/finance.ts`).
 
-Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
+Evidence: tests/vehicles.test.ts (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
 
 #### Stage 3f: at the dealer, and leasing (done 2026-09-30)
 Researched in `docs/research/world/research-car-buying.json`.
@@ -333,16 +338,16 @@ Researched in `docs/research/world/research-car-buying.json`.
     - No lessor's own early termination fee was found, so none is added; the disposition fee is charged, as at any return.
     - Miles over are counted against the whole term's allowance, as no proration was read.
     - A lease signed before then keeps no capitalized cost and ends at its term.
-    - Evidence: `tests/leasing.test.ts`, `tests/leasesabroad.test.ts`. 13 mutations, all killed in the end. Three survivors were redundant guards that were removed; three needed tests.
+    - Evidence: tests/leasing.test.ts, tests/leasesabroad.test.ts. 13 mutations, all killed in the end. Three survivors were redundant guards that were removed; three needed tests.
   - The lessor taking back a car whose payments are missed, until later on 2026-09-30 (`takeLeasedCar`). Now, three missed running where the law lets a car be seized, the lessor takes its car back. It goes on the record as a repossession, and what's missed stays owed. The early-termination charge, with no published formula, isn't charged. 3 mutations, all killed.
-  - Leases outside America, until later on 2026-09-30. Now (`CA_LEASE` and `PCP` in `content/vehiclefees.ts`, `tests/leasesabroad.test.ts`, 14 mutations, all killed in the end):
+  - Leases outside America, until later on 2026-09-30. Now (`CA_LEASE` and `PCP` in `content/vehiclefees.ts`, tests/leasesabroad.test.ts, 14 mutations, all killed in the end):
     - **Canada:** Honda Canada's lease at 2.99% APR. Its residual is worked back from the published $797.47 on $51,993 over 24 months, 68.2%, and scaled along SLATE's curve for 36 and 48 months. It allows 20,000 km a year at 15 cents a kilometer over, and each payment and a buyout are taxed as the province taxes a sale. It doesn't end early, as Honda publishes no charge for that.
     - **Britain, a PCP:** Nissan's Qashqai offer reproduced exactly: 30% down, 36 payments of £219 at 0%, and £13,550 to own it. Any other car pays the FCA's 5% average APR. It allows 6,000 miles a year at 8p a mile over, and can go back early under the Consumer Credit Act's half rule once half the total is paid.
     - **Ireland, a PCP:** Toyota's €63.49 documentation and purchase fees, at the Central Bank's car loan rate, with Britain's deposit, future value and mileage standing in for Ireland's, which aren't published. The half rule holds.
     - **Not sold:** Britain's PCH, whose only published offer is on a Corolla, which SLATE doesn't sell there; and Mexico's arrendamiento puro, which publishes no residual or allowance.
   - A pre-purchase inspection and a history report (Lemon Squad's $219.99, the AA's £99 to £110, CARFAX Canada's CAD 58.95). They're researched, but SLATE's used cars have no hidden condition for them to find, so buying one would change nothing.
 
-Evidence: `tests/leasing.test.ts` (5), and `tests/vehicles.test.ts` updated for the discount and the fees. 23 mutations, all killed in the end. Four first survived:
+Evidence: tests/leasing.test.ts (5), and tests/vehicles.test.ts updated for the discount and the fees. 23 mutations, all killed in the end. Four first survived:
 - Two were redundant guards, now removed: a trade-in filter on a lease quote that never has a trade-in, and cancelling a return the lease's own guard already passes.
 - Two needed tests: the miles over, and Connecticut's used-car fee.
 
@@ -383,7 +388,7 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - A motorcycle's own depreciation, which no source publishes (J.D. Power, Kelley Blue Book and Hagerty were looked for again later on 2026-09-30, `research-sweep3.json`); the car curve is used.
   - A rider's deaths above the life table's, until later on 2026-09-30 (`riderDeath`, `research-vehicles5.json`). Now a month's riding adds the motorcyclist's death rate above a car occupant's, a kilometer. America's NHTSA, 2024: 28.00 per 100 million vehicle miles against 1.05. Britain's DfT: 66.3 per billion passenger kilometers against 1.0. Canada and Mexico take America's, and Ireland Britain's. Decider `driving.rider_death`; 5 mutations, all killed.
 
-The courses, Class 8 and the moped were built later on 2026-09-30. Evidence: `tests/motorcycles.test.ts` (21, four for these). Of 15 mutations, 11 were killed and 4 survived. Three of the survivors were guards a later check already settled: a learner's car license, which the car check refuses anyway; holding a motorcycle license as well; and the road test's named need, which is the step before it anyway. Those three guards were removed. The fourth survivor, the moped's own-province rule, got a test. Before them, `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
+The courses, Class 8 and the moped were built later on 2026-09-30. Evidence: tests/motorcycles.test.ts (21, four for these). Of 15 mutations, 11 were killed and 4 survived. Three of the survivors were guards a later check already settled: a learner's car license, which the car check refuses anyway; holding a motorcycle license as well; and the road test's named need, which is the step before it anyway. Those three guards were removed. The fourth survivor, the moped's own-province rule, got a test. Before them, tests/motorcycles.test.ts (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
 - The mean an unrated bike burns, which the first test read back from the code.
 - A bike's trade-in lowering New York's tax.
 - The motorcycle record surviving its scheduled test.
@@ -459,11 +464,11 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - New York State Parks: $4 more a Friday or Saturday night. The night before a holiday isn't kept.
   - Carrowkeel, at Ballyvary in County Mayo: €15 a pitch outside July and August, and closed from 2 October to 31 March, the booking saying so.
   - Ontario Parks and Lake Perris: no seasonal fee, said so.
-  - Writing the tests found that a motorhome's trip to a town without hotel figures, Cork for one, was refused for want of a hotel. The campground was offered there and could never be booked. A stay in one's own motorhome or caravan no longer asks the town for a hotel. Evidence: `tests/motorhomes.test.ts` (14); 12 mutations, all killed in the end.
+  - Writing the tests found that a motorhome's trip to a town without hotel figures, Cork for one, was refused for want of a hotel. The campground was offered there and could never be booked. A stay in one's own motorhome or caravan no longer asks the town for a hotel. Evidence: tests/motorhomes.test.ts (14); 12 mutations, all killed in the end.
 
-Evidence for the caravan: `tests/caravans.test.ts` (7). Of 22 mutations, 15 were killed. Two survivors were redundant guards that were removed: a leg's drive-only check, since `planDrive` returns only drive legs, and the same-town early return, which the loop already settles. Five needed tests: the bank checks, the hitch's place, the second renewal, a caravan left in another town, and the towed way home.
+Evidence for the caravan: tests/caravans.test.ts (7). Of 22 mutations, 15 were killed. Two survivors were redundant guards that were removed: a leg's drive-only check, since `planDrive` returns only drive legs, and the same-town early return, which the loop already settles. Five needed tests: the bank checks, the hitch's place, the second renewal, a caravan left in another town, and the towed way home.
 
-Evidence: `tests/motorhomes.test.ts` (13: two for the street, whose 7 mutations were all killed, and two for the truck). Of the truck's 10 mutations, 9 were killed. The survivor was the road check, which `byRoad` already settles for any two American towns, so it was removed; the from-country check got a test. 16 mutations before it, all killed in the end. Three first survived, and each needed a test:
+Evidence: tests/motorhomes.test.ts (13: two for the street, whose 7 mutations were all killed, and two for the truck). Of the truck's 10 mutations, 9 were killed. The survivor was the road check, which `byRoad` already settles for any two American towns, so it was removed; the from-country check got a test. 16 mutations before it, all killed in the end. Three first survived, and each needed a test:
 - That a car doesn't carry the furniture.
 - That a van with nothing to carry isn't driven for it.
 - That a campground in New York City charges no hotel parking.
@@ -495,7 +500,7 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - The trailer that takes an ATV to its land, though its prices were read (a Carry-On 5x8 about $1,000, from excerpts; an Indespension £2,556). SLATE's land has a region and no place within it, so the drive to it can't be measured, and the ATV is ridden where it's kept.
   - Cycling to work, as SLATE has no commute.
 
-Evidence: `tests/outings.test.ts` (8). 22 mutations, all killed in the end. Three first survived:
+Evidence: tests/outings.test.ts (8). 22 mutations, all killed in the end. Three first survived:
 - The ride's crash draw, one chance in about 23,000 an hour, too rare for a test to see. It's now `rideOut`, taking its chance, and is tested at certainty.
 - The effort of a ride and of the trail, now measured against the body's sedentary 1.4.
 - The trail's mood, now tested against an hour outside and an hour unwinding.
@@ -514,7 +519,7 @@ Researched in `docs/research/world/research-custom-effects.json` (`systems/theft
 - This is the first thing that makes full cover and liability cover differ in what they pay, rather than only in what they cost.
 - Not kept: bicycles, e-bikes and ATVs stolen, which aren't in these counts; a tracker's or an immobilizer's effect, whose only published measure (the EU immobilizer's 40%) is already in today's rates.
 
-Evidence: `tests/theft.test.ts` (5). 11 mutations, all killed in the end. Three first survived and needed tests: a loan bigger than the car running on under full cover, a stolen car leaving the books once its loan is paid, and a stolen car not being driven.
+Evidence: tests/theft.test.ts (5). 11 mutations, all killed in the end. Three first survived and needed tests: a loan bigger than the car running on under full cover, a stolen car leaving the books once its loan is paid, and a stolen car not being driven.
 
 #### Stage 3k: winter tires (done 2026-09-30)
 Researched in `docs/research/world/research-customization.json` and `research-custom-effects.json` (`systems/tires.ts`, `vehicle.winter_tires`).
@@ -524,7 +529,7 @@ Researched in `docs/research/world/research-customization.json` and `research-cu
 - Worn out after 40,000 miles of winter driving, Michelin's X-Ice Snow warranty.
 - British Columbia's signed-route rule accepts an M+S all-season, which SLATE's cars have, so it asks nothing more.
 
-Evidence: `tests/tires.test.ts` (4) and `tests/tires-drive.test.ts` (1). 9 mutations, all killed in the end. Three first survived and needed tests: the season's kilometers, the factor in the crash chance, and the car's month handing the factor to the road's draw, watched through a mocked `drive` because the draw is too rare to see.
+Evidence: tests/tires.test.ts (4) and tests/tires-drive.test.ts (1). 9 mutations, all killed in the end. Three first survived and needed tests: the season's kilometers, the factor in the crash chance, and the car's month handing the factor to the road's draw, watched through a mocked `drive` because the draw is too rare to see.
 
 #### Stage 3l: electric cars and charging at home (done 2026-09-30)
 
@@ -556,7 +561,7 @@ Researched in `docs/research/world/research-ev-tint-security.json` and `research
   - New York, Con Edison's SmartCharge: 10 cents a kWh charged at home overnight, $35 a month from June to September, and $25 at three months.
 - **Not kept:** charging from an ordinary socket; Connecticut's Rebate+ on the car, whose income test was the charger's; range on a long journey.
 
-Evidence: `tests/evs.test.ts` (6). 15 mutations, 14 killed after three tests were added. The survivor is equivalent: BC's half-the-cost rule never binds under its $350 cap at these prices.
+Evidence: tests/evs.test.ts (6). 15 mutations, 14 killed after three tests were added. The survivor is equivalent: BC's half-the-cost rule never binds under its $350 cap at these prices.
 
 #### Stage 3m: window tint (done 2026-09-30)
 
@@ -573,7 +578,7 @@ Researched in `research-ev-tint-security.json`, `research-electricity-charging.j
 - **Every tint keeps the cabin cooler.** NREL measured aftermarket film at 1.8 °C cooler. Scaled by its solar glass study's 26% off air conditioning, and air conditioning's 6.1% of fuel, that is about 0.4% off the fuel or charge. This is SLATE's reading of the three.
 - **Not drawn:** theft or crash effects, which no study measured. Older drivers' poorer contrast behind 35% film, which was measured but never as crashes.
 
-Evidence: `tests/tint.test.ts` (5) and `tests/tint-road.test.ts` (1). 9 mutations, all killed once three tests were added.
+Evidence: tests/tint.test.ts (5) and tests/tint-road.test.ts (1). 9 mutations, all killed once three tests were added.
 
 #### Stage 3n: modifications and the insurer (done 2026-09-30)
 
@@ -596,19 +601,19 @@ Researched in `research-custom-effects.json` and `research-customization.json`.
   - A body kit, since only its fitting and paint were priced.
   - An American ECU tune. No tune price was read for a car SLATE sells, so the smog check's "Modified Software" failure has no tune to find.
   - New York's SLEEP Act fine for a loud exhaust. No count of its tickets is published: the city's noise cameras (1,691 tickets in 2025) enforce the city's own code.
-- Evidence since: `tests/mods.test.ts` and `tests/inspections.test.ts`. 6 mutations, all killed once three tests were added.
+- Evidence since: tests/mods.test.ts and tests/inspections.test.ts. 6 mutations, all killed once three tests were added.
 
-Evidence: `tests/mods.test.ts` (2). 4 mutations, all killed.
+Evidence: tests/mods.test.ts (2). 4 mutations, all killed.
 
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.
 - SLATE's estimates, and said so: the band of a speeding ticket, the injury mix of a crash, a ticket's frequency where a place publishes none.
 
-Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
+Evidence: tests/driving.test.ts (7); 11 mutations, all killed.
 
 #### Stage 3d: parking (done 2026-09-29)
-- A car kept on the street at home pays a resident's permit a year, on the quote and then with the registration: London's Westminster's by the car's CO2 (£40 to £353.10, from 2 March 2026), SLATE's borough for the city; Dublin City's €50. A home owned with a garage needs none. New York publishes no garage average and parks on the street for nothing; elsewhere no permit is kept, said so. Evidence: `tests/vehicles.test.ts` (parking); 3 mutations, all killed.
+- A car kept on the street at home pays a resident's permit a year, on the quote and then with the registration: London's Westminster's by the car's CO2 (£40 to £353.10, from 2 March 2026), SLATE's borough for the city; Dublin City's €50. A home owned with a garage needs none. New York publishes no garage average and parks on the street for nothing; elsewhere no permit is kept, said so. Evidence: tests/vehicles.test.ts (parking); 3 mutations, all killed.
 
 #### Stage 3e: a car loan in default (done 2026-09-29)
 - Three payments missed running (SLATE's, a contract and not a law setting it), and where the loan is secured and the place's law lets the lender seize, the car is taken (`systems/repossession.ts`, `content/repossession.ts`, researched in `docs/research/world/research-repossession.json`). It sits, uninsured and undriven, while its notice runs.
@@ -625,7 +630,7 @@ Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
 - Not kept, by design: a mark's fading measured by kind. FICO's one published study (2011) gives how long a score takes to recover from a mortgage 30 or 90 days late, a foreclosure or a bankruptcy, at three starting scores, holding everything else still; SLATE's record already climbs back with each month paid on time, so a second recovery drawn from the study would count the same months twice.
 - Mexico's period (from 2026-10-01, researched in `docs/research/world/research-open-final.json`): a mark goes by the debt's size in UDIs, 72 months under article 23 of the law on credit bureaus, and Banxico's Circular 27/2008 for the smaller ones: a year to 25 UDIs, two to 500, four to 1,000. A UDI is the DOF's 8.834094 pesos of 30 September 2026. A charged-off card's or account's debt is known and sized; a mark whose debt SLATE doesn't know stays the law's six years. Until then a Mexican mark stayed for good.
 
-Evidence: `tests/repossession.test.ts` (7); 8 mutations, all killed. One first survived, the count of payments missed running, which no test reached until one paid between two misses reset it. The record's mark: 5 more, all killed. Its falling off: `tests/marks.test.ts` (5), 6 mutations, all killed.
+Evidence: tests/repossession.test.ts (7); 8 mutations, all killed. One first survived, the count of payments missed running, which no test reached until one paid between two misses reset it. The record's mark: 5 more, all killed. Its falling off: `tests/marks.test.ts` (5), 6 mutations, all killed.
 
 ### Stage 4: Land
 
@@ -636,7 +641,7 @@ Evidence: `tests/repossession.test.ts` (7); 8 mutations, all killed. One first s
 - **Selling** after 125 days, a broker's figure for its 2025 US land sales, read secondhand and taken everywhere, at the value then less the seller's taxes. **Splitting** where each half keeps the zoning's minimum, or an acre of farmland (SLATE's); a London plot's permission isn't split. **Combining** two parcels of one place.
 - Until 4b, a parcel was bought at once at its value; that's no longer so.
 
-Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived. One was a redundant guard: a sold parcel's tax was already canceled by the sale, so the guard was removed. The other was a combine refusal that failed only by crashing, and it is now asserted by its words. Screen: Land, from Home's Land panel, opened by the guide's chapter Land.
+Evidence: tests/land.test.ts (9); 17 mutations, all killed. Two first survived. One was a redundant guard: a sold parcel's tax was already canceled by the sale, so the guard was removed. The other was a combine refusal that failed only by crashing, and it is now asserted by its words. Screen: Land, from Home's Land panel, opened by the guide's chapter Land.
 
 #### Stage 4b: listings, an offer, the deposit, due diligence and the closing (done 2026-09-29)
 - **Listings**: each market where one lives lists three a month (decider `land.listings`), a size it offers at an asking price from 5% under its value to 15% over (SLATE's spread), listed up to 250 days before the month began. None is a real listing, and the screen says so.
@@ -651,7 +656,7 @@ Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived
 - Ontario's title insurance (from 2026-10-01, `docs/research/world/research-open-final.json`): TitlePLUS's rate card of March 2025, C$385.74 to $500,000 and C$0.90 a thousand past it, with Ontario's 8% sales tax on insurance.
 - Open, and why: a survey in California, Ireland and Canada, whose surveyors print no price (the one found, a Toronto firm's "$1,800 and up" of 2015, isn't a price); title insurance in British Columbia, sold from calculators with no published table; land wasn't counted in net worth until 2026-09-29, and is now at its value, a house going up on it at what its stages have cost (`systems/finance.ts`); nothing is built on it until Stage 5.
 
-Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survived. One was the seller's "yes at the asking price", which the odds already give, so it was removed. The other was the counter spent on acceptance, which is now asserted.
+Evidence: tests/land.test.ts (14); 20 mutations, all killed. Two first survived. One was the seller's "yes at the asking price", which the odds already give, so it was removed. The other was the counter spent on acceptance, which is now asserted.
 
 #### Stage 4c: farmland let to a farmer (done 2026-09-30)
 Researched in `docs/research/world/research-land-2.json` (`systems/landlease.ts`).
@@ -666,7 +671,7 @@ Researched in `docs/research/world/research-land-2.json` (`systems/landlease.ts`
 - Let, the land is the farmer's: it isn't ridden on an ATV, split or joined, and a sale ends the lease. Ended on notice, the lease runs to the year's end.
 - Not kept yet: commercial land, waterfront premiums and islands, and easements, all researched. An easement's cost was read later on 2026-09-30 (`research-sweep4.json`): £400 and VAT to draft one and £40 to register it in England, and $150 to $350 at one Virginia firm. How often a lot needs one isn't published anywhere, so SLATE can't say when one does; utility connection was built later (`SERVICES`, below), and an easement waits on a published need. Foreign buyers' rules and a land loan were built next (Stages 4d and 4e).
 
-Evidence: `tests/landlease.test.ts` (4). 13 mutations, all killed in the end. One first survived as a redundant guard: a town lot's place has no farm rent, so `yearRent`'s acreage check was removed. Three needed tests: combining let land, and letting land for sale or being built on.
+Evidence: tests/landlease.test.ts (4). 13 mutations, all killed in the end. One first survived as a redundant guard: a town lot's place has no farm rent, so `yearRent`'s acreage check was removed. Three needed tests: combining let land, and letting land for sale or being built on.
 
 #### Stage 4d: a home bought in a country one isn't a citizen of (done 2026-09-30)
 Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers.ts`).
@@ -681,16 +686,16 @@ Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers
 - British Columbia's speculation and vacancy tax (`bcSvtRate`, later on 2026-09-30): each July, on the assessed value of a foreign owner's home that last year was lived in under half the year and not let. It is 2% through 2025, 3% for 2026 and 4% from 2027, now read on gov.bc.ca (`research-sweep5.json`). Since later on 2026-09-30 a Canadian citizen's empty home pays 0.5% for 2025 and 1% from 2026; until then a Canadian paid none. BC's untaxed worldwide earner, who pays the foreign rate, isn't kept, as SLATE doesn't hold where a household's income is taxed.
 - Not kept: America's FIRPTA withholding on a foreign seller, which needs a nonresident's US return that SLATE doesn't file.
 
-Evidence: `tests/foreignbuyers.test.ts` (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
+Evidence: tests/foreignbuyers.test.ts (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
 
 #### Stage 4e: a loan on land (done 2026-09-30)
 Researched in `docs/research/world/research-land-2.json` (`systems/landloan.ts`).
 - **The terms:** America's farmland, bought on the Farm Credit System's terms: about 6.3%, 35% down (common on bare land) and up to 30 years (Farm Credit East, from loan guides, secondary). The Land screen's Paid offers it; the lender puts up 65% at the closing.
 - **Showing funds:** a financed offer asks the buyer to show only what the loan doesn't lend and the closing's costs. The first draft asked for the whole price, which a test caught.
 - **Keeping it:** paid monthly, a payment missed owed; counted among the debts in net worth; paid off from a sale first.
-- **Not kept:** Britain's AMC, Ireland's banks and Farm Credit Canada publish how much they lend on land (60%, 70%, about 75%) but not at what rate. Mexico's Infonavit lends only to someone formally employed, which an actor isn't. A town lot isn't farmland. Until later on 2026-09-30 a lender didn't take land back for missed payments; they went into arrears without end. Now it does (`landLoanMonth`, `foreclose` in `systems/land.ts`), on the home's timings, since no land lender's were read: foreclosure begins when the oldest payment is 120 days late, a payment made stops it, and at 210 the land is sold at the home's 85% forced-sale share. The loan is paid first, any surplus is theirs and any shortfall is owed, and it goes on the record as a home's foreclosure does. Regulation X's 120 days binds a loan on a home lived in, not land. Evidence: `tests/landloan.test.ts` (5); 9 mutations, all killed in the end, two after their tests were added.
+- **Not kept:** Britain's AMC, Ireland's banks and Farm Credit Canada publish how much they lend on land (60%, 70%, about 75%) but not at what rate. Mexico's Infonavit lends only to someone formally employed, which an actor isn't. A town lot isn't farmland. Until later on 2026-09-30 a lender didn't take land back for missed payments; they went into arrears without end. Now it does (`landLoanMonth`, `foreclose` in `systems/land.ts`), on the home's timings, since no land lender's were read: foreclosure begins when the oldest payment is 120 days late, a payment made stops it, and at 210 the land is sold at the home's 85% forced-sale share. The loan is paid first, any surplus is theirs and any shortfall is owed, and it goes on the record as a home's foreclosure does. Regulation X's 120 days binds a loan on a home lived in, not land. Evidence: tests/landloan.test.ts (5); 9 mutations, all killed in the end, two after their tests were added.
 
-Evidence: `tests/landloan.test.ts` (2). 6 mutations, all killed in the end. Two needed tests: a sale's payoff, and the payment repeating each month.
+Evidence: tests/landloan.test.ts (2). 6 mutations, all killed in the end. Two needed tests: a sale's payoff, and the payment repeating each month.
 
 
 #### Stage 4f: services for a house on bare land (done 2026-09-30)
@@ -705,7 +710,7 @@ Evidence: `tests/landloan.test.ts` (2). 6 mutations, all killed in the end. Two 
   - A failed percolation test, whose rate isn't published.
   - Waterfront, islands and commercial land. The waterfront premiums are one-off studies. The islands are asking prices, and Mexico's are federal land. Commercial land's averages are paywalled.
 
-Evidence: `tests/construction.test.ts`, the farmland and Leinster cases. 2 mutations, both killed.
+Evidence: tests/construction.test.ts, the farmland and Leinster cases. 2 mutations, both killed.
 
 ### Stage 5: Construction
 
@@ -724,7 +729,7 @@ Evidence: `tests/construction.test.ts`, the farmland and Leinster cases. 2 mutat
 - Open, and why: building on farmland was the next module, and 5b built it; renovation and extension's permits were the one after, and 5c built them; no authority publishes a rate of delays, overruns or change orders for a house, or a failed inspection's, so none is drawn (Houzz's 2026 study has 37% of renovations over budget but no amount over, NaCSBA's 2022 self-builders 85% on or slightly over, and the Census the months a build takes, not how late it runs; no city publishes a first-time pass rate); HomeBond's warranty in Ireland, whose price isn't published; builder's risk in Canada, none being read.
 - A construction loan (from 2026-09-30, researched in `docs/research/world/research-land-construction.json`): in America Space Coast Credit Union's construction-to-permanent loan, a Florida lender's, the one rate sheet read in full, no New York, Connecticut or California lender publishing one: 10% down, its 30-year 7.25%, $1,100 and a quarter of a percent to originate and $1,400 for the inspections and draws; in England Ecology Building Society's self-build mortgage at 80%, 5.89%, £999 and £625. The lender pays its share of each stage, interest only on what's advanced is paid monthly, and when the house is finished the loan becomes its mortgage over 30 years (`BUILD_LOANS` in `content/construction.ts`). For a record a home lender would take. Until then a house was built from the bank alone; no Irish or Canadian lender's rate was read.
 
-Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three first survived, each a rule no test reached: New York's $100 least, the refusal of a start the bank can't cover, and the levy's three years running out. A test now reaches each.
+Evidence: tests/construction.test.ts (11); 18 mutations, all killed. Three first survived, each a rule no test reached: New York's $100 least, the refusal of a start the bank can't cover, and the levy's three years running out. A test now reaches each.
 
 #### Stage 5b: a house on farmland (done 2026-09-29)
 - **America**: upstate New York, rural Connecticut and California take the region's sizes, prices and times as the towns do. The state's fees are charged: Connecticut's education fee, and California's strong-motion and building standards fees on the work's value. A town's or county's permit is published town by town, none was researched, and it isn't kept, said so.
@@ -736,7 +741,7 @@ Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three fir
 - SLATE's estimates, and said so: twelve months to build in Ireland and Canada; two months for a British Columbia permit.
 - Finished, the house is a home on the farmland, the whole parcel gone into it, in its market’s town (`content/land.ts`): Hudson, Litchfield and Bakersfield (SLATE’s choice of farm towns), Naas, Millbrook and Sechelt (the towns whose fees it paid). Farmland’s value moves with that town’s market. Until 2026-09-29 the house stood in the city the land was bought from: a played New York life moved into its upstate farmhouse and so lived in Manhattan.
 
-Evidence: `tests/construction.test.ts` (15); 8 mutations, all killed.
+Evidence: tests/construction.test.ts (15); 8 mutations, all killed.
 
 #### Stage 5c: the permit an extension asks (done 2026-09-29)
 Renovation and extension stood before this work (`homes.ts`: thirty-nine jobs, from paint to a primary suite and a backyard cottage). What they lacked was the permit. The eight jobs that change the building now ask for it (`systems/permits.ts`): finishing a basement, converting an attic or a garage, adding a bathroom or a suite, building a cottage. The fees are paid when the work starts, and the work waits for a decision a law gives time to.
@@ -750,7 +755,7 @@ Renovation and extension stood before this work (`homes.ts`: thirty-nine jobs, f
 - Toronto, Vancouver and Mexico City (from 2026-10-01, `docs/research/world/research-open-final.json`, `systems/permits.ts`): Toronto's service index on the floor area, C$18.56 a m² for an addition and C$6.20 for a basement finished, C$214.79 at least and for a garage, after the Building Code's ten business days; Vancouver's on the work's value, C$217 for the first C$5,000, C$13.90 a C$1,000 to C$50,000 and C$7.04 past it; Mexico City's manifestación tipo A, MX$447 and MX$23 a m² added (Código Fiscal, article 185). Until then no permit was kept in those cities.
 - Open, and why: a loft or a garage made a room in Toronto, an interior alteration whose index wasn't read; a backyard cottage there, whose size SLATE doesn't keep; elsewhere the permit isn't kept.
 
-Evidence: `tests/permits.test.ts` (6); 7 mutations, all killed.
+Evidence: tests/permits.test.ts (6); 7 mutations, all killed.
 
 #### Stage 5c: retention, and the certificate of occupancy (done 2026-09-30)
 Researched in `docs/research/world/research-construction-choices.json` (`RETENTION`, `OCCUPANCY_WAIT_DAYS` in `content/construction.ts`).
@@ -768,7 +773,7 @@ Researched in `docs/research/world/research-construction-choices.json` (`RETENTI
   - A spec tier's effect on value, as no free source splits a new home's cost by spec.
   - An architect's fee. The AIA, RIBA and RIAI publish none; the RAIC's 2009 guide puts a custom house at 13.5% to 19.5%, from a copy on a firm's site. A house in Ontario or British Columbia needs no architect by law, as a qualified designer may draw it, so charging the RAIC's full-service fee would overstate it.
 
-Evidence: `tests/construction.test.ts`, 3 new tests and 4 updated for the retention. 8 mutations, all killed in the end; one needed a test, the retention set aside on an unpaid stage.
+Evidence: tests/construction.test.ts, 3 new tests and 4 updated for the retention. 8 mutations, all killed in the end; one needed a test, the retention set aside on an unpaid stage.
 
 ### Stage 6: A home's contents
 
@@ -784,14 +789,14 @@ What stood before: every home's fixtures, drawn from each country's survey of wh
 - Portables abroad and central air's worth (from 2026-10-01, `PORTABLES` and `CENTRAL_AIR_RECOVERED` in `systems/appliances.ts`, researched in `docs/research/world/research-home-lodgers-movers-2.json`): a portable washer and a compact dryer in Britain (Argos's £140 twin tub, Currys' £195 3 kg dryer), Ireland (MicksGarage's €149.99 twin tub, BuyItDirect.ie's €209.97 table-top dishwasher, Currys.ie's €239.99 dryer) and Canada (Danby's C$649.99 washer, BLACK+DECKER's C$679 dryer), and a twin tub in Mexico (Coppel's MX$4,199); several read from a search engine's copy, the stores refusing to be read. Mexico's "compact dryer" is a heatless spin extractor, and none is sold. Central air fitted to an American house adds 72.1% of its cost to the value, Cost vs. Value 2025's recovery for a new system, until it gives out. Until then none of these was kept.
 - Open, and why: what a built-in dishwasher adds to a home's value, which no one publishes; central air's worth outside America, none being read; furniture was open, and 6c built it; a garage built was open, and 6b built it. Bedrooms holding people waited for a household, which SLATE hasn't kept since the family went with the revamp; 6d (below) fills them with lodgers instead.
 
-Evidence: `tests/appliances.test.ts` (5); 10 mutations, all killed. One first survived as a redundant guard: an appliance can't be refitted before its end, so the check that the one ending was the one fitted was removed. Another survived because its test never reached the dryer's end: a £400,000 home's thirteen years of bills left the life short of it. The test now advances to that end and checks it came. A tenant's own units (3 tests, 8 mutations, the same guard surviving and removed the same way): `tests/appliances.test.ts` (8 in all).
+Evidence: tests/appliances.test.ts (5); 10 mutations, all killed. One first survived as a redundant guard: an appliance can't be refitted before its end, so the check that the one ending was the one fitted was removed. Another survived because its test never reached the dryer's end: a £400,000 home's thirteen years of bills left the life short of it. The test now advances to that end and checks it came. A tenant's own units (3 tests, 8 mutations, the same guard surviving and removed the same way): tests/appliances.test.ts (8 in all).
 
 #### Stage 6b: a garage built (done 2026-09-29)
 - A detached house with a yard, on a lot of 5,000 sq ft or more, can Build A Garage. It's one car's (Manual for Streets' 6 m by 3 m), at Angi's $26,400 average for a detached garage (a cost guide's), at the town's cost of living as every job is. Its return and its month are SLATE's.
 - It asks New York's, Los Angeles's and New Haven's permits. It's exempt in London, within England's Class E outbuilding limits, and in Dublin, within Ireland's Class 3 25 m².
 - A car kept at a home owned with a garage pays no resident parking permit, which stage 3d had kept for a garage the house came with. The garage door is new the year it's built.
 
-Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and the Puma's Westminster permit gone); 2 mutations, both killed.
+Evidence: tests/permits.test.ts (the garage, end to end: built in London and the Puma's Westminster permit gone); 2 mutations, both killed.
 
 #### Stage 6c: furniture of one's own (done 2026-09-29)
 - No body publishes what furnishing a home costs, but a shop publishes each piece's price. SLATE sells what furniture changes, at IKEA's own prices in America, Britain, Ireland, Canada and Mexico, read from its pages on 2026-09-29 (`content/furniture.ts`, researched in `docs/research/world/research-furniture.json`).
@@ -809,7 +814,7 @@ Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and t
 - Open, and why: a mattress's wear measured on SLATE's own terms, since the one study (Jacobson, 2009) has no control group, was paid for by the industry's council and measures on no scale SLATE's sleep has.
 - Not kept, by design: the rest of a home's furniture, which changes nothing SLATE keeps.
 
-Evidence: `tests/furniture.test.ts` (8); 8 mutations, all killed, and 7 for the fee and the movers, one first surviving, Britain's distance, which no town SLATE loads reaches, now tested on the table itself. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
+Evidence: tests/furniture.test.ts (8); 8 mutations, all killed, and 7 for the fee and the movers, one first surviving, Britain's distance, which no town SLATE loads reaches, now tested on the table itself. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
 
 #### Stage 6d: a lodger in a spare bedroom (done 2026-09-30)
 - A home one owns and lives in lets a spare bedroom to a lodger, as owners do (`systems/lodgers.ts`, researched in `docs/research/world/research-lodgers.json`): at most two, the number of boarders New York City's Housing Maintenance Code allows an owner, taken everywhere, and no more than its bedrooms past the owner's.
@@ -820,7 +825,7 @@ Evidence: `tests/furniture.test.ts` (8); 8 mutations, all killed, and 7 for the 
 - Not kept, by design: England's Right to Rent check, which is free and which SLATE's owner always makes, so it changes nothing; the penalties for not making it (£5,000 a lodger for a first breach since 13 February 2024) never fall.
 - Open, and why: a lodger's use of the bills, which Britain's room rents include: DESNZ's 2024 medians put a second adult at 2,063 kWh of gas and 864 of electricity a year more, but bigger households live in bigger homes, so the figure overstates what a lodger adds and isn't taken; how long a room sits empty, which SpareRoom and everyone else leave unpublished.
 
-Evidence: `tests/lodgers.test.ts` (5); 10 mutations, all killed in the end. One first survived for want of a year past Britain's £7,500; one was a redundant check that the home wasn't let, which living in it already settles, and was removed.
+Evidence: tests/lodgers.test.ts (5); 10 mutations, all killed in the end. One first survived for want of a year past Britain's £7,500; one was a redundant check that the home wasn't let, which living in it already settles, and was removed.
 
 #### Stage 6f: an alarm, Britain's burglaries, and a home's screen, console and speaker (done 2026-09-30)
 Researched in `docs/research/world/research-home-contents.json` and `research-home-effects.json`.
@@ -835,7 +840,7 @@ Researched in `docs/research/world/research-home-contents.json` and `research-ho
   - They're carried in a move with the bed and sofa.
 - Until 2026-09-30 the security that measurably cuts burglaries wasn't kept; it is now (below).
 
-Evidence: `tests/alarm.test.ts` (5) and `tests/gear.test.ts` (4). 13 mutations, all killed in the end. Two first survived and needed tests: the day's burglary draw at Britain's rate, now checked at a scale a test can see, and an unknown piece refused.
+Evidence: tests/alarm.test.ts (5) and tests/gear.test.ts (4). 13 mutations, all killed in the end. Two first survived and needed tests: the day's burglary draw at Britain's rate, now checked at a scale a test can see, and an unknown piece refused.
 #### Stage 6g: locks, a light and timers (done 2026-09-30)
 
 - **What they do** (`systems/homesecurity.ts`, `home.security`, the day's burglary in `systems/dwelling.ts`): Tseloni et al.'s protection factors, the odds of a burglary with entry against a home with none, from the Crime Survey for England and Wales (Security Journal, 2017, Table 3). Door deadlocks alone are 2.8; window locks with them 12.54; outside lights too, 34.41; indoor lights on a timer as well, the WIDE combination, 49.12.
@@ -847,7 +852,7 @@ Evidence: `tests/alarm.test.ts` (5) and `tests/gear.test.ts` (4). 13 mutations, 
   - They're screwed or plugged in, and no fitter is paid.
 - **Where they stay:** in a home one owns they stay with it. In a rented one, they're left behind on moving out. A shared home's windows and doors are the landlord's.
 
-Evidence: `tests/homesecurity.test.ts` (4). 9 mutations, 8 killed. The survivor was equivalent: it read a renter's devices in a home one owns, where a renter's never are.
+Evidence: tests/homesecurity.test.ts (4). 9 mutations, 8 killed. The survivor was equivalent: it read a renter's devices in a home one owns, where a renter's never are.
 ### Stage 8: Rentals on a journey
 
 #### Stage 8a: a car rented at the far end (done 2026-09-29)
@@ -873,7 +878,7 @@ Evidence: `tests/homesecurity.test.ts` (4). 9 mutations, 8 killed. The survivor 
 - Toronto Pearson's damage waiver (from later on 2026-10-01, `docs/research/world/research-open-final.json`): Enterprise's own C$31.99 to C$36.99 a day, the middle, with HST; declined, the same $882 repair in dollars, no Canadian figure being published.
 - Open, and why: Tweed's concession charge, which no company prints; damage in Connecticut and Vancouver, where no waiver's price is published (Enterprise's $8.99 to $74.99 at Tweed was only a search excerpt), and a renter's own insurance or card usually covers it; holiday lets were the next module, and 8b built them.
 
-Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a crash isn't mutation-tested: a crash is a draw, and the test can't make one without stubbing the injury system.
+Evidence: tests/rentals.test.ts (7); 12 mutations, all killed. The excess on a crash isn't mutation-tested: a crash is a draw, and the test can't make one without stubbing the injury system.
 
 #### Stage 8b: a holiday let instead of a hotel (done 2026-09-29)
 - Stay In A Holiday Let swaps a booked journey's hotel for a let, while the hotel can still be canceled free (`content/lets.ts`, `letQuote` in `systems/journey.ts`).
@@ -892,7 +897,7 @@ Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a
 - A damage claim against a guest (from 2026-09-30, researched in `docs/research/world/research-credit-damage-movers.json`): about 0.02% of Airbnb's reservations end in a damage reimbursement of $1,000 or more (Airbnb, 2023), the one platform-wide figure published, so leaving a let draws that (decider `travel.let_damage`) and the claim is the band's least, $1,000, charged to the guest as the platform charges the payment method after the host's 14 days and the guest's 24 hours. Until then no guest did any damage.
 - Open, and why: a claim's size past $1,000, and smaller claims, which no platform publishes (one manager's 0.71% of Airbnb bookings has no amounts; searched again on 2026-09-30, Airbnb, Vrbo, Proper and Steadily publish no average guest-damage payout, Proper's $18,000 average being a sewer backup's).
 
-Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
+Evidence: tests/lets.test.ts (5); 8 mutations, all killed.
 
 #### Stage 8c: staying longer (done 2026-09-30)
 - Once there, Stay Longer on Travel's journeys moves the booked way home some days on at the hour it was booked for (`travel.extend`, `extendQuote` and `slotOf` in `systems/journey.ts`), and carries the stay and any rental car to it:
@@ -907,7 +912,7 @@ Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
 - A change within Mexico (from later on 2026-10-01, `docs/research/world/research-open-final.json`): Volaris's own fee table of 22 September 2026, MX$850 more than 15 days before the flight and MX$1,100 within them.
 - Open, and why: a change across the Atlantic from Britain, where only secondary ranges ($0 to $275) were found, ba.com refusing to be read.
 
-Evidence: `tests/extend.test.ts` (3); 18 mutations, all killed in the end. Four first survived: a cheaper fare's credit, the old check-out and the old departure (which charged another night and set the way home off early), and a check that a stay was arrived at, which the town's check already settles, and was removed.
+Evidence: tests/extend.test.ts (3); 18 mutations, all killed in the end. Four first survived: a cheaper fare's credit, the old check-out and the old departure (which charged another night and set the way home off early), and a check that a stay was arrived at, which the town's check already settles, and was removed.
 
 ### Stage 7: Vehicle work, boats and aircraft
 
@@ -932,9 +937,9 @@ Researched (`docs/research/world/research-vehiclework.json`): each place's windo
 - Customization, read again on 2026-09-30 for the owner's "Add it all" (`docs/research/world/research-customization.json`). The research covers paint, wraps and film, wheels and tires, tint, interiors, lighting, audio, accessibility conversions, performance parts, towing, a boat's bottom, an aircraft's annual and shop labor rates. It confirmed the reason above.
   - No authority or insurer publishes a rate of police stops for tint or noise, a premium loading for a modification, or a resale effect. Britain's and Ireland's insurance acts set only a duty to answer the insurer honestly.
   - Superseded on 2026-09-30, at the owner's word: "If it doesn't have any downstream effects, give it some and that goes for everything that doesn't." The reason above, and "not kept, by design: tint, exhaust and lift work", no longer stand. Customization is being built with engines that give each part its effect (Stage 3j), from further research.
-- Built from it: **a boat's bottom** (`BOTTOM_PAINT` in `content/boats.ts`, from 2026-09-30). A boat kept in the water is painted with antifouling each April, before its launch. New York's and Connecticut's price is Nichols Yacht Yard's $27.50 a foot, paint in it. California's is Monterey Bay Boatworks' $10 a foot and $1.50 environmental fee; its paint isn't published and isn't charged. A boat kept on its trailer at home isn't painted. Britain's, Ireland's and Ontario's yards weren't read. The aircraft's annual inspection was already charged (Stage 7d). Evidence: `tests/boats.test.ts` (its bottom); 3 mutations. The one that survived, a guard against painting twice in an April, was redundant, as the boat's month comes every thirty days, and was removed.
+- Built from it: **a boat's bottom** (`BOTTOM_PAINT` in `content/boats.ts`, from 2026-09-30). A boat kept in the water is painted with antifouling each April, before its launch. New York's and Connecticut's price is Nichols Yacht Yard's $27.50 a foot, paint in it. California's is Monterey Bay Boatworks' $10 a foot and $1.50 environmental fee; its paint isn't published and isn't charged. A boat kept on its trailer at home isn't painted. Britain's, Ireland's and Ontario's yards weren't read. The aircraft's annual inspection was already charged (Stage 7d). Evidence: tests/boats.test.ts (its bottom); 3 mutations. The one that survived, a guard against painting twice in an April, was redundant, as the boat's month comes every thirty days, and was removed.
 
-Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end. The failed test: 7 more, all killed; one first survived, New York's upstate rate against the city's, too near to tell apart by sampling, and the rates are now checked themselves.
+Evidence: tests/inspections.test.ts (8); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end. The failed test: 7 more, all killed; one first survived, New York's upstate rate against the city's, too near to tell apart by sampling, and the rates are now checked themselves.
 
 #### Stage 7b: qualified to fly, and flying oneself (done 2026-09-29)
 - Owning and operating part here: a plane is rented, and flying it asks a certificate one earns (`systems/aviation.ts`).
@@ -948,7 +953,7 @@ Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first su
 - A medical abroad and training in Mexico (from 2026-10-01, `MEDICAL_ABROAD` and `PILOT_SCHOOLS` in `systems/aviation.ts`, researched in `docs/research/world/research-aviation-boats-credit-mot.json`): each license abroad asks its own medical, paid with the first month and renewed when it runs out, and a lapsed one grounds its pilot there. Britain's Class 2 at an examiner's £180 and the CAA's £11.67, Ireland's at €200 and the IAA's €22, Canada's Category 3 at C$240 and Transport Canada's C$67.75, Mexico's at AFAC's MX$4,267. It runs 60 months under 40; then 24 in America and Canada, and in Britain and Ireland 24 to 50 and 12 after (MED.A.045), Mexico's taken as ICAO's Annex 1 has it. Mexico's license is trained for at Voláre's MX$212,350 in Guadalajara, the one school that prints a whole course, over article 50's 40 hours, and a 172 rented after at Aviafly's MX$4,500 an hour, as no solo rental rate is published.
 - Open, and why: owning an aircraft (built in 7c, below), a medical's renewal and the weather a visual flight needs were open until 2026-09-30: a third-class medical is now paid with the first month's training at the middle of the $125 and $160 two examiners publish (a fee isn't regulated), and renewed when it runs out, every 60 months under 40 and 24 from 40 (14 CFR 61.23), a lapsed one keeping a pilot from flying themselves; and a flight of one's own is refused on a day of fog, under 14 CFR 91.155's three miles, or a thunderstorm, which the FAA's handbook says to keep 20 miles off, at either end (`MEDICAL`, `NOT_VISUAL`, researched in `docs/research/world/research-travel-aviation-boats.json`); the drive to and from the airports was open until 2026-09-30, and a flight of one's own or a charter now has the taxi to its airport and from the far one, at the town's rate card or SLATE's estimate, as an airline journey does; boats were open here, and 7d built them.
 
-Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
+Evidence: tests/aviation.test.ts (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
 
 #### Stage 7c: a plane of one's own (done 2026-09-29)
 - Buy A Plane buys a used Cessna 172 at the median asked for one listed, a secondary figure; Vref's and the Bluebook's values are sold, not published, and none depreciates it, so SLATE holds it at its price. Looked for again later on 2026-09-30 (`research-sweep3.json`), the one series read, AOPA's Vref values for a 1974 172, rose from $32,000 in 1995 to $36,000 in 2013, a used 172 holding its price as SLATE has it (`OWN_172` in `systems/aviation.ts`, researched in `docs/research/world/research-aircraft-owning.json`). Owning asks no certificate; flying it oneself does. Until 2026-09-30 an owner who wasn't a pilot kept it on the ground and paid its keeping. Now they hire a pilot: a private pilot may not be paid (14 CFR 61.113(a)) and a commercial one may (61.133(a)(1)), at the one piston rate published, an instructor's at Mike Goulian Aviation, $450 a half day (SLATE's four hours), $900 a full one and half as much again past eight (`HIRED_PILOT_USD`, researched in `docs/research/world/research-charter.json`). The pilot's travel and lodging, the customer's, aren't kept.
@@ -963,7 +968,7 @@ Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survi
 - A plane taken back (from 2026-10-01, `PLANE_REPO` in `systems/aviation.ts`): three payments missed running, as a car's and a boat's, and the lender retakes it without a court (UCC 9-609), filing the FAA's Form 8050-4, and sells it after the ten days' notice 9-612 makes safe. The shortfall is owed in every one of SLATE's states: California's Unruh Act leaves out an FAA-registered aircraft (Civ. Code 1801.4), and a 172's loan is past the $75,000 Connecticut's consumer act reaches. The retaking costs the middle of the $1,500 to $15,000 a repossession specialist's job is put at (secondary), added as 9-615 allows; a surplus comes back. It goes on the record as a repossession, and its months end with it. Until then a missed payment only ran into arrears.
 - Open, and why: a repossession's ferry flight and storage, which nobody publishes; hiring a pilot and a loan were open until 2026-09-30, and are built (above).
 
-Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
+Evidence: tests/aviation.test.ts (7); 5 mutations, all killed.
 
 #### Stage 7d: a boat of one's own (done 2026-09-30)
 - Researched in `docs/research/world/research-boats.json`, with the certificates and registrations in `research-vehiclework.json`; `content/boats.ts`, `systems/boats.ts`, the Cars screen's A Boat.
@@ -980,7 +985,7 @@ Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
 - Open, and why: a boat carried between Britain and Ireland by the Northern Irish road, neither country's relief being read for one; whether California credits Ontario's HST as tax paid elsewhere.
 - The Northeast's winter and a boat loan in default (from 2026-09-30, researched in `docs/research/world/research-travel-aviation-boats.json`): New York's and Connecticut's insurers lay a boat up from 1 November to 1 April and it isn't taken out then; each November it's hauled and stored (Burr's Marina in New London at $72 a foot, Moriches on Long Island at $75), or winterized on its trailer at home (Long Lake Marine's $599 for a 61 to 200 hp outboard, the one dealer's price read, in Maine). California's runs the year round. Three payments missed running, the lender takes the boat back and the record takes a repossession's mark: New York's and California's under the UCC's Article 9 (the Unruh Act reaching a boat only to $25,000 and the Rees-Levering Act none), sold after SLATE's ten days and the shortfall owed; Connecticut's under 36a-785, which covers a boat on credit to $75,000, from 15 days and a shortfall only past its fair market value, SLATE's held price (`BOAT_WINTER`, `BOAT_REPO` in `content/boats.ts`). Until then the boat went out all winter and a default only ran arrears.
 
-Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three first survived for want of a test (a second renewal, California's odd year, the outing's mood against sitting out's); one was a redundant guard, since a boat's months are canceled on its sale, and it was removed. The loan and the move: 4 more tests (13 in all), 12 mutations, all killed in the end; three first survived for want of a test (a move within the state, a road into Ontario, a real move home).
+Evidence: tests/boats.test.ts (9); 13 mutations, all killed in the end. Three first survived for want of a test (a second renewal, California's odd year, the outing's mood against sitting out's); one was a redundant guard, since a boat's months are canceled on its sale, and it was removed. The loan and the move: 4 more tests (13 in all), 12 mutations, all killed in the end; three first survived for want of a test (a move within the state, a road into Ontario, a real move home).
 
 #### Stage 7e: crew and charter (done 2026-09-30)
 - Researched in `docs/research/world/research-charter.json`.
@@ -991,7 +996,7 @@ Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three 
 - Open, and why: a jet chartered was open here until 7f (below).
 - A car and driver (from 2026-10-01): Travel's By offers A Car And Driver between towns by road, at the hourly rate a company in the city it leaves from prints for a sedan, for the hours on the road and at least its minimum, with its taxes: Gotham Ride's $117 in New York (two hours, its gratuity and tolls in), iChauffeur's £60 in London (three, with VAT), All City Chauffeurs' €70 in Dublin (four; its page last dated 2022), Rosedale Limousine's C$78 in Toronto (two, with HST), the middle of the Passenger Transportation Board's C$75 to C$150 in Vancouver (with GST), and Safe&Confidence's MX$5,400 ten-hour day in Mexico City (with IVA) (`CHAUFFEURS`, `planChauffeur` in `systems/journey.ts`). The car's way back, priced by quote, isn't kept; no Los Angeles or New Haven company's rate was read firsthand. A company's fixed fare for a pair of towns (Blackberry Cars' £120 from London to Oxford, Rideline's from JFK to the Hamptons, Chauffeuropolis's C$200 to Niagara Falls) isn't used, since none joins two of SLATE's towns. Until then a chauffeur was researched and nothing used one.
 
-Evidence: `tests/boats.test.ts` (16 in all) and `tests/aviation.test.ts` (7, the plane's own test now hiring a pilot); 10 mutations, all killed.
+Evidence: tests/boats.test.ts (16 in all) and tests/aviation.test.ts (7, the plane's own test now hiring a pilot); 10 mutations, all killed.
 
 #### Stage 7f: a light jet chartered (done 2026-09-30)
 - Travel's By offers A Chartered Light Jet between two American airports (`planCharterJet` in `systems/aviation.ts`, researched in `docs/research/world/research-charter.json`): Textron's Citation CJ3 Gen2 at its published 416 knots and 2,040 nautical miles, less the 45 minutes an instrument flight holds in reserve (14 CFR 91.167). Past that it stops once for fuel, as a light jet crossing the country does; farther, such as Honolulu, it's refused. The half hour taxiing and climbing each time, and 45 minutes on the ground refueling, are SLATE's.
@@ -1002,7 +1007,7 @@ Evidence: `tests/boats.test.ts` (16 in all) and `tests/aviation.test.ts` (7, the
 - Not kept, by design: an empty leg's cheaper seat; looked for again later on 2026-09-30, and no operator publishes a route's or a day's listings (`research-sweep4.json`). EBAA's 2017 study found 41% of Europe's business flights flying empty, which says how many fly, not whether one is offered on a given route and day; VistaJet and Paramount put the seat at 25% to 75% off, but no operator publishes how often one's offered, so SLATE can't say when one's there.
 - America and Canada (from later on 2026-10-01, `docs/research/world/research-open-final.json`): a jet between them at the rate of the country it leaves. To a Canadian airport within 225 miles of the United States it's taxed as a domestic flight (IRC 4262), the 7.5% and its segment fee and no facilities tax; past 225 miles, the facilities tax. SLATE measures to the nearest American airport, never nearer than the border, so a town just inside the zone can count as outside. From Canada, a Canadian operator's fare paid outside America pays the facilities tax in place of the 7.5% (4261(e)(2)), and CRA's 5% GST, not HST, as the continental United States is in its taxation area (GI-170). The flight-by-flight answers are the statute's reading; the IRS prints no Canadian example.
 
-Evidence: `tests/aviation.test.ts` (10); 8 mutations, all killed in the end. One first survived, the range past which no stop suffices, which no test reached until a flight to Honolulu.
+Evidence: tests/aviation.test.ts (10); 8 mutations, all killed in the end. One first survived, the range past which no stop suffices, which no test reached until a flight to Honolulu.
 
 ## Coverage record
 

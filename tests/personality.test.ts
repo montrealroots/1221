@@ -34,7 +34,7 @@ import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
   'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
-  'illnessToll', 'awayRecovery', 'earlyCall', 'lateCall', 'receipts', 'bondWarmth', 'bondWound', 'company', 'appetite',
+  'illnessToll', 'receipts', 'bondWarmth', 'bondWound', 'company', 'appetite',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */

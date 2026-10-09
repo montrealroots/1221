@@ -57,7 +57,7 @@ export function PapersWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Affairs</div>
         <h1>Papers</h1>
-        <p className="muted">Your returns, your health cover, unemployment between jobs, your passport and your license.</p>
+        <p className="muted">Your returns, your health cover, unemployment, your pensions, your passport and your ID.</p>
       </div>
       <div className="tabs" role="tablist" aria-label="Papers">
         {PAPERS_TABS.map((one, i) => (

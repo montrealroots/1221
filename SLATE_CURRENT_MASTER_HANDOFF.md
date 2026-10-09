@@ -1,3 +1,111 @@
+# Read First: The Scope Reset Of 2026-10-09
+
+**This section supersedes everything below it.** Everything after it was written for the line that ran to
+`81f77592`. Any instruction in it, or in an older handoff, to build, restore or expand the systems listed as removed
+here is superseded by the owner's reset. Its open-work lists are history, not a backlog.
+
+## What the owner asked, in order (2026-10-09)
+
+1. The reset brief: keep creation, banking and school; remove the personal life and the profession.
+2. A correction the same day: keep daily living too (sleep, washing, food, weather), and a simple residence.
+3. The final word, which governs: "get back to this setup/engine in that full page capture", the game as it stood
+   at the end of 2026-09-29 (`7e976601`). Keep "the current money/banking engine, school engine, and papers engine",
+   and remove the home, travel, cars and land. Then: "You can remove the rented room and household too."
+
+## What the game is now
+
+- **Base:** the setup of 2026-09-29 (`7e976601`), meaning its Home page, daily life (sleep, eating, ordering in, a
+  shower, a workout, unwinding, the body, illness and injury), creation, guide, calendar, weather, birthdays and
+  mortality.
+- **Today's engines** (`81f77592`):
+  - **Banking:** banking, banknumber, accountlife, statements, cash, credit, lending, cardlife, cardoffers,
+    payments, pending, security and finance.
+  - **School:** school, coursework, learning, production, classmates and playreading.
+  - **Papers:** health, appointments, clinics, therapy, access, taxreturn, earnings, unemployment, the benefits,
+    the state pensions, documents, identity, permission, residence, citizenship and papervisits.
+- **Removed:**
+  - the home and everything about owning, renting or moving;
+  - the rented room and the household's rent and bills;
+  - furniture and appliances;
+  - travel: journeys, flights, rail, stays and jet lag;
+  - cars: vehicles, driving and licensing;
+  - land, construction and permits;
+  - **the career**, meaning its agencies, commercials, classmates' careers and the SAG pension. The owner's
+    correction had removed the professional career, its location work and relocation stood on travel and the
+    home, and the final word didn't bring it back.
+  - everything the line of 2026-10-09 had built after 2026-09-29 outside the three kept engines: the shops and
+    catalogs, belongings, clothes, the kitchen, routines, the people and family, the industry and its database,
+    and the rail.
+- **Money with no home:** `systems/spending.ts` holds what every payment goes through (bank, card, cash, owed)
+  and the day's food, bought each morning, with SNAP on an EBT card first. "Where they live" is where they are,
+  since there's no travel to tell them apart.
+- **Graduation** ends at the school's results (`school.endedAt`). The Yale Health plan runs to the July after it.
+- **Every life** arms its tax returns and its health. The career used to do that for a life begun outside school.
+- **Moved screens:** the state pension claims are on Papers (Unemployment), and the real plays to read are on
+  School (Coursework).
+- **Home** is the September 29 layout without its Home, Career, Travel, Cars and Land cards. The rail is Home
+  only, as it was then, with Find A Place.
+
+## Saves
+
+- **Schema 90**, moved in both places: `SAVE_SCHEMA_VERSION` in `src/engine/domain/model.ts` and
+  `SUPPORTED_SCHEMA_VERSION` in `base44/shared/guard.js`.
+- **What `migrate` does:**
+  - Sheds 107 fields of removed systems from every person (`GONE_AT_90` in `engine/index.ts`) and a classmate's
+    career.
+  - Lets go every pending calendar event no handler takes and every open decision whose action no command takes.
+  - Moves a home's fed morning onto the person.
+  - Refuses, unchanged, a save whose ledger doesn't reconcile, with a message saying so.
+  - On first opening, returns a home's deposit and any rent paid ahead to the current account. What was owed on
+    rent stays owed, in the same account, and is paid down from the bank.
+- **Kept:** identity, money and every ledger posting, the school, the papers and the body.
+- A save from a newer build is refused as before.
+
+## Where things are
+
+- **Baseline:** branch `backup/pre-scope-reset-2026-10-09` and tag `pre-scope-reset-2026-10-09`, both at
+  `81f77592`, on GitHub.
+- **The first reset attempt** (the correction-scope keep list), abandoned when the owner chose the 2026-09-29 base:
+  `bb4d1700` on `claude/scope-reset`. It doesn't typecheck and is kept only to be read.
+- **This work:** `claude/sep29-reset`. The code is `bcc30c88`; the records and gate fixes come in the commit
+  after it.
+
+## Verification
+
+- `npm run gate`, read from a file, exit 0, run twice on the final tree with `VITEST_MAX_FORKS=2`: 105 test files and 1,346 tests, typecheck, lint, and all fifteen checks. catalog-coverage left the gate with the catalogs.
+- Inventory: 117 commands, 65 scheduled kinds and 4 routes. Traceability: 9 commands verified in a journey, 88 implemented but unverified and 20 partial.
+- Production build (`vite build`): exit 0.
+- In the built app, through `tools/screenshot.mjs` on a new life with the guide read, at 1440 and 390 wide: creation; Home, matching the 2026-09-29 page less its Home, Career, Travel, Cars and Land cards; School; Bank; Papers; the Calendar. There is no sideways scroll on the phone.
+- Tests for removed systems were deleted; cases about rent, licences, travel and the career were cut from kept files. The heat index was ported back and mutation-tested.
+- Not run: the long replay and the multi-seed lives (see the limits below).
+
+## Known gaps and limits
+
+- `docs/UNBITTEN.md`, "The scope reset of 2026-10-09", lists what the reset leaves declared and biting nothing:
+  - presence, reputation and recognition, which the school still writes and only the career read (the School screen shows composure alone);
+  - checks and a direct debit taken back, with no rent or bills to come from;
+  - the rent and bills payment settings;
+  - card bonuses on bills;
+  - the union health plans and COBRA after one;
+  - a week worked while claiming;
+  - the talent routes to residence;
+  - Ireland's Living Alone Increase;
+  - a return home from abroad;
+  - coursework's phone and clothes, taken as had;
+  - the homebody and early riser trait texts.
+- `docs/REQUIREMENTS.md` marks 139 rows **Retired by the owner (2026-10-09)**. `docs/capabilities.json` retires
+  17 of 18. `docs/WORLD.md`, `AUDIT.md`, `AI-INTEGRATION.md` and the catalog docs carry retirement banners, and a
+  path a doc names without backticks is one that went.
+- `tools/catalog-coverage.mjs` left the gate. `tools/social-lives.mjs` and the replay scripts in `probe/` (not
+  tracked) still name deleted systems and haven't been adapted. The long replay and the multi-seed lives the owner
+  asked for before the reset were interrupted by it and have not been run on this line.
+- Content files used only by removed systems are still in `src/engine/content/`. They're data, read by nothing
+  that runs. Pruning them is open.
+- The Home page is the 2026-09-29 one. The rail around School, Banking, Daily Living and Character that the
+  earlier brief described isn't built, because the owner's final word chose the 2026-09-29 setup.
+
+---
+
 - The replay at `71166663` was clean (New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors and 0 anomalies); `main` merged from it as `c519fe78`.
 - `585ea8fc`: lighting billed from the home's own bulbs (`systems/lighting.ts`: the market's household sockets, lit for the hours somebody's home and up in the dark, against EIA's and DECC's lighting share; bulbs out at their rated life, replaced from spares or a pack bought; 80 bulbs from 31 makers, 80 lamps from 45, `lighting.buy_bulbs`, `lighting.buy_lamp`, `lighting.fit`); sneakers counted from the clothes shops' trainers (60 brands), shoes 61, cosmetics 52; footwear always worn as shoes (gate 3,163 tests).
 - `07707f85`: tires by make and model (96 from 52 brands, a chosen set lasting its own warranty) and lawn mowers (117 from 52; mowing by hand needs one, a corded or battery mower's energy billed, a robot rated for the lawn keeping it). The replay at `874ec9e6` was clean (New York 89, London 50, 0 errors and 0 anomalies); `main` merged from it as `efd319de`.

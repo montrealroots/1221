@@ -1,5 +1,8 @@
 # The Built-In Assistant: How Claude Can Be Connected
 
+> **Retired by the owner's scope reset of 2026-10-09.** The assistant and its screen went that day; this is the record
+> of the research, kept as history.
+
 Researched on 2026-10-01 for requirement 32 of the owner's Final Master Build
 Command. Recheck everything here at activation; model ids and prices change.
 
@@ -66,7 +69,7 @@ Nothing is sent to Anthropic until all three are done.
 
 **Roles, from 2026-10-05.** Ask It To chooses one. *Help You Play*, the default, proposes any listed command. *Help Customize What You Own* is told only the customization commands (`CUSTOMIZE_COMMANDS`: a wrap, a stereo or speakers, tires, clothes and outfits, a lamp, paint, a renovation), each tried and put back like any other. *Propose A New Mechanic For Review* (requirement 57) answers through a second tool, `propose_mechanics`: each mechanic's title, what it would do, why, its sources and the systems it would touch, stored in the `SlateMechanicProposal` entity with status `proposed` for the owner to review. It returns no command, so nothing it says runs or reaches a save. A test checks every command the assistant may propose is one the engine handles.
 
-- **The engine's side** (`src/engine/systems/assistant.ts`): `assistantState` is
+- **The engine's side** (src/engine/systems/assistant.ts): `assistantState` is
   the summary sent (where you are, money, wellbeing, what's on the calendar,
   your garments, outfits, vehicles, homes and contacts), and
   `ASSISTANT_COMMANDS` is the list of commands it may propose, each with its
@@ -80,10 +83,10 @@ Nothing is sent to Anthropic until all three are done.
   Haiku 4.5 by default; the system prompt is cached; the answer comes back
   through one forced tool, `propose_actions`, and only proposals whose command
   is in the list are returned.
-- **The screen** (`src/ui/assistant/Assistant.tsx`): Ask, in the top bar,
+- **The screen** (src/ui/assistant/Assistant.tsx): Ask, in the top bar,
   opened by the guide's chapter "The Assistant". Without the server it says
   it isn't available, and nothing else changes.
-- **Tests** (`tests/assistant.test.ts`): a proposal leaves the world as it
+- **Tests** (tests/assistant.test.ts): a proposal leaves the world as it
   was; refusals and the allowlist hold; the function sends nothing without
   the key, returns only listed commands, and stops a player at the cap.
 
@@ -112,7 +115,7 @@ paragraph above says, and the line was struck.
   by the service role, which no player can read. It counts tokens because
   that is what the server can measure without a price list; the dollar limit
   is the Console's spend limit, step 1 above.
-- Tests (`tests/assistant.test.ts`): role refusals, offers that all fit the
+- Tests (tests/assistant.test.ts): role refusals, offers that all fit the
   car, a sequence where the second set of speakers is refused after the
   first, all-or-none rollback leaving the save byte-for-byte as it was, and
   the month's allowance stopping a second player without sending anything.

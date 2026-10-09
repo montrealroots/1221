@@ -28,7 +28,7 @@ import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
-import { weatherAt } from './weather';
+import { heatIndexC, weatherAt } from './weather';
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };
@@ -39,12 +39,12 @@ export const DELIVERY = { times: 21 / 3.03 };
  * more; the home went with its gym in the scope reset (`systems/dwelling.ts`).
  */
 export const TRAINING = { run: 1.1, indoors: 1 };
-/** Weather to run in: dry, and neither freezing nor sweltering. */
-const FINE = { highC: 32, runLowC: 0 };
+/** Weather to run in: dry, and neither freezing nor sweltering, the heat read as it feels (`heatIndexC`). */
+export const FINE = { highC: 32, runLowC: 0 };
 const WET = ['Rain', 'Thunderstorm', 'Snow', 'Drizzle'];
 export function trainingAt(sim: Simulation, person: Person): { where: 'run' | 'indoors'; builds: number } {
   const w = weatherAt(sim, person.currentLocationId, sim.now);
-  if (w && !WET.includes(w.condition) && w.temperatureC <= FINE.highC && w.temperatureC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
+  if (w && !WET.includes(w.condition) && heatIndexC(w.temperatureC, w.humidity) <= FINE.highC && w.temperatureC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
   return { where: 'indoors', builds: TRAINING.indoors };
 }
 

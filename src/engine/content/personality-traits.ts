@@ -50,7 +50,7 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
   | 'hygieneDrift' | 'moraleSwing' | 'spending'
-  | 'illnessToll' | 'awayRecovery' | 'earlyCall' | 'lateCall' | 'receipts'
+  | 'illnessToll' | 'receipts'
   | 'bondWarmth' | 'bondWound' | 'company' | 'appetite';
 
 export interface PersonalityTrait {
@@ -117,14 +117,16 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'early_riser', name: 'Early Riser', group: 'Habits',
     description: 'Up before anybody wants you, and the best hours of your day are over by ten.',
     cost: 'No use at all after nine at night.',
-    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1, earlyCall: 0.5, lateCall: 3 },
+    // A late call cost them three times, and an early one half (`lateCall`, `earlyCall`), until the career's calls went
+    // in the scope reset of 2026-10-09; the night's sleep is what's left of it.
+    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1 },
     conflictsWith: ['night_owl'],
   },
   {
     id: 'night_owl', name: 'Night Owl', group: 'Habits',
     description: 'The good hours start after midnight, and none of them are before noon.',
     cost: 'Every early call is a fight with yourself, and you sleep badly.',
-    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94, earlyCall: 3, lateCall: 0.5 },
+    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94 },
     conflictsWith: ['early_riser'],
   },
   {
@@ -145,14 +147,15 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'homebody', name: 'Homebody', group: 'Habits',
     description: 'Your own house, your own kitchen, your own bed. That’s where you recover.',
     cost: 'Nowhere else puts it back the way home does.',
-    systemMods: { energyRecovery: 1.15, awayRecovery: 0.8 },
+    // A night away put back a fifth less (`awayRecovery`) until the journeys went in the scope reset of 2026-10-09.
+    systemMods: { energyRecovery: 1.15 },
     conflictsWith: ['restless'],
   },
   {
     id: 'restless', name: 'Restless', group: 'Habits',
     description: 'One place for long is beyond you.',
     cost: 'You don’t rest properly, anywhere, ever, though away is where you rest best.',
-    systemMods: { energyRecovery: 0.9, awayRecovery: 1.1 },
+    systemMods: { energyRecovery: 0.9 },
     conflictsWith: ['homebody'],
   },
 

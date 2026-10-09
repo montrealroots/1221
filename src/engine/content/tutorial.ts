@@ -176,7 +176,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Plays To Read, under Coursework, are twenty-nine plays first staged since 2000: Read It with the Haas Arts Library’s copy, and Research It once read.',
       'The School panel on Home shows your year, standing, place in the class and what’s next, and its button, named for the school, opens it all, tab by tab.',
       'On the School screen the school’s name, each course and each skill open where they stand: the school into this year’s courses and the town, a course into the skills it trains and the next day it meets, a skill into where you stand in it against the class.',
-      'Beside the craft are attributes, on the School screen. Presence is mostly given. Composure grows with every performance; short of it, nerves add stress and take some of the work. Reputation is earned by calls kept and the degree, and lost by a missed day.',
+      'Beside the craft is composure, on the School screen. It grows with every performance and with scene study; short of it, nerves add stress and take some of the work.',
     ],
     names: ['School', 'Your school, from the School panel', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Plays To Read: Read It and Research It'],
     opens: ['ui.school', 'school.call_in_sick', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill'],

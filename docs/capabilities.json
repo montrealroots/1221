@@ -1,5 +1,5 @@
 {
-  "about": "What this phase (the owner's brief of 2026-10-08, 'Finish The Open Work, Improve Navigation, And Build The Connected Entertainment Industry') can do, one capability a row, each held to the code by tools/capabilities.mjs: every command, look, route and file it names must exist. Status is one of Missing, Partial, Implemented, Verified, Blocked: Verified means a test or a run in the built app shows the outcome, not only that code exists. The four layers are kept apart: a field in the model (schema) is not content, content is not a working interaction, and an interaction is not verified behavior. The denominator is these rows, this phase's scope, not all of SLATE and not all of real life or of IMDb.",
+  "about": "What this phase (the owner's brief of 2026-10-08, 'Finish The Open Work, Improve Navigation, And Build The Connected Entertainment Industry') can do, one capability a row, each held to the code by tools/capabilities.mjs: every command, look, route and file it names must exist. Status is one of Missing, Partial, Implemented, Verified, Blocked: Verified means a test or a run in the built app shows the outcome, not only that code exists. The four layers are kept apart: a field in the model (schema) is not content, content is not a working interaction, and an interaction is not verified behavior. The denominator is these rows, this phase's scope, not all of SLATE and not all of real life or of IMDb. Since the owner's scope reset of 2026-10-09 every row of this phase but kept-context is Retired: the career, the industry, its database and the rail went, and the rows stay as the record of what was built.",
   "capabilities": [
     {
       "id": "agency-introductions",
@@ -34,14 +34,14 @@
         "tests/representation.test.ts"
       ],
       "manual": "Seen in the built app's agency table",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "A producer's or a lawyer's introduction isn't a route"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. A producer's or a lawyer's introduction isn't a route"
     },
     {
       "id": "reschedule-series",
@@ -75,14 +75,14 @@
         "tests/rescheduling-families.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "A series' calls can't be asked to move by the actor"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. A series' calls can't be asked to move by the actor"
     },
     {
       "id": "reschedule-commercial-voice",
@@ -118,14 +118,14 @@
         "tests/rescheduling-families.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "UK commercial and BBC audio cancellation clauses weren't found: SLATE's estimate, said so"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. UK commercial and BBC audio cancellation clauses weren't found: SLATE's estimate, said so"
     },
     {
       "id": "replacement-performers",
@@ -159,14 +159,14 @@
         "tests/collaborators.test.ts"
       ],
       "manual": "Seen on a played save's project page",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "Performers book only within projects the save makes"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. Performers book only within projects the save makes"
     },
     {
       "id": "projects",
@@ -204,14 +204,14 @@
         "tests/journey-industry.test.ts"
       ],
       "manual": "Drill-down from a credit to the project in the built app",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "Untouched projects leave the record a year after they end"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. Untouched projects leave the record a year after they end"
     },
     {
       "id": "company-rules",
@@ -242,14 +242,14 @@
         "tests/industry.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "No company's own hiring policy is modeled, by design"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. No company's own hiring policy is modeled, by design"
     },
     {
       "id": "find-work",
@@ -288,14 +288,14 @@
         "tests/journey-industry.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "A part cast by offer can't be sought; a castmate's word isn't a route"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. A part cast by offer can't be sought; a castmate's word isn't a route"
     },
     {
       "id": "classmate-projects",
@@ -326,14 +326,14 @@
         "tests/industry.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": ""
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified."
     },
     {
       "id": "database-search",
@@ -358,14 +358,14 @@
         "tests/database.test.ts"
       ],
       "manual": "Searched and drilled in the built app, wide and phone",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "540 real titles, 2,663 people: a selection of the ten companies' 2015 to 2026 work"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. 540 real titles, 2,663 people: a selection of the ten companies' 2015 to 2026 work"
     },
     {
       "id": "database-pages",
@@ -398,14 +398,14 @@
         "tests/journey-industry.test.ts"
       ],
       "manual": "Title, company and project pages seen in the built app",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "No plots, reviews, images, biographies or contacts: not free to reuse"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. No plots, reviews, images, biographies or contacts: not free to reuse"
     },
     {
       "id": "database-lookup",
@@ -437,14 +437,14 @@
         "tests/journey-industry.test.ts"
       ],
       "manual": "Searched live in the built app",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "Needs the internet; Wikidata’s coverage is uneven, and a title it holds thinly is shown thinly; one lookup at a time"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. Needs the internet; Wikidata’s coverage is uneven, and a title it holds thinly is shown thinly; one lookup at a time"
     },
     {
       "id": "database-lists-ratings",
@@ -477,14 +477,14 @@
         "tests/journey-industry.test.ts"
       ],
       "manual": "",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": ""
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified."
     },
     {
       "id": "releases-awards-charts",
@@ -509,14 +509,14 @@
       "provenance": "The save's reception SLATE's own, labelled; real awards as Wikidata records them",
       "tests": [],
       "manual": "Tabs opened in the built app",
-      "status": "Implemented",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "No real popularity or ratings charts: they're a service's users' and not free to reuse"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Implemented. No real popularity or ratings charts: they're a service's users' and not free to reuse"
     },
     {
       "id": "imdb-community-media",
@@ -535,14 +535,14 @@
       "provenance": "Assessed: IMDb's terms forbid reuse; Wikidata doesn't carry them; licensed sources not available",
       "tests": [],
       "manual": "",
-      "status": "Blocked",
+      "status": "Retired",
       "layers": {
         "schema": "Missing",
         "content": "Missing",
         "interaction": "Missing",
         "verified": "Missing"
       },
-      "limits": "Needs licensed data. The save's own news is the trades' lines on Career"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Blocked. Needs licensed data. The save's own news is the trades' lines on Career"
     },
     {
       "id": "sidebar",
@@ -573,14 +573,14 @@
         "tests/navigation.test.ts"
       ],
       "manual": "tools/rail-check.mjs at 1440, 1024, 820 and 390: all passed",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "No icon-only collapsed rail on wide screens: groups fold instead"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. No icon-only collapsed rail on wide screens: groups fold instead"
     },
     {
       "id": "kept-context",
@@ -642,14 +642,14 @@
         "tests/looks.test.ts"
       ],
       "manual": "Credit, project, company and page, then back by the trail, wide and phone: all passed",
-      "status": "Verified",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "Vehicles, homes, trips and purchases kept the looks they had (vehicle, home, journey, receipt, item); they were audited, not extended"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Verified. Vehicles, homes, trips and purchases kept the looks they had (vehicle, home, journey, receipt, item); they were audited, not extended"
     },
     {
       "id": "school-to-career",
@@ -679,14 +679,14 @@
         "tests/collaborators.test.ts"
       ],
       "manual": "",
-      "status": "Partial",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Audited: no new gap was found in the graduation itself; a student can't be pitched (the career hasn't begun), by design. The owner's call on income for a life abroad is still open"
+      "limits": "Retired by the owner's scope reset of 2026-10-09; it was Partial. Audited: no new gap was found in the graduation itself; a student can't be pitched (the career hasn't begun), by design. The owner's call on income for a life abroad is still open"
     }
   ]
 }

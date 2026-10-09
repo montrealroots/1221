@@ -1,5 +1,8 @@
 # Catalog depth
 
+> **Retired by the owner's scope reset of 2026-10-09.** The catalogs this listed went that day, and
+> tools/catalog-coverage.mjs left the gate with them; this is the last count, kept as history.
+
 Written by `tools/catalog-coverage.mjs`; don't edit by hand. Every brand in every brand category, with its distinct
 products in SLATE and whether it meets the depth target: at least 100, or its whole researched range
 (`docs/research/catalog-ranges.json`). Short means more of its real range is to be researched and added.

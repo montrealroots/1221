@@ -31,13 +31,14 @@ may not rise.
 
 | Declared | Nothing reads | Of |
 |---|---|---|
-| Id namespaces | 1 | 11 |
-| Save tables nothing fills | 1 | 8 |
-| Personality knobs nothing reads | 0 | 16 |
+| Id namespaces | 1 | 9 |
+| Save tables nothing fills | 1 | 7 |
+| Personality knobs nothing reads | 0 | 13 |
 | Personality axes nothing consults | 0 | 7 |
 
 The "Of" column read 7, 9, 7 and 7 until 2026-10-01, when the tool was run
-again against it.
+again against it, and 21, 7, 16 and 7 until the scope reset of 2026-10-09 took
+twelve namespaces and three knobs out with the systems they served.
 
 The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
@@ -50,6 +51,60 @@ card read it, and this table said four until 2026-09-25.
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
 part the tool cannot see.
+
+---
+
+## The scope reset of 2026-10-09
+
+The owner set the game back to the setup of 2026-09-29, with the banking, the
+school and the papers of 2026-10-09, and took out the home, the rented room,
+the travel, the cars, the land and the career. Every entry below this section
+was written for the line that ran to that day: those about the systems that
+went are settled by deletion, and those about the banking, the school, the
+papers and the body stand. What the reset itself leaves declared and biting
+nothing, each with which kind it is:
+
+- **Checks, and a direct debit taken back.** Unreachable. A check was written
+  for the rent, and a SEPA debit taken back was a bills debit; with neither,
+  `bank.stop_check` and `bank.reclaim_debit` have nothing to act on, and
+  the screen's sections for them never appear. The fees and the countries'
+  norms behind them (`content/payments.ts`) are read only there. Build a
+  payment that goes by check or by debit, or delete them.
+- **How the rent and the bills are paid.** Dead. `PaymentSettings.rent` and
+  `.bills` are still kept and still set by `bank.set_payments`, and nothing
+  reads them; their controls left the screen on 2026-10-09.
+- **A card's bonus on the bills.** Unreachable. The cards that pay more on
+  recurring bills (`BONUSES` in `systems/cardoffers.ts`, with
+  `TELECOM_OF_BILLS`) read a month's spending on bills, and no bill is paid.
+- **The union health plans, and COBRA after one.** Unreachable. SAG-AFTRA's
+  and Equity-League's plans are reached by a year's acting earnings under
+  them, which only the career paid.
+- **A week worked while claiming.** Dead in part. Unemployment's partial week,
+  Ireland's days worked, Universal Credit's earnings taper and SNAP's work
+  hours all read a career's days, which are now none (`systems/unemployment.ts`,
+  `homebenefits.ts`, `universalcredit.ts`, `assistance.ts`); each reads
+  nought, and says so where it does.
+- **The talent routes to residence.** Dead. Britain's Global Talent visa and the
+  green card by extraordinary ability read the O-1's record, which was the
+  career's credits; `routeRefusal` refuses both now, and their fees,
+  enrolment and decisions in `systems/residence.ts` can't be reached. Mexico's
+  shorter wait for artistic work (`citizenship.ts`) is the same.
+- **Ireland's Living Alone Increase.** Dead. It was paid on a home of one's
+  own, and what says who somebody lives with went with the home.
+- **A return home from abroad.** Unreachable. `returnedHomeAt`, which
+  Ireland's and Mexico City's claims read, was written by the career's move
+  home.
+- **A phone that records, and clothes to move in.** Dead. Coursework's needs
+  `phone` and `moveClothes` are taken as had, the phones and the wardrobe gone.
+- **Presence, reputation and recognition.** Dead. The school still draws
+  presence and adds reputation for calls kept, a performance and the degree
+  (`systems/school.ts`), and only the career read the three: an audition, the
+  showcase, an agency's sends, a quote over scale. The School screen shows
+  composure alone, which a performance's nerves read.
+- **Homebody's cost.** Dead. "Nowhere else puts it back the way home does" was
+  a night away putting back less (`awayRecovery`); the trait's text stays and
+  bites nothing, as early riser's "No use at all after nine at night" does
+  without the career's late calls.
 
 ---
 
@@ -786,7 +841,7 @@ part the tool cannot see.
   them, so a British graduate out of permission to work, played broke,
   starved in New York; a pantry's plate would be the fix, and its size
   isn't researched.
-  Settled on 2026-10-01 (`systems/foodhelp.ts`, `research-foodbanks.json`): a day the bank can't pay for takes the help where they are, each a named site's published rule. New York gives a weekday lunch and a pantry's 9 meals every 14 days; Los Angeles the Midnight Mission's three meals; New Haven an evening meal; London a Trussell parcel, three in six months; Dublin the Capuchin Day Centre's two meals Monday to Saturday; Toronto Daily Bread weekly; Mexico City a comedor's MXN 11 meal on weekdays. Vancouver's is left out, its items being no measure of meals. Three meals is a fed day. Fewer add their share to what a broke day scrapes together, which is SLATE's reading. A broke life eating one meal a day keeps more of its weight than one eating none (`tests/foodhelp.test.ts`, 7; 15 mutations, all killed in the end).
+  Settled on 2026-10-01 (`systems/foodhelp.ts`, `research-foodbanks.json`): a day the bank can't pay for takes the help where they are, each a named site's published rule. New York gives a weekday lunch and a pantry's 9 meals every 14 days; Los Angeles the Midnight Mission's three meals; New Haven an evening meal; London a Trussell parcel, three in six months; Dublin the Capuchin Day Centre's two meals Monday to Saturday; Toronto Daily Bread weekly; Mexico City a comedor's MXN 11 meal on weekdays. Vancouver's is left out, its items being no measure of meals. Three meals is a fed day. Fewer add their share to what a broke day scrapes together, which is SLATE's reading. A broke life eating one meal a day keeps more of its weight than one eating none (tests/foodhelp.test.ts, 7; 15 mutations, all killed in the end).
 - **Humidity was drawn and only shown.** The weather drew a day's humidity
   from its climate type and only the screens read it, until an audit found it
   on 2026-10-01. Now a run and sitting out read the National Weather

@@ -1,11 +1,12 @@
 /**
  * SLATE — how each thing is paid, on the bank's screen.
  *
- * The rent, the bills and the day's spending, each the way the character
- * pays it; savings linked to the current account or not; standing orders
+ * The day's spending, the way the character pays it; savings linked to the
+ * current account or not; standing orders
  * into savings; payments set for a date; checks in the post, and stopping
  * one; and, in SEPA, a direct debit taken back within eight weeks
- * (`systems/payments.ts`).
+ * (`systems/payments.ts`). How the rent and the bills were paid was chosen
+ * here too, until the home went in the scope reset of 2026-10-09.
  */
 
 import { useState } from 'react';
@@ -16,7 +17,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import {
-  checkFees, checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
+  checkFees, mayReclaim, paymentsOf, SCHEDULED_KIND,
 } from '@/engine/systems/payments';
 import { FRENCH_CARDS, cardCeilingRoom } from '@/engine/systems/lending';
 
@@ -31,8 +32,6 @@ export function BankPayments() {
   const savings = accounts.filter((a) => a.kind === 'savings');
   const current = accounts.find((a) => a.id === person.primaryAccountId);
   const scheduled = useWorld((s) => s.universe.scheduled.filter((i) => i.kind === SCHEDULED_KIND && i.status === 'pending' && i.payload.personId === s.player.id));
-  const words = paymentWords(cityId);
-  const checks = checksUsed(cityId);
   // In the save's money, as the bank charges them; until 2026-09-27 the bank's own hundredths.
   const fees = checkFees(sim, person).fees;
   const ceiling = current?.bankId ? FRENCH_CARDS[current.bankId] : undefined;
@@ -64,24 +63,8 @@ export function BankPayments() {
   };
 
   return (
-    <Panel title="How You Pay" subtitle={words?.usual ?? 'Rent, bills and the day’s spending, and where each is paid from.'}>
+    <Panel title="How You Pay" subtitle="The day’s spending, and where it’s paid from.">
       <div className="field-row">
-        <div className="field">
-          <label htmlFor="pay-rent">Rent</label>
-          <select id="pay-rent" value={pay.rent} onChange={(e) => run('bank.set_payments', { rent: e.target.value as RentWay })}>
-            <option value="manual">By Hand, Paying The Landlord Yourself</option>
-            {checks && <option value="check">By Check</option>}
-            <option value="auto">From The Bank On The 1st</option>
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="pay-bills">Bills</label>
-          <select id="pay-bills" value={pay.bills} onChange={(e) => run('bank.set_payments', { bills: e.target.value as BillsWay })}>
-            <option value="manual">By Hand</option>
-            <option value="card">On The Credit Card</option>
-            <option value="auto">From The Bank On The 1st</option>
-          </select>
-        </div>
         <div className="field">
           <label htmlFor="pay-everyday">The Day’s Spending</label>
           <select id="pay-everyday" value={pay.everyday} onChange={(e) => run('bank.set_payments', { everyday: e.target.value })}>
@@ -92,15 +75,8 @@ export function BankPayments() {
         </div>
       </div>
       <p className="small" style={{ margin: 'var(--s2) 0' }}>
-        {pay.rent === 'check' && 'Rent goes by check on the 1st, and comes out of the current account when the landlord cashes it. Until then it can be stopped. '}
-        {pay.rent === 'manual' && 'Rent isn’t paid for you: pay the landlord yourself, from Home, on or before the 1st, or it’s owed. '}
-        {pay.rent === 'auto' && 'Rent goes from the current account on the 1st. If the account can’t cover it, it comes back unpaid, the bank charges for that, and it’s owed. '}
-        {pay.rent !== 'check' && checks && fees?.checkbook && !pay.checkbookBought ? `Paying by check orders a checkbook: ${fees.firstFree ? 'the first is free' : money(fees.checkbook)}. ` : ''}
-        {pay.bills === 'card' && 'Bills go on the credit card each month. '}
         {pay.everyday === 'debit' && ceiling && ceilingRoom !== undefined ? `The debit card pays up to its ceiling ${ceiling.window === 'month' ? 'each calendar month' : 'over any 30 days'}, ${money(ceilingRoom)} still; past it the day’s shopping goes on the credit card, or isn’t bought. ` : ''}
-        A landlord takes no card.
       </p>
-      {words && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>How rent and bills are usually paid here: {words.source}.{fees ? ` The bank’s check fees: ${fees.source}.` : ''}</p>}
       {/* Only with savings to cover it: until 2026-09-27 it was offered with none, and On changed nothing. */}
       {savings.length > 0 && (
         <div className="col gap-2">

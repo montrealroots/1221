@@ -45,7 +45,7 @@ corrected in the same commit, as the backlog's progress table is.
 | An outfit | Works | `clothes.save_outfit`, from what’s to hand, jewelry and accessories with it; Change Into These Now changes there and then (`clothes.change`), and what’s on now is kept (`wornNow`). A piece that can’t go on is refused, and one swapped on the day is told. |
 | Packed, cleaned, altered | Works | Packed by hand into the suitcase, each garment its folded liters, or Pack For Me (`luggage.pack`); washed at home or the laundromat and dry-cleaned at real shops’ prices; a garment fits the weight it was bought for, and one too big is taken in at one of 11 named tailors (`clothes.alter`). |
 | Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`); sold on Vinted, ThredUp or Kijiji (`clothes.sell`); Air Jordans sold on GOAT at its fees (`sneakers.sell`). Not kept: repair, SLATE keeping no tear to mend. |
-| Unavailable sizes, delays, returns, location | Works | Each is refused or said in words; tests in `tests/clothing.test.ts`. |
+| Unavailable sizes, delays, returns, location | Works | Each is refused or said in words; tests in tests/clothing.test.ts. |
 
 ## 36. Vehicle Purchase, Modification And Use
 
@@ -155,7 +155,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Issued, or a reason why not | Works | |
 | Used within scope | Works | A class drives what it covers. |
 | Renew or replace | Works | `documents.renew_license`, `documents.report_lost`. |
-| Starting doesn't unlock | Works | A learner can't drive alone; `tests/licensing.test.ts`. |
+| Starting doesn't unlock | Works | A learner can't drive alone; tests/licensing.test.ts. |
 
 ## 43. Acting Commitment With Daily-Life Preparation
 
