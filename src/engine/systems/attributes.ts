@@ -158,9 +158,12 @@ export function abilitiesOf(sim: Simulation, person: Person): Record<AbilityId, 
 }
 
 /** Moves an attribute: a gain as a share of what's left to 100 when `share` is set, or plain points otherwise; always 0 to 100. */
-export function nudge(sim: Simulation, person: Person, key: AttributeKey, amount: number, share = false): void {
+export function nudge(sim: Simulation, person: Person, key: AttributeKey, amount: number, share = false, source?: string): void {
   const a = attributesOf(sim, person);
+  const before = a[key];
   a[key] = clamp(share ? a[key] + (100 - a[key]) * amount : a[key] + amount, 0, 100);
+  // Kept in the history where it's named (from 2026-10-10: a house's nerves grew composure and presence unrecorded).
+  if (source && isAbility(key as Target)) recordDevelopment(sim, person, key, a[key] - before, source);
 }
 
 /** Where development is counted against farming (`DEVELOPMENT.repeat`), the day it's for, and what moved lately. */
@@ -290,8 +293,8 @@ export function nerves(sim: Simulation, person: Person, event: Event): void {
   const unsettled = 1 - a.composure / 100;
   person.wellbeing.stress = clamp(person.wellbeing.stress + ATTRIBUTES.eventWeight[event] * unsettled * personalityOf(person, 'stressGain'), 0, 100);
   takeTheHouse(person);
-  nudge(sim, person, 'composure', ATTRIBUTES.composureGain[event], true);
-  nudge(sim, person, 'presence', ATTRIBUTES.presenceGain, true);
+  nudge(sim, person, 'composure', ATTRIBUTES.composureGain[event], true, `nerves:${event}`);
+  nudge(sim, person, 'presence', ATTRIBUTES.presenceGain, true, `nerves:${event}`);
 }
 
 /** An ability's definition, for its look and the profile. */

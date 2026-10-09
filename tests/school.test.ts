@@ -10,6 +10,8 @@ import { COST_2026_27,COURSES,LABS,SEAGULL_2027,SKILLS,SUMMER_CABARET,WORK_STUDY
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY,MS_HOUR,instantFromZoned,zonedParts } from '@/engine/core/time';
 import { TURNS } from '@/engine/systems/enjoyment';
+import { courseworkOf } from '@/engine/systems/coursework';
+import { PREP_DIMS } from '@/engine/content/coursework';
 import { careFor,healthOf } from '@/engine/systems/health';
 import {
 CABARET_KIND,CALL_KIND,ESTIMATE,
@@ -35,10 +37,18 @@ import { describe,expect,it } from 'vitest';
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
 const life = (seed = 'school', extra: Record<string, unknown> = {}) =>
-  createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+  working(createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra }));
 /** A life whose family's means leave need, which Yale's aid meets. */
 const inNeed = (seed: string) => life(seed, { family: undefined, wealth: 'scraping' });
 /** Played to a moment, six hours at a time. */
+/**
+ * TEST SETUP: a student who does the coursework, its every part prepared before it's shown. From 2026-10-10 the
+ * faculty read the term's showings, and a term of work shown unready falls short; these tests are of casting and the
+ * calendar, not of a student who never prepares.
+ */
+const doTheWork = (sim: Simulation) => { for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) if (a.status === 'open' || a.status === 'revising') for (const d of PREP_DIMS) a.prep[d] = Math.max(a.prep[d] ?? 0, 0.95); };
+/** TEST SETUP: the work done each midnight, through however the test moves the clock. */
+const working = (sim: Simulation) => sim.onEvent('world.day_rollover', 'test.doTheWork', (_e, { sim: s }) => doTheWork(s));
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); };
 /** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };

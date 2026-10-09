@@ -52,7 +52,7 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, conditionAt, ordinary, coursesOn, focusOf, focusAt, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, conditionAt, ordinary, coursesOn, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, evaluate, recordWork, type Evaluation } from './evaluation';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
@@ -484,7 +484,7 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {
-    grow(person.craft, act.trains, focus, WORK.trainingWeight);
+    grewFrom(sim, person, `coursework:${act.id}`, (c) => grow(c, act.trains!, focus, WORK.trainingWeight));
     a.trained += 1;
   }
   // The ability this kind of step is practice in (`PREP_ABILITY`, from 2026-10-09), a step's training weight, while
@@ -795,8 +795,9 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     }
     const applied = noteTaken(person, revising, key);
     revising.revision!.applied = applied;
-    // Shown again, reckoned as a showing: its band kept (the showcase reads the last one, `showcaseSceneSeen`). Until
-    // 2026-10-08 the second showing was only taken or not, and its band was never set.
+    // Shown again, reckoned as a showing: its band kept, which the term's evaluation reads in place of the first
+    // (`evaluate`, from 2026-10-10; the showcase read it, `showcaseSceneSeen`, until the showcase went on 2026-10-09).
+    // Until 2026-10-08 the second showing was only taken or not, and its band was never set.
     revising.revision!.band = reshow(sim, person, revising, key, when);
     if (applied && revising.feedback) resolveNote(notesOf(courseworkOf(sim, person)!), noteKey(revising.feedback.focus), key, revising.id, courseOf(course)?.name ?? course);
     revising.status = 'done';

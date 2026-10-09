@@ -11,13 +11,24 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
 import { COURSES } from '@/engine/content/school';
+import { courseworkOf } from '@/engine/systems/coursework';
+import { PREP_DIMS } from '@/engine/content/coursework';
 import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightEvaluation, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
-const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
+
+/**
+ * TEST SETUP: a student who does the coursework, its every part prepared before it's shown. From 2026-10-10 the
+ * faculty read the term's showings, and a term of work shown unready falls short; these tests are of casting and the
+ * calendar, not of a student who never prepares.
+ */
+const doTheWork = (sim: Simulation) => { for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) if (a.status === 'open' || a.status === 'revising') for (const d of PREP_DIMS) a.prep[d] = Math.max(a.prep[d] ?? 0, 0.95); };
+/** TEST SETUP: the work done each midnight, through however the test moves the clock. */
+const working = (sim: Simulation) => sim.onEvent('world.day_rollover', 'test.doTheWork', (_e, { sim: s }) => doTheWork(s));
+const life = (seed: string, pronouns = 'she/her') => working(createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns }));
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const on = (y: number, m: number, d: number) => instantFromZoned({ year: y, month: m, day: d, hour: 10 }, NY);
-const student = (i: number, level: number, title: 'actor' | 'actress', last?: { size: 'lead' | 'supporting' | 'featured'; nights?: number; delivery?: number }) => ({ i, name: `S${i}`, craft: evenCraft(level), title, ...(last ? { last } : {}) });
+const student = (i: number, level: number, title: 'actor' | 'actress', last?: { size: 'lead' | 'supporting' | 'featured'; delivery?: number }) => ({ i, name: `S${i}`, craft: evenCraft(level), title, ...(last ? { last } : {}) });
 
 describe('the plays', () => {
   it('deals each save its own season: a thesis is a real play with its characters, and a season’s three are three plays', () => {
@@ -63,12 +74,12 @@ describe('the chair’s casting', () => {
     expect(partsFor([student(0, 90, 'actor')], [{ name: 'Hedda', size: 'lead', for: 'actress' }], reads)[0]!.part).toBe('In The Company');
   });
 
-  it('balances opportunity: a lead last time counts against the next, a featured part for it, and good nights for it', () => {
+  it('balances opportunity: a lead last time counts against the next, a featured part for it, and delivery a fifth of the fit', () => {
     const c = ESTIMATE.casting;
     expect(castScore(student(0, 60, 'actress', { size: 'lead' }), reads)).toBe(60 + c.balance.lead);
     expect(castScore(student(0, 60, 'actress', { size: 'featured' }), reads)).toBe(60 + c.balance.featured);
     // Since 2026-10-10 the last run counts by how much of themselves they delivered (`LastWork.delivery`), a fifth of the fit, not the nights' bands.
-    expect(castScore(student(0, 60, 'actress', { size: 'supporting', nights: 2 }), reads)).toBe(60);
+    expect(castScore(student(0, 60, 'actress', { size: 'supporting' }), reads)).toBe(60);
     expect(castScore(student(0, 60, 'actress', { size: 'supporting', delivery: 0.5 }), reads)).toBeCloseTo(60 * (1 - c.delivery * 0.5), 9);
     // Last time's lead, a point up on the craft, loses Hedda to last time's featured actress.
     const given = partsFor([student(0, 61, 'actress', { size: 'lead' }), student(1, 60, 'actress', { size: 'featured' })], parts, reads);
@@ -217,7 +228,7 @@ describe('a night’s reading', () => {
     expect(c.note).toMatch(/ Work on your [a-z -]+.$/);
     expect(sim.universe.notifications.some((n) => n.title.startsWith('The Director’s Note'))).toBe(true);
     play(sim, on(2027, 9, 15));
-    expect(sim.player.school!.lastWork).toMatchObject({ size: c.size, nights: nightsMean(c.nights!) });
+    expect(sim.player.school!.lastWork).toMatchObject({ size: c.size });
     // And how much of themselves they delivered across the run's nights (from 2026-10-10), a share.
     const delivery = sim.player.school!.lastWork!.delivery!;
     expect(delivery).toBeGreaterThan(0);

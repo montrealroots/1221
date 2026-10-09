@@ -397,7 +397,7 @@ function CastingPane() {
             {casting.nights && (
               <p className="small" style={{ margin: 0 }}>
                 Your nights: {(['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => casting.nights![b]).map((b) => `${NIGHT_WORD[b]} ${casting.nights![b]}`).join(', ')}.
-                {casting.note ? ` The director’s note: ${casting.note}` : ' How a run goes is read by the chair when casting you next.'}
+                {casting.note ? ` The director’s note: ${casting.note}` : ' How much of yourself you bring to its nights is read by the chair when casting you next.'}
               </p>
             )}
             <RehearsalProcess casting={casting} which={casting === school.rep ? 'rep' : 'school'} />
@@ -427,9 +427,9 @@ function CastingPane() {
       {school.around && school.around.term === school.termsBegun - 1 && enrolled && (
         <Panel title="Around The Class" subtitle="Who’s playing what this term">
           <table className="table">
-            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">To You</th></tr></thead>
+            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
             <tbody>
-              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
+              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
             </tbody>
           </table>
         </Panel>

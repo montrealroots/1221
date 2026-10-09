@@ -231,7 +231,7 @@ function FeedbackBlock({ a }: { a: Assignment }) {
   const f = a.feedback!;
   return (
     <div className="col gap-1">
-      <div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div>
+      <div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div>
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
       <div className="xs dim">Simulated feedback in {f.course}, taught by {f.teachers}: the game’s words, not theirs.</div>
@@ -282,7 +282,7 @@ function Shown({ list }: { list: Assignment[] }) {
           return (
             <div key={a.id} className="small">
               <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
-              {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.applied ? 'Note Taken' : 'Note Not Taken'}</span>}
+              {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
               {a.feedback && <div className="xs dim">{a.feedback.text}</div>}
             </div>
           );

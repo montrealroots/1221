@@ -77,7 +77,7 @@ describe('casting, read the same for everyone', () => {
 
   it('weighs delivery a fifth, and no longer the last run’s nights or a heeded note, which read the craft again', () => {
     const s = { craft: evenCraft(60), fit: 70 };
-    expect(castScore({ ...s, last: { size: 'supporting', nights: 2, heeded: true } }, reads)).toBe(70);
+    expect(castScore({ ...s, last: { size: 'supporting' } }, reads)).toBe(70);
     expect(castScore({ ...s, last: { size: 'supporting', delivery: 0.5 } }, reads)).toBeCloseTo(70 * (1 - ESTIMATE.casting.delivery / 2), 9);
     expect(castScore({ ...s, last: { size: 'lead', delivery: 1 } }, reads)).toBe(70 + ESTIMATE.casting.balance.lead);
   });
