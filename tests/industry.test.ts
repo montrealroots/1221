@@ -202,15 +202,42 @@ describe('a project’s life', () => {
     expect(who.commitments.some((c) => c.projectId === r.id)).toBe(false);
   });
 
-  it('an untouched project leaves the record a year after it ends; one the player touched stays', () => {
+  it('a project leaves the record a year after it ends unless the save’s records point at it: a credit, a list', () => {
     const sim = actor('ind-keep');
     const gone = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, 'g1');
-    const kept = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, 'g2');
-    kept.touched = true; // SETUP
-    for (const p of [gone, kept]) { p.status = 'released'; p.releaseAt = sim.now - (INDUSTRY.keepUntouchedDays + 1) * MS_DAY; } // SETUP
+    const credited = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, 'g2');
+    const listed = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, 'g3');
+    // Read for once, long ago, and nothing points at it now: the replay of 2026-10-08 kept every one of these for good.
+    gone.touched = true; // SETUP
+    careerOf(sim.player).credits.push({ roleId: 'costar', year: 2020, cityId: 'us-ny-newyork', projectId: credited.id }); // SETUP
+    sim.must({ kind: 'industry.list', payload: { list: 'favorites', kind: 'project', id: listed.id, on: true } });
+    for (const p of [gone, credited, listed]) { projectById(sim, p.id)!.status = 'released'; projectById(sim, p.id)!.releaseAt = sim.now - (INDUSTRY.keepUntouchedDays + 1) * MS_DAY; } // SETUP
     industryWeek(sim, sim.player, 'us-ny-newyork', sim.now);
     expect(projectById(sim, gone.id)).toBeUndefined();
-    expect(projectById(sim, kept.id)).toBeDefined();
+    expect(projectById(sim, credited.id)).toBeDefined();
+    expect(projectById(sim, listed.id)).toBeDefined();
+  });
+
+  it('stays bounded as a life goes on: hundreds of old projects read for leave, and performers’ old commitments with them', () => {
+    const sim = actor('ind-bounded');
+    for (let n = 0; n < 400; n += 1) {
+      const p = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, `b${n}`);
+      p.touched = true; // SETUP: each read for once, decades ago.
+      const who = castPerformer(sim, p, p.parts[1]!, sim.now - 3000 * MS_DAY, sim.now - 2990 * MS_DAY, 'old');
+      void who;
+      p.status = 'released';
+      p.releaseAt = sim.now - 2000 * MS_DAY;
+    }
+    // And one the player has a credit on, kept, whose performer's commitment ended years ago: the commitment goes, the project stays.
+    const mine = newProject(sim, role('costar'), 'us-ny-newyork', sim.now, 'mine');
+    const old = castPerformer(sim, mine, mine.parts[1]!, sim.now - 3000 * MS_DAY, sim.now - 2990 * MS_DAY, 'mine');
+    careerOf(sim.player).credits.push({ roleId: 'costar', year: 2018, cityId: 'us-ny-newyork', projectId: mine.id }); // SETUP
+    industryWeek(sim, sim.player, 'us-ny-newyork', sim.now);
+    const state = industryOf(sim);
+    expect(projectById(sim, mine.id)).toBeDefined();
+    expect(old.commitments.some((c) => c.projectId === mine.id)).toBe(false);
+    expect(state.projects.filter((p) => p.releaseAt < sim.now - 1000 * MS_DAY)).toHaveLength(0);
+    expect(state.performers.every((p) => p.commitments.every((c) => c.until > sim.now - INDUSTRY.keepUntouchedDays * MS_DAY))).toBe(true);
   });
 
   it('the town the player works in hears of a few projects a month, spread over the months ahead', () => {

@@ -32,9 +32,11 @@
  * critics' and audiences' scores out of a hundred. Nothing here is any real
  * company's decision or any real title's result.
  *
- * **Bounded**: projects nobody touched leave the record a year after they're
- * released or canceled (`INDUSTRY.keepUntouchedDays`); anything the player
- * auditioned for, worked on, listed or rated stays.
+ * **Bounded**: projects leave the record a year after they're released or
+ * canceled (`INDUSTRY.keepUntouchedDays`) unless the save's own records point
+ * at them (`pointedAt`): the player's recent auditions, bookings and credits,
+ * the class's credits, a list or a rating. Until 2026-10-08's replay anything
+ * the player had once auditioned for stayed for good.
  *
  * Every number here is SLATE's estimate unless it says otherwise.
  */
@@ -461,15 +463,37 @@ function releaseProject(sim: Simulation, person: Person, p: Project): void {
 function prune(sim: Simulation): void {
   const state = industryOf(sim);
   const ended = (p: Project) => p.status === 'released' || p.status === 'cancelled';
-  const old = (p: Project) => !p.touched && ended(p) && sim.now - p.releaseAt > INDUSTRY.keepUntouchedDays * MS_DAY;
+  // Kept by what points at it: until 2026-10-08's replay, a project the player had only auditioned for was kept for
+  // good, every audition one more, and by fifty a life's save held 2,412 projects, 3.2 MB, walked every week.
+  const held = pointedAt(sim);
+  const old = (p: Project) => !held.has(p.id) && ended(p) && sim.now - p.releaseAt > INDUSTRY.keepUntouchedDays * MS_DAY;
   if (state.projects.some(old)) state.projects = state.projects.filter((p) => !old(p));
   if (state.projects.length > INDUSTRY.most) {
-    const drop = new Set(state.projects.filter((p) => !p.touched && ended(p)).sort((a, b) => a.releaseAt - b.releaseAt).slice(0, state.projects.length - INDUSTRY.most).map((p) => p.id));
+    const drop = new Set(state.projects.filter((p) => !held.has(p.id) && ended(p)).sort((a, b) => a.releaseAt - b.releaseAt).slice(0, state.projects.length - INDUSTRY.most).map((p) => p.id));
     state.projects = state.projects.filter((p) => !drop.has(p.id));
   }
-  // A performer's commitments to projects gone are let go; their credits stay, the title kept in words.
+  // A performer's commitments: to projects gone, or ended a year ago, let go; their credits keep the history. Until
+  // then every commitment to a kept project stayed, 6,582 of them by fifty.
   const live = new Set(state.projects.map((p) => p.id));
-  for (const p of state.performers) p.commitments = p.commitments.filter((c) => live.has(c.projectId) || c.until > sim.now);
+  for (const p of state.performers) p.commitments = p.commitments.filter((c) => c.until > sim.now || (live.has(c.projectId) && sim.now - c.until < INDUSTRY.keepUntouchedDays * MS_DAY));
+}
+
+/**
+ * The projects the save's own records point at, which stay on the record: the player's auditions (the last sixty),
+ * bookings and credits, the class's credits, and what's on a list or rated. Each of these is bounded, so the record is.
+ */
+export function pointedAt(sim: Simulation): Set<string> {
+  const out = new Set<string>();
+  const person = sim.player;
+  const career = person.career;
+  for (const a of career?.auditions ?? []) if (a.projectId) out.add(a.projectId);
+  for (const b of career?.bookings ?? []) if (b.projectId) out.add(b.projectId);
+  for (const c of career?.credits ?? []) if (c.projectId) out.add(c.projectId);
+  for (const m of person.school?.classmates ?? []) for (const c of m.career?.credits ?? []) if (c.projectId) out.add(c.projectId);
+  const state = industryOf(sim);
+  for (const l of state.lists) for (const i of l.items) if (i.kind === 'project') out.add(i.id);
+  for (const k of Object.keys(state.ratings)) if (k.startsWith('project:')) out.add(k.slice(8));
+  return out;
 }
 
 /** The month's announcements in the town the player works in: a few projects in development, from the parts it casts. */
