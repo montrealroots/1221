@@ -9,7 +9,7 @@ import { createSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { coverOn, healthOf, medicalDebtOf } from '@/engine/systems/health';
+import { coverOn, healthOf, mayEnroll, medicalDebtOf } from '@/engine/systems/health';
 import { documentsOf } from '@/engine/systems/documents';
 import { courseworkOf, setWork, trustOf } from '@/engine/systems/coursework';
 
@@ -168,14 +168,27 @@ describe('papers', () => {
     expect(lifeIn('is-39-reykjavik', 'idcard-is').execute({ kind: 'documents.apply_idcard', payload: {} }).error).toMatch(/^SLATE issues ID cards in /);
   });
 
-  it('upgrades a Connecticut license to REAL ID, once, and nobody else’s', () => {
-    expect(lifeIn('us-ny-newyork', 'realid-ny').execute({ kind: 'documents.real_id', payload: {} }).error).toMatch(/^Connecticut upgrades its own license/);
-    // A life begun where it was born in Connecticut holds the state's license from the start.
-    const sim = lifeIn('us-ct-newhaven', 'realid');
-    expect(documentsOf(sim.player).some((d) => d.kind === 'license' && d.issuer === 'us-ct')).toBe(true);
-    const r = sim.must<{ fee: number }>({ kind: 'documents.real_id', payload: {} });
-    expect(r.fee).toBeGreaterThan(0);
-    expect(sim.execute({ kind: 'documents.real_id', payload: {} }).error).toBe('It’s REAL ID already.');
+  it('replaces a lost license where it was issued, at the issuer’s fee, free in New York stolen with the police’s report', () => {
+    // REAL ID's upgrade (`documents.real_id`) was tested here until 2026-10-09, when nothing in SLATE flew any more.
+    const ct = lifeIn('us-ct-newhaven', 'license-ct');
+    const license = documentsOf(ct.player).find((d) => d.kind === 'license' && d.status === 'valid')!;
+    expect(ct.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('It isn’t lost: report it lost first.');
+    ct.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
+    const r = ct.must<{ readyAt: number; fee: number }>({ kind: 'documents.replace_license', payload: { documentId: license.id } });
+    expect(r.fee).toBe(30_00);
+    ct.advanceTo(r.readyAt + MS_HOUR);
+    expect(documentsOf(ct.player).some((d) => d.kind === 'license' && d.status === 'valid' && d.id !== license.id)).toBe(true);
+    // New York, stolen: the police's report (MV-78B) makes it free; lost, the fee.
+    const ny = lifeIn('us-ny-newyork', 'license-ny');
+    const held = documentsOf(ny.player).find((d) => d.kind === 'license' && d.status === 'valid');
+    if (!held) return;
+    ny.must({ kind: 'documents.report_lost', payload: { documentId: held.id, stolen: true } });
+    expect(ny.must<{ fee: number }>({ kind: 'documents.replace_license', payload: { documentId: held.id } }).fee).toBe(17_50);
+    const ny2 = lifeIn('us-ny-newyork', 'license-ny');
+    const held2 = documentsOf(ny2.player).find((d) => d.kind === 'license' && d.status === 'valid')!;
+    ny2.must({ kind: 'documents.report_lost', payload: { documentId: held2.id, stolen: true } });
+    ny2.must({ kind: 'documents.police_report', payload: { documentId: held2.id } });
+    expect(ny2.must<{ fee: number }>({ kind: 'documents.replace_license', payload: { documentId: held2.id } }).fee).toBe(0);
   });
 });
 
@@ -237,5 +250,35 @@ describe('a French bank', () => {
     expect(Object.values(sim.universe.accounts).some((a) => a.ownerId === sim.player.id && a.kind === 'loan' && a.balance === -offered)).toBe(true);
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: {} }).ok).toBe(false);
     expect(sim.ledger.audit()).toEqual([]);
+  }, 120_000);
+});
+
+describe('what papers open, in the kept world (from 2026-10-09)', () => {
+  it('lets a new bank take somebody only with a photo ID in force, which a passport gives', () => {
+    const sim = lifeIn('us-ny-newyork', 'switch-id', { wealth: 'comfortable', bankId: 'us-chase' });
+    // Test setup: every document set aside, as a life without them begins (`startingDocuments` draws them by share).
+    for (const d of documentsOf(sim.player)) d.status = 'cancelled';
+    const r = sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    expect(r.error).toMatch(/asks a new customer for a photo ID in force/);
+    const a = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
+    sim.advanceTo(a.readyAt + MS_HOUR);
+    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-citi' } }).ok).toBe(true);
+  });
+
+  it('sells marketplace cover only to somebody lawfully present, and ends a plan held when status is lost', () => {
+    // TEST SETUP: a Mexican citizen living in New York, as a graduate of the school who stayed on would be.
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: false, wealth: 'wealthy' }, 'lawful');
+    const h = healthOf(sim.player);
+    // Test setup: a marketplace plan held, then the status a graduate loses by staying past it (`usOutOfStatus`).
+    h.marketplace = { from: sim.now - MS_DAY, state: 'ny' };
+    sim.player.usOutOfStatus = sim.now;
+    sim.advanceBy(40 * MS_DAY);
+    expect(coverOn(sim.player, sim.now)).toBeUndefined();
+    expect(sim.universe.notifications.some((n) => n.title === 'Your Marketplace Plan Has Ended')).toBe(true);
+    delete h.marketplace;
+    // From 1 October 2026 Medicaid asks satisfactory status of a non-citizen (`medicaidStatus`), so it's the marketplace or nothing.
+    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20))).toEqual({ ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' });
+    delete sim.player.usOutOfStatus;
+    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20)).ok).toBe(true);
   }, 120_000);
 });

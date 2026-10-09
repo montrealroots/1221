@@ -34,7 +34,8 @@ import { breaches } from '../src/engine/core/invariants';
 import { templateById } from '../src/engine/content/coursework';
 import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
-import { lookAfterOptions, readiness, suggestedSleep } from '../src/engine/systems/life';
+import { lookAfterOptions, occupiedAt, readiness, suggestedSleep } from '../src/engine/systems/life';
+import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { inTheBank } from '../src/engine/systems/spending';
 
 const arg = (name: string, d: number) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? Number(process.argv[i + 1]) : d; };
@@ -73,12 +74,32 @@ function evening(sim: Simulation) {
       const pick = options.find((o) => o.supported) ?? options[0]!;
       sim.execute({ kind: 'school.choose', payload: { assignmentId: a.id, question: q.id, option: pick.id } });
     }
-    const t = templateById(a.template)!;
-    for (let n = 0; n < Number(process.env.LIVES_STEPS ?? 2); n += 1) {
-      const act = t.activities.find((x) => x.dim !== 'partner' && !prepareRefusal(sim, sim.player, a, x.id));
-      if (!act || sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).error) break;
+  }
+}
+
+/**
+ * An hour free, used as a student who keeps up uses one: first the part they're cast in (a note to work, blocking
+ * missed, lines not yet known), then a step on the work due soonest. One thing an hour, each taking its own time.
+ * Until 2026-10-09's second measurement the player prepared only at eight in the evening, two steps a piece, and never
+ * touched the part: its nights went off, and the faculty read the term as work falling short. That was the tool, not
+ * the game: a player at eight was often at a call, and the part is the player's to learn.
+ */
+function freeHour(sim: Simulation): boolean {
+  const person = sim.player;
+  if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 30) return false;
+  for (const which of WHICH) {
+    for (const [kind, what] of [['school.work_note', 'note'], ['school.review_blocking', 'blocking'], ['school.learn_part', 'part']] as const) {
+      if (!ownWorkRefusal(sim, person, which, what) && sim.execute({ kind, payload: { which } }).ok) return true;
     }
   }
+  const cw = courseworkOf(sim, person);
+  const open = (cw?.assignments ?? []).filter((x) => x.status === 'open' || x.status === 'revising')
+    .sort((x, y) => (x.status === 'revising' ? x.revision!.dueOn : x.dueOn).localeCompare(y.status === 'revising' ? y.revision!.dueOn : y.dueOn));
+  for (const a of open) {
+    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < 0.95 && !prepareRefusal(sim, person, a, x.id));
+    if (act && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).ok) return true;
+  }
+  return false;
 }
 
 /** What the menu puts first and urgent, done; nothing done that isn't. */
@@ -106,6 +127,9 @@ function play(profile: Profile, seed: string): Result {
       if (profile.play === 'attentive') {
         lookAfter(sim);
         if (hour === 20 && sim.player.currentLocationId === 'us-ct-newhaven') evening(sim);
+        // Free hours from the end of classes to ten, and the weekend's from ten.
+        const weekend = [0, 6].includes(new Date(sim.now).getUTCDay());
+        if (hour >= (weekend ? 10 : 15) && hour < 22 && freeHour(sim)) continue;
         // To bed at eleven, or when the night's call lets them go: a player whose rehearsal runs late goes to bed after it.
         if ((hour >= 23 || hour < 5) && (sim.player.awakeSince ?? 0) <= sim.now) {
           const r = sim.execute({ kind: 'life.sleep', payload: { hours: suggestedSleep(sim).hours } });

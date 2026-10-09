@@ -238,7 +238,7 @@ export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, wh
   return undefined;
 }
 
-export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: Skill, focus: number, weight: number) => void, focusOf: (person: Person) => number): void {
+export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: Skill, focus: number, weight: number) => void, focusAt: (sim: Simulation, person: Person, at: number) => number): void {
   const take = (s: Simulation, person: Person) => {
     s.advanceTo(s.now + PROCESS.own.minutes * 60_000);
     exerts(person, 1.5, PROCESS.own.minutes / 60);
@@ -249,7 +249,8 @@ export function registerProduction(sim: Simulation, grow: (craft: Craft, skill: 
     const no = ownWorkRefusal(s, person, which, 'part');
     if (no) throw new CommandError(no);
     const proc = processOf(holderFor(s, person, which)!);
-    const focus = focusOf(person);
+    // At the hour it's learned (`focusAt`, from 2026-10-09), as every other step of the work is.
+    const focus = focusAt(s, person, s.now);
     take(s, person);
     proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * (1 - proc.lines));
     if (proc.trained < PROCESS.own.trainsAtMost && person.craft) { grow(person.craft, 'memorization', focus, PROCESS.own.trainingWeight); proc.trained += 1; }

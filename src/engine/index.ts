@@ -55,7 +55,7 @@ import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
-import { bindCeiling, ceilingBefore, focusOf, grow, upgradeCraft } from './systems/school';
+import { bindCeiling, ceilingBefore, focusAt, grow, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
 import { registerClassmates } from './systems/classmates';
 import { registerProduction } from './systems/production';
@@ -108,7 +108,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSchool(sim);
   registerCoursework(sim);
   registerClassmates(sim);
-  registerProduction(sim, grow, focusOf);
+  registerProduction(sim, grow, focusAt);
   registerPlayReading(sim);
   registerHealth(sim);
   registerAppointments(sim);

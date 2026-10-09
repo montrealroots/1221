@@ -22,7 +22,7 @@
  */
 
 import { VISAS } from '../content/visas';
-import { VISITS, bookVisit, waitsOnVisit } from './papervisits';
+import { waitsOnVisit } from './papervisits';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -199,7 +199,7 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
   }
   if (rule.status === 'visa') {
     const visa = documentsOf(person).find((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
-    if (!visa) missing.push(`A visa for ${country}: ${VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]?.name ?? rule.visa ?? 'a visitor visa'}, applied for on Papers.`);
+    if (!visa) missing.push(`A visa for ${country}: ${VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]?.name ?? rule.visa ?? 'a visitor visa'}, issued by its consulate.`);
   }
   const stay = rule.status === 'citizen' ? 'As a citizen, as long as you like.'
     : rule.status === 'free-movement' ? 'Free movement: to live and work as well as visit.'
@@ -211,18 +211,8 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
 // Crossing a border, and living across one
 // ---------------------------------------------------------------------------
 
-/**
- * Why a person can't go from one town to another, arriving on a day for some
- * days, where a border lies between them, or nothing: the destination's rule
- * for their citizenship, as `mayEnter` reads it. Within one country there's
- * nothing to ask.
- */
-export function crossingRefusal(person: Person, fromCity: string, toCity: string, at: Instant, stayDays: number): string | undefined {
-  const to = isoOfCity(toCity);
-  if (!to || isoOfCity(fromCity) === to) return undefined;
-  const answer = mayEnter(person, to, at, Math.max(1, Math.ceil(stayDays)));
-  return answer.ok ? undefined : answer.missing.join(' ');
-}
+// Why a person couldn't go from one town to another across a border (`crossingRefusal`) was asked by the journeys
+// until the scope reset of 2026-10-09, and by nothing after it; it went in the connected world that day.
 
 /**
  * Why a person can't make a home in a town's country, or nothing: a citizen
@@ -246,6 +236,14 @@ export function residenceRefusal(person: Person, cityId: string, at: Instant): s
   return `Living in ${there} needs permission to live there, which you don’t hold: see Papers for a route to residence, where there is one.`;
 }
 
+/**
+ * A photo ID in force: a passport from anywhere, or a license or an ID card. What a bank asks of a new customer
+ * (31 CFR 1020.220, the customer identification rule, and its like elsewhere), read by `bank.switch` from 2026-10-09.
+ */
+export function photoIdOf(person: Person, at: Instant): PersonDocument | undefined {
+  return documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport' || d.kind === 'license' || d.kind === 'idcard'));
+}
+
 /** An authorization in force for a destination, on the passport they'd travel on, through a day. */
 export function authorizationFor(person: Person, destination: string, at: Instant, through = at): PersonDocument | undefined {
   const passport = passportOf(person, at);
@@ -259,50 +257,16 @@ function formatFee(fee: number, currency: string): string {
   return formatMoney(Math.round(fee * 100), currency);
 }
 
-/**
- * How long an authorization takes to decide, from what each authority says:
- * most ESTAs, UK ETAs and Canadian eTAs are decided within minutes, taken
- * here as an hour; Korea's K-ETA and New Zealand's NZeTA are to be applied
- * for 72 hours ahead, taken as their time; Brazil's e-Visa averages about
- * five business days, taken as a week. Australia's ETA and eVisitor give no
- * figure: SLATE's estimate, a day. Every one is granted: an authorization
- * refused is a record SLATE doesn't keep.
- */
-export const DECIDED_IN_HOURS: Readonly<Record<string, number>> = {
-  ESTA: 1, ETA: 1, eTA: 1, 'K-ETA': 72, NZeTA: 72, 'e-Visa': 7 * 24, eVisitor: 24,
-};
+// How long each authorization took to decide (`DECIDED_IN_HOURS`: ESTAs, ETAs and eTAs within the hour, K-ETA and NZeTA
+// 72 hours, Brazil's e-Visa a week, Australia's a day, SLATE's estimate) went with the applications on 2026-10-09.
 
 /** Validity that differs by the traveler's citizenship: Brazil's e-Visa, ten years for Americans, five for Canadians and Australians. */
 const VALIDITY_BY_CITIZEN: Readonly<Record<string, Readonly<Record<string, number>>>> = { 'BR/e-Visa': { US: 10, CA: 5, AU: 5 } };
 
-/** A charge paid with an authorization: New Zealand's International Visitor Conservation and Tourism Levy, NZD 100 since 1 October 2024. */
-const PAID_BESIDE: Readonly<Record<string, { amount: number; currency: string; name: string }>> = { 'NZ/NZeTA': { amount: 100, currency: 'NZD', name: 'International Visitor Conservation And Tourism Levy' } };
+// A charge paid with an authorization (New Zealand's levy, `PAID_BESIDE`) went with the applications on 2026-10-09.
 
-/** Why an authorization can't be applied for now, or nothing. */
-/** Why a visa can't be applied for, or nothing. */
-export function visaRefusal(person: Person, destination: string, at: Instant): string | undefined {
-  const rule = VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`];
-  if (!rule) return 'Your citizenship doesn’t need a visa there, or SLATE doesn’t have that one.';
-  if (!passportOf(person, at)) return 'A visa is issued on a passport, and you have none in force.';
-  if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === destination && inForce(d, at))) return 'You hold one in force already.';
-  if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === destination && d.status === 'pending')) return 'One is being decided.';
-  return undefined;
-}
-
-export function authorizationRefusal(person: Person, destination: string, at: Instant): string | undefined {
-  const dest = ENTRY[destination];
-  const citizenship = isoOfCountry(person.citizenshipId);
-  const rule = dest && citizenship ? dest.citizens[citizenship] : undefined;
-  if (!dest || !rule) return 'SLATE doesn’t have that country’s rule for your citizenship.';
-  if (rule.status !== 'authorization' || !rule.authorization) return 'Your citizenship doesn’t need one there.';
-  const auth = dest.authorizations[rule.authorization]!;
-  if (!auth.live) return `${auth.name} isn’t in operation yet.`;
-  if (!passportOf(person, at)) return 'An authorization is issued on a passport, and you have none in force.';
-  if (destination === 'US' && person.usOutOfStatus !== undefined) return 'You stayed past your US status once: the Visa Waiver Program is closed to you for good (INA 217(a)(7)), and a visa is applied for at a consulate.';
-  if (authorizationFor(person, destination, at)) return 'You hold one in force already.';
-  if (documentsOf(person).some((d) => d.kind === 'authorization' && d.destination === destination && d.status === 'pending')) return 'One is being decided.';
-  return undefined;
-}
+// Why a visa or a travel authorization couldn't be applied for (`visaRefusal`, `authorizationRefusal`) went with
+// their applications on 2026-10-09: see `registerDocuments`.
 
 function inSave(sim: Simulation, amount: number, currency: string): Money {
   const cents = Math.round(amount * 100);
@@ -318,51 +282,10 @@ export function numberFor(prefix: string, id: string): string {
 }
 
 export function registerDocuments(sim: Simulation): void {
-  sim.onCommand<{ destination: string }, { readyAt: Instant; fee: Money }>('documents.apply_authorization', (p, { sim: s }) => {
-    const person = s.player;
-    const destination = String(p.destination).toUpperCase();
-    const no = authorizationRefusal(person, destination, s.now);
-    if (no) throw new CommandError(no);
-    const dest = ENTRY[destination]!;
-    const rule = dest.citizens[isoOfCountry(person.citizenshipId)!]!;
-    const key = rule.authorization!;
-    const auth = dest.authorizations[key]!;
-    const beside = PAID_BESIDE[`${destination}/${key}`];
-    const fee = inSave(s, auth.fee, auth.currency) + (beside ? inSave(s, beside.amount, beside.currency) : 0);
-    if (fee > 0 && !payFromBank(s, person, fee, `${auth.name}${beside ? `, and the ${beside.name}` : ''}`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    const readyAt = s.now + (DECIDED_IN_HOURS[key] ?? 24) * MS_HOUR;
-    const id = s.nextId('document');
-    documentsOf(person).push({
-      id, kind: 'authorization', issuer: destination, name: auth.name, number: numberFor(key.replace(/[^A-Z]/gi, '').slice(0, 3).toUpperCase(), id),
-      status: 'pending', appliedAt: s.now, readyAt, destination, passportId: passportOf(person, s.now)!.id,
-    });
-    s.schedule({ at: readyAt, kind: DECIDED_KIND, label: `${auth.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id } });
-    return { readyAt, fee };
-  });
-
-  sim.onCommand<{ destination: string }, { readyAt: Instant; fee: Money }>('documents.apply_visa', (p, { sim: s }) => {
-    const person = s.player;
-    const destination = String(p.destination).toUpperCase();
-    const no = visaRefusal(person, destination, s.now);
-    if (no) throw new CommandError(no);
-    const rule = VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]!;
-    const fee = inSave(s, rule.fee, rule.currency);
-    if (!payFromBank(s, person, fee, rule.name, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    const id = s.nextId('document');
-    const doc: PersonDocument = {
-      id, kind: 'visa', issuer: destination, name: rule.name, number: numberFor('V', id),
-      status: 'pending', appliedAt: s.now, readyAt: s.now + rule.days * MS_DAY, destination, passportId: passportOf(person, s.now)!.id,
-    };
-    documentsOf(person).push(doc);
-    // The visit it waits on (from 2026-10-06, `systems/papervisits.ts`): America's interview at the visa's own wait, its
-    // week to issue after; Canada's biometrics, its days counted from them. Until then it was decided with neither.
-    if (destination === 'US') doc.readyAt = bookVisit(s, person, doc, 'us-interview', rule.days - VISITS['us-interview'].after) + VISITS['us-interview'].after * MS_DAY;
-    if (destination === 'CA') doc.readyAt = bookVisit(s, person, doc, 'ca-biometrics', undefined, { after: rule.days }) + rule.days * MS_DAY;
-    const readyAt = doc.readyAt!;
-    s.schedule({ at: readyAt, kind: DECIDED_KIND, label: `${rule.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id } });
-    return { readyAt, fee };
-  });
-
+  // Applying for a travel authorization (`documents.apply_authorization`) and a visitor's visa
+  // (`documents.apply_visa`) went in the connected world of 2026-10-09: each was paid for to cross a border, and since
+  // the scope reset nothing crosses one, so each was a fee for a document nothing reads. What a country asks of a
+  // citizenship stays on Papers as what it is, the rule (`mayEnter`); one already pending in a save is decided below.
   sim.onSchedule(DECIDED_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
@@ -421,9 +344,11 @@ export function registerDocuments(sim: Simulation): void {
  * stolen property under $25,000; Ireland's Garda a theft to €1,000 online,
  * lost property only at a station; Mexico City's Denuncia Digital a lost
  * document's constancia (read secondhand). London's Met records no lost
- * document, sending it to DVLA or the Passport Office. New Haven's portal's
- * terms weren't read. What a report then does is the issuer's: New York
- * replaces a stolen license free with the police's MV-78B; ServiceOntario
+ * document, sending it to DVLA or the Passport Office. New Haven's Police
+ * to Citizen portal takes lost property and a theft (from 2026-10-09, read
+ * secondhand). What a report then does is the issuer's: New York replaces a
+ * stolen license or permit free with the police's MV-78B, though not a
+ * non-driver ID (dmv.ny.gov; `documents.replace_license`); ServiceOntario
  * asks for a report before replacing one; ICBC asks for one when it was stolen.
  */
 export const ONLINE_REPORTS: Readonly<Record<string, { lost: boolean; stolen: boolean; noPassport?: boolean }>> = {
@@ -433,6 +358,9 @@ export const ONLINE_REPORTS: Readonly<Record<string, { lost: boolean; stolen: bo
   'ca-bc-vancouver': { lost: true, stolen: true },
   'ie-lei-dublin': { lost: false, stolen: true },
   'mx-cmx-mexicocity': { lost: true, stolen: false },
+  // From 2026-10-09: New Haven's police take non-emergency reports, lost property among them, through their Police to
+  // Citizen portal (newhavenct.policetocitizen.com, read secondhand: the city's own page turned the reading away).
+  'us-ct-newhaven': { lost: true, stolen: true },
 };
 
 export function policeReportRefusal(person: Person, doc: PersonDocument | undefined): string | undefined {

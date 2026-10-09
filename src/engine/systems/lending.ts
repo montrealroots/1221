@@ -70,6 +70,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { photoIdOf } from './documents';
 import { drawFromBank } from './spending';
 import { CommandError } from '../core/simulation';
 import type { Account } from '../core/ledger';
@@ -1087,6 +1088,8 @@ export function registerLending(sim: Simulation): void {
     if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
     if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
+    // A new bank identifies a new customer (31 CFR 1020.220, and its like elsewhere), from 2026-10-09 (`photoIdOf`).
+    if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`);
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
     const iso = isoOf(homeOf(person)) ?? '';

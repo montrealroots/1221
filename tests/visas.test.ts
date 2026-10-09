@@ -1,14 +1,13 @@
 /**
- * Visitor visas (`content/visas.ts`, from 2026-09-29): applied for, paid,
- * decided after the published wait, and entry granted on them.
+ * Visitor visas (`content/visas.ts`, from 2026-09-29): what a country asks of a citizenship, and entry on a visa held.
+ * Applying for one on Papers (`documents.apply_visa`) and its interview were tested here until the connected world of
+ * 2026-10-09 retired the applications: nothing crosses a border since travel went in the scope reset, so a visa bought
+ * was a fee for a document nothing reads. One pending in a save from before is still decided.
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { saveCurrency } from '@/engine/core/money';
-import { exchange } from '@/engine/content/currency';
-import { VISAS } from '@/engine/content/visas';
-import { documentsOf, mayEnter, passportOf, visaRefusal } from '@/engine/systems/documents';
+import { documentsOf, mayEnter } from '@/engine/systems/documents';
 
 function citizen(city: string, citizenship: string, seed: string) {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -20,42 +19,23 @@ function citizen(city: string, citizenship: string, seed: string) {
 }
 
 describe('a visitor visa', () => {
-  it('lets a Mexican apply for the US’s B-1/B-2 at $185, decided after the interview’s wait, and then enter', () => {
+  it('is what the US asks of a Mexican, issued by its consulate, and a visa held lets them in', () => {
     const sim = citizen('mx-cmx-mexicocity', 'mx', 'visa-us');
     expect(mayEnter(sim.player, 'US', sim.now).ok).toBe(false);
-    expect(mayEnter(sim.player, 'US', sim.now).missing.join(' ')).toMatch(/B-1\/B-2 Visitor Visa, applied for on Papers/);
-    const r = sim.execute<{ readyAt: number; fee: number }>({ kind: 'documents.apply_visa', payload: { destination: 'US' } });
-    expect(r.ok, r.error).toBe(true);
-    const cur = saveCurrency(sim.universe);
-    expect(r.value!.fee).toBe(cur === 'USD' ? 185_00 : exchange(185_00, 'USD', cur));
-    // From 2026-10-06 the interview is booked on the calendar at the wait's end, the first business morning from it,
-    // and the visa decided its week after; until then the decision came at the wait's end with no interview.
-    const visa = documentsOf(sim.player).find((d) => d.kind === 'visa' && d.destination === 'US')!;
-    expect(visa.visit!.at - sim.now).toBeGreaterThanOrEqual((VISAS['US<MX']!.days - 7) * MS_DAY - 24 * 3_600_000);
-    expect(visa.visit!.at - sim.now).toBeLessThan((VISAS['US<MX']!.days - 7 + 4) * MS_DAY);
-    expect(r.value!.readyAt).toBe(visa.visit!.at + 7 * MS_DAY);
-    expect(visaRefusal(sim.player, 'US', sim.now)).toMatch(/being decided/);
-    sim.advanceTo(r.value!.readyAt + 60_000);
-    expect(visa.status).toBe('valid');
-    // Ten years, but no longer than the passport's nine and a half left.
-    expect(visa.expiresAt).toBe(passportOf(sim.player, sim.now)!.expiresAt);
+    expect(mayEnter(sim.player, 'US', sim.now).missing.join(' ')).toMatch(/B-1\/B-2 Visitor Visa, issued by its consulate/);
+    // Test setup: a visa a save from before 2026-10-09 holds.
+    documentsOf(sim.player).push({ id: 'v1', kind: 'visa', issuer: 'US', name: 'B-1/B-2 Visitor Visa', number: 'V1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3650 * MS_DAY, destination: 'US', passportId: 'pp' });
     expect(mayEnter(sim.player, 'US', sim.now).ok).toBe(true);
   });
 
-  it('issues Mexico’s electronic visa to a Brazilian for 180 days', () => {
+  it('isn’t applied for since travel went, and one pending from before is still decided', () => {
     const sim = citizen('br-27-saopaulo', 'br', 'visa-mx');
-    const r = sim.execute<{ readyAt: number }>({ kind: 'documents.apply_visa', payload: { destination: 'MX' } });
-    expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.readyAt + 60_000);
-    const visa = documentsOf(sim.player).find((d) => d.kind === 'visa' && d.destination === 'MX')!;
-    expect(visa.expiresAt! - visa.issuedAt!).toBe(180 * MS_DAY);
-  });
-
-  it('refuses a visa to a citizenship that needs none, and without a passport', () => {
-    const sim = citizen('uk-eng-london', 'uk', 'visa-none');
-    expect(visaRefusal(sim.player, 'US', sim.now)).toMatch(/doesn’t need a visa there/);
-    const mx = citizen('mx-cmx-mexicocity', 'mx', 'visa-nopass');
-    for (const d of documentsOf(mx.player)) d.status = 'cancelled';
-    expect(visaRefusal(mx.player, 'US', mx.now)).toMatch(/none in force/);
+    expect(sim.commandKinds()).not.toContain('documents.apply_visa');
+    expect(sim.commandKinds()).not.toContain('documents.apply_authorization');
+    // Test setup: Mexico's e-visa, applied for in a save from before 2026-10-09 and waiting on its decision.
+    documentsOf(sim.player).push({ id: 'v2', kind: 'visa', issuer: 'MX', name: 'Visa Electrónica', number: 'V2', status: 'pending', appliedAt: sim.now, readyAt: sim.now + MS_DAY, destination: 'MX', passportId: 'pp' });
+    sim.schedule({ at: sim.now + MS_DAY, kind: 'documents.decided', label: 'Decided', category: 'system', priority: 20, payload: { personId: sim.player.id } });
+    sim.advanceBy(2 * MS_DAY);
+    expect(documentsOf(sim.player).find((d) => d.id === 'v2')!.status).toBe('valid');
   });
 });

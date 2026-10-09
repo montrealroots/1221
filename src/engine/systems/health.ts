@@ -274,6 +274,8 @@ export function programFor(person: Person, at: Instant, into = 'USD'): { kind: '
   }
   // From 1 October 2026 federal Medicaid is a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109).
   if (ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, at)) return { kind: 'medicaid', band: 'low' };
+  // The Essential Plan and Covered Connecticut are for the lawfully present too, as the marketplace is (`lawfullyPresent`, from 2026-10-09).
+  if (!lawfullyPresent(person)) return undefined;
   if (state === 'ny' && ratio <= PUBLIC_COVER.essentialShare) return { kind: 'essential', band: ratio <= PUBLIC_COVER.essentialCopaysFrom ? 'low' : 'high' };
   // Covered Connecticut reads the year before's poverty line, as the marketplace does.
   if (state === 'ct' && income / povertyMonth(zonedParts(at, HOME).year - 1, into) <= PUBLIC_COVER.coveredCtShare) return { kind: 'essential', band: 'low' };
@@ -287,6 +289,14 @@ export const PROGRAM_NAMES: Readonly<Record<BenefitState, { medicaid: string; es
   ct: { medicaid: 'HUSKY D', essential: 'Covered Connecticut' },
 };
 
+/**
+ * Whether they may hold a marketplace plan: a citizen, or anybody lawfully present, as a student in F-1 status, a
+ * graduate on OPT or in its grace and a green card holder are; not somebody who stayed past their status (45 CFR
+ * 155.305(a)(1)). From 2026-10-09: until then the marketplace sold to anybody, and a graduate's status, read by
+ * nothing since travel went, changed nothing a student's life touched.
+ */
+export const lawfullyPresent = (person: Person): boolean => person.usOutOfStatus === undefined;
+
 /** Whether they may enroll now, in a program or the marketplace, and in which. */
 export function mayEnroll(person: Person, at: Instant, into = 'USD'): { ok: boolean; why: string; program?: 'medicaid' | 'essential' } {
   const state = BENEFIT_STATE[homeOf(person)];
@@ -295,6 +305,7 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD'): { ok: bool
   if (active(h.program, at) || active(h.marketplace, at)) return { ok: false, why: 'You’re enrolled.' };
   const program = programFor(person, at, into);
   if (program) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
+  if (!lawfullyPresent(person)) return { ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' };
   const p = zonedParts(at, HOME);
   const window = state === 'ct' ? CONNECTICUT_ENROLLMENT : ENROLLMENT;
   const open = (p.month > window.openFrom[0] || (p.month === window.openFrom[0] && p.day >= window.openFrom[1]))
@@ -410,6 +421,12 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   const home = homeOf(person);
   // The union plans read the quarter's and the twelve months' acting work here, and COBRA kept one lost, until
   // 2026-10-09: nothing earns them since the career went.
+  // Out of status, a marketplace plan ends with the month (`lawfullyPresent`, from 2026-10-09).
+  if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {
+    h.marketplace.until = at;
+    h.lostAt = at;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Marketplace Plan Has Ended', body: 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.', importance: 80, route: '/workspace/papers' });
+  }
   // A program's renewal: its income test, and from 2027 Medicaid's work.
   const prog = h.program;
   if (prog && active(prog, at)) {

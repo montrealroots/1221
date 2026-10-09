@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { createSave, loadSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { STARTING, documentsOf, inForce, mayDrive, mayEnter, passportOf, type PersonDocument } from '@/engine/systems/documents';
 import { ENTRY } from '@/engine/content/entry';
@@ -22,7 +22,7 @@ function holds(sim: Simulation, doc: Partial<PersonDocument> & Pick<PersonDocume
 }
 
 describe('entering a country', () => {
-  it('asks a US citizen for a passport, then the UK’s ETA, applied for and issued within the hour, at its £20', () => {
+  it('asks a US citizen for a passport, then the UK’s ETA at its £20, and an ETA held lets them in', () => {
     const sim = life('entry-gb');
     expect(sim.player.citizenshipId).toBeDefined();
     const none = mayEnter(sim.player, 'GB', sim.now);
@@ -32,9 +32,8 @@ describe('entering a country', () => {
     const noEta = mayEnter(sim.player, 'GB', sim.now);
     expect(noEta.missing.join(' ')).toMatch(/ETA/);
     expect(ENTRY.GB!.authorizations.ETA!.fee).toBe(20);
-    expect(sim.execute({ kind: 'documents.apply_authorization', payload: { destination: 'GB' } }).ok).toBe(true);
-    expect(mayEnter(sim.player, 'GB', sim.now).ok).toBe(false);
-    sim.advanceBy(2 * MS_HOUR);
+    // Test setup: an ETA a save from before 2026-10-09 holds; applying for one went with travel.
+    holds(sim, { kind: 'authorization', issuer: 'GB', name: 'ETA', destination: 'GB', passportId: passportOf(sim.player, sim.now)!.id });
     const answer = mayEnter(sim.player, 'GB', sim.now);
     expect(answer.ok).toBe(true);
     expect(answer.stay).toMatch(/180 days/);

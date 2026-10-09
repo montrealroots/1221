@@ -4,12 +4,18 @@
  * enrolment and Canada's biometrics, each booked on the calendar where the
  * applicant lives, the decision waiting on it, and a miss ending or delaying
  * the application as its authority says.
+ *
+ * Nothing books one since the connected world of 2026-10-09 (the visas' and the
+ * residence routes' applications went), so what's tested is a visit a save
+ * from before already has booked: kept, missed and booked again, or missed and
+ * the application ended. The applications that booked them were tested here
+ * until then.
  */
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY,MS_HOUR } from '@/engine/core/time';
 import { documentsOf,type PersonDocument } from '@/engine/systems/documents';
-import { VISIT_KIND } from '@/engine/systems/papervisits';
+import { VISITS, VISIT_KIND, type VisitRule } from '@/engine/systems/papervisits';
 import { describe,expect,it } from 'vitest';
 
 function citizen(city: string, citizenship: string, seed: string): Simulation {
@@ -28,27 +34,33 @@ function awayFor(sim: Simulation, doc: PersonDocument): void {
   sim.player.currentLocationId = home;
 }
 const visits = (sim: Simulation) => sim.universe.scheduled.filter((i) => i.kind === VISIT_KIND && i.status === 'pending');
+/** Test setup: a visa a save from before 2026-10-09 applied for, its visit booked at ten on a weekday some days on, as the application left it. */
+function pendingVisa(sim: Simulation, destination: string, rule: VisitRule, inDays: number, after?: number): PersonDocument {
+  const base = new Date(sim.now + inDays * MS_DAY);
+  while ([0, 6].includes(base.getUTCDay())) base.setUTCDate(base.getUTCDate() + 1);
+  const at = Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), base.getUTCDate(), 16);
+  const doc: PersonDocument = { id: `visa-${destination}`, kind: 'visa', issuer: destination, name: destination === 'US' ? 'B-1/B-2 Visitor Visa' : 'Visitor Visa', number: 'V1', status: 'pending', appliedAt: sim.now, readyAt: at + 7 * MS_DAY, destination, passportId: 'pp', visit: { rule, at, cityId: sim.player.currentLocationId, ...(after ? { after } : {}) } };
+  documentsOf(sim.player).push(doc);
+  sim.schedule({ at, kind: VISIT_KIND, label: VISITS[rule].what, category: 'personal', priority: 33, requiresPlayer: true, durationMinutes: 60, locationId: doc.visit!.cityId, payload: { personId: sim.player.id, documentId: doc.id } });
+  sim.schedule({ at: doc.readyAt!, kind: 'documents.decided', label: 'Decided', category: 'system', priority: 20, payload: { personId: sim.player.id } });
+  return doc;
+}
 
 describe('a US visa’s interview', () => {
-  it('is booked at the consulate where they live, the visa issued its week after; missed, a no-show closes it', () => {
+  it('kept, decides the visa its week after; missed, a no-show ends the application', () => {
     const kept = citizen('mx-cmx-mexicocity', 'mx', 'visit-us-kept');
-    const r = kept.must<{ readyAt: number }>({ kind: 'documents.apply_visa', payload: { destination: 'US' } });
-    const visa = documentsOf(kept.player).find((d) => d.kind === 'visa')!;
+    const visa = pendingVisa(kept, 'US', 'us-interview', 14);
     expect(visits(kept)).toHaveLength(1);
     expect(visits(kept)[0]).toMatchObject({ label: 'Visa Interview At The Consulate', locationId: 'mx-cmx-mexicocity', requiresPlayer: true, at: visa.visit!.at });
-    kept.advanceTo(r.readyAt + MS_HOUR);
-    expect(visa.status).toBe('valid');
+    kept.advanceTo(visa.visit!.at + 8 * MS_DAY);
     expect(visa.visit!.keptAt).toBe(visa.visit!.at);
+    expect(visa.status).toBe('valid');
 
     const missed = citizen('mx-cmx-mexicocity', 'mx', 'visit-us-missed');
-    const m = missed.must<{ readyAt: number }>({ kind: 'documents.apply_visa', payload: { destination: 'US' } });
-    const no = documentsOf(missed.player).find((d) => d.kind === 'visa')!;
+    const no = pendingVisa(missed, 'US', 'us-interview', 14);
     awayFor(missed, no);
-    missed.advanceTo(m.readyAt + MS_HOUR);
     expect(no.status).toBe('cancelled');
     expect(missed.universe.notifications.at(-1)?.body).toMatch(/no-show closes the application/);
-    // Applied for again, from the start.
-    expect(missed.execute({ kind: 'documents.apply_visa', payload: { destination: 'US' } }).ok).toBe(true);
   });
 });
 
@@ -56,8 +68,7 @@ describe('Canada’s biometrics', () => {
   it('for a visitor visa: missed, booked again inside the letter’s 30 days, and the 18 days run from the day given', () => {
     const sim = citizen('mx-cmx-mexicocity', 'mx', 'visit-ca');
     const applied = sim.now;
-    sim.must({ kind: 'documents.apply_visa', payload: { destination: 'CA' } });
-    const visa = documentsOf(sim.player).find((d) => d.kind === 'visa' && d.destination === 'CA')!;
+    const visa = pendingVisa(sim, 'CA', 'ca-biometrics', 14, 18);
     awayFor(sim, visa);
     expect(visa.status).toBe('pending');
     expect(visa.visit!.at).toBeLessThanOrEqual(applied + 30 * MS_DAY);

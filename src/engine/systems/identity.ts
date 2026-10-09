@@ -13,8 +13,8 @@ import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { ID_CARDS, REAL_ID } from '../content/identity';
-import { ID_CARD_REPLACEMENT } from '../content/replacements';
+import { ID_CARDS } from '../content/identity';
+import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../content/replacements';
 import { payFromBank } from './spending';
 import { addYears, citizenOf, documentsOf, inForce, licensingOf, numberFor, type PersonDocument } from './documents';
 
@@ -50,11 +50,28 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
 }
 
 /** A Connecticut license made REAL ID before it renews, for the duplicate's fee. */
-export function realIdRefusal(person: Person, at: Instant): string | undefined {
-  const license = documentsOf(person).find((d) => d.kind === 'license' && d.issuer === 'us-ct' && inForce(d, at));
-  if (!license) return 'Connecticut upgrades its own license before renewal; New York and California make it REAL ID at the renewal.';
-  if (license.realId) return 'It’s REAL ID already.';
+// Making a Connecticut license REAL ID (`documents.real_id`) went in the connected world of 2026-10-09: REAL ID is
+// what the TSA and a federal building ask, and nothing in SLATE flies or goes into one since the scope reset. A
+// license that is REAL ID still says so (`tsaAccepts`).
+
+/**
+ * Why a lost license can't be replaced, or nothing (from 2026-10-09; `LICENSE_REPLACEMENT`, each issuer's page): it
+ * must be reported lost, and is replaced by its issuer for somebody living there, as an ID card is.
+ */
+export function licenseReplaceRefusal(person: Person, documentId: string): string | undefined {
+  const doc = documentsOf(person).find((d) => d.id === documentId);
+  if (!doc || doc.kind !== 'license') return 'That isn’t a license of yours.';
+  if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
+  if (!LICENSE_REPLACEMENT[doc.issuer]) return 'SLATE doesn’t have what its issuer charges to replace it.';
+  if (licensingOf(person.currentLocationId) !== doc.issuer) return 'It’s replaced where it was issued, for somebody living there.';
   return undefined;
+}
+
+/** A license's replacement fee: the issuer's, nothing in New York for one stolen with the police's report filed (MV-78B). */
+export function licenseReplaceFee(sim: Simulation, doc: PersonDocument): Money {
+  if (doc.issuer === 'us-ny' && doc.stolen && doc.policeReport !== undefined) return 0;
+  const rule = LICENSE_REPLACEMENT[doc.issuer]!;
+  return inMoney(sim, rule.fee, rule.currency);
 }
 
 export const ID_CARD_KIND = 'documents.idcard_arrives';
@@ -117,13 +134,20 @@ export function registerIdentity(sim: Simulation): void {
     return { expiresAt, fee };
   });
 
-  sim.onCommand<Record<string, never>, { fee: Money }>('documents.real_id', (_p, { sim: s }) => {
+  sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_license', (p, { sim: s }) => {
     const person = s.player;
-    const no = realIdRefusal(person, s.now);
+    const no = licenseReplaceRefusal(person, String(p?.documentId));
     if (no) throw new CommandError(no);
-    const fee = usd(s, REAL_ID.ctUpgradeUsd);
-    if (!payFromBank(s, person, fee, 'A REAL ID license, the duplicate’s fee', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    documentsOf(person).find((d) => d.kind === 'license' && d.issuer === 'us-ct' && inForce(d, s.now))!.realId = true;
-    return { fee };
+    const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
+    const rule = LICENSE_REPLACEMENT[lost.issuer]!;
+    const fee = licenseReplaceFee(s, lost);
+    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    lost.status = 'cancelled';
+    const id = s.nextId('document');
+    const readyAt = s.now + rule.days * MS_DAY;
+    // The same license, a new card: its term and its REAL ID kept, its number new.
+    documentsOf(person).push({ ...lost, id, number: numberFor('D', id), status: 'pending', appliedAt: s.now, readyAt, stolen: undefined, policeReport: undefined } as PersonDocument);
+    s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The License Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
+    return { readyAt, fee };
   });
 }

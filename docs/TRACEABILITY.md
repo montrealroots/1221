@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 46
-- Implemented But Unverified: 65
+- Implemented But Unverified: 63
 - Partially Implemented: 0
-- Commands in all: 111
+- Commands in all: 109
 
 ## Commands
 
@@ -46,7 +46,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `bank.set_payments` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | Everyday spending goes in cash, on the debit card or on the credit card.; There’s no savings account to cover the current account. | — | — | — | 8 | journey-money.test.ts |
 | `bank.set_round_ups` | Verified (journey) | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | … doesn’t round purchases up into savings. | roundUps | — | — | 2 | journey-money.test.ts |
 | `bank.set_term_end` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … doesn’t let a term deposit end that way.; … needs … days’ notice before the end to change it. | — | — | — | 1 | — |
-| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; … won’t open an account for somebody who owes it a charged-off debt.; … turned you away on the ChexSystems report … made, which stands until ….; and 2 more | — | — | bank.switch_complete | 5 | — |
+| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; … won’t open an account for somebody who owes it a charged-off debt.; … turned you away on the ChexSystems report … made, which stands until ….; and 3 more | — | — | bank.switch_complete | 6 | — |
 | `bank.take_overrun_loan` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | Your bank has offered no loan for an overrun.; You already have a loan with the bank. | — | — | loan | 1 | — |
 | `bank.take_term_interest` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … pays a term deposit’s interest at its end.; It hasn’t earned anything to take yet. | — | Yes | — | 1 | — |
 | `bank.transfer` | Verified (journey) | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Money moves here between your own current and savings accounts.; That’s the same account.; Say how much to move.; … holds …)}.; and 3 more | — | Yes | — | 4 | journey-money.test.ts |
@@ -73,16 +73,14 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.set_statement_day` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Pick a day from the 1st to the 28th. | — | — | — | 3 | journey-money.test.ts |
 | `cash.deposit` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office. | — | Yes | — | 2 | journey-money.test.ts |
 | `cash.withdraw` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | Say how much.; From your bank’s ATM, another bank’s, the counter, the Post Office or the card. | — | Yes | — | 5 | journey-money.test.ts |
-| `documents.apply_authorization` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also authorizationRefusal) | documentsOf (added to) | Yes | authorization; documents.decided | 1 | — |
 | `documents.apply_idcard` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idCardRefusal) | documentsOf (added to) | Yes | idcard | 1 | — |
 | `documents.apply_opt` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/permission.ts` | — (also optRefusal) | usOutOfStatus; documentsOf (added to) | — | permit; documents.permission; documents.opt_week | 1 | — |
-| `documents.apply_passport` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 2 | journey-life.test.ts |
-| `documents.apply_visa` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also visaRefusal) | documentsOf (added to) | Yes | visa; documents.decided | 2 | — |
+| `documents.apply_passport` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 3 | journey-life.test.ts |
 | `documents.naturalize` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/citizenship.ts` | … is more than the bank can cover. (also naturalizeRefusal) | naturalizing; naturalized | Yes | citizenship.decided | 1 | — |
 | `documents.police_report` | Verified (journey) | Cover, Benefits And Returns | Documents.tsx | `systems/documents.ts` | — (also policeReportRefusal) | — | — | — | 2 | journey-life.test.ts |
-| `documents.real_id` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also realIdRefusal) | — | Yes | — | 1 | — |
 | `documents.renew_residence` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | Only Mexican temporary residence is renewed, a year at a time.; It’s renewed within its last 30 days.; … is more than the bank can cover. | — | Yes | — | 2 | — |
 | `documents.replace_idcard` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idReplaceRefusal) | documentsOf (added to) | Yes | documents.idcard_arrives | 1 | — |
+| `documents.replace_license` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also licenseReplaceRefusal) | documentsOf (added to) | Yes | documents.idcard_arrives | 1 | — |
 | `documents.report_lost` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | That isn’t a document you hold. | — | — | — | 4 | journey-life.test.ts |
 | `documents.residence` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also routeRefusal) | — | Yes | — | 3 | — |
 | `documents.settle` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also settleRefusal) | — | Yes | — | 1 | — |
@@ -161,8 +159,8 @@ money, what it sets going next, and how many test files name it or its constant.
 | `card.replaced` | `systems/security.ts` | systems/security.ts | last4; issued; expiresAt | — | — | 0 |
 | `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 12 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 0 |
-| `documents.decided` | `systems/documents.ts` | systems/documents.ts | documentsOf (added to) | Yes | passport; documents.decided | 0 |
-| `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard | 0 |
+| `documents.decided` | `systems/documents.ts` | systems/documents.ts | documentsOf (added to) | Yes | passport; documents.decided | 2 |
+| `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 0 |
 | `documents.opt_week` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
 | `documents.permission` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
 | `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 0 |

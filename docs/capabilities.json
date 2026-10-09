@@ -1538,7 +1538,7 @@
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "Chase and Capital One offer no round-up. The US's unclaimed rule is read from New York's law"
+      "limits": "Chase and Capital One offer no round-up. The US's unclaimed rule is read from New York's law From 2026-10-09 a new bank asks for a photo ID in force (31 CFR 1020.220): a passport, a license or an ID card."
     },
     {
       "id": "foreign-banking-rights",
@@ -1583,7 +1583,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Out of reach since the reset: every life begins in New Haven with one of five American banks and can't move. The US has no cooling-off period in UNCLAIMED, no American bank makes an overrun loan, and none of the five American cards offers a money transfer."
+      "limits": "Out of reach: every life banks in New Haven with one of five American banks. The rights are each country’s own and true to it: the US has no cooling-off period, no American bank makes an overrun loan, and none of the five American cards offers a money transfer. Reaching it needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); it stays as written until the owner says otherwise."
     },
     {
       "id": "cash",
@@ -1802,7 +1802,8 @@
         "coverOn and planOf for every bill (systems/health.ts)",
         "careQuote (systems/health.ts)",
         "armHealth's premiums",
-        "the medical debt's reporting (MEDICAL_DEBT.reportAt)"
+        "the medical debt's reporting (MEDICAL_DEBT.reportAt)",
+        "lawfullyPresent"
       ],
       "looks": [
         "debt",
@@ -1828,7 +1829,7 @@
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "health.drop and health.pay_bill have no test. The union plans and COBRA after one can't be reached without the career (docs/UNBITTEN.md)"
+      "limits": "The union plans and COBRA after one went with the career (docs/UNBITTEN.md). From 2026-10-09 the marketplace, the Essential Plan and Covered Connecticut ask lawful presence (45 CFR 155.305), so a graduate who stayed past their status is refused, and a plan held ends."
     },
     {
       "id": "doctor-and-appointments",
@@ -1975,14 +1976,17 @@
         "documents.police_report",
         "documents.replace_idcard",
         "documents.apply_idcard",
-        "documents.real_id"
+        "documents.replace_license"
       ],
       "effects": "A passport paid for and issued after the issuer's time, faster for a fee; the old one canceled with any authorization on it. Reported lost, a document is canceled. An ID card or REAL ID upgrade paid at the state's fee. A replacement after its time",
       "persists": "Person.documents (status, issuedAt, expiresAt, policeReport, realId), the fees' ledger postings",
       "readers": [
         "visaRefusal and authorizationRefusal, which read the passport's citizenship (systems/documents.ts)",
         "tsaAccepts, read only by the document look's sentence (systems/identity.ts)",
-        "idReplaceRefusal (systems/identity.ts)"
+        "idReplaceRefusal (systems/identity.ts)",
+        "photoIdOf (bank.switch)",
+        "licenseReplaceFee (the MV-78B waiver)",
+        "mayEnter (Going Abroad, as information)"
       ],
       "looks": [
         "document",
@@ -2006,7 +2010,7 @@
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "documents.apply_idcard, documents.police_report and documents.real_id have no test. REAL ID was for a flight's checkpoint and a police report is read only by its own refusal: both bite nothing since travel went. documents.test.ts reloads only an old save given papers"
+      "limits": "Making a license REAL ID went on 2026-10-09: REAL ID is for a flight’s checkpoint and a federal building, and nothing in SLATE goes to either. A photo ID in force is what a new bank asks (bank.switch, photoIdOf). A police report is filed in New Haven through its Police to Citizen portal (read secondhand), and New York waives a stolen license’s replacement with it (MV-78B); a non-driver ID’s replacement isn’t waived."
     },
     {
       "id": "visas-abroad",
@@ -2042,14 +2046,14 @@
         "tests/visas.test.ts"
       ],
       "manual": "",
-      "status": "Partial",
+      "status": "Retired",
       "layers": {
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "A visa or authorization issued is read by nothing that crosses a border: crossingRefusal has no caller since travel went in the reset"
+      "limits": "Retired in the connected world of 2026-10-09: a visa or a travel authorization was paid for to cross a border, and nothing crosses one since travel went, so each was a fee for a document nothing read. What a country asks of a citizenship stays on Papers as information (mayEnter); one pending in an older save is still decided (tests/visas.test.ts, tests/paper-visits.test.ts)."
     },
     {
       "id": "opt",
@@ -2067,7 +2071,8 @@
       "persists": "Person.documents (the OPT permit, idleDays), usOutOfStatus",
       "readers": [
         "usPermits and the US status handler (systems/permission.ts)",
-        "the OPT week handler (OPT_WEEK_KIND)"
+        "the OPT week handler (OPT_WEEK_KIND)",
+        "lawfullyPresent (health.enroll, programFor, healthMonth)"
       ],
       "looks": [
         "document"
@@ -2088,7 +2093,7 @@
         "interaction": "Implemented",
         "verified": "Verified"
       },
-      "limits": "There is no work after the degree since the career went, so OPT's idle days always pass the limit: it ends, and the status with it, with no grace. Whether that should be so is the owner's open call on a life's income after school"
+      "limits": "OPT keeps a graduate lawfully present, which the marketplace, the Essential Plan and Covered Connecticut ask (lawfullyPresent, from 2026-10-09). Nothing after the degree employs anybody since the career went, so OPT’s days without work pass its 90 and it ends, and the status with it, with no grace, as the rule has it (8 CFR 214.2(f)(10)(ii)(E)); out of status, a marketplace plan ends with the month. Reaching it needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); it stays as written until the owner says otherwise."
     },
     {
       "id": "residence-and-citizenship",
@@ -2134,7 +2139,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Only Mexico's route is open: Britain's Global Talent and the green card read a career's record, Canada and Ireland have no route. Residence is granted without living there, and nothing reads it as a place to live. documents.settle and documents.naturalize have no test"
+      "limits": "Only Mexico’s route is open: the green card and Britain’s Global Talent visa read a career’s record and their applications went on 2026-10-09; Canada and Ireland have no route. Residence is granted without living there, and nothing reads it as a place to live, since nobody moves. Reaching it needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); it stays as written until the owner says otherwise."
     },
     {
       "id": "benefits",
@@ -2181,7 +2186,7 @@
         "interaction": "Partial",
         "verified": "Partial"
       },
-      "limits": "Every life lives in New Haven, so Universal Credit, Jobseeker's Allowance, Mexico City's insurance and EI are out of reach, and EI's panel never shows. Whether a student's wages ever meet Connecticut's base period wasn't measured. A week worked while claiming reads nought (docs/UNBITTEN.md). SNAP is kept for a citizen only"
+      "limits": "Measured on 2026-10-09: a student’s work-study wages are kept out of unemployment’s base period, as the law has it (FUTA §3306(c)(10)(B), a school’s own enrolled students), so no student meets Connecticut’s; Universal Credit, Jobseeker’s Allowance, Mexico City’s insurance and EI are each another country’s, and every life lives in New Haven. SNAP is kept for a citizen. Reaching it needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); it stays as written until the owner says otherwise."
     },
     {
       "id": "pensions",
@@ -2229,7 +2234,7 @@
         "interaction": "Partial",
         "verified": "Partial"
       },
-      "limits": "No life reaches any of them: a student's wages make a few credits at most and nothing is earned after the degree, no life works in Britain, Ireland or Mexico, and none lives in Mexico."
+      "limits": "No life reaches one: a student’s work-study wages earn a few credits at most, nothing is earned after the degree, no life works in Britain, Ireland or Mexico, and none lives in Mexico. Each is tested on a life set up for it (tests/commands-kept.test.ts, the pension tests). Reaching it needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); it stays as written until the owner says otherwise."
     },
     {
       "id": "tax-return",

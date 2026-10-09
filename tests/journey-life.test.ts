@@ -2,7 +2,7 @@
  * Journey: a student's life around the school (from the connected world of 2026-10-09). Made as creation makes it,
  * saved and opened at once, as the first save of a new game is; then, by public commands only, the calendar's own
  * plans, a play read, the body looked after by the menu's first choice, a doctor chosen and a visit booked, moved and
- * kept, a day off sick refused to somebody well, the dental plan the school offers, a passport applied for, lost and replaced, the
+ * kept, a day off sick refused to somebody well, the dental plan the school offers, a passport applied for, lost and replaced with its police report, the
  * notifications read; and the clock run on through a leap day, a skip at a time, past the second Christmas. Saved and
  * opened midway. What it checks is downstream: each command's change shows where the game reads it, the ledger
  * balances, and no law of the save breaks.
@@ -78,7 +78,7 @@ describe('journey: a student’s life around the school', () => {
     // Saved and opened midway.
     sim = reload(sim);
 
-    // A passport applied for, as an American at Yale holds none, and once it's come, lost: reported, and replaced, each fee from the bank.
+    // A passport applied for, as an American at Yale holds none, and once it's come, lost: reported, reported to the police, and replaced, each fee from the bank.
     const paid = sim.universe.transactions.length;
     ok(sim, 'documents.apply_passport');
     expect(sim.universe.transactions.length).toBeGreaterThan(paid);
@@ -86,9 +86,8 @@ describe('journey: a student’s life around the school', () => {
     const passport = documentsOf(sim.player).find((d) => d.kind === 'passport' && d.status === 'valid')!;
     expect(passport).toBeDefined();
     ok(sim, 'documents.report_lost', { documentId: passport.id });
-    // New Haven's police take no report SLATE knows of, and it says so (the police report is New York's, Los Angeles's
-    // and the others' in `ONLINE_REPORTS`).
-    expect(sim.execute({ kind: 'documents.police_report', payload: { documentId: passport.id } }).error).toBe('SLATE doesn’t know how the police here take a report.');
+    // New Haven's police take a lost thing online, through their portal (from 2026-10-09, `ONLINE_REPORTS`).
+    ok(sim, 'documents.police_report', { documentId: passport.id });
     ok(sim, 'documents.apply_passport');
     expect(sim.universe.transactions.length).toBeGreaterThan(before);
 

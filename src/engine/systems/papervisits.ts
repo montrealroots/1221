@@ -49,10 +49,17 @@
  *
  * How far ahead a USCIS notice, a UKVCAS slot or a Canadian center's slot
  * comes isn't published (none of the authorities gives one): SLATE books
- * them two weeks on, `VISIT_LEAD_DAYS`, SLATE's estimate, inside every
+ * them two weeks on (`VISIT_LEAD_DAYS` until 2026-10-09), SLATE's estimate, inside every
  * deadline read (Canada's 30 days, UKVCAS's 45 working days). A visit takes
  * an hour, SLATE's estimate. Supporting documents to gather aren't kept: the
  * guidance lists what's brought, and nothing in SLATE would read the list.
+ *
+ * Nothing books a visit since the connected world of 2026-10-09: the green
+ * card's and the Global Talent visa's applications went that day with the
+ * career's record they read, and the visitor visas' with the travel they were
+ * for. A visit a save already has booked is still kept or missed as above, and
+ * its application decided or ended by it; booking one (`bookVisit`,
+ * `ukEnrolment`) went.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -65,8 +72,6 @@ import { DECIDED_KIND, documentsOf, type PersonDocument } from './documents';
 import { scheduleUsStatus } from './permission';
 
 export const VISIT_KIND = 'documents.visit';
-/** Days ahead a visit is booked where the authority publishes none: SLATE's estimate. */
-export const VISIT_LEAD_DAYS = 14;
 /** How long a visit takes, minutes: SLATE's estimate. */
 export const VISIT_MINUTES = 60;
 
@@ -141,17 +146,6 @@ function schedule(sim: Simulation, person: Person, doc: PersonDocument): void {
   const v = doc.visit!;
   sim.schedule({ at: v.at, kind: VISIT_KIND, label: VISITS[v.rule].what, category: 'personal', priority: 33, requiresPlayer: true, durationMinutes: VISIT_MINUTES, locationId: v.cityId, payload: { personId: person.id, documentId: doc.id } });
 }
-
-/** Books the visit a pending document waits on, so many days on, where they live; returns when. */
-export function bookVisit(sim: Simulation, person: Person, doc: PersonDocument, rule: VisitRule, days: number = VISIT_LEAD_DAYS, more: { years?: number; decidedBy?: string; after?: number } = {}): Instant {
-  const cityId = person.currentLocationId;
-  doc.visit = { rule, at: slot(sim, person, cityId, sim.now + days * MS_DAY), cityId, ...more };
-  schedule(sim, person, doc);
-  return doc.visit.at;
-}
-
-/** Britain's enrolment for one living there, or abroad. */
-export const ukEnrolment = (person: Person): VisitRule => (CITIES.get(person.currentLocationId)?.countryId === 'uk' ? 'uk-enrolment-home' : 'uk-enrolment-abroad');
 
 export function registerPaperVisits(sim: Simulation): void {
   sim.onSchedule(VISIT_KIND, (item, s) => {

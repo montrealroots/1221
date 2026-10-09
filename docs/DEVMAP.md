@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-111 commands; 111 named by a test, 0 not.
+109 commands; 109 named by a test, 0 not.
 
 ## bank
 
@@ -31,7 +31,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `bank.set_payments` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `arrears.test.ts` `cardlife.test.ts` `cardoffers.test.ts` `cash.test.ts` `journey-money.test.ts` `payments.test.ts` `pending.test.ts` | Your Bank |
 | `bank.set_round_ups` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-money.test.ts` | Your Bank |
 | `bank.set_term_end` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `cardoffers.test.ts` `cards.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
+| `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `cardoffers.test.ts` `cards.test.ts` `commands-kept.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
 | `bank.take_overrun_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `commands-kept.test.ts` | Your Bank |
 | `bank.take_term_interest` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
 | `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `cash.test.ts` `journey-money.test.ts` | Your Bank |
@@ -83,16 +83,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `documents.apply_authorization` | `src/engine/systems/documents.ts` | `Documents.tsx` | `documents.test.ts` | Passports And ID |
 | `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And ID |
-| `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `documents.test.ts` `journey-life.test.ts` | Passports And ID |
-| `documents.apply_visa` | `src/engine/systems/documents.ts` | `Documents.tsx` | `paper-visits.test.ts` `visas.test.ts` | Passports And ID |
+| `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `journey-life.test.ts` | Passports And ID |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 | `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | Cover, Benefits And Returns |
-| `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `idreplace.test.ts` | Passports And ID |
+| `documents.replace_license` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 | `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-life.test.ts` | Passports And ID |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |

@@ -111,12 +111,32 @@ What the same day found and settled besides:
   free to a student Yale Health covers.
 - **The tax return's home lines.** Retired with content/homes.ts.
 
-Still open from it, each in the coverage matrix's limits
-(`docs/capabilities.json`): the foreign banks' rights, the pensions and most
-benefits are out of a student's reach; a visa issued is read by nothing that
-crosses a border; OPT always ends, and the US status with it, which waits on
-the owner's call on a life's income after school; REAL ID and a police report
-are read only by their own looks.
+The owner's word that followed ("finish and complete those things in open
+perfectly") settled the rest the same day:
+
+- **A visa issued, read by nothing that crosses a border.** Retired: applying
+  for a visa or a travel authorization went, each a fee for a document nothing
+  read; what a country asks stays on Papers as information. Booking the visit
+  an application waited on went with them; one already booked is kept.
+- **REAL ID.** Retired: making a license REAL ID was for flights.
+- **A police report, read only by its own look.** Connected: New Haven takes
+  one online, and New York replaces a stolen license free with it
+  (`documents.replace_license`, which also gave `LICENSE_REPLACEMENT` its
+  reader).
+- **A passport, a license and an ID card read by nothing.** Connected: a new
+  bank asks for one in force (`photoIdOf`, `bank.switch`).
+- **US status and OPT read by nothing.** Connected: the marketplace, the
+  Essential Plan and Covered Connecticut ask lawful presence
+  (`lawfullyPresent`), so falling out of status, which OPT holds off, ends a
+  plan. OPT still ends after its 90 days without work, as the rule has it,
+  since nothing after the degree employs anybody.
+
+What stays out of a student's reach is in the coverage matrix's limits, each
+true to its country's rule: the foreign banks' rights, the pensions, and the
+benefits (a student's work-study wages are kept out of unemployment's base
+period, as FUTA has it). Reaching any needs income after the degree or a life
+outside the school, which the owner's brief held back; they stay as written
+until the owner says otherwise.
 
 ---
 

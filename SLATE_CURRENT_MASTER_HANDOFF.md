@@ -68,19 +68,40 @@ system could reach was retired with its reason, never quietly.
 - Pairs (`--pairs`, eight seeds as an actor and as an actress, otherwise alike): parts cast, actor 18 leads, 11
   supporting, 7 featured; actress 20, 6 and 8. No penalty by pronouns.
 
-## Open, measured, for the owner
+## The open items, finished (the owner: "Finish and complete those things in open perfectly")
 
-1. **Attentive students are dismissed too often.** Of 16 attentive pair lives, 9 were dismissed (4 actors, 5
-   actresses); of the 15 profile lives, 3. Attendance is 100%; the faculty's reason is craft growth behind the class
-   (about half the class's from the second year) and festival nights gone off. Classmates grow at a fixed focus of 1
-   (`ESTIMATE.classmateFocus`), readiness 80; a player sleeping the suggested hours reads about 70 at nine. More
-   preparation each evening made it worse (attendance fell to 84%: the work ran into calls). Not tuned blind: the
-   class model, the evening performances and the growth floor want measuring together. Repeat with
-   `npx vite-node tools/lives.ts -- --why --he --seed pair-1`.
-2. **Out of a student's reach,** each in the matrix's limits: foreign banks' rights, pensions, most benefits, a visa's
-   effect, OPT (always ends, with the status), REAL ID and the police report (none online in New Haven).
-3. **A US student can't arrange an overdraft,** and borrows only against wages paid in (Wells Fargo, Citi).
-4. **A US-born student holds no documents** at the start, which is right; a passport is applied for.
+1. **The dismissals were the probe's, not the game's.** `tools/lives.ts`'s player prepared only at eight in the
+   evening, often while at a call, and never learned its parts, so its festival nights went off and its growth
+   lagged. Given a student's free hours (the part first: a note to work, blocking missed, lines; then the work due
+   soonest), the same life (`pair-1`, as an actor) graduated in good standing every term, ahead of the class most
+   terms, readiness 94 at nine. Rerun, the actor/actress pairs (eight seeds each, three years): **16 of 16
+   graduated**, 0 breaches, 0 unbalanced ledgers; parts cast, actor 22 leads, 16 supporting, 2 featured; actress 28,
+   9, 3. Neither is held back; the sample is small. `school.learn_part` now reads the hour (`focusAt`), as every
+   other step does. The profile rerun was stopped by Claude Code for low memory before it finished, and wasn't
+   restarted: repeat it with `npx vite-node tools/lives.ts -- --seeds 3 --years 3`.
+2. **Papers connected to the kept world:** a new bank asks for a photo ID in force (`photoIdOf`, 31 CFR 1020.220);
+   the marketplace, the Essential Plan and Covered Connecticut ask lawful presence (`lawfullyPresent`, 45 CFR
+   155.305), so OPT and falling out of status now change a graduate's cover; New Haven takes a police report online
+   (Police to Citizen, read secondhand); a lost license is replaced at its issuer's fee, free in New York stolen with
+   the police's report (MV-78B, `documents.replace_license`).
+3. **Retired with reasons:** applying for visas and travel authorizations, booking the visit an application waited
+   on, and making a license REAL ID: each was for crossing a border or boarding a plane, and nothing does since the
+   reset. What a country asks stays on Papers as information; a pending one in an older save is still decided.
+4. **Measured and true to the rules, so left as they are:** a student's work-study wages are kept out of
+   unemployment's base period (FUTA §3306(c)(10)(B)); no American bank arranges an overdraft, and a loan is made
+   against wages paid in; a US-born student holds a passport or a license at the published shares.
+5. **Still out of reach, each in `docs/capabilities.json`'s limits:** the foreign banks' rights, the pensions,
+   most benefits, the residence routes beyond Mexico's, and OPT's end (90 days without work, since nothing after the
+   degree employs anybody). Each needs income after the degree or a life outside the school, which the owner's brief
+   held back (the career, travel and moving are not to come back). That's the owner's call to make.
+
+## Verification of the finishing work (2026-10-09)
+
+- `npm run gate`, read from a file: exit 0. 110 test files, 1,376 tests, typecheck, lint, all fifteen checks.
+- Inventory: 109 commands. Traceability: 46 verified in a journey, 63 tested, 0 partial. Capabilities: 27 Verified,
+  6 Partial, 19 Retired.
+- Mutations: the six new claims (photo ID, lawful presence in enrollment, in the programs and in a plan held, the
+  MV-78B waiver, New Haven's report), each killed by its test; with the earlier fourteen, 20 of 20.
 
 ---
 

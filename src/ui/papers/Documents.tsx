@@ -24,10 +24,10 @@ import { COUNTRIES } from '@/engine/content/geography';
 import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
-  authorizationFor, authorizationRefusal, visaRefusal, isoOfCountry, documentsOf, isoOfCity, mayEnter,
+  authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, realIdRefusal } from '@/engine/systems/identity';
+import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal } from '@/engine/systems/identity';
 import { optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
@@ -64,6 +64,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                     <><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id, stolen: true }).ok) toast(`${KIND_WORD[d.kind]} reported stolen and canceled.`, 'positive'); }}>Report Stolen</Gated></>
                   )}
                   {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('A police report filed.', 'positive'); }}>File A Police Report</Gated>; })()}
+                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id); return <Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replaced${a.value!.fee ? `, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated>; })()}
                   {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'Its time to come isn’t published: the license’s, there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated>; })()}
                 </td>
               </tr>
@@ -88,8 +89,6 @@ export function PassportPane() {
   const destinations = Object.keys(ENTRY).filter((iso) => iso !== isoOfCity(person.currentLocationId)).sort((a, b) => countryName(a).localeCompare(countryName(b)));
   const chosen = dest || destinations[0] || '';
   const answer = chosen ? mayEnter(person, chosen, sim.now) : undefined;
-  const authNo = chosen ? authorizationRefusal(person, chosen, sim.now) : 'Choose a country.';
-  const visaNo = chosen ? visaRefusal(person, chosen, sim.now) : 'Choose a country.';
   const visa = chosen ? VISAS[`${chosen}<${isoOfCountry(person.citizenshipId)}`] : undefined;
   const apply = (expedite: boolean) => {
     const a = run<{ readyAt: number; fee: number }>('documents.apply_passport', { expedite });
@@ -118,7 +117,7 @@ export function PassportPane() {
 
       <IdPanel />
 
-      <Panel title="Going Abroad" subtitle="What a country asks of your citizenship, for a short visit">
+      <Panel title="Going Abroad" subtitle="What a country asks of your citizenship, for a short visit: the rule, to read">
         <div className="col gap-3">
           <div className="field-row">
             <div className="field">
@@ -127,14 +126,6 @@ export function PassportPane() {
                 {destinations.map((iso) => <option key={iso} value={iso}>{countryName(iso)}</option>)}
               </select>
             </div>
-            <Gated feature="documents.apply_authorization" className="btn btn-sm" disabled={Boolean(authNo)} title={authNo} onClick={() => {
-              const a = run<{ readyAt: number; fee: number }>('documents.apply_authorization', { destination: chosen });
-              if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
-            }}>Apply For The Authorization</Gated>
-            <Gated feature="documents.apply_visa" className="btn btn-sm" disabled={Boolean(visaNo)} title={visaNo} onClick={() => {
-              const a = run<{ readyAt: number; fee: number }>('documents.apply_visa', { destination: chosen });
-              if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
-            }}>Apply For The Visa</Gated>
           </div>
           {answer && (
             answer.ok
@@ -142,6 +133,7 @@ export function PassportPane() {
               : <ul className="small" style={{ margin: 0 }}>{answer.missing.map((m) => <li key={m}>{m}</li>)}</ul>
           )}
           {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
+          <Fine>There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here: what each country asks is kept as what it is.</Fine>
           {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {ENTRY_AS_OF}; permission to live or work there is a different permission.</Fine>}
         </div>
       </Panel>
@@ -149,13 +141,12 @@ export function PassportPane() {
   );
 }
 
-/** The state's ID card, and making a card REAL ID: the Driving tab's until the cars went on 2026-10-09. */
+/** The state's ID card: the Driving tab's until the cars went on 2026-10-09. Making a card REAL ID was here too, until the same day's connected world: nothing in SLATE flies. */
 function IdPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const card = idCardHere(person);
   const idNo = idCardRefusal(person, sim.now);
-  const realNo = realIdRefusal(person, sim.now);
   return (
     <Panel title="Your ID" subtitle={card ? card.card.name : 'Where SLATE issues one'}>
       <LookRegion className="col gap-3">
@@ -164,10 +155,6 @@ function IdPanel() {
             const a = run<{ expiresAt?: number; fee: number }>('documents.apply_idcard', {});
             if (a.ok) toast(`${card?.card.name ?? 'An ID card'}, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}${a.value!.expiresAt ? `; good until ${formatDate(a.value!.expiresAt, sim.zone)}` : ''}.`, 'positive');
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
-          <Gated feature="documents.real_id" className="btn btn-sm btn-ghost" disabled={Boolean(realNo)} title={realNo} onClick={() => {
-            const a = run<{ fee: number }>('documents.real_id', {});
-            if (a.ok) toast(`Your card is REAL ID now, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');
-          }}>Make It REAL ID</Gated>
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />
       </LookRegion>
