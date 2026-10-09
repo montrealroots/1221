@@ -141,9 +141,13 @@ export function liabilityFor(sim: Simulation, account: Account, which: Which, am
 }
 
 /** The next statement after a moment, by which the holder is taken to have seen a charge: the card's next, or the account's month's end. */
-function statementAfter(sim: Simulation, which: Which, at: Instant): Instant {
+function statementAfter(sim: Simulation, account: Account, which: Which, at: Instant): Instant {
   if (which === 'credit') {
-    const next = sim.universe.scheduled.find((one) => one.kind === 'card.statement' && one.status === 'pending');
+    // This card's own (from 2026-10-10: until then the first pending statement of anyone's card, in a world of several).
+    const next = sim.universe.scheduled
+      .filter((one) => one.kind === 'card.statement' && one.status === 'pending' && (one.payload.personId ?? sim.universe.playerId) === account.ownerId
+        && (one.payload.accountId === account.id || one.payload.accountId === undefined))
+      .sort((a, b) => a.at - b.at)[0];
     if (next && next.at > at) return next.at;
   }
   // The bank's month, where the save keeps time; until 2026-09-27 a UTC month.
@@ -313,7 +317,7 @@ function somebodyElse(sim: Simulation, person: Person): void {
   sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
   // Learned of at once where an alert catches it, otherwise at the statement.
   const alert = alertsOf(person).largePayment;
-  const statedAt = statementAfter(sim, which, sim.now);
+  const statedAt = statementAfter(sim, account, which, sim.now);
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
   person.fraud = [...(person.fraud ?? []), { accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {

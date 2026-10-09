@@ -229,6 +229,9 @@ describe('help with payments', () => {
     const c = card(sim)!;
     give(sim, c.id, -80_000_00);
     const owed = -c.balance;
+    // For a holder who can't pay it off (from 2026-10-10), so the bank is emptied first.
+    expect(sim.execute({ kind: 'card.request_hardship', payload: {} }).error).toMatch(/hardship plan is for when you can’t/);
+    broke(sim);
     const plan = run(sim, 'card.request_hardship').value as { payment: number };
     expect(plan.payment).toBe(Math.ceil(owed / 48 / 100) * 100);
     expect(sim.player.credit!.suspended).toBe('hardship');

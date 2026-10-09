@@ -381,7 +381,8 @@ export function registerStatements(sim: Simulation): void {
         const txn = list[i]!;
         for (const p of txn.postings) {
           if (!watched.has(p.accountId) || p.amount >= 0 || -p.amount < alerts.largePayment) continue;
-          if (txn.category === 'transfer') continue;
+          // A stranger's charge is told of where it's taken (`somebodyElse`, systems/security.ts); until 2026-10-10 the alert said it twice.
+          if (txn.category === 'transfer' || txn.category === 'card-fraud') continue;
           s.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${txn.memo.toLowerCase()}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
         }
       }

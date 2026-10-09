@@ -19,7 +19,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, type CardTerm } from '@/engine/systems/credit';
+import { cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
@@ -208,7 +208,9 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
           <div className="stat">
             <Open subject={at('account', card.id)}>
               <span className="stat-label">Left To Spend</span>
-              <span className="stat-value mono">{money(Math.max(0, limit - owed))}</span>
+              {/* What a purchase can take, as the till asks it (`cardRoom`): until 2026-10-10 the limit less what's owed,
+                  which showed room on a locked, suspended or closing card and left out held payments. */}
+              <span className="stat-value mono">{money(cardRoom(person, card))}</span>
               <span className="stat-note">Of a {money(limit)} limit</span>
             </Open>
           </div>

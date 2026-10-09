@@ -45,7 +45,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
-import { inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
+import { dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
 import { ensurePrimary, stateOf } from './credit';
@@ -318,6 +318,7 @@ export function registerAccountLife(sim: Simulation): void {
     if (back > 0) s.post({ memo: `${account.name} canceled`, category: 'transfer', postings: [{ accountId: account.id, amount: -back }, { accountId: into.id, amount: back }] });
     account.accrued = 0;
     account.closedAt = s.now;
+    dropPaymentsFor(s, person, account);
     return { refunded: back };
   });
 
@@ -383,6 +384,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       const amount = account.balance;
       sim.post({ memo: `Unclaimed, to ${law.to ?? 'the state'}`, category: 'transfer', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('liability_other', 'Unclaimed Money').id, amount }] });
       account.closedAt = sim.now;
+      dropPaymentsFor(sim, person, account);
       person.unclaimed = [...(person.unclaimed ?? []), { amount, to: law.to ?? 'the state', at: sim.now }];
       if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
     }

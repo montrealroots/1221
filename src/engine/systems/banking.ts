@@ -430,6 +430,15 @@ function closeSavings(sim: Simulation, person: Person, account: Account, current
   }
   account.accrued = 0;
   account.closedAt = sim.now;
+  dropPaymentsFor(sim, person, account);
+}
+
+/**
+ * A closed account's standing orders into it and its scheduled payments to or from it, taken off. Closing savings
+ * did it; from 2026-10-10 an account canceled in its cooling-off and one handed to the state as unclaimed do too,
+ * which until then left them to run against a closed account.
+ */
+export function dropPaymentsFor(sim: Simulation, person: Person, account: Account): void {
   const pay = person.payments;
   if (pay) {
     const gone = new Set(pay.standingOrders.filter((o) => o.toId === account.id).map((o) => o.id));

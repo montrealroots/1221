@@ -38,7 +38,7 @@ import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
 import { inTheBank } from './spending';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { bankOf } from './banking';
@@ -156,13 +156,15 @@ export function registerCardLife(sim: Simulation): void {
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
     const day = Math.round(Number(p.day));
     if (!(day >= 1 && day <= 28)) throw new CommandError('Pick a day from the 1st to the 28th.');
-    stateOf(person, card).statementDay = day;
+    const state = stateOf(person, card);
+    state.statementDay = day;
     const everyday = cardOf(s, person)?.id === card.id;
     for (const item of s.universe.scheduled) {
       if (item.kind === STATEMENT_KIND && item.status === 'pending' && item.payload.personId === person.id
         && (item.payload.accountId === card.id || (item.payload.accountId === undefined && everyday))) s.timeline.cancel(item.id, s.now);
     }
-    scheduleStatement(s, person, s.now, card);
+    // The new day's first date a full cycle on from the last statement (`MIN_CYCLE_DAYS`).
+    scheduleStatement(s, person, Math.max(s.now, (state.statementAt ?? card.openedAt) + MIN_CYCLE_DAYS * 86_400_000), card);
     return { day };
   });
 
@@ -216,6 +218,10 @@ export function registerCardLife(sim: Simulation): void {
     if (credit.hardship) throw new CommandError('You’re on a plan already.');
     const owed = Math.max(0, -card.balance);
     if (owed === 0) throw new CommandError('The card owes nothing.');
+    // For a holder who can't pay (from 2026-10-10): a bank's hardship plan asks after the hardship, and one whose
+    // checking and savings could clear the card today isn't in it, SLATE's reading. Until then anyone with a balance
+    // was given interest frozen for four years for the asking.
+    if (inTheBank(s, person) >= owed) throw new CommandError('You could pay it off today: a hardship plan is for when you can’t.');
     credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: s.now };
     credit.suspended = 'hardship';
     return { payment: credit.hardship.payment };

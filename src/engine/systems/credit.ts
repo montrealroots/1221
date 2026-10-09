@@ -88,6 +88,10 @@ export interface CardState {
   statementInterest?: Money;
   /** The day of the month the statement comes, which moves the due date with it (C25). Absent, the 20th. */
   statementDay?: number;
+  /** When the last statement came (from 2026-10-10), which a moved statement day can't bring the next one sooner than `MIN_CYCLE_DAYS` after. */
+  statementAt?: Instant;
+  /** When the yearly fee was last charged (from 2026-10-10), so a month with two statements charges it once. */
+  feeAt?: Instant;
   /** Due dates in a row with less than the minimum paid. */
   missed?: number;
   /** Why the card can't be used: payments missed, a hardship plan, persistent debt (A149, C11, C86). */
@@ -158,7 +162,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'feeAt', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
@@ -641,6 +645,14 @@ export function statementDayOf(person: Person | undefined, card?: Account): numb
 }
 
 /** A card's next statement: its day at nine. */
+/**
+ * The shortest billing cycle a moved statement day makes: a month less the four days Reg Z lets a cycle vary
+ * (§1026.2(a)(4), "approximately equal intervals"), so the change makes one longer cycle, never a short one. Until
+ * 2026-10-10 the next statement came at the new day's next date however soon, and moving the day each day cut a
+ * statement each day: a month paid as agreed on the record each time, and the yearly fee twice in its month.
+ */
+export const MIN_CYCLE_DAYS = 27;
+
 export function scheduleStatement(sim: Simulation, person: Person, after: Instant, card = cardOf(sim, person)): void {
   const zone = zoneOf(sim, person);
   const p = zonedParts(after, zone);
@@ -673,6 +685,7 @@ export function registerCredit(sim: Simulation): void {
     const card = person ? cardFor(s, person, item.payload.accountId) : undefined;
     if (!person || !record || !card) return;
     const credit = stateOf(person, card);
+    credit.statementAt = s.now;
     // Repriced from the record by the bank's own terms, then the month's
     // interest if last month's statement was carried.
     const terms = cardTerms(s, card, record.score);
@@ -701,12 +714,14 @@ export function registerCredit(sim: Simulation): void {
     // A credit balance left six months is sent back to a US holder (Reg Z §1026.11).
     if (card.balance > 0 && credit.creditSince !== undefined && s.now - credit.creditSince >= 182 * 86_400_000 && bankById(card.bankId ?? '')?.iso === 'US') refundCredit(s, person, card);
     // The yearly fee, on the statement in the month the card was opened.
-    // One statement a month, so the month alone makes it once a year.
+    // Once in that month: a moved statement day can give the month two statements, and until 2026-10-10 both charged it.
     // In its first year a US card's fees, penalties aside, may not pass a
     // quarter of the limit it opened with (Reg Z §1026.52(a)).
     const firstYearUs = bankById(card.bankId ?? '')?.iso === 'US' && s.now - card.openedAt < 365 * 86_400_000;
     const annualFee = firstYearUs ? Math.min(terms.annualFee, Math.round((card.creditLimit ?? 0) * 0.25)) : terms.annualFee;
-    if (annualFee > 0 && credit.closing === undefined && zonedParts(s.now, zoneOf(s, person)).month === zonedParts(card.openedAt, zoneOf(s, person)).month) {
+    if (annualFee > 0 && credit.closing === undefined && zonedParts(s.now, zoneOf(s, person)).month === zonedParts(card.openedAt, zoneOf(s, person)).month
+      && (credit.feeAt === undefined || s.now - credit.feeAt > 60 * 86_400_000)) {
+      credit.feeAt = s.now;
       s.post({
         memo: `Yearly fee: ${card.name}`, category: 'fees',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: annualFee }, { accountId: card.id, amount: -annualFee }],
@@ -770,9 +785,12 @@ export function registerCredit(sim: Simulation): void {
     if (asked > 0) {
       if (autopayReach(s, person) >= asked) payCard(s, person, asked, false, card);
       else {
-        const returned = terms.returnedPaymentFee;
-        s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. The card charged ${formatMoney(returned, currency)} for that.`, importance: 75 });
+        // One penalty fee for one event on a US card (Reg Z §1026.52(b)(2)(ii)): a bounce that leaves the minimum
+        // unpaid is charged the late fee below, and not the returned payment's as well, as until 2026-10-10 it was.
+        const lateToo = bankById(card.bankId ?? '')?.iso === 'US' && credit.paidSinceStatement < due;
+        const returned = lateToo ? 0 : terms.returnedPaymentFee;
+        if (returned > 0) s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. ${returned > 0 ? `The card charged ${formatMoney(returned, currency)} for that.` : 'It’s late now, and the late fee is the one fee for it.'}`, importance: 75 });
       }
     }
     const paid = credit.paidSinceStatement;

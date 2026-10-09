@@ -282,8 +282,10 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
   if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) {
     chargeForPurchase(sim, person);
-    // The change to the next whole unit, into savings tonight, where the bank rounds up (B9).
-    if (roundUpsOn(sim, person)) person.roundUps!.pending += roundUpOf(amount - creditFirst);
+    // The change to the next whole unit, into savings tonight, where the bank rounds up (B9): on what the debit card
+    // paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
+    const onDebit = amount - creditFirst - bank.short;
+    if (roundUpsOn(sim, person) && onDebit > 0) person.roundUps!.pending += roundUpOf(onDebit);
   }
   return true;
 }

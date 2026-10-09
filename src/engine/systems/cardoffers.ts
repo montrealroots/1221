@@ -91,8 +91,8 @@ function bonusPeriod(sim: Simulation, per: 'quarter' | 'year' | 'cycle' | 'month
   return `m${d.year}-${d.month}`;
 }
 
-/** What isn't a purchase on the card, for rewards. */
-const NOT_PURCHASES = new Set(['interest', 'fees', 'cash', 'card-transfer', 'transfer', 'card-payment', 'rewards']);
+/** What isn't a purchase on the card, for rewards: a stranger's charge isn't (from 2026-10-10; until then it earned). */
+const NOT_PURCHASES = new Set(['interest', 'fees', 'cash', 'card-transfer', 'transfer', 'card-payment', 'rewards', 'card-fraud']);
 
 /** A transfer's rate today: its introductory rate while it runs, unless a US payment sixty days late ended it. */
 export function transferRate(sim: Simulation, credit: CardState, one: CardTransfer): number {
