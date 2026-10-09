@@ -108,17 +108,19 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   movement: {
     id: 'movement', label: 'Movement Work', what: 'A movement score or an Alexander practice, shown in class.', prepLabel: COURSEWORK_PREP,
     dims: {
-      execution: { weight: 3, inputs: [a('physical', 3), tech(2)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
-      consistency: { weight: 2, inputs: [a('stamina', 2), a('discipline', 1), a('focus', 1)], prep: ['rehearsal', 'familiarity'], conditions: ['fatigue', 'injury'] },
+      // The flu's aches and fever reach the body's work too (from 2026-10-10): played matched, a student showing a
+      // movement score with the flu showed exactly what a healthy twin did.
+      execution: { weight: 3, inputs: [a('physical', 3), tech(2)], prep: ['rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      consistency: { weight: 2, inputs: [a('stamina', 2), a('discipline', 1), a('focus', 1)], prep: ['rehearsal', 'familiarity'], conditions: ['fatigue', 'illness', 'injury'] },
       interpretation: { weight: 1, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation'] },
     },
   },
   partnered: {
     id: 'partnered', label: 'Partnered Physical Work', what: 'A fight or a moment of intimacy, choreographed and shown with a partner.', prepLabel: COURSEWORK_PREP,
     dims: {
-      execution: { weight: 3, inputs: [a('physical', 2), tech(3)], prep: ['familiarity', 'rehearsal'], conditions: ['fatigue', 'injury'] },
+      execution: { weight: 3, inputs: [a('physical', 2), tech(3)], prep: ['familiarity', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
       responsiveness: { weight: 2, inputs: [a('listening', 2), a('adaptability', 1)], prep: ['partner'], conditions: ALL },
-      consistency: { weight: 2, inputs: [a('discipline', 1), a('stamina', 1), a('focus', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
+      consistency: { weight: 2, inputs: [a('discipline', 1), a('stamina', 1), a('focus', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
       connection: { weight: 1, inputs: [a('listening', 1), a('emotionalDepth', 1)], prep: ['partner'] },
     },
   },
@@ -136,7 +138,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     dims: {
       connection: { weight: 3, inputs: [a('presence', 3), a('listening', 1), tech(1)], prep: ['rehearsal'], conditions: ALL },
       responsiveness: { weight: 2, inputs: [a('adaptability', 2), a('listening', 1), tech(1)], prep: ['rehearsal'], conditions: ALL },
-      execution: { weight: 2, inputs: [a('physical', 2), tech(2)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
+      execution: { weight: 2, inputs: [a('physical', 2), tech(2)], prep: ['rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
       believability: { weight: 1, inputs: [a('emotionalDepth', 1), tech(1)], prep: ['interpretation'] },
     },
   },
@@ -192,7 +194,7 @@ export const EVALUATION = {
   sufficientReadiness: 60,
   /** What incomplete preparation leaves at none done: a part not prepared still shows something of the actor. */
   prepFloor: 0.35,
-  /** What fatigue leaves at readiness 0, and what being ill leaves the voice and being hurt leaves the body. */
+  /** What fatigue leaves at readiness 0, what being ill leaves the voice and the body's work, and what being hurt leaves what the injury limits (`INJURY_KIND[].limits`). */
   fatigueFloor: 0.6,
   illness: 0.85,
   injury: 0.6,

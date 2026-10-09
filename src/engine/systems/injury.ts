@@ -51,10 +51,10 @@ export function laidUp(person: Person, at: Instant): boolean {
   return (injuryOf(person, at)?.offWorkUntil ?? 0) > at;
 }
 
-/** Why a workout or a swim isn't possible now, hurt: none for a cut or a knock. */
+/** Why a workout or a swim isn't possible now, hurt: none for a cut or a knock (`INJURY_KIND[].limits`). */
 export function trainingRefusal(person: Person, at: Instant): string | undefined {
   const injury = injuryOf(person, at);
-  if (!injury || injury.kind === 'cut' || injury.kind === 'bruise') return undefined;
+  if (!injury || INJURY_KIND[injury.kind].limits === 'none') return undefined;
   const days = Math.ceil((injury.until - at) / MS_DAY);
   return `Not with ${INJURY_KIND[injury.kind].label.toLowerCase()}; it has ${days} ${days === 1 ? 'day' : 'days'} yet to mend.`;
 }

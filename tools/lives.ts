@@ -25,26 +25,18 @@
  *   npx vite-node tools/lives.ts -- --seeds 6 --years 3
  *   npx vite-node tools/lives.ts -- --seeds 20 --pairs
  */
-import { createSave, loadSave } from '../src/engine';
+import { loadSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
-import { newLifeConfig, type NewSaveConfig } from '../src/engine/world/bootstrap';
+import type { NewSaveConfig } from '../src/engine/world/bootstrap';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { breaches } from '../src/engine/core/invariants';
-import { templateById } from '../src/engine/content/coursework';
-import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
-import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
-import { lookAfterOptions, occupiedAt, readiness, suggestedSleep } from '../src/engine/systems/life';
-import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
+import { readiness, suggestedSleep } from '../src/engine/systems/life';
 import { inTheBank } from '../src/engine/systems/spending';
-import { coverOn, healthOf, mayEnroll } from '../src/engine/systems/health';
+import { coverOn, healthOf } from '../src/engine/systems/health';
 import { mayHurt } from '../src/engine/systems/injury';
 import { journeyOf } from '../src/engine/systems/evaluation';
-import { nextInterest, nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
-import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
-import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
-import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
-import { abilitiesOf, abilityOf, developmentOf } from '../src/engine/systems/attributes';
+import { abilitiesOf, developmentOf } from '../src/engine/systems/attributes';
 
 const arg = (name: string, d: number) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? Number(process.argv[i + 1]) : d; };
 const flag = (name: string) => process.argv.includes(`--${name}`);
@@ -66,87 +58,7 @@ const PROFILES: Profile[] = [
   { name: 'pressure: scraping, the flu and an injury, attentive', config: { homeRegionId: 'us-ca-losangeles', pronouns: 'he/him', wealth: 'scraping', family: undefined }, play: 'attentive', adverse: true },
 ];
 
-function life(seed: string, p: Partial<NewSaveConfig>): Simulation {
-  return createSave(1, seed, { ...newLifeConfig(), firstName: 'Ada', lastName: 'Cole', pronouns: 'they/them', ...p });
-}
-
-/** One evening's work, as `tests/journey-school-year.test.ts` plays it, the careful way. */
-function evening(sim: Simulation) {
-  const cw = courseworkOf(sim, sim.player);
-  if (!cw) return;
-  for (const m of momentsOf(cw).filter((x) => x.status === 'open')) {
-    const choice = ({ disagreement: 'both', study: 'yes', help: 'help', apology: 'accept', boundary: 'respect', encouragement: '' } as Record<string, string>)[m.kind] ?? CHOICES[m.kind][0]!.id;
-    sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice } });
-  }
-  for (const a of cw.assignments.filter((x) => x.status === 'open' || x.status === 'revising')) {
-    if (a.feedback && !a.feedback.seen) sim.execute({ kind: 'school.read_feedback', payload: { assignmentId: a.id } });
-    for (const k of a.asks ?? []) if (k.status === 'open') sim.execute({ kind: 'school.answer_partner', payload: { assignmentId: a.id, askId: k.id, yes: true } });
-    for (const { q, options } of questionsFor(a)) {
-      if (a.answers[q.id]) continue;
-      const pick = options.find((o) => o.supported) ?? options[0]!;
-      sim.execute({ kind: 'school.choose', payload: { assignmentId: a.id, question: q.id, option: pick.id } });
-    }
-  }
-}
-
-/**
- * An hour free, used as a student who keeps up uses one: first the part they're cast in (a note to work, blocking
- * missed, lines not yet known), then a step on the work due soonest. One thing an hour, each taking its own time.
- * Until 2026-10-09's second measurement the player prepared only at eight in the evening, two steps a piece, and never
- * touched the part: its nights went off, and the faculty read the term as work falling short. That was the tool, not
- * the game: a player at eight was often at a call, and the part is the player's to learn.
- */
-function freeHour(sim: Simulation): boolean {
-  const person = sim.player;
-  if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 30) return false;
-  for (const which of WHICH) {
-    for (const [kind, what] of [['school.work_note', 'note'], ['school.review_blocking', 'blocking'], ['school.learn_part', 'part']] as const) {
-      if (!ownWorkRefusal(sim, person, which, what) && sim.execute({ kind, payload: { which } }).ok) return true;
-    }
-  }
-  const cw = courseworkOf(sim, person);
-  const open = (cw?.assignments ?? []).filter((x) => x.status === 'open' || x.status === 'revising')
-    .sort((x, y) => (x.status === 'revising' ? x.revision!.dueOn : x.dueOn).localeCompare(y.status === 'revising' ? y.revision!.dueOn : y.dueOn));
-  for (const a of open) {
-    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < 0.95 && !prepareRefusal(sim, person, a, x.id));
-    if (act && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).ok) return true;
-  }
-  return false;
-}
-
-/**
- * A free hour the practicing player spends on themselves (from 2026-10-09): stressed, an hour of a restful interest
- * the Profile suggests; else practice on what the last work was held back by most, else the ability furthest from full.
- */
-function practiceHour(sim: Simulation): boolean {
-  const person = sim.player;
-  if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 40) return false;
-  if (person.wellbeing.stress > 45) {
-    const id = nextInterest(sim, person);
-    if (id && sim.execute({ kind: 'interest.pursue', payload: { interest: id } }).ok) return true;
-  }
-  if (practicedToday(sim, person) >= PRACTICE.dailyHours) return false;
-  const limit = nextPractice(person);
-  const target = limit?.what ?? ABILITY_DEFS.map((d) => d.id).filter((id) => exerciseFor(id)).sort((a, b) => abilityOf(sim, person, a) - abilityOf(sim, person, b))[0];
-  const e = target ? exerciseFor(target as AbilityId) : undefined;
-  if (e && !practiceRefusal(sim, person, e)) return sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok;
-  return false;
-}
-
-/** Cover kept, as a graduate keeps it: with none, enrolled where the papers allow (`mayEnroll`), checked at noon. */
-function keepCovered(sim: Simulation) {
-  if (coverOn(sim.player, sim.now) || !mayEnroll(sim.player, sim.now).ok) return;
-  sim.execute({ kind: 'health.enroll', payload: {} });
-}
-
-/** What the menu puts first and urgent, done; nothing done that isn't. */
-function lookAfter(sim: Simulation) {
-  for (let n = 0; n < 3; n += 1) {
-    const top = lookAfterOptions(sim)[0];
-    if (!top || top.refused || !top.urgent) return;
-    if (sim.execute({ kind: 'life.look_after', payload: { action: top.action } }).error) return;
-  }
-}
+import { life, evening, freeHour, practiceHour, keepCovered, lookAfter } from './policy';
 
 interface Result { journey?: Record<string, unknown>; cast?: Record<string, unknown>; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 

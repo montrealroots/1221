@@ -85,7 +85,7 @@ import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
 import { practiceGenres } from './engagement';
-import { INJURY } from '../content/injury';
+import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
@@ -627,14 +627,17 @@ export function focusAt(sim: Simulation, person: Person, at: Instant): number {
 
 /**
  * The day's condition as a piece of work meets it (`systems/evaluation.ts`), from 2026-10-09: readiness at the hour's
- * fit, the flu, and an injury still mending. Weather reaches it only through these: a cold night's sleep or a wet walk
+ * fit, the flu, and an injury still mending, by what it limits (from 2026-10-10). Weather reaches it only through these: a cold night's sleep or a wet walk
  * is already in readiness.
  */
 export function conditionAt(sim: Simulation, person: Person, at: Instant): Condition {
   const z = CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
   const ill = (healthOf(person).fluUntil ?? 0) > at;
-  const injured = injuryOf(person, at) !== undefined;
-  return { readiness: readiness(person) * hourFit(person, zonedParts(at, z).hour), ...(ill ? { ill } : {}), ...(injured ? { injured } : {}) };
+  // What the injury limits (`INJURY_KIND[].limits`, from 2026-10-10): the body's dimensions, every one for a
+  // concussion, and nothing for a cut or a knock.
+  const hurt = injuryOf(person, at);
+  const limits = hurt ? INJURY_KIND[hurt.kind].limits : 'none';
+  return { readiness: readiness(person) * hourFit(person, zonedParts(at, z).hour), ...(ill ? { ill } : {}), ...(limits === 'body' ? { injured: true } : {}), ...(limits === 'mind' ? { concussed: true } : {}) };
 }
 
 /**
@@ -2311,7 +2314,11 @@ export function registerSchool(sim: Simulation): void {
     // Before they've run: until 2026-09-27 it was taken all day, and said the day was excused after it had been counted.
     if (s.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) throw new CommandError('Today’s classes have been and gone; calling in sick now excuses nothing.');
     // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
-    if (person.wellbeing.condition >= ESTIMATE.sickBelow && !((person.health?.fluUntil ?? 0) > s.now)) throw new CommandError('You’re well enough to go: staying away would be an unexcused absence.');
+    // Hurt in a way that limits the work (`INJURY_KIND[].limits`), a doctor's note excuses them too (from 2026-10-10): until
+    // then a student with a sprained ankle had to show a movement score on it, and lost a third of it (`tools/condition.ts`).
+    const hurt = injuryOf(person, s.now);
+    const noted = hurt !== undefined && INJURY_KIND[hurt.kind].limits !== 'none';
+    if (person.wellbeing.condition >= ESTIMATE.sickBelow && !((person.health?.fluUntil ?? 0) > s.now) && !noted) throw new CommandError('You’re well enough to go: staying away would be an unexcused absence.');
     school.sickDay = keyOf(today);
     return { excused: true };
   });

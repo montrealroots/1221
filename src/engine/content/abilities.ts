@@ -125,10 +125,10 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
   {
     id: 'stamina', label: 'Stamina', general: true,
     definition: 'Lasting through long days, runs of nights and physical work without the work falling off.',
-    develops: 'Workouts, and more on a run in fine weather; lost without them, as fitness is.',
+    develops: 'Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.',
     affects: 'Consistency in movement, fights, songs and every night on stage.',
     derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
-    source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Mujika & Padilla (2000) on detraining',
+    source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Hickson & Rosenkoetter (1981): two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on detraining',
   },
 ];
 

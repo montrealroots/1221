@@ -21,6 +21,7 @@ import { GENRE_DEFS } from '@/engine/content/genres';
 import { ALL_INTERESTS, FILM_GENRES, GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, levelOf, targetId } from '@/engine/systems/attributes';
 import { reachOf } from '@/engine/systems/school';
+import { EVERYDAY_FITNESS, FITNESS } from '@/engine/systems/life';
 import { genreSpeed, playOfGenre, restOf, satiationNow } from '@/engine/systems/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
@@ -113,7 +114,7 @@ defineLook<TheAbility>('ability', {
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
           <p className="small"><strong>What it does.</strong> {readers.length ? readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ') : def.affects}.</p>
           {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(SLATE’s own exercise.)' : exercise.kind === 'named' ? '(A named exercise of real pedagogy.)' : '(A composite of real practice.)'}</p>}
-          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it; without one it falls 0.18 a day toward 35, as an untrained body’s does. Rest doesn’t lower it.</p>}
+          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it and holds it for {FITNESS.heldDays} days; past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout the same day builds half.</p>}
           {recent.length > 0 && (
             <ul className="small">
               {recent.map((h, i) => <li key={i}>{formatDate(h.at, zoneOf(sim))}: +{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>)}

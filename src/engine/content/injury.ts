@@ -35,14 +35,23 @@
 
 export type InjuryKind = 'strain' | 'back' | 'sprain' | 'fracture' | 'concussion' | 'cut' | 'bruise';
 
-export const INJURY_KIND: Readonly<Record<InjuryKind, { label: string; days: readonly [number, number]; offWork: boolean; care: 'visit' | 'urgent' | 'emergency'; therapy: number }>> = {
-  strain: { label: 'A Pulled Muscle', days: [17, 22], offWork: false, care: 'urgent', therapy: 2 },
-  back: { label: 'A Back Strain', days: [28, 42], offWork: false, care: 'visit', therapy: 4 },
-  sprain: { label: 'A Sprained Ankle', days: [5, 10], offWork: false, care: 'urgent', therapy: 2 },
-  fracture: { label: 'A Broken Bone', days: [42, 84], offWork: true, care: 'emergency', therapy: 6 },
-  concussion: { label: 'A Concussion', days: [10, 14], offWork: true, care: 'emergency', therapy: 0 },
-  cut: { label: 'A Deep Cut', days: [3, 7], offWork: false, care: 'urgent', therapy: 0 },
-  bruise: { label: 'A Bad Knock', days: [3, 7], offWork: false, care: 'visit', therapy: 0 },
+/**
+ * What each limits while it mends (from 2026-10-10): `body`, training and the work's physical dimensions (the
+ * evaluation's `injury` condition); `mind`, a concussion's, every dimension of the work as well, since its symptoms
+ * are thinking, memory and balance (Patricios et al., Amsterdam consensus, BJSM 2023); `none`, neither, a cut or a
+ * knock, which already didn't stop a workout. Until 2026-10-10 any injury at all took the same from the body's
+ * dimensions, a cut finger's as much as a broken ankle's. Which kind limits what is SLATE's reading.
+ */
+export type InjuryLimits = 'body' | 'mind' | 'none';
+
+export const INJURY_KIND: Readonly<Record<InjuryKind, { label: string; days: readonly [number, number]; offWork: boolean; care: 'visit' | 'urgent' | 'emergency'; therapy: number; limits: InjuryLimits }>> = {
+  strain: { label: 'A Pulled Muscle', days: [17, 22], offWork: false, care: 'urgent', therapy: 2, limits: 'body' },
+  back: { label: 'A Back Strain', days: [28, 42], offWork: false, care: 'visit', therapy: 4, limits: 'body' },
+  sprain: { label: 'A Sprained Ankle', days: [5, 10], offWork: false, care: 'urgent', therapy: 2, limits: 'body' },
+  fracture: { label: 'A Broken Bone', days: [42, 84], offWork: true, care: 'emergency', therapy: 6, limits: 'body' },
+  concussion: { label: 'A Concussion', days: [10, 14], offWork: true, care: 'emergency', therapy: 0, limits: 'mind' },
+  cut: { label: 'A Deep Cut', days: [3, 7], offWork: false, care: 'urgent', therapy: 0, limits: 'none' },
+  bruise: { label: 'A Bad Knock', days: [3, 7], offWork: false, care: 'visit', therapy: 0, limits: 'none' },
 };
 
 /** What each source brings, by share: SLATE's estimate of the mix, from what each study says is most common. */

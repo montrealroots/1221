@@ -29,6 +29,8 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
 import { heatIndexC, weatherAt } from './weather';
+import { developmentOf, recordDevelopment, repeatsToday } from './attributes';
+import { DEVELOPMENT } from '../content/abilities';
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };
@@ -75,6 +77,25 @@ const GRIMY = 50;
 
 /** What an everyday life keeps fitness at without any training. */
 export const EVERYDAY_FITNESS = 35;
+
+/**
+ * How fitness is kept and lost (from 2026-10-10), SLATE's design on the research's shape:
+ *
+ * - **Held:** for `heldDays` after a workout, fitness doesn't fall. Hickson & Rosenkoetter (Med Sci Sports Exerc
+ *   1981;13:13-16) kept a trained group's raised VO2max for 15 weeks on two hard sessions a week, so a body trained
+ *   twice a week shouldn't lose ground. Until 2026-10-10 it fell 0.18 every midnight, trained that day or not, so
+ *   a student working out daily woke 0.18 under full every morning (99.12 against 99.3, played on 2026-10-10) and
+ *   Stamina was full only in the hours after a workout. The profile said a day's rest didn't lower it, and that was
+ *   false.
+ * - **Lost:** past that, `perDay` a day toward `EVERYDAY_FITNESS`. Mujika & Padilla (Sports Med 2000;30:79-87)
+ *   put a trained body's loss of VO2max at 4 to 14% in under four weeks without training; 0.18 a day is about 5
+ *   points in four weeks, the gentle end. The rate is SLATE's; no study gives a daily figure for this scale.
+ * - **Repeated:** a second workout the same day builds half the first, a third a quarter
+ *   (`DEVELOPMENT.repeat`, as practice repeats): until 2026-10-10 a second hour built as much as the first, and a
+ *   body could be farmed to full in half the days. Two a day isn't twice the adaptation; no figure is published for
+ *   how much less, so half is SLATE's.
+ */
+export const FITNESS = { heldDays: 3, perDay: 0.18 } as const;
 /**
  * Where morale settles, and how much of the way back a night brings it.
  *
@@ -409,7 +430,13 @@ export function registerLife(sim: Simulation): void {
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       const before = { ...person.wellbeing };
       const where = action === 'exercise' ? trainingAt(s, person) : undefined;
-      applyLookingAfter(person, action, s.now, where ? where.builds : 1);
+      // A second workout today builds half the first (`FITNESS`), counted where practice counts its repeats, so a save and a load don't reset it.
+      const again = action === 'exercise' ? DEVELOPMENT.repeat ** repeatsToday(s, person, 'stamina<workout') : 1;
+      applyLookingAfter(person, action, s.now, where ? where.builds * again : 1);
+      if (action === 'exercise') {
+        recordDevelopment(s, person, 'stamina', person.wellbeing.fitness - before.fitness, where!.where === 'run' ? 'workout:run' : 'workout');
+        developmentOf(person).workout = { at: s.now };
+      }
       // An hour of it, at its MET value (`content/body.ts`), and its injury rate (`content/injury.ts`).
       if (action === 'exercise') {
         const source = where!.where === 'run' ? 'run' : 'gym';
@@ -451,7 +478,7 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Feeds you, and lifts the mood by as much as you needed it' },
   order: { label: 'Order In', minutes: 50, does: 'A meal delivered, at what delivery costs: feeds you without the cooking' },
   wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
-  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are and more on a run in fine weather, and eases stress; costs energy, food and a shower' },
+  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are and more on a run in fine weather, and holds it for three days; a second the same day builds half. Eases stress; costs energy, food and a shower' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
 };
 
@@ -856,13 +883,16 @@ export function dailyRollover(sim: Simulation): void {
  * Fitness had no writer that raised it until Work Out (`applyLookingAfter`).
  * It fell 0.18 a day all the way to nought, so a year on autopilot ended at
  * fitness 0; it stops at what an everyday life of stairs and walking keeps,
- * `EVERYDAY_FITNESS`, now. What it decides is how far a night can mend
- * condition (`mendsTo`).
+ * `EVERYDAY_FITNESS`, now, and from 2026-10-10 not at all within
+ * `FITNESS.heldDays` of a workout. What it decides is how far a night can
+ * mend condition (`mendsTo`).
  */
 export function settleTheBody(person: Person, at: number): void {
   const w = person.wellbeing;
   const ceiling = ceilingAt(yearsSince(person.birthInstant, at));
-  const fell = w.fitness > EVERYDAY_FITNESS ? Math.max(EVERYDAY_FITNESS, w.fitness - 0.18) : w.fitness;
+  const trained = person.development?.workout?.at;
+  const held = trained !== undefined && at - trained <= FITNESS.heldDays * MS_DAY;
+  const fell = !held && w.fitness > EVERYDAY_FITNESS ? Math.max(EVERYDAY_FITNESS, w.fitness - FITNESS.perDay) : w.fitness;
   w.fitness = clamp(Math.min(fell, ceiling.fitness), 0, 100);
   // Toward what the fitness supports, which is what a night mends to
   // (`mendsTo`). Until 2026-09-27 it drifted toward 60 + 0.4 fitness, 74 at

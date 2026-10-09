@@ -111,7 +111,10 @@ export interface EvalContext {
 export interface Condition {
   readiness: number;
   ill?: boolean;
+  /** An injury that limits the body (`INJURY_KIND[].limits`): the dimensions whose conditions name `injury`. */
   injured?: boolean;
+  /** A concussion still mending (from 2026-10-10): every dimension, once, in place of `injured`. */
+  concussed?: boolean;
 }
 
 export interface Limit {
@@ -255,6 +258,8 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     if (ctx.condition.readiness < E.sufficientReadiness && reaches.includes('fatigue')) causes.push({ what: 'fatigue', label: `Readiness At ${Math.round(ctx.condition.readiness)}, Under ${E.sufficientReadiness}`, f: E.fatigueFloor + (1 - E.fatigueFloor) * clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1) });
     if (ctx.condition.ill && reaches.includes('illness')) causes.push({ what: 'illness', label: 'Down With The Flu', f: E.illness });
     if (ctx.condition.injured && reaches.includes('injury')) causes.push({ what: 'injury', label: 'An Injury Still Mending', f: E.injury });
+    // A concussion reaches every dimension, whatever its conditions name: it's thinking and memory, not the body only.
+    else if (ctx.condition.concussed) causes.push({ what: 'injury', label: 'A Concussion Still Mending', f: E.injury });
     const condition = causes.reduce((p, c) => p * c.f, 1);
 
     const now = dimensionQuality(terms, ctx.difficulty, prepared, condition, dr);

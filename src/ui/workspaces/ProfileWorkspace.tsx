@@ -30,7 +30,7 @@ import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attribut
 import { conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
 import { SELF_TAPE, bestRest, minutesOf, pursueRefusal, restOf, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
-import { EVERYDAY_FITNESS, readiness } from '@/engine/systems/life';
+import { EVERYDAY_FITNESS, FITNESS, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { coverOn } from '@/engine/systems/health';
@@ -82,6 +82,8 @@ export function todayFor(sim: Simulation, person: Person, id: AbilityId): string
   if (c.readiness < EVALUATION.sufficientReadiness) say(`Readiness ${Math.round(c.readiness)}, under ${EVALUATION.sufficientReadiness}`, 'fatigue');
   if (c.ill) say('The flu', 'illness');
   if (c.injured) say('An injury mending', 'injury');
+  // A concussion reaches every dimension the ability is read in (from 2026-10-10).
+  if (c.concussed && dims.size) out.push(`A concussion mending: ${[...dims].map((x) => DIMENSION_LABEL[x].toLowerCase()).join(', ')}`);
   return out;
 }
 
@@ -203,7 +205,7 @@ function AbilitiesPanel() {
           </table>
         </LookRegion>
         <p className="small" style={{ margin: 0 }}>
-          <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it. Without one it falls 0.18 a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); a night’s sleep and a day’s rest don’t lower it. It’s the one ability that fades without use: the others keep what they’ve earned.
+          <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it, and holds it for {FITNESS.heldDays} days: two a week keep it (Hickson &amp; Rosenkoetter, 1981). Past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); the rate is SLATE’s. A second workout the same day builds half. It’s the one ability that fades without use: the others keep what they’ve earned.
         </p>
         <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
       </div>
@@ -387,10 +389,10 @@ function ConditionPanel() {
       <div className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Readiness" value={String(Math.round(readiness(person)))} note={`${Math.round(c.readiness)} at this hour’s fit`} />
-          <Stat label="For Work" value={sufficient && !c.ill && !c.injured ? 'Sufficient' : 'Held Back'} tone={sufficient && !c.ill && !c.injured ? undefined : 'warning'} note={!sufficient ? `Under ${EVALUATION.sufficientReadiness}: fatigue holds back the work that reads it` : c.ill ? 'The flu holds back the voice' : c.injured ? 'An injury holds back the body' : 'Nothing today holds the work back'} />
+          <Stat label="For Work" value={sufficient && !c.ill && !c.injured && !c.concussed ? 'Sufficient' : 'Held Back'} tone={sufficient && !c.ill && !c.injured && !c.concussed ? undefined : 'warning'} note={!sufficient ? `Under ${EVALUATION.sufficientReadiness}: fatigue holds back the work that reads it` : c.concussed ? 'A concussion holds back all of it' : c.ill ? 'The flu holds back the voice' : c.injured ? 'An injury holds back the body' : 'Nothing today holds the work back'} />
           <Stat label="Energy, Stress" value={`${Math.round(w.energy)}, ${Math.round(w.stress)}`} note={`Sleep owed ${Math.round(w.sleepDebt)} hours`} />
         </div>
-        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s execution, consistency and responsiveness and leaves its interpretation be. None of it lowers an ability: it’s today’s, and passes with rest.</Fine>
+        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s execution, consistency and responsiveness and leaves its interpretation be. An injury holds back what it limits: a sprain, a strain or a break the body’s work, a concussion all of it, and a cut or a knock none. None of it lowers an ability: it’s today’s, and passes with rest.</Fine>
       </div>
     </Panel>
   );
