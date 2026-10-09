@@ -5,7 +5,7 @@ main at `d7daddf5`.
 
 ## Where it is
 
-- Branch `claude/attributes-complete`, pushed. It has two commits on main's `d7daddf5`:
+- Branch `claude/attributes-complete`, pushed. Its code is in two commits on main's `d7daddf5`, followed by handoff commits:
   - `986ac341`, the work;
   - `c9af11c0`, tests for the two mutations that survived, and the profile's When column.
 - **Not merged** and **not deployed**: both wait for the owner.
@@ -76,15 +76,22 @@ main at `d7daddf5`.
 - **Mutations:** 16 of 16 killed (scratchpad `mutate3.cjs`). Two had survived at `986ac341` and were killed by
   `c9af11c0`'s tests.
 - **Matched runs:** about 22, 48 and 76 at levels 30, 55 and 80, and exactly 100 at full, for every profile.
-- **Lives:**
-  - 13 of 18 finished against `986ac341` before the system's memory reaper killed the run. All 13 graduated, with
-    0 breaches, 0 unbalanced ledgers, 39 reloads each, and a consistent journey (about 363 pieces counted, 160 kept
-    in detail).
-  - **The full 18 have not been run on the final commit.** `c9af11c0` changes tests and the profile's display only,
-    but by the brief the 18 are owed against it. Run them sequentially, persisted, when the owner says memory allows.
-- **Screenshots** at 1440 and 390 (13 at each width) were taken against `986ac341`. Back/Forward, the direct
-  address, reopening, the drawer, the legacy notice and the locked profile were all checked. The When column came
-  after those screenshots.
+- **Lives:** all 18 ran on `8c06f5e5`, with nothing uncommitted under `src`, `tools` or `tests`. They ran one
+  at a time, each result kept as it finished (scratchpad `final18-final.jsonl`), at the owner's word. The 13 from
+  `986ac341` are kept apart and not counted.
+  - All 18 graduated: 0 breaches, 0 unbalanced ledgers, 39 or 40 reloads each.
+  - Each journey was consistent: 328 to 364 pieces counted, 160 kept in detail.
+  - Attentive lives: nights averaged 52 to 55 and scenes about 49.
+  - Practicing lives: nights averaged 60 to 62.5, with strong nights, and scenes 52.6 to 54.4. Imagination,
+    discipline and (in two lives) composure reached exactly 100.
+  - Autopilot lives: nights averaged about 36, every scene was unready, and there was no first-strong milestone.
+    Their delivery was 0.45, so they were cast 4th to 6th despite fits of 62 to 64.
+  - Pressure lives: two counted fewer pieces (333 and 328) than the baseline. The third (seed 2) counted 362,
+    which matches its baseline, so the flu and injury cost that life no work the journey counts.
+  - Stamina ended at 35 (the everyday floor) in every life. No profile exercises, so it detrained as designed.
+- **Build** passes. **Screenshots** at 1440 and 390 (13 at each width) were taken of the final build, including the
+  When column. Back/Forward, the direct address, reopening, the drawer, the legacy notice and the locked profile
+  were all checked.
 
 ---
 
