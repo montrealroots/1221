@@ -1,3 +1,88 @@
+# Read First: Gameplay Verification And Balance, 2026-10-10
+
+The owner's brief: "Finish SLATE's Remaining Gameplay Verification And Balance", from main at `fcac6b6e`.
+
+## Where it is
+
+- Branch `claude/gameplay-balance`, pushed, four commits on `fcac6b6e`:
+  - `f2c84e26` fitness, illness and injury;
+  - `03889f54` genre demands;
+  - `e53a242e` workout `actionId` and the Profile;
+  - `5d64d860` Classes Reach and the pressure lives.
+- **Not merged, not deployed. No schema change** (still 93). The new fields (`development.workout`,
+  `belongsTo`, `basis`) are optional and read safely when absent.
+- **Still owed:** the final 18 lives on `5d64d860`. The system's memory reaper stopped the run at 3 of 18. All 3
+  graduated, with 0 breaches, 0 unbalanced ledgers and a consistent journey. Per the standing instruction, it waits
+  for the owner's word. Run it in the worktree `C:/Users/sande/Downloads/slate-balance-5d64d860`, which is pinned
+  at that commit, with `run18b.sh` from the session scratchpad.
+- That worktree is this pass's own. Its `node_modules` is a junction: remove the junction with `rmdir` before
+  `git worktree remove`.
+
+## What changed
+
+- **Fitness:**
+  - It holds for three days after a workout, then falls 0.18 a day (`FITNESS`). Until now a daily trainer woke
+    0.18 under full, and the Profile claimed rest didn't lower it.
+  - A second workout the same day builds half.
+  - A workout is recorded in the development history and takes an `actionId`.
+  - The Profile shows the workout's refusal and whether fitness is held.
+- **Injury:** each kind now says what it limits (`INJURY_KIND[].limits`).
+  - Sprains, strains and breaks limit the body's dimensions.
+  - A concussion limits every dimension, once.
+  - A cut or a knock limits nothing.
+  - An injury that limits the work excuses a day called in sick.
+- **The flu** now reaches the execution and consistency of movement and partnered work and a clown turn, not
+  only voice work.
+- **Genres:**
+  - The 30 low entries that proposed tags were re-researched, and 2 rose to medium.
+  - 23 applied entries that rested on one film, one director, one role or one subgenre were lowered.
+  - 4 tags that didn't fit their claims were removed.
+  - So 41 genres and 52 tags apply, where 64 and 82 did. 98 are low; 41 of those record what their demand belongs to.
+  - `docs/GENRE-COVERAGE.md` accounts for every genre (41 + 10 + 98 = 149).
+  - `GenreDef`'s unread `demands` fields were removed.
+- **Refusals:** a life with no craft is refused a self-tape or a technique's exercise. It used to throw.
+- **Classes Reach** shows a dash for Presence, Composure, Discipline and Stamina, which classes don't move.
+- **New tools:** `tools/policy.ts`, `fitness.ts`, `condition.ts`, `mastery.ts` and `genre-coverage.ts`.
+
+## Verified
+
+- **Gate** at `5d64d860`'s tree: exit 0, read from a file. 120 files, 1442 tests and all 15 checks passed. The
+  build passes.
+- **Mutations:** 13 of 13 killed (scratchpad `mutate4.cjs`).
+- **Mastery through commands** (`f2c84e26`, 2 sessions a day, around school, reloaded every 30 days):
+  - All 29 abilities and techniques reached full and were still full after a reload.
+  - Techniques: mastery (90) in 185 to 229 days, full in 253 to 286.
+  - Abilities: full in 252 to 294 days. Discipline took 362 days, at once a day. Stamina took 64 days.
+- **Payoff** (musical self-tape plan, `f2c84e26`):
+  - Mastered on 2029-11-14, after graduation. Tapes on the way rose from 52.7 to 99.7.
+  - Three tapes at mastery, through the command, scored 100.
+  - Twins of the mastered save: flu, sprain, cut and recovered all scored 100. A concussion scored 60.
+- **Fitness** (`f2c84e26`; injured and ill on `5d64d860`):
+  - From 50, daily workouts reached full by day 76 to 107 across ages 20 to 45; three a week by day 124 to 178.
+  - Two a week kept rising.
+  - With none, fitness fell to 35 by day 90.
+  - In the return scenario, 120 days off cost 21 points, regained in under 30 days.
+  - Fitness lifted the consistency of work that reads Stamina by about 10 to 20 points.
+  - Running injuries (7.7 per 1,000 hours) are the cost.
+- **Condition** (matched coursework twins, `f2c84e26`):
+
+  | Showing | Healthy | Flu | Sprain | Cut |
+  |---|---|---|---|---|
+  | Movement | 63 | 54.8 | 40.9 | 63 |
+  | Voice | 62.3 | 52.8 | 62.3 | 62.3 |
+
+  - A concussion was laid up and excused, and the showing moved.
+  - Calling in sick moved the showing.
+  - No ability fell.
+
+## Open
+
+- The owner asked whether to remove the Interests engine and keep Genres. A recommendation was given; it's not
+  done, and waits for the owner.
+- The 18 lives on the final commit (above).
+
+---
+
 # Read First: The Attributes Finished, 2026-10-09
 
 The owner's brief: "Finish SLATE's Attribute, Interest, Genre, Profile And Navigation Integration", working from
