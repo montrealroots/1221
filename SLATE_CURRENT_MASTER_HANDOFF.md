@@ -1,3 +1,89 @@
+# Read First: The Connected World Of 2026-10-09
+
+**This section and the scope reset's below it supersede everything after them.** The owner's brief, the same day
+as the reset: "Connect And Perfect The Current World — Without Restoring Removed Systems". Nothing removed in the
+reset came back. What the reset kept was connected where a student's life has the thing, and what only a removed
+system could reach was retired with its reason, never quietly.
+
+## Where it is
+
+- **Branch:** `claude/connect-world`, fast-forwarded into `main`. Commits: `2edc8b60` (part one) and the ones after it.
+- **Baseline kept:** `backup/pre-scope-reset-2026-10-09` and the tag of the same name, at `81f77592`.
+- **Save schema 91**, both pins moved (`model.ts`, `base44/shared/guard.js`). `migrate` sheds on every open
+  (`GONE_AT_91`): the rent's and bills' ways of paying and checks, the union plans and COBRA, reputation and
+  recognition, the return home, a wheelchair and a parking permit, a card's stale billers, and a home's, a lodger's
+  and a farm's lines on a year's earnings. A rent paid ahead is still given back. Tested in `tests/simulation.test.ts`.
+- **Not deployed.** A deployment of an older line refuses schema 91 saves (see §10 further down for Base44).
+
+## The deliverables, and where each is
+
+- **Coverage matrix:** `docs/capabilities.json` (and its printout `docs/CAPABILITIES.md`, kept by
+  `tools/capabilities.mjs`): 34 rows for the current world naming all 111 commands, each with its goal, entry,
+  state, preconditions, effects, what persists, its readers, its drill-down looks and routes, its save/load test,
+  provenance, tests, status and limits. 27 Verified, 7 Partial (each says why it can't be reached in a student's
+  life), 1 Retired (Getting About). The rows of the brief of 2026-10-08 stay Retired as the record.
+- **Features and their readers:** the matrix's `readers` column; `docs/TRACEABILITY.md` and `docs/DEVMAP.md` for
+  every command's screen, test and journey.
+- **Creation audit:** every field has a role it says. Dispositions: Extraversion reads a house watching
+  (`takeTheHouse`, at every performance's nerves), Openness new work (a festival's new play, a Cabaret piece),
+  Agreeableness a rehearsal, the other four the knobs. Interests and genres read only where a student's life has
+  the thing (`interestsRead`): the plays are filed by kind (`genresOfPlay`), coursework by its craft
+  (`Template.crafts`), a play read by Reading; the rest are marked · at creation, said back only. Race and
+  ethnicity, a middle name, a background and a portrait decide nothing, and the screen says so (the portrait's
+  hint now says it's never looked at). Weight is disclosed for what it does: chronic onset and the mortality
+  hazard. Pronouns set the part a play writes for them (measured below).
+- **Drill-downs:** a trait (what each knob moves, its own figure and with all you are), a condition carried (what
+  it does left alone, the dial it takes from), a piece of coursework (each part's preparation against its weight,
+  due day, course), beside the existing readiness, dials, calendar entries, accounts, transactions, days and
+  holidays, weather. The person look lists traits and conditions; a course lists its open work.
+- **Look After Yourself:** `lookAfterOptions` in `systems/life.ts`. Order: what's costing the body every hour
+  (`HUNGRY`, `GRIMY`, `OVERWROUGHT`) first, marked Needed Now; then by readiness given back; then little to gain;
+  then refused, with the command's own words. Ties keep `LOOKING_AFTER`'s order. Each shows its time, cost and
+  the dials it would move, the preview being `applyLookingAfter` on a copy. Nothing happens unchosen; asking moves
+  no clock, money or dial (`tests/look-after.test.ts`).
+- **Leftovers resolved:** `docs/UNBITTEN.md`, "The scope reset of 2026-10-09", every item with what was done.
+- **Journeys:** `tests/journey-money.test.ts` (a year's money at Wells Fargo through the bank's commands, saved
+  midway, the return filed) and `tests/journey-life.test.ts` (creation saved and opened at once, plans, a play read,
+  the menu, care, papers, through the 2028 leap day). Plus the three school journeys.
+- **Long lives:** `tools/lives.ts` (`npx vite-node tools/lives.ts -- --seeds 3 --years 3`, and `--pairs`).
+
+- **Defects fixed on the way:** `tsc --noEmit` at the root checked nothing (the root config only holds references;
+  `tsc -b` is the check); New Haven had no therapist; a new card's notice warned of declined bills that can't happen;
+  the guide promised a wheelchair's parking permit and stale bills; a calendar entry was named with its year
+  (The Fall Term Begins, now); Desempleo's panel offered a claim nothing can file; and the long-life probe's own
+  policies were wrong (an hour-step autopilot never sleeps, by design; a sleep only at eleven missed late calls).
+
+## Verification (2026-10-09)
+
+- `npm run gate`, read from a file: exit 0. 110 test files, 1,375 tests, typecheck (`tsc -b`), lint, all fifteen checks.
+- Inventory: 111 commands, 64 scheduled kinds. Traceability: 46 commands verified in a journey, 65 tested, 0 partial.
+- Mutations: 14 of this phase's claims mutated, each killed by its test. One survived at first, the menu's urgency,
+  and the test that tells urgency from gain was added.
+- `vite build`: exit 0. The built app walked through `tools/screenshot.mjs` at 1440 and 390 wide: creation (the
+  interests marked ·), Home with the ordered Look After Yourself menu open, School, Coursework, Papers. No sideways
+  scroll on the phone.
+- Long lives (`tools/lives.ts`, three years each, saved and opened every new year): 15 lives over five profiles (New
+  York, Mexico City, London with Early Riser and Curious, Reykjavík on autopilot, and a test-setup student without
+  family money): 0 breaches, 0 unbalanced ledgers, 12 graduated, 3 dismissed.
+- Pairs (`--pairs`, eight seeds as an actor and as an actress, otherwise alike): parts cast, actor 18 leads, 11
+  supporting, 7 featured; actress 20, 6 and 8. No penalty by pronouns.
+
+## Open, measured, for the owner
+
+1. **Attentive students are dismissed too often.** Of 16 attentive pair lives, 9 were dismissed (4 actors, 5
+   actresses); of the 15 profile lives, 3. Attendance is 100%; the faculty's reason is craft growth behind the class
+   (about half the class's from the second year) and festival nights gone off. Classmates grow at a fixed focus of 1
+   (`ESTIMATE.classmateFocus`), readiness 80; a player sleeping the suggested hours reads about 70 at nine. More
+   preparation each evening made it worse (attendance fell to 84%: the work ran into calls). Not tuned blind: the
+   class model, the evening performances and the growth floor want measuring together. Repeat with
+   `npx vite-node tools/lives.ts -- --why --he --seed pair-1`.
+2. **Out of a student's reach,** each in the matrix's limits: foreign banks' rights, pensions, most benefits, a visa's
+   effect, OPT (always ends, with the status), REAL ID and the police report (none online in New Haven).
+3. **A US student can't arrange an overdraft,** and borrows only against wages paid in (Wells Fargo, Citi).
+4. **A US-born student holds no documents** at the start, which is right; a passport is applied for.
+
+---
+
 # Read First: The Scope Reset Of 2026-10-09
 
 **This section supersedes everything below it.** Everything after it was written for the line that ran to
@@ -48,7 +134,7 @@ here is superseded by the owner's reset. Its open-work lists are history, not a 
 
 ## Saves
 
-- **Schema 90**, moved in both places: `SAVE_SCHEMA_VERSION` in `src/engine/domain/model.ts` and
+- **Schema 90** (91 since the connected world, above), moved in both places: `SAVE_SCHEMA_VERSION` in `src/engine/domain/model.ts` and
   `SUPPORTED_SCHEMA_VERSION` in `base44/shared/guard.js`.
 - **What `migrate` does:**
   - Sheds 107 fields of removed systems from every person (`GONE_AT_90` in `engine/index.ts`) and a classmate's
