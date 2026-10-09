@@ -1,3 +1,19 @@
+# Read First: Merged To Main, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `fcac6b6e` to `500b1860`, nothing force-pushed.
+That brings in the balance pass, the interests' removal (schema 94) and two creation changes:
+
+- On Starting Point, the height and weight fields moved there from Identity, in their own card, Your Body, first on
+  the page. The engine behind them is unchanged. An owner's request to remove the height and weight engine was
+  begun and then withdrawn the same day ("keep the height and weight in just move it"). Nothing of that removal was
+  committed.
+- Month By Month, the month's food, was taken off Starting Point. Its Yale line (the health plan, and what the school
+  pays in each term) moved to What Is Yours. Review's Going Out A Month still shows the food's sum.
+
+**Not deployed.** Schema 94 needs the backend deployed with the client. **Still owed:** the 18 lives on `500b1860`.
+
+---
+
 # Read First: The Interests Removed, 2026-10-10
 
 The owner's word: "Yes delete it, and no", meaning remove the Interests engine, and don't keep the interests
