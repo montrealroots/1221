@@ -217,6 +217,16 @@ describe('Genres & Background', () => {
 });
 
 describe('Starting Point', () => {
+  // From 2026-10-10, at the owner's word: the height and weight asked here rather than in Identity, and the month's
+  // food (Month By Month) no longer shown here.
+  it('asks your height and weight, and shows no food', () => {
+    const step = stepSource('function StartingPointStep', 'function BankChoice');
+    expect(step).toContain('<BodyFields config={config} setConfig={setConfig} />');
+    expect(step).not.toContain('<MonthByMonth');
+    expect(stepSource('function IdentityStep', 'function PersonalityStep')).not.toContain('<BodyFields');
+    expect(SOURCE).not.toContain('function MonthByMonth');
+  });
+
   it('asks where you live and what you start with', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
     expect(step).toContain('id="live-here"');

@@ -502,9 +502,7 @@ function IdentityStep({ config, set, setConfig }: {
         </div>
       </div>
 
-      <hr className="divider" />
-
-      <BodyFields config={config} setConfig={setConfig} />
+      {/* Height and weight were asked here until 2026-10-10, when the owner moved them to Starting Point. */}
 
       <hr className="divider" />
 
@@ -900,7 +898,16 @@ function StartingPointStep({ config, set, setConfig }: {
         )}
       </div>
 
-      <MonthByMonth config={config} cur={cur} />
+      {/* Month By Month, the month's food, stood here until the owner took it off this screen on 2026-10-10. */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Your Body</h2>
+            <p className="muted small">Your height and weight on the first morning, in the units of where you were born.</p>
+          </div>
+        </div>
+        <BodyFields config={config} setConfig={setConfig} />
+      </div>
 
       <div className="card">
         <div className="panel-head">
@@ -948,6 +955,15 @@ function StartingPointStep({ config, set, setConfig }: {
             </div>
           )}
         </div>
+        {/* What Yale pays in and takes each term. It stood in Month By Month beside the food until the owner took the
+            food off this screen on 2026-10-10. */}
+        {config.school && (
+          <div className="callout" style={{ marginTop: 'var(--s4)' }}>
+            {findsNeed(config)
+              ? `The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`
+              : `Tuition is covered, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} goes each term to your Yale Health plan. Yale’s aid for living costs goes by need.`}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -983,11 +999,12 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
 }
 
 /**
- * What a month here costs, before the save exists.
+ * What a month here costs, before the save exists: Review's Going Out A Month.
  *
  * Every figure is the engine's own sum (`costsAt`), read for the town and
- * the start date on this page, so the card and the first month of play can't
- * disagree. What is real and what is SLATE's estimate is said under it.
+ * the start date, so the line and the first month of play can't disagree.
+ * Starting Point showed it as a card, Month By Month, with the food a day and
+ * a meal, until the owner took it off that screen on 2026-10-10.
  *
  * It was what a month paid too, until 2026-09-26: the day job, its employer's
  * rate, the tax withheld and the tips. The job engine went, and nothing comes
@@ -1000,42 +1017,6 @@ function monthOf(config: NewSaveConfig, cur: string) {
   const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
   const food = Math.round(costs.day * spending * 365 / 12);
   return { at, costs, spending, food, out: food };
-}
-
-function MonthByMonth({ config, cur }: { config: NewSaveConfig; cur: string }) {
-  const { costs, spending, food, out } = monthOf(config, cur);
-  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
-
-  return (
-    <div className="card">
-      <div className="panel-head">
-        <div>
-          <h2>Month By Month</h2>
-          <p className="muted small">What living here costs: the day’s food, bought every morning.</p>
-        </div>
-      </div>
-
-      <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
-        <div className="stat">
-          <span className="stat-label">Food</span>
-          <span className="stat-value mono">{money(food)}</span>
-          <span className="stat-note">{money(Math.round(costs.day * spending))} a day, {money(Math.round(costs.meal * spending))} a cooked meal</span>
-        </div>
-      </div>
-
-      <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-        {config.school
-          ? (!findsNeed(config)
-            ? `About ${money(out)} going out a month, from your bank, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} each term for your Yale Health plan. Tuition is covered; Yale’s aid for living costs goes by need.`
-            : `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`)
-          : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card.`}
-      </div>
-
-      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        Food is SLATE's estimate, not a published figure.
-      </p>
-    </div>
-  );
 }
 
 function ReviewStep({ config }: { config: NewSaveConfig }) {
