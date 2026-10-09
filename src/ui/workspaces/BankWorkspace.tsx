@@ -16,6 +16,8 @@
  */
 
 import { useState } from 'react';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
+import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -50,7 +52,7 @@ export function BankWorkspace() {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [amount, setAmount] = useState('');
-  const [tab, setTab] = useState<BankTab>('accounts');
+  const [tab, setTab] = useKept<BankTab>(tabKey('/workspace/bank'), 'accounts');
 
   if (!bank) {
     return <Empty title="No Bank" body="Your money isn’t held at a bank SLATE knows, so there’s nothing to show here." />;
@@ -231,13 +233,8 @@ export function BankWorkspace() {
 type BankTab = 'accounts' | 'cards' | 'payments' | 'borrowing' | 'statements';
 
 /** The screen's parts, each under its own tab. Until 2026-09-26 they ran down one page, fourteen to sixteen panels long. */
-const BANK_TABS: readonly { id: BankTab; label: string }[] = [
-  { id: 'accounts', label: 'Accounts' },
-  { id: 'cards', label: 'Cards' },
-  { id: 'payments', label: 'Payments And Cash' },
-  { id: 'borrowing', label: 'Borrowing' },
-  { id: 'statements', label: 'Statements' },
-];
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
+const BANK_TABS = SECTIONS['/workspace/bank'] as readonly { id: BankTab; label: string }[];
 
 /** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
 function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void }) {

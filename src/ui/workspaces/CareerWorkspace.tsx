@@ -8,6 +8,8 @@
  */
 
 import { useState, type ReactNode } from 'react';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
+import { useKept } from '@/ui/kept';
 import { plural } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
@@ -49,13 +51,8 @@ import { dateKey } from '@/engine/core/time';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
-const CAREER_TABS: readonly { id: CareerTab; label: string }[] = [
-  { id: 'agency', label: 'Representation' },
-  { id: 'auditions', label: 'Auditions' },
-  { id: 'work', label: 'Work' },
-  { id: 'unions', label: 'Unions And Pay' },
-  { id: 'home', label: 'Where You Live' },
-];
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
+const CAREER_TABS = SECTIONS['/workspace/career'] as readonly { id: CareerTab; label: string }[];
 
 const cityName = (id: string) => CITIES.require(id).name;
 const zoneOf = (id: string) => CITIES.require(id).timeZone;
@@ -160,7 +157,7 @@ const UNION_NAMES = { sag: 'SAG-AFTRA', equity: 'Actors’ Equity', 'equity-uk':
 
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
-  const [tab, setTab] = useState<CareerTab>('agency');
+  const [tab, setTab] = useKept<CareerTab>(tabKey('/workspace/career'), 'agency');
   if (!person.career) return <Empty title="No Career Yet" body="It begins in the first summer at school, when you can put yourself up for work, and in earnest at the showcase in the last spring." />;
   const career = person.career;
   const agency = career.agencyId ? agencyById(career.agencyId) : undefined;

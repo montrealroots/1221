@@ -12,7 +12,8 @@
  * doesn't do for a family with means.
  */
 
-import { useState } from 'react';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
+import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -35,14 +36,8 @@ import { hasProcess, holderFor } from '@/engine/systems/production';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
-const SCHOOL_TABS: readonly { id: SchoolTab; label: string }[] = [
-  { id: 'standing', label: 'Standing And Craft' },
-  { id: 'classes', label: 'Classes' },
-  { id: 'coursework', label: 'Coursework' },
-  { id: 'casting', label: 'Casting' },
-  { id: 'work', label: 'Shifts And Pay' },
-  { id: 'terms', label: 'Terms And Award' },
-];
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
+const SCHOOL_TABS = SECTIONS['/workspace/school'] as readonly { id: SchoolTab; label: string }[];
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const dayOf = (d: { year: number; month: number; day: number }) => formatDate(instantFromZoned({ ...d, hour: 12 }, zone()), zone());
@@ -58,7 +53,7 @@ function ahead(sim: Simulation, person: Person, kinds: readonly string[]) {
 
 export function SchoolWorkspace() {
   const person = useWorld((s) => s.player);
-  const [tab, setTab] = useState<SchoolTab>('standing');
+  const [tab, setTab] = useKept<SchoolTab>(tabKey('/workspace/school'), 'standing');
   const school = person.school;
   if (!school || !person.craft) return <Empty title="No School" body="This life didn’t begin at drama school." />;
   const where = school.standing === 'graduated' ? 'Graduated.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;

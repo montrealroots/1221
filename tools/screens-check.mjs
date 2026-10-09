@@ -96,7 +96,7 @@ for (const file of saves) {
   await check(`${file} the guide`);
 
   for (const d of DEST) {
-    // Each destination opens from Home (`homeOnly`), so Home first.
+    // Each destination opens from Home, as it did when the rail listed none (until 2026-10-08), so Home first.
     await page.locator('nav.rail').getByRole('button', { name: /^Home/ }).first().click({ timeout: 20000 }).catch(() => {});
     await page.waitForTimeout(800);
     const named = page.getByRole('button', { name: new RegExp('^' + d.label + '$', 'i') }).first();

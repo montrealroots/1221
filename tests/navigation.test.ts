@@ -151,10 +151,11 @@ describe('what was taken out', () => {
 
   it('gives the calendar a section of Home rather than a tile pointing at one', () => {
     // The calendar describes the day you are standing in, so it is a section
-    // of the hub. The rail does not carry it and Home does not list it among
-    // the places to go — Home *is* where it is.
+    // of the hub, and Home doesn't list it among the places to go. The rail
+    // didn't carry it either until 2026-10-08, when the owner's brief asked
+    // for a rail that makes every place easy to find: it's under Your Day.
     const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
-    expect(railRoutes).not.toContain('/workspace/calendar');
+    expect(railRoutes).toContain('/workspace/calendar');
     expect(ALL_DESTINATIONS.map((d) => d.route)).toContain('/workspace/calendar');
     for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
 

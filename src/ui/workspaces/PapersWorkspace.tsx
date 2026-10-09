@@ -8,6 +8,8 @@
  */
 
 import { useState } from 'react';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
+import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
@@ -40,17 +42,11 @@ import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
 
-const PAPERS_TABS: readonly { id: PapersTab; label: string }[] = [
-  { id: 'returns', label: 'Tax Returns' },
-  { id: 'health', label: 'Health Cover' },
-  { id: 'benefits', label: 'Unemployment' },
-  { id: 'passport', label: 'Passport And Travel' },
-  { id: 'work', label: 'Permission To Work' },
-  { id: 'driving', label: 'Driving' },
-];
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
+const PAPERS_TABS = SECTIONS['/workspace/papers'] as readonly { id: PapersTab; label: string }[];
 
 export function PapersWorkspace() {
-  const [tab, setTab] = useState<PapersTab>('returns');
+  const [tab, setTab] = useKept<PapersTab>(tabKey('/workspace/papers'), 'returns');
   const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, work: <WorkPane />, driving: <DrivingPane /> };
   return (
     <>

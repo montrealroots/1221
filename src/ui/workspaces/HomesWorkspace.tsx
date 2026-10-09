@@ -9,6 +9,8 @@
  */
 
 import { useState } from 'react';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
+import { useKept } from '@/ui/kept';
 import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
 import { CROPS, type Crop } from '@/engine/content/garden';
 import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
@@ -54,10 +56,8 @@ import { LookRegion, Open, at } from '@/ui/looks';
 
 type HomesTab = 'sale' | 'yours';
 
-const HOMES_TABS: readonly { id: HomesTab; label: string }[] = [
-  { id: 'sale', label: 'For Sale' },
-  { id: 'yours', label: 'Your Homes' },
-];
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
+const HOMES_TABS = SECTIONS['/workspace/homes'] as readonly { id: HomesTab; label: string }[];
 
 /** A home's lawn: how long it is, and a gardener by the visit (`home.gardener`). */
 function LawnRow({ owned }: { owned: OwnedHome }) {
@@ -83,7 +83,7 @@ function LawnRow({ owned }: { owned: OwnedHome }) {
 
 export function HomesWorkspace() {
   const owns = useWorld((s) => (s.player.homes ?? []).length > 0);
-  const [tab, setTab] = useState<HomesTab>(owns ? 'yours' : 'sale');
+  const [tab, setTab] = useKept<HomesTab>(tabKey('/workspace/homes'), owns ? 'yours' : 'sale');
   const panes: Record<HomesTab, JSX.Element> = { sale: <ForSalePane />, yours: <YourHomesPane /> };
   return (
     <>

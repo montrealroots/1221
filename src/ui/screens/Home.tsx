@@ -518,11 +518,14 @@ export function Home() {
 
       {/*
         Every place in the life opens from Home, under the group it belongs to,
-        the same groups the screens' eyebrows name (`ui/shell/destinations.ts`).
+        the same groups the rail and the screens' eyebrows name
+        (`ui/shell/destinations.ts`). From 2026-10-08 People, and Your Things
+        (belongings and land), have groups of their own; they were under Your
+        Day and Your Money.
         Until 2026-10-02 eight panels sat in one grid in no order, and the Home
         panel carried five other places as buttons in its corner.
       */}
-      <HomeGroup label={groupLabelOf('/workspace/people')} lead={!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
+      <HomeGroup label={groupLabelOf('/workspace/calendar')} lead={!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
         <Panel
           title="Home"
           tight
@@ -538,19 +541,6 @@ export function Home() {
           </div>
         </Panel>
         )}>
-        {!shows.people ? <LockedPanel feature="ui.people" title="People" /> : (
-        <Panel
-          title="People"
-          tight
-          actions={(
-            <Gated feature="ui.people" className="btn btn-sm" onClick={() => navigate('/workspace/people', 'People')}>
-              People
-            </Gated>
-          )}
-        >
-          <YourPeople />
-        </Panel>
-        )}
         {!shows.food ? <LockedPanel feature="ui.food" title="Food" /> : (
         <Panel
           title="Food"
@@ -590,17 +580,19 @@ export function Home() {
           <YourRoutines />
         </Panel>
         )}
-        {!shows.belongings ? <LockedPanel feature="ui.belongings" title="Belongings" /> : (
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/people')}>
+        {!shows.people ? <LockedPanel feature="ui.people" title="People" /> : (
         <Panel
-          title="Belongings"
+          title="People"
           tight
           actions={(
-            <Gated feature="ui.belongings" className="btn btn-sm" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
-              Belongings
+            <Gated feature="ui.people" className="btn btn-sm" onClick={() => navigate('/workspace/people', 'People')}>
+              People
             </Gated>
           )}
         >
-          <YourBelongings />
+          <YourPeople />
         </Panel>
         )}
       </HomeGroup>
@@ -673,6 +665,34 @@ export function Home() {
         </Panel>
         ))}
       </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/belongings')}>
+        {!shows.belongings ? <LockedPanel feature="ui.belongings" title="Belongings" /> : (
+        <Panel
+          title="Belongings"
+          tight
+          actions={(
+            <Gated feature="ui.belongings" className="btn btn-sm" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
+              Belongings
+            </Gated>
+          )}
+        >
+          <YourBelongings />
+        </Panel>
+        )}
+        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
+        <Panel
+          title="Land"
+          tight
+          actions={(
+            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
+              Land
+            </Gated>
+          )}
+        >
+          <YourLand />
+        </Panel>
+        ))}
+      </HomeGroup>
       <HomeGroup label={groupLabelOf('/workspace/bank')}>
         {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
         <Panel
@@ -709,19 +729,6 @@ export function Home() {
           </LookRegion>
         </Panel>
         )}
-        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
-        <Panel
-          title="Land"
-          tight
-          actions={(
-            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
-              Land
-            </Gated>
-          )}
-        >
-          <YourLand />
-        </Panel>
-        ))}
       </HomeGroup>
       <HomeGroup label={groupLabelOf('/workspace/papers')}>
         {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}

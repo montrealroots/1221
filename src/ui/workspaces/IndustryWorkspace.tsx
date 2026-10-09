@@ -18,6 +18,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Empty, Fine, Panel, Stat } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { useKept, useKeptScroll } from '@/ui/kept';
+import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { formatDate } from '@/engine/core/time';
 import { plural } from '@/engine/core/text';
 import { COMPANIES, COMPANIES_SOURCE, companyById, type IndustryCompany } from '@/engine/content/industry';
@@ -128,11 +129,9 @@ function RealNote({ real }: { real: RealWorld }) {
 // The screen
 // ---------------------------------------------------------------------------
 
-const TABS = [
-  { id: 'find', label: 'Find' }, { id: 'projects', label: 'This Save’s Projects' }, { id: 'companies', label: 'Companies' },
-  { id: 'releases', label: 'Releases' }, { id: 'awards', label: 'Awards' }, { id: 'charts', label: 'Charts' }, { id: 'lists', label: 'Your Lists' },
-] as const;
-type Tab = (typeof TABS)[number]['id'];
+type Tab = 'find' | 'projects' | 'companies' | 'releases' | 'awards' | 'charts' | 'lists';
+/** Its tabs, as the rail lists them too (`ui/shell/sections.ts`). */
+const TABS = SECTIONS['/workspace/industry'] as readonly { id: Tab; label: string }[];
 
 export function IndustryWorkspace({ route }: { route: string }) {
   const [, , , kind, raw] = route.split('/');
@@ -143,7 +142,7 @@ export function IndustryWorkspace({ route }: { route: string }) {
 }
 
 function IndustryHome({ loaded: l }: { loaded: Loaded }) {
-  const [tab, setTab] = useKept<Tab>('industry.tab', 'find');
+  const [tab, setTab] = useKept<Tab>(tabKey('/workspace/industry'), 'find');
   useKeptScroll(`industry.${tab}`);
   const n = useWorld((s) => counts(s, realOf(l)), [l]);
   const panes: Record<Tab, JSX.Element> = { find: <FindPane loaded={l} />, projects: <ProjectsPane />, companies: <CompaniesPane loaded={l} />, releases: <ReleasesPane loaded={l} />, awards: <AwardsPane loaded={l} />, charts: <ChartsPane />, lists: <ListsPane loaded={l} /> };

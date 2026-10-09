@@ -774,18 +774,6 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 }
 
 /* Below a laptop the rail folds away and comes back as a drawer. */
-@media (max-width: 900px) {
-  /* Closed, the drawer is off the left edge and hidden outright, so nothing
-     in it can take focus or be read as spilling out of the page. */
-  .rail {
-    position: fixed; top: var(--nav-h); bottom: 0; left: 0; width: 260px;
-    z-index: 30; transform: translateX(-100%); visibility: hidden;
-    transition: transform .2s, visibility 0s linear .2s;
-    box-shadow: var(--shadow-lg);
-  }
-  .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
-  .rail-shade { display: block; }
-}
 @media (min-width: 901px) {
   .rail-toggle { display: none; }
 }
@@ -797,43 +785,69 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 
 /*
   The rail: every destination, always in reach, down the left of every screen.
-  Words only. A locked room says Locked in a chip rather than showing a padlock,
-  and there are no icons, because a glyph that is a picture on one platform and
-  a box on another is not a label.
+  A locked room says Locked in a chip rather than showing a padlock. It had no
+  icons until 2026-10-08, because a glyph that is a picture on one platform and
+  a box on another is not a label; since then each group has a drawn picture,
+  the same everywhere, beside its name and never instead of it.
 */
 .rail {
-  width: var(--rail-w); flex-shrink: 0; overflow-y: auto;
+  width: var(--rail-w); flex-shrink: 0; overflow-y: auto; overscroll-behavior: contain;
   background: var(--surface); border-right: 1px solid var(--line);
   padding: var(--s3) var(--s2);
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: column; gap: var(--s1);
 }
-.rail-group { margin-bottom: var(--s4); }
+/* The rail's lists are lists, and their rows its buttons (from 2026-10-08). */
+.rail-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rail-group { margin-top: var(--s2); }
 .rail-group-label {
+  display: flex; align-items: center; gap: var(--s2);
   font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .1em;
   color: var(--text-dim); font-weight: 650; padding: var(--s2) var(--s3);
 }
-.rail-item {
-  display: flex; align-items: center; gap: var(--s3); width: 100%;
+/* Every row the same: a picture's column, its name, anything after it at the end. A name wraps rather than being cut short. */
+.rail-item, .rail-group-head {
+  display: flex; align-items: center; gap: var(--s2); width: 100%; min-height: 40px;
   padding: var(--s2) var(--s3); border-radius: var(--radius-sm);
   background: transparent; border: 0; color: var(--text-muted);
   font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
+  border-left: 3px solid transparent;
 }
-.rail-item:hover { background: var(--surface-2); color: var(--text); }
+.rail-label { flex: 1; min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
+.rail-icon { flex: none; width: 18px; height: 18px; color: var(--text-dim); }
+.rail-group-head { color: var(--text); font-weight: 600; }
+.rail-group-head .rail-chevron { flex: none; color: var(--text-dim); transition: transform .15s; }
+.rail-group-head[aria-expanded="false"] .rail-chevron { transform: rotate(-90deg); }
+/* A group's places sit under its name, in line with it, past the picture's column. */
+.rail-items > li > .rail-item { padding-left: calc(var(--s3) + 18px + var(--s2)); }
+.rail-sections { list-style: none; margin: 0; padding: 0; }
+.rail-sections .rail-item { padding-left: calc(var(--s3) + 18px + var(--s2) + var(--s4)); min-height: 36px; font-size: var(--size-xs); }
+.rail-item:hover, .rail-group-head:hover { background: var(--surface-2); color: var(--text); }
+.rail-item:focus-visible, .rail-group-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.rail-group[data-current="true"] > .rail-group-head { color: var(--accent-strong); }
+.rail-group[data-current="true"] > .rail-group-head .rail-icon { color: var(--accent-strong); }
+.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; border-left-color: var(--accent); }
+.rail-item[aria-current="location"] { color: var(--text); font-weight: 600; border-left-color: var(--accent-line); }
+.rail-section[aria-current="true"] { color: var(--accent-strong); font-weight: 600; }
+.rail-home .rail-icon { color: inherit; }
+.rail-chip { flex: none; font-size: var(--size-xs); }
 /* The rail's search sits where its items do, as wide, so it lines up with them. */
-.rail-find { width: 100%; font-size: var(--size-sm); padding: var(--s2) var(--s3); }
+.rail-search { position: relative; display: flex; align-items: center; margin: var(--s1) 0; }
+.rail-search .rail-icon { position: absolute; left: var(--s3); pointer-events: none; }
+.rail-find { width: 100%; font-size: var(--size-sm); padding: var(--s2) var(--s3) var(--s2) calc(var(--s3) + 18px + var(--s2)); min-height: 40px; }
 .rail-empty { padding: var(--s2) var(--s3); }
-.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;
   background: var(--negative); color: #fff; border-radius: 100px;
-  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px;
+  min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px; flex: none;
 }
-.rail-player { margin-top: auto; margin-bottom: 0; }
+.rail-player { margin-top: auto; padding-top: var(--s3); }
 .rail-you { padding: var(--s2) var(--s3); }
+/* The drawer's own heading and Close, shown only where the rail is a drawer. */
+.rail-head { display: none; }
 /* Below a laptop the rail is a drawer, and this is what you press to close it. */
 .rail-shade {
-  display: none; position: fixed; inset: var(--nav-h) 0 0 0; z-index: 29;
-  background: rgba(0, 0, 0, 0.35); border: 0; cursor: pointer;
+  display: none; position: fixed; inset: 0; z-index: 59;
+  background: rgba(0, 0, 0, 0.45); border: 0; cursor: pointer;
 }
 
 /* The two sides of the bar. Left is the world; right is you. */
@@ -1378,3 +1392,26 @@ ol.results > .result::before { counter-increment: rank; content: counter(rank); 
 .filters .input, .filters select { max-width: 100%; }
 .filters .row .input { width: 5.5em; }
 .result > button.link, .result > .row > button.link, .result button.link { align-self: flex-start; text-align: left; }
+
+/* The drawer's rules come after the rail's own, so they win where the rail is a drawer: until they were moved here on
+   2026-10-08 the rail's width and its hidden heading, written further down, overrode them on a phone. */
+@media (max-width: 900px) {
+  /* Closed, the drawer is off the left edge and hidden outright, so nothing
+     in it can take focus or be read as spilling out of the page. Open, it's
+     over the whole height, the bar included, with its own Close: until
+     2026-10-08 it opened under the bar's first line, and on a phone, where the
+     bar wraps to three, its top was under the bar's second and third. */
+  .rail {
+    position: fixed; top: 0; bottom: 0; left: 0; width: min(320px, 88vw);
+    z-index: 60; transform: translateX(-100%); visibility: hidden;
+    transition: transform .2s, visibility 0s linear .2s;
+    box-shadow: var(--shadow-lg);
+    padding-top: var(--s2);
+  }
+  .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
+  .rail-shade { display: block; }
+  .rail-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: var(--s1) var(--s3) var(--s2); border-bottom: 1px solid var(--line); margin-bottom: var(--s1); }
+  .rail-title { font-weight: 650; font-size: var(--size-sm); }
+  .rail-close { min-height: 40px; }
+}
+.rail-search .rail-find { padding-left: calc(var(--s3) + 18px + var(--s2)); }
