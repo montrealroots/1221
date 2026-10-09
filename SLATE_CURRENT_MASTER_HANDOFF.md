@@ -6,8 +6,8 @@ mid-turn: "Also put research behind any engine. (Always!)"
 ## Where it is
 
 - Branch `claude/connected-attributes`, pushed, two commits on main's `e8dac9c3`: `e2708b32` (the work) and
-  `103467c7` (coursework pitched at a student). **Not merged to main**: this brief didn't say to, and CLAUDE.md
-  says not without the owner. **Not deployed.**
+  `103467c7` (coursework pitched at a student), then the handoff (`33f96812`). **Merged to main** on 2026-10-09 at
+  the owner's word ("Merge it."), as a fast-forward from `e8dac9c3`, nothing force-pushed. **Not deployed.**
 - **Save schema 92.** `SAVE_SCHEMA_VERSION` and the guard's `SUPPORTED_SCHEMA_VERSION` moved together. A deployment
   still on 91 refuses every save this branch writes, so deploy the backend with the client.
 - Untouched, as before: the stash, both worktrees, `backup/pre-scope-reset-2026-10-09`, and the untracked
