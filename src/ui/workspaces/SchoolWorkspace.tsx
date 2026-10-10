@@ -12,6 +12,7 @@
  * doesn't do for a family with means.
  */
 
+import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
@@ -345,7 +346,7 @@ function CastReadPanel() {
   return (
     <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`}>
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions; the best read takes the biggest part written for them.</p>
+        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions; the best read takes the biggest part written for them.</p>
         {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered is read from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, weighted ${f.weight})`).join('; ')}. A Cabaret or Summer run weighs half a School production’s, each run up to eight nights; a night missed out of hospital is delivered at nothing. How the nights were judged isn’t read here: it’s in your work.</p>}
         <LookRegion className="table-scroll">
           <table>
@@ -673,7 +674,7 @@ function PlaysToRead() {
                     <td>
                       <span className="small" style={{ whiteSpace: 'nowrap' }}>{st ? (st.reads === 1 ? 'Once' : `${st.reads} Times`) : 'Not Yet'}</span>{st?.researchedAt && <div className="xs dim">Researched</div>}
                       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
-                        <button type="button" className="btn btn-sm btn-ghost" disabled={!read.open || Boolean(noRead)} title={noRead ?? read.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.read', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>{st ? 'Read It Again' : 'Read It'}</button>
+                        <button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!read.open || Boolean(noRead)} title={noRead ?? read.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.read', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>{st ? 'Read It Again' : 'Read It'}</button>
                         {st && !st.researchedAt && <button type="button" className="btn btn-sm btn-ghost" disabled={!research.open || Boolean(noResearch)} title={noResearch ?? research.reason} onClick={() => { const r = run<{ minutes: number; note: string }>('plays.research', { playId: p.id }); if (r.ok) toast(r.value!.note, 'positive'); }}>Research It</button>}
                       </div>
                     </td>
