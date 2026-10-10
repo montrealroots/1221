@@ -138,7 +138,7 @@ function IdentityPanel() {
   const school = person.school;
   return (
     <Panel title="Identity And Background" subtitle="As the character was made">
-      <div className="row gap-4 wrap" style={{ alignItems: 'flex-start' }}>
+      <div className="row gap-4 wrap identity-row" style={{ alignItems: 'flex-start' }}>
         {person.portrait
           ? <img src={person.portrait} alt={`${person.displayName}’s portrait`} width={128} height={160} style={{ borderRadius: 8, objectFit: 'cover' }} />
           : <div className="small muted" style={{ width: 128 }}>No portrait chosen</div>}

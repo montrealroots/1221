@@ -332,7 +332,7 @@ a:hover { text-decoration: underline; }
 .tabular { font-variant-numeric: tabular-nums; }
 .positive { color: var(--positive); }
 /* A name that is also a way in: a button dressed as a link inside running text. */
-button.link { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+button.link { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; text-align: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 button.link:hover { color: var(--accent-strong); }
 .negative { color: var(--negative); }
 .warning { color: var(--warning); }
@@ -740,10 +740,26 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
      and at this width its own gaps are what pushed Save & Exit off the edge. */
   .topbar-divider { display: none; }
 }
-/* On a phone the bar may take a second line rather than lose a control. */
+/* On a phone (from 2026-10-10) the bar is the desktop's in two ordered rows: the menu, the name, the clock with its
+   date, the guide and Save & Exit; under them the time controls across the width, as one toolbar. Until then it
+   wrapped where it ran out, three ragged lines, and the date was dropped. */
 @media (max-width: 620px) {
-  .topbar { flex-wrap: wrap; height: auto; min-height: var(--nav-h); padding-block: var(--s1); row-gap: 0; }
-  .topbar-divider { display: none; }
+  header.topbar {
+    display: grid; height: auto; min-height: var(--nav-h);
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "menu brand clock save" "time time time time";
+    column-gap: var(--s2); row-gap: var(--s1); padding: var(--s1) var(--s3) var(--s2);
+  }
+  .topbar > .rail-toggle { grid-area: menu; }
+  .topbar > .topbar-brand { grid-area: brand; padding-inline: var(--s1); }
+  .topbar > .topbar-clock { grid-area: clock; min-width: 0; }
+  .topbar > .topbar-group { grid-area: save; gap: var(--s1); }
+  .topbar > .topbar-time { grid-area: time; display: flex; gap: var(--s1); }
+  .topbar-time > * { flex: 1 1 auto; justify-content: center; }
+  .topbar > .grow, .topbar-divider { display: none; }
+  /* The date comes back, shortened by the room, never pushing a button off. */
+  .topbar-clock-sep, .topbar-clock-date { display: inline; }
+  .topbar-clock-date { min-width: 0; font-size: var(--size-xs); }
 }
 
 /* Below a laptop the rail folds away and comes back as a drawer. */
@@ -1039,7 +1055,10 @@ kbd {
 
   .wordmark { font-size: 34px; letter-spacing: .34em; text-indent: .34em; }
   .clapper { font-size: 54px; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  /* A grid of three or four short facts keeps two across (from 2026-10-10: until then one a row, so a card's three
+     figures took a screen); a grid of two is two panels' worth, one above the other. */
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .field-row.field-row-tight { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .creation { padding: var(--s4) var(--s3); }
   .hide-sm { display: none !important; }
@@ -1313,9 +1332,43 @@ details.fine[open] > summary { margin-bottom: 0; }
    when it's wider than the screen. Table cells broke words anywhere, which
    let a column shrink past a word ("Mon/day", "Profession/al"). */
 td, th { overflow-wrap: break-word; }
+/* From 2026-10-10 the tabs stay one row, as the desktop's, scrolling sideways with a fade at the edge where there's
+   more; until then they wrapped onto a second row, and a page's tabs read as two rows of choices. A table keeps every
+   column the desktop shows, scrolling in its panel, with a shadow on the side that has more (the scrolling-shadows
+   technique: covers that move with the content, shadows that stay with the box). */
 @media (max-width: 640px) {
-  .tabs { flex-wrap: wrap; overflow-x: visible; }
-  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tabs {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding-inline: var(--s3); }
+  table {
+    display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background:
+      linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
+      linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+  }
+  /* A wide table in its scrolling region keeps the desktop's layout at a width its columns can be read at, by how
+     many it has, rather than squeezed to the phone's width with every cell wrapped to a sliver (a cell's own
+     min-width is ignored by table layout, so it's the table's). The region scrolls and carries the shadows. */
+  .table-scroll > table { display: table; background: none; }
+  .table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
+  .table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
+  .table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
+  .table-scroll {
+    -webkit-overflow-scrolling: touch;
+    background:
+      linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
+      linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+  }
+  /* The portrait above the facts, not a column beside them taking a third of the width. */
+  .identity-row { flex-direction: column; }
+  .identity-row > .grow { width: 100%; }
 }
 /* A statement's lines keep their columns, scrolling as one on a phone. */
 .statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }

@@ -58,7 +58,7 @@ export function TimeControls() {
 
   return (
     <>
-      <div className="row gap-1" role="group" aria-label="Time Controls">
+      <div className="row gap-1 topbar-time" role="group" aria-label="Time Controls">
         <Gated
           feature="ui.play"
           className="btn btn-ghost btn-sm"
