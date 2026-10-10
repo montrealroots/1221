@@ -38,7 +38,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
-import { LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
+import { ClassesPanel, LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
 import { enrolledTerms } from '@/engine/systems/leave';
 import { hasProcess, holderFor } from '@/engine/systems/production';
 
@@ -160,6 +160,7 @@ function StandingPane() {
             <LeavePanel />
             <CoursesPanel />
             <RepeatPanel />
+            <ClassesPanel />
             <PoliciesPanel />
             <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
           </div>

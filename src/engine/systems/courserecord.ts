@@ -73,7 +73,9 @@ const keyOf = (term: number, code: string) => `${term}:${code}`;
 /** A meeting of a course, as it went. */
 export function noteMeeting(school: SchoolRecord, term: number, code: string, name: string, how: 'attended' | 'excused' | 'missed'): void {
   const all = coursesOf(school);
-  const r = (all[keyOf(term, code)] ??= { term, academic: term - (school.offset ?? 0), code, name, meetings: 0, attended: 0, excused: 0 });
+  // A retake in an additional term is an attempt at its own program term's requirement (`SchoolRecord.extra`).
+  const retake = school.extra?.term === term ? school.extra.courses.find((c) => c.code === code)?.academic : undefined;
+  const r = (all[keyOf(term, code)] ??= { term, academic: retake ?? term - (school.offset ?? 0), code, name, meetings: 0, attended: 0, excused: 0 });
   if (r.result !== undefined) return;
   r.meetings += 1;
   if (how === 'attended') r.attended += 1;

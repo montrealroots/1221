@@ -52,7 +52,7 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, conditionAt, ordinary, coursesOn, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, conditionAt, ordinary, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, chiefLimit, evaluate, recordWork, type Evaluation } from './evaluation';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
@@ -72,6 +72,7 @@ import {
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp, trainingRefusal } from './injury';
+import { academicTerm, coursesFor, type SchoolRecord } from './school';
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
@@ -183,6 +184,8 @@ export interface Assignment {
   approach?: { key: string; dim: PrepDim; kind: Approach; on: string };
   /** How the player has chosen to play the scene, and how far it's rehearsed in (`systems/material.ts`, from 2026-10-10). */
   playing?: Playing;
+  /** The partner's name, kept once the player has gone on with another class (`joinCohort`, from 2026-10-10). */
+  partnerName?: string;
   /** Work shown in rounds (`Template.rounds`): the round it's at, and each round shown, with how it went. From 2026-10-08. */
   round?: number;
   roundsShown?: { label: string; band: Band; on: string }[];
@@ -281,9 +284,9 @@ export function mateBusy(person: Person, i: number, when: Instant, minutes: numb
   const endH = startH + minutes / 60;
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (startH < WORK.rehearsal.from || endH > WORK.rehearsal.until) return `${first} won’t rehearse before ${WORK.rehearsal.from} or past ${WORK.rehearsal.until}.`;
-  if (coursesOn(day, person.school?.offset ?? 0).length && startH < 15 && endH > 9) return `${first} is in class until three.`;
+  if (coursesFor(person.school, day).length && startH < 15 && endH > 9) return `${first} is in class until three.`;
   const term = termOf(day);
-  if (weekday === 6 && startH < 16 && endH > 10 && coursesOn(plus(day, -1), person.school?.offset ?? 0).length) return `${first} works a work-study shift on Saturdays.`;
+  if (weekday === 6 && startH < 16 && endH > 10 && coursesFor(person.school, plus(day, -1)).length) return `${first} works a work-study shift on Saturdays.`;
   if (castThisTerm(person, mate, term) && weekday >= 2 && weekday <= 5 && endH > 15) return `${first} has rehearsal calls from three, Tuesday to Friday.`;
   return undefined;
 }
@@ -293,11 +296,11 @@ export function mateBusy(person: Person, i: number, when: Instant, minutes: numb
 // ---------------------------------------------------------------------------
 
 /** A course's meetings from a day on, to the end of its term's classes. */
-export function meetingsFrom(course: string, from: SchoolDate, offset = 0): string[] {
+export function meetingsFrom(course: string, from: SchoolDate, school?: SchoolRecord): string[] {
   const term = termOf(from);
   const end = keyOf(classPeriod(term).to);
   const out: string[] = [];
-  for (let d = from; keyOf(d) <= end; d = plus(d, 1)) if (coursesOn(d, offset).some((c) => c.code === course)) out.push(keyOf(d));
+  for (let d = from; keyOf(d) <= end; d = plus(d, 1)) if (coursesFor(school, d).some((c) => c.code === course)) out.push(keyOf(d));
   return out;
 }
 
@@ -315,7 +318,7 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   const t = templateFor(course, termWord(term));
   if (!t) return undefined;
   if (cw.assignments.some((a) => a.course === course && (a.status === 'open' || a.status === 'revising'))) return undefined;
-  const meetings = meetingsFrom(course, day, person.school?.offset ?? 0).filter((k) => k > keyOf(day));
+  const meetings = meetingsFrom(course, day, person.school).filter((k) => k > keyOf(day));
   const dueOn = meetings[t.dueAfter - 1];
   if (!dueOn) return undefined;
   // Work in rounds is set only where the term has a meeting for every round: a rehearsal cut off after its table
@@ -330,7 +333,9 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   // The material: the fitting scene not yet studied, nearest the difficulty that suits (`scenesFor`); every fitting one
   // studied, the longest ago comes back, and asks something new of it (`revisitOf`). Until 2026-10-08 a scene was
   // drawn from the unstudied ones at random, and once they ran out, from all of them, in any part, with anyone.
-  const year = Math.min(3, Math.floor(term / 2) + 1);
+  // The program's year they're in, not the calendar's (from 2026-10-10: a student back from a leave was set a
+  // year-two scene in their first year again).
+  const year = Math.min(3, Math.floor(academicTerm(school, term) / 2) + 1);
   if (t.material !== 'none') {
     const pool = scenesFor(t, course, cw.assignments, targetDifficulty(year, person.craft ? actingOf(person.craft) : 50));
     const scene = pool[0];
@@ -349,7 +354,9 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   if (t.repPlay) a.repPlay = repProduction(term).name;
   if (t.paired && school.classmates.length) {
     // The classmate least worked with, not last time's in this course or in this scene where another is free.
-    a.partner = partnerFor(cw.assignments, course, school.classmates.length, rng.next(), a.revisit?.partner !== undefined ? [a.revisit.partner] : []);
+    // Within the class they're in now: work with a class gone ahead (`joinCohort`) keeps its partner by name.
+    const current = cw.assignments.filter((x) => x.partnerName === undefined);
+    a.partner = partnerFor(current, course, school.classmates.length, rng.next(), a.revisit?.partner !== undefined && !cw.assignments.find((x) => x.id === a.revisit!.assignmentId)?.partnerName ? [a.revisit.partner] : []);
     // Their reliability drawn now, once, so a screen only ever reads it.
     reliabilityOf(sim, person, a.partner);
   }
@@ -810,7 +817,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   const due = cw.assignments.find((a) => a.course === course && a.status === 'open' && a.dueOn === key);
   if (due) {
     if (!present) {
-      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school)[0];
       if (excused && next) { due.dueOn = next; return 1; }
       // Excused with no meeting left: not shown, and not held against them or their partner (from 2026-10-10: until
       // then it was missed as if they'd stayed away).
@@ -831,10 +838,10 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const r = due.round ?? 0;
       (due.roundsShown ??= []).push({ label: t.rounds[r]!.label, band: showing.band, on: key });
       const nextRound = t.rounds[r + 1];
-      const next = nextRound ? meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[nextRound.gap - 1] : undefined;
+      const next = nextRound ? meetingsFrom(course, plus(day, 1), person.school)[nextRound.gap - 1] : undefined;
       if (nextRound && next) { due.round = r + 1; due.dueOn = next; } else due.status = 'done';
     } else if (t.revised && due.feedback) {
-      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school)[0];
       if (next) {
         const f = due.feedback.focus;
         due.revision = { dueOn: next, before: f.kind === 'dim' ? preparedParts(person, due, key)[f.dim] ?? 0 : 0 };
@@ -861,7 +868,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   const revising = cw.assignments.find((a) => a.course === course && a.status === 'revising' && a.revision?.dueOn === key);
   if (revising) {
     if (!present) {
-      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school)[0];
       if (excused && next) { revising.revision!.dueOn = next; return 1; }
       // Not there to show it again: unexcused, the evaluation reads it as unready (from 2026-10-10: until then it was
       // marked done in silence, and staying away was safer than showing it weak).

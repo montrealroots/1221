@@ -13,7 +13,7 @@ import { COMMENCEMENT_KIND, CLASSES_KIND, EVALUATION_KIND, TERM_KIND, academicTe
 import { degreeShortfall } from '@/engine/systems/courserecord';
 import { careFor, coverOn, healthOf } from '@/engine/systems/health';
 import { f1Of } from '@/engine/systems/permission';
-import { rebateShare, accountDue, billUnsupportedTerm, accountOwed, disqualified, enrolledTerms, insuranceStart, leaveRefusal, repeatRefusal, LEAVE_DECIDE_KIND } from '@/engine/systems/leave';
+import { facultyReview, rebateShare, accountDue, billUnsupportedTerm, accountOwed, disqualified, enrolledTerms, insuranceStart, leaveRefusal, repeatRefusal, LEAVE_DECIDE_KIND } from '@/engine/systems/leave';
 import { EXTENDED_STUDY, LEAVE_RULES } from '@/engine/content/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 
@@ -271,7 +271,9 @@ describe('failing, repeating and disqualification', () => {
     s.courses![`3:${spring.code}`]!.result = 'fail';
     Object.assign(s, { termsBegun: 4 });
     s.history.push({ term: 3, standing: 'concern', attendance: 1, growth: 0, classGrowth: 0, reason: 'TEST SETUP' });
-    expect(repeatRefusal(sim, sim.player)).toMatch(/one repeated year/);
+    // FIXTURE: the same first year failed again: the faculty don't approve it a second time.
+    Object.assign(s, { termsBegun: 4 });
+    expect(repeatRefusal(sim, sim.player)).toMatch(/don’t approve year 1 a second time/);
   });
 
   it('PLAYER JOURNEY: a last year failed waits thirty days for a repeat, then bills the seventh term, holds the account unpaid, and lifts the hold paid', () => {
@@ -285,7 +287,7 @@ describe('failing, repeating and disqualification', () => {
     const review = evaluate(sim, sim.player, 5)!;
     expect(review.standing).not.toBe('withheld');
     expect(school.repeatBy).toBeGreaterThan(sim.now);
-    expect(titled(sim, 'Your Last Year Wasn’t Passed')).toHaveLength(1);
+    expect(titled(sim, 'Your Degree Isn’t Complete')).toHaveLength(1);
     const asked = sim.must<{ decideAt: number }>({ kind: 'school.request_repeat', payload: {} });
     sim = reload(sim);
     tended(sim, asked.decideAt + MS_HOUR);
@@ -370,7 +372,7 @@ describe('failing, repeating and disqualification', () => {
     expect(titled(sim, 'The Degree Isn’t Recommended')[0]!.body).toMatch(/didn’t ask to repeat/);
   });
 
-  it('the evaluation dismisses at the Bulletin’s threshold', () => {
+  it('the faculty review a disqualification: the first time on warning, judged once, not stepped past', () => {
     const sim = student('lv-dq-play');
     tended(sim, at(2026, 12, 9));
     // FIXTURE: two fall courses met at a third of their meetings, none excused, before the evaluation settles them.
@@ -378,7 +380,11 @@ describe('failing, repeating and disqualification', () => {
     for (const r of recs) r.attended = Math.floor(r.meetings / 3);
     tended(sim, at(2026, 12, 12));
     expect(pendingOf(sim, EVALUATION_KIND)).toHaveLength(0);
-    expect(sim.player.school!.standing).toBe('dismissed');
-    expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/Bulletin disqualifies a student with 2 Failures in a term/);
+    const school = sim.player.school!;
+    expect(school.reviews?.[0]).toMatchObject({ term: 0, outcome: 'warning' });
+    expect(school.standing).toBe('warning');
+    expect(titled(sim, 'A Faculty Review: On Warning')[0]!.body).toMatch(/Bulletin disqualifies a student with 2 Failures in a term/);
+    // Reviewed again in a later term, it's a dismissal.
+    expect(facultyReview(sim, sim.player, 1)).toMatchObject({ outcome: 'dismissed' });
   });
 });

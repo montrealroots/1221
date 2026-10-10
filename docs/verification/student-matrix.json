@@ -542,10 +542,10 @@
      "title": "a term’s coursework"
     },
     {
-     "outcome": "Two Fails in a term dismiss",
+     "outcome": "Two Fails in a term bring a faculty review: warning the first time, dismissal after",
      "reader": "Standing; status; cover",
      "file": "tests/leave.test.ts",
-     "title": "the evaluation dismisses at the Bulletin’s threshold"
+     "title": "the faculty review a disqualification"
     }
    ]
   },

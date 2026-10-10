@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-136 commands; 132 named by a test, 4 not.
+139 commands; 135 named by a test, 4 not.
 
 ## bank
 
@@ -172,6 +172,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `school.answer_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
+| `school.appeal_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `school-paths.test.ts` | Drama School |
 | `school.approach` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
 | `school.buy_affiliate` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
@@ -189,15 +190,17 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.make_up` | `src/engine/systems/courserecord.ts` | `SchoolWorkspace.tsx` | `student-experience.test.ts` | Drama School |
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `journey-life.test.ts` `papers-complete.test.ts` | Drama School |
-| `school.pay_balance` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
+| `school.pay_balance` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` `traits-connected.test.ts` | Drama School |
 | `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.request_aid_review` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `school-paths.test.ts` | Drama School |
 | `school.request_conversion` | `src/engine/systems/school.ts` | `StudyPlanPanels.tsx` | `work-limits.test.ts` | Drama School |
-| `school.request_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
+| `school.request_extra_term` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `school-paths.test.ts` | Drama School |
+| `school.request_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.request_repeat` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `papers-transitions.test.ts` | Drama School |
 | `school.reregister` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `coverage-gaps-classmates.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `student-experience.test.ts` | Drama School |
-| `school.return_notice` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
+| `school.return_notice` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-journey-gaps.test.ts` `school.test.ts` `work-limits.test.ts` | Drama School |

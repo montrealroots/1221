@@ -112,7 +112,7 @@ import { nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
-import { insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, disqualified, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
+import { considerWelfare, facultyReview, joinCohort, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -156,10 +156,9 @@ export function sickRefusal(sim: Simulation, person: Person): string | undefined
   // Any day with something at school: classes, or a call, a lab, a shift, a Cabaret or Summer Cabaret call (from
   // 2026-10-10: until then only a class day, and flu on a Saturday performance or in a recess run couldn't be excused).
   const due = somethingAtSchoolFor(sim, person.id, at(today, 0), at(addDays(today, 1), 0));
-  const offset = school.offset ?? 0;
-  if (!coursesOn(today, offset).length && !due) return 'There’s nothing at school today to miss.';
+  if (!coursesFor(school, today).length && !due) return 'There’s nothing at school today to miss.';
   // Before they've run: until 2026-09-27 it was taken all day, and said the day was excused after it had been counted.
-  if (coursesOn(today, offset).length && !due && sim.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) return 'Today’s classes have been and gone; calling in sick now excuses nothing.';
+  if (coursesFor(school, today).length && !due && sim.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) return 'Today’s classes have been and gone; calling in sick now excuses nothing.';
   // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
   // Hurt in a way that limits the work (`INJURY_KIND[].limits`), a doctor's note excuses them too (from 2026-10-10): until
   // then a student with a sprained ankle had to show a movement score on it, and lost a third of it (`tools/condition.ts`).
@@ -417,6 +416,9 @@ export interface SchoolRecord {
   repeats?: number;
   /** A last year failed: until when a repeat can be asked for, before the degree is withheld (`systems/leave.ts`). */
   repeatBy?: Instant;
+  /** Yale Health's assessment of whether a student can go on (`systems/leave.ts`, a mandatory leave's process), and those before. */
+  welfare?: import('./leave').Welfare;
+  welfares?: import('./leave').Welfare[];
   /** Back from a leave, or held: registration to do again before classes count them (`school.reregister`). */
   mustRegister?: boolean;
   /** Yale Health's student cover lapsed, from and to: a leave's, with no Affiliate cover (`systems/leave.ts`, `coverOn`). */
@@ -429,6 +431,29 @@ export interface SchoolRecord {
   excusedHours?: Record<string, number>;
   /** Hours converted to grant aid, by the same year. */
   convertedHours?: Record<string, number>;
+  /**
+   * The classes the player was in before falling a year behind, kept whole with every relationship and record
+   * (`systems/leave.ts`, from 2026-10-10): each class's year, its classmates, and the calendar term it's been played
+   * forward to (`advanceMates`).
+   */
+  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant }[];
+  /**
+   * A new cohort to join at the next term of study, set by a leave's start or a repeat granted: the offset the student
+   * had before falling behind, which is still the first class's, and the last calendar term spent with that class.
+   */
+  joinsCohort?: { offsetBefore: number; lastWith: number };
+  /**
+   * An additional term to retake failed courses (`systems/leave.ts`, from 2026-10-10): its calendar term, and each
+   * course's code and the program term it belongs to, met in that term's season with the class then in that year.
+   */
+  extra?: { term: number; courses: { code: string; academic: number; name: string }[] };
+  /** Additional-term requests, and the program years a repeat has been granted for (`systems/leave.ts`). */
+  extraRequest?: import('./leave').ExtraRequest;
+  repeatedYears?: number[];
+  /** The financial-aid office's review of support for a term past six (`school.request_aid_review`). */
+  aidReview?: import('./leave').AidReview;
+  /** The faculty's reviews of a disqualification (`facultyReview`), each kept. */
+  reviews?: { at: Instant; term: number; outcome: 'dismissed' | 'warning'; why: string }[];
   /** Tuition billed to the Yale account for a term past the sixth, by calendar term (`billUnsupportedTerm`). */
   enrolledBilled?: Record<string, Money>;
 }
@@ -441,6 +466,14 @@ export const PAYDAY_KIND = 'school.payday';
 export const CALL_KIND = 'school.call';
 export const EVALUATION_KIND = 'school.evaluation';
 export const COMMENCEMENT_KIND = 'school.commencement';
+export const CONFERRAL_KIND = 'school.conferral';
+
+/**
+ * Yale confers most degrees in May or December, and "multiple times a year" (the University Registrar; the Graduate
+ * School's 2026–27 calendar gives 22 December 2026). SLATE confers a degree finished in an additional fall term on 22
+ * December; later years' dates are SLATE's estimate by the same day. A diploma off-cycle is mailed six weeks after.
+ */
+export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, source: 'https://registrar.yale.edu (degree conferral); Yale Graduate School 2026-2027 academic calendar; research-yale-leave-2.json' } as const;
 export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
@@ -697,6 +730,20 @@ export const CALENDAR_TERMS = 12;
 export const academicTerm = (school: SchoolRecord | undefined, calendarTerm: number): number => calendarTerm - (school?.offset ?? 0);
 
 /**
+ * The courses a student has on a day (from 2026-10-10): in an additional term (`SchoolRecord.extra`), only the
+ * courses being retaken, each in its own year's timetable for the season; otherwise the program's year they're in.
+ */
+export function coursesFor(school: SchoolRecord | undefined, day: SchoolDate): Course[] {
+  const extra = school?.extra;
+  if (extra && termOf(day) === extra.term) {
+    if (!isClassDay(extra.term, day)) return [];
+    const season = termStart(extra.term).fall ? 'fall' : 'spring';
+    return extra.courses.flatMap((c) => (timetable(yearOfTerm(c.academic), season)[weekday(day) - 1] ?? []).filter((x) => x.code === c.code));
+  }
+  return coursesOn(day, school?.offset ?? 0);
+}
+
+/**
  * The courses meeting on a day, for a student so many calendar terms behind (`offset`, from 2026-10-10): the
  * program's year they're in, on the calendar's days.
  */
@@ -718,7 +765,7 @@ export function nextClasses(from: Instant, school?: SchoolRecord): Instant | und
   const p = zonedParts(from, zone());
   let day: SchoolDate = { year: p.year, month: p.month, day: p.day };
   for (let n = 0; n < 200; n += 1, day = addDays(day, 1)) {
-    if (coursesOn(day, school?.offset ?? 0).length && at(day, 9) > from) return at(day, 9);
+    if (coursesFor(school, day).length && at(day, 9) > from) return at(day, 9);
   }
   return undefined;
 }
@@ -938,6 +985,70 @@ export function admittedClass(sim: Simulation, person: Person): { classmates: Cl
   });
   const player = skills(t.playerFrom + (t.to - t.playerFrom) * rng.next());
   return { classmates, player };
+}
+
+/**
+ * A class admitted in a later year, the cohort a student who fell a year behind goes on with (from 2026-10-10;
+ * `systems/leave.ts`): drawn as the first class was (`admittedClass`), by the same talent and names, keyed by its own
+ * class year so it isn't the first class again, their ceilings bound and their abilities drawn under the same key.
+ */
+export function drawCohort(sim: Simulation, person: Person, classOf: number): Classmate[] {
+  const rng = sim.rng('school.class', person.id, `cohort-${classOf}`);
+  const t = ESTIMATE.talent;
+  const skills = (talent: number) => Object.fromEntries(SKILL_IDS.map((id) => [id, Math.round(Math.min(95, talent + t.spread * (rng.next() + rng.next() - 1)) * 10) / 10])) as Craft;
+  const families = [...FAMILY];
+  const given = { actress: [...GIVEN_ACTRESS], actor: [...GIVEN_ACTOR] };
+  // Not a name the first class has: a returning student knows both.
+  const taken = new Set([...(person.school?.classmates ?? []), ...(person.school?.formerClasses ?? []).flatMap((c) => c.classmates)].map((m) => m.name));
+  return Array.from({ length: YALE_DRAMA.classSize - 1 }, (_, i): Classmate => {
+    const craft = skills(t.from + (t.to - t.from) * (rng.next() + rng.next()) / 2);
+    const title = rng.next() < 0.5 ? 'actress' : 'actor';
+    const names = given[title];
+    let name = '';
+    for (let n = 0; n < 50 && (!name || taken.has(name)); n += 1) name = `${names[Math.floor(rng.next() * names.length)]} ${families[Math.floor(rng.next() * families.length)]}`;
+    taken.add(name);
+    const drive = Math.round((1 + ESTIMATE.driveSpread * (2 * rng.next() - 1)) * 1000) / 1000;
+    const mate: Classmate = { name, craft, title, drive, ceiling: ceilingFrom(craft) };
+    bindCeiling(craft, mate.ceiling!);
+    mate.abilities = drawMateAbilities(sim.universe.meta.seed, `${person.id}:${classOf}`, i, craft);
+    return mate;
+  });
+}
+
+/**
+ * A class's terms of classes played forward, for a class the player wasn't in while it went on (from 2026-10-10): each
+ * class day of each academic term, its courses grow each classmate's skills and the abilities they reach, by the same
+ * rule a class day does (`CLASSES_KIND`), on the days a classmate's ordinary attendance has them there. Their
+ * productions' rehearsals and nights aren't played forward: SLATE keeps those for the class the player is in.
+ */
+export function advanceMates(mates: Classmate[], academicTerms: readonly number[]): void {
+  for (const a of academicTerms) {
+    if (a < 0 || a >= YALE_DRAMA.terms) continue;
+    const period = classPeriod(a);
+    const season = termStart(a).fall ? 'fall' : 'spring';
+    let n = 0;
+    for (let d = period.from; keyOf(d) <= keyOf(period.to); d = addDays(d, 1)) {
+      if (!isClassDay(a, d)) continue;
+      n += 1;
+      const courses = timetable(yearOfTerm(a), season)[weekday(d) - 1] ?? [];
+      mates.forEach((mate, i) => {
+        // Ordinary attendance, by a fixed pattern: about one class day in thirty-three missed (`classmateAttendance`).
+        if ((n + i * 7) % Math.round(1 / (1 - ESTIMATE.classmateAttendance)) === 0) return;
+        const focus = ESTIMATE.classmateFocus * (mate.drive ?? 1);
+        for (const course of courses) {
+          for (const skill of course.skills) grow(mate.craft, skill, focus);
+          if (!mate.abilities) continue;
+          for (const ability of classAbilities(course.skills)) {
+            const id = ability as keyof MateAbilities;
+            if (mate.abilities[id] === undefined) continue;
+            const kin = ABILITY_KIN[ability] ?? [];
+            const reach = kin.length ? kin.reduce((s, k) => s + ceilingOf(mate.craft, k), 0) / kin.length : 100;
+            mate.abilities[id] = Math.min(100, mate.abilities[id] + abilityGain(mate.abilities[id], reach, { weight: CLASS_ABILITY_SHARE, focus, deliberate: false }));
+          }
+        }
+      });
+    }
+  }
 }
 
 /**
@@ -1263,7 +1374,7 @@ export function planWeek(sim: Simulation, person: Person, from: Instant): void {
   const sunday = dayOnOrAfter(first.year, first.month, first.day, 0);
   for (let day = first; keyOf(day) <= keyOf(sunday); day = addDays(day, 1)) {
     const term = termOf(day);
-    if (coursesOn(day, school.offset ?? 0).length) schedule(sim, person, at(day, 9), { kind: CLASSES_KIND, label: 'Classes', minutes: 360, payload: { day: keyOf(day) } });
+    if (coursesFor(school, day).length) schedule(sim, person, at(day, 9), { kind: CLASSES_KIND, label: 'Classes', minutes: 360, payload: { day: keyOf(day) } });
     // The year's assigned hours, and no more: until 2026-09-27 every class-week
     // Saturday was booked, 156 hours in a second year against the Bulletin's 150.
     // Within Yale's weekly cap across its jobs (from 2026-10-10).
@@ -2220,8 +2331,12 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
   const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}`;
-  const last = academicTerm(school, term) === YALE_DRAMA.terms - 1;
-  const stepped: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
+  const extraTerm = school.extra?.term === term;
+  const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || extraTerm;
+  // A faculty review this term that kept them on warning (`facultyReview`) has judged these Fails: the evaluation doesn't
+  // step past it on the same Fails (from 2026-10-10).
+  const reviewed = school.reviews?.at(-1)?.term === term && school.reviews.at(-1)!.outcome === 'warning';
+  const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
   const shortfall = degreeShortfall(school);
   // A last year with a course failed: a repeat offered for thirty days (`offerRepeat`, from 2026-10-10), before the degree
   // is withheld; with a warning unmet, withheld as it was.
@@ -2240,7 +2355,11 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // started again here, and a first-year's Carlotta calls in May and the
   // summer's growth went into the next fall's attendance and growth.
   // After the sixth term in standing, the degree at Commencement on the last Monday of May, as 24 May 2027 is (SLATE's estimate for 2029).
-  if (last && !schoolEnded(next) && !offered) {
+  if (last && !schoolEnded(next) && !offered && extraTerm && termStart(term).fall) {
+    // Finished in a fall: the degree at Yale's December conferral (`DEGREE_DATES`), not May's Commencement.
+    const y = termStart(term).date.year;
+    schedule(sim, person, at({ year: y, month: DEGREE_DATES.december[0], day: DEGREE_DATES.december[1] }, 10), { kind: CONFERRAL_KIND, label: 'December Degree Conferral', minutes: 0, requiresPlayer: false });
+  } else if (last && !schoolEnded(next) && !offered) {
     const y = termStart(term).date.year;
     // Yale's Commencement is the Monday before Memorial Day, which is May's last Monday: 24 May 2027 and the published
     // 21 May 2029 (from 2026-10-10; until then the first Monday from the 25th, Memorial Day itself in 2029).
@@ -2286,19 +2405,23 @@ export function registerSchool(sim: Simulation): void {
       returnFromLeave(s, person);
     }
     if (school.termsBegun > term && (school.enrolled ?? []).includes(term)) return;
+    // A year behind now (a leave, a repeated year): on with the class at this stage (`joinCohort`, from 2026-10-10).
+    if (school.joinsCohort) { joinCohort(s, person, term); delete school.joinsCohort; }
     const academic = academicTerm(school, term);
     school.termsBegun = term + 1;
     school.enrolled = [...enrolledTerms(school).filter((x) => x < term), term];
     // A hold on the Yale account at a term's start: registration again once it's paid (Bulletin p.184).
     if (school.hold !== undefined) school.mustRegister = true;
     // Past the six terms the tuition scholarship supports, no aid: tuition and the health fee billed (`EXTENDED_STUDY`).
-    const unsupported = school.enrolled.length > YALE_DRAMA.terms;
+    const review = school.aidReview?.status === 'decided' ? school.aidReview : undefined;
+    const unsupported = school.enrolled.length > YALE_DRAMA.terms && !review?.tuition;
     if (term > 0) school.tally = freshTally(person, school);
     // A new year's hours from the second fall; the first's began at enrollment, and resetting them
     // here lost an elective shift asked for before the first term's morning.
     if (term > 0 && termStart(term).fall) school.workStudy = { electiveHours: 0, owedHours: school.workStudy.owedHours };
     const cur = saveCurrency(s.universe);
-    const need = hasNeed(person) && !unsupported;
+    // Living aid past six terms where the aid review keeps it (`AidReview.living`), as tuition support where it grants an exception.
+    const need = hasNeed(person) && (!unsupported || review?.living === true);
     const account = termAccount(cur, need, term);
     // Paid where their payments are paid (`payeeAccount`, from 2026-10-10: until then into whichever account was primary).
     const current = payeeAccount(s, person);
@@ -2314,8 +2437,9 @@ export function registerSchool(sim: Simulation): void {
       });
       recordScholarship(person, item.at, zone(), account.taxable);
       if (withheld) yearOf(person, year).withheld += withheld;
-    } else if (unsupported) {
-      billUnsupportedTerm(s, person, term);
+    }
+    if (unsupported) {
+      billUnsupportedTerm(s, person, term, need);
     } else if (!need) {
       // No need found: the health plan is billed to the Yale account and paid from the bank.
       payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');
@@ -2328,6 +2452,12 @@ export function registerSchool(sim: Simulation): void {
           : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, was paid from your bank, and living costs are yours.`,
         importance: 55, route: '/workspace/school',
       });
+    }
+    // An additional term has its retakes and its evaluation, nothing of a year's (`school.extra`, from 2026-10-10).
+    if (school.extra?.term === term) {
+      planWeek(s, person, s.now);
+      schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(term)} Evaluation`, minutes: 0, payload: { term }, requiresPlayer: false });
+      return;
     }
     // A first or second year's spring ends in a summer that's theirs. Until 2026-10-09 its first Monday began the business's week (`systems/career.ts`).
     if (!termStart(term).fall && yearOfTerm(academic) < 3) schedule(s, person, at(recessStart(term), 9), { kind: RECESS_KIND, label: 'Summer Recess', minutes: 0, requiresPlayer: false });
@@ -2350,7 +2480,7 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     if (!person || !school || !person.craft) return;
     const day = parseKey(String(item.payload.day));
-    const courses = coursesOn(day, school.offset ?? 0);
+    const courses = coursesFor(school, day);
     school.tally.classDays += 1;
     // The classmates, in class most days.
     const inClass = classmatesIn(s, person, keyOf(day));
@@ -2376,7 +2506,7 @@ export function registerSchool(sim: Simulation): void {
     });
     // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day
     // counted only for someone absent anyway, and a student who called in was counted in class).
-    if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; return; }
+    if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; considerWelfare(s, person); return; }
     // Not registered, classes don't count them: an absence, unexcused (from 2026-10-10, `registered`).
     if (!registered(school, courseworkOf(s, person))) {
       meet(false, false);
@@ -2407,7 +2537,7 @@ export function registerSchool(sim: Simulation): void {
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
     meet(false, offSick(person, item.at));
-    if (offSick(person, item.at)) { school.tally.excused += 1; return; }
+    if (offSick(person, item.at)) { school.tally.excused += 1; considerWelfare(s, person); return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
@@ -2707,11 +2837,12 @@ export function registerSchool(sim: Simulation): void {
         const due = work.filter((a) => a.course === code && (a.shown || a.status === 'missed'));
         return { due: due.length, notShown: due.filter((a) => !a.shown).length };
       }, (code) => COURSES.find((c) => c.code === code)?.perWeek ?? 4);
-      // The Bulletin's disqualification by Fails (p.194), from 2026-10-10 (`disqualified`).
-      const out = disqualified(person.school);
-      if (out) {
-        person.school.history.push({ term, standing: 'dismissed', attendance: 0, growth: 0, classGrowth: 0, reason: out });
-        setStanding(s, person, 'dismissed', `${out} The faculty act on it, as the Bulletin lets them.`);
+      // The Bulletin's disqualification by Fails (p.194): the faculty "may" disqualify, so it's their review
+      // (`facultyReview`, from 2026-10-10; that morning it was automatic).
+      const review = facultyReview(s, person, term);
+      if (review?.outcome === 'dismissed') {
+        person.school.history.push({ term, standing: 'dismissed', attendance: 0, growth: 0, classGrowth: 0, reason: review.why });
+        setStanding(s, person, 'dismissed', review.why);
         return;
       }
     }
@@ -2737,6 +2868,16 @@ export function registerSchool(sim: Simulation): void {
       return;
     }
     setStanding(s, person, 'graduated', `You graduate from the ${YALE_DRAMA.name} with an ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}.`);
+  });
+
+  sim.onSchedule(CONFERRAL_KIND, (item, s) => {
+    const person = personOf(item);
+    const school = person?.school;
+    if (!person || !school || schoolEnded(school.standing)) return;
+    const open = degreeShortfall(school);
+    if (open.failed.length) { setStanding(s, person, 'withheld', `The degree needs every course passed, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'wasn’t' : 'weren’t'}.`); return; }
+    if (school.hold !== undefined || open.incomplete.length) { school.awaitingDegree = true; if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Conferred In December', body: school.hold !== undefined ? 'A financial hold on your Yale account keeps the degree until it’s paid.' : `${open.incomplete.map((r) => r.name).join(', ')} still incomplete: the degree waits for ${open.incomplete.length === 1 ? 'it' : 'them'}.`, importance: 85, route: '/workspace/school' }); return; }
+    setStanding(s, person, 'graduated', `The ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} is conferred at Yale’s December conferral, your last courses retaken in an additional term; the diploma is mailed in about ${DEGREE_DATES.mailedWeeks} weeks.`);
   });
 
   sim.onCommand<Record<string, never>, { week: string }>('school.cabaret', (_p, { sim: s }) => {

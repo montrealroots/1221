@@ -439,14 +439,44 @@ export const LEAVE_RULES = {
  * disqualification at two Failures in a term, three by the end of the second, four by the third, five by the fourth,
  * six by the fifth, or seven in all; a late payment fee of $125 a month, to $375 a term, and a financial hold that
  * blocks registration and the diploma. Not found: any rule for repeating a failed acting course. SLATE's faculty model,
- * labeled so on the screen: a year with a course failed can be repeated, once, on the chair's and the dean's approval,
+ * labeled so on the screen: a year with a course failed can be repeated on the chair's and the dean's approval (a year
+ * repeated once isn't approved again, from 2026-10-10: until then one repeat in all), or, after the last year, the
+ * failed courses retaken in an additional term of their season (`school.request_extra_term`),
  * as a program "may vary specific requirements on an individual basis with the approval of the dean" (p.148), asked for
  * at the year's end, or within thirty days of a last term's; decided in five working days; refused past nine semesters.
+ * Disqualification is the faculty's review (`facultyReview`), since the Bulletin says "may".
  */
+/**
+ * A mandatory medical leave (Bulletin 2026–2027 p.159; research-yale-leave-2.json). Documented: the director of Yale
+ * Health or the chief of Mental Health and Counseling recommends it and the dean decides; on danger to self or others,
+ * serious disruption of the academic community, or refusing to cooperate with the assessment; "each case will be
+ * assessed individually", by "the level of risk presented and the availability of reasonable modifications"; an
+ * appeal in writing to the dean within seven days of its effective date, with no stay; and back only on a Yale Health
+ * physician's permission. Not found: notice before it, a meeting, or how long it runs. SLATE's model, labeled so: what
+ * starts an assessment is the student's observed function, never a diagnosis (two stays in hospital in four weeks, or
+ * most of a term's class days missed ill); the assessment weighs whether they're fit now, will be within two weeks
+ * (when the modifications the School already makes, excused absences and Incompletes, are enough), or not; the dean
+ * decides the next working day; and an appeal is upheld unless the student is cleared and the term is young enough
+ * to resume.
+ */
+export const MANDATORY_LEAVE = {
+  lookbackDays: 28,
+  stays: 2,
+  minClassDays: 12,
+  excusedShare: 0.6,
+  soonDays: 14,
+  assessWorkingDays: 2,
+  assessMinutes: 60,
+  appealDays: 7,
+  appealDecideWorkingDays: 5,
+  /** An appeal overturns a leave only while this share of the term's classes is still ahead. */
+  resumeWithin: 0.5,
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, p.159; research-yale-leave-2.json',
+} as const;
+
 export const EXTENDED_STUDY = {
   maxSemesters: 9,
   supportedTerms: 6,
-  repeats: 1,
   requestDays: 30,
   decideWorkingDays: 5,
   dueDays: 30,

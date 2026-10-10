@@ -112,7 +112,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
         {(a.objective || a.revisit) && (
           <div className="small">
             {a.objective && <div><strong>Put First: {objectiveLabel(t, a.objective)}.</strong> <span className="xs dim">{objectiveWhy(a, notesOf(courseworkOf(sim, person)!))}</span></div>}
-            {a.revisit && scene && <div>{revisitWords(a, scene.roles[a.revisit.role].name, person.school!.classmates[a.revisit.partner ?? -1]?.name)}{a.revisit.change === 'reading' && <span className="xs dim"> {readingDiffers(a) ? 'Your reading differs from last time’s.' : 'Your reading is last time’s so far.'}</span>}</div>}
+            {a.revisit && scene && <div>{revisitWords(a, scene.roles[a.revisit.role].name, courseworkOf(sim, person)!.assignments.find((x) => x.id === a.revisit!.assignmentId)?.partnerName ?? person.school!.classmates[a.revisit.partner ?? -1]?.name)}{a.revisit.change === 'reading' && <span className="xs dim"> {readingDiffers(a) ? 'Your reading differs from last time’s.' : 'Your reading is last time’s so far.'}</span>}</div>}
           </div>
         )}
         <div className="grid grid-3">
@@ -282,6 +282,7 @@ function NotesLedger() {
 }
 
 function Shown({ list }: { list: Assignment[] }) {
+  const person = useWorld((s) => s.player);
   return (
     <Panel title="Work Shown" subtitle="The last twelve">
       <div className="col gap-2">
@@ -290,7 +291,7 @@ function Shown({ list }: { list: Assignment[] }) {
           const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
           return (
             <div key={a.id} className="small">
-              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
+              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''}{a.partner !== undefined ? `, with ${a.partnerName ?? person.school?.classmates[a.partner]?.name ?? 'a classmate'}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
               {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.missed ? 'Not Shown Again' : a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
               {a.feedback && <div className="xs dim">{a.feedback.text}</div>}
             </div>

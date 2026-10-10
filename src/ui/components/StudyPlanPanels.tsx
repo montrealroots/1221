@@ -11,9 +11,9 @@ import { Fine, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, instantFromZoned } from '@/engine/core/time';
-import { EXTENDED_STUDY, LEAVE_RULES, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
+import { EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
 import {
-  LEAVE_REASONS, accountOwed, clearedToReturn, enrolledTerms, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, yaleAccount,
+  LEAVE_REASONS, accountOwed, clearedToReturn, enrolledTerms, extraRefusal, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
 import { termAccount, academicTerm, conversionRefusal, convertibleHours, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
@@ -21,7 +21,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 
 const STATUS: Record<Leave['status'], string> = {
   pending: 'With The Chair And The Dean', granted: 'Granted, Not Yet Begun', refused: 'Refused', canceled: 'Called Off',
-  on: 'On Leave', returned: 'Returned', dismissed: 'Ended In Dismissal', withdrawn: 'Ended In Withdrawal',
+  on: 'On Leave', returned: 'Returned', dismissed: 'Ended In Dismissal', withdrawn: 'Ended In Withdrawal', rescinded: 'Overturned On Appeal',
 };
 
 /** A leave: asked for, waited on, begun, and the way back. */
@@ -33,11 +33,14 @@ export function LeavePanel() {
   const money = (c: number) => formatMoney(c, cur);
   const [kind, setKind] = useState<LeaveKind>('medical');
   const [reason, setReason] = useState<LeaveReason>('illness');
+  const [terms, setTerms] = useState<number>(LEAVE_RULES.terms);
   const [asking, setAsking] = useState<'' | 'request' | 'cancel' | 'affiliate'>('');
   const l = school.leave;
   const ended = schoolEnded(school.standing);
   if (ended && !(school.leaves ?? []).length) return null;
   const no = ended ? undefined : leaveRefusal(sim, person, kind, reason);
+  const lengths = ended || school.termsBegun === 0 ? [] : leaveLengths(sim, school, kind);
+  const w = school.welfare;
   const start = !ended && school.termsBegun > 0 ? leaveStart(sim, school, kind) : undefined;
   const affiliateCost = LEAVE_RULES.terms * inSaveMoney(sim, LEAVE_RULES.affiliatePerTerm, 'USD') - (l?.feeCredit ?? 0);
   const noticeNo = l?.status === 'on' && l.kind === 'medical' ? clearedToReturn(person, sim.now) : undefined;
@@ -45,6 +48,11 @@ export function LeavePanel() {
   return (
     <div className="col gap-2">
       <div className="eyebrow">A Leave Of Absence</div>
+      {w && (
+        <p className="small" style={{ margin: 0 }}>
+          <strong>Yale Health’s assessment</strong>, {w.status === 'scheduled' ? `on ${formatDate(w.assessAt, sim.zone)}: be there, at Yale Health, or ask for a medical leave yourself first.` : w.status === 'assessed' ? `found: ${w.why} The dean decides by ${formatDate(w.decideAt ?? sim.now, sim.zone)}.` : w.why} <span className="xs dim">Started by {w.trigger}: how you’re managing, not a diagnosis.</span>
+        </p>
+      )}
       {l && (
         <div className="col gap-2">
           <div className="grid grid-3">
@@ -61,6 +69,12 @@ export function LeavePanel() {
                 {l.f1Extended ? 'Your I-20 runs a year longer, as a reduced course load. ' : ''}
                 {l.noticeAt ? `You gave notice of your return on ${formatDate(l.noticeAt, sim.zone)}.` : `Give notice of your return by ${formatDate(l.noticeBy!, sim.zone)}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}; without it the leave ends in dismissal.`}
               </p>
+              {l.mandatory && (
+                <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+                  <span className="small"><strong>Imposed by the dean</strong> on Yale Health’s recommendation: {l.mandatory.why} {l.mandatory.appeal ? (l.mandatory.appeal.outcome ? `Your appeal was ${l.mandatory.appeal.outcome === 'rescinded' ? 'granted' : 'turned down'}: ${l.mandatory.appeal.why}` : `Your appeal is with the dean, decided by ${formatDate(l.mandatory.appeal.decideAt, sim.zone)}.`) : sim.now <= l.mandatory.appealBy ? `You can appeal in writing to the dean until ${formatDate(l.mandatory.appealBy, sim.zone)}; the leave stands meanwhile, and it’s overturned if you’re cleared while enough of the term is left to resume.` : ''}</span>
+                  {!l.mandatory.appeal && sim.now <= l.mandatory.appealBy && <Gated feature="school.appeal_leave" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ decideAt: number }>('school.appeal_leave'); if (r.ok) toast(`Appealed: decided by ${formatDate(r.value!.decideAt, sim.zone)}.`, 'positive'); }}>Appeal To The Dean</Gated>}
+                </div>
+              )}
               <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                 {!l.noticeAt && <Gated feature="school.return_notice" className="btn btn-sm" disabled={Boolean(noticeNo)} title={noticeNo} onClick={() => { if (run('school.return_notice').ok) toast('Notice given: you’re expected back.', 'positive'); }}>Give Notice Of Return</Gated>}
                 {noticeNo && !l.noticeAt && <span className="xs dim">{noticeNo}</span>}
@@ -102,6 +116,11 @@ export function LeavePanel() {
                 <option value="medical">Medical</option><option value="personal">Personal</option>
               </select>
             </div>
+            <div className="field"><label htmlFor="leave-terms">Length</label>
+              <select id="leave-terms" value={terms} onChange={(e) => setTerms(Number(e.target.value))}>
+                {lengths.map((x) => <option key={x.terms} value={x.terms} disabled={Boolean(x.why)}>{x.terms === 1 ? 'One Term' : x.terms === 2 ? 'Two Terms' : 'Three Terms'}{x.why ? ' (Not Possible)' : ''}</option>)}
+              </select>
+            </div>
             <div className="field"><label htmlFor="leave-reason">Reason</label>
               <select id="leave-reason" value={reason} onChange={(e) => setReason(e.target.value as LeaveReason)}>
                 {(Object.keys(LEAVE_REASONS) as LeaveReason[]).filter((r) => LEAVE_REASONS[r].kind === kind).map((r) => <option key={r} value={r}>{LEAVE_REASONS[r].label}</option>)}
@@ -110,14 +129,15 @@ export function LeavePanel() {
             {asking !== 'request'
               ? <button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => setAsking('request')}>Ask For A Leave…</button>
               : <>
-                  <Gated feature="school.request_leave" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_leave', { kind, reason }); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(''); }}>Ask</Gated>
+                  <Gated feature="school.request_leave" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_leave', { kind, reason, terms }); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(''); }}>Ask</Gated>
                   <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
                 </>}
           </div>
+          {lengths.filter((x) => x.why).map((x) => <p key={x.terms} className="xs dim" style={{ margin: 0 }}>{x.terms === 1 ? 'One term' : x.terms === 2 ? 'Two terms' : 'Three terms'}: {x.why}</p>)}
           {no ? <p className="xs dim" style={{ margin: 0 }}>{no}</p> : start && (
             <p className="small" style={{ margin: 0 }}>
               {asking === 'request' ? 'Asking puts it to the chair and the dean, who decide in five working days. ' : ''}
-              Granted, it would run from {start.now ? 'the day it’s granted' : `${termLabel(start.term)}`} to {termLabel(start.term + LEAVE_RULES.terms)}, a year: {start.now ? 'this term’s courses are left unfinished and taken again on return, its castings and any Cabaret show end, and the term’s scholarship goes back on the rebate schedule; ' : ''}no aid, classes, calls or shifts while on leave; {kind === 'medical' ? 'Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back' : `Yale Health’s student cover ends, and Affiliate cover is ${money(inSaveMoney(sim, LEAVE_RULES.affiliatePerTerm, 'USD'))} a term`}; notice of return eight weeks before, or dismissal. You’d be back in year {Math.floor(academicTerm(school, start.term) / 2) + 1}, the class of {school.classOf + 1}.
+              Granted, it would run from {start.now ? 'the day it’s granted' : `${termLabel(start.term)}`} to {termLabel(start.term + terms)}: {start.now ? 'this term’s courses are left unfinished and taken again on return, its castings and any Cabaret show end, and the term’s scholarship goes back on the rebate schedule; ' : ''}no aid, classes, calls or shifts while on leave; {kind === 'medical' ? 'Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back' : `Yale Health’s student cover ends, and Affiliate cover is ${money(inSaveMoney(sim, LEAVE_RULES.affiliatePerTerm, 'USD'))} a term`}; notice of return eight weeks before, or dismissal. You’d be back in year {Math.floor(academicTerm(school, start.term) / 2) + 1}, with the class of {school.classOf + Math.round(terms / 2)}: your class goes on without you, and stays yours.
             </p>
           )}
         </div>
@@ -127,7 +147,7 @@ export function LeavePanel() {
           <ul style={{ margin: 0 }}>{school.leaves!.map((x) => <li key={x.id}>{x.kind === 'medical' ? 'Medical' : 'Personal'} ({LEAVE_REASONS[x.reason].label}), asked {formatDate(x.requestedAt, sim.zone)}: {STATUS[x.status]}{x.why ? `. ${x.why}` : ''}{x.returnedAt ? `, back ${formatDate(x.returnedAt, sim.zone)}` : ''}.</li>)}</ul>
         </details>
       )}
-      <Fine>The Bulletin’s leave (pp.157–160): one, two or three terms, personal after a term completed and current with requirements and normally not after the tenth day, medical on a Yale Health physician’s recommendation, no aid, Yale Health’s student cover ending the day it’s granted or back to the insurance term’s start before classes, Affiliate cover at $5,416 a term, notice eight weeks before return, and dismissal for not returning. SLATE’s: a leave is a year, since the acting courses run in sequence; five working days to decide; the physician’s view read from care, injury or illness in the last thirty days; the rebate schedule applied to the living scholarship. An F-1 student’s personal leave ends their status and needs travel SLATE doesn’t have, so it’s refused, with why. Used: {leaveTermsUsed(school)} of {LEAVE_RULES.maxTerms} terms. Source: {LEAVE_RULES.source}.</Fine>
+      <Fine>A mandatory medical leave (p.159) is recommended by Yale Health and decided by the dean, on an individual assessment of risk and of the modifications the School can make; you can appeal in writing within {MANDATORY_LEAVE.appealDays} days, and the leave stands while it’s heard. What starts an assessment in SLATE is how you’re managing (stays in hospital, class days missed ill), never a diagnosis; the rest of its process is SLATE’s model where the Bulletin is silent. The Bulletin’s leave (pp.157–160): one, two or three terms, personal after a term completed and current with requirements and normally not after the tenth day, medical on a Yale Health physician’s recommendation, no aid, Yale Health’s student cover ending the day it’s granted or back to the insurance term’s start before classes, Affiliate cover at $5,416 a term, notice eight weeks before return, and dismissal for not returning. SLATE’s: a leave’s length must return you in the season you left, since most acting courses run fall to spring; five working days to decide; the physician’s view read from care, injury or illness in the last thirty days; the rebate schedule applied to the living scholarship. An F-1 student’s personal leave ends their status and needs travel SLATE doesn’t have, so it’s refused, with why. Used: {leaveTermsUsed(school)} of {LEAVE_RULES.maxTerms} terms. Source: {LEAVE_RULES.source}.</Fine>
     </div>
   );
 }
@@ -146,12 +166,14 @@ export function RepeatPanel() {
   const r = school.repeat;
   const t = Math.max(0, school.termsBegun - 1);
   const failed = repeatCourses(school, t);
-  const show = r || school.repeatBy !== undefined || failed.length > 0;
+  const extra = extraRefusal(sim, person);
+  const ex = school.extraRequest;
+  const show = r || ex || school.extra || school.repeatBy !== undefined || failed.length > 0;
   if (!show) return null;
   const past = enrolledTerms(school).length + 2 - EXTENDED_STUDY.supportedTerms;
   return (
     <div className="col gap-2">
-      <div className="eyebrow">Repeating A Year</div>
+      <div className="eyebrow">Finishing The Degree</div>
       {r && <p className="small" style={{ margin: 0 }}>Year {r.year}, asked {formatDate(r.requestedAt, sim.zone)}: {r.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(r.decideAt, sim.zone)}` : r.status === 'granted' ? 'granted' : r.status === 'refused' ? `refused. ${r.why ?? ''}` : 'called off'}{r.courses.length ? `, for ${r.courses.join(', ')}` : ''}.</p>}
       {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the degree is withheld.</p>}
       {!no && (
@@ -167,9 +189,17 @@ export function RepeatPanel() {
           </div>
         </div>
       )}
+      {ex && <p className="small" style={{ margin: 0 }}>An additional term, {termLabel(ex.term)}, asked {formatDate(ex.requestedAt, sim.zone)} to retake {ex.courses.map((c) => c.name).join(', ')}: {ex.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(ex.decideAt, sim.zone)}` : ex.status === 'granted' ? 'granted' : `refused. ${ex.why ?? ''}`}.</p>}
+      {school.extra && <p className="small" style={{ margin: 0 }}>In {termLabel(school.extra.term)} you take only {school.extra.courses.map((c) => c.name).join(', ')}; passed, the degree is {termStart(school.extra.term).fall ? 'conferred at Yale’s December conferral' : 'conferred at Commencement in May'}.</p>}
+      {!extra.why && !ex && (
+        <div className="col gap-1">
+          <p className="small" style={{ margin: 0 }}>Or an additional term, {termLabel(extra.term!)}, to retake {extra.courses!.map((c) => c.name).join(', ')} alone, with the class then in that year{termStart(extra.term!).fall ? ', the degree conferred in December' : ''}.</p>
+          <div><Gated feature="school.request_extra_term" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_extra_term'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Additional Term</Gated></div>
+        </div>
+      )}
       {r?.status === 'pending' && <div><Gated feature="school.cancel_repeat" className="btn btn-sm btn-ghost" onClick={() => { if (run('school.cancel_repeat', { confirm: true }).ok) toast('Called off.', 'neutral'); }}>Call Off The Request</Gated></div>}
       {no && failed.length > 0 && !r && <p className="xs dim" style={{ margin: 0 }}>{no}</p>}
-      <Fine>No rule for repeating a failed acting course was found in the Bulletin; this is SLATE’s faculty model, under the Bulletin’s nine semesters for the degree, six terms of tuition support and its disqualification at two Fails in a term or seven in all (pp.148, 182, 194). One repeat, asked at the year’s end or within thirty days of the last year’s evaluation. Source: {EXTENDED_STUDY.source}.</Fine>
+      <Fine>No rule for repeating a failed acting course was found in the Bulletin; this is SLATE’s faculty model, under the Bulletin’s nine semesters for the degree, six terms of tuition support and its disqualification at two Fails in a term or seven in all (pp.148, 182, 194). A year is approved once, asked at its end or within thirty days of the last year’s evaluation; after the last year, what’s unpassed can be retaken in an additional term of its season instead. The faculty review a disqualification rather than apply it: the first time, academic warning and the year to repeat. Source: {EXTENDED_STUDY.source}.</Fine>
     </div>
   );
 }
@@ -185,9 +215,9 @@ export function YaleAccountPanel() {
   const money = (c: number) => formatMoney(c, cur);
   const [amount, setAmount] = useState('');
   const acc = yaleAccount(sim, person, false);
-  if (!acc) return null;
+  if (!acc && !school.aidReview && !school.extra && school.repeat?.status !== 'granted') return null;
   const owed = accountOwed(sim, person);
-  const lines = sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === acc.id)).slice(-12).reverse();
+  const lines = acc ? sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === acc.id)).slice(-12).reverse() : [];
   const value = Math.round(Number(amount) * 100);
   return (
     <div className="col gap-2">
@@ -207,12 +237,23 @@ export function YaleAccountPanel() {
           <thead><tr><th scope="col">Date</th><th scope="col">What</th><th scope="col" className="num">Charged</th><th scope="col" className="num">Paid Or Credited</th></tr></thead>
           <tbody>
             {lines.map((t) => {
-              const p = t.postings.find((q) => q.accountId === acc.id)!;
+              const p = t.postings.find((q) => q.accountId === acc!.id)!;
               return <tr key={t.id}><td>{formatDate(t.at, sim.zone)}</td><td className="small">{t.memo}</td><td className="num mono">{p.amount < 0 ? money(-p.amount) : ''}</td><td className="num mono">{p.amount > 0 ? money(p.amount) : ''}</td></tr>;
             })}
           </tbody>
         </table>
       </div>
+      {(() => {
+        const ar = school.aidReview;
+        const coming = enrolledTerms(school).length >= EXTENDED_STUDY.supportedTerms || school.extra || school.repeat?.status === 'granted';
+        if (!coming && !ar) return null;
+        return (
+          <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+            <span className="small">{ar ? (ar.status === 'pending' ? `The aid office is reviewing your support past six terms, by ${formatDate(ar.decideAt, sim.zone)}.` : ar.why) : 'Support past six terms: the aid office can review it.'}</span>
+            {!ar && <Gated feature="school.request_aid_review" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_aid_review'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Aid Review</Gated>}
+          </div>
+        );
+      })()}
       <Fine>Tuition support ordinarily covers six terms (p.182); a term past it is billed tuition and the Yale Health fee, due in thirty days, SLATE’s estimate. Unpaid, the Bulletin’s late fee, {money(inSaveMoney(sim, EXTENDED_STUDY.lateFee, 'USD'))} a month to {money(inSaveMoney(sim, EXTENDED_STUDY.lateFeeTermCap, 'USD'))} a term, and a hold on registration and the diploma (p.184). A scholarship returned on a leave is charged here too. The balance is the sum of the account’s postings.</Fine>
     </div>
   );
@@ -242,6 +283,26 @@ export function WorkLimitsBlock() {
         {no && <span className="xs dim">{no}</span>}
       </div>
       <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is refused, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found; SLATE’s is Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>
+    </div>
+  );
+}
+
+/** The class the student is in, and any class they began with and fell a year behind (`joinCohort`): every one kept. */
+export function ClassesPanel() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  if (!(school.formerClasses ?? []).length) return null;
+  return (
+    <div className="col gap-2">
+      <div className="eyebrow">Your Classes</div>
+      <p className="small" style={{ margin: 0 }}>You go on with the class of {school.classOf}: {school.classmates.map((m) => m.name).join(', ')}.</p>
+      {school.formerClasses!.map((c) => (
+        <p key={c.classOf} className="small" style={{ margin: 0 }}>
+          Your first class, the class of {c.classOf}, went on from {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record; they’re a year ahead now.
+        </p>
+      ))}
+      <Fine>The first class is played forward through the terms it had without you: its classes, as a class day grows a classmate. Its productions in those terms aren’t played forward, a boundary of SLATE’s.</Fine>
     </div>
   );
 }
