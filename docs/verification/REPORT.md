@@ -4,19 +4,19 @@ Written by `node tools/verify-report.mjs` from `docs/verification/<suite>/result
 
 ## Played Lives
 
-Ran on b7f2805f (tree 05f11da9, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
+Ran on f899ecd7 (tree 8894a59c, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
 
 | Profile and seed | Policy | Dates | Outcome | Terms (standing, attendance %) | Pieces judged (mastery) | Fitness, first and last month | Condition at end | Breaches | Unbalanced | Reloads | Error |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | new-york, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | new-york, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| new-york, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| new-york, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; concern 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | london, early riser and curious, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | london, early riser and curious, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | reykjavik, autopilot / lives-0 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-1 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-2 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
@@ -29,7 +29,7 @@ Ran on b7f2805f (tree 05f11da9, 0 dirty). Each plays a student from creation for
 
 ## Mastery Through The Commands
 
-Ran on b7f2805f (tree 05f11da9, 0 dirty). A student practices one ability or technique as far as the day allows (`tools/mastery.ts --mode single`), or a plan for a genre (`--mode plan`).
+Ran on f899ecd7 (tree 8894a59c, 0 dirty). A student practices one ability or technique as far as the day allows (`tools/mastery.ts --mode single`), or a plan for a genre (`--mode plan`).
 
 | Target | Start | End | Sessions to full | Calendar days | Full | Full after a reload | Refusals | Most refused by | Standing | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -78,22 +78,22 @@ Ran on b7f2805f (tree 05f11da9, 0 dirty). A student practices one ability or tec
 | singing | 55.7 | 2026-12-01 | 2029-05-09 (242 sessions) | 2029-11-18 (326 sessions) | 100 |
 | dance | 51.6 | 2026-09-29 | 2029-05-07 (255 sessions) | 2029-11-17 (339 sessions) | 100 |
 
-**Plan, drama** (seed m-1): targets emotionalDepth, imagination, memory, focus, composure, discipline, screen, scene; every one full or mastered on 2029-06-10; graduated 2029-05-21 (graduated); the journey's mastered pieces {"scene":0,"written":0,"movement":0,"voice":0,"improvisation":0,"camera":3,"partnered":0,"performance":0,"clown":0,"song":0,"audition":0}; breaches 0, unbalanced 0.
+**Plan, drama** (seed m-1): targets emotionalDepth, imagination, memory, focus, composure, discipline, screen, scene; every one full or mastered on 2029-06-08; graduated 2029-05-21 (graduated); the journey's mastered pieces {"scene":0,"written":0,"movement":0,"voice":0,"improvisation":0,"camera":3,"partnered":0,"performance":0,"clown":0,"song":0,"audition":0}; breaches 0, unbalanced 0.
 
 | Target | Start | First session | Mastered | Full | End |
 |---|---|---|---|---|---|
-| emotionalDepth | 54.5 | 2026-12-17 | — | 2029-06-09 (294 sessions) | 100 |
-| imagination | 52.4 | 2026-11-01 | — | 2029-06-10 (308 sessions) | 100 |
-| memory | 48.6 | 2026-08-24 | — | 2029-06-10 (344 sessions) | 100 |
-| focus | 54 | 2026-11-12 | — | 2029-06-10 (311 sessions) | 100 |
-| composure | 44.3 | 2026-08-24 | — | 2029-06-09 (347 sessions) | 100 |
+| emotionalDepth | 54.5 | 2026-12-17 | — | 2029-06-08 (295 sessions) | 100 |
+| imagination | 52.4 | 2026-11-01 | — | 2029-06-08 (309 sessions) | 100 |
+| memory | 48.6 | 2026-08-24 | — | 2029-06-08 (343 sessions) | 100 |
+| focus | 54 | 2026-11-12 | — | 2029-06-07 (306 sessions) | 100 |
+| composure | 44.3 | 2026-08-24 | — | 2029-06-07 (349 sessions) | 100 |
 | discipline | 57.5 | — | — | 2027-09-04 (0 sessions) | 100 |
-| screen | 55.8 | 2026-11-15 | 2028-08-24 (244 sessions) | 2029-06-09 (325 sessions) | 100 |
-| scene | 50.1 | 2026-10-09 | 2028-08-24 (234 sessions) | 2029-06-09 (315 sessions) | 100 |
+| screen | 55.8 | 2026-11-15 | 2028-08-22 (245 sessions) | — | 99.99 |
+| scene | 50.1 | 2026-10-09 | 2028-08-24 (237 sessions) | 2029-06-08 (316 sessions) | 100 |
 
 ## Fitness Through Look After Yourself
 
-Ran on b7f2805f (tree 05f11da9, 0 dirty). Each scenario works out on its schedule through `life.look_after` (`tools/fitness.ts`).
+Ran on f899ecd7 (tree 8894a59c, 0 dirty). Each scenario works out on its schedule through `life.look_after` (`tools/fitness.ts`).
 
 | Scenario | Born | Age at end | Start | End | Full | Full on day | Workouts done / days planned | Most refused by | Readiness at nine | Standing | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -114,7 +114,7 @@ Ran on b7f2805f (tree 05f11da9, 0 dirty). Each scenario works out on its schedul
 
 ## Illness And Injury On A Piece Of Work
 
-Ran on b7f2805f (tree 05f11da9, 0 dirty). The same piece shown healthy and under each condition (`tools/condition.ts`).
+Ran on f899ecd7 (tree 8894a59c, 0 dirty). The same piece shown healthy and under each condition (`tools/condition.ts`).
 
 | Work | Variant | Shown | Status | Overall | Band | Dimensions | Below healthy, same day | Condition among the record’s top three limits | Class days attended | Abilities lower than healthy | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
