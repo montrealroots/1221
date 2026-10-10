@@ -105,6 +105,7 @@ Each is a recommendation. Nothing was built to make these items reachable.
    - **Effect if changed:** fewer leads, abilities a few points lower.
 5. **A student who never prepares** is dismissed in the second year.
    - **Recommendation:** keep; it is the standard.
+   - **Decided:** kept, at the owner's word on 2026-10-10.
 
 ## Save compatibility
 

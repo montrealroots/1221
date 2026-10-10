@@ -1,3 +1,19 @@
+# Read First: Merged To Main, With The Coverage Gaps Closed, 2026-10-10
+
+At the owner's word ("Keep #5 then merge everything."), `main` was fast-forwarded from `9ae9879b` to `claude/coverage-gaps`. Nothing was force-pushed.
+
+**Decision #5 is kept:** a student who never prepares their coursework is dismissed in the second year. That is the standard, so no code changed.
+
+**Still the owner's to decide**, from `docs/verification/COVERAGE-GAPS.md`:
+1. Mexican residence.
+2. The receipts modifier.
+3. Foreign benefits and pensions.
+4. The student's talent range.
+
+**Not deployed.** Schema 94 is unchanged.
+
+---
+
 # Read First: The Remaining Coverage Gaps Closed, 2026-10-10
 
 The owner's brief, "Close SLATE's Remaining Gameplay Coverage Gaps", worked from `main` at `9ae9879b`.
