@@ -4,11 +4,12 @@ At the owner's word ("Keep #5 then merge everything."), `main` was fast-forwarde
 
 **Decision #5 is kept:** a student who never prepares their coursework is dismissed in the second year. That is the standard, so no code changed.
 
+**Decision #4 is kept too** ("Keep #4 too, now merge again."): the student's talent stays drawn from the class's top quarter, so a careful student takes most leads (`docs/verification/LEADS.md`). No code changed.
+
 **Still the owner's to decide**, from `docs/verification/COVERAGE-GAPS.md`:
 1. Mexican residence.
 2. The receipts modifier.
 3. Foreign benefits and pensions.
-4. The student's talent range.
 
 **Not deployed.** Schema 94 is unchanged.
 

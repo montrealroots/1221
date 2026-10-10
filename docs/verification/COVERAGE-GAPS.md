@@ -103,6 +103,7 @@ Each is a recommendation. Nothing was built to make these items reachable.
    - **Today:** drawn from the class's top quarter (`LEADS.md`).
    - **Recommendation:** keep, unless the student should start as one of the class.
    - **Effect if changed:** fewer leads, abilities a few points lower.
+   - **Decided:** kept, at the owner's word on 2026-10-10. A careful student starts among the class's strongest and takes most leads.
 5. **A student who never prepares** is dismissed in the second year.
    - **Recommendation:** keep; it is the standard.
    - **Decided:** kept, at the owner's word on 2026-10-10.
