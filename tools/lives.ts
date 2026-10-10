@@ -65,7 +65,7 @@ const PROFILES: Profile[] = [
 
 import { life, evening, freeHour, practiceHour, keepCovered, lookAfter } from './policy';
 
-interface Result { policy?: string; startedOn?: string; endedOn?: string; monthly?: unknown[]; terms?: unknown[]; journey?: Record<string, unknown>; cast?: Record<string, unknown>; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
+interface Result { policy?: string; startedOn?: string; endedOn?: string; monthly?: unknown[]; terms?: unknown[]; journey?: Record<string, unknown>; cast?: Record<string, unknown>; casts?: unknown[]; work?: Record<string, unknown>; abilities?: Record<string, number>; profile: string; seed: string; graduated: boolean; standing: string; usStatus?: string; cover?: string; planEnded?: boolean; parts: Record<string, number>; wellbeing: Record<string, number>; bank: number; breaches: number; unbalanced: number; reloads: number; error?: string }
 
 function play(profile: Profile, seed: string): Result {
   let sim: Simulation;
@@ -74,6 +74,10 @@ function play(profile: Profile, seed: string): Result {
   const startedOn = new Date(sim.now).toISOString().slice(0, 10);
   // The body and the day each month (from 2026-10-10): fitness, condition, stress and morale on the first morning seen.
   const monthly: { on: string; fitness: number; condition: number; stress: number; morale: number }[] = [];
+  // Each casting's read as it was made (from 2026-10-10): the student's fit, delivery, balance and score, the part,
+  // their place in the group cast together, and their margin over the next: for the audit of how often a student who
+  // looks after themselves takes the lead.
+  const casts: { term: number; play: string; fit: number; delivery: number; balance: number; score: number; size: string; rank: number; of: number; margin: number; groupFit: number }[] = [];
   let lastMonth = '';
   let reloads = 0;
   let lastReload = sim.now;
@@ -100,6 +104,16 @@ function play(profile: Profile, seed: string): Result {
         }
       }
       sim.advanceTo(sim.now + (profile.play === 'autopilot' ? MS_DAY : MS_HOUR));
+      const read = sim.player.school?.castRead;
+      if (read && read.term !== casts.at(-1)?.term) {
+        const order = [...read.rows].sort((a, b) => b.score - a.score);
+        const me = order.find((r) => r.you);
+        if (me) {
+          const k = order.indexOf(me);
+          const next = order[k === 0 ? 1 : 0];
+          casts.push({ term: read.term, play: read.play, fit: me.fit, delivery: me.delivery, balance: me.balance, score: me.score, size: me.size, rank: k + 1, of: order.length, margin: Math.round((me.score - (next?.score ?? me.score)) * 10) / 10, groupFit: Math.round((order.reduce((a, r) => a + r.fit, 0) / order.length) * 10) / 10 });
+        }
+      }
       const p = zonedParts(sim.now, sim.zone);
       const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
       if (month !== lastMonth) {
@@ -185,6 +199,7 @@ function play(profile: Profile, seed: string): Result {
     })(),
     work: { n: work.length, mastery: work.filter((x) => x.mastery).length, byYear: Object.fromEntries(Object.entries(byYear).map(([k, v]) => [k, `${v.n} @ ${v.mean.toFixed(1)}`])), bands, history: developmentOf(sim.player).history.length, held: top },
     abilities: Object.fromEntries(Object.entries(ab).map(([k, v]) => [k, Math.round(v)])),
+    casts,
     profile: profile.name, seed, policy: profile.play, startedOn, endedOn: new Date(sim.now).toISOString().slice(0, 10), monthly,
     terms: (school?.history ?? []).map((h) => ({ term: h.term, standing: h.standing, attendance: Math.round(h.attendance * 100) })),
     graduated: school?.standing === 'graduated', standing: school?.standing ?? 'none', parts,
