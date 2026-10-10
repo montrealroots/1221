@@ -250,6 +250,8 @@ export interface Person {
   ssn?: import('../systems/taxid').SsnRecord;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
+  /** An IRS payment plan over what's owed on the returns (`systems/taxreturn.ts`, from 2026-10-10). */
+  taxPlan?: import('../systems/taxreturn').TaxPlan;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */

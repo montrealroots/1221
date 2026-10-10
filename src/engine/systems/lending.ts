@@ -90,9 +90,48 @@ import { savingsLeftThisMonth } from './cash';
 import { homeOf } from './earnings';
 import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
 import { markRecord } from './credit';
+import { openingOf, usPerson } from './bankmoves';
+import { hasSsn } from './taxid';
+import { pendingOn } from './pending';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
+/** The new bank's first look at a switch's application, the next working day (from 2026-10-10). */
+export const SWITCH_REVIEW_KIND = 'bank.switch_review';
+/** An old account left open, blocked, with what a switch couldn't take: looked at weekly, closed once it's clear. */
+export const SWITCH_DEBT_KIND = 'bank.switch_debt';
+
+/**
+ * CASS's own steps and limits (research-switch-loans-plans.json): a switch takes seven working days, its last the
+ * switch date; called off up to seven working days before it, and after that only the balance's transfer can be
+ * stopped, up to the working day before; card payments still pending on the day are held back and the rest follows
+ * once they post; an old account still in debt is blocked to all but repayment and closes once it's repaid; a partial
+ * switch moves the payments and keeps the old account, up to twenty working days, with no Guarantee. Recurring card
+ * payments don't move under CASS: SLATE has none, so that step can't fail here, and says so.
+ */
+export const CASS = { partialDays: 20, debtCheckDays: 7 } as const;
+
+/** A switch's last record, added. */
+function noteSwitch(person: Person, r: NonNullable<NonNullable<Person['payments']>['switches']>[number]): void {
+  const pay = (person.payments ??= {} as NonNullable<Person['payments']>);
+  (pay.switches ??= []).push(r);
+  if (pay.switches.length > 20) pay.switches.splice(0, pay.switches.length - 20);
+}
+
+/**
+ * Why the new bank would decline a switch's application, by its own opening rules (`openRefusal`'s): a debt it charged
+ * off, a ChexSystems report it reads, no photo ID in force, under its age, or a US-persons-only account. A switch is
+ * applied for online, so a branch's hour isn't asked.
+ */
+export function switchApplicationRefusal(sim: Simulation, person: Person, to: Bank): string | undefined {
+  if (collectionsOf(sim, person)?.institution === to.name) return `${to.name} won’t open an account for somebody who owes it a charged-off debt.`;
+  if (declines(sim, person, to)) return `${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
+  if (!photoIdOf(person, sim.now)) return `${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
+  const rules = openingOf(to);
+  if (rules?.minimumAge !== undefined && ageOn(sim, person, sim.now) < rules.minimumAge) return `${to.name} opens an account on your own from ${rules.minimumAge}.`;
+  if (rules?.usPersonsOnly && !usPerson(person, sim.now)) return `${to.name} opens this account for US citizens and permanent residents.`;
+  return undefined;
+}
 
 /**
  * SLATE's estimates, where banks publish nothing.
@@ -397,10 +436,15 @@ export function overdraftOffer(sim: Simulation, person: Person, account?: Accoun
  * and payment, or why not. Every loan they already hold, at any bank, counts against the wages it reads, so the same
  * pay isn't lent against twice (from 2026-10-10: until then one loan in all, at the primary's bank).
  */
-export function loanOffer(sim: Simulation, person: Person, amount: Money, months: number, bankId?: string): { apr: number; payment: Money; terms: Loan } | { refused: string } {
+export function loanOffer(sim: Simulation, person: Person, amount: Money, months: number, bankId?: string, purpose: 'education' | 'other' = 'other'): { apr: number; payment: Money; terms: Loan } | { refused: string } {
   const bank = bankId ? bankById(bankId) : bankOf(sim, person);
   const terms = lendingOf(bank).loan;
   if (!bank || !terms) return { refused: `${bank?.name ?? 'Your bank'} publishes no personal loan rate SLATE has.` };
+  // The lender's own conditions (from 2026-10-10): a purpose it won't lend for, a Social Security number, an income.
+  const lender = terms.lender ?? bank.name;
+  if (purpose !== 'other' && terms.notFor?.includes(purpose)) return { refused: `${lender} doesn’t lend for a post-secondary education expense.` };
+  if (terms.ssn && !hasSsn(person)) return { refused: `${lender} asks for a Social Security number.` };
+  if (terms.minIncome !== undefined && wagesLastMonth(sim, person) * 12 < inSaveMoney(sim, terms.minIncome, bank.currency)) return { refused: `${lender} lends on ${formatMoney(inSaveMoney(sim, terms.minIncome, bank.currency), saveCurrency(sim.universe), { cents: false })} a year of income or more, and last month’s wages come to less, a year of them.` };
   // Its customers, as the bank says: a current account there (for so many months where it says), unless it lends to
   // new customers too, to a lower ceiling (Citi). SLATE's reading where a bank says nothing: its customers.
   const there = checkingAt(sim, person, bank.id);
@@ -587,24 +631,35 @@ function payFromBank(sim: Simulation, person: Person, amount: Money, from?: Acco
 
 
 /** Moves one person's bank to another of their country's, now. */
-function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false, fromId?: string): void {
+function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false, fromId?: string, how: { keepBalance?: boolean; partial?: boolean } = {}): void {
   // The account the switch was asked for (from 2026-10-10: until then whichever was primary on the day it completed).
   const named = fromId ? sim.universe.accounts[fromId] : undefined;
   const old = named && !named.closedAt ? named : currentOf(sim, person);
   if (!old) return;
+  // A partial switch, or one whose balance transfer was stopped: the payments move, and the old account stays open
+  // with what it holds (from 2026-10-10).
+  if ((how.keepBalance || how.partial) && !quietly) {
+    const fresh = openBeside(sim, person, to, old, secondChance);
+    noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: how.partial ? 'partial' : 'balance-kept', on: sim.now });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: how.partial ? `A Partial Switch To ${to.name}` : `Switched To ${to.name}, The Balance Left`, body: `Your ${fresh.name} is open and your wages, standing orders and autopay move to it. ${old.name} stays open with ${formatMoney(old.balance, saveCurrency(sim.universe))}${how.partial ? ': a partial switch keeps the old account' : ', as you asked'}. Move it and close it on Your Banks when you want.`, importance: 70, route: '/workspace/bank' });
+    return;
+  }
+  // Card payments still pending on the day: the old bank holds back what covers them and sends the rest once they post
+  // (from 2026-10-10: until then they were settled into the new account as if posted). Everything else moves as on a
+  // switch that completes: the savings, the orders, the wages, the autopay.
+  const pending = -pendingOn(sim, old);
+  const held = pending > 0 && old.balance >= 0 && !quietly ? pending : 0;
+  let across = 0;
   // Overdrawn on the day, the old bank can't close it (PAD Art. 10(4)(e); CASS asks the overdraft settled first): the new
   // account opens and the payments move, and the old one stays open with what it owes, said, for the player to clear and
   // close (from 2026-10-10: until then the debt moved across with the balance).
   if (old.balance < 0 && !quietly) {
-    const number = accountNumber(sim, person, to, 'checking');
-    const fresh = sim.openAccount({ id: sim.nextId('account'), kind: 'checking', name: to.current.name, ownerId: person.id, institution: to.name, bankId: to.id, number, last4: number.replace(/\D/g, '').slice(-4), openedAt: sim.now, monthOpen: 0 });
-    if (person.primaryAccountId === old.id) person.primaryAccountId = fresh.id;
-    const pay = person.payments;
-    if (pay?.depositTo === old.id) pay.depositTo = fresh.id;
-    for (const order of pay?.standingOrders ?? []) if (order.fromId === old.id) order.fromId = fresh.id;
-    if (person.credit) for (const st of [person.credit, ...Object.values(person.credit.cards ?? {})]) if (st.autopayFrom === old.id) st.autopayFrom = fresh.id;
-    for (const loan of Object.values(sim.universe.accounts)) if (loan.kind === 'loan' && loan.repayFromId === old.id) loan.repayFromId = fresh.id;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `The Switch To ${to.name} Is Only Part Done`, body: `Your ${to.current.name} is open and your wages, standing orders and autopay move to it. ${old.name} was overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}, so ${old.institution} couldn’t close it: pay it in, then close it on Your Banks.`, importance: 85, route: '/workspace/bank' });
+    openBeside(sim, person, to, old, secondChance);
+    // Blocked to all but repayment, and closed once it's repaid (CASS's Account Closure Instruction, from 2026-10-10).
+    old.switchDebt = true;
+    sim.schedule({ at: sim.now + CASS.debtCheckDays * MS_DAY, kind: SWITCH_DEBT_KIND, label: `${old.name}: Owed`, category: 'home', priority: 36, payload: { personId: person.id, accountId: old.id } });
+    noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: 'debt', why: `overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}`, on: sim.now });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `The Switch To ${to.name} Is Only Part Done`, body: `Your ${to.current.name} is open and your wages, standing orders and autopay move to it. ${old.name} was overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}, so ${old.institution} keeps it open, blocked to everything but paying it off, on its overdraft’s terms; it closes once it’s repaid. Pay it in on Your Banks.`, importance: 85, route: '/workspace/bank' });
     return;
   }
   const oldSavings = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term' && a.bankId === old.bankId);
@@ -614,6 +669,14 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
       id: sim.nextId('account'), kind, name: kind === 'checking' ? to.current.name : to.savings.name, ownerId: person.id,
       institution: to.name, bankId: to.id, number, last4: number.replace(/\D/g, '').slice(-4), openedAt: sim.now, monthOpen: 0,
     });
+    if (from === old && held > 0) {
+      across = Math.max(0, from.balance - held);
+      if (across > 0) post(sim, `Moved to ${to.name}`, 'transfer', [{ accountId: from.id, amount: -across }, { accountId: account.id, amount: across }]);
+      const latest = Math.max(sim.now, ...sim.universe.transactions.filter((t) => t.postsAt !== undefined && t.postsAt > sim.now && t.postings.some((q) => q.accountId === from.id)).map((t) => t.postsAt!));
+      from.closingAt = latest + MS_DAY;
+      sim.schedule({ at: from.closingAt, kind: 'bank.current_closes', label: `${from.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: from.id, remainderTo: account.id } });
+      return account;
+    }
     // The balance goes across, and anything built up on it is paid first, and any fees it owes.
     settleInterest(sim, from, `Interest: ${from.name}, on closing`);
     settleFees(sim, from);
@@ -656,9 +719,35 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     if (one.status !== 'pending' || one.kind !== 'bank.scheduled_payment' || one.payload.personId !== person.id) continue;
     one.payload = { ...one.payload, fromId: moved.get(String(one.payload.fromId)) ?? one.payload.fromId, toId: moved.get(String(one.payload.toId)) ?? one.payload.toId };
   }
+  if (held > 0) {
+    noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: 'held', why: `${formatMoney(held, saveCurrency(sim.universe))} of card payments still pending`, on: sim.now });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `Switched To ${to.name}, Some Held Back`, body: `Your payments are at ${to.name} now, with ${formatMoney(across, saveCurrency(sim.universe))}. ${old.institution} holds back ${formatMoney(held, saveCurrency(sim.universe))} for card payments still pending, and closes ${old.name} once they post, about ${formatDate(old.closingAt!, sim.zone)}, sending what’s left across.`, importance: 70, route: '/workspace/bank' });
+    return;
+  }
+  if (!quietly) noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: 'complete', on: sim.now });
   if (person.id === sim.universe.playerId && !quietly) {
     sim.notify({ category: 'bank', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
   }
+}
+
+/**
+ * The new bank's current account opened beside an old one that stays open, and every payment instruction on the old
+ * one moved to it: wages, standing orders, scheduled payments, card autopay and loan repayments.
+ */
+function openBeside(sim: Simulation, person: Person, to: Bank, old: Account, secondChance = false): Account {
+  const number = accountNumber(sim, person, to, 'checking');
+  const fresh = sim.openAccount({ id: sim.nextId('account'), kind: 'checking', name: to.current.name, ownerId: person.id, institution: to.name, bankId: to.id, number, last4: number.replace(/\D/g, '').slice(-4), openedAt: sim.now, monthOpen: 0, ...(secondChance ? { secondChance: true } : {}) });
+  if (person.primaryAccountId === old.id) person.primaryAccountId = fresh.id;
+  const pay = person.payments;
+  if (pay?.depositTo === old.id) pay.depositTo = fresh.id;
+  for (const order of pay?.standingOrders ?? []) { if (order.fromId === old.id) order.fromId = fresh.id; if (order.toId === old.id) order.toId = fresh.id; }
+  if (person.credit) for (const st of [person.credit, ...Object.values(person.credit.cards ?? {})]) if (st.autopayFrom === old.id) st.autopayFrom = fresh.id;
+  for (const loan of Object.values(sim.universe.accounts)) if (loan.kind === 'loan' && loan.repayFromId === old.id) loan.repayFromId = fresh.id;
+  for (const one of sim.universe.scheduled) {
+    if (one.status !== 'pending' || one.kind !== 'bank.scheduled_payment' || one.payload.personId !== person.id) continue;
+    if (one.payload.fromId === old.id) one.payload = { ...one.payload, fromId: fresh.id };
+  }
+  return fresh;
 }
 
 /**
@@ -1025,7 +1114,48 @@ export function registerLending(sim: Simulation): void {
   sim.onSchedule(SWITCH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const to = bankById(String(item.payload.bankId));
-    if (person && to) completeSwitch(s, person, to, false, false, item.payload.fromId ? String(item.payload.fromId) : undefined);
+    if (person && to) completeSwitch(s, person, to, false, false, item.payload.fromId ? String(item.payload.fromId) : undefined, { keepBalance: item.payload.keepBalance === true, partial: item.payload.partial === true });
+  });
+
+  // The new bank's first look: an application its opening rules now refuse ends the switch before anything moves.
+  sim.onSchedule(SWITCH_REVIEW_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const to = bankById(String(item.payload.bankId));
+    const pending = s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending' && one.payload.personId === person?.id);
+    if (!person || !to || !pending) return;
+    const no = switchApplicationRefusal(s, person, to);
+    if (!no) return;
+    s.timeline.cancel(pending.id, s.now);
+    noteSwitch(person, { at: s.now, toBank: to.name, outcome: 'declined', why: no });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${to.name} Declined The Switch`, body: `${no} Nothing has moved: your accounts and payments are where they were.`, importance: 80, route: '/workspace/bank' });
+  });
+
+  // An old account a switch left in debt: closed, its remainder sent across, once it's repaid.
+  sim.onSchedule(SWITCH_DEBT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const account = s.universe.accounts[String(item.payload.accountId)];
+    if (!person || !account || account.closedAt || !account.switchDebt) return;
+    if (account.balance < 0) { s.schedule({ at: s.now + CASS.debtCheckDays * MS_DAY, kind: SWITCH_DEBT_KIND, label: item.label, category: 'home', priority: 36, payload: item.payload }); return; }
+    delete account.switchDebt;
+    account.closingAt = s.now + 60_000;
+    s.schedule({ at: account.closingAt, kind: 'bank.current_closes', label: `${account.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: account.id, ...(person.primaryAccountId ? { remainderTo: person.primaryAccountId } : {}) } });
+  });
+
+  sim.onCommand<{ confirm?: boolean }, { kept: true }>('bank.stop_balance_transfer', (p, { sim: s }) => {
+    const person = s.player;
+    const item = s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending' && one.payload.personId === person.id);
+    if (!item) throw new CommandError('No switch is under way.');
+    if (item.payload.cancellableUntil === undefined) throw new CommandError('This country’s switching service publishes no such step.');
+    if (item.payload.keepBalance === true) throw new CommandError('Its balance transfer is stopped already.');
+    // Up to close of business the working day before the switch date.
+    let lastDay = addDays(item.at, -1, s.homeZone);
+    for (let n = 0; n < 4; n += 1) { const q = zonedParts(lastDay, s.homeZone); const wd = new Date(Date.UTC(q.year, q.month - 1, q.day)).getUTCDay(); if (wd !== 0 && wd !== 6) break; lastDay = addDays(lastDay, -1, s.homeZone); }
+    const q = zonedParts(lastDay, s.homeZone);
+    const by = instantFromZoned({ year: q.year, month: q.month, day: q.day, hour: 17 }, s.homeZone);
+    if (s.now > by) throw new CommandError(`The transfer could be stopped until close of business ${formatDate(by, s.zone)}.`);
+    if (!p?.confirm) throw new CommandError('The switch goes ahead: your payments move, and the balance stays in the old account, which stays open. Confirm to go ahead.');
+    item.payload = { ...item.payload, keepBalance: true };
+    return { kept: true };
   });
 
   sim.onCommand<{ on: boolean }, { on: boolean }>('bank.debit_overdraft', (p, { sim: s }) => {
@@ -1094,14 +1224,14 @@ export function registerLending(sim: Simulation): void {
     return { limit, rate: offer.rate };
   });
 
-  sim.onCommand<{ amount: Money; months: number; bankId?: string; intoId?: string; repayFromId?: string }, { apr: number; payment: Money; loanId: string }>('bank.borrow', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; months: number; bankId?: string; intoId?: string; repayFromId?: string; purpose?: 'education' | 'other' }, { apr: number; payment: Money; loanId: string }>('bank.borrow', (p, { sim: s }) => {
     const person = s.player;
     const amount = Math.round(Number(p.amount));
     const months = Math.round(Number(p.months));
     // At the bank named, any they keep a current account at (from 2026-10-10), else the primary's.
     const bank = p.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
     if (!bank) throw new CommandError('That isn’t a bank you keep an account at.');
-    const offer = loanOffer(s, person, amount, months, bank.id);
+    const offer = loanOffer(s, person, amount, months, bank.id, p.purpose === 'education' ? 'education' : 'other');
     if ('refused' in offer) throw new CommandError(offer.refused);
     // Paid into the current account named, else the one at the lender (or the primary, for a lender they don't bank
     // with); repaid from the one named, else that one.
@@ -1200,13 +1330,16 @@ export function registerLending(sim: Simulation): void {
     if (!item) throw new CommandError('No switch is under way.');
     const until = item.payload.cancellableUntil as number | undefined;
     if (until === undefined) throw new CommandError('This country’s switching service publishes no right to call a switch off: it runs to its date.');
-    if (s.now > until) throw new CommandError(`It could be called off until ${formatDate(until, s.zone)}, seven working days before its date; it’s under way now.`);
+    if (s.now > until) throw new CommandError(`It could be called off until ${formatDate(until, s.zone)}, seven working days before its date; it’s under way now. Its balance transfer alone can still be stopped, until the working day before.`);
     if (!p?.confirm) throw new CommandError('Calling it off leaves your accounts and payments where they are. Confirm to go ahead.');
     s.timeline.cancel(item.id, s.now);
+    for (const one of s.universe.scheduled) if (one.kind === SWITCH_REVIEW_KIND && one.status === 'pending' && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
+    const to = bankById(String(item.payload.bankId));
+    noteSwitch(person, { at: s.now, toBank: to?.name ?? String(item.payload.bankId), outcome: 'canceled' });
     return { cancelled: true };
   });
 
-  sim.onCommand<{ bankId: string; on?: string }, { at: Instant; cancellableUntil?: Instant }>('bank.switch', (p, { sim: s }) => {
+  sim.onCommand<{ bankId: string; on?: string; partial?: boolean }, { at: Instant; cancellableUntil?: Instant }>('bank.switch', (p, { sim: s }) => {
     const person = s.player;
     const from = bankOf(s, person);
     const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
@@ -1221,8 +1354,13 @@ export function registerLending(sim: Simulation): void {
     if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`);
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
+    // The new bank's own opening rules, as its application reads them (from 2026-10-10).
+    const declined = switchApplicationRefusal(s, person, to);
+    if (declined) throw new CommandError(declined);
     const iso = isoOf(homeOf(person)) ?? '';
     const rule = SWITCHING[iso];
+    // A partial switch is the Current Account Switch Service's (Britain's); no other service here publishes one.
+    if (p.partial && iso !== 'GB') throw new CommandError('A partial switch is a Current Account Switch Service step, in Britain only.');
     // With no switching service, there's nothing to run: until 2026-10-10 this opened the new bank's accounts, moved
     // everything into them and closed the old ones the same day, as no bank does (docs/verification/BANKING-SWITCH.md).
     if (!rule) {
@@ -1230,7 +1368,7 @@ export function registerLending(sim: Simulation): void {
     }
     // Working days: Monday to Friday, from tomorrow.
     let at = s.now;
-    let left = rule.workingDays;
+    let left = p.partial ? CASS.partialDays : rule.workingDays;
     while (left > 0) {
       at = addDays(at, 1, s.homeZone);
       const p2 = zonedParts(at, s.homeZone);
@@ -1259,7 +1397,11 @@ export function registerLending(sim: Simulation): void {
         if (wd !== 0 && wd !== 6) left -= 1;
       }
     }
-    s.schedule({ at: due, kind: SWITCH_KIND, label: 'World Simulation', category: 'system', priority: 80, payload: { personId: person.id, bankId: to.id, ...(current ? { fromId: current.id } : {}), ...(until !== undefined ? { cancellableUntil: until } : {}) } });
+    // A partial switch has no Guarantee and no published right to call it off.
+    if (p.partial) until = undefined;
+    s.schedule({ at: due, kind: SWITCH_KIND, label: 'World Simulation', category: 'system', priority: 80, payload: { personId: person.id, bankId: to.id, startedAt: s.now, ...(current ? { fromId: current.id } : {}), ...(until !== undefined ? { cancellableUntil: until } : {}), ...(p.partial ? { partial: true } : {}) } });
+    // The new bank looks at the application the next working day.
+    s.schedule({ at: addDays(s.now, 1, s.homeZone), kind: SWITCH_REVIEW_KIND, label: 'World Simulation', category: 'system', priority: 80, payload: { personId: person.id, bankId: to.id } });
     return { at: due, ...(until !== undefined ? { cancellableUntil: until } : {}) };
   });
 }

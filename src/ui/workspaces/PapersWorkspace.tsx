@@ -20,7 +20,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
-import { amendRefusal, deadline, owedOn, partsOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
+import { PLAN, amendRefusal, deadline, leastMonthly, owedAll, owedOn, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
@@ -106,6 +106,79 @@ function ReturnLife({ year }: { year: number }) {
   );
 }
 
+const PLAN_STATUS: Record<string, string> = { pending: 'With the IRS', active: 'In force', default: 'A payment missed', ended: 'Ended', paid: 'Paid in full', refused: 'Refused' };
+
+/**
+ * An IRS payment plan (from 2026-10-10, `tax.apply_plan`): applied for across every year owed, its fee, its monthly
+ * payment or its 180 days, a missed payment's CP523 and catching up, and a revision when a new balance is too large to
+ * join it. Shown while anything is owed or a plan has a history.
+ */
+function TaxPlanPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const [kind, setKind] = useState<'long' | 'short'>('long');
+  const [monthly, setMonthly] = useState('');
+  const [debit, setDebit] = useState(true);
+  const [revised, setRevised] = useState('');
+  const plan = person.taxPlan;
+  const owed = owedAll(person, sim.now);
+  if (owed <= 0 && !plan) return null;
+  const live = plan && ['pending', 'active', 'default'].includes(plan.status);
+  const no = planRefusal(sim, person, kind);
+  const least = leastMonthly(owed);
+  const asked = monthly ? Math.round(Number(monthly) * 100) : undefined;
+  return (
+    <Panel title="IRS Payment Plan" subtitle={plan ? PLAN_STATUS[plan.status] : `${money(owed)} owed`}>
+      <div className="col gap-3">
+        {plan && (
+          <div className="grid grid-3">
+            <Stat label="Covers" value={money(plan.covers)} note={plan.years.join(', ')} />
+            <Stat label={plan.kind === 'long' ? 'Each Month' : 'Paid By'} value={plan.kind === 'long' ? money(plan.monthly ?? 0) : plan.payBy !== undefined ? formatDate(plan.payBy, sim.zone) : '—'} note={plan.directDebit ? 'By direct debit' : 'Paid by you'} />
+            <Stat label={plan.status === 'pending' ? 'Answered By' : plan.status === 'default' ? 'Caught Up By' : 'Next Payment'} value={plan.status === 'pending' ? formatDate(plan.decideAt, sim.zone) : plan.status === 'default' && plan.defaultBy !== undefined ? formatDate(plan.defaultBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : '—'} />
+          </div>
+        )}
+        {plan?.why && <p className="small" style={{ margin: 0 }}>{plan.why}</p>}
+        {plan?.status === 'default' && (
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="tax.catch_up_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_plan', {}); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid.`, 'positive'); }}>Catch Up</Gated>
+          </div>
+        )}
+        {live && plan!.kind === 'long' && plan!.status !== 'pending' && (
+          <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            <div className="field"><label htmlFor="plan-revise">{`New Monthly Payment (${cur})`}</label><input id="plan-revise" inputMode="decimal" value={revised} onChange={(e) => setRevised(e.target.value)} placeholder={(leastMonthly(owed) / 100).toFixed(2)} /></div>
+            <Gated feature="tax.revise_plan" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ monthly: number; fee: number }>('tax.revise_plan', revised ? { monthly: Math.round(Number(revised) * 100) } : {}); if (a.ok) { toast(`Revised to ${money(a.value!.monthly)} a month, for a fee of ${money(a.value!.fee)}.`, 'positive'); setRevised(''); } }}>Revise The Plan</Gated>
+          </div>
+        )}
+        {!live && owed > 0 && (
+          <div className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>
+              The IRS takes what’s owed on every year in one plan. A short-term plan has {PLAN.shortDays} days and no fee; a monthly plan up to {money(PLAN.longMax)} is approved online, with a setup fee. While it’s in force, collection stops, and on a return filed on time the late-payment penalty runs at a quarter of its rate. A payment missed brings Notice CP523, and {PLAN.defaultDays} days to catch up before the plan ends. The least monthly payment, what’s owed over {PLAN.leastMonths} months, is SLATE’s.
+            </p>
+            <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="plan-kind">Plan</label><select id="plan-kind" style={{ width: 'auto' }} value={kind} onChange={(e) => setKind(e.target.value as 'long' | 'short')}>
+                <option value="long">Monthly Payments</option>
+                <option value="short">Paid Within {PLAN.shortDays} Days</option>
+              </select></div>
+              {kind === 'long' && <div className="field"><label htmlFor="plan-monthly">{`Each Month (${cur})`}</label><input id="plan-monthly" inputMode="decimal" value={monthly} onChange={(e) => setMonthly(e.target.value)} placeholder={(least / 100).toFixed(2)} /></div>}
+              {kind === 'long' && <label className="row gap-1 small"><input type="checkbox" checked={debit} onChange={(e) => setDebit(e.target.checked)} /> By Direct Debit</label>}
+              <Gated feature="tax.apply_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ status: string; decideAt: number; fee: number }>('tax.apply_plan', { kind, ...(kind === 'long' ? { directDebit: debit, ...(asked ? { monthly: asked } : {}) } : {}) }); if (a.ok) { toast(`Applied: answered by ${formatDate(a.value!.decideAt, sim.zone)}${a.value!.fee ? `, a fee of ${money(a.value!.fee)}` : ''}.`, 'positive'); setMonthly(''); } }}>Apply</Gated>
+            </div>
+            {no ? <span className="xs dim">{no}</span> : kind === 'long' && <span className="xs dim">Setup fee: {money(planFee(sim, person, 'long', debit))}.</span>}
+          </div>
+        )}
+        {plan && plan.history.length > 0 && (
+          <details className="small"><summary>The Plan’s History</summary>
+            <ul style={{ margin: 0 }}>{plan.history.map((h, i) => <li key={i}>{formatDate(h.at, sim.zone)}: {h.what}{h.amount !== undefined ? `, ${money(h.amount)}` : ''}.</li>)}</ul>
+          </details>
+        )}
+        <Fine>Source: {PLAN.source}.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 export function PapersWorkspace() {
   const [tab, setTab] = useKept<PapersTab>(tabKey('/workspace/papers'), 'returns');
   const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, work: <WorkPane /> };
@@ -165,6 +238,7 @@ function ReturnsPane() {
           </LookRegion>
         </Panel>
       )}
+      <TaxPlanPanel />
       {returns.map((r) => {
         const f = r.figures;
         const lines: [string, number][] = [

@@ -150,6 +150,8 @@ export interface Account {
   closingAt?: Instant;
   /** A loan's repayment account, as agreed when it was taken (from 2026-10-10): any current account of theirs. */
   repayFromId?: string;
+  /** Left open by a switch while still in debt: blocked to all but repayment, closed once it's repaid (`SWITCH_DEBT_KIND`). */
+  switchDebt?: boolean;
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

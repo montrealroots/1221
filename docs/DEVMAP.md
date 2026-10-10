@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-139 commands; 135 named by a test, 4 not.
+143 commands; 139 named by a test, 4 not.
 
 ## bank
 
@@ -17,7 +17,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.cancel_scheduled` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
 | `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `cross-journeys.test.ts` `journey-money.test.ts` `payments.test.ts` | Your Bank |
-| `bank.cancel_switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `bank-lifecycle.test.ts` | Your Bank |
+| `bank.cancel_switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `bank-lifecycle.test.ts` `finance-paths.test.ts` | Your Bank |
 | `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
 | `bank.close_current` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-lifecycle.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cross-journeys.test.ts` `papers-complete.test.ts` | Your Bank |
 | `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `banking.test.ts` `cross-journeys.test.ts` `lending.test.ts` `money-fixes.test.ts` | Your Bank |
@@ -38,10 +38,11 @@ Each command the player can run: the engine file that handles it, the screens th
 | `bank.set_primary` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-lifecycle.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cardoffers.test.ts` `cross-journeys.test.ts` | Your Bank |
 | `bank.set_round_ups` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-money.test.ts` | Your Bank |
 | `bank.set_term_end` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `bank-lifecycle.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cards.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
+| `bank.stop_balance_transfer` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `finance-paths.test.ts` | Your Bank |
+| `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `bank-lifecycle.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cards.test.ts` `finance-paths.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
 | `bank.take_overrun_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `commands-kept.test.ts` | Your Bank |
 | `bank.take_term_interest` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking.test.ts` `cash.test.ts` `cross-journeys.test.ts` `journey-money.test.ts` | Your Bank |
+| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking.test.ts` `cash.test.ts` `cross-journeys.test.ts` `finance-paths.test.ts` `journey-money.test.ts` | Your Bank |
 
 ## benefits
 
@@ -211,9 +212,12 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tax.amend` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
-| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.amend` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.apply_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
+| `tax.catch_up_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
+| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
 | `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.revise_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
 
 ## tutorial
 

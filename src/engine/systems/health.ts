@@ -139,7 +139,14 @@ export interface HealthRecord {
    * cover back in time bills it again as the cover then was (`repriceCare`). Yale Health's $0 share makes no bill, so
    * without it a cancellation back to a term's start had nothing to reckon.
    */
-  careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string }[];
+  careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string; adjusted?: { at: Instant; why: string; change: Money }[] }[];
+  /**
+   * Care older than the log keeps, by year: how many events and what was charged (from 2026-10-10). The log itself keeps
+   * every event within `CARE_LOG.keepDays`, past any cover change's reach back, and any event whose bill is still
+   * open, in debt or under appeal, however old: nothing a claim, an appeal or a change of cover needs is dropped to
+   * keep the list short. Until 2026-10-10 the log kept the latest 60 events, whatever they were.
+   */
+  careArchive?: Record<string, { events: number; charged: Money }>;
   /** In hospital until: a stay, or an emergency department's hours. */
   inHospitalUntil?: Instant;
   /** The American pharmacy their prescriptions are filled at (`US_PHARMACIES`, from 2026-10-01). */
@@ -1108,7 +1115,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
   // On the care log, whatever it cost (`repriceCare`).
   const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount } as NonNullable<HealthRecord['careLog']>[number] : undefined;
-  if (logged) h.careLog = [...(h.careLog ?? []), logged].slice(-60);
+  if (logged) { h.careLog = [...(h.careLog ?? []), logged]; pruneCareLog(h, at); }
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
     sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
@@ -1129,6 +1136,23 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   return bill;
 }
 
+/** How long the care log keeps every event: past the furthest a cover change reaches back (a leave's insurance term, a withdrawal's term start). */
+export const CARE_LOG = { keepDays: 400 } as const;
+
+/** The log pruned to what can still matter: recent events, and any whose bill is open, in debt or under appeal; the rest counted by year. */
+export function pruneCareLog(h: HealthRecord, now: Instant): void {
+  const open = new Set(h.bills.filter((b) => !b.paid || b.inDebt || (b.denied && !b.denied.outcome)).map((b) => b.id));
+  const keep: NonNullable<HealthRecord['careLog']> = [];
+  for (const e of h.careLog ?? []) {
+    if (e.at >= now - CARE_LOG.keepDays * MS_DAY || (e.billId && open.has(e.billId))) { keep.push(e); continue; }
+    const y = String(zonedParts(e.at, HOME).year);
+    const a = ((h.careArchive ??= {})[y] ??= { events: 0, charged: 0 });
+    a.events += 1;
+    a.charged += e.share;
+  }
+  h.careLog = keep;
+}
+
 /**
  * Care had between two moments billed again as the cover then now reads (from 2026-10-10): Yale Health canceled back
  * to an insurance term's start, or Affiliate cover bought back to the day student cover ended. More owed is a new bill,
@@ -1146,10 +1170,12 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
     const now = shareOf(person, e.care, e.at, cur);
     h.deductible = kept.deductible;
     if (kept.stayCopays) h.stayCopays = kept.stayCopays; else delete h.stayCopays;
+    // Against what was last charged for it: a second change of cover over the same care bills only the difference.
     const diff = now - e.share;
     if (diff === 0) continue;
     net += diff;
     e.share = now;
+    (e.adjusted ??= []).push({ at: sim.now, why, change: diff });
     if (diff > 0) {
       const bill = billCare(sim, person, `${e.what}: ${why}`, diff, sim.now);
       e.billId ??= bill.id;

@@ -12,6 +12,9 @@
  */
 
 import { useState } from 'react';
+
+/** How a switch ended, as its history says it (`payments.switches`, from 2026-10-10). */
+const SWITCH_OUTCOME: Record<string, string> = { declined: 'declined by the new bank', canceled: 'called off', complete: 'complete', held: 'complete, the old account held open for card payments still pending', debt: 'complete, the old account left in debt', 'balance-kept': 'complete, the balance left in the old account', partial: 'a partial switch' };
 import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
@@ -80,8 +83,13 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
   const [target, setTarget] = useState(others[0]?.id ?? '');
   const [askCancel, setAskCancel] = useState(false);
   const [switchOn, setSwitchOn] = useState('');
+  const [partial, setPartial] = useState(false);
+  const [askStop, setAskStop] = useState(false);
+  const [purpose, setPurpose] = useState<'other' | 'education'>('other');
+  const history = useWorld((s) => s.player.payments?.switches ?? []);
+  const inDebt = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && a.switchDebt && a.closedAt === undefined));
   const asked = cents(borrow);
-  const quote = useWorld((s) => (asked > 0 ? loanOffer(s, s.player, asked, Number(months), bank.id) : undefined), [asked, months, bank.id]);
+  const quote = useWorld((s) => (asked > 0 ? loanOffer(s, s.player, asked, Number(months), bank.id, purpose) : undefined), [asked, months, bank.id, purpose]);
   const od = lending.overdraft;
 
   return (
@@ -288,6 +296,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
         )}
         {!loan && lending.loan && (
           <div className="col gap-3">
+            {lending.loan.lender && <p className="small" style={{ margin: 0 }}>{bank.name}’s personal loans are {lending.loan.lender}’s.{lending.loan.rateSource === 'third-party' ? ' It publishes no rate of its own: the range is a comparison site’s, said in the source.' : ''}</p>}
             <p className="small" style={{ margin: 0 }}>
               {lending.loan.market
                 ? `At the market’s average, ${pct(lending.loan.from)}: the bank publishes no rate of its own.`
@@ -301,6 +310,10 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                   .filter((m) => m >= (lending.loan!.minMonths ?? ESTIMATE.loanMonths[0]) && m <= (lending.loan!.maxMonths ?? ESTIMATE.loanMonths[1]))
                   .map((m) => <option key={m} value={m}>{m} Months</option>)}
               </select></div>
+              {lending.loan.notFor && <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="loan-purpose">For</label><select id="loan-purpose" style={{ width: 'auto' }} value={purpose} onChange={(e) => setPurpose(e.target.value as 'other' | 'education')}>
+                <option value="other">Anything Else</option>
+                <option value="education">Education</option>
+              </select></div>}
             </div>
             {quote && ('refused' in quote
               ? <p className="small muted" style={{ margin: 0 }}>{quote.refused}</p>
@@ -319,7 +332,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             </div>
             <div>
               <Gated feature="bank.borrow" className="btn btn-sm" disabled={!quote || 'refused' in quote}
-                onClick={() => { if (run('bank.borrow', { amount: asked, months: Number(months), bankId: bank.id, intoId: into || current?.id, repayFromId: repay || current?.id }).ok) { toast('Borrowed.', 'positive'); setBorrow(''); setInto(''); setRepay(''); } }}>
+                onClick={() => { if (run('bank.borrow', { amount: asked, months: Number(months), bankId: bank.id, purpose, intoId: into || current?.id, repayFromId: repay || current?.id }).ok) { toast('Borrowed.', 'positive'); setBorrow(''); setInto(''); setRepay(''); } }}>
                 Borrow It
               </Gated>
             </div>
@@ -350,6 +363,11 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                     Switching to {bankById(String(switching.payload.bankId))?.name} on {formatDate(switching.at, sim.zone)}. {until === undefined ? 'This service publishes no right to call a switch off: it runs to its date.' : open ? `It can be called off until ${formatDate(until, sim.zone)}: your accounts, wages and payments stay where they are, and nothing has moved yet.` : `It’s past ${formatDate(until, sim.zone)}, its last day to be called off, and under way.`}
                     {' '}If {current?.name ?? 'the old account'} is overdrawn on the day, the old bank can’t close it: the new account opens and your payments move, and the debt stays to clear.
                   </p>
+                  {switching.payload.partial === true && <p className="small" style={{ margin: 0 }}>A partial switch: your wages, standing orders and autopay move, and {current?.name ?? 'the old account'} stays open with its balance.</p>}
+                  {switching.payload.keepBalance === true && <p className="small" style={{ margin: 0 }}>Its balance transfer is stopped: your payments move, and the balance stays in the old account, which stays open.</p>}
+                  {until !== undefined && !open && switching.payload.keepBalance !== true && switching.payload.partial !== true && (!askStop
+                    ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(true)}>Stop The Balance Transfer…</button></div>
+                    : <div className="row gap-2"><Gated feature="bank.stop_balance_transfer" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.stop_balance_transfer', { confirm: true }).ok) toast('Your balance stays in the old account.', 'positive'); setAskStop(false); }}>Keep The Balance There</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(false)}>Move It As Planned</button></div>)}
                   {open && (!askCancel
                     ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(true)}>Call Off The Switch…</button></div>
                     : <div className="row gap-2"><Gated feature="bank.cancel_switch" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.cancel_switch', { confirm: true }).ok) toast('The switch is called off.', 'positive'); setAskCancel(false); }}>Call It Off</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(false)}>Keep It</button></div>)}
@@ -361,6 +379,12 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                 {chex.bank} reported you to ChexSystems on {formatDate(chex.at, sim.zone)}; it stands until {formatDate(chex.at + CHEX.years * 365 * 86_400_000, sim.zone)}. A bank here turns a report away about {Math.round((debt && debt.balance < 0 ? CHEX.declines.unpaid : CHEX.declines.paid) * 100)}% of the time, SLATE’s estimate, and the ones that have are left off the list. Source: {CHEX.source}.
               </p>
             )}
+            {inDebt.map((a) => <p key={a.id} className="small" style={{ margin: 0 }}>{a.name} at {a.institution} was overdrawn on the switch date: it’s blocked to everything but paying in, and closes itself once what it owes is repaid.</p>)}
+            {history.length > 0 && (
+              <details className="small"><summary>Past Switches</summary>
+                <ul style={{ margin: 0 }}>{history.map((h, i) => <li key={i}>{formatDate(h.at, sim.zone)}: {h.fromBank ? `${h.fromBank} to ` : ''}{h.toBank}, {SWITCH_OUTCOME[h.outcome]}{h.why ? `: ${h.why}` : ''}.</li>)}</ul>
+              </details>
+            )}
             <Fine>Source: {rule.source}.</Fine>
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
@@ -368,8 +392,9 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                 {[...others].sort((a, b) => (b.current.monthlyFee ?? 0) - (a.current.monthlyFee ?? 0)).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
               </select></div>
               <div className="field"><label htmlFor="switch-on">On (Optional)</label><input id="switch-on" type="date" value={switchOn} onChange={(e) => setSwitchOn(e.target.value)} /></div>
+              {bank.iso === 'GB' && <label className="row gap-1 small"><input type="checkbox" checked={partial} onChange={(e) => setPartial(e.target.checked)} /> Partial: Keep The Old Account</label>}
               <Gated feature="bank.switch" className="btn btn-sm" disabled={!!switching || !target}
-                onClick={() => { const a = run<{ at: number }>('bank.switch', { bankId: target, ...(switchOn ? { on: switchOn } : {}) }); if (a.ok) toast(`Switch set for ${formatDate(a.value!.at, sim.zone)}.`, 'positive'); }}>
+                onClick={() => { const a = run<{ at: number }>('bank.switch', { bankId: target, ...(switchOn ? { on: switchOn } : {}), ...(partial ? { partial: true } : {}) }); if (a.ok) toast(`Switch set for ${formatDate(a.value!.at, sim.zone)}.`, 'positive'); }}>
                 Switch
               </Gated>
             </div>

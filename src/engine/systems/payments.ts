@@ -44,6 +44,12 @@ export interface PaymentSettings {
   standingOrders: StandingOrder[];
   /** Where incoming payments go, and a change to it with its day (`systems/routing.ts`, from 2026-10-10). */
   depositTo?: string;
+  /**
+   * Every switch asked for and how it ended (from 2026-10-10, `systems/lending.ts`): declined by the new bank at its
+   * first look, called off, completed, completed with the old account held open on pending payments or a debt, with
+   * its balance left where it was, or a partial switch.
+   */
+  switches?: { at: Instant; fromBank?: string; toBank: string; outcome: 'declined' | 'canceled' | 'complete' | 'held' | 'debt' | 'balance-kept' | 'partial'; why?: string; on?: Instant }[];
   /** `from`: the day each payer with a lead of its own (`PAYER_LEAD`) pays to the new account, from 2026-10-10. */
   depositChange?: { to: string; at: number; from?: Record<string, number> };
 }

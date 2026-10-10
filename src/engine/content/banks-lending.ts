@@ -100,6 +100,14 @@ export interface Loan {
   customerMonths?: number;
   /** Lends to somebody without a current account there too, up to this (absent: its customers only, SLATE's reading). */
   newCustomerMax?: Money;
+  /** The lender, where it isn't the bank's own name (Capital One's personal loans are Discover's, from 2026-10-10). */
+  lender?: string;
+  /** Where the lender doesn't publish its range: whose figure it is, said beside it. */
+  rateSource?: 'lender' | 'third-party';
+  /** What the lender asks, from 2026-10-10: a year's income at least, a Social Security number, a purpose it won't lend for. */
+  minIncome?: Money;
+  ssn?: boolean;
+  notFor?: readonly ('education')[];
   source: string;
 }
 
@@ -143,6 +151,10 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     term: { rate: 0.0425, months: 12, called: 'CD', source: 'Citi 12-month CD, via fortune.com, 24 September 2026' },
   },
   'us-capital-one': {
+    // Capital One's own name sells no personal loan; since it bought Discover (May 2025) it lends through Discover
+    // Personal Loans, "a division of Capital One, N.A.". Discover doesn't publish its APR on its pages; Credible's
+    // July 2026 figure is used and said so. Not for a post-secondary education expense, by Discover's terms.
+    loan: { from: 0.0799, to: 0.2499, minAmount: 2_500_00, maxAmount: 40_000_00, minMonths: 36, maxMonths: 84, newCustomerMax: 40_000_00, lender: 'Discover Personal Loans', rateSource: 'third-party', minIncome: 25_000_00, ssn: true, notFor: ['education'], source: 'discover.com/personal-loans (a division of Capital One, N.A.): $2,500 to $40,000, 36 to 84 months, no fees, a Social Security number and $25,000 of income, not for education expenses; APR 7.99% to 24.99% per Credible, July 2026 (research-switch-loans-plans.json)' },
     term: { rate: 0.043, months: 11, called: 'CD', source: 'Capital One 11-month CD, via fortune.com, 24 September 2026' },
   },
   // --- Canada
@@ -176,12 +188,12 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   'gb-natwest': {
     overdraft: { kind: 'arranged', rate: 0.3949, source: 'natwest.com: 39.49% EAR representative' },
-    loan: { from: 0.072, minAmount: 7_500_00, source: 'NatWest: 7.2% APR representative, on £7,500 and up; the rate on less wasn’t found' },
+    loan: { from: 0.072, minAmount: 7_500_00, maxAmount: 50_000_00, newCustomerMax: 35_000_00, source: 'NatWest: 7.2% APR representative on £7,500 to £19,950; to £50,000, and £35,000 for a new customer; the rate under £7,500 wasn’t found, so SLATE lends from there (research-switch-loans-plans.json)' },
     term: { rate: 0.0411, months: 12, called: 'Fixed-Term Savings', source: 'natwest.com: 4.11% AER' },
   },
   'gb-hsbc': {
     overdraft: { kind: 'arranged', rate: 0.399, buffer: 25_00, source: 'hsbc.co.uk: 39.9% EAR above a £25 buffer' },
-    loan: { from: 0.068, to: 0.229, source: 'HSBC UK: 6.8% APR representative, up to 22.9%' },
+    loan: { from: 0.068, to: 0.229, minAmount: 1_000_00, maxAmount: 30_000_00, newCustomerMax: 30_000_00, minIncome: 10_000_00, source: 'HSBC UK: 6.8% APR representative on £7,500 to £20,000, up to 22.9%; £1,000 to £30,000; lends to non-customers living in the UK earning £10,000 or more (research-switch-loans-plans.json)' },
   },
   'gb-santander': {
     overdraft: { kind: 'arranged', rate: 0.3994, source: 'santander.co.uk: 39.94% EAR representative' },

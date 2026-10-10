@@ -119,13 +119,29 @@ export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
   const from = r.accruedAt ?? r.filedAt ?? at;
   const days = Math.max(0, (at - from) / MS_DAY);
   const interest = p.interest + (p.tax + p.penalty + p.interest) * ((1 + COLLECTION.interest / 365) ** days - 1);
-  const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
-  const rate = Math.min(RETURN.lateCap, RETURN.payLateMonthly * months);
+  const rate = payLateRateAt(r, at);
   const penalty = p.penalty + Math.max(0, rate - (r.payLateRate ?? 0)) * p.tax;
   if (exact) return { tax: p.tax, penalty, interest };
   // Rounded so the parts add to the whole rounded once: the cent left over is the interest's.
   const whole = Math.round(p.tax + penalty + interest);
   return { tax: p.tax, penalty: Math.round(penalty), interest: whole - p.tax - Math.round(penalty) };
+}
+
+const monthsBetween = (a: Instant, b: Instant) => Math.ceil(Math.max(0, b - a) / (30.4375 * MS_DAY));
+
+/**
+ * The failure-to-pay penalty's rate charged by a moment: half a percent a month or part since filing, to a quarter;
+ * a quarter percent for the months a payment plan was in force, where the return was filed on time (IRC 6651(h), from
+ * 2026-10-10: `reducedFrom`, `reducedTo`).
+ */
+export function payLateRateAt(r: TaxReturn, at: Instant): number {
+  const filed = r.filedAt ?? at;
+  let months = RETURN.payLateMonthly * monthsBetween(filed, at);
+  if (r.reducedFrom !== undefined && at > r.reducedFrom) {
+    const within = monthsBetween(r.reducedFrom, Math.min(at, r.reducedTo ?? at));
+    months -= (RETURN.payLateMonthly - PLAN.reducedRate) * within;
+  }
+  return Math.min(RETURN.lateCap, Math.max(0, months));
 }
 
 /** What a return owes at a moment: its parts summed, rounded once. */
@@ -213,6 +229,146 @@ export interface TaxReturn {
   reconsideredAt?: Instant;
   /** The IRS's own figures on a substitute, kept beside the return's. */
   substituteFigures?: ReturnFigures;
+  /** A payment plan's months at the reduced failure-to-pay rate: from, and to once it ends (`payLateRateAt`). */
+  reducedFrom?: Instant;
+  reducedTo?: Instant;
+}
+
+/**
+ * An IRS payment plan (from 2026-10-10; research-switch-loans-plans.json): a short-term plan, paid in full within 180
+ * days with no setup fee, for less than $100,000; or a long-term plan (the Simple Payment Plan) of monthly payments for
+ * $50,000 or less, every return filed, its setup fee by how it's paid and the low-income waiver (`PLAN`). Online with
+ * a Social Security number it's approved at once; without, Form 9465 by mail, answered in about thirty days. While it
+ * stands, collection stops, interest goes on, and the failure-to-pay penalty halves where the return was filed on time.
+ * A missed payment brings notice CP523, thirty days to catch up, then the plan ends and collection resumes. Tax added
+ * later (an amended return, another year) joins the plan where it adds no more than two monthly payments; otherwise the
+ * plan must be revised, for its fee. Refunds go to what's owed.
+ */
+export interface TaxPlan {
+  kind: 'short' | 'long';
+  status: 'pending' | 'active' | 'default' | 'ended' | 'paid' | 'refused';
+  appliedAt: Instant;
+  decideAt: Instant;
+  startedAt?: Instant;
+  directDebit: boolean;
+  fee: Money;
+  monthly?: Money;
+  payBy?: Instant;
+  /** What it covers when set up, and the years. */
+  covers: Money;
+  years: number[];
+  nextDue?: Instant;
+  defaultBy?: Instant;
+  why?: string;
+  history: { at: Instant; what: string; amount?: Money }[];
+}
+
+/**
+ * The IRS's figures (research-switch-loans-plans.json, IRS.gov and IRM 5.14, July 2026): the short-term plan's 180 days
+ * and $100,000; the Simple Payment Plan's $50,000; the setup fees online with direct debit $29, online without $69, and
+ * the low-income $0 and $43; revision $6 online; CP523's thirty days; the quarter-percent rate under a plan; the most a
+ * new balance may add before the plan must be revised. The low-income line (250% of the poverty guideline) and SLATE's
+ * least monthly payment (what's owed over 72 months, the old streamlined term, so the collection deadline is never at
+ * risk) are said as SLATE's.
+ */
+export const PLAN = {
+  shortDays: 180, shortMax: 100_000_00, longMax: 50_000_00,
+  fee: { onlineDebit: 29_00, online: 69_00, lowIncomeDebit: 0, lowIncome: 43_00 }, reviseFee: 6_00,
+  lowIncomeShare: 2.5, leastMonths: 72, reducedRate: 0.0025, defaultDays: 30, mailDays: 30, addedPayments: 2,
+  source: 'https://www.irs.gov/payments/payment-plans-installment-agreements; IRM 5.14.5 (07-21-2026); 26 CFR 300.1-300.2; IRC 6651(h); research-switch-loans-plans.json',
+} as const;
+export const TAX_PLAN_KIND = 'tax.plan_payment';
+export const TAX_PLAN_DECIDE_KIND = 'tax.plan_decide';
+export const TAX_PLAN_DEFAULT_KIND = 'tax.plan_default';
+
+/** What's owed across every return, now. */
+export const owedAll = (person: Person, at: Instant): Money => Object.values(person.returns ?? {}).reduce((s, r) => s + owedOn(r, at), 0);
+
+/** Why a plan can't be applied for, or nothing; and what it would be. */
+export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'long'): string | undefined {
+  if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return person.taxPlan.status === 'pending' ? `Your application is with the IRS, answered by ${formatDate(person.taxPlan.decideAt, HOME)}.` : 'You have a payment plan.';
+  const owed = owedAll(person, sim.now);
+  if (owed <= 0) return 'You owe the IRS nothing.';
+  const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && r.due < sim.now);
+  if (unfiled) return `The IRS asks every return filed first: ${unfiled.year}’s isn’t.`;
+  const cur = saveCurrency(sim.universe);
+  if (kind === 'short' && owed >= usd(PLAN.shortMax, cur)) return `A short-term plan is for less than ${formatMoney(usd(PLAN.shortMax, cur), cur, { cents: false })}.`;
+  if (kind === 'long' && owed > usd(PLAN.longMax, cur)) return `A Simple Payment Plan is for ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} or less; more needs a financial statement SLATE doesn't model.`;
+  return undefined;
+}
+
+/** The setup fee for a long-term plan: by direct debit or not, online or not, and low income by last year's return. */
+export function planFee(sim: Simulation, person: Person, kind: 'short' | 'long', directDebit: boolean): Money {
+  if (kind === 'short') return 0;
+  const cur = saveCurrency(sim.universe);
+  const last = Object.values(person.returns ?? {}).sort((a, b) => b.year - a.year)[0];
+  const low = last ? last.figures.income <= PLAN.lowIncomeShare * usd(byYear(POVERTY_LINE, last.year), cur) : true;
+  return usd(low ? (directDebit ? PLAN.fee.lowIncomeDebit : PLAN.fee.lowIncome) : directDebit ? PLAN.fee.onlineDebit : PLAN.fee.online, cur);
+}
+
+/** The least monthly payment SLATE's plan takes: what's owed over `PLAN.leastMonths`. */
+export const leastMonthly = (owed: Money): Money => Math.ceil(owed / PLAN.leastMonths);
+
+const planNote = (p: TaxPlan, at: Instant, what: string, amount?: Money) => { p.history.push({ at, what, ...(amount !== undefined ? { amount } : {}) }); if (p.history.length > 40) p.history.splice(0, p.history.length - 40); };
+
+/** A plan begun: collection stopped, the reduced rate from today on each return filed on time, the first payment set. */
+function startPlan(sim: Simulation, person: Person, p: TaxPlan): void {
+  p.status = 'active';
+  p.startedAt = sim.now;
+  for (const r of Object.values(person.returns ?? {})) {
+    if (!r.owed) continue;
+    accrue(r, sim.now);
+    if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) { r.reducedFrom = sim.now; delete r.reducedTo; }
+    for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
+  }
+  if (p.fee > 0) payFromBank(sim, person, p.fee, 'IRS payment plan setup fee', 'tax');
+  if (p.kind === 'long') {
+    p.nextDue = sim.now + 30 * MS_DAY;
+    sim.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } });
+  } else {
+    p.payBy = sim.now + PLAN.shortDays * MS_DAY;
+    sim.schedule({ at: p.payBy, kind: TAX_PLAN_KIND, label: 'IRS Short-Term Plan: Paid By', category: 'personal', priority: 25, payload: { personId: person.id, last: true } });
+  }
+  planNote(p, sim.now, p.kind === 'long' ? `Approved: ${formatMoney(p.monthly!, saveCurrency(sim.universe))} a month` : `Approved: paid in full by ${formatDate(p.payBy!, HOME)}`);
+}
+
+/** A plan ended, by default or paid off: the reduced rate stops, and anything still owed goes back to collection. */
+function endPlan(sim: Simulation, person: Person, p: TaxPlan, status: 'ended' | 'paid', why: string): void {
+  p.status = status;
+  p.why = why;
+  planNote(p, sim.now, why);
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && (one.kind === TAX_PLAN_KIND || one.kind === TAX_PLAN_DEFAULT_KIND) && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
+  for (const r of Object.values(person.returns ?? {})) {
+    if (r.reducedFrom !== undefined && r.reducedTo === undefined) { accrue(r, sim.now); r.reducedTo = sim.now; }
+    if (status === 'ended' && r.owed) { r.collection = Math.max(r.collection ?? 0, COLLECTION.notices.length - 1); nextNotice(sim, person, r); }
+  }
+}
+
+/** A plan's payment: what it takes now, applied to the oldest year first. */
+function payPlan(sim: Simulation, person: Person, amount: Money): Money {
+  let left = amount;
+  for (const r of Object.values(person.returns ?? {}).sort((a, b) => a.year - b.year)) {
+    if (left <= 0 || !r.owed) continue;
+    const take = Math.min(left, owedOn(r, sim.now));
+    applyPayment(sim, person, r, take, 'payment');
+    left -= take;
+  }
+  return amount - left;
+}
+
+/**
+ * New tax owed while a plan stands (an amended return's, another year's): joined to it where it adds no more than two
+ * monthly payments; past that, the plan is in default until it's revised (`tax.revise_plan`).
+ */
+export function newLiability(sim: Simulation, person: Person, added: Money): void {
+  const p = person.taxPlan;
+  if (!p || p.status !== 'active' || p.kind !== 'long' || !p.monthly) return;
+  if (added <= PLAN.addedPayments * p.monthly) { planNote(p, sim.now, 'New tax joined the plan', added); return; }
+  p.status = 'default';
+  p.defaultBy = sim.now + PLAN.defaultDays * MS_DAY;
+  planNote(p, sim.now, 'New tax beyond what the plan takes: CP523', added);
+  sim.schedule({ at: p.defaultBy, kind: TAX_PLAN_DEFAULT_KIND, label: 'IRS: Notice Of Intent To End The Plan', category: 'personal', priority: 25, payload: { personId: person.id } });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'Notice CP523: Your Payment Plan', body: `New tax of ${formatMoney(added, saveCurrency(sim.universe))} is more than the plan’s two payments take in. Revise the plan by ${formatDate(p.defaultBy, HOME)}, or it ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
 }
 
 export interface ReturnFigures {
@@ -699,6 +855,8 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r?.owed) return;
+    // A payment plan in force or being decided stops collection (from 2026-10-10).
+    if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return;
     accrue(r, s.now);
     const cur = saveCurrency(s.universe);
     const step = r.collection ?? 0;
@@ -730,7 +888,116 @@ export function registerTaxReturn(sim: Simulation): void {
     const canada = item.payload.foreign === true ? r?.figures.foreignRefund ?? 0 : 0;
     if (canada) { s.post({ memo: `Canada Revenue Agency refund, ${r!.year}`, category: 'tax', postings: [{ accountId: account.id, amount: canada }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -canada }] }); return; }
     if (!r?.refund) return;
-    s.post({ memo: `Tax refund, ${r.year}`, category: 'tax', postings: [{ accountId: account.id, amount: r.refund }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -r.refund }] });
+    // Owed on another year, the IRS keeps what covers it (IRC 6402(a), from 2026-10-10; a plan's payments are still due).
+    let back = r.refund;
+    for (const other of Object.values(person.returns ?? {}).sort((a, b) => a.year - b.year)) {
+      if (back <= 0 || !other.owed || other === r) continue;
+      const take = Math.min(back, owedOn(other, s.now));
+      s.post({ memo: `Tax refund, ${r.year}, applied to ${other.year}`, category: 'tax', postings: [{ accountId: s.nominalAccount('expense', expenseFor('tax')).id, amount: take }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -take }] });
+      applyPayment(s, person, other, take, 'refund offset');
+      back -= take;
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your ${r.year} Refund Went To ${other.year}`, body: `${formatMoney(take, saveCurrency(s.universe))} of it paid what you owe on ${other.year}.`, importance: 70, route: '/workspace/papers' });
+    }
+    if (back > 0) s.post({ memo: `Tax refund, ${r.year}`, category: 'tax', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
+  });
+
+  sim.onCommand<{ kind: 'short' | 'long'; monthly?: Money; directDebit?: boolean }, { status: string; decideAt: Instant; fee: Money }>('tax.apply_plan', (p, { sim: s }) => {
+    const person = s.player;
+    const kind = p?.kind === 'short' ? 'short' : 'long';
+    const no = planRefusal(s, person, kind);
+    if (no) throw new CommandError(no);
+    const owed = owedAll(person, s.now);
+    const cur = saveCurrency(s.universe);
+    const directDebit = kind === 'long' ? p?.directDebit !== false : false;
+    const monthly = kind === 'long' ? Math.round(Number(p?.monthly ?? leastMonthly(owed))) : undefined;
+    if (monthly !== undefined && monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}, what’s owed over ${PLAN.leastMonths} months.`);
+    const fee = planFee(s, person, kind, directDebit);
+    // Online with a Social Security number, decided at once; without one, Form 9465 by mail.
+    const online = hasSsn(person);
+    const decideAt = online ? s.now + 60_000 : s.now + PLAN.mailDays * MS_DAY;
+    const plan: TaxPlan = { kind, status: 'pending', appliedAt: s.now, decideAt, directDebit, fee, ...(monthly !== undefined ? { monthly } : {}), covers: owed, years: Object.values(person.returns ?? {}).filter((r) => r.owed).map((r) => r.year), history: [] };
+    planNote(plan, s.now, online ? 'Applied online' : 'Form 9465 mailed: no Social Security number for the online application');
+    person.taxPlan = plan;
+    s.schedule({ at: decideAt, kind: TAX_PLAN_DECIDE_KIND, label: 'The IRS On Your Payment Plan', category: 'personal', priority: 25, payload: { personId: person.id } });
+    return { status: plan.status, decideAt, fee };
+  });
+
+  sim.onSchedule(TAX_PLAN_DECIDE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const p = person?.taxPlan;
+    if (!person || !p || p.status !== 'pending') return;
+    // Decided on the day: a new unfiled return or a balance past its limit is refused, as the IRS would.
+    p.status = 'refused';
+    const no = planRefusal(s, person, p.kind);
+    p.status = 'pending';
+    if (no && !/payment plan|application/.test(no)) { p.status = 'refused'; p.why = no; planNote(p, s.now, `Refused: ${no}`); if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Refused A Payment Plan', body: no, importance: 85, route: '/workspace/papers' }); return; }
+    startPlan(s, person, p);
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Is Approved', body: p.kind === 'long' ? `${formatMoney(p.monthly!, saveCurrency(s.universe))} a month${p.directDebit ? ' by direct debit' : ''}, from ${formatDate(p.nextDue!, HOME)}. Interest goes on; ${Object.values(person.returns ?? {}).some((r) => r.reducedFrom === p.startedAt) ? 'the late-payment penalty halves while it stands' : 'the penalty stays at its full rate, since the return wasn’t filed on time'}. Collection has stopped.` : `Pay what’s owed by ${formatDate(p.payBy!, HOME)}; there’s no setup fee. Interest and the penalty go on.`, importance: 80, route: '/workspace/papers' });
+  });
+
+  sim.onSchedule(TAX_PLAN_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const p = person?.taxPlan;
+    if (!person || !p || p.status !== 'active') return;
+    const cur = saveCurrency(s.universe);
+    const owed = owedAll(person, s.now);
+    if (owed <= 0) { endPlan(s, person, p, 'paid', 'Paid off'); return; }
+    const due = p.kind === 'short' ? owed : Math.min(owed, p.monthly!);
+    if (payFromBank(s, person, due, `IRS payment plan${p.kind === 'short' ? ', paid in full' : ''}`, 'tax')) {
+      const paid = payPlan(s, person, due);
+      planNote(p, s.now, 'A payment', paid);
+      if (owedAll(person, s.now) <= 0) { endPlan(s, person, p, 'paid', 'Paid off'); return; }
+      if (p.kind === 'long') { p.nextDue = s.now + 30 * MS_DAY; s.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } }); return; }
+    }
+    // Missed: notice CP523, thirty days to catch up.
+    p.status = 'default';
+    p.defaultBy = s.now + PLAN.defaultDays * MS_DAY;
+    planNote(p, s.now, 'A payment missed: CP523', due);
+    s.schedule({ at: p.defaultBy, kind: TAX_PLAN_DEFAULT_KIND, label: 'IRS: Notice Of Intent To End The Plan', category: 'personal', priority: 25, payload: { personId: person.id } });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Notice CP523: A Payment Missed', body: `The bank couldn’t pay ${formatMoney(due, cur)}. Catch up by ${formatDate(p.defaultBy, HOME)}, on Papers, or the plan ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
+  });
+
+  sim.onSchedule(TAX_PLAN_DEFAULT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const p = person?.taxPlan;
+    if (!person || !p || p.status !== 'default') return;
+    endPlan(s, person, p, 'ended', 'Ended: not caught up after CP523');
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Has Ended', body: 'It wasn’t caught up in its thirty days. Collection resumes on what’s owed: the final notice before a levy comes next.', importance: 95, route: '/workspace/papers' });
+  });
+
+  sim.onCommand<Record<string, never>, { paid: Money }>('tax.catch_up_plan', (_p, { sim: s }) => {
+    const person = s.player;
+    const p = person.taxPlan;
+    if (!p || p.status !== 'default') throw new CommandError('Your plan isn’t behind.');
+    const due = Math.min(owedAll(person, s.now), p.kind === 'short' ? owedAll(person, s.now) : p.monthly!);
+    if (!payFromBank(s, person, due, 'IRS payment plan, caught up', 'tax')) throw new CommandError(`${formatMoney(due, saveCurrency(s.universe))} is more than the bank can cover.`);
+    payPlan(s, person, due);
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_PLAN_DEFAULT_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
+    p.status = 'active';
+    delete p.defaultBy;
+    planNote(p, s.now, 'Caught up', due);
+    if (owedAll(person, s.now) <= 0) { endPlan(s, person, p, 'paid', 'Paid off'); return { paid: due }; }
+    if (p.kind === 'long' && !s.universe.scheduled.some((i) => i.status === 'pending' && i.kind === TAX_PLAN_KIND && i.payload.personId === person.id)) { p.nextDue = s.now + 30 * MS_DAY; s.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } }); }
+    return { paid: due };
+  });
+
+  sim.onCommand<{ monthly?: Money }, { monthly: Money; fee: Money }>('tax.revise_plan', (p, { sim: s }) => {
+    const person = s.player;
+    const plan = person.taxPlan;
+    if (!plan || (plan.status !== 'active' && plan.status !== 'default') || plan.kind !== 'long') throw new CommandError('Only a monthly plan in force is revised.');
+    const owed = owedAll(person, s.now);
+    const cur = saveCurrency(s.universe);
+    const monthly = Math.round(Number(p?.monthly ?? leastMonthly(owed)));
+    if (monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}.`);
+    if (owed > usd(PLAN.longMax, cur)) throw new CommandError(`More than ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} is owed now: a revision needs a financial statement SLATE doesn't model.`);
+    const fee = usd(PLAN.reviseFee, cur);
+    if (!payFromBank(s, person, fee, 'IRS payment plan revision fee', 'tax')) throw new CommandError(`The ${formatMoney(fee, cur)} fee is more than the bank can cover.`);
+    plan.monthly = monthly;
+    plan.covers = owed;
+    if (plan.status === 'default') { plan.status = 'active'; delete plan.defaultBy; for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_PLAN_DEFAULT_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now); }
+    planNote(plan, s.now, `Revised: ${formatMoney(monthly, cur)} a month`, fee);
+    if (!s.universe.scheduled.some((i) => i.status === 'pending' && i.kind === TAX_PLAN_KIND && i.payload.personId === person.id)) { plan.nextDue = s.now + 30 * MS_DAY; s.schedule({ at: plan.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } }); }
+    return { monthly, fee };
   });
 
   sim.onCommand<{ year: number }, { balance: Money; penalty: Money; paid: boolean }>('tax.file', (p, { sim: s }) => {
@@ -761,7 +1028,12 @@ export function registerTaxReturn(sim: Simulation): void {
     const interest = r.figures.balance > 0 ? Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
     const total = r.figures.balance + r.penalty + interest;
     const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
-    if (!paid) { setOwed(r, { tax: r.figures.balance, penalty: r.penalty, interest }, s.now); r.collection = 0; nextNotice(s, person, r); }
+    if (!paid) {
+      setOwed(r, { tax: r.figures.balance, penalty: r.penalty, interest }, s.now);
+      // Under a payment plan, another year's balance joins it or puts it in default (`newLiability`, from 2026-10-10).
+      if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) r.reducedFrom = s.now; newLiability(s, person, total); }
+      else { r.collection = 0; nextNotice(s, person, r); }
+    }
     else if (total > 0) r.paidTax = r.figures.balance;
     return { balance: r.figures.balance, penalty: r.penalty, paid };
   });
@@ -820,7 +1092,9 @@ export function registerTaxReturn(sim: Simulation): void {
       const had = !!r.owed;
       setOwed(r, { tax: p.tax + a.change, penalty: p.penalty, interest: p.interest + interest }, s.now);
       a.interest = interest;
-      if (!had) { r.collection = 0; nextNotice(s, person, r); }
+      // Under a payment plan, the new tax joins it or puts it in default (`newLiability`); otherwise collection.
+      if (person.taxPlan?.status === 'active') { if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) r.reducedFrom ??= s.now; newLiability(s, person, a.change + interest); }
+      else if (!had) { r.collection = 0; nextNotice(s, person, r); }
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(a.change, cur)} more tax, with ${formatMoney(interest, cur)} of interest from the due date. ${formatMoney(r.owed ?? 0, cur)} is owed on the year.`, importance: 85, route: '/workspace/papers' });
       return;
     }

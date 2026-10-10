@@ -583,6 +583,8 @@ export function registerBanking(sim: Simulation): void {
     if (from.id === to.id) throw new CommandError('That’s the same account.');
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much to move.');
+    // Left open by a switch while in debt: blocked to all but repayment (from 2026-10-10).
+    if (from.switchDebt) throw new CommandError(`${from.name} is blocked to everything but paying off what it owes, since the switch.`);
     if (amount > from.balance) {
       throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
     }
