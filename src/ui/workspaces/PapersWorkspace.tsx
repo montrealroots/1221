@@ -25,7 +25,7 @@ import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, den
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
-import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
+import { basePeriodFor, studentUnavailable, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { PassportPane, WorkPane } from '@/ui/papers/Documents';
@@ -422,6 +422,7 @@ function AssistancePanel() {
         <Stat label="At Most" value={most} note={scheme === 'snap' ? 'A month, less 30% of net income' : 'A month, less earnings past what’s kept'} />
         <Stat label={scheme === 'snap' ? 'On The EBT Card' : 'Assets Kept To'} value={scheme === 'snap' ? formatMoney(ebtBalance(sim, person), cur) : `CAD ${(scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets).toLocaleString('en-US')}`} note={scheme === 'snap' ? 'Spent on groceries first' : 'The home and a car aside'} />
       </div>
+      {scheme === 'snap' && <Fine>Counted as SNAP counts it (7 CFR 273.9): work-study pay isn’t income; interest and benefits are, without the earned-income deduction wages get. A student is eligible in term on a work-study award, and in the summer only with 20 hours’ work a week (7 CFR 273.5).</Fine>}
     </Panel>
   );
 }
@@ -459,6 +460,8 @@ function BenefitsPane() {
   const state = BENEFIT_STATE[homeOf(person)];
   const preview = state ? basePeriodFor(person, state, sim.now, cur) : undefined;
   const source = state === 'ca' ? CALIFORNIA_UI.source : state === 'ct' ? CONNECTICUT_UI.source : NEW_YORK_UI.source;
+  // A full-time student in Connecticut isn't available for work (from 2026-10-10, `studentUnavailable`).
+  const studying = state ? studentUnavailable(person, state) : undefined;
   const partial = state === 'ca' ? `the benefit less the earnings past the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} and a quarter of them` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'by its hours, and nothing where the pay reaches the maximum';
   return (
     <div className="col gap-5">
@@ -469,7 +472,7 @@ function BenefitsPane() {
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}
-        actions={claim || !state || !preview?.result.ok ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
+        actions={claim || !state || !preview?.result.ok || studying ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
       >
         <div className="col gap-3">
           {claim ? (
@@ -480,11 +483,11 @@ function BenefitsPane() {
             </div>
           ) : (
             <p className="small" style={{ margin: 0 }}>
-              {!state ? 'SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.' : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
+              {!state ? 'SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.' : studying ? studying : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
             </p>
           )}
           <p className="small" style={{ margin: 0 }}>
-            Each Sunday the week is certified for you, from anywhere in the country as an interstate claim is; a week abroad pays nothing. A week with work pays {partial}. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
+            Each Sunday the week is certified for you, from anywhere in the country as an interstate claim is; a week abroad pays nothing, and so does a week while you’re a full-time student in Connecticut. A week with work pays {partial}, from the wages paid in it; work-study wages are your school’s, outside the claim’s base period. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
           </p>
           <Fine>Source: {source}.</Fine>
         </div>
@@ -586,7 +589,7 @@ function PensionsPanel() {
           <Panel title="Social Security" subtitle="Your US earnings record" actions={no ? undefined : <Gated feature="pension.social_security" onClick={() => { const r = run<{ monthly: number; factor: number }>('pension.social_security'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month, ${Math.round(r.value!.factor * 1000) / 10}% of the full benefit.`, 'positive'); }}>Claim Social Security</Gated>}>
             <div className="col gap-3">
               <div className="grid grid-3">
-                <Stat label="Credits" value={String(ss.credits)} note="Forty qualify" />
+                <Stat label="Credits" value={String(ss.credits)} note="Forty qualify; a school life earns a few" />
                 <Stat label="At 67, A Month" value={usd(ss.pia)} note={`62: ${usd(Math.floor(ss.pia * claimFactor(-60)))}; 70: ${usd(Math.floor(ss.pia * claimFactor(36)))}`} />
                 <Stat label="Claimed" value={person.socialSecurity ? usd(person.socialSecurity.monthlyUsd) : 'Not Yet'} note={person.socialSecurity ? `A month since ${formatDate(person.socialSecurity.from, sim.zone)}` : no ?? 'You can claim it now'} />
               </div>

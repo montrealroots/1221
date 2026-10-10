@@ -14,10 +14,19 @@
  * of applying.
  */
 
-export interface Replacement { fee: number; currency: string; days: number; driveMeanwhile: boolean; first?: string; source: string }
+export interface Replacement {
+  fee: number; currency: string; days: number; driveMeanwhile: boolean; first?: string; source: string;
+  /**
+   * Replaced by mail to an address outside the issuing state, for a holder living elsewhere (from 2026-10-10,
+   * `docs/research/world/research-coverage-gaps.json`): New York's form MV-44 by mail takes a temporary address,
+   * where its online service mails only to the address on record. Where this is absent, SLATE found no way to have it
+   * sent out of state, and says so.
+   */
+  byMail?: { form: string; source: string };
+}
 
 export const LICENSE_REPLACEMENT: Readonly<Record<string, Replacement>> = {
-  'us-ny': { fee: 17.5, currency: 'USD', days: 21, driveMeanwhile: true, source: 'https://dmv.ny.gov/driver-license/replace-a-license-or-permit' },
+  'us-ny': { fee: 17.5, currency: 'USD', days: 21, driveMeanwhile: true, source: 'https://dmv.ny.gov/driver-license/replace-a-license-or-permit', byMail: { form: 'MV-44', source: 'https://dmv.ny.gov/driver-license/replace-a-license-or-permit' } },
   'us-ca': { fee: 37, currency: 'USD', days: 28, driveMeanwhile: false, source: 'https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/replace-your-driver-license-or-identification-dl-id-card/' },
   'us-ct': { fee: 30, currency: 'USD', days: 30, driveMeanwhile: true, source: 'https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-driver-license' },
   'ca-on': { fee: 35.75, currency: 'CAD', days: 42, driveMeanwhile: true, source: 'https://www.ontario.ca/page/replace-drivers-licence' },

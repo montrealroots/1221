@@ -137,10 +137,28 @@ export function residenceFee(sim: Simulation): Money {
   return inSave(sim, MEXICAN_RESIDENCE.temporary, 'MXN') + inSave(sim, MEXICAN_RESIDENCE.consularVisaUsd, 'USD');
 }
 
-/** Settling: Britain's indefinite leave after five years with pay earned there; Mexico's permanent residence after four years' temporary. */
+/**
+ * Since when residence in a country has been held without a break, back from the one in force (from 2026-10-10):
+ * each earlier grant counts while it reached the next, ended or run out no more than a day before it. Until then
+ * settlement and naturalization counted from the first grant ever, across a lapse of any length.
+ */
+export function continuousSince(person: Person, iso: string, at: Instant): Instant | undefined {
+  const now = residenceIn(person, iso, at);
+  if (!now || now.issuedAt === undefined) return undefined;
+  const earlier = documentsOf(person).filter((d) => d !== now && d.destination === iso && d.route !== undefined && d.issuedAt !== undefined).sort((a, b) => b.issuedAt! - a.issuedAt!);
+  let since = now.issuedAt;
+  for (const d of earlier) {
+    if (d.issuedAt! >= since) continue;
+    const ended = d.endedAt ?? d.expiresAt ?? Number.POSITIVE_INFINITY;
+    if (ended + MS_DAY < since) break;
+    since = d.issuedAt!;
+  }
+  return since;
+}
+
+/** Settling: Britain's indefinite leave after five years with pay earned there; Mexico's permanent residence after four years' temporary, held without a break. */
 export function settleRefusal(sim: Simulation, person: Person, iso: string): string | undefined {
-  const held = documentsOf(person).filter((d) => d.destination === iso && d.route !== undefined);
-  const first = held.reduce<number | undefined>((a, d) => (d.issuedAt !== undefined && (a === undefined || d.issuedAt < a) ? d.issuedAt : a), undefined);
+  const first = continuousSince(person, iso, sim.now);
   const now = residenceIn(person, iso, sim.now);
   if (!now || first === undefined) return 'You hold no residence there to settle from.';
   if (now.route === 'uk-settled' || now.route === 'mx-permanent') return 'You’re settled there.';

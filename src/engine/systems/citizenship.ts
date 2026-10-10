@@ -31,9 +31,9 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { citizenOf, documentsOf } from './documents';
+import { citizenOf } from './documents';
 import { payFromBank } from './spending';
-import { residenceIn } from './residence';
+import { continuousSince, residenceIn } from './residence';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 export const NATURALIZE = {
@@ -44,9 +44,9 @@ export const NATURALIZE = {
 export const CITIZENSHIP_KIND = 'citizenship.decided';
 type Where = keyof typeof NATURALIZE;
 
-/** When they first held residence in a country, of the routes SLATE grants. */
-function firstResidence(person: Person, iso: string): Instant | undefined {
-  return documentsOf(person).filter((d) => d.destination === iso && d.route !== undefined && d.issuedAt !== undefined).reduce<number | undefined>((a, d) => (a === undefined || d.issuedAt! < a ? d.issuedAt! : a), undefined);
+/** Since when they've held residence in a country without a break (`continuousSince`, from 2026-10-10: until then the first grant ever, across lapses). */
+function firstResidence(person: Person, iso: string, at: Instant): Instant | undefined {
+  return continuousSince(person, iso, at);
 }
 
 export function naturalizeRefusal(sim: Simulation, person: Person, iso: string): string | undefined {
@@ -54,7 +54,7 @@ export function naturalizeRefusal(sim: Simulation, person: Person, iso: string):
   if (citizenOf(person, iso)) return 'You’re a citizen there.';
   if (person.naturalizing) return 'An application is being decided.';
   const held = residenceIn(person, iso, sim.now);
-  const first = firstResidence(person, iso);
+  const first = firstResidence(person, iso, sim.now);
   if (!held || first === undefined) return 'It asks residence there first.';
   const years = (sim.now - first) / YEAR_MS;
   if (iso === 'GB') {

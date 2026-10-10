@@ -161,6 +161,19 @@ function close(sim: Simulation, person: Person, why: string): void {
   if (person.id === sim.universe.playerId) sim.notify({ category: 'benefits', title: 'Your Unemployment Claim Ended', body: why, importance: 60, route: '/workspace/papers' });
 }
 
+/**
+ * Why a student can't be paid, or nothing (from 2026-10-10): Connecticut takes somebody enrolled full-time as not
+ * available for work, CGS 31-235(b) withholding the availability protection from a claimant who was a full-time
+ * student in the two years before (unless they worked full-time through them), and the Labor Department asking a
+ * student to change classes or leave them for a job. SLATE's reading: enrolled at the school, summer included, is
+ * full-time. New York's and California's own student rules aren't kept, and their claims don't read this.
+ */
+export function studentUnavailable(person: Person, state: BenefitState): string | undefined {
+  const s = person.school;
+  if (state !== 'ct' || !s || s.standing === 'graduated' || s.standing === 'dismissed') return undefined;
+  return 'Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.';
+}
+
 export function registerUnemployment(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money; firstPaymentAt?: Instant }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
@@ -173,6 +186,9 @@ export function registerUnemployment(sim: Simulation): void {
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You have a claim open.');
     // A claim was refused on a job until the career went in the scope reset of 2026-10-09; there are no jobs to be on.
+    // In Connecticut a full-time student isn't available for work (from 2026-10-10, `studentUnavailable`).
+    const studying = studentUnavailable(person, state);
+    if (studying) throw new CommandError(studying);
     const cur = saveCurrency(s.universe);
     const base = basePeriodFor(person, state, s.now, cur);
     if (!base.result.ok) throw new CommandError(`${base.result.why} Your base period’s quarters paid ${base.wages.map((w) => formatMoney(w, cur)).join(', ')}.`);
@@ -196,7 +212,7 @@ export function registerUnemployment(sim: Simulation): void {
     // not from abroad, where they aren't available for work. Until 2026-09-27
     // it paid only in the claim's state, and a New York claimant who moved to
     // Los Angeles was paid nothing for the rest of the benefit year.
-    const available = CITIES.get(person.currentLocationId)?.countryId === 'us';
+    const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state);
     // The week's hours and pay worked: the career's days until the career went on 2026-10-09, and from 2026-10-10 the
     // school's work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none.
     const worked = workedBetween(s, person, item.at - 7 * MS_DAY, item.at);

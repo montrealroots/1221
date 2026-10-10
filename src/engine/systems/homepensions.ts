@@ -55,7 +55,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { earningsOf, homeOf } from './earnings';
+import { earningsOf, homeOf, recordPension } from './earnings';
 import { payeeAccount } from './cash';
 import { isoOfCountry } from './documents';
 import { capitalMeans, livesInIreland } from './homebenefits';
@@ -200,6 +200,8 @@ export function registerHomePensions(sim: Simulation): void {
     if (due > 0) {
       const account = payeeAccount(s, person);
       s.post({ memo: `The State Pension (${week.means ? 'Non-Contributory' : 'Contributory'}), the week${week.fuel ? ', and the Fuel Allowance' : ''}`, category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'State Pension (Ireland)').id, amount: -due }] });
+      // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
+      recordPension(person, item.at, s.homeZone, due);
     }
     s.schedule({ at: item.at + 7 * MS_DAY, kind: IRISH_PENSION_KIND, label: 'State Pension (Ireland)', category: 'system', priority: 20, payload: { personId: person.id } });
   });
@@ -221,6 +223,8 @@ export function registerHomePensions(sim: Simulation): void {
       const due = inSave(s, BIENESTAR.bimonthly, 'MXN');
       const account = payeeAccount(s, person);
       s.post({ memo: 'Pensión para el Bienestar, two months', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'Pensión para el Bienestar').id, amount: -due }] });
+      // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
+      recordPension(person, item.at, s.homeZone, due);
       if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Pensión Para El Bienestar Paid', body: `${formatMoney(due, saveCurrency(s.universe))} for two months, since ${formatDate(person.bienestarFrom, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     }
     s.schedule({ at: twoMonthsOn(item.at), kind: BIENESTAR_KIND, label: 'Pensión Para El Bienestar', category: 'system', priority: 20, payload: { personId: person.id } });

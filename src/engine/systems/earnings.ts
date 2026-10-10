@@ -64,6 +64,12 @@ export interface EarningsRecord {
   equityWeeks: string[];
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
   months: Record<string, Money>;
+  /**
+   * The same month's income by kind (from 2026-10-10): wages, work-study wages, and the unearned (interest, benefits,
+   * pensions). SNAP excludes work-study and gives its deduction to earned income only (7 CFR 273.9); until then it
+   * took the month's whole as earned. A month from before has none, and is read as it was.
+   */
+  kinds?: Record<string, { wages: Money; workStudy: Money; unearned: Money }>;
   /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test; what was withheld, by year and by payer; and the years settled. */
   ukYears: Record<string, Money>;
   /** Wages earned in the UK by its tax year, in the save's money, and the years National Insurance credits covered: the State Pension's record (`systems/statepension.ts`). */
@@ -128,6 +134,7 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   if (worked !== lived) y.elsewhere[`${lived}>${pay.where}`] = (y.elsewhere[`${lived}>${pay.where}`] ?? 0) + pay.gross;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + pay.gross;
+  addKind(person, month, pay.workStudy ? 'workStudy' : 'wages', pay.gross);
   if (pay.workStudy) y.workStudy += pay.gross;
   else y.acting += pay.gross;
   if (pay.sag) {
@@ -168,6 +175,12 @@ export function workedBetween(sim: Simulation, person: Person, from: Instant, to
   return { pay, hours };
 }
 
+/** A month's income of a kind (`EarningsRecord.kinds`). */
+function addKind(person: Person, month: string, kind: 'wages' | 'workStudy' | 'unearned', amount: Money): void {
+  const k = ((earningsOf(person).kinds ??= {})[month] ??= { wages: 0, workStudy: 0, unearned: 0 });
+  k[kind] += amount;
+}
+
 /** A benefit paid: unemployment insurance, income for the return. */
 export function recordBenefit(person: Person, at: Instant, zone: string, amount: Money): void {
   const p = zonedParts(at, zone);
@@ -178,6 +191,7 @@ export function recordBenefit(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+  addKind(person, month, 'unearned', amount);
 }
 
 /**
@@ -194,6 +208,7 @@ export function recordInterest(person: Person, at: Instant, zone: string, amount
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+  addKind(person, month, 'unearned', amount);
 }
 
 /** A pension paid, to the year it's paid and where they lived: income for the return, and the month's. */
@@ -206,6 +221,7 @@ export function recordPension(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+  addKind(person, month, 'unearned', amount);
 }
 
 /** A scholarship's taxable part, to the year it's paid and where they lived. */

@@ -30,7 +30,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { earningsOf } from './earnings';
+import { earningsOf, recordPension } from './earnings';
 import { payeeAccount } from './cash';
 
 export const SOCIAL_SECURITY = {
@@ -60,11 +60,16 @@ const heldAt = (table: Readonly<Record<number, number>>, year: number) => {
   return table[at]!;
 };
 
-/** A year's US wages, in dollars: what it earned in the US, all of it for a year from before wages were kept by country. */
+/**
+ * A year's US wages covered by Social Security, in dollars: what it earned in the US less work-study, which a student
+ * working for their own school while enrolled pays no FICA on and earns no credit for (IRC 3121(b)(10), 42 USC
+ * 410(a)(10)); until 2026-10-10 it counted, and a student's credits ran ahead of the tax paid. A Summer Cabaret stipend,
+ * with FICA withheld out of term, counts.
+ */
 function usWages(person: Person, year: number, currency: string): number {
   const y = earningsOf(person).years[year];
   if (!y) return 0;
-  const cents = y.bySource ? (y.bySource.us ?? 0) : y.acting + y.workStudy;
+  const cents = Math.max(0, (y.bySource ? (y.bySource.us ?? 0) : y.acting + y.workStudy) - y.workStudy);
   const usd = currency === 'USD' ? cents : exchange(cents, currency, 'USD') ?? cents;
   return usd / 100;
 }
@@ -139,6 +144,8 @@ export function registerSocialSecurity(sim: Simulation): void {
     if (due > 0) {
       const account = payeeAccount(s, person);
       s.post({ memo: 'Social Security, the month', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'Social Security').id, amount: -due }] });
+      // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
+      recordPension(person, item.at, s.homeZone, due);
       if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Social Security Paid', body: `${formatMoney(due, cur)} for the month, since ${formatDate(ss.from, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     }
     s.schedule({ at: monthOn(item.at), kind: SOCIAL_SECURITY_KIND, label: 'Social Security', category: 'system', priority: 20, payload: { personId: person.id } });

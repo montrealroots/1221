@@ -1,0 +1,252 @@
+[
+  {
+    "question": "1a. CT UI: is work-study pay at the school where enrolled covered employment?",
+    "rule": "No. CT excludes from 'employment' service performed in the employ of a school, college or university by a student who is enrolled and regularly attending classes there. Work-study wages from Yale therefore are not covered wages and do not count toward UI monetary eligibility. FUTA has the parallel exclusion.",
+    "citation": "Conn. Gen. Stat. 31-222(a)(5)(G)(i); 26 U.S.C. 3306(c)(10)(B)",
+    "url": "https://www.cga.ct.gov/current/pub/chap_567.htm#sec_31-222",
+    "jurisdiction": "Connecticut; US federal (FUTA)",
+    "asOf": "2026-10-10 (current CGS text fetched)",
+    "uncertainty": "Low for term-time work-study. Whether the exclusion reaches work-study done in a summer when the student is not taking classes depends on 'regularly attending classes'. Not verified.",
+    "gameImplication": "Work-study earnings should never build UI base-period wages."
+  },
+  {
+    "question": "1b. CT UI: is a Yale Summer Cabaret stipend covered employment?",
+    "rule": "Plausibly covered. The student exclusion needs the student to be enrolled AND regularly attending classes at the employing school, which a summer break normally doesn't satisfy. If the payer is a 501(c)(3) (Yale, or a separate nonprofit), CT nonprofits are covered under the reimbursement or contribution rules. No authoritative ruling on Summer Cabaret was found.",
+    "citation": "Conn. Gen. Stat. 31-222(a)(5)(G); 31-222(a)(1) (definition of employment); 31-225a (nonprofit reimbursement)",
+    "url": "https://www.cga.ct.gov/current/pub/chap_567.htm",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10",
+    "uncertainty": "High. Who the legal employer is, and whether summer counts as 'regularly attending', were not verified. A CT DOL determination would settle it. The withholding of taxes points to W-2 employment but does not show UI coverage.",
+    "gameImplication": "If modeled, only the Cabaret stipend can create UI wage credits. Gate it on summer and 'not attending classes'."
+  },
+  {
+    "question": "1c. CT UI: is a full-time student 'available for work'?",
+    "rule": "CGS 31-235(a)(2) says a claimant is not unavailable solely because they attend school, and may limit the search to hours outside class. 31-235(b) switches that protection off for anyone who was a regularly enrolled full-time student at any time in the 2 years before separation, unless they were employed full-time for those 2 years. 31-236(a)(6) disqualifies someone who left work to attend school, for as long as they attend. CT DOL guidance: a student must be willing to change classes or drop out if a job conflicts, unless in approved training.",
+    "citation": "Conn. Gen. Stat. 31-235(a)(2), 31-235(b), 31-236(a)(6)",
+    "url": "https://portal.ct.gov/dol/knowledge-base/articles/ui-claims-and-eligibility/can-i-receive-unemployment-if-i-attend-a-school-college-university",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low on the statute text. Medium on how the availability test is applied to a specific MFA schedule.",
+    "gameImplication": "A full-time MFA student is effectively ineligible unless willing to drop classes. Make the availability conflict explicit."
+  },
+  {
+    "question": "1d. CT UI weekly obligations",
+    "rule": "Every week: file a weekly certification in ReEmployCT by 11:59 p.m. Saturday, report all earnings, and do at least 3 work-search activities, at least 1 of them an employer contact. Keep work-search records for 3 years from the start of the claim, because claims can be audited.",
+    "citation": "Conn. Gen. Stat. 31-235(a)(1)-(2); CT DOL benefits guide and work-search FAQ",
+    "url": "https://portal.ct.gov/dolui/benefits-booklet/benefits-booklet---a-guide-to-collecting-benefits-in-connecticut",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low.",
+    "gameImplication": "Weekly: certify, report earnings, log 3 activities. Records are receipt-like evidence that could be audited."
+  },
+  {
+    "question": "1e. CT UI partial earnings formula",
+    "rule": "Partial benefit = weekly benefit rate minus two-thirds of gross weekly remuneration (remuneration rounded to the nearest dollar, the two-thirds rounded up to the next dollar). In effect, one-third of earnings is disregarded. Someone counts as partially unemployed only if that week's remuneration is less than 1.5 times their weekly benefit rate (rounded up). Holiday pay counts as remuneration.",
+    "citation": "Conn. Gen. Stat. 31-229",
+    "url": "https://www.cga.ct.gov/current/pub/chap_567.htm#sec_31-229",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10 (two-thirds reduction in place since P.A. 83-547; no later change in the history note)",
+    "uncertainty": "Low.",
+    "gameImplication": "payable = max(0, WBR - ceil((2/3)*round(earnings))) when earnings < ceil(1.5*WBR); otherwise 0."
+  },
+  {
+    "question": "2a. SNAP student eligibility",
+    "rule": "Anyone enrolled at least half-time in an institution of higher education is ineligible unless they meet an exemption in 273.5(b). The relevant exemptions are: (b)(5) employed at least 20 hours a week and paid (may be averaged over a month, quarter or semester); (b)(6) taking part in state- or federally-financed work study during the regular school year, approved for the term at application. FNS guidance adds that the student must anticipate actually working. Other exemptions include age under 18 or 50+, unable to work, caring for a young child, TANF, and SNAP E&T placement.",
+    "citation": "7 CFR 273.5(a), (b)(5), (b)(6); 7 U.S.C. 2015(e)",
+    "url": "https://www.law.cornell.edu/cfr/text/7/273.5",
+    "jurisdiction": "US federal (CT DSS administers it)",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low on the rule. The FNS 'anticipate working' gloss was not re-fetched. No CT-specific student variation was found or verified.",
+    "gameImplication": "An approved FWS award (not the hours) is the gate. 150-200 hours a year is about 5 hours a week and far below 20, so the work-study exemption is the only route. F-1 students are ineligible regardless (non-qualified aliens, 7 CFR 273.4)."
+  },
+  {
+    "question": "2b. SNAP earned vs unearned income; is work-study excluded?",
+    "rule": "Interest and unemployment compensation are unearned income (273.9(b)(2)). The 20% earned income deduction applies only to gross earned income (273.9(d)(2)). Federal Work-Study earnings are EXCLUDED. 273.9(b)(1)(vi) excludes earned income from work study funded under 20 U.S.C. 1087uu (HEA Title IV), and 273.9(c)(3)(i)(A) excludes educational assistance received under Title IV, which includes 42 U.S.C. ch. 34 subch. I part C, the FWS statute. Non-Title-IV work study counts as earned income above the excluded education-expense amount.",
+    "citation": "7 CFR 273.9(b)(1)(vi), 273.9(b)(2)(ii), 273.9(c)(3)(i)(A), 273.9(d)(2); 20 U.S.C. 1087uu",
+    "url": "https://www.law.cornell.edu/cfr/text/7/273.9",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low. Yale-funded (non-federal) work study would not get the Title IV exclusion.",
+    "gameImplication": "FWS wages count $0 toward SNAP income. The Cabaret stipend is earned income (20% deduction). Interest and UI are unearned (no 20% deduction)."
+  },
+  {
+    "question": "3a. FICA and SS credits on work-study wages",
+    "rule": "Service for the school, college or university where the person is enrolled and regularly attending classes is excluded from 'employment'. No FICA is withheld and the wages earn no Social Security credits. Under the Rev. Proc. 2005-11 safe harbor, the student must be enrolled at least half-time and not a full-time employee (normal schedule of 40+ hours a week). The exception does not apply during school breaks of more than 5 weeks (including summer) if the person is not enrolled. It continues through breaks of 5 weeks or less.",
+    "citation": "26 U.S.C. 3121(b)(10); 42 U.S.C. 410(a)(10); Treas. Reg. 31.3121(b)(10)-2; Rev. Proc. 2005-11",
+    "url": "https://www.irs.gov/pub/irs-drop/rp-05-11.pdf",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low. A university may choose not to use the safe harbor, but the statute still controls.",
+    "gameImplication": "Term-time work-study earns 0 credits."
+  },
+  {
+    "question": "3b. Credit amount and credits needed",
+    "rule": "2026: $1,890 of covered earnings per credit (quarter of coverage), at most 4 credits a year ($7,560 earns all four). 2025: $1,810. Retirement insured status needs 40 credits for anyone born after 1928.",
+    "citation": "42 U.S.C. 413(d); 20 CFR 404.143; 42 U.S.C. 414(a); 20 CFR 404.110; SSA 2026 COLA Fact Sheet",
+    "url": "https://www.ssa.gov/news/en/cola/factsheets/2026.html",
+    "jurisdiction": "US federal",
+    "asOf": "2026 (announced October 2025)",
+    "uncertainty": "Low. The 2027 figure will be announced around October 2026 and was not checked.",
+    "gameImplication": "credits = min(4, floor(coveredEarnings/1890)). Credits are annual and need not fall in specific calendar quarters."
+  },
+  {
+    "question": "3c. Summer stipend with FICA withheld",
+    "rule": "Wages on which FICA is withheld are covered earnings and count toward credits. Summer pay from the school while the person is not enrolled during a break of more than 5 weeks falls outside the student exception, so it is FICA-taxable and earns credits. F-1 nonresident aliens are exempt from FICA on employment that carries out the purpose of their visa (generally their first 5 calendar years), so in those lives the stipend may earn no credits.",
+    "citation": "26 U.S.C. 3121(b)(10), 3121(b)(19); Rev. Proc. 2005-11 sec. 7",
+    "url": "https://www.irs.gov/pub/irs-drop/rp-05-11.pdf",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10",
+    "uncertainty": "Medium. Whether FICA is actually withheld on the Cabaret stipend depends on Yale payroll. If it is withheld, credits follow.",
+    "gameImplication": "Only the stipend earns credits. A stipend over $1,890 earns 1 credit, up to 4 at $7,560. US citizens only; F-1 likely 0."
+  },
+  {
+    "question": "4a. Replacing a lost/stolen CT driver's license",
+    "rule": "Online ($30, arrives by mail within about 30 days) if lost, stolen or destroyed. Not available online for a name change, a non-US citizen, or a drive-only or commercial license. By mail with Form B-350 and a $30 check (mailed to the address on file, within about 20 days). In person with Form 1-B at a DMV office or AAA/credit-union partner (up to $8 convenience fee; temporary license issued). No police report required.",
+    "citation": "CT DMV duplicate license page; Conn. Gen. Stat. 14-50 (fees)",
+    "url": "https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-driver-license",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low. The fee statute section was not verified.",
+    "gameImplication": "US citizen with a CT license: remote, $30. F-1 student: in person only."
+  },
+  {
+    "question": "4b. CT non-driver photo ID; can a nonresident student get one?",
+    "rule": "Available only to Connecticut residents who don't hold a valid driver's license (or whose license is suspended). Requires 2 proofs of a CT address dated within 90 days, plus primary ID. $28, valid 7 years. A CT license holder must surrender it to get the ID. The page states no student or nonresident provision. Whether an out-of-state student counts as a 'resident' was not established.",
+    "citation": "Conn. Gen. Stat. 1-1h; CT DMV non-driver ID page",
+    "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-non-driver-id",
+    "jurisdiction": "Connecticut",
+    "asOf": "2026-10-10",
+    "uncertainty": "Medium. The residency definition for students was not found. Whether a duplicate non-driver ID can be done online was not confirmed.",
+    "gameImplication": "Gate the CT ID on declared CT residency plus address proofs, and on giving up any license."
+  },
+  {
+    "question": "4c. Replacing a NY license remotely",
+    "rule": "Online for $17.50, but it is mailed only to the address on the DMV record (no temporary address online, no foreign address). By mail (MV-44, ID copies, $17.50) or in an office, a temporary address may be used, so a student in CT can replace by mail. Free replacement if the license was stolen or lost due to a crime and the person gets form MV-78B from a police agency.",
+    "citation": "NY DMV Replace a License or Permit page; NY Veh. & Traf. Law 491",
+    "url": "https://dmv.ny.gov/driver-license/replace-a-license-or-permit",
+    "jurisdiction": "New York",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low.",
+    "gameImplication": "A police report (MV-78B) has a concrete payoff for NY lives: the $17.50 fee is waived."
+  },
+  {
+    "question": "4d. Replacing a CA license remotely",
+    "rule": "A replacement driver's license can be requested online (not ID cards or commercial licenses, which need an office visit with photo and thumbprint). It is mailed to the address on DMV record and may take up to 60 days. Fee: $37 for a Class C license, $40 for an ID card. Whether CA mails to an out-of-state address was not stated on official pages.",
+    "citation": "CA DMV replacement and licensing-fee pages; Cal. Veh. Code 14901",
+    "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/licensing-fees/",
+    "jurisdiction": "California",
+    "asOf": "2026-10-10",
+    "uncertainty": "Medium on out-of-state mailing. Third-party sites say a cardholder out of state must wait to apply in person. Not confirmed by DMV.",
+    "gameImplication": "Treat CA license replacement as remote but slow. A CA ID card is in-person only."
+  },
+  {
+    "question": "5a. Do replacement processes need a police report?",
+    "rule": "CT DMV: no police report for any method. NY DMV: not required, but form MV-78B from police waives the fee for a license stolen or lost due to a crime. US passport: report the loss on DS-64 (online, by mail, or with the new application). The passport is invalidated. Replacement is a new DS-11 in person. No police report required. Social Security card: free, can often be done online. Limits are 3 replacements a year and 10 per lifetime (name changes excepted). No police report required.",
+    "citation": "22 CFR 51.20 and 51.21 (passport application); DS-64; 20 CFR 422.103(e) (SSN card limits)",
+    "url": "https://www.govinfo.gov/content/pkg/CFR-2025-title20-vol2/pdf/CFR-2025-title20-vol2-sec422-103.pdf",
+    "jurisdiction": "US federal; CT; NY",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low-medium. travel.state.gov and ssa.gov pages returned 403 and were confirmed through secondary results and the CFR.",
+    "gameImplication": "In most cases a police report only helps the NY fee waiver. It is not a gate."
+  },
+  {
+    "question": "5b. FTC Identity Theft Report vs police report",
+    "rule": "An 'identity theft report' is a report filed with a federal, state or local law enforcement agency where filing false information carries criminal penalties. An FTC IdentityTheft.gov report qualifies, because the FTC is a federal agency. The report unlocks: (1) a 7-year extended fraud alert plus 5 years off prescreened lists (FCRA 605A(b)); (2) a block of fraudulent information by consumer reporting agencies within 4 business days (FCRA 605B); (3) blocking by furnishers and access to business records about fraudulent transactions (FCRA 609(e)). A 1-year initial fraud alert needs no report. A police report gives no extra statutory rights. Per BJS, only 7% of 2021 victims reported to police.",
+    "citation": "15 U.S.C. 1681a(q)(4); 12 CFR 1022.3(i); 15 U.S.C. 1681c-1(a),(b); 15 U.S.C. 1681c-2; 15 U.S.C. 1681g(e)",
+    "url": "https://www.law.cornell.edu/uscode/text/15/1681c-2",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low.",
+    "gameImplication": "The FTC report is the meaningful action, and it is free and online. A police report is optional."
+  },
+  {
+    "question": "5c. New Haven PD online reporting",
+    "rule": "NHPD runs a Police-to-Citizen (P2C) portal for online non-emergency reports. Secondary sources say lost property, theft from vehicles and identity theft can be reported there. The portal is JavaScript-rendered, and its list of incident types could not be read directly. Routine line: 203-946-6316.",
+    "citation": "NHPD P2C portal",
+    "url": "https://newhavenct.policetocitizen.com/",
+    "jurisdiction": "New Haven, CT",
+    "asOf": "2026-10-10",
+    "uncertainty": "Medium-high. Lost property being reportable online is from search snippets, not verified.",
+    "gameImplication": "An online report is plausible. Treat it as low-cost but unverified."
+  },
+  {
+    "question": "6a. Regulation E: unauthorized ACH vs debit card",
+    "rule": "With an access device (debit card or PIN): liability is up to $50 if reported within 2 business days of learning of the loss or theft, and up to $500 after that. For transfers not involving an access device, such as an ACH debit using only the account and routing numbers, the $50/$500 tiers don't apply: the consumer owes $0 if the transfer is reported within 60 days of the statement being sent. Under both, transfers after that 60-day window and before notice can fall on the consumer. Error resolution (1005.11): the bank investigates within 10 business days, or 45 days if it provisionally credits within 10 business days (20 and 90 days for new accounts, point-of-sale and foreign transfers).",
+    "citation": "12 CFR 1005.6(b)(1)-(3); 12 CFR 1005.11(c)",
+    "url": "https://www.law.cornell.edu/cfr/text/12/1005.6",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10",
+    "uncertainty": "Low.",
+    "gameImplication": "Account-number fraud costs $0 if caught within 60 days of the statement. Card loss can cost $50-$500. Slow reporting carries the risk."
+  },
+  {
+    "question": "6b. How banks handle a compromised account number",
+    "rule": "No regulation requires renumbering. Common practice is to close the account and open a new number, reissue any linked debit card, and leave the customer to redirect direct deposits and automatic payments. Nacha rules let the receiving bank return an unauthorized consumer debit within 60 days of settlement on a Written Statement of Unauthorized Debit (codes R05, R07, R10, R11). These steps are industry practice, not law.",
+    "citation": "Nacha Operating Rules, Subsection 3.12 (WSUD) and Article Three; 12 CFR 1005.10 (preauthorized transfers, stop payment)",
+    "url": "https://www.nacha.org/rules/ach-network-risk-and-enforcement-topics",
+    "jurisdiction": "US (private network rules, not law)",
+    "asOf": "2026-10-10",
+    "uncertainty": "Medium. No authoritative source describes renumbering practice. The Nacha rule numbers were not re-verified.",
+    "gameImplication": "Renumbering is a choice with a cost (redirecting deposits and payments). Recovery runs through the WSUD route."
+  },
+  {
+    "question": "6c. Nacha unauthorized return rate",
+    "rule": "Originators exceeding a 0.5% unauthorized debit return rate (R05, R07, R10, R11, R29, R51 over the preceding 60 days) face Nacha inquiry. Nacha's own figure for the network-average unauthorized debit return rate was 0.03% in calendar 2013. No newer authoritative average was found.",
+    "citation": "Nacha Operating Rules 2.17.2; Nacha 'ACH Network Risk and Enforcement Topics' (2015 rule)",
+    "url": "https://www.nacha.org/system/files/2024-01/Calculate_Unauthorized_Return_Rate.pdf",
+    "jurisdiction": "US ACH network",
+    "asOf": "Rule current 2026. The 0.03% average is a 2013 figure.",
+    "uncertainty": "Medium. The 0.03% is dated, and it measures returns per debit, not victims per person-year.",
+    "gameImplication": "Unauthorized ACH debits are rare per transaction (about 3 in 10,000 debits in 2013). Don't use it as a per-person annual probability."
+  },
+  {
+    "question": "6d. BJS: existing bank account misuse prevalence and repeat incidents",
+    "rule": "2021 Identity Theft Supplement: 23.9 million people (9.1% of those 16+) had identity theft in the prior 12 months. About 3% of persons 16+ had an existing bank account misused. Counting only victims whose most recent incident was bank misuse alone: 5.66 million (2.2% of persons, 23.7% of victims). 7% reported to police. 22% had a lifetime incident. The 2021 bulletin does not report a share with multiple incidents. The most recent BJS figure for that is from 2014: 79% of victims had one incident in the year and 21% had multiple (2012: 22%). For bank misuse in 2014: 3% of persons; 38% of victims had a bank account misused. The 2021 ITS was redesigned and is not comparable to earlier years.",
+    "citation": "BJS, Victims of Identity Theft, 2021 (NCJ 306474, Oct 2023), Table 1 and Highlights; BJS, Victims of Identity Theft, 2014 (NCJ 248991)",
+    "url": "https://bjs.ojp.gov/document/vit21.pdf",
+    "jurisdiction": "US",
+    "asOf": "Data year 2021 (published Oct 2023); repeat-incident figure from data year 2014",
+    "uncertainty": "Low for the figures as quoted. The repeat-incident share covers any identity theft, not bank account misuse after a first bank compromise. No authoritative figure was found for 'repeat bank fraud after a first compromise'.",
+    "gameImplication": "Base rate is about 3% a year for existing bank account misuse. About 1 in 5 victims see more than one incident in the year (2014 data, any type)."
+  },
+  {
+    "question": "7a. Education credits for a graduate drama student",
+    "rule": "The American Opportunity Credit is limited to the first 4 years of postsecondary education, so it is not available. The Lifetime Learning Credit is available to grad students: 20% of up to $10,000 of qualified expenses (max $2,000), nonrefundable, phased out at MAGI $80,000-$90,000 (single, frozen). Qualified expenses are tuition and fees required for enrollment, including course materials only if they must be paid to the institution as a condition of enrollment. Tax-free scholarships and grants reduce qualified expenses. Because the credit is nonrefundable, it is worth $0 if no tax is owed.",
+    "citation": "26 U.S.C. 25A(c), 25A(d), 25A(f)(1); Treas. Reg. 1.25A-2(d); Rev. Proc. 2025-32",
+    "url": "https://www.irs.gov/credits-deductions/individuals/llc",
+    "jurisdiction": "US federal",
+    "asOf": "Tax year 2026",
+    "uncertainty": "Low on the rule. Yale School of Drama has been tuition-free since 2021 (Geffen gift; recalled, not re-verified), which would leave no qualified expenses.",
+    "gameImplication": "Likely $0. Work-study plus a stipend falls under the 2026 standard deduction of $16,100, so there is no tax liability to offset."
+  },
+  {
+    "question": "7b. Qualified Performing Artist deduction",
+    "rule": "An above-the-line deduction of employee performing-arts expenses applies only if: (A) the person performed in the performing arts as an employee for at least 2 employers, each paying at least $200; (B) those expenses exceed 10% of gross income from the performing; (C) AGI, computed without this deduction, is no more than $16,000 (unindexed). Married filers must file jointly. Being above the line, it is unaffected by the 67(g)/(h) suspension.",
+    "citation": "26 U.S.C. 62(a)(2)(B), 62(b)",
+    "url": "https://www.law.cornell.edu/uscode/text/26/62",
+    "jurisdiction": "US federal",
+    "asOf": "2026-10-10 (current text; $16,000 unchanged since 1986)",
+    "uncertainty": "Low on the rule. Medium on facts: work-study is unlikely to be 'services in the performing arts', so the Cabaret alone gives only 1 employer and the test usually fails.",
+    "gameImplication": "Real, receipt-dependent, and narrow. It needs a second paid performing gig of $200 or more. Headshots, scripts and the like count only if they are ordinary and necessary for the performing employment."
+  },
+  {
+    "question": "7c. Unreimbursed employee expenses after OBBBA",
+    "rule": "OBBBA (Pub. L. 119-21, sec. 70110) made the TCJA suspension of miscellaneous itemized deductions permanent for tax years after 2017 (now 26 U.S.C. 67(h)). The one carve-out, from 2026, is unreimbursed educator expenses as an itemized deduction. Ordinary unreimbursed employee expenses (books, headshots, supplies) are not deductible.",
+    "citation": "26 U.S.C. 67(b)(13), 67(g), 67(h); Pub. L. 119-21 sec. 70110",
+    "url": "https://www.law.cornell.edu/uscode/text/26/67",
+    "jurisdiction": "US federal",
+    "asOf": "Enacted 2025-07-04; effective for 2026 and later",
+    "uncertainty": "Low.",
+    "gameImplication": "No general deduction for a student's costs."
+  },
+  {
+    "question": "7d. Any receipt-dependent tax benefit plausibly available?",
+    "rule": "The most plausible is the scholarship exclusion. Scholarship or fellowship amounts used for tuition and for fees, books, supplies and equipment required for courses are tax-free. Amounts beyond that (living stipends) are taxable. Receipts for required books and supplies prove the excluded part. Also: a 529 distribution is tax-free when used for required books and supplies. The QPA deduction (7b) applies only rarely. The LLC needs Form 1098-T and proof of payment. Connecticut has no student-expense deduction (not verified exhaustively).",
+    "citation": "26 U.S.C. 117(a), 117(b)(2); 26 U.S.C. 529(e)(3); IRS Pub. 970",
+    "url": "https://www.irs.gov/publications/p970",
+    "jurisdiction": "US federal",
+    "asOf": "Tax year 2026",
+    "uncertainty": "Medium. It depends on whether the player has scholarship money beyond tuition. The CT state-level check was not done.",
+    "gameImplication": "Receipts matter only if the life has a taxable stipend or fellowship (or a 529). Otherwise income is below the standard deduction and receipts change no outcome."
+  }
+]

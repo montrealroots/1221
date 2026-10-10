@@ -54,14 +54,16 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
 
 /**
  * Why a lost license can't be replaced, or nothing (from 2026-10-09; `LICENSE_REPLACEMENT`, each issuer's page): it
- * must be reported lost, and is replaced by its issuer for somebody living there, as an ID card is.
+ * must be reported lost, and is replaced by its issuer for somebody living there, as an ID card is, or by mail from
+ * elsewhere where the issuer sends one out of state (`byMail`, from 2026-10-10: until then a New Yorker studying in
+ * New Haven couldn't replace their license at all). It's an identity document here; nothing in SLATE is driven.
  */
 export function licenseReplaceRefusal(person: Person, documentId: string): string | undefined {
   const doc = documentsOf(person).find((d) => d.id === documentId);
   if (!doc || doc.kind !== 'license') return 'That isn’t a license of yours.';
   if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
   if (!LICENSE_REPLACEMENT[doc.issuer]) return 'SLATE doesn’t have what its issuer charges to replace it.';
-  if (licensingOf(person.currentLocationId) !== doc.issuer) return 'It’s replaced where it was issued, for somebody living there.';
+  if (licensingOf(person.currentLocationId) !== doc.issuer && !LICENSE_REPLACEMENT[doc.issuer]!.byMail) return 'Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.';
   return undefined;
 }
 

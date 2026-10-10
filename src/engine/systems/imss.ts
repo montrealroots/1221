@@ -34,6 +34,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
+import { recordPension } from './earnings';
 import { payeeAccount } from './cash';
 
 export const IMSS = {
@@ -157,6 +158,8 @@ export function registerImss(sim: Simulation): void {
     const due = cur === 'MXN' ? r.monthly : exchange(r.monthly, 'MXN', cur) ?? r.monthly;
     const account = payeeAccount(s, person);
     s.post({ memo: 'IMSS pension, the month', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'IMSS Pension').id, amount: -due }] });
+    // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
+    recordPension(person, item.at, s.homeZone, due);
     if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'IMSS Pension Paid', body: `${formatMoney(due, cur)} for the month, since ${formatDate(r.claimedAt, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     s.schedule({ at: monthOn(item.at), kind: IMSS_KIND, label: 'IMSS Pension', category: 'system', priority: 20, payload: { personId: person.id } });
   });

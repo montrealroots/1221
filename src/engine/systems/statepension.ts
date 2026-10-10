@@ -28,7 +28,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { rateOn, type RateSteps } from '../content/rates';
-import { earningsOf } from './earnings';
+import { earningsOf, recordPension } from './earnings';
 import { payeeAccount } from './cash';
 
 export const STATE_PENSION = {
@@ -92,6 +92,8 @@ export function registerStatePension(sim: Simulation): void {
     if (due > 0) {
       const account = payeeAccount(s, person);
       s.post({ memo: 'The State Pension, four weeks', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'State Pension').id, amount: -due }] });
+      // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
+      recordPension(person, item.at, s.homeZone, due);
       if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'State Pension Paid', body: `${formatMoney(due, cur)} for four weeks.`, importance: 25, route: '/workspace/bank' });
     }
     s.schedule({ at: item.at + 28 * MS_DAY, kind: STATE_PENSION_KIND, label: 'State Pension', category: 'system', priority: 20, payload: { personId: person.id } });

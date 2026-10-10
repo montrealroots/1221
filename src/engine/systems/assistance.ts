@@ -57,6 +57,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
 import { earningsOf, workedBetween } from './earnings';
+import { summerOf } from './school';
 import { citizenOf } from './documents';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
@@ -76,6 +77,8 @@ export const SNAP = {
   /** The states it's kept in, where SLATE keeps benefits. */
   states: ['us-ny', 'us-ca', 'us-ct'] as readonly string[],
   earnedDeduction: 0.2,
+  /** A month's paid hours that meet the student exemption's 20 a week (7 CFR 273.5(b)(5)): 20 × 52 ÷ 12. */
+  studentHours: 87,
   share: 0.3,
   abawd: { from: 18, to: 64, hours: 80, months: 3, window: 36 },
 } as const;
@@ -106,6 +109,33 @@ function lastMonthEarned(person: Person, at: Instant): Money {
   return earningsOf(person).months[`${p.year}-${String(p.month).padStart(2, '0')}`] ?? 0;
 }
 
+/**
+ * The month before a moment as SNAP counts it (from 2026-10-10; 7 CFR 273.9): earned income (wages) and unearned
+ * (interest, benefits, pensions), work-study left out (273.9(c)(3)). A month from before the kinds were kept is read
+ * as it was, all of it earned.
+ */
+export function snapIncome(person: Person, at: Instant): { gross: Money; earned: Money; workStudy: Money } {
+  const p = zonedParts(at - 15 * MS_DAY, 'UTC');
+  const key = `${p.year}-${String(p.month).padStart(2, '0')}`;
+  const k = earningsOf(person).kinds?.[key];
+  if (!k) { const all = earningsOf(person).months[key] ?? 0; return { gross: all, earned: all, workStudy: 0 }; }
+  return { gross: k.wages + k.unearned, earned: k.wages, workStudy: k.workStudy };
+}
+
+/**
+ * Why a student is refused SNAP, or nothing (from 2026-10-10; 7 CFR 273.5): enrolled at least half-time in higher
+ * education, a student is ineligible unless exempt; the exemptions a Yale student can meet are a work-study award
+ * during the school year (273.5(b)(5)) and paid work of 20 hours a week (273.5(b)(5) too), which the Summer Cabaret's
+ * company is. SLATE's reading: the school year is the time outside the summer recess (`summerOf`).
+ */
+export function snapStudentRefusal(sim: Simulation, person: Person, at: Instant): string | undefined {
+  const s = person.school;
+  if (!s || s.standing === 'graduated' || s.standing === 'dismissed') return undefined;
+  if (!summerOf(person, at)) return undefined;
+  if (workedBetween(sim, person, at - 30 * MS_DAY, at).hours >= SNAP.studentHours) return undefined;
+  return 'A student in the summer without work-study or 20 hours of work a week isn’t eligible for SNAP (7 CFR 273.5).';
+}
+
 /** Why they can't claim, or nothing. */
 export function assistanceRefusal(sim: Simulation, person: Person): string | undefined {
   const scheme = schemeFor(person);
@@ -116,6 +146,7 @@ export function assistanceRefusal(sim: Simulation, person: Person): string | und
   if (scheme !== 'snap' && own !== 'CA' && !citizenOf(person, 'CA')) return 'Assistance is kept for a Canadian citizen; a newcomer’s eligibility turns on status SLATE doesn’t keep.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age < 18) return 'It’s claimed by an adult.';
+  if (scheme === 'snap') { const student = snapStudentRefusal(sim, person, sim.now); if (student) return student; }
   if (scheme === 'ontario-works' && inLocal(sim, liquid(sim, person), 'CAD') > ONTARIO_WORKS.assets * 100) return `Ontario Works asks liquid assets under CAD ${ONTARIO_WORKS.assets.toLocaleString('en-US')}.`;
   if (scheme === 'bc-assistance' && inLocal(sim, liquid(sim, person), 'CAD') > BC_ASSISTANCE.assets * 100) return `Income assistance asks assets under CAD ${BC_ASSISTANCE.assets.toLocaleString('en-US')}.`;
   return undefined;
@@ -194,7 +225,11 @@ export function registerAssistance(sim: Simulation): void {
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }
-      due = toSave(s, snapMonth(inLocal(s, earned, 'USD'), inLocal(s, earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
+      // Earned and unearned apart, work-study out (`snapIncome`); a student without an exemption is paid nothing that month.
+      const income = snapIncome(person, item.at);
+      const student = snapStudentRefusal(s, person, item.at);
+      due = student ? 0 : toSave(s, snapMonth(inLocal(s, income.gross, 'USD'), inLocal(s, income.earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
+      if (student && mine) s.notify({ category: 'benefits', title: 'No SNAP This Month', body: student, importance: 50, route: '/workspace/papers' });
       if (due > 0) {
         if (limited) claim.counted = [...within, key];
         const ebt = claim.ebtAccountId ? s.universe.accounts[claim.ebtAccountId] : undefined;
