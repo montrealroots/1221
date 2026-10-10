@@ -16,9 +16,10 @@ import { abilityFull, develop, levelOf } from '@/engine/systems/attributes';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES } from '@/engine/content/abilities';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { EXERCISES } from '@/engine/content/practice';
-import { DEMAND_TECHNIQUE, DEMAND_WEIGHT, demandTags, genreTags, withDemands } from '@/engine/content/demands';
-import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
+import { DEMAND_TECHNIQUE, demandTags, genreTags, withDemands } from '@/engine/content/demands';
+import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '@/engine/content/plays';
 import { SCENES, templateById } from '@/engine/content/coursework';
+import { MATERIAL_BY_ID } from '@/engine/content/material';
 import { judgeWork, type Assignment } from '@/engine/systems/coursework';
 import { FILM_GENRES } from '@/engine/content/film-genres';
 import { genreState, SELF_TAPE } from '@/engine/systems/engagement';
@@ -203,35 +204,36 @@ describe('the guarantee, with a genre’s demands in the work', () => {
   });
 });
 
-describe('a play’s kinds asked of its work', () => {
+describe('what a play’s material asks of its work (from 2026-10-10)', () => {
   const plays = [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS];
 
-  it('puts every technique a play’s kinds demand into its casting and its nights, beside its own reads', () => {
-    let added = 0;
+  it('reads each play’s own techniques and its material’s, and no technique a genre tag alone would have added', () => {
+    // Until the material profiles, every play tagged a farce read physical comedy: The Importance of Being Earnest,
+    // whose comedy is verbal, among them. Its kinds still say farce; its material doesn't ask clowning.
+    const earnest = castingReads({ play: 'The Importance Of Being Earnest' });
+    expect(demandTags(['farce']).map((t) => DEMAND_TECHNIQUE[t])).toContain('clown');
+    expect(earnest.clown).toBeUndefined();
     for (const p of plays) {
+      const m = MATERIAL_BY_ID[p.title];
+      expect(m, p.title).toBeDefined();
       const r = castingReads({ play: p.title });
-      for (const t of demandTags(p.kinds ?? [])) {
-        const skill = DEMAND_TECHNIQUE[t];
-        expect(r[skill], `${p.title} reads ${skill}`).toBeDefined();
-        if ((p.reads as Partial<Record<string, number>>)[skill] === undefined) { added += 1; expect(r[skill]).toBe(DEMAND_WEIGHT); }
-        else expect(r[skill]).toBe((p.reads as Partial<Record<string, number>>)[skill]);
-      }
+      for (const [k, w] of Object.entries(p.reads)) expect(r[k as keyof typeof r], `${p.title} ${k}`).toBe(w);
+      for (const k of Object.keys(r)) expect(k in p.reads || k in (m!.techniques ?? {}), `${p.title} reads ${k} from nowhere`).toBe(true);
     }
-    expect(added).toBeGreaterThan(0);
   });
 
-  it('reads a coursework scene’s play’s demands in the scene’s judgement', () => {
+  it('reads a coursework scene’s material in the scene’s judgement: its techniques, and its features’ abilities', () => {
     const sim = life('scene-demands');
     const person = sim.player;
-    // Much Ado's romantic comedy asks comic timing, which scene study doesn't read on its own. Until the review of
-    // 2026-10-10 this was Macbeth's, whose tragedy and historical drama asked heightened language and an accent of every
-    // play of the kind; they no longer do (`docs/GENRE-COVERAGE.md`).
+    // Much Ado's church scene: period text spoken at speed, which the material asks as classical technique.
     const scene = SCENES.find((s) => s.play === 'Much Ado About Nothing')!;
     const a = { id: 'm', course: 'X', template: 'scene-study', term: 0, setOn: '2026-09-01', dueOn: '2026-09-02', sceneId: scene.id, role: 0 as const, prep: { familiarity: 0, memorization: 0, interpretation: 0, rehearsal: 0, partner: 0, revision: 0 }, answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], status: 'done' } as unknown as Assignment;
     const e = judgeWork(sim, person, a, '2026-09-02', sim.now, 'm');
     const own = templateById('scene-study')!.reads as Partial<Record<string, number>>;
-    const demanded = demandTags(genresOfPlay('Much Ado About Nothing') ?? []).map((t) => DEMAND_TECHNIQUE[t]);
-    expect(demanded.some((s) => own[s] === undefined)).toBe(true);
-    for (const s of demanded) expect(e.inputs.techniques[s], s).toBeDefined();
+    expect(own.classical).toBeUndefined();
+    expect(e.inputs.techniques.classical).toBe(MATERIAL_BY_ID[scene.id]!.techniques!.classical);
+    // Its timing asks listening of its responsiveness, beyond the task's own weight for it.
+    expect(e.inputs.inputs?.responsiveness?.some((x) => x.ability === 'listening')).toBe(true);
+    expect(e.inputs.families).toEqual([]);
   });
 });

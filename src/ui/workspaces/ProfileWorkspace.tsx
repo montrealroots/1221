@@ -20,7 +20,10 @@ import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '
 import { formatDate, ageOn } from '@/engine/core/time';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
-import { exerciseFor, PRACTICE } from '@/engine/content/practice';
+import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, TIER, exerciseFor, PRACTICE, type PracticeFocus } from '@/engine/content/practice';
+import { experienceOf, FEATURE_LABEL, recommendations } from '@/engine/systems/experience';
+import { focusRefusal, matchedTier } from '@/engine/systems/practice';
+import { levelOf } from '@/engine/systems/attributes';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
@@ -55,21 +58,6 @@ import type { Simulation } from '@/engine/core/simulation';
 const one = (x: number) => x.toFixed(1);
 const PAGE = 16;
 
-/** What the latest work was held back by most, summed over the last five, and in how many of them: the next thing to practice. */
-export function nextPractice(person: Person): { what: string; kind: string; by: number; pieces: number } | undefined {
-  const sums = new Map<string, { what: string; kind: string; by: number; pieces: number; seen?: unknown }>();
-  for (const w of (person.work ?? []).slice(-5)) {
-    for (const l of w.limits) {
-      if (l.kind !== 'ability' && l.kind !== 'technique') continue;
-      const k = sums.get(l.what) ?? { what: l.what, kind: l.kind, by: 0, pieces: 0 };
-      k.by += l.by;
-      if (k.seen !== w) { k.pieces += 1; k.seen = w; }
-      sums.set(l.what, k);
-    }
-  }
-  const best = [...sums.values()].sort((a, b) => b.by - a.by)[0];
-  return best ? { what: best.what, kind: best.kind, by: best.by, pieces: best.pieces } : undefined;
-}
 
 /**
  * A genre to study, and why: the next part's play's kind least known, else a loved one least known. The why came
@@ -168,7 +156,7 @@ function IdentityPanel() {
 }
 
 function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] }) {
-  const { sim, run } = useGame();
+  const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const e = exerciseFor(id);
   if (id === 'stamina') {
@@ -185,28 +173,69 @@ function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] })
     );
   }
   if (!e) return <span className="xs dim">Practice kept up, day after day</span>;
-  const no = practiceRefusal(sim, person, e);
+  return <PracticeControl exercise={e.id} />;
+}
+
+/**
+ * An exercise as practice on a challenge (from 2026-10-10): its challenge, its material at the tier chosen (the one
+ * matching the level preselected), the focus for the hour with what each does, and what the hour found, said from the
+ * numbers that moved it. Each refusal is on the button.
+ */
+function PracticeControl({ exercise }: { exercise: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const e = EXERCISE_BY_ID[exercise]!;
+  const design = EXERCISE_DESIGN[exercise];
+  const level = levelOf(sim, person, e.trains as never);
+  const [openUp, setOpenUp] = useState(false);
+  const [tier, setTier] = useState<0 | 1 | 2>(matchedTier(level));
+  const [focus, setFocus] = useState<PracticeFocus>('steady');
+  const [found, setFound] = useState<string | undefined>();
+  const no = practiceRefusal(sim, person, e) ?? focusRefusal(person, e, focus);
+  const rec = experienceOf(person).exercises[exercise];
+  if (!openUp) return <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpenUp(true)}>{e.label}…</button>;
   return (
-    <span className="col">
-      <Gated feature="practice.exercise" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? e.how} onClick={() => run('practice.exercise', { exercise: e.id })}>
-        {e.label}
-      </Gated>
+    <span className="col gap-1" style={{ minWidth: 220 }}>
+      <span className="xs"><strong>{e.label}.</strong> {design?.challenge}</span>
+      <label className="xs">Tier <select value={tier} onChange={(x) => setTier(Number(x.target.value) as 0 | 1 | 2)}>{TIER.label.map((l, i) => <option key={l} value={i}>{l}{i === matchedTier(level) ? ' (Your Level)' : ''}</option>)}</select></label>
+      {design && <span className="xs dim">{design.tiers[tier]}</span>}
+      <label className="xs">Focus <select value={focus} onChange={(x) => setFocus(x.target.value as PracticeFocus)}>{(Object.keys(FOCUS) as PracticeFocus[]).map((f) => <option key={f} value={f} disabled={Boolean(focusRefusal(person, e, f))}>{FOCUS[f].label}</option>)}</select></label>
+      <span className="xs dim">{FOCUS[focus].words}</span>
+      <Gated feature="practice.exercise" className="btn btn-sm" disabled={Boolean(no)} title={no ?? e.how} onClick={() => { const r = run<{ gained: number; feedback: string }>('practice.exercise', { exercise, tier, focus }); if (r.ok) { setFound(r.value!.feedback); toast(`${e.label}: +${r.value!.gained.toFixed(2)}.`, 'positive'); } }}>Practice An Hour</Gated>
       {no && <span className="xs dim">{no}</span>}
+      {found && <span className="xs">{found}</span>}
+      {rec && <span className="xs dim">{rec.sessions} session{rec.sessions === 1 ? '' : 's'}, last {rec.lastDay}.</span>}
+      {design?.practises.length ? <span className="xs dim">Practice in {design.practises.map((f) => FEATURE_LABEL[f]?.toLowerCase()).join(' and ')}.</span> : null}
     </span>
+  );
+}
+
+/** What to work on next, from what cost recent work, dropping a weakness once it's addressed (`recommendations`). */
+function NextWork() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (ABILITY_DEFS.some((d) => d.id === id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier);
+  if (!recs.length) return <p className="small" style={{ margin: 0 }}>Your recent work wasn’t held back by any ability or technique with room to grow: the work now is in new material and new ways of playing it.</p>;
+  return (
+    <div className="col gap-1">
+      <div className="eyebrow">What To Work On Next</div>
+      <ul className="small" style={{ margin: 0 }}>
+        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0].toLowerCase()} tier` : ''}. {r.why}</li>)}
+      </ul>
+    </div>
   );
 }
 
 function AbilitiesPanel() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
-  const next = nextPractice(person);
   const recent = developmentOf(person).history;
   const last = (id: string) => [...recent].reverse().find((h) => h.id === id);
   const staminaFull = abilityFull(sim, person, 'stamina');
   return (
     <Panel title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100; today’s practice ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`}>
       <div className="col gap-3">
-        {next && <p className="small" style={{ margin: 0 }}>Your latest work was held back most by <Open subject={targetSubject(next.what as AbilityId)}>{targetLabel(next.what as AbilityId)}</Open>: {one(next.by / next.pieces)} points a piece, across its dimensions, in {next.pieces} of the last five.</p>}
+        <NextWork />
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Ability</th><th scope="col" className="num">Now</th><th scope="col" className="num">Full</th><th scope="col" className="num">Classes Reach</th><th scope="col">Today</th><th scope="col">It Shapes</th><th scope="col">Last Change</th><th scope="col">Practice</th></tr></thead>

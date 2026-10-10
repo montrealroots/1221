@@ -72,6 +72,9 @@ import {
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp, trainingRefusal } from './injury';
+import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
+import { PLAYING } from '../content/approaches';
+import { featureSpeed, noteMaterial } from './experience';
 
 /** What SLATE estimates for the coursework, named where it's read. */
 export const WORK = {
@@ -178,6 +181,8 @@ export interface Assignment {
   taken?: string[];
   /** Another way at a persistent weakness, chosen for this work (`APPROACHES`, from 2026-10-08): which note, how, when. */
   approach?: { key: string; dim: PrepDim; kind: Approach; on: string };
+  /** How the player has chosen to play the scene, and how far it's rehearsed in (`systems/material.ts`, from 2026-10-10). */
+  playing?: Playing;
   /** Work shown in rounds (`Template.rounds`): the round it's at, and each round shown, with how it went. From 2026-10-08. */
   round?: number;
   roundsShown?: { label: string; band: Band; on: string }[];
@@ -483,10 +488,14 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
   // Work in a genre known goes faster (`genreSpeed`, from 2026-10-09): the scene's play's kinds, the best of them.
-  const speed = genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined);
+  // And from 2026-10-10 the material's features met before (`featureSpeed`), the better of the two: familiarity with a
+  // kind of work counted once, never twice.
+  const speed = Math.max(genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined), featureSpeed(person, materialOf(a.sceneId)));
   a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
+  // Work on its feet rehearses the way it's to be played, where one is chosen (from 2026-10-10).
+  if (act.dim === 'rehearsal' || act.dim === 'partner') rehearseChoice(a.playing, act.gain * Math.min(1.1, Math.max(0.5, focus)));
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {
     grewFrom(sim, person, `coursework:${act.id}`, (c) => grow(c, act.trains!, focus, WORK.trainingWeight));
     a.trained += 1;
@@ -664,12 +673,55 @@ export const difficultyOf = (t: Template): number => Math.max(-0.5, Math.min(1, 
  * its scene's play's kinds leaning what counts and adding what they demand (`withDemands`), where the game has the play.
  */
 export function judgeWork(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant, key: string): Evaluation {
-  const t = templateById(a.template)!;
   const w = weightsOf(a);
   const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
   const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
+  return evaluate(sim, person, { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key });
+}
+
+/**
+ * What a piece of coursework asks, but the day (from 2026-10-10): its task, its techniques, its preparation, its
+ * difficulty, and its material's and its playing's reads (`materialContext`). A scene with a profile reads it and no
+ * genre-wide demand; one without (no scene in the game has none, but a template with material none) reads its play's
+ * genres as before.
+ */
+export function workContext(a: Assignment, parts: Record<string, number>, required: Record<string, number>, playing: Playing | undefined = a.playing) {
+  const t = templateById(a.template)!;
+  const task = TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!;
+  const material = materialOf(a.sceneId);
+  const prep = { ...parts };
+  const req = { ...required };
+  if (sidesOf(playing).length) { prep.approach = playing!.prep; req.approach = PLAYING.complete; }
+  if (material) {
+    const read = materialContext(task, material, playing);
+    const techniques = { ...t.reads } as Partial<Record<Skill, number>>;
+    for (const [k, w] of Object.entries(material.techniques ?? {}) as [Skill, number][]) if (techniques[k] === undefined) techniques[k] = w;
+    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
+  }
   const genres = a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : [];
-  return evaluate(sim, person, { task: TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!, techniques: withDemands(t.reads, genres), prep: parts, required, difficulty: difficultyOf(t), condition: conditionAt(sim, person, when), families: familiesOf(genres), key });
+  const read = materialContext(task, undefined, playing);
+  return { task, techniques: withDemands(t.reads, genres), prep, required: req, difficulty: difficultyOf(t), families: familiesOf(genres), ...(sidesOf(playing).length ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep } : {}) };
+}
+
+/**
+ * What each way of playing a piece would show today, prepared fully (from 2026-10-10): the expected result with no
+ * draw, so the choice is made seeing what it does with this actor's abilities, and whether it fits.
+ */
+export function playingPreview(sim: Simulation, person: Person, a: Assignment, onDay: string, playing: Omit<Playing, 'chosenAt' | 'prep'>): Evaluation {
+  const w = weightsOf(a);
+  const parts = Object.fromEntries(Object.keys(w).map((d) => [d, 1])) as Record<string, number>;
+  const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
+  void onDay;
+  return evaluate(sim, person, { ...workContext(a, parts, required, { ...playing, chosenAt: sim.now, prep: 1 }), condition: { readiness: 100 }, key: `preview:${a.id}`, expected: true });
+}
+
+/** Why a way of playing can't be chosen for a piece now, or nothing. */
+export function playingRefusal(a: Assignment | undefined): string | undefined {
+  if (!a) return 'There’s no such work.';
+  if (a.status !== 'open' && a.status !== 'revising') return 'It’s been shown.';
+  const t = templateById(a.template);
+  if (!t || t.material === 'none') return 'There’s no scene in it to play one way or another.';
+  return undefined;
 }
 
 /** A showing's band from its whole, a smaller piece no better than Working (`approach`). */
@@ -708,6 +760,8 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // A smaller piece shown is no better than Working (`approach`).
   const band = bandFor(a, judged.overall);
   recordWork(sim, person, judged, { at: when, what: t.title, band });
+  // The material met, the way it was played and how it went, on the record (`systems/experience.ts`, from 2026-10-10).
+  noteMaterial(person, { material: materialOf(a.sceneId), at: when, overall: judged.overall, approaches: sidesOf(a.playing), shown: true });
   const showing: Showing = { band, score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
   // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
   const pick = noteCandidates(person, a, parts, craft, notes)[0];
@@ -835,6 +889,8 @@ function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string, w
   const judged = judgeWork(sim, person, a, onDay, when, `reshow:${person.id}:${a.id}:${onDay}`);
   const band = bandFor(a, judged.overall);
   recordWork(sim, person, judged, { at: when, what: `${templateById(a.template)!.title}, revised`, band });
+  // The material met, the way it was played and how it went, on the record (`systems/experience.ts`, from 2026-10-10).
+  noteMaterial(person, { material: materialOf(a.sceneId), at: when, overall: judged.overall, approaches: sidesOf(a.playing), shown: true });
   return band;
 }
 
@@ -1112,6 +1168,20 @@ export function registerCoursework(sim: Simulation): void {
     a!.approach = { key: weak.key, dim: weak.dim, kind, on: dayKey(s.now) };
     if (kind === 'objective') a!.objective = (Object.keys(OBJECTIVE_DIM) as Objective[]).find((o) => OBJECTIVE_DIM[o] === weak.dim)!;
     return { dim: weak.dim };
+  });
+
+  sim.onCommand<{ assignmentId: string; pace?: string; scale?: string; structure?: string }, { prep: number; kept: boolean }>('school.choose_playing', (p, { sim: s }) => {
+    const person = s.player;
+    const a = assignmentById(s, person, String(p?.assignmentId));
+    const no = playingRefusal(a);
+    if (no) throw new CommandError(no);
+    const pick = <T extends string>(v: unknown, of: readonly T[]): T | undefined => (of as readonly unknown[]).includes(v) ? v as T : undefined;
+    const next = { pace: pick(p?.pace, ['measured', 'driven'] as const), scale: pick(p?.scale, ['restrained', 'expansive'] as const), structure: pick(p?.structure, ['set', 'open'] as const) };
+    const was = a!.playing;
+    a!.playing = choose(was, next, s.now);
+    if (!sidesOf(a!.playing).length) delete a!.playing;
+    noteMaterial(person, { approaches: sidesOf(a!.playing) });
+    return { prep: a!.playing?.prep ?? 0, kept: (a!.playing?.prep ?? 0) === (was?.prep ?? 0) };
   });
 
   sim.onCommand<{ assignmentId: string; question: Question['id']; option: string }, { supported: boolean }>('school.choose', (p, { sim: s }) => {

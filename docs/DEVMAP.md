@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-134 commands; 132 named by a test, 2 not.
+136 commands; 132 named by a test, 4 not.
 
 ## bank
 
@@ -182,6 +182,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.cancel_repeat` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | **none** | Drama School |
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.choose_part_playing` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | **none** | Drama School |
+| `school.choose_playing` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | **none** | Drama School |
 | `school.extend_incomplete` | `src/engine/systems/courserecord.ts` | `SchoolWorkspace.tsx` | `student-experience.test.ts` | Drama School |
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |

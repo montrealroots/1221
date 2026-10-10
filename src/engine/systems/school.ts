@@ -99,6 +99,8 @@ import { bandOfQuality, evaluate as judgeWork, judge, milestone, performerOf, re
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
+import { materialContext, materialOf, type Playing } from './material';
+import { PLAYING } from '../content/approaches';
 import { practiceGenres } from './engagement';
 import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
@@ -111,7 +113,7 @@ import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
 import { insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, disqualified, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
-import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
+import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
 /**
@@ -1576,11 +1578,21 @@ export function repPlayOf(sim: Simulation, person: Person, term: number): (typeo
 /** What a casting asks of the craft: its play's, a festival's new plays', or the Rep company's. */
 export function castingReads(c: { play?: string; kind?: Casting['kind'] }): Partial<Craft> {
   const play = c.play ? [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title === c.play) : undefined;
-  // With what its kinds of play ask (`withDemands`, from 2026-10-10): a musical's singing and dancing, a farce's
-  // physical comedy, read by the casting, the rehearsals and every night.
-  if (play) return withDemands(play.reads, play.kinds ?? []);
+  // With what its kinds of play asked (`withDemands`) from 2026-10-10 until the material profiles later that day: a
+  // farce's physical comedy was read into The Importance of Being Earnest, whose comedy is verbal. A play with a
+  // profile reads its own techniques and what its material asks (`playReads`); its kinds only where it has none.
+  if (play) return playReads(play);
   // The Rep's company without a named play asks a professional stage's; the rest are new work.
   return c.kind === 'role' || c.kind === 'understudy' ? COMPANY_READ : NEW_PLAYS_READ;
+}
+
+/** What a play asks of the craft: its own reads and its material's techniques, or, with no profile, its kinds' demands. */
+export function playReads(play: { title?: string; reads: Partial<Craft>; kinds?: readonly string[] }): Partial<Craft> {
+  const m = materialOf(play.title);
+  if (!m) return withDemands(play.reads, play.kinds ?? []);
+  const out = { ...play.reads } as Partial<Craft>;
+  for (const [k, w] of Object.entries(m.techniques ?? {}) as [Skill, number][]) if (out[k] === undefined) out[k] = w;
+  return out;
 }
 
 /**
@@ -1667,10 +1679,32 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   // Complete is what every call makes, but never asks less than a part's lines and blocking at their least.
   const par = completeFor(holder);
   const required: Record<string, number> = par ? { lines: Math.max(par.lines, NIGHT_LEAST.lines), blocking: Math.max(par.blocking, NIGHT_LEAST.blocking), notes: par.notes } : {};
+  // The play's material and the way the part is played (from 2026-10-10): its lean, what it asks, the choice's
+  // rehearsal and whether it fits the play and the director's request. A play with no profile leans by its kinds.
+  const material = materialOf(holder.play);
+  const proc = hasProcess(holder) ? holder.process : undefined;
+  const playing = proc?.playing;
+  const prepWith: Record<string, number> = { ...prep };
+  if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = PLAYING.complete; }
+  const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;
   return judgeWork(sim, person, {
-    task: E, techniques: castingReads(holder), prep, required, difficulty: NIGHT_DIFFICULTY[where][size],
-    condition: conditionAt(sim, person, at), families: familiesOf(genresOfPlay(holder.play) ?? []), key: `night:${person.id}:${key}`,
+    task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
+    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
   });
+}
+
+/**
+ * What a part would show on a night played a given way, prepared fully and on a sufficient day, with no draw (from
+ * 2026-10-10): the preview a choice of how to play it is made by. The size and the house don't change between the
+ * choices, so a supporting part at the School is the reading.
+ */
+export function partPreview(sim: Simulation, person: Person, holder: NightHolder, playing: Omit<Playing, 'chosenAt' | 'prep'>): Evaluation {
+  const E = TASK_PROFILES.performance!;
+  const material = materialOf(holder.play);
+  const proc = hasProcess(holder) ? holder.process : undefined;
+  const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
+  const read = materialContext(E, material, chosen, proc?.direction);
+  return judge(sim.universe.meta.seed, performerOf(sim, person), { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, key: `preview:${holder.play ?? ''}`, expected: true });
 }
 
 /** The least a night's lines and blocking must be at to count complete, however few the calls: off book (`PROCESS.offBook`), and the blocking set. */
@@ -1863,10 +1897,13 @@ export const castingPerformer = (p: Performer): Performer => ({
  * evaluation (`performance`) from the abilities a night asks and the techniques the play reads, its kinds' demands
  * among them; preparation complete and the day sufficient, and no draw. What each would bring if all went to plan.
  */
-export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>, kinds: readonly string[], key: string): number {
+export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>, kinds: readonly string[], key: string, title?: string): number {
+  // The play's material as a night reads it (from 2026-10-10), before anyone has chosen how to play it.
+  const material = materialOf(title);
+  const read = material ? materialContext(TASK_PROFILES.performance!, material) : undefined;
   return judge(sim.universe.meta.seed, castingPerformer(perf), {
     task: TASK_PROFILES.performance!, techniques: reads, prep: {}, required: {}, difficulty: 0,
-    condition: { readiness: 100 }, families: familiesOf(kinds), key, expected: true,
+    condition: { readiness: 100 }, ...(read ? { lean: read.lean, inputs: read.inputs } : { families: familiesOf(kinds) }), key, expected: true,
   }).overall;
 }
 
@@ -1949,7 +1986,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const fits = new Map<string, number>();
   const fitFor = (play: { title?: string; reads: Partial<Craft>; kinds?: readonly string[] }) => (s: Student) => {
     const k = `${s.i}:${play.title ?? 'new'}`;
-    if (!fits.has(k)) fits.set(k, s.perf ? castFit(sim, s.perf, withDemands(play.reads, play.kinds ?? []), play.kinds ?? [], `cast:${term}:${k}`) : readOf(s.craft, play.reads));
+    if (!fits.has(k)) fits.set(k, s.perf ? castFit(sim, s.perf, playReads(play), play.kinds ?? [], `cast:${term}:${k}`, play.title) : readOf(s.craft, play.reads));
     return fits.get(k)!;
   };
   const first = schoolProduction(term, 1, academic);
@@ -1979,7 +2016,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       // The chair's read of this cast, kept for the screen: each student's fit, delivery, balance and the part.
       if (me) {
         school.castRead = {
-          term, play: shown, reads: withDemands(play.reads, play.kinds ?? []), kinds: [...(play.kinds ?? [])],
+          term, play: shown, reads: playReads(play), kinds: [...(play.kinds ?? [])],
           rows: given.map((g) => ({ name: g.s.name, you: g.s.i < 0, fit: Math.round(playFit(g.s) * 10) / 10, delivery: g.s.last?.delivery ?? 1, balance: g.s.last?.size ? ESTIMATE.casting.balance[g.s.last.size] : 0, ...(g.s.i < 0 && g.s.last?.from ? { from: g.s.last.from } : {}), score: Math.round(castScore({ ...g.s, fit: playFit(g.s) }, play.reads) * 10) / 10, part: partLabel(g.part, production.kind), size: g.size })),
         };
       }
@@ -2002,7 +2039,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       // The classmates in it rehearse and play it too: grown once the run is over (`COMPANY_KIND`).
       const mates = given.filter((g) => g.s.i >= 0).map((g) => g.s.i);
       const last = production.runs[production.runs.length - 1]!;
-      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: withDemands(play.reads, play.kinds ?? []), production: shown } });
+      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: playReads(play), production: shown } });
     }
   }
   school.around = { term, list: around };

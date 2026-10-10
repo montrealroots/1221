@@ -12,7 +12,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { YALE_DRAMA } from '@/engine/content/school';
-import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, type Holder, type Which } from '@/engine/systems/production';
+import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, partPlayingRefusal, type Holder, type Which } from '@/engine/systems/production';
+import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
+import { materialOf } from '@/engine/systems/material';
+import { partPreview } from '@/engine/systems/school';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
@@ -49,6 +52,12 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         <Gated feature="school.review_blocking" className="btn btn-sm btn-ghost" disabled={Boolean(blocking)} title={blocking ?? 'An hour with the stage manager’s book'} onClick={() => { const r = run<{ blocking: number }>('school.review_blocking', { which }); if (r.ok) toast(`Caught up from the book: blocking at ${pct(r.value!.blocking)}.`, 'positive'); }}>Catch Up The Blocking</Gated>
         <Gated feature="school.work_note" className="btn btn-sm btn-ghost" disabled={Boolean(note)} title={note ?? 'An hour on the director’s note'} onClick={() => { if (run('school.work_note', { which }).ok) toast('Worked on: the next call will show it.', 'positive'); }}>Work On The Note</Gated>
       </div>
+      {materialOf((casting as { play?: string }).play) && <MaterialDemands material={materialOf((casting as { play?: string }).play)!} />}
+      {!partPlayingRefusal(sim, person, which) && (
+        <PlayingChooser material={materialOf((casting as { play?: string }).play)} current={p?.playing} direction={p?.direction} feature="school.choose_part_playing"
+          preview={(c) => partPreview(sim, person, casting as never, c)}
+          onChoose={(c) => { const r = run<{ prep: number }>('school.choose_part_playing', { which, ...c }); if (r.ok) toast(`Chosen: rehearsed in to ${pct(r.value!.prep)}.`, 'positive'); }} />
+      )}
       <Fine>The stages and their order are a rehearsal’s; how far a call or an hour moves the lines and blocking, and what they make of a night, are SLATE’s estimate.</Fine>
     </div>
   );

@@ -19,6 +19,11 @@
  *   growth is the better for it; not worked on, it's still there.
  * - **The dress**, played through as a night with no house, its reading kept.
  *
+ * - **How the part is played** (from 2026-10-10): the actor's choice of pace, scale and structure
+ *   (`systems/material.ts`), rehearsed in at every call after it's made; and the director's own request on an axis,
+ *   drawn once for the production and shown from the first call, which the material's own constraints bound. A choice
+ *   against the request is given as a note at a work-through, and taken at the next call if the choice has changed.
+ *
  * A night reads all of it: lines, blocking and the notes taken make a
  * readiness factor around 1, 0.85 to 1.15, measured against what an actor who
  * came to every one of this casting's calls and did no more would have
@@ -43,6 +48,10 @@ import { recordNote, type NoteFocus as LedgerFocus } from './learning';
 import { develop, type Target } from './attributes';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
+import { AXES, APPROACH_EFFECT } from '../content/approaches';
+import type { Axis, AxisValue } from '../content/material';
+import { choose, materialOf, misfitOf, rehearseChoice, sidesOf, type Playing } from './material';
+import { noteMaterial } from './experience';
 
 export const PROCESS = {
   /** What a call attended does to lines and blocking, as a share of what's left. */
@@ -71,7 +80,7 @@ export const STAGE_LABEL: Record<Stage, string> = { read: 'Read-Through', blocki
  */
 export type Format = 'production' | 'cabaret';
 
-export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill };
+export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill } | { kind: 'direction'; axis: Axis; side: AxisValue };
 export interface DirectorNote { at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean }
 
 export interface Process {
@@ -90,6 +99,42 @@ export interface Process {
   format?: Format;
   /** Looking back once it closed (`reflect`), from 2026-10-08. */
   reflection?: { on: Instant; text: string };
+  /** How the actor plays the part, and the director's request on an axis (none asked: `{}`), from 2026-10-10. */
+  playing?: Playing;
+  direction?: Partial<Record<Axis, AxisValue>>;
+}
+
+/** The share of productions whose director asks for a particular way on one axis: SLATE's estimate. */
+export const DIRECTION = { asks: 0.5 } as const;
+
+/**
+ * The director's request, drawn once for a production: on one axis, half the time, a side the play's material allows.
+ * Deterministic by the production's own key, so a reload draws the same.
+ */
+export function drawDirection(sim: Simulation, person: Person, holder: Holder): Partial<Record<Axis, AxisValue>> {
+  const title = (holder as { play?: string; production?: string }).play ?? (holder as { production?: string }).production ?? 'work';
+  const term = (holder as { term?: number }).term ?? 0;
+  const rng = sim.rng('production.direction', person.id, `${title}:${term}`);
+  if (rng.next() >= DIRECTION.asks) return {};
+  const axes = Object.keys(AXES) as Axis[];
+  const axis = axes[Math.floor(rng.next() * axes.length)]!;
+  const material = materialOf((holder as { play?: string }).play);
+  const sides = AXES[axis].values.filter((v) => !material?.allows?.[axis] || material.allows[axis]!.includes(v));
+  return { [axis]: sides[Math.floor(rng.next() * sides.length)]! };
+}
+
+/** The axis on which the actor's playing goes against the director's request, if one does. */
+export function againstDirection(p: Process): { axis: Axis; side: AxisValue } | undefined {
+  for (const [axis, side] of Object.entries(p.direction ?? {}) as [Axis, AxisValue][]) if (p.playing?.[axis] !== undefined && misfitOf(axis, p.playing[axis]!, undefined, p.direction)) return { axis, side };
+  return undefined;
+}
+
+/** Why a part's playing can't be chosen now, or nothing. */
+export function partPlayingRefusal(sim: Simulation, person: Person, which: Which): string | undefined {
+  const casting = holderFor(sim, person, which);
+  if (!casting) return 'You aren’t cast in anything there.';
+  if (!pendingOf(sim, person, which).length) return 'The run is over.';
+  return undefined;
 }
 
 /** Anything a process can be kept on: a casting, a Cabaret show, a Summer Cabaret show. */
@@ -123,7 +168,7 @@ const scoreOf = (p: { lines: number; blocking: number; notes: { taken?: boolean 
 
 type Kept = Pick<Process, 'lines' | 'blocking' | 'blockingMissed'>;
 /** What a note is on: a blocking call missed and not caught up, the lines past off-book, the blocking short, else the play's craft. */
-const noteKind = (p: Kept, n: number, of: number): NoteFocus['kind'] =>
+const noteKind = (p: Kept, n: number, of: number): 'lines' | 'blocking' | 'skill' =>
   p.blockingMissed > 0 ? 'blocking' : n / Math.max(1, of) >= PROCESS.blockingShare && p.lines < PROCESS.offBook ? 'lines' : p.blocking < 0.7 ? 'blocking' : 'skill';
 /** Whether a note not worked on is taken anyway: a lines or blocking note is, once the calls have done it. */
 const takenUnworked = (p: Kept, kind: NoteFocus['kind']) =>
@@ -187,7 +232,7 @@ export function nightFactor(holder: Holder | undefined): number {
 /** The note a director gives at a work-through: a gap in the blocking, the lines past off-book, the blocking short, else the play's craft weakest in the actor. */
 export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: number, of: number): NoteFocus {
   const kind = noteKind(p, n, of);
-  if (kind !== 'skill') return { kind };
+  if (kind !== 'skill') return { kind } as NoteFocus;
   const weakest = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b])[0] ?? 'scene';
   return { kind: 'skill', skill: weakest };
 }
@@ -195,6 +240,7 @@ export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: nu
 export function noteText(f: NoteFocus): string {
   if (f.kind === 'lines') return 'Be off book: the lines aren’t there yet, and the scene can’t start until they are.';
   if (f.kind === 'blocking') return 'The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.';
+  if (f.kind === 'direction') return `I want it ${APPROACH_EFFECT[f.side].label.toLowerCase()}: ${APPROACH_EFFECT[f.side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[f.side].words.slice(1)}`;
   return `Find more ${labelOf(f.skill).toLowerCase()} in it: that’s where the part is thin.`;
 }
 
@@ -211,15 +257,20 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   attend(p, stage);
   // A call kept is discipline kept, a quarter of a session's worth (from 2026-10-09).
   develop(sim, person, 'discipline', { weight: 0.25, focus: 1, deliberate: false, source: 'call' });
-  // The last note, taken or not at this call.
+  // The director's request, from the first call (from 2026-10-10).
+  p.direction ??= drawDirection(sim, person, holder);
+  // Every call works the part on its feet, and with it the way it's being played.
+  if (stage !== 'read') rehearseChoice(p.playing, 0.3);
+  // The last note, taken or not at this call: a note on the director's request is taken when the playing has changed.
   let weight = 1;
   const last = p.notes.at(-1);
   if (last && last.taken === undefined) {
-    last.taken = Boolean(last.worked) || takenUnworked(p, last.focus.kind);
+    last.taken = last.focus.kind === 'direction' ? !againstDirection(p) : Boolean(last.worked) || takenUnworked(p, last.focus.kind);
     if (last.taken) weight = PROCESS.noteTaken;
   }
   if (stage === 'work') {
-    const focus = noteFor(person, p, reads, n, of);
+    const against = againstDirection(p);
+    const focus: NoteFocus = against ? { kind: 'direction', ...against } : noteFor(person, p, reads, n, of);
     p.notes.push({ at: sim.now, text: noteText(focus), focus });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }
@@ -308,6 +359,19 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
     return { blocking: proc.blocking };
   });
+  sim.onCommand<{ which?: Which; pace?: string; scale?: string; structure?: string }, { prep: number }>('school.choose_part_playing', (p, { sim: s }) => {
+    const person = s.player;
+    const which = (WHICH.includes(p?.which as Which) ? p!.which : 'school') as Which;
+    const no = partPlayingRefusal(s, person, which);
+    if (no) throw new CommandError(no);
+    const pr = processOf(holderFor(s, person, which)!);
+    const pick = <T extends string>(v: unknown, of: readonly T[]): T | undefined => ((of as readonly unknown[]).includes(v) ? (v as T) : undefined);
+    pr.playing = choose(pr.playing, { pace: pick(p?.pace, ['measured', 'driven'] as const), scale: pick(p?.scale, ['restrained', 'expansive'] as const), structure: pick(p?.structure, ['set', 'open'] as const) }, s.now);
+    if (!sidesOf(pr.playing).length) delete pr.playing;
+    noteMaterial(person, { approaches: sidesOf(pr.playing) });
+    return { prep: pr.playing?.prep ?? 0 };
+  });
+
   sim.onCommand<{ which?: Which }, { worked: true }>('school.work_note', (p, { sim: s }) => {
     const person = s.player;
     const which: Which = WHICH.includes(p?.which as Which) ? (p!.which as Which) : 'school';
@@ -351,6 +415,8 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
     const on = `${pz.year}-${String(pz.month).padStart(2, '0')}-${String(pz.day).padStart(2, '0')}`;
     const seen = new Set<string>();
     for (const n of open) {
+      // A note on the director's request isn't a weakness for the ledger: it's a choice, said on the part's process.
+      if (n.focus.kind === 'direction') continue;
       const f: LedgerFocus = n.focus.kind === 'lines' ? { kind: 'dim', dim: 'memorization' } : n.focus.kind === 'blocking' ? { kind: 'dim', dim: 'rehearsal' } : { kind: 'skill', skill: n.focus.skill };
       const key = JSON.stringify(f);
       if (seen.has(key)) continue;

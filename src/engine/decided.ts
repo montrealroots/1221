@@ -30,6 +30,8 @@ import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft, nightBand, nightEvaluation } from './systems/school';
+import { drawDirection } from './systems/production';
+import { PLAY_MATERIAL } from './content/material';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
@@ -312,6 +314,19 @@ defineDecider<{ sim: Simulation; level: number; ready: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), level: 50 + (seed % 30), ready: 0.6 + (seed % 5) / 10 }),
   decide: ({ sim, level, ready }) => { atLevel(sim, level, Math.min(100, ready * 80)); return Array.from({ length: 60 }, (_, n) => { const e = nightEvaluation(sim, sim.player, `d${n}`, {}, sim.now); return `${nightBand(e.overall)[0]}${Math.round(e.overall)}`; }).join(' '); },
+});
+
+defineDecider<{ sim: Simulation; term: number }, string>({
+  id: 'production.direction',
+  decides: 'Whether a production’s director asks for a way of playing it on one axis, which axis and which side, within what the play’s material takes (from 2026-10-10).',
+  drawnIn: 'src/engine/systems/production.ts',
+  reads: {
+    // The production's term, which keys the draw with the play.
+    term: (o, t) => ({ ...o, term: Math.round(t * 8) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), term: seed % 8 }),
+  decide: ({ sim, term }) => PLAY_MATERIAL.map((m) => JSON.stringify(drawDirection(sim, sim.player, { play: m.id, term }))).join(' '),
 });
 
 defineDecider<{ sim: Simulation; night: number }, string>({

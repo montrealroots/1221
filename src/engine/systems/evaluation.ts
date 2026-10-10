@@ -28,10 +28,17 @@
  *               `sufficientReadiness` or over, and no named cause that reaches
  *               the dimension: the flu for the voice, an injury for the body),
  *               less by each named cause otherwise;
- *   variation = a bounded draw, ± variation × (1 − shaped), so it narrows as
- *               mastery rises and is nothing at full capacity;
- *   quality   = 100 × shaped × prepared × condition + variation, held to
- *               0..100.
+ *   variation = a bounded draw, ± variation × (1 − shaped) × prepared ×
+ *               condition × fit, so it narrows as mastery rises and is
+ *               nothing at full capacity; on a tired day its downward side
+ *               widens by up to `fatigueSpread`, since sleep loss brings
+ *               lapses and makes work more erratic, not only worse (Lim &
+ *               Dinges 2010; Doran et al. 2001; research-practice-material.json). Until 2026-10-10 it
+ *               wasn't scaled by the other factors, and with the fit factor
+ *               added the least they came to (0.091) let the draw outweigh a
+ *               rising input;
+ *   quality   = 100 × shaped × prepared × condition × fit + variation, held
+ *               to 0..100.
  *
  * The whole is the dimensions' weighted mean for `meanShare` of it and the
  * weakest for the rest, so one strength doesn't erase an unrelated weakness.
@@ -40,11 +47,21 @@
  * at MASTERED, every part of preparation complete and the condition
  * sufficient, then capacity is 1, shaped is 1, prepared is 1, condition is 1
  * and variation is 0: every dimension and the whole are 100. A dimension's
- * quality never falls as an input it reads rises, holding the rest: the
- * variation's slope against shaped is at most `variation` points, and the
- * least prepared × condition can be (0.35 × 0.6 × 0.85 × 0.6, 0.107) gives
- * the rest at least 10.7, so quality rises (`tests/evaluation.test.ts` holds
- * both). Inputs a task doesn't read change nothing.
+ * quality never falls as an input it reads rises, holding the rest: against
+ * shaped its slope is (100 − variation × spread × draw) × prepared × condition
+ * × fit, and variation × spread is at most 15, so it's always positive
+ * (`tests/evaluation.test.ts` and `tests/engine-properties.test.ts` hold both).
+ * Inputs a task doesn't read change nothing.
+ *
+ * From 2026-10-10 a piece of material and the way it's played reach the same formula (`systems/material.ts`): they
+ * lean the dimensions' weights (normalized, as a genre's did), add abilities to a dimension's inputs (merged with the
+ * task's own, an ability counted once at its summed weight), add the choice's rehearsal as a part of preparation, and
+ * where a choice doesn't fit the material or the direction, a fit factor under 1 on the dimensions it leans on:
+ *
+ *   quality = 100 × shaped × prepared × condition × fit + variation.
+ *
+ * Fit is known before the work, shown with the choice, and 1 for a choice that fits, so the guarantee is the same
+ * with "the choice fits" added to what it asks.
  *
  * What's returned says why. Each limit is what one input cost its
  * dimension, in points: the dimension worked out again with that one input
@@ -99,8 +116,16 @@ export interface EvalContext {
   /** -0.5 (work pitched under a professional's: a class exercise) to 1 (the hardest the task comes); 0 a professional's. */
   difficulty: number;
   condition: Condition;
-  /** Genre families the material belongs to, which lean the dimensions' weights (`content/tasks.ts`, normalized). */
+  /** Genre families the material belongs to, which lean the dimensions' weights (`content/tasks.ts`, normalized). Read only where no material lean is given. */
   families?: readonly string[];
+  /** A material's and a choice's lean on the dimensions, multiplied in and normalized (`systems/material.ts`). In place of the families'. */
+  lean?: Partial<Record<Dimension, number>>;
+  /** Abilities a dimension draws on beyond the task's own, merged into its inputs. */
+  inputs?: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>>;
+  /** Parts of preparation a dimension reads beyond the task's own (a choice's rehearsal, `approach`). */
+  extraPrep?: Partial<Record<Dimension, readonly string[]>>;
+  /** Where the way it's played doesn't fit: the factor on a dimension, and why. */
+  fit?: Partial<Record<Dimension, { f: number; label: string }>>;
   /** A stable key for the bounded draw: the same work on the same day draws the same. */
   key: string;
   /** What the work would be expected to come to, with no draw: a casting read, which judges no night (from 2026-10-10). */
@@ -118,7 +143,7 @@ export interface Condition {
 }
 
 export interface Limit {
-  kind: 'ability' | 'technique' | 'preparation' | 'condition' | 'difficulty';
+  kind: 'ability' | 'technique' | 'preparation' | 'condition' | 'difficulty' | 'fit';
   what: string;
   label: string;
   dimension: Dimension;
@@ -133,6 +158,8 @@ export interface DimensionResult {
   capacity: number;
   prepared: number;
   condition: number;
+  /** The way it's played against the material or the direction: 1 where it fits (from 2026-10-10). */
+  fit?: number;
   variation: number;
   strongest?: { what: string; label: string };
   limits: Limit[];
@@ -156,6 +183,11 @@ export interface Evaluation {
     fulls?: Partial<Record<AbilityId, number>>;
     /** The save's seed the draw was keyed by. */
     seed?: string;
+    /** The material's and the choice's reads (from 2026-10-10), so a result replays with them. */
+    lean?: Partial<Record<Dimension, number>>;
+    inputs?: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>>;
+    extraPrep?: Partial<Record<Dimension, readonly string[]>>;
+    fit?: Partial<Record<Dimension, { f: number; label: string }>>;
   };
 }
 
@@ -169,9 +201,19 @@ export function draw(key: string): number {
   return (h % 2_000_000) / 1_000_000 - 1;
 }
 
-/** The dimension weights leant by the material's genre families, normalized so adding families adds nothing. */
-export function leanedWeights(task: TaskProfile, families: readonly string[] = []): Partial<Record<Dimension, number>> {
+/**
+ * The dimension weights leant by a material and a choice (`lean`, multiplied in) or, with none, by the material's
+ * genre families, normalized so leaning moves weight and never adds it.
+ */
+export function leanedWeights(task: TaskProfile, families: readonly string[] = [], lean?: Partial<Record<Dimension, number>>): Partial<Record<Dimension, number>> {
   const base = Object.fromEntries(Object.entries(task.dims).map(([d, s]) => [d, s!.weight])) as Partial<Record<Dimension, number>>;
+  if (lean) {
+    const out = Object.fromEntries((Object.keys(base) as Dimension[]).map((d) => [d, base[d]! * (lean[d] ?? 1)])) as Partial<Record<Dimension, number>>;
+    const total = Object.values(out).reduce((a, b) => a + (b ?? 0), 0);
+    const was = Object.values(base).reduce((a, b) => a + (b ?? 0), 0);
+    for (const d of Object.keys(out) as Dimension[]) out[d] = (out[d]! * was) / total;
+    return out;
+  }
   const leans = families.map((f) => EVALUATION.familyLean[f]).filter(Boolean);
   if (!leans.length) return base;
   const out: Partial<Record<Dimension, number>> = {};
@@ -204,14 +246,28 @@ function termsOf(spec: DimensionSpec, level: (a: AbilityId) => number, full: (a:
   return out;
 }
 
-/** A dimension's parts, worked out from its terms, preparation and condition factors: the one formula every limit reruns. */
-function dimensionQuality(terms: readonly Term[], difficulty: number, prepared: number, condition: number, d: number): { capacity: number; shaped: number; variation: number; quality: number } {
+/** A dimension's parts, worked out from its terms, preparation, condition and fit factors: the one formula every limit reruns. */
+function dimensionQuality(terms: readonly Term[], difficulty: number, prepared: number, condition: number, d: number, fit = 1, spread = 1): { capacity: number; shaped: number; variation: number; quality: number } {
   const total = terms.reduce((s, t) => s + t.weight, 0);
   const capacity = total > 0 ? terms.reduce((s, t) => s + t.weight * t.n, 0) / total : 1;
   const shaped = capacity ** (1 + difficulty);
   // Nothing at full capacity, exactly: not a negative zero.
-  const variation = shaped >= 1 ? 0 : EVALUATION.variation * (1 - shaped) * d;
-  return { capacity, shaped, variation, quality: clamp(100 * shaped * prepared * condition + variation, 0, 100) };
+  const factors = prepared * condition * fit;
+  // A tired day widens the draw downward only: lapses, not inspiration (Lim & Dinges 2010), which also keeps quality
+  // rising as readiness rises.
+  const variation = shaped >= 1 ? 0 : EVALUATION.variation * (d < 0 ? spread : 1) * (1 - shaped) * factors * d;
+  return { capacity, shaped, variation, quality: clamp(100 * shaped * factors + variation, 0, 100) };
+}
+
+/** A dimension's spec with what the material and the choice add: inputs merged (an ability once, its weights summed), parts of preparation joined. */
+function specWith(spec: DimensionSpec, extra?: readonly { ability: AbilityId; weight: number }[], prep?: readonly string[]): DimensionSpec {
+  if (!extra?.length && !prep?.length) return spec;
+  const inputs = spec.inputs.map((x) => ({ ...x }));
+  for (const e of extra ?? []) {
+    const had = inputs.find((x) => 'ability' in x && x.ability === e.ability);
+    if (had) had.weight += e.weight; else inputs.push({ ability: e.ability, weight: e.weight });
+  }
+  return { ...spec, inputs, prep: [...new Set([...(spec.prep ?? []), ...(prep ?? [])])] };
 }
 
 /** Judges the player's piece of work (`judge`, through `performerOf`). */
@@ -223,7 +279,7 @@ export function evaluate(sim: Simulation, person: Person, ctx: EvalContext): Eva
 export function replay(record: { inputs: Evaluation['inputs']; task: string }, profile: TaskProfile): Evaluation | undefined {
   const i = record.inputs;
   if (!i.levels || !i.fulls || i.seed === undefined) return undefined;
-  return judge(i.seed, frozenPerformer(i), { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key });
+  return judge(i.seed, frozenPerformer(i), { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}) });
 }
 
 /** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. */
@@ -239,10 +295,13 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
   // read by the dimensions that name it, and counted there once.
   const techniques = Object.fromEntries(Object.entries(ctx.techniques).filter(([k, w]) => TECHNIQUES.includes(k as Skill) && (w ?? 0) > 0)) as Partial<Record<Skill, number>>;
   const dims: DimensionResult[] = [];
-  const weights = leanedWeights(ctx.task, ctx.families);
+  const weights = leanedWeights(ctx.task, ctx.families, ctx.lean);
   let mastery = true;
 
-  for (const [d, spec] of Object.entries(ctx.task.dims) as [Dimension, DimensionSpec][]) {
+  for (const [d, base] of Object.entries(ctx.task.dims) as [Dimension, DimensionSpec][]) {
+    const spec = specWith(base, ctx.inputs?.[d], ctx.extraPrep?.[d]);
+    const fit = ctx.fit?.[d];
+    const f = fit ? clamp(fit.f, 0, 1) : 1;
     const terms = termsOf(spec, level, full, techniques, craftLevel);
     // The draw is the save's own, by its seed: two lives don't draw the same night.
     const dr = ctx.expected ? 0 : draw(`${seed}:${ctx.key}:${d}`);
@@ -261,29 +320,35 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     // A concussion reaches every dimension, whatever its conditions name: it's thinking and memory, not the body only.
     else if (ctx.condition.concussed) causes.push({ what: 'injury', label: 'A Concussion Still Mending', f: E.injury });
     const condition = causes.reduce((p, c) => p * c.f, 1);
+    // A tired day widens the draw (`fatigueSpread`); a sufficient day leaves it as it is.
+    const spread = ctx.condition.readiness < E.sufficientReadiness ? 1 + E.fatigueSpread * (1 - clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1)) : 1;
 
-    const now = dimensionQuality(terms, ctx.difficulty, prepared, condition, dr);
+    const now = dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, f, spread);
     const limits: Limit[] = [];
     const cost = (q: number) => r1(Math.max(0, q - now.quality));
     for (const [i, t] of terms.entries()) {
       if (t.n >= 1) continue;
       mastery = false;
       const whole = terms.map((x, j) => (j === i ? { ...x, n: 1 } : x));
-      limits.push({ kind: t.kind, what: t.what, label: t.label, dimension: d, by: cost(dimensionQuality(whole, ctx.difficulty, prepared, condition, dr).quality) });
+      limits.push({ kind: t.kind, what: t.what, label: t.label, dimension: d, by: cost(dimensionQuality(whole, ctx.difficulty, prepared, condition, dr, f, spread).quality) });
     }
-    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Work Is', dimension: d, by: cost(dimensionQuality(terms, 0, prepared, condition, dr).quality) });
+    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Work Is', dimension: d, by: cost(dimensionQuality(terms, 0, prepared, condition, dr, f, spread).quality) });
     for (const p of parts) {
       if (p.f >= 1) continue;
       mastery = false;
       const rest = parts.reduce((m, x) => (x === p ? m : Math.min(m, x.f)), 1);
-      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? p.part, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, rest, condition, dr).quality) });
+      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? (p.part === 'approach' ? 'The way you chose to play it, rehearsed in' : p.part), dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, rest, condition, dr, f, spread).quality) });
     }
     for (const c of causes) {
       mastery = false;
-      limits.push({ kind: 'condition', what: c.what, label: c.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition / c.f, dr).quality) });
+      limits.push({ kind: 'condition', what: c.what, label: c.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition / c.f, dr, f, c.what === 'fatigue' ? 1 : spread).quality) });
+    }
+    if (f < 1) {
+      mastery = false;
+      limits.push({ kind: 'fit', what: 'fit', label: fit!.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, 1, spread).quality) });
     }
     const strongest = terms.reduce<Term | undefined>((b, t) => (!b || t.n > b.n ? t : b), undefined);
-    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
+    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, ...(f < 1 ? { fit: f } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
   }
 
   const wTotal = dims.reduce((s, x) => s + (weights[x.dimension] ?? 0), 0);
@@ -293,7 +358,7 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
   return {
     ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
     limits: dims.flatMap((x) => x.limits).sort((a, b) => b.by - a.by),
-    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed },
+    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}) },
   };
 }
 
@@ -409,5 +474,6 @@ export function chiefLimit(e: Pick<Evaluation, 'limits'>): string | undefined {
   if (l.kind === 'preparation') return `${l.label} wasn’t complete, which cost the ${dim} ${l.by} points`;
   if (l.kind === 'condition') return `${l.label}, which cost the ${dim} ${l.by} points`;
   if (l.kind === 'difficulty') return `The work asked more than the craft yet holds, which cost the ${dim} ${l.by} points`;
+  if (l.kind === 'fit') return `The way you played it didn’t fit (${l.label}), which cost the ${dim} ${l.by} points`;
   return `${l.label} held back the ${dim} by ${l.by} points`;
 }

@@ -22,6 +22,9 @@ import {
   activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
+import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
+import { playingPreview, playingRefusal } from '@/engine/systems/coursework';
+import { materialOf } from '@/engine/systems/material';
 import { at } from '@/ui/looks/subject';
 import { PRIORITY_WORDS, amendsRefusal, boundaryLiftsAfter, owesYouLines, personOf, stoppedAsking } from '@/engine/systems/classmates';
 import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
@@ -126,6 +129,12 @@ function AssignmentCard({ a }: { a: Assignment }) {
             );
           })}
         </div>
+        {materialOf(a.sceneId) && <MaterialDemands material={materialOf(a.sceneId)!} />}
+        {!playingRefusal(a) && (
+          <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing"
+            preview={(c) => playingPreview(sim, person, a, due, c)}
+            onChoose={(c) => { const r = run<{ prep: number }>('school.choose_playing', { assignmentId: a.id, ...c }); if (r.ok) toast(`Chosen: rehearsed in to ${pct(r.value!.prep)}.`, 'positive'); }} />
+        )}
         <AnotherWay a={a} />
         {questionsFor(a).length > 0 && <TableWork a={a} />}
         {mate && <Rehearsals a={a} />}

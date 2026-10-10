@@ -20,7 +20,7 @@
 import type { AbilityId } from './abilities';
 
 /** The version of these rules, kept on every result so an old one is read under its own terms. */
-export const RULESET = 'evaluation-1 (2026-10-09)';
+export const RULESET = 'evaluation-2 (2026-10-10)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 
@@ -198,8 +198,10 @@ export const EVALUATION = {
   fatigueFloor: 0.6,
   illness: 0.85,
   injury: 0.6,
-  /** The bounded draw at no mastery, in points either way; nothing at full capacity. Under 18 keeps quality rising with every input. */
+  /** The bounded draw at no mastery, in points either way; nothing at full capacity. Scaled by the other factors from 2026-10-10, any spread under 100 keeps quality rising with every input. */
   variation: 10,
+  /** How much a tired day widens the draw at readiness 0 (from 2026-10-10): sleep loss makes work erratic (Doran et al. 2001). SLATE's size of it. */
+  fatigueSpread: 0.5,
   /** The whole: this share the weighted mean, the rest the weakest dimension. */
   meanShare: 0.75,
   /**
