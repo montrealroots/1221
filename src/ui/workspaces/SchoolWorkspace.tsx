@@ -333,16 +333,20 @@ const repeats = (c: { production: string; kind: string }) => c.production.starts
  * the part given. Fit is what a night would come to, read the same for everyone; it isn't anybody's recorded work,
  * which stays as it was judged.
  */
+const SOURCE_WORD: Record<string, string> = { school: 'a School production', rep: 'Yale Rep', cabaret: 'the Yale Cabaret', summer: 'the Summer Cabaret' };
+
 function CastReadPanel() {
   const person = useWorld((s) => s.player);
   const read = person.school?.castRead;
   if (!read) return null;
   const rows = [...read.rows].sort((a, b) => b.score - a.score);
+  const you = read.rows.find((r) => r.you);
   const asks = Object.keys(read.reads).map((k) => SKILLS.find((x) => x.id === k)?.label ?? k).join(', ');
   return (
     <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`}>
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their last run, and balances who had the big parts last time; the best read takes the biggest part written for them.</p>
+        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions; the best read takes the biggest part written for them.</p>
+        {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered is read from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, weighted ${f.weight})`).join('; ')}. A Cabaret or Summer run weighs half a School production’s, each run up to eight nights; a night missed out of hospital is delivered at nothing. How the nights were judged isn’t read here: it’s in your work.</p>}
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Student</th><th scope="col" className="num">Fit</th><th scope="col" className="num">Delivered</th><th scope="col" className="num">Balance</th><th scope="col" className="num">Read</th><th scope="col">Part</th></tr></thead>

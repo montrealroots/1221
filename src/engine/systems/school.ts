@@ -135,7 +135,8 @@ export interface Run { production: string; role: string; play?: string; by?: str
  * a week after the chair stopped reading them; nothing else did, and they went.
  */
 export interface LastWork {
-  size: PartSize;
+  /** The last School or Rep part's size, for the balance of opportunity; Cabaret and Summer parts don't move it. */
+  size?: PartSize;
   /**
    * How much of their ability they brought to it, 0 to 1 (from 2026-10-10): the player's, the mean of each night's
    * preparation and condition as the evaluation found them; a classmate's, the share of calls they keep
@@ -143,6 +144,27 @@ export interface LastWork {
    * of the nights' bands, which read the craft a second time.
    */
   delivery?: number;
+  /**
+   * The player's: how much evidence the delivery stands on (`ESTIMATE.casting.record`), and the runs it was read
+   * from at the last casting, for Why This Cast (from 2026-10-10).
+   */
+  weight?: number;
+  from?: { what: string; source: RunSource | 'before'; nights?: number; delivery: number; weight: number }[];
+}
+
+/** Where a run was played: a School production, the Rep, the Yale Cabaret or the Summer Cabaret. */
+export type RunSource = 'school' | 'rep' | 'cabaret' | 'summer';
+
+/**
+ * A run of nights, kept whatever kind it was (from 2026-10-10): its nights played and missed, how much of themselves
+ * the student delivered across them, the quality of the nights as judged (for the record, never the casting), and
+ * the casting that read it. Until then the chair read only the last School production's delivery, and a Cabaret or a
+ * Summer run reached nothing it decided.
+ */
+export interface RunRecord {
+  key: string; source: RunSource; production: string; play?: string; role: string; size?: PartSize; term?: number;
+  nights: number; missed: number; delivered: number; quality: number; firstAt: Instant; lastAt: Instant;
+  readAtCasting?: number;
 }
 
 /**
@@ -256,11 +278,13 @@ export interface SchoolRecord {
   tally: TermTally;
   /** The player's last part, for the chair's next casting. */
   lastWork?: LastWork;
+  /** Every run played, the latest last, the most recent twelve (`RunRecord`, from 2026-10-10). */
+  runs?: RunRecord[];
   /**
    * The chair's read of the cast the player is in, kept from 2026-10-10 for the screen: each student's fit for the
    * play, how much of themselves they delivered last time, the balance of opportunity, the score and the part.
    */
-  castRead?: { term: number; play: string; reads: Partial<Craft>; kinds: string[]; rows: { name: string; you: boolean; fit: number; delivery: number; balance: number; score: number; part: string; size: PartSize }[] };
+  castRead?: { term: number; play: string; reads: Partial<Craft>; kinds: string[]; rows: { name: string; you: boolean; fit: number; delivery: number; balance: number; score: number; part: string; size: PartSize; from?: LastWork['from'] }[] };
   /** The term's casting across the class: who's in what, as which part. */
   around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[] };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
@@ -331,7 +355,19 @@ export const ESTIMATE = {
    * heeded, which read the craft again. A note heeded shows in the fit through the skill itself; it was marked for the
    * record (`heedGain`, the skill grown a point and a half) until 2026-10-10, read by nothing. SLATE's estimates.
    */
-  casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, delivery: 0.2 },
+  casting: {
+    balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, delivery: 0.2,
+    /**
+     * What the chair reads of a student's runs since the last casting (from 2026-10-10): each run's delivery, weighted
+     * by its nights up to `nightsCap` and by its kind (a Cabaret show or a Summer play half a School production's),
+     * with the record before carried at `carry` of its weight, and the whole held to `cap`. So a short run can't
+     * erase a long one, more runs add evidence and never advantage (it's an average), a run not played counts for
+     * nothing either way, and each run is read once. SLATE's estimates. The faculty's term evaluation reads the
+     * term's School, Rep and Cabaret runs (`evaluate`); the Summer Cabaret is outside the term, and reaches casting
+     * only.
+     */
+    record: { weight: { school: 1, rep: 1, cabaret: 0.5, summer: 0.5 } as Record<RunSource, number>, nightsCap: 8, carry: 0.5, cap: 12 },
+  },
   /**
    * What a night's band does (`nightOf`, judged by `systems/evaluation.ts` from 2026-10-09): a strong or remarkable
    * night lifts morale, and a remarkable one the presence; an off night stings. Until 2026-10-09 the band was readiness
@@ -1441,6 +1477,64 @@ export function teachersNotes(person: Person, term: number): { course: string; t
   });
 }
 
+/**
+ * The chair's read of the runs since the last casting (`ESTIMATE.casting.record`), each marked read: the delivery,
+ * the evidence it stands on and where it came from, and the last School or Rep part's size. A save from before
+ * 2026-10-10 has no run record; its last production's delivery, kept on the casting, is read as that run.
+ */
+export function readRuns(school: SchoolRecord, term: number, c0: Casting | undefined): LastWork | undefined {
+  const R = ESTIMATE.casting.record;
+  const prior = school.lastWork;
+  const legacy = (c0 as Run & { delivered?: { sum: number; n: number } } | undefined)?.delivered;
+  if (c0 && legacy?.n && !(school.runs ?? []).some((r) => r.production === c0.production && r.term === c0.term)) {
+    (school.runs ??= []).push({ key: `school:${c0.production}:${c0.term}`, source: 'school', production: c0.production, ...(c0.play ? { play: c0.play } : {}), role: c0.role, ...(c0.size ? { size: c0.size } : {}), term: c0.term, nights: legacy.n, missed: 0, delivered: legacy.sum, quality: 0, firstAt: 0, lastAt: 0 });
+  }
+  const from: NonNullable<LastWork['from']> = [];
+  let weight = 0;
+  let sum = 0;
+  if (prior?.delivery !== undefined) {
+    const w = (prior.weight ?? R.nightsCap) * R.carry;
+    weight += w; sum += prior.delivery * w;
+    from.push({ what: 'Your record before', source: 'before', delivery: prior.delivery, weight: Math.round(w * 100) / 100 });
+  }
+  for (const r of school.runs ?? []) {
+    if (r.readAtCasting !== undefined || r.nights <= 0) continue;
+    const w = Math.min(r.nights, R.nightsCap) * R.weight[r.source];
+    const d = r.delivered / r.nights;
+    weight += w; sum += d * w;
+    r.readAtCasting = term;
+    from.push({ what: r.play ?? r.production, source: r.source, nights: r.nights, delivery: Math.round(d * 1000) / 1000, weight: w });
+  }
+  const size = c0?.size ?? prior?.size;
+  if (!weight && !size) return prior;
+  return { ...(size ? { size } : {}), ...(weight ? { delivery: Math.round((sum / weight) * 1000) / 1000, weight: Math.min(R.cap, weight), from } : {}) };
+}
+
+/** Where a run is played, by which of the student's runs it is. */
+function runSource(school: SchoolRecord, run: Run, rep: boolean): RunSource {
+  if (run === (school.cabaret as unknown)) return 'cabaret';
+  if (school.summer?.shows?.includes(run)) return 'summer';
+  return rep ? 'rep' : 'school';
+}
+
+/** A night of a run kept in the record (`RunRecord`): played, with its delivery and quality, or missed. */
+export function noteRun(school: SchoolRecord, run: Run & { term?: number }, rep: boolean, at: Instant, night: { delivery: number; quality: number } | 'missed'): RunRecord {
+  const source = runSource(school, run, rep);
+  const key = `${source}:${run.production}:${run.term ?? ''}`;
+  const runs = (school.runs ??= []);
+  let r = runs.find((x) => x.key === key && x.readAtCasting === undefined);
+  if (!r) {
+    r = { key, source, production: run.production, ...(run.play ? { play: run.play } : {}), role: run.role, ...(run.size ? { size: run.size } : {}), ...(run.term !== undefined ? { term: run.term } : {}), nights: 0, missed: 0, delivered: 0, quality: 0, firstAt: at, lastAt: at };
+    runs.push(r);
+    if (runs.length > 12) runs.splice(0, runs.length - 12);
+  }
+  r.nights += 1;
+  r.lastAt = at;
+  if (night === 'missed') r.missed += 1;
+  else { r.delivered += night.delivery; r.quality += night.quality; }
+  return r;
+}
+
 /** How many nights a run has played. */
 const nightsOf = (c: Casting) => Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
 
@@ -1542,7 +1636,7 @@ export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>,
 export function castScore(s: { craft: Craft; last?: LastWork; fit?: number }, reads: Partial<Craft>): number {
   const c = ESTIMATE.casting;
   const fit = s.fit ?? readOf(s.craft, reads);
-  return fit * (1 - c.delivery + c.delivery * (s.last?.delivery ?? 1)) + (s.last ? c.balance[s.last.size] : 0);
+  return fit * (1 - c.delivery + c.delivery * (s.last?.delivery ?? 1)) + (s.last?.size ? c.balance[s.last.size] : 0);
 }
 
 /**
@@ -1589,11 +1683,10 @@ function cast(sim: Simulation, person: Person, term: number): void {
   keepCredit(sim, school);
   // What the chair reads of last time: the part's size and how much of themselves they delivered in it.
   const c0 = school.casting;
-  const delivered = (c0 as Run & { delivered?: { sum: number; n: number } } | undefined)?.delivered;
   // A run its term's evaluation came too early to judge is kept for the next.
   const unjudged = [school.casting, school.rep].filter((c): c is Casting => c !== undefined && !c.reviewed && nightsOf(c) >= ESTIMATE.workNights);
   if (unjudged.length) school.unreviewed = [...(school.unreviewed ?? []), ...unjudged].slice(-2);
-  if (c0?.size) school.lastWork = { size: c0.size, ...(delivered?.n ? { delivery: Math.round((delivered.sum / delivered.n) * 1000) / 1000 } : {}) };
+  school.lastWork = readRuns(school, term, c0);
   delete school.casting;
   delete school.rep;
   // A third-year a director asks into the Rep's company plays there that
@@ -1641,7 +1734,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       if (me) {
         school.castRead = {
           term, play: shown, reads: withDemands(play.reads, play.kinds ?? []), kinds: [...(play.kinds ?? [])],
-          rows: given.map((g) => ({ name: g.s.name, you: g.s.i < 0, fit: Math.round(playFit(g.s) * 10) / 10, delivery: g.s.last?.delivery ?? 1, balance: g.s.last ? ESTIMATE.casting.balance[g.s.last.size] : 0, score: Math.round(castScore({ ...g.s, fit: playFit(g.s) }, play.reads) * 10) / 10, part: partLabel(g.part, production.kind), size: g.size })),
+          rows: given.map((g) => ({ name: g.s.name, you: g.s.i < 0, fit: Math.round(playFit(g.s) * 10) / 10, delivery: g.s.last?.delivery ?? 1, balance: g.s.last?.size ? ESTIMATE.casting.balance[g.s.last.size] : 0, ...(g.s.i < 0 && g.s.last?.from ? { from: g.s.last.from } : {}), score: Math.round(castScore({ ...g.s, fit: playFit(g.s) }, play.reads) * 10) / 10, part: partLabel(g.part, production.kind), size: g.size })),
         };
       }
       if (me) mine = { production, play, part: me.part, size: me.size, cast: given.filter((g) => g.s.i >= 0).map((g) => ({ name: g.s.name, part: partLabel(g.part, production.kind) })) };
@@ -2017,8 +2110,11 @@ export function registerSchool(sim: Simulation): void {
     recordWork(s, person, evaluation, { at: item.at, what: casting.play ?? casting.production, band: night });
     // How much of themselves they brought (`LastWork.delivery`): each dimension's preparation and condition, averaged.
     const d = (casting as Run & { delivered?: { sum: number; n: number } }).delivered ??= { sum: 0, n: 0 };
-    d.sum += evaluation.dimensions.reduce((a, x) => a + x.prepared * x.condition, 0) / Math.max(1, evaluation.dimensions.length);
+    const tonight = evaluation.dimensions.reduce((a, x) => a + x.prepared * x.condition, 0) / Math.max(1, evaluation.dimensions.length);
+    d.sum += tonight;
     d.n += 1;
+    // And in the record of runs the next casting reads, whatever kind of run (`noteRun`, from 2026-10-10).
+    if (person.school) noteRun(person.school, casting, rep, item.at, { delivery: tonight, quality: evaluation.overall });
     // A house answered night after night: listening grows by it (`content/abilities.ts`), and the play's kinds are
     // practiced, one night's worth shared among them (`practiceGenres`).
     ordinary(s, person, 'listening', focusAt(s, person, item.at), 0.5, 'night');
@@ -2158,7 +2254,9 @@ export function registerSchool(sim: Simulation): void {
     }
     item.status = 'missed';
     if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
-    if (call === 'performance') { breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
+    // A performance not played, and not excused: a breach, and a night delivered at nothing in the record the next
+    // casting reads, as a classmate's delivery is the share of calls they keep (from 2026-10-10).
+    if (call === 'performance') { noteRun(school, casting, item.payload.which === 'rep', item.at, 'missed'); breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
     if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) {
       school.castable = false;
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Casting Pool', body: 'Missed rehearsal calls: the chair takes you out of the casting pool to reacquire the discipline. You fulfil what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });
@@ -2214,6 +2312,8 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) {
       item.status = 'missed';
       if (stage) callMissed(school.cabaret, stage, Number(item.payload.of ?? 0));
+      // A show not played, out of hospital: a night delivered at nothing in the record (from 2026-10-10).
+      if (item.payload.call === 'performance' && !offSick(person, item.at) && school.cabaret.role) noteRun(school, school.cabaret as typeof school.cabaret & Run, false, item.at, 'missed');
       return;
     }
     const cab = school.cabaret;
@@ -2292,7 +2392,9 @@ export function registerSchool(sim: Simulation): void {
       if (stage && summer.shows?.[run]) callMissed(summer.shows[run]!, stage, Number(item.payload.of ?? 0));
       // In hospital, the company covers the night and keeps them.
       if (item.payload.call !== 'performance' || offSick(person, item.at)) return;
-      // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
+      // A missed performance and the company lets them go: the calls ahead are off, the stipend stops; and the night
+      // is in the record the next casting reads, delivered at nothing (from 2026-10-10).
+      if (summer.shows?.[run]) noteRun(school!, summer.shows[run]!, false, item.at, 'missed');
       summer.out = true;
       // This week's stipend is kept, for the days of it worked; until
       // 2026-09-27 it went with the rest, and the notice said they were paid.
