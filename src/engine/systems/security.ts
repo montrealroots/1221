@@ -55,6 +55,18 @@ export const ESTIMATE_RUSH_DAYS = 3;
 /** Business days a refund takes where the law names none: SLATE's estimate, the US's ten. */
 export const ESTIMATE_REFUND_DAYS = 10;
 export const REPLACED_KIND = 'card.replaced';
+
+/**
+ * An account number known to whoever used the debit card drawn on it (from 2026-10-10): at a bank that moves a
+ * compromised account to a new number (`newNumberOnFraud`), a debit card used by somebody else leaves the account's
+ * number exposed for a year (SLATE's estimate of how long it's tried). Each day, an attempt on it at the yearly rate
+ * of a victim's further incidents, 21% (BJS, Victims of Identity Theft 2014, NCJ 248991: victims with more than one
+ * incident in the year, of any kind; no figure for a bank account alone was found, and this is the only one). Tried
+ * on the number still in use, it goes through as an electronic debit, disputable under the country's law (Regulation
+ * E's $0 within 60 days of the statement for a transfer made without a card, 12 CFR 1005.6(b)(3)); tried on a number
+ * the account has moved from, it's declined. A card's own fraud is the separate draw it always was.
+ */
+export const EXPOSURE = { yearlyAttempt: 0.21, days: 365 } as const;
 export const REFUND_KIND = 'bank.fraud_refund';
 
 
@@ -129,10 +141,13 @@ function replace(sim: Simulation, account: Account, which: Which, why: NonNullab
 }
 
 /** What the law leaves the holder to carry of an amount used without them, reported so many days after they learned of it. */
-export function liabilityFor(sim: Simulation, account: Account, which: Which, amount: Money, daysLate: number): Money {
+export function liabilityFor(sim: Simulation, account: Account, which: Which, amount: Money, daysLate: number, via?: 'number'): Money {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   const law = bank ? FRAUD_LAW[bank.iso] : undefined;
   if (!bank || !law) return amount;
+  // A transfer made without a card in the US: nothing, reported within the 60 days (12 CFR 1005.6(b)(3)); the
+  // dispute's own window refuses it after. Elsewhere the country's rule for a payment instrument, as a card's.
+  if (via === 'number' && bank.iso === 'US') return 0;
   const money = law.inEuros ? 'EUR' : bank.currency;
   if (which === 'credit' && law.creditMax !== undefined) return Math.min(amount, inSave(sim, law.creditMax, money));
   const tier = law.debitTiers.find((t) => t.withinDays === undefined || daysLate <= t.withinDays);
@@ -215,6 +230,7 @@ export function registerSecurity(sim: Simulation): void {
       }
     }
     somebodyElse(s, person);
+    attemptOnNumber(s, person);
   });
 
   sim.onCommand<{ which: Which; locked: boolean; accountId?: string }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
@@ -255,6 +271,7 @@ export function registerSecurity(sim: Simulation): void {
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     if (!current || !bank) throw new CommandError('You have no current account.');
     if (!SECURITY[bank.id]?.newNumberOnFraud) throw new CommandError(`${bank.name} doesn’t say it moves an account to a new number; closing it and opening another does.`);
+    // The number moves at once; the exposure stays on the old one, whose attempts are declined from now on.
     current.number = accountNumber(s, person, bank, 'checking', (current.plastic?.issued ?? 1) + 1);
     current.last4 = current.number.replace(/\D/g, '').slice(-4);
     replace(s, current, 'debit', 'fraud', false);
@@ -270,12 +287,12 @@ export function registerSecurity(sim: Simulation): void {
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
     one.reportedAt = s.now;
-    one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
+    one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY), one.via);
     const kept = daysOfAccount(account, person);
     const refundAt = afterBusinessDays(s.now, law?.refundDays ?? ESTIMATE_REFUND_DAYS, kept.countryId, s.homeZone, kept.regionId);
     s.schedule({ at: refundAt, kind: REFUND_KIND, label: 'A Refund From The Bank', category: 'home', priority: 38, payload: { personId: person.id, index: Number(p.index) } });
-    // The card it was used on is stopped and replaced, free.
-    if (!account.plastic?.stopped) replace(s, account, one.which, 'fraud', false);
+    // The card it was used on is stopped and replaced, free; a debit taken with the number alone stops no card.
+    if (!account.plastic?.stopped && one.via !== 'number') replace(s, account, one.which, 'fraud', false);
     return { carried: one.carried, refundAt };
   });
 }
@@ -301,8 +318,9 @@ export function fraudOn(sim: Simulation, person: Person, at: Instant): { which: 
   return { which, account, amount, stopped: rng.next() < (law.preventedShare ?? 0) };
 }
 
-function somebodyElse(sim: Simulation, person: Person): void {
-  const hit = fraudOn(sim, person, sim.now);
+/** Somebody else's use of a card on the day, as drawn (`fraudOn`), or as given (a test's setup). */
+export function somebodyElse(sim: Simulation, person: Person, given?: ReturnType<typeof fraudOn>): void {
+  const hit = given ?? fraudOn(sim, person, sim.now);
   if (!hit) return;
   const { which, account, amount } = hit;
   const bank = bankById(account.bankId!)!;
@@ -323,4 +341,33 @@ function somebodyElse(sim: Simulation, person: Person): void {
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
     sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
   }
+  // A debit card used: the account it draws on is known with it, where the bank treats that as compromised (`EXPOSURE`).
+  if (which === 'debit' && SECURITY[bank.id]?.newNumberOnFraud && account.number) account.exposed = { number: account.number, at: sim.now, until: sim.now + EXPOSURE.days * MS_DAY };
+}
+
+/** The day's attempt on an exposed account number (`EXPOSURE`): declined where the account has moved, taken where it hasn't. */
+export function attemptOnNumber(sim: Simulation, person: Person, given?: { size: number }): void {
+  const account = currentOf(sim, person);
+  const exposed = account?.exposed;
+  if (!account || !exposed || account.closedAt) return;
+  if (sim.now >= exposed.until) { delete account.exposed; return; }
+  const rng = sim.rng('bank.fraud.number', person.id, dateKey(sim.now, sim.zone));
+  // The day's draw, or an attempt given (a test's setup, at the size given, 0 to 1).
+  if (!given && rng.next() >= 1 - (1 - EXPOSURE.yearlyAttempt) ** (1 / 365)) return;
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const law = bank ? FRAUD_LAW[bank.iso] : undefined;
+  if (!bank || !law?.avgLoss) return;
+  const cur = saveCurrency(sim.universe);
+  const amount = Math.max(100, Math.round(inSave(sim, law.avgLoss, law.avgLossCurrency ?? bank.currency) * (0.25 + 1.5 * (given?.size ?? rng.next()))));
+  const mine = person.id === sim.universe.playerId;
+  if (account.number !== exposed.number) {
+    if (mine) sim.notify({ category: 'bank', title: 'A Debit On Your Old Number Declined', body: `Somebody tried to take ${formatMoney(amount, cur)} with your old account number. It’s closed to them, so ${bank.name} declined it.`, importance: 45, route: '/workspace/bank' });
+    return;
+  }
+  sim.post({ memo: 'Electronic debit', category: 'account-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
+  const statedAt = statementAfter(sim, account, 'debit', sim.now);
+  const alert = alertsOf(person).largePayment;
+  const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
+  person.fraud = [...(person.fraud ?? []), { accountId: account.id, which: 'debit', via: 'number', amount, at: sim.now, learnedAt, statedAt }];
+  if (mine && learnedAt === sim.now) sim.notify({ category: 'bank', title: 'An Electronic Debit You Didn’t Make', body: `${formatMoney(amount, cur)} taken from ${account.name} with its account number. If it wasn’t you, report it; and ${bank.name} can move the account to a new number.`, importance: 70, route: '/workspace/bank' });
 }

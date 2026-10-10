@@ -64,6 +64,11 @@ export interface Account {
   bankId?: string;
   /** The account's number as its country writes it (`systems/banknumber.ts`). */
   number?: string;
+  /**
+   * A number known to somebody who shouldn't have it (from 2026-10-10, `systems/security.ts`): which number, since
+   * when, and until when attempts on it are drawn.
+   */
+  exposed?: { number: string; at: number; until: number };
   /** Interest built up since it was last paid, in fractional hundredths. */
   accrued?: number;
   /** The lowest it has stood at this month, for a fee's waiver. */

@@ -94,16 +94,25 @@ export function BankSecurity({ bankId }: { bankId: string }) {
         })}
         {learned.map(({ one, index }) => (
           <div key={index} className="row-between small">
-            <span>{money(one.amount)} on your {one.which} card, {formatDate(one.at, sim.zone)}: not yours?</span>
+            <span>{money(one.amount)} {one.via === 'number' ? 'taken with your account number' : `on your ${one.which} card`}, {formatDate(one.at, sim.zone)}: not yours?</span>
             {disputeRefusal(sim, person, index) ? <span className="xs dim">{disputeRefusal(sim, person, index)}</span> : <Gated feature="card.dispute" className="btn btn-sm" onClick={() => {
               const answer = run<{ carried: number; refundAt: number }>('card.dispute', { index });
               if (answer.ok) toast(`Reported. The refund comes by ${formatDate(answer.value!.refundAt, sim.zone)}${answer.value!.carried ? `, less the ${money(answer.value!.carried)} the law leaves you` : ''}.`, 'positive');
             }}>Report It As Not Mine</Gated>}
           </div>
         ))}
-        {rules?.newNumberOnFraud && (
-          <Gated feature="bank.new_number" className="btn btn-sm btn-ghost" onClick={() => run('bank.new_number', {})}>Move My Account To A New Number</Gated>
-        )}
+        {rules?.newNumberOnFraud && (() => {
+          // What a new number does (`EXPOSURE`, from 2026-10-10): attempts on the old one are declined; a card's own fraud is apart.
+          const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+          const exposed = current?.exposed;
+          const moved = exposed && current?.number !== exposed.number;
+          return (
+            <div className="col gap-1">
+              <p className="xs" style={{ margin: 0 }}>{!exposed ? 'Your account number isn’t known to be exposed. A new number would cost a new debit card and protect against nothing yet.' : moved ? `Your old number was exposed on ${formatDate(exposed.at, sim.zone)}; it’s moved, and debits tried on the old one are declined until ${formatDate(exposed.until, sim.zone)}.` : `Your account number was exposed when your debit card was used on ${formatDate(exposed.at, sim.zone)}. Debits can be tried on it until ${formatDate(exposed.until, sim.zone)}; a new number closes it to them. It doesn’t stop a card being used: that’s the card’s own risk.`}</p>
+              <Gated feature="bank.new_number" className="btn btn-sm btn-ghost" onClick={() => run('bank.new_number', {})}>Move My Account To A New Number</Gated>
+            </div>
+          );
+        })()}
         {rules?.lostCardWords && <p className="xs dim" style={{ margin: 0 }}>{rules.lostCardWords}</p>}
         {rules?.suspectWords && <p className="xs dim" style={{ margin: 0 }}>{rules.suspectWords}</p>}
         {law?.debitWords && <p className="xs dim" style={{ margin: 0 }}>The law, for the debit card: {law.debitWords}</p>}

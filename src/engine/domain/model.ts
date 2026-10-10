@@ -249,7 +249,7 @@ export interface Person {
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
-  fraud?: { accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
+  fraud?: { accountId: string; which: 'debit' | 'credit'; /** Taken with the account's number alone, not a card (from 2026-10-10). */ via?: 'number'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
   /** Height and weight, and the day's energy in and out (`systems/body.ts`). */
