@@ -1,3 +1,12 @@
+# Read First: Merged To Main, With The Yale Student, Banking And Papers Pass, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `af99bf6e` to `claude/student-experience`. Nothing was force-pushed. The stash and the three worktrees were left untouched.
+
+- **Not deployed.** Schema 94 is unchanged.
+- **Still the owner's:** decisions #1–#3 from `docs/verification/COVERAGE-GAPS.md`; the 16 deferred items; and the four decisions listed in the section below.
+
+---
+
 # Read First: The Yale Student, Banking And Papers Completed, 2026-10-10
 
 The owner's brief was "Complete SLATE's Yale Student, Banking And Papers Experience". The work started on `main` at `af99bf6e`.
