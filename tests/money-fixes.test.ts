@@ -1,5 +1,5 @@
 /**
- * The money repairs of 2026-10-10, each held by the behaviour it fixed: a moved statement day makes one longer
+ * The money repairs of 2026-10-10, each held by the behavior it fixed: a moved statement day makes one longer
  * cycle, never a statement a day; the yearly fee is charged once in its month; a US payment that bounced is charged
  * the late fee and not the returned payment's too; a hardship plan is for a holder who can't pay; an account
  * canceled new takes its standing orders with it; and a stranger's charge earns no rewards.

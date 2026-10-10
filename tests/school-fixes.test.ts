@@ -1,5 +1,5 @@
 /**
- * The school repairs of 2026-10-10, each held by the behaviour it fixed: the term's coursework reaches its
+ * The school repairs of 2026-10-10, each held by the behavior it fixed: the term's coursework reaches its
  * evaluation, a piece shown again standing at its second band; a run played after its term's evaluation is judged at
  * the next, once; the craft a call or a night grows is kept in the development history; and the third year's solo
  * showing is judged and recorded.

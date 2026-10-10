@@ -44,10 +44,10 @@ export function parseSubject(key: string): Subject | undefined {
  * `refType` and `refId` are declared on five record shapes — a decision, a
  * notification, a ledger transaction, a scheduled item and a calendar entry.
  * The engine writes four on decisions: `'account'`, which has a look;
- * `'unclaimed-notice'`, whose id is the account's, so it opens the account
+ * `'unclaimed-notice'`, whose id is the account’s, so it opens the account
  * (from 2026-10-10; until then it opened nothing); and `'return'` and
  * `'us-status'`, which have no look, their decision routing to Papers
- * instead. An older save carries the film side's `'project'`, `'audition'`
+ * instead. An older save carries the film side’s `'project'`, `'audition'`
  * and `'property'`, none of which has a look in this build. This said until
  * 2026-10-10 that nothing in the engine wrote one.
  *

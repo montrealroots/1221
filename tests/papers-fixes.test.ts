@@ -1,5 +1,5 @@
 /**
- * The Papers repairs of 2026-10-10, each held by the behaviour it fixed: a status isn't reported lost with its paper;
+ * The Papers repairs of 2026-10-10, each held by the behavior it fixed: a status isn't reported lost with its paper;
  * OPT applied for answers the status's decision, which offers the standard filing first and premium by name; a
  * dismissed student's status ends fifteen days from the dismissal; and the week's work-study is read as work.
  */

@@ -10,18 +10,18 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `bank.add_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `journey-money.test.ts` `payments.test.ts` | Your Bank |
+| `bank.add_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `journey-money.test.ts` `money-fixes.test.ts` `payments.test.ts` | Your Bank |
 | `bank.arrange_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `bank-fees.test.ts` `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.borrow` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.break_term` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-money.test.ts` | Your Bank |
-| `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
+| `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.cancel_scheduled` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
 | `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
 | `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `lending.test.ts` | Your Bank |
+| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `lending.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.debit_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
 | `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
-| `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` | Your Bank |
+| `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.open_term` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.pay_collections` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` | Your Bank |
 | `bank.reactivate` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
@@ -65,12 +65,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `card.redeem_rewards` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` `journey-money.test.ts` | Your Bank |
 | `card.refund_credit` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `interest.test.ts` | Your Bank |
 | `card.report` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
-| `card.request_hardship` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
+| `card.request_hardship` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `money-fixes.test.ts` | Your Bank |
 | `card.request_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
 | `card.set_auto_raise` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
 | `card.set_everyday` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `journey-money.test.ts` `several-cards.test.ts` | Your Bank |
 | `card.set_over_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-money.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-money.test.ts` `money-fixes.test.ts` `several-cards.test.ts` | Your Bank |
 
 ## cash
 
@@ -91,7 +91,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `idreplace.test.ts` | Passports And ID |
 | `documents.replace_license` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-life.test.ts` | Passports And ID |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-life.test.ts` `papers-fixes.test.ts` | Passports And ID |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 
@@ -124,15 +124,15 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
-| `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Cover, Benefits And Returns |
-| `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Cover, Benefits And Returns |
+| `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `life-fixes.test.ts` `therapy.test.ts` | Cover, Benefits And Returns |
+| `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
 
 ## life
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `fitness.test.ts` `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
-| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
+| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `life-fixes.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## pension
 
@@ -155,8 +155,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
-| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `attributes-complete.test.ts` `engagement.test.ts` `genre-coverage.test.ts` | You As An Actor |
+| `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
+| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `attributes-complete.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
 
 ## school
 
@@ -173,9 +173,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | Drama School |
-| `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` `traits-connected.test.ts` | Drama School |
-| `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
-| `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `traits-connected.test.ts` | Drama School |
+| `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
@@ -201,4 +201,4 @@ Each command the player can run: the engine file that handles it, the screens th
 | `world.dismiss_decision` | `src/engine/world/world.ts` | `Home.tsx` | `smoke.test.ts` | What Needs You |
 | `world.mark_read` | `src/engine/world/world.ts` | `Home.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | What Needs You |
 | `world.set_preferences` | `src/engine/world/world.ts` | `TimeControls.tsx` `game-context.tsx` | `plans.test.ts` `tutorial.test.ts` | The Clock |
-| `world.take_decision_action` | `src/engine/world/world.ts` | `Home.tsx` | `smoke.test.ts` | What Needs You |
+| `world.take_decision_action` | `src/engine/world/world.ts` | `Home.tsx` | `life-fixes.test.ts` `papers-fixes.test.ts` `smoke.test.ts` | What Needs You |

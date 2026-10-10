@@ -1,5 +1,5 @@
 /**
- * The life and health repairs of 2026-10-10, each held by the behaviour it fixed: a medical bill unpaid when due is
+ * The life and health repairs of 2026-10-10, each held by the behavior it fixed: a medical bill unpaid when due is
  * owed as debt and not read as settled; a therapy session slept through is missed, not paid; switching treatment on
  * pays the month's care or lapses; Look After is refused from a hospital bed and a workout with the flu; a decision
  * acted on once isn't acted on again; an injury at work pays workers' compensation; a starved body's end isn't
