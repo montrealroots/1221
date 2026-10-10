@@ -19,12 +19,14 @@
  *   would take (C93), and in Britain next month's interest (C44).
  * - **The year** (A100, A160): interest earned and the tax the bank took,
  *   and every fee paid, bank and card, by kind.
- * - **Alerts** (A147): the current account under a line the holder sets, a
+ * - **Alerts** (A147): each current account under a line the holder sets (the primary alone until 2026-10-10), an
+ *   account short for a payment coming (`systems/obligations.ts`), a
  *   payment out over one, and a statement ready. A bank's app sets the
  *   statement alert on and leaves the others for the holder to set.
  */
 
 import type { Simulation } from '../core/simulation';
+import { accountAlerts } from './obligations';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency } from '../core/money';
@@ -369,8 +371,14 @@ export function apyOf(rate: number, creditsPerYear = 12): number {
 // ---------------------------------------------------------------------------
 
 export interface AlertSettings {
-  /** Tell them when the current account ends a day under this; absent, off. */
+  /** Tell them when a current account ends a day under this, each of them from 2026-10-10 (the primary alone until then); absent, off. */
   lowBalance?: Money;
+  /** The accounts told they're under the line, until each is back above it (`accountAlerts`). */
+  lowSentFor?: string[];
+  /** Tell them when an account can't cover a payment due from it in the next days (`systems/obligations.ts`); absent, on. */
+  upcoming?: boolean;
+  /** The payments already told of as short, each once. */
+  warned?: string[];
   /** Tell them of any payment out of the current account or onto the card over this; absent, off. */
   largePayment?: Money;
   /**
@@ -380,7 +388,7 @@ export interface AlertSettings {
    * wanted them in a played life, 117 of 305 notices.
    */
   statements: boolean;
-  /** Whether the low-balance alert has fired since the balance last stood above the line. */
+  /** Whether the low-balance alert had fired for the primary account: a save from before 2026-10-10, read into `lowSentFor` once. */
   lowSent?: boolean;
   /** The last transaction the large-payment alert has looked at. */
   seenUpTo?: number;
@@ -399,16 +407,11 @@ export function statementReady(sim: Simulation, person: Person, account: Account
 export function registerStatements(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.alerts', (_event, { sim: s }) => {
     const person = s.player;
+    // Each current account's low line, and each one short for a payment coming (`accountAlerts`, from 2026-10-10).
+    accountAlerts(s, person);
     const alerts = person.alerts;
     if (!alerts) return;
     const cur = saveCurrency(s.universe);
-    const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (alerts.lowBalance !== undefined && current) {
-      if (current.balance < alerts.lowBalance && !alerts.lowSent) {
-        alerts.lowSent = true;
-        s.notify({ category: 'bank', title: 'Low Balance', body: `${current.name} is down to ${formatMoney(current.balance, cur)}, under the ${formatMoney(alerts.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
-      } else if (current.balance >= alerts.lowBalance) alerts.lowSent = false;
-    }
     const list = s.universe.transactions as LedgerTransaction[];
     const from = Math.min(alerts.seenUpTo ?? list.length, list.length);
     if (alerts.largePayment !== undefined) {
@@ -426,7 +429,7 @@ export function registerStatements(sim: Simulation): void {
     alerts.seenUpTo = list.length;
   });
 
-  sim.onCommand<{ lowBalance?: Money | null; largePayment?: Money | null; statements?: boolean }, { alerts: AlertSettings }>('bank.set_alerts', (p, { sim: s }) => {
+  sim.onCommand<{ lowBalance?: Money | null; largePayment?: Money | null; statements?: boolean; upcoming?: boolean }, { alerts: AlertSettings }>('bank.set_alerts', (p, { sim: s }) => {
     const person = s.player;
     const next: AlertSettings = { ...alertsOf(person) };
     const line = (v: unknown, name: string): Money | undefined => {
@@ -435,7 +438,8 @@ export function registerStatements(sim: Simulation): void {
       if (!(n >= 0)) throw new CommandError(`Set the ${name} as an amount, or turn it off.`);
       return n;
     };
-    if ('lowBalance' in p) { next.lowBalance = line(p.lowBalance, 'low balance'); next.lowSent = false; }
+    if ('lowBalance' in p) { next.lowBalance = line(p.lowBalance, 'low balance'); next.lowSentFor = []; delete next.lowSent; }
+    if (p.upcoming !== undefined) next.upcoming = Boolean(p.upcoming);
     if ('largePayment' in p) next.largePayment = line(p.largePayment, 'large payment');
     if (p.statements !== undefined) next.statements = Boolean(p.statements);
     next.seenUpTo = (s.universe.transactions as LedgerTransaction[]).length;

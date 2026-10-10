@@ -175,7 +175,7 @@ describe('alerts', () => {
     const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'st-low');
     const answer = sim.execute({ kind: 'bank.set_alerts', payload: { lowBalance: current(sim).balance + 1_000_00 } });
     expect(answer.ok, answer.error).toBe(true);
-    const lows = () => sim.universe.notifications.filter((n) => n.title === 'Low Balance').length;
+    const lows = () => sim.universe.notifications.filter((n) => n.title.startsWith('Low Balance')).length;
     sim.advanceBy(3 * MS_DAY);
     expect(lows()).toBe(1);
     // Still under: no second alert.

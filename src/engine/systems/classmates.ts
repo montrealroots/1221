@@ -299,6 +299,15 @@ function studyEvening(person: Person, i: number, day: SchoolDate, returning = fa
   return undefined;
 }
 
+/**
+ * The work you share with a classmate: open scenes with them as your partner, the least secure lines first (from
+ * 2026-10-10, `STUDY_KIND`). Running lines with someone works on the scene the two of you are in, not another.
+ */
+export function sharedWork(sim: Simulation, person: Person, mate: number): Assignment[] {
+  const cw = courseworkOf(sim, person);
+  return (cw?.assignments ?? []).filter((a) => (a.status === 'open' || a.status === 'revising') && a.sceneId && a.partner === mate).sort((x, y) => x.prep.memorization - y.prep.memorization);
+}
+
 /** The answers a moment takes. */
 export const CHOICES: Record<MomentKind, readonly { id: string; label: string }[]> = {
   disagreement: [{ id: 'hold', label: 'Keep Your Reading' }, { id: 'theirs', label: 'Try Theirs' }, { id: 'both', label: 'Try Both Next Rehearsal' }],
@@ -343,7 +352,7 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
 }
 
 export function registerClassmates(sim: Simulation): void {
-  sim.onCommand<{ momentId: string; choice: string }, { done: string }>('school.respond', (p, { sim: s }) => {
+  sim.onCommand<{ momentId: string; choice: string; assignmentId?: string }, { done: string }>('school.respond', (p, { sim: s }) => {
     const person = s.player;
     const cw = courseworkOf(s, person);
     const m = cw ? momentsOf(cw).find((x) => x.id === p?.momentId) : undefined;
@@ -383,8 +392,13 @@ export function registerClassmates(sim: Simulation): void {
       }
       case 'study': {
         if (choice === 'no') { remember(s, mate, 'Asked you to run lines; you couldn’t'); return { done: `You told ${f} you can’t.` }; }
-        s.schedule({ at: m!.when!, kind: STUDY_KIND, label: `Running Lines With ${f}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: CLASS.study.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, mate: m!.mate, momentId: m!.id } });
-        return { done: 'On your calendar.' };
+        // The scene you share with them, the one named or the least secure; none shared, their lines (from 2026-10-10).
+        const shared = sharedWork(s, person, m!.mate);
+        const chosen = p?.assignmentId ? shared.find((a) => a.id === p.assignmentId) : shared[0];
+        if (p?.assignmentId && !chosen) throw new CommandError(`That isn’t a scene you share with ${f}.`);
+        s.schedule({ at: m!.when!, kind: STUDY_KIND, label: `Running Lines With ${f}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: CLASS.study.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, mate: m!.mate, momentId: m!.id, ...(chosen ? { assignmentId: chosen.id } : {}) } });
+        const what = chosen ? sceneById(chosen.sceneId ?? '')?.play ?? 'your scene' : undefined;
+        return { done: what ? `On your calendar: ${what}, with ${f}.` : `On your calendar. You share no open scene with ${f}, so it’s their lines you’ll run.` };
       }
       case 'help': {
         if (choice === 'no') { remember(s, mate, 'Asked for your help; you couldn’t'); return { done: `You told ${f} you can’t.` }; }
@@ -462,13 +476,22 @@ export function registerClassmates(sim: Simulation): void {
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${first(mate)} Waited For You`, body: 'You didn’t come to run lines. They’ll remember it.', importance: 55, route: '/workspace/school' });
       return;
     }
-    // Your open work with the least secure lines, moved as a step of learning lines would, without training a skill.
-    const cw = courseworkOf(s, person)!;
-    const open = cw.assignments.filter((a) => (a.status === 'open' || a.status === 'revising') && a.sceneId).sort((x, y) => x.prep.memorization - y.prep.memorization)[0];
+    // The scene shared with them: the one chosen when it was agreed, if it's still open, else another shared one; moved
+    // as a step of learning lines would, without training a skill. Until 2026-10-10 it was whichever of your scenes had
+    // the least secure lines, often one with somebody else.
+    const shared = sharedWork(s, person, Number(item.payload.mate));
+    const open = shared.find((a) => a.id === item.payload.assignmentId) ?? shared[0];
+    const before = open?.prep.memorization ?? 0;
     if (open) open.prep.memorization = clamp01(open.prep.memorization + CLASS.study.memorization * (1 - open.prep.memorization));
     exerts(person, WORK.met.desk, CLASS.study.minutes / 60);
     move(person, mate, CLASS.study.kept.trust, CLASS.study.kept.bond);
     remember(s, mate, 'Ran lines with you');
+    if (person.id === s.universe.playerId) {
+      const pct = (x: number) => `${Math.round(x * 100)}%`;
+      s.notify({ category: 'school', title: `Ran Lines With ${first(mate)}`, body: open
+        ? `${sceneById(open.sceneId ?? '')?.play ?? 'Your scene'}: your lines went from ${pct(before)} to ${pct(open.prep.memorization)}.`
+        : `You share no open scene with ${first(mate)}, so you ran theirs: it helped them, and nothing of yours moved.`, importance: 30, route: '/workspace/school' });
+    }
   });
 }
 

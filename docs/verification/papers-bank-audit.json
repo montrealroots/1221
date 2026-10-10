@@ -1,0 +1,1358 @@
+{
+  "features": [
+    {
+      "area": "papers/passport",
+      "feature": "Apply for or renew a passport, standard or expedited",
+      "entry": "Papers > Passport tab > 'Apply For One'/'Renew It' and 'Apply Faster'/'Renew It Faster' (src/ui/papers/Documents.tsx:107-110)",
+      "commands": [
+        "documents.apply_passport",
+        "scheduled documents.decided"
+      ],
+      "prereqs": "passportRuleFor (country office known), no pending passport, expedite offered / renewal-only rule (documents.ts:406-413)",
+      "states": [
+        "pending",
+        "valid",
+        "cancelled (replaced)",
+        "lost"
+      ],
+      "failurePaths": "refusal disables button with title (UI uses passportRefusal); bank can't cover -> CommandError before any write (documents.ts:317)",
+      "recovery": "none: a pending application can't be withdrawn or corrected",
+      "stateRead": "person.citizenshipId, documents, birthInstant",
+      "stateWritten": "person.documents (pending passport), bank via payFromBank, schedule documents.decided",
+      "consumers": "passportOf -> mayEnter (display only); photoIdOf -> bank.switch / lending new bank (bankmoves.ts:95, lending.ts:1130); idCardRefusal (Irish passport card)",
+      "notifications": "'<name> Issued' on decision (documents.ts:505)",
+      "saveLoad": "documents on person and the scheduled item persist",
+      "source": "content/passports.ts per-office sources, shown in Fine print (Documents.tsx:114)",
+      "tests": "tests/documents.test.ts, tests/commands-kept.test.ts, tests/journey-life.test.ts",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "No way to withdraw a pending passport application; the fee is spent and the only path is to wait.",
+          "evidence": "src/engine/systems/documents.ts:308-325",
+          "suggestedFix": "Leave as is and say so, or add a cancel that refunds nothing."
+        }
+      ]
+    },
+    {
+      "area": "papers/passport",
+      "feature": "Report a passport, license or ID card lost or stolen",
+      "entry": "Papers > Passport tab > document table 'Report Lost' / 'Report Stolen' (Documents.tsx:63-65)",
+      "commands": [
+        "documents.report_lost"
+      ],
+      "prereqs": "document valid and of a LOSABLE kind (documents.ts:47, 327-330)",
+      "states": [
+        "valid -> lost (stolen flag)"
+      ],
+      "failurePaths": "not held / not losable -> CommandError",
+      "recovery": "replace (license, ID card) or apply for a new passport; no 'found it' undo",
+      "stateRead": "documents",
+      "stateWritten": "doc.status='lost', doc.stolen; for a passport every valid doc with passportId === it -> 'cancelled' (documents.ts:334)",
+      "consumers": "policeReportRefusal, licenseReplaceRefusal, idReplaceRefusal, photoIdOf (bank onboarding)",
+      "notifications": "toast only",
+      "saveLoad": "persisted on person",
+      "source": "none cited for cancelling what was issued on the passport",
+      "tests": "tests/documents.test.ts, tests/idreplace.test.ts, tests/papers-fixes.test.ts, tests/coverage-gaps-papers.test.ts",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Reporting the passport lost cancels the F-1 student visa, because the F-1 carries the starting passport's passportId. The file's own rule says a visa is a status that losing its paper doesn't end. A studying international student's Work tab then lists the F-1 as 'Canceled' while 'Your US Status' still reads 'Held', and a new passport doesn't restore it. Probe: report_lost on passport -> f1.status 'cancelled'.",
+          "evidence": "src/engine/systems/documents.ts:334 vs documents.ts:43-47; F-1 linked to passport at documents.ts:478",
+          "suggestedFix": "Restrict the cascade to kind 'authorization' (as issuePassport does at documents.ts:424), or record the visa foil as lost while F-1 status stays valid."
+        },
+        {
+          "severity": "low",
+          "problem": "'Report Lost' is destructive, takes one click, has no confirm and can't be undone ('found it'). A misclick cancels the passport and whatever was issued on it.",
+          "evidence": "src/ui/papers/Documents.tsx:64",
+          "suggestedFix": "A confirm step, or a short-lived undo."
+        }
+      ]
+    },
+    {
+      "area": "papers/passport",
+      "feature": "File a police report for a lost or stolen document",
+      "entry": "Documents table 'File A Police Report' (Documents.tsx:66)",
+      "commands": [
+        "documents.police_report"
+      ],
+      "prereqs": "doc lost, no report yet, city in ONLINE_REPORTS and kind/theft allowed (documents.ts:375-385)",
+      "states": [
+        "lost -> lost+policeReport"
+      ],
+      "failurePaths": "refusal shown as disabled title (UI uses policeReportRefusal)",
+      "recovery": "n/a",
+      "stateRead": "doc.stolen, person.currentLocationId",
+      "stateWritten": "doc.policeReport",
+      "consumers": "licenseReplaceFee (NY stolen license free, identity.ts:71-75)",
+      "notifications": "toast",
+      "saveLoad": "persisted",
+      "source": "each force's page, comment documents.ts:347-362",
+      "tests": "tests/coverage-gaps-papers.test.ts, tests/journey-life.test.ts",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Replacing an ID card copies the lost card's stolen flag and policeReport onto the new card. License replacement clears them; ID card replacement doesn't. If the new card is later lost (not stolen), it is still flagged stolen and policeReportRefusal answers 'A report is filed.' Probe confirmed: fresh.stolen=true; after a new plain loss, police refusal='A report is filed.'",
+          "evidence": "src/engine/systems/identity.ts:109 (vs identity.ts:149, which clears stolen/policeReport)",
+          "suggestedFix": "Spread with stolen: undefined, policeReport: undefined as replace_license does; test a second loss."
+        }
+      ]
+    },
+    {
+      "area": "papers/id",
+      "feature": "Get a state/provincial ID card",
+      "entry": "Papers > Passport tab > Your ID > 'Get <card>' (Documents.tsx:154-157)",
+      "commands": [
+        "documents.apply_idcard"
+      ],
+      "prereqs": "jurisdiction issues one; citizenship, age and passport-book rules; no license here; none in force or pending (identity.ts:35-48)",
+      "states": [
+        "valid immediately (no pending)"
+      ],
+      "failurePaths": "refusal disables the button; bank can't cover -> CommandError before write",
+      "recovery": "replace when lost",
+      "stateRead": "documents, location, birthInstant",
+      "stateWritten": "documents (idcard, realId for US), bank",
+      "consumers": "photoIdOf (bank onboarding)",
+      "notifications": "toast only",
+      "saveLoad": "persisted",
+      "source": "content/identity.ts",
+      "tests": "tests/commands-kept.test.ts only",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "A US ID card is issued to a non-citizen F-1 student with no check for lawful presence or for an SSN or SSA ineligibility letter (CT DMV asks for one). SSN and ITIN are not modeled anywhere in src.",
+          "evidence": "src/engine/systems/identity.ts:35-48; grep SSN/ITIN in src finds only a content note at src/engine/content/licenses.ts:288",
+          "suggestedFix": "Model an SSN, issued with on-campus work authorization, or note the omission in the card's look or Fine print."
+        }
+      ]
+    },
+    {
+      "area": "papers/id",
+      "feature": "Replace a lost ID card or license",
+      "entry": "Documents table 'Replace It' (Documents.tsx:67-68)",
+      "commands": [
+        "documents.replace_idcard",
+        "documents.replace_license",
+        "scheduled documents.idcard_arrives"
+      ],
+      "prereqs": "lost; issuer rule known; lives there, or replaced by mail (identity.ts:61-87)",
+      "states": [
+        "lost -> cancelled; new pending -> valid"
+      ],
+      "failurePaths": "UI uses the refusal functions; bank can't cover -> CommandError before writes",
+      "recovery": "n/a",
+      "stateRead": "documents, location",
+      "stateWritten": "old doc cancelled, new pending doc, schedule",
+      "consumers": "photoIdOf",
+      "notifications": "none when the card arrives (identity.ts:113-120)",
+      "saveLoad": "persisted",
+      "source": "content/replacements.ts per-issuer URLs",
+      "tests": "tests/idreplace.test.ts, tests/coverage-gaps-papers.test.ts; no test names documents.idcard_arrives",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "The replacement card or license arrives silently: the scheduled handler flips it valid without notifying, unlike the passport's 'Issued'.",
+          "evidence": "src/engine/systems/identity.ts:113-120",
+          "suggestedFix": "Notify the player on arrival."
+        }
+      ]
+    },
+    {
+      "area": "papers/entry",
+      "feature": "Going Abroad: what a country asks of the citizenship",
+      "entry": "Papers > Passport tab > Going Abroad select (Documents.tsx:120-139)",
+      "commands": [],
+      "prereqs": "none (read-only)",
+      "states": [],
+      "failurePaths": "an unknown rule is said",
+      "recovery": "n/a",
+      "stateRead": "documents, citizenship",
+      "stateWritten": "none",
+      "consumers": "display only",
+      "notifications": "none",
+      "saveLoad": "n/a",
+      "source": "content/entry.ts, ENTRY_AS_OF shown",
+      "tests": "tests/documents.test.ts",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "residenceRefusal is exported and documented as the rule for living in a country (an F-1 lets a student live in the US), but nothing has called it since the journeys went. It is a declared rule nothing reads.",
+          "evidence": "src/engine/systems/documents.ts:225-245 (grep: no callers)",
+          "suggestedFix": "Delete it, or have the residence and status UI read it."
+        }
+      ]
+    },
+    {
+      "area": "papers/work",
+      "feature": "Apply for OPT, standard or premium; its approval and its days without work",
+      "entry": "Papers > Work tab > OPT 'Apply For OPT' / 'Apply With Premium Processing' (Documents.tsx:195-198); also the actions of the 'Your US Status Is Ending' decision (permission.ts:217)",
+      "commands": [
+        "documents.apply_opt",
+        "scheduled documents.permission",
+        "scheduled documents.opt_week"
+      ],
+      "prereqs": "not a US citizen; holds an F-1; not dismissed; from 90 days before to 60 days after programEnd; no earlier OPT permit (permission.ts:75-86)",
+      "states": [
+        "pending -> valid (12 months) -> cancelled with endedAt after >90 idle days"
+      ],
+      "failurePaths": "refusal disables both buttons; bank can't cover -> CommandError before writes (permission.ts:154-156)",
+      "recovery": "none after cancellation (any OPT permit refuses a new application)",
+      "stateRead": "F-1 doc, school.standing/endedAt, documents",
+      "stateWritten": "permit doc, idleDays, endedAt, us-status decisions resolved, schedules",
+      "consumers": "usStatusEnds/statusCheckAt, mayEnter (permit as visa), Work tab",
+      "notifications": "'OPT Approved', 'OPT Ended'",
+      "saveLoad": "persisted; US status re-armed on load (src/engine/index.ts:277)",
+      "source": "WORK_RULES.opt.source shown in Fine (Documents.tsx:199)",
+      "tests": "tests/permission.test.ts (window, premium, 90 days, status). No test for OPT being refused after a withheld degree or a dismissal.",
+      "gaps": [
+        {
+          "severity": "high",
+          "problem": "A student whose degree is withheld (last term on warning; schoolEnded 'withheld') is offered and granted OPT, which 'follows a degree completed', and gets the full 60-day F-1 grace. Only 'dismissed' is refused OPT and given the shorter grace. Probe: withheld -> optRefusal undefined, apply_opt ok=true, grace 60 days; dismissed -> refused, 15 days.",
+          "evidence": "src/engine/systems/permission.ts:79 (only 'dismissed'), permission.ts:64 and :123 (programEnd and grace only for 'dismissed'); src/engine/systems/school.ts:115-121",
+          "suggestedFix": "Treat 'withheld' as no completed degree: refuse OPT, end the program at endedAt, and choose its grace deliberately; add a test."
+        },
+        {
+          "severity": "medium",
+          "problem": "After the degree there is no work and no way home. Every international graduate's OPT ends after 90 idle days with no grace, and their status then ends while they are still in the US. They are out of status with no way to recover. The decision offers no move home, yet the header comment still says the person is 'offered the move home' (present tense, falsified).",
+          "evidence": "src/engine/systems/permission.ts:99-101 (claim) vs permission.ts:215-217 (actions are only OPT); permission.ts:224-227 (out of status)",
+          "suggestedFix": "Add a 'leave the US' / depart action or an end-of-life choice, or put the comment in the past tense and say the dead end on the Work tab."
+        }
+      ]
+    },
+    {
+      "area": "papers/work",
+      "feature": "US status after the program: grace, the 'Status Is Ending' decision, out of status",
+      "entry": "Scheduled; shown on the Work tab as 'Your US Status' (Documents.tsx:186)",
+      "commands": [
+        "scheduled documents.us_status"
+      ],
+      "prereqs": "holds an F-1, school ended, in the US",
+      "states": [
+        "held",
+        "ending (decision)",
+        "out of status (person.usOutOfStatus, F-1 cancelled)"
+      ],
+      "failurePaths": "n/a",
+      "recovery": "OPT before the status ends; none after",
+      "stateRead": "school.standing, documents, location",
+      "stateWritten": "usOutOfStatus, F-1 status, decisions",
+      "consumers": "health.lawfullyPresent (health.ts:308), authorizationFor (ESTA)",
+      "notifications": "decision 'Your US Status Is Ending'; 'Out Of Status'",
+      "saveLoad": "re-armed on load if missing (index.ts:277)",
+      "source": "8 CFR 214.2(f)(5)(iv), INA 217(a)(7), 222(g) cited in comments",
+      "tests": "tests/permission.test.ts; no test names documents.us_status",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Withdrawal from school isn't modeled: no command withdraws or takes a leave. Yet the dismissal grace borrows the 15 days 8 CFR 214.2(f)(5)(iv) gives an authorized withdrawal. Only a dismissal, a graduation or a withheld degree ends school.",
+          "evidence": "src/engine/systems/school.ts:115-121 (Standing has no withdrawn); src/engine/systems/permission.ts:120-123",
+          "suggestedFix": "Add school.withdraw (authorized early withdrawal: the program ends that day, with a 15-day grace and consequences for Yale Health and aid), or say on the Work tab that withdrawal isn't modeled."
+        },
+        {
+          "severity": "low",
+          "problem": "SLATE's own reading gives a dismissal for academic failure 15 days' grace; a SEVIS termination for failing to maintain status gives none. The code says it is SLATE's reading but cites no source for the choice.",
+          "evidence": "src/engine/systems/permission.ts:120-123",
+          "suggestedFix": "Cite the DSO/SEVP guidance used, or make dismissal zero-grace."
+        },
+        {
+          "severity": "low",
+          "problem": "Graduating doesn't reschedule the status check; only a dismissal or a withheld degree does. Graduates rely on the check booked at life start for programEnd. If that check fires while the person is still 'studying', it returns without rebooking.",
+          "evidence": "src/engine/systems/school.ts:1182; src/engine/systems/permission.ts:118 and :202-204",
+          "suggestedFix": "Call scheduleUsStatus on every schoolEnded transition."
+        }
+      ]
+    },
+    {
+      "area": "papers/work",
+      "feature": "Work authorization while studying (on-campus vs off-campus), SSN/ITIN",
+      "entry": "No control on Papers: work-study shifts and the Summer Cabaret (school screen)",
+      "commands": [
+        "school.take_shift and the like (not on Papers)"
+      ],
+      "prereqs": "school not ended (school.ts:876, 968, 987)",
+      "states": [],
+      "failurePaths": "nothing reads immigration status",
+      "recovery": "n/a",
+      "stateRead": "school.standing only",
+      "stateWritten": "earnings.workStudy",
+      "consumers": "tax return, Medicaid work test",
+      "notifications": "n/a",
+      "saveLoad": "n/a",
+      "source": "Yale Bulletin for hours; no F-1 rule cited",
+      "tests": "none for F-1 work limits",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "No work path reads the F-1. All work offered is on campus (200 hours a year, well under 20 a week), so nothing goes wrong today. But no rule would refuse off-campus work, CPT isn't modeled, and nothing says so. No SSN or ITIN exists, so on-campus payroll and the tax return go ahead for an F-1 student who has neither.",
+          "evidence": "src/engine/systems/school.ts (no citizen/F-1 read; grep), src/engine/content/school.ts:258",
+          "suggestedFix": "Note the omission on the Work tab, or model the SSN application tied to on-campus employment."
+        },
+        {
+          "severity": "medium",
+          "problem": "Adjacent (taxreturn, outside this fork's scope): a non-citizen whose only income is a taxable living-cost scholarship owes no US return, because owesUsReturn ignores scholarship. Nothing treats an F-1 as a nonresident (1040-NR, Form 8843, FICA exemption).",
+          "evidence": "src/engine/systems/taxreturn.ts:455-462",
+          "suggestedFix": "Count scholarship in owesUsReturn; decide nonresident treatment for F-1 years."
+        }
+      ]
+    },
+    {
+      "area": "papers/residence",
+      "feature": "Mexican temporary residence: apply, renew, settle (permanent)",
+      "entry": "Papers > Work tab > Residence Abroad table 'Apply' / 'Renew' / 'Settle' (Documents.tsx:234-237)",
+      "commands": [
+        "documents.residence",
+        "documents.renew_residence",
+        "documents.settle"
+      ],
+      "prereqs": "routeRefusal (MX solvency); renewal only within the last 30 days; settling after 4 years continuous (residence.ts:107-172, 204-209)",
+      "states": [
+        "valid immediately; renewed; cancelled on settle; permanent"
+      ],
+      "failurePaths": "bank can't cover -> CommandError before writes",
+      "recovery": "a lapsed card: apply again (continuity breaks)",
+      "stateRead": "bank balance, earnings months, documents",
+      "stateWritten": "documents (visa kind with route), bank",
+      "consumers": "residenceIn -> continuousSince -> settleRefusal / naturalizeRefusal; nothing else reads MX residence (the UI says so)",
+      "notifications": "toast only; nothing before the card runs out",
+      "saveLoad": "persisted",
+      "source": "MEXICAN_RESIDENCE, with guideline and law dates in the comment; no source line in the Fine print",
+      "tests": "tests/residence.test.ts, tests/naturalize.test.ts, tests/commands-kept.test.ts",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "'Renew' shows for any Mexican temporary card held, but the engine refuses it outside the card's last 30 days. The UI never asks for the refusal, so for most of the year the button only errors.",
+          "evidence": "src/ui/papers/Documents.tsx:237 vs src/engine/systems/residence.ts:209",
+          "suggestedFix": "Export renewRefusal and disable the button with its reason, as the passport buttons do."
+        },
+        {
+          "severity": "medium",
+          "problem": "The player can buy Mexican residence while living in New Haven, having never been to Mexico, and it counts toward permanent residence and Mexican citizenship. Nothing asks for physical presence or a consular visit, and nothing warns before the card lapses. Mexico counts only residence actually lived there.",
+          "evidence": "src/engine/systems/residence.ts:174-190, 145-157; src/engine/systems/citizenship.ts:52-68",
+          "suggestedFix": "Require living in Mexico, or count only days spent there, for continuity; or remove the route while no life can move there."
+        }
+      ]
+    },
+    {
+      "area": "papers/residence",
+      "feature": "Naturalize (GB, MX, US)",
+      "entry": "Residence Abroad 'Naturalize' (Documents.tsx:235)",
+      "commands": [
+        "documents.naturalize",
+        "scheduled citizenship.decided"
+      ],
+      "prereqs": "naturalizeRefusal (citizenship.ts:52-73)",
+      "states": [
+        "naturalizing -> naturalized"
+      ],
+      "failurePaths": "bank can't cover -> CommandError",
+      "recovery": "none; an application can't be withdrawn",
+      "stateRead": "residence docs",
+      "stateWritten": "person.naturalizing, person.naturalized",
+      "consumers": "citizenOf (UC, health, ID cards, OPT refusal, tax)",
+      "notifications": "'A Citizen'",
+      "saveLoad": "persisted",
+      "source": "NATURALIZE table, research-citizenship.json; processing time is SLATE's",
+      "tests": "tests/naturalize.test.ts, tests/commands-kept.test.ts; no test names citizenship.decided",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "The decision grants citizenship without checking eligibility again: residence that lapsed or was cancelled during the 56-243 days still gets the grant.",
+          "evidence": "src/engine/systems/citizenship.ts:91-98",
+          "suggestedFix": "Re-check residenceIn at the decision and refuse (fee kept) with a notice."
+        }
+      ]
+    },
+    {
+      "area": "papers/visits",
+      "feature": "Interview / biometrics visits for pending applications (legacy saves only)",
+      "entry": "No control: scheduled from saves made before 2026-10-09",
+      "commands": [
+        "scheduled documents.visit"
+      ],
+      "prereqs": "a doc with a visit",
+      "states": [
+        "kept -> decided; missed -> rebooked or cancelled"
+      ],
+      "failurePaths": "a miss ends the application",
+      "recovery": "one rebooking for UK home / Canada",
+      "stateRead": "present()",
+      "stateWritten": "doc.visit, status, readyAt",
+      "consumers": "documents.decided, permission",
+      "notifications": "done, missed, ended",
+      "saveLoad": "persisted",
+      "source": "8 CFR 103.2(b)(13)(ii), Home Office v14.0, canada.ca",
+      "tests": "tests/paper-visits.test.ts",
+      "gaps": []
+    },
+    {
+      "area": "health",
+      "feature": "Yale Health student cover and its end (dismissal/graduation/withheld)",
+      "entry": "Papers > Health > Your Cover (read-only stat)",
+      "commands": [
+        "scheduled: health.month",
+        "school term-begin billing (school.ts:2031)"
+      ],
+      "prereqs": "person.school present",
+      "states": [
+        "yale while studying",
+        "to 1 Aug after degree",
+        "to 1 Feb (fall leaver) or 1 Aug (spring leaver) after dismissal/withheld"
+      ],
+      "failurePaths": [
+        "no withdrawal standing exists (Standing = good|concern|warning|dismissed|graduated|withheld, school.ts:118)"
+      ],
+      "recovery": "marketplace/Medicaid enrollment within 60 days of lostAt",
+      "stateRead": [
+        "school.standing",
+        "school.endedAt"
+      ],
+      "stateWritten": [
+        "health.lostAt",
+        "health.covered"
+      ],
+      "consumers": [
+        "coverOn",
+        "planOf",
+        "therapyRefusal",
+        "shareOf"
+      ],
+      "notifications": [
+        "Your Health Cover Ended"
+      ],
+      "saveLoad": "derived from school fields; persisted",
+      "source": "SLATE's reading of Yale Health billed by term (health.ts:188-191)",
+      "tests": [
+        "tests/school-journey-gaps.test.ts:150-161"
+      ],
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "A dismissal in January after the spring term has begun (its Yale Health premium billed on 4 Jan) ends cover on 1 Feb: month 1 is treated as the fall term. Probe: endedAt 2027-01-20 -> yaleUntil 2027-02-01.",
+          "evidence": "src/engine/systems/health.ts:206; src/engine/content/school.ts:92; src/engine/systems/school.ts:2031",
+          "suggestedFix": "Decide fall vs spring from the last term billed (termsBegun/termStart), not the calendar month."
+        },
+        {
+          "severity": "low",
+          "problem": "Withdrawal (voluntary leave) is not modeled: no standing or command, so cover, F-1 status and the SNAP/UI student tests end only via dismissal or graduation.",
+          "evidence": "src/engine/systems/school.ts:118-121",
+          "suggestedFix": "Add a 'withdrawn' standing with its own Yale Health end, SEVIS grace and student-rule exits, or record its absence in docs/UNBITTEN.md."
+        }
+      ]
+    },
+    {
+      "area": "health",
+      "feature": "Enroll in Medicaid/HUSKY D/Essential Plan/marketplace; drop a plan",
+      "entry": "Papers > Health > The Marketplace: Enroll / Drop The Plan",
+      "commands": [
+        "health.enroll",
+        "health.drop",
+        "scheduled: health.month"
+      ],
+      "prereqs": "BENEFIT_STATE for home; programFor income test + medicaidStatus; marketplace needs lawfullyPresent and open enrollment or 60 days after lostAt",
+      "states": [
+        "pending (from next month)",
+        "active",
+        "ended (until)"
+      ],
+      "failurePaths": [
+        "outside window",
+        "out of status",
+        "premium unpaid -> marketplace ends",
+        "renewal income/work test fails"
+      ],
+      "recovery": "re-enroll in window; special enrollment 60 days",
+      "stateRead": [
+        "earnings.months",
+        "usOutOfStatus",
+        "residence cards",
+        "health.lostAt"
+      ],
+      "stateWritten": [
+        "health.program",
+        "health.marketplace",
+        "health.premiums[year]",
+        "health.uncoveredInCalifornia"
+      ],
+      "consumers": [
+        "coverOn/planOf",
+        "taxreturn figuresFor (premium credit, CA mandate)"
+      ],
+      "notifications": [
+        "Your Marketplace Plan Has Ended",
+        "Your Public Cover Ended At Renewal",
+        "Your Health Cover Ended"
+      ],
+      "saveLoad": "person.health persisted",
+      "source": "45 CFR 155.305; Pub. L. 119-21 s71109; KFF/HealthCare.gov",
+      "tests": [
+        "tests/safetynet.test.ts",
+        "tests/medicaluis.test.ts",
+        "tests/commands-kept.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "mayEnroll ignores Yale Health: a covered student is offered Enroll and the engine accepts it (probe: New Haven student, cover=yale, health.enroll ok -> HUSKY D). On the marketplace path premiums are charged monthly while coverOn still returns 'yale', and the return gives the premium credit on those months though a student plan is minimum essential cover that bars it.",
+          "evidence": "src/engine/systems/health.ts:315; src/engine/systems/health.ts:480-483; src/engine/systems/taxreturn.ts:414",
+          "suggestedFix": "Refuse (or warn on) marketplace enrollment while coverOn==='yale', and exclude Yale-covered months from the premium credit."
+        },
+        {
+          "severity": "low",
+          "problem": "Retrying health.enroll before the plan's start re-enrolls: active() requires at>=from, so a pending plan isn't 'You're enrolled'; a second call can add a marketplace plan beside a pending program. The UI hides the button; the engine does not refuse.",
+          "evidence": "src/engine/systems/health.ts:184; src/engine/systems/health.ts:315; src/engine/systems/health.ts:1272-1276",
+          "suggestedFix": "Treat a plan whose until is undefined or later than now as enrolled regardless of from."
+        }
+      ]
+    },
+    {
+      "area": "health",
+      "feature": "Medical bills, debt, charity aid, denials and appeals",
+      "entry": "Papers > Health > Care And Its Bills: Appeal It / Apply For Assistance / Pay It Off",
+      "commands": [
+        "health.appeal",
+        "health.apply_aid",
+        "health.pay_bill",
+        "scheduled: health.bill",
+        "scheduled: health.appeal_decided"
+      ],
+      "prereqs": "appealRefusal / aidRefusal (UI uses both)",
+      "states": [
+        "due",
+        "paid",
+        "inDebt",
+        "denied->appealed->upheld/overturned",
+        "aid free/discount/refused/screened"
+      ],
+      "failurePaths": [
+        "unpaid at due -> medical debt account",
+        "reported after a year >= $500 outside NY/CA"
+      ],
+      "recovery": "appeal within 180 days; aid before due; pay debt",
+      "stateRead": [
+        "health.bills",
+        "medical debt account"
+      ],
+      "stateWritten": [
+        "bill fields",
+        "debt postings",
+        "health.debtSince/reported",
+        "credit record"
+      ],
+      "consumers": [
+        "credit.markRecord",
+        "UI table"
+      ],
+      "notifications": [
+        "A Claim Denied",
+        "A Medical Bill Went Unpaid",
+        "Appeal Upheld/Won",
+        "A Medical Debt Is On Your Record"
+      ],
+      "saveLoad": "persisted; bills array capped at 40",
+      "source": "KFF/HealthCare.gov (DENIALS), CHARITY.connecticut",
+      "tests": [
+        "tests/claims.test.ts",
+        "tests/life-fixes.test.ts",
+        "tests/safetynet.test.ts",
+        "tests/coverage-gaps-life.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "health.pay_bill draws only from person.primaryAccountId and refuses if that one account can't cover it, while bills are paid by payFromCurrent/payeeAccount; the appeal refund is gated on primaryAccountId though it posts to payeeAccount. With several banks the debt can't be paid from the account holding the money.",
+          "evidence": "src/engine/systems/health.ts:1375-1376; src/engine/systems/health.ts:1230",
+          "suggestedFix": "Use payFromCurrent/payeeAccount, or let the player pick the account."
+        },
+        {
+          "severity": "low",
+          "problem": "Bills are trimmed to the last 40; an unpaid bill, or one under a 60-day appeal, that falls off is never charged and its appeal outcome is silently dropped, because the scheduled handlers look the bill up by id.",
+          "evidence": "src/engine/systems/health.ts:1059; src/engine/systems/health.ts:1067; src/engine/systems/health.ts:1088; src/engine/systems/health.ts:1115",
+          "suggestedFix": "Trim only settled bills with no pending appeal."
+        }
+      ]
+    },
+    {
+      "area": "health",
+      "feature": "Therapy course (Yale Mental Health & Counseling)",
+      "entry": "Papers > Health > conditions: Begin A Course Of 8",
+      "commands": [
+        "health.therapy",
+        "scheduled: health.therapy_session"
+      ],
+      "prereqs": "therapyRefusal: therapist in town; Yale's only while coverOn==='yale'; depression; no course open",
+      "states": [
+        "course 0..8 sessions",
+        "missed -> rescheduled"
+      ],
+      "failurePaths": [
+        "absent -> held next week",
+        "unpaid -> billCare"
+      ],
+      "recovery": "another course",
+      "stateRead": [
+        "person.therapy",
+        "coverOn"
+      ],
+      "stateWritten": [
+        "person.therapy",
+        "chronic.depression removed on lift"
+      ],
+      "consumers": [
+        "health conditions"
+      ],
+      "notifications": [
+        "The Depression Has Lifted / The Course Is Done"
+      ],
+      "saveLoad": "persisted",
+      "source": "NICE NG222; NHS Talking Therapies",
+      "tests": [
+        "tests/therapy.test.ts",
+        "tests/life-fixes.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "Yale cover is checked only when a course starts; after dismissal/graduation ends Yale Health, the remaining Yale sessions continue free to the eighth.",
+          "evidence": "src/engine/systems/therapy.ts:67; src/engine/systems/therapy.ts:113-121",
+          "suggestedFix": "In the session handler, end or price the course when t.yale and coverOn !== 'yale'."
+        }
+      ]
+    },
+    {
+      "area": "health",
+      "feature": "Injury and workers' compensation",
+      "entry": "no control (scheduled); notifications route to Papers",
+      "commands": [
+        "scheduled: injury.comp",
+        "world.day_rollover injury.day"
+      ],
+      "prereqs": "mayHurt with a work argument (Summer Cabaret only)",
+      "states": [
+        "injured",
+        "laid up",
+        "comp paid weekly"
+      ],
+      "failurePaths": [],
+      "recovery": "mends",
+      "stateRead": [
+        "health.injury"
+      ],
+      "stateWritten": [
+        "injury.atWork.paidDays",
+        "comp postings"
+      ],
+      "consumers": [
+        "present()/laidUp",
+        "school presence"
+      ],
+      "notifications": [
+        "the injury's notice"
+      ],
+      "saveLoad": "persisted",
+      "source": "NY WCB, CA DIR (content/injury.ts)",
+      "tests": [
+        "tests/injury.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "The only workplace injury in play is the Summer Cabaret in New Haven (us-ct), but WORKERS_COMP carries only NY and CA, so Connecticut falls back to New York's: 2/3 of the $375 stipend ($250) is clamped up to NY's $384.45 floor, paying more than the wage, with NY's 7 waiting days instead of Connecticut's 3.",
+          "evidence": "src/engine/systems/injury.ts:123; src/engine/content/injury.ts:92-97; src/engine/content/school.ts:318; src/engine/systems/school.ts:2485",
+          "suggestedFix": "Add Connecticut's rule (75% of after-tax average weekly wage, CGS 31-307, its min/max and 3-day wait) and never pay above the wage."
+        },
+        {
+          "severity": "low",
+          "problem": "Work-study shifts (paid Yale employment) carry no injury risk, so workers' compensation for a school work injury never arises; school calls bill Yale Health instead.",
+          "evidence": "src/engine/systems/school.ts:2140-2145; src/engine/systems/school.ts:2295-2296",
+          "suggestedFix": "Roll a light injury on shifts with the work argument, or record the omission in docs/UNBITTEN.md."
+        }
+      ]
+    },
+    {
+      "area": "tax",
+      "feature": "Annual US return: prepared, filed, paid, collected",
+      "entry": "Papers > Returns (File It via decision; tax.pay button)",
+      "commands": [
+        "tax.file",
+        "tax.pay",
+        "scheduled: tax.season, tax.due, tax.substitute, tax.notice, tax.refund"
+      ],
+      "prereqs": "owesUsReturn; figures non-zero",
+      "states": [
+        "prepared",
+        "filed",
+        "refund pending",
+        "owed with collection steps",
+        "SFR proposed/assessed",
+        "levied"
+      ],
+      "failurePaths": [
+        "late penalties",
+        "SFR after a year",
+        "levy"
+      ],
+      "recovery": "file within 120 days of CP2566; tax.pay in full",
+      "stateRead": [
+        "earnings.years",
+        "health.premiums",
+        "health.uncoveredInCalifornia",
+        "citizenship"
+      ],
+      "stateWritten": [
+        "person.returns",
+        "postings",
+        "decisions resolved"
+      ],
+      "consumers": [
+        "ReturnsPane",
+        "collection"
+      ],
+      "notifications": [
+        "Return Is Late",
+        "CP2566",
+        "IRS notices",
+        "levy"
+      ],
+      "saveLoad": "figures snapshot stored; recomputed at filing",
+      "source": "IRS pages cited in taxreturn.ts",
+      "tests": [
+        "tests/safetynet.test.ts",
+        "tests/journey-money.test.ts",
+        "tests/retirement.test.ts",
+        "tests/ukbusiness.test.ts",
+        "tests/arrears.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "high",
+          "problem": "A foreign F-1 student is taxed as a US resident: figuresFor never reads citizenship or F-1 status, takes the resident standard deduction and rates, and taxes US bank interest. An F-1 student is an exempt individual for five years and files as a nonresident (1040-NR, no standard deduction, bank interest exempt, scholarship under 14% withholding, treaty articles). Probe: UK citizen in New Haven, $20k scholarship + $3k work-study -> federal $840 under resident treatment.",
+          "evidence": "src/engine/systems/taxreturn.ts:320-330; src/engine/systems/taxreturn.ts:399; src/engine/systems/permission.ts:53",
+          "suggestedFix": "Branch figuresFor on f1Of and exempt-individual years: nonresident schedule, no standard deduction, interest excluded, scholarship withholding credited."
+        },
+        {
+          "severity": "medium",
+          "problem": "owesUsReturn for a non-citizen counts US wages, work-study and unemployment but not a taxable scholarship or interest, so an F-1 student whose only US income is a living-expense scholarship gets no return (a nonresident with taxable scholarship must file).",
+          "evidence": "src/engine/systems/taxreturn.ts:456-462; src/engine/systems/earnings.ts:228-234",
+          "suggestedFix": "Count the scholarship in the non-citizen test."
+        },
+        {
+          "severity": "medium",
+          "problem": "The Summer Cabaret stipend has FICA withheld, the return charges payroll tax on it, and Social Security credits it, though an F-1 nonresident's student employment is FICA-exempt (IRC 3121(b)(19)).",
+          "evidence": "src/engine/systems/school.ts:2558-2564; src/engine/systems/taxreturn.ts:408; src/engine/systems/socialsecurity.ts:63-70",
+          "suggestedFix": "Skip payroll for F-1 nonresidents in withholding, on the return and in SS credits."
+        },
+        {
+          "severity": "low",
+          "problem": "tax.pay is all-or-nothing: if the bank can't cover the whole owedOn it refuses; there is no partial payment or installment agreement, so a balance can only be cleared by levy.",
+          "evidence": "src/engine/systems/taxreturn.ts:632-636",
+          "suggestedFix": "Allow a partial amount (reduce r.owed) or an installment plan."
+        },
+        {
+          "severity": "low",
+          "problem": "Once the IRS's substitute return is assessed, filedAt is set and tax.file refuses ('You've filed it'), so the player can never replace an SFR with their own return after the 120 days.",
+          "evidence": "src/engine/systems/taxreturn.ts:560-564; src/engine/systems/taxreturn.ts:610",
+          "suggestedFix": "Allow an original return to reduce an SFR assessment."
+        }
+      ]
+    },
+    {
+      "area": "benefits",
+      "feature": "Unemployment insurance claim (Connecticut for every player)",
+      "entry": "Papers > Benefits > File A Claim",
+      "commands": [
+        "benefits.claim",
+        "scheduled: benefits.week"
+      ],
+      "prereqs": "claim state from base-period wages; studentUnavailable (CT full-time student); monetary tests",
+      "states": [
+        "open",
+        "waiting week",
+        "paid weekly",
+        "closed (year/max)"
+      ],
+      "failurePaths": [
+        "base period short",
+        "student in CT",
+        "week abroad pays 0"
+      ],
+      "recovery": "file again after close",
+      "stateRead": [
+        "earnings.quarters (work-study excluded)",
+        "school.standing",
+        "currentLocationId"
+      ],
+      "stateWritten": [
+        "unemployment.claim/past",
+        "benefit postings",
+        "earnings via recordBenefit"
+      ],
+      "consumers": [
+        "taxreturn unemployment line",
+        "SNAP unearned income",
+        "Medicaid month income"
+      ],
+      "notifications": [
+        "Your Waiting Week",
+        "Your Unemployment Claim Ended"
+      ],
+      "saveLoad": "persisted",
+      "source": "NY/CA/CT UI sources; CGS 31-235(b)",
+      "tests": [
+        "tests/safetynet.test.ts",
+        "tests/coverage-gaps-papers.test.ts",
+        "tests/homebenefits.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "high",
+          "problem": "Work authorization is never checked: a non-citizen whose F-1 status has lapsed (usOutOfStatus set, dismissed) files and is paid. Probe: UK citizen, out of status, dismissed, CT base-period wages -> benefits.claim ok at $346 a week. Neither the claim nor the weekly certification reads usOutOfStatus, f1Of or any permit.",
+          "evidence": "src/engine/systems/unemployment.ts:179-205; src/engine/systems/unemployment.ts:216",
+          "suggestedFix": "Refuse the claim, and stop weekly pay, without US work authorization (citizen, green card, valid OPT/permit); show the reason in the Benefits pane."
+        },
+        {
+          "severity": "low",
+          "problem": "The Benefits pane previews the claim from BENEFIT_STATE[homeOf] while the engine files with claimStateFor(...) first, so the preview and the claim can name different states.",
+          "evidence": "src/ui/workspaces/PapersWorkspace.tsx:470-472; src/engine/systems/unemployment.ts:185",
+          "suggestedFix": "Use claimStateFor in the preview."
+        },
+        {
+          "severity": "low",
+          "problem": "Weekly certification checks only the country and student status, not ability to work: a week in hospital or laid up by an injury is still paid.",
+          "evidence": "src/engine/systems/unemployment.ts:216",
+          "suggestedFix": "Treat inHospital/laidUp weeks as unavailable."
+        }
+      ]
+    },
+    {
+      "area": "benefits",
+      "feature": "SNAP onto an EBT card",
+      "entry": "Papers > Benefits > SNAP: Apply",
+      "commands": [
+        "benefits.assistance",
+        "scheduled: benefits.assistance_month"
+      ],
+      "prereqs": "assistanceRefusal (citizen only; adult; snapStudentRefusal: summer without 87 hours)",
+      "states": [
+        "open",
+        "paid / 0 (student) / ABAWD limited"
+      ],
+      "failurePaths": [
+        "time limit",
+        "a student month pays 0"
+      ],
+      "recovery": "none; claim can't be closed by the player",
+      "stateRead": [
+        "earnings.kinds",
+        "workedBetween hours",
+        "school"
+      ],
+      "stateWritten": [
+        "person.assistance",
+        "EBT escrow account"
+      ],
+      "consumers": [
+        "daily food draws the EBT first"
+      ],
+      "notifications": [
+        "SNAP Paid",
+        "No SNAP This Month",
+        "SNAP Time Limit Reached"
+      ],
+      "saveLoad": "persisted",
+      "source": "7 CFR 273.5, 273.9; 7 U.S.C. 2015(o)",
+      "tests": [
+        "tests/assistance.test.ts",
+        "tests/coverage-gaps-papers.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "A SNAP claim never closes except by moving state (impossible in play): no close command, and the month runs forever paying 0 once income rises.",
+          "evidence": "src/engine/systems/assistance.ts:207-213",
+          "suggestedFix": "Close after months of nil or on income, and add a close command."
+        }
+      ]
+    },
+    {
+      "area": "pensions",
+      "feature": "Social Security retirement claim",
+      "entry": "Papers > Benefits > Pensions: Claim It",
+      "commands": [
+        "pension.social_security",
+        "scheduled: pension.ss_month"
+      ],
+      "prereqs": "age 62, 40 credits",
+      "states": [
+        "drawing"
+      ],
+      "failurePaths": [],
+      "recovery": "none",
+      "stateRead": [
+        "earnings.years"
+      ],
+      "stateWritten": [
+        "person.socialSecurity",
+        "recordPension"
+      ],
+      "consumers": [
+        "taxreturn pension line",
+        "SNAP/Medicaid month income"
+      ],
+      "notifications": [
+        "Social Security Paid"
+      ],
+      "saveLoad": "persisted",
+      "source": "SSA pages",
+      "tests": [
+        "tests/socialsecurity.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "The header says the benefit's taxation on the return is left out, but each payment goes through recordPension into y.pension, which figuresFor taxes in full (the law taxes 0-85% by provisional income). The comment is falsified and the tax overstated.",
+          "evidence": "src/engine/systems/socialsecurity.ts:23; src/engine/systems/socialsecurity.ts:148; src/engine/systems/taxreturn.ts:323",
+          "suggestedFix": "Record SS on its own line and apply IRC 86's provisional-income formula, or correct the header in the past tense."
+        }
+      ]
+    },
+    {
+      "area": "benefits",
+      "feature": "Schemes abroad: Universal Credit, Irish JA, CDMX desempleo, Ontario Works/BC, EI self-employed, UK/Irish/IMSS/Bienestar pensions, NHS prepayment",
+      "entry": "Papers > Benefits / Health panels gated by livesIn*/schemeFor",
+      "commands": [
+        "benefits.claim (UC/JA branches)",
+        "benefits.assistance (ON/BC)",
+        "benefits.ei_register",
+        "pension.state",
+        "pension.ie_state",
+        "pension.imss",
+        "pension.bienestar",
+        "health.prepay"
+      ],
+      "prereqs": "living in the country (homeOf = currentLocationId)",
+      "states": [
+        "not reachable in play"
+      ],
+      "failurePaths": [],
+      "recovery": "",
+      "stateRead": [
+        "currentLocationId"
+      ],
+      "stateWritten": [],
+      "consumers": [],
+      "notifications": [],
+      "saveLoad": "persisted",
+      "source": "cited per system",
+      "tests": [
+        "tests/homebenefits.test.ts",
+        "tests/assistance.test.ts"
+      ],
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "Every new life starts at Yale in New Haven (atSchool) and nothing in play changes currentLocationId, so the residence-gated schemes can't be reached; only the UK/Irish pensions on contribution records could be. homeOf comments still speak of moving between states.",
+          "evidence": "src/engine/world/bootstrap.ts:157-166; src/engine/systems/earnings.ts:253",
+          "suggestedFix": "Record them as unreachable in docs/UNBITTEN.md / docs/UNWIRED.json, or remove the dead branches."
+        }
+      ]
+    },
+    {
+      "area": "bank-multibank",
+      "feature": "Close a current account (immediate, or Citi's restricted close while items are pending)",
+      "entry": "Bank > Accounts > Your Banks > Close It (src/ui/bank/BankMoves.tsx:127), disabled by closeRefusal",
+      "commands": [
+        "bank.close_current",
+        "scheduled bank.current_closes"
+      ],
+      "prereqs": "not primary; >=2 current accounts; not overdrawn; no transfer in flight; nothing linked (deposits, orders, autopay, dated payments); no savings beside it at that bank; no pending items unless the bank closes with pending (Citi 21 days)",
+      "states": [
+        "open",
+        "closingAt (Citi, pending items)",
+        "closedAt"
+      ],
+      "failurePaths": [
+        "refusals in closeRefusal",
+        "remainder account required if balance+accrued>0",
+        "Citi outbound limit refusal from sendBetweenBanks",
+        "scheduled close aborted if overdrawn on the day"
+      ],
+      "recovery": "a refused command rolls back (snapshot); a scheduled close that finds an overdraft notifies and leaves the account open",
+      "stateRead": "account.balance, accrued, person.payments, credit.autopayFrom, scheduled items, ledger postsAt",
+      "stateWritten": "closedAt, closingAt, accrued, overdraftLimit, awaitingFunds/fundBy deleted, interest/fee postings, a transfer or the in-transit escrow + bank.transfer_arrives",
+      "consumers": "checkingsOf, statements, transfersOf, routing",
+      "notifications": "'<name> Closed' / 'Didn't Close' (scheduled path only)",
+      "saveLoad": "fields on Account and ScheduledItem; serialised",
+      "source": "Citi deposit agreement (content/bankopening.ts:72); CFPB steps",
+      "tests": "tests/bank-moves.test.ts:133,217 (immediate close, in-flight refusal); nothing tests the pending path or closingAt",
+      "gaps": [
+        {
+          "severity": "high",
+          "problem": "Pending card payments never block or defer a close. pendingOn returns a debit as negative ('a debit negative', pending.ts:50), but both checks test > 0. So the 'Card payments are still pending' refusal and Citi's 21-day restricted close are unreachable for card payments. Probe: a Citi account with a -$10 pending purchase gave pendingOn = -1000, closeRefusal returned undefined and close_current ran closeNow at once.",
+          "evidence": "src/engine/systems/bankmoves.ts:245, src/engine/systems/bankmoves.ts:432, src/engine/systems/pending.ts:50",
+          "suggestedFix": "Test pendingOn(...) !== 0 (or < 0 for money going out). Add a test with a pending card payment at Chase (refused) and at Citi (closingAt set)."
+        },
+        {
+          "severity": "medium",
+          "problem": "A scheduled close (bank.current_closes) that sends the remainder to another bank can throw on Citi's outbound limit inside a schedule handler. Schedule handlers are not rolled back, so the interest and fees already settled stay posted, closingAt is already deleted, the account stays open, and the item is only marked 'missed' with a generic system notice.",
+          "evidence": "src/engine/systems/bankmoves.ts:446-454, src/engine/systems/bankmoves.ts:257, src/engine/core/simulation.ts:443-451",
+          "suggestedFix": "Check limitRefusal before settling. On a refusal, keep closingAt and reschedule for the next business day, or send the remainder through the in-transit escrow in daily tranches."
+        },
+        {
+          "severity": "low",
+          "problem": "closeRefusal doesn't anticipate Citi's outbound limit, so Close It is enabled on a Citi account holding more than $10,000 and the command then refuses it. Probe: 'Citi lets $10,000 a day out to other banks'.",
+          "evidence": "src/engine/systems/bankmoves.ts:234-247, src/ui/bank/BankMoves.tsx:127",
+          "suggestedFix": "Have closeRefusal call limitRefusal when the remainder goes to another bank."
+        }
+      ]
+    },
+    {
+      "area": "bank-multibank",
+      "feature": "Open a current account at another bank (application, review, opening deposit, card arrival, bank closes an unfunded or idle account)",
+      "entry": "Bank > Accounts > Open An Account At Another Bank > Apply (BankMoves.tsx:214), disabled by openRefusal",
+      "commands": [
+        "bank.open_current",
+        "scheduled bank.application",
+        "scheduled bank.transfer_arrives",
+        "scheduled card.replaced",
+        "day_rollover bank.moves"
+      ],
+      "prereqs": "bank in home country; no account already held there; no pending application; no charged-off debt to it; ChexSystems draw; photo ID in force; minimum age; Citi: US person",
+      "states": [
+        "applied (pending review)",
+        "open, awaiting funds",
+        "open",
+        "closed by the bank"
+      ],
+      "failurePaths": [
+        "declined at decision (openRefusal re-run)",
+        "deposit returns if the destination isn't open",
+        "unfunded by fundBy -> closed",
+        "zero balance for N days -> closed"
+      ],
+      "recovery": "deposit returned to its source or the deposit account; can re-apply after a decline",
+      "stateRead": "person.chex, documents (photoIdOf), citizenshipId, OPENING rules",
+      "stateWritten": "new Account, plastic{stopped:'new'}, awaitingFunds, fundBy, zeroSince, escrow 'Money In Transit'",
+      "consumers": "checkingsOf, routing, statements, security",
+      "notifications": "Opened / Turned Down / A Transfer Came Back / Bank Closed",
+      "saveLoad": "serialised on accounts/scheduled; bank-moves.test.ts reloads",
+      "source": "content/bankopening.ts per-bank sources; 31 CFR 1020.220",
+      "tests": "tests/bank-moves.test.ts:54,94,114,256",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Citi's 'US person' test reads citizenship only, so a green-card holder is refused. The cited source admits 'a US citizen or resident alien', and residenceIn(person,'US') is never consulted.",
+          "evidence": "src/engine/systems/bankmoves.ts:98, src/engine/content/bankopening.ts:72, src/engine/systems/residence.ts:83",
+          "suggestedFix": "Accept person.citizenshipId==='us' || residenceIn(person,'US',at)."
+        },
+        {
+          "severity": "low",
+          "problem": "Account opening has no taxpayer-ID (SSN/ITIN) step and no nonresident-alien path. An F-1 student is admitted on photo ID alone, and interest is taxed by the bank country's rule with no W-8BEN/1042-S distinction. Dismissal and graduation don't affect banking, which is realistic, but nothing models a nonresident's papers.",
+          "evidence": "src/engine/systems/bankmoves.ts:88-100, src/engine/systems/banking.ts:365-374",
+          "suggestedFix": "Record that the bank asked for an SSN/ITIN or a passport and I-20, with no US interest withholding for a nonresident alien. Or have the screen's source line say SLATE doesn't model it."
+        },
+        {
+          "severity": "low",
+          "problem": "An account funded below its required deposit (balance > 0 but under awaitingFunds) is never closed after fundBy, and is re-checked every day: closedByBank returns early when balance !== 0.",
+          "evidence": "src/engine/systems/bankmoves.ts:275, src/engine/systems/bankmoves.ts:360-362",
+          "suggestedFix": "Close it and send the partial funds back to the deposit account, or clear awaitingFunds once any deposit lands, as the bank's terms say."
+        }
+      ]
+    },
+    {
+      "area": "bank-multibank",
+      "feature": "Primary account, deposit instruction, standing-order source, card autopay source",
+      "entry": "Your Banks > Make Primary / Have Wages Paid Here (BankMoves.tsx:108-117); What Pays From Where > Pay From There (BankMoves.tsx:155,169)",
+      "commands": [
+        "bank.set_primary",
+        "bank.redirect_deposits",
+        "bank.set_order_source",
+        "card.set_autopay_from"
+      ],
+      "prereqs": "an open current account of the player's; not closing (checked by set_primary and redirect_deposits only)",
+      "states": [
+        "depositTo",
+        "depositChange{to,at} (14 days)",
+        "order.fromId",
+        "card autopayFrom"
+      ],
+      "failurePaths": [
+        "a closing account is refused by two of the four commands",
+        "an order or autopay from a closed account fails and notifies (payments.ts:92-98, credit.ts:594)"
+      ],
+      "recovery": "move it again",
+      "stateRead": "person.payments, credit state",
+      "stateWritten": "primaryAccountId, payments.depositTo/depositChange, order.fromId, autopayFrom",
+      "consumers": "payeeAccount, drawFromBank, payCard, obligations",
+      "notifications": "toasts only; a notice when an order or autopay fails",
+      "saveLoad": "old saves are pinned on first read (routing.ts:16-18); tested",
+      "source": "DEPOSIT_LEAD estimate, cited to docs/research/world/research-banking.json",
+      "tests": "tests/bank-moves.test.ts:133,187,201",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Changing the primary account while a UK CASS switch is pending is allowed, and completeSwitch then moves whichever account is primary on the day. Probe: open NatWest, start a switch Barclays->HSBC, make NatWest primary. On the day NatWest was closed into HSBC and Barclays stayed open.",
+          "evidence": "src/engine/systems/bankmoves.ts:373-385, src/engine/systems/lending.ts:555-576",
+          "suggestedFix": "Record the source account id in the SWITCH_KIND payload and switch that account. Or refuse set_primary and close_current while a switch is pending."
+        },
+        {
+          "severity": "low",
+          "problem": "The UI offers Make Primary and Have Wages Paid Here on a closing account, and the engine refuses both ('is closing').",
+          "evidence": "src/ui/bank/BankMoves.tsx:108,113; src/engine/systems/bankmoves.ts:378,391",
+          "suggestedFix": "Hide or disable both when a.closingAt !== undefined."
+        },
+        {
+          "severity": "low",
+          "problem": "set_order_source and card.set_autopay_from accept a closing account (only set_primary and redirect_deposits check closingAt). The order then fails once the scheduled close runs.",
+          "evidence": "src/engine/systems/bankmoves.ts:399-402, src/engine/systems/bankmoves.ts:410-416",
+          "suggestedFix": "Refuse an account with closingAt, as the other two commands do."
+        }
+      ]
+    },
+    {
+      "area": "bank-multibank",
+      "feature": "Switching service (UK CASS and others)",
+      "entry": "Bank > Accounts > Switch Bank (BankLending.tsx:323), shown only where SWITCHING has a rule",
+      "commands": [
+        "bank.switch",
+        "scheduled bank.switch (SWITCH_KIND)"
+      ],
+      "prereqs": "another bank in the country; no collections owed to it; ChexSystems; no switch pending; photo ID; not overdrawn; a switching service exists",
+      "states": [
+        "pending",
+        "done"
+      ],
+      "failurePaths": [
+        "the refusals above"
+      ],
+      "recovery": "none: no command cancels a pending switch",
+      "stateRead": "primary account, savings at that bank",
+      "stateWritten": "new checking/savings, old ones closed, orders/deposits/autopay/scheduled payments remapped",
+      "consumers": "everything in banking",
+      "notifications": "'Switched To X'",
+      "saveLoad": "scheduled item",
+      "source": "SWITCHING rule's source, shown on screen",
+      "tests": "tests/bank-moves.test.ts:267; tests/lending.test.ts",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "bank.switch doesn't refuse a bank where the player already has a current account, and the UI lists that bank. completeSwitch then opens a second current account at the same bank. Probe: open NatWest, switch to NatWest -> two gb-natwest current accounts. openRefusal forbids exactly this when opening.",
+          "evidence": "src/engine/systems/lending.ts:1120-1127, src/ui/bank/BankLending.tsx:61, src/engine/systems/lending.ts:554-576",
+          "suggestedFix": "Refuse when checkingAt(s, person, to.id) exists (or switch into that account), and drop that bank from the list."
+        },
+        {
+          "severity": "low",
+          "problem": "A pending switch can't be cancelled, and the screen offers no way to.",
+          "evidence": "src/ui/bank/BankLending.tsx:323-325",
+          "suggestedFix": "Add bank.cancel_switch, which cancels the SWITCH_KIND item before its day."
+        }
+      ]
+    },
+    {
+      "area": "bank",
+      "feature": "Savings: open, close (with German notice), and transfers between own accounts at one bank or across banks",
+      "entry": "Bank > Accounts > Open A Savings / Close It / Move Money (BankWorkspace.tsx:130,146,181)",
+      "commands": [
+        "bank.open_savings",
+        "bank.close_savings",
+        "scheduled bank.savings_notice",
+        "bank.transfer"
+      ],
+      "prereqs": "open_savings: no savings account anywhere; opens at the primary's bank",
+      "states": [
+        "open",
+        "notice given",
+        "closed",
+        "in transit"
+      ],
+      "failurePaths": [
+        "insufficient funds, dormant, monthly allowance, room for the withdrawal fee, closing, outbound limits"
+      ],
+      "recovery": "command rollback",
+      "stateRead": "balances, savingsLeftThisMonth, savingsDebit",
+      "stateWritten": "postings, accounts",
+      "consumers": "statements, interest",
+      "notifications": "closed at the end of notice",
+      "saveLoad": "serialised",
+      "source": "product and ACCOUNT_LIFE sources",
+      "tests": "tests/interest.test.ts, tests/bank-moves.test.ts:217,244",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "A person can hold only one savings account across all banks. open_savings refuses if any savings exists and opens only at the primary's bank, so a second bank's savings can't be opened, and the 'Open A Savings' panel hides when savings exists elsewhere. Probe: 'You already have a savings account', both before and after making the second bank primary.",
+          "evidence": "src/engine/systems/banking.ts:610-613, src/ui/workspaces/BankWorkspace.tsx:141",
+          "suggestedFix": "Make the limit one per bank (a.bankId === bank.id) and have the command take a bankId."
+        },
+        {
+          "severity": "low",
+          "problem": "The screen's 'current' is the first current account found, not the primary. So the savings-closing sentence and Move Money's default can name the wrong account. The engine sends savings to the current account at its own bank, else to the primary.",
+          "evidence": "src/ui/workspaces/BankWorkspace.tsx:63, src/ui/workspaces/BankWorkspace.tsx:133, src/engine/systems/banking.ts:431",
+          "suggestedFix": "Name checkingAt(savings.bankId) ?? primary, as closeSavings does."
+        }
+      ]
+    },
+    {
+      "area": "bank",
+      "feature": "Statements (accounts, cards), the year, closed accounts",
+      "entry": "Bank > Statements (BankStatements.tsx)",
+      "commands": [],
+      "prereqs": "any checking, savings, card or loan owned, open or closed",
+      "states": [
+        "period so far",
+        "closed period",
+        "rebuilt card period"
+      ],
+      "failurePaths": [],
+      "recovery": "n/a",
+      "stateRead": "ledger transactions, card cuts, current card terms and score",
+      "stateWritten": "none (read-only)",
+      "consumers": "player",
+      "notifications": "statementReady at month end and on a card statement",
+      "saveLoad": "derived from the ledger",
+      "source": "Reg Z §1026.7(b)(12); AGB-Banken no. 7",
+      "tests": "tests/statements.test.ts:26-159, tests/coverage-gaps-statements.test.ts",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "A closed current, savings or loan account keeps getting statement periods after it closed: periodsOf ignores closedAt for anything but a card and walks back from now. Probe: an account closed in August listed 'November 2026, So Far / October / September / August', which means empty statements and an 'Available Now' figure on a closed account.",
+          "evidence": "src/engine/systems/statements.ts:89-131, src/ui/bank/BankStatements.tsx:36",
+          "suggestedFix": "Start the walk from min(now, closedAt) and label the last period as running to the closing."
+        },
+        {
+          "severity": "medium",
+          "problem": "A past card statement's minimum, minimum-only warning and APR are recomputed from today's terms, today's score (always sim.player's) and today's remaining intro months. Old statements change when the score or rate changes: history rewritten by current settings.",
+          "evidence": "src/engine/systems/statements.ts:244-245, src/engine/systems/statements.ts:259-263, src/engine/systems/statements.ts:281",
+          "suggestedFix": "Keep the stated minimum and APR with each cut (credit.ts already keeps the cuts) and read them back for closed periods."
+        },
+        {
+          "severity": "low",
+          "problem": "Account statement months are cut in sim.zone, while the bank's month end, fees and interest use sim.homeZone. A statement's boundaries move with where the player is.",
+          "evidence": "src/engine/systems/statements.ts:90, src/engine/systems/banking.ts:186-200",
+          "suggestedFix": "Use sim.homeZone in periodsOf and yearSummary."
+        }
+      ]
+    },
+    {
+      "area": "bank",
+      "feature": "Alerts: low balance, large payment, statement ready",
+      "entry": "Bank > Statements > Alerts (BankStatements.tsx: Save Alerts and the Statement Ready toggle)",
+      "commands": [
+        "bank.set_alerts",
+        "day_rollover bank.alerts"
+      ],
+      "prereqs": "none",
+      "states": [
+        "lowSent",
+        "seenUpTo"
+      ],
+      "failurePaths": [
+        "a negative amount is refused"
+      ],
+      "recovery": "n/a",
+      "stateRead": "primary account balance (at HEAD); postings on every open checking account and card",
+      "stateWritten": "person.alerts",
+      "consumers": "security.ts learnedAt (fraud is found at once if over largePayment)",
+      "notifications": "Low Balance, A Large Payment, Statement Ready",
+      "saveLoad": "person.alerts serialised",
+      "source": "A147 in BANKING-FUNCTIONS",
+      "tests": "tests/statements.test.ts:174,192,208",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "At HEAD the low-balance alert watches only the primary account. A second bank's account (wages redirected there, orders or autopay paid from it) can run down with no alert. NOTE: the working tree has an uncommitted change that this audit didn't make (statements.ts, BankStatements.tsx, credit.ts) moving it to accountAlerts for every current account. It wasn't verified or tested here.",
+          "evidence": "src/engine/systems/statements.ts:404-411 (HEAD 9758719c), git diff src/engine/systems/statements.ts",
+          "suggestedFix": "Land the per-account change with a test that a non-primary account under the line alerts once."
+        },
+        {
+          "severity": "low",
+          "problem": "The large-payment alert ignores savings and every transfer, including sends to another bank. A payment out of savings is never alerted.",
+          "evidence": "src/engine/systems/statements.ts:415-421",
+          "suggestedFix": "Watch savings too, or have the screen say which accounts the alert covers."
+        }
+      ]
+    },
+    {
+      "area": "bank",
+      "feature": "Card security: lock, report lost/stolen, new number, expiry renewal, fraud draw, dispute and refund",
+      "entry": "Bank > Cards > Your Cards (BankSecurity.tsx:67,77,81,98,112)",
+      "commands": [
+        "card.lock",
+        "card.report",
+        "bank.new_number",
+        "card.dispute",
+        "scheduled card.replaced",
+        "scheduled bank.fraud_refund",
+        "day_rollover bank.security"
+      ],
+      "prereqs": "card exists; not stopped; lockInApp; a rush fee exists; dispute within claimDays",
+      "states": [
+        "locked",
+        "stopped (lost/stolen/damaged/fraud/new)",
+        "replacement pending",
+        "number exposed",
+        "fraud reported/refunded"
+      ],
+      "failurePaths": [
+        "refusals; dispute past the window (the UI uses disputeRefusal)"
+      ],
+      "recovery": "replacement card, refund",
+      "stateRead": "SECURITY, FRAUD_LAW, alerts.largePayment",
+      "stateWritten": "account.plastic, account.exposed, person.fraud, fees",
+      "consumers": "cardWorks (spending), statements",
+      "notifications": "New card arrived / on its way, Your Bank Stopped A Payment, A Large Payment, Refunded",
+      "saveLoad": "serialised",
+      "source": "content/security.ts, per bank and per country's law",
+      "tests": "tests/cards.test.ts and the security tests",
+      "gaps": [
+        {
+          "severity": "medium",
+          "problem": "Debit-card security covers the primary account only. cardAccount('debit') ignores accountId, so a second bank's debit card (issued by openApproved with its own plastic) can't be locked or reported, its expiry is never renewed and its fraud is never drawn. Probe: card.lock{which:'debit', accountId:<Capital One>} returned ok and locked the PRIMARY (Chase) card instead. Changing the primary also stops the attempts on an exposed number, because attemptOnNumber reads only the primary.",
+          "evidence": "src/engine/systems/security.ts:73-81, src/engine/systems/security.ts:224-237, src/engine/systems/security.ts:240-248, src/engine/systems/security.ts:353-356, src/ui/bank/BankSecurity.tsx:33-36",
+          "suggestedFix": "Honour accountId for debit (any open current account of the player's), loop expiry, fraud and exposure over checkingsOf, and list every debit card on the Cards tab."
+        }
+      ]
+    },
+    {
+      "area": "bank",
+      "feature": "Overdraft, per-item fees, collections, personal loan, term deposit, account closed for overdraft",
+      "entry": "Bank > Borrowing (BankLending.tsx:110,159,173,219,238,249,264,290)",
+      "commands": [
+        "bank.debit_overdraft",
+        "bank.arrange_overdraft",
+        "bank.pay_collections",
+        "bank.borrow",
+        "bank.take_overrun_loan",
+        "bank.repay_loan",
+        "bank.open_term",
+        "day_rollover bank.lending_day",
+        "scheduled loan due"
+      ],
+      "prereqs": "primary account at a bank with those terms; offers worked out by overdraftOffer/loanOffer and shown",
+      "states": [
+        "overdrawn, negativeSince",
+        "closed for overdraft",
+        "collections debt",
+        "ChexSystems report",
+        "second-chance account"
+      ],
+      "failurePaths": [
+        "refusals shown from offer.refused/quote.refused"
+      ],
+      "recovery": "pay collections; the ChexSystems report expires after CHEX.years",
+      "stateRead": "the primary account; every current account for daily interest and closing",
+      "stateWritten": "od* fields, collections account, person.chex, credit.late",
+      "consumers": "openRefusal (declines, collections), credit score",
+      "notifications": "account closed; notice to close (France)",
+      "saveLoad": "serialised",
+      "source": "content/banks-lending.ts; ESTIMATE.closeAfterDays stated as an estimate",
+      "tests": "tests/lending.test.ts, tests/arrears.test.ts",
+      "gaps": [
+        {
+          "severity": "low",
+          "problem": "Arranging an overdraft, the debit-overdraft opt-in, loans, term deposits and paying collections all act on the primary account only. A non-primary account can be overdrawn (fees and the 60-day closure have run per account since 2026-10-10), but the player can't arrange an overdraft or opt in on it.",
+          "evidence": "src/engine/systems/lending.ts:977-1003, src/engine/systems/lending.ts:804-807",
+          "suggestedFix": "Have these commands take an accountId, or have the screen say they apply to the primary account."
+        }
+      ]
+    }
+  ]
+}

@@ -471,6 +471,8 @@ function CabaretPanel() {
   const term = school.termsBegun - 1;
   const mine = school.cabaret?.term === term ? school.cabaret : undefined;
   const calls = ahead(sim, person, [CABARET_KIND]);
+  // Why it can't be joined, said where the button would be (from 2026-10-10: until then the button just wasn't there).
+  const why = mine ? undefined : cabaretRefusal(sim, person);
   return (
     <Panel
       title="The Yale Cabaret"
@@ -484,10 +486,12 @@ function CabaretPanel() {
             <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />
           </div>
         )}
+        {mine?.withdrawn && <p className="small" style={{ margin: 0 }}>Out of the show on {mine.withdrawn.why}, {formatDate(mine.withdrawn.at, sim.zone)}: the calls after it were called off, and not held against you.</p>}
+        {why && <p className="small muted" style={{ margin: 0 }}>{why}</p>}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
         {mine && <RehearsalProcess casting={mine} which="cabaret" />}
         <Fine>
-          The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
+          The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part (a warning during a show takes you out of what’s left of it), and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
         </Fine>
       </div>
     </Panel>

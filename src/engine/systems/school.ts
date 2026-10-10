@@ -314,7 +314,8 @@ export interface SchoolRecord {
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
   credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize }[];
   /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
-  cabaret?: { term: number; week: string; performed: number } & Partial<Run>;
+  /** `withdrawn`: taken out of the show by an academic warning that came during it (from 2026-10-10, `leaveCabaret`). */
+  cabaret?: { term: number; week: string; performed: number; withdrawn?: { at: Instant; why: string } } & Partial<Run>;
   /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over, and each show's play, part and nights. */
   summer?: { year: number; played: number[]; until: Instant; out?: boolean; shows?: Run[] };
   history: TermReview[];
@@ -1168,6 +1169,10 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   school.standing = to;
   if (schoolEnded(to)) school.endedAt = sim.now;
   if (to !== 'good') feel(person, to === 'withheld' ? 'dismissed' : to);
+  // "No student on academic warning ... may participate" in the Cabaret (Bulletin 2026–27 p.148): a warning, or the end
+  // of school, during a show takes them out of what's still to come (from 2026-10-10: until then it was checked only at
+  // joining).
+  if (to === 'warning' || schoolEnded(to)) leaveCabaret(sim, person, to === 'warning' ? 'academic warning' : 'leaving the School');
   if (schoolEnded(to)) {
     // The coursework ends with it (`endCoursework`, from 2026-10-10).
     endCoursework(sim, person);
@@ -1196,6 +1201,20 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   if (to === 'concern' && school.termsBegun >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair, ${chair}, has raised a concern. ${reason} It was your last term: the concern is noted, and doesn’t stand in the way of the degree.`];
   const [title, body] = words[to];
   sim.notify({ category: 'school', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
+}
+
+/**
+ * Out of a Cabaret show still to come: its calls ahead called off, with no missed call or breach for them; the
+ * rehearsals and nights already played stay played. Said once.
+ */
+function leaveCabaret(sim: Simulation, person: Person, why: string): void {
+  const cab = person.school?.cabaret;
+  if (!cab || cab.withdrawn) return;
+  const ahead = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === CABARET_KIND && i.payload.personId === person.id);
+  if (!ahead.length) return;
+  for (const i of ahead) sim.timeline.cancel(i.id, sim.now);
+  cab.withdrawn = { at: sim.now, why };
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so the ${ahead.length} calls still to come are off and the show goes on without you. What you rehearsed and played stays on your record, and it isn’t held against you as a missed call.`, importance: 70, route: '/workspace/school' });
 }
 
 /** A grave breach: straight to warning, or dismissal from warning. */

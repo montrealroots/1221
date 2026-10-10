@@ -197,10 +197,10 @@ function AlertsView() {
     if (answer.ok) toast('Alerts saved.', 'positive');
   };
   return (
-    <Panel title="Alerts" subtitle="What the bank tells you, in What Needs You.">
+    <Panel title="Alerts" subtitle="What the bank tells you, in What Needs You. Short For A Payment tells you, once, when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days (SLATE’s design).">
       <div className="field-row">
         <div className="field">
-          <label htmlFor="alert-low">Current Account Under ({cur})</label>
+          <label htmlFor="alert-low">Any Current Account Under ({cur})</label>
           <input id="alert-low" type="text" inputMode="decimal" placeholder="Off" value={low} onChange={(e) => setLow(e.target.value)} />
         </div>
         <div className="field">
@@ -212,6 +212,9 @@ function AlertsView() {
         <Gated feature="bank.set_alerts" className="btn btn-sm btn-primary" onClick={save}>Save Alerts</Gated>
         <Gated feature="bank.set_alerts" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_alerts', { statements: !alerts.statements })}>
           Statement Ready: {alerts.statements ? 'On' : 'Off'}
+        </Gated>
+        <Gated feature="bank.set_alerts" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_alerts', { upcoming: alerts.upcoming === false })}>
+          Short For A Payment: {alerts.upcoming === false ? 'Off' : 'On'}
         </Gated>
       </div>
     </Panel>

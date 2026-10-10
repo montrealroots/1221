@@ -785,15 +785,9 @@ export function registerCredit(sim: Simulation): void {
     const currency = saveCurrency(s.universe);
     const terms = cardTerms(s, card, record.score);
     const statement = credit.statementBalance;
-    const minimum = minimumDue(s, statement, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0);
-    // A charge card's minimum is the whole statement, so it takes all of it
-    // whatever the autopay says.
-    const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;
-    const want = plan ?? (credit.autopay === 'full' ? statement : minimum);
-    const due = plan ?? minimum;
+    const { asked, due, minimum } = autopayAsk(s, person, card);
     // Autopay asks the bank for the whole amount; a current account that
     // can't cover it sends it back, and the card charges for that (C59).
-    const asked = Math.max(0, want - credit.paidSinceStatement);
     if (asked > 0) {
       if (autopayReach(s, person, card) >= asked) payCard(s, person, asked, false, card);
       else {
@@ -1024,6 +1018,21 @@ export function autopaySource(sim: Simulation, person: Person, card: Account): A
   const state = stateOf(person, card);
   if (state.autopayFrom === undefined && person.primaryAccountId) state.autopayFrom = person.primaryAccountId;
   return state.autopayFrom ? sim.universe.accounts[state.autopayFrom] : undefined;
+}
+
+/**
+ * What a card's autopay will ask its account for on the due date, and the minimum due: a charge card's minimum is the
+ * whole statement, and a hardship plan's payment stands in for both (from 2026-10-10 a function of its own, which the
+ * account alerts read ahead of the day, `systems/statements.ts`).
+ */
+export function autopayAsk(sim: Simulation, person: Person, card: Account): { asked: Money; due: Money; minimum: Money } {
+  const credit = stateOf(person, card);
+  const terms = cardTerms(sim, card, person.credit!.score);
+  const statement = credit.statementBalance;
+  const minimum = minimumDue(sim, statement, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0);
+  const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;
+  const want = plan ?? (credit.autopay === 'full' ? statement : minimum);
+  return { asked: Math.max(0, want - credit.paidSinceStatement), due: plan ?? minimum, minimum };
 }
 
 function autopayReach(sim: Simulation, person: Person, card: Account): Money {

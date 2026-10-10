@@ -12,13 +12,16 @@ import { formatDate, formatTime } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { courseworkOf } from '@/engine/systems/coursework';
-import { CHOICES, MOMENT_TITLE, momentsOf, respondRefusal } from '@/engine/systems/classmates';
+import { CHOICES, MOMENT_TITLE, momentsOf, respondRefusal, sharedWork } from '@/engine/systems/classmates';
+import { sceneById } from '@/engine/content/coursework';
+import { useState } from 'react';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 
 export function ClassMoments() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
+  const [scene, setScene] = useState<Record<string, string>>({});
   const cw = courseworkOf(sim, person);
   if (!cw) return null;
   const all = momentsOf(cw);
@@ -31,15 +34,29 @@ export function ClassMoments() {
       <div className="col gap-3">
         {open.map((m) => {
           const mate = person.school!.classmates[m.mate]!;
+          // Running lines works on a scene you share with them (from 2026-10-10): which one, where there's a choice.
+          const shared = m.kind === 'study' ? sharedWork(sim, person, m.mate) : [];
+          const play = (id: string) => sceneById(shared.find((a) => a.id === id)?.sceneId ?? '')?.play ?? 'a scene';
           return (
             <div key={m.id} className="col gap-1">
               <div className="small"><strong>{mate.name}: {MOMENT_TITLE[m.kind]}.</strong> {m.text} <span className="xs dim">Answer by {formatTime(m.until, zone())}, {formatDate(m.until, zone())}.</span></div>
+              {m.kind === 'study' && (shared.length === 0
+                ? <div className="xs dim">You share no open scene with {mate.name.split(' ')[0]}: you’d run their lines, which helps them and moves nothing of yours.</div>
+                : shared.length === 1
+                  ? <div className="xs dim">You’d run {play(shared[0]!.id)}, the scene you share.</div>
+                  : (
+                    <div className="field"><label htmlFor={`study-${m.id}`}>Which Scene You Share</label>
+                      <select id={`study-${m.id}`} value={scene[m.id] ?? shared[0]!.id} onChange={(e) => setScene({ ...scene, [m.id]: e.target.value })}>
+                        {shared.map((a) => <option key={a.id} value={a.id}>{play(a.id)}, lines {Math.round(a.prep.memorization * 100)}%</option>)}
+                      </select>
+                    </div>
+                  ))}
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
                 {CHOICES[m.kind].map((c) => {
                   const no = respondRefusal(sim, person, m, c.id);
                   return (
                     <Gated key={c.id} feature="school.respond" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? c.label}
-                      onClick={() => { const r = run<{ done: string }>('school.respond', { momentId: m.id, choice: c.id }); if (r.ok) toast(r.value!.done, 'neutral'); }}>
+                      onClick={() => { const r = run<{ done: string }>('school.respond', { momentId: m.id, choice: c.id, ...(m.kind === 'study' && c.id === 'yes' && shared.length ? { assignmentId: scene[m.id] ?? shared[0]!.id } : {}) }); if (r.ok) toast(r.value!.done, 'neutral'); }}>
                       {c.label}
                     </Gated>
                   );
