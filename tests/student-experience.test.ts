@@ -10,7 +10,8 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { courseworkOf, type Assignment } from '@/engine/systems/coursework';
 import { momentsOf, sharedWork, STUDY_KIND } from '@/engine/systems/classmates';
-import { CABARET_KIND, evaluate } from '@/engine/systems/school';
+import { CABARET_KIND, COMMENCEMENT_KIND, evaluate } from '@/engine/systems/school';
+import { settleCourses } from '@/engine/systems/courserecord';
 import { yaleUntil } from '@/engine/systems/health';
 import { graceDays, optRefusal, usStatusEnds } from '@/engine/systems/permission';
 
@@ -126,5 +127,78 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     Object.assign(school, { standing: 'graduated', endedAt: at(2029, 5, 21) });
     expect(graceDays(sim.player)).toBe(60);
     expect(optRefusal(sim, sim.player) ?? '').not.toMatch(/degree completed/);
+  });
+});
+
+describe('each course passed, incomplete or failed, and what the degree needs', () => {
+  it('PLAYER JOURNEY: ill for five weeks of classes in the first fall, an Incomplete in a course, made up in its sessions, and passed', () => {
+    let sim = student('se-incomplete');
+    tended(sim, at(2026, 10, 1, 8));
+    // FIXTURE: admitted to hospital for five weeks of classes, as a serious illness's admission would.
+    sim.player.health = { ...(sim.player.health ?? {}), inHospitalUntil: at(2026, 11, 10, 8) } as never;
+    tended(sim, at(2026, 12, 12, 12));
+    const records = Object.entries(sim.player.school!.courses ?? {}).filter(([, r]) => r.term === 0);
+    expect(records.length).toBeGreaterThan(3);
+    expect(records.every(([, r]) => r.result !== undefined)).toBe(true);
+    expect(records.some(([, r]) => r.result === 'fail')).toBe(false);
+    const incomplete = records.filter(([, r]) => r.result === 'incomplete');
+    expect(incomplete.length).toBeGreaterThan(0);
+    const [key, r] = incomplete[0]!;
+    expect(sim.universe.notifications.some((n) => n.title === `Incomplete: ${r.name}`)).toBe(true);
+    sim = reload(sim);
+    for (let i = 0; i < (r.owed ?? 0); i += 1) {
+      const made = sim.must<{ passed: boolean }>({ kind: 'school.make_up', payload: { key } });
+      expect(made.passed).toBe(i === (r.owed ?? 0) - 1);
+      sim.advanceTo(sim.now + 3 * MS_HOUR);
+    }
+    expect(sim.player.school!.courses![key]!.result).toBe('pass');
+    expect(sim.execute({ kind: 'school.make_up', payload: { key } }).ok).toBe(false);
+  });
+
+  it('a course missed without excuse isn’t passed, the evaluation falls short, and the last term withholds the degree for it', () => {
+    const sim = student('se-fail');
+    const school = sim.player.school!;
+    // FIXTURE: a first-term course attended at half its meetings, none excused.
+    school.courses = { '0:DRAM 103a': { term: 0, code: 'DRAM 103a', name: 'Acting I', meetings: 20, attended: 10, excused: 0 } };
+    settleCourses(sim, sim.player, 0, () => ({ due: 0, notShown: 0 }));
+    expect(school.courses['0:DRAM 103a']!.result).toBe('fail');
+    expect(evaluate(sim, sim.player, 0)!.reason).toMatch(/Not passed: Acting I/);
+    // FIXTURE: the last term's evaluation in good standing otherwise.
+    Object.assign(school, { standing: 'good', termsBegun: 6 });
+    Object.assign(school.tally, { classDays: 40, attended: 40, excused: 0 });
+    expect(evaluate(sim, sim.player, 5)!.standing).toBe('withheld');
+    expect(sim.universe.notifications.find((n) => n.title === 'The Degree Isn’t Recommended')!.body).toMatch(/every course passed, and Acting I wasn’t/);
+  });
+
+  it('an Incomplete at Commencement keeps them from it, and the degree comes when it’s made up, or is withheld when its month runs out', () => {
+    for (const makeUp of [true, false]) {
+      const sim = student(`se-late-${makeUp}`);
+      tended(sim, at(2026, 9, 1, 18));
+      const school = sim.player.school!;
+      // FIXTURE: the last term's evaluation passed with one Incomplete open, then to Commencement.
+      Object.assign(school, { standing: 'good', termsBegun: 6 });
+      school.courses = { '5:DRAM 393b': { term: 5, code: 'DRAM 393b', name: 'Acting VI', meetings: 20, attended: 12, excused: 8 } };
+      settleCourses(sim, sim.player, 5, () => ({ due: 0, notShown: 0 }));
+      expect(school.courses['5:DRAM 393b']!.result).toBe('incomplete');
+      Object.assign(school.tally, { classDays: 40, attended: 40, excused: 0 });
+      evaluate(sim, sim.player, 5);
+      // FIXTURE: Commencement brought to tomorrow, so the month after it is played rather than three years.
+      const booked = sim.universe.scheduled.find((i) => i.kind === COMMENCEMENT_KIND && i.status === 'pending')!;
+      sim.timeline.cancel(booked.id, sim.now);
+      const commencement = sim.schedule({ at: sim.now + MS_DAY, kind: COMMENCEMENT_KIND, label: 'Commencement', category: 'school', priority: 30, payload: booked.payload });
+      tended(sim, Math.min(commencement.at + MS_HOUR, school.courses['5:DRAM 393b']!.dueBy! - MS_DAY));
+      expect(sim.now).toBeGreaterThan(commencement.at);
+      expect(school.standing).toBe('good');
+      expect(school.awaitingDegree).toBe(true);
+      if (makeUp) {
+        // Each session in an evening, clear of the day's classes.
+        for (let i = 0; i < (school.courses['5:DRAM 393b']!.owed ?? 0); i += 1) { tended(sim, sim.now + MS_DAY); sim.must({ kind: 'school.make_up', payload: { key: '5:DRAM 393b' } }); }
+        expect(school.standing).toBe('graduated');
+      } else {
+        tended(sim, school.courses['5:DRAM 393b']!.dueBy! + MS_HOUR);
+        expect(school.courses['5:DRAM 393b']!.result).toBe('permanent');
+        expect(school.standing).toBe('withheld');
+      }
+    }
   });
 });

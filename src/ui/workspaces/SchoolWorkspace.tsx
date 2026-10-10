@@ -13,6 +13,7 @@
  */
 
 import { useState } from 'react';
+import { degreeShortfall, makeUpRefusal, type CourseRecord } from '@/engine/systems/courserecord';
 import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
@@ -25,7 +26,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_POLICIES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { courseworkOf } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
@@ -153,6 +155,8 @@ function StandingPane() {
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
             <WithdrawControl />
+            <CoursesPanel />
+            <PoliciesPanel />
             <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
           </div>
         </Panel>
@@ -497,6 +501,67 @@ function CabaretPanel() {
         </Fine>
       </div>
     </Panel>
+  );
+}
+
+/** What the School asks, as orientation's faculty session set it out (`SCHOOL_POLICIES`), kept for reading at any time. */
+function PoliciesPanel() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const told = courseworkOf(sim, person)?.orientation.done.faculty;
+  return (
+    <details className="small">
+      <summary>What The School Asks{told ? ` (set out at orientation, ${formatDate(told, sim.zone)})` : ''}</summary>
+      <ul style={{ margin: 'var(--s2) 0 0' }}>{SCHOOL_POLICIES.map((p) => <li key={p.rule}>{p.rule} <span className="dim">Bulletin 2026–27 {p.page}.</span></li>)}</ul>
+    </details>
+  );
+}
+
+/**
+ * Each course's record and what the degree still needs (`systems/courserecord.ts`, from 2026-10-10): this term's
+ * courses as they stand, each Incomplete with its make-up and deadline, and every course not passed, first; the rest
+ * in a list below.
+ */
+function CoursesPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  const all = Object.entries(school.courses ?? {});
+  if (!all.length) return null;
+  const { failed, incomplete } = degreeShortfall(school);
+  const term = Math.max(0, school.termsBegun - 1);
+  const now = all.filter(([, r]) => r.term === term && r.result === undefined);
+  const word = (r: CourseRecord) => r.result === 'pass' ? 'Passed' : r.result === 'incomplete' ? 'Incomplete' : r.result === 'fail' ? 'Not Passed' : r.result === 'permanent' ? 'Permanent Incomplete' : 'In Progress';
+  const passed = all.filter(([, r]) => r.result === 'pass').length;
+  return (
+    <div className="col gap-2">
+      <div className="eyebrow">Courses And The Degree</div>
+      <p className="small" style={{ margin: 0 }}>
+        {passed} of {all.length} courses passed so far.{' '}
+        {failed.length ? `The degree can’t be completed: ${failed.map((r) => r.name).join(', ')} ${failed.length === 1 ? 'wasn’t' : 'weren’t'} passed, and SLATE models no repeated course.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
+      </p>
+      {incomplete.map((r) => {
+        const key = `${r.term}:${r.code}`;
+        const no = makeUpRefusal(sim, person, key);
+        return (
+          <div key={key} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+            <span className="small"><strong>{r.name}</strong>, Incomplete: {(r.owed ?? 0) - (r.madeUp ?? 0)} of {r.owed} make-up sessions left, by {formatDate(r.dueBy!, sim.zone)}.</span>
+            <Gated feature="school.make_up" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ passed: boolean }>('school.make_up', { key }); if (a.ok) toast(a.value!.passed ? `${r.name}: passed.` : 'A session made up.', 'positive'); }}>Make Up A Session</Gated>
+            {no && <span className="xs dim">{no}</span>}
+          </div>
+        );
+      })}
+      {failed.map((r) => <p key={`${r.term}:${r.code}`} className="small" style={{ margin: 0 }}><strong>{r.name}</strong>, {word(r)}: {r.why}.</p>)}
+      {now.length > 0 && (
+        <ul className="small" style={{ margin: 0 }}>
+          {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {r.meetings} meetings{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
+        </ul>
+      )}
+      <details className="small"><summary>Every Course</summary>
+        <ul style={{ margin: 0 }}>{all.map(([key, r]) => <li key={key}>{termLabel(r.term)}, {r.code} {r.name}: {word(r)}</li>)}</ul>
+      </details>
+      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, and two-hour make-up sessions. The Bulletin’s nine semesters would let a course be repeated; SLATE models no added term.</Fine>
+    </div>
   );
 }
 

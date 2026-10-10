@@ -109,6 +109,7 @@ import { f1Of, scheduleUsStatus } from './permission';
 import { nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
+import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -319,6 +320,10 @@ export interface SchoolRecord {
   endedAt?: Instant;
   /** Withdrew on or before the fifteenth day of a term's classes, when Yale Health's cover is canceled back to its start (p.174). */
   withdrewEarly?: boolean;
+  /** Each course's record, by term and number (`systems/courserecord.ts`, from 2026-10-10). */
+  courses?: Record<string, CourseRecord>;
+  /** Past Commencement with an Incomplete outstanding: the degree waits for it (`courserecord.ts`). */
+  awaitingDegree?: boolean;
   /** When they registered for the program (`registered`, from 2026-10-10): classes count them, and work-study's I-9 is done, from then. */
   registeredAt?: Instant;
   /** In the casting pool: out after missed rehearsal calls, back after a good evaluation. */
@@ -2027,19 +2032,24 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const unreadyWork = counted && cw.unready >= ESTIMATE.coursework.unready * cw.shown;
   const strongWork = counted && !unreadyWork && cw.strong >= ESTIMATE.coursework.strong * cw.shown;
   // A grave breach in the term keeps it short of good standing, whatever else went well.
-  const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || t.breaches > 0;
+  // A course failed this term falls short too (`settleCourses`, from 2026-10-10).
+  const failedNow = Object.values(school.courses ?? {}).filter((r) => r.term === term && r.result === 'fail');
+  const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || t.breaches > 0 || failedNow.length > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
-  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}`;
+  const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
+  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}`;
   const last = term === YALE_DRAMA.terms - 1;
   const stepped: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
-  const next: Standing = last && stepped === 'warning' ? 'withheld' : stepped;
+  const shortfall = degreeShortfall(school);
+  const next: Standing = last && stepped !== 'dismissed' && (stepped === 'warning' || shortfall.failed.length > 0) ? 'withheld' : stepped;
   const notes = teachersNotes(person, term);
   const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}), ...(cw.shown ? { coursework: cw } : {}), ...(notes.length ? { notes } : {}) };
   school.history.push(review);
   if (!short) school.castable = true;
-  setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : next === 'withheld' ? `The concern wasn’t remedied. ${reason}` : reason);
+  const withheldWhy = shortfall.failed.length ? `The degree needs every course passed, and ${shortfall.failed.map((r) => r.name).join(', ')} ${shortfall.failed.length === 1 ? 'wasn’t' : 'weren’t'}.` : 'The concern wasn’t remedied.';
+  setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : next === 'withheld' ? `${withheldWhy} ${reason}` : reason);
   // The tally starts again with the next term (`TERM_KIND`). Until 2026-09-27 it
   // started again here, and a first-year's Carlotta calls in May and the
   // summer's growth went into the next fall's attendance and growth.
@@ -2054,6 +2064,21 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
 }
 
 export function registerSchool(sim: Simulation): void {
+  // An Incomplete made up, or run out: a degree waiting past Commencement is conferred, or withheld (from 2026-10-10).
+  registerCourseRecord(sim, (s, person) => {
+    const school = person.school!;
+    if (!school.awaitingDegree || schoolEnded(school.standing)) return;
+    const open = degreeShortfall(school);
+    if (open.failed.length || open.incomplete.length) return;
+    delete school.awaitingDegree;
+    setStanding(s, person, 'graduated', `Your last Incomplete made up, the faculty confer the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}, without the ceremony.`);
+  }, (s, person, r) => {
+    const school = person.school!;
+    if (school.awaitingDegree && !schoolEnded(school.standing)) {
+      delete school.awaitingDegree;
+      setStanding(s, person, 'withheld', `${r.name} wasn’t made up in its month, and the degree needs every course passed.`);
+    }
+  });
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
 
   sim.onSchedule(TERM_KIND, (item, s) => {
@@ -2133,6 +2158,8 @@ export function registerSchool(sim: Simulation): void {
     // Each course's work: due there, shown once (or moved on, excused), and what that makes of the meeting's growth in
     // place of an ordinary meeting's; then the course's next work set (`systems/coursework.ts`, from 2026-10-07).
     const meet = (here: boolean, excused: boolean) => courses.map((course) => {
+      // The course's own record, for its pass (`noteMeeting`, from 2026-10-10).
+      noteMeeting(school, termOf(day), course.code, course.name, here ? 'attended' : excused ? 'excused' : 'missed');
       const weight = meetingWeight(s, person, course.code, day, item.at, here, excused);
       setWork(s, person, course.code, day);
       // In class, a partner may ask for an evening (`partnerAsks`, from 2026-10-07).
@@ -2412,14 +2439,31 @@ export function registerSchool(sim: Simulation): void {
     const person = personOf(item);
     if (!person) return;
     // The term’s classes are over: work still open has no meeting left to be shown at (`systems/coursework.ts`).
-    lapseTerm(s, person, Number(item.payload.term));
-    evaluate(s, person, Number(item.payload.term));
+    const term = Number(item.payload.term);
+    lapseTerm(s, person, term);
+    // Each course passed, incomplete or failed (`settleCourses`, from 2026-10-10), which the evaluation then reads.
+    if (person.school && !schoolEnded(person.school.standing)) {
+      const work = courseworkOf(s, person)?.assignments.filter((a) => a.term === term) ?? [];
+      settleCourses(s, person, term, (code) => {
+        const due = work.filter((a) => a.course === code && (a.shown || a.status === 'missed'));
+        return { due: due.length, notShown: due.filter((a) => !a.shown).length };
+      });
+    }
+    evaluate(s, person, term);
   });
 
   sim.onSchedule(COMMENCEMENT_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
     if (!person || !school || schoolEnded(school.standing)) return;
+    // An Incomplete outstanding: no part in Commencement (Bulletin p.26), and the degree waits for it (from 2026-10-10).
+    const open = degreeShortfall(school);
+    if (open.failed.length) { setStanding(s, person, 'withheld', `The degree needs every course passed, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'wasn’t' : 'weren’t'}.`); return; }
+    if (open.incomplete.length) {
+      school.awaitingDegree = true;
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not At Commencement', body: `With ${open.incomplete.map((r) => r.name).join(', ')} still incomplete, you take no part in Commencement. The degree is yours once ${open.incomplete.length === 1 ? 'it’s' : 'they’re'} made up in time.`, importance: 80, route: '/workspace/school' });
+      return;
+    }
     setStanding(s, person, 'graduated', `You graduate from the ${YALE_DRAMA.name} with an ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}.`);
   });
 
@@ -2580,10 +2624,16 @@ export function registerSchool(sim: Simulation): void {
     if (!person || !school || !person.craft) return;
     // Excused as a call is. Until 2026-09-27 a lab missed in hospital counted
     // against them, and toward the casting pool's missed calls.
-    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
+    // A lab is a Pass/Fail course (DRAM 50a, 51b, 363a): its meetings go on its record (`noteMeeting`, from 2026-10-10).
+    const labDay = parseKey(dayKeyAt(item.at));
+    const labTerm = termOf(labDay);
+    const lab = labDays(labTerm);
+    const note = (how: 'attended' | 'excused' | 'missed') => { if (LAB_CODES[labTerm] && lab) noteMeeting(school, labTerm, LAB_CODES[labTerm]!, lab.name, how); };
+    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; note('excused'); return; }
     school.tally.calls += 1;
-    if (!present(person, item.at)) { item.status = 'missed'; return; }
+    if (!present(person, item.at)) { item.status = 'missed'; note('missed'); return; }
     school.tally.answered += 1;
+    note('attended');
     if (item.payload.showing === true) {
       nerves(sim, person, 'performance');
       // The solo piece judged as a night is, a lead's, and kept in the work's record and the journey (from 2026-10-10:

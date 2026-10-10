@@ -362,6 +362,23 @@ export const SCHOOL_SEASON = {
  * (Drama 50 from the second week of classes, the New Play Lab after the
  * spring recess), its afternoon hours, and the showing's day.
  */
+/**
+ * What the School asks of a student, as the faculty set it out at orientation and the Bulletin keeps it (2026–27,
+ * research-yale-student-policies.json), from 2026-10-10: until then the faculty session named the teachers and said
+ * nothing a student needed. Each line is the Bulletin's, with its page; what SLATE does with it is said beside.
+ */
+export const SCHOOL_POLICIES: readonly { rule: string; page: string }[] = [
+  { rule: 'Attendance is required at every class, rehearsal and call. Running late for a call, tell the stage manager at least thirty minutes ahead.', page: 'p.149' },
+  { rule: 'Ill, email your teachers and copy the program chair; the work missed is made up on the schedule each teacher sets. SLATE: Call In Sick, and an Incomplete made up on the Standing tab.', page: 'p.149' },
+  { rule: 'Every acting course is Pass/Fail. An Incomplete is due within a month of the term’s end, or it becomes a Permanent Incomplete with no credit.', page: 'pp.26, 152' },
+  { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. SLATE counts two missed rehearsal calls.', page: 'p.146' },
+  { rule: 'Failing to be available as an understudy is a grave breach of professionalism, and may be grounds for dismissal.', page: 'p.146' },
+  { rule: 'No student on academic warning may take part in the Yale Cabaret, which also needs the chair’s approval and never wins a conflict.', page: 'pp.147–148' },
+  { rule: 'Work-study is 200 hours a year, 150 assigned and 50 elective. Failing to do assigned work-study may lead to academic warning or dismissal.', page: 'p.147' },
+  { rule: 'Concern, then warning, then dismissal; the faculty may act at any time. A student dismissed may not return; one who withdraws may apply to.', page: 'pp.154, 157–160' },
+  { rule: 'The degree is recommended by a majority vote of the faculty, for a student who has completed every course and requirement.', page: 'p.151' },
+];
+
 export const LABS = {
   drama50: { name: 'Drama 50: The Theatrical Event', term: 0, weeks: 3 },
   newPlayLab: { name: 'The New Play Lab', term: 1, weeks: 3 },

@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 46
-- Implemented But Unverified: 74
+- Implemented But Unverified: 75
 - Partially Implemented: 0
-- Commands in all: 120
+- Commands in all: 121
 
 ## Commands
 
@@ -129,6 +129,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal) | — | — | — | 2 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `school.make_amends` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/classmates.ts` | — (also amendsRefusal) | status | — | — | 1 | — |
+| `school.make_up` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/courserecord.ts` | — (also makeUpRefusal) | — | — | — | 1 | — |
 | `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 3 | journey-life.test.ts |
 | `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 7 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 3 | journey-school-year.test.ts; journey-three-students.test.ts |
@@ -198,9 +199,10 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 6 |
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 9 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 0 |
-| `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 3 |
+| `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 5 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.evaluation` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
+| `school.incomplete_due` | `systems/courserecord.ts` | systems/courserecord.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 4 |
 | `school.moment` | `systems/classmates.ts` | systems/classmates.ts | — | — | — | 4 |
 | `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 3 |
