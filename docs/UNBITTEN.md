@@ -76,10 +76,12 @@ to what's kept or by retiring it with the reason, and never quietly:
 - **The union health plans, and COBRA after one.** Retired, the plans' tables
   with them; the tests that used them use a marketplace plan, the Essential
   Plan and Medicaid.
-- **A week worked while claiming.** Still dead in part, and kept as it is:
-  each claim reads nought for the days worked, and says so where it does. A
-  student's work-study pay is what a claim could read, and no claim a student
-  can reach is in the game (`docs/capabilities.json`, the benefits row).
+- **A week worked while claiming.** Was dead in part until 2026-10-10: each
+  claim read nought for the days worked. A Summer Cabaret stipend can qualify a
+  Connecticut claim, so the claim is reachable after all, and from that day a
+  week's unemployment and a month's SNAP read the work-study and Cabaret wages
+  paid in them (`workedBetween`). There's still no rule for a full-time
+  student's availability.
 - **The talent routes to residence.** Retired: the Global Talent visa's and
   the green card's applications and fees went, and Mexico's shorter wait for
   artistic work. A save holding either keeps it and what it opens.
@@ -139,6 +141,33 @@ benefits (a student's work-study wages are kept out of unemployment's base
 period, as FUTA has it). Reaching any needs income after the degree or a life
 outside the school, which the owner's brief held back; they stay as written
 until the owner says otherwise.
+
+---
+
+## The loop's verification of 2026-10-10
+
+The audit that day traced 292 retained features (`docs/GAMEPLAY-COVERAGE.md`) and repaired what it could connect.
+Settled that day: the coursework and a late run reaching the term's standing, the development history's missing
+growth, a director's note's unread fields, `school.filmed`, the TSA rule read only by a sentence, the statement-day
+farm, a status reported lost, and a dozen more, each in its commit. What it left, each kept rather than deleted:
+
+- **The `receipts` knob and `jobCosts`.** Unreachable. The tax return deducts a work's costs by the receipts a
+  trait keeps, and nothing in the game is a cost of the work since the career went. Chaotic's and Keeps Accounts'
+  receipts lean on nothing.
+- **The Mexican residence chain** (residence, renewal, settlement, naturalization). Reachable, and read by nothing
+  outside itself, since no life can move to Mexico. Settlement counts years from the first grant, not continuous
+  residence.
+- **A police report in New Haven.** Read only by New York's free replacement of a stolen license.
+- **IMSS contributions, EI premiums, pensions taxed.** `contribute`, `eiOnCheck` and `recordPension` have no
+  caller, and the pensions they'd feed are unreachable.
+- **`bank.new_number`.** It costs a new card and protects against nothing SLATE models: the fraud draw doesn't read
+  the number.
+- **A past card statement** is cut on today's statement day, so a statement from before a move is shown on the new
+  day.
+- **A classmate's moment answered** keeps its choice on the classmate, read by nothing beyond the memory line.
+- **The chair's casting** reads the last School production's delivery, not a Cabaret's or a Summer run's, though the
+  faculty now read the Cabaret's nights.
+- **SNAP's income** is passed as all earned, interest and benefits with it.
 
 ---
 

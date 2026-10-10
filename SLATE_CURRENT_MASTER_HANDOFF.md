@@ -1,3 +1,131 @@
+# Read First: The Gameplay Loop Completed And Verified, 2026-10-10
+
+The owner's brief, "Complete And Verify SLATE's Current Gameplay Loop", worked from `main` at `43d10f8b`.
+
+## Where it is
+
+- **Branch:** `claude/loop-verification`, pushed, 14 commits on `43d10f8b`. **Not merged** (that's the owner's
+  word to give). **Not deployed.**
+- **Final code:** `e7a4b3b4`. Its `src` and `tests` are those of `e31dbffc`; after that, only `tools/verify.mjs` (it
+  quotes arguments now) and `tools/lives.ts` (it refuses an unknown profile) changed, then the docs.
+- **The gate on `e31dbffc`:** exit 0, read from a file. 129 files, 1,476 tests, and all fifteen checks. `npm run build`
+  passes.
+- **Save schema:** still 94. Nothing in this pass changed it.
+  - New optional fields: `MedicalBill.inDebt`, `CardState.statementAt` and `.feeAt`, `Casting.reviewed`,
+    `SchoolRecord.unreviewed` and `TermReview.coursework`. An older save reads them as absent.
+  - The fields removed (`LastWork.nights`/`.heeded`, `noteSkill`/`noteLevel`, `school.filmed`) are left in a save
+    that has them and read by nothing.
+  - The backend contract is untouched. Deploying still needs the client and the schema-94 guard together, as
+    before.
+
+## Read these, in this order
+
+1. `docs/verification/ACCEPTANCE.md`: the brief's 16 requirements, each with what's built, the evidence, the research
+   behind it and what the runs say of balance.
+2. `docs/verification/REPORT.md`: every figure from the four suites, written by `node tools/verify-report.mjs` from
+   `docs/verification/<suite>/results.jsonl`.
+3. `docs/GAMEPLAY-COVERAGE.md`: 292 retained features traced end to end, from `docs/verification/audit/*.json` by
+   `node tools/coverage.mjs`. 247 are verified, 19 partial, 18 unresolved and 8 informational.
+4. `docs/verification/UI.md`: the pass at 1440 and 390.
+5. `docs/UNBITTEN.md`, its new section "The loop's verification of 2026-10-10": what the audit left, and why.
+
+## What changed, by commit
+
+- **`f71bb8c6`:** Two self-tapes on one day are two records; the second used to replace the first. Adds the resumable
+  verifier, plus the mastery-contract, mastery-integration and history tests.
+- **`f7c45651` (life and health):**
+  - An unpaid bill is debt, and isn't "Settled".
+  - An appeal won on a bill in debt comes off the debt.
+  - Therapy is held at 17:00 on a weekday, and missed when asleep or in hospital.
+  - Switching treatment on pays for the month.
+  - A decision is acted on once, and its command meets the guide's guards.
+  - Workers' compensation is reachable through the Summer Cabaret.
+  - A starved end survives the birthday redraw.
+  - Sleep validates its input.
+- **`9685b7d2` (money):**
+  - The statement day can't be moved to farm statements: the next statement comes 27 days on at the earliest.
+  - The yearly fee is charged once.
+  - A US bounce that leaves the minimum unpaid costs the late fee alone (Reg Z 1026.52(b)(2)(ii)).
+  - Hardship is for those who can't pay.
+  - A cancelled account takes its standing orders with it.
+  - Fraud earns no rewards and isn't alerted twice.
+  - Round-ups count only the debit part.
+  - Left To Spend reads `cardRoom`.
+- **`d5eb33d8` and `a577f278` (school):**
+  - The faculty read the term's coursework: half or more of three or more pieces shown unready falls short.
+  - A run after the evaluation (Carlotta) is judged at the next one, once.
+  - The Cabaret's nights are read.
+  - Growth from rehearsals, nights, labs, coursework training and nerves is recorded (`grewFrom`).
+  - A night is judged before its growth.
+  - The solo showing is judged.
+  - Dead fields were removed.
+  - Idle-student tests now do the work at midnight (marked as test setup).
+- **`49b20023`:** Moments, the feedback block and classmate growth are tested.
+- **`4ab11b30` (papers):**
+  - OPT's panel says it ends after its 90 days without work here. The status decision offers standard filing first,
+    with premium named, and is answered by applying.
+  - Only cards and books can be reported lost.
+  - A dismissal ends the program, with 15 days' grace.
+  - Unemployment and SNAP read work-study and Cabaret wages.
+  - Text fixes. The TSA rule went.
+- **`8787bd4f` (UI):**
+  - The Dispositions text is honest. The Profile shows the dispositions, and traits can be opened.
+  - Body range is in one place, and the page says so.
+  - Home's tax line reads `owedOn`.
+  - The genre suggestion says why it's suggested.
+  - An unclaimed-account decision opens the account.
+  - Stale interest claims were removed.
+- **`a4e8b645`:** What the screenshots found:
+  - feet and inches;
+  - a run under way;
+  - the safe-harbor late fee;
+  - the standing sentence.
+- **Records, the verifier's Windows fix, and the argument quoting:** `f8deca98`, `5a18327e`, `e31dbffc` and
+  `e7a4b3b4`.
+
+## Measured on the final code
+
+- **The 18 lives** (six profiles × three seeds, 3.3 years each, reloaded every 30 days, tree `5aff35ab`):
+  - 15 graduated: every attentive, practicing and pressure life.
+  - The three autopilot lives were dismissed in term 2, after concern and then warning. Each showed every piece of
+    coursework unready (46 of 46) at 100% attendance.
+  - Two attentive lives drew one concern in the second-year fall, at exactly half unready, and recovered.
+  - In every life: 0 breaches, 0 unbalanced ledgers, 0 exceptions.
+  - Abilities at the end: practicing 71–73, attentive 60–61, autopilot 55–56.
+  - **Balance for the owner:** the cared-for students take four or five leads of five in most seeds.
+- **A trap in the verification, caught by the rule-7 test:** the first full run gave 18 near-identical results.
+  - Profiles with spaces weren't quoted, and `lives.ts` fell back silently to its first profile.
+  - Both are fixed. The bad runs are kept as `docs/verification/lives/results-profile-unread.jsonl`.
+- **Mastery:**
+  - All 29 targets reach full in 314–398 sessions over 252–294 days, and stay full after a reload.
+  - Discipline grows by itself. Stamina is full in 64 days.
+  - Both plans keep practicing after the degree, through 2029-11.
+- **Fitness:**
+  - Full by day 84 with daily workouts and by day 178 at three a week (age 25).
+  - It tops out at 91.6 at age 45 and 97.7 at two a week.
+  - With none, it falls to 35. No played policy trains, which was true before the interests went too.
+- **Condition:**
+  - Flu takes about 9–10 points from execution and consistency.
+  - A body injury takes about 25 from each in movement and fight work, and nothing from voice work.
+  - Interpretation is never touched, and no ability is lower afterwards.
+  - Calling in sick excuses the day and moves the showing.
+- **Genres:** unchanged at 41 + 10 + 98 = 149, with 52 techniques.
+- **UI:** 82 screens at 1440 and 58 at 390. Nothing spills past the right edge and there are no page errors.
+  - Back and Forward, the keyboard and the drawer all work.
+  - A schema-92 save migrates through the startup notice.
+
+## Open, for the next session
+
+- The 19 partial and 18 unresolved items in the coverage matrix, each with its reason. The largest are the Papers
+  systems that only removed systems could reach, and the `receipts` knob.
+- **For the owner:**
+  - How many leads a cared-for student should get.
+  - Whether an autopilot student's dismissal in the second year is the consequence wanted.
+- Lint doesn't cover `tools/*.mjs`. `tools/verify.mjs` reads the wall clock for its timings, which the engine's rule
+  forbids, and `npm run lint` doesn't see it.
+
+---
+
 # Read First: Merged To Main, 2026-10-10
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `fcac6b6e` to `500b1860`, nothing force-pushed.
