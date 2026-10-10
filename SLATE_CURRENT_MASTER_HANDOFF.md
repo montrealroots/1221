@@ -1,3 +1,24 @@
+# Read First: Merged To Main, With The Phone Layout, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `43d10f8b` to `claude/mobile-match`, nothing
+force-pushed. That brings in the loop's verification (the section below) and one more commit:
+
+- `d8fee91c`, at the owner's word that the phone should match the desktop. At 390 wide:
+  - The top bar is the desktop's in two ordered rows, with the date.
+  - Tabs stay one row and scroll.
+  - Stat grids keep two across.
+  - The Profile's portrait sits above its facts.
+  - A wide table keeps the desktop's columns at a readable width in its scrolling region, with shadows.
+  - A link that's a heading is no longer centred.
+
+  It was photographed at 390 and 1440: nothing past the edge, no page errors, the desktop unchanged. Gate exit 0,
+  1,476 tests. The navigation stays a drawer behind Menu on a phone. A persistent bar was offered to the owner and
+  not asked for.
+
+**Not deployed.** Schema 94 needs the backend deployed with the client, as before.
+
+---
+
 # Read First: The Gameplay Loop Completed And Verified, 2026-10-10
 
 The owner's brief, "Complete And Verify SLATE's Current Gameplay Loop", worked from `main` at `43d10f8b`.
