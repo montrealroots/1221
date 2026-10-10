@@ -1,0 +1,376 @@
+{
+  "written": "2026-10-10, before implementation, from the audit at 9ae9879b",
+  "count": 37,
+  "items": [
+    {
+      "area": "life",
+      "id": "calendar.skip",
+      "type": "verification",
+      "problem": "Skipping a plan that has come round is meant to free its time; nothing tested it.",
+      "journey": "A student who planned an hour and decides not to go, then washes or sleeps.",
+      "resolution": "Test the command and its effect: Look After refused while the plan is due, allowed once skipped; a second skip refused; across a reload.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "life",
+      "id": "health.pay_bill",
+      "type": "verification",
+      "problem": "Paying medical debt off settles its bills (tested), but its other effects were untested: the day’s money worry, and the report a year on.",
+      "journey": "A student whose care bill went unpaid, who pays it off later.",
+      "resolution": "Test: the debt is a money trouble until paid; paid, it isn’t; no report follows a year on; a report already made stays on the record.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "life",
+      "id": "health.prepay",
+      "type": "verification",
+      "problem": "England’s prescription prepayment certificate is meant to make prescriptions free while it runs; untested.",
+      "journey": "Location fixture only: a life in London. A New Haven student can’t reach it (it’s refused outside England).",
+      "resolution": "Fixture test, labelled: the charge before, free while in force, charged again after; renewal refused early; across a reload.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "life",
+      "id": "knob:appetite",
+      "type": "verification",
+      "problem": "Appetite is read by the day’s weight; no test showed weight moving with it.",
+      "journey": "Any life: the traits chosen at creation that lean appetite.",
+      "resolution": "Matched twins: same body, same days, appetite lean above and below one; weights diverge in the expected direction; once a day.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.respond",
+      "type": "connection",
+      "problem": "The choice is kept on the classmate (personOf(mate).moments[].choice) and read by nothing beyond a memory line.",
+      "journey": "A student answering a classmate’s invitation, request for help or boundary, and meeting them again later.",
+      "resolution": "Read it where it changes a later interaction: invitations stop after two declined or left unanswered; a classmate you helped invites you; an accepted boundary lifts sooner than one pushed back on. Shown on the classmate.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.cabaret",
+      "type": "connection",
+      "problem": "Its nights reach the term evaluation, not the next casting.",
+      "journey": "A student who plays the Cabaret in a term and is cast again the next.",
+      "resolution": "A record of completed runs across School, Rep, Cabaret and Summer; the chair reads delivery from the runs since the last casting, weighted by nights (capped) and by kind, blended with the earlier record so a short run can’t erase a long one; each run read once.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.cabaret (kind)",
+      "type": "connection",
+      "problem": "As school.cabaret.",
+      "journey": "As school.cabaret.",
+      "resolution": "As school.cabaret.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.summer_cabaret",
+      "type": "connection",
+      "problem": "Summer nights reach neither standing nor casting.",
+      "journey": "A first- or second-year who joins the Summer Cabaret.",
+      "resolution": "Summer runs enter the run record and inform the next casting; they don’t enter standing (the summer is outside the term the faculty evaluate), which the term feedback and Why This Cast say.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.summer",
+      "type": "connection",
+      "problem": "As school.summer_cabaret.",
+      "journey": "As school.summer_cabaret.",
+      "resolution": "As school.summer_cabaret.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "school.recess",
+      "type": "verification",
+      "problem": "A notice only; summerOf has no other reader.",
+      "journey": "Every first and second year at the end of spring.",
+      "resolution": "Keep the calendar’s dates authoritative; prove the school schedules nothing for the student between recess and the fall term, and that the notice comes at recess; say on the notice and in the code that it reminds, not rules.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "school",
+      "id": "casting (castFit/castScore)",
+      "type": "connection",
+      "problem": "The chair reads only the last School production’s delivery.",
+      "journey": "Every casting after the first.",
+      "resolution": "As school.cabaret; Why This Cast lists the runs read and their weights.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "money",
+      "id": "bank.new_number",
+      "type": "bounded",
+      "problem": "It costs a new card and protects against nothing modelled: the fraud draw reads no account number.",
+      "journey": "A student whose debit card was used by someone else, at a bank that renumbers a compromised account.",
+      "resolution": "Model the account number’s exposure after debit fraud at such a bank; attempts on an exposed number go through as unauthorized debits until renumbered; renumbered, attempts on the old number are declined; card fraud stays separate; history, balance and disputes kept.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "money",
+      "id": "statements",
+      "type": "defect",
+      "problem": "periodsOf cuts every past card period on today’s statement day, so a statement from before a move is shown on the wrong days.",
+      "journey": "A student who moves their statement day and looks at last month’s statement.",
+      "resolution": "Keep each statement’s actual cut on the card (statementAt history); past periods read it; a legacy card without history keeps today’s reconstruction, said so.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.replace_license",
+      "type": "bounded",
+      "problem": "Only a license issued by Connecticut can be replaced; a license from the birth state elsewhere can’t, from New Haven.",
+      "journey": "A student from another state who loses their license.",
+      "resolution": "Per research: the issuing state’s remote duplicate where it offers one (to an out-of-state address), else the honest refusal; a Connecticut non-driver ID where supported.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.police_report",
+      "type": "unresolved-scope",
+      "problem": "Nothing in New Haven reads the report.",
+      "journey": "A student whose wallet is stolen.",
+      "resolution": "Per research: connect it where a retained workflow genuinely reads one (identity theft, a replacement); otherwise keep it filed and say what it does and doesn’t do.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.claim",
+      "type": "bounded",
+      "problem": "No student availability rule; reachable through a Summer Cabaret claim in Connecticut.",
+      "journey": "A student who claims after the summer.",
+      "resolution": "Per research: Connecticut’s rule on students’ availability; the claim refused or the week unpaid where it applies; earnings reduction from actual wages.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.week",
+      "type": "bounded",
+      "problem": "As benefits.claim.",
+      "journey": "As benefits.claim.",
+      "resolution": "As benefits.claim.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.assistance",
+      "type": "bounded",
+      "problem": "SNAP’s student rule is missing, and income isn’t split into earned and unearned.",
+      "journey": "A US-citizen student short of money who applies for SNAP.",
+      "resolution": "Per research: the higher-education student rule and its exemptions (work-study); earned and unearned income kept apart, the earned deduction on earned only.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.assistance_month",
+      "type": "bounded",
+      "problem": "As benefits.assistance.",
+      "journey": "As benefits.assistance.",
+      "resolution": "As benefits.assistance.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.social_security",
+      "type": "defect",
+      "problem": "Credits count work-study wages, which the student exemption leaves out of FICA; and 40 credits can’t be earned in a school life.",
+      "journey": "Every US life: the credits shown on Papers.",
+      "resolution": "Exclude FICA-exempt wages from credits; keep the credits earned (Summer Cabaret); say the retirement benefit isn’t reachable in a school life, without adding work.",
+      "evidence": "research then tests",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.residence",
+      "type": "removed",
+      "problem": "Mexican residence is paid for and read by nothing: no life can move to Mexico.",
+      "journey": "A wealthy start who applies on Papers.",
+      "resolution": "Say before paying that no life in the game can move there and nothing reads it; refuse? (owner); fix continuity.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.renew_residence",
+      "type": "removed",
+      "problem": "As documents.residence; renewal of an expired card fixed earlier.",
+      "journey": "As documents.residence.",
+      "resolution": "As documents.residence.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.settle",
+      "type": "defect",
+      "problem": "Settlement counts years from the first grant, across lapses.",
+      "journey": "As documents.residence.",
+      "resolution": "Count continuous residence in force; a lapse restarts it.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.naturalize",
+      "type": "removed",
+      "problem": "A Mexican citizenship changes nothing for someone living in New Haven.",
+      "journey": "As documents.residence.",
+      "resolution": "As documents.residence; continuity fixed through settle.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "citizenship.decided",
+      "type": "removed",
+      "problem": "Untested, and nothing downstream in play.",
+      "journey": "As documents.residence.",
+      "resolution": "Test the decision through the legacy/fixture chain; consumer depends on a removed system.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.ei_register",
+      "type": "removed",
+      "problem": "Needs a life in Canada.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system (relocation).",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.bienestar",
+      "type": "removed",
+      "problem": "Needs a life in Mexico.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.ie_state",
+      "type": "removed",
+      "problem": "Needs Irish earnings or residence.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.imss",
+      "type": "removed",
+      "problem": "contribute() has no caller: no Mexican employment exists.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.state",
+      "type": "removed",
+      "problem": "Needs UK earnings or credits.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "documents.visit",
+      "type": "legacy",
+      "problem": "Only for saves from before 2026-10-09.",
+      "journey": "A legacy save with a visit booked.",
+      "resolution": "Test the visit through legacy state: it completes and its document proceeds.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.desempleo_month",
+      "type": "legacy",
+      "problem": "Legacy saves only.",
+      "journey": "A legacy save with a Mexican claim.",
+      "resolution": "Test the month through legacy state: paid, recorded, ends.",
+      "evidence": "tests/coverage-gaps.test.ts",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.ja_week",
+      "type": "removed",
+      "problem": "Needs a life in Ireland.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "benefits.uc_period",
+      "type": "removed",
+      "problem": "Needs a life in Britain.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "papers",
+      "id": "pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment",
+      "type": "removed",
+      "problem": "Each unreachable as its command is; recordPension has no caller.",
+      "journey": "None reachable.",
+      "resolution": "Unresolved, removed system; recordPension kept for the legacy path where a pension is already paid.",
+      "evidence": "owner recommendation",
+      "outcome": "pending"
+    },
+    {
+      "area": "ui",
+      "id": "trait-receipts",
+      "type": "unresolved-scope",
+      "problem": "Receipts multiply job costs the game never creates.",
+      "journey": "A player choosing Chaotic or Keeps Accounts at creation.",
+      "resolution": "Per research: a legitimate receipt-dependent interaction if one exists among retained transactions; otherwise an owner proposal (retire the modifier, keep the traits’ other effects), and the advertised text corrected meanwhile.",
+      "evidence": "research then owner proposal",
+      "outcome": "pending"
+    },
+    {
+      "area": "ui",
+      "id": "l-trait",
+      "type": "unresolved-scope",
+      "problem": "As trait-receipts.",
+      "journey": "As trait-receipts.",
+      "resolution": "As trait-receipts.",
+      "evidence": "research then owner proposal",
+      "outcome": "pending"
+    }
+  ]
+}
