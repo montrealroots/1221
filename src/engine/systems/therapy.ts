@@ -115,6 +115,13 @@ export function registerTherapy(sim: Simulation): void {
     // Away, asleep or in hospital, the session is held next week: until 2026-10-10 only away was, and a session slept
     // through was paid, counted and could lift the depression.
     if (!presentForCare(person, item.at, t.cityId)) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
+    // Yale's counseling sees students Yale Health covers: with the cover gone, the course ends there, and the sessions
+    // had stay had (from 2026-10-10: until then it ran on after the cover ended).
+    if (t.yale && coverOn(person, item.at) !== 'yale') {
+      delete person.therapy;
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Your Counseling At Yale Ended', body: `Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after ${course.done} of ${THERAPY.sessions} sessions. A therapist outside Yale can take it on.`, importance: 60, route: '/workspace/papers' });
+      return;
+    }
     const price = sessionPrice(s, t);
     // Unpaid, a medical bill like any other care's, which goes to the medical debt if it's still unpaid when due
     // (from 2026-10-10; until then it went to the general bills owed, which the medical debt never saw).

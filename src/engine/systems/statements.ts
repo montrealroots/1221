@@ -87,7 +87,11 @@ export function activity(sim: Simulation, account: Account, from: Instant, to: I
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-/** An account's statement periods, newest first, from when it opened to now; the current one is still open. */
+/**
+ * An account's statement periods, newest first, from when it opened to now, or to its closing (from 2026-10-10: until
+ * then a closed account went on having months, empty ones, to today); the current one is still open, a closed
+ * account's last ends at its closing.
+ */
 export function periodsOf(sim: Simulation, account: Account): Period[] {
   const zone = sim.zone;
   const out: Period[] = [];
@@ -97,13 +101,14 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
   if (card && kept.length) return cardPeriods(sim, account, kept);
   const quarterly = closesQuarterly(account);
   const start = zonedParts(account.openedAt, zone);
-  const now = zonedParts(sim.now, zone);
+  const end = account.closedAt ?? sim.now;
+  const now = zonedParts(end, zone);
   // Cards run from the 20th to the 20th, at nine, as their statements do (`systems/credit.ts`).
   let y = now.year;
   let m = now.month;
   // A card states on its day, the 20th unless the holder moved it.
   const sday = statementDayOf(sim.universe.people[account.ownerId], card ? account : undefined);
-  if (card && sim.now >= instantFromZoned({ year: now.year, month: now.month, day: sday, hour: 9 }, zone)) m += 1;
+  if (card && end >= instantFromZoned({ year: now.year, month: now.month, day: sday, hour: 9 }, zone)) m += 1;
   if (m > 12) { m -= 12; y += 1; }
   if (quarterly) m = Math.ceil(m / 3) * 3;
   for (let i = 0; i < 600; i += 1) {
@@ -124,7 +129,8 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
         ? `${MONTHS[fromParts.month - 1]} To ${MONTHS[endParts.month - 1]} ${endParts.year}`
         : `${MONTHS[fromParts.month - 1]} ${fromParts.year}`;
     // A card's past statement drawn here has no cut kept (a save from before 2026-10-10): rebuilt, and said so.
-    out.push({ from, to, label: to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
+    const closing = account.closedAt !== undefined && to > account.closedAt;
+    out.push({ from, to: closing ? account.closedAt! : to, label: closing ? `${label}, To Its Closing` : to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
     if (from <= account.openedAt || (fromParts.year < start.year - 1)) break;
     m -= step;
     while (m < 1) { m += 12; y -= 1; }

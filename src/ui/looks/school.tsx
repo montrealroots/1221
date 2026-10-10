@@ -113,6 +113,10 @@ defineLook<TheSchool>('school', {
         ? `You graduated with the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, ${ordinal(rank)} of ${YALE_DRAMA.classSize} in the class overall.`
         : school.standing === 'dismissed'
           ? 'The school dismissed you, and you left without the degree.'
+          : school.standing === 'withdrawn'
+            ? 'You withdrew from the school, and left without the degree.'
+            : school.standing === 'withheld'
+              ? 'You finished the three years, and the faculty didn’t recommend the degree.'
           : `You’re in your ${YEAR_WORD[year]?.toLowerCase() ?? 'last'} year of three, in ${STANDING_LABEL[school.standing].toLowerCase()} standing, and ${ordinal(rank)} of ${YALE_DRAMA.classSize} in the class overall.`;
 
     return {

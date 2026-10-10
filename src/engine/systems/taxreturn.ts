@@ -34,7 +34,12 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { computeAnnualTax } from '../content/tax';
+import { computeAnnualTax, INCOME_TAX_RULES } from '../content/tax';
+import { f1Of } from './permission';
+import { hasSsn, SSN } from './taxid';
+
+/** The federal standard deduction in the tax table, which a nonresident alien doesn't take (`figuresFor`). */
+const US_STANDARD_DEDUCTION = INCOME_TAX_RULES.find((r) => r.jurisdictionCode === 'US')!.standardDeduction;
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
@@ -144,6 +149,8 @@ export interface TaxReturn {
 }
 
 export interface ReturnFigures {
+  /** The form: a nonresident alien's 1040-NR, with its Form 8843, from 2026-10-10 (`nonresidentFor`); absent, the 1040. */
+  form?: '1040-NR';
   cityId: string;
   acting: Money;
   workStudy: Money;
@@ -316,11 +323,34 @@ export function ukTaxOn(gross: Money, into: string, allowed = false): Money {
  */
 export const NIIT = { rate: 0.038, from: 200_000_00 } as const;
 
+/**
+ * A nonresident alien for the year's US tax (from 2026-10-10; research-student-status.json): a student on an F-1 is an
+ * exempt individual, whose days don't count toward the substantial presence test, for any part of five calendar years
+ * (IRC 7701(b)(5)(E)), so for the whole of SLATE's three. Until then every foreign student filed as a resident, taking
+ * the resident's standard deduction and paying on the banks' interest. A green card isn't modeled, so no student here
+ * is a resident alien by it.
+ */
+export function nonresidentFor(person: Person, year: number): boolean {
+  if (citizenOf(person, 'US') || person.citizenshipId === undefined) return false;
+  const f1 = f1Of(person);
+  if (!f1) return false;
+  const first = zonedParts(f1.issuedAt ?? f1.appliedAt ?? instantFromZoned({ year, month: 1, day: 1, hour: 12 }, HOME), HOME).year;
+  return year - first < 5;
+}
+
+/** The nonresident's due date: 15 April with wages withheld on, 15 June without (Form 1040-NR instructions). */
+export function nonresidentDeadline(year: number, wages: boolean): Instant {
+  return wages ? deadline(year) : instantFromZoned({ year: year + 1, month: 6, day: 15, hour: 23, minute: 59 }, HOME);
+}
+
 export function figuresFor(person: Person, year: number, into = 'USD', filedAt?: Instant): ReturnFigures {
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
-  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0) + (y.pension ?? 0);
+  // A nonresident's return is on income connected with the US: the wages, the taxable scholarship, unemployment. The
+  // banks' deposit interest isn't (IRC 871(i)), and nor would a foreign pension be.
+  const nra = nonresidentFor(person, year);
+  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : (y.interest ?? 0) + (y.pension ?? 0));
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
@@ -396,22 +426,26 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   // Federal, at the standard deduction: itemizing was a home's interest and taxes, which went on 2026-10-09.
   // Filed singly. A joint return for the married (`systems/marriage.ts`, from 2026-10-01) went with the marriages in the
   // scope reset of 2026-10-09.
-  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into }).federal;
+  // A nonresident takes no standard deduction (Form 1040-NR; India's students excepted by treaty, whose citizens aren't
+  // among SLATE's birthplaces): the rule's deduction is added back so its graduated rates fall on the whole.
+  const federalBefore = computeAnnualTax(taxed + (nra ? usd(US_STANDARD_DEDUCTION, into) : 0), cityId, at, { currency: into }).federal;
   // 3.8% on investment income, the banks' interest, over $200,000 of income.
-  const gainTax = Math.round(NIIT.rate * Math.min(y.interest ?? 0, Math.max(0, taxed - usd(NIIT.from, into))));
+  const gainTax = nra ? 0 : Math.round(NIIT.rate * Math.min(y.interest ?? 0, Math.max(0, taxed - usd(NIIT.from, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
   // The Child Tax Credit and the adoption credit came off it (`systems/children.ts`, `systems/adoption.ts`) until the
   // children went in the scope reset of 2026-10-09.
   const federal = federalBefore - foreignCredit + gainTax;
   const incomeTax = federal + stateAndLocal;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
-  const payroll = computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;
+  // None for a nonresident alien on an F-1 (IRC 3121(b)(19)), from 2026-10-10.
+  const payroll = nra ? 0 : computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;
   const premiums = person.health?.premiums[year] ?? [];
   // The poverty line the year's cover reads is the year before's; a person Medicaid or the Essential Plan would take gets no credit.
   const ratio = income / usd(byYear(POVERTY_LINE, year - 1), into);
   const program = ratio <= PUBLIC_COVER.medicaidShare || (lastState === 'us-ny' && ratio <= PUBLIC_COVER.essentialShare);
   const pct = program ? undefined : applicablePercent(year, ratio);
-  const credit = pct === undefined ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
+  // A nonresident alien isn't an applicable taxpayer for the premium tax credit, which the 1040-NR doesn't carry.
+  const credit = pct === undefined || nra ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
   // Connecticut's 2026 assistance: what the expired enhanced credits would have added, in full or half by income.
   const ct = ENHANCED_CREDIT.connecticut;
   const share = lastState === 'us-ct' && year === ct.year && !program ? (ratio > ct.full[0] && ratio <= ct.full[1] ? 1 : ratio > ct.half[0] && ratio <= ct.half[1] ? 0.5 : 0) : 0;
@@ -420,6 +454,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
+    ...(nra ? { form: '1040-NR' as const } : {}),
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
     gainTax, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), mandate, withheld: y.withheld,
@@ -455,6 +490,8 @@ export function armCollection(sim: Simulation, person: Person): void {
 /** Whether a year asks a US return of them: a citizen, or anyone with wages or benefit earned in the US. */
 export function owesUsReturn(person: Person, year: number): boolean {
   if (citizenOf(person, 'US') || person.citizenshipId === undefined) return true;
+  // A student on an F-1 files Form 8843 for each year present (from 2026-10-10).
+  if (nonresidentFor(person, year) && earningsOf(person).years[year] !== undefined) return true;
   const y = earningsOf(person).years[year];
   if (!y) return false;
   if (y.bySource === undefined) return y.acting + y.workStudy + y.unemployment > 0;
@@ -515,15 +552,17 @@ export function registerTaxReturn(sim: Simulation): void {
     // given one on their pounds.
     if (!owesUsReturn(person, year)) return;
     const figures = figuresFor(person, year, cur);
-    // Nothing owed and nothing due back: no return to file.
-    if (figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;
-    const due = deadline(year);
+    // Nothing owed and nothing due back: no return to file. A nonresident student files Form 8843 every year, income or
+    // none (from 2026-10-10), so theirs is always ready.
+    const nra = figures.form === '1040-NR';
+    if (!nra && figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;
+    const due = nra ? nonresidentDeadline(year, figures.workStudy + figures.acting > 0) : deadline(year);
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });
     if (person.id !== s.universe.playerId) return;
     s.requireDecision({
       urgency: 70, category: 'taxes', title: `Your ${year} Tax Return`,
-      detail: `${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : `${formatMoney(-figures.balance, cur)} comes back to you`} on ${formatMoney(figures.income, cur)} of income. File by ${formatDate(due, HOME)}.`,
+      detail: `${nra ? (figures.income > 0 ? 'Form 1040-NR, with Form 8843. ' : 'Form 8843, which every F-1 student files; no income to report. ') : ''}${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : figures.balance < 0 ? `${formatMoney(-figures.balance, cur)} comes back to you` : 'Nothing owed or due back'} on ${formatMoney(figures.income, cur)} of income. File by ${formatDate(due, HOME)}.`,
       route: '/workspace/papers', dueAt: due, refType: 'return', refId: String(year),
       actions: [{ label: 'File It', commandKind: 'tax.file', payload: { year } }],
     });
@@ -617,7 +656,10 @@ export function registerTaxReturn(sim: Simulation): void {
     if (r.figures.foreignRefund > 0) s.schedule({ at: s.now + RETURN.refundDays * MS_DAY, kind: TAX_REFUND_KIND, label: `Canada’s Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, foreign: true } });
     if (r.figures.balance < 0) {
       r.refund = -r.figures.balance;
-      r.refundAt = s.now + RETURN.refundDays * MS_DAY;
+      // A nonresident with no Social Security number files with a W-7 for an ITIN, and the return waits for it: seven
+      // weeks more before the refund (`systems/taxid.ts`, from 2026-10-10).
+      const itin = r.figures.form === '1040-NR' && !hasSsn(person) ? SSN.itinWeeks * 7 : 0;
+      r.refundAt = s.now + (RETURN.refundDays + itin) * MS_DAY;
       s.schedule({ at: r.refundAt, kind: TAX_REFUND_KIND, label: `Tax Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
       return { balance: r.figures.balance, penalty: 0, paid: true };
     }

@@ -27,6 +27,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
+import { nonresidentFor } from './taxreturn';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -64,11 +65,12 @@ const heldAt = (table: Readonly<Record<number, number>>, year: number) => {
  * A year's US wages covered by Social Security, in dollars: what it earned in the US less work-study, which a student
  * working for their own school while enrolled pays no FICA on and earns no credit for (IRC 3121(b)(10), 42 USC
  * 410(a)(10)); until 2026-10-10 it counted, and a student's credits ran ahead of the tax paid. A Summer Cabaret stipend,
- * with FICA withheld out of term, counts.
+ * with FICA withheld out of term, counts, except for a nonresident alien on an F-1.
  */
 function usWages(person: Person, year: number, currency: string): number {
   const y = earningsOf(person).years[year];
-  if (!y) return 0;
+  // A nonresident alien on an F-1 pays no FICA and earns no credit (IRC 3121(b)(19)), from 2026-10-10.
+  if (!y || nonresidentFor(person, year)) return 0;
   const cents = Math.max(0, (y.bySource ? (y.bySource.us ?? 0) : y.acting + y.workStudy) - y.workStudy);
   const usd = currency === 'USD' ? cents : exchange(cents, currency, 'USD') ?? cents;
   return usd / 100;

@@ -30,6 +30,14 @@ import { paymentsOf, type PaymentSettings } from './payments';
  */
 export const DEPOSIT_LEAD = { days: 14 } as const;
 
+/**
+ * Yale's own payroll, which pays work-study weekly: a change of direct deposit in Workday "takes approximately one pay
+ * cycle" (Yale payroll, research-student-status.json A4), so seven days, from 2026-10-10. Every other payer keeps
+ * `DEPOSIT_LEAD`, an estimate, not any institution's rule.
+ */
+export const PAYER_LEAD: Readonly<Record<string, number>> = { 'yale-payroll': 7 };
+export type Payer = keyof typeof PAYER_LEAD;
+
 /** A person's payment settings, kept on them where a save had none. */
 function settingsOf(person: Person): PaymentSettings {
   person.payments ??= paymentsOf(person);
@@ -41,14 +49,19 @@ const open = (sim: Simulation, id: string | undefined): Account | undefined => {
   return a && !a.closedAt ? a : undefined;
 };
 
-/** Where incoming payments go today: the deposit instruction, a change to it applied once its day has come. */
-export function depositAccount(sim: Simulation, person: Person, at: Instant = sim.now): Account | undefined {
+/**
+ * Where incoming payments go today: the deposit instruction, a change to it applied once its day has come; for a payer
+ * with a lead of its own (`PAYER_LEAD`), from that payer's day.
+ */
+export function depositAccount(sim: Simulation, person: Person, at: Instant = sim.now, payer?: string): Account | undefined {
   const pay = settingsOf(person);
   if (pay.depositChange && at >= pay.depositChange.at) {
     pay.depositTo = pay.depositChange.to;
     delete pay.depositChange;
   }
   pay.depositTo ??= open(sim, person.primaryAccountId)?.id;
+  const early = payer ? pay.depositChange?.from?.[payer] : undefined;
+  if (early !== undefined && at >= early) return open(sim, pay.depositChange!.to) ?? open(sim, pay.depositTo);
   return open(sim, pay.depositTo);
 }
 
@@ -57,8 +70,9 @@ export function changeDeposits(sim: Simulation, person: Person, toId: string): I
   const pay = settingsOf(person);
   depositAccount(sim, person);
   const at = sim.now + DEPOSIT_LEAD.days * MS_DAY;
+  const from = Object.fromEntries(Object.entries(PAYER_LEAD).map(([payer, days]) => [payer, sim.now + days * MS_DAY]));
   if (pay.depositTo === toId) delete pay.depositChange;
-  else pay.depositChange = { to: toId, at };
+  else pay.depositChange = { to: toId, at, from };
   return at;
 }
 

@@ -106,7 +106,8 @@ export function registerIdentity(sim: Simulation): void {
     lost.status = 'cancelled';
     const id = s.nextId('document');
     const readyAt = s.now + rule.days * MS_DAY;
-    documentsOf(person).push({ ...lost, id, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt });
+    // A new card, not the lost one's report: its stolen mark and police report stay with the old (from 2026-10-10, as the license's do).
+    documentsOf(person).push({ ...lost, id, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, stolen: undefined, policeReport: undefined } as PersonDocument);
     s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
     return { readyAt, fee };
   });

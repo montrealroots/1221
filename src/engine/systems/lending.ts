@@ -551,8 +551,10 @@ function payFromBank(sim: Simulation, person: Person, amount: Money, from?: Acco
 
 
 /** Moves one person's bank to another of their country's, now. */
-function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false): void {
-  const old = currentOf(sim, person);
+function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false, fromId?: string): void {
+  // The account the switch was asked for (from 2026-10-10: until then whichever was primary on the day it completed).
+  const named = fromId ? sim.universe.accounts[fromId] : undefined;
+  const old = named && !named.closedAt ? named : currentOf(sim, person);
   if (!old) return;
   const oldSavings = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term' && a.bankId === old.bankId);
   const open = (kind: 'checking' | 'savings', from: Account) => {
@@ -971,7 +973,7 @@ export function registerLending(sim: Simulation): void {
   sim.onSchedule(SWITCH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const to = bankById(String(item.payload.bankId));
-    if (person && to) completeSwitch(s, person, to);
+    if (person && to) completeSwitch(s, person, to, false, false, item.payload.fromId ? String(item.payload.fromId) : undefined);
   });
 
   sim.onCommand<{ on: boolean }, { on: boolean }>('bank.debit_overdraft', (p, { sim: s }) => {
@@ -1123,6 +1125,8 @@ export function registerLending(sim: Simulation): void {
     const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
     if (!to) throw new CommandError('That isn’t a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
+    // Already keeping an account there, there's nothing to switch to (from 2026-10-10: until then a second one opened).
+    if (checkingAt(s, person, to.id)) throw new CommandError(`You keep an account at ${to.name} already: make it primary, move what pays from the old one, and close it.`);
     if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
     if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
@@ -1148,7 +1152,7 @@ export function registerLending(sim: Simulation): void {
     }
     const d = zonedParts(at, s.homeZone);
     const due = instantFromZoned({ year: d.year, month: d.month, day: d.day, hour: 9 }, s.homeZone);
-    s.schedule({ at: due, kind: SWITCH_KIND, label: 'World Simulation', category: 'system', priority: 80, payload: { personId: person.id, bankId: to.id } });
+    s.schedule({ at: due, kind: SWITCH_KIND, label: 'World Simulation', category: 'system', priority: 80, payload: { personId: person.id, bankId: to.id, ...(current ? { fromId: current.id } : {}) } });
     return { at: due };
   });
 }

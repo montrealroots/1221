@@ -23,6 +23,9 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { usWorkAuthorized } from './permission';
+import { inHospital } from './health';
+import { laidUp } from './injury';
 import { schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -190,6 +193,9 @@ export function registerUnemployment(sim: Simulation): void {
     // In Connecticut a full-time student isn't available for work (from 2026-10-10, `studentUnavailable`).
     const studying = studentUnavailable(person, state);
     if (studying) throw new CommandError(studying);
+    // A noncitizen is paid only with permission to work in the US (FUTA 3304(a)(14)), from 2026-10-10: until then a
+    // dismissed student out of status was paid.
+    if (!usWorkAuthorized(person, s.now)) throw new CommandError('Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).');
     const cur = saveCurrency(s.universe);
     const base = basePeriodFor(person, state, s.now, cur);
     if (!base.result.ok) throw new CommandError(`${base.result.why} Your base period’s quarters paid ${base.wages.map((w) => formatMoney(w, cur)).join(', ')}.`);
@@ -213,7 +219,9 @@ export function registerUnemployment(sim: Simulation): void {
     // not from abroad, where they aren't available for work. Until 2026-09-27
     // it paid only in the claim's state, and a New York claimant who moved to
     // Los Angeles was paid nothing for the rest of the benefit year.
-    const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state);
+    // Able and available: in the country, not a student, allowed to work, and not in hospital or laid up on the day
+    // the week is certified (the last two from 2026-10-10).
+    const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state) && usWorkAuthorized(person, s.now) && !inHospital(person, s.now) && !laidUp(person, s.now);
     // The week's hours and pay worked: the career's days until the career went on 2026-10-09, and from 2026-10-10 the
     // school's work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none.
     const worked = workedBetween(s, person, item.at - 7 * MS_DAY, item.at);

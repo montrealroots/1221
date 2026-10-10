@@ -21,7 +21,8 @@ import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { INJURY, INJURY_KIND, INJURY_MIX, WORKERS_COMP, type InjuryKind } from '../content/injury';
+import { INJURY, INJURY_KIND, INJURY_MIX, WORKERS_COMP, type CompRules, type InjuryKind } from '../content/injury';
+import { computeAnnualTax } from '../content/tax';
 import { personalityOf } from './personality';
 import { billCare, healthOf, shareOf } from './health';
 import { payeeAccount } from './cash';
@@ -115,18 +116,28 @@ export function injuryDay(person: Person, at: Instant): void {
   w.stress = clamp(w.stress + INJURY.weighs.stress, 0, 100);
 }
 
-/** A week's workers' compensation: two-thirds of the wage between the state's floor and ceiling, the waiting days unpaid unless the time off runs past fourteen. */
+/** A week's benefit in the state's way: its share of the wage (after tax in Connecticut), between its floor and its ceiling. */
+export function compWeekly(sim: Simulation, rules: CompRules, weeklyWage: Money, at: Instant): Money {
+  const cur = saveCurrency(sim.universe);
+  const inSave = (usd: Money) => exchange(usd, 'USD', cur) ?? usd;
+  // After tax: the wage less a year of it's income and payroll tax, by the week (SLATE's reading of CGS 31-310's "after
+  // taxes", worked on the tax table).
+  const base = rules.afterTax ? weeklyWage - Math.round(computeAnnualTax(weeklyWage * 52, 'us-ct-newhaven', at, { currency: cur }).total / 52) : weeklyWage;
+  const share = Math.round(base * rules.share);
+  const floor = rules.minShareOfMax !== undefined ? Math.min(Math.round(inSave(rules.max) * rules.minShareOfMax), share) : inSave(rules.min);
+  return clamp(share, floor, inSave(rules.max));
+}
+
+/** A week's workers' compensation: the state's share of the wage between its floor and ceiling, the waiting days unpaid unless the time off runs past the state's days. */
 export function compWeek(sim: Simulation, person: Person, at: Instant): Money {
   const injury = healthOf(person).injury;
   const work = injury?.atWork;
   if (!injury || !work || !injury.offWorkUntil) return 0;
   const rules = WORKERS_COMP.states[work.stateId] ?? WORKERS_COMP.states['us-ny']!;
-  const cur = saveCurrency(sim.universe);
-  const inSave = (usd: Money) => exchange(usd, 'USD', cur) ?? usd;
-  const weekly = clamp(Math.round(work.weeklyWage * WORKERS_COMP.share), inSave(rules.min), inSave(rules.max));
+  const weekly = compWeekly(sim, rules, work.weeklyWage, injury.at);
   const offDays = Math.round((injury.offWorkUntil - injury.at) / MS_DAY);
   const through = Math.min(offDays, Math.round((at - injury.at) / MS_DAY));
-  const waiting = offDays > WORKERS_COMP.retroAfterDays ? 0 : rules.waitingDays;
+  const waiting = offDays > rules.retroAfterDays ? 0 : rules.waitingDays;
   const owedDays = Math.max(0, through - waiting);
   const days = owedDays - work.paidDays;
   if (days <= 0) return 0;

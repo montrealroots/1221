@@ -85,7 +85,7 @@ import {
 import { readiness } from './life';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
-import { payFromCurrent, spend } from './spending';
+import { expenseFor, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
 import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
@@ -104,8 +104,9 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork, type Assignment } from './coursework';
-import { scheduleUsStatus } from './permission';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork, type Assignment } from './coursework';
+import { f1Of, scheduleUsStatus } from './permission';
+import { nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
@@ -115,10 +116,34 @@ export type Craft = Record<Skill, number>;
  * `withheld`: the last term ended on academic warning, and the faculty, who recommend the degree by a majority vote
  * (Bulletin p.151), didn't (from 2026-10-10: until then Commencement was booked for any standing short of dismissal).
  */
-export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated' | 'withheld';
+export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated' | 'withheld' | 'withdrawn';
 
-/** Whether school is over for them: dismissed, graduated, or ended without the degree. */
-export const schoolEnded = (standing: Standing): boolean => standing === 'dismissed' || standing === 'graduated' || standing === 'withheld';
+/**
+ * Whether they're registered for the program (from 2026-10-10). The Bulletin has every student register before the fall
+ * term's classes begin, and register late only with the chair's written permission (2026–27 p.144); the work-study's
+ * I-9 is done with it, SLATE's reading of where it falls. Unregistered, classes don't count them and a shift can't be
+ * worked. Orientation's registration session does it (`systems/coursework.ts`), or catching it up later, which SLATE
+ * takes the chair's permission for as given. A student who arrived after orientation registered on arriving, and a save
+ * from before a term had begun keeps the way it ran.
+ */
+export function registered(school: SchoolRecord | undefined, cw?: { orientation: { behind?: boolean; done: Partial<Record<string, Instant>> } }): boolean {
+  if (!school) return false;
+  return school.registeredAt !== undefined || cw?.orientation.behind === true || cw?.orientation.done.register !== undefined || school.termsBegun > 1;
+}
+
+/** The withholding on a nonresident alien's taxable scholarship at source: 14% for an F-1 student (IRC 1441(b)). */
+export const NONRESIDENT_SCHOLARSHIP_RATE = 0.14;
+
+/**
+ * Whether school is over for them: dismissed, graduated, ended without the degree, or withdrawn by their own choice
+ * (`school.withdraw`, from 2026-10-10). The four aren't the same event: the Bulletin lets a student who withdrew apply
+ * to come back and one dismissed never (pp.157, 160), and their status, cover and options after differ
+ * (`systems/permission.ts`, `yaleUntil`).
+ */
+export const schoolEnded = (standing: Standing): boolean => standing === 'dismissed' || standing === 'graduated' || standing === 'withheld' || standing === 'withdrawn';
+
+/** Left without the degree, whichever way. */
+export const leftWithout = (standing: Standing): boolean => standing === 'dismissed' || standing === 'withheld' || standing === 'withdrawn';
 
 /** A standing as the school names it. */
 export const STANDING_LABEL: Record<Standing, string> = {
@@ -128,6 +153,7 @@ export const STANDING_LABEL: Record<Standing, string> = {
   dismissed: 'Dismissed',
   graduated: 'Graduated',
   withheld: 'Degree Not Recommended',
+  withdrawn: 'Withdrawn',
 };
 
 /** A term's attendance and growth so far, for its evaluation. */
@@ -291,6 +317,10 @@ export interface SchoolRecord {
    * the career began until the career went; a save from before has neither, and its plan runs on.
    */
   endedAt?: Instant;
+  /** Withdrew on or before the fifteenth day of a term's classes, when Yale Health's cover is canceled back to its start (p.174). */
+  withdrewEarly?: boolean;
+  /** When they registered for the program (`registered`, from 2026-10-10): classes count them, and work-study's I-9 is done, from then. */
+  registeredAt?: Instant;
   /** In the casting pool: out after missed rehearsal calls, back after a good evaluation. */
   castable: boolean;
   /**
@@ -1168,7 +1198,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   const school = person.school!;
   school.standing = to;
   if (schoolEnded(to)) school.endedAt = sim.now;
-  if (to !== 'good') feel(person, to === 'withheld' ? 'dismissed' : to);
+  if (to !== 'good' && to !== 'withdrawn') feel(person, to === 'withheld' ? 'dismissed' : to);
   // "No student on academic warning ... may participate" in the Cabaret (Bulletin 2026–27 p.148): a warning, or the end
   // of school, during a show takes them out of what's still to come (from 2026-10-10: until then it was checked only at
   // joining).
@@ -1184,7 +1214,9 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
     // A dismissal ends an F-1 student's program now, and the look at their status comes with it (`programEnd`).
-    if (to === 'dismissed' || to === 'withheld') scheduleUsStatus(sim, person);
+    // Every way out ends an F-1 student's program, and the look at their status comes with it (`programEnd`): until
+    // 2026-10-10 the degree didn't reschedule it.
+    scheduleUsStatus(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
   const chair = YALE_DRAMA.actingChair.name;
@@ -1194,6 +1226,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     warning: ['Academic Warning', `A formal meeting with the chair, ${chair}, and an associate dean. ${reason} Improve by the end of next term, or you may be dismissed.`],
     dismissed: ['Dismissed From The School', `${reason} Once dismissed, a student isn’t eligible to come back.`],
     graduated: ['Your MFA Is Conferred', reason],
+    withdrawn: ['You Withdrew From The School', reason],
     withheld: ['The Degree Isn’t Recommended', `${reason} The term was your last, so there was no next one to meet the warning in, and the faculty didn’t recommend the degree. SLATE keeps no extra term: the Bulletin allows up to nine semesters, and that path isn’t modeled.`],
   };
   // The last term has no next one to remedy anything in (from 2026-10-10: until then a last-term concern said "by the
@@ -2039,12 +2072,17 @@ export function registerSchool(sim: Simulation): void {
     // Paid where their payments are paid (`payeeAccount`, from 2026-10-10: until then into whichever account was primary).
     const current = payeeAccount(s, person);
     if (need && current && !current.closedAt) {
+      // A nonresident alien's taxable scholarship has 14% withheld at source, reported on Form 1042-S (IRC 1441(b);
+      // research-student-status.json), from 2026-10-10: until then nothing was, and the 1040-NR found it all owed.
+      const year = zonedParts(item.at, zone()).year;
+      const withheld = nonresidentFor(person, year) ? Math.min(account.refund, Math.round(NONRESIDENT_SCHOLARSHIP_RATE * account.taxable)) : 0;
       s.post({
         memo: `Living-expense scholarship, ${termWords(term)}: ${YALE_DRAMA.name}`,
         category: 'scholarship',
-        postings: [{ accountId: current.id, amount: account.refund }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }],
+        postings: [{ accountId: current.id, amount: account.refund - withheld }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])],
       });
       recordScholarship(person, item.at, zone(), account.taxable);
+      if (withheld) yearOf(person, year).withheld += withheld;
     } else if (!need) {
       // No need found: the health plan is billed to the Yale account and paid from the bank.
       payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');
@@ -2104,6 +2142,13 @@ export function registerSchool(sim: Simulation): void {
     // Called in sick, kept home and excused, however well they could have gone (from 2026-10-06; until then a sick day
     // counted only for someone absent anyway, and a student who called in was counted in class).
     if (school.sickDay === keyOf(day)) { meet(false, true); item.status = 'missed'; school.tally.excused += 1; return; }
+    // Not registered, classes don't count them: an absence, unexcused (from 2026-10-10, `registered`).
+    if (!registered(school, courseworkOf(s, person))) {
+      meet(false, false);
+      item.status = 'missed';
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Registered', body: 'You haven’t registered, so today’s classes didn’t count you. Register on the School screen: late, it takes the chair’s written permission, which SLATE takes as given.', importance: 75, route: '/workspace/school' });
+      return;
+    }
     if (present(person, item.at)) {
       school.tally.attended += 1;
       const focus = focusAt(s, person, item.at);
@@ -2149,6 +2194,14 @@ export function registerSchool(sim: Simulation): void {
     // A day called in sick excuses it too (from 2026-10-10: until then only a hospital stay or a lay-up did).
     if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
     if (!elective) school.tally.shifts += 1;
+    // Not registered, the I-9 isn't done and the shift can't be worked: missed, and not excused (the Bulletin's hours lost
+    // to "delay of I-9 completion" can't be converted), from 2026-10-10.
+    if (!registered(school, courseworkOf(s, person))) {
+      item.status = 'missed';
+      if (elective) school.workStudy.electiveHours -= hours;
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'A Shift You Couldn’t Work', body: 'Work-study starts with registration, when the I-9 is done. Register on the School screen.', importance: 60, route: '/workspace/school' });
+      return;
+    }
     // The crew's Saturday needs the protective equipment: bought there if not before, through the bank; the bank short of
     // it, the supervisor sends them home and the shift is missed (`REQUIRED_PPE`, from 2026-10-08).
     if (!elective && present(person, item.at) && !school.ppe && !buyPpe(s, person)) {
@@ -2173,7 +2226,8 @@ export function registerSchool(sim: Simulation): void {
     const person = personOf(item);
     const school = person?.school;
     if (!person || !school || school.workStudy.owedHours <= 0) return;
-    const current = payeeAccount(s, person);
+    // Yale's payroll, whose change of direct deposit takes a pay cycle (`PAYER_LEAD`, from 2026-10-10).
+    const current = payeeAccount(s, person, 'yale-payroll');
     const cur = saveCurrency(s.universe);
     const pay = Math.round(school.workStudy.owedHours * hourlyIn(cur));
     // Paid by direct deposit through Yale's payroll, so a bank counts it as wages. A student's pay
@@ -2577,8 +2631,12 @@ export function registerSchool(sim: Simulation): void {
     // Summer wages, with tax withheld as a paycheck's: a student out of term
     // isn't exempt from FICA. Until 2026-09-27 nothing was withheld, and the
     // return asked for the payroll tax as a balance due.
-    const before = yearOf(person, zonedParts(item.at, zone()).year).acting;
-    const withheld = computeAnnualTax(before + pay, YALE_DRAMA.cityId, item.at, { currency: cur }).total - computeAnnualTax(before, YALE_DRAMA.cityId, item.at, { currency: cur }).total;
+    const year = zonedParts(item.at, zone()).year;
+    const before = yearOf(person, year).acting;
+    const taxOf = (x: number) => computeAnnualTax(x, YALE_DRAMA.cityId, item.at, { currency: cur });
+    // A nonresident alien on an F-1 pays no FICA at all (IRC 3121(b)(19), from 2026-10-10: until then it was withheld).
+    const fica = nonresidentFor(person, year) ? taxOf(before + pay).payroll - taxOf(before).payroll : 0;
+    const withheld = taxOf(before + pay).total - taxOf(before).total - fica;
     s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
     recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
   });
@@ -2586,6 +2644,40 @@ export function registerSchool(sim: Simulation): void {
   /** Whether anything of the school's is on their calendar between two moments. */
   const somethingAtSchool = (s: Simulation, personId: string, from: Instant, to: Instant) => s.universe.scheduled.some((i) => i.status === 'pending' && i.payload.personId === personId && i.at >= from && i.at < to
     && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND || i.kind === CABARET_KIND || i.kind === SUMMER_KIND));
+  /**
+   * A withdrawal of their own (from 2026-10-10): the place given up that day, as the Bulletin lets a student do
+   * (pp.157-160). Its consequences: classes, calls, shifts and coursework end; hours worked are still paid; Yale Health
+   * ends (`yaleUntil`), and on or before the fifteenth day of a term's classes the term's Hospitalization premium comes
+   * back; an F-1 student has fifteen days' grace and no OPT (`graceDays`). Tuition is the Geffen scholarship's, so
+   * the tuition rebate isn't the student's. The Bulletin lets a student who withdrew apply to come back; SLATE doesn't
+   * model a return, and says so.
+   */
+  sim.onCommand<{ confirm?: boolean }, { early: boolean; refund: Money }>('school.withdraw', (p, { sim: s }) => {
+    const person = s.player;
+    const school = person.school;
+    if (!school || schoolEnded(school.standing)) throw new CommandError('You’re not at school.');
+    if (!p?.confirm) throw new CommandError('Withdrawing gives up your place at the School. Confirm to go ahead.');
+    const term = Math.max(0, school.termsBegun - 1);
+    const classesFrom = at(classPeriod(term).from, 0);
+    const early = school.termsBegun > 0 && s.now <= classesFrom + 15 * MS_DAY;
+    school.withdrewEarly = early;
+    // The term's Hospitalization premium back, where it was paid from the bank and the cover is canceled.
+    const cur = saveCurrency(s.universe);
+    const memo = `Yale Health plan, ${termWords(term)}`;
+    const paid = early && s.universe.transactions.some((t) => t.memo === memo && t.postings.some((q) => s.universe.accounts[q.accountId]?.ownerId === person.id));
+    const refund = paid ? termAccount(cur, false, term).healthPlan : 0;
+    if (refund > 0) s.post({ memo: `Refund: ${memo}, withdrawn`, category: 'school', postings: [{ accountId: payeeAccount(s, person).id, amount: refund }, { accountId: s.nominalAccount('expense', expenseFor('school')).id, amount: -refund }] });
+    const f1 = f1Of(person) !== undefined;
+    setStanding(s, person, 'withdrawn', [
+      'You gave up your place at the School today.',
+      early ? `It was by the fifteenth day of classes, so Yale Health’s cover is canceled back to the term’s start${refund > 0 ? `, and its ${formatMoney(refund, cur)} premium is refunded` : ''}.` : 'Yale Health covers you for thirty days more.',
+      'Hours you worked are still paid.',
+      f1 ? 'As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.' : '',
+      'The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.',
+    ].filter(Boolean).join(' '));
+    return { early, refund };
+  });
+
   sim.onCommand<Record<string, never>, { excused: boolean }>('school.call_in_sick', (_p, { sim: s }) => {
     const person = s.player;
     const school = person.school;

@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { INJURY, INJURY_KIND, WORKERS_COMP } from '@/engine/content/injury';
-import { chanceOver, compWeek, everydayInjury, injuryOf, laidUp, mayHurt, trainingRefusal } from '@/engine/systems/injury';
+import { chanceOver, compWeek, compWeekly, everydayInjury, injuryOf, laidUp, mayHurt, trainingRefusal } from '@/engine/systems/injury';
 import { healthOf } from '@/engine/systems/health';
 
 const life = (seed: string, city = 'us-ny-newyork') => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -68,5 +68,20 @@ describe('getting hurt', () => {
     healthOf(sim.player).injury = { kind: 'concussion', at: start, until: start + 10 * MS_DAY, offWorkUntil: start + 10 * MS_DAY, atWork: { stateId: 'us-ny', weeklyWage: 900_00, paidDays: 0 } };
     expect(compWeek(sim, sim.player, start + 7 * MS_DAY)).toBe(0);
     expect(compWeek(sim, sim.player, start + 10 * MS_DAY)).toBe(Math.round((600_00 * 3) / 7));
+  });
+
+  it('in Connecticut, where the school is, pays 75% of the wage after tax from the fourth day, or the first past six, never above 75% of the wage (from 2026-10-10)', () => {
+    const sim = life('hurt-comp-ct');
+    const start = sim.now;
+    // The Summer Cabaret's $375 a week, five days off: three waiting days unpaid, two paid at 75% of it after tax.
+    healthOf(sim.player).injury = { kind: 'sprain', at: start, until: start + 5 * MS_DAY, offWorkUntil: start + 5 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 375_00, paidDays: 0 } };
+    const weekly = compWeekly(sim, WORKERS_COMP.states['us-ct']!, 375_00, start);
+    expect(weekly).toBeLessThanOrEqual(Math.round(375_00 * 0.75));
+    expect(weekly).toBeGreaterThan(Math.round(375_00 * 0.6));
+    expect(compWeek(sim, sim.player, start + 3 * MS_DAY)).toBe(0);
+    expect(compWeek(sim, sim.player, start + 5 * MS_DAY)).toBe(Math.round((weekly * 2) / 7));
+    // Eight days off: paid from the first.
+    healthOf(sim.player).injury = { kind: 'sprain', at: start, until: start + 8 * MS_DAY, offWorkUntil: start + 8 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 375_00, paidDays: 0 } };
+    expect(compWeek(sim, sim.player, start + 8 * MS_DAY)).toBe(Math.round((weekly * 8) / 7));
   });
 });

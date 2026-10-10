@@ -330,8 +330,11 @@ export function registerDocuments(sim: Simulation): void {
     if (!LOSABLE.has(doc.kind)) throw new CommandError('A status isn’t lost with its paper: it holds.');
     doc.status = 'lost';
     if (p.stolen) doc.stolen = true;
-    // A passport reported lost is canceled, and what was issued on it goes with it.
-    if (doc.kind === 'passport') for (const d of documentsOf(s.player)) if (d.passportId === doc.id && d.status === 'valid') d.status = 'cancelled';
+    // A passport reported lost is canceled, and what was issued on it goes with it, except the F-1: SLATE's F-1 is the
+    // student's status as much as the stamp, and the status holds while they study (the I-20 and the I-94), the stamp
+    // mattering only to come back in, which SLATE doesn't model since travel went (from 2026-10-10: until then a lost
+    // passport canceled the F-1, and the Work tab showed it canceled while the status read held).
+    if (doc.kind === 'passport') for (const d of documentsOf(s.player)) if (d.passportId === doc.id && d.status === 'valid' && !(d.kind === 'visa' && d.destination === 'US' && d.name.startsWith('F-1'))) d.status = 'cancelled';
     return { lost: true };
   });
   sim.onCommand<{ documentId: string }, { filed: Instant }>('documents.police_report', (p, { sim: s }) => {

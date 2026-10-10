@@ -44,7 +44,8 @@ export interface PaymentSettings {
   standingOrders: StandingOrder[];
   /** Where incoming payments go, and a change to it with its day (`systems/routing.ts`, from 2026-10-10). */
   depositTo?: string;
-  depositChange?: { to: string; at: number };
+  /** `from`: the day each payer with a lead of its own (`PAYER_LEAD`) pays to the new account, from 2026-10-10. */
+  depositChange?: { to: string; at: number; from?: Record<string, number> };
 }
 
 export const STANDING_ORDER_KIND = 'bank.standing_order';

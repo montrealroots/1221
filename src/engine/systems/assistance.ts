@@ -229,8 +229,14 @@ export function registerAssistance(sim: Simulation): void {
       // Earned and unearned apart, work-study out (`snapIncome`); a student without an exemption is paid nothing that month.
       const income = snapIncome(person, item.at);
       const student = snapStudentRefusal(s, person, item.at);
-      due = student ? 0 : toSave(s, snapMonth(inLocal(s, income.gross, 'USD'), inLocal(s, income.earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
-      if (student && mine) s.notify({ category: 'benefits', title: 'No SNAP This Month', body: student, importance: 50, route: '/workspace/papers' });
+      // A student without an exemption isn't eligible: the case closes, told once, and can be applied for again once that
+      // changes (from 2026-10-10: until then it stayed open and said so every month).
+      if (student) {
+        claim.closedAt = s.now;
+        if (mine) s.notify({ category: 'benefits', title: 'Your SNAP Case Closed', body: `${student} Apply again once that changes.`, importance: 55, route: '/workspace/papers' });
+        return;
+      }
+      due = toSave(s, snapMonth(inLocal(s, income.gross, 'USD'), inLocal(s, income.earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
       if (due > 0) {
         if (limited) claim.counted = [...within, key];
         const ebt = claim.ebtAccountId ? s.universe.accounts[claim.ebtAccountId] : undefined;

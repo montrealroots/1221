@@ -62,8 +62,8 @@ export function walletOf(sim: Simulation, person: Person, open = false): Account
  * Where a payment to them is paid: the deposit instruction (`depositAccount`, from 2026-10-10: until then whichever
  * account was primary on the day), else the primary account, else cash in hand.
  */
-export function payeeAccount(sim: Simulation, person: Person): Account {
-  const deposits = depositAccount(sim, person);
+export function payeeAccount(sim: Simulation, person: Person, payer?: string): Account {
+  const deposits = depositAccount(sim, person, sim.now, payer);
   if (deposits) return deposits;
   const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   return current && !current.closedAt ? current : walletOf(sim, person, true)!;

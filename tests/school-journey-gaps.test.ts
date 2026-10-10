@@ -149,12 +149,12 @@ describe('time', () => {
 });
 
 describe('Yale Health after leaving', () => {
-  it('runs to the end of the term paid for: a December dismissal to 1 February, the degree to 1 August', () => {
+  it('after a dismissal, thirty days (SLATE’s reading; the Bulletin names withdrawal), the degree to 1 August (the rule of 2026-10-10, after p.174 was read)', () => {
     const sim = life('gap-health');
     const school = sim.player.school!;
     school.standing = 'dismissed';
     school.endedAt = at(2026, 12, 15);
-    expect(yaleUntil(sim.player)).toBe(instantFromZoned({ year: 2027, month: 2, day: 1, hour: 0 }, zone));
+    expect(yaleUntil(sim.player)).toBe(school.endedAt + 30 * MS_DAY);
     school.standing = 'graduated';
     school.endedAt = at(2029, 5, 21);
     expect(yaleUntil(sim.player)).toBe(instantFromZoned({ year: 2029, month: 8, day: 1, hour: 0 }, zone));

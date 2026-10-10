@@ -32,8 +32,10 @@ export interface Opening {
   limits?: { outDay: Money; outMonth: Money };
   /** The age it opens an account for somebody on their own. */
   minimumAge?: number;
-  /** The online application asks for US citizenship or residence. */
+  /** For US citizens and permanent residents only (Capital One), or so online with no branch route published (Citi). */
   usPersonsOnly?: boolean;
+  /** Without a US taxpayer number, opened only in a branch, with a passport (from 2026-10-10). */
+  withoutSsn?: 'branch';
   /** Days it may keep an account open, restricted, while items are pending, before closing it. Absent: it won't close one with items pending. */
   closeWithPendingDays?: number;
   source: string;
@@ -46,21 +48,24 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     card: { days: 7, business: false },
     sendDays: 3,
     minimumAge: 18,
-    source: 'Chase Total Checking page and Deposit Account Agreement of 14 June 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
+    withoutSsn: 'branch',
+    source: 'Chase: "International students ... must open account at a Chase branch", with a passport, a US address and a second ID such as the I-20, no SSN needed (research-student-status.json A3). Chase Total Checking page and Deposit Account Agreement of 14 June 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
   },
   'us-bank-of-america': {
     reviewDays: 2,
     minimumDeposit: 100_00,
     card: { days: 6, business: true, digital: true },
     minimumAge: 18,
-    source: 'Bank of America: "Your application will be processed in 1 to 2 business days"; Advantage Plus Banking "requires a $100 opening deposit"; "You will receive your debit card in 4-6 business days", with a digital card in the app "to use while you\'re waiting". Its time for a transfer to another bank isn\'t published',
+    withoutSsn: 'branch',
+    source: 'Bank of America: no SSN needed in person, a foreign passport and a second ID, with both addresses (research-student-status.json A3); "Your application will be processed in 1 to 2 business days"; Advantage Plus Banking "requires a $100 opening deposit"; "You will receive your debit card in 4-6 business days", with a digital card in the app "to use while you\'re waiting". Its time for a transfer to another bank isn\'t published',
   },
   'us-wells-fargo': {
     minimumDeposit: 25_00,
     card: { days: 7, business: false },
     sendDays: 2,
     minimumAge: 18,
-    source: 'Wells Fargo: "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". Its closing of a zero-balance account at a fee period\'s end, unless something posted in two months, isn\'t kept',
+    withoutSsn: 'branch',
+    source: 'Wells Fargo: online needs an SSN or ITIN, and in a branch a passport serves (research-student-status.json A3, medium: its FAQ also says a branch asks for one); "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". Its closing of a zero-balance account at a fee period\'s end, unless something posted in two months, isn\'t kept',
   },
   'us-citi': {
     closesAtZeroAfterDays: 90,
@@ -74,9 +79,10 @@ export const OPENING: Readonly<Record<string, Opening>> = {
   'us-capital-one': {
     openedWhenFunded: true,
     fundWithinDays: 60,
+    usPersonsOnly: true,
     card: { days: 7, business: true },
     sendDays: 3,
-    source: 'Capital One 360 Checking: "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
+    source: 'Capital One 360 Checking: for "United States citizens or lawful permanent residents" (disclosure of 20 May 2026); "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
   },
 };
 

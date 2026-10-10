@@ -15,7 +15,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
 import { FRAUD_LAW, SECURITY } from '@/engine/content/security';
-import { cardAccount, disputeRefusal, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
+import { disputeRefusal, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { cardsOf } from '@/engine/systems/credit';
 import type { Account } from '@/engine/core/ledger';
@@ -33,9 +33,10 @@ export function BankSecurity({ bankId }: { bankId: string }) {
   const bank = bankById(bankId);
   const law = bank ? FRAUD_LAW[bank.iso] : undefined;
   // The debit card this bank issued, and every credit card held, each under its own bank's rules: until 2026-09-28 a person held one credit card.
-  const debit = cardAccount(sim, person, 'debit');
+  // Every current account's debit card, at each bank (from 2026-10-10: the primary account's only until then).
+  const debits = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && a.kind === 'checking' && !a.closedAt && !a.nominal);
   const cards: { which: Which; account: Account }[] = [
-    ...(debit && debit.bankId === bankId ? [{ which: 'debit' as Which, account: debit }] : []),
+    ...debits.map((account) => ({ which: 'debit' as Which, account })),
     ...cardsOf(sim, person).map((account) => ({ which: 'credit' as Which, account })),
   ];
   if (cards.length === 0) return null;

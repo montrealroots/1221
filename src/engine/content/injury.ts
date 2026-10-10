@@ -86,15 +86,22 @@ export const INJURY = {
  * 046-1805); California from 1 January 2026, $264.61 to $1,764.11 (DIR
  * 2025-116). The first week in New York, three days in California, aren't
  * paid unless the time off runs past fourteen days (NY WCL §15(11); Cal.
- * Labor Code §4652). Elsewhere a production's own cover, SLATE takes New
- * York's.
+ * Labor Code §4652). Connecticut from 2026-10-10, where the school's work is
+ * done (research-student-status.json): 75% of the average week's wage after
+ * taxes (CGS 31-307), to $1,776 for an injury from 1 October 2026, at least a
+ * fifth of that but never more than 75% of the wage; nothing unless out more
+ * than three days, from the fourth, or from the first if out seven or more
+ * (CGS 31-295). Until then a Summer Cabaret injury in New Haven was paid on
+ * New York's rules, its floor above the stipend. A student employee isn't
+ * excluded from CGS 31-275's "employee", SLATE's reading: no sentence says so
+ * outright. Elsewhere a production's own cover, SLATE takes New York's.
  */
+export interface CompRules { share: number; min: number; max: number; waitingDays: number; retroAfterDays: number; afterTax?: boolean; minShareOfMax?: number }
 export const WORKERS_COMP = {
-  share: 2 / 3,
   states: {
-    'us-ny': { min: 384_45, max: 1_281_50, waitingDays: 7 },
-    'us-ca': { min: 264_61, max: 1_764_11, waitingDays: 3 },
-  } as Readonly<Record<string, { min: number; max: number; waitingDays: number }>>,
-  retroAfterDays: 14,
-  source: 'https://www.wcb.ny.gov/content/main/SubjectNos/sn046_1805.jsp; https://dir.ca.gov/DIRNews/2025/2025-116.html; Equity rulebooks (Workers’ Compensation); https://www.sagaftraplans.org/health/faq/if-i-am-injured-set-will-plan-pay-my-medical-expenses',
+    'us-ny': { share: 2 / 3, min: 384_45, max: 1_281_50, waitingDays: 7, retroAfterDays: 14 },
+    'us-ca': { share: 2 / 3, min: 264_61, max: 1_764_11, waitingDays: 3, retroAfterDays: 14 },
+    'us-ct': { share: 0.75, min: 0, max: 1_776_00, minShareOfMax: 0.2, afterTax: true, waitingDays: 3, retroAfterDays: 6 },
+  } as Readonly<Record<string, CompRules>>,
+  source: 'https://www.wcb.ny.gov/content/main/SubjectNos/sn046_1805.jsp; https://dir.ca.gov/DIRNews/2025/2025-116.html; https://www.cga.ct.gov/current/pub/chap_568.htm (CGS 31-295, 31-307); https://wcc.state.ct.us/download/acrobat/max-comp-rates.pdf; Equity rulebooks (Workers’ Compensation); https://www.sagaftraplans.org/health/faq/if-i-am-injured-set-will-plan-pay-my-medical-expenses',
 } as const;

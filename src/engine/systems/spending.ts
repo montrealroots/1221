@@ -34,7 +34,7 @@ import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
-import { deadline, latePenalty } from './taxreturn';
+import { latePenalty } from './taxreturn';
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
 const DAY_OF_FOOD_USD = 8;
@@ -381,8 +381,8 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
   // until 2026-09-27 it counted for nothing until it was filed.
   const cur = saveCurrency(sim.universe);
   const late = Object.values(person.returns ?? {})
-    .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > deadline(r.year))
-    .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, deadline(r.year), sim.now, cur), 0);
+    .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > r.due)
+    .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, r.due, sim.now, cur), 0);
   if (late > 0) out.push({ kind: 'return_late', amount: late });
   return out;
 }

@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 46
-- Implemented But Unverified: 72
+- Implemented But Unverified: 74
 - Partially Implemented: 0
-- Commands in all: 118
+- Commands in all: 120
 
 ## Commands
 
@@ -33,30 +33,30 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `bank.cancel_scheduled` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | There’s no payment waiting by that name. | — | — | — | 2 | journey-money.test.ts |
 | `bank.cancel_standing_order` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | There’s no standing order by that name. | — | — | — | 2 | journey-money.test.ts |
 | `bank.claim_unclaimed` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | No money of yours is held as unclaimed. | unclaimed | Yes | — | 1 | — |
-| `bank.close_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal) | — | — | bank.current_closes | 1 | — |
-| `bank.close_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Only a savings account of yours can be closed here.; There’s no current account to move the money into.; Notice is given: … closes on …. | — | — | bank.savings_notice | 5 | — |
+| `bank.close_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal) | — | — | bank.current_closes | 3 | — |
+| `bank.close_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Only a savings account of yours can be closed here.; There’s no current account to move the money into.; Notice is given: … closes on …. | — | — | bank.savings_notice | 6 | — |
 | `bank.debit_overdraft` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | Your bank doesn’t ask you this.; … never pays a debit card purchase into an overdraft. | — | — | — | 1 | — |
 | `bank.new_number` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | You have no current account.; … doesn’t say it moves an account to a new number; closing it and opening another does. | — | — | — | 2 | — |
-| `bank.open_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal) | status | Yes | bank.application; card.arrives | 3 | — |
-| `bank.open_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | You already have a savings account.; Your current account isn’t with a bank that can open one. | — | — | — | 5 | — |
+| `bank.open_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal) | status | Yes | bank.application; card.arrives | 6 | — |
+| `bank.open_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Savings opens beside a current account of yours at that bank.; You already have a savings account at …. | — | — | — | 6 | — |
 | `bank.open_term` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | … publishes no term deposit rate SLATE has.; Say how much to put in.; It takes …)} or more.; … holds …)}. | — | — | savings | 4 | journey-money.test.ts |
 | `bank.pay_collections` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | You don’t owe anything in collections.; You have no account to pay from.; There’s nothing in the account to pay it with. | — | — | — | 1 | — |
 | `bank.reactivate` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That account isn’t dormant. | — | — | — | 1 | — |
 | `bank.redirect_deposits` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Wages are paid into an open current or savings account of yours.; … is closing. | — | — | — | 1 | — |
 | `bank.repay_loan` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | You don’t have a loan to pay off.; Paying it off takes …)}, and the bank can’t cover it all. | — | Yes | — | 2 | journey-money.test.ts |
 | `bank.schedule_payment` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | A scheduled payment goes between two of your own accounts.; Say how much.; Pick a day ahead. | — | — | bank.scheduled_payment | 2 | journey-money.test.ts |
-| `bank.set_alerts` | Verified (journey) | Your Bank | BankStatements.tsx | `systems/statements.ts` | Set the … as an amount, or turn it off. | alerts | — | — | 3 | journey-money.test.ts |
+| `bank.set_alerts` | Verified (journey) | Your Bank | BankStatements.tsx | `systems/statements.ts` | Set the … as an amount, or turn it off. | alerts | — | — | 4 | journey-money.test.ts |
 | `bank.set_order_source` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | No such standing order.; A standing order pays from an open current account of yours.; It pays into that account. | fromId | — | — | 1 | — |
 | `bank.set_payments` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | Everyday spending goes in cash, on the debit card or on the credit card.; There’s no savings account to cover the current account. | — | — | — | 8 | journey-money.test.ts |
-| `bank.set_primary` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only an open current account of yours can be primary.; … is primary already.; … is closing. | primaryAccountId | — | — | 2 | — |
+| `bank.set_primary` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only an open current account of yours can be primary.; … is primary already.; … is closing. | primaryAccountId | — | — | 3 | — |
 | `bank.set_round_ups` | Verified (journey) | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | … doesn’t round purchases up into savings. | roundUps | — | — | 2 | journey-money.test.ts |
 | `bank.set_term_end` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … doesn’t let a term deposit end that way.; … needs … days’ notice before the end to change it. | — | — | — | 1 | — |
-| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; … won’t open an account for somebody who owes it a charged-off debt.; … turned you away on the ChexSystems report … made, which stands until ….; and 4 more | — | — | bank.switch_complete | 5 | — |
+| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; You keep an account at … already: make it primary, move what pays from the old one, and cl; … won’t open an account for somebody who owes it a charged-off debt.; and 5 more | — | — | bank.switch_complete | 6 | — |
 | `bank.take_overrun_loan` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | Your bank has offered no loan for an overrun.; You already have a loan with the bank. | — | — | loan | 1 | — |
 | `bank.take_term_interest` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … pays a term deposit’s interest at its end.; It hasn’t earned anything to take yet. | — | Yes | — | 1 | — |
 | `bank.transfer` | Verified (journey) | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Money moves here between your own current and savings accounts.; That’s the same account.; Say how much to move.; … holds …)}.; and 4 more | — | Yes | — | 5 | journey-money.test.ts |
 | `benefits.assistance` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/assistance.ts` | — (also assistanceRefusal, snapStudentRefusal) | assistance | Yes | escrow | 1 | — |
-| `benefits.claim` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/unemployment.ts` | SLATE pays unemployment in New York, California and Connecticut, where you’d have to have ; You have a claim open.; … Your base period’s quarters paid …. | — | Yes | benefits.week | 3 | — |
+| `benefits.claim` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/unemployment.ts` | SLATE pays unemployment in New York, California and Connecticut, where you’d have to have ; You have a claim open.; Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3; … Your base period’s quarters paid …. | — | Yes | benefits.week | 4 | — |
 | `benefits.ei_register` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/eiself.ts` | — (also eiRefusal) | ei | — | — | 1 | — |
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 3 | journey-life.test.ts |
 | `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 9 | journey-life.test.ts |
@@ -64,7 +64,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; SLATE doesn’t know that bank.; and 3 more (also transferRefusal) | — | — | card.arrives | 4 | — |
 | `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 3 | — |
 | `card.dispute` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | — (also disputeRefusal) | — | — | bank.fraud_refund | 2 | — |
-| `card.lock` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | … locks a card only by phone.; That card is stopped; a new one is on its way. | — | — | — | 2 | journey-money.test.ts |
+| `card.lock` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | … locks a card only by phone.; That card is stopped; a new one is on its way. | — | — | — | 3 | journey-money.test.ts |
 | `card.money_transfer` | Implemented But Unverified | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | You don’t have a card.; The … doesn’t offer money transfers.; You need a current account for the money.; Say how much.; and 1 more | — | Yes | money | 1 | — |
 | `card.plan` | Implemented But Unverified | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | You don’t have a card.; The … has no plan SLATE has terms for.; A plan runs … months.; Purchases owe … that can go into a plan.; and 1 more | — | — | — | 1 | — |
 | `card.redeem_rewards` | Verified (journey) | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | The card has no rewards to redeem. | — | Yes | — | 2 | journey-money.test.ts |
@@ -73,7 +73,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.request_hardship` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; You’re on a plan already.; The card owes nothing.; You could pay it off today: a hardship plan is for when you can’t. | — | — | — | 2 | — |
 | `card.request_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Say the limit you want. | — | — | — | 1 | — |
 | `card.set_auto_raise` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card. | — | — | — | 1 | — |
-| `card.set_autopay_from` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | That isn’t one of your cards.; Autopay pays from an open current account of yours. | — | — | — | 1 | — |
+| `card.set_autopay_from` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | That isn’t one of your cards.; Autopay pays from an open current account of yours. | — | — | — | 3 | — |
 | `card.set_everyday` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t hold that card. | — | — | — | 2 | journey-money.test.ts |
 | `card.set_over_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Opting in to going over the limit is a US card’s choice. | — | — | — | 1 | — |
 | `card.set_statement_day` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Pick a day from the 1st to the 28th. | — | — | — | 5 | journey-money.test.ts |
@@ -82,12 +82,13 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `documents.apply_idcard` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idCardRefusal) | documentsOf (added to) | Yes | idcard | 1 | — |
 | `documents.apply_opt` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/permission.ts` | — (also optRefusal) | usOutOfStatus; documentsOf (added to) | — | permit; documents.permission; documents.opt_week | 1 | — |
 | `documents.apply_passport` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | … is more than the bank can cover. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 3 | journey-life.test.ts |
+| `documents.apply_ssn` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/taxid.ts` | — (also ssnRefusal) | ssn | — | documents.ssn_arrives | 1 | — |
 | `documents.naturalize` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/citizenship.ts` | … is more than the bank can cover. (also naturalizeRefusal) | naturalizing; naturalized | Yes | citizenship.decided | 1 | — |
 | `documents.police_report` | Verified (journey) | Cover, Benefits And Returns | Documents.tsx | `systems/documents.ts` | — (also policeReportRefusal) | — | — | — | 3 | journey-life.test.ts |
 | `documents.renew_residence` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | Only Mexican temporary residence is renewed, a year at a time.; It’s renewed within its last 30 days.; … is more than the bank can cover. | — | Yes | — | 2 | — |
 | `documents.replace_idcard` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also idReplaceRefusal) | documentsOf (added to) | Yes | documents.idcard_arrives | 1 | — |
 | `documents.replace_license` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/identity.ts` | … is more than the bank can cover. (also licenseReplaceRefusal) | documentsOf (added to) | Yes | documents.idcard_arrives | 2 | — |
-| `documents.report_lost` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | That isn’t a document you hold.; A status isn’t lost with its paper: it holds. | — | — | — | 6 | journey-life.test.ts |
+| `documents.report_lost` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | That isn’t a document you hold.; A status isn’t lost with its paper: it holds. | — | — | — | 7 | journey-life.test.ts |
 | `documents.residence` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also routeRefusal) | — | Yes | — | 3 | — |
 | `documents.settle` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | … is more than the bank can cover. (also settleRefusal) | — | Yes | — | 1 | — |
 | `finance.pay_card` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t have a card.; You don’t owe anything on it.; Pay something, or nothing.; There’s nothing in the bank to pay it with. | — | — | — | 3 | — |
@@ -122,19 +123,20 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 2 | journey-three-students.test.ts |
 | `school.ask_partner` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | — | — | — | 3 | — |
 | `school.buy_ppe` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | It’s …, which the bank can’t cover. (also ppeRefusal) | status | Yes | run; school.call | 1 | — |
-| `school.cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 2 | — |
+| `school.cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 3 | — |
 | `school.call_in_sick` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; There’s nothing at school today to miss.; Today’s classes have been and gone; calling in sick now excuses nothing.; You’re well enough to go: staying away would be an unexcused absence. | — | — | — | 3 | journey-life.test.ts |
 | `school.cancel_rehearsal` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 1 | — |
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal) | — | — | — | 2 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `school.make_amends` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/classmates.ts` | — (also amendsRefusal) | status | — | — | 1 | — |
-| `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 2 | journey-life.test.ts |
+| `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 3 | journey-life.test.ts |
 | `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 7 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 3 | journey-school-year.test.ts; journey-three-students.test.ts |
-| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | — (also respondRefusal) | — | — | school.study_session | 4 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 5 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 1 | — |
 | `school.take_shift` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | No free evening in the term in the next two weeks. (also shiftRefusal) | — | — | school.shift | 2 | — |
+| `school.withdraw` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; Withdrawing gives up your place at the School. Confirm to go ahead. | — | Yes | — | 1 | — |
 | `school.work_note` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. | — | Yes | tax.refund | 3 | journey-money.test.ts |
 | `tax.pay` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; … is more than the bank can cover. | — | Yes | — | 2 | journey-money.test.ts |
@@ -159,14 +161,14 @@ money, what it sets going next, and how many test files name it or its constant.
 | `bank.savings_notice` | `systems/banking.ts` | systems/banking.ts; systems/lending.ts | — | — | — | 0 |
 | `bank.scheduled_payment` | `systems/payments.ts` | systems/payments.ts | standingOrders (added to) | Yes | bank.standing_order; bank.scheduled_payment | 2 |
 | `bank.standing_order` | `systems/payments.ts` | systems/payments.ts | — | Yes | bank.standing_order | 2 |
-| `bank.switch_complete` | `systems/lending.ts` | systems/lending.ts | — | Yes | loan; savings; bank.switch_complete | 2 |
+| `bank.switch_complete` | `systems/lending.ts` | systems/lending.ts | — | Yes | loan; savings; bank.switch_complete | 4 |
 | `benefits.assistance_month` | `systems/assistance.ts` | systems/assistance.ts | — | Yes | escrow | 0 |
 | `benefits.desempleo_month` | `systems/homebenefits.ts` | systems/homebenefits.ts | — | — | benefits.desempleo_month | 3 |
 | `benefits.ja_week` | `systems/homebenefits.ts` | systems/homebenefits.ts | — | — | benefits.ja_week | 0 |
 | `benefits.uc_period` | `systems/universalcredit.ts` | systems/universalcredit.ts | — | Yes | — | 0 |
 | `benefits.week` | `systems/unemployment.ts` | systems/unemployment.ts | — | Yes | benefits.week | 0 |
 | `card.arrives` | `systems/cardlife.ts` | systems/bankmoves.ts; systems/cardlife.ts | — | — | credit_card; card.arrives | 0 |
-| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 13 |
+| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 15 |
 | `card.replaced` | `systems/security.ts` | systems/bankmoves.ts; systems/security.ts | last4; issued; expiresAt | — | — | 0 |
 | `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 16 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 2 |
@@ -174,6 +176,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 0 |
 | `documents.opt_week` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
 | `documents.permission` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 0 |
+| `documents.ssn_arrives` | `systems/taxid.ts` | systems/taxid.ts | ssn | — | — | 0 |
 | `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 2 |
 | `documents.visit` | `systems/papervisits.ts` | systems/papervisits.ts | keptAt; missed; at | — | — | 4 |
 | `health.appeal_decided` | `systems/health.ts` | systems/health.ts | — | Yes | — | 0 |
@@ -192,7 +195,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pension.imss_month` | `systems/imss.ts` | systems/imss.ts | — | Yes | pension.imss_month | 0 |
 | `pension.ss_month` | `systems/socialsecurity.ts` | systems/socialsecurity.ts | — | Yes | pension.ss_month | 2 |
 | `pension.state_payment` | `systems/statepension.ts` | systems/statepension.ts | — | Yes | pension.state_payment | 0 |
-| `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 4 |
+| `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 6 |
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 9 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 0 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 3 |
@@ -200,14 +203,14 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.evaluation` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 4 |
 | `school.moment` | `systems/classmates.ts` | systems/classmates.ts | — | — | — | 4 |
-| `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 2 |
+| `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 3 |
 | `school.partner_ask` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
 | `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
-| `school.payday` | `systems/school.ts` | systems/school.ts | — | Yes | run | 1 |
+| `school.payday` | `systems/school.ts` | systems/school.ts | — | Yes | run | 2 |
 | `school.recess` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.shift` | `systems/school.ts` | systems/school.ts | status | — | — | 6 |
 | `school.stipend` | `systems/school.ts` | systems/school.ts | — | Yes | school.shift | 3 |
-| `school.study_session` | `systems/classmates.ts` | systems/classmates.ts | status | — | — | 2 |
+| `school.study_session` | `systems/classmates.ts` | systems/classmates.ts | status | — | — | 4 |
 | `school.summer` | `systems/school.ts` | systems/school.ts | status | — | summer | 3 |
 | `school.term` | `systems/school.ts` | systems/school.ts | — | Yes | school.recess; school.evaluation; school.term | 1 |
 | `school.week` | `systems/school.ts` | systems/school.ts | — | — | — | 0 |

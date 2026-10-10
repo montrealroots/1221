@@ -12,6 +12,7 @@
  * doesn't do for a family with means.
  */
 
+import { useState } from 'react';
 import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
@@ -151,6 +152,7 @@ function StandingPane() {
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
+            <WithdrawControl />
             <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
           </div>
         </Panel>
@@ -495,6 +497,36 @@ function CabaretPanel() {
         </Fine>
       </div>
     </Panel>
+  );
+}
+
+/**
+ * Withdrawing (`school.withdraw`, from 2026-10-10): what it does said first, then a second press to confirm, since it
+ * can't be undone in SLATE.
+ */
+function WithdrawControl() {
+  const { run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [asking, setAsking] = useState(false);
+  if (!person.school || schoolEnded(person.school.standing)) return null;
+  return (
+    <div className="col gap-2">
+      {asking && (
+        <p className="small" style={{ margin: 0 }}>
+          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health is canceled back to the term’s start and its premium refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, which SLATE doesn’t model.
+        </p>
+      )}
+      <div className="row gap-2">
+        {!asking
+          ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking(true)}>Withdraw From The School…</button>
+          : (
+            <>
+              <Gated feature="school.withdraw" className="btn btn-sm btn-danger" onClick={() => { const r = run('school.withdraw', { confirm: true }); if (r.ok) toast('You withdrew from the School.', 'neutral'); setAsking(false); }}>Withdraw</Gated>
+              <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking(false)}>Stay</button>
+            </>
+          )}
+      </div>
+    </div>
   );
 }
 

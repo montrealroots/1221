@@ -25,6 +25,7 @@ import { foodAt } from '@/engine/systems/spending';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
+import { OPENING } from '@/engine/content/bankopening';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, formatDate, instantFromZoned, zoneAbbreviation } from '@/engine/core/time';
@@ -992,8 +993,10 @@ function StartingPointStep({ config, set, setConfig }: {
  * account costs, as the bank publishes them.
  */
 function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void }) {
-  const banks = banksFor(config.startLocationId);
-  const bank = startingBank(config.startLocationId, config.bankId);
+  // Born outside the US, a student on an F-1: the banks that open for them (`startingBank`, from 2026-10-10).
+  const usPerson = CITIES.get(config.homeRegionId ?? '')?.countryId === 'us';
+  const banks = banksFor(config.startLocationId).filter((b) => usPerson || !OPENING[b.id]?.usPersonsOnly);
+  const bank = startingBank(config.startLocationId, config.bankId, usPerson);
   if (!bank) {
     return <p className="small muted" style={{ marginTop: 'var(--s3)' }}>SLATE has no bank on record where you live, so your money is kept in a plain current account.</p>;
   }
@@ -1084,7 +1087,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           {config.school && <Line label="School" value={`${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${config.startYear + 3}`} />}
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
-          <Line label="Bank" value={startingBank(config.startLocationId, config.bankId)?.name ?? 'None On Record'} />
+          <Line label="Bank" value={startingBank(config.startLocationId, config.bankId, CITIES.get(config.homeRegionId ?? '')?.countryId === 'us')?.name ?? 'None On Record'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />

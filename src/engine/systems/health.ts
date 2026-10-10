@@ -185,10 +185,10 @@ const inCalifornia = (cityId: string) => CITIES.get(cityId)?.parentId === 'us-ca
 const active = (r: { from: Instant; until?: Instant } | undefined, at: Instant) => r !== undefined && at >= r.from && (r.until === undefined || at < r.until);
 
 /**
- * Until when the Yale Health plan covers them: while at school; after the degree, to 31 July; after leaving without
- * it, to the end of the term's cover they paid for, 31 January for a fall and 31 July for a spring (from 2026-10-10:
- * until then a student dismissed in December was covered to the next 31 July, and the spring's premium was never
- * billed). The two periods are SLATE's reading of Yale Health's student cover, billed by the term.
+ * Until when the Yale Health plan covers them: while at school; after the degree, or the last term finished without
+ * it, to 31 July; after a withdrawal, thirty days, or none where it came by the fifteenth day of classes; after a
+ * dismissal, thirty days, SLATE's reading (from 2026-10-10: before the Bulletin's withdrawal rules were read, a
+ * dismissal ran to the end of the term's cover, and before that to 31 July).
  */
 export function yaleUntil(person: Person): Instant | undefined {
   const school = person.school;
@@ -197,8 +197,12 @@ export function yaleUntil(person: Person): Instant | undefined {
   const since = school.endedAt;
   if (since === undefined) return Number.POSITIVE_INFINITY;
   const p = zonedParts(since, HOME);
-  if (school.standing !== 'graduated' && (p.month >= 8 || p.month === 1)) return firstOf(p.month >= 8 ? p.year + 1 : p.year, 2);
-  return firstOf(p.month >= 8 ? p.year + 1 : p.year, 8);
+  // The degree, or the last term finished without it: covered through 31 July, as Yale Health says a graduate is.
+  if (school.standing === 'graduated' || school.standing === 'withheld') return firstOf(p.month >= 8 ? p.year + 1 : p.year, 8);
+  // A withdrawal: on or before the fifteenth day of classes the cover is canceled back to the term's start, after it
+  // thirty days more (Bulletin 2026–27 p.174). A dismissal isn't named there; SLATE gives it the thirty days.
+  if (school.standing === 'withdrawn' && school.withdrewEarly) return since;
+  return since + 30 * MS_DAY;
 }
 
 /** What covers them at a moment, first match. */
@@ -313,6 +317,12 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD'): { ok: bool
   if (!state) return { ok: false, why: 'SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.' };
   const h = healthOf(person);
   if (active(h.program, at) || active(h.marketplace, at)) return { ok: false, why: 'You’re enrolled.' };
+  // Enrolled already from a month ahead (from 2026-10-10: until then a second enrollment could be made while the first waited).
+  const ahead = [h.program, h.marketplace].find((c) => c !== undefined && c.from > at && (c.until === undefined || c.until > c.from));
+  if (ahead) return { ok: false, why: `You’re enrolled from ${formatDate(ahead.from, HOME)}.` };
+  // Covered by Yale Health, which the school bills for: a plan beside it would be paid for twice (from 2026-10-10).
+  const yale = yaleUntil(person);
+  if (yale !== undefined && yale > at) return { ok: false, why: Number.isFinite(yale) ? `Yale Health covers you until ${formatDate(yale, HOME)}; you can enroll as that cover ends, within ${ENROLLMENT.specialDays} days of losing it.` : 'Yale Health covers you while you’re at the School.' };
   const program = programFor(person, at, into);
   if (program) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
   if (!lawfullyPresent(person)) return { ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' };

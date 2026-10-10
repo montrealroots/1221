@@ -36,6 +36,7 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
 import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
+import { OPENING } from '../content/bankopening';
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
 import { ACCOUNT_LIFE } from '../content/accountlife';
@@ -80,9 +81,12 @@ export function banksFor(cityId: string): readonly Bank[] {
   return iso ? banksIn(iso) : [];
 }
 
-/** The bank a new life starts with: the one chosen, or the country's first. */
-export function startingBank(cityId: string, chosen?: string): Bank | undefined {
-  const banks = banksFor(cityId);
+/**
+ * The bank a new life starts with: the one chosen, or the country's first; and for somebody who isn't a US citizen, one
+ * that opens for them (from 2026-10-10: Capital One and Citi online are for US persons, `OPENING`).
+ */
+export function startingBank(cityId: string, chosen?: string, usPerson = true): Bank | undefined {
+  const banks = banksFor(cityId).filter((b) => usPerson || !OPENING[b.id]?.usPersonsOnly);
   return banks.find((b) => b.id === chosen) ?? banks[0];
 }
 
@@ -605,11 +609,13 @@ export function registerBanking(sim: Simulation): void {
     return { moved: amount };
   });
 
-  sim.onCommand<Record<string, never>, { accountId: string }>('bank.open_savings', (_p, { sim: s }) => {
+  sim.onCommand<{ bankId?: string }, { accountId: string }>('bank.open_savings', (p, { sim: s }) => {
     const person = s.player;
-    if (bankAccountsOf(s, person).some((a) => a.kind === 'savings')) throw new CommandError('You already have a savings account.');
-    const bank = bankOf(s, person);
-    if (!bank) throw new CommandError('Your current account isn’t with a bank that can open one.');
+    // At any bank they keep a current account with, one each (from 2026-10-10: until then one savings account in all,
+    // at the primary account's bank).
+    const bank = p?.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
+    if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('Savings opens beside a current account of yours at that bank.');
+    if (bankAccountsOf(s, person).some((a) => a.kind === 'savings' && a.bankId === bank.id)) throw new CommandError(`You already have a savings account at ${bank.name}.`);
     return { accountId: openOne(s, person, bank, 'savings', 0).id };
   });
 

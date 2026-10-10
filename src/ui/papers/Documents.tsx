@@ -25,10 +25,11 @@ import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
-  LOSABLE, passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
+  LOSABLE, citizenOf, passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal } from '@/engine/systems/identity';
-import { optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
+import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
+import { hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
 import { naturalizeRefusal } from '@/engine/systems/citizenship';
@@ -189,6 +190,8 @@ export function WorkPane() {
         </div>
       </Panel>
 
+      <TaxIdPanel />
+
       <Panel title="OPT" subtitle={`${opt.form}, after the degree`}>
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>Up to twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days without work in all. There’s no work to be had in SLATE after the degree since the career went, so an OPT approved ends after its {opt.unemploymentDays} days without work, and your US status ends with it: it keeps you here about {opt.unemploymentDays} days from its start. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
@@ -203,6 +206,38 @@ export function WorkPane() {
       <ResidencePanel />
 
     </div>
+  );
+}
+
+/**
+ * A Social Security number's status, and applying for one on an F-1 (`systems/taxid.ts`, from 2026-10-10). No number
+ * is shown: SLATE keeps none.
+ */
+function TaxIdPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const citizen = citizenOf(person, 'US');
+  if (!citizen && !f1Of(person)) return null;
+  const no = ssnRefusal(sim, person);
+  const ssn = person.ssn;
+  const where = citizen ? 'Held, as a US citizen' : ssn?.status === 'issued' ? 'Held' : ssn?.status === 'applied' ? `Applied for; the card comes ${formatDate(ssn.arrivesAt!, sim.zone)}` : 'Not yet';
+  return (
+    <Panel title="Social Security Number" subtitle={where}>
+      <div className="col gap-2">
+        {!citizen && (
+          <p className="small" style={{ margin: 0 }}>
+            On an F-1 you may work only at the School, up to 19 hours a week in term (Yale’s limit) and full time in the breaks, and only while the program lasts. A Social Security number comes with that work: in person at the office on Court Street, with your passport, I-20 and the letters from the international office and the School; the card in two to three weeks. Without one, a 1040-NR goes in with an ITIN application, which holds the return seven weeks, and a bank opens your account only in a branch.
+          </p>
+        )}
+        {!citizen && !hasSsn(person) && ssn?.status !== 'applied' && (
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <Gated feature="documents.apply_ssn" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ arrivesAt: number }>('documents.apply_ssn', {}); if (a.ok) toast(`Applied. The card comes ${formatDate(a.value!.arrivesAt, sim.zone)}.`, 'positive'); }}>Apply At The Social Security Office</Gated>
+            {no && <span className="xs dim">{no}</span>}
+          </div>
+        )}
+        <Fine>SSA POMS RM 10211.245 and the IRS on the ITIN, read 2026-10-10 (research-student-status.json). Whether Yale pays before the card comes isn’t published; SLATE pays, as the IRS lets an employer report the number as applied for.</Fine>
+      </div>
+    </Panel>
   );
 }
 

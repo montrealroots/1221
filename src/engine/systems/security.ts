@@ -75,9 +75,16 @@ function currentOf(sim: Simulation, person: Person): Account | undefined {
   return account && !account.closedAt ? account : undefined;
 }
 
-/** The account a card draws on: the current account for the debit card, the card's own for a credit card, the everyday one where none is named. */
+/**
+ * The account a card draws on: for a debit card the current account named, any of theirs at any bank (from 2026-10-10:
+ * until then the primary one only, and a second bank's card couldn't be locked or reported), or the primary one; the
+ * card's own for a credit card, the everyday one where none is named.
+ */
 export function cardAccount(sim: Simulation, person: Person, which: Which, accountId?: string): Account | undefined {
-  return which === 'debit' ? currentOf(sim, person) : cardFor(sim, person, accountId);
+  if (which !== 'debit') return cardFor(sim, person, accountId);
+  const named = accountId ? sim.universe.accounts[accountId] : undefined;
+  if (named && named.ownerId === person.id && named.kind === 'checking' && !named.closedAt) return named;
+  return currentOf(sim, person);
 }
 
 function yearsFor(account: Account, which: Which): number {
@@ -223,9 +230,12 @@ export function registerSecurity(sim: Simulation): void {
 
   sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {
     const person = s.player;
-    for (const which of ['debit', 'credit'] as const) {
-      const account = cardAccount(s, person, which);
-      if (!account) continue;
+    // Every debit card at every bank, and the everyday credit card (from 2026-10-10: the primary account's debit card only until then).
+    const held: [Which, Account][] = [
+      ...Object.values(s.universe.accounts).filter((a) => a.ownerId === person.id && a.kind === 'checking' && !a.closedAt && !a.nominal).map((a): [Which, Account] => ['debit', a]),
+      ...[cardAccount(s, person, 'credit')].filter((a): a is Account => a !== undefined).map((a): [Which, Account] => ['credit', a]),
+    ];
+    for (const [which, account] of held) {
       const p = plasticOf(s, account, which);
       // A month before it expires, a new card with the same number (A144, C88).
       if (!p.stopped && p.expiresAt - s.now <= 30 * MS_DAY) {

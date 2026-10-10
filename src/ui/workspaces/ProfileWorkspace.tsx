@@ -148,7 +148,7 @@ function IdentityPanel() {
             <Stat label="Pronouns" value={person.pronouns} note={person.performerTitle === 'actress' ? 'Billed as an actress' : 'Billed as an actor'} />
             <Stat label="Age" value={String(ageOn(person.birthInstant, sim.now, sim.zone))} note={`Born ${formatDate(person.birthInstant, sim.zone)}`} />
             <Stat label="From" value={home?.name ?? 'Not On The Map'} note={country ? `A citizen of ${theCountry(country.name)}` : undefined} />
-            <Stat label="School" value={school ? (school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' ? 'Left' : `Year ${yearOfStudy(person)}`) : 'None'} note={school ? `Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}` : undefined} />
+            <Stat label="School" value={school ? (school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left' : `Year ${yearOfStudy(person)}`) : 'None'} note={school ? `Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}` : undefined} />
             <Stat label="Living In" value={CITIES.get(person.currentLocationId)?.name ?? '—'} />
           </div>
           {person.background && <p className="small" style={{ margin: 0 }}><strong>In their own words.</strong> {person.background}</p>}
@@ -362,7 +362,7 @@ function JourneyPanel() {
   const work = [...(person.work ?? [])].reverse();
   const terms = Object.entries(j.byTerm);
   return (
-    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
+    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
         {terms.length > 0 && (

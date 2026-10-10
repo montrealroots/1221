@@ -23,8 +23,8 @@ import { checkingsOf } from '@/engine/systems/lending';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
 import { cardsOf, autopaySource } from '@/engine/systems/credit';
-import { depositAccount, linkedTo, orderSource, DEPOSIT_LEAD } from '@/engine/systems/routing';
-import { PRIMARY_DOES, applicationsOf, closeRefusal, openRefusal, openingOf, transfersOf } from '@/engine/systems/bankmoves';
+import { depositAccount, linkedTo, orderSource, DEPOSIT_LEAD, PAYER_LEAD } from '@/engine/systems/routing';
+import { PRIMARY_DOES, applicationsOf, channelFor, closeRefusal, openRefusal, openingOf, transfersOf } from '@/engine/systems/bankmoves';
 
 export function BankMoves() {
   const { sim, run, toast } = useGame();
@@ -70,6 +70,7 @@ export function BankMoves() {
   const whatItTakes = (): string => {
     if (!chosen) return '';
     const parts: string[] = [];
+    if (channelFor(person, chosen) === 'branch') parts.push('Without a Social Security number, you apply in a branch here, with your passport and I-20: an hour there.');
     parts.push(rules?.reviewDays ? `It decides an application in ${rules.reviewDays} business days, the longer end of what it says.` : 'It opens the account as you apply.');
     parts.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts.` : rules ? 'It asks for no opening deposit.' : 'SLATE has found no opening deposit it asks for.');
     if (rules?.openedWhenFunded) parts.push('The account counts as open only once money is in it.');
@@ -105,12 +106,12 @@ export function BankMoves() {
                 </p>
                 {links.length > 0 && <p className="xs dim" style={{ margin: 0 }}>{links.join('. ')}.</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'end' }}>
-                  {a.id !== person.primaryAccountId && (
+                  {a.id !== person.primaryAccountId && a.closingAt === undefined && (
                     <Gated feature="bank.set_primary" className="btn btn-sm" onClick={() => { const r = run<{ unchanged: string[] }>('bank.set_primary', { accountId: a.id }); if (r.ok) toast(`${a.name} is primary. ${r.value?.unchanged.length ? 'What was set up elsewhere stays there.' : ''}`, 'positive'); }}>
                       Make Primary
                     </Gated>
                   )}
-                  {deposits?.id !== a.id && pay.depositChange?.to !== a.id && (
+                  {deposits?.id !== a.id && pay.depositChange?.to !== a.id && a.closingAt === undefined && (
                     <Gated feature="bank.redirect_deposits" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ at: number }>('bank.redirect_deposits', { accountId: a.id }); if (r.ok && r.value) toast(`Wages and other payments go to ${a.name} from ${formatDate(r.value.at, sim.zone)}.`, 'positive'); }}>
                       Have Wages Paid Here
                     </Gated>
@@ -137,7 +138,7 @@ export function BankMoves() {
           })}
           <p className="xs dim" style={{ margin: 0 }}>
             The primary account is where {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another primary moves nothing already set up.
-            {' '}Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches the payers in {DEPOSIT_LEAD.days} days, SLATE’s estimate of a pay cycle (employers say one to two).
+            {' '}Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says, and other payers in {DEPOSIT_LEAD.days}, SLATE’s estimate (employers say one to two pay cycles).
           </p>
         </div>
       </Panel>

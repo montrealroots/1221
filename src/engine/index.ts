@@ -45,6 +45,7 @@ import { registerMortality } from './systems/mortality';
 import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerBankMoves } from './systems/bankmoves';
+import { registerTaxId } from './systems/taxid';
 import { registerLending } from './systems/lending';
 import { registerStatements } from './systems/statements';
 import { armPayments, freshPayments, registerPayments } from './systems/payments';
@@ -135,6 +136,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
+  registerTaxId(sim);
   registerIdentity(sim);
   registerResidence(sim);
   registerCitizenship(sim);
@@ -167,7 +169,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // --- Accounts -----------------------------------------------------------
   // At a real bank where they live (`systems/banking.ts`). A country the
   // tables have no bank for keeps a plain current account and savings.
-  const bank = startingBank(config.startLocationId, config.bankId);
+  const bank = startingBank(config.startLocationId, config.bankId, player.citizenshipId === 'us');
   if (bank) {
     openAt(sim, player, bank, { checking: wealth.checking, savings: wealth.savings });
   } else {
@@ -243,7 +245,7 @@ export function refreshMeta(sim: Simulation): void {
   // 2026-09-27 it was the title alone, Actor or Actress, whatever the life;
   // until 2026-10-09 the agency after the school, which went with the career.
   const school = player.school;
-  const where = !school ? '' : school.standing === 'graduated' ? ', Yale Drama Graduate' : school.standing === 'dismissed' || school.standing === 'withheld' ? ', Left Yale Drama' : `, Yale Drama Year ${yearOfStudy(player)}`;
+  const where = !school ? '' : school.standing === 'graduated' ? ', Yale Drama Graduate' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? ', Left Yale Drama' : `, Yale Drama Year ${yearOfStudy(player)}`;
   sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + where + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);

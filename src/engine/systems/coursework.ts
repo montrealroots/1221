@@ -884,6 +884,8 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
   const cur = saveCurrency(sim.universe);
   switch (task) {
     case 'register': {
+      // Registered: classes count them, and the work-study's I-9 is done (`registered`, from 2026-10-10).
+      school.registeredAt ??= sim.now;
       const acc = termAccount(cur, hasNeed(person), 0);
       return `Tuition, ${formatMoney(acc.tuition, cur)} a term, is met by the tuition scholarship. ${hasNeed(person) ? `Your living-expense scholarship, ${formatMoney(acc.livingScholarship, cur)}, meets the Yale Health plan, ${formatMoney(acc.healthPlan, cur)}, and the rest comes to your bank.` : `No need was found, so the Yale Health plan, ${formatMoney(acc.healthPlan, cur)} a term, is yours to pay.`} Work-study is ${WORK_STUDY.assignedHours} assigned hours a year at ${formatMoney(WORK_STUDY.hourly, 'USD')} an hour, a shift each Saturday of the class weeks.`;
     }

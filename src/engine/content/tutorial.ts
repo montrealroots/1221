@@ -180,7 +180,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Beside the craft is composure, on the School screen. Nerves add stress before every performance, less the more composure you have, and every performance grows it; a night’s consistency reads it.',
     ],
     names: ['School', 'Your school, from the School panel', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Plays To Read: Read It and Research It'],
-    opens: ['ui.school', 'school.call_in_sick', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill', 'look.assignment'],
+    opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill', 'look.assignment'],
   },
   {
     id: 'profile',
@@ -226,7 +226,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Each paper you hold opens where it’s listed: who issued it, the last digits of its number, when it was issued and runs out, what it lets you do today, and the country it’s from or for.',
     ],
     names: ['Passport And ID', 'Permission To Work', 'Apply For OPT', 'Apply For One', 'Renew It', 'Apply Faster', 'Report Lost', 'Replace It', 'File A Police Report', 'Residence Abroad'],
-    opens: ['documents.apply_passport', 'documents.replace_idcard', 'documents.report_lost', 'documents.apply_idcard', 'documents.replace_license', 'documents.apply_opt', 'documents.residence', 'documents.settle', 'documents.renew_residence', 'documents.naturalize', 'look.document'],
+    opens: ['documents.apply_passport', 'documents.replace_idcard', 'documents.report_lost', 'documents.apply_idcard', 'documents.replace_license', 'documents.apply_opt', 'documents.apply_ssn', 'documents.residence', 'documents.settle', 'documents.renew_residence', 'documents.naturalize', 'look.document'],
   },
   {
     id: 'money',

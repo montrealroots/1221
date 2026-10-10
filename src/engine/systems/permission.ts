@@ -15,7 +15,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
-import { schoolEnded } from './school';
+import { leftWithout, schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, formatDate, type Instant } from '../core/time';
@@ -60,9 +60,21 @@ export function programEnd(person: Person): Instant | undefined {
   const planned = f1?.expiresAt !== undefined ? f1.expiresAt - STARTING.graceDays * MS_DAY : undefined;
   // A dismissal ends the program that day (from 2026-10-10: until then a dismissed student's status ran to the end the
   // degree would have had, and sixty days past it).
+  // Every way out without the degree, dismissal, withdrawal or a degree withheld, ends it that day too (from 2026-10-10).
   const school = person.school;
-  if (planned !== undefined && school?.standing === 'dismissed' && school.endedAt !== undefined) return Math.min(planned, school.endedAt);
+  if (planned !== undefined && school && leftWithout(school.standing) && school.endedAt !== undefined) return Math.min(planned, school.endedAt);
   return planned;
+}
+
+/**
+ * Whether they may work in the US for any employer at a moment (from 2026-10-10): a citizen, or a holder of a US
+ * permit in force, OPT. An F-1 student's own on-campus work isn't this: it's permission for the school's jobs alone,
+ * ending with the program (8 CFR 214.2(f)(9)(i)). Unemployment reads it (FUTA 3304(a)(14)).
+ */
+export function usWorkAuthorized(person: Person, at: Instant): boolean {
+  if (citizenOf(person, 'US')) return true;
+  if (person.usOutOfStatus !== undefined) return false;
+  return usPermits(person).some((d) => d.status === 'valid' && inForce(d, at));
 }
 
 /** Whether they're a student still, at school. */
@@ -76,7 +88,9 @@ export function optRefusal(sim: Simulation, person: Person): string | undefined 
   const end = programEnd(person);
   if (citizenOf(person, 'US')) return 'OPT is for a student on an F-1; you’re a citizen.';
   if (end === undefined) return 'OPT is for a student on an F-1, and you haven’t held one.';
-  if (person.school?.standing === 'dismissed') return 'OPT follows a degree completed.';
+  // Post-completion OPT follows a program completed: not a dismissal, a withdrawal or a degree withheld (from 2026-10-10:
+  // until then only a dismissal was refused).
+  if (person.school && leftWithout(person.school.standing)) return 'OPT follows a degree completed, and you left without it.';
   const opens = end - WORK_RULES.opt.windowBeforeDays * MS_DAY;
   const closes = end + WORK_RULES.opt.windowAfterDays * MS_DAY;
   if (sim.now < opens) return `It opens ${formatDate(opens, sim.zone)}, 90 days before the program ends.`;
@@ -108,7 +122,23 @@ export function optRefusal(sim: Simulation, person: Person): string | undefined 
  * graduate out of permission stayed on in New York, refused every job,
  * with nothing said, and a played life starved there.
  */
-export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10, dismissed: 15 } as const;
+export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10, withdrawn: 15, dismissed: 0 } as const;
+
+/**
+ * The grace after the program ends, by how it ended (8 CFR 214.2(f)(5)(iv), as in force on 2026-10-10: DHS's rule of
+ * 17 July 2026 cutting it to 30 days was stayed by the court on 14 September; research-student-status.json):
+ * - **The degree**, 60 days.
+ * - **A withdrawal the school authorizes**, 15 days. A degree withheld counts as one here, SLATE's reading: the program
+ *   ended without completion, and nothing says the school terminated the record for cause.
+ * - **A dismissal**, none: failing to maintain status leaves no grace. Until 2026-10-10 SLATE gave a dismissal the
+ *   withdrawal's 15 days.
+ */
+export function graceDays(person: Person): number {
+  const s = person.school?.standing;
+  if (s === 'dismissed') return STATUS_GRACE_DAYS.dismissed;
+  if (s === 'withdrawn' || s === 'withheld') return STATUS_GRACE_DAYS.withdrawn;
+  return STATUS_GRACE_DAYS.f1;
+}
 
 const usPermits = (person: Person) => documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US');
 
@@ -118,9 +148,7 @@ export function usStatusEnds(person: Person): Instant | undefined {
   if (!f1Of(person) || studying(person)) return undefined;
   const permits = usPermits(person);
   if (permits.some((d) => d.status === 'pending')) return undefined;
-  // Dismissed, fifteen days to leave, the period 8 CFR 214.2(f)(5)(iv) gives a withdrawal the school authorizes (SLATE's
-  // reading: a student who fails to maintain status gets none, and the school, not the student, ended this one).
-  let ends = (programEnd(person) ?? 0) + (person.school?.standing === 'dismissed' ? STATUS_GRACE_DAYS.dismissed : STATUS_GRACE_DAYS.f1) * MS_DAY;
+  let ends = (programEnd(person) ?? 0) + graceDays(person) * MS_DAY;
   for (const d of permits) {
     if (d.status === 'valid' && d.expiresAt !== undefined) ends = Math.max(ends, d.expiresAt + (d.name.includes('OPT') ? STATUS_GRACE_DAYS.opt : STATUS_GRACE_DAYS.o1) * MS_DAY);
     if (d.endedAt !== undefined) ends = Math.max(ends, d.endedAt);

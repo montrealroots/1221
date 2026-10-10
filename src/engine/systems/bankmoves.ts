@@ -44,6 +44,9 @@ import { pendingOn } from './pending';
 import { photoIdOf } from './documents';
 import { ageOn } from './mortality';
 import { homeOf } from './earnings';
+import { citizenOf } from './documents';
+import { hasSsn } from './taxid';
+import { startRefusal } from './life';
 import { last4For, REPLACED_KIND } from './security';
 
 export const APPLICATION_KIND = 'bank.application';
@@ -95,8 +98,25 @@ export function openRefusal(sim: Simulation, person: Person, bankId: string, at:
   if (!photoIdOf(person, at)) return `${bank.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
   const rules = openingOf(bank);
   if (rules?.minimumAge !== undefined && ageOn(sim, person, at) < rules.minimumAge) return `${bank.name} opens an account on your own from ${rules.minimumAge}.`;
-  if (rules?.usPersonsOnly && person.citizenshipId !== 'us') return `${bank.name}’s application asks for US citizenship or residence.`;
+  // US persons only: a citizen, or a permanent resident, whom SLATE doesn't model, so a citizen (from 2026-10-10 Capital
+  // One too, whose disclosure says so; Citi's branch route for a nonresident isn't published).
+  if (rules?.usPersonsOnly && !citizenOf(person, 'US')) return `${bank.name} opens this account for US citizens and permanent residents; on an F-1 you’re neither.`;
+  // Without a Social Security number, a bank that opens for international students does it in a branch: in town, out
+  // of hospital, and an hour there (SLATE's estimate).
+  if (channelFor(person, bank) === 'branch') {
+    if (person.currentLocationId !== homeOf(person)) return `Without a Social Security number, ${bank.name} opens your account in a branch where you live.`;
+    const busy = startRefusal(sim, person, BRANCH_MINUTES, true);
+    if (busy) return busy;
+  }
   return undefined;
+}
+
+/** An hour at the branch, SLATE's estimate, where an account is opened in person. */
+export const BRANCH_MINUTES = 60;
+
+/** How they'd open an account at a bank: online, or in a branch for want of a Social Security number. */
+export function channelFor(person: Person, bank: Bank): 'online' | 'branch' {
+  return !hasSsn(person) && openingOf(bank)?.withoutSsn === 'branch' ? 'branch' : 'online';
 }
 
 /** The opening deposit a bank asks for, in the save's money. */
@@ -187,9 +207,11 @@ function limitRefusal(sim: Simulation, person: Person, bank: Bank | undefined, a
  * Sends money from one of the holder's accounts to their account at another bank: out now, into the money in transit,
  * and in on the day it arrives (`ARRIVES_KIND`). `toBankId` alone names an account still being opened there.
  */
-export function sendBetweenBanks(sim: Simulation, person: Person, from: Account, to: Account | undefined, amount: Money, toBankId = to?.bankId): Instant {
+export function sendBetweenBanks(sim: Simulation, person: Person, from: Account, to: Account | undefined, amount: Money, toBankId = to?.bankId, byTheBank = false): Instant {
   const toBank = toBankId ? bankById(toBankId) : undefined;
-  const no = limitRefusal(sim, person, from.bankId ? bankById(from.bankId) : undefined, amount);
+  // What a closing bank remits is its own payment, not the customer's transfer, and isn't held to its limits (from
+  // 2026-10-10: until then a Citi close past $10,000 failed halfway, its interest settled and the account left open).
+  const no = byTheBank ? undefined : limitRefusal(sim, person, from.bankId ? bankById(from.bankId) : undefined, amount);
   if (no) throw new CommandError(no);
   const at = arrivalOf(sim, from, person);
   // At once where the country's banks pay instantly: straight across, nothing in transit.
@@ -242,7 +264,9 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   const savings = bankAccountsOf(sim, person).find((a) => a.kind === 'savings' && a.bankId === account.bankId);
   if (savings) return `${savings.name} is open beside it. Close it first.`;
   const bank = account.bankId ? bankById(account.bankId) : undefined;
-  if (pendingOn(sim, account) > 0 && openingOf(bank)?.closeWithPendingDays === undefined) return `Card payments are still pending on it. ${bank?.name ?? 'The bank'} closes it once they’ve posted.`;
+  // A pending card payment is a debit, negative in the ledger's sense (`pendingOn`): until 2026-10-10 this asked for
+  // more than nothing, and neither this refusal nor Citi's restricted close ever happened.
+  if (pendingOn(sim, account) !== 0 && openingOf(bank)?.closeWithPendingDays === undefined) return `Card payments are still pending on it. ${bank?.name ?? 'The bank'} closes it once they’ve posted.`;
   return undefined;
 }
 
@@ -254,7 +278,7 @@ function closeNow(sim: Simulation, person: Person, account: Account, remainderTo
   if (account.balance > 0 && remainderTo) {
     if (remainderTo.bankId === account.bankId) {
       sim.post({ memo: `Closed ${account.name}`, category: 'transfer', postings: [{ accountId: account.id, amount: -account.balance }, { accountId: remainderTo.id, amount: account.balance }] });
-    } else arrives = sendBetweenBanks(sim, person, account, remainderTo, account.balance);
+    } else arrives = sendBetweenBanks(sim, person, account, remainderTo, account.balance, remainderTo.bankId, true);
   }
   account.accrued = 0;
   account.closedAt = sim.now;
@@ -286,6 +310,8 @@ export function registerBankMoves(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const bank = bankById(String(p.bankId))!;
     const rules = openingOf(bank);
+    // In a branch, the hour there (`channelFor`).
+    if (channelFor(person, bank) === 'branch') s.advanceTo(s.now + BRANCH_MINUTES * 60_000);
     const min = openingDeposit(s, bank);
     const amount = Math.round(Number(p.amount ?? 0));
     const from = p.fundFrom ? bankAccountsOf(s, person).find((a) => a.id === p.fundFrom) : undefined;
@@ -429,7 +455,7 @@ export function registerBankMoves(sim: Simulation): void {
     // Citi keeps it open, restricted, while items are pending, up to its 21 days.
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const wait = openingOf(bank)?.closeWithPendingDays;
-    if (pendingOn(s, account) > 0 && wait !== undefined) {
+    if (pendingOn(s, account) !== 0 && wait !== undefined) {
       const latest = Math.max(...s.universe.transactions.filter((t) => t.postsAt !== undefined && t.postsAt > s.now && t.postings.some((q) => q.accountId === account.id)).map((t) => t.postsAt!));
       account.closingAt = Math.min(latest + 60_000, s.now + wait * MS_DAY);
       s.schedule({ at: account.closingAt, kind: CLOSES_KIND, label: `${account.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: account.id, ...(to ? { remainderTo: to.id } : {}) } });

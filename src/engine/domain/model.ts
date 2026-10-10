@@ -244,6 +244,8 @@ export interface Person {
   assistance?: import('../systems/assistance').AssistanceClaim;
   /** When their US status ended while they stayed on, from 2026-10-01 (`systems/permission.ts`). */
   usOutOfStatus?: number;
+  /** A Social Security number's status: applied for or issued (`systems/taxid.ts`, from 2026-10-10). No number is kept. */
+  ssn?: import('../systems/taxid').SsnRecord;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
