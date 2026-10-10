@@ -535,7 +535,8 @@ export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefi
 
 /**
  * Why an hour of one's own can't start now: something on the calendar that wants the player begins inside it (from
- * 2026-10-10). An hour of practice, an interest or study isn't lived across a class or a call: it's refused, and says
+ * 2026-10-10). An hour of practice or study isn't lived across a class or a call (an interest's hour was too, until the
+ * interests went that day): it's refused, and says
  * what's coming and when.
  */
 export function commitmentWithin(sim: Simulation, minutes: number): string | undefined {

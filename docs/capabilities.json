@@ -756,7 +756,6 @@
       "readers": [
         "readiness (systems/life.ts)",
         "lookAfterOptions (systems/life.ts)",
-        "enjoyment's loved interests (systems/enjoyment.ts)",
         "mayHurt and the injury record (systems/injury.ts)"
       ],
       "looks": [
@@ -1261,7 +1260,6 @@
       "effects": "Hours on the clock by the play's length, less again; the script skill grows on a fresh read; what was noticed is kept as notes; research reads the play's licensors and first edition",
       "persists": "Person.plays[playId] (reads, lastAt, noticed, notes, researchedAt), craft.script",
       "readers": [
-        "the reading interest's enjoyment (READ_CRAFTS, systems/enjoyment.ts)",
         "readRefusal and researchRefusal (systems/playreading.ts)"
       ],
       "looks": [

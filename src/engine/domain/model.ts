@@ -37,9 +37,11 @@ export type Id = string;
  * (`systems/credit.ts`); it was read by nothing until the card. Openness,
  * extraversion and agreeableness were kept and read by nothing until
  * 2026-09-27; since then they decide how a day of work is taken
- * (`systems/enjoyment.ts`): extraversion the stress of an audition in the
- * room, openness the mood of a day away from home, agreeableness the mood of
- * a rehearsal.
+ * (`systems/enjoyment.ts`): extraversion how a house watching sits, openness
+ * new work, agreeableness a rehearsal. (They read an audition in the room and
+ * a day away from home until those went in the scope reset of 2026-10-09.)
+ * Conscientiousness also sets where discipline starts, and emotional stability
+ * where composure does (`systems/attributes.ts`).
  */
 export interface Personality {
   openness: number;

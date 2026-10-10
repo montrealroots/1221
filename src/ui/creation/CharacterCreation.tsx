@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote,
+  APP_VERSION, BODY_GIVEN, bodyGiven, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -295,6 +295,15 @@ function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (
           </>
         )}
       </div>
+      {(cm !== undefined || kg !== undefined) && !bodyGiven(config) && (
+        <p className="xs" role="status" style={{ marginTop: 'var(--s2)', color: 'var(--warning)' }}>
+          {cm === undefined || kg === undefined
+            ? 'Give both, or neither: with one of them, the body is drawn from where you were born.'
+            : imperial
+              ? `Out of range, so the body will be drawn instead: a height from ${Math.ceil(BODY_GIVEN.heightCm[0] / 2.54)} to ${Math.floor(BODY_GIVEN.heightCm[1] / 2.54)} inches (3′11″ to 7′6″), and a weight from ${Math.ceil(BODY_GIVEN.weightKg[0] / 0.45359237)} to ${Math.floor(BODY_GIVEN.weightKg[1] / 0.45359237)} pounds.`
+              : `Out of range, so the body will be drawn instead: a height from ${BODY_GIVEN.heightCm[0]} to ${BODY_GIVEN.heightCm[1]} centimeters, and a weight from ${BODY_GIVEN.weightKg[0]} to ${BODY_GIVEN.weightKg[1]} kilograms.`}
+        </p>
+      )}
       <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank to be drawn from where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} From here your weight follows what you eat against what you do, and a heavier body meets diabetes, high blood pressure and arthritis more often as the years go, at the published rates; a weight far from the middle, either way, shortens the odds on a long life the same way.</p>
     </>
   );
@@ -616,7 +625,9 @@ function PersonalityStep({ config, setConfig }: {
               and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
               Extraversion sets how a house watching you sits with you, Openness how rehearsing new
               work does, a festival’s new play or a Cabaret piece, and Agreeableness how a rehearsal
-              does. None of them makes you better or worse at anything.
+              does. Two set where an ability starts: Conscientiousness your discipline, and Emotional
+              Stability your composure, which the work’s judging reads. Past those two, none of them makes
+              you better or worse at anything.
             </p>
           </div>
         </div>

@@ -24,6 +24,18 @@ import { exerciseFor, PRACTICE } from '@/engine/content/practice';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import type { Personality } from '@/engine/domain/model';
+
+/** Each disposition, as creation names it, and what it does in play. */
+const DISPOSITIONS: readonly [keyof Personality, string, string][] = [
+  ['emotionalStability', 'Emotional Stability', 'how fast stress comes and clears, and where composure starts'],
+  ['conscientiousness', 'Conscientiousness', 'how well a night’s sleep restores you, and where discipline starts'],
+  ['ambition', 'Ambition', 'how fast every stress comes'],
+  ['riskTolerance', 'Risk Tolerance', 'over 65, the card’s autopay starts on the minimum'],
+  ['extraversion', 'Extraversion', 'how a house watching sits with you'],
+  ['openness', 'Openness', 'how rehearsing new work does'],
+  ['agreeableness', 'Agreeableness', 'how a rehearsal does'],
+];
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
@@ -58,13 +70,19 @@ export function nextPractice(person: Person): { what: string; kind: string; by: 
   return best ? { what: best.what, kind: best.kind, by: best.by, pieces: best.pieces } : undefined;
 }
 
-/** A genre to study: the next part's play's kind least known, else a loved one least known. */
-export function nextGenre(person: Person): string | undefined {
+/**
+ * A genre to study, and why: the next part's play's kind least known, else a loved one least known. The why came
+ * with it from 2026-10-10: until then a loved genre offered for want of a part was said to be what the next work asks.
+ */
+export function nextGenre(person: Person): { id: string; why: 'part' | 'loved' } | undefined {
   const fam = (id: string) => person.engagement?.byGenre[id]?.familiarity ?? 0;
   const casting = person.school?.casting as { play?: string } | undefined;
   const play = (genresOfPlay(casting?.play) ?? []).filter((g) => GENRE_BY_ID[g]);
   const loved = (person.genres ?? []).filter((g) => GENRE_BY_ID[g]);
-  return [...play].sort((a, b) => fam(a) - fam(b))[0] ?? [...loved].sort((a, b) => fam(a) - fam(b))[0];
+  const forPart = [...play].sort((a, b) => fam(a) - fam(b))[0];
+  if (forPart) return { id: forPart, why: 'part' };
+  const fromLoved = [...loved].sort((a, b) => fam(a) - fam(b))[0];
+  return fromLoved ? { id: fromLoved, why: 'loved' } : undefined;
 }
 
 /** What today's condition does to the dimensions an ability is read in: each named cause and the dimensions it reaches. */
@@ -134,7 +152,9 @@ function IdentityPanel() {
           </div>
           {person.background && <p className="small" style={{ margin: 0 }}><strong>In their own words.</strong> {person.background}</p>}
           {said.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Race and ethnicity, as given.</strong> {said.join(', ')}.</p>}
-          {person.personalityTraits.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t) => PERSONALITY_TRAIT_BY_ID[t]?.name ?? t).join(', ')}.</p>}
+          {person.personalityTraits.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t, i) => <span key={t}>{i ? ', ' : ''}<Open subject={at('trait', t)}>{PERSONALITY_TRAIT_BY_ID[t]?.name ?? t}</Open></span>)}.</p>}
+          {/* The dispositions set at creation, and what each does (from 2026-10-10: until then the Profile didn't show them). */}
+          <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {does}</span>)}.</p>
           <div className="row gap-2 wrap">
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{money}</button>
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>{cover ? 'Papers, Covered' : 'Papers, No Health Cover'}</button>
@@ -276,7 +296,7 @@ function GenresPanel() {
   return (
     <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or practiced`}>
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested)}>{GENRE_BY_ID[suggested]!.label}</Open> is the kind your next work asks for, least known.</> : null}</p>
+        <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is the kind your next part’s play is, and the one of its kinds you know least.' : 'is the one you love and know least; no part asks for a kind yet.'}</> : null}</p>
         <ListControls id="genres" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Studied Or Practiced', 'With Requirements']} count={Math.min(limit, list.length)} />
         <LookRegion className="table-scroll">
           <table>

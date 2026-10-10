@@ -1,7 +1,7 @@
 /**
  * SLATE — the actor as the Player Profile opens it (from the connected
- * attributes of 2026-10-09): an ability, an interest, a genre, and a piece of
- * finished work.
+ * attributes of 2026-10-09): an ability, a genre, and a piece of finished
+ * work. An interest was one too, until the interests went on 2026-10-10.
  *
  * Every figure is read from where the engine keeps it: an ability from its
  * one place (`abilityOf`), its changes from the development history, what it

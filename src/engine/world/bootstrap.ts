@@ -51,6 +51,7 @@ export interface NewSaveConfig {
    */
   performerTitle?: PerformerTitle;
   /** Height and weight as the player gives them, in centimetres and kilograms; absent, drawn from where they were born (`systems/body.ts`). */
+  /** Height and weight as given at creation, both inside `BODY_GIVEN`; otherwise the body is drawn. */
   heightCm?: number;
   weightKg?: number;
   /** Local date of birth in the starting city's zone. */
@@ -171,6 +172,19 @@ export function atSchool(config: NewSaveConfig): NewSaveConfig {
  * was New York). The engine's `defaultConfig` stays where it was for saves
  * made by tests and tools, which choose their own town and day.
  */
+/**
+ * The height and weight creation takes, in centimeters and kilograms: an adult's range, outside which the body is
+ * drawn from where they were born. Creation says so where the fields are (from 2026-10-10: until then a figure
+ * outside them, or one of the two left blank, was dropped without a word, and feet and inches reached 241 cm).
+ */
+export const BODY_GIVEN = { heightCm: [120, 230], weightKg: [35, 250] } as const;
+
+/** Whether creation's height and weight are both given and both in range. */
+export function bodyGiven(config: Pick<NewSaveConfig, 'heightCm' | 'weightKg'>): boolean {
+  const { heightCm: h, weightKg: w } = config;
+  return h !== undefined && w !== undefined && h >= BODY_GIVEN.heightCm[0] && h <= BODY_GIVEN.heightCm[1] && w >= BODY_GIVEN.weightKg[0] && w <= BODY_GIVEN.weightKg[1];
+}
+
 export function newLifeConfig(): NewSaveConfig {
   return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy' });
 }
@@ -369,8 +383,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     createdAt: now,
   };
   // Their height and weight as they gave them, the life they start with holding it (`settle`).
-  if (config.heightCm && config.weightKg && config.heightCm >= 120 && config.heightCm <= 230 && config.weightKg >= 35 && config.weightKg <= 250) {
-    player.body = settle({ heightCm: config.heightCm, weightKg: config.weightKg }, player, now);
+  if (bodyGiven(config)) {
+    player.body = settle({ heightCm: config.heightCm!, weightKg: config.weightKg! }, player, now);
   }
   universe.people[playerId] = player;
   idAlreadyIssued(universe, 'person', 1);
