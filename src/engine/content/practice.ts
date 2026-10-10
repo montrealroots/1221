@@ -168,14 +168,20 @@ export type PracticeFocus = 'steady' | 'precision' | 'spaced' | 'variation' | 'l
 export const FOCUS: Readonly<Record<PracticeFocus, { label: string; words: string }>> = {
   steady: { label: 'Steady', words: 'The exercise as it comes, for the hour.' },
   precision: { label: 'Precision', words: 'Slow and exact, until it’s right. Pays most on a rested day.' },
-  spaced: { label: 'Spaced', words: 'Picked up a day or more since the last time, within the week.' },
+  spaced: { label: 'Spaced', words: 'Picked up cold, a day or more since the last time and within the week; outside that, it costs.' },
   variation: { label: 'Variation', words: 'Under changing conditions: less on the exercise’s own target, some carried to what it’s kin to.' },
   live: { label: 'Live With A Partner', words: 'With a classmate, taking what they give: some carried to listening and adaptability.' },
 };
 
 export const FOCUS_RATE = {
   precision: { rested: 1.15, tired: 0.85, restedAt: 0.85 },
-  spaced: { within: 1.1, fromDays: 1, toDays: 7 },
+  // Outside the window it costs (from 2026-10-10, `tools/strategies.ts`): spacing's gain is a ridge, too short and too
+  // long a gap both losing (Cepeda et al. 2008), and an hour begun cold on what's faded spends some of itself
+  // relearning. Until then it was 1, so spaced was never worse than steady and steady was never the better choice.
+  spaced: { within: 1.1, outside: 0.9, fromDays: 1, toDays: 7 },
   variation: { primary: 0.85, transfer: 0.3 },
-  live: { primary: 0.9, transfer: 0.25 },
+  // Played against each other (`tools/strategies.ts`, 2026-10-10), live at 0.9 and 0.25 to each of two carried more on
+  // the target and more in all than variation: it beat variation on both, whenever a classmate was there. Both now
+  // carry the same in all, and choosing between them is choosing what it carries to.
+  live: { primary: 0.85, transfer: 0.15 },
 } as const;

@@ -122,6 +122,39 @@ describe('a mandatory medical leave', () => {
     expect(pendingOf(sim, WELFARE_KIND)).toHaveLength(0);
   });
 
+  it('one stay in hospital, or a few days missed early in a term, asks nothing: the rule reads function over weeks', () => {
+    // Found by mutation (2026-10-10): with one stay enough, nothing failed.
+    const sim = student('sp-one-stay');
+    tended(sim, at(2026, 9, 14));
+    healthOf(sim.player).careLog = [{ at: sim.now - 3 * MS_DAY, care: 'stay', what: 'A stay', share: 0 }] as never;
+    considerWelfare(sim, sim.player);
+    expect(sim.player.school!.welfare).toBeUndefined();
+    // FIXTURE: eleven class days, every one missed ill, short of the twelve the share is read over.
+    Object.assign(sim.player.school!.tally, { classDays: 11, excused: 11 });
+    considerWelfare(sim, sim.player);
+    expect(sim.player.school!.welfare).toBeUndefined();
+    Object.assign(sim.player.school!.tally, { classDays: 12, excused: 8 });
+    considerWelfare(sim, sim.player);
+    expect(sim.player.school!.welfare?.trigger).toMatch(/8 of the term’s 12 class days/);
+  });
+
+  it('an appeal from a student cleared with less than half the term left leaves the leave standing', () => {
+    // Found by mutation (2026-10-10): with the half-term rule gone, nothing failed.
+    const sim = student('sp-late-appeal');
+    tended(sim, at(2026, 11, 9));
+    crisis(sim, 40);
+    considerWelfare(sim, sim.player);
+    sim.advanceTo(sim.player.school!.welfare!.assessAt + 3 * MS_DAY);
+    expect(sim.player.school!.leave?.mandatory).toBeDefined();
+    healthOf(sim.player).inHospitalUntil = sim.now - MS_HOUR;
+    sim.player.wellbeing.condition = 90;
+    const d = sim.must<{ decideAt: number }>({ kind: 'school.appeal_leave', payload: {} });
+    tended(sim, d.decideAt + MS_HOUR);
+    const appeal = sim.player.school!.leave!.mandatory!.appeal!;
+    expect(appeal.outcome).toBe('upheld');
+    expect(JSON.stringify(appeal)).toMatch(/Too much of the term/);
+  });
+
   it('an appeal turned down leaves the leave standing; too late, it’s refused', () => {
     const sim = student('sp-upheld');
     tended(sim, at(2026, 9, 14));

@@ -1,0 +1,2340 @@
+{
+ "note": "tools/strategies.ts runs of 2026-10-10 after the spaced and live changes; see docs/ENGINE-MODEL.md section 4. st-m1/st-m2 matched seeds (st-m2 live row is before the live change; st-m3 is after), st-h held-out, st-late practice from 21:00, st-s sensitivity.",
+ "runs": {
+  "st-h1": {
+   "days": 60,
+   "seeds": [
+    "st-10",
+    "st-11",
+    "st-12"
+   ],
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 66,
+     "primary": 14.627,
+     "transfer": 0,
+     "total": 14.627,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "precision",
+     "hours": 66,
+     "primary": 16.654,
+     "transfer": 0,
+     "total": 16.654,
+     "vsSteady": [
+      2.164,
+      1.972,
+      1.946
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "spaced",
+     "hours": 66,
+     "primary": 15.903,
+     "transfer": 0,
+     "total": 15.903,
+     "vsSteady": [
+      1.363,
+      1.242,
+      1.225
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "variation",
+     "hours": 66,
+     "primary": 12.528,
+     "transfer": 4.639,
+     "total": 17.167,
+     "vsSteady": [
+      2.509,
+      2.337,
+      2.776
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-10",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.614023358411224,
+     "transfer": 0,
+     "total": 15.614023358411224,
+     "byTarget": {
+      "imagination": 5.3592,
+      "adaptability": 5.1068,
+      "vocal": 5.1484
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "precision",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 17.778486319567293,
+     "transfer": 0,
+     "total": 17.778486319567293,
+     "byTarget": {
+      "imagination": 6.1167,
+      "adaptability": 5.7868,
+      "vocal": 5.8752
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.977163132322218,
+     "transfer": 0,
+     "total": 16.977163132322218,
+     "byTarget": {
+      "imagination": 5.8267,
+      "adaptability": 5.561,
+      "vocal": 5.5893
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.373309982858032,
+     "transfer": 4.750112059246696,
+     "total": 18.12342204210473,
+     "byTarget": {
+      "imagination": 4.5893,
+      "script": 1.7033,
+      "adaptability": 4.3739,
+      "improv": 1.5864,
+      "vocal": 4.4099,
+      "speech": 1.4605
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.228235696479594,
+     "transfer": 0,
+     "total": 14.228235696479594,
+     "byTarget": {
+      "imagination": 4.7863,
+      "adaptability": 4.6523,
+      "vocal": 4.7896
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "precision",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.20028534209127,
+     "transfer": 0,
+     "total": 16.20028534209127,
+     "byTarget": {
+      "imagination": 5.4633,
+      "adaptability": 5.2715,
+      "vocal": 5.4657
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.470076214589689,
+     "transfer": 0,
+     "total": 15.470076214589689,
+     "byTarget": {
+      "imagination": 5.2041,
+      "adaptability": 5.0661,
+      "vocal": 5.1998
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.186722512757179,
+     "transfer": 4.378060338207625,
+     "total": 16.564782850964804,
+     "byTarget": {
+      "imagination": 4.0991,
+      "script": 1.4199,
+      "adaptability": 3.9848,
+      "improv": 1.4453,
+      "vocal": 4.1026,
+      "speech": 1.5129
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.037742649027699,
+     "transfer": 0,
+     "total": 14.037742649027699,
+     "byTarget": {
+      "imagination": 4.9047,
+      "adaptability": 4.5542,
+      "vocal": 4.5788
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "precision",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.983629884638752,
+     "transfer": 0,
+     "total": 15.983629884638752,
+     "byTarget": {
+      "imagination": 5.598,
+      "adaptability": 5.1604,
+      "vocal": 5.225
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.263108304680031,
+     "transfer": 0,
+     "total": 15.263108304680031,
+     "byTarget": {
+      "imagination": 5.3325,
+      "adaptability": 4.9592,
+      "vocal": 4.971
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.023562377274928,
+     "transfer": 4.7900042334873305,
+     "total": 16.81356661076226,
+     "byTarget": {
+      "imagination": 4.2006,
+      "script": 1.6296,
+      "adaptability": 3.9006,
+      "improv": 1.415,
+      "vocal": 3.922,
+      "speech": 1.7454
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-h2": {
+   "days": 60,
+   "seeds": [
+    "st-10",
+    "st-11",
+    "st-12"
+   ],
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 66,
+     "primary": 14.627,
+     "transfer": 0,
+     "total": 14.627,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "live",
+     "hours": 66,
+     "primary": 12.461,
+     "transfer": 3.775,
+     "total": 16.235,
+     "vsSteady": [
+      1.76,
+      1.497,
+      1.568
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "tier-above",
+     "hours": 65.33333333333333,
+     "primary": 11.688,
+     "transfer": 0,
+     "total": 11.688,
+     "vsSteady": [
+      -3.196,
+      -2.747,
+      -2.873
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-below",
+     "hours": 66,
+     "primary": 11.11,
+     "transfer": 0,
+     "total": 11.11,
+     "vsSteady": [
+      -3.754,
+      -3.42,
+      -3.374
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "adaptive",
+     "hours": 66,
+     "primary": 16.674,
+     "transfer": 0,
+     "total": 16.674,
+     "vsSteady": [
+      2.185,
+      1.991,
+      1.964
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-10",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.614023358411224,
+     "transfer": 0,
+     "total": 15.614023358411224,
+     "byTarget": {
+      "imagination": 5.3592,
+      "adaptability": 5.1068,
+      "vocal": 5.1484
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.301369644494784,
+     "transfer": 4.072917936511814,
+     "total": 17.374287581006598,
+     "byTarget": {
+      "imagination": 4.5895,
+      "listening": 2.5174,
+      "adaptability": 5.8569,
+      "vocal": 4.4099
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 12.41812794060629,
+     "transfer": 0,
+     "total": 12.41812794060629,
+     "byTarget": {
+      "imagination": 4.3257,
+      "adaptability": 4.1184,
+      "vocal": 3.9742
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-10",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.860169937224768,
+     "transfer": 0,
+     "total": 11.860169937224768,
+     "byTarget": {
+      "imagination": 4.0698,
+      "adaptability": 3.8793,
+      "vocal": 3.9111
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-10",
+     "strategy": "adaptive",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 17.799311684442884,
+     "transfer": 0,
+     "total": 17.799311684442884,
+     "byTarget": {
+      "imagination": 6.1167,
+      "adaptability": 5.8074,
+      "vocal": 5.8752
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.228235696479594,
+     "transfer": 0,
+     "total": 14.228235696479594,
+     "byTarget": {
+      "imagination": 4.7863,
+      "adaptability": 4.6523,
+      "vocal": 4.7896
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.121077923603217,
+     "transfer": 3.6046522451584693,
+     "total": 15.725730168761686,
+     "byTarget": {
+      "imagination": 4.0991,
+      "listening": 2.1875,
+      "adaptability": 5.3361,
+      "vocal": 4.1026
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "tier-above",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.481320294586425,
+     "transfer": 0,
+     "total": 11.481320294586425,
+     "byTarget": {
+      "imagination": 3.8632,
+      "adaptability": 3.7517,
+      "vocal": 3.8664
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 10.807973579568397,
+     "transfer": 0,
+     "total": 10.807973579568397,
+     "byTarget": {
+      "imagination": 3.6351,
+      "adaptability": 3.5339,
+      "vocal": 3.6386
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-11",
+     "strategy": "adaptive",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.219256985749503,
+     "transfer": 0,
+     "total": 16.219256985749503,
+     "byTarget": {
+      "imagination": 5.4633,
+      "adaptability": 5.2907,
+      "vocal": 5.4657
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.037742649027699,
+     "transfer": 0,
+     "total": 14.037742649027699,
+     "byTarget": {
+      "imagination": 4.9047,
+      "adaptability": 4.5542,
+      "vocal": 4.5788
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.95932389655848,
+     "transfer": 3.6459480741824777,
+     "total": 15.605271970740958,
+     "byTarget": {
+      "imagination": 4.2006,
+      "listening": 2.2576,
+      "adaptability": 5.2245,
+      "vocal": 3.922
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 11.164342947767118,
+     "transfer": 0,
+     "total": 11.164342947767118,
+     "byTarget": {
+      "imagination": 3.9594,
+      "adaptability": 3.6709,
+      "vocal": 3.5344
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-12",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 10.663272942129645,
+     "transfer": 0,
+     "total": 10.663272942129645,
+     "byTarget": {
+      "imagination": 3.7251,
+      "adaptability": 3.4592,
+      "vocal": 3.4787
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-12",
+     "strategy": "adaptive",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.002227372252968,
+     "transfer": 0,
+     "total": 16.002227372252968,
+     "byTarget": {
+      "imagination": 5.598,
+      "adaptability": 5.1789,
+      "vocal": 5.225
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-late": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "from": 21,
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 5.333333333333333,
+     "primary": 0.798,
+     "transfer": 0,
+     "total": 0.798,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "precision",
+     "hours": 5.333333333333333,
+     "primary": 0.678,
+     "transfer": 0,
+     "total": 0.678,
+     "vsSteady": [
+      -0.129,
+      -0.085,
+      -0.144
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "spaced",
+     "hours": 5.333333333333333,
+     "primary": 0.749,
+     "transfer": 0,
+     "total": 0.749,
+     "vsSteady": [
+      -0.058,
+      -0.026,
+      -0.063
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "adaptive",
+     "hours": 5.333333333333333,
+     "primary": 0.813,
+     "transfer": 0,
+     "total": 0.813,
+     "vsSteady": [
+      0.014,
+      0.015,
+      0.016
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.8618512127433888,
+     "transfer": 0,
+     "total": 0.8618512127433888,
+     "byTarget": {
+      "imagination": 0.2525,
+      "adaptability": 0.3172,
+      "vocal": 0.2921
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-0",
+     "strategy": "precision",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.7327510019865358,
+     "transfer": 0,
+     "total": 0.7327510019865358,
+     "byTarget": {
+      "imagination": 0.2147,
+      "adaptability": 0.2696,
+      "vocal": 0.2484
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-0",
+     "strategy": "spaced",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.8041574410009815,
+     "transfer": 0,
+     "total": 0.8041574410009815,
+     "byTarget": {
+      "imagination": 0.2556,
+      "adaptability": 0.2855,
+      "vocal": 0.263
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-0",
+     "strategy": "adaptive",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.8760305562385895,
+     "transfer": 0,
+     "total": 0.8760305562385895,
+     "byTarget": {
+      "imagination": 0.2667,
+      "adaptability": 0.3172,
+      "vocal": 0.2921
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 4,
+     "refusedFocus": 0,
+     "primary": 0.5695279297832343,
+     "transfer": 0,
+     "total": 0.5695279297832343,
+     "byTarget": {
+      "imagination": 0.2763,
+      "adaptability": 0.1511,
+      "vocal": 0.1421
+     },
+     "practiceDays": 4
+    },
+    {
+     "seed": "st-1",
+     "strategy": "precision",
+     "hours": 4,
+     "refusedFocus": 0,
+     "primary": 0.48415014358592146,
+     "transfer": 0,
+     "total": 0.48415014358592146,
+     "byTarget": {
+      "imagination": 0.235,
+      "adaptability": 0.1284,
+      "vocal": 0.1208
+     },
+     "practiceDays": 4
+    },
+    {
+     "seed": "st-1",
+     "strategy": "spaced",
+     "hours": 4,
+     "refusedFocus": 0,
+     "primary": 0.543567112248617,
+     "transfer": 0,
+     "total": 0.543567112248617,
+     "byTarget": {
+      "imagination": 0.2798,
+      "adaptability": 0.136,
+      "vocal": 0.1279
+     },
+     "practiceDays": 4
+    },
+    {
+     "seed": "st-1",
+     "strategy": "adaptive",
+     "hours": 4,
+     "refusedFocus": 0,
+     "primary": 0.5850017435454049,
+     "transfer": 0,
+     "total": 0.5850017435454049,
+     "byTarget": {
+      "imagination": 0.2918,
+      "adaptability": 0.1511,
+      "vocal": 0.1421
+     },
+     "practiceDays": 4
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.9618689426616172,
+     "transfer": 0,
+     "total": 0.9618689426616172,
+     "byTarget": {
+      "imagination": 0.2904,
+      "adaptability": 0.347,
+      "vocal": 0.3244
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-2",
+     "strategy": "precision",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.8177856337223446,
+     "transfer": 0,
+     "total": 0.8177856337223446,
+     "byTarget": {
+      "imagination": 0.2469,
+      "adaptability": 0.295,
+      "vocal": 0.2758
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-2",
+     "strategy": "spaced",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.8984487759899125,
+     "transfer": 0,
+     "total": 0.8984487759899125,
+     "byTarget": {
+      "imagination": 0.2941,
+      "adaptability": 0.3124,
+      "vocal": 0.292
+     },
+     "practiceDays": 6
+    },
+    {
+     "seed": "st-2",
+     "strategy": "adaptive",
+     "hours": 6,
+     "refusedFocus": 0,
+     "primary": 0.9781785161654852,
+     "transfer": 0,
+     "total": 0.9781785161654852,
+     "byTarget": {
+      "imagination": 0.3067,
+      "adaptability": 0.347,
+      "vocal": 0.3244
+     },
+     "practiceDays": 6
+    }
+   ]
+  },
+  "st-m1": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "precision",
+     "hours": 65.33333333333333,
+     "primary": 16.413,
+     "transfer": 0,
+     "total": 16.413,
+     "vsSteady": [
+      1.913,
+      1.931,
+      2.147
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "spaced",
+     "hours": 65.33333333333333,
+     "primary": 15.675,
+     "transfer": 0,
+     "total": 15.675,
+     "vsSteady": [
+      1.207,
+      1.215,
+      1.354
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "variation",
+     "hours": 65.33333333333333,
+     "primary": 12.347,
+     "transfer": 4.412,
+     "total": 16.759,
+     "vsSteady": [
+      2.237,
+      2.162,
+      2.629
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "precision",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.73576994277036,
+     "transfer": 0,
+     "total": 15.73576994277036,
+     "byTarget": {
+      "imagination": 5.0326,
+      "adaptability": 5.4814,
+      "vocal": 5.2217
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.02962201283632,
+     "transfer": 0,
+     "total": 15.02962201283632,
+     "byTarget": {
+      "imagination": 4.7939,
+      "adaptability": 5.2679,
+      "vocal": 4.9679
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.839338891667246,
+     "transfer": 4.219992176602773,
+     "total": 16.05933106827002,
+     "byTarget": {
+      "imagination": 3.7764,
+      "script": 1.3424,
+      "adaptability": 4.1435,
+      "improv": 1.5032,
+      "vocal": 3.9195,
+      "speech": 1.3746
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "precision",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 15.854185378778318,
+     "transfer": 0,
+     "total": 15.854185378778318,
+     "byTarget": {
+      "imagination": 5.5352,
+      "adaptability": 5.3083,
+      "vocal": 5.0106
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "spaced",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 15.138707613191826,
+     "transfer": 0,
+     "total": 15.138707613191826,
+     "byTarget": {
+      "imagination": 5.2726,
+      "adaptability": 5.1016,
+      "vocal": 4.7646
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "variation",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 11.923317839831789,
+     "transfer": 4.162403711500993,
+     "total": 16.08572155133278,
+     "byTarget": {
+      "imagination": 4.1534,
+      "script": 1.429,
+      "adaptability": 4.0117,
+      "improv": 1.4526,
+      "vocal": 3.7585,
+      "speech": 1.2808
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "precision",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 17.64869642243741,
+     "transfer": 0,
+     "total": 17.64869642243741,
+     "byTarget": {
+      "imagination": 5.7977,
+      "adaptability": 6.0494,
+      "vocal": 5.8014
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.85587689358062,
+     "transfer": 0,
+     "total": 16.85587689358062,
+     "byTarget": {
+      "imagination": 5.5225,
+      "adaptability": 5.8138,
+      "vocal": 5.5195
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.27745964599751,
+     "transfer": 4.853899428007217,
+     "total": 18.131359074004727,
+     "byTarget": {
+      "imagination": 4.3501,
+      "script": 1.5776,
+      "adaptability": 4.5727,
+      "improv": 1.6586,
+      "vocal": 4.3545,
+      "speech": 1.6174
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-m2": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "live",
+     "hours": 65.33333333333333,
+     "primary": 12.92,
+     "transfer": 6.13,
+     "total": 19.05,
+     "vsSteady": [
+      4.598,
+      4.531,
+      4.773
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "tier-above",
+     "hours": 65.33333333333333,
+     "primary": 11.637,
+     "transfer": 0,
+     "total": 11.637,
+     "vsSteady": [
+      -2.831,
+      -2.511,
+      -2.997
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-below",
+     "hours": 65.33333333333333,
+     "primary": 10.949,
+     "transfer": 0,
+     "total": 10.949,
+     "vsSteady": [
+      -3.323,
+      -3.351,
+      -3.727
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "adaptive",
+     "hours": 65.33333333333333,
+     "primary": 16.433,
+     "transfer": 0,
+     "total": 16.433,
+     "vsSteady": [
+      1.933,
+      1.95,
+      2.168
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.384753348288449,
+     "transfer": 6.036340706040356,
+     "total": 18.421094054328805,
+     "byTarget": {
+      "imagination": 3.9884,
+      "listening": 3.6127,
+      "adaptability": 6.6808,
+      "vocal": 4.1397
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 10.991980696363825,
+     "transfer": 0,
+     "total": 10.991980696363825,
+     "byTarget": {
+      "imagination": 3.5591,
+      "adaptability": 3.9011,
+      "vocal": 3.5321
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 10.499920092231903,
+     "transfer": 0,
+     "total": 10.499920092231903,
+     "byTarget": {
+      "imagination": 3.349,
+      "adaptability": 3.6746,
+      "vocal": 3.4763
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "adaptive",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.755501030006982,
+     "transfer": 0,
+     "total": 15.755501030006982,
+     "byTarget": {
+      "imagination": 5.0326,
+      "adaptability": 5.5012,
+      "vocal": 5.2217
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "live",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 12.483845019606939,
+     "transfer": 5.970915348302043,
+     "total": 18.454760367908982,
+     "byTarget": {
+      "imagination": 4.3865,
+      "listening": 3.5967,
+      "adaptability": 6.5016,
+      "vocal": 3.9699
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 11.412896181640306,
+     "transfer": 0,
+     "total": 11.412896181640306,
+     "byTarget": {
+      "imagination": 3.9137,
+      "adaptability": 3.9586,
+      "vocal": 3.5411
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-below",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 10.572878819853734,
+     "transfer": 0,
+     "total": 10.572878819853734,
+     "byTarget": {
+      "imagination": 3.6835,
+      "adaptability": 3.5569,
+      "vocal": 3.3324
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "adaptive",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 15.874046077493759,
+     "transfer": 0,
+     "total": 15.874046077493759,
+     "byTarget": {
+      "imagination": 5.5352,
+      "adaptability": 5.3284,
+      "vocal": 5.0106
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.891553919146403,
+     "transfer": 6.383692662395987,
+     "total": 20.27524658154239,
+     "byTarget": {
+      "imagination": 4.5947,
+      "listening": 3.707,
+      "adaptability": 7.3747,
+      "vocal": 4.5989
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-above",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.505396668426144,
+     "transfer": 0,
+     "total": 12.505396668426144,
+     "byTarget": {
+      "imagination": 4.0986,
+      "adaptability": 4.3025,
+      "vocal": 4.1042
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.775148367598803,
+     "transfer": 0,
+     "total": 11.775148367598803,
+     "byTarget": {
+      "imagination": 3.8578,
+      "adaptability": 4.0551,
+      "vocal": 3.8621
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "adaptive",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 17.670497118106894,
+     "transfer": 0,
+     "total": 17.670497118106894,
+     "byTarget": {
+      "imagination": 5.7977,
+      "adaptability": 6.0712,
+      "vocal": 5.8014
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-m3": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "scale": null,
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "live",
+     "hours": 65.33333333333333,
+     "primary": 12.278,
+     "transfer": 3.732,
+     "total": 16.01,
+     "vsSteady": [
+      1.624,
+      1.571,
+      1.587
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "variation",
+     "hours": 65.33333333333333,
+     "primary": 12.347,
+     "transfer": 4.412,
+     "total": 16.759,
+     "vsSteady": [
+      2.237,
+      2.162,
+      2.629
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.771137785989403,
+     "transfer": 3.6755786419158127,
+     "total": 15.446716427905216,
+     "byTarget": {
+      "imagination": 3.7764,
+      "listening": 2.2019,
+      "adaptability": 5.5485,
+      "vocal": 3.9195
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.839338891667246,
+     "transfer": 4.219992176602773,
+     "total": 16.05933106827002,
+     "byTarget": {
+      "imagination": 3.7764,
+      "script": 1.3424,
+      "adaptability": 4.1435,
+      "improv": 1.5032,
+      "vocal": 3.9195,
+      "speech": 1.3746
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "live",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 11.860575809020581,
+     "transfer": 3.634340648249271,
+     "total": 15.494916457269852,
+     "byTarget": {
+      "imagination": 4.1533,
+      "listening": 2.1913,
+      "adaptability": 5.3913,
+      "vocal": 3.7585
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "variation",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 11.923317839831789,
+     "transfer": 4.162403711500993,
+     "total": 16.08572155133278,
+     "byTarget": {
+      "imagination": 4.1534,
+      "script": 1.429,
+      "adaptability": 4.0117,
+      "improv": 1.4526,
+      "vocal": 3.7585,
+      "speech": 1.2808
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "live",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.202302086022698,
+     "transfer": 3.8868617903114426,
+     "total": 17.08916387633414,
+     "byTarget": {
+      "imagination": 4.3501,
+      "listening": 2.2594,
+      "adaptability": 6.1249,
+      "vocal": 4.3545
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.27745964599751,
+     "transfer": 4.853899428007217,
+     "total": 18.131359074004727,
+     "byTarget": {
+      "imagination": 4.3501,
+      "script": 1.5776,
+      "adaptability": 4.5727,
+      "improv": 1.6586,
+      "vocal": 4.3545,
+      "speech": 1.6174
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-s-spaced.within=0.8": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "from": 0,
+   "scale": "spaced.within=0.8",
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "variation",
+     "hours": 65.33333333333333,
+     "primary": 12.347,
+     "transfer": 4.412,
+     "total": 16.759,
+     "vsSteady": [
+      2.237,
+      2.162,
+      2.629
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "spaced",
+     "hours": 65.33333333333333,
+     "primary": 12.774,
+     "transfer": 0,
+     "total": 12.774,
+     "vsSteady": [
+      -1.574,
+      -1.587,
+      -1.766
+     ],
+     "wonOn": 0
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.839338891667246,
+     "transfer": 4.219992176602773,
+     "total": 16.05933106827002,
+     "byTarget": {
+      "imagination": 3.7764,
+      "script": 1.3424,
+      "adaptability": 4.1435,
+      "improv": 1.5032,
+      "vocal": 3.9195,
+      "speech": 1.3746
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.24850102063592,
+     "transfer": 0,
+     "total": 12.24850102063592,
+     "byTarget": {
+      "imagination": 3.9072,
+      "adaptability": 4.2858,
+      "vocal": 4.0557
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "variation",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 11.923317839831789,
+     "transfer": 4.162403711500993,
+     "total": 16.08572155133278,
+     "byTarget": {
+      "imagination": 4.1534,
+      "script": 1.429,
+      "adaptability": 4.0117,
+      "improv": 1.4526,
+      "vocal": 3.7585,
+      "speech": 1.2808
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "spaced",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 12.336206120112813,
+     "transfer": 0,
+     "total": 12.336206120112813,
+     "byTarget": {
+      "imagination": 4.297,
+      "adaptability": 4.1496,
+      "vocal": 3.8891
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.27745964599751,
+     "transfer": 4.853899428007217,
+     "total": 18.131359074004727,
+     "byTarget": {
+      "imagination": 4.3501,
+      "script": 1.5776,
+      "adaptability": 4.5727,
+      "improv": 1.6586,
+      "vocal": 4.3545,
+      "speech": 1.6174
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.736396331198563,
+     "transfer": 0,
+     "total": 13.736396331198563,
+     "byTarget": {
+      "imagination": 4.5009,
+      "adaptability": 4.7297,
+      "vocal": 4.5059
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-s-tier.above=1.2": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "from": 0,
+   "scale": "tier.above=1.2",
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-above",
+     "hours": 65.33333333333333,
+     "primary": 13.852,
+     "transfer": 0,
+     "total": 13.852,
+     "vsSteady": [
+      -0.738,
+      -0.338,
+      -0.617
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-below",
+     "hours": 65.33333333333333,
+     "primary": 10.949,
+     "transfer": 0,
+     "total": 10.949,
+     "vsSteady": [
+      -3.323,
+      -3.351,
+      -3.727
+     ],
+     "wonOn": 0
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 13.08503845949356,
+     "transfer": 0,
+     "total": 13.08503845949356,
+     "byTarget": {
+      "imagination": 4.2366,
+      "adaptability": 4.643,
+      "vocal": 4.2052
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 10.499920092231903,
+     "transfer": 0,
+     "total": 10.499920092231903,
+     "byTarget": {
+      "imagination": 3.349,
+      "adaptability": 3.6746,
+      "vocal": 3.4763
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 13.585601605517986,
+     "transfer": 0,
+     "total": 13.585601605517986,
+     "byTarget": {
+      "imagination": 4.6587,
+      "adaptability": 4.7111,
+      "vocal": 4.2159
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-below",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 10.572878819853734,
+     "transfer": 0,
+     "total": 10.572878819853734,
+     "byTarget": {
+      "imagination": 3.6835,
+      "adaptability": 3.5569,
+      "vocal": 3.3324
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-above",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.885007159100248,
+     "transfer": 0,
+     "total": 14.885007159100248,
+     "byTarget": {
+      "imagination": 4.8788,
+      "adaptability": 5.1213,
+      "vocal": 4.8849
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.775148367598803,
+     "transfer": 0,
+     "total": 11.775148367598803,
+     "byTarget": {
+      "imagination": 3.8578,
+      "adaptability": 4.0551,
+      "vocal": 3.8621
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-s-tier.below=1.2": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "from": 0,
+   "scale": "tier.below=1.2",
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-above",
+     "hours": 65.33333333333333,
+     "primary": 11.637,
+     "transfer": 0,
+     "total": 11.637,
+     "vsSteady": [
+      -2.831,
+      -2.511,
+      -2.997
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "tier-below",
+     "hours": 65.33333333333333,
+     "primary": 13.04,
+     "transfer": 0,
+     "total": 13.04,
+     "vsSteady": [
+      -1.319,
+      -1.33,
+      -1.479
+     ],
+     "wonOn": 0
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 10.991980696363825,
+     "transfer": 0,
+     "total": 10.991980696363825,
+     "byTarget": {
+      "imagination": 3.5591,
+      "adaptability": 3.9011,
+      "vocal": 3.5321
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-0",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.503858698477025,
+     "transfer": 0,
+     "total": 12.503858698477025,
+     "byTarget": {
+      "imagination": 3.9884,
+      "adaptability": 4.376,
+      "vocal": 4.1397
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-above",
+     "hours": 65,
+     "refusedFocus": 0,
+     "primary": 11.412896181640306,
+     "transfer": 0,
+     "total": 11.412896181640306,
+     "byTarget": {
+      "imagination": 3.9137,
+      "adaptability": 3.9586,
+      "vocal": 3.5411
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "tier-below",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 12.593453784387492,
+     "transfer": 0,
+     "total": 12.593453784387492,
+     "byTarget": {
+      "imagination": 4.3866,
+      "adaptability": 4.2373,
+      "vocal": 3.9699
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-above",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 12.505396668426144,
+     "transfer": 0,
+     "total": 12.505396668426144,
+     "byTarget": {
+      "imagination": 4.0986,
+      "adaptability": 4.3025,
+      "vocal": 4.1042
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "tier-below",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 14.022812818864544,
+     "transfer": 0,
+     "total": 14.022812818864544,
+     "byTarget": {
+      "imagination": 4.5947,
+      "adaptability": 4.8292,
+      "vocal": 4.5989
+     },
+     "practiceDays": 61
+    }
+   ]
+  },
+  "st-s-variation.transfer=0.8": {
+   "days": 60,
+   "seeds": [
+    "st-0",
+    "st-1",
+    "st-2"
+   ],
+   "from": 0,
+   "scale": "variation.transfer=0.8",
+   "table": [
+    {
+     "strategy": "steady",
+     "hours": 65.33333333333333,
+     "primary": 14.416,
+     "transfer": 0,
+     "total": 14.416,
+     "vsSteady": [
+      0,
+      0,
+      0
+     ],
+     "wonOn": 0
+    },
+    {
+     "strategy": "variation",
+     "hours": 65.33333333333333,
+     "primary": 12.347,
+     "transfer": 3.54,
+     "total": 15.887,
+     "vsSteady": [
+      1.403,
+      1.34,
+      1.67
+     ],
+     "wonOn": 3
+    },
+    {
+     "strategy": "spaced",
+     "hours": 65.33333333333333,
+     "primary": 15.675,
+     "transfer": 0,
+     "total": 15.675,
+     "vsSteady": [
+      1.207,
+      1.215,
+      1.354
+     ],
+     "wonOn": 3
+    }
+   ],
+   "rows": [
+    {
+     "seed": "st-0",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.822603201979,
+     "transfer": 0,
+     "total": 13.822603201979,
+     "byTarget": {
+      "imagination": 4.4093,
+      "adaptability": 4.8374,
+      "vocal": 4.5759
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 11.839338891667246,
+     "transfer": 3.3864025944811402,
+     "total": 15.225741486148387,
+     "byTarget": {
+      "imagination": 3.7764,
+      "script": 1.077,
+      "adaptability": 4.1435,
+      "improv": 1.2062,
+      "vocal": 3.9195,
+      "speech": 1.1032
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-0",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.02962201283632,
+     "transfer": 0,
+     "total": 15.02962201283632,
+     "byTarget": {
+      "imagination": 4.7939,
+      "adaptability": 5.2679,
+      "vocal": 4.9679
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-1",
+     "strategy": "steady",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 13.923613441191826,
+     "transfer": 0,
+     "total": 13.923613441191826,
+     "byTarget": {
+      "imagination": 4.8495,
+      "adaptability": 4.6849,
+      "vocal": 4.3892
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "variation",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 11.923317839831789,
+     "transfer": 3.3398831866893346,
+     "total": 15.263201026521124,
+     "byTarget": {
+      "imagination": 4.1534,
+      "script": 1.1467,
+      "adaptability": 4.0117,
+      "improv": 1.1654,
+      "vocal": 3.7585,
+      "speech": 1.0278
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-1",
+     "strategy": "spaced",
+     "hours": 64,
+     "refusedFocus": 0,
+     "primary": 15.138707613191826,
+     "transfer": 0,
+     "total": 15.138707613191826,
+     "byTarget": {
+      "imagination": 5.2726,
+      "adaptability": 5.1016,
+      "vocal": 4.7646
+     },
+     "practiceDays": 60
+    },
+    {
+     "seed": "st-2",
+     "strategy": "steady",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 15.502007521437825,
+     "transfer": 0,
+     "total": 15.502007521437825,
+     "byTarget": {
+      "imagination": 5.0798,
+      "adaptability": 5.3386,
+      "vocal": 5.0838
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "variation",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 13.27745964599751,
+     "transfer": 3.8950267981513136,
+     "total": 17.172486444148824,
+     "byTarget": {
+      "imagination": 4.3501,
+      "script": 1.2658,
+      "adaptability": 4.5727,
+      "improv": 1.331,
+      "vocal": 4.3545,
+      "speech": 1.2981
+     },
+     "practiceDays": 61
+    },
+    {
+     "seed": "st-2",
+     "strategy": "spaced",
+     "hours": 66,
+     "refusedFocus": 0,
+     "primary": 16.85587689358062,
+     "transfer": 0,
+     "total": 16.85587689358062,
+     "byTarget": {
+      "imagination": 5.5225,
+      "adaptability": 5.8138,
+      "vocal": 5.5195
+     },
+     "practiceDays": 61
+    }
+   ]
+  }
+ }
+}

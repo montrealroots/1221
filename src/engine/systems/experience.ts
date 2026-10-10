@@ -129,7 +129,7 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const points = c.points * Math.min(1, room);
     if (points < 0.5) continue;
     const ex = exerciseFor(what);
-    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus: 'spaced', points: Math.round(points * 10) / 10, why: `It cost your recent work about ${Math.round(points)} point${Math.round(points) === 1 ? '' : 's'}, weighted to the latest; it’s at ${Math.round(now)} of ${Math.round(full)}.` });
+    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus: 'steady', points: Math.round(points * 10) / 10, why: `It cost your recent work about ${Math.round(points)} point${Math.round(points) === 1 ? '' : 's'}, weighted to the latest; it’s at ${Math.round(now)} of ${Math.round(full)}. Steady to begin; spaced pays once the last session is a day to a week old.` });
   }
   for (const [what, c] of prepCost) {
     if (c.points < 1) continue;

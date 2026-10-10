@@ -89,7 +89,7 @@ function daysSince(sim: Simulation, person: Person, id: string): number | undefi
 /** What a focus makes of the hour on its own target, at a focus of the day and a gap since the last session. */
 export function focusFactor(f: PracticeFocus, dayFocus: number, gap: number | undefined): number {
   if (f === 'precision') return dayFocus >= FOCUS_RATE.precision.restedAt ? FOCUS_RATE.precision.rested : FOCUS_RATE.precision.tired;
-  if (f === 'spaced') return gap !== undefined && gap >= FOCUS_RATE.spaced.fromDays && gap <= FOCUS_RATE.spaced.toDays ? FOCUS_RATE.spaced.within : 1;
+  if (f === 'spaced') return gap !== undefined && gap >= FOCUS_RATE.spaced.fromDays && gap <= FOCUS_RATE.spaced.toDays ? FOCUS_RATE.spaced.within : FOCUS_RATE.spaced.outside;
   if (f === 'variation') return FOCUS_RATE.variation.primary;
   if (f === 'live') return FOCUS_RATE.live.primary;
   return 1;
@@ -151,7 +151,7 @@ export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f:
   out.push(design ? `${TIER.label[tier]}: ${design.tiers[tier]}.` : '');
   out.push(tier === matched ? 'Pitched where you are.' : tier < matched ? `It went easily: you’re past it, and the ${TIER.label[matched].toLowerCase()} tier would ask more.` : `You struggled to hold it: the ${TIER.label[matched].toLowerCase()} tier fits where you are now.`);
   if (f === 'precision') out.push(dayFocus >= FOCUS_RATE.precision.restedAt ? 'Rested, the exactness paid.' : 'Tired, the exactness cost more than it gave: a steady hour would have done better today.');
-  if (f === 'spaced') out.push(gap !== undefined && gap >= FOCUS_RATE.spaced.fromDays && gap <= FOCUS_RATE.spaced.toDays ? `Picked up after ${gap} day${gap === 1 ? '' : 's'}: the gap helped it stick.` : gap === undefined ? 'The first time: spacing helps from the next session.' : gap === 0 ? 'The same day as the last: spacing needs a day between.' : 'Too long since the last: spacing helps within a week.');
+  if (f === 'spaced') out.push(gap !== undefined && gap >= FOCUS_RATE.spaced.fromDays && gap <= FOCUS_RATE.spaced.toDays ? `Picked up after ${gap} day${gap === 1 ? '' : 's'}: the gap helped it stick.` : gap === undefined ? 'The first time, begun cold: spacing helps from the next session, and a steady hour would have done better.' : gap === 0 ? 'The same day as the last: spacing needs a day between, and a steady hour would have done better.' : 'Too long since the last: the hour went partly on relearning. Spacing helps within a week.');
   const moved = carried.filter((c) => c.gained > 0);
   if (moved.length) out.push(`It carried over to ${moved.map((c) => labelOf(c.target).toLowerCase()).join(' and ')}.`);
   else if (f === 'variation' || f === 'live') out.push('What it carries over to is full already.');

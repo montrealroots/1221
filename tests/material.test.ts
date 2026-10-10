@@ -232,8 +232,16 @@ describe('practice on a challenge', () => {
     expect(focusFactor('precision', 0.95, undefined)).toBe(FOCUS_RATE.precision.rested);
     expect(focusFactor('precision', 0.6, undefined)).toBe(FOCUS_RATE.precision.tired);
     expect(focusFactor('spaced', 0.8, 2)).toBe(FOCUS_RATE.spaced.within);
-    expect(focusFactor('spaced', 0.8, 0)).toBe(1);
-    expect(focusFactor('spaced', 0.8, 30)).toBe(1);
+    expect(focusFactor('spaced', 0.8, 0)).toBe(FOCUS_RATE.spaced.outside);
+    expect(focusFactor('spaced', 0.8, 30)).toBe(FOCUS_RATE.spaced.outside);
+    expect(focusFactor('spaced', 0.8, undefined)).toBe(FOCUS_RATE.spaced.outside);
+    // No focus is never worse than steady: each has a day it costs (`tools/strategies.ts`, 2026-10-10).
+    expect(FOCUS_RATE.spaced.outside).toBeLessThan(1);
+    expect(FOCUS_RATE.precision.tired).toBeLessThan(1);
+    expect(FOCUS_RATE.variation.primary).toBeLessThan(1);
+    expect(FOCUS_RATE.live.primary).toBeLessThan(1);
+    // Neither breadth focus carries more in all than the other: live's two at 0.15 against variation's one at 0.3.
+    expect(FOCUS_RATE.live.primary + 2 * FOCUS_RATE.live.transfer).toBeCloseTo(FOCUS_RATE.variation.primary + FOCUS_RATE.variation.transfer, 6);
   });
 
   it('no focus is best everywhere: precision beats steady rested and loses tired; variation carries over and steady doesn’t', () => {
