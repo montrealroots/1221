@@ -111,7 +111,8 @@ export function optRefusal(sim: Simulation, person: Person): string | undefined 
  * 60 days after it runs out, but not after it's ended for too long without
  * work, a violation that leaves no grace; an O-1's for 10 days past its term
  * (8 CFR 214.1(l)(1)). An application pending holds it. When permission ends
- * the person is told the day their status does, and offered the move home;
+ * the person is told the day their status does (the move home it offered went with travel in the scope reset
+ * of 2026-10-09: there's no leaving now, which this said until 2026-10-10 there was);
  * staying past it, they're out of status. That closes the Visa Waiver Program
  * to them for good (INA 217(a)(7)), so a British or Irish citizen's ESTA is
  * refused, and voids the visa they hold (INA 222(g)); work, and an O-1, wait

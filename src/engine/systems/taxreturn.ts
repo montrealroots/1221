@@ -338,6 +338,22 @@ export function nonresidentFor(person: Person, year: number): boolean {
   return year - first < 5;
 }
 
+/**
+ * The part of a year's Social Security benefit that's taxable (IRC 86, filing singly): none while provisional income,
+ * the other income and half the benefit, is $25,000 or less; then half of what it's over, to half the benefit; past
+ * $34,000, 85% of what it's over, with the lesser of half the benefit and $4,500, to 85% of the benefit. The two
+ * thresholds aren't indexed. From 2026-10-10: until then the whole benefit was taxed.
+ */
+export function taxableSocialSecurity(benefit: Money, other: Money, into = 'USD'): Money {
+  if (benefit <= 0) return 0;
+  const b1 = usd(25_000_00, into);
+  const b2 = usd(34_000_00, into);
+  const provisional = other + benefit / 2;
+  if (provisional <= b1) return 0;
+  if (provisional <= b2) return Math.round(Math.min(benefit / 2, (provisional - b1) / 2));
+  return Math.round(Math.min(0.85 * benefit, 0.85 * (provisional - b2) + Math.min(benefit / 2, usd(4_500_00, into))));
+}
+
 /** The nonresident's due date: 15 April with wages withheld on, 15 June without (Form 1040-NR instructions). */
 export function nonresidentDeadline(year: number, wages: boolean): Instant {
   return wages ? deadline(year) : instantFromZoned({ year: year + 1, month: 6, day: 15, hour: 23, minute: 59 }, HOME);
@@ -350,7 +366,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   // A nonresident's return is on income connected with the US: the wages, the taxable scholarship, unemployment. The
   // banks' deposit interest isn't (IRC 871(i)), and nor would a foreign pension be.
   const nra = nonresidentFor(person, year);
-  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : (y.interest ?? 0) + (y.pension ?? 0));
+  const ss = y.socialSecurity ?? 0;
+  const otherIncome = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : (y.interest ?? 0) + (y.pension ?? 0) - ss);
+  const income = otherIncome + (nra ? 0 : taxableSocialSecurity(ss, otherIncome, into));
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));

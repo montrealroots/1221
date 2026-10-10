@@ -132,6 +132,37 @@ export function registered(school: SchoolRecord | undefined, cw?: { orientation:
   return school.registeredAt !== undefined || cw?.orientation.behind === true || cw?.orientation.done.register !== undefined || school.termsBegun > 1;
 }
 
+/** Whether anything of the school's is on their calendar between two moments. */
+function somethingAtSchoolFor(sim: Simulation, personId: string, from: Instant, to: Instant): boolean {
+  return sim.universe.scheduled.some((i) => i.status === 'pending' && i.payload.personId === personId && i.at >= from && i.at < to
+    && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND || i.kind === CABARET_KIND || i.kind === SUMMER_KIND));
+}
+
+/**
+ * Why they can't call in sick now, or nothing (a function of its own from 2026-10-10, so the screen offers the button
+ * with its reason, as the command refuses it).
+ */
+export function sickRefusal(sim: Simulation, person: Person): string | undefined {
+  const school = person.school;
+  if (!school || schoolEnded(school.standing)) return 'You’re not at school.';
+  const p = zonedParts(sim.now, zone());
+  const today: SchoolDate = { year: p.year, month: p.month, day: p.day };
+  if (school.sickDay === keyOf(today)) return 'You’ve called in sick today already.';
+  // Any day with something at school: classes, or a call, a lab, a shift, a Cabaret or Summer Cabaret call (from
+  // 2026-10-10: until then only a class day, and flu on a Saturday performance or in a recess run couldn't be excused).
+  const due = somethingAtSchoolFor(sim, person.id, at(today, 0), at(addDays(today, 1), 0));
+  if (!coursesOn(today).length && !due) return 'There’s nothing at school today to miss.';
+  // Before they've run: until 2026-09-27 it was taken all day, and said the day was excused after it had been counted.
+  if (coursesOn(today).length && !due && sim.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) return 'Today’s classes have been and gone; calling in sick now excuses nothing.';
+  // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
+  // Hurt in a way that limits the work (`INJURY_KIND[].limits`), a doctor's note excuses them too (from 2026-10-10): until
+  // then a student with a sprained ankle had to show a movement score on it, and lost a third of it (`tools/condition.ts`).
+  const hurt = injuryOf(person, sim.now);
+  const noted = hurt !== undefined && INJURY_KIND[hurt.kind].limits !== 'none';
+  if (person.wellbeing.condition >= ESTIMATE.sickBelow && !((person.health?.fluUntil ?? 0) > sim.now) && !noted) return 'You’re well enough to go: staying away would be an unexcused absence.';
+  return undefined;
+}
+
 /** The withholding on a nonresident alien's taxable scholarship at source: 14% for an F-1 student (IRC 1441(b)). */
 export const NONRESIDENT_SCHOLARSHIP_RATE = 0.14;
 
@@ -2691,9 +2722,6 @@ export function registerSchool(sim: Simulation): void {
     recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
   });
 
-  /** Whether anything of the school's is on their calendar between two moments. */
-  const somethingAtSchool = (s: Simulation, personId: string, from: Instant, to: Instant) => s.universe.scheduled.some((i) => i.status === 'pending' && i.payload.personId === personId && i.at >= from && i.at < to
-    && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND || i.kind === CABARET_KIND || i.kind === SUMMER_KIND));
   /**
    * A withdrawal of their own (from 2026-10-10): the place given up that day, as the Bulletin lets a student do
    * (pp.157-160). Its consequences: classes, calls, shifts and coursework end; hours worked are still paid; Yale Health
@@ -2730,24 +2758,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { excused: boolean }>('school.call_in_sick', (_p, { sim: s }) => {
     const person = s.player;
-    const school = person.school;
-    if (!school || schoolEnded(school.standing)) throw new CommandError('You’re not at school.');
+    const no = sickRefusal(s, person);
+    if (no) throw new CommandError(no);
     const p = zonedParts(s.now, zone());
-    const today: SchoolDate = { year: p.year, month: p.month, day: p.day };
-    // Any day with something at school: classes, or a call, a lab, a shift, a Cabaret or Summer Cabaret call (from
-    // 2026-10-10: until then only a class day, and flu on a Saturday performance or in a recess run couldn't be excused).
-    const end = at(addDays(today, 1), 0);
-    const due = somethingAtSchool(s, person.id, at(today, 0), end);
-    if (!coursesOn(today).length && !due) throw new CommandError('There’s nothing at school today to miss.');
-    // Before they've run: until 2026-09-27 it was taken all day, and said the day was excused after it had been counted.
-    if (coursesOn(today).length && s.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) throw new CommandError('Today’s classes have been and gone; calling in sick now excuses nothing.');
-    // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
-    // Hurt in a way that limits the work (`INJURY_KIND[].limits`), a doctor's note excuses them too (from 2026-10-10): until
-    // then a student with a sprained ankle had to show a movement score on it, and lost a third of it (`tools/condition.ts`).
-    const hurt = injuryOf(person, s.now);
-    const noted = hurt !== undefined && INJURY_KIND[hurt.kind].limits !== 'none';
-    if (person.wellbeing.condition >= ESTIMATE.sickBelow && !((person.health?.fluUntil ?? 0) > s.now) && !noted) throw new CommandError('You’re well enough to go: staying away would be an unexcused absence.');
-    school.sickDay = keyOf(today);
+    person.school!.sickDay = keyOf({ year: p.year, month: p.month, day: p.day });
     return { excused: true };
   });
 

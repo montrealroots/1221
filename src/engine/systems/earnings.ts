@@ -26,6 +26,8 @@ export interface YearEarnings {
   interest?: Money;
   /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
   pension?: Money;
+  /** Of the pension, Social Security, which the return taxes in part (from 2026-10-10). */
+  socialSecurity?: Money;
   // What a home put on the year (its mortgage interest and taxes, a let home's rent and costs, a sale's gain) and a
   // lodger's rent were kept here from 2026-09-28 and 2026-09-30, until the homes and the lodgers went in the scope
   // reset of 2026-10-09, and a farm's rent with the land the same day. A save that kept them sheds them (`migrate`, 91).
@@ -212,10 +214,12 @@ export function recordInterest(person: Person, at: Instant, zone: string, amount
 }
 
 /** A pension paid, to the year it's paid and where they lived: income for the return, and the month's. */
-export function recordPension(person: Person, at: Instant, zone: string, amount: Money, withheld = 0): void {
+export function recordPension(person: Person, at: Instant, zone: string, amount: Money, withheld = 0, socialSecurity = false): void {
   const p = zonedParts(at, zone);
   const y = yearOf(person, p.year);
   y.pension = (y.pension ?? 0) + amount;
+  // Social Security apart, which the return taxes in part (`taxableSocialSecurity`, from 2026-10-10).
+  if (socialSecurity) y.socialSecurity = (y.socialSecurity ?? 0) + amount;
   y.withheld += withheld;
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;

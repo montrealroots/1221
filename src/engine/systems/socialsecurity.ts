@@ -20,8 +20,10 @@
  * SLATE's estimates: what SSA hasn't published (the wage index after 2024,
  * the taxable maximum, bend points and credit after 2026, every later
  * cost-of-living increase) held at the last published; the earnings test on
- * a benefit claimed early while working, its taxation on the return, and
- * combining a UK record under the totalization agreement, left out.
+ * a benefit claimed early while working, and combining a UK record under the
+ * totalization agreement, left out. Its taxation on the return is IRC 86's,
+ * from 2026-10-10 (`taxableSocialSecurity`): until then this said it was left
+ * out while the return taxed all of it.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -147,7 +149,7 @@ export function registerSocialSecurity(sim: Simulation): void {
       const account = payeeAccount(s, person);
       s.post({ memo: 'Social Security, the month', category: 'pension', postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'Social Security').id, amount: -due }] });
       // Income for the return and the month (`recordPension`, from 2026-10-10: until then a pension paid reached neither).
-      recordPension(person, item.at, s.homeZone, due);
+      recordPension(person, item.at, s.homeZone, due, 0, true);
       if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Social Security Paid', body: `${formatMoney(due, cur)} for the month, since ${formatDate(ss.from, s.zone)}.`, importance: 25, route: '/workspace/bank' });
     }
     s.schedule({ at: monthOn(item.at), kind: SOCIAL_SECURITY_KIND, label: 'Social Security', category: 'system', priority: 20, payload: { personId: person.id } });

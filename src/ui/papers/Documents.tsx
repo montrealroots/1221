@@ -269,7 +269,7 @@ function ResidencePanel() {
                       {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, 'Temporary residence is granted')}>Apply</Gated>}
                       {!naturalize && <Gated feature="documents.naturalize" className="btn btn-sm btn-ghost" onClick={() => act('documents.naturalize', iso, 'Applied for citizenship')}>Naturalize</Gated>}
                       {held && !settle && <Gated feature="documents.settle" className="btn btn-sm btn-ghost" onClick={() => act('documents.settle', iso, 'Settled')}>Settle</Gated>}
-                      {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" onClick={() => act('documents.renew_residence', iso, 'Renewed for a year')}>Renew</Gated>}
+                      {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" disabled={(held.expiresAt ?? 0) - sim.now > 30 * 86_400_000} title={(held.expiresAt ?? 0) - sim.now > 30 * 86_400_000 ? 'It’s renewed within its last 30 days.' : 'For a year'} onClick={() => act('documents.renew_residence', iso, 'Renewed for a year')}>Renew</Gated>}
                     </div>
                   </td>
                 </tr>

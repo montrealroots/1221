@@ -26,6 +26,7 @@ import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/sy
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, studentUnavailable, unemploymentOf } from '@/engine/systems/unemployment';
+import { usWorkAuthorized } from '@/engine/systems/permission';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { PassportPane, WorkPane } from '@/ui/papers/Documents';
@@ -461,7 +462,8 @@ function BenefitsPane() {
   const preview = state ? basePeriodFor(person, state, sim.now, cur) : undefined;
   const source = state === 'ca' ? CALIFORNIA_UI.source : state === 'ct' ? CONNECTICUT_UI.source : NEW_YORK_UI.source;
   // A full-time student in Connecticut isn't available for work (from 2026-10-10, `studentUnavailable`).
-  const studying = state ? studentUnavailable(person, state) : undefined;
+  // A student in Connecticut, or a noncitizen without permission to work (`usWorkAuthorized`, from 2026-10-10): the reason said, no button.
+  const studying = state ? studentUnavailable(person, state) ?? (usWorkAuthorized(person, sim.now) ? undefined : 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).') : undefined;
   const partial = state === 'ca' ? `the benefit less the earnings past the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} and a quarter of them` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'by its hours, and nothing where the pay reaches the maximum';
   return (
     <div className="col gap-5">

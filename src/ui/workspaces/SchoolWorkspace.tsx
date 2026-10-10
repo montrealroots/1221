@@ -31,7 +31,7 @@ import { courseworkOf } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, summerRefusal, schoolEnded } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -269,9 +269,10 @@ function ClassesPane() {
       <Panel
         title={`Your Week, ${termLabel(term)}`}
         subtitle={`Year ${year}: nine to three on class days`}
-        actions={classToday ? (
-          <Gated feature="school.call_in_sick" onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
-        ) : undefined}
+        actions={sickRefusal(sim, person) === 'There’s nothing at school today to miss.' && !classToday ? undefined : (
+          // Offered on any day with something at school, with why it can't be used where it can't (from 2026-10-10).
+          <Gated feature="school.call_in_sick" disabled={Boolean(sickRefusal(sim, person))} title={sickRefusal(sim, person) ?? 'Today’s classes, calls and shift excused'} onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
+        )}
       >
         <LookRegion className="col gap-3">
           <div className="table-scroll">
@@ -609,6 +610,7 @@ function SummerPanel() {
       subtitle={summer ? (summer.out ? 'The company let you go' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
       actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
     >
+      {!summer && summerRefusal(sim, person) && <p className="small muted" style={{ margin: '0 0 var(--s2)' }}>{summerRefusal(sim, person)}</p>}
       {summer && (
         <div className="col gap-2" style={{ margin: '0 0 var(--s2)' }}>
           {summerRuns(summer.year).map((run, i) => {
@@ -649,6 +651,7 @@ function WorkPane() {
       actions={shiftRefusal(person) ? undefined : <Gated feature="school.take_shift" onClick={() => { const a = run<{ at: number }>('school.take_shift'); if (a.ok && a.value) toast(`Front of house, ${formatDateTime(a.value.at, zone())}.`, 'positive'); }}>Take An Elective Shift</Gated>}
     >
       <div className="col gap-3">
+        {shiftRefusal(person) && <p className="small muted" style={{ margin: 0 }}>{shiftRefusal(person)}</p>}
         <div className="grid grid-3">
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours}`} note={`The Bulletin’s minimum is ${WORK_STUDY.electiveHours}`} />

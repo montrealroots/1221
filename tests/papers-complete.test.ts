@@ -12,7 +12,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { checkingsOf } from '@/engine/systems/lending';
 import { hasSsn, SSN } from '@/engine/systems/taxid';
 import { courseworkOf } from '@/engine/systems/coursework';
-import { figuresFor, nonresidentFor, nonresidentDeadline } from '@/engine/systems/taxreturn';
+import { figuresFor, nonresidentFor, nonresidentDeadline, taxableSocialSecurity } from '@/engine/systems/taxreturn';
 import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { changeDeposits } from '@/engine/systems/routing';
 import { payeeAccount } from '@/engine/systems/cash';
@@ -151,5 +151,13 @@ describe('papers and cover', () => {
     expect(f1Of(sim.player)!.status).toBe('valid');
     tended(sim, at(2026, 9, 2));
     expect(mayEnroll(sim.player, sim.now).why).toMatch(/Yale Health covers you/);
+  });
+});
+
+describe('Social Security on the return', () => {
+  it('is taxed in part, by provisional income (IRC 86): none under $25,000, half past it, 85% past $34,000', () => {
+    expect(taxableSocialSecurity(20_000_00, 10_000_00)).toBe(0);
+    expect(taxableSocialSecurity(20_000_00, 20_000_00)).toBe(Math.round((30_000_00 - 25_000_00) / 2));
+    expect(taxableSocialSecurity(20_000_00, 80_000_00)).toBe(Math.round(0.85 * 20_000_00));
   });
 });

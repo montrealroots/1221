@@ -16,30 +16,30 @@ Each command the player can run: the engine file that handles it, the screens th
 | `bank.break_term` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-money.test.ts` | Your Bank |
 | `bank.cancel_new` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.cancel_scheduled` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
-| `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
+| `bank.cancel_standing_order` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `cross-journeys.test.ts` `journey-money.test.ts` `payments.test.ts` | Your Bank |
 | `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.close_current` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` `banking-complete.test.ts` `papers-complete.test.ts` | Your Bank |
-| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `banking.test.ts` `lending.test.ts` `money-fixes.test.ts` | Your Bank |
+| `bank.close_current` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` `banking-complete.test.ts` `cross-journeys.test.ts` `papers-complete.test.ts` | Your Bank |
+| `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `banking.test.ts` `cross-journeys.test.ts` `lending.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.debit_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
 | `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `coverage-gaps-number.test.ts` `security.test.ts` | Your Bank |
-| `bank.open_current` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `account-alerts.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cardoffers.test.ts` `commands-kept.test.ts` `papers-complete.test.ts` | Your Bank |
+| `bank.open_current` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `account-alerts.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cardoffers.test.ts` `commands-kept.test.ts` `cross-journeys.test.ts` `papers-complete.test.ts` | Your Bank |
 | `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `banking.test.ts` `money-fixes.test.ts` `payments.test.ts` | Your Bank |
 | `bank.open_term` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.pay_collections` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` | Your Bank |
 | `bank.reactivate` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.redirect_deposits` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` | Your Bank |
+| `bank.redirect_deposits` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` `cross-journeys.test.ts` | Your Bank |
 | `bank.repay_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.schedule_payment` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `journey-money.test.ts` `payments.test.ts` | Your Bank |
 | `bank.set_alerts` | `src/engine/systems/statements.ts` | `BankStatements.tsx` | `account-alerts.test.ts` `journey-money.test.ts` `playthrough-fixes.test.ts` `statements.test.ts` | Your Bank |
 | `bank.set_order_source` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` | Your Bank |
 | `bank.set_payments` | `src/engine/systems/payments.ts` | `BankPayments.tsx` | `accountlife.test.ts` `arrears.test.ts` `cardlife.test.ts` `cardoffers.test.ts` `cash.test.ts` `journey-money.test.ts` `payments.test.ts` `pending.test.ts` | Your Bank |
-| `bank.set_primary` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` `banking-complete.test.ts` `cardoffers.test.ts` | Your Bank |
+| `bank.set_primary` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `bank-moves.test.ts` `banking-complete.test.ts` `cardoffers.test.ts` `cross-journeys.test.ts` | Your Bank |
 | `bank.set_round_ups` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` `journey-money.test.ts` | Your Bank |
 | `bank.set_term_end` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
 | `bank.switch` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cards.test.ts` `lending.test.ts` `payments.test.ts` | Your Bank |
 | `bank.take_overrun_loan` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `commands-kept.test.ts` | Your Bank |
 | `bank.take_term_interest` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
-| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking.test.ts` `cash.test.ts` `journey-money.test.ts` | Your Bank |
+| `bank.transfer` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `bank-moves.test.ts` `banking.test.ts` `cash.test.ts` `cross-journeys.test.ts` `journey-money.test.ts` | Your Bank |
 
 ## benefits
 
@@ -73,7 +73,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `card.request_hardship` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `money-fixes.test.ts` | Your Bank |
 | `card.request_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
 | `card.set_auto_raise` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_autopay_from` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `account-alerts.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` | Your Bank |
+| `card.set_autopay_from` | `src/engine/systems/bankmoves.ts` | `BankMoves.tsx` | `account-alerts.test.ts` `bank-moves.test.ts` `banking-complete.test.ts` `cross-journeys.test.ts` | Your Bank |
 | `card.set_everyday` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `journey-money.test.ts` `several-cards.test.ts` | Your Bank |
 | `card.set_over_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
 | `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `coverage-gaps-statements.test.ts` `journey-money.test.ts` `money-fixes.test.ts` `several-cards.test.ts` | Your Bank |
