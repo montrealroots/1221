@@ -86,6 +86,7 @@ export function banksFor(cityId: string): readonly Bank[] {
  * that opens for them (from 2026-10-10: Capital One and Citi online are for US persons, `OPENING`).
  */
 export function startingBank(cityId: string, chosen?: string, usPerson = true): Bank | undefined {
+  // At creation nobody holds a green card yet, so a US person here is a citizen.
   const banks = banksFor(cityId).filter((b) => usPerson || !OPENING[b.id]?.usPersonsOnly);
   return banks.find((b) => b.id === chosen) ?? banks[0];
 }

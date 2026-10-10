@@ -17,41 +17,43 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 46
-- Implemented But Unverified: 76
-- Partially Implemented: 0
-- Commands in all: 122
+- Implemented But Unverified: 77
+- Partially Implemented: 1
+- Commands in all: 124
 
 ## Commands
 
 | Command | Status | Chapter | Screens | Handled In | Refuses | Changes | Money | Later | Tests | Journeys |
 |---|---|---|---|---|---|---|---|---|---|---|
 | `bank.add_standing_order` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | A standing order of your own goes into one of your savings accounts.; Say how much each month.; Pick a day of the month, 1 to 31. | standingOrders (added to) | — | bank.standing_order | 5 | journey-money.test.ts |
-| `bank.arrange_overdraft` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | There’s no current account to arrange one on.; Pay the overdraft back before closing it.; The bank arranges between …)} and …)}.; You’re overdrawn by more than that already. | — | — | — | 3 | journey-money.test.ts |
-| `bank.borrow` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | — | — | — | loan | 2 | journey-money.test.ts |
+| `bank.arrange_overdraft` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t an open current account of yours.; There’s no current account to arrange one on.; Pay the overdraft back before closing it.; The bank arranges between …)} and …)}.; and 1 more | — | — | — | 4 | journey-money.test.ts |
+| `bank.borrow` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank you keep an account at.; The loan is paid into, and repaid from, an open current account of yours. | — | — | loan | 3 | journey-money.test.ts |
 | `bank.break_term` | Verified (journey) | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; You need a current account for the money.; It closes on …, on the notice given. | — | — | — | 3 | journey-money.test.ts |
 | `bank.cancel_new` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your accounts.; Its cooling-off period has passed, or there isn’t one here for it.; You don’t have a card.; Your primary current account can’t be canceled. Make another primary first.; and 1 more | — | Yes | — | 2 | — |
 | `bank.cancel_scheduled` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | There’s no payment waiting by that name. | — | — | — | 2 | journey-money.test.ts |
 | `bank.cancel_standing_order` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | There’s no standing order by that name. | — | — | — | 3 | journey-money.test.ts |
+| `bank.cancel_switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | No switch is under way.; This country’s switching service publishes no right to call a switch off: it runs to its d; It could be called off until …, seven working days before its date; it’s under way now.; Calling it off leaves your accounts and payments where they are. Confirm to go ahead. | — | — | — | 1 | — |
 | `bank.claim_unclaimed` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | No money of yours is held as unclaimed. | unclaimed | Yes | — | 1 | — |
-| `bank.close_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal) | — | — | bank.current_closes | 4 | — |
+| `bank.close_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal) | — | — | bank.current_closes | 5 | — |
 | `bank.close_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Only a savings account of yours can be closed here.; There’s no current account to move the money into.; Notice is given: … closes on …. | — | — | bank.savings_notice | 7 | — |
 | `bank.debit_overdraft` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | Your bank doesn’t ask you this.; … never pays a debit card purchase into an overdraft. | — | — | — | 1 | — |
 | `bank.new_number` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | You have no current account.; … doesn’t say it moves an account to a new number; closing it and opening another does. | — | — | — | 2 | — |
-| `bank.open_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal) | status | Yes | bank.application; card.arrives | 7 | — |
+| `bank.open_current` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal) | status | Yes | bank.application; card.arrives | 8 | — |
 | `bank.open_savings` | Implemented But Unverified | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Savings opens beside a current account of yours at that bank.; You already have a savings account at …. | — | — | — | 6 | — |
-| `bank.open_term` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | … publishes no term deposit rate SLATE has.; Say how much to put in.; It takes …)} or more.; … holds …)}. | — | — | savings | 4 | journey-money.test.ts |
+| `bank.open_term` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | … publishes no term deposit rate SLATE has.; A term deposit at … is funded from your current account there: open one first.; Say how much to put in.; It takes …)} or more.; and 1 more | — | — | savings | 4 | journey-money.test.ts |
 | `bank.pay_collections` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | You don’t owe anything in collections.; You have no account to pay from.; There’s nothing in the account to pay it with. | — | — | — | 1 | — |
 | `bank.reactivate` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That account isn’t dormant. | — | — | — | 1 | — |
 | `bank.redirect_deposits` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Wages are paid into an open current or savings account of yours.; … is closing. | — | — | — | 2 | — |
 | `bank.repay_loan` | Verified (journey) | Your Bank | BankLending.tsx | `systems/lending.ts` | You don’t have a loan to pay off.; Paying it off takes …)}, and the bank can’t cover it all. | — | Yes | — | 2 | journey-money.test.ts |
 | `bank.schedule_payment` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | A scheduled payment goes between two of your own accounts.; Say how much.; Pick a day ahead. | — | — | bank.scheduled_payment | 2 | journey-money.test.ts |
 | `bank.set_alerts` | Verified (journey) | Your Bank | BankStatements.tsx | `systems/statements.ts` | Set the … as an amount, or turn it off. | alerts | — | — | 4 | journey-money.test.ts |
-| `bank.set_order_source` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | No such standing order.; A standing order pays from an open current account of yours.; It pays into that account. | fromId | — | — | 1 | — |
+| `bank.set_loan_repayment` | Partially Implemented | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t an open loan of yours.; A loan is repaid from an open current account of yours.; … is closing. | — | — | — | 0 | — |
+| `bank.set_order_source` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | No such standing order.; A standing order pays from an open current account of yours.; … is closing.; It pays into that account. | fromId | — | — | 1 | — |
 | `bank.set_payments` | Verified (journey) | Your Bank | BankPayments.tsx | `systems/payments.ts` | Everyday spending goes in cash, on the debit card or on the credit card.; There’s no savings account to cover the current account. | — | — | — | 8 | journey-money.test.ts |
-| `bank.set_primary` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only an open current account of yours can be primary.; … is primary already.; … is closing. | primaryAccountId | — | — | 4 | — |
+| `bank.set_primary` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | Only an open current account of yours can be primary.; … is primary already.; … is closing. | primaryAccountId | — | — | 5 | — |
 | `bank.set_round_ups` | Verified (journey) | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | … doesn’t round purchases up into savings. | roundUps | — | — | 2 | journey-money.test.ts |
 | `bank.set_term_end` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … doesn’t let a term deposit end that way.; … needs … days’ notice before the end to change it. | — | — | — | 1 | — |
-| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; You keep an account at … already: make it primary, move what pays from the old one, and cl; … won’t open an account for somebody who owes it a charged-off debt.; and 5 more | — | — | bank.switch_complete | 6 | — |
+| `bank.switch` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | That isn’t a bank where you live.; You already bank with ….; You keep an account at … already: make it primary, move what pays from the old one, and cl; … won’t open an account for somebody who owes it a charged-off debt.; and 7 more | — | — | bank.switch_complete | 7 | — |
 | `bank.take_overrun_loan` | Implemented But Unverified | Your Bank | BankLending.tsx | `systems/lending.ts` | Your bank has offered no loan for an overrun.; You already have a loan with the bank. | — | — | loan | 1 | — |
 | `bank.take_term_interest` | Implemented But Unverified | Your Bank | BankAccountLife.tsx | `systems/accountlife.ts` | That isn’t one of your term deposits.; … pays a term deposit’s interest at its end.; It hasn’t earned anything to take yet. | — | Yes | — | 1 | — |
 | `bank.transfer` | Verified (journey) | Your Bank | BankWorkspace.tsx | `systems/banking.ts` | Money moves here between your own current and savings accounts.; That’s the same account.; Say how much to move.; … holds …)}.; and 4 more | — | Yes | — | 6 | journey-money.test.ts |
@@ -73,7 +75,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.request_hardship` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; You’re on a plan already.; The card owes nothing.; You could pay it off today: a hardship plan is for when you can’t. | — | — | — | 2 | — |
 | `card.request_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Say the limit you want. | — | — | — | 1 | — |
 | `card.set_auto_raise` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card. | — | — | — | 1 | — |
-| `card.set_autopay_from` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | That isn’t one of your cards.; Autopay pays from an open current account of yours. | — | — | — | 4 | — |
+| `card.set_autopay_from` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | That isn’t one of your cards.; Autopay pays from an open current account of yours.; … is closing. | — | — | — | 5 | — |
 | `card.set_everyday` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t hold that card. | — | — | — | 2 | journey-money.test.ts |
 | `card.set_over_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Opting in to going over the limit is a US card’s choice. | — | — | — | 1 | — |
 | `card.set_statement_day` | Verified (journey) | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Pick a day from the 1st to the 28th. | — | — | — | 5 | journey-money.test.ts |
@@ -104,7 +106,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.drop` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You have no plan of your own to drop. | — | — | — | 1 | — |
 | `health.enroll` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | — | — | — | — | 2 | — |
 | `health.extra_supply` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | — (also extraSupplyRefusal) | — | — | — | 1 | — |
-| `health.pay_bill` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You owe nothing for care.; Say how much.; Your current account can’t cover it. | — | Yes | — | 3 | — |
+| `health.pay_bill` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You owe nothing for care.; Say how much.; … can’t cover it. | — | Yes | — | 3 | — |
 | `health.prepay` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | It comes to …, more than you can pay. (also prepayRefusal) | — | — | — | 2 | — |
 | `health.therapy` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/therapy.ts` | — (also therapyRefusal) | therapy; status | Yes | — | 2 | — |
 | `health.treat` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You don’t have that. | — | — | — | 2 | — |
@@ -163,7 +165,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `bank.savings_notice` | `systems/banking.ts` | systems/banking.ts; systems/lending.ts | — | — | — | 0 |
 | `bank.scheduled_payment` | `systems/payments.ts` | systems/payments.ts | standingOrders (added to) | Yes | bank.standing_order; bank.scheduled_payment | 2 |
 | `bank.standing_order` | `systems/payments.ts` | systems/payments.ts | — | Yes | bank.standing_order | 2 |
-| `bank.switch_complete` | `systems/lending.ts` | systems/lending.ts | — | Yes | loan; savings; bank.switch_complete | 4 |
+| `bank.switch_complete` | `systems/lending.ts` | systems/lending.ts | — | Yes | loan; savings; bank.switch_complete | 6 |
 | `benefits.assistance_month` | `systems/assistance.ts` | systems/assistance.ts | — | Yes | escrow | 0 |
 | `benefits.desempleo_month` | `systems/homebenefits.ts` | systems/homebenefits.ts | — | — | benefits.desempleo_month | 3 |
 | `benefits.ja_week` | `systems/homebenefits.ts` | systems/homebenefits.ts | — | — | benefits.ja_week | 0 |

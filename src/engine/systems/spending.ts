@@ -154,12 +154,12 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
       left -= take;
     }
   }
-  // The arranged overdraft is the primary account's, and only it is drawn on.
-  const current = checkingOf(sim, person);
-  if (withOverdraft && current && checking?.id === current.id && left > 0) {
-    const take = Math.min(left, overdraftHeadroom(sim, person));
+  // The account drawn on runs into its own overdraft: the primary's in the bank's way, another bank's to its arranged
+  // limit (from 2026-10-10: until then the primary's alone, and a loan or autopay from a second bank couldn't use one).
+  if (withOverdraft && checking && left > 0) {
+    const take = Math.min(left, overdraftHeadroom(sim, person, checking));
     if (take > 0) {
-      postings.push({ accountId: current.id, amount: -take });
+      postings.push({ accountId: checking.id, amount: -take });
       left -= take;
     }
   }

@@ -40,7 +40,7 @@ import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSa
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
-import { CHEX } from '@/engine/systems/lending';
+import { CHEX, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -60,7 +60,9 @@ export function BankWorkspace() {
   }
 
   const here = accounts.filter((a) => a.bankId === bank.id);
-  const current = accounts.find((a) => a.kind === 'checking');
+  // The primary account (from 2026-10-10: until then the first current account found, which with two banks could be the
+  // other one, named as where savings closes and where Move Money starts from).
+  const current = accounts.find((a) => a.id === sim.player.primaryAccountId) ?? accounts.find((a) => a.kind === 'checking');
   const savings = accounts.find((a) => a.kind === 'savings');
   const fromId = from || current?.id || '';
   const toId = to || accounts.find((a) => a.id !== fromId)?.id || '';
@@ -206,7 +208,7 @@ export function BankWorkspace() {
         <BankCash bankId={bank.id} />
       </div>
     ),
-    borrowing: <BankLending bank={bank} show={['borrowing']} />,
+    borrowing: <BorrowingAt primaryBank={bank} />,
     statements: <BankStatements />,
   };
 
@@ -237,6 +239,30 @@ export function BankWorkspace() {
 }
 
 type BankTab = 'accounts' | 'cards' | 'payments' | 'borrowing' | 'statements';
+
+/**
+ * Borrowing at any bank held (from 2026-10-10): the lender chosen first, then that bank's own overdraft, loan and term
+ * terms, on the current account there. Until then only the primary account's bank lent.
+ */
+function BorrowingAt({ primaryBank }: { primaryBank: import('@/engine/content/banks').Bank }) {
+  const currents = useWorld((s) => checkingsOf(s, s.player));
+  const [lender, setLender] = useState(primaryBank.id);
+  const account = currents.find((a) => a.bankId === lender) ?? currents[0];
+  const bank = (account?.bankId ? bankById(account.bankId) : undefined) ?? primaryBank;
+  return (
+    <div className="col gap-3">
+      {currents.length > 1 && (
+        <div className="field" style={{ maxWidth: 360 }}>
+          <label htmlFor="lender">Borrow At</label>
+          <select id="lender" value={bank.id} onChange={(e) => setLender(e.target.value)}>
+            {currents.map((a) => <option key={a.id} value={a.bankId}>{a.institution}</option>)}
+          </select>
+        </div>
+      )}
+      <BankLending bank={bank} account={account} show={['borrowing']} />
+    </div>
+  );
+}
 
 /** The screen's parts, each under its own tab. Until 2026-09-26 they ran down one page, fourteen to sixteen panels long. */
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */

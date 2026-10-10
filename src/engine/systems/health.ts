@@ -167,6 +167,17 @@ export interface HealthRecord {
   stayCopays?: Record<string, Money>;
 }
 
+/**
+ * The bills kept: the last forty settled, and every one still open, owed, in debt or under appeal (from 2026-10-10:
+ * until then the last forty of all, and an unpaid bill or one under appeal that fell off was never charged).
+ */
+export function keptBills<T extends { paid?: boolean; inDebt?: boolean; denied?: { appealedAt?: Instant; outcome?: string } }>(bills: T[]): T[] {
+  const open = (b: T) => !b.paid || b.inDebt === true || (b.denied?.appealedAt !== undefined && b.denied.outcome === undefined);
+  const settled = bills.filter((b) => !open(b));
+  const drop = new Set(settled.slice(0, Math.max(0, settled.length - 40)));
+  return bills.filter((b) => !drop.has(b));
+}
+
 export function healthOf(person: Person): HealthRecord {
   person.health ??= { premiums: {}, uncoveredInCalifornia: {}, covered: true, spent: {}, deductible: {}, bills: [] };
   const h = person.health;
@@ -1066,7 +1077,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     h.seq = (h.seq ?? 0) + 1;
     const paid: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at, paid: true };
     h.bills.push(paid);
-    h.bills = h.bills.slice(-40);
+    h.bills = keptBills(h.bills);
     return undefined;
   }
   if (!MEDICAL.includes(event.care)) {
@@ -1074,7 +1085,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     h.seq = (h.seq ?? 0) + 1;
     const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
     h.bills.push(bill);
-    h.bills = h.bills.slice(-40);
+    h.bills = keptBills(h.bills);
     sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
     return bill;
   }
@@ -1095,7 +1106,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount: full, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screened ? { aid: 'screened' as const } : {}), ...(denied ? { denied: { share: amount } } : {}) };
   if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${event.what.toLowerCase()}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
-  h.bills = h.bills.slice(-40);
+  h.bills = keptBills(h.bills);
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
   return bill;
 }
@@ -1122,7 +1133,7 @@ export function billCare(sim: Simulation, person: Person, what: string, amount: 
   h.seq = (h.seq ?? 0) + 1;
   const bill: MedicalBill = { id: `m${h.seq}`, at, what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
   h.bills.push(bill);
-  h.bills = h.bills.slice(-40);
+  h.bills = keptBills(h.bills);
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
   return bill;
 }
@@ -1376,14 +1387,16 @@ export function registerHealth(sim: Simulation): void {
     return { aid: bill.aid, amount: bill.amount };
   });
 
-  sim.onCommand<{ amount: Money }, { paid: Money }>('health.pay_bill', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; fromId?: string }, { paid: Money }>('health.pay_bill', (p, { sim: s }) => {
     const person = s.player;
     const debt = medicalDebtOf(s, person);
     if (!debt || debt.balance >= 0) throw new CommandError('You owe nothing for care.');
     const amount = Math.min(Math.round(Number(p.amount)), -debt.balance);
     if (!(amount > 0)) throw new CommandError('Say how much.');
-    const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!current || current.balance < amount) throw new CommandError('Your current account can’t cover it.');
+    // From the account named, any open current or savings account of theirs (from 2026-10-10: the primary alone until then).
+    const named = p.fromId ? s.universe.accounts[String(p.fromId)] : undefined;
+    const current = named && named.ownerId === person.id && !named.closedAt && (named.kind === 'checking' || named.kind === 'savings') ? named : person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    if (!current || current.balance < amount) throw new CommandError(`${current?.name ?? 'That account'} can’t cover it.`);
     s.post({ memo: 'Paid toward medical debt', category: 'health', postings: [{ accountId: current.id, amount: -amount }, { accountId: debt.id, amount }] });
     // The debt cleared, every bill that had gone to it is settled.
     if (debt.balance >= 0) {

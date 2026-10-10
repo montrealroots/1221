@@ -99,6 +99,9 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   }
   for (const [, state] of Object.entries(person.credit?.cards ?? {})) if (state.autopayFrom === accountId) out.push('A card’s autopay pays from it');
   if (person.credit?.autopayFrom === accountId) out.push('Your everyday card’s autopay pays from it');
+  for (const loan of Object.values(sim.universe.accounts)) {
+    if (loan.ownerId === person.id && !loan.closedAt && loan.kind === 'loan' && loan.repayFromId === accountId) out.push(`${loan.name}’s payments come from it`);
+  }
   for (const i of sim.universe.scheduled) {
     if (i.status !== 'pending' || i.kind !== 'bank.scheduled_payment' || i.payload.personId !== person.id) continue;
     if (i.payload.fromId === accountId || i.payload.toId === accountId) out.push('A payment set for a date uses it');

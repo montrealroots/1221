@@ -44,6 +44,8 @@ const countryIdOf = (iso: string) => COUNTRIES.all().find((c) => c.iso2?.toUpper
 function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
+  // Reporting a document lost cancels it for good, and what was issued on it: asked twice (from 2026-10-10).
+  const [confirming, setConfirming] = useState<{ id: string; stolen: boolean } | undefined>(undefined);
   const docs = documentsOf(person).filter((d) => kinds.includes(d.kind)).sort((a, b) => (b.issuedAt ?? b.appliedAt ?? 0) - (a.issuedAt ?? a.appliedAt ?? 0));
   if (!docs.length) return <p className="small muted" style={{ margin: 0 }}>None held.</p>;
   return (
@@ -62,7 +64,12 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                 <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
                 <td>
                   {d.status === 'valid' && !expired && LOSABLE.has(d.kind) && (
-                    <><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated><Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id, stolen: true }).ok) toast(`${KIND_WORD[d.kind]} reported stolen and canceled.`, 'positive'); }}>Report Stolen</Gated></>
+                    confirming?.id === d.id ? (
+                      <span className="col gap-1"><span className="xs">Reported {confirming.stolen ? 'stolen' : 'lost'}, it’s canceled for good, even if it turns up{d.kind === 'passport' ? ', with any visa or authorization issued on it (the F-1 status holds)' : ''}.</span>
+                        <span className="row gap-1"><Gated feature="documents.report_lost" className="btn btn-sm btn-danger" onClick={() => { if (run('documents.report_lost', { documentId: d.id, ...(confirming.stolen ? { stolen: true } : {}) }).ok) toast(`${KIND_WORD[d.kind]} reported ${confirming.stolen ? 'stolen' : 'lost'} and canceled.`, 'positive'); setConfirming(undefined); }}>Cancel It</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming(undefined)}>Keep It</button></span></span>
+                    ) : (
+                    <><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming({ id: d.id, stolen: false })}>Report Lost…</button><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming({ id: d.id, stolen: true })}>Report Stolen…</button></>
+                    )
                   )}
                   {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('A police report filed.', 'positive'); }}>File A Police Report</Gated>; })()}
                   {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id); return <Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replaced${a.value!.fee ? `, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated>; })()}

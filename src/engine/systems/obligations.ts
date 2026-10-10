@@ -20,7 +20,7 @@ import { formatDate, MS_DAY, type Instant } from '../core/time';
 import { paymentsOf, SCHEDULED_KIND, STANDING_ORDER_KIND } from './payments';
 import { orderSource } from './routing';
 import { autopayAsk, autopaySource, cardsOf, DUE_KIND } from './credit';
-import { checkingAt, checkingsOf, LOAN_DUE_KIND } from './lending';
+import { checkingsOf, LOAN_DUE_KIND, repaymentAccount } from './lending';
 import { alertsOf } from './statements';
 
 export const LOOKAHEAD_DAYS = 3;
@@ -56,7 +56,7 @@ export function obligationsAhead(sim: Simulation, person: Person, until: Instant
     } else if (item.kind === LOAN_DUE_KIND) {
       const loan = sim.universe.accounts[String(item.payload.accountId)];
       if (!loan || loan.ownerId !== person.id || loan.closedAt) continue;
-      const from = checkingAt(sim, person, loan.bankId) ?? checkingsOf(sim, person)[0];
+      const from = repaymentAccount(sim, person, loan);
       const owed = Math.min(loan.loanPayment ?? 0, Math.max(0, -loan.balance));
       if (from && owed > 0) out.push({ key: `loan:${loan.id}:${item.at}`, accountId: from.id, what: `The ${loan.name} payment`, amount: owed, at: item.at, remedy: 'Move money into it before the day.' });
     }

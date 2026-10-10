@@ -96,6 +96,10 @@ export interface Loan {
   maxMonths?: number;
   /** The rate is the country's market average, not this bank's own. */
   market?: boolean;
+  /** Lends only to a customer of so many months (from 2026-10-10, research-tax-switch-lending.json). */
+  customerMonths?: number;
+  /** Lends to somebody without a current account there too, up to this (absent: its customers only, SLATE's reading). */
+  newCustomerMax?: Money;
   source: string;
 }
 
@@ -131,11 +135,11 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   'us-wells-fargo': {
     overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. 2026-07-28: no fee on an item of $10 or less, items posted by time, ties lowest first' },
-    loan: { from: 0.0674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, source: 'wellsfargo.com personal loans: from 6.74% APR, $3,000 to $100,000, 12 to 84 months' },
+    loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (research-tax-switch-lending.json, 2026-10-10)' },
     term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, 24 September 2026' },
   },
   'us-citi': {
-    loan: { from: 0.0999, to: 0.1749, source: 'citi.com personal loans: 9.99% to 17.49% APR' },
+    loan: { from: 0.1024, to: 0.1849, minAmount: 2_000_00, maxAmount: 50_000_00, newCustomerMax: 30_000_00, source: 'citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (research-tax-switch-lending.json, 2026-10-10)' },
     term: { rate: 0.0425, months: 12, called: 'CD', source: 'Citi 12-month CD, via fortune.com, 24 September 2026' },
   },
   'us-capital-one': {
@@ -342,8 +346,12 @@ export const LENDING: Readonly<Record<string, Lending>> = {
  * have none; Korea's moves automatic payments but not the balance, and Mexico's moves a payroll alone, so neither is
  * run here: the player moves those steps themselves (`systems/bankmoves.ts`).
  */
-export const SWITCHING: Readonly<Record<string, { workingDays: number; scheme: string; source: string }>> = {
-  GB: { workingDays: 7, scheme: 'Current Account Switch Service', source: 'currentaccountswitch.co.uk: "The process takes 7 working days"' },
+/**
+ * `cancelBeforeDays`: a switch can be called off until so many working days before its date, where the service says
+ * (CASS's seven, research-tax-switch-lending.json); absent, no right to cancel was found, and none is offered.
+ */
+export const SWITCHING: Readonly<Record<string, { workingDays: number; scheme: string; source: string; cancelBeforeDays?: number }>> = {
+  GB: { workingDays: 7, scheme: 'Current Account Switch Service', cancelBeforeDays: 7, source: 'currentaccountswitch.co.uk: "The process takes 7 working days"; a switch can be canceled up to 7 working days before the switch date, which the customer chooses' },
   IE: { workingDays: 10, scheme: 'Switching Code', source: 'Central Bank of Ireland, Code of Conduct on the Switching of Payment Accounts (2016): the new account active within 10 working days of the switch date' },
   DE: { workingDays: 12, scheme: 'Kontowechselhilfe', source: 'Zahlungskontengesetz §§ 20–26: 2, 5 and 5 business days, 12 in all' },
   FR: { workingDays: 22, scheme: 'mobilité bancaire', source: 'service-public.gouv.fr F33881, Code monétaire et financier L312-1-7: 22 working days from the signed mandate, free' },

@@ -70,8 +70,8 @@ describe('journey: a student’s money through a first year', () => {
     // A term deposit opened, and a loan taken.
     ok(sim, 'bank.open_term', { amount: 5_000_00 });
     const term = termsOf(sim, sim.player).at(-1)!;
-    // No loan yet: Wells Fargo lends against wages paid in, and none has been.
-    expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 12 } }).error).toMatch(/wages paid in/);
+    // No loan yet: Wells Fargo lends to customers of a year (from 2026-10-10), and against wages paid in, none yet.
+    expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 12 } }).error).toMatch(/customers of 12 months|wages paid in/);
 
     // On through the standing order's day: it went, the canceled payment didn't.
     const s0 = savings.balance;
@@ -87,6 +87,8 @@ describe('journey: a student’s money through a first year', () => {
     // Three months of work-study pay in, the bank lends against it; the loan paid off, the term deposit broken, the
     // standing order called off.
     expect(sim.universe.transactions.some((t) => t.postings.some((p) => p.accountId === current(sim).id && p.amount > 0) && /work-study|payroll|wages|pay/i.test(t.memo))).toBe(true);
+    // TEST SETUP: the account a year old, as Wells Fargo asks of a borrower; this journey runs three months.
+    current(sim).openedAt -= 13 * 30.44 * 86_400_000;
     ok(sim, 'bank.borrow', { amount: 3_000_00, months: 60 });
     expect(mine(sim, 'loan')).toBeDefined();
     ok(sim, 'bank.repay_loan');

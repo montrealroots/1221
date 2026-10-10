@@ -25,7 +25,7 @@ import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, den
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
-import { basePeriodFor, studentUnavailable, unemploymentOf } from '@/engine/systems/unemployment';
+import { basePeriodFor, claimStateFor, studentUnavailable, unemploymentOf } from '@/engine/systems/unemployment';
 import { usWorkAuthorized } from '@/engine/systems/permission';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -457,8 +457,9 @@ function BenefitsPane() {
   const money = (c: number) => formatMoney(c, cur);
   const record = unemploymentOf(person);
   const claim = record.claim;
-  // Filed where they live (`homeOf`); until 2026-09-27 this read where they stood.
-  const state = BENEFIT_STATE[homeOf(person)];
+  // Filed where the engine files it (`claimStateFor`, from 2026-10-10: until then where they live, which could name
+  // another state than the claim went to); until 2026-09-27 this read where they stood.
+  const state = claimStateFor(person, sim.now) ?? BENEFIT_STATE[homeOf(person)];
   const preview = state ? basePeriodFor(person, state, sim.now, cur) : undefined;
   const source = state === 'ca' ? CALIFORNIA_UI.source : state === 'ct' ? CONNECTICUT_UI.source : NEW_YORK_UI.source;
   // A full-time student in Connecticut isn't available for work (from 2026-10-10, `studentUnavailable`).

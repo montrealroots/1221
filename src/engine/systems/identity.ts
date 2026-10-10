@@ -118,6 +118,8 @@ export function registerIdentity(sim: Simulation): void {
     // The post held while away kept it until the hold's end (`systems/away.ts`), until the time away went on 2026-10-09.
     doc.status = 'valid';
     doc.issuedAt = item.at;
+    // Said, as a passport's arrival is (from 2026-10-10: until then it came in silence).
+    if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s in force from today.', importance: 40, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money }>('documents.apply_idcard', (_p, { sim: s }) => {

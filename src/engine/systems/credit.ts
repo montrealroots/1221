@@ -97,6 +97,11 @@ export interface CardState {
    * until then were redrawn on today's statement day, so a moved day moved every statement before it too.
    */
   cuts?: Instant[];
+  /**
+   * What each statement said when it was cut (from 2026-10-10): its minimum and its terms, the last sixty. Until then a
+   * past statement was redrawn from today's terms, score and intro months, so a cleared intro rate rewrote old ones.
+   */
+  issued?: { at: Instant; minimum: Money; terms: CardTerms }[];
   /** When the yearly fee was last charged (from 2026-10-10), so a month with two statements charges it once. */
   feeAt?: Instant;
   /** Due dates in a row with less than the minimum paid. */
@@ -169,7 +174,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
@@ -760,6 +765,9 @@ export function registerCredit(sim: Simulation): void {
         }
       }
     }
+    // What this statement says, kept as it said it.
+    (credit.issued ??= []).push({ at: s.now, minimum: credit.statementBalance > 0 ? minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0) : 0, terms });
+    if (credit.issued.length > 60) credit.issued.splice(0, credit.issued.length - 60);
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays, card);
     // Nothing owed: the month is reported now, paid as agreed.
     else reportMonth(s, person, ON_TIME);

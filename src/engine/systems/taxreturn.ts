@@ -36,6 +36,7 @@ import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '
 import { exchange } from '../content/currency';
 import { computeAnnualTax, INCOME_TAX_RULES } from '../content/tax';
 import { f1Of } from './permission';
+import { residenceIn } from './residence';
 import { hasSsn, SSN } from './taxid';
 
 /** The federal standard deduction in the tax table, which a nonresident alien doesn't take (`figuresFor`). */
@@ -332,6 +333,8 @@ export const NIIT = { rate: 0.038, from: 200_000_00 } as const;
  */
 export function nonresidentFor(person: Person, year: number): boolean {
   if (citizenOf(person, 'US') || person.citizenshipId === undefined) return false;
+  // A green card makes them a resident alien for tax (the green-card test, IRC 7701(b)(1)(A)(i)), from 2026-10-10.
+  if (residenceIn(person, 'US', instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME))?.route === 'us-green-card') return false;
   const f1 = f1Of(person);
   if (!f1) return false;
   const first = zonedParts(f1.issuedAt ?? f1.appliedAt ?? instantFromZoned({ year, month: 1, day: 1, hour: 12 }, HOME), HOME).year;

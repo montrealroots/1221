@@ -148,6 +148,8 @@ export interface Account {
   fundBy?: Instant;
   zeroSince?: Instant;
   closingAt?: Instant;
+  /** A loan's repayment account, as agreed when it was taken (from 2026-10-10): any current account of theirs. */
+  repayFromId?: string;
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

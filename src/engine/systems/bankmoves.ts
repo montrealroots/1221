@@ -45,6 +45,7 @@ import { photoIdOf } from './documents';
 import { ageOn } from './mortality';
 import { homeOf } from './earnings';
 import { citizenOf } from './documents';
+import { residenceIn } from './residence';
 import { hasSsn } from './taxid';
 import { startRefusal } from './life';
 import { last4For, REPLACED_KIND } from './security';
@@ -98,9 +99,9 @@ export function openRefusal(sim: Simulation, person: Person, bankId: string, at:
   if (!photoIdOf(person, at)) return `${bank.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
   const rules = openingOf(bank);
   if (rules?.minimumAge !== undefined && ageOn(sim, person, at) < rules.minimumAge) return `${bank.name} opens an account on your own from ${rules.minimumAge}.`;
-  // US persons only: a citizen, or a permanent resident, whom SLATE doesn't model, so a citizen (from 2026-10-10 Capital
-  // One too, whose disclosure says so; Citi's branch route for a nonresident isn't published).
-  if (rules?.usPersonsOnly && !citizenOf(person, 'US')) return `${bank.name} opens this account for US citizens and permanent residents; on an F-1 you’re neither.`;
+  // US persons only: a citizen, or a green-card holder (`usPerson`); Capital One's disclosure says so, and Citi's
+  // branch route for a nonresident isn't published.
+  if (rules?.usPersonsOnly && !usPerson(person, at)) return `${bank.name} opens this account for US citizens and permanent residents; on an F-1 you’re neither.`;
   // Without a Social Security number, a bank that opens for international students does it in a branch: in town, out
   // of hospital, and an hour there (SLATE's estimate).
   if (channelFor(person, bank) === 'branch') {
@@ -109,6 +110,14 @@ export function openRefusal(sim: Simulation, person: Person, bankId: string, at:
     if (busy) return busy;
   }
   return undefined;
+}
+
+/**
+ * A US person for a bank's purposes: a citizen, or a permanent resident holding a green card in force (from 2026-10-10:
+ * until then citizenship alone, and the sources say "or lawful permanent residents" / "or resident alien").
+ */
+export function usPerson(person: Person, at: Instant): boolean {
+  return citizenOf(person, 'US') || residenceIn(person, 'US', at)?.route === 'us-green-card';
 }
 
 /** An hour at the branch, SLATE's estimate, where an account is opened in person. */
@@ -424,6 +433,7 @@ export function registerBankMoves(sim: Simulation): void {
     if (!order) throw new CommandError('No such standing order.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('A standing order pays from an open current account of yours.');
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
     if (account.id === order.toId) throw new CommandError('It pays into that account.');
     order.fromId = account.id;
     return { fromId: account.id };
@@ -435,6 +445,7 @@ export function registerBankMoves(sim: Simulation): void {
     if (!card) throw new CommandError('That isn’t one of your cards.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('Autopay pays from an open current account of yours.');
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
     autopaySource(s, person, card);
     const credit = person.credit!;
     const state = !credit.primaryId || credit.primaryId === card.id ? credit : (credit.cards ??= {})[card.id];

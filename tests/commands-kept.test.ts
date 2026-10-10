@@ -110,7 +110,7 @@ describe('cover and care', () => {
     const debt = medicalDebtOf(poor, poor.player)!;
     expect(debt.balance).toBe(-30_000_00);
     expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 0 } }).error).toBe('Say how much.');
-    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toBe('Your current account can’t cover it.');
+    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/can’t cover it/);
     const current = poor.universe.accounts[poor.player.primaryAccountId!]!;
     const part = 100_00;
     expect(current.balance).toBeGreaterThan(part);

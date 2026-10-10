@@ -170,7 +170,7 @@ describe('a personal loan', () => {
     sim.player.payments = { ...(sim.player.payments ?? {}), linkSavings: true } as typeof sim.player.payments;
     const answer = sim.must<{ apr: number; payment: number }>({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 12 } });
     const score = sim.player.credit!.score;
-    expect(answer.apr).toBe(rateForRecord(0.0999, 0.1749, score));
+    expect(answer.apr).toBe(rateForRecord(0.1024, 0.1849, score));
     expect(answer.payment).toBe(monthlyPayment(3_000_00, answer.apr, 12));
     const loan = loanOf(sim, sim.player)!;
     expect(loan.balance).toBe(-3_000_00);
@@ -191,7 +191,7 @@ describe('a personal loan', () => {
     expect(interestPaid()).toBeGreaterThan(0);
   });
 
-  it('refuses without wages, past 35% of them, to a poor record, and Wells Fargo below a good one', () => {
+  it('refuses without wages, past 35% of them, to a poor record, and at Wells Fargo a customer of under a year', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi' });
     expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 1_000_00, months: 12 } }).ok).toBe(false);
     wages(sim, 1_000_00);
@@ -200,9 +200,11 @@ describe('a personal loan', () => {
     expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 1_000_00, months: 12 } }).ok).toBe(false);
     const wf = lifeIn('us-ny-newyork', { bankId: 'us-wells-fargo' });
     wages(wf, 10_000_00);
-    wf.player.credit!.score = 650;
-    expect(wf.execute({ kind: 'bank.borrow', payload: { amount: 5_000_00, months: 24 } }).error).toContain('lowest rate');
     wf.player.credit!.score = 700;
+    // Wells Fargo lends to customers of 12 months or more (from 2026-10-10): the account opened today isn't one yet.
+    expect(wf.execute({ kind: 'bank.borrow', payload: { amount: 5_000_00, months: 24 } }).error).toMatch(/customers of 12 months/);
+    // TEST SETUP: the account opened thirteen months before.
+    wf.universe.accounts[wf.player.primaryAccountId!]!.openedAt -= 13 * 30.44 * MS_DAY;
     expect(wf.execute({ kind: 'bank.borrow', payload: { amount: 5_000_00, months: 24 } }).ok).toBe(true);
     expect(wf.execute({ kind: 'bank.borrow', payload: { amount: 1_000_00, months: 24 } }).ok).toBe(false);
   });

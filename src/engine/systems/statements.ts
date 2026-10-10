@@ -93,7 +93,8 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
  * account's last ends at its closing.
  */
 export function periodsOf(sim: Simulation, account: Account): Period[] {
-  const zone = sim.zone;
+  // The bank's own zone, where its month ends and fees fall (from 2026-10-10: until then where the player was).
+  const zone = sim.homeZone;
   const out: Period[] = [];
   const card = account.kind === 'credit_card';
   const owner = sim.universe.people[account.ownerId];
@@ -249,8 +250,11 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
     else if (FEE_CATEGORIES.has(line.category)) fees += line.amount;
     else spending += line.amount;
   }
-  const score = sim.player.credit?.score ?? 650;
-  const terms = cardTerms(sim, card, score);
+  // A statement already cut reads its own terms and minimum as they were (`CardState.issued`, from 2026-10-10); the one
+  // still open, and a statement from before the record was kept, today's, with its own holder's score.
+  const owner = sim.universe.people[card.ownerId ?? ''];
+  const kept = owner?.credit ? stateOf(owner, card).issued?.find((x) => Math.abs(x.at - period.to) < 60_000) : undefined;
+  const terms = kept?.terms ?? cardTerms(sim, card, owner?.credit?.score ?? sim.player.credit?.score ?? 650);
   // What it owed over the period, weighted by how long it owed it.
   const end = Math.min(period.to, sim.now);
   let owedNow = Math.max(0, opening);
@@ -266,9 +270,8 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
   const out: CardStatement = { period, previous: opening, payments, spending, fees, interest, newBalance: Math.max(0, closing), averageDaily, lines, terms };
   if (period.to <= sim.now && out.newBalance > 0) {
     // The card's own plan months, not the everyday card's: until 2026-09-28 they were one card.
-    const owner = sim.universe.people[card.ownerId ?? ''];
-    out.minimum = minimumDue(sim, out.newBalance, terms, interest, owner?.credit ? stateOf(owner, card).statementPlanDue ?? 0 : 0);
-    out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms);
+    out.minimum = kept?.minimum ?? minimumDue(sim, out.newBalance, terms, interest, owner?.credit ? stateOf(owner, card).statementPlanDue ?? 0 : 0);
+    out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms, kept?.at);
     const bank = card.bankId ? bankById(card.bankId) : undefined;
     if (bank?.iso === 'GB' && terms.kind === 'revolving') out.nextInterest = Math.round(out.newBalance * terms.apr / 12);
   }
@@ -284,9 +287,10 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
  * rate after, as Reg Z §1026.7(b)(12)(i)(D) has it; until 2026-09-26 SLATE
  * had no introductory rates.
  */
-export function payingTheMinimum(sim: Simulation, balance: Money, terms: CardTerms): { months: number; total: Money; threeYears: Money; threeYearsTotal: Money } | 'never' {
+export function payingTheMinimum(sim: Simulation, balance: Money, terms: CardTerms, asOf: Instant = sim.now): { months: number; total: Money; threeYears: Money; threeYearsTotal: Money } | 'never' {
   if (terms.kind === 'charge') return { months: 1, total: balance, threeYears: balance, threeYearsTotal: balance };
-  const introMonths = terms.standardApr !== undefined && terms.introUntil !== undefined ? Math.max(0, Math.round((terms.introUntil - sim.now) / (30.44 * 86_400_000))) : 0;
+  // The intro months left as of the statement's own day (from 2026-10-10: until then as of today).
+  const introMonths = terms.standardApr !== undefined && terms.introUntil !== undefined ? Math.max(0, Math.round((terms.introUntil - asOf) / (30.44 * 86_400_000))) : 0;
   const rateIn = (month: number) => (month < introMonths ? terms.apr : terms.standardApr ?? terms.apr) / 12;
   const r = rateIn(introMonths);
   let left = balance;
@@ -421,7 +425,8 @@ export function registerStatements(sim: Simulation): void {
     const list = s.universe.transactions as LedgerTransaction[];
     const from = Math.min(alerts.seenUpTo ?? list.length, list.length);
     if (alerts.largePayment !== undefined) {
-      const watched = new Set(Object.values(s.universe.accounts).filter((a) => a.ownerId === person.id && (a.kind === 'checking' || a.kind === 'credit_card') && !a.closedAt).map((a) => a.id));
+      // Savings too, from 2026-10-10: until then a payment out of savings was never alerted.
+      const watched = new Set(Object.values(s.universe.accounts).filter((a) => a.ownerId === person.id && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'credit_card') && !a.closedAt && !a.nominal).map((a) => a.id));
       for (let i = from; i < list.length; i += 1) {
         const txn = list[i]!;
         for (const p of txn.postings) {
