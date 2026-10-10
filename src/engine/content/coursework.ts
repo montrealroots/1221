@@ -862,8 +862,9 @@ const revise: Activity = { id: 'revise', label: 'Work On The Note', minutes: 60,
  * The Actor Showcase's scene (DRAM 793b): the Bulletin's "students choose and
  * rehearse scenes, which are presented to agents, managers, casting directors,
  * and other members of the industry in New York and Los Angeles". Shown in
- * class and again with the note taken; how it last went reads at the showcase
- * (`showcaseSceneSeen` in `systems/career.ts`). The scenes are SLATE's
+ * class and again with the note taken. How it last went was read at the
+ * showcase (`showcaseSceneSeen` in `systems/career.ts`) until the showcase and
+ * the career went on 2026-10-09; this said until 2026-10-10 that it still was. The scenes are SLATE's
  * public-domain ones: which scenes a class chooses isn't published.
  */
 const SHOWCASE_SCENE: Template = {

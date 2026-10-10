@@ -59,6 +59,7 @@ export function BankWorkspace() {
     return <Empty title="No Bank" body="Your money isn’t held at a bank SLATE knows, so there’s nothing to show here." />;
   }
 
+  const here = accounts.filter((a) => a.bankId === bank.id);
   const current = accounts.find((a) => a.kind === 'checking');
   const savings = accounts.find((a) => a.kind === 'savings');
   const fromId = from || current?.id || '';
@@ -217,11 +218,13 @@ export function BankWorkspace() {
         {/* What's held here, now. Until 2026-09-26 this said what the deposit
             guarantee covers and the central bank's rate, which nothing in play
             reads: no bank fails, and no rate follows it. */}
+        {/* The primary account's bank, and the others kept beside it (from 2026-10-10: until then every account was at one bank, and it said so). */}
         <p className="muted">
-          <Open subject={at('bank', bank.id)}>{money(accounts.reduce((sum, a) => sum + a.balance, 0))}</Open> held here, in{' '}
-          {accounts.length === 1 && accounts[0]
-            ? <Open subject={at('account', accounts[0].id)}>one account</Open>
-            : <Open subject={at('bank', bank.id)}>{accounts.length} accounts</Open>}.
+          <Open subject={at('bank', bank.id)}>{money(here.reduce((sum, a) => sum + a.balance, 0))}</Open> held here, in{' '}
+          {here.length === 1 && here[0]
+            ? <Open subject={at('account', here[0].id)}>one account</Open>
+            : <Open subject={at('bank', bank.id)}>{here.length} accounts</Open>}
+          {accounts.length > here.length ? `, and ${money(accounts.filter((a) => a.bankId !== bank.id).reduce((sum, a) => sum + a.balance, 0))} at your other banks` : ''}.
         </p>
       </LookRegion>
 

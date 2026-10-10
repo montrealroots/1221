@@ -2,11 +2,10 @@
  * SLATE — reading real plays, and researching them (from 2026-10-08; the
  * plays and their facts in `content/contemporary.ts`).
  *
- * **What's to be had.** A copy is borrowed where you are: at school, the Haas
- * Arts Library once orientation's tour has shown it you; after, the library of
- * the town whose card you hold (`reading.library_card`), while you're in that
- * town. That a town's library lends published plays is SLATE's estimate; no
- * library's catalog was read title by title.
+ * **What's to be had.** A copy is borrowed from the Haas Arts Library at
+ * school, once orientation's tour has shown it you. After school, a town's
+ * library card lent one (`reading.library_card`) until the cards went in the
+ * scope reset of 2026-10-09; this said until 2026-10-10 that they still did.
  *
  * **Reading one** (`plays.read`) takes two hours, an hour for a short play or
  * a monologue (SLATE's estimate of a close first read), and works the

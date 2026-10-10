@@ -99,7 +99,7 @@ export function BankMoves() {
                 <p className="small" style={{ margin: 0 }}>
                   <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {money(a.balance)}
                   {a.id === person.primaryAccountId ? '. Primary.' : '.'}
-                  {a.awaitingFunds !== undefined ? ` Waiting for its first ${money(a.awaitingFunds)}${a.fundBy ? `, by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
+                  {a.awaitingFunds !== undefined ? ` Waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
                   {a.plastic?.stopped === 'new' && a.plastic.replacementAt ? ` Its debit card arrives ${formatDate(a.plastic.replacementAt, sim.zone)}.` : ''}
                   {a.closingAt !== undefined ? ` Closing ${formatDate(a.closingAt, sim.zone)}, once its pending items post.` : ''}
                 </p>
@@ -136,7 +136,7 @@ export function BankMoves() {
             );
           })}
           <p className="xs dim" style={{ margin: 0 }}>
-            The primary account is where {PRIMARY_DOES.map((w) => w.replace(/^Your |^A |^Bills /, (m) => m.toLowerCase())).join('; ')}. Making another primary moves nothing already set up.
+            The primary account is where {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another primary moves nothing already set up.
             {' '}Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches the payers in {DEPOSIT_LEAD.days} days, SLATE’s estimate of a pay cycle (employers say one to two).
           </p>
         </div>
@@ -148,7 +148,7 @@ export function BankMoves() {
             {pay.standingOrders.map((o) => (
               <div key={o.id} className="field">
                 <label htmlFor={`order-from-${o.id}`}>Standing Order, {money(o.amount)} On The {o.day}, Into {name(o.toId)}</label>
-                <div className="field-act">
+                <div className="field-act" style={{ flexWrap: 'wrap' }}>
                   <select id={`order-from-${o.id}`} value={sources[o.id] ?? orderSource(sim, person, o)?.id ?? ''} onChange={(e) => setSources({ ...sources, [o.id]: e.target.value })}>
                     {currents.filter((a) => a.id !== o.toId).map((a) => <option key={a.id} value={a.id}>{label(a.id)}</option>)}
                   </select>
@@ -162,7 +162,7 @@ export function BankMoves() {
             {cards.map((c) => (
               <div key={c.id} className="field">
                 <label htmlFor={`autopay-from-${c.id}`}>{c.name} Autopay Pays From</label>
-                <div className="field-act">
+                <div className="field-act" style={{ flexWrap: 'wrap' }}>
                   <select id={`autopay-from-${c.id}`} value={sources[c.id] ?? autopaySource(sim, person, c)?.id ?? ''} onChange={(e) => setSources({ ...sources, [c.id]: e.target.value })}>
                     {currents.map((a) => <option key={a.id} value={a.id}>{label(a.id)}</option>)}
                   </select>
@@ -193,7 +193,7 @@ export function BankMoves() {
                 ? `The ${service.scheme} below moves everything for you in ${service.workingDays} working days. Or open a second account here and keep both.`
                 : 'There’s no switching service here. To move banks: open the account, have your wages paid into it, move each standing order and autopay, move the money across, then close the old account. The new account starts with nothing, and its own history.'}
             </p>
-            <div className="field-act">
+            <div className="field-row">
               <div className="field"><label htmlFor="open-at">Bank</label>
                 <select id="open-at" value={chosen?.id ?? ''} onChange={(e) => setTarget(e.target.value)}>
                   {others.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
