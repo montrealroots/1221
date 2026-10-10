@@ -57,6 +57,7 @@ export function BankStatements() {
             </select>
           </div>
         </div>
+        {period.rebuilt && <p className="xs dim" style={{ margin: 0 }}>Rebuilt: this statement is from before the card’s statements were kept, so its dates are drawn on the statement day of the earliest one kept. If the day was moved before then, they may be a few days off.</p>}
         {account.kind === 'credit_card' ? <CardStatementView account={account} period={period} /> : <AccountStatementView account={account} period={period} />}
       </Panel>
       <YearView />

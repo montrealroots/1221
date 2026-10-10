@@ -90,6 +90,11 @@ export interface CardState {
   statementDay?: number;
   /** When the last statement came (from 2026-10-10), which a moved statement day can't bring the next one sooner than `MIN_CYCLE_DAYS` after. */
   statementAt?: Instant;
+  /**
+   * When each statement was cut, oldest first, the last sixty (from 2026-10-10): the past statements' periods, which
+   * until then were redrawn on today's statement day, so a moved day moved every statement before it too.
+   */
+  cuts?: Instant[];
   /** When the yearly fee was last charged (from 2026-10-10), so a month with two statements charges it once. */
   feeAt?: Instant;
   /** Due dates in a row with less than the minimum paid. */
@@ -162,7 +167,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'feeAt', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'feeAt', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
@@ -686,6 +691,8 @@ export function registerCredit(sim: Simulation): void {
     if (!person || !record || !card) return;
     const credit = stateOf(person, card);
     credit.statementAt = s.now;
+    (credit.cuts ??= []).push(s.now);
+    if (credit.cuts.length > 60) credit.cuts.splice(0, credit.cuts.length - 60);
     // Repriced from the record by the bank's own terms, then the month's
     // interest if last month's statement was carried.
     const terms = cardTerms(s, card, record.score);

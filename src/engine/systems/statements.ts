@@ -31,7 +31,7 @@ import { formatMoney, saveCurrency } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
-import { instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { cardTerms, minimumDue, stateOf, statementDayOf, type CardTerms } from './credit';
 import { closesQuarterly } from './banking';
@@ -51,7 +51,8 @@ export interface StatementLine {
   postsAt?: Instant;
 }
 
-export interface Period { from: Instant; to: Instant; label: string }
+/** A statement's period. `rebuilt`: drawn on a statement day from before its cuts were kept, not the cut itself (from 2026-10-10). */
+export interface Period { from: Instant; to: Instant; label: string; rebuilt?: boolean }
 
 /** Statement-sense of a balance: what's in an account, what's owed on a card or loan. */
 const sense = (account: Account) => (isLiability(account.kind) ? -1 : 1);
@@ -89,6 +90,9 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
   const zone = sim.zone;
   const out: Period[] = [];
   const card = account.kind === 'credit_card';
+  const owner = sim.universe.people[account.ownerId];
+  const kept = card && owner?.credit ? stateOf(owner, account).cuts ?? [] : [];
+  if (card && kept.length) return cardPeriods(sim, account, kept);
   const quarterly = closesQuarterly(account);
   const start = zonedParts(account.openedAt, zone);
   const now = zonedParts(sim.now, zone);
@@ -117,10 +121,42 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
       : quarterly
         ? `${MONTHS[fromParts.month - 1]} To ${MONTHS[endParts.month - 1]} ${endParts.year}`
         : `${MONTHS[fromParts.month - 1]} ${fromParts.year}`;
-    out.push({ from, to, label: to > sim.now ? `${label}, So Far` : label });
+    // A card's past statement drawn here has no cut kept (a save from before 2026-10-10): rebuilt, and said so.
+    out.push({ from, to, label: to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
     if (from <= account.openedAt || (fromParts.year < start.year - 1)) break;
     m -= step;
     while (m < 1) { m += 12; y -= 1; }
+  }
+  return out;
+}
+
+/**
+ * A card's periods from its kept cuts (from 2026-10-10): the open one from the last cut to the next statement on the
+ * calendar, each past one between two cuts, so a moved statement day moves only what comes after it. Before the first
+ * cut kept, a save from before then: monthly on that first cut's day, back to the card's opening, each marked rebuilt.
+ */
+function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]): Period[] {
+  const zone = sim.zone;
+  const cuts = [...kept].sort((a, b) => a - b);
+  const labelOf = (to: Instant) => { const p = zonedParts(to, zone); return `Statement Of ${MONTHS[p.month - 1]} ${p.day}, ${p.year}`; };
+  const next = sim.universe.scheduled
+    .filter((i) => i.kind === 'card.statement' && i.status === 'pending' && (i.payload.personId ?? sim.universe.playerId) === account.ownerId
+      && (i.payload.accountId === account.id || i.payload.accountId === undefined))
+    .sort((a, b) => a.at - b.at)[0]?.at;
+  const last = cuts[cuts.length - 1]!;
+  const out: Period[] = [];
+  if (!account.closedAt || account.closedAt > last) {
+    const to = next ?? last + 31 * MS_DAY;
+    out.push({ from: last, to, label: `${labelOf(to)}, So Far` });
+  }
+  for (let i = cuts.length - 1; i >= 1; i -= 1) out.push({ from: cuts[i - 1]!, to: cuts[i]!, label: labelOf(cuts[i]!) });
+  // Before the first kept cut: a month back at a time, on its day.
+  const first = zonedParts(cuts[0]!, zone);
+  let to = cuts[0]!;
+  for (let n = 1; n < 600 && to > account.openedAt; n += 1) {
+    const from = Math.max(account.openedAt, instantFromZoned({ year: first.year, month: first.month - n, day: first.day, hour: 9 }, zone));
+    out.push({ from, to, label: `${labelOf(to)} (Rebuilt)`, rebuilt: true });
+    to = from;
   }
   return out;
 }
