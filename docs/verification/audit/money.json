@@ -138,12 +138,14 @@
       "entry": "BankSecurity.tsx:105 (only newNumberOnFraud banks)",
       "reads": "SECURITY[bank].newNumberOnFraud",
       "changes": "current.number/last4; debit plastic stopped + replacement scheduled (security.ts:248-257)",
-      "downstream": "spend falls to credit/cash while stopped (spending.ts:247); cash.ts:115 refuses ATM",
+      "downstream": "attemptOnNumber (the day’s attempt), card.dispute (liabilityFor via number)",
       "persistent": "account number",
-      "explanation": "button only",
-      "tests": "security.test.ts:108 'is given by Bank of America, not by Chase'",
-      "status": "partial",
-      "issue": "Only a cost: no compromise state exists, the fraud draw (security.ts:285) is independent of the number, so a new number changes no later risk"
+      "explanation": "The Security screen’s exposure line; the declined notice",
+      "tests": "tests/coverage-gaps-number.test.ts",
+      "status": "verified",
+      "issue": "Only a cost: no compromise state exists, the fraud draw (security.ts:285) is independent of the number, so a new number changes no later risk",
+      "previous": "partial",
+      "settled": "The account number is a credential: exposed by debit fraud at a renumbering bank; attempts on it go through while it’s the number in use (Reg E $0 within 60 days), declined once moved; card fraud is apart."
     },
     {
       "id": "bank.open_savings",
@@ -772,12 +774,14 @@
       "entry": "BankStatements.tsx",
       "reads": "ledger postings (activity statements.ts:60)",
       "changes": "none (read-only)",
-      "downstream": "n/a (display); yearSummary",
+      "downstream": "periodsOf → cardStatement → the Statements screen",
       "persistent": "n/a",
       "explanation": "periods, lines, minimum warning",
-      "tests": "statements.test.ts:26-159",
-      "status": "partial",
-      "issue": "periodsOf cuts every past card period on the current statement day (statements.ts:99), so after a move past statements are re-cut on the new day"
+      "tests": "tests/coverage-gaps-statements.test.ts",
+      "status": "verified",
+      "issue": "periodsOf cuts every past card period on the current statement day (statements.ts:99), so after a move past statements are re-cut on the new day",
+      "previous": "partial",
+      "settled": "Each cut kept (CardState.cuts); past periods built from them; a legacy card’s are marked Rebuilt."
     }
   ],
   "findings": [
@@ -859,5 +863,5 @@
       "suggestedFix": "Derive the period bounds from the statements that actually happened (done STATEMENT_KIND items)"
     }
   ],
-  "audited": "2026-10-10, on 43d10f8b; statuses as the repairs to e7a4b3b4 left them"
+  "audited": "2026-10-10, on 43d10f8b; the open items revisited after 9ae9879b"
 }

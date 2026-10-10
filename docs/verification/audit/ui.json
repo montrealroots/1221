@@ -450,7 +450,9 @@
       "explanation": "Reader multiplies a figure that is always 0 in play: the knob changes no outcome. Change Keeps Accounts on/off on a played career -> identical return.",
       "tests": "tests/costs.test.ts 'counts the work's costs in New York's itemized deduction...' (injects recordJobCost by hand)",
       "status": "unresolved",
-      "issue": "Declared effect with no live input."
+      "issue": "Declared effect with no live input.",
+      "previous": "unresolved",
+      "settled": "No receipt-dependent tax benefit reaches this student (research). Disclosed on the knob; mechanics and traits unchanged. Owner recommendation: retire the receipts modifier from Chaotic and Keeps Accounts."
     },
     {
       "id": "trait-bondWarmth-bondWound",
@@ -745,8 +747,10 @@
       "downstream": "readiness look",
       "explanation": "Figures are the trait's and the combined knob. For Keeps Accounts/Chaotic the receipts row shows a percentage that changes nothing in play.",
       "tests": "tests/looks.test.ts",
-      "status": "partial",
-      "issue": "See trait-receipts."
+      "status": "unresolved",
+      "issue": "See trait-receipts.",
+      "previous": "partial",
+      "settled": "As trait-receipts. Reclassified from partial: the gap it pointed at is the same unresolved one."
     },
     {
       "id": "l-actor",
@@ -980,5 +984,5 @@
       "suggestedFix": "Add a creation test at 90 and at 50."
     }
   ],
-  "audited": "2026-10-10, on 43d10f8b; statuses as the repairs to e7a4b3b4 left them"
+  "audited": "2026-10-10, on 43d10f8b; the open items revisited after 9ae9879b"
 }

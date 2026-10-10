@@ -53,7 +53,9 @@
       "explanation": "toast; notice 'A Citizen' (citizenship.ts:250)",
       "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five' (the command only; the decision is never reached); tests/naturalize.test.ts (refusal only)",
       "status": "unresolved",
-      "issue": "Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven."
+      "issue": "Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven.",
+      "previous": "unresolved",
+      "settled": "Continuity fixed; as documents.residence."
     },
     {
       "id": "documents.police_report",
@@ -61,12 +63,14 @@
       "entry": "DocumentList 'File A Police Report' on a lost document (Documents.tsx:66)",
       "reads": "ONLINE_REPORTS[currentLocationId] (documents.ts:354-376); 'us-ct-newhaven' is listed",
       "changes": "doc.policeReport = now (documents.ts:328-335)",
-      "downstream": "Its only reader is licenseReplaceFee, a free NY replacement (identity.ts:72), which needs a us-ny licence and living in NY (identity.ts:66). That can't happen from New Haven",
+      "downstream": "licenseReplaceFee",
       "persistent": "doc.policeReport",
       "explanation": "toast 'A police report filed.'",
-      "tests": "tests/commands-kept.test.ts 'files a police report for a document reported lost, once...'; 'replaces a lost license ... free in New York stolen with the police’s report' (a NY save)",
-      "status": "unresolved",
-      "issue": "Decorative in play: nothing in New Haven reads the report."
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
+      "issue": "Decorative in play: nothing in New Haven reads the report.",
+      "previous": "unresolved",
+      "settled": "Read by New York’s free replacement of a stolen license (MV-78B), which the default New Yorker at Yale reaches by mail. For other documents it’s filed and changes nothing, which the research found true of every other replacement."
     },
     {
       "id": "documents.renew_residence",
@@ -81,7 +85,8 @@
       "status": "unresolved",
       "issue": "Also accepts an expired card, because it checks status 'valid' rather than inForce (residence.ts:188-190).",
       "auditStatus": "unresolved",
-      "settled": "The expired-card renewal is fixed (inForce); nothing outside the Mexican chain reads the result, as documents.residence."
+      "settled": "As documents.residence.",
+      "previous": "unresolved"
     },
     {
       "id": "documents.replace_idcard",
@@ -105,9 +110,11 @@
       "downstream": "photoIdOf -> bank.switch; idCardRefusal (identity.ts:44)",
       "persistent": "documents",
       "explanation": "toast",
-      "tests": "tests/commands-kept.test.ts 'replaces a lost license where it was issued, at the issuer’s fee...'",
-      "status": "partial",
-      "issue": "Licences are issued only by the birth state (documents.ts:475-484), so only a CT-born player can replace one. Its only use now is as photo ID, because driving went."
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
+      "issue": "Licences are issued only by the birth state (documents.ts:475-484), so only a CT-born player can replace one. Its only use now is as photo ID, because driving went.",
+      "previous": "partial",
+      "settled": "New York replaces by mail from New Haven (MV-44), free when stolen with the police’s MV-78B; California and Connecticut say why not."
     },
     {
       "id": "documents.report_lost",
@@ -135,7 +142,9 @@
       "explanation": "toast 'Temporary residence is granted'; Fine 'lets you live there'",
       "tests": "tests/residence.test.ts 'gives Mexican temporary residence on the solvency test...'",
       "status": "unresolved",
-      "issue": "A wealthy start passes the savings test on day one, but the player can never live in Mexico. See finding 3."
+      "issue": "A wealthy start passes the savings test on day one, but the player can never live in Mexico. See finding 3.",
+      "previous": "unresolved",
+      "settled": "Says before payment that no life moves to Mexico and nothing but these papers reads it. Owner recommendation: withdraw the offer to new lives, keep it for saves that hold residence."
     },
     {
       "id": "documents.settle",
@@ -146,9 +155,11 @@
       "downstream": "naturalize MX only; GB settlement is unreachable",
       "persistent": "documents",
       "explanation": "toast 'Settled'",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years...'",
+      "tests": "tests/coverage-gaps-papers.test.ts",
       "status": "unresolved",
-      "issue": "Continuous residence isn't checked: years are counted from the first grant, even across a lapse."
+      "issue": "Continuous residence isn't checked: years are counted from the first grant, even across a lapse.",
+      "previous": "unresolved",
+      "settled": "Continuity fixed (continuousSince): a lapse restarts the count. Still read by nothing outside the Mexican chain, which no life can use."
     },
     {
       "id": "benefits.assistance",
@@ -159,11 +170,12 @@
       "downstream": "benefits.assistance_month posts SNAP to an EBT account, which spending.ts:buyTheDaysFood draws on first (spending.ts:300-305)",
       "persistent": "person.assistance, EBT account",
       "explanation": "Panel stats; 'SNAP Paid' notice",
-      "tests": "tests/assistance.test.ts 'puts a New Yorker’s SNAP on an EBT card the groceries draw on first, and pays three months in three years...'",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
       "issue": "SNAP works for a US citizen in CT. Ontario Works and BC can't be reached. The ABAWD hours are hard-coded to 0 (assistance.ts:373) even though work-study hours exist. All income is passed as earned (assistance.ts:382). No student rule.",
       "auditStatus": "partial",
-      "settled": "SNAP reads the month’s work-study and Cabaret hours (workedBetween); Ontario Works and BC stay unreachable."
+      "settled": "SNAP’s student rule (7 CFR 273.5) and income by kind (273.9) for the reachable program; Ontario Works and BC stay unreachable (no Canadian life).",
+      "previous": "partial"
     },
     {
       "id": "benefits.claim",
@@ -174,11 +186,12 @@
       "downstream": "benefits.week pays and recordBenefit -> tax return income (taxreturn.ts:323)",
       "persistent": "unemployment record, ledger, earnings",
       "explanation": "Claim panel, 'Your Waiting Week', 'Your Unemployment Claim Ended'",
-      "tests": "tests/safetynet.test.ts 'Connecticut: pays unemployment on 40 times the benefit...', 'is claimed where they live ... and paid as income'",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
       "issue": "It can be reached from Summer Cabaret wages. But every week is paid in full while work-study and Cabaret pay go on, and there's no availability or student check. The UK, Ireland and Mexico City branches can't be reached. See finding 4.",
       "auditStatus": "partial",
-      "settled": "A week reads its wages (workedBetween); there’s still no student availability rule."
+      "settled": "Connecticut’s full-time student rule (CGS 31-235(b)) refuses the claim while enrolled; filed after leaving school; weeks read their wages (workedBetween).",
+      "previous": "partial"
     },
     {
       "id": "benefits.ei_register",
@@ -243,9 +256,11 @@
       "downstream": "monthly payments",
       "persistent": "person.socialSecurity",
       "explanation": "panel shows credits from school wages",
-      "tests": "tests/socialsecurity.test.ts 'is paid monthly once claimed at full retirement age'",
+      "tests": "tests/coverage-gaps-papers.test.ts",
       "status": "unresolved",
-      "issue": "40 credits can't be earned: the only wages are three school years of work-study and Cabaret. The credits also count FICA-exempt work-study pay."
+      "issue": "40 credits can't be earned: the only wages are three school years of work-study and Cabaret. The credits also count FICA-exempt work-study pay.",
+      "previous": "unresolved",
+      "settled": "Credits now leave out FICA-exempt work-study; the Summer Cabaret earns a few. Forty can’t be earned in a school life without employment the owner removed, and the panel says so."
     },
     {
       "id": "pension.state",
@@ -295,9 +310,11 @@
       "downstream": "citizenOf: nothing in New Haven reads MX",
       "persistent": "person.naturalized",
       "explanation": "notice 'A Citizen'",
-      "tests": "none reaches the decision",
-      "status": "unresolved",
-      "issue": "Untested, and no downstream consumer in play."
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "legacy",
+      "issue": "Untested, and no downstream consumer in play.",
+      "previous": "unresolved",
+      "settled": "A naturalization already applied for is decided and kept (legacy state)."
     },
     {
       "id": "documents.decided",
@@ -375,9 +392,11 @@
       "downstream": "documents.decided",
       "persistent": "documents",
       "explanation": "notices",
-      "tests": "tests/paper-visits.test.ts",
-      "status": "unresolved",
-      "issue": "Only for saves from before 2026-10-09. A new life can't reach it."
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "legacy",
+      "issue": "Only for saves from before 2026-10-09. A new life can't reach it.",
+      "previous": "unresolved",
+      "settled": "A visit booked before the travel went is kept and its document proceeds (legacy state)."
     },
     {
       "id": "benefits.assistance_month",
@@ -388,11 +407,12 @@
       "downstream": "buyTheDaysFood draws on the EBT",
       "persistent": "assistance, ledger",
       "explanation": "'SNAP Paid', 'SNAP Time Limit Reached'",
-      "tests": "tests/assistance.test.ts",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
       "issue": "The provincial branch can't be reached. The ABAWD hours are always 0.",
       "auditStatus": "partial",
-      "settled": "As benefits.assistance."
+      "settled": "As benefits.assistance.",
+      "previous": "partial"
     },
     {
       "id": "benefits.week",
@@ -403,11 +423,12 @@
       "downstream": "tax return income",
       "persistent": "claim.paid, earnings",
       "explanation": "claim panel",
-      "tests": "tests/safetynet.test.ts",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "verified",
       "issue": "Pays in full despite the work-study and Cabaret pay the game still makes.",
       "auditStatus": "partial",
-      "settled": "As benefits.claim."
+      "settled": "As benefits.claim: a week while enrolled pays nothing.",
+      "previous": "partial"
     },
     {
       "id": "benefits.desempleo_month",
@@ -418,9 +439,11 @@
       "downstream": "none",
       "persistent": "",
       "explanation": "HomeClaimsPanel (legacy)",
-      "tests": "tests/homebenefits.test.ts 'isn’t filed for now, and a claim a save already holds is paid...'",
-      "status": "unresolved",
-      "issue": "Legacy saves only."
+      "tests": "tests/coverage-gaps-papers.test.ts",
+      "status": "legacy",
+      "issue": "Legacy saves only.",
+      "previous": "unresolved",
+      "settled": "A claim already held is paid month by month and ends at its count (legacy state)."
     },
     {
       "id": "benefits.ja_week",
@@ -457,9 +480,11 @@
       "downstream": "Irish NCP means reads other pensions (homepensions.ts:119-134)",
       "persistent": "ledger",
       "explanation": "bank notices",
-      "tests": "homepensions, socialsecurity, statepension, commands-kept tests",
+      "tests": "tests/coverage-gaps-papers.test.ts",
       "status": "unresolved",
-      "issue": "Each is unreachable, as its command is. recordPension (earnings.ts:179) has no caller, so none of these is taxed."
+      "issue": "Each is unreachable, as its command is. recordPension (earnings.ts:179) has no caller, so none of these is taxed.",
+      "previous": "unresolved",
+      "settled": "Payments now reach the year’s income (recordPension wired in all five); Social Security’s legacy month tested. New lives can’t reach any of them."
     },
     {
       "id": "tax.season",
@@ -613,5 +638,5 @@
       "suggestedFix": "Compare with isoOfCountry(person.citizenshipId)."
     }
   ],
-  "audited": "2026-10-10, on 43d10f8b; statuses as the repairs to e7a4b3b4 left them"
+  "audited": "2026-10-10, on 43d10f8b; the open items revisited after 9ae9879b"
 }

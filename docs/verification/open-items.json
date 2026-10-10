@@ -10,7 +10,7 @@
       "journey": "A student who planned an hour and decides not to go, then washes or sleeps.",
       "resolution": "Test the command and its effect: Look After refused while the plan is due, allowed once skipped; a second skip refused; across a reload.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Tested: Look After refused while a plan is due, allowed once skipped; a second skip refused; across a reload."
     },
     {
       "area": "life",
@@ -20,7 +20,7 @@
       "journey": "A student whose care bill went unpaid, who pays it off later.",
       "resolution": "Test: the debt is a money trouble until paid; paid, it isn’t; no report follows a year on; a report already made stays on the record.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Tested: the debt is a money trouble until paid; paid, not one, and not reported a year on; a report made before stays."
     },
     {
       "area": "life",
@@ -30,7 +30,7 @@
       "journey": "Location fixture only: a life in London. A New Haven student can’t reach it (it’s refused outside England).",
       "resolution": "Fixture test, labelled: the charge before, free while in force, charged again after; renewal refused early; across a reload.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "unresolved: Works and is tested, but only as a London fixture: a new life is the New Haven student, who is refused it. Reclassified from partial for that reason, not for any change."
     },
     {
       "area": "life",
@@ -40,7 +40,7 @@
       "journey": "Any life: the traits chosen at creation that lean appetite.",
       "resolution": "Matched twins: same body, same days, appetite lean above and below one; weights diverge in the expected direction; once a day.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Tested between matched twins: the hungrier heavier, a day at a time."
     },
     {
       "area": "school",
@@ -50,7 +50,7 @@
       "journey": "A student answering a classmate’s invitation, request for help or boundary, and meeting them again later.",
       "resolution": "Read it where it changes a later interaction: invitations stop after two declined or left unanswered; a classmate you helped invites you; an accepted boundary lifts sooner than one pushed back on. Shown on the classmate.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: The answer is read later: two invitations declined stop that classmate asking for 45 days; helping with lines brings an invitation back within 60; an accepted boundary lifts after two kept rehearsals, a pushed-back one after four. Shown on the partner line."
     },
     {
       "area": "school",
@@ -60,7 +60,7 @@
       "journey": "A student who plays the Cabaret in a term and is cast again the next.",
       "resolution": "A record of completed runs across School, Rep, Cabaret and Summer; the chair reads delivery from the runs since the last casting, weighted by nights (capped) and by kind, blended with the earlier record so a short run can’t erase a long one; each run read once.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Its nights are in the run record: read by the term evaluation and, once, by the next casting."
     },
     {
       "area": "school",
@@ -70,7 +70,7 @@
       "journey": "As school.cabaret.",
       "resolution": "As school.cabaret.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: As school.cabaret."
     },
     {
       "area": "school",
@@ -80,7 +80,7 @@
       "journey": "A first- or second-year who joins the Summer Cabaret.",
       "resolution": "Summer runs enter the run record and inform the next casting; they don’t enter standing (the summer is outside the term the faculty evaluate), which the term feedback and Why This Cast say.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Summer nights are in the run record and inform the next casting, at half a School production’s weight; the summer is outside the term the faculty evaluate, so standing doesn’t read them, which Why This Cast says."
     },
     {
       "area": "school",
@@ -90,7 +90,7 @@
       "journey": "As school.summer_cabaret.",
       "resolution": "As school.summer_cabaret.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: As school.summer_cabaret; a missed show is a night delivered at nothing."
     },
     {
       "area": "school",
@@ -100,7 +100,7 @@
       "journey": "Every first and second year at the end of spring.",
       "resolution": "Keep the calendar’s dates authoritative; prove the school schedules nothing for the student between recess and the fall term, and that the notice comes at recess; say on the notice and in the code that it reminds, not rules.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: A reminder by design: the calendar’s dates rule the summer, which a played first spring shows (nothing of the school’s wants the student between recess and fall; no class meets). No second recess flag."
     },
     {
       "area": "school",
@@ -110,7 +110,7 @@
       "journey": "Every casting after the first.",
       "resolution": "As school.cabaret; Why This Cast lists the runs read and their weights.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: The chair reads every run since the last casting, once, weighted by nights (cap 8) and kind (Cabaret and Summer half), the record before at half its weight, capped at 12; quality stays out."
     },
     {
       "area": "money",
@@ -120,7 +120,7 @@
       "journey": "A student whose debit card was used by someone else, at a bank that renumbers a compromised account.",
       "resolution": "Model the account number’s exposure after debit fraud at such a bank; attempts on an exposed number go through as unauthorized debits until renumbered; renumbered, attempts on the old number are declined; card fraud stays separate; history, balance and disputes kept.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: The account number is a credential: exposed by debit fraud at a renumbering bank; attempts on it go through while it’s the number in use (Reg E $0 within 60 days), declined once moved; card fraud is apart."
     },
     {
       "area": "money",
@@ -130,7 +130,7 @@
       "journey": "A student who moves their statement day and looks at last month’s statement.",
       "resolution": "Keep each statement’s actual cut on the card (statementAt history); past periods read it; a legacy card without history keeps today’s reconstruction, said so.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "verified: Each cut kept (CardState.cuts); past periods built from them; a legacy card’s are marked Rebuilt."
     },
     {
       "area": "papers",
@@ -140,7 +140,7 @@
       "journey": "A student from another state who loses their license.",
       "resolution": "Per research: the issuing state’s remote duplicate where it offers one (to an out-of-state address), else the honest refusal; a Connecticut non-driver ID where supported.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: New York replaces by mail from New Haven (MV-44), free when stolen with the police’s MV-78B; California and Connecticut say why not."
     },
     {
       "area": "papers",
@@ -150,7 +150,7 @@
       "journey": "A student whose wallet is stolen.",
       "resolution": "Per research: connect it where a retained workflow genuinely reads one (identity theft, a replacement); otherwise keep it filed and say what it does and doesn’t do.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: Read by New York’s free replacement of a stolen license (MV-78B), which the default New Yorker at Yale reaches by mail. For other documents it’s filed and changes nothing, which the research found true of every other replacement."
     },
     {
       "area": "papers",
@@ -160,7 +160,7 @@
       "journey": "A student who claims after the summer.",
       "resolution": "Per research: Connecticut’s rule on students’ availability; the claim refused or the week unpaid where it applies; earnings reduction from actual wages.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: Connecticut’s full-time student rule (CGS 31-235(b)) refuses the claim while enrolled; filed after leaving school; weeks read their wages (workedBetween)."
     },
     {
       "area": "papers",
@@ -170,7 +170,7 @@
       "journey": "As benefits.claim.",
       "resolution": "As benefits.claim.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: As benefits.claim: a week while enrolled pays nothing."
     },
     {
       "area": "papers",
@@ -180,7 +180,7 @@
       "journey": "A US-citizen student short of money who applies for SNAP.",
       "resolution": "Per research: the higher-education student rule and its exemptions (work-study); earned and unearned income kept apart, the earned deduction on earned only.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: SNAP’s student rule (7 CFR 273.5) and income by kind (273.9) for the reachable program; Ontario Works and BC stay unreachable (no Canadian life)."
     },
     {
       "area": "papers",
@@ -190,7 +190,7 @@
       "journey": "As benefits.assistance.",
       "resolution": "As benefits.assistance.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "verified: As benefits.assistance."
     },
     {
       "area": "papers",
@@ -200,7 +200,7 @@
       "journey": "Every US life: the credits shown on Papers.",
       "resolution": "Exclude FICA-exempt wages from credits; keep the credits earned (Summer Cabaret); say the retirement benefit isn’t reachable in a school life, without adding work.",
       "evidence": "research then tests",
-      "outcome": "pending"
+      "outcome": "unresolved: Credits now leave out FICA-exempt work-study; the Summer Cabaret earns a few. Forty can’t be earned in a school life without employment the owner removed, and the panel says so."
     },
     {
       "area": "papers",
@@ -210,7 +210,7 @@
       "journey": "A wealthy start who applies on Papers.",
       "resolution": "Say before paying that no life in the game can move there and nothing reads it; refuse? (owner); fix continuity.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: Says before payment that no life moves to Mexico and nothing but these papers reads it. Owner recommendation: withdraw the offer to new lives, keep it for saves that hold residence."
     },
     {
       "area": "papers",
@@ -220,7 +220,7 @@
       "journey": "As documents.residence.",
       "resolution": "As documents.residence.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: As documents.residence."
     },
     {
       "area": "papers",
@@ -230,7 +230,7 @@
       "journey": "As documents.residence.",
       "resolution": "Count continuous residence in force; a lapse restarts it.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "unresolved: Continuity fixed (continuousSince): a lapse restarts the count. Still read by nothing outside the Mexican chain, which no life can use."
     },
     {
       "area": "papers",
@@ -240,7 +240,7 @@
       "journey": "As documents.residence.",
       "resolution": "As documents.residence; continuity fixed through settle.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: Continuity fixed; as documents.residence."
     },
     {
       "area": "papers",
@@ -250,7 +250,7 @@
       "journey": "As documents.residence.",
       "resolution": "Test the decision through the legacy/fixture chain; consumer depends on a removed system.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "legacy: A naturalization already applied for is decided and kept (legacy state)."
     },
     {
       "area": "papers",
@@ -260,7 +260,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system (relocation).",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -270,7 +270,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -280,7 +280,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -290,7 +290,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -300,7 +300,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -310,7 +310,7 @@
       "journey": "A legacy save with a visit booked.",
       "resolution": "Test the visit through legacy state: it completes and its document proceeds.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "legacy: A visit booked before the travel went is kept and its document proceeds (legacy state)."
     },
     {
       "area": "papers",
@@ -320,7 +320,7 @@
       "journey": "A legacy save with a Mexican claim.",
       "resolution": "Test the month through legacy state: paid, recorded, ends.",
       "evidence": "tests/coverage-gaps.test.ts",
-      "outcome": "pending"
+      "outcome": "legacy: A claim already held is paid month by month and ends at its count (legacy state)."
     },
     {
       "area": "papers",
@@ -330,7 +330,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -340,7 +340,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: depends on a system the owner removed (a life in Canada, Ireland, Britain or Mexico, or employment); nothing built to reach it, as the brief asks."
     },
     {
       "area": "papers",
@@ -350,7 +350,7 @@
       "journey": "None reachable.",
       "resolution": "Unresolved, removed system; recordPension kept for the legacy path where a pension is already paid.",
       "evidence": "owner recommendation",
-      "outcome": "pending"
+      "outcome": "unresolved: Payments now reach the year’s income (recordPension wired in all five); Social Security’s legacy month tested. New lives can’t reach any of them."
     },
     {
       "area": "ui",
@@ -360,7 +360,7 @@
       "journey": "A player choosing Chaotic or Keeps Accounts at creation.",
       "resolution": "Per research: a legitimate receipt-dependent interaction if one exists among retained transactions; otherwise an owner proposal (retire the modifier, keep the traits’ other effects), and the advertised text corrected meanwhile.",
       "evidence": "research then owner proposal",
-      "outcome": "pending"
+      "outcome": "unresolved: No receipt-dependent tax benefit reaches this student (research). Disclosed on the knob; mechanics and traits unchanged. Owner recommendation: retire the receipts modifier from Chaotic and Keeps Accounts."
     },
     {
       "area": "ui",
@@ -370,7 +370,8 @@
       "journey": "As trait-receipts.",
       "resolution": "As trait-receipts.",
       "evidence": "research then owner proposal",
-      "outcome": "pending"
+      "outcome": "unresolved: As trait-receipts. Reclassified from partial: the gap it pointed at is the same unresolved one."
     }
-  ]
+  ],
+  "outcomesWritten": "2026-10-10, after the work"
 }

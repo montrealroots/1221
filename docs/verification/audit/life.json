@@ -113,9 +113,11 @@
       "downstream": "life.ts:occupiedAt (missed plan no longer blocks sleep/wash)",
       "persistent": "status missed",
       "explanation": "'You Didn't Go To ...' notice",
-      "tests": "plans.test.ts 'marks it missed once you are standing at it'",
-      "status": "partial",
-      "issue": "Only consumer is occupiedAt; no test shows a skipped plan freeing the window for sleep/look_after"
+      "tests": "tests/coverage-gaps-life.test.ts",
+      "status": "verified",
+      "issue": "Only consumer is occupiedAt; no test shows a skipped plan freeing the window for sleep/look_after",
+      "previous": "partial",
+      "settled": "Tested: Look After refused while a plan is due, allowed once skipped; a second skip refused; across a reload."
     },
     {
       "id": "world.dismiss_decision",
@@ -322,14 +324,15 @@
       "entry": "PapersWorkspace.tsx:237",
       "reads": "medical debt balance, current balance",
       "changes": "debt balance, debtSince",
-      "downstream": "healthMonth credit report (debtSince), spending.ts Trouble 'medical' worry",
+      "downstream": "troubles/inTrouble (the day’s worry), healthMonth’s report a year on, bills settled",
       "persistent": "ledger",
       "explanation": "Papers",
-      "tests": "commands-kept.test.ts 'pays toward a debt for care from the current account'",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-life.test.ts",
+      "status": "verified",
       "issue": "Downstream (report stopped, worry lifted) not tested; UI only offers full payoff",
       "auditStatus": "partial",
-      "settled": "Settling the bills gone to debt is tested (tests/life-fixes.test.ts); the report stopping and the worry lifting are not."
+      "settled": "Tested: the debt is a money trouble until paid; paid, not one, and not reported a year on; a report made before stays.",
+      "previous": "partial"
     },
     {
       "id": "health.prepay",
@@ -340,9 +343,11 @@
       "downstream": "health.ts:publicCareShareOf rx -> 0",
       "persistent": "prepaidUntil",
       "explanation": "Papers (hard-coded £32.05/£114.50 labels match NHS.prepayment)",
-      "tests": "commands-kept.test.ts 'sells England's prescription prepayment certificate...'",
-      "status": "partial",
-      "issue": "No test shows a prescription free while it runs"
+      "tests": "tests/coverage-gaps-life.test.ts",
+      "status": "unresolved",
+      "issue": "No test shows a prescription free while it runs",
+      "previous": "partial",
+      "settled": "Works and is tested, but only as a London fixture: a new life is the New Haven student, who is refused it. Reclassified from partial for that reason, not for any change."
     },
     {
       "id": "health.therapy",
@@ -859,9 +864,11 @@
       "downstream": "body.ts:132",
       "persistent": "",
       "explanation": "",
-      "tests": "personality.test.ts (declared list only)",
-      "status": "partial",
-      "issue": "Reader exists; no behavioral test of weight moving with appetite"
+      "tests": "tests/coverage-gaps-life.test.ts",
+      "status": "verified",
+      "issue": "Reader exists; no behavioral test of weight moving with appetite",
+      "previous": "partial",
+      "settled": "Tested between matched twins: the hungrier heavier, a day at a time."
     },
     {
       "id": "knob:mealMood",
@@ -1011,5 +1018,5 @@
       "suggestedFix": "Bill sessions through billCare, or document the choice"
     }
   ],
-  "audited": "2026-10-10, on 43d10f8b; statuses as the repairs to e7a4b3b4 left them"
+  "audited": "2026-10-10, on 43d10f8b; the open items revisited after 9ae9879b"
 }

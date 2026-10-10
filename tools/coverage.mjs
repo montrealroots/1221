@@ -16,23 +16,25 @@ const AREAS = [
   ['papers', 'Papers'],
   ['ui', 'Creation, Profile, Home And The Looks'],
 ];
-const ORDER = ['verified', 'partial', 'unresolved', 'informational'];
+const ORDER = ['verified', 'partial', 'unresolved', 'legacy', 'informational'];
 const cell = (v) => (v === undefined || v === null || v === '' ? '—' : String(Array.isArray(v) ? v.join('; ') : v).replace(/\|/g, '/').replace(/\n/g, ' '));
 
 const totals = Object.fromEntries(ORDER.map((s) => [s, 0]));
 const sections = [];
 const rows = [];
+/** Items whose status this pass moved (`previous`), for the count's explanation. */
+const moved = [];
 for (const [area, title] of AREAS) {
   const a = JSON.parse(readFileSync(`docs/verification/audit/${area}.json`, 'utf8'));
   const count = Object.fromEntries(ORDER.map((s) => [s, 0]));
-  for (const i of a.items) { count[i.status] = (count[i.status] ?? 0) + 1; totals[i.status] = (totals[i.status] ?? 0) + 1; }
+  for (const i of a.items) { count[i.status] = (count[i.status] ?? 0) + 1; totals[i.status] = (totals[i.status] ?? 0) + 1; if (i.previous && i.previous !== i.status) moved.push({ title, i }); }
   rows.push([title, a.items.length, ...ORDER.map((s) => count[s])]);
   const body = [
     `## ${title}`, '',
     `${a.items.length} items: ${ORDER.map((s) => `${count[s]} ${s}`).join(', ')}.`, '',
     '| Item | Kind | Entry | Reads | Changes | Downstream | Persists | Explained | Tested by | Status | Note |',
     '|---|---|---|---|---|---|---|---|---|---|---|',
-    ...[...a.items].sort((x, y) => ORDER.indexOf(x.status) - ORDER.indexOf(y.status)).map((i) => `| ${cell(i.id)} | ${cell(i.kind)} | ${cell(i.entry)} | ${cell(i.reads)} | ${cell(i.changes)} | ${cell(i.downstream)} | ${cell(i.persistent)} | ${cell(i.explanation)} | ${cell(i.tests)} | ${i.status}${i.auditStatus && i.auditStatus !== i.status ? ` (was ${i.auditStatus})` : ''} | ${cell(i.settled ?? i.issue)} |`),
+    ...[...a.items].sort((x, y) => ORDER.indexOf(x.status) - ORDER.indexOf(y.status)).map((i) => `| ${cell(i.id)} | ${cell(i.kind)} | ${cell(i.entry)} | ${cell(i.reads)} | ${cell(i.changes)} | ${cell(i.downstream)} | ${cell(i.persistent)} | ${cell(i.explanation)} | ${cell(i.tests)} | ${i.status}${i.previous && i.previous !== i.status ? ` (was ${i.previous})` : i.auditStatus && i.auditStatus !== i.status ? ` (was ${i.auditStatus})` : ''} | ${cell(i.settled ?? i.issue)} |`),
     '',
   ];
   sections.push(body.join('\n'));
@@ -41,16 +43,24 @@ const all = Object.values(totals).reduce((a, b) => a + b, 0);
 const page = [
   '# Gameplay Coverage',
   '',
-  'Every retained feature traced from where the player meets it to what it changes and who reads the change: entry, preconditions and state read, the calculation and the state changed, the downstream consumer, what persists, how it is explained, and what tests it. Audited on 2026-10-10 against `43d10f8b`; each status is as the repairs of that day left it, and an item whose status moved says what it was. Written by `node tools/coverage.mjs` from `docs/verification/audit/*.json`.',
+  'Every retained feature traced from where the player meets it to what it changes and who reads the change: entry, preconditions and state read, the calculation and the state changed, the downstream consumer, what persists, how it is explained, and what tests it. Audited on 2026-10-10 against `43d10f8b`, and its open items revisited after `9ae9879b` (`docs/verification/open-items.json` holds each one\'s disposition, recorded before the work, and its outcome). Written by `node tools/coverage.mjs` from `docs/verification/audit/*.json`.',
   '',
-  '**Verified**: traced end to end, and a test exercises it. Mutation-tested only where a repair’s commit says so; the rest were traced, not mutated. **Partial**: works, with a named gap (untested, or a consumer missing). **Unresolved**: declared or reachable only through systems the owner removed, reported rather than deleted. **Informational**: said back to the player and meant to decide nothing (a name, a portrait).',
+  '**Verified**: traced end to end, and a test exercises it. Mutation-tested only where a repair’s commit says so; the rest were traced, not mutated. **Partial**: works, with a named gap (untested, or a consumer missing). **Unresolved**: declared or reachable only through systems the owner removed, or reached only by a fixture (a place no new life lives), reported rather than deleted, each with its recommendation where the owner decides. **Legacy**: a compatibility path for a save from before 2026-10-09, tested through legacy state; no new life reaches it. **Informational**: said back to the player and meant to decide nothing (a name, a portrait).',
   '',
   `## Totals`,
   '',
-  '| Area | Items | Verified | Partial | Unresolved | Informational |',
-  '|---|---|---|---|---|---|',
+  '| Area | Items | Verified | Partial | Unresolved | Legacy | Informational |',
+  '|---|---|---|---|---|---|---|',
   ...rows.map((r) => `| ${r.join(' | ')} |`),
-  `| **All** | **${all}** | **${totals.verified}** | **${totals.partial}** | **${totals.unresolved}** | **${totals.informational}** |`,
+  `| **All** | **${all}** | **${totals.verified}** | **${totals.partial}** | **${totals.unresolved}** | **${totals.legacy}** | **${totals.informational}** |`,
+  '',
+  '## What Moved, And Why',
+  '',
+  `${moved.length} items moved status when the open items were revisited. A row says what moved it: built or connected, tested, or reclassified. A reclassification isn't new functionality.`,
+  '',
+  '| Area | Item | Was | Now | Why |',
+  '|---|---|---|---|---|',
+  ...moved.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.previous} | ${i.status} | ${cell(i.settled)} |`),
   '',
   ...sections,
 ].join('\n');

@@ -112,14 +112,15 @@
       "entry": "ClassMoments.tsx; classmates.ts:312",
       "reads": "respondRefusal; moment kind/choice",
       "changes": "trust/bond moves; answers (theirs); tryBoth; STUDY_KIND booked; boundary set",
-      "downstream": "answers->showing interpretation; tryBoth->rehearsalOutcome; boundary->askRefusal; bond->castCompany",
+      "downstream": "classMoment’s candidates (stoppedAsking, owesYouLines), keptWith (boundaryLiftsAfter)",
       "persistent": "moments, classmate record",
-      "explanation": "ClassMoments.tsx",
-      "tests": "journey-school-year/three-students only answer them; no test asserts a trust/bond/answer effect",
-      "status": "partial",
+      "explanation": "The partner line: Ask A Day Ahead (Lifts After N More Kept), Has Stopped Asking You To Run Lines, Owes You Lines; the invitation’s text",
+      "tests": "tests/coverage-gaps-classmates.test.ts",
+      "status": "verified",
       "issue": "no behaviour test of the choices; moment.choice on classmate (classmates.ts:323) read by nothing",
       "auditStatus": "partial",
-      "settled": "Answered once and an invitation kept are tested (tests/classmate-moments.test.ts); the choice kept on the classmate is still read by nothing."
+      "settled": "The answer is read later: two invitations declined stop that classmate asking for 45 days; helping with lines brings an invitation back within 60; an accepted boundary lifts after two kept rehearsals, a pushed-back one after four. Shown on the partner line.",
+      "previous": "partial"
     },
     {
       "id": "school.orientation",
@@ -218,14 +219,15 @@
       "entry": "SchoolWorkspace.tsx; school.ts:2130",
       "reads": "cabaretRefusal (standing, week, double-cast)",
       "changes": "school.cabaret (companyPart), CABARET_KIND calls",
-      "downstream": "CABARET_KIND -> process, reckonNight (work, journey, morale, presence, genres), reflect->notes ledger, credits",
+      "downstream": "evaluate (term standing), readRuns (the next casting’s delivery)",
       "persistent": "cabaret, credits, work",
-      "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"puts a student in a show this term... and grows them for it\" (credits asserted)",
-      "status": "partial",
+      "explanation": "Term feedback names the run; Why This Cast lists it with its nights, delivery and weight",
+      "tests": "tests/coverage-gaps-runs.test.ts, tests/school-fixes.test.ts",
+      "status": "verified",
       "issue": "its nights and delivery reach neither the term evaluation nor the next casting (school.ts:1557,1772)",
       "auditStatus": "partial",
-      "settled": "Its nights are read by the term evaluation (tests/school-fixes.test.ts); the next casting still reads only the School production."
+      "settled": "Its nights are in the run record: read by the term evaluation and, once, by the next casting.",
+      "previous": "partial"
     },
     {
       "id": "school.summer_cabaret",
@@ -233,12 +235,14 @@
       "entry": "SchoolWorkspace.tsx; school.ts:2191",
       "reads": "summerRefusal",
       "changes": "school.summer shows, SUMMER_KIND, STIPEND_KIND",
-      "downstream": "SUMMER_KIND nights, stipend wages/tax, credits; missed performance -> out",
+      "downstream": "readRuns (the next casting)",
       "persistent": "summer, credits, wages",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"lets a student go who misses a performance...\"; \"forms in the spring...\"",
-      "status": "partial",
-      "issue": "show nights/delivery not read by standing or casting"
+      "tests": "tests/coverage-gaps-runs.test.ts",
+      "status": "verified",
+      "issue": "show nights/delivery not read by standing or casting",
+      "previous": "partial",
+      "settled": "Summer nights are in the run record and inform the next casting, at half a School production’s weight; the summer is outside the term the faculty evaluate, so standing doesn’t read them, which Why This Cast says."
     },
     {
       "id": "plays.read",
@@ -452,11 +456,12 @@
       "downstream": "work/journey; reflect->ledger; credits->Papers",
       "persistent": "cabaret",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts cabaret its",
-      "status": "partial",
+      "tests": "tests/coverage-gaps-runs.test.ts",
+      "status": "verified",
       "issue": "see school.cabaret",
       "auditStatus": "partial",
-      "settled": "As school.cabaret."
+      "settled": "As school.cabaret.",
+      "previous": "partial"
     },
     {
       "id": "school.summer",
@@ -467,9 +472,11 @@
       "downstream": "stipend cancel; credits",
       "persistent": "summer",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts summer its",
-      "status": "partial",
-      "issue": "nights not read by standing/casting"
+      "tests": "tests/coverage-gaps-runs.test.ts",
+      "status": "verified",
+      "issue": "nights not read by standing/casting",
+      "previous": "partial",
+      "settled": "As school.summer_cabaret; a missed show is a night delivered at nothing."
     },
     {
       "id": "school.stipend",
@@ -490,12 +497,14 @@
       "entry": "term (spring yr1-2)",
       "reads": "summerOf",
       "changes": "notification only",
-      "downstream": "none (summer is computed by summerOf dates)",
+      "downstream": "none of its own: summerOf is read by SNAP’s student rule (from this pass) and by the notice",
       "persistent": "none",
       "explanation": "notification",
-      "tests": "none specific",
-      "status": "partial",
-      "issue": "notice only; changes no state"
+      "tests": "tests/coverage-gaps-recess.test.ts",
+      "status": "verified",
+      "issue": "notice only; changes no state",
+      "previous": "partial",
+      "settled": "A reminder by design: the calendar’s dates rule the summer, which a played first spring shows (nothing of the school’s wants the student between recess and fall; no class meets). No second recess flag."
     },
     {
       "id": "school.orientation (kind)",
@@ -667,14 +676,15 @@
       "entry": "cast() at term start",
       "reads": "fit (evaluation expected), lastWork.size/delivery, castable",
       "changes": "casting, rep, around, castRead, bonds, lastWork",
-      "downstream": "calls, nights, bonds, mateBusy",
+      "downstream": "castScore through LastWork.delivery",
       "persistent": "school.casting/castRead",
-      "explanation": "SchoolWorkspace.tsx castRead",
-      "tests": "attributes-complete.test.ts castFit/castScore its; casting.test.ts",
-      "status": "partial",
+      "explanation": "Why This Cast: the runs read, nights, delivery, weight",
+      "tests": "tests/coverage-gaps-runs.test.ts",
+      "status": "verified",
       "issue": "no double count (delivery is prep x condition); lastWork.nights/heeded unread; only school.casting feeds lastWork",
       "auditStatus": "partial",
-      "settled": "LastWork.nights and .heeded, read by nothing, removed; the chair still reads only the School production’s delivery, not a Cabaret or Summer run."
+      "settled": "The chair reads every run since the last casting, once, weighted by nights (cap 8) and kind (Cabaret and Summer half), the record before at half its weight, capped at 12; quality stays out.",
+      "previous": "partial"
     },
     {
       "id": "standing/term evaluation",
@@ -845,5 +855,5 @@
       "suggestedFix": "Add mutation-sensitive tests for each effect"
     }
   ],
-  "audited": "2026-10-10, on 43d10f8b; statuses as the repairs to e7a4b3b4 left them"
+  "audited": "2026-10-10, on 43d10f8b; the open items revisited after 9ae9879b"
 }
