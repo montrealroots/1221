@@ -41,7 +41,7 @@ if (!jobs) { console.error(`no suite ${suite}: ${Object.keys(SUITES).join(', ')}
 const max = (() => { const i = process.argv.indexOf('--max'); return i > 0 ? Number(process.argv[i + 1]) : Infinity; })();
 const sh = (c) => execSync(c, { encoding: 'utf8' }).trim();
 const commit = sh('git rev-parse --short HEAD');
-const tree = sh('git rev-parse --short HEAD^{tree}');
+const tree = sh('git log -1 --format=%t');
 const dirty = sh('git status --porcelain -- src tools tests').split('\n').filter(Boolean).length;
 const dir = `docs/verification/${suite}`;
 mkdirSync(dir, { recursive: true });
