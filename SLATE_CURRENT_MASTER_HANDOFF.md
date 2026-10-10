@@ -1,3 +1,42 @@
+# Read First: The Remaining Coverage Gaps Closed, 2026-10-10
+
+The owner's brief, "Close SLATE's Remaining Gameplay Coverage Gaps", worked from `main` at `9ae9879b`.
+
+- **Branch:** `claude/coverage-gaps`, pushed.
+- **Not merged:** that's the owner's word to give.
+- **Not deployed.**
+- **Final candidate:** `bf8918e3`. Gate exit 0 (136 files, 1,510 tests, the fifteen checks); build passes.
+
+Read `docs/verification/COVERAGE-GAPS.md` first. It holds:
+- the count, 247/19/18/8 → 265 verified, 0 partial, 16 unresolved, 3 legacy, 8 informational;
+- what was built;
+- the research;
+- the leads measurement;
+- the five decisions for the owner.
+
+Then:
+- `docs/verification/open-items.json`: each item's disposition and its outcome.
+- `docs/GAMEPLAY-COVERAGE.md`.
+- `docs/verification/REPORT.md`: the suites on `bf8918e3`.
+- `docs/verification/LEADS.md`.
+
+The 18 lives (tree `f6cf0a8c`, each profile checked to have run as itself):
+- 15 graduated.
+- The three autopilot lives were dismissed, as before.
+- 0 breaches, 0 unbalanced ledgers, 0 exceptions.
+
+Mastery, fitness and condition reran on the same commit:
+- All 29 targets reach full and stay full after a reload.
+- Fitness and condition results match the last pass.
+
+The phone layout is preserved and photographed at 390 and 1440 on the built app. Nothing spills past the edge and there are no page errors.
+
+Schema 94 is unchanged; the new fields are optional, each with a tested fallback.
+
+**Open:** the 16 unresolved items, each an owner decision or a system the owner removed, and the five recommendations in `COVERAGE-GAPS.md`.
+
+---
+
 # Read First: Merged To Main, With The Phone Layout, 2026-10-10
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `43d10f8b` to `claude/mobile-match`, nothing

@@ -4,7 +4,7 @@ Written by `node tools/verify-report.mjs` from `docs/verification/<suite>/result
 
 ## Played Lives
 
-Ran on e7a4b3b4 (tree 5aff35ab, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
+Ran on bf8918e3 (tree f6cf0a8c, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
 
 | Profile and seed | Policy | Dates | Outcome | Terms (standing, attendance %) | Pieces judged (mastery) | Fitness, first and last month | Condition at end | Breaches | Unbalanced | Reloads | Error |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -29,7 +29,7 @@ Ran on e7a4b3b4 (tree 5aff35ab, 0 dirty). Each plays a student from creation for
 
 ## Mastery Through The Commands
 
-Ran on e31dbffc (tree 139ef86d, 0 dirty). A student practices one ability or technique as far as the day allows (`tools/mastery.ts --mode single`), or a plan for a genre (`--mode plan`).
+Ran on bf8918e3 (tree f6cf0a8c, 0 dirty). A student practices one ability or technique as far as the day allows (`tools/mastery.ts --mode single`), or a plan for a genre (`--mode plan`).
 
 | Target | Start | End | Sessions to full | Calendar days | Full | Full after a reload | Refusals | Most refused by | Standing | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -67,16 +67,16 @@ Ran on e31dbffc (tree 139ef86d, 0 dirty). A student practices one ability or tec
 
 | Target | Start | First session | Mastered | Full | End |
 |---|---|---|---|---|---|
-| emotionalDepth | 58 | 2027-05-01 | — | 2029-11-13 (264 sessions) | 100 |
-| imagination | 50.2 | 2026-09-26 | — | 2029-11-13 (326 sessions) | 100 |
-| memory | 49.1 | 2026-08-24 | — | 2029-11-13 (344 sessions) | 100 |
-| focus | 54.6 | 2026-12-09 | — | 2029-11-12 (309 sessions) | 100 |
-| composure | 44.3 | 2026-08-24 | — | 2029-11-14 (348 sessions) | 100 |
+| emotionalDepth | 58 | 2027-05-01 | — | 2029-11-12 (263 sessions) | 100 |
+| imagination | 50.2 | 2026-09-26 | — | 2029-11-12 (325 sessions) | 100 |
+| memory | 49.1 | 2026-08-24 | — | 2029-11-14 (349 sessions) | 100 |
+| focus | 54.6 | 2026-12-09 | — | 2029-11-13 (310 sessions) | 100 |
+| composure | 44.3 | 2026-08-24 | — | 2029-11-14 (347 sessions) | 100 |
 | discipline | 57.5 | — | — | 2027-09-02 (0 sessions) | 100 |
-| screen | 52.5 | 2026-10-10 | 2029-05-04 (257 sessions) | 2029-11-12 (341 sessions) | 100 |
-| scene | 52.9 | 2026-12-09 | 2029-05-03 (208 sessions) | 2029-11-13 (296 sessions) | 100 |
-| singing | 55.7 | 2026-12-01 | 2029-05-04 (239 sessions) | 2029-11-12 (326 sessions) | 100 |
-| dance | 51.6 | 2026-09-28 | 2029-05-03 (256 sessions) | — | 99.99 |
+| screen | 52.5 | 2026-10-10 | 2029-05-04 (257 sessions) | 2029-11-14 (343 sessions) | 100 |
+| scene | 52.9 | 2026-12-09 | 2029-05-05 (209 sessions) | 2029-11-13 (295 sessions) | 100 |
+| singing | 55.7 | 2026-12-01 | 2029-05-05 (240 sessions) | 2029-11-13 (323 sessions) | 100 |
+| dance | 51.6 | 2026-09-28 | 2029-05-03 (256 sessions) | 2029-11-13 (340 sessions) | 100 |
 
 **Plan, drama** (seed m-1): targets emotionalDepth, imagination, memory, focus, composure, discipline, screen, scene; every one full or mastered on 2029-06-06; graduated 2029-05-28 (graduated); the journey's mastered pieces {"scene":0,"written":0,"movement":0,"voice":0,"improvisation":0,"camera":3,"partnered":0,"performance":0,"clown":0,"song":0,"audition":0}; breaches 0, unbalanced 0.
 
@@ -93,7 +93,7 @@ Ran on e31dbffc (tree 139ef86d, 0 dirty). A student practices one ability or tec
 
 ## Fitness Through Look After Yourself
 
-Ran on e31dbffc (tree 139ef86d, 0 dirty). Each scenario works out on its schedule through `life.look_after` (`tools/fitness.ts`).
+Ran on bf8918e3 (tree f6cf0a8c, 0 dirty). Each scenario works out on its schedule through `life.look_after` (`tools/fitness.ts`).
 
 | Scenario | Born | Age at end | Start | End | Full | Full on day | Workouts done / days planned | Most refused by | Readiness at nine | Standing | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -114,7 +114,7 @@ Ran on e31dbffc (tree 139ef86d, 0 dirty). Each scenario works out on its schedul
 
 ## Illness And Injury On A Piece Of Work
 
-Ran on e31dbffc (tree 139ef86d, 0 dirty). The same piece shown healthy and under each condition (`tools/condition.ts`).
+Ran on bf8918e3 (tree f6cf0a8c, 0 dirty). The same piece shown healthy and under each condition (`tools/condition.ts`).
 
 | Work | Variant | Shown | Status | Overall | Band | Dimensions | Below healthy, same day | Condition among the record’s top three limits | Class days attended | Abilities lower than healthy | Breaches | Unbalanced |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
