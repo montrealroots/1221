@@ -46,7 +46,9 @@ const dirty = sh('git status --porcelain -- src tools tests').split('\n').filter
 const dir = `docs/verification/${suite}`;
 mkdirSync(dir, { recursive: true });
 const file = `${dir}/results.jsonl`;
-const done = new Set(existsSync(file) ? readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.tree === tree && r.dirty === dirty).map((r) => r.job) : []);
+// Done only with a result: a job killed partway (a batch's own timeout) is recorded with its error and still owed (from
+// 2026-10-10: until then it counted as done, and the Mexico City life of that day's run had to be rerun by hand).
+const done = new Set(existsSync(file) ? readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.tree === tree && r.dirty === dirty && !r.results?.some((x) => x.error)).map((r) => r.job) : []);
 const owed = jobs.filter((j) => !done.has(j.id));
 
 if (process.argv.includes('--status')) {

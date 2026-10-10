@@ -1,3 +1,34 @@
+# Read First: Banking Realism And The School Journey, 2026-10-10
+
+The owner's brief was "Audit And Correct SLATE's Banking Realism And Complete The School Experience Review". The work started on `main` at `a2bf025d`.
+
+- **Branch:** `claude/bank-school`, pushed.
+- **Not merged:** that's the owner's word to give.
+- **Not deployed.** Schema 94 is unchanged.
+
+Read `docs/verification/BANK-SCHOOL.md` first. It holds the matrix, the stage-by-stage school assessment, the sources and the remaining limitations. Then `docs/verification/BANKING-SWITCH.md`: the reproduced defect, and what each step does now.
+
+**Banking.** In the US, Switch Bank used to move everything to a new bank in one instant, and could be repeated. Opening an account, moving money between banks, choosing the primary account, moving wages, orders and autopay, and closing are now separate steps (`systems/bankmoves.ts`, `systems/routing.ts`). Each uses the bank's own published terms (`content/bankopening.ts`). `bank.switch` now runs only where a switching service exists: Britain, Ireland, Germany, France, Spain, Iceland and New Zealand.
+
+**School.** The calendar, Commencement, the elective hours and the curtain times are corrected to the Bulletin. Unlabelled inventions are now labelled as SLATE's. The audit's 3 high and 15 medium gaps are fixed:
+- dismissal now ends the coursework;
+- a last term on warning withholds the degree (new standing `withheld`);
+- illness is excused everywhere;
+- staying away no longer beats showing weak work;
+- clashes between calls, shifts and labs are resolved;
+- Yale Health ends after leaving.
+
+**Verified on `3e0f23bb`:**
+- Gate exit 0: 138 files, 1,531 tests, all 15 checks.
+- The 18 lives (tree `e558e728`): 15 graduated, and the 3 autopilot lives were dismissed as kept.
+- UI checked at 1440 and 390.
+
+**Still the owner's:** decisions #1–#3 from `COVERAGE-GAPS.md`. The 16 deferred items are untouched.
+
+**One decision made here, for the owner to see:** a last term ending on academic warning withholds the degree. Until now SLATE conferred it on any standing short of dismissal, and said Yale did.
+
+---
+
 # Read First: Merged To Main, With The Coverage Gaps Closed, 2026-10-10
 
 At the owner's word ("Keep #5 then merge everything."), `main` was fast-forwarded from `9ae9879b` to `claude/coverage-gaps`. Nothing was force-pushed.
