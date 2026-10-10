@@ -1,3 +1,15 @@
+# Read First: Merged To Main, With Banking Realism And The School Journey, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `a2bf025d` to `claude/bank-school` at `4bf767a5`. Nothing was force-pushed. The stash and the three worktrees were left untouched.
+
+**Not deployed.** Schema 94 is unchanged.
+
+**Still the owner's to decide:** decisions #1–#3 from `docs/verification/COVERAGE-GAPS.md`. The 16 deferred items are untouched.
+
+**One decision made in this pass, for the owner to see:** a last term ending on academic warning withholds the degree (`docs/verification/BANK-SCHOOL.md`).
+
+---
+
 # Read First: Banking Realism And The School Journey, 2026-10-10
 
 The owner's brief was "Audit And Correct SLATE's Banking Realism And Complete The School Experience Review". The work started on `main` at `a2bf025d`.
