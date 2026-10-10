@@ -192,8 +192,12 @@ export function registerSecurity(sim: Simulation): void {
     const which = item.payload.which as Which;
     if (!account || account.closedAt || !account.plastic) return;
     const p = account.plastic;
-    p.last4 = nextLast4(p);
-    p.issued = (p.issued ?? 1) + 1;
+    // A new account's first card keeps the number it was opened with (from 2026-10-10).
+    const first = p.stopped === 'new';
+    if (!first) {
+      p.last4 = nextLast4(p);
+      p.issued = (p.issued ?? 1) + 1;
+    }
     delete p.stopped;
     delete p.replacementAt;
     delete p.locked;
@@ -202,7 +206,7 @@ export function registerSecurity(sim: Simulation): void {
     // they had it (`card.update_billers`), until 2026-10-09: nothing has charged a card as a bill since the home and
     // its bills went, so the connected world that day let the stale billers and their command go (schema 91 sheds them).
     if (account.ownerId === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Ending ${p.last4}.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: first ? `${account.name}’s debit card, ending ${p.last4}.` : `Ending ${p.last4}.`, importance: 50, route: '/workspace/bank' });
     }
   });
 

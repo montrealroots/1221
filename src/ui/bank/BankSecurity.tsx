@@ -21,7 +21,7 @@ import { cardsOf } from '@/engine/systems/credit';
 import type { Account } from '@/engine/core/ledger';
 import { FRENCH_CARDS, FRENCH_CARDS_SOURCE, cardCeilingRoom } from '@/engine/systems/lending';
 
-const WHY_WORDS = { lost: 'Lost', stolen: 'Stolen', damaged: 'Damaged', fraud: 'Used by somebody else' } as const;
+const WHY_WORDS = { lost: 'Lost', stolen: 'Stolen', damaged: 'Damaged', fraud: 'Used by somebody else', new: 'Not arrived yet' } as const;
 
 export function BankSecurity({ bankId }: { bankId: string }) {
   const { sim, run, toast } = useGame();
@@ -55,7 +55,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
           return (
             <div key={account.id} className="col gap-2">
               <div className="strong small"><Open subject={at('account', account.id)}>{which === 'debit' ? 'Debit card' : account.name} ending {p.last4}</Open>, expires <Open subject={at('day', dateKey(p.expiresAt, sim.homeZone))}>{formatDate(p.expiresAt, sim.zone)}</Open></div>
-              {p.stopped && <p className="small" style={{ margin: 0 }}>{WHY_WORDS[p.stopped]}: stopped. A new one arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
+              {p.stopped && <p className="small" style={{ margin: 0 }}>{p.stopped === 'new' ? 'A new account’s first card' : `${WHY_WORDS[p.stopped]}: stopped`}. {p.stopped === 'new' ? 'It' : 'A new one'} arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
               {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new goes on it.</p>}
               {which === 'debit' && ceiling && (
                 <p className="small" style={{ margin: 0 }}>

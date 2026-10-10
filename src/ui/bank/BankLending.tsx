@@ -298,14 +298,14 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
       </Panel>
       )}
 
-      {show.includes('switch') && (
+      {/* Only where a switching service runs it: with none, until 2026-10-10 this moved everything the same day, and
+          its text said you did it yourself. The steps are in Your Banks now (`BankMoves`). */}
+      {show.includes('switch') && rule && (
       <Panel title="Switch Bank" subtitle={switching ? `Under way, done ${formatDate(switching.at, sim.zone)}` : undefined}>
         {others.length === 0 ? <p className="small">No other bank where you live is on record.</p> : (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {rule
-                ? `Through the ${rule.scheme}: ${rule.workingDays} working days, and your balances, wages and bills move with you.`
-                : 'You open the new accounts and move the money yourself, the same day.'}
+              {`Through the ${rule.scheme}: ${rule.workingDays} working days, and your balances, wages and bills move with you.`}
               {' '}An overdraft has to be cleared first. Term deposits and loans stay where they are.
               {bank.iso === 'DE' ? ' Savings past the month’s €2,000 isn’t moved: notice is given on it, and it follows in three months.' : ''}
             </p>
@@ -314,7 +314,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 {chex.bank} reported you to ChexSystems on {formatDate(chex.at, sim.zone)}; it stands until {formatDate(chex.at + CHEX.years * 365 * 86_400_000, sim.zone)}. A bank here turns a report away about {Math.round((debt && debt.balance < 0 ? CHEX.declines.unpaid : CHEX.declines.paid) * 100)}% of the time, SLATE’s estimate, and the ones that have are left off the list. Source: {CHEX.source}.
               </p>
             )}
-            {rule && <Fine>Source: {rule.source}.</Fine>}
+            <Fine>Source: {rule.source}.</Fine>
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}

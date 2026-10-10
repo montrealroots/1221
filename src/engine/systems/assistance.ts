@@ -49,6 +49,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { payeeAccount } from './cash';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, zonedParts, type Instant } from '../core/time';
@@ -242,7 +243,7 @@ export function registerAssistance(sim: Simulation): void {
       const limit = (claim.scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets) * 100;
       if (liquidCad <= limit) {
         due = toSave(s, provincialMonth(claim.scheme, 0, inLocal(s, earned, 'CAD'), claim.months), 'CAD');
-        if (due > 0) s.post({ memo: `${claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income assistance'}, the month`, category: 'benefit', postings: [{ accountId: person.primaryAccountId!, amount: due }, { accountId: s.nominalAccount('income', claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income Assistance').id, amount: -due }] });
+        if (due > 0) s.post({ memo: `${claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income assistance'}, the month`, category: 'benefit', postings: [{ accountId: payeeAccount(s, person).id, amount: due }, { accountId: s.nominalAccount('income', claim.scheme === 'ontario-works' ? 'Ontario Works' : 'Income Assistance').id, amount: -due }] });
       }
     }
     if (due > 0) claim.months += 1;

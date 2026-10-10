@@ -104,15 +104,20 @@ describe('standing orders and payments set for a date', () => {
     expect(moved()).toBe(1);
   });
 
-  it('moves with the accounts when the bank is switched', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'pay-switch');
-    const oldSavings = accountOf(sim, 'savings')!;
+  it('moves with the accounts when a switching service moves the bank', () => {
+    // Britain's: a US switch has no service to run from 2026-10-10, and the player moves each order themselves.
+    const sim = lifeIn('uk-eng-london', { wealth: 'comfortable', bankId: 'gb-barclays' }, 'pay-switch');
+    const oldSavings = accountOf(sim, 'savings') ?? sim.universe.accounts[(run(sim, 'bank.open_savings', {}).value as { accountId: string }).accountId]!;
     run(sim, 'bank.add_standing_order', { toId: oldSavings.id, amount: 100_00, day: 20 });
-    const at = sim.now + 5 * MS_DAY;
+    const done = (run(sim, 'bank.switch', { bankId: 'gb-hsbc' }).value as { at: number }).at;
+    const at = done + MS_DAY;
     run(sim, 'bank.schedule_payment', { fromId: current(sim).id, toId: oldSavings.id, amount: 50_00, at });
-    run(sim, 'bank.switch', { bankId: 'us-citi' });
-    const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && !a.closedAt && a.kind === 'savings' && a.bankId === 'us-citi')!;
+    sim.advanceTo(done + 60_000);
+    const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && !a.closedAt && a.kind === 'savings' && a.bankId === 'gb-hsbc')!;
     expect(paymentsOf(sim.player).standingOrders[0]!.toId).toBe(savings.id);
+    expect(paymentsOf(sim.player).standingOrders[0]!.fromId ?? current(sim).id).toBe(current(sim).id);
+    expect(current(sim).bankId).toBe('gb-hsbc');
+    setCurrent(sim, 1_000_00);
     const before = savings.balance;
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 21, hour: 12 }, sim.zone));
     expect(savings.balance - before).toBeGreaterThanOrEqual(150_00);

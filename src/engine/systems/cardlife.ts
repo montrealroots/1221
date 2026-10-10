@@ -30,6 +30,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import type { Person } from '../domain/model';
 import { CommandError } from '../core/simulation';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY } from '../core/time';
@@ -37,11 +38,10 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { inTheBank } from './spending';
 import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
-import { bankOf } from './banking';
+import { bankAccountsOf, bankOf } from './banking';
 
 export const ARRIVES_KIND = 'card.arrives';
 
@@ -119,7 +119,7 @@ export function registerCardLife(sim: Simulation): void {
     // A hard inquiry, approved or not.
     credit.score = Math.max(300, credit.score - INQUIRY);
     const cur = saveCurrency(s.universe);
-    const means = inTheBank(s, person);
+    const means = heldInBanks(s, person);
     const collections = Object.values(s.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.category === 'collections' && a.balance < 0);
     const age = ageOn(s, person, s.now);
     let reason = '';
@@ -184,7 +184,7 @@ export function registerCardLife(sim: Simulation): void {
       return { limit: card.creditLimit, granted: true };
     }
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
-    if (credit.score < 700 || !clean || stateOf(person, card).suspended || inTheBank(s, person) <= 0) {
+    if (credit.score < 700 || !clean || stateOf(person, card).suspended || heldInBanks(s, person) <= 0) {
       s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept the limit at ${formatMoney(now, cur)}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`, importance: 40 });
       return { limit: now, granted: false };
     }
@@ -221,7 +221,7 @@ export function registerCardLife(sim: Simulation): void {
     // For a holder who can't pay (from 2026-10-10): a bank's hardship plan asks after the hardship, and one whose
     // checking and savings could clear the card today isn't in it, SLATE's reading. Until then anyone with a balance
     // was given interest frozen for four years for the asking.
-    if (inTheBank(s, person) >= owed) throw new CommandError('You could pay it off today: a hardship plan is for when you can’t.');
+    if (heldInBanks(s, person) >= owed) throw new CommandError('You could pay it off today: a hardship plan is for when you can’t.');
     credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: s.now };
     credit.suspended = 'hardship';
     return { payment: credit.hardship.payment };
@@ -235,4 +235,13 @@ export function armCardLife(sim: Simulation): void {
   if (!person || !applied) return;
   const armed = sim.universe.scheduled.some((one) => one.kind === ARRIVES_KIND && one.status === 'pending' && one.payload.personId === person.id);
   if (!armed) sim.schedule({ at: Math.max(applied.arrivesAt, sim.now + 60_000), kind: ARRIVES_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { personId: person.id } });
+}
+
+/**
+ * What a card issuer counts as somebody's means: everything in their current and savings accounts at every bank (from
+ * 2026-10-10, when a second bank could be kept; until then the primary account and its savings, which read a student
+ * banking at Chase and just opened at Citi as having nothing).
+ */
+function heldInBanks(sim: Simulation, person: Person): Money {
+  return bankAccountsOf(sim, person).reduce((sum, a) => sum + Math.max(0, a.balance), 0);
 }

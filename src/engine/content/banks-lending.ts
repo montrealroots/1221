@@ -334,7 +334,20 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   'nz-kiwibank': { term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' } },
 };
 
-/** The UK's Current Account Switch Service: the one country here with a set switching time. */
+/**
+ * A country's switching service, which moves a current account's balance, wages and payments to a new bank and closes
+ * the old one in a set time (`bank.switch`). Britain's was the only one here until 2026-10-10; the EU's Payment Accounts
+ * Directive (Art. 10) gives its members and the EEA one each, and New Zealand's banks keep one
+ * (docs/research/world/research-banking.json, research-banking-intl.json). The US, Canada, Australia, Japan and Mexico
+ * have none; Korea's moves automatic payments but not the balance, and Mexico's moves a payroll alone, so neither is
+ * run here: the player moves those steps themselves (`systems/bankmoves.ts`).
+ */
 export const SWITCHING: Readonly<Record<string, { workingDays: number; scheme: string; source: string }>> = {
   GB: { workingDays: 7, scheme: 'Current Account Switch Service', source: 'currentaccountswitch.co.uk: "The process takes 7 working days"' },
+  IE: { workingDays: 10, scheme: 'Switching Code', source: 'Central Bank of Ireland, Code of Conduct on the Switching of Payment Accounts (2016): the new account active within 10 working days of the switch date' },
+  DE: { workingDays: 12, scheme: 'Kontowechselhilfe', source: 'Zahlungskontengesetz §§ 20–26: 2, 5 and 5 business days, 12 in all' },
+  FR: { workingDays: 22, scheme: 'mobilité bancaire', source: 'service-public.gouv.fr F33881, Code monétaire et financier L312-1-7: 22 working days from the signed mandate, free' },
+  ES: { workingDays: 13, scheme: 'traslado de cuentas de pago', source: 'Real Decreto-ley 19/2017, art. 13: 2 and 5 business days, then a switch date at least 6 later; 13 is the steps added up, not a single stated limit' },
+  IS: { workingDays: 12, scheme: 'account switching under Act 5/2023', source: 'Act 5/2023, transposing Directive 2014/92/EU (in the EEA by Joint Committee Decision 171/2021): 2, 5 and 5 business days; read through a translation, and 12 is the steps added up' },
+  NZ: { workingDays: 5, scheme: 'NZBA switching process', source: 'New Zealand Bankers\' Association: an account switched in 5 working days; no formal code was found' },
 };

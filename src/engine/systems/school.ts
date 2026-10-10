@@ -1978,7 +1978,8 @@ export function registerSchool(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const need = hasNeed(person);
     const account = termAccount(cur, need, term);
-    const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    // Paid where their payments are paid (`payeeAccount`, from 2026-10-10: until then into whichever account was primary).
+    const current = payeeAccount(s, person);
     if (need && current && !current.closedAt) {
       s.post({
         memo: `Living-expense scholarship, ${termWords(term)}: ${YALE_DRAMA.name}`,

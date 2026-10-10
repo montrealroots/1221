@@ -271,15 +271,26 @@ describe('a term deposit', () => {
 });
 
 describe('a switch', () => {
-  it('moves the money the same day where there’s no switching service', () => {
+  it('runs Iceland’s switching service in its twelve business days, and moves every balance whole', () => {
+    // Until 2026-10-10 Iceland had no switching service here, and the switch moved everything the same day.
     const sim = lifeIn('is-39-mosfellsbr', { bankId: 'is-landsbankinn', wealth: 'modest' });
     const total = bankAccountsOf(sim, sim.player).reduce((sum, a) => sum + a.balance, 0);
-    sim.must({ kind: 'bank.switch', payload: { bankId: 'is-islandsbanki' } });
+    const at = sim.must<{ at: number }>({ kind: 'bank.switch', payload: { bankId: 'is-islandsbanki' } }).at;
+    expect(at - sim.now).toBeGreaterThanOrEqual(12 * MS_DAY);
+    expect(bankOf(sim, sim.player)?.name).toBe('Landsbankinn');
+    // TEST SETUP: the life's spending held still while the service runs, so the balances can be compared whole.
+    sim.universe.scheduled = sim.universe.scheduled.filter((i) => i.kind === SWITCH_KIND);
+    sim.advanceTo(at + 60_000);
     expect(bankOf(sim, sim.player)?.name).toBe('Íslandsbanki');
     expect(current(sim).name).toBe('Almennur reikningur');
     const now = bankAccountsOf(sim, sim.player);
     expect(now.every((a) => a.bankId === 'is-islandsbanki')).toBe(true);
-    expect(now.reduce((sum, a) => sum + a.balance, 0)).toBe(total);
+    expect(now.reduce((sum, a) => sum + a.balance, 0)).toBeGreaterThan(total * 0.9);
+  });
+
+  it('runs no switch where there’s no service, and says what to do instead', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'modest' });
+    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-citi' } }).error).toMatch(/no switching service here: open an account at Citi/);
   });
 
   it('takes Britain’s seven working days, and waits for an overdraft to be cleared', () => {

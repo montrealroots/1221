@@ -585,7 +585,20 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   // Standing orders and payments set up ahead move with the accounts, as a
   // switching service moves them. Until 2026-09-27 they stayed pointed at the
   // closed accounts: an order failed every month, and a payment was dropped.
-  for (const order of person.payments?.standingOrders ?? []) order.toId = moved.get(order.toId) ?? order.toId;
+  for (const order of person.payments?.standingOrders ?? []) {
+    order.toId = moved.get(order.toId) ?? order.toId;
+    if (order.fromId) order.fromId = moved.get(order.fromId) ?? order.fromId;
+  }
+  // So do wages and other payments, and each card's autopay, where they were set to the old accounts (from 2026-10-10,
+  // when each became an instruction of its own: `systems/routing.ts`). One never set follows the primary account here.
+  const pay = person.payments;
+  if (pay?.depositTo) pay.depositTo = moved.get(pay.depositTo) ?? pay.depositTo;
+  if (pay?.depositChange) pay.depositChange.to = moved.get(pay.depositChange.to) ?? pay.depositChange.to;
+  if (person.credit) {
+    for (const state of [person.credit, ...Object.values(person.credit.cards ?? {})]) {
+      if (state.autopayFrom) state.autopayFrom = moved.get(state.autopayFrom) ?? state.autopayFrom;
+    }
+  }
   for (const one of sim.universe.scheduled) {
     if (one.status !== 'pending' || one.kind !== 'bank.scheduled_payment' || one.payload.personId !== person.id) continue;
     one.payload = { ...one.payload, fromId: moved.get(String(one.payload.fromId)) ?? one.payload.fromId, toId: moved.get(String(one.payload.toId)) ?? one.payload.toId };
@@ -1119,9 +1132,10 @@ export function registerLending(sim: Simulation): void {
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
     const iso = isoOf(homeOf(person)) ?? '';
     const rule = SWITCHING[iso];
+    // With no switching service, there's nothing to run: until 2026-10-10 this opened the new bank's accounts, moved
+    // everything into them and closed the old ones the same day, as no bank does (docs/verification/BANKING-SWITCH.md).
     if (!rule) {
-      completeSwitch(s, person, to);
-      return { at: s.now };
+      throw new CommandError(`There’s no switching service here: open an account at ${to.name}, have your wages paid into it, move your standing orders and autopay, move the money across, then close the old account. Each step is on this screen.`);
     }
     // Working days: Monday to Friday, from tomorrow.
     let at = s.now;

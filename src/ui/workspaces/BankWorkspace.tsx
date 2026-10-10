@@ -22,6 +22,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
+import { BankMoves } from '@/ui/bank/BankMoves';
 import { BankCard } from '@/ui/bank/BankCard';
 import { BankCardOffers } from '@/ui/bank/BankCardOffers';
 import { BankSecurity } from '@/ui/bank/BankSecurity';
@@ -74,9 +75,10 @@ export function BankWorkspace() {
   const move = () => {
     // Typed in whole units of the money, as a banking app takes it.
     const cents = centsFromTyped(amount);
-    const answer = run<{ moved: number }>('bank.transfer', { fromId, toId, amount: cents });
+    const answer = run<{ moved: number; arrivesAt?: number }>('bank.transfer', { fromId, toId, amount: cents });
     if (answer.ok && answer.value) {
-      toast(`Moved ${money(answer.value.moved)}.`, 'positive');
+      const later = answer.value.arrivesAt !== undefined && answer.value.arrivesAt > sim.now;
+      toast(later ? `Sent ${money(answer.value.moved)}: it arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${money(answer.value.moved)}.`, 'positive');
       setAmount('');
     }
   };
@@ -92,7 +94,7 @@ export function BankWorkspace() {
           // As the bank counts them: until 2026-09-27 wages only, where the bank counts any electronic deposit.
           const paidIn = directDeposits(sim, account, monthStart, product?.deposits);
           return (
-            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.number}</Open>} look={at('account', account.id)}>
+            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.institution} {account.number}</Open>} look={at('account', account.id)}>
               <div className="col gap-3">
                 <div className="stat">
                   <Open subject={at('account', account.id)}>
@@ -148,19 +150,19 @@ export function BankWorkspace() {
       </div>
 
       {accounts.length > 1 && (
-        <Panel title="Move Money" subtitle="Between your own accounts, at once.">
+        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days.">
           <div className="field-row">
             <div className="field">
               <label htmlFor="move-from">From</label>
               <select id="move-from" value={fromId} onChange={(e) => setFrom(e.target.value)}>
                 {/* By balance, the most in it last. */}
-                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4} ({money(a.balance)})</option>)}
+                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution} ({money(a.balance)})</option>)}
               </select>
             </div>
             <div className="field">
               <label htmlFor="move-to">To</label>
               <select id="move-to" value={toId} onChange={(e) => setTo(e.target.value)}>
-                {accounts.filter((a) => a.id !== fromId).sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}</option>)}
+                {accounts.filter((a) => a.id !== fromId).sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution}</option>)}
               </select>
             </div>
             <div className="field">
@@ -182,6 +184,7 @@ export function BankWorkspace() {
       )}
 
 
+        <BankMoves />
         <BankLending bank={bank} show={['term', 'switch']} />
         <div style={{ marginBottom: 'var(--s5)' }}>
           <BankAccountLife bankId={bank.id} />

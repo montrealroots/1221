@@ -31,6 +31,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { payeeAccount } from './cash';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -1218,7 +1219,8 @@ export function registerHealth(sim: Simulation): void {
       // Overturned: only the plan's share is owed. What was paid over it comes back; what went to debt over it is taken
       // off the debt (from 2026-10-10: until then a bill gone to debt was refunded as if paid, and its debt stayed).
       const over = bill.amount - bill.denied.share;
-      if (bill.paid && over > 0 && person.primaryAccountId) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: person.primaryAccountId, amount: over }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -over }] });
+      // Back where their payments are paid (`payeeAccount`, from 2026-10-10: until then the primary account).
+      if (bill.paid && over > 0 && person.primaryAccountId) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: payeeAccount(s, person).id, amount: over }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -over }] });
       const debt = bill.inDebt ? medicalDebtOf(s, person) : undefined;
       if (debt && over > 0) {
         const off = Math.min(over, Math.max(0, -debt.balance));

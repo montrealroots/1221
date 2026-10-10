@@ -95,7 +95,8 @@ describe('a balance transfer', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-bt');
     const old = card(sim);
     give(sim, old.id, -old.balance - 800_00);
-    sim.must({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    // Banking at Citi now: an account opened there and made primary (a US switch has no service to run, from 2026-10-10).
+    sim.must({ kind: 'bank.set_primary', payload: { accountId: sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).accountId } });
     sim.advanceBy(10 * MS_DAY);
     expect(card(sim).bankId).toBe('us-chase');
     const score = sim.player.credit!.score;
@@ -125,7 +126,7 @@ describe('a balance transfer', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-bt-big');
     const old = card(sim);
     give(sim, old.id, -old.balance - 100_000_00);
-    sim.must({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    sim.must({ kind: 'bank.set_primary', payload: { accountId: sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).accountId } });
     sim.advanceBy(10 * MS_DAY);
     const score = sim.player.credit!.score;
     expect(run(sim, 'card.apply', { transfer: true }).ok).toBe(false);

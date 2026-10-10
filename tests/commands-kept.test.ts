@@ -258,11 +258,12 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
     const sim = lifeIn('us-ny-newyork', 'switch-id', { wealth: 'comfortable', bankId: 'us-chase' });
     // Test setup: every document set aside, as a life without them begins (`startingDocuments` draws them by share).
     for (const d of documentsOf(sim.player)) d.status = 'cancelled';
-    const r = sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    // An account opened at a new bank (`bank.open_current`; a US switch, which asked the same, has no service to run since 2026-10-10).
+    const r = sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
     expect(r.error).toMatch(/asks a new customer for a photo ID in force/);
     const a = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
     sim.advanceTo(a.readyAt + MS_HOUR);
-    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-citi' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).ok).toBe(true);
   });
 
   it('sells marketplace cover only to somebody lawfully present, and ends a plan held when status is lost', () => {

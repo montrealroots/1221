@@ -33,7 +33,8 @@ export interface Plastic {
   expiresAt: Instant;
   issued?: number;
   locked?: boolean;
-  stopped?: 'lost' | 'stolen' | 'damaged' | 'fraud';
+  /** Stopped, and why; `new` is a new account's first card, not yet arrived (from 2026-10-10, `systems/bankmoves.ts`). */
+  stopped?: 'lost' | 'stolen' | 'damaged' | 'fraud' | 'new';
   replacementAt?: Instant;
 }
 
@@ -138,6 +139,15 @@ export interface Account {
   renewedAt?: Instant;
   /** What its holder has told the bank to do with a term deposit at its end, where it differs from the bank's default. */
   atEnd?: 'renews' | 'savings' | 'paid_out';
+  /**
+   * A new current account the bank waits on (from 2026-10-10, `systems/bankmoves.ts`): the deposit that funds it, and
+   * the day it closes unfunded where the bank closes one; since when it has held nothing, for a bank that closes an
+   * account at zero; and the day it closes, where the bank keeps it open for items pending.
+   */
+  awaitingFunds?: Money;
+  fundBy?: Instant;
+  zeroSince?: Instant;
+  closingAt?: Instant;
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

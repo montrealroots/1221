@@ -17,9 +17,11 @@
  * - **The monthly fee.** A current account that charges one charges it on the
  *   last day of the month, unless the month met the bank's own waiver: wages
  *   paid in by direct deposit, or a balance kept above a line all month.
- * - **Moving money.** Between one's own accounts, at once, as a bank's app
- *   does it (`bank.transfer`), and a savings account opened or closed
- *   (`bank.open_savings`, `bank.close_savings`).
+ * - **Moving money.** Between one's own accounts at a bank, at once, as a
+ *   bank's app does it (`bank.transfer`); to one's own account at another
+ *   bank, in that bank's days (`systems/bankmoves.ts`, from 2026-10-10); and
+ *   a savings account opened or closed (`bank.open_savings`,
+ *   `bank.close_savings`).
  *
  * Money still leaves in the order `systems/household.ts` takes it: the
  * current account, then savings, then the card.
@@ -43,6 +45,8 @@ import type { ScheduledItem } from '../core/scheduler';
 import { savingsDebit } from './accountlife';
 import { recordInterest } from './earnings';
 import { marksFallOff } from './credit';
+import { checkingAt } from './lending';
+import { sendBetweenBanks } from './bankmoves';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -418,11 +422,15 @@ export function savingsNotice(sim: Simulation, account: Account): ScheduledItem 
  * and payments ahead that touch it called off. Until 2026-09-27 the orders
  * stayed pointed at it and said every month that the money wasn't there.
  */
-function closeSavings(sim: Simulation, person: Person, account: Account, current: Account): void {
+function closeSavings(sim: Simulation, person: Person, account: Account, primary: Account): void {
   // What it has earned this month is paid before it closes, as a bank does.
   payInterest(sim, account, `Interest: ${account.name}, on closing`);
   settleFees(sim, account);
-  if (account.balance !== 0) {
+  // Into the current account at its own bank; with none there, sent to the primary one in the bank's days (from
+  // 2026-10-10: until then into the primary account at once, wherever it was).
+  const current = checkingAt(sim, person, account.bankId) ?? primary;
+  if (account.balance > 0 && current.bankId !== account.bankId) sendBetweenBanks(sim, person, account, current, account.balance);
+  else if (account.balance !== 0) {
     sim.post({
       memo: `Closed ${account.name}`, category: 'transfer',
       postings: [{ accountId: account.id, amount: -account.balance }, { accountId: current.id, amount: account.balance }],
@@ -561,8 +569,9 @@ export function registerBanking(sim: Simulation): void {
     scheduleMonthEnd(s, item.at);
   });
 
-  sim.onCommand<{ fromId: string; toId: string; amount: Money }, { moved: Money }>('bank.transfer', (p, { sim: s }) => {
-    const mine = bankAccountsOf(s, s.player);
+  sim.onCommand<{ fromId: string; toId: string; amount: Money }, { moved: Money; arrivesAt?: Instant }>('bank.transfer', (p, { sim: s }) => {
+    const person = s.player;
+    const mine = bankAccountsOf(s, person);
     const from = mine.find((a) => a.id === p.fromId);
     const to = mine.find((a) => a.id === p.toId);
     if (!from || !to) throw new CommandError('Money moves here between your own current and savings accounts.');
@@ -580,6 +589,14 @@ export function registerBanking(sim: Simulation): void {
     }
     // The fee comes out beside it: until 2026-09-27 a move of the whole balance left the account overdrawn by the fee.
     if (amount > room) throw new CommandError(`${from.name} can let ${formatMoney(room, saveCurrency(s.universe), { cents: false })} out, with the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee.`);
+    if (from.closingAt !== undefined || to.closingAt !== undefined) throw new CommandError(`${(from.closingAt !== undefined ? from : to).name} is closing.`);
+    // Between two banks, it goes out now and arrives in the sending bank's days (`systems/bankmoves.ts`, from
+    // 2026-10-10); until then it couldn't, and a bank switch moved everything at once.
+    if (from.bankId !== to.bankId) {
+      const arrivesAt = sendBetweenBanks(s, person, from, to, amount);
+      if (withdrawalFee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -withdrawalFee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: withdrawalFee }] });
+      return { moved: amount, arrivesAt };
+    }
     s.post({
       memo: `Moved to ${to.name}`, category: 'transfer',
       postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }],

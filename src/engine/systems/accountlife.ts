@@ -38,6 +38,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { linkedTo } from './routing';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
@@ -312,7 +313,11 @@ export function registerAccountLife(sim: Simulation): void {
       if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }
       return { refunded: 0 };
     }
-    if (!into || into.id === account.id) throw new CommandError('Your current account is closed by switching banks.');
+    if (!into || into.id === account.id) throw new CommandError('Your primary current account can’t be canceled. Make another primary first.');
+    // A current account canceled like any close: nothing may still use it (from 2026-10-10, `linkedTo`). A savings
+    // account's orders into it go with it, as they always have (`dropPaymentsFor`).
+    const links = account.kind === 'checking' ? linkedTo(s, person, account.id) : [];
+    if (links.length > 0) throw new CommandError(`${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`);
     // The deposit's money back whole: no interest, no penalty.
     const back = Math.max(0, account.balance);
     if (back > 0) s.post({ memo: `${account.name} canceled`, category: 'transfer', postings: [{ accountId: account.id, amount: -back }, { accountId: into.id, amount: back }] });
