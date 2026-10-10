@@ -112,7 +112,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `health.appeal` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `claims.test.ts` | Cover, Benefits And Returns |
+| `health.appeal` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `claims.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
 | `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Cover, Benefits And Returns |
 | `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `journey-life.test.ts` `referrals.test.ts` | Cover, Benefits And Returns |
 | `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `journey-life.test.ts` `referrals.test.ts` | Cover, Benefits And Returns |
@@ -122,7 +122,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicaluis.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
 | `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
-| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
+| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `life-fixes.test.ts` `therapy.test.ts` | Cover, Benefits And Returns |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
