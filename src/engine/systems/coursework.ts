@@ -276,9 +276,9 @@ export function mateBusy(person: Person, i: number, when: Instant, minutes: numb
   const endH = startH + minutes / 60;
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (startH < WORK.rehearsal.from || endH > WORK.rehearsal.until) return `${first} won’t rehearse before ${WORK.rehearsal.from} or past ${WORK.rehearsal.until}.`;
-  if (coursesOn(day).length && startH < 15 && endH > 9) return `${first} is in class until three.`;
+  if (coursesOn(day, person.school?.offset ?? 0).length && startH < 15 && endH > 9) return `${first} is in class until three.`;
   const term = termOf(day);
-  if (weekday === 6 && startH < 16 && endH > 10 && coursesOn(plus(day, -1)).length) return `${first} works a work-study shift on Saturdays.`;
+  if (weekday === 6 && startH < 16 && endH > 10 && coursesOn(plus(day, -1), person.school?.offset ?? 0).length) return `${first} works a work-study shift on Saturdays.`;
   if (castThisTerm(person, mate, term) && weekday >= 2 && weekday <= 5 && endH > 15) return `${first} has rehearsal calls from three, Tuesday to Friday.`;
   return undefined;
 }
@@ -288,11 +288,11 @@ export function mateBusy(person: Person, i: number, when: Instant, minutes: numb
 // ---------------------------------------------------------------------------
 
 /** A course's meetings from a day on, to the end of its term's classes. */
-export function meetingsFrom(course: string, from: SchoolDate): string[] {
+export function meetingsFrom(course: string, from: SchoolDate, offset = 0): string[] {
   const term = termOf(from);
   const end = keyOf(classPeriod(term).to);
   const out: string[] = [];
-  for (let d = from; keyOf(d) <= end; d = plus(d, 1)) if (coursesOn(d).some((c) => c.code === course)) out.push(keyOf(d));
+  for (let d = from; keyOf(d) <= end; d = plus(d, 1)) if (coursesOn(d, offset).some((c) => c.code === course)) out.push(keyOf(d));
   return out;
 }
 
@@ -310,7 +310,7 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   const t = templateFor(course, termWord(term));
   if (!t) return undefined;
   if (cw.assignments.some((a) => a.course === course && (a.status === 'open' || a.status === 'revising'))) return undefined;
-  const meetings = meetingsFrom(course, day).filter((k) => k > keyOf(day));
+  const meetings = meetingsFrom(course, day, person.school?.offset ?? 0).filter((k) => k > keyOf(day));
   const dueOn = meetings[t.dueAfter - 1];
   if (!dueOn) return undefined;
   // Work in rounds is set only where the term has a meeting for every round: a rehearsal cut off after its table
@@ -756,7 +756,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   const due = cw.assignments.find((a) => a.course === course && a.status === 'open' && a.dueOn === key);
   if (due) {
     if (!present) {
-      const next = meetingsFrom(course, plus(day, 1))[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
       if (excused && next) { due.dueOn = next; return 1; }
       // Excused with no meeting left: not shown, and not held against them or their partner (from 2026-10-10: until
       // then it was missed as if they'd stayed away).
@@ -777,10 +777,10 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const r = due.round ?? 0;
       (due.roundsShown ??= []).push({ label: t.rounds[r]!.label, band: showing.band, on: key });
       const nextRound = t.rounds[r + 1];
-      const next = nextRound ? meetingsFrom(course, plus(day, 1))[nextRound.gap - 1] : undefined;
+      const next = nextRound ? meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[nextRound.gap - 1] : undefined;
       if (nextRound && next) { due.round = r + 1; due.dueOn = next; } else due.status = 'done';
     } else if (t.revised && due.feedback) {
-      const next = meetingsFrom(course, plus(day, 1))[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
       if (next) {
         const f = due.feedback.focus;
         due.revision = { dueOn: next, before: f.kind === 'dim' ? preparedParts(person, due, key)[f.dim] ?? 0 : 0 };
@@ -807,7 +807,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   const revising = cw.assignments.find((a) => a.course === course && a.status === 'revising' && a.revision?.dueOn === key);
   if (revising) {
     if (!present) {
-      const next = meetingsFrom(course, plus(day, 1))[0];
+      const next = meetingsFrom(course, plus(day, 1), person.school?.offset ?? 0)[0];
       if (excused && next) { revising.revision!.dueOn = next; return 1; }
       // Not there to show it again: unexcused, the evaluation reads it as unready (from 2026-10-10: until then it was
       // marked done in silence, and staying away was safer than showing it weak).

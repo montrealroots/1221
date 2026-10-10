@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-124 commands; 123 named by a test, 1 not.
+134 commands; 132 named by a test, 2 not.
 
 ## bank
 
@@ -91,10 +91,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
+| `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` `papers-transitions.test.ts` | Passports And ID |
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And ID |
 | `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `journey-life.test.ts` | Passports And ID |
-| `documents.apply_ssn` | `src/engine/systems/taxid.ts` | `Documents.tsx` | `papers-complete.test.ts` | Passports And ID |
+| `documents.apply_ssn` | `src/engine/systems/taxid.ts` | `Documents.tsx` | `papers-complete.test.ts` `papers-transitions.test.ts` | Passports And ID |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 | `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `journey-life.test.ts` | Cover, Benefits And Returns |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `residence.test.ts` | Passports And ID |
@@ -141,7 +141,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `coverage-gaps-life.test.ts` `fitness.test.ts` `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
-| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `life-fixes.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
+| `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `journey-school-year.test.ts` `life-fixes.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## pension
 
@@ -174,31 +174,41 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.answer_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
 | `school.approach` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
+| `school.buy_affiliate` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.buy_ppe` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-everyday.test.ts` | Drama School |
 | `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `coverage-gaps-runs.test.ts` `school.test.ts` `student-experience.test.ts` | Drama School |
-| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `condition-reach.test.ts` `journey-life.test.ts` `school.test.ts` | Drama School |
+| `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `condition-reach.test.ts` `journey-life.test.ts` `school.test.ts` `work-limits.test.ts` | Drama School |
+| `school.cancel_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
+| `school.cancel_repeat` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | **none** | Drama School |
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.extend_incomplete` | `src/engine/systems/courserecord.ts` | `SchoolWorkspace.tsx` | `student-experience.test.ts` | Drama School |
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.make_up` | `src/engine/systems/courserecord.ts` | `SchoolWorkspace.tsx` | `student-experience.test.ts` | Drama School |
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `journey-life.test.ts` `papers-complete.test.ts` | Drama School |
+| `school.pay_balance` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` `traits-connected.test.ts` | Drama School |
 | `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.request_conversion` | `src/engine/systems/school.ts` | `StudyPlanPanels.tsx` | `work-limits.test.ts` | Drama School |
+| `school.request_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
+| `school.request_repeat` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `papers-transitions.test.ts` | Drama School |
+| `school.reregister` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `coverage-gaps-classmates.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `student-experience.test.ts` | Drama School |
+| `school.return_notice` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
-| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-journey-gaps.test.ts` `school.test.ts` | Drama School |
-| `school.withdraw` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `student-experience.test.ts` | Drama School |
+| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-journey-gaps.test.ts` `school.test.ts` `work-limits.test.ts` | Drama School |
+| `school.withdraw` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `leave.test.ts` `papers-transitions.test.ts` `student-experience.test.ts` | Drama School |
 | `school.work_note` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 
 ## tax
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
-| `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
+| `tax.amend` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
 
 ## tutorial
 

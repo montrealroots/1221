@@ -46,7 +46,7 @@ import {
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf } from './earnings';
-import { payFromCurrent } from './spending';
+import { expenseFor, payFromCurrent } from './spending';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
 import { bmiOf } from './body';
@@ -134,6 +134,12 @@ export interface HealthRecord {
   spent: Record<string, Money>;
   deductible: Record<string, Money>;
   bills: MedicalBill[];
+  /**
+   * Care had, what it was, what their share was and the bill it went on, the latest 60 (from 2026-10-10): a change of
+   * cover back in time bills it again as the cover then was (`repriceCare`). Yale Health's $0 share makes no bill, so
+   * without it a cancellation back to a term's start had nothing to reckon.
+   */
+  careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string }[];
   /** In hospital until: a stay, or an emergency department's hours. */
   inHospitalUntil?: Instant;
   /** The American pharmacy their prescriptions are filled at (`US_PHARMACIES`, from 2026-10-01). */
@@ -216,10 +222,18 @@ export function yaleUntil(person: Person): Instant | undefined {
   return since + 30 * MS_DAY;
 }
 
+/**
+ * Whether Yale Health's student cover had lapsed at a moment: a personal leave's, with no Affiliate cover bought
+ * (`SchoolRecord.uncovered`, `systems/leave.ts`, from 2026-10-10).
+ */
+export function yaleLapsed(person: Person, at: Instant): boolean {
+  return (person.school?.uncovered ?? []).some((g) => at >= g.from && (g.until === undefined || at < g.until));
+}
+
 /** What covers them at a moment, first match. */
 export function coverOn(person: Person, at: Instant): Cover | undefined {
   const h = person.health;
-  if (at < (yaleUntil(person) ?? 0)) return 'yale';
+  if (at < (yaleUntil(person) ?? 0) && !yaleLapsed(person, at)) return 'yale';
   if (active(h?.program, at)) return h!.program!.kind;
   if (active(h?.marketplace, at)) return 'marketplace';
   return undefined;
@@ -333,7 +347,7 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD'): { ok: bool
   if (ahead) return { ok: false, why: `You’re enrolled from ${formatDate(ahead.from, HOME)}.` };
   // Covered by Yale Health, which the school bills for: a plan beside it would be paid for twice (from 2026-10-10).
   const yale = yaleUntil(person);
-  if (yale !== undefined && yale > at) return { ok: false, why: Number.isFinite(yale) ? `Yale Health covers you until ${formatDate(yale, HOME)}; you can enroll as that cover ends, within ${ENROLLMENT.specialDays} days of losing it.` : 'Yale Health covers you while you’re at the School.' };
+  if (yale !== undefined && yale > at && !yaleLapsed(person, at)) return { ok: false, why: Number.isFinite(yale) ? `Yale Health covers you until ${formatDate(yale, HOME)}; you can enroll as that cover ends, within ${ENROLLMENT.specialDays} days of losing it.` : 'Yale Health covers you while you’re at the School.' };
   const program = programFor(person, at, into);
   if (program) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
   if (!lawfullyPresent(person)) return { ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' };
@@ -1092,6 +1106,9 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`).
   const clinic = MEDICAL.includes(event.care) ? clinicFor(person, event.care as 'visit' | 'urgent' | 'emergency' | 'stay') : undefined;
   if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
+  // On the care log, whatever it cost (`repriceCare`).
+  const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount } as NonNullable<HealthRecord['careLog']>[number] : undefined;
+  if (logged) h.careLog = [...(h.careLog ?? []), logged].slice(-60);
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
     sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
@@ -1107,8 +1124,44 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${event.what.toLowerCase()}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
   h.bills = keptBills(h.bills);
+  if (logged) logged.billId = bill.id;
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
   return bill;
+}
+
+/**
+ * Care had between two moments billed again as the cover then now reads (from 2026-10-10): Yale Health canceled back
+ * to an insurance term's start, or Affiliate cover bought back to the day student cover ended. More owed is a new bill,
+ * said for what it is; less comes off the bill still open, and what's left of it back to the bank. Every change is a
+ * posting or a bill of its own: nothing already on a statement is rewritten. Returns the net change, more owed positive.
+ */
+export function repriceCare(sim: Simulation, person: Person, from: Instant, to: Instant, why: string): Money {
+  const h = healthOf(person);
+  const cur = saveCurrency(sim.universe);
+  let net = 0;
+  for (const e of h.careLog ?? []) {
+    if (e.at < from || e.at > to) continue;
+    // Read without moving the year's deductible and copay counters, which the care already moved once when it was had.
+    const kept = { deductible: { ...h.deductible }, stayCopays: h.stayCopays ? { ...h.stayCopays } : undefined };
+    const now = shareOf(person, e.care, e.at, cur);
+    h.deductible = kept.deductible;
+    if (kept.stayCopays) h.stayCopays = kept.stayCopays; else delete h.stayCopays;
+    const diff = now - e.share;
+    if (diff === 0) continue;
+    net += diff;
+    e.share = now;
+    if (diff > 0) {
+      const bill = billCare(sim, person, `${e.what}: ${why}`, diff, sim.now);
+      e.billId ??= bill.id;
+      continue;
+    }
+    let credit = -diff;
+    const open = h.bills.find((b) => b.id === e.billId && !b.paid && !b.inDebt);
+    if (open) { const off = Math.min(credit, open.amount); open.amount -= off; credit -= off; if (open.amount === 0) open.paid = true; }
+    if (credit > 0) sim.post({ memo: `Refund: ${e.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: credit }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: -credit }] });
+  }
+  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${why}: care you had from ${formatDate(from, HOME)} is billed as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, off what was open and back to your bank`}.`, importance: 75, route: '/workspace/papers' });
+  return net;
 }
 
 /**

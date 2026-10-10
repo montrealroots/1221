@@ -94,27 +94,83 @@ export const COLLECTION = {
   source: 'https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026; https://www.irsproblemsolve.com/2026/03/24/cp14-cp501-cp503-cp504-lt11/',
 } as const;
 
-/** What a return owes at a moment: the balance, its interest since it was last brought up to date, and the late-payment penalty's months since. */
-export function owedOn(r: TaxReturn, at: Instant): Money {
-  if (!r.owed) return 0;
+/**
+ * What's owed on a return, in its three parts (from 2026-10-10): the unpaid tax, the penalties, and the interest. Until
+ * then one sum was kept, and a payment could only be the whole of it. A save from before holds the sum: its tax is the
+ * balance the penalty was a share of (`base`), and the rest is taken as interest.
+ */
+export interface OwedParts { tax: Money; penalty: Money; interest: Money }
+
+export function partsOf(r: TaxReturn): OwedParts {
+  if (r.parts) return r.parts;
+  const owed = r.owed ?? 0;
+  const tax = Math.min(owed, r.base ?? owed);
+  return { tax, penalty: 0, interest: owed - tax };
+}
+
+/**
+ * The parts at a moment: interest at the IRS's rate, compounded daily, on all that's owed since it was last brought up to
+ * date; the failure-to-pay penalty, 0.5% a month or part since filing to 25%, on the tax still unpaid, so a part payment
+ * lowers what the next months charge (IRC 6651(a)(2)).
+ */
+export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
+  const p = partsOf(r);
+  if (!r.owed) return { tax: 0, penalty: 0, interest: 0 };
   const from = r.accruedAt ?? r.filedAt ?? at;
   const days = Math.max(0, (at - from) / MS_DAY);
-  const interest = r.owed * ((1 + COLLECTION.interest / 365) ** days - 1);
+  const interest = p.interest + (p.tax + p.penalty + p.interest) * ((1 + COLLECTION.interest / 365) ** days - 1);
   const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
   const rate = Math.min(RETURN.lateCap, RETURN.payLateMonthly * months);
-  const penalty = Math.max(0, rate - (r.payLateRate ?? 0)) * (r.base ?? r.owed);
-  return Math.round(r.owed + interest + penalty);
+  const penalty = p.penalty + Math.max(0, rate - (r.payLateRate ?? 0)) * p.tax;
+  if (exact) return { tax: p.tax, penalty, interest };
+  // Rounded so the parts add to the whole rounded once: the cent left over is the interest's.
+  const whole = Math.round(p.tax + penalty + interest);
+  return { tax: p.tax, penalty: Math.round(penalty), interest: whole - p.tax - Math.round(penalty) };
+}
+
+/** What a return owes at a moment: its parts summed, rounded once. */
+export function owedOn(r: TaxReturn, at: Instant): Money {
+  if (!r.owed) return 0;
+  const p = partsOn(r, at, true);
+  return Math.round(p.tax + p.penalty + p.interest);
 }
 
 /** Brings a return's balance up to a moment. */
 function accrue(r: TaxReturn, at: Instant): void {
   if (!r.owed) return;
   const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
-  const owed = owedOn(r, at);
-  r.base ??= r.owed;
+  r.parts = partsOn(r, at);
+  r.base ??= r.parts.tax;
   r.payLateRate = Math.max(r.payLateRate ?? 0, Math.min(RETURN.lateCap, RETURN.payLateMonthly * months));
-  r.owed = owed;
+  r.owed = r.parts.tax + r.parts.penalty + r.parts.interest;
   r.accruedAt = at;
+}
+
+/** A balance owed set down: its parts, brought up to date from now. */
+function setOwed(r: TaxReturn, parts: OwedParts, at: Instant): void {
+  r.parts = parts;
+  r.owed = parts.tax + parts.penalty + parts.interest;
+  r.base = parts.tax;
+  r.accruedAt = at;
+  if (r.owed <= 0) { delete r.owed; delete r.parts; }
+}
+
+/**
+ * A payment on a return: brought up to date, then applied to the tax, then the penalty, then the interest, the IRS's
+ * order where the taxpayer names none (research-tax-switch-lending.json), and kept on the return's payments.
+ */
+export function applyPayment(sim: Simulation, person: Person, r: TaxReturn, amount: Money, how: 'payment' | 'levy' | 'refund offset'): OwedParts {
+  accrue(r, sim.now);
+  const p = { ...partsOf(r) };
+  let left = amount;
+  const tax = Math.min(left, p.tax); left -= tax; p.tax -= tax;
+  const penalty = Math.min(left, p.penalty); left -= penalty; p.penalty -= penalty;
+  const interest = Math.min(left, p.interest); left -= interest; p.interest -= interest;
+  (r.payments ??= []).push({ at: sim.now, amount: amount - left, tax, penalty, interest, how });
+  r.paidTax = (r.paidTax ?? 0) + tax;
+  setOwed(r, p, sim.now);
+  if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
+  return { tax, penalty, interest };
 }
 
 /** The next step of the IRS's collection on a return, on the calendar. */
@@ -147,6 +203,16 @@ export interface TaxReturn {
   substitute?: boolean;
   refund?: Money;
   refundAt?: Instant;
+  /** The balance's parts (`partsOn`), what was paid toward the tax itself, and every payment, levy and offset with its split. */
+  parts?: OwedParts;
+  paidTax?: Money;
+  payments?: { at: Instant; amount: Money; tax: Money; penalty: Money; interest: Money; how: 'payment' | 'levy' | 'refund offset' }[];
+  /** An amended return: its form, when filed, the figures it carries, the change, when the IRS processes it, and its outcome. */
+  amended?: { form: '1040-X' | '1040-X with 1040-NR'; at: Instant; figures: ReturnFigures; change: Money; processAt: Instant; processedAt?: Instant; refund?: Money; interest?: Money }[];
+  /** A substitute return replaced by their own after it was assessed, and when (`tax.file`, a reconsideration). */
+  reconsideredAt?: Instant;
+  /** The IRS's own figures on a substitute, kept beside the return's. */
+  substituteFigures?: ReturnFigures;
 }
 
 export interface ReturnFigures {
@@ -605,9 +671,14 @@ export function registerTaxReturn(sim: Simulation): void {
     if (!person || !r || r.filedAt !== undefined) return;
     const cur = saveCurrency(s.universe);
     const late = Math.max(0, (s.now - r.due) / MS_DAY);
-    const penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
-    const interest = Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1));
-    const total = r.figures.balance + penalty + interest;
+    // The IRS's figures claim no credit a return of their own would: the foreign tax credit (Form 1116) and the premium tax
+    // credit (Form 8962), from 2026-10-10. Until then the substitute was their own return's figures to the cent, and
+    // replacing it changed nothing.
+    const sfr = sfrFigures(r.figures);
+    r.substituteFigures = sfr;
+    const penalty = latePenalty(sfr.balance, r.due, s.now, cur);
+    const interest = Math.round(sfr.balance * ((1 + COLLECTION.interest / 365) ** late - 1));
+    const total = sfr.balance + penalty + interest;
     if (item.payload.step === 'proposed') {
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: with no return from you, the IRS worked out ${formatMoney(total, cur)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
       s.schedule({ at: s.now + SUBSTITUTE.answerDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'assessed' } });
@@ -617,9 +688,7 @@ export function registerTaxReturn(sim: Simulation): void {
     r.filedAt = s.now;
     r.penalty = penalty;
     r.substitute = true;
-    r.owed = total;
-    r.base = r.figures.balance;
-    r.accruedAt = s.now;
+    setOwed(r, { tax: sfr.balance, penalty, interest }, s.now);
     r.collection = 0;
     // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
     if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
@@ -645,11 +714,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const taken = r.owed - bank.short;
     if (taken > 0) {
       s.post({ memo: `IRS levy, ${r.year} return`, category: 'tax', postings: [{ accountId: s.nominalAccount('expense', expenseFor('tax')).id, amount: taken }, ...bank.postings] });
-      r.owed -= taken;
+      applyPayment(s, person, r, taken, 'levy');
     }
     r.collection = step + 1;
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Levied Your Accounts', body: `${formatMoney(taken, cur)} taken from your bank accounts for your ${r.year} return${r.owed > 0 ? `; ${formatMoney(r.owed, cur)} is still owed, and it levies again while it is` : ', which is now paid'}.`, importance: 95, route: '/workspace/papers' });
-    if (r.owed > 0) nextNotice(s, person, r); else delete r.owed;
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Levied Your Accounts', body: `${formatMoney(taken, cur)} taken from your bank accounts for your ${r.year} return${(r.owed ?? 0) > 0 ? `; ${formatMoney(r.owed!, cur)} is still owed, and it levies again while it is` : ', which is now paid'}.`, importance: 95, route: '/workspace/papers' });
+    if ((r.owed ?? 0) > 0) nextNotice(s, person, r);
   });
 
   sim.onSchedule(TAX_REFUND_KIND, (item, s) => {
@@ -668,8 +737,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     if (!r) throw new CommandError('There’s no return for that year.');
-    if (r.filedAt !== undefined) throw new CommandError('You’ve filed it.');
+    if (r.filedAt !== undefined && !r.substitute) throw new CommandError('You’ve filed it. A change is an amended return.');
     const cur = saveCurrency(s.universe);
+    if (r.substitute) return reconsider(s, person, r);
+    // Filed before the IRS assessed its substitute: the CP2566's proposal is replaced, and nothing of it is assessed.
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_SFR_KIND && one.payload.personId === person.id && one.payload.year === r.year) s.timeline.cancel(one.id, s.now);
     r.figures = figuresFor(person, r.year, cur, s.now);
     r.filedAt = s.now;
     r.penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
@@ -689,19 +761,126 @@ export function registerTaxReturn(sim: Simulation): void {
     const interest = r.figures.balance > 0 ? Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
     const total = r.figures.balance + r.penalty + interest;
     const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
-    if (!paid) { r.owed = total; r.base = r.figures.balance; r.accruedAt = s.now; r.collection = 0; nextNotice(s, person, r); }
+    if (!paid) { setOwed(r, { tax: r.figures.balance, penalty: r.penalty, interest }, s.now); r.collection = 0; nextNotice(s, person, r); }
+    else if (total > 0) r.paidTax = r.figures.balance;
     return { balance: r.figures.balance, penalty: r.penalty, paid };
   });
 
-  sim.onCommand<{ year: number }, { paid: Money }>('tax.pay', (p, { sim: s }) => {
+  /**
+   * A payment on a balance owed, the whole or a part (from 2026-10-10: until then the whole or nothing): applied to the
+   * tax, then the penalty, then the interest (`applyPayment`), which keeps the next months' penalty on the tax left.
+   */
+  sim.onCommand<{ year: number; amount?: Money }, { paid: Money; owed: Money; tax: Money; penalty: Money; interest: Money }>('tax.pay', (p, { sim: s }) => {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     if (!r?.owed) throw new CommandError('That year is paid.');
-    // Paying late costs 0.5% a month or part from filing, and the IRS's interest from the due date.
+    const cur = saveCurrency(s.universe);
     const total = owedOn(r, s.now);
-    if (!payFromBank(s, person, total, `Income tax owed, ${r.year}`, 'tax')) throw new CommandError(`${formatMoney(total, saveCurrency(s.universe))} is more than the bank can cover.`);
-    delete r.owed;
-    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) s.timeline.cancel(one.id, s.now);
-    return { paid: total };
+    const amount = p.amount === undefined ? total : Math.round(Number(p.amount));
+    if (!(amount > 0)) throw new CommandError('Pay something.');
+    if (amount > total) throw new CommandError(`${formatMoney(total, cur)} is owed; pay that or less.`);
+    if (!payFromBank(s, person, amount, `Income tax owed, ${r.year}${amount < total ? ', in part' : ''}`, 'tax')) throw new CommandError(`${formatMoney(amount, cur)} is more than the bank can cover.`);
+    const split = applyPayment(s, person, r, amount, 'payment');
+    return { paid: amount, owed: r.owed ?? 0, ...split };
   });
+
+  /**
+   * An amended return (from 2026-10-10): Form 1040-X, with a 1040-NR behind it for a nonresident, within three years of
+   * filing or two of paying; the IRS takes eight to twelve weeks, sixteen at most (SLATE takes ten). More owed is added
+   * with interest from the due date; less comes off what's owed, and the rest back with the IRS's interest on it.
+   */
+  sim.onCommand<{ year: number }, { change: Money; processAt: Instant; form: string }>('tax.amend', (p, { sim: s }) => {
+    const person = s.player;
+    const r = returnsOf(person)[String(p.year)];
+    const no = amendRefusal(s, r);
+    if (no) throw new CommandError(no);
+    const figures = figuresFor(person, r!.year, saveCurrency(s.universe), s.now);
+    const change = figures.balance - r!.figures.balance;
+    if (change === 0) throw new CommandError('Your return as filed matches what’s on record: there’s nothing to amend.');
+    const form = figures.form === '1040-NR' ? '1040-X with 1040-NR' as const : '1040-X' as const;
+    const processAt = s.now + AMEND.weeks * 7 * MS_DAY;
+    (r!.amended ??= []).push({ form, at: s.now, figures, change, processAt });
+    s.schedule({ at: processAt, kind: TAX_AMEND_KIND, label: `Your Amended ${r!.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year } });
+    return { change, processAt, form };
+  });
+
+  sim.onSchedule(TAX_AMEND_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
+    const a = r?.amended?.find((x) => x.processedAt === undefined);
+    if (!person || !r || !a) return;
+    a.processedAt = s.now;
+    const cur = saveCurrency(s.universe);
+    r.figures = a.figures;
+    if (a.change > 0) {
+      const days = Math.max(0, (s.now - r.due) / MS_DAY);
+      const interest = Math.round(a.change * ((1 + COLLECTION.interest / 365) ** days - 1));
+      accrue(r, s.now);
+      const p = partsOf(r);
+      const had = !!r.owed;
+      setOwed(r, { tax: p.tax + a.change, penalty: p.penalty, interest: p.interest + interest }, s.now);
+      a.interest = interest;
+      if (!had) { r.collection = 0; nextNotice(s, person, r); }
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(a.change, cur)} more tax, with ${formatMoney(interest, cur)} of interest from the due date. ${formatMoney(r.owed ?? 0, cur)} is owed on the year.`, importance: 85, route: '/workspace/papers' });
+      return;
+    }
+    let back = -a.change;
+    const offset = Math.min(back, r.owed ? owedOn(r, s.now) : 0);
+    if (offset > 0) { applyPayment(s, person, r, offset, 'refund offset'); back -= offset; }
+    const interest = back > 0 ? Math.round(back * ((1 + COLLECTION.interest / 365) ** (Math.max(0, s.now - Math.max(r.due, r.filedAt ?? r.due)) / MS_DAY) - 1)) : 0;
+    a.refund = back;
+    a.interest = interest;
+    if (back + interest > 0) s.post({ memo: `Tax refund, amended ${r.year} return${interest ? ', with interest' : ''}`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: back + interest }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }, ...(interest ? [{ accountId: s.nominalAccount('income', 'Interest').id, amount: -interest }] : [])] });
+    if (interest) yearOf(person, zonedParts(s.now, HOME).year).interest = (yearOf(person, zonedParts(s.now, HOME).year).interest ?? 0) + interest;
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(-a.change, cur)} less tax.${offset > 0 ? ` ${formatMoney(offset, cur)} of it went to what was owed on the year.` : ''}${back > 0 ? ` ${formatMoney(back + interest, cur)} is refunded, ${formatMoney(interest, cur)} of it the IRS’s interest, which is taxable.` : ''}`, importance: 85, route: '/workspace/papers' });
+  });
+}
+
+/** How long an amended return takes: eight to twelve weeks, up to sixteen (IRS); SLATE takes ten. Three years to file one. */
+export const AMEND = { weeks: 10, years: 3, paidYears: 2, source: 'https://www.irs.gov/filing/wheres-my-amended-return; IRC 6511(a)' } as const;
+export const TAX_AMEND_KIND = 'tax.amended';
+
+/** Why a year's return can't be amended now, or nothing. */
+export function amendRefusal(sim: Simulation, r: TaxReturn | undefined): string | undefined {
+  if (!r) return 'There’s no return for that year.';
+  if (r.filedAt === undefined) return 'It isn’t filed: file it.';
+  if (r.substitute) return 'The IRS filed this one: file your own to replace it.';
+  if (r.amended?.some((a) => a.processedAt === undefined)) return 'An amended return for the year is with the IRS.';
+  const paid = r.payments?.at(-1)?.at ?? r.filedAt;
+  const by = Math.max(r.filedAt + AMEND.years * 365.25 * MS_DAY, paid + AMEND.paidYears * 365.25 * MS_DAY);
+  if (sim.now > by) return `The time to amend it ran out on ${formatDate(by, HOME)}.`;
+  return undefined;
+}
+
+/** The IRS's substitute figures: their own return's, without the credits only their own return claims. */
+export function sfrFigures(f: ReturnFigures): ReturnFigures {
+  const unclaimed = f.foreignCredit + Math.max(0, f.credit);
+  return { ...f, foreignCredit: 0, credit: Math.min(0, f.credit), balance: f.balance + unclaimed };
+}
+
+/**
+ * Their own return in place of an assessed substitute, a reconsideration (from 2026-10-10): the tax becomes what their
+ * return says, less what's been paid toward it; the penalty and interest charged on the substitute fall in proportion;
+ * and anything paid past it comes back. Before 2026-10-10 an assessed substitute couldn't be answered at all.
+ */
+function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: Money; penalty: Money; paid: boolean } {
+  const cur = saveCurrency(sim.universe);
+  accrue(r, sim.now);
+  const own = figuresFor(person, r.year, cur, sim.now);
+  const was = r.substituteFigures?.balance ?? r.figures.balance;
+  const paidTax = r.paidTax ?? 0;
+  const p = partsOf(r);
+  const ratio = was > 0 ? Math.max(0, own.balance) / was : 1;
+  const tax = Math.max(0, own.balance - paidTax);
+  setOwed(r, { tax, penalty: Math.round(p.penalty * ratio), interest: Math.round(p.interest * ratio) }, sim.now);
+  r.penalty = Math.round((r.penalty ?? 0) * ratio);
+  const over = paidTax - Math.max(0, own.balance);
+  if (over > 0) sim.post({ memo: `Tax refund, ${r.year}: the IRS’s return replaced by yours`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: over }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -over }] });
+  r.figures = own;
+  r.substitute = false;
+  r.reconsideredAt = sim.now;
+  if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
+  for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(own.balance, cur)} of tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
+  return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed };
 }

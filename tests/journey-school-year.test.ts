@@ -27,7 +27,7 @@ const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)
 const tend = (sim: Simulation) => { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); };
 
 /** One evening's work: notes read, asks answered, the table chosen, and up to `steps` steps on each open piece. */
-function evening(sim: Simulation, steps: number, careful: boolean) {
+function evening(sim: Simulation, steps: number, careful: boolean, until = Number.POSITIVE_INFINITY) {
   const cw = courseworkOf(sim, sim.player)!;
   // What classmates brought: answered, the careful way or the first offered.
   for (const m of momentsOf(cw).filter((x) => x.status === 'open')) {
@@ -44,7 +44,7 @@ function evening(sim: Simulation, steps: number, careful: boolean) {
       sim.execute({ kind: 'school.choose', payload: { assignmentId: a.id, question: q.id, option: pick.id } });
     }
     const t = templateById(a.template)!;
-    for (let n = 0; n < steps; n += 1) {
+    for (let n = 0; n < steps && sim.now < until; n += 1) {
       const act = t.activities.find((x) => x.dim !== 'partner' && !prepareRefusal(sim, sim.player, a, x.id));
       if (!act) break;
       if (sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).error) break;
@@ -64,7 +64,12 @@ describe('journey: a first year of coursework', () => {
       // Some weeks careful and thorough, some hardly at all: the work and its notes should show both.
       const week = Math.floor((day - at(2026, 8, 31)) / (7 * MS_DAY));
       const careful = week % 4 !== 3;
-      if (sim.player.currentLocationId === 'us-ct-newhaven') evening(sim, careful ? 3 : 0, careful);
+      if (sim.player.currentLocationId === 'us-ct-newhaven') evening(sim, careful ? 3 : 0, careful, day + 3 * MS_HOUR);
+      // TEST SETUP: the evening's work stops at eleven, and to bed for eight hours, as a student with nine o'clock classes
+      // goes. Until 2026-10-10 the work ran on into the next afternoon, through its classes: eight of the fall's courses
+      // failed, unasserted, and the Bulletin's disqualification (`systems/leave.ts`) now dismisses for that.
+      if (sim.now < day + 3 * MS_HOUR) sim.advanceTo(day + 3 * MS_HOUR);
+      sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
       if (!reloaded && day >= at(2026, 12, 1)) { sim = reload(sim); reloaded = true; }
       day += MS_DAY;
     }

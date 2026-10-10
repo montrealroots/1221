@@ -33,13 +33,21 @@ import type { SchoolRecord } from './school';
 
 export interface CourseRecord {
   term: number;
+  /**
+   * Where in the program it was taken: its calendar term less the leave or repeated year before it (from 2026-10-10).
+   * A year-long course's halves share a code, so a requirement is its code in its program term. Absent, the term.
+   */
+  academic?: number;
   code: string;
   name: string;
   meetings: number;
   attended: number;
   excused: number;
-  /** Absent, still running; `permanent`, an Incomplete not made up in its month. */
-  result?: 'pass' | 'incomplete' | 'fail' | 'permanent';
+  /**
+   * Absent, still running; `permanent`, an Incomplete not made up in its month; `withdrawn`, left unfinished by a leave
+   * begun in its term (from 2026-10-10), taken again on return. Each attempt is its own record, by calendar term.
+   */
+  result?: 'pass' | 'incomplete' | 'fail' | 'permanent' | 'withdrawn';
   /** Why it failed, said on the screen. */
   why?: string;
   /** An Incomplete's make-up sessions owed (a week's work each), made up so far, its deadline, and whether it was extended. */
@@ -65,7 +73,7 @@ const keyOf = (term: number, code: string) => `${term}:${code}`;
 /** A meeting of a course, as it went. */
 export function noteMeeting(school: SchoolRecord, term: number, code: string, name: string, how: 'attended' | 'excused' | 'missed'): void {
   const all = coursesOf(school);
-  const r = (all[keyOf(term, code)] ??= { term, code, name, meetings: 0, attended: 0, excused: 0 });
+  const r = (all[keyOf(term, code)] ??= { term, academic: term - (school.offset ?? 0), code, name, meetings: 0, attended: 0, excused: 0 });
   if (r.result !== undefined) return;
   r.meetings += 1;
   if (how === 'attended') r.attended += 1;
@@ -101,7 +109,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
   }
   if (person.id === sim.universe.playerId) {
     for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} meetings. Make up ${r.owed} session${r.owed === 1 ? '' : 's'} of work with its teachers, a week's each, by ${formatDate(r.dueBy!, sim.zone)}, on the Standing tab (it can be extended once by a month), or it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
-    for (const r of settled.filter((x) => x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed, and SLATE models no repeated course.`, importance: 85, route: '/workspace/school' });
+    for (const r of settled.filter((x) => x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.`, importance: 85, route: '/workspace/school' });
   }
   return settled;
 }
@@ -123,11 +131,29 @@ export function extendRefusal(sim: Simulation, person: Person, key: string): str
   return undefined;
 }
 
-/** What still stands between them and the degree: each course not passed, or incomplete. */
+/**
+ * What still stands between them and the degree: each course with no attempt passed, by its latest attempt, failed (a
+ * Fail, a Permanent Incomplete, or left on a leave and not taken again) or incomplete. Until 2026-10-10 every record
+ * counted, and a course failed and then passed on a repeated year would still have withheld the degree.
+ */
 export function degreeShortfall(school: SchoolRecord): { failed: CourseRecord[]; incomplete: CourseRecord[] } {
-  const all = Object.values(school.courses ?? {});
-  return { failed: all.filter((r) => r.result === 'fail' || r.result === 'permanent'), incomplete: all.filter((r) => r.result === 'incomplete') };
+  const latest = new Map<string, CourseRecord>();
+  const passed = new Set<string>();
+  for (const r of Object.values(school.courses ?? {})) {
+    const req = requirementOf(r);
+    if (r.result === 'pass') passed.add(req);
+    const was = latest.get(req);
+    if (!was || r.term > was.term) latest.set(req, r);
+  }
+  const open = [...latest.values()].filter((r) => !passed.has(requirementOf(r)));
+  return { failed: open.filter((r) => r.result === 'fail' || r.result === 'permanent' || r.result === 'withdrawn'), incomplete: open.filter((r) => r.result === 'incomplete') };
 }
+
+/** The requirement a record is an attempt at: its code in its term of the program. */
+export const requirementOf = (r: CourseRecord): string => `${r.academic ?? r.term}:${r.code}`;
+
+/** Every Fail on the record, each attempt, for the Bulletin's disqualification (`disqualified`, `systems/leave.ts`). */
+export const failsOf = (school: SchoolRecord): CourseRecord[] => Object.values(school.courses ?? {}).filter((r) => r.result === 'fail');
 
 /** Why a make-up session can't be done now, or nothing. */
 export function makeUpRefusal(sim: Simulation, person: Person, key: string): string | undefined {
@@ -180,7 +206,7 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     }
     r.result = 'permanent';
     r.why = 'an Incomplete not made up in its month';
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it. SLATE models no repeated course.`, importance: 85, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it: at the year’s end you can ask to repeat the year, on the Standing tab.`, importance: 85, route: '/workspace/school' });
     onPermanent(s, person, r);
   });
 }

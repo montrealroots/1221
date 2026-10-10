@@ -480,10 +480,10 @@ function SchoolLine() {
     .sort((x, y) => x.at - y.at)[0];
   // What the calendar holds, or past this week, the next classes, while there are classes to go to.
   const enrolled = !schoolEnded(school.standing);
-  const classes = enrolled ? nextClasses(sim.now) : undefined;
+  const classes = enrolled ? nextClasses(sim.now, school) : undefined;
   const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
   // Left without the degree, not a year of study (from 2026-10-10: until then a dismissed student was "Year 2").
-  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`;
+  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
   const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
   return (
     <AffairLine

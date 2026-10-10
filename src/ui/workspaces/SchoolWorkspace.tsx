@@ -38,6 +38,8 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
+import { LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
+import { enrolledTerms } from '@/engine/systems/leave';
 import { hasProcess, holderFor } from '@/engine/systems/production';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
@@ -62,7 +64,7 @@ export function SchoolWorkspace() {
   const [tab, setTab] = useKept<SchoolTab>(tabKey('/workspace/school'), 'standing');
   const school = person.school;
   if (!school || !person.craft) return <Empty title="No School" body="This life didn’t begin at drama school." />;
-  const where = school.standing === 'graduated' ? 'Graduated.' : schoolEnded(school.standing) ? 'Left the school.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
+  const where = school.standing === 'graduated' ? 'Graduated.' : schoolEnded(school.standing) ? 'Left the school.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : school.leave?.status === 'on' ? `On leave until ${termLabel(school.leave.returnTerm)}.` : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
 
   const panes: Record<SchoolTab, JSX.Element> = {
     standing: <StandingPane />,
@@ -155,7 +157,9 @@ function StandingPane() {
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
             <WithdrawControl />
+            <LeavePanel />
             <CoursesPanel />
+            <RepeatPanel />
             <PoliciesPanel />
             <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
           </div>
@@ -219,8 +223,8 @@ function StandingPane() {
                 <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Why</th></tr>
               </thead>
               <tbody>
-                {school.history.map((r) => (
-                  <tr key={r.term}>
+                {school.history.map((r, i) => (
+                  <tr key={i}>
                     <td>{termLabel(r.term)}</td>
                     <td>{STANDING_LABEL[r.standing]}</td>
                     <td className="num mono">{pct(r.attendance)}</td>
@@ -257,7 +261,7 @@ function ClassesPane() {
   const fall = termStart(term).fall;
   const week = timetable(year, fall ? 'fall' : 'spring');
   const period = classPeriod(term);
-  const next = enrolled ? nextClasses(sim.now) : undefined;
+  const next = enrolled ? nextClasses(sim.now, school) : undefined;
   const off = daysOffIn(term);
   // Offered until the day's classes have run, as the command takes it.
   const classToday = enrolled && ahead(sim, person, [CLASSES_KIND]).some((c) => c.payload.day === keyOf(today));
@@ -532,14 +536,14 @@ function CoursesPanel() {
   const { failed, incomplete } = degreeShortfall(school);
   const term = Math.max(0, school.termsBegun - 1);
   const now = all.filter(([, r]) => r.term === term && r.result === undefined);
-  const word = (r: CourseRecord) => r.result === 'pass' ? 'Passed' : r.result === 'incomplete' ? 'Incomplete' : r.result === 'fail' ? 'Not Passed' : r.result === 'permanent' ? 'Permanent Incomplete' : 'In Progress';
+  const word = (r: CourseRecord) => r.result === 'pass' ? 'Passed' : r.result === 'incomplete' ? 'Incomplete' : r.result === 'fail' ? 'Not Passed' : r.result === 'permanent' ? 'Permanent Incomplete' : r.result === 'withdrawn' ? 'Left On Leave' : 'In Progress';
   const passed = all.filter(([, r]) => r.result === 'pass').length;
   return (
     <div className="col gap-2">
       <div className="eyebrow">Courses And The Degree</div>
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed so far.{' '}
-        {failed.length ? `The degree can’t be completed: ${failed.map((r) => r.name).join(', ')} ${failed.length === 1 ? 'wasn’t' : 'weren’t'} passed, and SLATE models no repeated course.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
+        {failed.length ? `The degree needs ${failed.map((r) => r.name).join(', ')}, not passed yet: a course left on a leave is taken on return, and a year with a course failed can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
       </p>
       {incomplete.map((r) => {
         const key = `${r.term}:${r.code}`;
@@ -562,7 +566,7 @@ function CoursesPanel() {
       <details className="small"><summary>Every Course</summary>
         <ul style={{ margin: 0 }}>{all.map(([key, r]) => <li key={key}>{termLabel(r.term)}, {r.code} {r.name}: {word(r)}</li>)}</ul>
       </details>
-      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. The Bulletin’s nine semesters would let a course be repeated; SLATE models no added term.</Fine>
+      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. A year with a course failed can be repeated, once, on SLATE’s faculty model (below); each attempt stays on the record, and the degree reads the pass.</Fine>
     </div>
   );
 }
@@ -653,6 +657,7 @@ function WorkPane() {
     >
       <div className="col gap-3">
         {shiftRefusal(person) && <p className="small muted" style={{ margin: 0 }}>{shiftRefusal(person)}</p>}
+        <WorkLimitsBlock />
         <div className="grid grid-3">
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours}`} note={`The Bulletin’s minimum is ${WORK_STUDY.electiveHours}`} />
@@ -692,21 +697,26 @@ function TermsPane() {
   const money = (c: number) => formatMoney(c, cur);
   const need = hasNeed(person);
   // The term they're in, as the engine bills it; until 2026-09-27 the first year's, whatever the year.
-  const current = Math.max(0, Math.min(YALE_DRAMA.terms - 1, school.termsBegun - 1));
-  const account = termAccount(cur, need, current);
+  // The calendar term they're in, past the sixth too (from 2026-10-10), and whether it has tuition support.
+  const current = Math.max(0, school.termsBegun - 1);
+  const unsupported = enrolledTerms(school).length > YALE_DRAMA.terms;
+  const account = termAccount(cur, need && !unsupported, current);
   // This year's figures, as the engine grows them; until 2026-09-27 the sentence quoted 2026–27's in every year.
   const aid = termAccount(cur, true, current);
   const aidBooks = 2 * (aid.livingScholarship - aid.taxable);
   const aidLiving = 2 * aid.livingScholarship - aidBooks;
-  const terms = Array.from({ length: YALE_DRAMA.terms }, (_, i) => ({ i, ...termStart(i) }));
+  // Every calendar term the program runs to, with a leave's or a repeated year's (from 2026-10-10).
+  const enrolled = enrolledTerms(school);
+  const terms = Array.from({ length: YALE_DRAMA.terms + (school.offset ?? 0) }, (_, i) => ({ i, ...termStart(i) }));
+
 
   return (
     <div className="grid grid-2">
-      <Panel title="Your Terms" subtitle={`${school.termsBegun} of ${YALE_DRAMA.terms} begun`}>
+      <Panel title="Your Terms" subtitle={`${enrolled.length} enrolled, ${YALE_DRAMA.terms} with tuition support${school.offset ? `; ${school.offset} on leave or repeated` : ''}`}>
         <LookRegion className="col gap-2">
           {terms.map((t) => (
             <div key={t.i} className="row-between small">
-              <span>{termLabel(t.i)}</span>
+              <span>{termLabel(t.i)}{t.i < school.termsBegun && !enrolled.includes(t.i) ? ', On Leave' : ''}{(school.leaves ?? []).concat(school.leave ? [school.leave] : []).some((l) => l.startedAt !== undefined && (t.i === l.firstTerm || t.i === l.firstTerm + 1)) && t.i >= school.termsBegun ? ', On Leave' : ''}</span>
               <span className={t.i < school.termsBegun ? 'dim' : ''}>
                 {t.i < school.termsBegun ? 'Began ' : 'Begins '}<Open subject={at('day', keyOf(t.date))}>{dayOf(t.date)}</Open>{t.estimate ? ', SLATE’s estimate' : ''}
               </span>
@@ -725,20 +735,21 @@ function TermsPane() {
               <thead><tr><th scope="col">Each Term</th><th scope="col" className="num">Billed</th><th scope="col" className="num">Credited</th></tr></thead>
               <tbody>
                 <tr><td>Tuition</td><td className="num mono">{money(account.tuition)}</td><td /></tr>
-                <tr><td>Tuition Scholarship</td><td /><td className="num mono">{money(account.tuition)}</td></tr>
+                {!unsupported && <tr><td>Tuition Scholarship</td><td /><td className="num mono">{money(account.tuition)}</td></tr>}
                 <tr><td>Yale Health Plan</td><td className="num mono">{money(account.healthPlan)}</td><td /></tr>
-                {need && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
+                {need && !unsupported && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
                 <tr className="strong">
-                  <td>{need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
-                  <td className="num mono">{need ? '' : money(account.healthPlan)}</td>
-                  <td className="num mono">{need ? money(account.refund) : ''}</td>
+                  <td>{unsupported ? 'On Your Yale Account' : need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
+                  <td className="num mono">{unsupported ? money(account.tuition + account.healthPlan) : need ? '' : money(account.healthPlan)}</td>
+                  <td className="num mono">{need && !unsupported ? money(account.refund) : ''}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            Tuition is met in full for every student, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
+            {unsupported ? 'This term is past the six the tuition scholarship supports, so its tuition and health fee are billed to your Yale account. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
+          <YaleAccountPanel />
           <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</Fine>
         </div>
       </Panel>

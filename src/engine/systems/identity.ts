@@ -17,6 +17,24 @@ import { ID_CARDS } from '../content/identity';
 import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../content/replacements';
 import { payFromBank } from './spending';
 import { addYears, citizenOf, documentsOf, inForce, licensingOf, numberFor, type PersonDocument } from './documents';
+import { businessDaysOn, f1Of, programEnd } from './permission';
+import { hasSsn } from './taxid';
+import { schoolEnded } from './school';
+
+/**
+ * A US state's card for somebody who isn't a citizen (from 2026-10-10; until then it was issued over the counter to anyone
+ * living there): lawful presence shown and checked through SAVE, ten business days or more; an F-1 student's I-20 and
+ * proof of enrollment in the state's school; a Social Security number, or the SSA's letter that they're ineligible,
+ * which SLATE doesn't issue since every student here is eligible through work-study; and a term to the end of their
+ * lawful presence (Connecticut DMV, non-driver photo ID; CGS 14-36(c)).
+ */
+export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining; https://portal.ct.gov/DMV/Licenses/Licenses/Drivers-License--NonUS-Citizen--Requirements' } as const;
+
+/** When a non-citizen's lawful presence ends, for a US card's term; nothing for a citizen. */
+function presenceEnds(person: Person): Instant | undefined {
+  if (citizenOf(person, 'US')) return undefined;
+  return programEnd(person) ?? f1Of(person)?.expiresAt;
+}
 
 const usd = (sim: Simulation, dollars: number): Money => { const c = Math.round(dollars * 100); const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
 const inMoney = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
@@ -40,6 +58,14 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
   if (card.age && (at - person.birthInstant) / (365.25 * MS_DAY) < card.age) return `The ${card.name} is issued from ${card.age}.`;
   if (card.passportBook && !documentsOf(person).some((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, at))) return 'The passport card is issued to a holder of an Irish passport book in force.';
   if (!card.citizens && documentsOf(person).some((d) => d.kind === 'license' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold a license here. It serves as your ID.';
+  // Not a citizen, at a US state's counter: status, enrollment and a number first.
+  if (here.jurisdiction.startsWith('us-') && !citizenOf(person, 'US')) {
+    if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you stayed past your status.';
+    const f1 = f1Of(person);
+    if (f1 && (!person.school || schoolEnded(person.school.standing))) return 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.';
+    if (!f1 && !documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && inForce(d, at))) return 'The DMV asks for proof of lawful presence in the US, which you don’t hold.';
+    if (!hasSsn(person)) return 'The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one. You can, through work-study: apply for it on the Papers screen first.';
+  }
   if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold one in force.';
   // One on its way, applied for or replacing a lost one (from 2026-10-06; until then a second was issued and charged for,
   // and they held two when the first came).
@@ -132,7 +158,15 @@ export function registerIdentity(sim: Simulation): void {
     const id = s.nextId('document');
     // Ireland's passport card runs five years or to the book's expiry; the Ontario, BC and INE cards' terms weren't read.
     const book = card.passportBook ? documentsOf(person).find((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, s.now)) : undefined;
-    const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity) : undefined;
+    // A non-citizen's runs to the end of their lawful presence, and waits on SAVE (`NONCITIZEN_ID`, from 2026-10-10).
+    const limited = jurisdiction.startsWith('us-') ? presenceEnds(person) : undefined;
+    const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
+    if (limited !== undefined) {
+      const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays);
+      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: `${card.name}, Limited Term`, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), realId: true } as PersonDocument);
+      s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
+      return { expiresAt, fee };
+    }
     documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: card.name, number: numberFor('ID', id), status: 'valid', issuedAt: s.now, ...(expiresAt ? { expiresAt } : {}), ...(jurisdiction.startsWith('us-') ? { realId: true } : {}) });
     return { expiresAt, fee };
   });

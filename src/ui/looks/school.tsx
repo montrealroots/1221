@@ -90,7 +90,7 @@ defineLook<TheSchool>('school', {
     const season = termStart(term).fall ? 'fall' : 'spring';
     const courses = COURSES.filter((c) => c.year === year && (school ? c.terms.includes(season) : true));
     const rank = person ? rankIn(person) : 0;
-    const next = done ? undefined : nextClasses(sim.now);
+    const next = done ? undefined : nextClasses(sim.now, person.school);
     const city = CITIES.get(YALE_DRAMA.cityId);
     const player = sim.universe.playerId;
 

@@ -55,7 +55,11 @@ export const INJURY_KIND: Readonly<Record<InjuryKind, { label: string; days: rea
 };
 
 /** What each source brings, by share: SLATE's estimate of the mix, from what each study says is most common. */
-export const INJURY_MIX: Readonly<Record<'run' | 'gym' | 'swim' | 'stage' | 'screen' | 'fall' | 'struck' | 'overexertion' | 'cutting' | 'other' | 'crash', readonly (readonly [InjuryKind, number])[]>> = {
+export const INJURY_MIX: Readonly<Record<'run' | 'gym' | 'swim' | 'stage' | 'screen' | 'fall' | 'struck' | 'overexertion' | 'cutting' | 'other' | 'crash' | 'crew' | 'usher', readonly (readonly [InjuryKind, number])[]>> = {
+  // Work-study (from 2026-10-10): a production crew's shift in the shops, struck, cut and lifting, SLATE's mix of BLS's
+  // leading events; front of house, a fall's.
+  crew: [['bruise', 0.3], ['cut', 0.25], ['back', 0.2], ['strain', 0.15], ['sprain', 0.1]],
+  usher: [['sprain', 0.45], ['bruise', 0.3], ['fracture', 0.2], ['concussion', 0.05]],
   // A crash: whiplash is a neck strain, the knocks, the breaks and the concussions.
   crash: [['bruise', 0.35], ['strain', 0.3], ['fracture', 0.15], ['concussion', 0.1], ['cut', 0.1]],
   run: [['strain', 0.5], ['sprain', 0.4], ['fracture', 0.1]],
@@ -71,11 +75,15 @@ export const INJURY_MIX: Readonly<Record<'run' | 'gym' | 'swim' | 'stage' | 'scr
 };
 
 export const INJURY = {
-  perThousandHours: { run: 7.7, gym: (0.24 + 1) / 2, swim: 3.04, stage: 1.6 / 2, stageDemanding: 1.2, screen: 0.2 / 2, screenDemanding: 1.6 / 2 },
+  /**
+   * `crew`: NAICS 711, performing arts and spectator sports, 5.9 recordable cases per 100 full-time workers in 2024, a
+   * full-time year 2,000 hours; `usher`: all private industry, 2.4 in 2023 (BLS; from 2026-10-10, work-study's shifts).
+   */
+  perThousandHours: { crew: 5.9 / 2, usher: 2.4 / 2, run: 7.7, gym: (0.24 + 1) / 2, swim: 3.04, stage: 1.6 / 2, stageDemanding: 1.2, screen: 0.2 / 2, screenDemanding: 1.6 / 2 },
   everydayYearly: { fall: 26.11, struck: 10.2, overexertion: 13.72, cutting: 15.2, other: 28.95 },
   /** While hurt: what it weighs on the mood and the stress each day, SLATE's estimate. (This promised a fitter body's spared risk too, until 2026-10-10; nothing ever spared it.) */
   weighs: { morale: 1, stress: 1 },
-  source: 'Videbæk et al. 2015; Keogh & Winwood 2017; Res Sports Med 2013; https://www.bls.gov/web/osh/table-1-industry-rates-national.htm; Mattiussi et al. 2021; https://ftp.cdc.gov/pub/Health_Statistics/NCHS/NHIS/SHS/2014_SHS_Table_P-6.pdf; Ekstrand et al. 2012; AAOS OrthoInfo; AAFP 2025',
+  source: 'https://www.bls.gov/iag/tgs/iag711.htm (NAICS 711, 2024); https://www.bls.gov/news.release/osh.t04.htm (private industry, 2023); Videbæk et al. 2015; Keogh & Winwood 2017; Res Sports Med 2013; https://www.bls.gov/web/osh/table-1-industry-rates-national.htm; Mattiussi et al. 2021; https://ftp.cdc.gov/pub/Health_Statistics/NCHS/NHIS/SHS/2014_SHS_Table_P-6.pdf; Ekstrand et al. 2012; AAOS OrthoInfo; AAFP 2025',
 } as const;
 
 /**

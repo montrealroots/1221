@@ -585,12 +585,17 @@ describe('casting', () => {
     sim.player.school!.classmates[0]!.craft.scene = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const rehearsals = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'rehearsal');
+    // Away for the two calls alone: away the whole spring, nine courses fail, and the Bulletin's disqualification
+    // dismisses before the show (from 2026-10-10).
+    sim.advanceTo(rehearsals[0]!.at - 60_000);
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(rehearsals[1]!.at + 60_000);
+    sim.player.currentLocationId = YALE_DRAMA.cityId;
     expect(sim.player.school!.castable).toBe(false);
     expect(titled(sim, 'Out Of The Casting Pool')).toHaveLength(1);
     const show = pending(sim, CALL_KIND).find((c) => c.payload.call === 'performance')!;
     sim.advanceTo(show.at - 60_000);
+    sim.player.currentLocationId = 'us-ny-newyork';
     sim.player.wellbeing.morale = 50;
     sim.advanceTo(show.at + 60_000);
     expect(sim.player.school!.standing).toBe('warning');

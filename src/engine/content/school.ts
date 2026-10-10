@@ -400,3 +400,66 @@ export const YALE_COST_GROWTH = {
   living: 0.0582,
   source: 'https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2022-2023.pdf through -2026-2027.pdf',
 } as const;
+
+/**
+ * A leave of absence (Bulletin 2026–2027 pp.157–160, 175–176; research-yale-leave.json). Documented: personal, medical
+ * or parental, for one, two or three terms, approved by the chair and the dean; a personal leave after one term
+ * completed, current with requirements, normally not after the tenth day of a term, and not for a professional
+ * commitment; a medical one on a Yale Health physician's written recommendation, and back only with their permission;
+ * no aid while on leave; student cover ends the day it's granted, back to the insurance term's start with the fee
+ * refunded where the registrar heard by the first day of classes; Affiliate cover at $5,416 a term, the student fee
+ * paid credited against it, asked for by 15 September or 31 January or within 30 days of the leave, whichever is later,
+ * and paid by the School for a medical leave, to three terms; notice of return in writing eight weeks before the leave
+ * ends, and a student who doesn't return, with no extension, is dismissed. SLATE's: the leave is a year, two terms,
+ * because the acting courses run fall to spring in sequence, and a one-term leave would come back out of it; the
+ * decision takes five working days; and a parental or mandatory medical leave isn't modeled.
+ */
+export const LEAVE_RULES = {
+  terms: 2,
+  maxTerms: 3,
+  personalByClassDay: 10,
+  decideWorkingDays: 5,
+  noticeWeeks: 8,
+  affiliatePerTerm: 5_416_00,
+  affiliateDays: 30,
+  /** Fall's and spring's Affiliate deadlines, month and day. */
+  affiliateBy: { fall: [9, 15], spring: [1, 31] },
+  /** Yale Health's insurance terms begin 1 August and 1 February. */
+  insuranceTermFrom: { fall: [8, 1], spring: [2, 1] },
+  /** A physician's recommendation reads care or an injury within so many days; SLATE's estimate of "must interrupt study". */
+  medicalLookbackDays: 30,
+  /** The tuition rebate schedule, which recalculates aid on a leave mid-term: share of the term passed, share rebated (p.183). */
+  rebate: [[0.1, 1], [0.25, 0.5], [0.5, 0.25]],
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.157–160, 175–176, 182–183; yalehealth.yale.edu Affiliate rates 2026–27; research-yale-leave.json',
+} as const;
+
+/**
+ * Failing and finishing late (Bulletin 2026–2027 pp.182, 184, 190, 194). Documented: the degree within nine semesters,
+ * with leave of no more than three; tuition support ordinarily for six terms, and "exceptions are extremely rare";
+ * disqualification at two Failures in a term, three by the end of the second, four by the third, five by the fourth,
+ * six by the fifth, or seven in all; a late payment fee of $125 a month, to $375 a term, and a financial hold that
+ * blocks registration and the diploma. Not found: any rule for repeating a failed acting course. SLATE's faculty model,
+ * labeled so on the screen: a year with a course failed can be repeated, once, on the chair's and the dean's approval,
+ * as a program "may vary specific requirements on an individual basis with the approval of the dean" (p.148), asked for
+ * at the year's end, or within thirty days of a last term's; decided in five working days; refused past nine semesters.
+ */
+export const EXTENDED_STUDY = {
+  maxSemesters: 9,
+  supportedTerms: 6,
+  repeats: 1,
+  requestDays: 30,
+  decideWorkingDays: 5,
+  dueDays: 30,
+  lateFee: 125_00,
+  lateFeeTermCap: 375_00,
+  disqualify: { inOneTerm: 2, byTerm: { 2: 3, 3: 4, 4: 5, 5: 6 } as Readonly<Record<number, number>>, total: 7 },
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.148, 182, 184, 190, 194; research-yale-leave.json',
+} as const;
+
+/**
+ * Work-study's limits (research-yale-leave.json): no more than 19 hours a week across all Yale jobs during academic
+ * terms, 40 in recess, summer and leave; hours short of the assigned 150 through the School's or the Rep's conflicts,
+ * illness or injury converted to grant-in-aid for a student on aid, up to 150, processed in January and May (p.189).
+ * Not found: how Yale bounds the week; SLATE's is Monday to Sunday, New Haven time.
+ */
+export const WORK_LIMITS = { weekHours: 19, recessWeekHours: 40, convertibleHours: 150, convertMonths: [1, 5], source: 'https://your.yale.edu (student employment hours); Yale Bulletin 2026–2027 pp.147, 189; research-yale-leave.json' } as const;

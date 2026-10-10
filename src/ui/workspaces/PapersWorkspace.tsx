@@ -20,7 +20,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
-import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
+import { amendRefusal, deadline, owedOn, partsOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
@@ -47,6 +47,64 @@ type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
 const PAPERS_TABS = SECTIONS['/workspace/papers'] as readonly { id: PapersTab; label: string }[];
+
+/**
+ * A filed return's life after filing (from 2026-10-10): what's owed in its parts and a payment of any part of it, every
+ * payment and how it was split, the IRS's substitute and replacing it, and an amended return.
+ */
+function ReturnLife({ year }: { year: number }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const r = returnsOf(person)[String(year)];
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const [amount, setAmount] = useState('');
+  const [amending, setAmending] = useState(false);
+  if (!r || r.filedAt === undefined) return null;
+  const parts = r.owed ? partsOn(r, sim.now) : undefined;
+  const amendNo = amendRefusal(sim, r);
+  const value = Math.round(Number(amount) * 100);
+  return (
+    <div className="col gap-2">
+      {r.substitute && <p className="small" style={{ margin: 0 }}>The IRS filed this from what your employers and banks reported{r.substituteFigures ? `, ${money(r.substituteFigures.balance)} of tax with no credit only your own return claims` : ''}. File your own and it reconsiders: the tax becomes what yours says, the penalty and interest fall in proportion, and anything paid past it comes back.</p>}
+      {r.reconsideredAt !== undefined && <p className="small" style={{ margin: 0 }}>Your own return replaced the IRS’s on {formatDate(r.reconsideredAt, sim.zone)}.</p>}
+      {parts && (
+        <div className="col gap-2">
+          <div className="grid grid-3">
+            <Stat label="Tax Unpaid" value={money(parts.tax)} />
+            <Stat label="Penalties" value={money(parts.penalty)} note="0.5% a month on the tax unpaid, to 25%" />
+            <Stat label="Interest" value={money(parts.interest)} note="7% a year, daily" />
+          </div>
+          <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            <div className="field"><label htmlFor={`tax-pay-${year}`}>Pay (Blank Pays It All)</label><input id={`tax-pay-${year}`} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder={(owedOn(r, sim.now) / 100).toFixed(2)} /></div>
+            <Gated feature="tax.pay" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay', amount ? { year, amount: value } : { year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : 'Paid in full.', 'positive'); setAmount(''); } }}>Pay</Gated>
+          </div>
+          <p className="xs dim" style={{ margin: 0 }}>A part goes to the tax first, then the penalties, then the interest, the IRS’s order where you name none; a lower tax lowers the months of penalty still to come.</p>
+        </div>
+      )}
+      {(r.payments ?? []).length > 0 && (
+        <details className="small"><summary>Payments On The Year</summary>
+          <ul style={{ margin: 0 }}>{r.payments!.map((p, i) => <li key={i}>{formatDate(p.at, sim.zone)}: {money(p.amount)}, {p.how === 'levy' ? 'taken by levy' : p.how === 'refund offset' ? 'from an amended return’s refund' : 'paid'}; to the tax {money(p.tax)}, penalties {money(p.penalty)}, interest {money(p.interest)}.</li>)}</ul>
+        </details>
+      )}
+      {(r.amended ?? []).map((a, i) => (
+        <p key={i} className="small" style={{ margin: 0 }}>Form {a.form}, filed {formatDate(a.at, sim.zone)}: {a.change > 0 ? `${money(a.change)} more tax` : `${money(-a.change)} less tax`}. {a.processedAt ? `Processed ${formatDate(a.processedAt, sim.zone)}${a.refund ? `: ${money(a.refund + (a.interest ?? 0))} refunded, with interest` : a.interest ? `, with ${money(a.interest)} of interest` : ''}.` : `The IRS takes eight to twelve weeks; SLATE’s estimate is ${formatDate(a.processAt, sim.zone)}.`}</p>
+      ))}
+      {!r.substitute && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+          {!amending
+            ? <button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(amendNo)} title={amendNo} onClick={() => setAmending(true)}>Amend The Return…</button>
+            : <>
+                <span className="small">An amended return refigures the year from what’s on record now. More owed is added with interest from the due date; less comes off what’s owed, and the rest back with interest.</span>
+                <Gated feature="tax.amend" className="btn btn-sm" onClick={() => { const a = run<{ change: number; processAt: number; form: string }>('tax.amend', { year }); if (a.ok) toast(`Form ${a.value!.form} filed: ${a.value!.change > 0 ? 'more' : 'less'} tax, processed about ${formatDate(a.value!.processAt, sim.zone)}.`, 'positive'); setAmending(false); }}>File The Amendment</Gated>
+                <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAmending(false)}>Not Now</button>
+              </>}
+          {amendNo && <span className="xs dim">{amendNo}</span>}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function PapersWorkspace() {
   const [tab, setTab] = useKept<PapersTab>(tabKey('/workspace/papers'), 'returns');
@@ -140,9 +198,9 @@ function ReturnsPane() {
             key={r.year}
             title={`${r.year} Return`}
             subtitle={r.filedAt !== undefined ? `${r.substitute ? 'Filed by the IRS' : 'Filed'} ${formatDate(r.filedAt, sim.zone)}` : `Due ${formatDate(r.due, sim.zone)}`}
-            actions={r.filedAt === undefined
-              ? <Gated feature="tax.file" onClick={() => { const a = run<{ balance: number; penalty: number; paid: boolean }>('tax.file', { year: r.year }); if (a.ok) toast(a.value!.balance < 0 ? `Filed. ${money(-a.value!.balance)} comes back in ${RETURN.refundDays} days.` : a.value!.paid ? 'Filed and paid.' : 'Filed. The bank couldn’t pay it: it’s owed.', 'positive'); }}>File It</Gated>
-              : r.owed ? <Gated feature="tax.pay" onClick={() => { if (run('tax.pay', { year: r.year }).ok) toast('Paid.', 'positive'); }}>Pay What’s Owed</Gated> : undefined}
+            actions={r.filedAt === undefined || r.substitute
+              ? <Gated feature="tax.file" onClick={() => { const a = run<{ balance: number; penalty: number; paid: boolean }>('tax.file', { year: r.year }); if (a.ok) toast(a.value!.balance < 0 ? `Filed. ${money(-a.value!.balance)} comes back in ${RETURN.refundDays} days.` : a.value!.paid ? 'Filed and paid.' : 'Filed. The bank couldn’t pay it: it’s owed.', 'positive'); }}>{r.substitute ? 'File Your Own In Its Place' : 'File It'}</Gated>
+              : undefined}
           >
             <LookRegion className="col gap-3">
               <div className="table-scroll">
@@ -157,6 +215,7 @@ function ReturnsPane() {
                 </table>
               </div>
               <p className="xs dim" style={{ margin: 0 }}>Filed from <Open subject={at('place', f.cityId)}>{CITIES.require(f.cityId).name}</Open>, where you last lived that year.</p>
+              <ReturnLife year={r.year} />
             </LookRegion>
           </Panel>
         );

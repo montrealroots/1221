@@ -55,6 +55,7 @@ import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
+import { registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
 import { WORK_KEPT, countWork } from './systems/evaluation';
@@ -114,6 +115,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCardOffers(sim);
   registerSecurity(sim);
   registerSchool(sim);
+  registerLeave(sim);
   registerCoursework(sim);
   registerClassmates(sim);
   registerProduction(sim, focusAt, ordinary);
