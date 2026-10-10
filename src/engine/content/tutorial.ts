@@ -180,7 +180,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Beside the craft is composure, on the School screen. Nerves add stress before every performance, less the more composure you have, and every performance grows it; a night’s consistency reads it.',
     ],
     names: ['School', 'Your school, from the School panel', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Plays To Read: Read It and Research It'],
-    opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.make_up', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill', 'look.assignment'],
+    opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.make_up', 'school.extend_incomplete', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill', 'look.assignment'],
   },
   {
     id: 'profile',

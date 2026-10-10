@@ -202,3 +202,22 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     }
   });
 });
+
+describe('an Incomplete’s month', () => {
+  it('is extended once by a month, and not again', () => {
+    const sim = student('se-extend');
+    const school = sim.player.school!;
+    // FIXTURE: a course left incomplete by illness at the first term's evaluation.
+    school.courses = { '0:DRAM 103a/b': { term: 0, code: 'DRAM 103a/b', name: 'Acting I', meetings: 40, attended: 20, excused: 20 } };
+    settleCourses(sim, sim.player, 0, () => ({ due: 0, notShown: 0 }), () => 3);
+    const r = school.courses['0:DRAM 103a/b']!;
+    expect(r.result).toBe('incomplete');
+    // Ten meetings short of three quarters, three a week: four sessions.
+    expect(r.owed).toBe(4);
+    const due = r.dueBy!;
+    expect(sim.must<{ dueBy: number }>({ kind: 'school.extend_incomplete', payload: { key: '0:DRAM 103a/b' } }).dueBy).toBe(due + 30 * MS_DAY);
+    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: '0:DRAM 103a/b' } }).error).toMatch(/once already/);
+    sim.advanceTo(due + MS_DAY);
+    expect(r.result).toBe('incomplete');
+  });
+});

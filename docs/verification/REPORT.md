@@ -4,28 +4,28 @@ Written by `node tools/verify-report.mjs` from `docs/verification/<suite>/result
 
 ## Played Lives
 
-Ran on 3e0f23bb (tree e558e728, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
+Ran on eb081937 (tree a7e5fec5, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
 
 | Profile and seed | Policy | Dates | Outcome | Terms (standing, attendance %) | Pieces judged (mastery) | Fitness, first and last month | Condition at end | Breaches | Unbalanced | Reloads | Error |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | new-york, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | new-york, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| new-york, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| new-york, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; concern 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | london, early riser and curious, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| london, early riser and curious, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| london, early riser and curious, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | reykjavik, autopilot / lives-0 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-1 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-2 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | new-york, practicing / lives-0 | practicing | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | new-york, practicing / lives-1 | practicing | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| new-york, practicing / lives-2 | practicing | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| new-york, practicing / lives-2 | practicing | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | pressure: scraping, the flu and an injury, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | pressure: scraping, the flu and an injury, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| pressure: scraping, the flu and an injury, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| pressure: scraping, the flu and an injury, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | withheld | good 100; good 100; good 100; good 100; good 100; withheld 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 
 ## Mastery Through The Commands
 

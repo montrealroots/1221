@@ -15,6 +15,7 @@ import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
 import { nextPractice } from '../src/ui/workspaces/ProfileWorkspace';
 import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
+import { makeUpRefusal } from '../src/engine/systems/courserecord';
 import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
 import { abilityOf } from '../src/engine/systems/attributes';
@@ -52,6 +53,14 @@ export function evening(sim: Simulation) {
 export function freeHour(sim: Simulation): boolean {
   const person = sim.player;
   if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 30) return false;
+  // An Incomplete first, as a student who keeps up makes one up (from 2026-10-10): asked for a month more when there's
+  // more owed than days left, then a session.
+  for (const [key, r] of Object.entries(person.school?.courses ?? {})) {
+    if (r.result !== 'incomplete') continue;
+    const left = (r.owed ?? 0) - (r.madeUp ?? 0);
+    if (r.dueBy !== undefined && left > (r.dueBy - sim.now) / 86_400_000 - 3) sim.execute({ kind: 'school.extend_incomplete', payload: { key } });
+    if (!makeUpRefusal(sim, person, key) && sim.execute({ kind: 'school.make_up', payload: { key } }).ok) return true;
+  }
   for (const which of WHICH) {
     for (const [kind, what] of [['school.work_note', 'note'], ['school.review_blocking', 'blocking'], ['school.learn_part', 'part']] as const) {
       if (!ownWorkRefusal(sim, person, which, what) && sim.execute({ kind, payload: { which } }).ok) return true;

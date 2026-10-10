@@ -9,312 +9,993 @@
   },
   "features": [
     {
-      "id": "school.arrive", "area": "School", "goal": "Begin as a first-year in the MFA in Acting",
-      "entry": "Character creation; Home's School panel", "prereqs": "A new life; the owner-approved talent from the class's top quarter",
-      "choices": "Birthplace (US citizen or F-1 student), bank, family means", "steps": "Arrive in New Haven on 24 August 2026, a week before classes",
-      "costs": "None at arrival", "states": "termsBegun 0, standing good", "failure": "None", "recovery": "None needed",
-      "stateRW": "Person.school, documents (F-1 for a foreign birthplace), primary account", "consumers": "Every school system; Papers status; banking eligibility",
-      "notices": "The guide's Drama School chapter", "saveLoad": "SchoolRecord in the save",
-      "source": "Bulletin 2026–27; owner decision #4", "basis": "simplified",
-      "commands": [], "tests": [{ "file": "tests/school.test.ts", "title": "the admitted class" }],
+      "id": "school.arrive",
+      "area": "School",
+      "goal": "Begin as a first-year in the MFA in Acting",
+      "entry": "Character creation; Home's School panel",
+      "prereqs": "A new life; the owner-approved talent from the class's top quarter",
+      "choices": "Birthplace (US citizen or F-1 student), bank, family means",
+      "steps": "Arrive in New Haven on 24 August 2026, a week before classes",
+      "costs": "None at arrival",
+      "states": "termsBegun 0, standing good",
+      "failure": "None",
+      "recovery": "None needed",
+      "stateRW": "Person.school, documents (F-1 for a foreign birthplace), primary account",
+      "consumers": "Every school system; Papers status; banking eligibility",
+      "notices": "The guide's Drama School chapter",
+      "saveLoad": "SchoolRecord in the save",
+      "source": "Bulletin 2026–27; owner decision #4",
+      "basis": "simplified",
+      "commands": [],
+      "tests": [
+        {
+          "file": "tests/school.test.ts",
+          "title": "the admitted class"
+        }
+      ],
       "limitations": "The August 17–21 international pre-orientation isn't modeled; the Certificate route isn't modeled."
     },
     {
-      "id": "school.register", "area": "School", "goal": "Register for the program",
-      "entry": "Orientation's registration session (24–29 August), or School screen catch-up", "prereqs": "In New Haven; a session's time passed for catch-up",
-      "choices": "Attend the session, or catch it up late", "steps": "Session or catch-up, as long as the session", "costs": "The session's time",
-      "states": "registeredAt unset → set", "failure": "Unregistered: classes count as unexcused absences, shifts can't be worked (I-9), SSN can't be applied for",
-      "recovery": "Late registration, with the chair's written permission taken as given", "stateRW": "SchoolRecord.registeredAt; tally; shifts",
-      "consumers": "Classes, work-study shifts, the F-1 SSN application", "notices": "'Not Registered' each class day missed for it; 'A Shift You Couldn't Work'",
-      "saveLoad": "registeredAt saved; a save from before registers by its orientation record", "source": "Bulletin p.144 (registration), p.188 (I-9 delay); research-yale-student-policies.json", "basis": "simplified",
-      "commands": ["school.orientation"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "unregistered, classes don’t count them" }],
+      "id": "school.register",
+      "area": "School",
+      "goal": "Register for the program",
+      "entry": "Orientation's registration session (24–29 August), or School screen catch-up",
+      "prereqs": "In New Haven; a session's time passed for catch-up",
+      "choices": "Attend the session, or catch it up late",
+      "steps": "Session or catch-up, as long as the session",
+      "costs": "The session's time",
+      "states": "registeredAt unset → set",
+      "failure": "Unregistered: classes count as unexcused absences, shifts can't be worked (I-9), SSN can't be applied for",
+      "recovery": "Late registration, with the chair's written permission taken as given",
+      "stateRW": "SchoolRecord.registeredAt; tally; shifts",
+      "consumers": "Classes, work-study shifts, the F-1 SSN application",
+      "notices": "'Not Registered' each class day missed for it; 'A Shift You Couldn't Work'",
+      "saveLoad": "registeredAt saved; a save from before registers by its orientation record",
+      "source": "Bulletin p.144 (registration), p.188 (I-9 delay); research-yale-student-policies.json",
+      "basis": "simplified",
+      "commands": [
+        "school.orientation"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "unregistered, classes don’t count them"
+        }
+      ],
       "limitations": "What Yale's registration involves beyond enrolment isn't published past login; I-9 timing is SLATE's reading.",
-      "initialGap": "Registration changed nothing (school-journey-audit low).", "resolution": "Fixed: registration gates classes, shifts and the SSN."
+      "initialGap": "Registration changed nothing (school-journey-audit low).",
+      "resolution": "Fixed: registration gates classes, shifts and the SSN."
     },
     {
-      "id": "school.orientation", "area": "School", "goal": "Meet the class and the faculty, and learn what the School asks",
-      "entry": "Orientation sessions on the calendar; School screen catch-up", "prereqs": "In New Haven, out of hospital, awake",
-      "choices": "Attend each, or catch up", "steps": "Classmates met; faculty set out the policies; the tour shows the studios and library; expectations set the first work",
-      "costs": "Each session's time", "states": "orientation.done per task", "failure": "Missed sessions: classmates unmet until the first class, studios and library unknown",
-      "recovery": "Catch-up by hand", "stateRW": "Coursework.orientation; mateRecord.met", "consumers": "Partner asks need classmates met; studio and library steps need the tour; the Standing tab's policies",
-      "notices": "Each session's text; the policies kept under What The School Asks", "saveLoad": "Saved", "source": "Bulletin pp.144–160 (SCHOOL_POLICIES)", "basis": "simplified",
-      "commands": ["school.orientation"], "tests": [{ "file": "tests/commands-kept.test.ts", "title": "catches up a session missed by hand" }, { "file": "tests/papers-complete.test.ts", "title": "catching it up late counts them from then" }],
+      "id": "school.orientation",
+      "area": "School",
+      "goal": "Meet the class and the faculty, and learn what the School asks",
+      "entry": "Orientation sessions on the calendar; School screen catch-up",
+      "prereqs": "In New Haven, out of hospital, awake",
+      "choices": "Attend each, or catch up",
+      "steps": "Classmates met; faculty set out the policies; the tour shows the studios and library; expectations set the first work",
+      "costs": "Each session's time",
+      "states": "orientation.done per task",
+      "failure": "Missed sessions: classmates unmet until the first class, studios and library unknown",
+      "recovery": "Catch-up by hand",
+      "stateRW": "Coursework.orientation; mateRecord.met",
+      "consumers": "Partner asks need classmates met; studio and library steps need the tour; the Standing tab's policies",
+      "notices": "Each session's text; the policies kept under What The School Asks",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.144–160 (SCHOOL_POLICIES)",
+      "basis": "simplified",
+      "commands": [
+        "school.orientation"
+      ],
+      "tests": [
+        {
+          "file": "tests/commands-kept.test.ts",
+          "title": "catches up a session missed by hand"
+        },
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "catching it up late counts them from then"
+        }
+      ],
       "limitations": "The sessions' real content is behind a Yale login; SLATE's faculty session states the Bulletin's policies.",
-      "initialGap": "The faculty session named teachers and changed nothing.", "resolution": "Fixed: it sets out the policies, kept readable on the Standing tab."
+      "initialGap": "The faculty session named teachers and changed nothing.",
+      "resolution": "Fixed: it sets out the policies, kept readable on the Standing tab."
     },
     {
-      "id": "school.classes", "area": "School", "goal": "Attend classes, or be excused when ill",
-      "entry": "The calendar's class days; Call In Sick on the School screen", "prereqs": "Registered; in New Haven and awake at nine",
-      "choices": "Go, call in sick, or stay away", "steps": "Classes run nine to three on class days", "costs": "Energy; the day",
-      "states": "attended, excused, missed per day and per course", "failure": "Unexcused absence counts against attendance and the course",
-      "recovery": "Excused by a sick day, a hospital stay or a lay-up", "stateRW": "tally; courses; coursework due dates",
-      "consumers": "Term evaluation; course pass; coursework showings", "notices": "'You Missed Classes'; the sick-day refusal explains why where it can't be used",
-      "saveLoad": "Saved", "source": "Bulletin p.149; 2026–27 calendar", "basis": "simplified",
-      "commands": ["school.call_in_sick"], "tests": [{ "file": "tests/school.test.ts", "title": "can’t be called in sick from on a day with nothing at school" }],
+      "id": "school.classes",
+      "area": "School",
+      "goal": "Attend classes, or be excused when ill",
+      "entry": "The calendar's class days; Call In Sick on the School screen",
+      "prereqs": "Registered; in New Haven and awake at nine",
+      "choices": "Go, call in sick, or stay away",
+      "steps": "Classes run nine to three on class days",
+      "costs": "Energy; the day",
+      "states": "attended, excused, missed per day and per course",
+      "failure": "Unexcused absence counts against attendance and the course",
+      "recovery": "Excused by a sick day, a hospital stay or a lay-up",
+      "stateRW": "tally; courses; coursework due dates",
+      "consumers": "Term evaluation; course pass; coursework showings",
+      "notices": "'You Missed Classes'; the sick-day refusal explains why where it can't be used",
+      "saveLoad": "Saved",
+      "source": "Bulletin p.149; 2026–27 calendar",
+      "basis": "simplified",
+      "commands": [
+        "school.call_in_sick"
+      ],
+      "tests": [
+        {
+          "file": "tests/school.test.ts",
+          "title": "can’t be called in sick from on a day with nothing at school"
+        }
+      ],
       "limitations": "One evaluation a term; the faculty's 'any time' action is a grave breach only."
     },
     {
-      "id": "school.coursework", "area": "School", "goal": "Prepare and show coursework",
-      "entry": "School → Coursework tab", "prereqs": "Open work; feedback read; partner asks answered; time before the next commitment; fit for on-your-feet steps",
-      "choices": "Which step, which approach, table-work answers", "steps": "Read, prepare parts, rehearse, show at the course meeting", "costs": "Each step's minutes; energy",
-      "states": "open → shown/revising → done; missed; excused; lapsed", "failure": "Not shown unexcused counts as unready; feedback reflects the evaluation's chief limit",
-      "recovery": "Excused showings move to the next meeting, or are excused at a course's last", "stateRW": "Assignment prep, answers, feedback, revision",
-      "consumers": "Term evaluation's coursework; course pass; casting's evidence", "notices": "'Shown: …'; 'Not Shown'; 'Excused: …'; 'Not Shown Again'",
-      "saveLoad": "Saved", "source": "Original SLATE content, labelled simulated", "basis": "design",
-      "commands": ["school.prepare", "school.approach", "school.choose", "school.read_feedback"], "tests": [{ "file": "tests/school-journey-gaps.test.ts", "title": "counts a piece not shown" }],
+      "id": "school.coursework",
+      "area": "School",
+      "goal": "Prepare and show coursework",
+      "entry": "School → Coursework tab",
+      "prereqs": "Open work; feedback read; partner asks answered; time before the next commitment; fit for on-your-feet steps",
+      "choices": "Which step, which approach, table-work answers",
+      "steps": "Read, prepare parts, rehearse, show at the course meeting",
+      "costs": "Each step's minutes; energy",
+      "states": "open → shown/revising → done; missed; excused; lapsed",
+      "failure": "Not shown unexcused counts as unready; feedback reflects the evaluation's chief limit",
+      "recovery": "Excused showings move to the next meeting, or are excused at a course's last",
+      "stateRW": "Assignment prep, answers, feedback, revision",
+      "consumers": "Term evaluation's coursework; course pass; casting's evidence",
+      "notices": "'Shown: …'; 'Not Shown'; 'Excused: …'; 'Not Shown Again'",
+      "saveLoad": "Saved",
+      "source": "Original SLATE content, labelled simulated",
+      "basis": "design",
+      "commands": [
+        "school.prepare",
+        "school.approach",
+        "school.choose",
+        "school.read_feedback"
+      ],
+      "tests": [
+        {
+          "file": "tests/school-journey-gaps.test.ts",
+          "title": "counts a piece not shown"
+        }
+      ],
       "limitations": "Feedback words are SLATE's, marked simulated."
     },
     {
-      "id": "school.partners", "area": "School", "goal": "Rehearse with a scene partner",
-      "entry": "Coursework tab: ask, answer, call off", "prereqs": "Classmate met; 24 hours ahead; no clash; trust above wary",
-      "choices": "Ask, accept, decline, call off", "steps": "Book, then meet", "costs": "The rehearsal's time",
-      "states": "booked → kept, missed by you, missed by them, called off or excused", "failure": "Standing them up costs trust and bond",
-      "recovery": "Make amends; illness excused", "stateRW": "Assignment.rehearsals; mate trust and bond", "consumers": "Partner preparation; classmates' later answers",
-      "notices": "'X Waited For You'; 'X Knows You're Ill'", "saveLoad": "Saved", "source": "Original SLATE design", "basis": "design",
-      "commands": ["school.ask_partner", "school.answer_partner", "school.cancel_rehearsal", "school.make_amends"], "tests": [{ "file": "tests/school-journey-gaps.test.ts", "title": "is excused, not standing them up" }],
+      "id": "school.partners",
+      "area": "School",
+      "goal": "Rehearse with a scene partner",
+      "entry": "Coursework tab: ask, answer, call off",
+      "prereqs": "Classmate met; 24 hours ahead; no clash; trust above wary",
+      "choices": "Ask, accept, decline, call off",
+      "steps": "Book, then meet",
+      "costs": "The rehearsal's time",
+      "states": "booked → kept, missed by you, missed by them, called off or excused",
+      "failure": "Standing them up costs trust and bond",
+      "recovery": "Make amends; illness excused",
+      "stateRW": "Assignment.rehearsals; mate trust and bond",
+      "consumers": "Partner preparation; classmates' later answers",
+      "notices": "'X Waited For You'; 'X Knows You're Ill'",
+      "saveLoad": "Saved",
+      "source": "Original SLATE design",
+      "basis": "design",
+      "commands": [
+        "school.ask_partner",
+        "school.answer_partner",
+        "school.cancel_rehearsal",
+        "school.make_amends"
+      ],
+      "tests": [
+        {
+          "file": "tests/school-journey-gaps.test.ts",
+          "title": "is excused, not standing them up"
+        }
+      ],
       "limitations": "Classmates' reliability is drawn."
     },
     {
-      "id": "school.lines", "area": "School", "goal": "Run lines with a classmate",
-      "entry": "A classmate's invitation on the Coursework tab", "prereqs": "Their evening free; no clash",
-      "choices": "Say yes or no; which shared scene", "steps": "An hour in New Haven", "costs": "An hour; energy",
-      "states": "Invitation open → answered → session kept / missed / excused", "failure": "Not coming costs trust",
-      "recovery": "Illness excuses it", "stateRW": "Shared assignment's memorization", "consumers": "That scene's preparation and showing",
-      "notices": "'Ran Lines With X': which scene and how far the lines moved; or that nothing of yours moved", "saveLoad": "The scene chosen is on the scheduled item",
-      "source": "Original SLATE design", "basis": "design", "commands": ["school.respond"],
-      "tests": [{ "file": "tests/student-experience.test.ts", "title": "works on the scene you share with them" }, { "file": "tests/student-experience.test.ts", "title": "with no scene shared" }],
-      "limitations": "None known.", "initialGap": "A session trained whichever scene was weakest, often another partner's.", "resolution": "Fixed: shared scenes only, chosen, said."
+      "id": "school.lines",
+      "area": "School",
+      "goal": "Run lines with a classmate",
+      "entry": "A classmate's invitation on the Coursework tab",
+      "prereqs": "Their evening free; no clash",
+      "choices": "Say yes or no; which shared scene",
+      "steps": "An hour in New Haven",
+      "costs": "An hour; energy",
+      "states": "Invitation open → answered → session kept / missed / excused",
+      "failure": "Not coming costs trust",
+      "recovery": "Illness excuses it",
+      "stateRW": "Shared assignment's memorization",
+      "consumers": "That scene's preparation and showing",
+      "notices": "'Ran Lines With X': which scene and how far the lines moved; or that nothing of yours moved",
+      "saveLoad": "The scene chosen is on the scheduled item",
+      "source": "Original SLATE design",
+      "basis": "design",
+      "commands": [
+        "school.respond"
+      ],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "works on the scene you share with them"
+        },
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "with no scene shared"
+        }
+      ],
+      "limitations": "None known.",
+      "initialGap": "A session trained whichever scene was weakest, often another partner's.",
+      "resolution": "Fixed: shared scenes only, chosen, said."
     },
     {
-      "id": "school.courses", "area": "School", "goal": "Pass each course",
-      "entry": "Standing tab: Courses And The Degree", "prereqs": "Meetings attended",
-      "choices": "Attend; make up an Incomplete", "steps": "Meetings counted; settled at the term's evaluation", "costs": "Make-up sessions of two hours",
-      "states": "in progress → pass / incomplete / fail; incomplete → pass / permanent", "failure": "Unexcused attendance under three quarters, or half the work unshown: not passed",
-      "recovery": "An Incomplete made up within its month", "stateRW": "SchoolRecord.courses", "consumers": "Term evaluation; the degree",
-      "notices": "'Incomplete: …', a week's reminder, 'Permanent Incomplete', 'Not Passed'", "saveLoad": "Saved; a save from before has no records and isn't judged by them",
-      "source": "Bulletin pp.26, 151–152", "basis": "simplified", "commands": ["school.make_up"],
-      "tests": [{ "file": "tests/student-experience.test.ts", "title": "an Incomplete in a course, made up" }, { "file": "tests/student-experience.test.ts", "title": "a course missed without excuse isn’t passed" }],
-      "limitations": "The three-quarters line and two-hour sessions are SLATE's; no repeated course or added semester.",
-      "initialGap": "No course had a record; the degree came with time in standing.", "resolution": "Fixed: per-course Pass/Incomplete/Fail and make-up."
+      "id": "school.courses",
+      "area": "School",
+      "goal": "Pass each course",
+      "entry": "Standing tab: Courses And The Degree",
+      "prereqs": "Meetings attended",
+      "choices": "Attend; make up an Incomplete",
+      "steps": "Meetings counted; settled at the term's evaluation",
+      "costs": "Make-up sessions of two hours",
+      "states": "in progress → pass / incomplete / fail; incomplete → pass / permanent",
+      "failure": "Unexcused attendance under three quarters, or half the work unshown: not passed",
+      "recovery": "An Incomplete made up within its month, a week of the course a session; extendable once by a month",
+      "stateRW": "SchoolRecord.courses",
+      "consumers": "Term evaluation; the degree",
+      "notices": "'Incomplete: …', a week's reminder, 'Permanent Incomplete', 'Not Passed'",
+      "saveLoad": "Saved; a save from before has no records and isn't judged by them",
+      "source": "Bulletin pp.26, 151–152",
+      "basis": "simplified",
+      "commands": [
+        "school.make_up",
+        "school.extend_incomplete"
+      ],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "an Incomplete in a course, made up"
+        },
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "a course missed without excuse isn’t passed"
+        },
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "extended once by a month"
+        }
+      ],
+      "limitations": "The three-quarters line, two-hour sessions worth a week each and one month’s extension are SLATE’s; no repeated course or added semester.",
+      "initialGap": "No course had a record; the degree came with time in standing.",
+      "resolution": "Fixed: per-course Pass/Incomplete/Fail and make-up."
     },
     {
-      "id": "school.labs", "area": "School", "goal": "Take the labs: Drama 50, the New Play Lab, You Are The Creator",
-      "entry": "Calendar calls", "prereqs": "Their term", "choices": "Attend", "steps": "Afternoon sessions; the solo showing judged",
-      "costs": "Afternoons", "states": "attended / excused / missed per meeting", "failure": "Missed counts against attendance and the lab's pass",
-      "recovery": "Excused when ill", "stateRW": "tally.calls; courses", "consumers": "Evaluation; course pass; the degree",
-      "notices": "The showing's result", "saveLoad": "Saved", "source": "Bulletin pp.31, 65, 99", "basis": "simplified", "commands": [],
-      "tests": [{ "file": "tests/school.test.ts", "title": "runs Drama 50 in the first fall" }],
+      "id": "school.labs",
+      "area": "School",
+      "goal": "Take the labs: Drama 50, the New Play Lab, You Are The Creator",
+      "entry": "Calendar calls",
+      "prereqs": "Their term",
+      "choices": "Attend",
+      "steps": "Afternoon sessions; the solo showing judged",
+      "costs": "Afternoons",
+      "states": "attended / excused / missed per meeting",
+      "failure": "Missed counts against attendance and the lab's pass",
+      "recovery": "Excused when ill",
+      "stateRW": "tally.calls; courses",
+      "consumers": "Evaluation; course pass; the degree",
+      "notices": "The showing's result",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.31, 65, 99",
+      "basis": "simplified",
+      "commands": [],
+      "tests": [
+        {
+          "file": "tests/school.test.ts",
+          "title": "runs Drama 50 in the first fall"
+        }
+      ],
       "limitations": "Labs don't count toward the casting pool's missed calls, SLATE's reading of p.146.",
-      "initialGap": "Missed labs never met any rule beyond attendance.", "resolution": "Decided and implemented: Pass/Fail courses."
+      "initialGap": "Missed labs never met any rule beyond attendance.",
+      "resolution": "Decided and implemented: Pass/Fail courses."
     },
     {
-      "id": "school.casting", "area": "School", "goal": "Be cast and play a School production",
-      "entry": "Casting tab; production calls", "prereqs": "In the casting pool; from the second term",
-      "choices": "Learn the part, review blocking, work notes", "steps": "Rehearsal stages to nights", "costs": "Afternoons and evenings",
-      "states": "Cast → rehearsing → performing → reviewed once", "failure": "Missed calls take an actor out of the pool; a missed performance is a grave breach",
-      "recovery": "Excused calls leave a blocking gap to catch up", "stateRW": "Casting, process, nights", "consumers": "Evaluation's work on stage; next casting reads delivery",
-      "notices": "Casting and night results", "saveLoad": "Saved", "source": "Bulletin pp.23–25, 146; SCHOOL_SEASON", "basis": "simplified",
-      "commands": ["school.learn_part", "school.review_blocking", "school.work_note"], "tests": [{ "file": "tests/journey-school-production.test.ts", "title": "rehearses, misses and catches up, works the notes, and plays the nights on it" }],
+      "id": "school.casting",
+      "area": "School",
+      "goal": "Be cast and play a School production",
+      "entry": "Casting tab; production calls",
+      "prereqs": "In the casting pool; from the second term",
+      "choices": "Learn the part, review blocking, work notes",
+      "steps": "Rehearsal stages to nights",
+      "costs": "Afternoons and evenings",
+      "states": "Cast → rehearsing → performing → reviewed once",
+      "failure": "Missed calls take an actor out of the pool; a missed performance is a grave breach",
+      "recovery": "Excused calls leave a blocking gap to catch up",
+      "stateRW": "Casting, process, nights",
+      "consumers": "Evaluation's work on stage; next casting reads delivery",
+      "notices": "Casting and night results",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.23–25, 146; SCHOOL_SEASON",
+      "basis": "simplified",
+      "commands": [
+        "school.learn_part",
+        "school.review_blocking",
+        "school.work_note"
+      ],
+      "tests": [
+        {
+          "file": "tests/journey-school-production.test.ts",
+          "title": "rehearses, misses and catches up, works the notes, and plays the nights on it"
+        }
+      ],
       "limitations": "Which plays and dates are SLATE's; casting every student every term is SLATE's."
     },
     {
-      "id": "school.cabaret", "area": "School", "goal": "Join a Yale Cabaret show",
-      "entry": "Productions tab", "prereqs": "Not on warning; not double-cast; a clear week three weeks off",
-      "choices": "Join or not", "steps": "Evenings of rehearsal and a week of shows", "costs": "Evenings",
-      "states": "joined → playing → done / withdrawn", "failure": "A warning during the show takes them out of what's left",
-      "recovery": "None needed: nothing played is undone, no missed call charged", "stateRW": "SchoolRecord.cabaret", "consumers": "Evaluation's work on stage",
-      "notices": "'Out Of The Cabaret Show'; the panel says why it can't be joined", "saveLoad": "Saved", "source": "Bulletin pp.147–148", "basis": "documented",
-      "commands": ["school.cabaret"], "tests": [{ "file": "tests/student-experience.test.ts", "title": "takes them out of a show still to come" }],
+      "id": "school.cabaret",
+      "area": "School",
+      "goal": "Join a Yale Cabaret show",
+      "entry": "Productions tab",
+      "prereqs": "Not on warning; not double-cast; a clear week three weeks off",
+      "choices": "Join or not",
+      "steps": "Evenings of rehearsal and a week of shows",
+      "costs": "Evenings",
+      "states": "joined → playing → done / withdrawn",
+      "failure": "A warning during the show takes them out of what's left",
+      "recovery": "None needed: nothing played is undone, no missed call charged",
+      "stateRW": "SchoolRecord.cabaret",
+      "consumers": "Evaluation's work on stage",
+      "notices": "'Out Of The Cabaret Show'; the panel says why it can't be joined",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.147–148",
+      "basis": "documented",
+      "commands": [
+        "school.cabaret"
+      ],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "takes them out of a show still to come"
+        }
+      ],
       "limitations": "The chair's approval is the refusals, not a separate request.",
-      "initialGap": "The warning ban was checked only at joining.", "resolution": "Fixed."
+      "initialGap": "The warning ban was checked only at joining.",
+      "resolution": "Fixed."
     },
     {
-      "id": "school.workstudy", "area": "School", "goal": "Work the assigned and elective work-study hours",
-      "entry": "Shifts tab", "prereqs": "Registered (I-9); in term for elective; not on a night on call",
-      "choices": "Take elective evenings", "steps": "Saturday shifts; elective evenings; Friday pay", "costs": "Hours; protective equipment once",
-      "states": "owedHours, electiveHours, shifts worked or missed", "failure": "Missed shifts count against attendance",
-      "recovery": "Excused when ill", "stateRW": "workStudy; tally; earnings", "consumers": "Evaluation; pay into the wages account; the return",
-      "notices": "Payday; refusals said on the panel", "saveLoad": "Saved", "source": "Bulletin p.147; drama.yale.edu ($23)", "basis": "simplified",
-      "commands": ["school.take_shift", "school.buy_ppe"], "tests": [{ "file": "tests/school.test.ts", "title": "takes elective evenings" }],
+      "id": "school.workstudy",
+      "area": "School",
+      "goal": "Work the assigned and elective work-study hours",
+      "entry": "Shifts tab",
+      "prereqs": "Registered (I-9); in term for elective; not on a night on call",
+      "choices": "Take elective evenings",
+      "steps": "Saturday shifts; elective evenings; Friday pay",
+      "costs": "Hours; protective equipment once",
+      "states": "owedHours, electiveHours, shifts worked or missed",
+      "failure": "Missed shifts count against attendance",
+      "recovery": "Excused when ill",
+      "stateRW": "workStudy; tally; earnings",
+      "consumers": "Evaluation; pay into the wages account; the return",
+      "notices": "Payday; refusals said on the panel",
+      "saveLoad": "Saved",
+      "source": "Bulletin p.147; drama.yale.edu ($23)",
+      "basis": "simplified",
+      "commands": [
+        "school.take_shift",
+        "school.buy_ppe"
+      ],
+      "tests": [
+        {
+          "file": "tests/school.test.ts",
+          "title": "takes elective evenings"
+        }
+      ],
       "limitations": "Saturday and Friday schedule is SLATE's; Yale's 19-hour weekly cap and the conversion of excused hours to grant aid aren't modeled."
     },
     {
-      "id": "school.evaluation", "area": "School", "goal": "Stay in good standing",
-      "entry": "Standing tab", "prereqs": "End of a term's classes", "choices": "How the term was spent", "steps": "Courses settled, then evaluation",
-      "costs": "None", "states": "good / concern / warning / dismissed / withheld", "failure": "Short: a step down",
-      "recovery": "Meeting every floor restores good standing and the casting pool", "stateRW": "standing; history", "consumers": "Cabaret, Rep, casting, the degree",
-      "notices": "The standing notice, with the reasons", "saveLoad": "Saved", "source": "Bulletin pp.151–157; floors SLATE's", "basis": "simplified", "commands": [],
-      "tests": [{ "file": "tests/school-fixes.test.ts", "title": "a term’s coursework" }], "limitations": "Floors are SLATE's estimates."
+      "id": "school.evaluation",
+      "area": "School",
+      "goal": "Stay in good standing",
+      "entry": "Standing tab",
+      "prereqs": "End of a term's classes",
+      "choices": "How the term was spent",
+      "steps": "Courses settled, then evaluation",
+      "costs": "None",
+      "states": "good / concern / warning / dismissed / withheld",
+      "failure": "Short: a step down",
+      "recovery": "Meeting every floor restores good standing and the casting pool",
+      "stateRW": "standing; history",
+      "consumers": "Cabaret, Rep, casting, the degree",
+      "notices": "The standing notice, with the reasons",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.151–157; floors SLATE's",
+      "basis": "simplified",
+      "commands": [],
+      "tests": [
+        {
+          "file": "tests/school-fixes.test.ts",
+          "title": "a term’s coursework"
+        }
+      ],
+      "limitations": "Floors are SLATE's estimates."
     },
     {
-      "id": "school.leave", "area": "School", "goal": "Leave the School: withdraw, or be dismissed",
-      "entry": "Standing tab: Withdraw From The School (confirmed); dismissal by evaluation or breach", "prereqs": "Enrolled",
-      "choices": "Withdraw, or not", "steps": "Place given up that day", "costs": "Early withdrawal refunds the term's Hospitalization premium",
-      "states": "withdrawn / dismissed", "failure": "None", "recovery": "Readmission after withdrawal is in the Bulletin and not modeled",
-      "stateRW": "standing; endedAt; coursework; calendar; Cabaret", "consumers": "Yale Health (30 days, or canceled by day 15), F-1 grace (15 / none), OPT refused, work-study ends",
-      "notices": "The standing notice, with each consequence", "saveLoad": "Saved", "source": "Bulletin pp.157–160, 174; 8 CFR 214.2(f)(5)(iv)", "basis": "simplified",
-      "commands": ["school.withdraw"], "tests": [{ "file": "tests/student-experience.test.ts", "title": "a withdrawal by the fifteenth day" }, { "file": "tests/student-experience.test.ts", "title": "a dismissal leaves no grace" }],
+      "id": "school.leave",
+      "area": "School",
+      "goal": "Leave the School: withdraw, or be dismissed",
+      "entry": "Standing tab: Withdraw From The School (confirmed); dismissal by evaluation or breach",
+      "prereqs": "Enrolled",
+      "choices": "Withdraw, or not",
+      "steps": "Place given up that day",
+      "costs": "Early withdrawal refunds the term's Hospitalization premium",
+      "states": "withdrawn / dismissed",
+      "failure": "None",
+      "recovery": "Readmission after withdrawal is in the Bulletin and not modeled",
+      "stateRW": "standing; endedAt; coursework; calendar; Cabaret",
+      "consumers": "Yale Health (30 days, or canceled by day 15), F-1 grace (15 / none), OPT refused, work-study ends",
+      "notices": "The standing notice, with each consequence",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.157–160, 174; 8 CFR 214.2(f)(5)(iv)",
+      "basis": "simplified",
+      "commands": [
+        "school.withdraw"
+      ],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "a withdrawal by the fifteenth day"
+        },
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "a dismissal leaves no grace"
+        }
+      ],
       "limitations": "Dismissal's Yale Health rule is inferred from withdrawal's; a leave of absence isn't modeled.",
-      "initialGap": "Withdrawal didn't exist; dismissal borrowed withdrawal's grace.", "resolution": "Fixed."
+      "initialGap": "Withdrawal didn't exist; dismissal borrowed withdrawal's grace.",
+      "resolution": "Fixed."
     },
     {
-      "id": "school.degree", "area": "School", "goal": "Graduate",
-      "entry": "Standing tab; Commencement", "prereqs": "Every course passed; not on warning after the last term",
-      "choices": "Make up any Incomplete", "steps": "Last evaluation, Commencement, or conferral on completing", "costs": "None",
-      "states": "graduated / awaitingDegree / withheld", "failure": "A course failed or permanently incomplete, or a final warning: withheld",
-      "recovery": "An Incomplete made up after Commencement confers the degree without the ceremony", "stateRW": "standing; awaitingDegree", "consumers": "OPT, grace, Yale Health to 31 July",
-      "notices": "'Your MFA Is Conferred'; 'Not At Commencement'; 'The Degree Isn't Recommended'", "saveLoad": "Saved",
-      "source": "Bulletin pp.26, 151–152, 194", "basis": "simplified", "commands": [],
-      "tests": [{ "file": "tests/student-experience.test.ts", "title": "an Incomplete at Commencement" }, { "file": "tests/school-journey-gaps.test.ts", "title": "withholds the degree" }],
+      "id": "school.degree",
+      "area": "School",
+      "goal": "Graduate",
+      "entry": "Standing tab; Commencement",
+      "prereqs": "Every course passed; not on warning after the last term",
+      "choices": "Make up any Incomplete",
+      "steps": "Last evaluation, Commencement, or conferral on completing",
+      "costs": "None",
+      "states": "graduated / awaitingDegree / withheld",
+      "failure": "A course failed or permanently incomplete, or a final warning: withheld",
+      "recovery": "An Incomplete made up after Commencement confers the degree without the ceremony",
+      "stateRW": "standing; awaitingDegree",
+      "consumers": "OPT, grace, Yale Health to 31 July",
+      "notices": "'Your MFA Is Conferred'; 'Not At Commencement'; 'The Degree Isn't Recommended'",
+      "saveLoad": "Saved",
+      "source": "Bulletin pp.26, 151–152, 194",
+      "basis": "simplified",
+      "commands": [],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "an Incomplete at Commencement"
+        },
+        {
+          "file": "tests/school-journey-gaps.test.ts",
+          "title": "withholds the degree"
+        }
+      ],
       "limitations": "No ninth semester or repeated course; a withheld degree ends school, said on the screen.",
-      "initialGap": "Graduation checked no course.", "resolution": "Fixed."
+      "initialGap": "Graduation checked no course.",
+      "resolution": "Fixed."
     },
     {
-      "id": "bank.open", "area": "Banking", "goal": "Open a current account at another bank",
-      "entry": "Money → Accounts → Open An Account At Another Bank", "prereqs": "A bank where you live; none there already; no charged-off debt; screening; photo ID; age; US person where the bank requires; a branch visit without an SSN",
-      "choices": "Which bank; opening deposit source", "steps": "Apply; Bank of America reviews two business days; fund; card arrives",
-      "costs": "Opening deposit where asked; an hour in a branch without an SSN", "states": "application pending → open; awaitingFunds; card not yet arrived",
-      "failure": "Refused with the reason; declined at review returns the deposit", "recovery": "Capital One closes unfunded at 60 days, Citi at zero 90 days",
-      "stateRW": "Account; plastic; scheduled application", "consumers": "Transfers, primary, alerts, cards", "notices": "Decision; card arrival",
-      "saveLoad": "Applications and transfers are scheduled items", "source": "research-banking.json; research-student-status.json A3", "basis": "documented",
-      "commands": ["bank.open_current"], "tests": [{ "file": "tests/bank-moves.test.ts", "title": "opens Capital One at nothing" }, { "file": "tests/papers-complete.test.ts", "title": "starts at a bank that opens for an F-1" }],
+      "id": "bank.open",
+      "area": "Banking",
+      "goal": "Open a current account at another bank",
+      "entry": "Money → Accounts → Open An Account At Another Bank",
+      "prereqs": "A bank where you live; none there already; no charged-off debt; screening; photo ID; age; US person where the bank requires; a branch visit without an SSN",
+      "choices": "Which bank; opening deposit source",
+      "steps": "Apply; Bank of America reviews two business days; fund; card arrives",
+      "costs": "Opening deposit where asked; an hour in a branch without an SSN",
+      "states": "application pending → open; awaitingFunds; card not yet arrived",
+      "failure": "Refused with the reason; declined at review returns the deposit",
+      "recovery": "Capital One closes unfunded at 60 days, Citi at zero 90 days",
+      "stateRW": "Account; plastic; scheduled application",
+      "consumers": "Transfers, primary, alerts, cards",
+      "notices": "Decision; card arrival",
+      "saveLoad": "Applications and transfers are scheduled items",
+      "source": "research-banking.json; research-student-status.json A3",
+      "basis": "documented",
+      "commands": [
+        "bank.open_current"
+      ],
+      "tests": [
+        {
+          "file": "tests/bank-moves.test.ts",
+          "title": "opens Capital One at nothing"
+        },
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "starts at a bank that opens for an F-1"
+        }
+      ],
       "limitations": "Permanent residence isn't modeled, so US-persons-only reads citizenship; Citi's branch route for nonresidents isn't published."
     },
     {
-      "id": "bank.transfer", "area": "Banking", "goal": "Move money between your banks",
-      "entry": "Move Money", "prereqs": "Funds; savings allowances; the sending bank's limits", "choices": "From, to, amount",
-      "steps": "Out now, in transit, in on arrival", "costs": "Savings withdrawal fees where charged",
-      "states": "in transit → arrived / returned", "failure": "Refused over balance or limit", "recovery": "Returned to the source if the destination closed",
-      "stateRW": "Money In Transit escrow; postings", "consumers": "Funding, closing, net worth", "notices": "On Its Way; 'A Transfer Came Back'",
-      "saveLoad": "Scheduled arrival saved", "source": "research-banking.json; research-banking-intl.json", "basis": "documented",
-      "commands": ["bank.transfer"], "tests": [{ "file": "tests/bank-moves.test.ts", "title": "can’t send money it doesn’t have" }], "limitations": "Pull transfers aren't modeled."
+      "id": "bank.transfer",
+      "area": "Banking",
+      "goal": "Move money between your banks",
+      "entry": "Move Money",
+      "prereqs": "Funds; savings allowances; the sending bank's limits",
+      "choices": "From, to, amount",
+      "steps": "Out now, in transit, in on arrival",
+      "costs": "Savings withdrawal fees where charged",
+      "states": "in transit → arrived / returned",
+      "failure": "Refused over balance or limit",
+      "recovery": "Returned to the source if the destination closed",
+      "stateRW": "Money In Transit escrow; postings",
+      "consumers": "Funding, closing, net worth",
+      "notices": "On Its Way; 'A Transfer Came Back'",
+      "saveLoad": "Scheduled arrival saved",
+      "source": "research-banking.json; research-banking-intl.json",
+      "basis": "documented",
+      "commands": [
+        "bank.transfer"
+      ],
+      "tests": [
+        {
+          "file": "tests/bank-moves.test.ts",
+          "title": "can’t send money it doesn’t have"
+        }
+      ],
+      "limitations": "Pull transfers aren't modeled."
     },
     {
-      "id": "bank.primary", "area": "Banking", "goal": "Choose the primary account",
-      "entry": "Your Banks: Make Primary", "prereqs": "An open, not closing, current account", "choices": "Which", "steps": "Instant",
-      "costs": "None", "states": "primaryAccountId", "failure": "Refused if closing", "recovery": "Choose again",
-      "stateRW": "primaryAccountId; instructions pinned first", "consumers": "Debit purchases, ATM cash, bills by hand, new instructions",
-      "notices": "What it does and doesn't move", "saveLoad": "Saved", "source": "SLATE design", "basis": "design",
-      "commands": ["bank.set_primary"], "tests": [{ "file": "tests/bank-moves.test.ts", "title": "keeps a save from before running as it ran" }], "limitations": "Overdraft and loans offered by the primary bank only."
+      "id": "bank.primary",
+      "area": "Banking",
+      "goal": "Choose the primary account",
+      "entry": "Your Banks: Make Primary",
+      "prereqs": "An open, not closing, current account",
+      "choices": "Which",
+      "steps": "Instant",
+      "costs": "None",
+      "states": "primaryAccountId",
+      "failure": "Refused if closing",
+      "recovery": "Choose again",
+      "stateRW": "primaryAccountId; instructions pinned first",
+      "consumers": "Debit purchases, ATM cash, bills by hand, new instructions",
+      "notices": "What it does and doesn't move",
+      "saveLoad": "Saved",
+      "source": "SLATE design",
+      "basis": "design",
+      "commands": [
+        "bank.set_primary"
+      ],
+      "tests": [
+        {
+          "file": "tests/bank-moves.test.ts",
+          "title": "keeps a save from before running as it ran"
+        }
+      ],
+      "limitations": "Overdraft and loans offered by the primary bank only."
     },
     {
-      "id": "bank.deposits", "area": "Banking", "goal": "Have wages and school money paid elsewhere",
-      "entry": "Have Wages Paid Here", "prereqs": "An open everyday account", "choices": "Which", "steps": "Payers move after their lead",
-      "costs": "None", "states": "depositTo; depositChange with per-payer days", "failure": "None", "recovery": "Change again",
-      "stateRW": "PaymentSettings", "consumers": "Work-study (Yale payroll, 7 days), scholarship, benefits, refunds (14 days)",
-      "notices": "Your Banks states where and from when", "saveLoad": "Saved", "source": "Yale payroll (one pay cycle); SLATE's 14-day estimate otherwise", "basis": "simplified",
-      "commands": ["bank.redirect_deposits"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "moves to the new account after one weekly pay cycle" }, { "file": "tests/cross-journeys.test.ts", "title": "a student changes banks" }],
+      "id": "bank.deposits",
+      "area": "Banking",
+      "goal": "Have wages and school money paid elsewhere",
+      "entry": "Have Wages Paid Here",
+      "prereqs": "An open everyday account",
+      "choices": "Which",
+      "steps": "Payers move after their lead",
+      "costs": "None",
+      "states": "depositTo; depositChange with per-payer days",
+      "failure": "None",
+      "recovery": "Change again",
+      "stateRW": "PaymentSettings",
+      "consumers": "Work-study (Yale payroll, 7 days), scholarship, benefits, refunds (14 days)",
+      "notices": "Your Banks states where and from when",
+      "saveLoad": "Saved",
+      "source": "Yale payroll (one pay cycle); SLATE's 14-day estimate otherwise",
+      "basis": "simplified",
+      "commands": [
+        "bank.redirect_deposits"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "moves to the new account after one weekly pay cycle"
+        },
+        {
+          "file": "tests/cross-journeys.test.ts",
+          "title": "a student changes banks"
+        }
+      ],
       "limitations": "Only Yale payroll has its own lead; the scholarship's refund system's lead isn't published."
     },
     {
-      "id": "bank.instructions", "area": "Banking", "goal": "Move standing orders and card autopay",
-      "entry": "What Pays From Where", "prereqs": "An open current account", "choices": "Which account", "steps": "Instant",
-      "costs": "None", "states": "fromId; autopayFrom", "failure": "Paid from a closed account: fails and says so", "recovery": "Move it",
-      "stateRW": "StandingOrder.fromId; CardState.autopayFrom", "consumers": "Payments; alerts", "notices": "Failure notices; Short For A Payment",
-      "saveLoad": "Saved; pinned for legacy saves", "source": "SLATE design", "basis": "design",
-      "commands": ["bank.set_order_source", "card.set_autopay_from"], "tests": [{ "file": "tests/bank-moves.test.ts", "title": "moves the primary account" }], "limitations": "None known."
+      "id": "bank.instructions",
+      "area": "Banking",
+      "goal": "Move standing orders and card autopay",
+      "entry": "What Pays From Where",
+      "prereqs": "An open current account",
+      "choices": "Which account",
+      "steps": "Instant",
+      "costs": "None",
+      "states": "fromId; autopayFrom",
+      "failure": "Paid from a closed account: fails and says so",
+      "recovery": "Move it",
+      "stateRW": "StandingOrder.fromId; CardState.autopayFrom",
+      "consumers": "Payments; alerts",
+      "notices": "Failure notices; Short For A Payment",
+      "saveLoad": "Saved; pinned for legacy saves",
+      "source": "SLATE design",
+      "basis": "design",
+      "commands": [
+        "bank.set_order_source",
+        "card.set_autopay_from"
+      ],
+      "tests": [
+        {
+          "file": "tests/bank-moves.test.ts",
+          "title": "moves the primary account"
+        }
+      ],
+      "limitations": "None known."
     },
     {
-      "id": "bank.close", "area": "Banking", "goal": "Close a current account",
-      "entry": "Your Banks: Close It", "prereqs": "Not only or primary; not overdrawn; nothing in transit or linked; no savings beside; no pending items (Citi waits up to 21 days)",
-      "choices": "Where the balance goes", "steps": "Interest and fees settled; balance remitted; closed", "costs": "None",
-      "states": "open → closing (Citi) → closed", "failure": "Each refusal named", "recovery": "Clear what blocks it",
-      "stateRW": "closedAt; history kept", "consumers": "Statements end at closing", "notices": "Closed; 'Didn't Close' if overdrawn",
-      "saveLoad": "Closing scheduled", "source": "research-banking.json", "basis": "documented",
-      "commands": ["bank.close_current"], "tests": [{ "file": "tests/banking-complete.test.ts", "title": "is refused at Chase until they post" }], "limitations": "None known.",
-      "initialGap": "Pending items never blocked closing (sign error); a Citi close past its limit failed halfway.", "resolution": "Fixed."
+      "id": "bank.close",
+      "area": "Banking",
+      "goal": "Close a current account",
+      "entry": "Your Banks: Close It",
+      "prereqs": "Not only or primary; not overdrawn; nothing in transit or linked; no savings beside; no pending items (Citi waits up to 21 days)",
+      "choices": "Where the balance goes",
+      "steps": "Interest and fees settled; balance remitted; closed",
+      "costs": "None",
+      "states": "open → closing (Citi) → closed",
+      "failure": "Each refusal named",
+      "recovery": "Clear what blocks it",
+      "stateRW": "closedAt; history kept",
+      "consumers": "Statements end at closing",
+      "notices": "Closed; 'Didn't Close' if overdrawn",
+      "saveLoad": "Closing scheduled",
+      "source": "research-banking.json",
+      "basis": "documented",
+      "commands": [
+        "bank.close_current"
+      ],
+      "tests": [
+        {
+          "file": "tests/banking-complete.test.ts",
+          "title": "is refused at Chase until they post"
+        }
+      ],
+      "limitations": "None known.",
+      "initialGap": "Pending items never blocked closing (sign error); a Citi close past its limit failed halfway.",
+      "resolution": "Fixed."
     },
     {
-      "id": "bank.switch", "area": "Banking", "goal": "Use a switching service",
-      "entry": "Switch Bank (only where a service exists)", "prereqs": "A service country; not already at that bank", "choices": "Which bank",
-      "steps": "The service's working days", "costs": "None", "states": "pending → complete", "failure": "Refused in the US and other countries without one",
-      "recovery": "The manual steps", "stateRW": "Accounts, instructions", "consumers": "Everything routed", "notices": "Completed",
-      "saveLoad": "Scheduled with the account it's for", "source": "research-banking-intl.json", "basis": "documented",
-      "commands": ["bank.switch"], "tests": [{ "file": "tests/banking-complete.test.ts", "title": "won’t switch into a bank already kept" }], "limitations": "A pending switch can't be cancelled."
+      "id": "bank.switch",
+      "area": "Banking",
+      "goal": "Use a switching service",
+      "entry": "Switch Bank (only where a service exists)",
+      "prereqs": "A service country; not already at that bank",
+      "choices": "Which bank",
+      "steps": "The service's working days",
+      "costs": "None",
+      "states": "pending → complete",
+      "failure": "Refused in the US and other countries without one",
+      "recovery": "The manual steps",
+      "stateRW": "Accounts, instructions",
+      "consumers": "Everything routed",
+      "notices": "Completed",
+      "saveLoad": "Scheduled with the account it's for",
+      "source": "research-banking-intl.json",
+      "basis": "documented",
+      "commands": [
+        "bank.switch"
+      ],
+      "tests": [
+        {
+          "file": "tests/banking-complete.test.ts",
+          "title": "won’t switch into a bank already kept"
+        }
+      ],
+      "limitations": "A pending switch can't be cancelled."
     },
     {
-      "id": "bank.alerts", "area": "Banking", "goal": "Be told which account needs attention",
-      "entry": "Statements → Alerts", "prereqs": "None; low line set by the player", "choices": "Low line; Short For A Payment on or off",
-      "steps": "Checked daily", "costs": "None", "states": "lowSentFor; warned", "failure": "None",
-      "recovery": "Move money, change the source, cancel", "stateRW": "AlertSettings", "consumers": "What Needs You",
-      "notices": "'Low Balance: X'; 'Short For A Payment: X' naming payment, date, remedy", "saveLoad": "Saved; legacy lowSent migrated",
-      "source": "SLATE design (three-day lookahead)", "basis": "design", "commands": ["bank.set_alerts"],
-      "tests": [{ "file": "tests/account-alerts.test.ts", "title": "warns once that Capital One is short" }], "limitations": "Three days is SLATE's design.",
-      "initialGap": "The low-balance alert watched the primary only.", "resolution": "Fixed."
+      "id": "bank.alerts",
+      "area": "Banking",
+      "goal": "Be told which account needs attention",
+      "entry": "Statements → Alerts",
+      "prereqs": "None; low line set by the player",
+      "choices": "Low line; Short For A Payment on or off",
+      "steps": "Checked daily",
+      "costs": "None",
+      "states": "lowSentFor; warned",
+      "failure": "None",
+      "recovery": "Move money, change the source, cancel",
+      "stateRW": "AlertSettings",
+      "consumers": "What Needs You",
+      "notices": "'Low Balance: X'; 'Short For A Payment: X' naming payment, date, remedy",
+      "saveLoad": "Saved; legacy lowSent migrated",
+      "source": "SLATE design (three-day lookahead)",
+      "basis": "design",
+      "commands": [
+        "bank.set_alerts"
+      ],
+      "tests": [
+        {
+          "file": "tests/account-alerts.test.ts",
+          "title": "warns once that Capital One is short"
+        }
+      ],
+      "limitations": "Three days is SLATE's design.",
+      "initialGap": "The low-balance alert watched the primary only.",
+      "resolution": "Fixed."
     },
     {
-      "id": "bank.cards", "area": "Banking", "goal": "Lock, report and renew each bank's debit card",
-      "entry": "Cards tab", "prereqs": "An open current account", "choices": "Lock, report lost or stolen, rush", "steps": "Stopped; replacement in the bank's days",
-      "costs": "The bank's fees", "states": "locked / stopped / new", "failure": "None", "recovery": "Replacement",
-      "stateRW": "Plastic", "consumers": "Purchases, ATM", "notices": "'Your New Card Arrived'", "saveLoad": "Saved", "source": "content/security.ts", "basis": "documented",
-      "commands": ["card.lock", "card.report"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "a second bank’s debit card can be locked" }], "limitations": "None known.",
-      "initialGap": "Only the primary account's card could be managed.", "resolution": "Fixed."
+      "id": "bank.cards",
+      "area": "Banking",
+      "goal": "Lock, report and renew each bank's debit card",
+      "entry": "Cards tab",
+      "prereqs": "An open current account",
+      "choices": "Lock, report lost or stolen, rush",
+      "steps": "Stopped; replacement in the bank's days",
+      "costs": "The bank's fees",
+      "states": "locked / stopped / new",
+      "failure": "None",
+      "recovery": "Replacement",
+      "stateRW": "Plastic",
+      "consumers": "Purchases, ATM",
+      "notices": "'Your New Card Arrived'",
+      "saveLoad": "Saved",
+      "source": "content/security.ts",
+      "basis": "documented",
+      "commands": [
+        "card.lock",
+        "card.report"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "a second bank’s debit card can be locked"
+        }
+      ],
+      "limitations": "None known.",
+      "initialGap": "Only the primary account's card could be managed.",
+      "resolution": "Fixed."
     },
     {
-      "id": "papers.ssn", "area": "Papers", "goal": "Get a Social Security number on an F-1",
-      "entry": "Papers → Work → Social Security Number", "prereqs": "F-1; registered for on-campus work; passport; in New Haven; out of hospital",
-      "choices": "Apply", "steps": "An hour at the office; the card in 21 days", "costs": "Time", "states": "none → applied → issued",
-      "failure": "Refused with the reason", "recovery": "Apply once eligible", "stateRW": "Person.ssn (status only)", "consumers": "Bank channel; ITIN wait on the return",
-      "notices": "'Your Social Security Card Came'", "saveLoad": "Saved", "source": "SSA POMS RM 10211.245; research-student-status.json", "basis": "documented",
-      "commands": ["documents.apply_ssn"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "applies for the number once registered" }],
-      "limitations": "Whether Yale pays before the card comes isn't published; SLATE pays.", "initialGap": "No taxpayer number existed.", "resolution": "Added."
+      "id": "papers.ssn",
+      "area": "Papers",
+      "goal": "Get a Social Security number on an F-1",
+      "entry": "Papers → Work → Social Security Number",
+      "prereqs": "F-1; registered for on-campus work; passport; in New Haven; out of hospital",
+      "choices": "Apply",
+      "steps": "An hour at the office; the card in 21 days",
+      "costs": "Time",
+      "states": "none → applied → issued",
+      "failure": "Refused with the reason",
+      "recovery": "Apply once eligible",
+      "stateRW": "Person.ssn (status only)",
+      "consumers": "Bank channel; ITIN wait on the return",
+      "notices": "'Your Social Security Card Came'",
+      "saveLoad": "Saved",
+      "source": "SSA POMS RM 10211.245; research-student-status.json",
+      "basis": "documented",
+      "commands": [
+        "documents.apply_ssn"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "applies for the number once registered"
+        }
+      ],
+      "limitations": "Whether Yale pays before the card comes isn't published; SLATE pays.",
+      "initialGap": "No taxpayer number existed.",
+      "resolution": "Added."
     },
     {
-      "id": "papers.status", "area": "Papers", "goal": "Keep lawful US status, and know its end",
-      "entry": "Papers → Work", "prereqs": "F-1", "choices": "Apply for OPT after the degree", "steps": "Status held while studying; grace after",
-      "costs": "OPT's fee", "states": "held → grace → out of status", "failure": "Out of status: marketplace ends, benefits refused",
-      "recovery": "OPT after the degree", "stateRW": "documents; usOutOfStatus", "consumers": "Health, unemployment, banking",
-      "notices": "Status ending", "saveLoad": "Scheduled check", "source": "8 CFR 214.2(f)(5)(iv), as in force (the 2026 rule stayed)", "basis": "documented",
-      "commands": ["documents.apply_opt"], "tests": [{ "file": "tests/student-experience.test.ts", "title": "a dismissal leaves no grace" }],
+      "id": "papers.status",
+      "area": "Papers",
+      "goal": "Keep lawful US status, and know its end",
+      "entry": "Papers → Work",
+      "prereqs": "F-1",
+      "choices": "Apply for OPT after the degree",
+      "steps": "Status held while studying; grace after",
+      "costs": "OPT's fee",
+      "states": "held → grace → out of status",
+      "failure": "Out of status: marketplace ends, benefits refused",
+      "recovery": "OPT after the degree",
+      "stateRW": "documents; usOutOfStatus",
+      "consumers": "Health, unemployment, banking",
+      "notices": "Status ending",
+      "saveLoad": "Scheduled check",
+      "source": "8 CFR 214.2(f)(5)(iv), as in force (the 2026 rule stayed)",
+      "basis": "documented",
+      "commands": [
+        "documents.apply_opt"
+      ],
+      "tests": [
+        {
+          "file": "tests/student-experience.test.ts",
+          "title": "a dismissal leaves no grace"
+        }
+      ],
       "limitations": "Leaving the US isn't possible since travel went; an F-1 graduate without OPT goes out of status."
     },
     {
-      "id": "papers.documents", "area": "Papers", "goal": "Hold, lose and replace identity documents",
-      "entry": "Papers → Documents", "prereqs": "Per document", "choices": "Report lost or stolen; police report; replace", "steps": "Application and decision",
-      "costs": "Fees", "states": "valid / lost / pending / cancelled", "failure": "Refused with reasons", "recovery": "Replacement",
-      "stateRW": "PersonDocument", "consumers": "Photo ID for banks; SSN", "notices": "Arrivals", "saveLoad": "Saved", "source": "content/passports.ts and licenses", "basis": "documented",
-      "commands": ["documents.report_lost", "documents.police_report", "documents.apply_passport"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "a lost passport leaves the F-1 status held" }],
-      "limitations": "None known.", "initialGap": "A lost passport canceled the F-1; a replacement ID kept the theft record.", "resolution": "Fixed."
+      "id": "papers.documents",
+      "area": "Papers",
+      "goal": "Hold, lose and replace identity documents",
+      "entry": "Papers → Documents",
+      "prereqs": "Per document",
+      "choices": "Report lost or stolen; police report; replace",
+      "steps": "Application and decision",
+      "costs": "Fees",
+      "states": "valid / lost / pending / cancelled",
+      "failure": "Refused with reasons",
+      "recovery": "Replacement",
+      "stateRW": "PersonDocument",
+      "consumers": "Photo ID for banks; SSN",
+      "notices": "Arrivals",
+      "saveLoad": "Saved",
+      "source": "content/passports.ts and licenses",
+      "basis": "documented",
+      "commands": [
+        "documents.report_lost",
+        "documents.police_report",
+        "documents.apply_passport"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "a lost passport leaves the F-1 status held"
+        }
+      ],
+      "limitations": "None known.",
+      "initialGap": "A lost passport canceled the F-1; a replacement ID kept the theft record.",
+      "resolution": "Fixed."
     },
     {
-      "id": "papers.health", "area": "Papers", "goal": "Be covered and cared for",
-      "entry": "Papers → Health", "prereqs": "Yale Health while enrolled", "choices": "Enroll when cover ends; care; prescriptions; therapy",
-      "steps": "Care billed by the plan; bills paid or owed", "costs": "Plan shares; premiums", "states": "covered / uncovered; bills; debt",
-      "failure": "Enroll refused while Yale covers or a plan waits", "recovery": "Special enrollment within 60 days of losing cover; appeals; aid",
-      "stateRW": "HealthRecord", "consumers": "Bank payments; tax credit", "notices": "Cover ending; bills", "saveLoad": "Saved",
-      "source": "Yale Health; Bulletin p.174", "basis": "simplified", "commands": ["health.enroll", "health.pay_bill"],
-      "tests": [{ "file": "tests/cross-journeys.test.ts", "title": "is admitted, billed" }], "limitations": "Retroactive cancellation's billing of care used isn't modeled."
+      "id": "papers.health",
+      "area": "Papers",
+      "goal": "Be covered and cared for",
+      "entry": "Papers → Health",
+      "prereqs": "Yale Health while enrolled",
+      "choices": "Enroll when cover ends; care; prescriptions; therapy",
+      "steps": "Care billed by the plan; bills paid or owed",
+      "costs": "Plan shares; premiums",
+      "states": "covered / uncovered; bills; debt",
+      "failure": "Enroll refused while Yale covers or a plan waits",
+      "recovery": "Special enrollment within 60 days of losing cover; appeals; aid",
+      "stateRW": "HealthRecord",
+      "consumers": "Bank payments; tax credit",
+      "notices": "Cover ending; bills",
+      "saveLoad": "Saved",
+      "source": "Yale Health; Bulletin p.174",
+      "basis": "simplified",
+      "commands": [
+        "health.enroll",
+        "health.pay_bill"
+      ],
+      "tests": [
+        {
+          "file": "tests/cross-journeys.test.ts",
+          "title": "is admitted, billed"
+        }
+      ],
+      "limitations": "Retroactive cancellation's billing of care used isn't modeled."
     },
     {
-      "id": "papers.tax", "area": "Papers", "goal": "File the year's return and pay what's owed",
-      "entry": "Papers → Taxes", "prereqs": "February each year", "choices": "File; pay", "steps": "File; refund or payment; collection if unpaid",
-      "costs": "Tax; penalties", "states": "ready → filed → refunded / owed / collected", "failure": "Late penalties; substitute return",
-      "recovery": "Pay; file your own within the notice", "stateRW": "returns", "consumers": "Bank", "notices": "Return ready; collection notices",
-      "saveLoad": "Saved", "source": "IRS; research-student-status.json (1040-NR, 8843)", "basis": "simplified",
-      "commands": ["tax.file", "tax.pay"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "files a 1040-NR" }, { "file": "tests/papers-complete.test.ts", "title": "is taxed in part" }],
-      "limitations": "No partial payment; a substitute return can't be replaced once assessed.", "initialGap": "An F-1 student filed as a resident.", "resolution": "Fixed."
+      "id": "papers.tax",
+      "area": "Papers",
+      "goal": "File the year's return and pay what's owed",
+      "entry": "Papers → Taxes",
+      "prereqs": "February each year",
+      "choices": "File; pay",
+      "steps": "File; refund or payment; collection if unpaid",
+      "costs": "Tax; penalties",
+      "states": "ready → filed → refunded / owed / collected",
+      "failure": "Late penalties; substitute return",
+      "recovery": "Pay; file your own within the notice",
+      "stateRW": "returns",
+      "consumers": "Bank",
+      "notices": "Return ready; collection notices",
+      "saveLoad": "Saved",
+      "source": "IRS; research-student-status.json (1040-NR, 8843)",
+      "basis": "simplified",
+      "commands": [
+        "tax.file",
+        "tax.pay"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "files a 1040-NR"
+        },
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "is taxed in part"
+        }
+      ],
+      "limitations": "No partial payment; a substitute return can't be replaced once assessed.",
+      "initialGap": "An F-1 student filed as a resident.",
+      "resolution": "Fixed."
     },
     {
-      "id": "papers.unemployment", "area": "Papers", "goal": "Claim unemployment after school",
-      "entry": "Papers → Benefits", "prereqs": "Covered wages; not a student in Connecticut; permission to work", "choices": "File", "steps": "Weekly certification",
-      "costs": "None", "states": "open → closed", "failure": "Refused with the reason", "recovery": "None", "stateRW": "Unemployment record",
-      "consumers": "Bank", "notices": "Weekly", "saveLoad": "Saved", "source": "CGS 31-235, 31-222; FUTA 3304(a)(14)", "basis": "documented",
-      "commands": ["benefits.claim"], "tests": [{ "file": "tests/papers-complete.test.ts", "title": "pays a noncitizen nothing without permission" }],
+      "id": "papers.unemployment",
+      "area": "Papers",
+      "goal": "Claim unemployment after school",
+      "entry": "Papers → Benefits",
+      "prereqs": "Covered wages; not a student in Connecticut; permission to work",
+      "choices": "File",
+      "steps": "Weekly certification",
+      "costs": "None",
+      "states": "open → closed",
+      "failure": "Refused with the reason",
+      "recovery": "None",
+      "stateRW": "Unemployment record",
+      "consumers": "Bank",
+      "notices": "Weekly",
+      "saveLoad": "Saved",
+      "source": "CGS 31-235, 31-222; FUTA 3304(a)(14)",
+      "basis": "documented",
+      "commands": [
+        "benefits.claim"
+      ],
+      "tests": [
+        {
+          "file": "tests/papers-complete.test.ts",
+          "title": "pays a noncitizen nothing without permission"
+        }
+      ],
       "limitations": "The Summer Cabaret stipend is taken as covered, uncertain."
     },
     {
-      "id": "papers.injury", "area": "Papers", "goal": "Be compensated for an injury at school work",
-      "entry": "Automatic on an injury at work", "prereqs": "An injury during paid school work", "choices": "None", "steps": "Weekly benefit while off",
-      "costs": "None", "states": "off work → paid days", "failure": "Waiting days unpaid", "recovery": "Retroactive past seven days",
-      "stateRW": "injury.atWork", "consumers": "Bank", "notices": "Payments", "saveLoad": "Saved", "source": "CGS 31-295, 31-307", "basis": "documented",
-      "commands": [], "tests": [{ "file": "tests/injury.test.ts", "title": "in Connecticut, where the school is" }],
+      "id": "papers.injury",
+      "area": "Papers",
+      "goal": "Be compensated for an injury at school work",
+      "entry": "Automatic on an injury at work",
+      "prereqs": "An injury during paid school work",
+      "choices": "None",
+      "steps": "Weekly benefit while off",
+      "costs": "None",
+      "states": "off work → paid days",
+      "failure": "Waiting days unpaid",
+      "recovery": "Retroactive past seven days",
+      "stateRW": "injury.atWork",
+      "consumers": "Bank",
+      "notices": "Payments",
+      "saveLoad": "Saved",
+      "source": "CGS 31-295, 31-307",
+      "basis": "documented",
+      "commands": [],
+      "tests": [
+        {
+          "file": "tests/injury.test.ts",
+          "title": "in Connecticut, where the school is"
+        }
+      ],
       "limitations": "Work-study shifts carry no injury risk; student coverage under CGS 31-275 is SLATE's reading.",
-      "initialGap": "New York's rules applied in New Haven.", "resolution": "Fixed."
+      "initialGap": "New York's rules applied in New Haven.",
+      "resolution": "Fixed."
     }
   ],
   "deferred": [
-    "health.prepay", "pension.social_security", "documents.residence", "documents.renew_residence", "documents.settle", "documents.naturalize",
-    "benefits.ei_register", "pension.bienestar", "pension.ie_state", "pension.imss", "pension.state", "benefits.ja_week", "benefits.uc_period",
-    "pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment", "trait-receipts", "l-trait"
+    "health.prepay",
+    "pension.social_security",
+    "documents.residence",
+    "documents.renew_residence",
+    "documents.settle",
+    "documents.naturalize",
+    "benefits.ei_register",
+    "pension.bienestar",
+    "pension.ie_state",
+    "pension.imss",
+    "pension.state",
+    "benefits.ja_week",
+    "benefits.uc_period",
+    "pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment",
+    "trait-receipts",
+    "l-trait"
   ]
 }

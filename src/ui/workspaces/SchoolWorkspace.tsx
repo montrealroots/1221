@@ -13,7 +13,7 @@
  */
 
 import { useState } from 'react';
-import { degreeShortfall, makeUpRefusal, type CourseRecord } from '@/engine/systems/courserecord';
+import { degreeShortfall, extendRefusal, makeUpRefusal, type CourseRecord } from '@/engine/systems/courserecord';
 import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
@@ -548,6 +548,7 @@ function CoursesPanel() {
           <div key={key} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
             <span className="small"><strong>{r.name}</strong>, Incomplete: {(r.owed ?? 0) - (r.madeUp ?? 0)} of {r.owed} make-up sessions left, by {formatDate(r.dueBy!, sim.zone)}.</span>
             <Gated feature="school.make_up" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ passed: boolean }>('school.make_up', { key }); if (a.ok) toast(a.value!.passed ? `${r.name}: passed.` : 'A session made up.', 'positive'); }}>Make Up A Session</Gated>
+            {!extendRefusal(sim, person, key) && <Gated feature="school.extend_incomplete" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ dueBy: number }>('school.extend_incomplete', { key }); if (a.ok) toast(`Extended to ${formatDate(a.value!.dueBy, sim.zone)}.`, 'positive'); }}>Ask For A Month More</Gated>}
             {no && <span className="xs dim">{no}</span>}
           </div>
         );
@@ -561,7 +562,7 @@ function CoursesPanel() {
       <details className="small"><summary>Every Course</summary>
         <ul style={{ margin: 0 }}>{all.map(([key, r]) => <li key={key}>{termLabel(r.term)}, {r.code} {r.name}: {word(r)}</li>)}</ul>
       </details>
-      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, and two-hour make-up sessions. The Bulletin’s nine semesters would let a course be repeated; SLATE models no added term.</Fine>
+      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. The Bulletin’s nine semesters would let a course be repeated; SLATE models no added term.</Fine>
     </div>
   );
 }

@@ -2478,7 +2478,7 @@ export function registerSchool(sim: Simulation): void {
       settleCourses(s, person, term, (code) => {
         const due = work.filter((a) => a.course === code && (a.shown || a.status === 'missed'));
         return { due: due.length, notShown: due.filter((a) => !a.shown).length };
-      });
+      }, (code) => COURSES.find((c) => c.code === code)?.perWeek ?? 4);
     }
     evaluate(s, person, term);
   });
