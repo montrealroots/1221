@@ -2467,6 +2467,9 @@ export function registerSchool(sim: Simulation): void {
     enjoyWork(person, { rehearsal: true });
   });
 
+  // The recess's notice: a reminder. The calendar's dates rule the summer (`recessStart`, `classPeriod`, `termStart`):
+  // no class meets and the school calls on nobody between the recess and the fall term, which
+  // tests/coverage-gaps-recess.test.ts holds. Nothing reads a recess of its own (said 2026-10-10, when the audit asked).
   sim.onSchedule(RECESS_KIND, (item, s) => {
     const person = personOf(item);
     if (!person || !summerOf(person, item.at)) return;
