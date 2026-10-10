@@ -23,7 +23,7 @@ import {
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { at } from '@/ui/looks/subject';
-import { PRIORITY_WORDS, amendsRefusal, personOf } from '@/engine/systems/classmates';
+import { PRIORITY_WORDS, amendsRefusal, boundaryLiftsAfter, owesYouLines, personOf, stoppedAsking } from '@/engine/systems/classmates';
 import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
@@ -306,7 +306,7 @@ function Partners() {
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong>{m.name}</strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ' · Ask A Day Ahead' : ''}</span>
+              <strong>{m.name}</strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ` · Ask A Day Ahead (Lifts After ${boundaryLiftsAfter(p.boundary) - p.boundary.keptSince} More Kept)` : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>

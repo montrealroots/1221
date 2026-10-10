@@ -61,11 +61,21 @@ export const CLASS = {
   answerHours: 22,
   /** What each answer does: to their trust in you, and to the bond (before your own warmth or wound, `bondMove`). */
   hold: { trust: 0, bond: 0 }, holdAgainstText: { trust: -1, bond: 0 }, theirs: { trust: 2, bond: 1 }, both: { trust: 3, bond: 1 },
-  study: { minutes: 60, hour: 19, memorization: 0.2, kept: { trust: 2, bond: 2 }, missed: { trust: -6, bond: -3 }, unanswered: -1 },
-  help: { minutes: 45, trust: 4, bond: 3 },
+  /**
+   * And from 2026-10-10 an invitation turned down or left unanswered twice running stops a classmate asking for
+   * `quietDays` after the second (SLATE's estimate): until then the answer was kept on them and read by nothing.
+   */
+  study: { minutes: 60, hour: 19, memorization: 0.2, kept: { trust: 2, bond: 2 }, missed: { trust: -6, bond: -3 }, unanswered: -1, declinedStop: 2, quietDays: 45 },
+  /** A classmate you helped with their lines asks you to run lines in turn within `returnDays` (from 2026-10-10), whatever they care most about. */
+  help: { minutes: 45, trust: 4, bond: 3, returnDays: 60 },
   encourage: { morale: 3, bondFrom: 10 },
   apology: { accept: 2, cool: -2 },
-  boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: 3 },
+  /**
+   * A boundary lifts after rehearsals kept since: two where it was accepted, four where it was pushed back on (from
+   * 2026-10-10, SLATE's estimate; until then three either way, the answer read by nothing). A boundary set before then
+   * keeps three.
+   */
+  boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: { accepted: 2, pushedBack: 4, before: 3 } },
   /**
    * Making it right gives back what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the
    * bond 2 of the 3 it cost), a plan called off late (the bond's 1; it took no trust). Until 2026-10-08 every one gave
@@ -101,7 +111,7 @@ export interface Moment {
 export interface ClassmatePerson {
   priority?: Priority;
   incidents?: { at: Instant; kind: 'missed' | 'lateCancel'; repaired?: Instant }[];
-  boundary?: { since: Instant; keptSince: number };
+  boundary?: { since: Instant; keptSince: number; /** Accepted, or pushed back on (from 2026-10-10). */ accepted?: boolean };
   moments?: { at: Instant; kind: MomentKind; choice?: string }[];
 }
 export const personOf = (mate: Classmate): MateRecord & ClassmatePerson => mate as Classmate & MateRecord & ClassmatePerson;
@@ -157,12 +167,33 @@ export function boundaryRefusal(mate: Classmate, now: Instant, when: Instant): s
   return when - now < CLASS.boundary.noticeHours * 3_600_000 ? `${first(mate)} asked to be asked a day ahead, after last time.` : undefined;
 }
 
-/** A rehearsal kept with a classmate who set a boundary: three kept since, and it's lifted. */
+/** How many rehearsals kept lift a boundary: by how it was taken (`CLASS.boundary.liftAfterKept`). */
+export function boundaryLiftsAfter(b: NonNullable<ClassmatePerson['boundary']>): number {
+  const l = CLASS.boundary.liftAfterKept;
+  return b.accepted === undefined ? l.before : b.accepted ? l.accepted : l.pushedBack;
+}
+
+/** A rehearsal kept with a classmate who set a boundary: enough kept since, and it's lifted. */
 export function keptWith(mate: Classmate): void {
   const b = personOf(mate).boundary;
   if (!b) return;
   b.keptSince += 1;
-  if (b.keptSince >= CLASS.boundary.liftAfterKept) delete personOf(mate).boundary;
+  if (b.keptSince >= boundaryLiftsAfter(b)) delete personOf(mate).boundary;
+}
+
+/**
+ * Whether a classmate has stopped asking you to run lines: their last `declinedStop` invitations turned down or
+ * left unanswered, the latest within `quietDays`. Read from the answers kept on them (`moments`).
+ */
+export function stoppedAsking(mate: Classmate, now: Instant): boolean {
+  const asked = (personOf(mate).moments ?? []).filter((m) => m.kind === 'study');
+  const last = asked.slice(0, CLASS.study.declinedStop);
+  return last.length === CLASS.study.declinedStop && last.every((m) => m.choice !== 'yes') && now - last[0]!.at < CLASS.study.quietDays * 86_400_000;
+}
+
+/** Whether you helped this classmate with their lines within `CLASS.help.returnDays`: they'll ask you to run lines in turn. */
+export function owesYouLines(mate: Classmate, now: Instant): boolean {
+  return (personOf(mate).moments ?? []).some((m) => m.kind === 'help' && m.choice === 'help' && now - m.at < CLASS.help.returnDays * 86_400_000);
 }
 
 type Candidate = { kind: MomentKind; mate: number; build: () => Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined };
@@ -195,7 +226,10 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     const shared = open.find((a) => a.partner === i && questionsFor(a).some(({ q }) => a.answers[q.id]));
     if (shared && !recent(mate, 'disagreement')) cands.push({ kind: 'disagreement', mate: i, build: () => disagreement(shared, mate, rng.next()) });
     // An invitation to run lines, on an evening they're free.
-    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people') && trustOf(mate) >= WORK.trust.wary) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day) });
+    // Those who care for the work or the room ask; anyone you helped with their lines asks in turn; nobody who has
+    // stopped asking (`stoppedAsking`) does.
+    const returning = owesYouLines(mate, now);
+    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning) });
     // A request for help: those under pressure to be seen, or with a life outside, are behind.
     if (!recent(mate, 'help') && (pr === 'career' || pr === 'home')) cands.push({ kind: 'help', mate: i, build: () => ({ text: `${first(mate)} is behind on their lines and asks if you’d run them for three quarters of an hour now. ${pr === 'home' ? 'They’ve had a hard week away from school.' : 'They’re auditioning outside school and short of time.'}` }) });
     // Encouragement, from a friend only, after work of yours that went badly in the last days.
@@ -252,13 +286,13 @@ function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment
 }
 
 /** An evening in the next three a classmate is free to run lines, at seven. */
-function studyEvening(person: Person, i: number, day: SchoolDate): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
+function studyEvening(person: Person, i: number, day: SchoolDate, returning = false): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
   for (let n = 1; n <= 3; n += 1) {
     const d = new Date(Date.UTC(day.year, day.month - 1, day.day + n));
     const when = instantFromZoned({ year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: CLASS.study.hour, minute: 0 }, zone());
     if (mateBusy(person, i, when, CLASS.study.minutes)) continue;
     const mate = person.school!.classmates[i]!;
-    return { when, text: `${first(mate)} asks if you’d run lines together on ${formatDate(when, zone())} at ${formatTime(when, zone())}, an hour.` };
+    return { when, text: `${first(mate)} asks if you’d run lines together on ${formatDate(when, zone())} at ${formatTime(when, zone())}, an hour.${returning ? ' You ran theirs when they were behind.' : ''}` };
   }
   return undefined;
 }
@@ -368,15 +402,15 @@ export function registerClassmates(sim: Simulation): void {
       }
       case 'boundary': {
         if (choice === 'respect') {
-          personOf(mate).boundary = { since: s.now, keptSince: 0 };
+          personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: true };
           move(person, mate, CLASS.boundary.respect, 0);
           remember(s, mate, 'Set a boundary; you accepted it');
-          return { done: `From now, ask ${f} a day ahead.` };
+          return { done: `From now, ask ${f} a day ahead; ${CLASS.boundary.liftAfterKept.accepted} rehearsals kept, and it lifts.` };
         }
-        personOf(mate).boundary = { since: s.now, keptSince: 0 };
+        personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: false };
         move(person, mate, CLASS.boundary.argue.trust, CLASS.boundary.argue.bond);
         remember(s, mate, 'Set a boundary; you pushed back');
-        return { done: `${f} holds to it, and things are cooler between you.` };
+        return { done: `${f} holds to it, and things are cooler between you: ${CLASS.boundary.liftAfterKept.pushedBack} rehearsals kept before it lifts.` };
       }
       default: return { done: '' };
     }
