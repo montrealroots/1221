@@ -544,6 +544,18 @@ export function commitmentWithin(sim: Simulation, minutes: number): string | und
   return next ? `${next.label} starts at ${formatTime(next.at, sim.zone)}: there isn’t the time before it.` : undefined;
 }
 
+/**
+ * Why something taking so many minutes can't start now, or nothing (from 2026-10-10): already at something, or due at
+ * something before it would end, and, done in person, in a hospital bed. Until then practice alone asked about what
+ * was coming, and a two-hour read begun at eight also counted the nine o'clock classes it ran across.
+ */
+export function startRefusal(sim: Simulation, person: Person, minutes: number, inPerson = false): string | undefined {
+  if (inPerson && inHospital(person, sim.now)) return 'Not from a hospital bed.';
+  const busy = occupiedAt(sim, sim.now);
+  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
+  return commitmentWithin(sim, minutes);
+}
+
 /** How long it takes. Until 2026-10-09 the laundry and the cleaning took as long as the home made them. */
 export function minutesFor(_sim: Simulation, action: LookAfter): number {
   return LOOKING_AFTER[action].minutes;

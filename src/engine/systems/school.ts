@@ -107,10 +107,18 @@ import { payeeAccount } from './cash';
 import { lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork, type Assignment } from './coursework';
 import { scheduleUsStatus } from './permission';
 import { momentInClass } from './classmates';
+import { endCoursework } from './coursework';
 import { STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
-export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
+/**
+ * `withheld`: the last term ended on academic warning, and the faculty, who recommend the degree by a majority vote
+ * (Bulletin p.151), didn't (from 2026-10-10: until then Commencement was booked for any standing short of dismissal).
+ */
+export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated' | 'withheld';
+
+/** Whether school is over for them: dismissed, graduated, or ended without the degree. */
+export const schoolEnded = (standing: Standing): boolean => standing === 'dismissed' || standing === 'graduated' || standing === 'withheld';
 
 /** A standing as the school names it. */
 export const STANDING_LABEL: Record<Standing, string> = {
@@ -119,6 +127,7 @@ export const STANDING_LABEL: Record<Standing, string> = {
   warning: 'Academic Warning',
   dismissed: 'Dismissed',
   graduated: 'Graduated',
+  withheld: 'Degree Not Recommended',
 };
 
 /** A term's attendance and growth so far, for its evaluation. */
@@ -864,7 +873,7 @@ export const ppeCost = (sim: Simulation): Money => inSaveMoney(sim, REQUIRED_PPE
 /** Why the protective equipment can't be bought now, or nothing. */
 export function ppeRefusal(person: Person): string | undefined {
   const school = person.school;
-  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return 'It’s for students’ work-study.';
+  if (!school || schoolEnded(school.standing)) return 'It’s for students’ work-study.';
   if (school.ppe) return `You bought it on ${formatDate(school.ppe.at, zone())}.`;
   return undefined;
 }
@@ -956,7 +965,7 @@ function schedule(
  */
 export function cabaretRefusal(sim: Simulation, person: Person): string | undefined {
   const school = person.school;
-  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return 'The Cabaret is for students.';
+  if (!school || schoolEnded(school.standing)) return 'The Cabaret is for students.';
   if (school.standing === 'warning') return 'Nobody on academic warning may take part in the Cabaret.';
   const term = school.termsBegun - 1;
   if (term < 0) return 'The Cabaret’s season begins with the term.';
@@ -987,7 +996,7 @@ export function summerRefusal(sim: Simulation, person: Person): string | undefin
 
 export function shiftRefusal(person: Person): string | undefined {
   const school = person.school;
-  if (!school || school.standing === 'dismissed' || school.standing === 'graduated') return 'You’re not at school.';
+  if (!school || schoolEnded(school.standing)) return 'You’re not at school.';
   // The Bulletin's 50 elective hours are part of a minimum of 200, not a cap (from 2026-10-10: until then a shift past 50
   // was refused). The award's ceiling isn't published, so SLATE sets none: the calendar's own hours are the limit.
   return undefined;
@@ -1019,12 +1028,23 @@ export function cabaretEvenings(thu: SchoolDate, off: readonly (readonly [string
  * built on 2026-09-27, a single day off classes in the fortnight ruled a
  * week out, which left a first-year's fall one week to choose from.
  */
+/**
+ * The hours a call holds: its own, and for a night on call, from the call at five to the curtain's end, SLATE's
+ * estimate of three hours from eight (from 2026-10-10: until then a night on call held nothing, and a Cabaret week and an
+ * elective shift were both set on Seagull nights the understudy was on call for).
+ */
+const ON_CALL_HOLDS_MINUTES = 180;
+function heldSpan(i: { at: Instant; durationMinutes?: number; payload: Record<string, unknown> }): readonly [Instant, Instant] {
+  if (i.payload.call === 'oncall' && i.payload.perfAt !== undefined) return [i.at, Number(i.payload.perfAt) + ON_CALL_HOLDS_MINUTES * 60_000] as const;
+  return [i.at, i.at + (i.durationMinutes ?? 0) * 60_000] as const;
+}
+
 export function cabaretWeek(sim: Simulation, person: Person, term: number): SchoolDate | undefined {
   const period = classPeriod(term);
   const calls = sim.universe.scheduled
     // A work-study shift booked too: until 2026-09-27 an elective evening already taken wasn't read, and the show was set on it.
     .filter((i) => i.status === 'pending' && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND) && i.payload.personId === person.id)
-    .map((i) => [i.at, i.at + (i.durationMinutes ?? 0) * 60_000] as const);
+    .map(heldSpan);
   const clashes = (from: Instant, minutes: number) => calls.some(([a, b]) => a < from + minutes * 60_000 && from < b);
   const earliest = zonedParts(sim.now + YALE_CABARET.leadDays * MS_DAY, zone());
   for (let thu = dayOnOrAfter(earliest.year, earliest.month, earliest.day, 4); keyOf(thu) <= keyOf(period.to); thu = addDays(thu, 7)) {
@@ -1054,7 +1074,7 @@ export function recessStart(term: number): SchoolDate {
  */
 export function summerOf(person: Person, when: Instant): { from: Instant; until: Instant } | undefined {
   const school = person.school;
-  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return undefined;
+  if (!school || schoolEnded(school.standing)) return undefined;
   const term = school.termsBegun - 1;
   if (term < 0 || termStart(term).fall || yearOfTerm(term) === 3) return undefined;
   const from = at(recessStart(term), 0);
@@ -1113,7 +1133,7 @@ export function enroll(sim: Simulation, person: Person): void {
  */
 function planWeek(sim: Simulation, person: Person, from: Instant): void {
   const school = person.school;
-  if (!school || school.standing === 'dismissed' || school.standing === 'graduated') return;
+  if (!school || schoolEnded(school.standing)) return;
   const p = zonedParts(from, zone());
   const first: SchoolDate = { year: p.year, month: p.month, day: p.day };
   const sunday = dayOnOrAfter(first.year, first.month, first.day, 0);
@@ -1146,9 +1166,11 @@ function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
 function setStanding(sim: Simulation, person: Person, to: Standing, reason: string): void {
   const school = person.school!;
   school.standing = to;
-  if (to === 'dismissed' || to === 'graduated') school.endedAt = sim.now;
-  if (to !== 'good') feel(person, to);
-  if (to === 'dismissed' || to === 'graduated') {
+  if (schoolEnded(to)) school.endedAt = sim.now;
+  if (to !== 'good') feel(person, to === 'withheld' ? 'dismissed' : to);
+  if (schoolEnded(to)) {
+    // The coursework ends with it (`endCoursework`, from 2026-10-10).
+    endCoursework(sim, person);
     // The degree added to reputation and a dismissal took from it until 2026-10-09, when what read it went with the career.
     keepCredit(sim, school);
     for (const item of sim.universe.scheduled) {
@@ -1157,7 +1179,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
     // A dismissal ends an F-1 student's program now, and the look at their status comes with it (`programEnd`).
-    if (to === 'dismissed') scheduleUsStatus(sim, person);
+    if (to === 'dismissed' || to === 'withheld') scheduleUsStatus(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
   const chair = YALE_DRAMA.actingChair.name;
@@ -1167,7 +1189,11 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     warning: ['Academic Warning', `A formal meeting with the chair, ${chair}, and an associate dean. ${reason} Improve by the end of next term, or you may be dismissed.`],
     dismissed: ['Dismissed From The School', `${reason} Once dismissed, a student isn’t eligible to come back.`],
     graduated: ['Your MFA Is Conferred', reason],
+    withheld: ['The Degree Isn’t Recommended', `${reason} The term was your last, so there was no next one to meet the warning in, and the faculty didn’t recommend the degree. SLATE keeps no extra term: the Bulletin allows up to nine semesters, and that path isn’t modeled.`],
   };
+  // The last term has no next one to remedy anything in (from 2026-10-10: until then a last-term concern said "by the
+  // end of next term").
+  if (to === 'concern' && school.termsBegun >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair, ${chair}, has raised a concern. ${reason} It was your last term: the concern is noted, and doesn’t stand in the way of the degree.`];
   const [title, body] = words[to];
   sim.notify({ category: 'school', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
 }
@@ -1808,7 +1834,14 @@ function cast(sim: Simulation, person: Person, term: number): void {
       production: production.name, role: partLabel(mine.part, production.kind), kind: production.kind, term, performed: 0, size: mine.size, cast: mine.cast,
       ...(mine.play.title ? { play: mine.play.title, by: mine.play.by } : {}),
     };
-    for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
+    // A rehearsal on the afternoon of a lab's showing gives way to it (from 2026-10-10: until then the third year's You Are
+    // The Creator showing and the Shakespeare Repertory Project I rehearsal were both called for 19 January 2029).
+    const labs = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === LAB_KIND && i.payload.personId === person.id);
+    for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) {
+      const from = at(d, 15);
+      if (labs.some((l) => l.at < from + 360 * 60_000 && from < l.at + (l.durationMinutes ?? 0) * 60_000)) continue;
+      ours.push({ at: from, minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
+    }
     // At eight, as Carlotta's 2026 curtains were (from 2026-10-10; until then at seven, which nothing published).
     production.runs.forEach((d, k) => ours.push({ at: at(d, 20), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
     staged(ours, production.name);
@@ -1913,7 +1946,7 @@ export function termGrowth(person: Person): { growth: number; classGrowth: numbe
  */
 export function evaluate(sim: Simulation, person: Person, term: number): TermReview | undefined {
   const school = person.school;
-  if (!school || !person.craft || school.standing === 'dismissed' || school.standing === 'graduated') return undefined;
+  if (!school || !person.craft || schoolEnded(school.standing)) return undefined;
   const t = school.tally;
   const expected = (t.classDays - t.excused) + t.calls + t.shifts;
   const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : 1;
@@ -1930,10 +1963,14 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   delete school.unreviewed;
   const workedPoorly = work !== undefined && work <= ESTIMATE.workFloor;
   // The term's coursework as shown (`ESTIMATE.coursework`).
-  const shown = ((school as SchoolRecord & { coursework?: { assignments: Assignment[] } }).coursework?.assignments ?? []).filter((a) => a.term === term && a.shown);
-  // A piece shown again stands at its second showing's band.
-  const bandOf = (a: Assignment) => a.revision?.band ?? a.shown!.band;
-  const cw = { shown: shown.length, unready: shown.filter((a) => bandOf(a) === 'unready').length, strong: shown.filter((a) => bandOf(a) === 'strong' || bandOf(a) === 'exceptional').length };
+  const termWork = ((school as SchoolRecord & { coursework?: { assignments: Assignment[] } }).coursework?.assignments ?? []).filter((a) => a.term === term);
+  const shown = termWork.filter((a) => a.shown);
+  // A piece shown again stands at its second showing's band; one not there to be shown again is unready.
+  const bandOf = (a: Assignment) => (a.revision?.missed ? 'unready' : a.revision?.band ?? a.shown!.band);
+  // A piece not shown at all, unexcused, counts as unready (from 2026-10-10: until then it counted as nothing, and
+  // staying away was safer than showing unready work).
+  const notShown = termWork.filter((a) => a.status === 'missed' && !a.shown).length;
+  const cw = { shown: shown.length + notShown, unready: shown.filter((a) => bandOf(a) === 'unready').length + notShown, strong: shown.filter((a) => bandOf(a) === 'strong' || bandOf(a) === 'exceptional').length };
   const counted = cw.shown >= ESTIMATE.coursework.shown;
   const unreadyWork = counted && cw.unready >= ESTIMATE.coursework.unready * cw.shown;
   const strongWork = counted && !unreadyWork && cw.strong >= ESTIMATE.coursework.strong * cw.shown;
@@ -1941,19 +1978,21 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || t.breaches > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
-  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces you showed in class were unready, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
+  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}`;
-  const next: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
+  const last = term === YALE_DRAMA.terms - 1;
+  const stepped: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
+  const next: Standing = last && stepped === 'warning' ? 'withheld' : stepped;
   const notes = teachersNotes(person, term);
   const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}), ...(cw.shown ? { coursework: cw } : {}), ...(notes.length ? { notes } : {}) };
   school.history.push(review);
   if (!short) school.castable = true;
-  setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : reason);
+  setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : next === 'withheld' ? `The concern wasn’t remedied. ${reason}` : reason);
   // The tally starts again with the next term (`TERM_KIND`). Until 2026-09-27 it
   // started again here, and a first-year's Carlotta calls in May and the
   // summer's growth went into the next fall's attendance and growth.
   // After the sixth term in standing, the degree at Commencement on the last Monday of May, as 24 May 2027 is (SLATE's estimate for 2029).
-  if (term === YALE_DRAMA.terms - 1 && next !== 'dismissed') {
+  if (last && !schoolEnded(next)) {
     const y = termStart(term).date.year;
     // Yale's Commencement is the Monday before Memorial Day, which is May's last Monday: 24 May 2027 and the published
     // 21 May 2029 (from 2026-10-10; until then the first Monday from the 25th, Memorial Day itself in 2029).
@@ -1969,7 +2008,7 @@ export function registerSchool(sim: Simulation): void {
     const person = personOf(item);
     const school = person?.school;
     const term = Number(item.payload.term);
-    if (!person || !school || school.standing === 'dismissed') return;
+    if (!person || !school || schoolEnded(school.standing)) return;
     school.termsBegun = term + 1;
     if (term > 0) school.tally = freshTally(person, school);
     // A new year's hours from the second fall; the first's began at enrollment, and resetting them
@@ -2088,7 +2127,8 @@ export function registerSchool(sim: Simulation): void {
     const hours = Number(item.payload.hours);
     const elective = item.payload.elective === true;
     // A shift in hospital isn't one they were there to be asked for.
-    if (offSick(person, item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
+    // A day called in sick excuses it too (from 2026-10-10: until then only a hospital stay or a lay-up did).
+    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
     if (!elective) school.tally.shifts += 1;
     // The crew's Saturday needs the protective equipment: bought there if not before, through the bank; the bank short of
     // it, the supervisor sends them home and the shift is missed (`REQUIRED_PPE`, from 2026-10-08).
@@ -2191,7 +2231,13 @@ export function registerSchool(sim: Simulation): void {
     // In hospital, or sick with the day called in, somebody else covers: the
     // call isn't theirs to answer. Until 2026-09-27 a sick day excused the
     // classes and not that afternoon's rehearsal.
-    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
+    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) {
+      item.status = 'missed';
+      // The blocking set without them is still a gap in the book to catch up (from 2026-10-10: until then an excused
+      // call left none, and `school.review_blocking` refused, where an unexcused one could be caught up).
+      if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
+      return;
+    }
     if (call === 'oncall' && item.payload.check === true) {
       // At five: most nights they aren't needed, and the evening is theirs.
       const curtain = Number(item.payload.perfAt);
@@ -2300,7 +2346,7 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(COMMENCEMENT_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
-    if (!person || !school || school.standing === 'dismissed') return;
+    if (!person || !school || schoolEnded(school.standing)) return;
     setStanding(s, person, 'graduated', `You graduate from the ${YALE_DRAMA.name} with an ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}.`);
   });
 
@@ -2518,15 +2564,22 @@ export function registerSchool(sim: Simulation): void {
     recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
   });
 
+  /** Whether anything of the school's is on their calendar between two moments. */
+  const somethingAtSchool = (s: Simulation, personId: string, from: Instant, to: Instant) => s.universe.scheduled.some((i) => i.status === 'pending' && i.payload.personId === personId && i.at >= from && i.at < to
+    && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND || i.kind === CABARET_KIND || i.kind === SUMMER_KIND));
   sim.onCommand<Record<string, never>, { excused: boolean }>('school.call_in_sick', (_p, { sim: s }) => {
     const person = s.player;
     const school = person.school;
-    if (!school || school.standing === 'dismissed' || school.standing === 'graduated') throw new CommandError('You’re not at school.');
+    if (!school || schoolEnded(school.standing)) throw new CommandError('You’re not at school.');
     const p = zonedParts(s.now, zone());
     const today: SchoolDate = { year: p.year, month: p.month, day: p.day };
-    if (!coursesOn(today).length) throw new CommandError('There are no classes today.');
+    // Any day with something at school: classes, or a call, a lab, a shift, a Cabaret or Summer Cabaret call (from
+    // 2026-10-10: until then only a class day, and flu on a Saturday performance or in a recess run couldn't be excused).
+    const end = at(addDays(today, 1), 0);
+    const due = somethingAtSchool(s, person.id, at(today, 0), end);
+    if (!coursesOn(today).length && !due) throw new CommandError('There’s nothing at school today to miss.');
     // Before they've run: until 2026-09-27 it was taken all day, and said the day was excused after it had been counted.
-    if (s.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) throw new CommandError('Today’s classes have been and gone; calling in sick now excuses nothing.');
+    if (coursesOn(today).length && s.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.status !== 'pending' && i.status !== 'cancelled' && i.payload.personId === person.id && i.payload.day === keyOf(today))) throw new CommandError('Today’s classes have been and gone; calling in sick now excuses nothing.');
     // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
     // Hurt in a way that limits the work (`INJURY_KIND[].limits`), a doctor's note excuses them too (from 2026-10-10): until
     // then a student with a sprained ankle had to show a movement score on it, and lost a third of it (`tools/condition.ts`).
@@ -2546,13 +2599,19 @@ export function registerSchool(sim: Simulation): void {
     // The next evening, seven to eleven, front of house at Yale Rep, that nothing else wants.
     const p = zonedParts(s.now, zone());
     let day = addDays({ year: p.year, month: p.month, day: p.day }, 1);
+    const held = s.universe.scheduled.filter((i) => i.status === 'pending' && i.payload.personId === person.id && i.kind === CALL_KIND).map(heldSpan);
     for (let n = 0; n < 14; n += 1, day = addDays(day, 1)) {
       const when = at(day, 19);
       if (s.timeline.conflicts(when, hours * 60).some((one) => one.requiresPlayer)) continue;
+      // Not on a night on call (from 2026-10-10), and only in a term, when the Rep plays: front of house in the summer
+      // recess, before the first term or between terms was offered with the theater dark until then.
+      if (held.some(([a, b]) => a < when + hours * 3_600_000 && when < b)) continue;
+      const term = termOf(day);
+      if (keyOf(day) < keyOf(classPeriod(term).from) || keyOf(day) > keyOf(classPeriod(term).to)) continue;
       school.workStudy.electiveHours += hours;
       schedule(s, person, when, { kind: SHIFT_KIND, label: 'Elective Shift: Front Of House, Yale Rep', minutes: hours * 60, payload: { hours, elective: true } });
       return { at: when, hours };
     }
-    throw new CommandError('No free evening in the next two weeks.');
+    throw new CommandError('No free evening in the term in the next two weeks.');
   });
 }

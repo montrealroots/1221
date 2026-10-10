@@ -19,7 +19,7 @@ const shownAt = (bands: (Band | [Band, Band])[]) => bands.map((b, i) => ({ id: `
 describe('a term’s coursework', () => {
   it('half or more of it unready, of three or more shown, falls short; half or more strong is noted', () => {
     for (const [bands, standing, words] of [
-      [['unready', 'unready', 'working', 'strong'], 'concern', /2 of the 4 pieces you showed in class were unready/],
+      [['unready', 'unready', 'working', 'strong'], 'concern', /2 of the 4 pieces due in class were unready or not shown/],
       [['strong', 'exceptional', 'working'], 'good', /noted your coursework: 2 of 3 pieces strong or better/],
       [['unready', 'unready'], 'good', /^(?!.*(unready|noted your coursework))/],
     ] as const) {

@@ -32,10 +32,10 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatTime, zonedParts, type Instant } from '../core/time';
+import { zonedParts, type Instant } from '../core/time';
 import { SKILLS, YALE_DRAMA, type Skill } from '../content/school';
 import { CITIES } from '../content/geography';
-import { occupiedAt } from './life';
+import { startRefusal } from './life';
 import { exerts } from './body';
 import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
 import { courseworkOf, notesOf } from './coursework';
@@ -267,9 +267,7 @@ export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, wh
     if (!last || last.taken !== undefined) return 'There’s no note to work on.';
     if (last.worked) return 'You’ve worked on it: the next call will show it.';
   }
-  const busy = occupiedAt(sim, sim.now);
-  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  return undefined;
+  return startRefusal(sim, person, PROCESS.own.minutes);
 }
 
 /** Ordinary development from a step of the actor's own work (`ordinary` in `systems/school.ts`), injected as `grow` is. */

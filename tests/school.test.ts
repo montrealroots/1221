@@ -415,11 +415,19 @@ describe('classes', () => {
     expect(late.error).toMatch(/been and gone/);
   });
 
-  it('can’t be called in sick from on a day without them', () => {
+  it('can’t be called in sick from on a day with nothing at school, and can on a Saturday shift (from 2026-10-10)', () => {
     const sim = life('weekend');
-    play(sim, at(2026, 9, 5, 8));
+    play(sim, at(2026, 9, 6, 8));
     sim.player.wellbeing.condition = 10;
-    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(false);
+    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toMatch(/nothing at school today/);
+    const shift = life('weekend-shift');
+    play(shift, at(2026, 9, 12, 8));
+    shift.player.wellbeing.condition = 10;
+    expect(shift.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
+    const worked = shift.player.school!.tally.worked;
+    play(shift, at(2026, 9, 12, 20));
+    expect(shift.player.school!.tally.worked).toBe(worked);
+    expect(shift.universe.scheduled.some((i) => i.kind === SHIFT_KIND && i.status === 'missed' && zonedParts(i.at, zone).day === 12)).toBe(true);
   });
 });
 

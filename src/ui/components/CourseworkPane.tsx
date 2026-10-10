@@ -217,7 +217,7 @@ function Rehearsals({ a }: { a: Assignment }) {
           <span>{formatDateTime(r.at, zone())}</span>
           {r.status === 'booked'
             ? <Gated feature="school.cancel_rehearsal" className="btn btn-sm btn-ghost" title={r.at - sim.now < 86_400_000 ? `Short notice: ${first} will mind` : 'With notice'} onClick={() => { if (run('school.cancel_rehearsal', { assignmentId: a.id, rehearsalId: r.id }).ok) toast('Called off.', 'neutral'); }}>Call It Off</Gated>
-            : <span className="xs">{{ kept: 'Rehearsed', missedByYou: 'You Didn’t Come', missedByThem: `${first} Didn’t Come`, cancelled: 'Called Off', booked: '' }[r.status]}</span>}
+            : <span className="xs">{{ kept: 'Rehearsed', missedByYou: 'You Didn’t Come', missedByThem: `${first} Didn’t Come`, cancelled: 'Called Off', excused: 'You Were Ill', booked: '' }[r.status]}</span>}
         </div>
         {r.said && <div className="xs dim">{r.said} <span>(Simulated: the game’s words.)</span></div>}
         </div>
@@ -235,7 +235,7 @@ function FeedbackBlock({ a }: { a: Assignment }) {
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
       <div className="xs dim">Simulated feedback in {f.course}, taught by {f.teachers}: the game’s words, not theirs.</div>
-      {!f.seen && <div><Gated feature="school.read_feedback" className="btn btn-sm btn-ghost" onClick={() => run('school.read_feedback', { assignmentId: a.id })}>Take The Note</Gated></div>}
+      {!f.seen && <div><Gated feature="school.read_feedback" className="btn btn-sm btn-ghost" onClick={() => run('school.read_feedback', { assignmentId: a.id })}>Mark As Read</Gated></div>}
     </div>
   );
 }
@@ -281,8 +281,8 @@ function Shown({ list }: { list: Assignment[] }) {
           const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
           return (
             <div key={a.id} className="small">
-              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
-              {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
+              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
+              {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.missed ? 'Not Shown Again' : a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
               {a.feedback && <div className="xs dim">{a.feedback.text}</div>}
             </div>
           );

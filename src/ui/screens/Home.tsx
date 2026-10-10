@@ -30,7 +30,7 @@ import { troubles } from '@/engine/systems/spending';
 import { latePenalty, owedOn } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
-import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
+import { STANDING_LABEL, nextClasses, rankIn, schoolEnded, yearOfStudy } from '@/engine/systems/school';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
@@ -479,10 +479,11 @@ function SchoolLine() {
     .filter((item) => item.status === 'pending' && item.category === 'school' && item.requiresPlayer && item.payload.personId === person.id)
     .sort((x, y) => x.at - y.at)[0];
   // What the calendar holds, or past this week, the next classes, while there are classes to go to.
-  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const enrolled = !schoolEnded(school.standing);
   const classes = enrolled ? nextClasses(sim.now) : undefined;
   const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
-  const where = school.standing === 'graduated' ? 'Graduated' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`;
+  // Left without the degree, not a year of study (from 2026-10-10: until then a dismissed student was "Year 2").
+  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`;
   const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
   return (
     <AffairLine

@@ -53,14 +53,14 @@ import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, conditionAt, ordinary, coursesOn, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
-import { bandOfQuality, evaluate, recordWork, type Evaluation } from './evaluation';
+import { bandOfQuality, chiefLimit, evaluate, recordWork, type Evaluation } from './evaluation';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
 import { familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
-import { SPENT, occupiedAt } from './life';
+import { SPENT, startRefusal } from './life';
 import { exerts } from './body';
 import { personalityOf } from './personality';
 import type { PersonalityKnob } from '../content/personality-traits';
@@ -71,7 +71,7 @@ import {
 } from './learning';
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
-import { laidUp } from './injury';
+import { laidUp, trainingRefusal } from './injury';
 
 /** What SLATE estimates for the coursework, named where it's read. */
 export const WORK = {
@@ -139,7 +139,8 @@ export interface Showing {
 export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string } }
 
 export interface PartnerRehearsal {
-  id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled';
+  /** `excused`: missed in hospital or laid up, which isn't standing them up (from 2026-10-10). */
+  id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled' | 'excused';
   /** What the partner said after it, kept (`peerNote`): the game's words, marked simulated. */
   said?: string;
 }
@@ -168,7 +169,8 @@ export interface Assignment {
   /** What your partner has done together with you, and on their own. */
   rehearsals: PartnerRehearsal[];
   asks?: PartnerAsk[];
-  status: 'open' | 'revising' | 'done' | 'missed' | 'lapsed';
+  /** `excused`: due at the last meeting of its course, missed ill, with none left to move it to (from 2026-10-10). */
+  status: 'open' | 'revising' | 'done' | 'missed' | 'lapsed' | 'excused';
   /** What the work asks you to put first (`objectiveFor`), and, for a scene studied before, what's new about it (`revisitOf`). From 2026-10-08. */
   objective?: Objective;
   revisit?: Revisit & { answers?: Partial<Record<Question['id'], string>> };
@@ -181,7 +183,8 @@ export interface Assignment {
   roundsShown?: { label: string; band: Band; on: string }[];
   shown?: Showing;
   feedback?: Feedback;
-  revision?: { dueOn: string; before: number; applied?: boolean; band?: Band };
+  /** `missed`: not there to show it again, unexcused, which the term's evaluation reads as unready (from 2026-10-10). */
+  revision?: { dueOn: string; before: number; applied?: boolean; band?: Band; missed?: boolean };
 }
 
 export type OrientationTask = 'register' | 'classmates' | 'faculty' | 'tour' | 'expectations';
@@ -440,10 +443,11 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
   // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
-  if ((act.needs ?? []).some((n) => n === 'studio' || n === 'feet') && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
-  const busy = occupiedAt(sim, sim.now);
-  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  return undefined;
+  const onFeet = (act.needs ?? []).some((n) => n === 'studio' || n === 'feet');
+  if (onFeet && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
+  // An injury that stops training stops work on your feet too (from 2026-10-10: until then a sprain didn't).
+  if (onFeet) { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
+  return startRefusal(sim, person, act.minutes, onFeet || (act.needs ?? []).includes('library'));
 }
 
 /**
@@ -687,7 +691,8 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const score = judged.overall / 100;
   const strengths = (Object.entries(parts) as [PrepDim, number][]).filter(([, v]) => v >= 0.75).map(([dim]) => `${t.dims[dim]!.label} was there`);
   if (craft >= 0.65) strengths.push(`Your ${(Object.keys(t.reads) as Skill[]).map((k) => labelOf(k).toLowerCase()).join(' and ')} carried it`);
-  if (ready >= 0.75) strengths.push('You came rested and ready');
+  // Rested and ready only where nothing about the day held it back (from 2026-10-10).
+  if (ready >= 0.75 && !judged.limits.some((l) => l.kind === 'condition')) strengths.push('You came rested and ready');
   const c = courseOf(a.course)!;
   const cw = courseworkOf(sim, person)!;
   const notes = notesOf(cw);
@@ -713,7 +718,11 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const partnerName = a.partner !== undefined ? person.school!.classmates[a.partner]?.name : undefined;
   const body = noteText(a, focus, pick?.level, partnerName);
   const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, given: before.given, ...(before.level !== undefined ? { level: before.level } : {}) } : undefined;
-  a.feedback = { course: c.name, teachers: c.teachers, text: feedbackWords(kind, body, prior, pick?.level), focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
+  // Prepared, and still Unready or Working: what the evaluation says held it back, the day or the craft, not "it held
+  // together" (from 2026-10-10: until then the words came from the preparation alone, and contradicted the band).
+  const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(judged) : undefined;
+  const text = held ? `It didn’t come together today: ${held.charAt(0).toLowerCase()}${held.slice(1)}. The next step, once it does: ${body}` : feedbackWords(kind, body, prior, pick?.level);
+  a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
   return showing;
 }
@@ -725,7 +734,10 @@ export function noteTaken(person: Person, a: Assignment, onDay: string): boolean
   const r = WORK.revision;
   if (focus.kind === 'dim') {
     const now = preparedParts(person, a, onDay)[focus.dim] ?? 0;
-    return now >= (a.revision?.before ?? 0) + r.dimRise || now >= r.dimEnough || a.prep.revision >= r.worked;
+    // Past enough counts only where it wasn't already (from 2026-10-10: until then a note on a part shown at 0.85 was
+    // "taken" with no work, and paid the revision's growth).
+    const before = a.revision?.before ?? 0;
+    return now >= before + r.dimRise || (now >= r.dimEnough && before < r.dimEnough) || a.prep.revision >= r.worked;
   }
   if (focus.kind === 'choice') return Boolean(questionsFor(a).find(({ q }) => q.id === focus.question)?.options.find((o) => o.id === a.answers[focus.question])?.supported);
   return a.prep.revision >= r.worked;
@@ -746,6 +758,13 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     if (!present) {
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (excused && next) { due.dueOn = next; return 1; }
+      // Excused with no meeting left: not shown, and not held against them or their partner (from 2026-10-10: until
+      // then it was missed as if they'd stayed away).
+      if (excused) {
+        due.status = 'excused';
+        if (mine) sim.notify({ category: 'school', title: `Excused: ${courseOf(course)?.name}`, body: 'You were ill on its last meeting, so it isn’t shown this term, and it isn’t held against you.', importance: 45, route: '/workspace/school' });
+        return 1;
+      }
       due.status = 'missed';
       if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); noteIncident(mate, sim.now, 'missed'); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
       if (mine) sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: 'You weren’t there when it was due, and it isn’t taken later.', importance: 60, route: '/workspace/school' });
@@ -790,7 +809,11 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
     if (!present) {
       const next = meetingsFrom(course, plus(day, 1))[0];
       if (excused && next) { revising.revision!.dueOn = next; return 1; }
+      // Not there to show it again: unexcused, the evaluation reads it as unready (from 2026-10-10: until then it was
+      // marked done in silence, and staying away was safer than showing it weak).
+      if (!excused) revising.revision!.missed = true;
       revising.status = 'done';
+      if (mine && !excused) sim.notify({ category: 'school', title: `Not Shown Again: ${courseOf(course)?.name}`, body: 'You weren’t there to show it again, and it counts as unready this term.', importance: 55, route: '/workspace/school' });
       return 1;
     }
     const applied = noteTaken(person, revising, key);
@@ -816,6 +839,20 @@ function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string, w
 }
 
 /** Work still open when its term's classes end lapses: there's no meeting left to show it. */
+/**
+ * School over (dismissed, or the degree): every piece still open lapses, every rehearsal booked is off, every ask
+ * unanswered lapses (from 2026-10-10: until then a dismissed student's work stayed open, and a partner rehearsal booked
+ * after the dismissal still ran).
+ */
+export function endCoursework(sim: Simulation, person: Person): void {
+  for (const a of courseworkOf(sim, person)?.assignments ?? []) {
+    if (a.status === 'open') a.status = 'lapsed';
+    else if (a.status === 'revising') a.status = 'done';
+    for (const r of a.rehearsals) if (r.status === 'booked') r.status = 'cancelled';
+    for (const k of a.asks ?? []) if (k.status === 'open') k.status = 'lapsed';
+  }
+}
+
 export function lapseTerm(sim: Simulation, person: Person, term: number): void {
   for (const a of courseworkOf(sim, person)?.assignments ?? []) {
     if (a.term !== term) continue;
@@ -875,9 +912,7 @@ export function orientationRefusal(sim: Simulation, person: Person, task: Orient
   if (done) return `Done on ${formatDate(done, zone())}.`;
   if (sim.now < at({ year: ORIENTATION_2026.begins.year, month: 8, day: o.day }, o.hour)) return 'Its session is still ahead on the calendar.';
   if (person.currentLocationId !== YALE_DRAMA.cityId) return 'Orientation is in New Haven.';
-  const busy = occupiedAt(sim, sim.now);
-  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  return undefined;
+  return startRefusal(sim, person, o.minutes, true);
 }
 
 // ---------------------------------------------------------------------------
@@ -913,7 +948,15 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   const m = mateRecord(mate);
   const first = mate.name.split(' ')[0];
   const mine = person.id === sim.universe.playerId;
-  const here = person.currentLocationId === YALE_DRAMA.cityId && !(person.awakeSince !== undefined && person.awakeSince > when) && !inHospital(person, when) && !laidUp(person, when);
+  // Ill (in hospital or laid up), it's excused, and they're told (from 2026-10-10: until then it cost trust and bond as
+  // standing them up, which `health.ts` says an admission never is).
+  if (inHospital(person, when) || laidUp(person, when)) {
+    r.status = 'excused';
+    remember(sim, mate, `You were ill and couldn’t rehearse ${sceneById(a.sceneId ?? '')?.play ?? templateById(a.template)!.title}`);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${mate.name.split(' ')[0]} Knows You’re Ill`, body: 'The rehearsal you booked is off, and they don’t hold it against you.', importance: 40, route: '/workspace/school' });
+    return;
+  }
+  const here = person.currentLocationId === YALE_DRAMA.cityId && !(person.awakeSince !== undefined && person.awakeSince > when);
   const theyCome = sim.rng('school.partner', person.id, `${a.id}-${r.id}`).next() < reliabilityOf(sim, person, a.partner!);
   const what = sceneById(a.sceneId ?? '')?.play ?? templateById(a.template)!.title;
   if (!here) {
@@ -1029,7 +1072,8 @@ export function registerCoursework(sim: Simulation): void {
     const cw = person ? courseworkOf(s, person) : undefined;
     const task = item.payload.task as OrientationTask;
     if (!person || !cw || cw.orientation.done[task]) return;
-    const here = person.currentLocationId === YALE_DRAMA.cityId && !(person.awakeSince !== undefined && person.awakeSince > item.at);
+    // In hospital it's missed too, to be caught up (from 2026-10-10: until then it was held at the bedside).
+    const here = person.currentLocationId === YALE_DRAMA.cityId && !(person.awakeSince !== undefined && person.awakeSince > item.at) && !inHospital(person, item.at);
     if (!here) { item.status = 'missed'; return; }
     const told = orient(s, person, task);
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: ORIENTATION.find((o) => o.task === task)!.label, body: told, importance: 45, route: '/workspace/school' });
@@ -1077,8 +1121,8 @@ export function registerCoursework(sim: Simulation): void {
     if (!option) throw new CommandError('That isn’t one of the answers.');
     if (a.prep.familiarity < 0.3) throw new CommandError('Read it first: table work is done on a text you know.');
     if (a.answers[qo.q.id] === option.id) throw new CommandError('That’s your answer already.');
-    const busy = occupiedAt(s, s.now);
-    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const busy = startRefusal(s, person, CHOOSE_MINUTES);
+    if (busy) throw new CommandError(busy);
     s.advanceTo(s.now + CHOOSE_MINUTES * 60_000);
     a.answers[qo.q.id] = option.id;
     return { supported: option.supported };

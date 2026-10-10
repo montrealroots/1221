@@ -23,6 +23,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -170,7 +171,7 @@ function close(sim: Simulation, person: Person, why: string): void {
  */
 export function studentUnavailable(person: Person, state: BenefitState): string | undefined {
   const s = person.school;
-  if (state !== 'ct' || !s || s.standing === 'graduated' || s.standing === 'dismissed') return undefined;
+  if (state !== 'ct' || !s || schoolEnded(s.standing)) return undefined;
   return 'Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.';
 }
 

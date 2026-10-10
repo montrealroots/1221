@@ -58,7 +58,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
 import { earningsOf, workedBetween } from './earnings';
-import { summerOf } from './school';
+import { schoolEnded, summerOf } from './school';
 import { citizenOf } from './documents';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
@@ -131,7 +131,7 @@ export function snapIncome(person: Person, at: Instant): { gross: Money; earned:
  */
 export function snapStudentRefusal(sim: Simulation, person: Person, at: Instant): string | undefined {
   const s = person.school;
-  if (!s || s.standing === 'graduated' || s.standing === 'dismissed') return undefined;
+  if (!s || schoolEnded(s.standing)) return undefined;
   if (!summerOf(person, at)) return undefined;
   if (workedBetween(sim, person, at - 30 * MS_DAY, at).hours >= SNAP.studentHours) return undefined;
   return 'A student in the summer without work-study or 20 hours of work a week isn’t eligible for SNAP (7 CFR 273.5).';

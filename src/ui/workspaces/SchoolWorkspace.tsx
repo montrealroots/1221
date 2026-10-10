@@ -28,7 +28,7 @@ import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_SEASON, SEAGULL_2027, SKILL
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, summerRefusal, schoolEnded } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -59,7 +59,7 @@ export function SchoolWorkspace() {
   const [tab, setTab] = useKept<SchoolTab>(tabKey('/workspace/school'), 'standing');
   const school = person.school;
   if (!school || !person.craft) return <Empty title="No School" body="This life didn’t begin at drama school." />;
-  const where = school.standing === 'graduated' ? 'Graduated.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
+  const where = school.standing === 'graduated' ? 'Graduated.' : schoolEnded(school.standing) ? 'Left the school.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
 
   const panes: Record<SchoolTab, JSX.Element> = {
     standing: <StandingPane />,
@@ -148,10 +148,10 @@ function StandingPane() {
               <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each has, ${pace} it, and half its pace is the floor`} tone={grewTooLittle ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
-              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework shown unready, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree on any standing short of dismissal.
+              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
-            <Fine>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</Fine>
+            <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
           </div>
         </Panel>
 
@@ -165,6 +165,7 @@ function StandingPane() {
                 {last.notes.map((n) => (
                   <div key={n.course} className="small"><strong>{n.teacher}</strong>, {n.course}: {n.note}</div>
                 ))}
+                <div className="xs dim">Simulated notes: the game’s words under the course’s teachers, not theirs.</div>
               </div>
             </Panel>
           ) : null;
@@ -242,7 +243,7 @@ function ClassesPane() {
   const person = useWorld((s) => s.player);
   const school = person.school!;
   // Only while at school: until 2026-09-27 a dismissed student was told of their next classes.
-  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const enrolled = !schoolEnded(school.standing);
   const p = zonedParts(sim.now, zone());
   const today = { year: p.year, month: p.month, day: p.day };
   const term = Math.min(termOf(today), YALE_DRAMA.terms - 1);
@@ -380,7 +381,7 @@ function CastingPane() {
   const calls = every.slice(0, 8);
   const onCall = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call === 'oncall');
   // This term’s, while at school: the last production stayed on the tab after the degree until 2026-09-27.
-  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const enrolled = !schoolEnded(school.standing);
   const castings = [school.casting, school.rep].filter((c): c is NonNullable<typeof c> => c !== undefined && enrolled && c.term === school.termsBegun - 1);
 
   return (
@@ -440,7 +441,7 @@ function CastingPane() {
         </Panel>
       )}
       <Fine>
-        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how the last run’s nights went. The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
+        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
       </Fine>
 
       <CabaretPanel />
@@ -543,13 +544,13 @@ function WorkPane() {
   return (
     <Panel
       title="Work-Study"
-      subtitle={`${WORK_STUDY.assignedHours} assigned hours and up to ${WORK_STUDY.electiveHours} elective a year`}
+      subtitle={`${WORK_STUDY.assignedHours} assigned hours and at least ${WORK_STUDY.electiveHours} elective a year`}
       actions={shiftRefusal(person) ? undefined : <Gated feature="school.take_shift" onClick={() => { const a = run<{ at: number }>('school.take_shift'); if (a.ok && a.value) toast(`Front of house, ${formatDateTime(a.value.at, zone())}.`, 'positive'); }}>Take An Elective Shift</Gated>}
     >
       <div className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
-          <Stat label="Elective Hours Asked For" value={`${work.electiveHours} of ${WORK_STUDY.electiveHours}`} />
+          <Stat label="Elective Hours Asked For" value={`${work.electiveHours}`} note={`The Bulletin’s minimum is ${WORK_STUDY.electiveHours}`} />
           <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
           <Stat label="Protective Equipment" value={person.school!.ppe ? 'Bought' : 'Not Yet'} note={person.school!.ppe ? `On ${formatDate(person.school!.ppe.at, zone())}, ${formatMoney(person.school!.ppe.cost, cur)}` : `Required for the Saturday crew: ${formatMoney(ppeCost(sim), cur)}, or bought at your first shift`} />
         </div>

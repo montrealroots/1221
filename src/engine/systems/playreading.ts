@@ -34,11 +34,11 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, ageOn, formatDate, formatTime, type Instant } from '../core/time';
+import { MS_DAY, ageOn, formatDate, type Instant } from '../core/time';
 import { CONTEMPORARY_PLAYS, type ContemporaryPlay } from '../content/contemporary';
 import { exerts } from './body';
-import { focusAt, ordinary } from './school';
-import { occupiedAt } from './life';
+import { focusAt, ordinary, schoolEnded } from './school';
+import { startRefusal } from './life';
 
 export const PLAYREADING = {
   minutes: { full: 120, short: 60, research: 90 },
@@ -62,7 +62,7 @@ const short = (p: ContemporaryPlay) => /short play|monologue/.test(p.form ?? '')
 /** Where a copy is to be had now, or why not. */
 export function copyAt(person: Person): { library: string } | { no: string } {
   const school = person.school;
-  if (school && school.standing !== 'graduated' && school.standing !== 'dismissed') {
+  if (school && !schoolEnded(school.standing)) {
     const cw = (school as { coursework?: { orientation: { done: { tour?: number }; behind?: boolean } } }).coursework;
     if (person.currentLocationId !== 'us-ct-newhaven') return { no: 'A copy is at the Haas Arts Library, in New Haven.' };
     if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'The library isn’t known to you yet: the tour shows you it.' };
@@ -93,17 +93,15 @@ function aspects(person: Person, p: ContemporaryPlay, at: Instant, zone: string)
   return out;
 }
 
-export function readRefusal(sim: Simulation, person: Person, playId: string): string | undefined {
+export function readRefusal(sim: Simulation, person: Person, playId: string, minutes: number = PLAYREADING.minutes.short): string | undefined {
   if (!playById(playId)) return 'There’s no such play.';
   const copy = copyAt(person);
   if ('no' in copy) return copy.no;
-  const busy = occupiedAt(sim, sim.now);
-  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  return undefined;
+  return startRefusal(sim, person, minutes);
 }
 
 export function researchRefusal(sim: Simulation, person: Person, playId: string): string | undefined {
-  const no = readRefusal(sim, person, playId);
+  const no = readRefusal(sim, person, playId, PLAYREADING.minutes.research);
   if (no) return no;
   const s = studiesOf(person)[playId];
   if (!s) return 'Read it first: research needs questions.';
@@ -120,12 +118,12 @@ export function registerPlayReading(sim: Simulation): void {
   sim.onCommand<{ playId: string }, { minutes: number; note: string }>('plays.read', (q, { sim: s }) => {
     const person = s.player;
     const id = String(q?.playId);
-    const no = readRefusal(s, person, id);
-    if (no) throw new CommandError(no);
-    const p = playById(id)!;
+    const p = playById(id);
     const all = studiesOf(person);
     const before = all[id];
-    const minutes = Math.round((short(p) ? PLAYREADING.minutes.short : PLAYREADING.minutes.full) * (before ? PLAYREADING.again : 1));
+    const minutes = p ? Math.round((short(p) ? PLAYREADING.minutes.short : PLAYREADING.minutes.full) * (before ? PLAYREADING.again : 1)) : 0;
+    const no = readRefusal(s, person, id, minutes);
+    if (no || !p) throw new CommandError(no ?? 'There’s no such play.');
     const focus = focusAt(s, person, s.now);
     s.advanceTo(s.now + minutes * 60_000);
     exerts(person, PLAYREADING.met, minutes / 60);

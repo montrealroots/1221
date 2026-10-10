@@ -168,9 +168,9 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `school.answer_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` | Drama School |
+| `school.answer_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
 | `school.approach` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-three-students.test.ts` | Drama School |
-| `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` | Drama School |
+| `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` | Drama School |
 | `school.buy_ppe` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-everyday.test.ts` | Drama School |
 | `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `coverage-gaps-runs.test.ts` `school.test.ts` | Drama School |
 | `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `condition-reach.test.ts` `journey-life.test.ts` `school.test.ts` | Drama School |
@@ -179,12 +179,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | Drama School |
-| `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `traits-connected.test.ts` | Drama School |
+| `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `school-journey-gaps.test.ts` `traits-connected.test.ts` | Drama School |
 | `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `coverage-gaps-classmates.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
-| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
+| `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-journey-gaps.test.ts` `school.test.ts` | Drama School |
 | `school.work_note` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 
 ## tax

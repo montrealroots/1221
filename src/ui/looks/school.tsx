@@ -18,6 +18,7 @@ import { CITIES } from '@/engine/content/geography';
 import { COURSES, SKILLS, YALE_DRAMA, type Course, type Skill } from '@/engine/content/school';
 import {
   STANDING_LABEL, ceilingOf, coursesOn, meanCraft, nextClasses, rankIn, termLabel, termOf, termStart, yearOfStudy,
+  schoolEnded,
 } from '@/engine/systems/school';
 import type { Person } from '@/engine/domain/model';
 import { templateById, type PrepDim } from '@/engine/content/coursework';
@@ -83,7 +84,7 @@ defineLook<TheSchool>('school', {
   seeds: () => [YALE_DRAMA.id],
   look: ({ person }, { sim }) => {
     const school = person?.school;
-    const done = !school || school.standing === 'graduated' || school.standing === 'dismissed';
+    const done = !school || schoolEnded(school.standing);
     const year = person ? yearOfStudy(person) : 1;
     const term = termNow(sim);
     const season = termStart(term).fall ? 'fall' : 'spring';
@@ -158,7 +159,7 @@ defineLook<TheCourse>('course', {
     const school = person?.school;
     const year = person ? yearOfStudy(person) : 0;
     const season = termStart(termNow(sim)).fall ? 'fall' : 'spring';
-    const enrolled = !!school && school.standing !== 'graduated' && school.standing !== 'dismissed';
+    const enrolled = !!school && !schoolEnded(school.standing);
     const taking = enrolled && course.year === year && course.terms.includes(season);
     const next = taking ? nextMeeting(sim, course) : undefined;
     const terms = course.terms.length === 2 ? 'the fall and the spring' : `the ${course.terms[0]}`;
@@ -281,7 +282,7 @@ defineLook<TheSkill>('skill', {
 
 interface TheWork { person: Person; a: Assignment }
 
-const STATUS_WORD: Record<Assignment['status'], string> = { open: 'Open', revising: 'To Show Again', done: 'Shown', missed: 'Missed', lapsed: 'Let Lapse' };
+const STATUS_WORD: Record<Assignment['status'], string> = { open: 'Open', revising: 'To Show Again', done: 'Shown', missed: 'Missed', lapsed: 'Let Lapse', excused: 'Excused' };
 
 defineLook<TheWork>('assignment', {
   gone: 'That work isn’t set, or was never yours.',

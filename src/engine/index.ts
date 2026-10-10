@@ -243,7 +243,7 @@ export function refreshMeta(sim: Simulation): void {
   // 2026-09-27 it was the title alone, Actor or Actress, whatever the life;
   // until 2026-10-09 the agency after the school, which went with the career.
   const school = player.school;
-  const where = !school ? '' : school.standing === 'graduated' ? ', Yale Drama Graduate' : school.standing === 'dismissed' ? ', Left Yale Drama' : `, Yale Drama Year ${yearOfStudy(player)}`;
+  const where = !school ? '' : school.standing === 'graduated' ? ', Yale Drama Graduate' : school.standing === 'dismissed' || school.standing === 'withheld' ? ', Left Yale Drama' : `, Yale Drama Year ${yearOfStudy(player)}`;
   sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + where + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);

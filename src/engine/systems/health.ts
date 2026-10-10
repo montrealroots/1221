@@ -31,6 +31,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { schoolEnded } from './school';
 import { payeeAccount } from './cash';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -183,14 +184,20 @@ const lastMonthKey = (at: Instant) => { const p = zonedParts(at, HOME); const d 
 const inCalifornia = (cityId: string) => CITIES.get(cityId)?.parentId === 'us-ca';
 const active = (r: { from: Instant; until?: Instant } | undefined, at: Instant) => r !== undefined && at >= r.from && (r.until === undefined || at < r.until);
 
-/** Until when the Yale Health plan covers them: while at school, and to 31 July of the year school ended. */
+/**
+ * Until when the Yale Health plan covers them: while at school; after the degree, to 31 July; after leaving without
+ * it, to the end of the term's cover they paid for, 31 January for a fall and 31 July for a spring (from 2026-10-10:
+ * until then a student dismissed in December was covered to the next 31 July, and the spring's premium was never
+ * billed). The two periods are SLATE's reading of Yale Health's student cover, billed by the term.
+ */
 export function yaleUntil(person: Person): Instant | undefined {
   const school = person.school;
   if (!school) return undefined;
-  if (school.standing !== 'graduated' && school.standing !== 'dismissed') return Number.POSITIVE_INFINITY;
+  if (!schoolEnded(school.standing)) return Number.POSITIVE_INFINITY;
   const since = school.endedAt;
   if (since === undefined) return Number.POSITIVE_INFINITY;
   const p = zonedParts(since, HOME);
+  if (school.standing !== 'graduated' && (p.month >= 8 || p.month === 1)) return firstOf(p.month >= 8 ? p.year + 1 : p.year, 2);
   return firstOf(p.month >= 8 ? p.year + 1 : p.year, 8);
 }
 

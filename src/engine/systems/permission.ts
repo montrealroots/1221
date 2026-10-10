@@ -15,6 +15,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, formatDate, type Instant } from '../core/time';
@@ -65,7 +66,7 @@ export function programEnd(person: Person): Instant | undefined {
 }
 
 /** Whether they're a student still, at school. */
-const studying = (person: Person) => person.school !== undefined && person.school.standing !== 'graduated' && person.school.standing !== 'dismissed';
+const studying = (person: Person) => person.school !== undefined && !schoolEnded(person.school.standing);
 
 // ---------------------------------------------------------------------------
 // OPT

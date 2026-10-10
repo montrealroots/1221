@@ -106,7 +106,7 @@ export function BankMoves() {
                 {links.length > 0 && <p className="xs dim" style={{ margin: 0 }}>{links.join('. ')}.</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'end' }}>
                   {a.id !== person.primaryAccountId && (
-                    <Gated feature="bank.set_primary" className="btn btn-sm" onClick={() => { const r = run<{ unchanged: string[] }>('bank.set_primary', { accountId: a.id }); if (r.ok) toast(`${a.name} is primary. ${r.value?.unchanged.length ? 'Nothing set up elsewhere moved.' : ''}`, 'positive'); }}>
+                    <Gated feature="bank.set_primary" className="btn btn-sm" onClick={() => { const r = run<{ unchanged: string[] }>('bank.set_primary', { accountId: a.id }); if (r.ok) toast(`${a.name} is primary. ${r.value?.unchanged.length ? 'What was set up elsewhere stays there.' : ''}`, 'positive'); }}>
                       Make Primary
                     </Gated>
                   )}

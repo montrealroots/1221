@@ -51,7 +51,9 @@ import { bondMove, keyOf, type Classmate } from './school';
 import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
-import { occupiedAt } from './life';
+import { startRefusal } from './life';
+import { inHospital } from './health';
+import { laidUp } from './injury';
 import { exerts } from './body';
 
 export const CLASS = {
@@ -317,8 +319,8 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
   if (m.kind === 'disagreement' && (!a || (a.status !== 'open' && a.status !== 'revising'))) return 'That work is finished.';
   if (m.kind === 'help' && choice === 'help') {
     if (person.currentLocationId !== YALE_DRAMA.cityId) return 'They’re in New Haven.';
-    const busy = occupiedAt(sim, sim.now);
-    if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
+    const busy = startRefusal(sim, person, CLASS.help.minutes, true);
+    if (busy) return busy;
   }
   if (m.kind === 'study' && choice === 'yes') {
     const when = m.when!;
@@ -337,9 +339,7 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
   // In New Haven. After the degree they were in the town the person they are lived in (from 2026-10-08), until the
   // people they are went in the scope reset of 2026-10-09 (`systems/people.ts`).
   if (person.currentLocationId !== YALE_DRAMA.cityId) return `${first(mate)} is in ${CITIES.require(YALE_DRAMA.cityId).name}.`;
-  const busy = occupiedAt(sim, sim.now);
-  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  return undefined;
+  return startRefusal(sim, person, CLASS.amends.minutes, true);
 }
 
 export function registerClassmates(sim: Simulation): void {
@@ -446,6 +446,13 @@ export function registerClassmates(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person?.school) return;
     const mate = person.school.classmates[Number(item.payload.mate)]!;
+    // In hospital or laid up it's excused, and they hear why (from 2026-10-10: until then it counted as standing them up,
+    // which `health.ts` says an admission never is).
+    if (inHospital(person, item.at) || laidUp(person, item.at)) {
+      item.status = 'missed';
+      remember(s, mate, 'You were ill and couldn’t run lines');
+      return;
+    }
     const here = person.currentLocationId === YALE_DRAMA.cityId && !(person.awakeSince !== undefined && person.awakeSince > item.at);
     if (!here) {
       item.status = 'missed';
