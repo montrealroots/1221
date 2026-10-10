@@ -1,3 +1,12 @@
+# Read First: Merged To Main, With School, Banking And Papers Finished End To End, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `55c46cd5` to `claude/school-bank-papers-complete`. Nothing was force-pushed. The stash and the three worktrees were left untouched.
+
+- **Not deployed.** Schema 94 is unchanged.
+- **Still the owner's:** decisions #1–#3 from `docs/verification/COVERAGE-GAPS.md`, the 16 deferred items, and the eight decisions listed in the section below.
+
+---
+
 # Read First: School, Banking And Papers Finished End To End, 2026-10-10
 
 The owner's brief was "Finish SLATE's School, Banking And Papers Features End To End". The work started on `main` at
