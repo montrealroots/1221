@@ -60,7 +60,10 @@ for (const j of owed) {
   if (ran >= max) break;
   const started = new Date().toISOString();
   const t0 = Date.now();
-  const r = spawnSync('npx', ['vite-node', j.tool, '--', ...j.args], { encoding: 'utf8', shell: true, maxBuffer: 64 * 1024 * 1024 });
+  // Each argument quoted for the shell (from 2026-10-10): until then a profile named with spaces reached the tool as its
+  // first word, and every lives job ran the first profile under its own name.
+  const quoted = j.args.map((a) => (/[\s,:]/.test(a) ? `"${a}"` : a));
+  const r = spawnSync('npx', ['vite-node', j.tool, '--', ...quoted], { encoding: 'utf8', shell: true, maxBuffer: 64 * 1024 * 1024 });
   const lines = (r.stdout ?? '').split('\n').filter((l) => l.startsWith('{'));
   const results = lines.length ? lines.map((l) => { try { return JSON.parse(l); } catch { return { error: 'unparsed line' }; } }) : [{ error: `no result (exit ${r.status}): ${(r.stderr ?? '').slice(-400)}` }];
   const line = { job: j.id, tool: j.tool, args: j.args, commit, tree, dirty, started, ended: new Date().toISOString(), seconds: Math.round((Date.now() - t0) / 1000), results };

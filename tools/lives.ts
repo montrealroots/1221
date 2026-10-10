@@ -205,7 +205,11 @@ if (flag('why')) {
   const at = process.argv.indexOf('--seed');
   const seed = at > 0 ? process.argv[at + 1]! : 'lives-0';
   const he = flag('he');
-  const named = PROFILES.find((p) => p.name === process.argv[process.argv.indexOf('--profile') + 1]);
+  const asked = process.argv.indexOf('--profile') > 0 ? process.argv[process.argv.indexOf('--profile') + 1] : undefined;
+  const named = PROFILES.find((p) => p.name === asked);
+  // A profile asked for and not found is an error, not the first profile (from 2026-10-10: until then it fell back in
+  // silence, and a run reported under one name played another).
+  if (asked !== undefined && !named) throw new Error(`No profile named "${asked}": ${PROFILES.map((p) => p.name).join('; ')}`);
   const r = play(he ? { name: 'actor', config: { homeRegionId: 'us-ny-newyork', pronouns: 'he/him' }, play: 'attentive' } : named ?? PROFILES[0]!, seed);
   console.log(JSON.stringify(r));
 } else if (flag('pairs')) {
