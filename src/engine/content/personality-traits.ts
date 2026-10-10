@@ -76,7 +76,7 @@ export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   illnessToll: 'How hard an illness hits, and how long an injury takes to mend',
   // Read by the return's deduction of a work's costs (`figuresFor`), and nothing in a school life is one: said so here from
   // 2026-10-10, as the research that day found no receipt a student's return can use (docs/research/world/research-coverage-gaps.json).
-  receipts: 'How many of the work’s costs you keep a receipt for, which the tax return deducts. Nothing a student pays is a cost of the work, so it decides nothing now',
+  receipts: 'How many of the work’s costs you keep a receipt for, which the tax return deducts. A student pays no cost of the work, so it decides nothing now',
   bondWarmth: 'How fast you warm to a classmate',
   bondWound: 'How hard a slight from a classmate cuts',
   company: 'How much friends in a cast lift you, and how much their absence weighs',

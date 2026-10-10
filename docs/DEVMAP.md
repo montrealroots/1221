@@ -20,7 +20,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `bank.claim_unclaimed` | `src/engine/systems/accountlife.ts` | `BankAccountLife.tsx` | `accountlife.test.ts` | Your Bank |
 | `bank.close_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `lending.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.debit_overdraft` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `lending.test.ts` | Your Bank |
-| `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
+| `bank.new_number` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `coverage-gaps-number.test.ts` `security.test.ts` | Your Bank |
 | `bank.open_savings` | `src/engine/systems/banking.ts` | `BankWorkspace.tsx` | `accountlife.test.ts` `banking.test.ts` `money-fixes.test.ts` | Your Bank |
 | `bank.open_term` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `accountlife.test.ts` `arrears.test.ts` `journey-money.test.ts` `lending.test.ts` | Your Bank |
 | `bank.pay_collections` | `src/engine/systems/lending.ts` | `BankLending.tsx` | `arrears.test.ts` | Your Bank |
@@ -41,7 +41,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `benefits.assistance` | `src/engine/systems/assistance.ts` | `PapersWorkspace.tsx` | `assistance.test.ts` | Cover, Benefits And Returns |
-| `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `homebenefits.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
+| `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `coverage-gaps-papers.test.ts` `homebenefits.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
 | `benefits.ei_register` | `src/engine/systems/eiself.ts` | `PapersWorkspace.tsx` | `cabenefits.test.ts` | Cover, Benefits And Returns |
 
 ## calendar
@@ -49,8 +49,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `calendar.cancel` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `journey-life.test.ts` `plans.test.ts` `smoke.test.ts` | Your Own Plans |
-| `calendar.schedule` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `day-bounds.test.ts` `journey-life.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `plans.test.ts` `simulation.test.ts` `smoke.test.ts` | Your Own Plans |
-| `calendar.skip` | `src/engine/world/plans.ts` | `TimeControls.tsx` | `plans.test.ts` | What’s Coming |
+| `calendar.schedule` | `src/engine/world/plans.ts` | `CalendarWorkspace.tsx` | `coverage-gaps-life.test.ts` `day-bounds.test.ts` `journey-life.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `plans.test.ts` `simulation.test.ts` `smoke.test.ts` | Your Own Plans |
+| `calendar.skip` | `src/engine/world/plans.ts` | `TimeControls.tsx` | `coverage-gaps-life.test.ts` `plans.test.ts` | What’s Coming |
 
 ## card
 
@@ -58,7 +58,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `card.apply` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cardoffers.test.ts` `cards.test.ts` `several-cards.test.ts` | Your Bank |
 | `card.close` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `cards.test.ts` `several-cards.test.ts` | Your Bank |
-| `card.dispute` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `security.test.ts` | Your Bank |
+| `card.dispute` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `coverage-gaps-number.test.ts` `security.test.ts` | Your Bank |
 | `card.lock` | `src/engine/systems/security.ts` | `BankSecurity.tsx` | `journey-money.test.ts` `security.test.ts` | Your Bank |
 | `card.money_transfer` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` | Your Bank |
 | `card.plan` | `src/engine/systems/cardoffers.ts` | `BankCardOffers.tsx` | `cardoffers.test.ts` | Your Bank |
@@ -70,7 +70,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `card.set_auto_raise` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
 | `card.set_everyday` | `src/engine/systems/credit.ts` | `BankCard.tsx` | `journey-money.test.ts` `several-cards.test.ts` | Your Bank |
 | `card.set_over_limit` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` | Your Bank |
-| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `journey-money.test.ts` `money-fixes.test.ts` `several-cards.test.ts` | Your Bank |
+| `card.set_statement_day` | `src/engine/systems/cardlife.ts` | `BankCard.tsx` | `cardlife.test.ts` `coverage-gaps-statements.test.ts` `journey-money.test.ts` `money-fixes.test.ts` `several-cards.test.ts` | Your Bank |
 
 ## cash
 
@@ -87,11 +87,11 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | Passports And ID |
 | `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `journey-life.test.ts` | Passports And ID |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
-| `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | Cover, Benefits And Returns |
+| `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `journey-life.test.ts` | Cover, Benefits And Returns |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `idreplace.test.ts` | Passports And ID |
-| `documents.replace_license` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-life.test.ts` `papers-fixes.test.ts` | Passports And ID |
+| `documents.replace_license` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` | Passports And ID |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `documents.test.ts` `idreplace.test.ts` `journey-life.test.ts` `papers-fixes.test.ts` | Passports And ID |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
 
@@ -122,8 +122,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
 | `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicaluis.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
 | `health.extra_supply` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
-| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
-| `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` | Cover, Benefits And Returns |
+| `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` `coverage-gaps-life.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
+| `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `commands-kept.test.ts` `coverage-gaps-life.test.ts` | Cover, Benefits And Returns |
 | `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `life-fixes.test.ts` `therapy.test.ts` | Cover, Benefits And Returns |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` `life-fixes.test.ts` | Cover, Benefits And Returns |
 
@@ -131,7 +131,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `fitness.test.ts` `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `coverage-gaps-life.test.ts` `fitness.test.ts` `journey-life.test.ts` `look-after.test.ts` `looking-after.test.ts` `traits-connected.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `integrity.test.ts` `journey-life.test.ts` `life-fixes.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## pension
@@ -166,7 +166,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.approach` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.ask_partner` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `partners.test.ts` | Drama School |
 | `school.buy_ppe` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-everyday.test.ts` | Drama School |
-| `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `school.test.ts` | Drama School |
+| `school.cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` `day.tsx` | `coverage-gaps-runs.test.ts` `school.test.ts` | Drama School |
 | `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `condition-reach.test.ts` `journey-life.test.ts` `school.test.ts` | Drama School |
 | `school.cancel_rehearsal` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` | Drama School |
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
@@ -175,7 +175,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.orientation` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `journey-life.test.ts` | Drama School |
 | `school.prepare` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `approaches.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `mastery-integration.test.ts` `partners.test.ts` `traits-connected.test.ts` | Drama School |
 | `school.read_feedback` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
-| `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
+| `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `coverage-gaps-classmates.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
