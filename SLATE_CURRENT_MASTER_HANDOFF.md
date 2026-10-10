@@ -1,3 +1,97 @@
+# Read First: The Yale Student, Banking And Papers Completed, 2026-10-10
+
+The owner's brief was "Complete SLATE's Yale Student, Banking And Papers Experience". The work started on `main` at `af99bf6e`.
+
+- **Branch:** `claude/student-experience`, pushed.
+- **Not merged:** that's the owner's word to give.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged. Every new field is optional, with a fallback for saves from before:
+  - `courses`, `registeredAt`, `awaitingDegree`, `withdrewEarly`;
+  - `ssn`;
+  - `lowSentFor`, `upcoming`, `warned`;
+  - `depositChange.from`;
+  - `cabaret.withdrawn`;
+  - `Plastic.stopped: 'new'`.
+
+  A save from before keeps running as it ran:
+  - `registered` reads its orientation record;
+  - an old `lowSent` is read once;
+  - a term with no course records isn't judged by them.
+
+**Read first:** `docs/verification/STUDENT-MATRIX.md`.
+- It's generated from `docs/verification/student-matrix.json` by `node tools/student-matrix.mjs --write`.
+- The gate's new sixteenth check (`--check`) fails a row whose cited test or command is gone.
+- 31 of 31 rows are evidenced: School 15, Banking 9, Papers 7.
+- The 16 deferred items are listed apart and not counted.
+
+Then read:
+- `docs/verification/school-journey-audit.json` and `papers-bank-audit.json`: the gaps found at the start;
+- `docs/research/world/research-yale-student-policies.json` and `research-student-status.json`: the research behind the rules.
+
+**What changed, by commit:**
+
+- `5fc6c119`
+  - Running lines works on the scene you share with that classmate, chosen by you.
+  - Alerts cover every account and every payment due from it (`systems/obligations.ts`).
+  - A warning ends a Cabaret show, as the Bulletin's rule (p.148) requires.
+- `c8e43db9`
+  - Dismissal, withdrawal (new, `school.withdraw`), a withheld degree and graduation are distinct exits:
+    - F-1 grace: none, 15 days, 15 days and 60 days;
+    - OPT: only after the degree;
+    - Yale Health: 30 days after leaving, cancelled by day 15 of the term, or to 31 July after the last term.
+  - SSN status (`systems/taxid.ts`).
+  - Bank eligibility by SSN and status:
+    - Capital One and Citi online: US citizens only, since permanent residence isn't modeled;
+    - Chase, Bank of America and Wells Fargo: in a branch, for an F-1 student without an SSN.
+  - An F-1 student files a 1040-NR with Form 8843: no FICA, 14% withheld on the scholarship.
+  - Unemployment needs permission to work.
+  - Registration gates classes, shifts and the SSN application.
+  - Workers' comp follows Connecticut's rules for school work.
+  - Banking fixes:
+    - pending card payments now block closing (a sign fix);
+    - closing remittances skip the customer's transfer limits;
+    - a switch closes the account it named;
+    - a savings account at each bank;
+    - debit cards at every bank can be locked and reported;
+    - closed accounts' statements end at the closing;
+    - Yale payroll's 7-day deposit lead.
+  - Papers and health fixes: a lost passport keeps the F-1; enrolment refused while Yale Health covers; Yale counseling ends with Yale cover; a student's SNAP case closes; a replacement ID card drops the old theft record.
+- `1f08d8e8`
+  - Course records (`systems/courserecord.ts`): Pass/Incomplete/Fail per course, the labs included.
+  - The degree needs every course passed. An Incomplete at Commencement holds the degree.
+  - The faculty session sets out the School's policies, kept on the Standing tab.
+- `e286de53`
+  - Refused actions show their reason.
+  - Two cross-system journeys (`tests/cross-journeys.test.ts`).
+  - Social Security taxed under IRC 86.
+- `eb081937`: the matrix, and its check in the gate.
+- `b7f2805f`: an Incomplete is made up a week of the course per session, and can be extended once. A played life showed the first rule cost a diligent, ill student the degree.
+- `2e452fb5`: the suites on `b7f2805f`.
+
+**Verified on `b7f2805f` (tree `05f11da9`):**
+- Gate exit 0: 1,559 tests in 143 files, and all 16 checks.
+- The 18 lives: 15 graduated, and the 3 autopilot lives were dismissed, as kept. 0 breaches, 0 unbalanced ledgers.
+- Mastery: 29 of 29 targets full, and full after a reload. Fitness and condition reran.
+- The tests caught all six mutations tried this pass.
+- UI checked at 1440 and 390 on a played international student: no overflow, no page errors.
+
+**Decisions made here, for the owner to see:**
+1. A course passes at three quarters of its meetings. A make-up session is worth a week of the course. An Incomplete extends once. All are SLATE's estimates where the Bulletin leaves it to the faculty.
+2. A withheld degree gets 15 days of F-1 grace, as an authorized withdrawal does, and no OPT.
+3. Dismissal gets Yale Health for 30 days, read from the withdrawal rule.
+4. Capital One and Citi online stay closed to every noncitizen, because permanent residence isn't modeled.
+
+**Still the owner's:** decisions #1–#3 from `COVERAGE-GAPS.md`, and the 16 deferred items. Of those, `pension.social_security` sits in `socialsecurity.ts`, which this pass touched (taxation and nonresidents). That item stays deferred and is not claimed fixed.
+
+**Open:** the matrix's Remaining Limitation column. The chief ones:
+- no leave of absence, repeated course or added semester;
+- the excused work-study hours' conversion to grant aid;
+- Yale's 19-hour weekly cap;
+- a pending switch can't be cancelled;
+- overdraft and loans come from the primary bank only.
+
+---
+
 # Read First: Merged To Main, With Banking Realism And The School Journey, 2026-10-10
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `a2bf025d` to `claude/bank-school` at `4bf767a5`. Nothing was force-pushed. The stash and the three worktrees were left untouched.
