@@ -29,6 +29,7 @@ import { loadSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import type { NewSaveConfig } from '../src/engine/world/bootstrap';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
+import { writeFileSync } from 'node:fs';
 import { MS_DAY, MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { breaches } from '../src/engine/core/invariants';
 import { readiness, suggestedSleep } from '../src/engine/systems/life';
@@ -136,6 +137,9 @@ function play(profile: Profile, seed: string): Result {
   }
   if (flag('why')) { const avg = (k: number) => Math.round(ready.reduce((a, r) => a + r[k]!, 0) / Math.max(1, ready.length)); console.log('AT NINE', ['readiness', 'energy', 'stress', 'debt', 'nourishment', 'morale', 'condition'].map((n, k) => n + ' ' + avg(k)).join(', ')); }
   if (flag('why')) for (const h of sim.player.school?.history ?? []) console.log('TERM', h.term, h.standing, h.reason.slice(0, 260), Math.round(h.attendance * 100), h.growth.toFixed(2), h.classGrowth.toFixed(2), h.work ?? '', JSON.stringify(sim.player.school?.tally));
+  // The life as played, written where `--save` says (from 2026-10-10), for the UI pass to open in the built app.
+  const saveTo = process.argv.indexOf('--save');
+  if (saveTo > 0) writeFileSync(process.argv[saveTo + 1]!, serialise(sim.universe));
   const school = sim.player.school;
   const parts: Record<string, number> = {};
   for (const c of school?.credits ?? []) parts[c.size ?? 'unsized'] = (parts[c.size ?? 'unsized'] ?? 0) + 1;

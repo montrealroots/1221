@@ -27,7 +27,7 @@ import { limitFor } from '@/engine/systems/cardlife';
 import { useState } from 'react';
 import { inTheBank } from '@/engine/systems/spending';
 import { PENDING } from '@/engine/content/pending';
-import { FIRST_LATE_FEE } from '@/engine/content/latefees';
+import { FIRST_LATE_FEE, US_SAFE_HARBOR } from '@/engine/content/latefees';
 import { bankOf, inSaveMoney } from '@/engine/systems/banking';
 import { CARDS } from '@/engine/content/cards';
 
@@ -168,7 +168,13 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const short = charge ? 'the statement' : 'the minimum';
   if (bankIso === 'US') {
     const asked = state.statementBalance > 0 ? minimumDue(sim, state.statementBalance, terms, state.statementInterest, state.statementPlanDue) : undefined;
-    lines.push(`A payment short of ${short} costs ${money(asked !== undefined ? Math.min(terms.lateFee, asked) : terms.lateFee)}${asked === undefined || asked >= terms.lateFee ? ', or the minimum if that’s less' : ', the minimum, which the law holds it to'}.${card.bankId && FIRST_LATE_FEE[card.bankId] ? ` The first in ${FIRST_LATE_FEE[card.bankId]!.withinPeriods} billing periods costs ${money(inSaveMoney(sim, FIRST_LATE_FEE[card.bankId]!.first, 'USD'))}.` : ''} Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
+    // As the due date charges it (`systems/credit.ts`): the bank's fee, its lower first fee where it has one, each held to
+    // the safe harbor, and never over the minimum. Until 2026-10-10 this said the bank's flat fee, which the harbor cut.
+    const tier = card.bankId ? FIRST_LATE_FEE[card.bankId] : undefined;
+    const first = Math.min(tier ? Math.min(terms.lateFee, inSaveMoney(sim, tier.first, 'USD')) : terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.first, 'USD'));
+    const again = Math.min(terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.repeat, 'USD'));
+    const capped = (fee: number) => money(asked !== undefined ? Math.min(fee, asked) : fee);
+    lines.push(`A payment short of ${short} costs ${capped(first)} the first time and ${capped(again)} again within ${tier?.withinPeriods ?? US_SAFE_HARBOR.withinPeriods} billing periods, never more than the minimum. An autopay that bounces and leaves it short is charged that and no returned payment’s fee beside it. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
   } else {
     const rule = terms.lateRule;
     const costs = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? 'the minimum' : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? ', never more than the minimum' : ''}` : money(terms.lateFee);

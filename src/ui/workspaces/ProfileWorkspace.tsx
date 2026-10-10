@@ -25,6 +25,7 @@ import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import type { Personality } from '@/engine/domain/model';
+import { theCountry } from '@/engine/systems/documents';
 
 /** Each disposition, as creation names it, and what it does in play. */
 const DISPOSITIONS: readonly [keyof Personality, string, string][] = [
@@ -146,7 +147,7 @@ function IdentityPanel() {
             <Stat label="Full Name" value={full} note={person.displayName !== full ? `Called ${person.displayName}` : 'Called by it'} />
             <Stat label="Pronouns" value={person.pronouns} note={person.performerTitle === 'actress' ? 'Billed as an actress' : 'Billed as an actor'} />
             <Stat label="Age" value={String(ageOn(person.birthInstant, sim.now, sim.zone))} note={`Born ${formatDate(person.birthInstant, sim.zone)}`} />
-            <Stat label="From" value={home?.name ?? 'Not On The Map'} note={country ? `A citizen of ${country.name}` : undefined} />
+            <Stat label="From" value={home?.name ?? 'Not On The Map'} note={country ? `A citizen of ${theCountry(country.name)}` : undefined} />
             <Stat label="School" value={school ? (school.standing === 'graduated' ? 'Graduated' : `Year ${yearOfStudy(person)}`) : 'None'} note={school ? `Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}` : undefined} />
             <Stat label="Living In" value={CITIES.get(person.currentLocationId)?.name ?? '—'} />
           </div>
@@ -363,7 +364,7 @@ function JourneyPanel() {
   return (
     <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
       <div className="col gap-3">
-        {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}`).join('; ')}.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
+        {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
         {terms.length > 0 && (
           <LookRegion className="table-scroll">
             <table>

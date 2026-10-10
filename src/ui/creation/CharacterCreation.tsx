@@ -255,8 +255,12 @@ function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (
   const imperial = countryOfPlace(config.homeRegionId) === 'us';
   const cm = config.heightCm;
   const kg = config.weightKg;
-  const feet = cm ? Math.floor(cm / 30.48) : undefined;
-  const inches = cm ? Math.round((cm / 2.54) - (feet ?? 0) * 12) : undefined;
+  // Whole inches first, then feet and the inches over (from 2026-10-10: until then 9 feet read back as 8 feet 12 inches,
+  // the centimeters' rounding falling just under the foot).
+  const allInches = cm ? Math.round(cm / 2.54) : undefined;
+  const feet = allInches !== undefined ? Math.floor(allInches / 12) : undefined;
+  const inches = allInches !== undefined ? allInches % 12 : undefined;
+  const feetAndInches = (n: number) => `${Math.floor(n / 12)}′${n % 12}″`;
   const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
   const setHeight = (value: number | undefined) => setConfig((c) => ({ ...c, heightCm: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
   const setWeight = (value: number | undefined) => setConfig((c) => ({ ...c, weightKg: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
@@ -300,7 +304,7 @@ function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (
           {cm === undefined || kg === undefined
             ? 'Give both, or neither: with one of them, the body is drawn from where you were born.'
             : imperial
-              ? `Out of range, so the body will be drawn instead: a height from ${Math.ceil(BODY_GIVEN.heightCm[0] / 2.54)} to ${Math.floor(BODY_GIVEN.heightCm[1] / 2.54)} inches (3′11″ to 7′6″), and a weight from ${Math.ceil(BODY_GIVEN.weightKg[0] / 0.45359237)} to ${Math.floor(BODY_GIVEN.weightKg[1] / 0.45359237)} pounds.`
+              ? `Out of range, so the body will be drawn instead: a height from ${feetAndInches(Math.ceil(BODY_GIVEN.heightCm[0] / 2.54))} to ${feetAndInches(Math.floor(BODY_GIVEN.heightCm[1] / 2.54))}, and a weight from ${Math.ceil(BODY_GIVEN.weightKg[0] / 0.45359237)} to ${Math.floor(BODY_GIVEN.weightKg[1] / 0.45359237)} pounds.`
               : `Out of range, so the body will be drawn instead: a height from ${BODY_GIVEN.heightCm[0]} to ${BODY_GIVEN.heightCm[1]} centimeters, and a weight from ${BODY_GIVEN.weightKg[0]} to ${BODY_GIVEN.weightKg[1]} kilograms.`}
         </p>
       )}
