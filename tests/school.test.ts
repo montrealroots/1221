@@ -297,7 +297,12 @@ describe('the calendar', () => {
     expect(isClassDay(0, day('2026-09-08'))).toBe(true);
     expect(isClassDay(0, day('2026-09-30'))).toBe(false);
     expect(isClassDay(0, day('2026-10-22'))).toBe(false);
-    expect(isClassDay(0, day('2026-11-25'))).toBe(false);
+    // The Wednesday before Thanksgiving and the Monday after the work period are class days (from 2026-10-10).
+    expect(isClassDay(0, day('2026-11-25'))).toBe(true);
+    expect(isClassDay(0, day('2026-11-26'))).toBe(false);
+    expect(isClassDay(0, day('2026-10-26'))).toBe(true);
+    expect(isClassDay(1, day('2027-03-15'))).toBe(true);
+    expect(isClassDay(1, day('2027-04-01'))).toBe(true);
     expect(isClassDay(0, day('2026-12-12'))).toBe(false);
     expect(isClassDay(1, day('2027-03-10'))).toBe(false);
     expect(isShiftDay(0, day('2026-09-05'))).toBe(true);
@@ -465,15 +470,13 @@ describe('work-study', () => {
     expect(sim.player.school!.workStudy.electiveHours).toBe(0);
   });
 
-  it('takes elective evenings of four hours on request, up to fifty hours a year', () => {
+  it('takes elective evenings of four hours on request, past fifty hours a year, the Bulletin’s fifty being part of a minimum', () => {
     const sim = life('elective');
     const first = sim.execute<{ at: number }>({ kind: 'school.take_shift', payload: {} });
     expect(first.ok).toBe(true);
     expect(zonedParts(first.value!.at, zone)).toMatchObject({ hour: 19 });
     expect(sim.player.school!.workStudy.electiveHours).toBe(4);
-    sim.player.school!.workStudy.electiveHours = WORK_STUDY.electiveHours - 2;
-    expect(sim.execute({ kind: 'school.take_shift', payload: {} }).ok).toBe(false);
-    sim.player.school!.workStudy.electiveHours = WORK_STUDY.electiveHours - 4;
+    sim.player.school!.workStudy.electiveHours = WORK_STUDY.electiveHours + 2;
     expect(sim.execute({ kind: 'school.take_shift', payload: {} }).ok).toBe(true);
     const evenings = pending(sim, SHIFT_KIND).filter((i) => i.payload.elective === true).map((i) => i.at);
     expect(evenings).toHaveLength(2);
@@ -537,7 +540,7 @@ describe('casting', () => {
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const mine = pending(sim, CALL_KIND).filter((c) => c.payload.which !== 'rep');
     const shows = mine.filter((c) => c.payload.call === 'performance');
-    expect(shows.map((c) => zonedParts(c.at, zone))).toMatchObject([{ month: 5, day: 4, hour: 19 }, { month: 5, day: 6 }, { month: 5, day: 9 }, { month: 5, day: 12 }]);
+    expect(shows.map((c) => zonedParts(c.at, zone))).toMatchObject([{ month: 5, day: 4, hour: 20 }, { month: 5, day: 6 }, { month: 5, day: 9 }, { month: 5, day: 12 }]);
     const rehearsals = mine.filter((c) => c.payload.call === 'rehearsal');
     expect(rehearsals.length).toBe(12);
     expect(rehearsals.every((c) => { const wd = new Date(c.at).getUTCDay(); return wd >= 2 && wd <= 5; })).toBe(true);
@@ -872,8 +875,8 @@ describe('the curriculum’s labs', () => {
     const npl = labDays(1)!;
     expect(npl.days[0]).toEqual({ year: 2027, month: 3, day: 16 });
     expect(npl.days.every((d) => { const wd = new Date(Date.UTC(d.year, d.month - 1, d.day)).getUTCDay(); return wd >= 2 && wd <= 5; })).toBe(true);
-    // Three weeks of Tuesday to Friday, less the work period of 30 March to 1 April.
-    expect(npl.days.length).toBe(9);
+    // Three weeks of Tuesday to Friday, less the work period of 30 and 31 March (to 1 April until 2026-10-10).
+    expect(npl.days.length).toBe(10);
     const solo = labDays(5)!;
     expect(solo).toMatchObject({ name: LABS.creator.name, showing: true });
     expect(solo.days).toHaveLength(1);

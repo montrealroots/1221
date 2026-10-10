@@ -37,10 +37,15 @@ export const YALE_DRAMA: School = {
   program: 'Acting',
   degree: 'MFA',
   cityId: 'us-ct-newhaven',
+  /** The class SLATE seats: the school admits 15 to 17 actors a year (its admissions FAQ), and SLATE takes 16. */
   classSize: 16,
   terms: 6,
   dean: { name: 'Evan Yionoulis', title: 'Dean And Artistic Director Of Yale Repertory Theatre', since: '2026-07-01' },
   actingChair: { name: 'Tamilla Woodard', title: 'Chair Of Acting' },
+  /**
+   * SLATE's youngest admit, from the MFA's bachelor's degree. A simplification: the program also admits actors
+   * without a degree to the Certificate in Drama, five years out of high school, and an early graduate could be younger.
+   */
   minimumAge: 21,
   source: 'Yale Bulletin, David Geffen School of Drama 2026–2027 (https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf); https://www.drama.yale.edu/',
 };
@@ -225,13 +230,16 @@ export const CLASSES_2026_27 = {
     ['2026-09-07', '2026-09-07'], // Labor Day
     ['2026-09-30', '2026-09-30'], // Community Day
     ['2026-10-12', '2026-10-12'], // Indigenous Peoples’ Day
-    ['2026-10-20', '2026-10-26'], // work period
+    // Corrected 2026-10-10 against the 2026–27 Bulletin, where classes resume the day after each range ends and a
+    // recess begins at midnight: the work period ran to the 26th, the fall recess from the 25th to the 30th, the spring
+    // recess to the 15th and the spring work period to 1 April, a class day each.
+    ['2026-10-20', '2026-10-25'], // work period
     ['2026-11-03', '2026-11-03'], // Community Day
-    ['2026-11-25', '2026-11-30'], // fall recess
+    ['2026-11-26', '2026-11-29'], // fall recess
     ['2027-01-18', '2027-01-18'], // Martin Luther King Jr. Day
     ['2027-02-18', '2027-02-19'], // Community Days
-    ['2027-03-06', '2027-03-15'], // spring recess
-    ['2027-03-30', '2027-04-01'], // work period
+    ['2027-03-06', '2027-03-14'], // spring recess
+    ['2027-03-30', '2027-03-31'], // work period
   ] as readonly (readonly [string, string])[],
 };
 
@@ -270,12 +278,14 @@ export const SEAGULL_2027 = {
  * The Yale Cabaret, 217 Park Street: the students' own theater, run by a new
  * team of them each season (2026–27 is its 59th). A new show each production
  * week, Thursday to Saturday at eight, and Friday and Saturday at eleven too;
- * unpaid, and outside the curriculum. An acting student needs the chair's
+ * outside the curriculum (and unpaid for a performer here, SLATE's reading:
+ * the Cabaret offers paid elective work-study, which SLATE doesn't keep). An acting student needs the chair's
  * approval first, nobody on academic warning may take part, and a conflict
  * with classes, casting or work-study is never resolved in the Cabaret's
  * favor (the Bulletin, 2026–27). The rehearsals, nine weekday evenings of
  * five hours before the production week, and one show a term, are SLATE's
- * estimate; 2026–27's dates weren't yet published.
+ * estimate; Season 59 opened on 17 September 2026, which SLATE's own
+ * production weeks don't follow.
  */
 export const YALE_CABARET = {
   firstSeason: 59,
@@ -291,8 +301,9 @@ export const YALE_CABARET = {
 /**
  * The Yale Summer Cabaret, the students' summer theater in New Haven, three
  * shows a summer: 2026's ran 25 to 28 June, 23 July to 1 August and 13 to
- * 22 August, evenings at eight and Saturdays at two. A student continuing to
- * the next year may join its company. Later summers' dates, the three weeks'
+ * 22 August. Its curtain times (evenings at eight, Saturdays at two), a
+ * student continuing to the next year joining its company, the April 30
+ * deadline to join, later summers' dates, the three weeks'
  * afternoon rehearsals before each opening, the company being open to a
  * student in good standing, and its stipend of $375 a week, are SLATE's
  * estimate: how the company is chosen and what it pays aren't published.
@@ -314,8 +325,9 @@ export const SUMMER_CABARET = {
  * by assignment, the dean approving: "developmental needs of each student",
  * the needs of the project and "a balance of collaborative opportunity"
  * (the Bulletin, 2026–27). First-years are cast only from the second
- * semester. Each year: three directors' thesis productions, cast from the
- * second and third years, 2026–27's announced (Machinal from 9 October,
+ * semester. Each year (which years are cast in each is SLATE's reading, not
+ * published): three directors' thesis productions, cast from the second and
+ * third years, 2026–27's announced (Machinal from 9 October,
  * Marisol from 14 November, The Doctor from 23 January, each a week); the
  * Langston Hughes Festival of new plays in November, second and third
  * years; three Shakespeare Repertory Projects in the spring, third years

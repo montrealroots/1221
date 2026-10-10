@@ -13,8 +13,12 @@
  * - **Money.** Tuition is billed to the student's Yale account every term and
  *   met by the tuition scholarship every student has had since the David
  *   Geffen gift. The Yale Health plan is billed there too. Aid for living
- *   costs is need-based and assesses the family: where there's need, a
- *   living-expense scholarship meets it and what's left after the health
+ *   costs is need-based and assesses the family. Simplified: where there's
+ *   need, a living-expense scholarship meets it here, where Yale awards it
+ *   after the student's and the family's contributions, a first-year loan
+ *   (most first-years borrow $9,500, the aid office says) and work-study, so
+ *   that even high need is met at about 95% across the three years. SLATE
+ *   keeps no student loan. What's left after the health
  *   plan is paid into the bank at the start of each term; where the family's
  *   means rule need out, as the player's do, the bank pays the health plan
  *   and everything else. (Until 2026-09-26 the award covered the whole cost
@@ -25,16 +29,22 @@
  *   each course grows its skill by how ready they are and less the better
  *   they already are; asleep, or not in New Haven, it's an absence, excused
  *   only if they called in sick when unwell.
- * - **Work-study.** A six-hour assigned shift each Saturday of the class
- *   weeks, 150 hours a year, and up to 50 elective hours on the evenings they
- *   ask for, at $23 an hour, paid every Friday for the week's hours.
- * - **Casting.** From the second term the chair casts every student each
- *   term in one of the School's own productions (`SCHOOL_SEASON`): the
- *   Carlotta Festival, a directors' thesis, the Langston Hughes Festival or
- *   a Shakespeare Repertory Project, by year and standing; and once a year,
- *   in good standing, at Yale Rep, most often to understudy, on call at
- *   every performance. Missed rehearsal calls take an actor out of the
- *   casting pool; a missed performance or understudy call is a grave breach.
+ * - **Work-study.** The Bulletin's minimum of 200 hours a year, 150 assigned
+ *   and 50 elective, at $23 an hour. SLATE's schedule for them is its own: a
+ *   six-hour assigned shift each Saturday of the class weeks, elective shifts
+ *   on the evenings asked for, and pay every Friday for the week's hours. The
+ *   50 elective hours were a cap here until 2026-10-10; the Bulletin gives them
+ *   as part of a minimum.
+ * - **Casting.** Documented: the chair determines casting assignments, and
+ *   first-years are cast from the second semester. SLATE's design: from the
+ *   second term the chair casts every student each term in one of the
+ *   School's own productions (`SCHOOL_SEASON`), the Carlotta Festival, a
+ *   directors' thesis, the Langston Hughes Festival or a Shakespeare
+ *   Repertory Project, with the years cast in each SLATE's reading; and once
+ *   a year, in good standing, at Yale Rep, most often to understudy, on call
+ *   at every performance. Documented: missed calls can take an actor out of
+ *   the casting pool; SLATE's count is two. A missed performance or
+ *   understudy call is a grave breach here.
  *   Until 2026-09-27 only the class's best actor went to Yale Rep, and
  *   everybody else was in a project named by the term.
  * - **Labs.** Drama 50's three weeks in the first fall, the New Play Lab's
@@ -48,10 +58,15 @@
  *   summer, three shows and a weekly stipend, a missed performance and it's
  *   over. Until 2026-09-27 the terms had nothing outside the curriculum and
  *   the summers nothing at all.
- * - **Evaluation.** At the end of each term's classes the faculty weigh
- *   attendance and growth against the class: good standing, a notice of
- *   academic concern, academic warning, dismissal, with no readmission, as
- *   the Bulletin sets it out. After six terms in standing, the degree.
+ * - **Evaluation.** Documented: the four standings (good, a notice of
+ *   academic concern, academic warning, dismissal with no readmission), and
+ *   that the faculty evaluate students regularly and may act at any time,
+ *   even dismissing without a warning first. SLATE's design: one evaluation at
+ *   the end of each term's classes, of attendance, growth against the class,
+ *   the term's work on stage and its coursework, each against floors that are
+ *   SLATE's estimates, moving standing one step a term. This said until
+ *   2026-10-10 that the Bulletin set out the term-end ladder; it sets out the
+ *   standings. After six terms in standing, the degree.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -382,7 +397,10 @@ export const ESTIMATE = {
   goesOn: 0.02,
   /** How many hours before a performance an understudy on call hears whether they're on: at five for an eight o'clock curtain. */
   onCallAhead: 3,
-  /** Attendance under this, or growth under this share of the class's, is short of the program's requirements. */
+  /**
+   * Attendance under this, or growth under this share of the class's, is short of the program's requirements: SLATE's
+   * estimates, both (the Bulletin publishes no threshold for either).
+   */
   attendanceFloor: 0.9,
   growthFloor: 0.5,
   /**
@@ -400,7 +418,7 @@ export const ESTIMATE = {
    * SLATE's reading of "appropriate standards".
    */
   coursework: { shown: 3, unready: 0.5, strong: 0.5 },
-  /** Missed rehearsal calls in a term that take an actor out of the casting pool. */
+  /** Missed rehearsal calls in a term that take an actor out of the casting pool: the removal is the Bulletin's, the count SLATE's estimate. */
   missedCallsOut: 2,
   /**
    * The acting (`actingOf`) at which a director asks for a third-year in a
@@ -970,7 +988,8 @@ export function summerRefusal(sim: Simulation, person: Person): string | undefin
 export function shiftRefusal(person: Person): string | undefined {
   const school = person.school;
   if (!school || school.standing === 'dismissed' || school.standing === 'graduated') return 'You’re not at school.';
-  if (school.workStudy.electiveHours + 4 > WORK_STUDY.electiveHours) return `You’ve taken the year’s ${WORK_STUDY.electiveHours} elective hours.`;
+  // The Bulletin's 50 elective hours are part of a minimum of 200, not a cap (from 2026-10-10: until then a shift past 50
+  // was refused). The award's ceiling isn't published, so SLATE sets none: the calendar's own hours are the limit.
   return undefined;
 }
 
@@ -1274,7 +1293,8 @@ function keepCredit(sim: Simulation, school: SchoolRecord): void {
  * The chair's casting for a term, from the second (`SCHOOL_SEASON`): a
  * School production for every student in the pool, its rehearsal calls
  * Tuesday to Friday from three for its weeks before opening, inside the
- * term, and its performances at seven. Beside it, once a year (a first
+ * term, and its performances at eight (SLATE's casting of every student each term is its own: the Bulletin says the
+ * chair determines assignments). Beside it, once a year (a first
  * year's spring, a second and third year's fall), a Yale Rep assignment for
  * a student in good standing, as most acting students work there: an
  * understudy, or, in the third year at a director's invitation, which
@@ -1455,8 +1475,8 @@ export function directorsNote(mean: number): string {
  * The teachers' notes on a term: for each course the term ran, its first
  * teacher on how the student grew in the skills it trains against the class's
  * middle, ahead at a quarter more, behind under three quarters. The Bulletin
- * says the faculty evaluate every student each term; what each says, and the
- * edges, are SLATE's.
+ * says the faculty evaluate students regularly (this said "each term" until
+ * 2026-10-10); a note each term, what each says, and the edges, are SLATE's.
  */
 export function teachersNotes(person: Person, term: number): { course: string; teacher: string; note: string }[] {
   const t = person.school?.tally;
@@ -1789,7 +1809,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
       ...(mine.play.title ? { play: mine.play.title, by: mine.play.by } : {}),
     };
     for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
-    production.runs.forEach((d, k) => ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
+    // At eight, as Carlotta's 2026 curtains were (from 2026-10-10; until then at seven, which nothing published).
+    production.runs.forEach((d, k) => ours.push({ at: at(d, 20), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
     staged(ours, production.name);
   }
   if (repTerm(term) && school.standing === 'good') {
@@ -1934,7 +1955,9 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // After the sixth term in standing, the degree at Commencement on the last Monday of May, as 24 May 2027 is (SLATE's estimate for 2029).
   if (term === YALE_DRAMA.terms - 1 && next !== 'dismissed') {
     const y = termStart(term).date.year;
-    schedule(sim, person, at(dayOnOrAfter(y, 5, 25, 1), 10), { kind: COMMENCEMENT_KIND, label: 'Commencement', minutes: 180 });
+    // Yale's Commencement is the Monday before Memorial Day, which is May's last Monday: 24 May 2027 and the published
+    // 21 May 2029 (from 2026-10-10; until then the first Monday from the 25th, Memorial Day itself in 2029).
+    schedule(sim, person, at(addDays(dayOnOrAfter(y, 5, 25, 1), -7), 10), { kind: COMMENCEMENT_KIND, label: 'Commencement', minutes: 180 });
   }
   return review;
 }
