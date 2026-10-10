@@ -33,14 +33,18 @@ import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { savingsDebit } from './accountlife';
+import { orderSource } from './routing';
 
-export interface StandingOrder { id: string; toId: string; amount: Money; day: number }
+export interface StandingOrder { id: string; toId: string; amount: Money; day: number; /** The account it pays from (from 2026-10-10, `orderSource`). */ fromId?: string }
 
 export interface PaymentSettings {
   everyday: 'debit' | 'credit' | 'cash';
   /** Savings backs the current account (overdraft protection). */
   linkSavings: boolean;
   standingOrders: StandingOrder[];
+  /** Where incoming payments go, and a change to it with its day (`systems/routing.ts`, from 2026-10-10). */
+  depositTo?: string;
+  depositChange?: { to: string; at: number };
 }
 
 export const STANDING_ORDER_KIND = 'bank.standing_order';
@@ -83,12 +87,14 @@ export function registerPayments(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const order = person ? paymentsOf(person).standingOrders.find((one) => one.id === item.payload.orderId) : undefined;
     if (!person || !order) return;
-    const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    // From the account it was set up on (`orderSource`, from 2026-10-10: until then whichever was primary on its day).
+    const source = orderSource(s, person, order);
+    const current = source && !source.closedAt ? source : undefined;
     const to = s.universe.accounts[order.toId];
     if (current && to && !to.closedAt && current.balance >= order.amount) {
       s.post({ memo: `Standing order to ${to.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: to.id, amount: order.amount }] });
     } else if (person.id === s.universe.playerId) {
-      const why = !to || to.closedAt ? `${to?.name ?? 'The account'} is closed` : 'It wasn’t in the current account on the day';
+      const why = !to || to.closedAt ? `${to?.name ?? 'The account'} is closed` : !current ? `${source?.name ?? 'The account it pays from'} is closed` : `It wasn’t in ${current.name} on the day`;
       s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'}: ${why}, so the bank didn’t make it.`, importance: 50, route: '/workspace/bank' });
     }
     s.schedule({ at: nextOn(s, order.day, item.at), kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });

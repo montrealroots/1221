@@ -101,9 +101,13 @@ export function arrearsAccount(sim: Simulation, person: Person): Account {
   });
 }
 
-/** Easy-access savings: a term deposit is locked until its end. */
-function savingsOf(sim: Simulation, person: Person): Account | undefined {
-  return accountsOf(sim, person).find((a) => a.kind === 'savings' && a.category !== 'term');
+/**
+ * Easy-access savings at the same bank as a current account (the primary one where none is named): a term deposit is
+ * locked until its end, and a link to savings is a link at one bank (from 2026-10-10, when a second bank's could be
+ * kept; until then the first savings account found anywhere).
+ */
+function savingsOf(sim: Simulation, person: Person, checking = checkingOf(sim, person)): Account | undefined {
+  return accountsOf(sim, person).find((a) => a.kind === 'savings' && a.category !== 'term' && (!checking?.bankId || a.bankId === checking.bankId));
 }
 
 /** What can come out of savings now, its fee and any monthly allowance allowed for. */
@@ -127,10 +131,11 @@ function reachable(sim: Simulation, person: Person): Money {
  * they go, then, where asked, the current account's overdraft
  * (`systems/lending.ts`), and what's left.
  */
-export function drawFromBank(sim: Simulation, person: Person, amount: Money, withOverdraft = false, fromSavings = paymentsOf(person).linkSavings): { postings: { accountId: string; amount: Money }[]; short: Money } {
+export function drawFromBank(sim: Simulation, person: Person, amount: Money, withOverdraft = false, fromSavings = paymentsOf(person).linkSavings, from?: Account): { postings: { accountId: string; amount: Money }[]; short: Money } {
   const postings: { accountId: string; amount: Money }[] = [];
   let left = amount;
-  const checking = checkingOf(sim, person);
+  // From the account an instruction names (from 2026-10-10: a loan's bank's, a card's autopay account), else the primary.
+  const checking = from && !from.closedAt ? from : checkingOf(sim, person);
   if (checking && left > 0) {
     const take = Math.min(left, Math.max(0, checking.balance));
     if (take > 0) {
@@ -139,7 +144,7 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
     }
   }
   // From savings, what it lets out, and the bank's fee for the withdrawal beside it.
-  const savings = fromSavings ? savingsOf(sim, person) : undefined;
+  const savings = fromSavings ? savingsOf(sim, person, checking) : undefined;
   if (savings && left > 0) {
     const { room, fee } = savingsDebit(sim, savings);
     const take = Math.min(left, room);
@@ -149,8 +154,9 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
       left -= take;
     }
   }
+  // The arranged overdraft is the primary account's, and only it is drawn on.
   const current = checkingOf(sim, person);
-  if (withOverdraft && current && left > 0) {
+  if (withOverdraft && current && checking?.id === current.id && left > 0) {
     const take = Math.min(left, overdraftHeadroom(sim, person));
     if (take > 0) {
       postings.push({ accountId: current.id, amount: -take });

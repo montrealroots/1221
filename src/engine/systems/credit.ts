@@ -90,6 +90,8 @@ export interface CardState {
   statementDay?: number;
   /** When the last statement came (from 2026-10-10), which a moved statement day can't bring the next one sooner than `MIN_CYCLE_DAYS` after. */
   statementAt?: Instant;
+  /** The account its autopay pays from (from 2026-10-10, `autopaySource`): the one it was set up on, not whichever is primary. */
+  autopayFrom?: string;
   /**
    * When each statement was cut, oldest first, the last sixty (from 2026-10-10): the past statements' periods, which
    * until then were redrawn on today's statement day, so a moved day moved every statement before it too.
@@ -167,7 +169,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'feeAt', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
@@ -586,16 +588,19 @@ export function minimumDue(sim: Simulation, statement: Money, terms = playerCard
 /** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
 function payCard(sim: Simulation, person: Person, amount: Money, byHand = false, card = cardOf(sim, person)): Money {
   if (!card) return 0;
-  // Autopay from the current account and any savings linked to it; by hand, from either.
-  const inCurrent = Math.max(0, sim.universe.accounts[person.primaryAccountId ?? '']?.balance ?? 0);
-  const linked = byHand || paymentsOf(person).linkSavings;
+  // Autopay from the account it was set up on (`autopaySource`) and savings linked to it; by hand, from the primary
+  // account and its savings.
+  const from = byHand ? undefined : autopaySource(sim, person, card);
+  if (!byHand && (!from || from.closedAt)) return 0;
+  const inCurrent = Math.max(0, (from ?? sim.universe.accounts[person.primaryAccountId ?? ''])?.balance ?? 0);
+  const linked = byHand || (paymentsOf(person).linkSavings && (!from || from.id === person.primaryAccountId));
   const reach = linked ? inTheBank(sim, person) : inCurrent;
   // By hand the holder may pay more than is owed, and the card holds the credit (C23).
   const paid = Math.max(0, Math.min(amount, reach, byHand ? amount : -card.balance));
   if (paid <= 0) return 0;
   sim.post({
     memo: `Paid ${card.name}`, category: 'card-payment',
-    postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid, false, linked).postings],
+    postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid, false, linked, from).postings],
   });
   if (person.credit) {
     const state = stateOf(person, card);
@@ -790,7 +795,7 @@ export function registerCredit(sim: Simulation): void {
     // can't cover it sends it back, and the card charges for that (C59).
     const asked = Math.max(0, want - credit.paidSinceStatement);
     if (asked > 0) {
-      if (autopayReach(s, person) >= asked) payCard(s, person, asked, false, card);
+      if (autopayReach(s, person, card) >= asked) payCard(s, person, asked, false, card);
       else {
         // One penalty fee for one event on a US card (Reg Z §1026.52(b)(2)(ii)): a bounce that leaves the minimum
         // unpaid is charged the late fee below, and not the returned payment's as well, as until 2026-10-10 it was.
@@ -1011,9 +1016,21 @@ function refundCredit(sim: Simulation, person: Person, card: Account): Money {
 }
 
 /** What autopay can take: the current account, and savings where it's linked to it. */
-function autopayReach(sim: Simulation, person: Person): Money {
-  const inCurrent = Math.max(0, sim.universe.accounts[person.primaryAccountId ?? '']?.balance ?? 0);
-  return paymentsOf(person).linkSavings ? inTheBank(sim, person) : inCurrent;
+/**
+ * The account a card's autopay pays from: the one it was set up on (from 2026-10-10; a card from before is pinned to
+ * the primary account the first time it's asked). Until then it was whichever account was primary on the due date.
+ */
+export function autopaySource(sim: Simulation, person: Person, card: Account): Account | undefined {
+  const state = stateOf(person, card);
+  if (state.autopayFrom === undefined && person.primaryAccountId) state.autopayFrom = person.primaryAccountId;
+  return state.autopayFrom ? sim.universe.accounts[state.autopayFrom] : undefined;
+}
+
+function autopayReach(sim: Simulation, person: Person, card: Account): Money {
+  const from = autopaySource(sim, person, card);
+  if (!from || from.closedAt) return 0;
+  const linked = paymentsOf(person).linkSavings && from.id === person.primaryAccountId;
+  return linked ? inTheBank(sim, person) : Math.max(0, from.balance);
 }
 
 /**

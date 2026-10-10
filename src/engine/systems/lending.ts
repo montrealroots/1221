@@ -81,6 +81,7 @@ import { addDays, addMonths, dateKey, formatDate, instantFromZoned, zonedParts, 
 import { clamp } from '../core/rng';
 import { bankById, bankingIn, type Bank } from '../content/banks';
 import { ageOn } from './mortality';
+import { redirectAway } from './routing';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
@@ -279,6 +280,17 @@ export function unarrangedOf(terms: Overdraft | undefined): Unarranged | undefin
 function currentOf(sim: Simulation, person: Person): Account | undefined {
   const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   return account && !account.closedAt ? account : undefined;
+}
+
+/** Every open current account a person holds, the primary first (from 2026-10-10, when a second bank's could be kept). */
+export function checkingsOf(sim: Simulation, person: Person): Account[] {
+  const open = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && !a.nominal && a.kind === 'checking');
+  return [...open.filter((a) => a.id === person.primaryAccountId), ...open.filter((a) => a.id !== person.primaryAccountId)];
+}
+
+/** A person's open current account at a bank, if they keep one there. */
+export function checkingAt(sim: Simulation, person: Person, bankId: string | undefined): Account | undefined {
+  return bankId ? checkingsOf(sim, person).find((a) => a.bankId === bankId) : undefined;
 }
 
 /** A person's open term deposits. */
@@ -531,10 +543,10 @@ function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
 }
 
 /** Pays an amount from the bank, overdraft and all, and says what it couldn't. */
-function payFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
+function payFromBank(sim: Simulation, person: Person, amount: Money, from?: Account): { postings: { accountId: string; amount: Money }[]; short: Money } {
   // As every other payment is taken (`drawFromBank`): savings only where it's linked, and with its fee. Until
   // 2026-09-28 a loan's took from savings whatever the setting, and skipped the fee and a German allowance.
-  return drawFromBank(sim, person, amount, true);
+  return drawFromBank(sim, person, amount, true, undefined, from);
 }
 
 
@@ -711,7 +723,8 @@ function leftOverdrawn(sim: Simulation, person: Person, bank: Bank): boolean {
 export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): void {
   const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.bankId === bank.id
     && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term');
-  const current = currentOf(sim, person);
+  // The current account at the bank closing it (from 2026-10-10: until then the primary one, wherever it was).
+  const current = checkingAt(sim, person, bank.id);
   if (!current) return;
   for (const account of mine) settleInterest(sim, account, `Interest: ${account.name}, on closing`);
   // Set-off: what's owed on any account there is gathered on the current
@@ -750,12 +763,19 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   const owedTo = collectionsOf(sim, person)?.institution;
   // A US bank reports it, and the next bank reads the report.
   if (bank.id.startsWith('us-')) person.chex = { at: sim.now, bank: bank.name };
-  // Re-banked where they live: until 2026-09-27, where they stood, so a US account closed on a London shoot moved to a UK bank.
+  // Holding a current account at another bank, the charged-off one closes and that one carries on, primary if this
+  // was (from 2026-10-10). With none elsewhere, SLATE re-banks them where they live, as it always has: a simplification,
+  // since a closed customer opens their own account, kept so a life always has somewhere to be paid.
+  const elsewhere = checkingsOf(sim, person).find((a) => a.bankId !== bank.id);
   const others = banksFor(homeOf(person)).filter((b) => b.id !== bank.id && b.name !== owedTo);
   const willing = others.find((b) => !declines(sim, person, b));
-  const to = willing ?? others[0] ?? bank;
-  const secondChance = willing === undefined && person.chex !== undefined;
-  completeSwitch(sim, person, to, true, secondChance);
+  const to = elsewhere?.bankId ? bankById(elsewhere.bankId)! : willing ?? others[0] ?? bank;
+  const secondChance = !elsewhere && willing === undefined && person.chex !== undefined;
+  if (elsewhere) {
+    for (const account of mine) { if (account.balance === 0) account.closedAt = sim.now; account.overdraftLimit = undefined; }
+    if (person.primaryAccountId === current.id) person.primaryAccountId = elsewhere.id;
+    redirectAway(sim, person, current.id, elsewhere.id);
+  } else completeSwitch(sim, person, to, true, secondChance);
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
@@ -771,92 +791,95 @@ export function registerLending(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.lending_day', (_event, { sim: s }) => {
     const firstOfMonth = zonedParts(s.now, s.homeZone).day === 1;
     for (const person of Object.values(s.universe.people)) {
-      const current = currentOf(s, person);
-      const bank = current?.bankId ? bankById(current.bankId) : undefined;
-      const terms = lendingOf(bank).overdraft;
-      if (current && bank && terms) {
-        const beyondTerms = unarrangedOf(terms);
-        if (current.balance < 0) {
-          const used = -current.balance;
-          const limit = current.overdraftLimit ?? 0;
-          current.odPeak = Math.max(current.odPeak ?? 0, used);
-          current.odDaySum = (current.odDaySum ?? 0) + used;
-          if (beyondTerms && used - limit > (beyondTerms.graceUpTo !== undefined ? inSaveMoney(s, beyondTerms.graceUpTo, bank.currency) : 0)) {
-            current.odBeyondDays = (current.odBeyondDays ?? 0) + 1;
-          }
-          if (terms.kind === 'arranged') {
-            // Past the buffer at the arranged rate; past the limit at the rate beyond it, where the bank has one.
-            const buffer = terms.buffer !== undefined ? inSaveMoney(s, terms.buffer, bank.currency) : 0;
-            const rate = current.overdraftRate ?? terms.rate;
-            const beyond = Math.max(0, used - Math.max(limit, buffer));
-            const within = Math.max(0, used - buffer) - beyond;
-            current.odAccrued = (current.odAccrued ?? 0) + (within * rate + beyond * (terms.beyond?.rate ?? rate)) / 365;
-          } else if (terms.kind === 'unarranged') {
-            if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-          } else if (terms.kind === 'per_item') {
-            if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-            // One fee for a day a payment overdrew it and that ended overdrawn;
-            // a day it only stayed overdrawn builds interest. Until 2026-09-25
-            // every overdrawn midnight was charged, and a life overdrawn for
-            // 250 days paid CommBank $4,020.
-            if (terms.atMidnight && current.overdrewDay === dateKey(s.now - 1, s.homeZone)) {
-              charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
+      // Each open current account, at its own bank (from 2026-10-10: until then only the primary one, so a second bank's
+      // account ran below zero with no fee, interest or closing).
+      for (const current of checkingsOf(s, person)) {
+        const bank = current?.bankId ? bankById(current.bankId) : undefined;
+        const terms = lendingOf(bank).overdraft;
+        if (current && bank && terms) {
+          const beyondTerms = unarrangedOf(terms);
+          if (current.balance < 0) {
+            const used = -current.balance;
+            const limit = current.overdraftLimit ?? 0;
+            current.odPeak = Math.max(current.odPeak ?? 0, used);
+            current.odDaySum = (current.odDaySum ?? 0) + used;
+            if (beyondTerms && used - limit > (beyondTerms.graceUpTo !== undefined ? inSaveMoney(s, beyondTerms.graceUpTo, bank.currency) : 0)) {
+              current.odBeyondDays = (current.odBeyondDays ?? 0) + 1;
             }
-          } else if (terms.kind === 'tacit') {
-            current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-          } else if (terms.kind === 'secured') {
-            const held = termsOf(s, person).find((a) => a.bankId === bank.id);
-            current.odAccrued = (current.odAccrued ?? 0) + (used * ((held?.fixedRate ?? 0) + terms.over)) / 365;
+            if (terms.kind === 'arranged') {
+              // Past the buffer at the arranged rate; past the limit at the rate beyond it, where the bank has one.
+              const buffer = terms.buffer !== undefined ? inSaveMoney(s, terms.buffer, bank.currency) : 0;
+              const rate = current.overdraftRate ?? terms.rate;
+              const beyond = Math.max(0, used - Math.max(limit, buffer));
+              const within = Math.max(0, used - buffer) - beyond;
+              current.odAccrued = (current.odAccrued ?? 0) + (within * rate + beyond * (terms.beyond?.rate ?? rate)) / 365;
+            } else if (terms.kind === 'unarranged') {
+              if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
+            } else if (terms.kind === 'per_item') {
+              if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
+              // One fee for a day a payment overdrew it and that ended overdrawn;
+              // a day it only stayed overdrawn builds interest. Until 2026-09-25
+              // every overdrawn midnight was charged, and a life overdrawn for
+              // 250 days paid CommBank $4,020.
+              if (terms.atMidnight && current.overdrewDay === dateKey(s.now - 1, s.homeZone)) {
+                charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
+              }
+            } else if (terms.kind === 'tacit') {
+              current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
+            } else if (terms.kind === 'secured') {
+              const held = termsOf(s, person).find((a) => a.bankId === bank.id);
+              current.odAccrued = (current.odAccrued ?? 0) + (used * ((held?.fixedRate ?? 0) + terms.over)) / 365;
+            }
+          }
+          if (firstOfMonth) {
+            const interest = Math.floor(current.odAccrued ?? 0);
+            current.odAccrued = (current.odAccrued ?? 0) - interest;
+            let commission = terms.kind === 'tacit' && (current.odPeak ?? 0) > 0
+              ? Math.max(Math.round((current.odPeak ?? 0) * terms.commission.share), inSaveMoney(s, terms.commission.min, bank.currency))
+              : 0;
+            if (terms.kind === 'tacit' && terms.cap) {
+              // The law's cap on the month's cost, on what was overdrawn day by
+              // day. Both banks' rates (7.83%, 7.25%) are under it, so the
+              // interest alone never reaches it and the commission takes the cut;
+              // a cap on the interest as well changed nothing and was taken out.
+              const most = Math.floor(((current.odDaySum ?? 0) * terms.cap.rate) / 365);
+              commission = Math.min(commission, most - interest);
+            }
+            charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
+            if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined && !current.overdraftPerUse) {
+              charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
+            }
+            charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
+            if (beyondTerms?.monthlyFee !== undefined && (current.odBeyondDays ?? 0) >= (beyondTerms.afterDays ?? 1)
+              && (beyondTerms.freeUnder === undefined || ageOn(s, person, s.now) >= beyondTerms.freeUnder)) {
+              charge(s, current, inSaveMoney(s, beyondTerms.monthlyFee, bank.currency), 'Unarranged overdraft fee', 'bank_fee', 'Bank Fees');
+            }
+            current.odPeak = current.balance < 0 ? -current.balance : 0;
+            current.odDaySum = 0;
+            current.odBeyondDays = 0;
+          }
+          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.yearlyFee !== undefined
+            && current.overdraftSince !== undefined && s.now - current.overdraftSince >= 365 * MS_DAY) {
+            charge(s, current, inSaveMoney(s, terms.yearlyFee, bank.currency), 'Overdraft facility fee', 'bank_fee', 'Bank Fees');
+            current.overdraftSince = s.now;
           }
         }
-        if (firstOfMonth) {
-          const interest = Math.floor(current.odAccrued ?? 0);
-          current.odAccrued = (current.odAccrued ?? 0) - interest;
-          let commission = terms.kind === 'tacit' && (current.odPeak ?? 0) > 0
-            ? Math.max(Math.round((current.odPeak ?? 0) * terms.commission.share), inSaveMoney(s, terms.commission.min, bank.currency))
-            : 0;
-          if (terms.kind === 'tacit' && terms.cap) {
-            // The law's cap on the month's cost, on what was overdrawn day by
-            // day. Both banks' rates (7.83%, 7.25%) are under it, so the
-            // interest alone never reaches it and the commission takes the cut;
-            // a cap on the interest as well changed nothing and was taken out.
-            const most = Math.floor(((current.odDaySum ?? 0) * terms.cap.rate) / 365);
-            commission = Math.min(commission, most - interest);
-          }
-          charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
-          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined && !current.overdraftPerUse) {
-            charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
-          }
-          charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
-          if (beyondTerms?.monthlyFee !== undefined && (current.odBeyondDays ?? 0) >= (beyondTerms.afterDays ?? 1)
-            && (beyondTerms.freeUnder === undefined || ageOn(s, person, s.now) >= beyondTerms.freeUnder)) {
-            charge(s, current, inSaveMoney(s, beyondTerms.monthlyFee, bank.currency), 'Unarranged overdraft fee', 'bank_fee', 'Bank Fees');
-          }
-          current.odPeak = current.balance < 0 ? -current.balance : 0;
-          current.odDaySum = 0;
-          current.odBeyondDays = 0;
+        if (current && bank && terms?.kind === 'per_item' && terms.nextDay) settlePendingItems(s, current, bank, terms);
+        if (current && bank && firstOfMonth) monthlyCharges(s, person, current, bank);
+        const over = current && bank ? leftOverdrawn(s, person, bank) : false;
+        if (current && bank) frenchOverrun(s, person, current, bank);
+        if (current && bank && over) {
+          closeForOverdraft(s, person, bank);
+          continue;
         }
-        if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.yearlyFee !== undefined
-          && current.overdraftSince !== undefined && s.now - current.overdraftSince >= 365 * MS_DAY) {
-          charge(s, current, inSaveMoney(s, terms.yearlyFee, bank.currency), 'Overdraft facility fee', 'bank_fee', 'Bank Fees');
-          current.overdraftSince = s.now;
+        if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
+          current.cardFeeAt = s.now;
+          if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
+            charge(s, current, inSaveMoney(s, bank.card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees');
+          }
         }
+        if (current && bank) refundInterestTax(s, person, current, bank);
       }
-      if (current && bank && terms?.kind === 'per_item' && terms.nextDay) settlePendingItems(s, current, bank, terms);
-      if (current && bank && firstOfMonth) monthlyCharges(s, person, current, bank);
-      const over = current && bank ? leftOverdrawn(s, person, bank) : false;
-      if (current && bank) frenchOverrun(s, person, current, bank);
-      if (current && bank && over) {
-        closeForOverdraft(s, person, bank);
-        continue;
-      }
-      if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
-        current.cardFeeAt = s.now;
-        if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
-          charge(s, current, inSaveMoney(s, bank.card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees');
-        }
-      }
-      if (current && bank) refundInterestTax(s, person, current, bank);
       for (const term of termsOf(s, person)) {
         term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
         if (term.maturesAt === undefined || s.now < term.maturesAt) continue;
@@ -870,7 +893,8 @@ export function registerLending(sim: Simulation): void {
           if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${term.name} Has Ended`, body: 'It moved, with its interest, into your easy-access savings at the same bank, where it can be taken any time.', importance: 50 });
           continue;
         }
-        const into = currentOf(s, person);
+        // Into the current account at the term's own bank where they keep one (from 2026-10-10: until then the primary).
+        const into = checkingAt(s, person, term.bankId) ?? currentOf(s, person);
         if (!into) continue;
         const earned = Math.floor(term.accrued ?? 0);
         const tax = interestTaxFor(s, term, earned);
@@ -910,7 +934,8 @@ export function registerLending(sim: Simulation): void {
     const monthsIn = Math.round((item.at - loan.openedAt) / (30.4375 * MS_DAY));
     const last = loan.loanMonths !== undefined && monthsIn >= loan.loanMonths;
     const due = last ? -loan.balance : Math.min(loan.loanPayment ?? 0, -loan.balance);
-    const bank = payFromBank(s, person, due);
+    // From the current account at the lending bank where they keep one (from 2026-10-10: until then whichever was primary).
+    const bank = payFromBank(s, person, due, checkingAt(s, person, loan.bankId));
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
     if (bank.short > 0) chargeReturned(s, person, bank.short);

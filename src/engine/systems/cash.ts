@@ -29,6 +29,7 @@
  *   §1026.53), everywhere else all of it to the dearest.
  */
 
+import { depositAccount } from './routing';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -57,7 +58,13 @@ export function walletOf(sim: Simulation, person: Person, open = false): Account
  * pay, residuals, a stipend, work-study, unemployment and a tax refund with
  * no open current account to go to were dropped, and what was owed with them.
  */
+/**
+ * Where a payment to them is paid: the deposit instruction (`depositAccount`, from 2026-10-10: until then whichever
+ * account was primary on the day), else the primary account, else cash in hand.
+ */
 export function payeeAccount(sim: Simulation, person: Person): Account {
+  const deposits = depositAccount(sim, person);
+  if (deposits) return deposits;
   const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   return current && !current.closedAt ? current : walletOf(sim, person, true)!;
 }
