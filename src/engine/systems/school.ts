@@ -1805,8 +1805,9 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : 1;
   const { growth, classGrowth, grewTooLittle, pace } = termGrowth(person);
   // The term's work on stage, as the faculty see it: a run gone mostly off falls short, as poor production work does; a strong one is noted.
-  // Each run once, and one played after the last evaluation with this term's (`unreviewed`).
-  const runs = [...(school.unreviewed ?? []), school.casting, school.rep].filter((c): c is Casting => c !== undefined && !c.reviewed && c.term <= term && nightsOf(c) >= ESTIMATE.workNights);
+  // Each run once, and one played after the last evaluation with this term's (`unreviewed`). The term's Cabaret show
+  // with them from 2026-10-10: until then its nights reached the record and nothing the faculty read.
+  const runs = [...(school.unreviewed ?? []), school.casting, school.rep, school.cabaret as unknown as Casting | undefined].filter((c): c is Casting => c !== undefined && !c.reviewed && c.term <= term && nightsOf(c) >= ESTIMATE.workNights);
   const nights: Partial<Record<Night, number>> = {};
   for (const one of runs) for (const [b, n] of Object.entries(one.nights ?? {}) as [Night, number][]) nights[b] = (nights[b] ?? 0) + n;
   const work = runs.length ? nightsMean(nights) : undefined;

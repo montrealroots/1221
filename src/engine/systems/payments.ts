@@ -101,7 +101,12 @@ export function registerPayments(sim: Simulation): void {
     const from = s.universe.accounts[String(item.payload.fromId)];
     const to = s.universe.accounts[String(item.payload.toId)];
     const amount = Number(item.payload.amount);
-    if (!from || !to || from.closedAt || to.closedAt) return;
+    if (!from || !to) return;
+    // An account closed since it was set: said, not passed over in silence (from 2026-10-10), as a standing order says it.
+    if (from.closedAt || to.closedAt) {
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} didn’t go: ${from.closedAt ? from.name : to.name} is closed.`, importance: 50, route: '/workspace/bank' });
+      return;
+    }
     // From savings, what it lets out, and its withdrawal fee: until 2026-09-27 neither was read here.
     const { room, fee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
     if (room >= amount) {

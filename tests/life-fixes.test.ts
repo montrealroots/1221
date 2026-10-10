@@ -10,7 +10,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
-import { billCare, healthOf, medicalDebtOf, monthCareCost } from '@/engine/systems/health';
+import { DENIALS, billCare, careFor, coverOn, healthOf, medicalDebtOf, monthCareCost } from '@/engine/systems/health';
 import { COMP_KIND, mayHurt } from '@/engine/systems/injury';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { starvedPastTheLimit } from '@/engine/systems/mortality';
@@ -19,6 +19,7 @@ import { bodyOf } from '@/engine/systems/body';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 /** TEST SETUP: nothing in the player's own accounts to pay with. */
+const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const drain = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash')) a.balance = 0; };
 
 describe('a medical bill unpaid when it falls due', () => {
@@ -30,6 +31,35 @@ describe('a medical bill unpaid when it falls due', () => {
     expect(bill.paid).toBeFalsy();
     expect(bill.inDebt).toBe(true);
     expect(medicalDebtOf(sim, sim.player)!.balance).toBeLessThanOrEqual(-50_000_00);
+    // The debt paid off, the bill is settled.
+    give(sim, sim.player.primaryAccountId!, 60_000_00);
+    sim.must({ kind: 'health.pay_bill', payload: { amount: -medicalDebtOf(sim, sim.player)!.balance } });
+    expect(bill.paid).toBe(true);
+    expect(bill.inDebt).toBeUndefined();
+  });
+
+  it('denied, gone to debt, and overturned on appeal, comes off the debt and isn’t refunded', () => {
+    // TEST SETUP: a marketplace claim denied, searching seeds for one the appeal overturns.
+    for (let i = 0; i < 80; i += 1) {
+      const sim = life(`fix-appeal-${i}`);
+      healthOf(sim.player).marketplace = { from: sim.now - MS_DAY, state: 'ny' };
+      if (coverOn(sim.player, sim.now) !== 'marketplace') continue;
+      const bill = careFor(sim, sim.player, { care: 'visit', what: 'A checkup' }, sim.now);
+      if (!bill?.denied || sim.rng('health.appeal', sim.player.id, bill.id).next() < DENIALS.upheld) continue;
+      // TEST SETUP: a bill past what the overdraft would cover, and nothing in the bank.
+      bill.amount = 50_000_00;
+      drain(sim);
+      sim.advanceTo(bill.dueAt + MS_DAY);
+      expect(bill.inDebt).toBe(true);
+      const owed = -medicalDebtOf(sim, sim.player)!.balance;
+      const r = sim.must<{ decidedAt: number }>({ kind: 'health.appeal', payload: { billId: bill.id } });
+      sim.advanceTo(r.decidedAt + 60_000);
+      expect(bill.denied!.outcome).toBe('overturned');
+      expect(-medicalDebtOf(sim, sim.player)!.balance).toBeLessThan(owed);
+      expect(sim.universe.transactions.some((t) => t.memo.startsWith('Appeal won') && t.postings.some((p) => p.accountId === sim.player.primaryAccountId && p.amount > 0))).toBe(false);
+      return;
+    }
+    throw new Error('no claim denied and overturned in 80 seeds');
   });
 });
 

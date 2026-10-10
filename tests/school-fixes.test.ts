@@ -62,6 +62,18 @@ describe('a run played after its term’s evaluation', () => {
   });
 });
 
+describe('the term’s Cabaret show', () => {
+  it('is read with the term’s work on stage', () => {
+    const sim = life('cabaret-read');
+    const school = sim.player.school!;
+    (school as unknown as { cabaret: unknown }).cabaret = { term: 0, week: '2026-11-02', performed: 3, production: 'The Yale Cabaret', role: 'A Part', nights: { off: 3 } };
+    const review = evaluate(sim, sim.player, 0)!;
+    expect(review.work).toBe(-1);
+    expect(review.standing).toBe('concern');
+    expect(review.reason).toMatch(/The Yale Cabaret fell short/);
+  });
+});
+
 describe('the craft a call grows', () => {
   it('is kept in the development history under its source', () => {
     const sim = life('grew');
