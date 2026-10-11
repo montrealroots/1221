@@ -100,6 +100,8 @@ export const BRIEF = {
   takesKept: 8,
   /** A better take than the last by this many points, its expected result with no draw, is an improved one. */
   improvedBy: 1,
+  /** What a take that's the same again is worth as practice, on any day. */
+  againWorth: 0.5,
   /**
    * How strongly a reading counts: its leans raised to this power, its abilities' weights times this. Written at 1 and
    * measured across the catalog, a specialist's best and worst readings of a brief were under a point apart on most
@@ -255,7 +257,7 @@ export const PURPOSE_WORDS: Readonly<Record<Purpose, string>> = {
   'another-reading': 'Another reading of it than last time’s.',
   'another-way': 'The same reading played another way.',
   improved: 'Better prepared or better able than last time: it should show.',
-  again: 'The same reading, played the same way, no better prepared: it counts, and practice on it the same day keeps half.',
+  again: 'The same reading, played the same way, no better prepared: it counts, and it’s worth half as practice.',
 };
 
 // ---------------------------------------------------------------------------
@@ -375,9 +377,14 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   const reading = readingOf(b, rec.reading)!;
   const band = bandOfQuality(e.overall);
   recordWork(sim, person, e, { at: sim.now, what: `${b.title} (${reading.label}), Taped`, band });
-  ordinary(sim, person, b.medium === 'voice' ? 'voiceover' : 'screen', focus, 0.5, 'self-tape');
+  // A take that's the same again, no better prepared and played the same way, is worth half as practice, on whatever
+  // day: it counts, and teaches less than one that tries something. Until a played comparison of 2026-10-12
+  // (tools/brief-strategies.ts) taping one brief over and over, unprepared, credited its genre with more practice than
+  // preparing it properly did, and grew the camera's technique as fast.
+  const worth = purpose === 'again' ? BRIEF.againWorth : 1;
+  ordinary(sim, person, b.medium === 'voice' ? 'voiceover' : 'screen', focus, 0.5 * worth, 'self-tape');
   // The same brief again the same day is half the practice of the one before; its genres share it.
-  practiceGenres(sim, person, b.kinds, 0.5 ** again);
+  practiceGenres(sim, person, b.kinds, worth * 0.5 ** again);
   noteMaterial(person, { material: briefMaterial(b), at: sim.now, overall: e.overall, approaches: sidesOf(rec.playing), shown: true });
   const chief = chiefLimit(e);
   const take: Take = {

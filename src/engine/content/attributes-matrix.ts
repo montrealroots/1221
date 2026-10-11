@@ -16,6 +16,9 @@ import { GENRE_DEFS } from './genres';
 import { FILM_GENRES } from './film-genres';
 import { TASK_PROFILES, TEMPLATE_TASK, DIMENSION_LABEL, type Dimension } from './tasks';
 import { DEMAND_TECHNIQUE, GENRE_DEMANDS, genreTags } from './demands';
+import { APPROACH_EFFECT, BLEND_EFFECT, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, TRANSITION_EFFECT, VOICE_LEAN } from './approaches';
+import { PLAY_MATERIAL, SCENE_MATERIAL } from './material';
+import { BRIEFS } from './briefs';
 
 const SAVED: Readonly<Partial<Record<AbilityId, string>>> = { emotionalDepth: '`craft.emotion`', memory: '`craft.memorization`', vocal: '`craft.voice`', physical: '`craft.movement`', stamina: '`wellbeing.fitness`' };
 const ORDINARY: Readonly<Partial<Record<AbilityId, string>>> = {
@@ -53,17 +56,41 @@ export function attributesMatrix(): string {
     const tags = genreTags(g.id);
     const dem = GENRE_DEMANDS[g.id];
     const demands = tags.length ? `demands ${tags.map((t) => TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]).join(', ')} read by its work` : dem?.tags.length ? 'demands not applied: low confidence' : 'no demand established';
-    out.push(row([`${g.label} (${dem?.confidence ?? 'low'})`, '`engagement.byGenre`', '`genre.study`, `practice.self_tape`, a night of a play of the kind', `families ${d.families.join(', ')} lean the dimensions; \`genreSpeed\`; ${demands}`, 'Player Profile, Genres; `look.genre`; `look.work`', `preparation speed; a self-tape’s knowing the genre${tags.length ? '; its techniques in tapes, scenes, nights and casting fit' : ''}`, '`tests/engagement.test.ts` (every genre; every applied demand)']));
+    out.push(row([`${g.label} (${dem?.confidence ?? 'low'})`, '`engagement.byGenre`', '`genre.study`, its brief (`brief.prepare`, `brief.choose`, `practice.self_tape`), a night of a play of the kind', `families ${d.families.join(', ')} lean the dimensions; \`genreSpeed\`; ${demands}`, 'Player Profile, Genres; `look.genre`; `look.work`', `preparation speed; a self-tape’s knowing the genre${tags.length ? '; its techniques in tapes, scenes, nights and casting fit' : ''}`, '`tests/engagement.test.ts` (every genre; every applied demand)']));
   }
 
   out.push('', `## Task Profiles: ${Object.keys(TASK_PROFILES).length} of ${Object.keys(TASK_PROFILES).length}`, '', row(['Profile', 'Dimensions', 'Judged In', 'Consumer', 'Test Evidence']), '| --- | --- | --- | --- | --- |');
   for (const t of Object.values(TASK_PROFILES)) {
-    const where = t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape; `practice.self_tape`' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
+    const where = t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape' : t.id === 'tape' ? 'a practice brief, `practice.self_tape` (from 2026-10-12)' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
     out.push(row([t.label, Object.keys(t.dims).map((d) => DIMENSION_LABEL[d as Dimension]).join(', '), where, t.id === 'performance' ? 'the night’s band: morale, presence, casting, the term’s evaluation' : 'the showing’s band: the meeting’s growth, a classmate’s word', '`tests/evaluation.test.ts` (the guarantee on every profile)']));
   }
 
   out.push('', '## Exercises: ' + `${EXERCISES.length} of ${EXERCISES.length}`, '', row(['Exercise', 'Trains', 'Source']), '| --- | --- | --- |');
   for (const e of EXERCISES) out.push(row([e.label, (ABILITY_DEFS.find((a) => a.id === e.trains)?.label) ?? TECHNIQUE_LABEL[e.trains as (typeof TECHNIQUES)[number]], e.source]));
+
+  // What a piece of material asks (from 2026-10-12): each feature, the language, the medium and the tones, with how
+  // many of the game's materials carry it, what it does to the work, and what reads it.
+  const materials = [...SCENE_MATERIAL, ...PLAY_MATERIAL];
+  const carry = (f: 'timing' | 'physical' | 'partner' | 'vocal' | 'improvisation') => `${materials.filter((m) => m[f] >= 2).length} scenes and plays, ${BRIEFS.filter((b) => b[f] >= 2).length} briefs at 2 or more`;
+  const dimsOf = (lean: Partial<Record<string, number>>) => Object.entries(lean).map(([d, x]) => `${DIMENSION_LABEL[d as Dimension]} ${x}`).join(', ');
+  const effect = (e: { lean: Partial<Record<string, number>>; inputs: Partial<Record<string, readonly { ability: string; weight: number }[]>> }) => `leans ${dimsOf(e.lean)}; draws ${Object.entries(e.inputs).flatMap(([d, xs]) => (xs ?? []).map((x) => `${ABILITY_DEFS.find((a) => a.id === x.ability)?.label} ${x.weight} in ${DIMENSION_LABEL[d as Dimension]}`)).join(', ')}`;
+  const changes = (b: (typeof BRIEFS)[number]) => b.beats.some((x, i) => i > 0 && [...x.tones].sort().join() !== [...b.beats[i - 1]!.tones].sort().join());
+  out.push('', '## Material Demands', '', HEAD);
+  for (const f of ['timing', 'physical', 'partner', 'vocal', 'improvisation'] as const) out.push(row([`${f[0]!.toUpperCase()}${f.slice(1)}, 0 to 3`, 'the material profile (`content/material.ts`, `content/briefs/`)', carry(f), `per level: ${effect(FEATURE_EFFECT[f])}`, 'What It Asks, beside a scene’s or a brief’s chooser; What The Take Weighs', 'every performed task’s dimensions, normalized', '`tests/material.test.ts`, `tests/briefs.test.ts` (an ability it doesn’t read changes nothing)']));
+  out.push(row(['Heightened prose, verse', 'the material’s language', `${materials.filter((m) => m.language !== 'everyday').length} scenes and plays, ${BRIEFS.filter((b) => b.language !== 'everyday').length} briefs`, `heightened: ${effect(LANGUAGE_EFFECT.heightened)}; verse: ${effect(LANGUAGE_EFFECT.verse)}`, 'What It Asks', 'interpretation, and the voice in verse', '`tests/material.test.ts`']));
+  out.push(row(['A change of tone between beats', 'the material’s tones and turns, or a brief’s beats', `${BRIEFS.filter(changes).length} briefs`, `each: ${effect(TRANSITION_EFFECT)}; a brief’s rehearsal counts complete 0.08 higher`, 'Where It Turns', 'believability, consistency; the rehearsal part', '`tests/briefs.test.ts` (tone held and tone changed)']));
+  out.push(row(['Two tones held at once', 'a brief’s beat with two tones', `${BRIEFS.filter((b) => b.beats.some((x) => x.tones.length > 1)).length} briefs`, `each: ${effect(BLEND_EFFECT)}; a brief’s rehearsal counts complete 0.04 higher`, 'Where It Turns, held at once', 'believability, interpretation; the rehearsal part', '`tests/briefs.test.ts` (tone held and tone changed)']));
+  out.push(row(['The medium', 'the material’s medium', `${BRIEFS.filter((b) => b.medium === 'camera').length} briefs on camera, ${BRIEFS.filter((b) => b.medium === 'voice').length} at a microphone`, `camera leans ${dimsOf(CAMERA_LEAN)}; a microphone leans ${dimsOf(VOICE_LEAN)}`, 'the brief’s heading', 'the dimensions’ weights', '`tests/briefs.test.ts`']));
+  out.push(row(['A way of playing it', '`Playing` on an assignment, a part or a brief', 'a scene’s, a part’s or a brief’s chooser', Object.entries(APPROACH_EFFECT).map(([k, e]) => `${k}: leans ${dimsOf(e.lean)}`).join('; '), 'How You’ll Play It, with each side’s fully prepared result', 'the dimensions’ weights; its rehearsal a part of preparation; a misfit only from the material or a direction', '`tests/material.test.ts`, `tests/briefs.test.ts`']));
+  out.push(row(['A reading of a brief', '`briefs[id].reading`', `each brief’s ${Math.min(...BRIEFS.map((b) => b.readings.length))} to ${Math.max(...BRIEFS.map((b) => b.readings.length))}, ${BRIEFS.reduce((s, b) => s + b.readings.length, 0)} in all`, 'its leans squared and its abilities doubled, normalized; never a misfit', 'Your Reading, each with what it rests on and its fully prepared result', 'the dimensions’ weights and inputs; the breakdown kept half on a change', '`tests/briefs.test.ts` (no reading misfits; each reading changes what the work leans on)']));
+
+  // What a player does to develop and prepare (from 2026-10-12), each with what it moves and what reads that.
+  out.push('', '## Training And Preparation Actions', '', HEAD);
+  out.push(row(['Practice an exercise', '`experience.exercises`, the target’s level', '`practice.exercise`, an hour', '`develop` deliberate: tier, focus, repeats halved, four hours a day', 'Practice An Hour, the hour’s feedback', 'the ability or technique it trains, read by every task that reads it', '`tests/development.test.ts`, `tests/engine-properties.test.ts`']));
+  out.push(row(['Study a genre', '`engagement.byGenre[g].familiarity`', '`genre.study`, an hour and a half', '8 points of what’s left, half again the same day', 'Genres; a brief’s Knowing The Genre', 'a scene’s and a part’s preparation speed; a taped brief’s knowing the genre', '`tests/engagement.test.ts`']));
+  const steps: readonly (readonly [string, string, string, string])[] = [['read', 'Break It Down', 'interpretation', 'believability, interpretation'], ['lines', 'Learn The Lines', 'memorization', 'believability, execution'], ['rehearse', 'Rehearse It On Your Feet', 'rehearsal', 'connection, execution, consistency, responsiveness, and the way of playing it']];
+  for (const [step, label, part, reads] of steps) out.push(row([`A brief: ${label}`, `\`briefs[id].prep.${part}\``, `\`brief.prepare\` ${step}`, 'a share of what’s left, half again the same day, faster with the material’s features met before', 'Preparation, against what completes it', `a taped brief’s ${reads}`, '`tests/briefs.test.ts` (played)']));
+  out.push(row(['A brief: Tape It', '`briefs[id].takes`, `work`, `journey`', '`practice.self_tape`, an hour', 'judged as a taped brief; its purpose; a callback on a Strong take, one a round', 'The Last Take, Your Takes Of It, What To Work On', 'recommendations; the next suggestion; practice in its genres; the camera’s or the microphone’s technique', '`tests/briefs.test.ts`, `tests/genre-coverage.test.ts`']));
 
   out.push('', '## Casting', '', HEAD);
   out.push(row(['Fit', '`Classmate.abilities`, the craft, `attrs`', 'the chair’s casting each term', '`castFit`: the performance profile, the play’s reads with its demands, preparation complete, no draw; stamina and discipline full for all', 'School, Casting, Why This Cast', 'the parts given (`partsFor`)', '`tests/attributes-complete.test.ts`: same data, same fit; identity reads nothing']));

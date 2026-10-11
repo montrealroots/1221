@@ -20,10 +20,11 @@ import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief } from '@/engine/content/brie
 import { AXES } from '@/engine/content/approaches';
 import { MASTERED } from '@/engine/content/abilities';
 import type { Axis } from '@/engine/content/material';
-import { BRIEF, briefContext, briefMaterial, recordOf, requiredOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
+import { BRIEF, briefContext, briefMaterial, genreKnown, prepSpeed, recordOf, requiredOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
 import { judge, leanedWeights, type Performer } from '@/engine/systems/evaluation';
 import { addPractice, genreState } from '@/engine/systems/engagement';
-import { misfitOf, type Playing } from '@/engine/systems/material';
+import { materialContext, misfitOf, type Playing } from '@/engine/systems/material';
+import { TASK_PROFILES } from '@/engine/content/tasks';
 import { evenCraft } from '@/engine/systems/school';
 import { abilityFull } from '@/engine/systems/attributes';
 import { activitiesOf, courseworkOf, prepareRefusal, setWork } from '@/engine/systems/coursework';
@@ -125,6 +126,9 @@ describe('tone held and tone changed', () => {
     expect(requiredOf(none).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal, 9);
     expect(requiredOf(change).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal + BRIEF.complete.perTransition, 9);
     expect(requiredOf(held).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal + 2 * BRIEF.complete.perBlend, 9);
+    // Independent of the sizes: a scene that changes tone, or holds two at once, asks more rehearsal than one that doesn't.
+    expect(requiredOf(change).rehearsal!).toBeGreaterThan(requiredOf(none).rehearsal! + 0.01);
+    expect(requiredOf(held).rehearsal!).toBeGreaterThan(requiredOf(none).rehearsal! + 0.01);
   });
 
   it('asks adaptability of a change and depth of a held beat, so different actors meet each differently', () => {
@@ -135,6 +139,8 @@ describe('tone held and tone changed', () => {
     const held1 = run(nimble, held, blank(), { reading: r }).overall - run(deep, held, blank(), { reading: r }).overall;
     expect(change1).toBeGreaterThan(held1);
     for (const b of [none, change, held]) expect(run(FULL, b, blank(), { reading: r }).overall).toBe(100);
+    // The held beat itself asks depth: against the same scene with nothing held, the deep actor gains more than the nimble one.
+    expect(run(deep, held, blank(), { reading: r }).overall - run(deep, none, blank(), { reading: r }).overall).toBeGreaterThan(run(nimble, held, blank(), { reading: r }).overall - run(nimble, none, blank(), { reading: r }).overall);
   });
 });
 
@@ -213,6 +219,16 @@ describe('a brief, played', () => {
     // A change of reading kept half the breakdown.
     expect(rec.takes[2]!.prep.interpretation!).toBeCloseTo(rec.takes[1]!.prep.interpretation! * BRIEF.readingKept, 2);
     expect(sim.player.work!.filter((w) => w.task === 'tape')).toHaveLength(3);
+  });
+
+  it('goes half as far with a step done again the same day', () => {
+    const sim = student('brief-step-twice');
+    go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
+    const one = go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'read' }).value!.moved as number;
+    const two = go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'read' }).value!.moved as number;
+    // A share of what's left either way; the second, the same day, at half the share.
+    expect(two).toBeLessThan(one * (1 - one) * 0.65);
+    expect(two).toBeGreaterThan(one * (1 - one) * 0.35);
   });
 
   it('lives an action sent twice once, and the same take again the same day keeps half its practice', () => {
@@ -340,5 +356,65 @@ describe('found by the played runs (2026-10-12)', () => {
     expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/nothing more to gain/);
     a.playing = { pace: 'driven', chosenAt: sim.now, prep: 0.2 };
     expect(prepareRefusal(sim, sim.player, a, act.id)).toBeUndefined();
+  });
+});
+
+describe('found by the played comparison of strategies (2026-10-12)', () => {
+  it('a take that’s the same again is worth half as practice on another day too: repeating a take earns less than trying something', () => {
+    const sim = student('brief-again-days');
+    genreState(sim.player, 'comedy').familiarity = 40;
+    const b = BRIEF_BY_ID['brief-comedy']!;
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    const p0 = genreState(sim.player, 'comedy').practice;
+    go(sim, 'practice.self_tape', { genre: 'comedy' });
+    const first = genreState(sim.player, 'comedy').practice - p0;
+    sim.advanceTo(sim.now + 24 * 60 * 60_000);
+    const p1 = genreState(sim.player, 'comedy').practice;
+    expect(go(sim, 'practice.self_tape', { genre: 'comedy' }).value!.purpose).toBe('again');
+    const again = genreState(sim.player, 'comedy').practice - p1;
+    expect(again).toBeCloseTo(first * BRIEF.againWorth * (1 - p1 / 100) / (1 - p0 / 100), 2);
+    // Another reading, the next day, is worth a whole session again.
+    sim.advanceTo(sim.now + 24 * 60 * 60_000);
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[1]!.id });
+    const p2 = genreState(sim.player, 'comedy').practice;
+    expect(go(sim, 'practice.self_tape', { genre: 'comedy' }).value!.purpose).toBe('another-reading');
+    expect(genreState(sim.player, 'comedy').practice - p2).toBeGreaterThan(again * 1.5);
+  });
+});
+
+describe('what each new rule holds (2026-10-12)', () => {
+  it('knowing the genre is the better of studied and worked in, never the sum, and it doesn’t also speed preparation', () => {
+    const p = { engagement: { byGenre: { comedy: { familiarity: 20, practice: 25 } } } } as unknown as Person;
+    const b = BRIEF_BY_ID['brief-comedy']!;
+    expect(genreKnown(p, b)).toBeCloseTo(0.25, 9);
+    p.engagement!.byGenre.comedy!.familiarity = 60;
+    expect(genreKnown(p, b)).toBeCloseTo(0.6, 9);
+    // Practice in the genre, however much, moves the steps no faster; only the material's features met before do.
+    const none = { engagement: { byGenre: {} } } as unknown as Person;
+    const lots = { engagement: { byGenre: { comedy: { familiarity: 100, practice: 100 } } } } as unknown as Person;
+    expect(prepSpeed(lots, b)).toBe(prepSpeed(none, b));
+  });
+
+  it('a microphone leans the work toward execution, as a camera leans it toward believability', () => {
+    const voice = BRIEFS.find((x) => x.medium === 'voice')!;
+    const asCamera: Brief = { ...voice, id: `${voice.id}-as-camera`, medium: 'camera' };
+    const w = (b: Brief) => { const c = briefContext(nobody, b, blank(), { reading: b.readings[0]!.id }); const ws = leanedWeights(c.task, [], c.lean); const t = Object.values(ws).reduce((s, x) => s + (x ?? 0), 0); return { exec: ws.execution! / t, bel: ws.believability! / t }; };
+    expect(w(voice).exec).toBeGreaterThan(w(asCamera).exec);
+    expect(w(asCamera).bel).toBeGreaterThan(w(voice).bel);
+    // Against no medium at all, the microphone's own lean shows.
+    const plain = briefMaterial(voice);
+    const ctxPlain = materialContext(TASK_PROFILES.tape!, { ...plain, id: `${plain.id}-plain`, medium: 'stage' });
+    const ctxVoice = materialContext(TASK_PROFILES.tape!, plain);
+    expect(ctxVoice.lean.execution! / ctxPlain.lean.execution!).toBeCloseTo(1.2, 6);
+  });
+
+  it('a feature at 3, the material built on it, makes its ability a real share of its dimension', () => {
+    for (const b of BRIEFS.filter((x) => x.physical === 3)) {
+      const ctx = briefContext(nobody, b, blank(), { reading: b.readings[0]!.id });
+      const exec = [...ctx.task.dims.execution!.inputs.map((i) => ('ability' in i ? { a: i.ability, w: i.weight } : { a: 'tech', w: i.weight })), ...(ctx.inputs.execution ?? []).map((x) => ({ a: x.ability, w: x.weight }))];
+      const total = exec.reduce((s, x) => s + x.w, 0);
+      const physical = exec.filter((x) => x.a === 'physical').reduce((s, x) => s + x.w, 0);
+      expect(physical / total, b.id).toBeGreaterThanOrEqual(0.25);
+    }
   });
 });

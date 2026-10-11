@@ -87,6 +87,15 @@ for (const name of ['feeling specialist', 'body specialist', 'partner specialist
   md.push(`| ${name} | ${ahead.length} of ${BRIEFS.length} | ${behind.length} | ${ahead.length ? `${stats(ahead).mean} (sd ${stats(ahead).sd}, ${stats(ahead).min}–${stats(ahead).max})` : '—'} | ${behind.length ? `${stats(behind.map((x) => -x)).mean} (sd ${stats(behind.map((x) => -x)).sd}, ${stats(behind.map((x) => -x)).min}–${stats(behind.map((x) => -x)).max})` : '—'} |`);
 }
 out.specialist = spec;
+// Whether what a brief is built on moves the body specialist: its deficit by the brief's physical and vocal demand.
+const bodyGap = BRIEFS.map((b, i) => ({ load: b.physical + b.vocal, d: best(ACTORS['body specialist']!, b) - gen[i]! }));
+const byLoad: Record<string, ReturnType<typeof stats>> = {};
+for (const [lo, hi, name] of [[0, 1, 'physical and vocal 0–1'], [2, 3, '2–3'], [4, 6, '4 or more']] as const) {
+  const xs = bodyGap.filter((x) => x.load >= lo && x.load <= hi).map((x) => x.d);
+  if (xs.length) byLoad[name] = stats(xs);
+}
+out.bodyByLoad = byLoad;
+md.push('', 'The body specialist on camera, by how much the brief is built on the body and the voice (its physical plus vocal level), against the generalist:', '', ...Object.entries(byLoad).map(([k, s]) => `- ${k}: ${s.mean} (sd ${s.sd}, ${s.min} to ${s.max}), n = ${s.n}.`));
 md.push('', `Generalist's best per brief: ${JSON.stringify(stats(gen))}.`, '');
 
 // 1b. Across every kind of work the School sets: each task, with its materials where it has them (a scene's 56, a
