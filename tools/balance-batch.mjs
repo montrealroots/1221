@@ -50,14 +50,17 @@ const FILE = `${OUT}/results.jsonl`;
 const sh = (c) => execSync(c, { encoding: 'utf8' }).trim();
 const commit = sh('git rev-parse --short HEAD');
 const tree = sh('git log -1 --format=%t');
+// What a result depends on: the engine's source (src), not the runner's tree.
+const srcTree = sh('git rev-parse --short HEAD:src');
 const dirty = sh('git status --porcelain -- src tools').split('\n').filter(Boolean).length;
 mkdirSync(OUT, { recursive: true });
 const kept = existsSync(FILE) ? readFileSync(FILE, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
-const done = new Set(kept.filter((r) => r.tree === tree).map((r) => `${r.id}|${r.seedSet}`));
+const srcOf = (r) => r.srcTree ?? sh(`git rev-parse --short ${r.commit}:src`);
+const done = new Set(kept.filter((r) => srcOf(r) === srcTree).map((r) => `${r.id}|${r.seedSet}`));
 const jobs = [...GRID.flatMap(([id, what, flags]) => SEEDSETS.map((seedSet) => ({ id, what, flags, seedSet }))), ...SWEEP_JOBS];
 
 if (process.argv.includes('--status')) {
-  console.log(`balance grid on ${commit} (tree ${tree}${dirty ? `, ${dirty} dirty` : ''}): ${jobs.filter((j) => done.has(`${j.id}|${j.seedSet}`)).length} of ${jobs.length} done`);
+  console.log(`balance grid on ${commit} (src ${srcTree}${dirty ? `, ${dirty} dirty` : ''}): ${jobs.filter((j) => done.has(`${j.id}|${j.seedSet}`)).length} of ${jobs.length} done`);
   process.exit(0);
 }
 
@@ -90,7 +93,7 @@ for (const j of jobs) {
   let result;
   try { result = JSON.parse(out.stdout); } catch { console.log(`FAILED ${j.id} ${j.seedSet}: ${(out.stderr || out.stdout).slice(0, 400)}`); continue; }
   delete result.rows;
-  appendFileSync(FILE, `${JSON.stringify({ id: j.id, seedSet: j.seedSet, commit, tree, dirty, flags: j.flags, seconds: Math.round((Date.now() - t0) / 1000), result })}\n`);
+  appendFileSync(FILE, `${JSON.stringify({ id: j.id, seedSet: j.seedSet, commit, tree, srcTree, dirty, flags: j.flags, seconds: Math.round((Date.now() - t0) / 1000), result })}\n`);
   ran += 1;
   console.log(`${Math.round((Date.now() - t0) / 1000)}s ${j.id} ${j.seedSet}`);
 }
