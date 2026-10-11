@@ -1,3 +1,77 @@
+# Read First: The Remaining In-Scope Gaps, 2026-10-11
+
+The owner's brief was "Finish SLATE's Remaining In-Scope Gaps And Verify Completion", from `main` at `086d00ca`. Its
+checklist, written before the engine changed, is `docs/verification/REMAINING-GAPS-CHECKLIST-2026-10-11.md`; the
+evidence, item by item, is `docs/verification/REMAINING-GAPS-PASS-2026-10-11.md`.
+
+- **Branch:** `claude/remaining-gaps`, pushed. **Not merged:** `main` is still `086d00ca`, for the owner.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged; every new field is optional. Saves written at `086d00ca` open with nothing charged
+  or filed after the fact (`tests/save-migration.test.ts`).
+- **Untouched:** the stash (`stash@{0}`), the three worktrees, the untracked files at the root.
+- **Kept deferred:** the 16 deferred items; no removed system restored; no parental leave; no credit score or property
+  system made for a lien's consequence.
+
+## What the pass did
+
+1. **Taxed where it wasn't.** Indiana with Marion County, the District and Oklahoma, which had a city each and no rule;
+   New York City's tax in four boroughs that had none; Philadelphia's, Columbus's and Portland's taxes and Denver's OPT.
+   `tests/tax-coverage.test.ts` fails a US city whose state or local tax is neither a rule nor a confirmed none.
+2. **Liens,** for every researched authority and the IRS: intent, filing and fee, payment, release on its own or on
+   request, withdrawal of one filed in error.
+3. **The longer arrangements:** Pennsylvania's extended plan, New Mexico's long-term agreement, Louisiana's and the
+   District's down payments, Oregon's 100% for three years unfiled and its waiver. Massachusetts's doubling and
+   Oklahoma's 25% are discretionary: said, not applied.
+4. **The built app** played the seven journeys the brief named, at 1440 and 390.
+
+## Bugs found and fixed
+
+- The budget and Home counted a state's own assessment of an unfiled return twice.
+- The financial statement counted opening balances as income.
+- A state balance paid off outside its plan left the plan in force with nothing owed.
+- The places untaxed and the local taxes missing, above.
+- The acceptance tool passed its plan step with the button absent; its rehearsal step stopped short of the call.
+
+## Where each thing is
+
+- **Rules:** `src/engine/content/tax.ts` (`LOCAL_TAX`, `NO_LOCAL_TAX`, `DENVER_OPT`), `src/engine/content/statetax.ts`
+  (each authority's `lien`, `plan.long`, `plan.downPayment`, `threeYear`), `src/engine/systems/withholding.ts`.
+- **Engine:** `src/engine/systems/statetax.ts` (liens, long plans, the statement, Oregon), `src/engine/systems/taxreturn.ts`
+  (`FEDERAL_LIEN`, `unassessedBalance`).
+- **Screens:** `src/ui/components/LienPanels.tsx`; the plan panel in `src/ui/workspaces/PapersWorkspace.tsx`.
+- **Tests:** `tests/tax-places.test.ts`, `tests/tax-coverage.test.ts`, `tests/liens-and-arrangements.test.ts`,
+  `tests/liens-step-skip.test.ts`, `tests/save-migration.test.ts` (saves at `086d00ca`).
+- **Scenarios:** `lien` and `missed-plan` in `tools/scenarios.ts`, which gained `stopWhen`. Results:
+  `docs/verification/SCENARIOS-GAPS-2026-10-11.json`.
+- **Built app:** `docs/verification/acceptance-ui/gaps-2026-10-11/`.
+- **Matrices:** `docs/COVERAGE-MATRIX.md` (a "remaining-gaps pass" section); `docs/verification/STUDENT-MATRIX.md`,
+  56 of 56 verified, four rows new.
+
+## Verification
+
+- **Engine runs,** on `a023d4d7`, src tree `80e9f4d0`:
+  - 18 lives: 15 graduated, the 3 autopilot lives dismissed, each identical field for field to its run on `fdc31377`;
+  - eleven scenarios, `lien` and `missed-plan` among them;
+  - the 48-job grid, all 48 identical to `3963fb8c`;
+  - variety, identical to `3963fb8c`.
+  - All 0 breaches, 0 unbalanced.
+- **Built app,** on the build of `a023d4d7`:
+  - 1440: 30 passed, 1 skipped.
+  - 390: 31 passed, 1 skipped.
+  - 0 errors and 0 overflows at either width.
+- **Mutation:** twelve mutations of the new rules, each failing a test; the one that first survived got a test.
+- **Gate:** 165 files and 1,737 tests pass, with all sixteen checks, on src tree `80e9f4d0` (the final commit changes documents only). A first run was cut short by memory taken by a stray process of this session's research, now stopped.
+
+## Still the owner's
+
+- Merge, and deploy.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- Whether play should ever reach a residence outside New Haven: until it does, Indiana, the District, Oklahoma and the
+  city taxes are reached by tests and the engine's own saves only.
+
+---
+
 # Read First: The Limitations Pass, 2026-10-11
 
 The owner's brief was "Complete and finish all limitations": the seven left in §6 of
@@ -76,7 +150,8 @@ The detail is in `docs/verification/LIMITATIONS-PASS-2026-10-11.md`.
 - Deploy.
 - Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
 - The 16 deferred items.
-- SLATE taxes no income in Indiana, DC or Oklahoma, which each have a city: found this pass, not in the brief.
+- SLATE taxed no income in Indiana, DC or Oklahoma, which each have a city: found this pass, not in the brief. The
+  remaining-gaps pass taxed them the same day.
 
 ---
 

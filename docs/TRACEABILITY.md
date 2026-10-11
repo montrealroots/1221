@@ -272,7 +272,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `tax.state_nonfiler` | `systems/taxreturn.ts` | systems/statetax.ts | — | — | — | 2 |
 | `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 7 |
 | `tax.state_plan_end` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 0 |
-| `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | status; why; nextDue | Yes | tax.state_plan_payment | 0 |
+| `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | status; why; nextDue | Yes | tax.state_plan_payment | 1 |
 | `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 2 |
 | `tax.three_year` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | — | 2 |
 | `world.tick` | `world/world.ts` | index.ts; world/world.ts | — | — | world.tick | 0 |

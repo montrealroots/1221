@@ -1,0 +1,735 @@
+{
+ "note": "tools/scenarios.ts, seed sc-0, on src 80e9f4d0 (commit a023d4d7), 2026-10-11. Each run saved and opened every thirty days.",
+ "runs": {
+  "leave": {
+   "scenario": "leave",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2027-01-20 school.request_leave",
+    "2027-01-28 school.return_notice",
+    "2028-01-03 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "personal",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": false
+     }
+    ],
+    "welfares": [],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6,
+      "leftBehind": false,
+      "productions": 12,
+      "cabaret": 3
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates",
+     "Your MFA Is Conferred"
+    ],
+    "credits": [
+     "2028 carlotta supporting",
+     "2028 thesis supporting",
+     "2029 thesis supporting",
+     "2029 thesis lead",
+     "2029 understudy ",
+     "2030 shakespeare supporting"
+    ],
+    "joinedHistory": [
+     "2 Yale Cabaret, Season 60"
+    ],
+    "firstClassGraduated": [
+     true
+    ],
+    "duringLeave": [
+     1
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: unfiled",
+    "2027: unfiled",
+    "2028: unfiled",
+    "2029: unfiled",
+    "2030: unfiled"
+   ],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "leave-year2": {
+   "scenario": "leave-year2",
+   "seed": "sc-0",
+   "ended": "2030-09-29",
+   "log": [
+    "2027-07-10 school.request_leave",
+    "2027-08-23 school.return_notice",
+    "2028-08-28 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "personal",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": false
+     }
+    ],
+    "welfares": [],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6,
+      "leftBehind": false,
+      "productions": 12,
+      "cabaret": 3
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates",
+     "Your MFA Is Conferred"
+    ],
+    "credits": [
+     "2027 carlotta lead",
+     "2028 thesis supporting",
+     "2029 thesis supporting",
+     "2029 thesis lead",
+     "2029 understudy ",
+     "2030 shakespeare supporting"
+    ],
+    "joinedHistory": [
+     "2 Yale Cabaret, Season 60",
+     "3 Carlotta Festival Of New Plays"
+    ],
+    "firstClassGraduated": [
+     true
+    ],
+    "duringLeave": [
+     0
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: unfiled",
+    "2027: unfiled",
+    "2028: unfiled",
+    "2029: unfiled"
+   ],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 49
+  },
+  "mandatory": {
+   "scenario": "mandatory",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2026-10-20 TEST SETUP: two stays",
+    "refused school.return_notice: You’re in hospital: a Yale Health physician can’t clear you to come back yet.",
+    "2026-12-01 school.return_notice",
+    "2027-08-23 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "medical",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": true
+     }
+    ],
+    "welfares": [
+     "leave"
+    ],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6,
+      "leftBehind": false,
+      "productions": 14,
+      "cabaret": 4
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "2:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates",
+     "Your MFA Is Conferred"
+    ],
+    "credits": [
+     "2028 carlotta lead",
+     "2028 thesis supporting",
+     "2029 thesis supporting",
+     "2029 thesis lead",
+     "2029 understudy ",
+     "2030 shakespeare lead"
+    ],
+    "joinedHistory": [],
+    "firstClassGraduated": [
+     true
+    ],
+    "duringLeave": [
+     0
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: unfiled",
+    "2027: unfiled",
+    "2028: unfiled",
+    "2029: unfiled",
+    "2030: unfiled"
+   ],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "switch-uk": {
+   "scenario": "switch-uk",
+   "seed": "sc-0",
+   "ended": "2028-01-05",
+   "log": [
+    "2026-10-02 bank.switch",
+    "2027-03-02 bank.switch"
+   ],
+   "switches": [
+    {
+     "at": 1793350800000,
+     "fromBank": "Barclays",
+     "toBank": "HSBC UK",
+     "outcome": "partial",
+     "on": 1793350800000
+    },
+    {
+     "at": 1804755600000,
+     "fromBank": "HSBC UK",
+     "toBank": "NatWest",
+     "outcome": "complete",
+     "on": 1804755600000
+    }
+   ],
+   "accounts": [
+    "Barclays checking",
+    "Barclays savings",
+    "HSBC UK checking closed",
+    "NatWest checking"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 24
+  },
+  "state-plan": {
+   "scenario": "state-plan",
+   "seed": "sc-0",
+   "ended": "2029-02-21",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-02-15 tax.apply_state_plan",
+    "2027-02-16 TEST SETUP: a gift",
+    "refused tax.catch_up_plan: $84.40 is more than the bank can cover."
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:good",
+     "4:good"
+    ],
+    "conferred": [],
+    "credits": [
+     "2027 carlotta lead",
+     "2027 thesis supporting",
+     "2028 thesis supporting",
+     "2028 thesis lead"
+    ],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking closed",
+    "Chase savings closed",
+    "Citi checking closed",
+    "Capital One checking"
+   ],
+   "taxPlan": {
+    "status": "ended",
+    "payments": 15,
+    "history": [
+     "A payment",
+     "A payment",
+     "A payment",
+     "A payment",
+     "A payment missed: CP523",
+     "Ended: not caught up after CP523"
+    ]
+   },
+   "owedIrs": 493784,
+   "irsSubstitute": [
+    "2026: filed",
+    "2027: unfiled",
+    "2028: unfiled"
+   ],
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 0,
+     "payments": [
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan"
+     ],
+     "notices": 0,
+     "assessed": false,
+     "replaced": false
+    }
+   },
+   "statePlans": {
+    "us-ct": {
+     "status": "paid",
+     "history": [
+      "A payment",
+      "A payment",
+      "A payment",
+      "A payment",
+      "Paid off"
+     ]
+    }
+   },
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 30
+  },
+  "tax-plan": {
+   "scenario": "tax-plan",
+   "seed": "sc-0",
+   "ended": "2029-02-21",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-02-16 TEST SETUP: a gift",
+    "refused tax.catch_up_plan: $84.40 is more than the bank can cover.",
+    "2028-01-22 tax.catch_up_plan",
+    "2028-03-25 tax.catch_up_plan"
+   ],
+   "school": {
+    "standing": "concern",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:good",
+     "4:concern"
+    ],
+    "conferred": [],
+    "credits": [
+     "2027 carlotta lead",
+     "2027 thesis supporting",
+     "2028 thesis supporting",
+     "2028 thesis lead"
+    ],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking closed",
+    "Chase savings closed",
+    "Bank of America checking closed",
+    "Capital One checking"
+   ],
+   "taxPlan": {
+    "status": "ended",
+    "payments": 14,
+    "history": [
+     "Caught up",
+     "A payment",
+     "A payment missed: CP523",
+     "Caught up",
+     "A payment missed: CP523",
+     "Ended: not caught up after CP523"
+    ]
+   },
+   "owedIrs": 527274,
+   "irsSubstitute": [
+    "2026: filed",
+    "2027: unfiled",
+    "2028: unfiled"
+   ],
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 0,
+     "payments": [
+      "levy"
+     ],
+     "notices": 3,
+     "lien": "paid",
+     "assessed": false,
+     "replaced": false
+    }
+   },
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 30
+  },
+  "withdraw": {
+   "scenario": "withdraw",
+   "seed": "sc-0",
+   "ended": "2029-07-18",
+   "log": [
+    "2027-04-07 school.withdraw"
+   ],
+   "school": {
+    "standing": "withdrawn",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 5,
+      "leftBehind": true,
+      "productions": 13,
+      "cabaret": 3
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "0:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates"
+    ],
+    "credits": [],
+    "joinedHistory": [],
+    "firstClassGraduated": [
+     true
+    ],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: unfiled",
+    "2027: unfiled",
+    "2028: unfiled"
+   ],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 35
+  },
+  "nonfiler": {
+   "scenario": "nonfiler",
+   "seed": "sc-0",
+   "ended": "2029-03-30",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2028-08-13 tax.file"
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:good",
+     "4:good"
+    ],
+    "conferred": [],
+    "credits": [
+     "2027 carlotta lead",
+     "2027 thesis supporting",
+     "2028 thesis supporting",
+     "2028 thesis lead"
+    ],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: replaced",
+    "2027: unfiled",
+    "2028: unfiled"
+   ],
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 0,
+     "payments": [
+      "levy"
+     ],
+     "notices": 3,
+     "lien": "paid",
+     "assessed": true,
+     "replaced": true
+    }
+   },
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 31
+  },
+  "rehearsal": {
+   "scenario": "rehearsal",
+   "seed": "sc-0",
+   "ended": "2027-03-31",
+   "log": [],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good"
+    ],
+    "conferred": [],
+    "credits": [],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings"
+   ],
+   "owedIrs": 0,
+   "irsSubstitute": [
+    "2026: unfiled"
+   ],
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 7
+  },
+  "lien": {
+   "scenario": "lien",
+   "seed": "sc-0",
+   "ended": "2027-04-17",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-04-17 TEST SETUP: a gift"
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good"
+    ],
+    "conferred": [],
+    "credits": [],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings"
+   ],
+   "owedIrs": 610850,
+   "irsSubstitute": [
+    "2026: filed"
+   ],
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 148869,
+     "payments": [],
+     "notices": 2,
+     "lien": "filed",
+     "assessed": false,
+     "replaced": false
+    }
+   },
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 7
+  },
+  "missed-plan": {
+   "scenario": "missed-plan",
+   "seed": "sc-0",
+   "ended": "2027-05-17",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-05-17 TEST SETUP: a gift"
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good"
+    ],
+    "conferred": [],
+    "credits": [],
+    "joinedHistory": [],
+    "firstClassGraduated": [],
+    "duringLeave": []
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "taxPlan": {
+    "status": "default",
+    "payments": 3,
+    "history": [
+     "Applied online",
+     "Approved: $84.40 a month",
+     "A payment",
+     "A payment",
+     "A payment missed: CP523"
+    ]
+   },
+   "owedIrs": 594333,
+   "irsSubstitute": [
+    "2026: filed"
+   ],
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 148869,
+     "payments": [],
+     "notices": 3,
+     "lien": "filed",
+     "assessed": false,
+     "replaced": false
+    }
+   },
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 8
+  }
+ }
+}
