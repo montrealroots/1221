@@ -156,6 +156,12 @@ const SCENARIOS: Record<string, Hook> = {
     years: 0.6, config: { homeRegionId: 'us-ny-newyork' }, ownWork: false,
     daily() {},
   },
+  // A student a few weeks into the first term, saved on a free Saturday morning (from 2026-10-12), so the built app's
+  // practice-brief journey has hours to spend: choose a genre, read its brief, prepare it, tape it, train, tape again.
+  brief: {
+    years: 0.053, config: { homeRegionId: 'us-ny-newyork' },
+    daily() {},
+  },
   withdraw: {
     years: 2.9, config: { homeRegionId: 'us-ny-newyork' },
     daily(sim, log) {

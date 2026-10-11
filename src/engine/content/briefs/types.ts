@@ -27,6 +27,14 @@ import type { Skill } from '../school';
 import type { Dimension } from '../tasks';
 
 /**
+ * Staged for a tape (from the review of 2026-10-12): a brief is taped alone, to a reader who stands off camera, or
+ * recorded alone at a microphone. Nothing touches the reader: a fight's exchanges are marked solo against the reader's
+ * called cues and its contact reacted to, an embrace is played to the eyeline beside the lens, props stay on the
+ * actor's side of the frame, a weapon is a replica, and there's no live animal, water, fire, ladder or car to drive.
+ * Each brief that stages something physical says how.
+ */
+
+/**
  * A beat of the scene, in order: what happens, and its tone. One tone is played plainly; two tones are held together
  * in the one beat (funny and frightening at once), which asks something different from a change between beats (a turn
  * from the joke to the grief). `systems/briefs.ts` counts each apart.

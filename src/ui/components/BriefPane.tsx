@@ -19,7 +19,7 @@ import { DIMENSION_LABEL } from '@/engine/content/tasks';
 import { abilityFull, abilityOf } from '@/engine/systems/attributes';
 import { bandOfQuality, chiefLimit } from '@/engine/systems/evaluation';
 import { BAND_LABEL } from '@/engine/systems/coursework';
-import { BRIEF, PURPOSE_WORDS, asksOf, briefMaterial, forecast, prepareRefusal, preview, purposeOf, readingOf, requiredOf, stepMinutes, suggestions, tapeRefusal, turnsOf, type BriefStep } from '@/engine/systems/briefs';
+import { BRIEF, PURPOSE_WORDS, asksOf, genreKnown, briefMaterial, forecast, prepareRefusal, preview, purposeOf, readingOf, requiredOf, stepMinutes, suggestions, tapeRefusal, turnsOf, type BriefStep } from '@/engine/systems/briefs';
 import { studyRefusal } from '@/engine/systems/engagement';
 import { exerciseFor } from '@/engine/content/practice';
 import { matchedTier } from '@/engine/systems/practice';
@@ -44,7 +44,7 @@ export function BriefPane({ genre, onOpen, practice }: { genre: string; onOpen: 
   const material = briefMaterial(b);
   const req = requiredOf(b);
   const turns = turnsOf(b);
-  const known = Math.max(0, ...b.kinds.map((g) => person.engagement?.byGenre[g]?.familiarity ?? 0)) / 100;
+  const known = genreKnown(person, b);
   const prep = rec?.prep ?? { interpretation: 0, memorization: 0, rehearsal: 0 };
   const now = forecast(sim, person, b);
   const purpose = rec?.reading ? purposeOf(rec, now.overall) : undefined;
@@ -112,7 +112,7 @@ export function BriefPane({ genre, onOpen, practice }: { genre: string; onOpen: 
           <Stat label="The Breakdown" value={`${pct(prep.interpretation)} of ${pct(req.interpretation!)}`} />
           <Stat label="The Lines" value={`${pct(prep.memorization)} of ${pct(req.memorization!)}`} />
           <Stat label="Rehearsal" value={`${pct(prep.rehearsal)} of ${pct(req.rehearsal!)}`} />
-          <Stat label="Knowing The Genre" value={`${pct(known)} of ${pct(req.genre!)}`} note="Study It builds it" />
+          <Stat label="Knowing The Genre" value={`${pct(known)} of ${pct(req.genre!)}`} note="Studied, or worked in: the better of the two" />
         </div>
         <div className="row gap-2 wrap">
           {(['read', 'lines', 'rehearse'] as BriefStep[]).map((s) => {
@@ -136,7 +136,7 @@ export function BriefPane({ genre, onOpen, practice }: { genre: string; onOpen: 
           );
         })}
         <div>
-          <Gated feature="brief.choose" className="btn btn-sm" disabled={rec?.reading === draftReading} onClick={() => { const r = run<{ interpretation: number }>('brief.choose', { brief: b.id, reading: draftReading, ...(rec?.playing ? { pace: rec.playing.pace, scale: rec.playing.scale, structure: rec.playing.structure } : {}) }); if (r.ok) toast(`Reading it as ${readingOf(b, draftReading)!.label}.${rec?.reading ? ` The breakdown keeps ${pct(BRIEF.readingKept)} of what it was.` : ''}`, 'positive'); }}>{rec?.reading ? 'Change The Reading' : 'Read It This Way'}</Gated>
+          <Gated feature="brief.choose" className="btn btn-sm" disabled={rec?.reading === draftReading} onClick={() => { const r = run<{ interpretation: number; readingChanged: boolean }>('brief.choose', { brief: b.id, reading: draftReading, ...(rec?.playing ? { pace: rec.playing.pace, scale: rec.playing.scale, structure: rec.playing.structure } : {}) }); if (r.ok) toast(`Reading it as ${readingOf(b, draftReading)!.label}.${r.value!.readingChanged ? ` The breakdown keeps ${pct(BRIEF.readingKept)} of what it was: ${pct(r.value!.interpretation)} now.` : ''}`, 'positive'); }}>{rec?.reading ? 'Change The Reading' : 'Read It This Way'}</Gated>
         </div>
         <Fine>Every reading here is one the brief supports; none is the right answer. A reading leans what the take counts for and draws on different abilities, and moves weight without adding any. Changing it keeps {pct(BRIEF.readingKept)} of the breakdown.</Fine>
       </div>
@@ -191,7 +191,7 @@ export function BriefPane({ genre, onOpen, practice }: { genre: string; onOpen: 
         <div className="col gap-1">
           <div className="eyebrow">Your Takes Of It</div>
           <div className="table-scroll">
-            <table>
+            <table data-takes="">
               <thead><tr><th scope="col">When</th><th scope="col">Reading</th><th scope="col">Played</th><th scope="col">For</th><th scope="col" className="num">Result</th><th scope="col">Held Back Most By</th></tr></thead>
               <tbody>
                 {[...rec.takes].reverse().map((t) => (

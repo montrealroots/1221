@@ -475,7 +475,10 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene another way: answer first.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
   if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
-  if (a.prep[act.dim] >= 0.97) return 'There’s nothing more to gain from it now.';
+  // Work on its feet still rehearses in a way of playing chosen after the part was complete (from 2026-10-12: until then
+  // it was refused here, and a choice made late could never be rehearsed in; a played run of the practice briefs found it).
+  const choiceToRehearse = (act.dim === 'rehearsal' || act.dim === 'partner') && sidesOf(a.playing).length > 0 && a.playing!.prep < PLAYING.complete;
+  if (a.prep[act.dim] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
   // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
   const onFeet = (act.needs ?? []).some((n) => n === 'studio' || n === 'feet');

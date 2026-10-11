@@ -59,13 +59,20 @@ export const PLAYING = { complete: 0.9, keptOnChange: 0.5, gainShare: 0.9 } as c
 /**
  * What each material feature does at each level (`MaterialProfile`): the dimensions it leans, per level, and the
  * abilities it asks, per level. Applied only to the dimensions a task has. SLATE's design, from what each feature is.
+ *
+ * Doubled on 2026-10-12, both the lean and the abilities. Until then a feature at 3, the material built on it, made the
+ * ability it asks about a fifth of one dimension, and measured across the 149 practice briefs it hardly decided who
+ * showed best: an actor strong in the feeling abilities every take reads came out ahead of an even actor of the same
+ * budget on 139 of them, whatever each was built on (docs/verification/BRIEF-BALANCE.md). Doubled, what a scene is built
+ * on decides more of it: that actor is ahead on the briefs built on feeling and behind on those built on timing, a
+ * partner or the body. Normalized as before, and every ability still reaches 100 at full.
  */
 export const FEATURE_EFFECT: Readonly<Record<Feature, { lean: Partial<Record<Dimension, number>>; inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }>> = {
-  timing: { lean: { responsiveness: 0.1, execution: 0.08 }, inputs: { responsiveness: [{ ability: 'listening', weight: 0.5 }], execution: [{ ability: 'focus', weight: 0.5 }] } },
-  physical: { lean: { execution: 0.1 }, inputs: { execution: [{ ability: 'physical', weight: 0.6 }], consistency: [{ ability: 'stamina', weight: 0.4 }] } },
-  partner: { lean: { connection: 0.1, responsiveness: 0.05 }, inputs: { connection: [{ ability: 'listening', weight: 0.5 }] } },
-  vocal: { lean: { execution: 0.08 }, inputs: { execution: [{ ability: 'vocal', weight: 0.6 }], consistency: [{ ability: 'stamina', weight: 0.3 }] } },
-  improvisation: { lean: { responsiveness: 0.1 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 0.6 }] } },
+  timing: { lean: { responsiveness: 0.2, execution: 0.16 }, inputs: { responsiveness: [{ ability: 'listening', weight: 1 }], execution: [{ ability: 'focus', weight: 1 }] } },
+  physical: { lean: { execution: 0.2 }, inputs: { execution: [{ ability: 'physical', weight: 1.2 }], consistency: [{ ability: 'stamina', weight: 0.8 }] } },
+  partner: { lean: { connection: 0.2, responsiveness: 0.1 }, inputs: { connection: [{ ability: 'listening', weight: 1 }] } },
+  vocal: { lean: { execution: 0.16 }, inputs: { execution: [{ ability: 'vocal', weight: 1.2 }], consistency: [{ ability: 'stamina', weight: 0.6 }] } },
+  improvisation: { lean: { responsiveness: 0.2 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 1.2 }] } },
 };
 
 /** A tone change or an emotional turn, each: what transitions ask. */

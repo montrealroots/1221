@@ -68,14 +68,19 @@ export type Purpose = 'first' | 'callback' | 'another-reading' | 'another-way' |
 /** The numbers, all SLATE's estimates. */
 export const BRIEF = {
   steps: {
-    read: { label: 'Break It Down', what: 'The circumstances, the relationship, what you want and what’s in the way, and where it turns: the ground your reading stands on.', minutes: 30, part: 'interpretation', gain: 0.5, feet: false, trains: 'imagination' },
-    lines: { label: 'Learn The Lines', what: 'The lines, until they’re yours.', minutes: 30, minutesMedium: 50, part: 'memorization', gain: 0.5, feet: false, trains: 'memory' },
-    rehearse: { label: 'Rehearse It On Your Feet', what: 'Played through aloud with the beats placed, and the way you chose to play it worked in.', minutes: 45, part: 'rehearsal', gain: 0.4, feet: true, trains: undefined },
+    read: { label: 'Break It Down', what: 'The circumstances, the relationship, what you want and what’s in the way, and where it turns: the ground your reading stands on.', minutes: 30, part: 'interpretation', gain: 0.6, feet: false, trains: 'imagination' },
+    lines: { label: 'Learn The Lines', what: 'The lines, until they’re yours.', minutes: 30, minutesMedium: 50, part: 'memorization', gain: 0.6, feet: false, trains: 'memory' },
+    rehearse: { label: 'Rehearse It On Your Feet', what: 'Played through aloud with the beats placed, and the way you chose to play it worked in.', minutes: 45, part: 'rehearsal', gain: 0.5, feet: true, trains: undefined },
   } as const,
   /** Rehearsal needs some of the lines first. */
   rehearseNeeds: 0.3,
-  /** What each part counts complete at; rehearsal's rises with what the scene turns on. */
-  complete: { interpretation: 0.85, memorization: 0.9, rehearsal: 0.6, perTransition: 0.1, perBlend: 0.05, mostRehearsal: 0.95 },
+  /**
+   * What each part counts complete at; rehearsal's rises with what the scene turns on. Lightened on 2026-10-12, with the
+   * steps' gains (0.6, 0.6, 0.5 from 0.5, 0.5, 0.4): a played month of term (tools/brief-journeys.ts) found a first brief
+   * in a new genre took about fourteen hours to have ready, more than a term's free hours give practice material. It's
+   * about four now, and more where the scene turns more.
+   */
+  complete: { interpretation: 0.8, memorization: 0.8, rehearsal: 0.5, perTransition: 0.08, perBlend: 0.04, mostRehearsal: 0.85, genre: 0.3 },
   /** A change of reading keeps this much of the breakdown. */
   readingKept: 0.5,
   /**
@@ -95,6 +100,13 @@ export const BRIEF = {
   takesKept: 8,
   /** A better take than the last by this many points, its expected result with no draw, is an improved one. */
   improvedBy: 1,
+  /**
+   * How strongly a reading counts: its leans raised to this power, its abilities' weights times this. Written at 1 and
+   * measured across the catalog, a specialist's best and worst readings of a brief were under a point apart on most
+   * briefs, a choice with no consequence; at 2 they're a point or more apart on most of them, up to about three
+   * (docs/verification/BRIEF-BALANCE.md). Leans are normalized, so it still moves weight and adds none.
+   */
+  readingLean: 2, readingDraw: 2,
 } as const;
 
 export interface Take {
@@ -162,17 +174,24 @@ export function turnsOf(b: Brief): { transitions: number; blends: number } {
 export function requiredOf(b: Brief): Record<string, number> {
   const t = turnsOf(b);
   const c = BRIEF.complete;
-  return { interpretation: c.interpretation, memorization: c.memorization, rehearsal: Math.min(c.mostRehearsal, c.rehearsal + c.perTransition * t.transitions + c.perBlend * t.blends), genre: SELF_TAPE.genreComplete };
+  return { interpretation: c.interpretation, memorization: c.memorization, rehearsal: Math.min(c.mostRehearsal, c.rehearsal + c.perTransition * t.transitions + c.perBlend * t.blends), genre: c.genre };
 }
 
-/** How well the brief's genres are known, the best of them, 0 to 1: a part of the take's preparation. */
-export const genreKnown = (person: Person, b: Brief): number => Math.max(0, ...b.kinds.map((g) => (person.engagement?.byGenre[g]?.familiarity ?? 0) / 100));
+/**
+ * How well the brief's genres are known, 0 to 1: the best of its genres, each the better of its familiarity (studied)
+ * and its practice (worked in), never their sum. A part of the take's preparation, complete at `BRIEF.complete.genre`.
+ * Until a played run of 2026-10-12 it was familiarity alone, complete at 60 as a material-less self-tape's was: a student
+ * spent 21 hours of a month studying one genre and taped nothing, since a session gives eight points and half again the
+ * same day. At 30, with work in the genre counting, it's four or so sessions for a genre never met, and taping in it
+ * builds it.
+ */
+export const genreKnown = (person: Person, b: Brief): number => Math.max(0, ...b.kinds.map((g) => Math.max(person.engagement?.byGenre[g]?.familiarity ?? 0, person.engagement?.byGenre[g]?.practice ?? 0) / 100));
 
-/** How much faster a step goes: the material's features met before or the genres' practice, the better of the two; familiarity is the take's own part, so it doesn't count here too. */
-export function prepSpeed(person: Person, b: Brief): number {
-  const practice = Math.max(0, ...b.kinds.map((g) => person.engagement?.byGenre[g]?.practice ?? 0));
-  return Math.max(featureSpeed(person, briefMaterial(b)), 1 + ENGAGEMENT.genreSpeed * practice / 100);
-}
+/**
+ * How much faster a step goes: the material's features met before (`featureSpeed`). Knowing the genre, studied or
+ * worked in, is the take's own part of preparation (`genreKnown`), so it doesn't speed the preparation too.
+ */
+export const prepSpeed = (person: Person, b: Brief): number => featureSpeed(person, briefMaterial(b));
 
 export const readingOf = (b: Brief, id: string | undefined): Reading | undefined => b.readings.find((r) => r.id === id);
 
@@ -193,12 +212,12 @@ export function briefContext(person: Person, b: Brief, rec: BriefRecord, over: {
   const inputs: Partial<Record<Dimension, { ability: AbilityId; weight: number }[]>> = Object.fromEntries(Object.entries(read.inputs).map(([d, xs]) => [d, (xs ?? []).map((x) => ({ ...x }))]));
   const reading = readingOf(b, over.reading ?? rec.reading);
   if (reading) {
-    for (const [d, x] of Object.entries(reading.lean) as [Dimension, number][]) if (lean[d] !== undefined) lean[d] = lean[d]! * x;
+    for (const [d, x] of Object.entries(reading.lean) as [Dimension, number][]) if (lean[d] !== undefined) lean[d] = lean[d]! * x ** BRIEF.readingLean;
     for (const dr of reading.draws) {
       if (!task.dims[dr.dim]) continue;
       const list = (inputs[dr.dim] ??= []);
       const had = list.find((y) => y.ability === dr.ability);
-      if (had) had.weight += dr.weight; else list.push({ ability: dr.ability, weight: dr.weight });
+      if (had) had.weight += dr.weight * BRIEF.readingDraw; else list.push({ ability: dr.ability, weight: dr.weight * BRIEF.readingDraw });
     }
   }
   const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b), ...(over.prep ?? {}) } as Record<string, number>;
@@ -259,7 +278,9 @@ export function prepareRefusal(sim: Simulation, person: Person, b: Brief | undef
   const s = BRIEF.steps[step as BriefStep];
   if (!s) return 'That isn’t a step of a brief.';
   const rec = peek(person, b.id);
-  if (rec.prep[s.part] >= 0.97) return 'There’s nothing more to gain from it now.';
+  // Rehearsal complete still rehearses in a way of playing chosen after it: a callback's note answered, a change of mind.
+  const choiceToRehearse = step === 'rehearse' && sidesOf(rec.playing).length > 0 && rec.playing!.prep < PLAYING.complete;
+  if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
   if (step === 'rehearse' && rec.prep.memorization < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
   if (s.feet) {
     if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
@@ -296,14 +317,15 @@ export function chooseRefusal(b: Brief | undefined, reading: unknown): string | 
 }
 
 /** A reading and a way of playing it chosen: a different reading keeps half the breakdown, a different way half its rehearsal. */
-export function chooseBrief(sim: Simulation, person: Person, b: Brief, reading: string, sides: Omit<Playing, 'chosenAt' | 'prep'>): { reading: string; interpretation: number; approach: number } {
+export function chooseBrief(sim: Simulation, person: Person, b: Brief, reading: string, sides: Omit<Playing, 'chosenAt' | 'prep'>): { reading: string; interpretation: number; approach: number; readingChanged: boolean } {
   const rec = recordOf(person, b.id);
-  if (rec.reading && rec.reading !== reading) rec.prep.interpretation = r3(rec.prep.interpretation * BRIEF.readingKept);
+  const readingChanged = Boolean(rec.reading && rec.reading !== reading);
+  if (readingChanged) rec.prep.interpretation = r3(rec.prep.interpretation * BRIEF.readingKept);
   rec.reading = reading;
   rec.playing = choose(rec.playing, sides, sim.now);
   if (!sidesOf(rec.playing).length) delete rec.playing;
   noteMaterial(person, { approaches: sidesOf(rec.playing) });
-  return { reading, interpretation: rec.prep.interpretation, approach: rec.playing?.prep ?? 0 };
+  return { reading, interpretation: rec.prep.interpretation, approach: rec.playing?.prep ?? 0, readingChanged };
 }
 
 /** The brief a self-tape in a genre is of, by its id or the genre's first. */
@@ -364,8 +386,12 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   };
   rec.takes.push(take);
   if (rec.takes.length > BRIEF.takesKept) rec.takes.splice(0, rec.takes.length - BRIEF.takesKept);
+  // One callback a round: a callback answered ends it, and only a take that wasn't one earns the next. Until a played run
+  // of 2026-10-12 every Strong callback earned another, and a mastered student taped one brief 84 times, a new note each
+  // time and nothing else new: repetition with the numbers changed.
+  const answered = Boolean(rec.callback);
   delete rec.callback;
-  if (band === 'strong' || band === 'exceptional') { const c = callbackFor(b, rec, key, sim.now); if (c) rec.callback = c; }
+  if (!answered && (band === 'strong' || band === 'exceptional')) { const c = callbackFor(b, rec, key, sim.now); if (c) rec.callback = c; }
   return { evaluation: e, take };
 }
 
@@ -468,7 +494,7 @@ export function registerBriefs(sim: Simulation): void {
     markApplied(s.player, p?.actionId);
     return prepareBrief(s, s.player, b!, String(p?.step) as BriefStep);
   });
-  sim.onCommand<{ brief: string; reading: string; pace?: string; scale?: string; structure?: string }, { reading: string; interpretation: number; approach: number }>('brief.choose', (p, { sim: s }) => {
+  sim.onCommand<{ brief: string; reading: string; pace?: string; scale?: string; structure?: string }, { reading: string; interpretation: number; approach: number; readingChanged: boolean }>('brief.choose', (p, { sim: s }) => {
     const b = BRIEF_BY_ID[String(p?.brief)];
     const no = chooseRefusal(b, p?.reading);
     if (no) throw new CommandError(no);

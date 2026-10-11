@@ -443,6 +443,108 @@ if (DIR && existsSync(`${DIR}/nonfiler.json`)) {
   });
   await overflow('papers tax (nonfiler save)');
 }
+// From the attributes-and-genres pass of 2026-10-12: a genre's practice brief worked through the Player Profile, from a
+// save the `brief` scenario wrote on a free Saturday: choose a genre, inspect its brief, prepare, choose a reading,
+// tape, read the result, identify a weakness, train it, tape again, then save, exit and find it all there.
+const briefPane = () => page.locator('[data-brief]').first();
+const num = (s, re) => Number((s.match(re) ?? [])[1] ?? NaN);
+async function openBrief(label) {
+  await rail('Player Profile');
+  const find = page.locator('#genres-find');
+  must(await find.count(), 'no genre search');
+  await find.fill(label); await wait(400);
+  const rows = page.locator('tr', { has: page.getByRole('button', { name: /^Open Its Brief$/ }) });
+  for (let i = 0; i < await rows.count(); i += 1) {
+    const r = rows.nth(i);
+    if ((await r.locator('td').first().innerText()).trim().replace(/, Loved$/, '') === label) { await r.getByRole('button', { name: /^Open Its Brief$/ }).click(); await wait(600); return; }
+  }
+  throw new Error(`no ${label} row`);
+}
+async function briefButton(re) {
+  const b = briefPane().getByRole('button', { name: re }).first();
+  must(await b.count(), `no button ${re}`);
+  must(!(await b.isDisabled()), `${re} greyed: ${await b.getAttribute('title')}`);
+  await b.click(); await wait(900); await settleDialogs();
+  return await toast();
+}
+if (DIR && existsSync(`${DIR}/brief.json`)) {
+  let first = NaN;
+  await step('[save: brief scenario] profile: a genre’s brief opened, the scene and what it asks shown before any time is spent', async () => {
+    await openSave('brief.json');
+    await openBrief('Drama');
+    const text = await briefPane().innerText();
+    for (const want of ['The Scene', 'What You Want', 'What’s In The Way', 'Where It Turns', 'What The Take Weighs', 'Preparation', 'Your Reading', 'an original scene written for SLATE']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
+    must(/Choose a reading first/.test(text), 'the take isn’t held until a reading is chosen');
+    const tape = briefPane().getByRole('button', { name: /^Tape It/ }).first();
+    must(await tape.isDisabled(), 'Tape It offered before a reading is chosen');
+    return text.split('\n').slice(0, 2).join(' / ').slice(0, 200);
+  });
+  await step('[save: brief scenario] brief: broken down, lines learned, a reading chosen and rehearsed, each spending its time', async () => {
+    const t0 = await clock();
+    const a = await briefButton(/^Break It Down/);
+    must(/Break It Down: 30 minutes/.test(a), a);
+    const b = await briefButton(/^Learn The Lines/);
+    must(/Learn The Lines: \d+ minutes/.test(b), b);
+    const radios = briefPane().locator('input[type=radio][name^="reading-"]');
+    must(await radios.count() >= 2, 'fewer than two readings');
+    await radios.nth(1).check(); await wait(300);
+    const c = await briefButton(/^Read It This Way$/);
+    must(/Reading it as/.test(c), c);
+    const d = await briefButton(/^Rehearse It On Your Feet/);
+    must(/Rehearse It On Your Feet: 45 minutes/.test(d), d);
+    const text = await briefPane().innerText();
+    must(/it would come to about \d+\.\d/.test(text), 'no forecast before the take');
+    return `${t0} → ${await clock()}; ${text.match(/it would come to about [^.]+\.\d[^.]*\./)?.[0]}`;
+  });
+  await step('[save: brief scenario] brief: taped, the result read, what held it back and what to work on shown', async () => {
+    const said = await briefButton(/^Tape It/);
+    first = num(said, /Taped: (\d+\.\d)/);
+    must(!Number.isNaN(first), `no result said: ${said}`);
+    const text = await briefPane().innerText();
+    // Headings render in capitals; their words are what count.
+    must(/The Last Take/i.test(text), 'no last take');
+    must(/A first take of it\./.test(text), 'its purpose isn’t said');
+    must(/held back the|wasn’t complete|didn’t fit/.test(text), 'what held it back isn’t said');
+    must(/What To Work On/i.test(text), 'no weakness named');
+    must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t in the takes table');
+    return `${said} / ${text.match(/What To Work On\n[^\n]+/)?.[0]?.slice(0, 160)}`;
+  });
+  await step('[save: brief scenario] brief: the weakness trained from the brief, an hour of practice', async () => {
+    const open = briefPane().locator('button', { hasText: /…$/ }).first();
+    if (!(await open.count())) skip('the weakness named is trained by a workout, not an exercise');
+    await open.click(); await wait(400);
+    const go = briefPane().getByRole('button', { name: /^Practice An Hour$/ }).first();
+    must(await go.count() && !(await go.isDisabled()), `Practice An Hour not available: ${await go.getAttribute('title')}`);
+    await go.click(); await wait(1200); await settleDialogs();
+    const said = await toast();
+    must(/: \+\d/.test(said), `no gain said: ${said}`);
+    return said;
+  });
+  await step('[save: brief scenario] brief: prepared further and taped again, better, and the record says why', async () => {
+    await briefButton(/^Break It Down/);
+    await briefButton(/^Rehearse It On Your Feet/);
+    await briefButton(/^Learn The Lines/);
+    const said = await briefButton(/^Tape It/);
+    const second = num(said, /Taped: (\d+\.\d)/);
+    must(second > first, `${first} → ${second}`);
+    const rows = briefPane().locator('table[data-takes] tbody tr');
+    must(await rows.count() === 2, 'two takes not kept');
+    const top = await rows.first().innerText();
+    must(/Better prepared or better able/.test(top), `its purpose: ${top}`);
+    return `${first} → ${second}: ${top.replace(/\s+/g, ' ').slice(0, 160)}`;
+  });
+  await step('[save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept', async () => {
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await openBrief('Drama');
+    const rows = briefPane().locator('table[data-takes] tbody tr');
+    must(await rows.count() === 2, `takes after reload: ${await rows.count()}`);
+    must(/Chosen/.test(await briefPane().innerText()), 'the reading chosen isn’t kept');
+    return 'kept';
+  });
+  await overflow('profile brief (brief save)');
+}
+
 // From the remaining-gaps pass of 2026-10-11: a lien's lifecycle and a plan's recovery, carried out through the screens.
 const lienLine = () => page.getByText(/Connecticut Tax Lien · /).first();
 if (DIR && existsSync(`${DIR}/lien.json`)) {

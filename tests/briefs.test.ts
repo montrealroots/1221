@@ -26,6 +26,7 @@ import { addPractice, genreState } from '@/engine/systems/engagement';
 import { misfitOf, type Playing } from '@/engine/systems/material';
 import { evenCraft } from '@/engine/systems/school';
 import { abilityFull } from '@/engine/systems/attributes';
+import { activitiesOf, courseworkOf, prepareRefusal, setWork } from '@/engine/systems/coursework';
 
 const ABILITIES = ['emotionalDepth', 'presence', 'listening', 'imagination', 'focus', 'memory', 'adaptability', 'composure', 'vocal', 'physical', 'discipline', 'stamina'] as const;
 const nobody = { engagement: { byGenre: {} } } as unknown as Person;
@@ -223,6 +224,8 @@ describe('a brief, played', () => {
     expect(go(sim, 'brief.prepare', { brief: 'brief-comedy', step: 'read', actionId: 'x-1' }).error).toMatch(/already done/);
     expect(JSON.stringify(sim.player.briefs)).toBe(after);
     expect(after).not.toBe(before);
+    // Known past what completes it, so a second take is the same work again: the first take's practice adds nothing to it.
+    genreState(sim.player, 'comedy').familiarity = 40;
     const p0 = genreState(sim.player, 'comedy').practice;
     go(sim, 'practice.self_tape', { genre: 'comedy' });
     const p1 = genreState(sim.player, 'comedy').practice;
@@ -285,5 +288,57 @@ describe('what the record makes of it', () => {
 
   it('every genre has a brief, reachable by the genre’s own tape', () => {
     for (const b of BRIEFS) expect(briefsOf(b.kinds[0]!)[0], b.id).toBeDefined();
+  });
+});
+
+describe('found by the played runs (2026-10-12)', () => {
+  it('rehearses in a way of playing chosen after rehearsal was complete, where it was refused', () => {
+    const sim = student('brief-late-choice');
+    go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
+    recordOf(sim.player, 'brief-drama').prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
+    expect(go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'rehearse' }).error).toMatch(/nothing more to gain/);
+    go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded', pace: 'measured' });
+    const before = recordOf(sim.player, 'brief-drama').playing!.prep;
+    expect(go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'rehearse' }).ok).toBe(true);
+    expect(recordOf(sim.player, 'brief-drama').playing!.prep).toBeGreaterThan(before);
+    expect(recordOf(sim.player, 'brief-drama').prep.rehearsal).toBe(1);
+  });
+
+  it('earns one callback a round: a callback answered, however Strong, earns no other until a fresh take', () => {
+    const sim = student('brief-one-callback');
+    mastered(sim);
+    const b = BRIEF_BY_ID['brief-thriller']!;
+    genreState(sim.player, 'thriller').familiarity = 70;
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    recordOf(sim.player, b.id).prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
+    go(sim, 'practice.self_tape', { genre: 'thriller' });
+    const cb = recordOf(sim.player, b.id).callback!;
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id, [cb.axis]: cb.side });
+    expect(go(sim, 'brief.prepare', { brief: b.id, step: 'rehearse' }).ok).toBe(true);
+    // TEST SETUP: the note rehearsed in fully, which days of rehearsal would do.
+    recordOf(sim.player, b.id).playing!.prep = 1;
+    const answered = go(sim, 'practice.self_tape', { genre: 'thriller' });
+    expect(answered.value!.purpose).toBe('callback');
+    expect(answered.value!.overall).toBe(100);
+    expect(recordOf(sim.player, b.id).callback).toBeUndefined();
+    // A fresh take of another reading can earn the next.
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[1]!.id, [cb.axis]: cb.side });
+    for (let i = 0; i < 4; i += 1) for (const s of ['read', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step: s });
+    expect(go(sim, 'practice.self_tape', { genre: 'thriller' }).value!.purpose).toBe('another-reading');
+    expect(recordOf(sim.player, b.id).callback).toBeDefined();
+  });
+
+  it('coursework rehearses in a way of playing chosen after its rehearsal was complete, too', () => {
+    const sim = student('cw-late-choice');
+    const a = setWork(sim, sim.player, 'DRAM 103a/b', { year: 2026, month: 9, day: 28 })!;
+    const act = activitiesOf(a).find((x) => x.dim === 'rehearsal');
+    if (!act) return;
+    courseworkOf(sim, sim.player)!.orientation.done.tour = sim.now;
+    a.prep.memorization = 1;
+    a.prep.rehearsal = 0.99;
+    rest(sim);
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/nothing more to gain/);
+    a.playing = { pace: 'driven', chosenAt: sim.now, prep: 0.2 };
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toBeUndefined();
   });
 });
