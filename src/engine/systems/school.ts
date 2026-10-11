@@ -112,7 +112,7 @@ import { connecticutTax, nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
-import { considerWelfare, facultyReview, followFormerClasses, joinCohort, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
+import { considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -381,7 +381,8 @@ export interface SchoolRecord {
    */
   castRead?: { term: number; play: string; reads: Partial<Craft>; kinds: string[]; rows: { name: string; you: boolean; fit: number; delivery: number; balance: number; score: number; part: string; size: PartSize; from?: LastWork['from'] }[] };
   /** The term's casting across the class: who's in what, as which part. */
-  around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[] };
+  /** The class's casts this term, and the week of its Cabaret show where it has one (`cabaretCompany`, from 2026-10-11). */
+  around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[]; cabaretWeek?: string };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
   credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize }[];
   /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
@@ -436,7 +437,13 @@ export interface SchoolRecord {
    * (`systems/leave.ts`, from 2026-10-10): each class's year, its classmates, and the calendar term it's been played
    * forward to (`advanceMates`).
    */
-  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant; offset?: number; productions?: FormerProduction[]; graduatedAt?: Instant }[];
+  formerClasses?: {
+    classOf: number; classmates: Classmate[]; playedTo: number; left: Instant; offset?: number; productions?: FormerProduction[]; graduatedAt?: Instant;
+    /** The class the student was in when they left the School, followed on without them (`leaveClassBehind`, from 2026-10-11). */
+    leftBehind?: true;
+    /** A term the class had partly with the student: its class days from `from` are still to play, its casts were live. */
+    resume?: { term: number; from: string };
+  }[];
   /** The productions the class a student joined had before they came (`joinCohort`, from the integration pass of 2026-10-10). */
   joinedHistory?: FormerProduction[];
   /**
@@ -574,6 +581,13 @@ export const ESTIMATE = {
    * the third year; 77 keeps the class's best actor as far above it.
    */
   castAtRep: 77,
+  /**
+   * A classmate's Cabaret (from 2026-10-11): the class makes one new piece a term, in a week drawn among the term's
+   * (three weeks in, clear of a recess, as the player's is), and each classmate free of their own production's calls
+   * that week joins it at this chance, at most this many. The Cabaret is the students' own and voluntary (the
+   * Bulletin, 2026–27); how many of a class take part isn't published, so both numbers are SLATE's estimate.
+   */
+  cabaretMates: { chance: 0.35, most: 4 },
   /** Below this condition a body is unwell enough to call in sick. */
   sickBelow: 55,
 } as const;
@@ -1028,6 +1042,113 @@ export interface FormerProduction {
   cast: { name: string; part: string; size: PartSize; quality: number }[];
 }
 
+/**
+ * A class's Cabaret show in a term (from 2026-10-11, `ESTIMATE.cabaretMates`): its week, drawn among the Thursdays three
+ * weeks into the term's classes with the week clear of a recess, and the classmates in it, each drawn at the chance
+ * among those whose own calls (`busy`, the days a production calls them) leave its evenings and nights free, as the
+ * player's week must be clear of theirs (`cabaretWeek`). A double-cast classmate is busy every week of their runs, so
+ * the Bulletin's bar on double-cast actors holds without a rule of its own. A classmate's standing isn't simulated, so
+ * none is kept out by a warning. Until 2026-10-11 only the player did the Cabaret, and a class's lists had no show.
+ */
+export function cabaretCompany(sim: Simulation, person: Person, key: string, term: number, mates: number, busy: (i: number) => ReadonlySet<string>): { week: SchoolDate; evenings: SchoolDate[]; members: number[] } | undefined {
+  const period = classPeriod(term);
+  const weeks: SchoolDate[] = [];
+  const from = addDays(period.from, 21);
+  for (let thu = addDays(from, (4 - weekday(from) + 7) % 7); keyOf(thu) <= keyOf(period.to); thu = addDays(thu, 7)) {
+    const sat = addDays(thu, 2);
+    if (period.off.some(([a, b]) => !(b < keyOf(thu) || a > keyOf(sat)))) continue;
+    weeks.push(thu);
+  }
+  if (!weeks.length) return undefined;
+  const week = weeks[Math.floor(sim.rng('school.cabaret_mates', person.id, `${key}-${term}-week`).next() * weeks.length)]!;
+  const evenings = cabaretEvenings(week, period.off);
+  const days = [...evenings, week, addDays(week, 1), addDays(week, 2)].map(keyOf);
+  const members: number[] = [];
+  for (let i = 0; i < mates && members.length < ESTIMATE.cabaretMates.most; i += 1) {
+    const held = busy(i);
+    if (days.some((d) => held.has(d))) continue;
+    if (sim.rng('school.cabaret_mates', person.id, `${key}-${term}-${i}`).next() < ESTIMATE.cabaretMates.chance) members.push(i);
+  }
+  return members.length ? { week, evenings, members } : undefined;
+}
+
+/** The days a School production calls its cast: each rehearsal and each night (`rehearsalDays`, its runs). */
+export function productionDays(term: number, p: { runs: SchoolDate[]; weeks: number }): Set<string> {
+  return new Set([...rehearsalDays(term, p.runs[0]!, p.weeks), ...p.runs].map(keyOf));
+}
+
+/** The days the Rep calls its company in a term: Tuesday to Saturday through its rehearsals, every night of its run. */
+export function repDays(term: number): Set<string> {
+  const rep = repProduction(term);
+  const out = new Set<string>();
+  for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) out.add(keyOf(d));
+  return out;
+}
+
+/** A Cabaret show's calls, the same for any class: its evenings' rehearsals and its five shows (`YALE_CABARET`). */
+export const CABARET_RUN = { rehearsals: YALE_CABARET.rehearsalEvenings, performances: YALE_CABARET.shows.length, part: 'A Part In A Cabaret Show' } as const;
+
+/**
+ * A first class's classmate through a run (from 2026-10-11, out of `formerProductions`, for the Rep's company and the
+ * Cabaret too): grown by its rehearsals and nights as a company is, judged as a classmate's run is, their composure
+ * grown by the nights, and a School part (`size`) kept for the next casting's balance.
+ */
+function formerRun(sim: Simulation, person: Person, c: NonNullable<SchoolRecord['formerClasses']>[number], i: number, reads: Partial<Craft>, shown: string, rehearsals: number, nights: number, last: Instant, size?: PartSize): number {
+  const mate = c.classmates[i]!;
+  const kept = reliabilityFor(sim, person, mate, `reliability-${i}`);
+  const f = ESTIMATE.classmateFocus * (mate.drive ?? 1) * ESTIMATE.classmateAttendance;
+  for (let n = 0; n < rehearsals; n += 1) rehearse(mate.craft, f);
+  for (let n = 0; n < nights; n += 1) playNight(mate.craft, reads, f);
+  if (mate.ceiling) bindCeiling(mate.craft, mate.ceiling);
+  const e = judge(sim.universe.meta.seed, formerPerformer(sim, person, mate, i), {
+    task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept }, required: { lines: 1, blocking: 1, notes: 1 },
+    difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `former:${c.classOf}:${i}:${shown}`,
+  });
+  mate.shown = { production: shown, quality: e.overall, at: last, runs: (mate.shown?.runs ?? 0) + 1 };
+  if (size) mate.last = { ...(mate.last ?? {}), size, delivery: kept };
+  const a = mate.abilities ?? (mate.abilities = drawMateAbilities(sim.universe.meta.seed, person.id, i, mate.craft));
+  for (let n = 0; n < nights; n += 1) a.composure = Math.min(100, a.composure + (100 - a.composure) * ATTRIBUTES.composureGain.performance);
+  return e.overall;
+}
+
+/**
+ * A run cast while the student was in the class, ended after they left the School (`COMPANY_KIND`, from 2026-10-11):
+ * its classmates grown and judged as a first class's are (`formerRun`), and the run kept in the class's record.
+ */
+function formerCompanyRun(sim: Simulation, person: Person, c: NonNullable<SchoolRecord['formerClasses']>[number], item: { at: Instant; label: string; payload: Record<string, unknown> }): void {
+  const reads = (item.payload.reads as Partial<Craft> | undefined) ?? COMPANY_READ;
+  const shown = String(item.payload.production ?? item.label.replace(/: The (Run|Show) Ends$/, ''));
+  const term = c.resume?.term ?? c.playedTo;
+  const around = person.school!.around?.term === term ? person.school!.around.list : [];
+  const cast: FormerProduction['cast'] = [];
+  for (const i of item.payload.mates as number[]) {
+    const mate = c.classmates[i];
+    if (!mate) continue;
+    const quality = formerRun(sim, person, c, i, reads, shown, Number(item.payload.rehearsals), Number(item.payload.performances), item.at);
+    const part = around.find((a) => a.name === mate.name && (a.production === shown || shown.startsWith(a.production)));
+    cast.push({ name: mate.name, part: part?.part ?? 'In The Company', size: part?.size ?? 'featured', quality });
+  }
+  const p = zonedParts(item.at, zone());
+  const day = keyOf({ year: p.year, month: p.month, day: p.day });
+  if (cast.length) (c.productions ??= []).push({ term, academic: term - (c.offset ?? 0), name: shown, from: String(item.payload.opened ?? day), to: day, cast });
+}
+
+/**
+ * The student's class's Cabaret show in a term (`cabaretCompany`, from 2026-10-11): listed with the term's casts, and
+ * those in it grown once it's played (`COMPANY_KIND`). A first fall, which has no casting, has its show too, as a
+ * first-year may take one.
+ */
+function classCabaret(sim: Simulation, person: Person, term: number, callsOf: ReadonlyMap<number, ReadonlySet<string>>): void {
+  const school = person.school!;
+  const cab = cabaretCompany(sim, person, `class-${school.classOf}`, term, school.classmates.length, (i) => callsOf.get(i) ?? new Set());
+  if (!cab) return;
+  const show = cabaretSeason(term);
+  school.around ??= { term, list: [] };
+  for (const i of cab.members) school.around.list.push({ name: school.classmates[i]!.name, production: show, part: CABARET_RUN.part });
+  school.around.cabaretWeek = keyOf(cab.week);
+  schedule(sim, person, at(addDays(cab.week, 2), 23, 30), { kind: COMPANY_KIND, label: `${show}: The Show Ends`, minutes: 0, requiresPlayer: false, payload: { mates: cab.members, rehearsals: CABARET_RUN.rehearsals, performances: CABARET_RUN.performances, reads: NEW_PLAYS_READ, production: show, opened: keyOf(cab.week) } });
+}
+
 /** The year a class's plays are dealt from: its own class year (`playOf` reads the player's). */
 const asClassOf = (person: Person, classOf: number): Person => ({ ...person, school: { ...person.school!, classOf } });
 
@@ -1038,16 +1159,25 @@ const asClassOf = (person: Person, classOf: number): Person => ({ ...person, sch
  * member grown by the rehearsals and the nights as a company is (`rehearse`, `playNight`), judged as a classmate's run
  * is, and their last part kept for the next casting's balance. Until then a first class had its classes played forward
  * and none of its productions. The student is never in these casts: they were somewhere else. Recorded once a term.
+ * From 2026-10-11 its third-year fall's best play in the Rep's company instead, as the student's own class's do, and the
+ * class has its Cabaret show (`cabaretCompany`): until then a first class's Rep and Cabaret parts weren't played. As
+ * in the student's class, only a School part is kept for the next casting's balance (`last`).
  */
 export function formerProductions(sim: Simulation, person: Person, c: NonNullable<SchoolRecord['formerClasses']>[number], term: number, academic: number): void {
-  if (academic < 1 || academic >= YALE_DRAMA.terms) return;
+  if (academic < 0 || academic >= YALE_DRAMA.terms) return;
   if ((c.productions ?? []).some((p) => p.term === term)) return;
   const as = asClassOf(person, c.classOf);
-  const students: Student[] = c.classmates.map((m, i) => ({ i, name: m.name, craft: m.craft, title: m.title ?? 'actor', ...(m.last ? { last: m.last } : {}) }));
+  // A third-year fall's best go to the Rep's company and not a School production, as in the student's own class (`cast`,
+  // from 2026-10-11: until then a first class's were cast in the School's productions that term like the rest).
+  const company = repTerm(academic) && yearOfTerm(academic) === 3;
+  const atRep = new Set(company ? c.classmates.flatMap((m, i) => (actingOf(m.craft) >= ESTIMATE.castAtRep ? [i] : [])) : []);
+  const callsOf = new Map<number, Set<string>>();
+  for (const i of atRep) callsOf.set(i, repDays(term));
+  const students: Student[] = c.classmates.flatMap((m, i) => (atRep.has(i) ? [] : [{ i, name: m.name, craft: m.craft, title: m.title ?? 'actor', ...(m.last ? { last: m.last } : {}) }]));
+  // A first fall has no casting, only its Cabaret show.
   const first = schoolProduction(term, 1, academic);
-  if (!first) return;
-  const firstPlay = playOf(sim, as, first);
-  const order = [...students].sort((a, b) => castScore(b, playReads(firstPlay)) - castScore(a, playReads(firstPlay)));
+  const firstPlay = first && playOf(sim, as, first);
+  const order = firstPlay ? [...students].sort((a, b) => castScore(b, playReads(firstPlay)) - castScore(a, playReads(firstPlay))) : [];
   const groups = new Map<string, { production: NonNullable<ReturnType<typeof schoolProduction>>; members: Student[] }>();
   order.forEach((s, k) => {
     const production = schoolProduction(term, k + 1, academic)!;
@@ -1055,6 +1185,7 @@ export function formerProductions(sim: Simulation, person: Person, c: NonNullabl
     g.members.push(s);
     groups.set(production.name, g);
   });
+  const record = (p: Omit<FormerProduction, 'term' | 'academic'>) => (c.productions ??= []).push({ term, academic, ...p });
   for (const { production, members } of groups.values()) {
     const play = playOf(sim, as, production);
     const reads = playReads(play);
@@ -1064,26 +1195,37 @@ export function formerProductions(sim: Simulation, person: Person, c: NonNullabl
     const nights = production.runs.length;
     const cast: FormerProduction['cast'] = [];
     for (const g of given) {
-      const mate = c.classmates[g.s.i]!;
-      const kept = reliabilityFor(sim, person, mate, `reliability-${g.s.i}`);
-      const f = ESTIMATE.classmateFocus * (mate.drive ?? 1) * ESTIMATE.classmateAttendance;
-      for (let n = 0; n < rehearsals; n += 1) rehearse(mate.craft, f);
-      for (let n = 0; n < nights; n += 1) playNight(mate.craft, reads, f);
-      if (mate.ceiling) bindCeiling(mate.craft, mate.ceiling);
-      const e = judge(sim.universe.meta.seed, formerPerformer(sim, person, mate, g.s.i), {
-        task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept }, required: { lines: 1, blocking: 1, notes: 1 },
-        difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `former:${c.classOf}:${g.s.i}:${shown}`,
-      });
-      mate.shown = { production: shown, quality: e.overall, at: at(production.runs[nights - 1]!, 22), runs: (mate.shown?.runs ?? 0) + 1 };
-      mate.last = { ...(mate.last ?? {}), size: g.size, delivery: kept };
-      const a = mate.abilities ?? (mate.abilities = drawMateAbilities(sim.universe.meta.seed, person.id, g.s.i, mate.craft));
-      for (let n = 0; n < nights; n += 1) a.composure = Math.min(100, a.composure + (100 - a.composure) * ATTRIBUTES.composureGain.performance);
-      cast.push({ name: mate.name, part: partLabel(g.part, production.kind), size: g.size, quality: e.overall });
+      callsOf.set(g.s.i, productionDays(term, production));
+      const quality = formerRun(sim, person, c, g.s.i, reads, shown, rehearsals, nights, at(production.runs[nights - 1]!, 22), g.size);
+      cast.push({ name: c.classmates[g.s.i]!.name, part: partLabel(g.part, production.kind), size: g.size, quality });
     }
-    (c.productions ??= []).push({ term, academic, name: production.name, ...(play.title ? { play: play.title } : {}), ...(play.by ? { by: play.by } : {}), from: keyOf(production.runs[0]!), to: keyOf(production.runs[nights - 1]!), cast });
+    record({ name: production.name, ...(play.title ? { play: play.title } : {}), ...(play.by ? { by: play.by } : {}), from: keyOf(production.runs[0]!), to: keyOf(production.runs[nights - 1]!), cast });
   }
-  // A long life's list stays bounded: a class has at most a production a term for each of its five terms with one.
-  if (c.productions!.length > 20) c.productions!.splice(0, c.productions!.length - 20);
+  // The Rep's company, played as the student's class's is (`COMPANY_KIND`): its rehearsal weeks' weekdays and its nights.
+  if (atRep.size) {
+    const rep = repProduction(term);
+    const days = Math.max(0, Math.round((Date.parse(rep.run.from) - Date.parse(rep.rehearsals.from)) / MS_DAY));
+    const nights = Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1;
+    const cast: FormerProduction['cast'] = [];
+    for (const i of atRep) {
+      const quality = formerRun(sim, person, c, i, COMPANY_READ, rep.name, Math.round(days * 5 / 7), nights, at(parseKey(rep.run.to), 23));
+      cast.push({ name: c.classmates[i]!.name, part: 'A Featured Part In The Company', size: 'featured', quality });
+    }
+    record({ name: rep.name, from: rep.run.from, to: rep.run.to, cast });
+  }
+  // And the class's Cabaret show (`cabaretCompany`), under the key the class had while the student was in it.
+  const cab = cabaretCompany(sim, person, `class-${c.classOf}`, term, c.classmates.length, (i) => callsOf.get(i) ?? new Set());
+  if (cab) {
+    const show = cabaretSeason(term);
+    const cast: FormerProduction['cast'] = [];
+    for (const i of cab.members) {
+      const quality = formerRun(sim, person, c, i, NEW_PLAYS_READ, show, CABARET_RUN.rehearsals, CABARET_RUN.performances, at(addDays(cab.week, 2), 23, 30));
+      cast.push({ name: c.classmates[i]!.name, part: CABARET_RUN.part, size: 'featured', quality });
+    }
+    record({ name: show, from: keyOf(cab.week), to: keyOf(addDays(cab.week, 2)), cast });
+  }
+  // A long life's list stays bounded: at most a School production, the Rep and a Cabaret show a term, for five terms.
+  if (c.productions!.length > 30) c.productions!.splice(0, c.productions!.length - 30);
 }
 
 /** A first-class classmate as the evaluation reads them, from their own record, under the keys they always had. */
@@ -1107,16 +1249,20 @@ function formerPerformer(sim: Simulation, person: Person, mate: Classmate, i: nu
  * class day of each academic term, its courses grow each classmate's skills and the abilities they reach, by the same
  * rule a class day does (`CLASSES_KIND`), on the days a classmate's ordinary attendance has them there. Their
  * productions' rehearsals and nights aren't played forward: SLATE keeps those for the class the player is in.
+ * From 2026-10-11 the days are the calendar term's (`offset`, the class's calendar term less its academic one): until
+ * then they were the academic term's own, the class of 2029's, so a class a year behind was played the year before's
+ * days, recesses and all. And a term the class had partly with the student plays on `from` the day it was left at.
  */
-export function advanceMates(mates: Classmate[], academicTerms: readonly number[]): void {
+export function advanceMates(mates: Classmate[], academicTerms: readonly number[], offset = 0, from?: string): void {
   for (const a of academicTerms) {
     if (a < 0 || a >= YALE_DRAMA.terms) continue;
-    const period = classPeriod(a);
+    const period = classPeriod(a + offset);
     const season = termStart(a).fall ? 'fall' : 'spring';
     let n = 0;
     for (let d = period.from; keyOf(d) <= keyOf(period.to); d = addDays(d, 1)) {
-      if (!isClassDay(a, d)) continue;
+      if (!isClassDay(a + offset, d)) continue;
       n += 1;
+      if (from && keyOf(d) < from) continue;
       const courses = timetable(yearOfTerm(a), season)[weekday(d) - 1] ?? [];
       mates.forEach((mate, i) => {
         // Ordinary attendance, by a fixed pattern: about one class day in thirty-three missed (`classmateAttendance`).
@@ -1552,7 +1698,11 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
     endCoursework(sim, person);
     // The degree added to reputation and a dismissal took from it until 2026-10-09, when what read it went with the career.
     keepCredit(sim, school);
+    // The class they were in goes on without them (`leaveClassBehind`, from 2026-10-11), after a dismissal or a
+    // withdrawal; its runs under way and every class's next term are its, not the student's, and stay on the calendar.
+    if (to === 'dismissed' || to === 'withdrawn') leaveClassBehind(sim, person);
     for (const item of sim.universe.scheduled) {
+      if (item.kind === FORMER_KIND || (item.kind === COMPANY_KIND && item.payload.classOf !== undefined)) continue;
       if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
     }
     // What was worked is still paid.
@@ -2194,6 +2344,9 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const first = schoolProduction(term, 1, academic);
   const around: { name: string; production: string; part: string; size?: PartSize }[] = [];
   let mine: { production: NonNullable<ReturnType<typeof schoolProduction>>; play: ReturnType<typeof playOf>; part: string; size: PartSize; cast: { name: string; part: string }[] } | undefined;
+  // The days each classmate's production calls them, for the Cabaret's (`cabaretCompany`).
+  const callsOf = new Map<number, Set<string>>();
+  if (company) for (const i of matesAtRep) callsOf.set(i, repDays(term));
   if (first) {
     // Placed by how each reads for the first production's play, then cast within each.
     const firstPlay = playOf(sim, person, first);
@@ -2211,6 +2364,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       const playFit = fitFor(play);
       const given = partsFor(members, play.parts, play.reads, playFit);
       const shown = play.title ?? production.name;
+      for (const g of given) if (g.s.i >= 0) callsOf.set(g.s.i, productionDays(term, production));
       for (const g of given) around.push({ name: g.s.name, production: shown, part: partLabel(g.part, production.kind), size: g.size });
       // A classmate's delivery is the share of calls they keep (`reliabilityOf`): their calls aren't played one by one.
       for (const g of given) if (g.s.i >= 0) school.classmates[g.s.i]!.last = { size: g.size, delivery: reliabilityOf(sim, person, g.s.i) };
@@ -2241,10 +2395,11 @@ function cast(sim: Simulation, person: Person, term: number): void {
       // The classmates in it rehearse and play it too: grown once the run is over (`COMPANY_KIND`).
       const mates = given.filter((g) => g.s.i >= 0).map((g) => g.s.i);
       const last = production.runs[production.runs.length - 1]!;
-      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: playReads(play), production: shown } });
+      if (mates.length) schedule(sim, person, at(last, 22), { kind: COMPANY_KIND, label: `${shown}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates, rehearsals: rehearsalDays(term, production.runs[0]!, production.weeks).length, performances: production.runs.length, reads: playReads(play), production: shown, opened: keyOf(production.runs[0]!) } });
     }
   }
   school.around = { term, list: around };
+  classCabaret(sim, person, term, callsOf);
   castListRead(person);
   if (!school.castable) {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
@@ -2334,7 +2489,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     const mates = school.classmates.map((m, i) => ({ m, i })).filter(({ i }) => matesAtRep.has(i));
     for (const { m } of mates) school.around.list.push({ name: m.name, production: rep.name, part: 'A Featured Part In The Company' });
     const days = Math.max(0, Math.round((Date.parse(rep.run.from) - Date.parse(rep.rehearsals.from)) / MS_DAY));
-    if (mates.length) schedule(sim, person, at(parseKey(rep.run.to), 23), { kind: COMPANY_KIND, label: `${rep.name}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates: mates.map(({ i }) => i), rehearsals: Math.round(days * 5 / 7), performances: Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1 } });
+    if (mates.length) schedule(sim, person, at(parseKey(rep.run.to), 23), { kind: COMPANY_KIND, label: `${rep.name}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates: mates.map(({ i }) => i), rehearsals: Math.round(days * 5 / 7), performances: Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1, production: rep.name, opened: rep.run.from } });
   }
   if (person.id === sim.universe.playerId) {
     const chair = YALE_DRAMA.actingChair.name;
@@ -2557,6 +2712,7 @@ export function registerSchool(sim: Simulation): void {
     if (!termStart(term).fall && yearOfTerm(academic) < 3) schedule(s, person, at(recessStart(term), 9), { kind: RECESS_KIND, label: 'Summer Recess', minutes: 0, requiresPlayer: false });
     scheduleLabs(s, person, term);
     if (academic >= 1) cast(s, person, term);
+    else { if (school.around?.term !== term) school.around = { term, list: [] }; classCabaret(s, person, term, new Map()); }
     // The last spring ended in the Actor Showcase for the agents until the career went on 2026-10-09. The degree's
     // filmed monologues were marked posted at its end (`school.filmed`), footage for a reel, until 2026-10-10: with the
     // career gone nothing cut a reel, and the mark went.
@@ -2793,8 +2949,11 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(COMPANY_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
-    if (!school) return;
+    if (!person || !school) return;
     const reads = (item.payload.reads as Partial<Craft> | undefined) ?? COMPANY_READ;
+    // A run of a class the student has left (`leaveClassBehind`, from 2026-10-11): played into that class's record.
+    const left = item.payload.classOf === undefined ? undefined : school.formerClasses?.find((c) => c.classOf === item.payload.classOf);
+    if (left) { formerCompanyRun(s, person, left, item); return; }
     for (const i of item.payload.mates as number[]) {
       const m = school.classmates[i];
       if (!m) continue;

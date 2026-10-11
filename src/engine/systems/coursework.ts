@@ -72,7 +72,7 @@ import {
 import { actingOf } from './school';
 import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp, trainingRefusal } from './injury';
-import { academicTerm, coursesFor, type SchoolRecord } from './school';
+import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, type SchoolRecord } from './school';
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
@@ -280,8 +280,21 @@ function moveTrust(mate: Classmate, by: number, bond?: { person: Person; by: num
   if (bond) mate.bond = Math.max(-100, Math.min(100, (mate.bond ?? 0) + bondMove(bond.person, bond.by)));
 }
 
-/** Whether a classmate is cast this term, and so called Tuesday to Friday from three (the Bulletin's rehearsal hours). */
-const castThisTerm = (person: Person, mate: Classmate, term: number): boolean => person.school!.around?.term === term && person.school!.around.list.some((x) => x.name === mate.name);
+/**
+ * Whether a classmate is cast this term, and so called Tuesday to Friday from three (the Bulletin's rehearsal hours). A
+ * Cabaret show alone isn't that: it calls its evenings and its nights in one week (`cabaretCalls`, from 2026-10-11).
+ */
+const castThisTerm = (person: Person, mate: Classmate, term: number): boolean => person.school!.around?.term === term && person.school!.around.list.some((x) => x.name === mate.name && x.part !== CABARET_RUN.part);
+
+/** Whether a classmate's Cabaret show calls them on a day, from six in the evening: its rehearsal evenings and its nights. */
+function cabaretCalls(person: Person, mate: Classmate, term: number, day: SchoolDate): boolean {
+  const around = person.school!.around;
+  if (around?.term !== term || !around.cabaretWeek || !around.list.some((x) => x.name === mate.name && x.part === CABARET_RUN.part)) return false;
+  const [y, m, d] = around.cabaretWeek.split('-').map(Number);
+  const thu: SchoolDate = { year: y!, month: m!, day: d! };
+  const k = keyOf(day);
+  return [0, 1, 2].some((n) => keyOf(plus(thu, n)) === k) || cabaretEvenings(thu, classPeriod(term).off).some((e) => keyOf(e) === k);
+}
 
 /** Why a classmate can't rehearse at a moment, by their own day, or nothing. */
 export function mateBusy(person: Person, i: number, when: Instant, minutes: number): string | undefined {
@@ -297,6 +310,7 @@ export function mateBusy(person: Person, i: number, when: Instant, minutes: numb
   const term = termOf(day);
   if (weekday === 6 && startH < 16 && endH > 10 && coursesFor(person.school, plus(day, -1)).length) return `${first} works a work-study shift on Saturdays.`;
   if (castThisTerm(person, mate, term) && weekday >= 2 && weekday <= 5 && endH > 15) return `${first} has rehearsal calls from three, Tuesday to Friday.`;
+  if (endH > 18 && cabaretCalls(person, mate, term, day)) return `${first} is in a Cabaret show this week, called from six.`;
   return undefined;
 }
 

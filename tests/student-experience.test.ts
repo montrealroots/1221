@@ -100,7 +100,10 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(graceDays(sim.player)).toBe(15);
     expect(usStatusEnds(sim.player)).toBe(school.endedAt! + 15 * MS_DAY);
     expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
-    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === sim.player.id && i.kind !== 'school.payday')).toBe(false);
+    // Nothing of the student's own is left on the calendar. The class they left keeps its term's end, to be followed
+    // on without them (`leaveClassBehind`, from 2026-10-11).
+    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === sim.player.id && i.kind !== 'school.payday' && i.kind !== 'school.former_class' && i.payload.classOf === undefined)).toBe(false);
+    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === 'school.former_class' && i.payload.personId === sim.player.id)).toBe(true);
     expect(courseworkOf(sim, sim.player)!.assignments.some((a) => a.status === 'open')).toBe(false);
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(false);
   });

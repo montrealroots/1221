@@ -296,10 +296,10 @@ export function ClassesPanel() {
   return (
     <div className="col gap-2">
       <div className="eyebrow">Your Classes</div>
-      <p className="small" style={{ margin: 0 }}>You go on with the class of {school.classOf}: {school.classmates.map((m) => m.name).join(', ')}.</p>
+      {!schoolEnded(school.standing) && <p className="small" style={{ margin: 0 }}>You go on with the class of {school.classOf}: {school.classmates.map((m) => m.name).join(', ')}.</p>}
       {school.formerClasses!.map((c) => (
         <p key={c.classOf} className="small" style={{ margin: 0 }}>
-          Your first class, the class of {c.classOf}, a year ahead of you since you rejoined on {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record. {c.graduatedAt !== undefined ? `They had their degrees by ${formatDate(c.graduatedAt, sim.zone)}.` : (() => { const at = formerStage(c, Math.max(0, school.termsBegun - 1)); return at === undefined ? 'They’re a year ahead.' : at >= YALE_DRAMA.terms ? 'They’ve finished their sixth term.' : `They’re in year ${Math.floor(at / 2) + 1}, its ${at % 2 === 0 ? 'fall' : 'spring'} term.`; })()}
+          {c.leftBehind ? `The class of ${c.classOf}, who went on without you after you left the School on ${formatDate(c.left, sim.zone)}` : `Your first class, the class of ${c.classOf}, a year ahead of you since you rejoined on ${formatDate(c.left, sim.zone)}`}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record. {c.graduatedAt !== undefined ? `They had their degrees by ${formatDate(c.graduatedAt, sim.zone)}.` : (() => { const at = formerStage(c, schoolEnded(school.standing) ? c.playedTo + 1 : Math.max(0, school.termsBegun - 1)); return at === undefined ? 'They’re a year ahead.' : at >= YALE_DRAMA.terms ? 'They’ve finished their sixth term.' : `They’re in year ${Math.floor(at / 2) + 1}, its ${at % 2 === 0 ? 'fall' : 'spring'} term.`; })()}
         </p>
       ))}
       {school.formerClasses!.filter((c) => (c.productions ?? []).length).map((c) => (
@@ -307,8 +307,8 @@ export function ClassesPanel() {
           <ul style={{ margin: 0 }}>{c.productions!.map((p) => { const lead = [...p.cast].sort((a, b) => (a.size === 'lead' ? 0 : 1) - (b.size === 'lead' ? 0 : 1) || b.quality - a.quality)[0]; return <li key={`${p.term}${p.name}`}>{p.play ?? p.name}{p.play ? `, ${p.name}` : ''}, {formatDate(Date.parse(`${p.from}T17:00:00Z`), sim.zone)}: {p.cast.length} of them{lead ? `; ${lead.name} as ${lead.part}, ${Math.round(lead.quality)}` : ''}.</li>; })}</ul>
         </details>
       ))}
-      {(school.joinedHistory ?? []).length > 0 && <p className="small" style={{ margin: 0 }}>Before you joined, the class of {school.classOf} played {school.joinedHistory!.map((p) => p.play ?? p.name).join(' and ')}.</p>}
-      <Fine>The first class is played forward through every term it has, to its degree, while you’re at the School: its classes, as a class day grows a classmate, and its productions, cast by the chair’s rule and grown by their rehearsals and nights. The Rep’s and the Cabaret’s parts aren’t played for it, a boundary of SLATE’s.</Fine>
+      {(school.joinedHistory ?? []).length > 0 && (() => { const plays = school.joinedHistory!.filter((p) => !p.name.startsWith('Yale Cabaret')).map((p) => p.play ?? p.name); const shows = school.joinedHistory!.length - plays.length; const said = [...plays, ...(shows ? [shows === 1 ? 'a Cabaret show' : `${shows} Cabaret shows`] : [])]; return <p className="small" style={{ margin: 0 }}>Before you joined, the class of {school.classOf} played {said.join(' and ')}.</p>; })()}
+      <Fine>A class you’ve left is played forward through every term it has, to its degree, whether or not you’re still at the School: its classes, as a class day grows a classmate, and its productions, cast by the chair’s rule and grown by their rehearsals and nights, its third year’s Rep company and a Cabaret show a term among them. How many of a class take a Cabaret show is SLATE’s estimate.</Fine>
     </div>
   );
 }

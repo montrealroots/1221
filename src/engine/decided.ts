@@ -29,7 +29,7 @@ import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
-import { admittedClass, classmatesIn, goesOn, meanCraft, nightBand, nightEvaluation } from './systems/school';
+import { admittedClass, cabaretCompany, classmatesIn, goesOn, meanCraft, nightBand, nightEvaluation } from './systems/school';
 import { drawDirection } from './systems/production';
 import { PLAY_MATERIAL } from './content/material';
 import { attributesOf } from './systems/attributes';
@@ -290,6 +290,23 @@ defineDecider<{ sim: Simulation; day: number }, string>({
   sample: (seed) => ({ sim: atYale(seed), day: seed % 60 }),
   // A fortnight of class days from the one read, so an absence shows.
   decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
+});
+
+defineDecider<{ sim: Simulation; term: number }, string>({
+  id: 'school.cabaret_mates',
+  decides: 'A class’s Cabaret show in a term: its week among the term’s, and which of the classmates free that week are in it.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // The term: each is drawn on its own.
+    term: (o, t) => ({ ...o, term: Math.round(t * 5) }),
+    // Two saves are two classes.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), term: seed % 6 }),
+  decide: ({ sim, term }) => {
+    const c = cabaretCompany(sim, sim.player, 'class-2029', term, 15, () => new Set());
+    return c ? `${c.week.month}-${c.week.day}: ${c.members.join(' ')}` : 'none';
+  },
 });
 
 /** A student set at one level in every ability and technique, and at an energy: what a night's decider reads. */

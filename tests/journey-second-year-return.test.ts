@@ -93,7 +93,8 @@ describe('PLAYER JOURNEY: a second-year leave, and back with the class a year be
     expect(school().leaves!.at(-1)!.status).toBe('returned');
     expect(academicTerm(school(), 4)).toBe(2);
     expect(school().classmates.some((m) => firstClass.includes(m.name))).toBe(false);
-    expect(school().joinedHistory!.map((p) => p.term)).toEqual([3]);
+    // Its School production, with the Cabaret shows its terms had (from 2026-10-11).
+    expect(school().joinedHistory!.filter((p) => !p.name.startsWith('Yale Cabaret')).map((p) => p.term)).toEqual([3]);
     const joined = new Set(school().classmates.map((m) => m.name));
     expect(school().joinedHistory![0]!.cast.every((c) => joined.has(c.name))).toBe(true);
     expect(titled(sim, 'The Class Of 2030')).toHaveLength(1);

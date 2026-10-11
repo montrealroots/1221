@@ -87,8 +87,10 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
       for (const c of p.cast) expect(theirs.has(c.name), c.name).toBe(true);
       expect(p.cast.some((c) => c.name === `${sim.player.firstName} ${sim.player.lastName}`)).toBe(false);
     }
-    // Every one of the class in a production each of those terms, and their last part kept for the next casting.
-    for (const t of [1, 2]) expect(prods.filter((p) => p.term === t).reduce((n, p) => n + p.cast.length, 0)).toBe(later.classmates.length);
+    // Every one of the class in a School production each of those terms, and their last part kept for the next casting;
+    // some in a Cabaret show besides (from 2026-10-11).
+    const staged = (p: { name: string }) => !p.name.startsWith('Yale Cabaret');
+    for (const t of [1, 2]) expect(prods.filter((p) => p.term === t && staged(p)).reduce((n, p) => n + p.cast.length, 0)).toBe(later.classmates.length);
     expect(later.classmates.every((m) => m.shown && m.last?.size)).toBe(true);
     // The class joined came with its own first spring's production, and its own draws: not the first class's again.
     // (Back at a first-year fall, the class joined has had no production yet: its history is empty.)
@@ -106,7 +108,9 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
     Object.assign(school, { offset: 2, classOf: school.classOf + 1, joinsCohort: { offsetBefore: 0, lastWith: 3 } });
     joinCohort(sim, sim.player, 4);
     const history = school.joinedHistory ?? [];
-    expect(history.map((p) => p.term)).toEqual([3]);
+    // Its School production, and the Cabaret shows of its two terms (from 2026-10-11).
+    expect(history.filter((p) => !p.name.startsWith('Yale Cabaret')).map((p) => p.term)).toEqual([3]);
+    expect(history.filter((p) => p.name.startsWith('Yale Cabaret')).every((p) => p.term === 2 || p.term === 3)).toBe(true);
     const names = new Set(school.classmates.map((m) => m.name));
     for (const p of history) for (const c of p.cast) expect(names.has(c.name)).toBe(true);
     expect(school.classmates.every((m) => m.last?.size)).toBe(true);

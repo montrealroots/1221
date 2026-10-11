@@ -38,10 +38,10 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { formatDate, MS_DAY, type Instant } from '../core/time';
+import { formatDate, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { COURSES, EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, YALE_DRAMA } from '../content/school';
 import {
-  ESTIMATE, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
+  CLASSES_KIND, COMPANY_KIND, ESTIMATE, bindCeiling, ceilingBefore, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, keyOf, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
   schoolEnded, setStanding, termAccount, termBegins, termLabel, termStart, yearOfTerm, zone, type SchoolRecord,
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
@@ -423,14 +423,18 @@ export function followFormerClasses(sim: Simulation, person: Person, term: numbe
     for (let t = c.playedTo + 1; t < term; t += 1) {
       const academic = t - c.offset;
       if (academic < YALE_DRAMA.terms && sim.now < formerTermEnds(t, academic)) break;
-      advanceMates(c.classmates, [academic]);
-      formerProductions(sim, person, c, t, academic);
+      // A term the class had partly with the student (`leaveClassBehind`): the rest of its class days, and its casts
+      // already made, their runs played to this class's record as they end (`COMPANY_KIND`).
+      const partly = c.resume?.term === t ? c.resume : undefined;
+      advanceMates(c.classmates, [academic], c.offset, partly?.from);
+      if (!partly) formerProductions(sim, person, c, t, academic);
+      delete c.resume;
       c.playedTo = t;
       // Its sixth term over, the class has its degrees: said once, as the term is played once (`playedTo` passes it; a
       // guard on `graduatedAt` besides was found redundant by mutation in the integration pass).
       if (academic === YALE_DRAMA.terms - 1) {
         c.graduatedAt = sim.now;
-        if (person.id === sim.universe.playerId) notify(sim, person, `The Class Of ${c.classOf} Graduates`, `Your first class has its degrees: ${c.classmates.slice(0, 3).map((m) => m.name).join(', ')} and the rest. What you shared with them stays on your record.`, 55);
+        if (person.id === sim.universe.playerId) notify(sim, person, `The Class Of ${c.classOf} Graduates`, `${c.leftBehind ? 'The class you left' : 'Your first class'} has its degrees: ${c.classmates.slice(0, 3).map((m) => m.name).join(', ')} and the rest. What you shared with them stays on your record.`, 55);
       }
     }
     // The next term's end, on the calendar, while the class has a term left (`FORMER_KIND`): a term is caught up there,
@@ -440,6 +444,45 @@ export function followFormerClasses(sim: Simulation, person: Person, term: numbe
       sim.schedule({ at: Math.max(sim.now + 60_000, formerTermEnds(next, next - c.offset)), kind: FORMER_KIND, label: `The Class Of ${c.classOf}`, category: 'system', priority: 30, payload: { personId: person.id, term: next } });
     }
   }
+}
+
+/**
+ * The class a student was in, followed on when they leave the School by a dismissal or a withdrawal (from 2026-10-11):
+ * until then every class was kept where it stood the day the student left, its pending runs called off with the
+ * student's own calls, and the classes a year ahead stopped there too. Kept whole as a first class is
+ * (`followFormerClasses`), a copy of the classmates as they were that day, so the record of the class the student
+ * was in stays as they knew it. A term part played goes on from the next class day not yet had (`resume`); the casts
+ * already made run to their ends, into this class's record. A student on a leave, or between classes after a repeat,
+ * left the class at their last term with it (`joinsCohort`), and it's followed from there, as on a return. A degree
+ * or a degree withheld leaves no class behind: the class finishes with them.
+ */
+export function leaveClassBehind(sim: Simulation, person: Person): void {
+  const school = person.school!;
+  if (!school.classmates.length || school.termsBegun < 1) return;
+  const behind = school.joinsCohort;
+  const offset = behind ? behind.offsetBefore : school.offset ?? 0;
+  const classOf = behind ? school.classOf - Math.round(((school.offset ?? 0) - behind.offsetBefore) / 2) : school.classOf;
+  if ((school.formerClasses ?? []).some((c) => c.classOf === classOf)) return;
+  const t = behind ? behind.lastWith : termNow(school);
+  const academic = t - offset;
+  if (academic >= YALE_DRAMA.terms - 1 && sim.now >= formerTermEnds(t, academic)) return;
+  const classmates = structuredClone(school.classmates);
+  // A copy's ceilings bound as an opened save's are (`bindCeiling`): a copy doesn't carry the binding, and grew unbounded
+  // until a reload, when it was found on 2026-10-11.
+  for (const m of classmates) { m.ceiling ??= ceilingBefore(m.craft); bindCeiling(m.craft, m.ceiling); }
+  const c: NonNullable<SchoolRecord['formerClasses']>[number] = { classOf, classmates, playedTo: t, left: sim.now, offset, leftBehind: true };
+  if (!behind && sim.now < formerTermEnds(t, academic)) {
+    c.playedTo = t - 1;
+    const p = zonedParts(sim.now, zone());
+    const today = keyOf({ year: p.year, month: p.month, day: p.day });
+    const had = sim.universe.scheduled.some((i) => i.kind === CLASSES_KIND && i.payload.personId === person.id && i.payload.day === today && i.status !== 'pending' && i.status !== 'cancelled');
+    const next = new Date(Date.UTC(p.year, p.month - 1, p.day + (had ? 1 : 0)));
+    c.resume = { term: t, from: keyOf({ year: next.getUTCFullYear(), month: next.getUTCMonth() + 1, day: next.getUTCDate() }) };
+    for (const i of sim.universe.scheduled) if (i.kind === COMPANY_KIND && i.status === 'pending' && i.payload.personId === person.id) i.payload.classOf = classOf;
+  }
+  (school.formerClasses ??= []).push(c);
+  // Every term of it that's over is played now, a leave's among them; the next at its end.
+  followFormerClasses(sim, person, Math.max(t, termNow(school)) + 1);
 }
 
 /** A first class's term caught up at its end (`followFormerClasses`). */
@@ -481,7 +524,7 @@ export function joinCohort(sim: Simulation, person: Person, term: number): void 
   followFormerClasses(sim, person, term);
   const next = drawCohort(sim, person, school.classOf);
   const joined = { classOf: school.classOf, classmates: next, playedTo: -1, left: sim.now, productions: [] as NonNullable<NonNullable<SchoolRecord['formerClasses']>[number]['productions']> };
-  for (let a = 0; a < academic; a += 1) { advanceMates(next, [a]); formerProductions(sim, person, joined, term - academic + a, a); }
+  for (let a = 0; a < academic; a += 1) { advanceMates(next, [a], term - academic); formerProductions(sim, person, joined, term - academic + a, a); }
   if (joined.productions.length) school.joinedHistory = joined.productions;
   school.classmates = next;
   delete school.around;
@@ -803,10 +846,11 @@ export function registerLeave(sim: Simulation): void {
     return { decideAt: leave.decideAt, firstTerm: leave.firstTerm, startsNow: leave.firstTerm === termNow(s.player.school!) && !evaluated(s.player.school!, leave.firstTerm) };
   });
 
-  // A first class's term over: caught up now (`followFormerClasses`), while the student is at the School.
+  // A first class's term over: caught up now (`followFormerClasses`), at the School or not (from 2026-10-11: until then
+  // a class stopped where it was the day the student left).
   sim.onSchedule(FORMER_KIND, (item, s) => {
     const person = personOf(item);
-    if (!person?.school || schoolEnded(person.school.standing)) return;
+    if (!person?.school) return;
     followFormerClasses(s, person, Number(item.payload.term) + 1);
   });
 
