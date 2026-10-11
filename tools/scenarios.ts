@@ -9,6 +9,10 @@
  *   way back, and the degree.
  * - `switch-uk`: a London student's partial switch in the first fall, a full switch in the spring, two years on.
  * - `tax-plan`: TEST SETUP a 2026 W-2 and an empty bank at filing; a monthly IRS plan, paid through.
+ * - `withdraw`: a withdrawal in the first spring, by the command, then the class left followed to its degree (from the
+ *   limitations pass of 2026-10-11).
+ * - `nonfiler`: TEST SETUP a 2026 W-2; the return never filed until the IRS and Connecticut have each assessed it, then
+ *   filed, each replaced (from the limitations pass of 2026-10-11).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  */
@@ -105,6 +109,26 @@ const SCENARIOS: Record<string, Hook> = {
       if (sim.player.statePlans?.['us-ct']?.status === 'missed') tryOnce(sim, log, 'tax.catch_up_state_plan', { state: 'us-ct' });
     },
   },
+  withdraw: {
+    years: 2.9, config: { homeRegionId: 'us-ny-newyork' },
+    daily(sim, log) {
+      const s = sim.player.school;
+      if (s && s.standing !== 'withdrawn' && sim.now >= on(2027, 4, 7)) tryOnce(sim, log, 'school.withdraw', { confirm: true });
+    },
+  },
+  nonfiler: {
+    years: 2.6, config: { homeRegionId: 'us-ny-newyork', wealth: 'wealthy' },
+    daily(sim, log) {
+      const r = returnsOf(sim.player)['2026'];
+      if (!r && sim.now >= on(2026, 9, 10) && !log.some((l) => l.includes('W-2'))) {
+        // TEST SETUP: a 2026 W-2 of $40,000 with nothing withheld, paid before the year's end.
+        recordWages(sim.player, on(2026, 9, 1), NY, { gross: 40_000_00 });
+        log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: W-2`);
+      }
+      // Never filed until both the IRS and Connecticut have assessed it; then filed, and each replaced.
+      if (r && r.filedAt !== undefined && r.substitute && r.stateDue?.['us-ct']?.assessedBy && !r.stateDue['us-ct'].replacedAt) tryOnce(sim, log, 'tax.file', { year: 2026 });
+    },
+  },
   'tax-plan': {
     years: 2.5, config: { homeRegionId: 'us-ny-newyork', wealth: 'wealthy' },
     daily(sim, log) {
@@ -166,7 +190,7 @@ console.log(JSON.stringify({
   scenario: SCENARIO, seed: SEED, ended: new Date(sim.now).toISOString().slice(0, 10), log, error,
   school: s ? {
     standing: s.standing, classOf: s.classOf, offset: s.offset ?? 0, leaves: (s.leaves ?? []).map((l) => ({ kind: l.kind, status: l.status, terms: l.terms, mandatory: Boolean(l.mandatory) })),
-    welfares: (s.welfares ?? []).map((w) => w.outcome), formerClasses: (s.formerClasses ?? []).map((c) => ({ classOf: c.classOf, mates: c.classmates.length, playedTo: c.playedTo })),
+    welfares: (s.welfares ?? []).map((w) => w.outcome), formerClasses: (s.formerClasses ?? []).map((c) => ({ classOf: c.classOf, mates: c.classmates.length, playedTo: c.playedTo, leftBehind: Boolean(c.leftBehind), productions: (c.productions ?? []).length, cabaret: (c.productions ?? []).filter((p) => p.name.startsWith('Yale Cabaret')).length })),
     classmates: s.classmates.length, terms: (s.history ?? []).map((h) => `${h.term}:${h.standing}`), conferred: titles(/Degree|Conferred|Graduat/),
     credits: (s.credits ?? []).map((c) => `${c.year} ${c.kind} ${c.size ?? ''}`), joinedHistory: (s.joinedHistory ?? []).map((p) => `${p.term} ${p.play ?? p.name}`), firstClassGraduated: (s.formerClasses ?? []).map((c) => c.graduatedAt !== undefined),
     // Anything paid, billed or credited inside a leave's own terms: there should be none.
@@ -174,9 +198,9 @@ console.log(JSON.stringify({
   } : undefined,
   switches: sim.player.payments?.switches, accounts: Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')).map((a) => `${a.institution} ${a.kind}${a.closedAt ? ' closed' : ''}${a.switchDebt ? ' in debt' : ''}`),
   taxPlan: sim.player.taxPlan ? { status: sim.player.taxPlan.status, payments: sim.player.taxPlan.history.filter((h) => /payment/i.test(h.what)).length, history: sim.player.taxPlan.history.slice(-6).map((h) => h.what) } : undefined,
-  owedIrs: owedAll(sim.player, sim.now),
+  owedIrs: owedAll(sim.player, sim.now), irsSubstitute: Object.values(sim.player.returns ?? {}).map((r) => `${r.year}: ${r.substitute ? 'substitute' : r.reconsideredAt !== undefined ? 'replaced' : r.filedAt !== undefined ? 'filed' : 'unfiled'}`),
   // Each state's side (integration pass): what it assessed, owes, took by levy, and its plan.
-  states: Object.fromEntries(Object.values(sim.player.returns ?? {}).flatMap((r) => Object.entries(r.stateDue ?? {}).map(([st, sd]) => [`${r.year} ${st}`, { balance: sd.balance, owed: sd.owed ?? 0, payments: (sd.payments ?? []).map((p) => p.how), notices: sd.collection ?? 0 }]))),
+  states: Object.fromEntries(Object.values(sim.player.returns ?? {}).flatMap((r) => Object.entries(r.stateDue ?? {}).map(([st, sd]) => [`${r.year} ${st}`, { balance: sd.balance, owed: sd.owed ?? 0, payments: (sd.payments ?? []).map((p) => p.how), notices: sd.collection ?? 0, assessed: Boolean(sd.assessedBy), replaced: sd.replacedAt !== undefined }]))),
   statePlans: Object.fromEntries(Object.entries(sim.player.statePlans ?? {}).map(([st, p]) => [st, { status: p.status, history: p.history.slice(-5).map((h) => h.what) }])),
   breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads,
 }, null, 1));
