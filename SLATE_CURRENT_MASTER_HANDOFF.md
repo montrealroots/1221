@@ -1,3 +1,14 @@
+# Read First: Merged To Main, With The Remaining Features And The Deeper Engines, 2026-10-10
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `2f376a08` to `claude/remaining-and-engines`.
+Nothing was force-pushed. The stash and the three worktrees were left untouched.
+
+- **Not deployed.** Schema 94 is unchanged.
+- **Still the owner's:** decisions #1–#3 from `docs/verification/COVERAGE-GAPS.md`, the 16 deferred items, and the
+  federal-and-state balance simplification in the section below.
+
+---
+
 # Read First: The Remaining Features, And The Attribute And Genre Engines Deepened, 2026-10-10
 
 The owner's brief was "Complete SLATE's Remaining Features And Deepen Its Attribute And Genre Engines". The work
