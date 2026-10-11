@@ -4,7 +4,7 @@ Written by `node tools/verify-report.mjs` from `docs/verification/<suite>/result
 
 ## Played Lives
 
-Ran on f3915368 (tree 35c29b53, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
+Ran on 804bde39 (tree f4d7033c, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
 
 | Profile and seed | Policy | Dates | Outcome | Terms (standing, attendance %) | Pieces judged (mastery) | Fitness, first and last month | Condition at end | Breaches | Unbalanced | Reloads | Error |
 |---|---|---|---|---|---|---|---|---|---|---|---|

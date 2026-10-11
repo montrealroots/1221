@@ -1,6 +1,6 @@
 {
  "title": "The Yale Student, Banking And Papers: Implementation Matrix",
- "asOf": "2026-10-11, after the integration and verification pass",
+ "asOf": "2026-10-11, after the player-facing acceptance pass",
  "basisKey": {
   "documented": "The rule is the institution's or the law's, read in a cited source.",
   "simplified": "The rule follows a cited source, with a stated simplification.",
@@ -2160,6 +2160,92 @@
      "reader": "The production",
      "file": "tests/variety.test.ts",
      "title": "moves on from a skill note that was taken"
+    }
+   ]
+  },
+  {
+   "entry": "School, Standing And Craft: Your Leave; Register",
+   "prereqs": "A term completed; current with requirements",
+   "choices": "Kind, length and reason; notice of return",
+   "steps": "Asked in the summer, decided, begun with the second year; notice; back at the return term; registered; played on",
+   "costs": "The terms away, unbilled; cover lapses unless Affiliate is bought",
+   "states": "leave, offset, classOf, formerClasses, joinedHistory, credits",
+   "failure": "Refused for a professional reason or an unsupported medical one; a second request or registration while away refused",
+   "recovery": "The right request; notice once; registration once",
+   "stateRW": "SchoolRecord",
+   "consumers": "Classes, coursework partners, casting, the Yale account, cover, the résumé",
+   "notices": "Your Leave decisions; The Class Of 2030",
+   "saveLoad": "Saved and opened at each transition in the test",
+   "source": "Yale Bulletin 2026–2027; tests and tools/scenarios.ts leave-year2",
+   "basis": "simplified",
+   "limitations": "Played to the degree by tools/scenarios.ts leave-year2, too long for the gate.",
+   "id": "school.secondYearReturn",
+   "area": "School",
+   "goal": "Leave in the second year and come back into the class below, on to the degree",
+   "commands": [
+    "school.request_leave",
+    "school.return_notice",
+    "school.reregister"
+   ],
+   "tests": [
+    {
+     "file": "tests/journey-second-year-return.test.ts",
+     "title": "asks in the summer after year one"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Nothing paid, billed, enrolled, credited or cast for the terms away; the first class goes on; old work keeps its partners; new work with the class joined",
+     "reader": "Classes, coursework, casting, the account",
+     "file": "tests/journey-second-year-return.test.ts",
+     "title": "asks in the summer after year one, is away the second year"
+    },
+    {
+     "outcome": "The year away plays the same a day at a time and at once",
+     "reader": "The school",
+     "file": "tests/journey-second-year-return.test.ts",
+     "title": "plays the year away the same whether it passes a day at a time or at once"
+    }
+   ]
+  },
+  {
+   "entry": "Save slots: Continue",
+   "prereqs": "",
+   "choices": "",
+   "steps": "Opened: the combined balance divided once, the estimate named, the IRS plan federal; played on",
+   "costs": "",
+   "states": "TaxReturn.split, stateDue",
+   "failure": "",
+   "recovery": "",
+   "stateRW": "TaxReturn, Person.taxPlan",
+   "consumers": "Collection, plans, the budget, Papers",
+   "notices": "The return’s note of the division",
+   "saveLoad": "Schema 94 unchanged; divided once on opening",
+   "source": "Saves written by tools/scenarios.ts at ff837dfa",
+   "basis": "simplified",
+   "limitations": "The division of an old balance is SLATE’s, in proportion, since payments before weren’t kept by authority; said on the return.",
+   "id": "papers.oldSaves",
+   "area": "Papers",
+   "goal": "Open a save from before federal and state tax were kept apart, and go on",
+   "commands": [],
+   "tests": [
+    {
+     "file": "tests/save-migration.test.ts",
+     "title": "is divided once to the cent"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Divided to the cent, once; the IRS plan federal; collection and plan payments go on",
+     "reader": "Opening a save",
+     "file": "tests/save-migration.test.ts",
+     "title": "is divided once to the cent"
+    },
+    {
+     "outcome": "The budget sets aside what the screens say is owed",
+     "reader": "The budget",
+     "file": "tests/state-tax.test.ts",
+     "title": "New York: half a percent a month"
     }
    ]
   }

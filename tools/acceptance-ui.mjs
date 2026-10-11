@@ -152,7 +152,8 @@ await step('guide: a new player’s controls are locked until its chapters are r
       b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
       if (!(await b.count())) break;
     }
-    await b.click({ timeout: 5000 }); await wait(400); read += 1;
+    const isRead = /I’ve Read It/.test(await b.innerText());
+    await b.click({ timeout: 5000 }); await wait(400); if (isRead) read += 1;
   }
   await page.keyboard.press('Escape'); await wait(300);
   const still = await page.locator('.is-locked').count();

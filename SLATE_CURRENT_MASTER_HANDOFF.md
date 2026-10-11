@@ -1,3 +1,73 @@
+# Read First: The Player-Facing Acceptance Pass, 2026-10-11
+
+The owner's brief was "Complete SLATE's Player-Facing Acceptance Pass". The work started from `main` at `6568dda1`, the
+commit the brief reviewed. Nothing newer had landed.
+
+- **Branch:** `claude/acceptance-pass`, pushed.
+- **Not merged.** That's the owner's word to give: each "Merge it." so far was for its own pass.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged.
+  - A credit already written keeps the year it was given. Only credits written from now take their production's year.
+  - Older saves open and go on. `tests/save-migration.test.ts` opens two written at `ff837dfa`.
+- **Untouched:** the stash (`stash@{0}`), the three worktrees, and the untracked files at the root.
+  - The older saves were written from a `git archive` export into the scratchpad, not a worktree.
+  - The export's `node_modules` junction was removed with `rmdir` before its folder was deleted.
+
+## Where each thing is
+
+- **`docs/verification/ACCEPTANCE-PASS-2026-10-11.md`** holds:
+  - the journeys and their outcomes;
+  - variety from the player's side;
+  - the bugs, their fixes and tests;
+  - desktop and mobile;
+  - save compatibility;
+  - the limitations and what the player meets;
+  - readiness.
+- **`docs/COVERAGE-MATRIX.md`:**
+  - a new "Player-facing acceptance" section, each journey with what holds it;
+  - the guide's count corrected to seventeen chapters.
+- **`docs/verification/STUDENT-MATRIX.md`:** 50 of 50 rows verified. New rows: the second-year return, and older
+  saves.
+- **New tests:**
+  - `tests/journey-second-year-return.test.ts`;
+  - `tests/save-migration.test.ts`, with fixtures in `tests/fixtures/`;
+  - `tests/acceptance-contract.test.ts`;
+  - additions to `tests/journey-school-production.test.ts`, `tests/variety.test.ts` and `tests/state-tax.test.ts`.
+- **New tool:** `tools/acceptance-ui.mjs`, which plays the built app through its controls at a given width. Its
+  reports are in `docs/verification/acceptance-ui/`.
+- **A new scenario:** `tools/scenarios.ts leave-year2`.
+
+## Verification
+
+Tested on commit `804bde39`, `src` tree `6fd98a13`. Later commits change documents and tools only.
+
+- **Gate:** 157 files and 1,668 tests pass, along with all sixteen checks.
+- **The 18 lives:** 15 graduated, and the 3 autopilot lives were dismissed, as kept. 0 breaches, 0 unbalanced.
+- **Six scenarios:** all 0 breaches, 0 unbalanced.
+- **Balance grid:** 48 jobs, identical to the previous source tree.
+- **Variety:** three seeds, two years each.
+- **Built app:**
+  - 1440: 21 passed, 1 skipped.
+  - 390: 22 passed, 1 skipped.
+  - 0 errors and 0 overflows at either width.
+
+## Bugs fixed
+
+1. A credit was dated a year late after a leave.
+2. A greyed control's reason was only in its tooltip. `WhyNot` now shows it.
+3. The budget's tax reservation was short of the screens' total.
+4. Practice didn't say why a repeat or a tired hour gave less.
+5. The coverage matrix's guide count was stale.
+
+## Still the owner's
+
+- Merge and deploy.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- The limitations in §6 of the acceptance document.
+
+---
+
 # Read First: Merged To Main, With The Integration And Verification Pass, 2026-10-11
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `ff837dfa` to `claude/integration-pass`. Nothing was
