@@ -1,3 +1,85 @@
+# Read First: The Limitations Pass, 2026-10-11
+
+The owner's brief was "Complete and finish all limitations": the seven left in §6 of
+`docs/verification/ACCEPTANCE-PASS-2026-10-11.md`.
+
+- **Branch:** `claude/limitations`, pushed. It began from `claude/acceptance-pass` at `98ae1e0b`, so it holds that
+  pass too.
+- **Main:** still at `6568dda1`.
+- **Not merged.** Neither pass is; each "Merge it." so far was for its own pass.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged.
+  - An older save's credits are dated once on opening, by its casting notices.
+  - A past-due unfiled return gets a state's letters on opening.
+- **Untouched:**
+  - the stash (`stash@{0}`);
+  - the three worktrees;
+  - the untracked files at the root.
+- **Kept deferred:**
+  - the 16 deferred items;
+  - no removed system restored;
+  - no parental leave.
+
+## What became of each limitation
+
+The detail is in `docs/verification/LIMITATIONS-PASS-2026-10-11.md`.
+
+1. **Rep and Cabaret for classmates.** Every class has its third-year Rep company and a Cabaret show a term.
+2. **Classes after the student leaves.** A dismissal or withdrawal leaves the class to be followed to its degree.
+3. **State collection rules.** Researched for every state a life can owe: fifteen. New Jersey, Michigan and Utah have
+   no city.
+4. **Non-filers.** Each state assesses one itself; the student's own return replaces it.
+5. **Refunds between states.** New York's, California's and Connecticut's published partners.
+6. **Content.** Enlarged: 56 scenes and 30 plays, from 42 and 26. Still finite.
+7. **Old credits.** Dated by their runs; the résumé shows the year.
+
+## Bugs found and fixed
+
+- A refused command merged records sharing a name (`restoreObject`), losing the earlier record.
+- A copied class grew past its ceilings.
+- A class a year behind used the wrong year's calendar.
+- The Rep company's run was judged under its label, not its name.
+- A state's assessment of an unfiled return was hidden on Papers.
+- A Doll's House's profile described the wrong scene.
+
+## Where each thing is
+
+- **New tests:**
+  - `tests/journey-class-left-behind.test.ts`;
+  - `tests/state-tax-states.test.ts`;
+  - `tests/credits-dated.test.ts`;
+  - `tests/restore-same-names.test.ts`.
+- **Research:** `docs/research/world/research-state-tax-collection-2a.json`, `-2b.json`, `-2c.json`.
+- **Scenarios:** `tools/scenarios.ts` has `withdraw` and `nonfiler`. Results are in
+  `docs/verification/SCENARIOS-LIMITS-2026-10-11.json`.
+- **Variety:** `docs/verification/VARIETY-2026-10-11.json`.
+- **Built app:** `docs/verification/acceptance-ui/limits-2026-10-11/`.
+- **`docs/COVERAGE-MATRIX.md`:** a "Limitations pass" section.
+- **`docs/verification/STUDENT-MATRIX.md`:** 52 of 52 rows verified.
+
+## Verification
+
+- **Engine runs,** on `fdc31377`, src tree `64d0ece5`:
+  - 18 lives: 15 graduated, the 3 autopilot lives dismissed as before;
+  - 8 scenarios;
+  - the 48-job grid;
+  - variety.
+  - All 0 breaches, 0 unbalanced.
+- **Built app,** on `160e8f7d`:
+  - 1440: 23 passed, 1 skipped.
+  - 390: 24 passed, 1 skipped.
+  - 0 errors and 0 overflows at either width.
+- **Gate,** on the final commit: 161 files and 1,697 tests pass, with all sixteen checks (src tree `974bfdee`; later commits change documents only).
+
+## Still the owner's
+
+- Merge and deploy, both passes.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- SLATE taxes no income in Indiana, DC or Oklahoma, which each have a city: found this pass, not in the brief.
+
+---
+
 # Read First: The Player-Facing Acceptance Pass, 2026-10-11
 
 The owner's brief was "Complete SLATE's Player-Facing Acceptance Pass". The work started from `main` at `6568dda1`, the

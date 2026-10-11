@@ -62,6 +62,21 @@ The journeys a player takes, played and checked, with where each is held.
 | Save & Exit and Continue to the same moment; older saves opened and migrated once | Implemented, played | `tools/acceptance-ui.mjs`, `tests/save-migration.test.ts` (saves written at ff837dfa) |
 | A preferred genre is enjoyed, not expertise; perfect work doesn't guarantee a part | Implemented | `tests/acceptance-contract.test.ts` |
 
+## The limitations pass (2026-10-11)
+
+What the acceptance pass left as limitations, closed or enlarged, with where each is held. The detail is in
+`docs/verification/LIMITATIONS-PASS-2026-10-11.md`.
+
+| Limitation it was | State now | Held by |
+| --- | --- | --- |
+| A class the student wasn't in had no Rep company or Cabaret show | Implemented, played: the third-year fall's best in the Rep's company, a Cabaret show a term for every class | `tests/journey-class-left-behind.test.ts`; `tools/scenarios.ts` (`withdraw`, `leave`) |
+| Classes stopped when the student left the School | Implemented, played: followed to the degree, a term left partway not replayed | `tests/journey-class-left-behind.test.ts`; `tools/scenarios.ts` (`withdraw`); `tools/acceptance-ui.mjs` (from a save) |
+| State collection researched for three states | Implemented: every state a life can owe, fifteen; three with tax tables and no city stay unresearched | `tests/state-tax-states.test.ts` |
+| A state never assessed a non-filer | Implemented, played: each state's letters, assessment, collection, replacement | `tests/state-tax-states.test.ts`; `tools/scenarios.ts` (`nonfiler`); `tools/acceptance-ui.mjs` (from a save) |
+| No refund offsets between states | Implemented: New York's, California's and Connecticut's partners | `tests/state-tax-states.test.ts` |
+| 42 scenes, 26 plays | Enlarged, still finite: 56 scenes, 30 plays, 27 exercises | `tests/scenes.test.ts`; `tools/variety.ts` |
+| Older credits' years | Implemented: dated once by their casting notices; the résumé shows the year | `tests/credits-dated.test.ts` |
+
 ## What was taken out
 
 The revamp removed, with their screens, their content, their tests and their
