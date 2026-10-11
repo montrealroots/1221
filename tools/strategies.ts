@@ -6,7 +6,7 @@
  * calls, illnesses and nights, so a difference is the strategy's.
  *
  * What a run is (each a flag, each said in the output):
- * - \`--profile\` who's practising, TEST SETUP of their levels at the start: \`beginner\` (abilities and techniques about
+ * - \`--profile\` who's practicing, TEST SETUP of their levels at the start: \`beginner\` (abilities and techniques about
  *   30), \`developing\` (the game's own new student, untouched), \`specialist\` (the plan's targets at 85, the rest 40),
  *   \`uneven\` (the plan's targets 30, the rest 80), \`mastered\` (everything full).
  * - \`--tired\` each practice hour taken on a tired day, TEST SETUP of the night before (eight hours of sleep owed and
@@ -99,7 +99,7 @@ function put(sim: Simulation, target: string, v: number): void {
   (attributesOf(sim, p) as unknown as Record<string, number>)[id] = v;
 }
 
-/** TEST SETUP of who's practising, said in the output. */
+/** TEST SETUP of who's practicing, said in the output. */
 function profile(sim: Simulation): void {
   const targets = new Set(PLAN.map((e) => targetId(EXERCISE_BY_ID[e]!.trains as never) as string));
   const all = [...ABILITY_DEFS.map((d) => d.id as string), ...TECHNIQUES];

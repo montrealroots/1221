@@ -233,11 +233,26 @@ export function nightFactor(holder: Holder | undefined): number {
 export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: number, of: number): NoteFocus {
   const kind = noteKind(p, n, of);
   if (kind !== 'skill') return { kind } as NoteFocus;
-  const weakest = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b])[0] ?? 'scene';
+  const order = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b]);
+  // A skill note just taken moves the next one on to the next thinnest place (from the integration pass of 2026-10-10):
+  // until then the same note came at every work-through while that skill stayed the weakest, taken or not.
+  const prev = [...p.notes].reverse().find((x) => x.focus.kind === 'skill');
+  const taken = prev?.taken && prev.focus.kind === 'skill' ? prev.focus.skill : undefined;
+  const weakest = (taken && order[0] === taken && order.length > 1 ? order[1] : order[0]) ?? 'scene';
   return { kind: 'skill', skill: weakest };
 }
 
-export function noteText(f: NoteFocus): string {
+/**
+ * A note's words, and where the same note was given before at this work, what came of it (from the integration pass of
+ * 2026-10-10): not taken, it's said again as still; taken, it's acknowledged before more is asked.
+ */
+export function noteText(f: NoteFocus, before?: DirectorNote): string {
+  const words = noteWords(f);
+  if (!before) return words;
+  return before.taken ? `Better since the last note. ${words}` : `Still: ${words.charAt(0).toLowerCase()}${words.slice(1)}`;
+}
+
+function noteWords(f: NoteFocus): string {
   if (f.kind === 'lines') return 'Be off book: the lines aren’t there yet, and the scene can’t start until they are.';
   if (f.kind === 'blocking') return 'The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.';
   if (f.kind === 'direction') return `I want it ${APPROACH_EFFECT[f.side].label.toLowerCase()}: ${APPROACH_EFFECT[f.side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[f.side].words.slice(1)}`;
@@ -271,7 +286,8 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   if (stage === 'work') {
     const against = againstDirection(p);
     const focus: NoteFocus = against ? { kind: 'direction', ...against } : noteFor(person, p, reads, n, of);
-    p.notes.push({ at: sim.now, text: noteText(focus), focus });
+    const before = [...p.notes].reverse().find((x) => JSON.stringify(x.focus) === JSON.stringify(focus));
+    p.notes.push({ at: sim.now, text: noteText(focus, before), focus });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }
   return weight;

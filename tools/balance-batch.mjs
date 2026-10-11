@@ -1,5 +1,5 @@
 /**
- * SLATE — the practice-balance grid (integration pass, 2026-10-10): \`tools/strategies.ts\` run over who's practising,
+ * SLATE — the practice-balance grid (integration pass, 2026-10-10): \`tools/strategies.ts\` run over who's practicing,
  * how rested, what, how often and how broadly, each on the matched seeds and the held-out ones, the results kept a line
  * each in docs/verification/balance/results.jsonl with the commit and tree they ran on. A run already kept for this tree
  * is skipped, so a long grid is resumed by calling it again; \`--max N\` keeps one call short.

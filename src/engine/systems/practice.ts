@@ -25,7 +25,7 @@ import type { Person } from '../domain/model';
 import { formatTime, zonedParts } from '../core/time';
 import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, FOCUS_RATE, PRACTICE, TIER, type Exercise, type PracticeFocus } from '../content/practice';
 import { experienceOf, FEATURE_LABEL } from './experience';
-import { abilityDef, isAbility } from './attributes';
+import { abilityDef, abilityFull, isAbility } from './attributes';
 import { SKILLS } from '../content/school';
 
 /** A target's label: an ability's, or a technique's. */
@@ -129,6 +129,11 @@ export function practiceHour(sim: Simulation, person: Person, e: Exercise, tierA
   const rec = (xp.exercises[e.id] ??= { sessions: 0, focus: {}, tiers: {} });
   rec.sessions += 1;
   rec.lastDay = today(sim);
+  const priorTier = rec.lastTier;
+  rec.streak = xp.lastExercise === e.id ? (rec.streak ?? 0) + 1 : 1;
+  xp.lastExercise = e.id;
+  rec.gains = [...(rec.gains ?? []), Math.round(gained * 1000) / 1000].slice(-8);
+  rec.lastTier = tier;
   rec.focus[focusAsked] = (rec.focus[focusAsked] ?? 0) + 1;
   rec.tiers[String(tier)] = (rec.tiers[String(tier)] ?? 0) + 1;
   for (const f of EXERCISE_DESIGN[e.id]?.practises ?? []) { const r = (xp.features[f] ??= { met: 0, practiced: 0 }); r.practiced += 1; r.last = sim.now; }
@@ -140,11 +145,18 @@ export function practiceHour(sim: Simulation, person: Person, e: Exercise, tierA
   // Deliberate, so a habit kept up reaches its full and doesn't stall a hair under it (from 2026-10-10).
   const discipline = first ? develop(sim, person, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' }) : 0;
   const level = levelOf(sim, person, targetId(e.trains));
-  return { gained, level, discipline, tier, focus: focusAsked, carried, feedback: practiceFeedback(e, before, tier, focusAsked, focus, gap, carried) };
+  const full = isAbility(targetId(e.trains)) ? abilityFull(sim, person, targetId(e.trains) as never) : 100;
+  return { gained, level, discipline, tier, focus: focusAsked, carried, feedback: practiceFeedback(e, before, tier, focusAsked, focus, gap, carried, { gained, level, full, sessions: rec.sessions, streak: rec.streak, gains: rec.gains, priorTier }) };
 }
 
 /** What the hour found, in words, from the numbers that moved it. */
-export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f: PracticeFocus, dayFocus: number, gap: number | undefined, carried: { target: string; gained: number }[]): string {
+/** What the record says about the hour (from the integration pass of 2026-10-10): its gain, where the level stands, the run and its gains. */
+export interface HourRecord { gained: number; level: number; full: number; sessions: number; streak?: number; gains?: number[]; priorTier?: number }
+
+/** How far the next tier's band is, or nothing past the last. */
+const nextBand = (level: number): number | undefined => TIER.bands.find((b) => b > level);
+
+export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f: PracticeFocus, dayFocus: number, gap: number | undefined, carried: { target: string; gained: number }[], hour?: HourRecord): string {
   const design = EXERCISE_DESIGN[e.id];
   const matched = matchedTier(level);
   const out: string[] = [];
@@ -158,6 +170,17 @@ export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f:
   const feats = design?.practises.map((x) => FEATURE_LABEL[x]?.toLowerCase()).filter(Boolean) ?? [];
   if (feats.length) out.push(`Practice in ${feats.join(' and ')}: material that asks it prepares faster.`);
   if (level >= 100) out.push(`${FOCUS[f].label} or not, it’s full: the work now is in new material.`);
+  // What changed, from the record (from the integration pass of 2026-10-10): the hour's gain and where the level now
+  // stands against the next tier and full, the move up a tier since last time, and a long run whose gains are falling.
+  if (hour && hour.level < hour.full) {
+    const label = labelOf(e.trains);
+    const band = nextBand(hour.level);
+    out.push(`${label} ${hour.gained > 0 ? `rose ${hour.gained.toFixed(2)}, to` : 'stands at'} ${hour.level.toFixed(1)} of ${Math.round(hour.full)}${band !== undefined && band < hour.full ? `, ${(band - hour.level).toFixed(1)} short of the ${TIER.label[matchedTier(band)].toLowerCase()} tier` : ''}.`);
+    if (hour.priorTier !== undefined && hour.priorTier < matched && tier === matched) out.push(`You’ve moved up to the ${TIER.label[matched].toLowerCase()} tier since last time.`);
+    const g = hour.gains ?? [];
+    const slowing = g.length >= 6 && g.slice(-3).reduce((a, b) => a + b, 0) < 0.8 * g.slice(0, 3).reduce((a, b) => a + b, 0);
+    if ((hour.streak ?? 0) >= 6) out.push(`Session ${hour.streak} on it in a row${slowing ? `: each hour is giving less as ${label.toLowerCase()} nears its full${design?.transfer.length ? `. A variation hour would carry some to ${design.transfer.map((t) => labelOf(t).toLowerCase()).join(' and ')} instead` : ''}` : ''}.`);
+  }
   return out.filter(Boolean).join(' ');
 }
 

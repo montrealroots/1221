@@ -28,7 +28,15 @@ export interface Experience {
   features: Record<string, { met: number; practiced: number; best?: number; last?: Instant }>;
   approaches: Record<string, { chosen: number; shown: number; best?: number }>;
   materials: Record<string, { times: number; best: number; last: Instant }>;
-  exercises: Record<string, { sessions: number; lastDay?: string; focus: Record<string, number>; tiers: Record<string, number> }>;
+  /**
+   * Each exercise's record: its sessions, the last day, how often each focus and tier; and from the integration pass of
+   * 2026-10-10 the run of sessions on it with nothing else between (`streak`) and its last few gains (`gains`), which
+   * the hour's feedback reads to say what's changed and when gains are slowing. Until then the same hour read the same
+   * whatever had happened: a student told "Pitched where you are" 175 hours running while the level rose 17 points.
+   */
+  exercises: Record<string, { sessions: number; lastDay?: string; focus: Record<string, number>; tiers: Record<string, number>; streak?: number; gains?: number[]; lastTier?: number }>;
+  /** The exercise practised last, whatever it was. */
+  lastExercise?: string;
 }
 
 export const experienceOf = (person: Person): Experience => {
