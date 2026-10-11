@@ -14,7 +14,8 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { CLASSES_KIND, CONFERRAL_KIND, TERM_KIND, coursesFor, evaluate, meanCraft, termStart } from '@/engine/systems/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { healthOf } from '@/engine/systems/health';
-import { formerStage, accountOwed, considerWelfare, enrolledTerms, extraRefusal, leaveLengths, WELFARE_KIND, APPEAL_KIND } from '@/engine/systems/leave';
+import { attentiveHour } from '../tools/policy';
+import { formerStage, joinCohort, accountOwed, considerWelfare, enrolledTerms, extraRefusal, leaveLengths, WELFARE_KIND, APPEAL_KIND } from '@/engine/systems/leave';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
@@ -75,7 +76,84 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
     expect(later.playedTo).toBe(2);
     expect(formerStage(later, 3)).toBe(3);
     expect(meanCraft(later.classmates[1]!.craft)).toBeGreaterThan(atJoin);
+    // Their productions too (integration pass, 2026-10-10): the spring the student missed, and the fall after, each once,
+    // on its own dates, every cast member one of theirs, the student in none.
+    const prods = later.productions ?? [];
+    expect(prods.map((p) => p.term)).toEqual([...new Set(prods.map((p) => p.term))].flatMap((t) => prods.filter((p) => p.term === t).map(() => t)));
+    expect(new Set(prods.map((p) => p.term))).toEqual(new Set([1, 2]));
+    const theirs = new Set(later.classmates.map((m) => m.name));
+    for (const p of prods) {
+      expect(p.from <= p.to).toBe(true);
+      for (const c of p.cast) expect(theirs.has(c.name), c.name).toBe(true);
+      expect(p.cast.some((c) => c.name === `${sim.player.firstName} ${sim.player.lastName}`)).toBe(false);
+    }
+    // Every one of the class in a production each of those terms, and their last part kept for the next casting.
+    for (const t of [1, 2]) expect(prods.filter((p) => p.term === t).reduce((n, p) => n + p.cast.length, 0)).toBe(later.classmates.length);
+    expect(later.classmates.every((m) => m.shown && m.last?.size)).toBe(true);
+    // The class joined came with its own first spring's production, and its own draws: not the first class's again.
+    // (Back at a first-year fall, the class joined has had no production yet: its history is empty.)
+    expect(sim.player.school!.joinedHistory).toBeUndefined();
+    const now = sim.player.school!.classmates;
+    const same = now.filter((m, i) => m.presence === later.classmates[i]!.presence && (m as { reliability?: number }).reliability === (later.classmates[i] as { reliability?: number }).reliability).length;
+    expect(same).toBeLessThan(3);
   }, 60_000);
+
+  it('brings a class joined in its second year with the production it had, cast from itself', () => {
+    // FIXTURE: a student a year behind at the start of a second-year fall, as a repeat of the second year leaves one.
+    const sim = student('sp-joined');
+    const school = sim.player.school!;
+    Object.assign(school, { offset: 2, classOf: school.classOf + 1, joinsCohort: { offsetBefore: 0, lastWith: 3 } });
+    joinCohort(sim, sim.player, 4);
+    const history = school.joinedHistory ?? [];
+    expect(history.map((p) => p.term)).toEqual([3]);
+    const names = new Set(school.classmates.map((m) => m.name));
+    for (const p of history) for (const c of p.cast) expect(names.has(c.name)).toBe(true);
+    expect(school.classmates.every((m) => m.last?.size)).toBe(true);
+  });
+
+  it('follows the first class to its degree once, past which it stays, and plays the same whether time passes in steps or at once', () => {
+    const leave = (seed: string) => {
+      const sim = student(seed);
+      tended(sim, at(2026, 10, 5));
+      healthOf(sim.player).fluUntil = sim.now + 4 * MS_DAY;
+      const asked = sim.must<{ decideAt: number }>({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
+      tended(sim, asked.decideAt + MS_HOUR);
+      tended(sim, at(2027, 5, 1));
+      sim.must({ kind: 'school.return_notice', payload: {} });
+      tended(sim, at(2027, 8, 25, 12));
+      // Registration again, as the way back asks.
+      sim.must({ kind: 'school.reregister', payload: {} });
+      tended(sim, at(2027, 9, 1, 12));
+      return sim;
+    };
+    // The same life, one in day-long steps and one in a single jump, across the next term's start. Found by this test
+    // (2026-10-10): a reloaded save's first class had no ceilings bound, and outgrew the one never reloaded.
+    const stepped = leave('sp-steps');
+    const jumped = reload(stepped);
+    const until = at(2028, 2, 1, 12);
+    while (stepped.now < until) stepped.advanceTo(Math.min(until, stepped.now + MS_DAY));
+    jumped.advanceTo(until);
+    const a = stepped.player.school!.formerClasses![0]!;
+    const b = jumped.player.school!.formerClasses![0]!;
+    const diff = (x: unknown, y: unknown, path = ""): string[] => (typeof x === "object" && x && y && typeof y === "object" ? [...new Set([...Object.keys(x), ...Object.keys(y as object)])].flatMap((k) => diff((x as Record<string, unknown>)[k], (y as Record<string, unknown>)[k], `${path}.${k}`)) : JSON.stringify(x) === JSON.stringify(y) ? [] : [`${path}: ${JSON.stringify(x)} vs ${JSON.stringify(y)}`]);
+    expect(diff(a, b).slice(0, 8)).toEqual([]);
+    expect(a.playedTo).toBe(2);
+    // Kept at the School to the first class's sixth term (calendar 5): graduated once, its productions through its
+    // Shakespeare, none after. (Followed while the student is at the School: a student whose time there ended leaves it
+    // where it was, the boundary of SLATE's.)
+    // Played by the attentive policy (`tools/policy.ts`): classes, coursework, sleep and meals, through its commands.
+    const kept = leave('sp-grad');
+    while (kept.now < at(2029, 7, 1, 12)) attentiveHour(kept);
+    expect(kept.player.school!.standing).not.toBe('dismissed');
+    const c = kept.player.school!.formerClasses![0]!;
+    expect(c.graduatedAt).toBeDefined();
+    expect(Math.max(...(c.productions ?? []).map((p) => p.academic))).toBe(5);
+    expect(titled(kept, 'The Class Of 2029 Graduates')).toHaveLength(1);
+    const was = JSON.stringify(c.productions);
+    while (kept.now < at(2030, 1, 20, 12)) attentiveHour(kept);
+    expect(JSON.stringify(kept.player.school!.formerClasses![0]!.productions)).toBe(was);
+    expect(titled(kept, 'The Class Of 2029 Graduates')).toHaveLength(1);
+  }, 180_000);
 });
 
 describe('a mandatory medical leave', () => {

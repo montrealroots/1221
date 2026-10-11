@@ -199,7 +199,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.request_extra_term` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `school-paths.test.ts` | Drama School |
 | `school.request_leave` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.request_repeat` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `papers-transitions.test.ts` | Drama School |
-| `school.reregister` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` | Drama School |
+| `school.reregister` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.respond` | `src/engine/systems/classmates.ts` | `ClassMoments.tsx` | `classmate-moments.test.ts` `coverage-gaps-classmates.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `student-experience.test.ts` | Drama School |
 | `school.return_notice` | `src/engine/systems/leave.ts` | `StudyPlanPanels.tsx` | `leave.test.ts` `school-paths.test.ts` | Drama School |
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |

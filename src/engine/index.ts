@@ -289,6 +289,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
     // How far each can grow: the ceiling kept, or one for a save from before ceilings (`CEILING`).
     if (person.craft) { person.craftCeiling ??= ceilingBefore(person.craft); bindCeiling(person.craft, person.craftCeiling); }
     for (const mate of person.school?.classmates ?? []) { mate.ceiling ??= ceilingBefore(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
+    // A first class kept after a leave, bound too (integration pass, 2026-10-10): until then only the class the student was
+    // in was, and after a reload a first class grew past its ceilings, on to 100.
+    for (const c of person.school?.formerClasses ?? []) for (const mate of c.classmates) { mate.ceiling ??= ceilingBefore(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
   }
   const zone = sim.homeZone;
 

@@ -89,8 +89,13 @@ export const CRAFT_ABILITY: Readonly<Partial<Record<AbilityId, Skill>>> = { emot
 export function classmatePresence(sim: Simulation, person: Person, i: number): number {
   const mate = person.school?.classmates[i];
   if (!mate) return 50;
+  return presenceFor(sim, person, mate, `mate-${i}`);
+}
+
+/** A classmate's presence under a draw key of its own: the first class's by place, a later class's by its year (`drawCohort`). */
+export function presenceFor(sim: Simulation, person: Person, mate: { presence?: number }, key: string): number {
   if (mate.presence === undefined) {
-    const rng = sim.rng('attributes.presence', person.id, `mate-${i}`);
+    const rng = sim.rng('attributes.presence', person.id, key);
     mate.presence = Math.round((ATTRIBUTES.presence.from + ATTRIBUTES.presence.span * (rng.next() + rng.next()) / 2) * 10) / 10;
   }
   return mate.presence;

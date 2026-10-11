@@ -87,7 +87,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAY
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
+import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
 import { recordScholarship, recordWages, yearOf } from './earnings';
@@ -106,7 +106,7 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, scheduleOrientation, setWork, type Assignment } from './coursework';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
@@ -436,7 +436,9 @@ export interface SchoolRecord {
    * (`systems/leave.ts`, from 2026-10-10): each class's year, its classmates, and the calendar term it's been played
    * forward to (`advanceMates`).
    */
-  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant; offset?: number }[];
+  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant; offset?: number; productions?: FormerProduction[]; graduatedAt?: Instant }[];
+  /** The productions the class a student joined had before they came (`joinCohort`, from the integration pass of 2026-10-10). */
+  joinedHistory?: FormerProduction[];
   /**
    * A new cohort to join at the next term of study, set by a leave's start or a repeat granted: the offset the student
    * had before falling behind, which is still the first class's, and the last calendar term spent with that class.
@@ -1011,8 +1013,93 @@ export function drawCohort(sim: Simulation, person: Person, classOf: number): Cl
     const mate: Classmate = { name, craft, title, drive, ceiling: ceilingFrom(craft) };
     bindCeiling(craft, mate.ceiling!);
     mate.abilities = drawMateAbilities(sim.universe.meta.seed, `${person.id}:${classOf}`, i, craft);
+    // Presence and reliability drawn now, under the class's own key (from the integration pass of 2026-10-10): until
+    // then they were drawn later by place alone, and the new class's fifth had the first class's fifth's presence and
+    // reliability to the decimal.
+    presenceFor(sim, person, mate, `cohort-${classOf}-mate-${i}`);
+    reliabilityFor(sim, person, mate, `cohort-${classOf}-reliability-${i}`);
     return mate;
   });
+}
+
+/** A production a first class played without the student (`formerProductions`): when, what, who played what, and how it went. */
+export interface FormerProduction {
+  term: number; academic: number; name: string; play?: string; by?: string; from: string; to: string;
+  cast: { name: string; part: string; size: PartSize; quality: number }[];
+}
+
+/** The year a class's plays are dealt from: its own class year (`playOf` reads the player's). */
+const asClassOf = (person: Person, classOf: number): Person => ({ ...person, school: { ...person.school!, classOf } });
+
+/**
+ * A first class's productions in a term it had without the student (from the integration pass of 2026-10-10): cast by
+ * the chair's rule, the same as the student's own class (`castScore`, read on the craft, `readOf`), into the
+ * productions its year has (`schoolProduction`), with the plays dealt for its own class year (`playOf`); each cast
+ * member grown by the rehearsals and the nights as a company is (`rehearse`, `playNight`), judged as a classmate's run
+ * is, and their last part kept for the next casting's balance. Until then a first class had its classes played forward
+ * and none of its productions. The student is never in these casts: they were somewhere else. Recorded once a term.
+ */
+export function formerProductions(sim: Simulation, person: Person, c: NonNullable<SchoolRecord['formerClasses']>[number], term: number, academic: number): void {
+  if (academic < 1 || academic >= YALE_DRAMA.terms) return;
+  if ((c.productions ?? []).some((p) => p.term === term)) return;
+  const as = asClassOf(person, c.classOf);
+  const students: Student[] = c.classmates.map((m, i) => ({ i, name: m.name, craft: m.craft, title: m.title ?? 'actor', ...(m.last ? { last: m.last } : {}) }));
+  const first = schoolProduction(term, 1, academic);
+  if (!first) return;
+  const firstPlay = playOf(sim, as, first);
+  const order = [...students].sort((a, b) => castScore(b, playReads(firstPlay)) - castScore(a, playReads(firstPlay)));
+  const groups = new Map<string, { production: NonNullable<ReturnType<typeof schoolProduction>>; members: Student[] }>();
+  order.forEach((s, k) => {
+    const production = schoolProduction(term, k + 1, academic)!;
+    const g = groups.get(production.name) ?? { production, members: [] };
+    g.members.push(s);
+    groups.set(production.name, g);
+  });
+  for (const { production, members } of groups.values()) {
+    const play = playOf(sim, as, production);
+    const reads = playReads(play);
+    const given = partsFor(members, play.parts, reads);
+    const shown = play.title ?? production.name;
+    const rehearsals = rehearsalDays(term, production.runs[0]!, production.weeks).length;
+    const nights = production.runs.length;
+    const cast: FormerProduction['cast'] = [];
+    for (const g of given) {
+      const mate = c.classmates[g.s.i]!;
+      const kept = reliabilityFor(sim, person, mate, `reliability-${g.s.i}`);
+      const f = ESTIMATE.classmateFocus * (mate.drive ?? 1) * ESTIMATE.classmateAttendance;
+      for (let n = 0; n < rehearsals; n += 1) rehearse(mate.craft, f);
+      for (let n = 0; n < nights; n += 1) playNight(mate.craft, reads, f);
+      if (mate.ceiling) bindCeiling(mate.craft, mate.ceiling);
+      const e = judge(sim.universe.meta.seed, formerPerformer(sim, person, mate, g.s.i), {
+        task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept }, required: { lines: 1, blocking: 1, notes: 1 },
+        difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `former:${c.classOf}:${g.s.i}:${shown}`,
+      });
+      mate.shown = { production: shown, quality: e.overall, at: at(production.runs[nights - 1]!, 22), runs: (mate.shown?.runs ?? 0) + 1 };
+      mate.last = { ...(mate.last ?? {}), size: g.size, delivery: kept };
+      const a = mate.abilities ?? (mate.abilities = drawMateAbilities(sim.universe.meta.seed, person.id, g.s.i, mate.craft));
+      for (let n = 0; n < nights; n += 1) a.composure = Math.min(100, a.composure + (100 - a.composure) * ATTRIBUTES.composureGain.performance);
+      cast.push({ name: mate.name, part: partLabel(g.part, production.kind), size: g.size, quality: e.overall });
+    }
+    (c.productions ??= []).push({ term, academic, name: production.name, ...(play.title ? { play: play.title } : {}), ...(play.by ? { by: play.by } : {}), from: keyOf(production.runs[0]!), to: keyOf(production.runs[nights - 1]!), cast });
+  }
+  // A long life's list stays bounded: a class has at most a production a term for each of its five terms with one.
+  if (c.productions!.length > 20) c.productions!.splice(0, c.productions!.length - 20);
+}
+
+/** A first-class classmate as the evaluation reads them, from their own record, under the keys they always had. */
+function formerPerformer(sim: Simulation, person: Person, mate: Classmate, i: number): Performer {
+  const held: Partial<Record<AbilityId, Skill>> = { emotionalDepth: 'emotion', memory: 'memorization', vocal: 'voice', physical: 'movement' };
+  return {
+    ability: (id) => {
+      const skill = held[id];
+      if (skill) return mate.craft[skill];
+      if (id === 'presence') return presenceFor(sim, person, mate, `mate-${i}`);
+      if (id === 'discipline' || id === 'stamina') return 100;
+      return (mate.abilities ?? (mate.abilities = drawMateAbilities(sim.universe.meta.seed, person.id, i, mate.craft)))[id as keyof MateAbilities];
+    },
+    full: () => 100,
+    technique: (skill) => mate.craft[skill],
+  };
 }
 
 /**
@@ -2398,7 +2485,7 @@ export function registerSchool(sim: Simulation): void {
     const term = Number(item.payload.term);
     if (!person || !school || schoolEnded(school.standing)) return;
     // A first class goes on through its own terms, whatever the student's are (`followFormerClasses`).
-    followFormerClasses(school, term);
+    followFormerClasses(s, person, term);
     // A leave granted for this term begins with it; one under way ends at its return term, with notice given
     // (`systems/leave.ts`, from 2026-10-10). A term already begun isn't begun again.
     if (school.leave?.status === 'granted' && school.leave.firstTerm === term) { school.termsBegun = Math.max(school.termsBegun, term + 1); startLeave(s, person, false); return; }

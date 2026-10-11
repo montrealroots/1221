@@ -248,10 +248,19 @@ export const mateRecord = (mate: Classmate): MateRecord => mate as Classmate & M
 
 /** How reliable a classmate is, drawn once (`school.partner`), by their drive: the more driven, the likelier. */
 export function reliabilityOf(sim: Simulation, person: Person, i: number): number {
-  const mate = mateRecord(person.school!.classmates[i]!);
+  return reliabilityFor(sim, person, person.school!.classmates[i]!, `reliability-${i}`);
+}
+
+/**
+ * A classmate's reliability under a draw key of its own (from the integration pass of 2026-10-10): the first class keys
+ * it by place (`reliability-<i>`), as always; a class drawn later (`drawCohort`) by its year, so its fifth classmate
+ * isn't the first class's fifth again.
+ */
+export function reliabilityFor(sim: Simulation, person: Person, m: Classmate, key: string): number {
+  const mate = mateRecord(m);
   if (mate.reliability === undefined) {
-    const r = sim.rng('school.partner', person.id, `reliability-${i}`).next();
-    const drive = person.school!.classmates[i]!.drive ?? 1;
+    const r = sim.rng('school.partner', person.id, key).next();
+    const drive = m.drive ?? 1;
     mate.reliability = Math.round(Math.min(WORK.reliability.to, WORK.reliability.from + (WORK.reliability.to - WORK.reliability.from) * (0.5 * r + 0.5 * (drive - 0.75) / 0.5)) * 1000) / 1000;
   }
   return mate.reliability;

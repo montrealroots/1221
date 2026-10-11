@@ -149,7 +149,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.request_extra_term` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — (also extraRefusal) | — | — | school.extra_decide; school.term | 1 | — |
 | `school.request_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Give a reason. | — | — | school.welfare_decide; medical | 2 | — |
 | `school.request_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — | — | — | — | 2 | — |
-| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 1 | — |
+| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 2 | — |
 | `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 5 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.return_notice` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not on leave.; You gave notice on ….; Its deadline has passed. | — | — | — | 2 | — |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
@@ -230,6 +230,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.convert` | `systems/school.ts` | systems/school.ts | — | Yes | — | 2 |
 | `school.evaluation` | `systems/school.ts` | systems/leave.ts; systems/school.ts | history (added to) | — | — | 2 |
 | `school.extra_decide` | `systems/leave.ts` | systems/leave.ts | — | — | school.term; school.aid_decide | 0 |
+| `school.former_class` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.incomplete_due` | `systems/courserecord.ts` | systems/courserecord.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 4 |
 | `school.leave_appeal` | `systems/leave.ts` | systems/health.ts; systems/leave.ts | — | — | school.extra_decide | 2 |

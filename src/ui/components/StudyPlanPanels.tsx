@@ -299,10 +299,16 @@ export function ClassesPanel() {
       <p className="small" style={{ margin: 0 }}>You go on with the class of {school.classOf}: {school.classmates.map((m) => m.name).join(', ')}.</p>
       {school.formerClasses!.map((c) => (
         <p key={c.classOf} className="small" style={{ margin: 0 }}>
-          Your first class, the class of {c.classOf}, went on from {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record. {(() => { const at = formerStage(c, Math.max(0, school.termsBegun - 1)); return at === undefined ? 'They’re a year ahead.' : at >= YALE_DRAMA.terms ? 'They have their degrees.' : `They’re in year ${Math.floor(at / 2) + 1}, its ${at % 2 === 0 ? 'fall' : 'spring'} term.`; })()}
+          Your first class, the class of {c.classOf}, went on from {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record. {c.graduatedAt !== undefined ? `They had their degrees by ${formatDate(c.graduatedAt, sim.zone)}.` : (() => { const at = formerStage(c, Math.max(0, school.termsBegun - 1)); return at === undefined ? 'They’re a year ahead.' : at >= YALE_DRAMA.terms ? 'They’ve finished their sixth term.' : `They’re in year ${Math.floor(at / 2) + 1}, its ${at % 2 === 0 ? 'fall' : 'spring'} term.`; })()}
         </p>
       ))}
-      <Fine>The first class is played forward through every term it has, to its degree: its classes, as a class day grows a classmate. Its productions aren’t played forward, a boundary of SLATE’s.</Fine>
+      {school.formerClasses!.filter((c) => (c.productions ?? []).length).map((c) => (
+        <details key={`p${c.classOf}`} className="small"><summary>What The Class Of {c.classOf} Played Without You</summary>
+          <ul style={{ margin: 0 }}>{c.productions!.map((p) => { const lead = [...p.cast].sort((a, b) => (a.size === 'lead' ? 0 : 1) - (b.size === 'lead' ? 0 : 1) || b.quality - a.quality)[0]; return <li key={`${p.term}${p.name}`}>{p.play ?? p.name}{p.play ? `, ${p.name}` : ''}, {formatDate(Date.parse(`${p.from}T17:00:00Z`), sim.zone)}: {p.cast.length} of them{lead ? `; ${lead.name} as ${lead.part}, ${Math.round(lead.quality)}` : ''}.</li>; })}</ul>
+        </details>
+      ))}
+      {(school.joinedHistory ?? []).length > 0 && <p className="small" style={{ margin: 0 }}>Before you joined, the class of {school.classOf} played {school.joinedHistory!.map((p) => p.play ?? p.name).join(' and ')}.</p>}
+      <Fine>The first class is played forward through every term it has, to its degree, while you’re at the School: its classes, as a class day grows a classmate, and its productions, cast by the chair’s rule and grown by their rehearsals and nights. The Rep’s and the Cabaret’s parts aren’t played for it, a boundary of SLATE’s.</Fine>
     </div>
   );
 }

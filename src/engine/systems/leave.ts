@@ -41,7 +41,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, MS_DAY, type Instant } from '../core/time';
 import { COURSES, EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, YALE_DRAMA } from '../content/school';
 import {
-  ESTIMATE, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, drawCohort, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
+  ESTIMATE, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, drawCohort, formerProductions, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
   schoolEnded, setStanding, termAccount, termBegins, termLabel, termStart, yearOfTerm, zone, type SchoolRecord,
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
@@ -410,15 +410,46 @@ export function returnFromLeave(sim: Simulation, person: Person): void {
  * term the student's calendar reaches, the classes they began with have theirs, to their sixth. A class kept before
  * its offset was (`offset` absent) stays where it was.
  */
-export function followFormerClasses(school: SchoolRecord, term: number): void {
-  for (const c of school.formerClasses ?? []) {
+export function followFormerClasses(sim: Simulation, person: Person, term: number): void {
+  for (const c of person.school?.formerClasses ?? []) {
     if (c.offset === undefined) continue;
-    const terms: number[] = [];
-    for (let t = c.playedTo + 1; t < term; t += 1) terms.push(t - c.offset);
-    if (!terms.length) continue;
-    advanceMates(c.classmates, terms);
-    c.playedTo = term - 1;
+    // A term at a time, its classes then its productions (`formerProductions`, from the integration pass of
+    // 2026-10-10), so a run grows craft the term's classes grew first, as the student's own class's does; and only a
+    // term that's over, its last class day and its last night both past (`formerTermEnds`), so nothing is recorded
+    // before it happened.
+    for (let t = c.playedTo + 1; t < term; t += 1) {
+      const academic = t - c.offset;
+      if (academic < YALE_DRAMA.terms && sim.now < formerTermEnds(t, academic)) break;
+      advanceMates(c.classmates, [academic]);
+      formerProductions(sim, person, c, t, academic);
+      c.playedTo = t;
+      // Its sixth term over, the class has its degrees: said once, never again (`graduatedAt`).
+      if (academic === YALE_DRAMA.terms - 1 && c.graduatedAt === undefined) {
+        c.graduatedAt = sim.now;
+        if (person.id === sim.universe.playerId) notify(sim, person, `The Class Of ${c.classOf} Graduates`, `Your first class has its degrees: ${c.classmates.slice(0, 3).map((m) => m.name).join(', ')} and the rest. What you shared with them stays on your record.`, 55);
+      }
+    }
+    // The next term's end, on the calendar, while the class has a term left (`FORMER_KIND`): a term is caught up there,
+    // not months later at the next term's start.
+    const next = c.playedTo + 1;
+    if (next - c.offset < YALE_DRAMA.terms && !sim.universe.scheduled.some((i) => i.kind === FORMER_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.term === next)) {
+      sim.schedule({ at: Math.max(sim.now + 60_000, formerTermEnds(next, next - c.offset)), kind: FORMER_KIND, label: `The Class Of ${c.classOf}`, category: 'system', priority: 30, payload: { personId: person.id, term: next } });
+    }
   }
+}
+
+/** A first class's term caught up at its end (`followFormerClasses`). */
+export const FORMER_KIND = 'school.former_class';
+
+/** When a first class's term is over: the day after its last class day or its last night, whichever is later. */
+export function formerTermEnds(term: number, academic: number): Instant {
+  let last = classPeriod(term).to;
+  for (let rank = 1; rank <= YALE_DRAMA.classSize; rank += 1) {
+    const p = schoolProduction(term, rank, academic);
+    const end = p?.runs[p.runs.length - 1];
+    if (end && (end.year * 10000 + end.month * 100 + end.day) > (last.year * 10000 + last.month * 100 + last.day)) last = end;
+  }
+  return at(last, 23) + MS_DAY;
 }
 
 /** Where a first class is in its program at a calendar term: its academic term, past the sixth once it has its degree. */
@@ -428,8 +459,10 @@ export const formerStage = (c: NonNullable<SchoolRecord['formerClasses']>[number
  * Fallen a year behind, by a leave or a repeated year, a student goes on with the class that's now at their stage
  * (from 2026-10-10; until then the first class waited for them, frozen, and was still at their side on return). The
  * first class is kept whole, every relationship and record, and played forward through the terms it went on without
- * them (`advanceMates`); the new class is drawn (`drawCohort`) and brought to the same stage by the terms they've had.
- * Coursework kept from before keeps its partners' names.
+ * them, their classes and their productions (`followFormerClasses`); the new class is drawn (`drawCohort`) and
+ * brought to the same stage by the terms they've had, their productions among them (`joinedHistory`, from the
+ * integration pass of 2026-10-10: until then both classes had only their classes played forward). Coursework kept
+ * from before keeps its partners' names.
  */
 export function joinCohort(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
@@ -438,14 +471,14 @@ export function joinCohort(sim: Simulation, person: Person, term: number): void 
   // The first class's place in the program at each calendar term since: the term less the offset the student had
   // before falling behind, which is theirs.
   const behind = school.joinsCohort ?? { offsetBefore: Math.max(0, (school.offset ?? 0) - 2), lastWith: term - 1 };
-  const terms: number[] = [];
-  for (let c = behind.lastWith + 1; c < term; c += 1) terms.push(c - behind.offsetBefore);
-  advanceMates(old, terms);
   const stamp = courseworkOf(sim, person);
   for (const a of stamp?.assignments ?? []) if (a.partner !== undefined && a.partnerName === undefined) a.partnerName = old[a.partner]?.name;
-  (school.formerClasses ??= []).push({ classOf: school.classOf - 1, classmates: old, playedTo: term - 1, left: sim.now, offset: behind.offsetBefore });
+  (school.formerClasses ??= []).push({ classOf: school.classOf - 1, classmates: old, playedTo: behind.lastWith, left: sim.now, offset: behind.offsetBefore });
+  followFormerClasses(sim, person, term);
   const next = drawCohort(sim, person, school.classOf);
-  advanceMates(next, Array.from({ length: Math.max(0, academic) }, (_, i) => i));
+  const joined = { classOf: school.classOf, classmates: next, playedTo: -1, left: sim.now, productions: [] as NonNullable<NonNullable<SchoolRecord['formerClasses']>[number]['productions']> };
+  for (let a = 0; a < academic; a += 1) { advanceMates(next, [a]); formerProductions(sim, person, joined, term - academic + a, a); }
+  if (joined.productions.length) school.joinedHistory = joined.productions;
   school.classmates = next;
   delete school.around;
   delete school.castRead;
@@ -764,6 +797,13 @@ export function registerLeave(sim: Simulation): void {
     if (!(reason in LEAVE_REASONS)) throw new CommandError('Give a reason.');
     const leave = requestLeave(s, s.player, kind, reason, p?.terms === undefined ? LEAVE_RULES.terms : Number(p.terms));
     return { decideAt: leave.decideAt, firstTerm: leave.firstTerm, startsNow: leave.firstTerm === termNow(s.player.school!) && !evaluated(s.player.school!, leave.firstTerm) };
+  });
+
+  // A first class's term over: caught up now (`followFormerClasses`), while the student is at the School.
+  sim.onSchedule(FORMER_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person?.school || schoolEnded(person.school.standing)) return;
+    followFormerClasses(s, person, Number(item.payload.term) + 1);
   });
 
   sim.onSchedule(WELFARE_KIND, (item, s) => {
