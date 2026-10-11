@@ -12,8 +12,8 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STATE_TAX, STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
-import { connecticutTax, TAX_REFUND_KIND, owedAll, owedEverywhere, returnsOf, withholdingSplit } from '@/engine/systems/taxreturn';
-import { STATE_NOTICE_KIND, owedToState, statePartsOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { connecticutTax, TAX_REFUND_KIND, owedAll, owedOn, owedEverywhere, returnsOf, withholdingSplit } from '@/engine/systems/taxreturn';
+import { STATE_NOTICE_KIND, federalOffsetToState, owedToState, statePartsOn, statePlanRefusal } from '@/engine/systems/statetax';
 
 const NY = 'America/New_York';
 const at = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
@@ -69,6 +69,9 @@ describe('who is owed', () => {
     sim.must({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 300_00 } });
     play(sim, sim.now + MS_HOUR);
     expect(sim.player.taxPlan!.status).toBe('active');
+    // Found by mutation (integration pass): compared with owedAll, which was what changed, this proved nothing. The
+    // IRS's own balance on the return, nothing of Connecticut's in it.
+    expect(sim.player.taxPlan!.covers).toBe(owedOn(r, sim.player.taxPlan!.appliedAt));
     expect(sim.player.taxPlan!.covers).toBe(owedAll(sim.player, sim.player.taxPlan!.appliedAt));
     expect(sim.player.taxPlan!.covers).toBeLessThan(owedEverywhere(sim.player, sim.player.taxPlan!.appliedAt));
     // Connecticut's bill comes on its own calendar, the IRS plan notwithstanding.
@@ -201,6 +204,23 @@ describe('refunds', () => {
     expect(sim.universe.transactions.filter((t) => /refund/i.test(t.memo)).length).toBe(count);
     expect(sim.ledger.audit()).toEqual([]);
   }, 120_000);
+});
+
+describe('a federal refund and a state’s debt', () => {
+  it('isn’t sent to a state that hasn’t sent its notice yet: a debt isn’t past due before it’s billed', () => {
+    // Found by mutation (integration pass): nothing tested a federal refund before the state's first notice.
+    const sim = owing('us-ct-newhaven', 'st-no-notice');
+    const r26 = returnsOf(sim.player)['2026']!;
+    expect(r26.stateDue!['us-ct']!.collection ?? 0).toBe(0);
+    const before = owedToState(sim.player, 'us-ct', sim.now);
+    expect(federalOffsetToState(sim, sim.player, 'us-ct', 500_00, 2027)).toBe(0);
+    expect(owedToState(sim.player, 'us-ct', sim.now)).toBe(before);
+    // Billed, it is.
+    play(sim, sim.now + 32 * MS_DAY);
+    expect(r26.stateDue!['us-ct']!.collection).toBe(1);
+    expect(federalOffsetToState(sim, sim.player, 'us-ct', 500_00, 2027)).toBe(500_00);
+    expect(sim.ledger.audit()).toEqual([]);
+  }, 60_000);
 });
 
 describe('a save from before the split', () => {

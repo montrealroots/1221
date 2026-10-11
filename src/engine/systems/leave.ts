@@ -423,8 +423,9 @@ export function followFormerClasses(sim: Simulation, person: Person, term: numbe
       advanceMates(c.classmates, [academic]);
       formerProductions(sim, person, c, t, academic);
       c.playedTo = t;
-      // Its sixth term over, the class has its degrees: said once, never again (`graduatedAt`).
-      if (academic === YALE_DRAMA.terms - 1 && c.graduatedAt === undefined) {
+      // Its sixth term over, the class has its degrees: said once, as the term is played once (`playedTo` passes it; a
+      // guard on `graduatedAt` besides was found redundant by mutation in the integration pass).
+      if (academic === YALE_DRAMA.terms - 1) {
         c.graduatedAt = sim.now;
         if (person.id === sim.universe.playerId) notify(sim, person, `The Class Of ${c.classOf} Graduates`, `Your first class has its degrees: ${c.classmates.slice(0, 3).map((m) => m.name).join(', ')} and the rest. What you shared with them stays on your record.`, 55);
       }

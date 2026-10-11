@@ -93,9 +93,10 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
     // The class joined came with its own first spring's production, and its own draws: not the first class's again.
     // (Back at a first-year fall, the class joined has had no production yet: its history is empty.)
     expect(sim.player.school!.joinedHistory).toBeUndefined();
+    // Each draw on its own (found by mutation, integration pass: counted together, one could hide behind the other).
     const now = sim.player.school!.classmates;
-    const same = now.filter((m, i) => m.presence === later.classmates[i]!.presence && (m as { reliability?: number }).reliability === (later.classmates[i] as { reliability?: number }).reliability).length;
-    expect(same).toBeLessThan(3);
+    expect(now.filter((m, i) => m.presence === later.classmates[i]!.presence).length).toBeLessThan(3);
+    expect(now.filter((m, i) => (m as { reliability?: number }).reliability === (later.classmates[i] as { reliability?: number }).reliability).length).toBeLessThan(3);
   }, 60_000);
 
   it('brings a class joined in its second year with the production it had, cast from itself', () => {
