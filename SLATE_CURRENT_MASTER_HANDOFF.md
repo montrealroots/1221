@@ -4,7 +4,8 @@ The owner's brief was "Finish SLATE's Remaining In-Scope Gaps And Verify Complet
 checklist, written before the engine changed, is `docs/verification/REMAINING-GAPS-CHECKLIST-2026-10-11.md`; the
 evidence, item by item, is `docs/verification/REMAINING-GAPS-PASS-2026-10-11.md`.
 
-- **Branch:** `claude/remaining-gaps`, pushed. **Not merged:** `main` is still `086d00ca`, for the owner.
+- **Branch:** `claude/remaining-gaps`, pushed.
+- **Merged:** at the owner's "Merge it.", `main` was fast-forwarded from `086d00ca` to this pass.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged; every new field is optional. Saves written at `086d00ca` open with nothing charged
   or filed after the fact (`tests/save-migration.test.ts`).
@@ -64,7 +65,7 @@ evidence, item by item, is `docs/verification/REMAINING-GAPS-PASS-2026-10-11.md`
 
 ## Still the owner's
 
-- Merge, and deploy.
+- Deploy.
 - Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
 - The 16 deferred items.
 - Whether play should ever reach a residence outside New Haven: until it does, Indiana, the District, Oklahoma and the
