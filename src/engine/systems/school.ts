@@ -384,7 +384,14 @@ export interface SchoolRecord {
   /** The class's casts this term, and the week of its Cabaret show where it has one (`cabaretCompany`, from 2026-10-11). */
   around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[]; cabaretWeek?: string };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
-  credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize }[];
+  /**
+   * What they played, each with the year of its run (read by the résumé from 2026-10-11). A credit an older save wrote
+   * before the acceptance pass of 2026-10-11 has the year it was written down; opened, each is dated by its term's
+   * casting notice where one is kept (`creditsDated`), and one with none keeps its year, said (`yearAsKept`).
+   */
+  credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize; yearAsKept?: true }[];
+  /** The credits' years checked against the casting notices, once (`redateCredits`, from 2026-10-11). */
+  creditsDated?: true;
   /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
   /** `withdrawn`: taken out of the show by an academic warning that came during it (from 2026-10-10, `leaveCabaret`). */
   cabaret?: { term: number; week: string; performed: number; withdrawn?: { at: Instant; why: string } } & Partial<Run>;
@@ -1567,7 +1574,7 @@ export function enroll(sim: Simulation, person: Person): void {
   bindCeiling(person.craft, person.craftCeiling);
   for (const mate of admitted.classmates) { mate.ceiling = ceilingFrom(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
   const school: SchoolRecord = {
-    classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true,
+    classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true, creditsDated: true,
     classmates: admitted.classmates, tally: undefined as unknown as TermTally, history: [],
     workStudy: { electiveHours: 0, owedHours: 0 },
   };
@@ -1860,6 +1867,40 @@ export const repTerm = (term: number) => term === 1 || (termStart(term).fall && 
  * term's (from the acceptance pass of 2026-10-11): until then it was the year the credit was written, at the next
  * casting, and a student away on a leave had their spring's Carlotta lead credited to the year they came back.
  */
+/**
+ * An older save's credits dated by their runs, once (from 2026-10-11): until the acceptance pass of 2026-10-11 a credit
+ * took the year it was written down, at the next casting, so a fall's run was dated the January after and a run before
+ * a leave a year later. Each term's casting notice (`Cast: …`, kept with the save's notifications) names its
+ * productions and parts and dates its term: the credits, in the order they were written, are matched to them in turn,
+ * each notice's production once, by its production and its part (a Rep company part by its production alone), and each
+ * takes its term's year where it's no later than the year it had and within two. A credit with no notice kept for it
+ * (a save keeps its last 500 notifications) keeps its year, and says so. The Cabaret's and the summer's were always
+ * dated by their own runs. Returns how many were dated again and how many kept.
+ */
+export function redateCredits(school: SchoolRecord, notices: readonly { at: Instant; title: string; body: string }[]): { redated: number; kept: number } {
+  let redated = 0;
+  let kept = 0;
+  if (school.creditsDated) return { redated, kept };
+  const casts = notices.filter((n) => n.title.startsWith('Cast: ')).sort((a, b) => a.at - b.at).map((n) => {
+    const p = zonedParts(n.at, zone());
+    return { year: termStart(termOf({ year: p.year, month: p.month, day: p.day })).date.year, text: `${n.title} ${n.body}` };
+  });
+  const used = new Set<string>();
+  let from = 0;
+  for (const c of school.credits ?? []) {
+    if (c.kind === 'cabaret' || c.kind === 'summer') continue;
+    // Its production named, and its part where the notice names it (a company part in the Rep it doesn't).
+    const k = casts.findIndex((x, i) => i >= from && !used.has(`${i}|${c.production}`) && x.text.includes(c.production) && (c.kind === 'role' || x.text.includes(c.role)));
+    const year = k < 0 ? undefined : casts[k]!.year;
+    if (year === undefined || year > c.year || c.year - year > 2) { c.yearAsKept = true; kept += 1; continue; }
+    used.add(`${k}|${c.production}`);
+    from = k;
+    if (year !== c.year) { c.year = year; redated += 1; }
+  }
+  school.creditsDated = true;
+  return { redated, kept };
+}
+
 export function keepCredit(_sim: Simulation, school: SchoolRecord): void {
   for (const c of [school.casting, school.rep]) {
     if (!c || c.performed === 0) continue;

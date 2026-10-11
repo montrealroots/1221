@@ -393,7 +393,7 @@ function JourneyPanel() {
   return (
     <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
       <div className="col gap-3">
-        {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
+        {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
         {terms.length > 0 && (
           <LookRegion className="table-scroll">
             <table>

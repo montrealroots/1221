@@ -21,7 +21,7 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { PLAN, amendRefusal, deadline, leastMonthly, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
-import { agencyOf, owedToState, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { agencyOf, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
 import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
@@ -91,19 +91,20 @@ function WhoIsOwed({ year }: { year: number }) {
             <div className="eyebrow">Owed To {agencyOf(state)}</div>
             {!rules && <p className="xs dim" style={{ margin: 0 }}>{STATE_UNRESEARCHED}</p>}
             {sd.migrated && <p className="xs dim" style={{ margin: 0 }}>{sd.migrated.how}.</p>}
+            {sd.assessedBy && <p className="xs dim" style={{ margin: 0 }}>{sd.replacedAt !== undefined ? `Assessed by ${agencyOf(state)} with no return from you, ${formatDate(sd.assessedBy.at, sim.zone)}; replaced by your own, ${formatDate(sd.replacedAt, sim.zone)}.` : `Assessed by ${agencyOf(state)} with no return from you, ${formatDate(sd.assessedBy.at, sim.zone)}. File your own to replace it.`}</p>}
             {p ? (
               <>
                 <div className="grid grid-3">
                   <Stat label="Tax Unpaid" value={money(p.tax)} />
-                  <Stat label="Penalties" value={money(p.penalty)} note={rules ? (rules.payLate.monthly ? `${rules.payLate.once ? `${Math.round(rules.payLate.once * 100)}% once, then ` : ''}${rules.payLate.monthly * 100}% a month, to ${Math.round(rules.payLate.cap * 100)}%` : `${Math.round(rules.payLate.once * 100)}% once, past the due date`) : 'None added: unresearched'} />
-                  <Stat label="Interest" value={money(p.interest)} note={rules ? (rules.interest.how === 'daily' ? `${(rules.interest.yearly * 100).toFixed(1)}% a year, daily` : '1% a month or part') : 'None added: unresearched'} />
+                  <Stat label="Penalties" value={money(p.penalty)} note={rules ? payLateWords(rules) : 'None added: unresearched'} />
+                  <Stat label="Interest" value={money(p.interest)} note={rules ? interestWords(rules) : 'None added: unresearched'} />
                 </div>
                 {rules && (sd.collection ?? 0) > 0 && <p className="xs dim" style={{ margin: 0 }}>{(sd.collection ?? 0) <= rules.notices.length ? `${rules.notices[(sd.collection ?? 1) - 1]!.code} sent.` : 'Its levy has been made.'}{rules.timingAssumed ? ' The days between its notices are SLATE’s.' : ''}</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
                   <div className="field"><label htmlFor={`tax-pay-${state}-${year}`}>{`Pay ${stateName(state)} (Blank Pays It All)`}</label><input id={`tax-pay-${state}-${year}`} inputMode="decimal" value={amounts[state] ?? ''} onChange={(e) => setAmounts({ ...amounts, [state]: e.target.value })} placeholder={(stateOwedOn(sd, r.due, sim.now) / 100).toFixed(2)} /></div>
                   <Gated feature="tax.pay_state" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay_state', amounts[state] ? { state, year, amount: value } : { state, year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid ${agencyOf(state)}: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : `Paid ${agencyOf(state)} in full.`, 'positive'); setAmounts({ ...amounts, [state]: '' }); } }}>Pay</Gated>
                 </div>
-                {rules && <p className="xs dim" style={{ margin: 0 }}>{rules.orderAssumed ? `${rules.short} doesn’t publish the order a part goes in: SLATE puts it to the tax first.` : `By statute a part goes to the penalty first, then the interest, then the tax.`}</p>}
+                {rules && <p className="xs dim" style={{ margin: 0 }}>{orderWords(rules)}</p>}
               </>
             ) : sd.refund ? <p className="small" style={{ margin: 0 }}>{money(sd.refund)} back from {agencyOf(state)}{sd.refundedAt !== undefined ? `, paid ${formatDate(sd.refundedAt, sim.zone)}` : sd.refundAt !== undefined ? `, due about ${formatDate(sd.refundAt, sim.zone)}` : ''}.</p> : sd.filedAt !== undefined ? <p className="small" style={{ margin: 0 }}>Paid to {agencyOf(state)}.</p> : null}
             {(sd.payments ?? []).length > 0 && (
@@ -145,7 +146,7 @@ function StatePlanPanel({ state }: { state: string }) {
         {!live && owed > 0 && (
           <div className="col gap-2">
             <p className="small" style={{ margin: 0 }}>
-              {rules.short}’s own plan, apart from any with the IRS: up to {money(rules.plan.max)} over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.fee ? `, a ${money(rules.plan.fee)} fee ${rules.plan.feeAdded ? 'added to the balance' : ''}` : ', no fee'}. Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
+              {rules.short}’s own plan, apart from any with the IRS: {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'no most published'}{rules.plan.min !== undefined ? `, over ${money(rules.plan.min)}` : ''}, over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.monthsAssumed ? ' (SLATE’s: the longest isn’t published)' : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? `, a ${money(statePlanFee(person, rules, cur))} fee added to the balance` : ', its fee waived at your income') : ', no fee'}.{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>

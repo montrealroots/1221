@@ -48,7 +48,7 @@ import { drawFromBank, expenseFor, payFromBank } from './spending';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
-import { stateFileLate, statePayLateRate, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
+import { reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -805,7 +805,7 @@ export function latePenaltyAll(person: Person, r: TaxReturn, at: Instant, into =
   for (const [state, tax] of Object.entries(to.states)) {
     const rules = rulesOf(state);
     if (!rules || tax <= 0) continue;
-    total += stateFileLate(rules, tax, r.due, at, into) + Math.round(statePayLateRate(rules, r.due, at) * tax);
+    total += stateLateAt(rules, tax, r.due, at, into);
   }
   return total;
 }
@@ -818,6 +818,7 @@ export function armCollection(sim: Simulation, person: Person): void {
     if (r.filedAt === undefined && r.figures.balance > 0 && r.due < sim.now && !sim.universe.scheduled.some((i) => i.kind === TAX_SFR_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) {
       sim.schedule({ at: Math.max(sim.now + MS_DAY, r.due + SUBSTITUTE.afterDays * MS_DAY), kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
     }
+    if (r.filedAt === undefined && r.due < sim.now) scheduleStateNonFiler(sim, person, r, owedToOf(person, r).states);
     for (const [state, sd] of Object.entries(r.stateDue ?? {})) if (sd.owed && !person.statePlans?.[state] && !sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) stateNextNotice(sim, person, r, state);
     if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
     r.accruedAt ??= sim.now;
@@ -914,6 +915,8 @@ export function registerTaxReturn(sim: Simulation): void {
     // Owing the IRS and unfiled, the IRS files it for them in a year (`SUBSTITUTE`): on its own part, from the integration
     // pass of 2026-10-10.
     if (owedToOf(person, r).irs > 0) s.schedule({ at: r.due + SUBSTITUTE.afterDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
+    // And each state owed acts on its own (`scheduleStateNonFiler`, from 2026-10-11): until then only the IRS did.
+    scheduleStateNonFiler(s, person, r, owedToOf(person, r).states);
     if (person.id !== s.universe.playerId) return;
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
@@ -948,6 +951,15 @@ export function registerTaxReturn(sim: Simulation): void {
     // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
     if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
     nextNotice(s, person, r);
+  });
+
+  // A state's letter on a return never filed, or its assessment (`stateNonFilerStep`, from 2026-10-11).
+  sim.onSchedule(STATE_NONFILER_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
+    if (!person || !r || (r.filedAt !== undefined && !r.substitute)) return;
+    const state = String(item.payload.state);
+    stateNonFilerStep(s, person, r, state, Number(item.payload.step), owedToOf(person, r).states[state] ?? 0);
   });
 
   sim.onSchedule(TAX_NOTICE_KIND, (item, s) => {
@@ -1111,8 +1123,9 @@ export function registerTaxReturn(sim: Simulation): void {
     if (r.filedAt !== undefined && !r.substitute) throw new CommandError('You’ve filed it. A change is an amended return.');
     const cur = saveCurrency(s.universe);
     if (r.substitute) return reconsider(s, person, r);
-    // Filed before the IRS assessed its substitute: the CP2566's proposal is replaced, and nothing of it is assessed.
-    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_SFR_KIND && one.payload.personId === person.id && one.payload.year === r.year) s.timeline.cancel(one.id, s.now);
+    // Filed before the IRS assessed its substitute: the CP2566's proposal is replaced, and nothing of it is assessed; a
+    // state's letters stop too.
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === TAX_SFR_KIND || one.kind === STATE_NONFILER_KIND) && one.payload.personId === person.id && one.payload.year === r.year) s.timeline.cancel(one.id, s.now);
     r.figures = figuresFor(person, r.year, cur, s.now);
     r.filedAt = s.now;
     r.penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
@@ -1123,7 +1136,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const split = owedToOf(person, r);
     const stateTotal = Object.values(split.states).reduce((a, b) => a + b, 0);
     let statesPaid = true;
-    for (const [state, amount] of Object.entries(split.states)) statesPaid = fileState(s, person, r, state, amount).paid && statesPaid;
+    // A state that assessed it already takes their own return in its place (`reconsiderState`, from 2026-10-11).
+    for (const [state, amount] of Object.entries(split.states)) {
+      if (r.stateDue?.[state]?.assessedBy) { reconsiderState(s, person, r, state, amount); statesPaid = !r.stateDue[state]!.owed && statesPaid; continue; }
+      statesPaid = fileState(s, person, r, state, amount).paid && statesPaid;
+    }
     const irs = split.irs;
     r.penalty = latePenalty(irs, r.due, s.now, cur);
     if (irs < 0) {
@@ -1266,7 +1283,11 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: M
   accrue(r, sim.now);
   const own = figuresFor(person, r.year, cur, sim.now);
   // The IRS reconsiders its own part (from the integration pass of 2026-10-10); each state's is filed now, for the first time.
-  for (const [state, amount] of Object.entries(own.owedTo!.states)) if (!r.stateDue?.[state]?.filedAt) fileState(sim, person, r, state, amount);
+  for (const [state, amount] of Object.entries(own.owedTo!.states)) {
+    if (r.stateDue?.[state]?.assessedBy) reconsiderState(sim, person, r, state, amount);
+    else if (!r.stateDue?.[state]?.filedAt) fileState(sim, person, r, state, amount);
+  }
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NONFILER_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   const ownIrs = own.owedTo!.irs;
   const was = r.substituteFigures ? Math.max(0, owedToOf(person, r).irs + (r.substituteFigures.balance - r.figures.balance)) : owedToOf(person, r).irs;
   const paidTax = r.paidTax ?? 0;

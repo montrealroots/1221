@@ -172,13 +172,14 @@ describe('each state by its own rules', () => {
   }, 60_000);
 
   it('a state SLATE hasn’t researched keeps its balance with nothing added, and says so rather than take the IRS’s rules', () => {
-    const sim = owing('us-il-chicago', 'st-il');
+    // Illinois was this test's state until it was researched on 2026-10-11. New Jersey has a tax table and no city, so
+    // no life owes it: FIXTURE, a balance put on a return by hand, read as an owed one is.
+    const sim = owing('us-ct-newhaven', 'st-nj');
     const r = returnsOf(sim.player)['2026']!;
-    const sd = r.stateDue!['us-il']!;
-    expect(sd.owed).toBeGreaterThan(0);
+    const sd = (r.stateDue!['us-nj'] = { state: 'us-nj', balance: 500_00, filedAt: sim.now, owed: 500_00, parts: { tax: 500_00, penalty: 0, interest: 0 }, accruedAt: sim.now });
     expect(statePartsOn(sd, r.due, r.due + 400 * MS_DAY)).toEqual(sd.parts);
-    expect(statePlanRefusal(sim, sim.player, 'us-il', 12)).toBe(STATE_UNRESEARCHED);
-    expect(sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.payload.state === 'us-il')).toBe(false);
+    expect(statePlanRefusal(sim, sim.player, 'us-nj', 12)).toBe(STATE_UNRESEARCHED);
+    expect(sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.payload.state === 'us-nj')).toBe(false);
   }, 60_000);
 });
 

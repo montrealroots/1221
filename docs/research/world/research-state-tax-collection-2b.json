@@ -1,0 +1,2098 @@
+[
+  {
+    "jurisdiction": "LA",
+    "topic": "late-payment-penalty",
+    "claim": "Individual income tax delinquent payment penalty is 0.5% of the tax not paid by the due date for each 30 days or fraction thereof the failure continues, capped at 25% of the tax due. Penalty is based on the date LDR receives the payment.",
+    "value": {
+      "ratePerPeriod": 0.005,
+      "periodDays": 30,
+      "fractionCountsAsFullPeriod": true,
+      "cap": 0.25,
+      "base": "unpaid tax",
+      "minimum": null
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025.pdf",
+    "sourceDate": "2025 Form IT-540 instructions (tax year 2025, due May 15, 2026); accessed 2026-10-11",
+    "establishes": "Accrual unit (30-day period, fraction rounds up), rate and cap of the individual late-pay penalty.",
+    "uncertainty": "No minimum penalty stated for individual income tax (R.S. 47:1602(C)'s $3 minimum is for registration-fee failures). Statutory basis is R.S. 47:1602(A)(3); statute text was read only through a summarizer.",
+    "designImplication": "Model late-pay as ceil(daysLate/30) * 0.5% of unpaid tax, capped at 25% shared with the late-file penalty."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "late-payment-penalty",
+    "claim": "R.S. 47:1602(A)(3) sets the individual income tax failure-to-remit penalty at one-half of one percent per 30 days (versus 5% per 30 days for other taxes under (A)(2)); (A)(4) applies 0.5% per 30 days to additional tax after notice; (A)(5) caps all at 25% of the tax in the aggregate.",
+    "value": {
+      "individualIncomeTaxPerPeriod": 0.005,
+      "otherTaxesPerPeriod": 0.05,
+      "aggregateCap": 0.25
+    },
+    "url": "https://www.legis.la.gov/Legis/Law.aspx?d=101291",
+    "sourceDate": "History through Acts 2020, No. 348; accessed 2026-10-11",
+    "establishes": "Statutory basis for the reduced individual-income-tax payment penalty and the aggregate cap.",
+    "uncertainty": "The page was read through a summarizer, not verbatim. Subsection lettering is as the summarizer reported it.",
+    "designImplication": "Individuals pay a much gentler late-pay rate than businesses, so a simulation should key the rate on tax type."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "late-filing-penalty",
+    "claim": "The delinquent filing penalty is 5% of the tax for each 30 days or fraction thereof, calculated from the ORIGINAL due date, up to 25%. It applies only if the return is filed after the automatic extended due date (Nov 16, 2026 for TY2025). So a return filed after the extended date gets the maximum 25%. The sum of the delinquent filing and delinquent payment penalties cannot exceed 25% of the tax due.",
+    "value": {
+      "ratePerPeriod": 0.05,
+      "periodDays": 30,
+      "cap": 0.25,
+      "combinedCapWithLatePayment": 0.25,
+      "accruesFrom": "original due date",
+      "triggeredOnlyAfter": "automatic 6-month extended due date"
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025.pdf",
+    "sourceDate": "2025 Form IT-540 instructions; accessed 2026-10-11",
+    "establishes": "Late-file rate, cap, the extension cliff, and that the two penalties share one 25% cap.",
+    "uncertainty": "No minimum late-file penalty published for individuals.",
+    "designImplication": "Model LA late-file as a cliff: zero until the extended date passes, then 25% of tax, with late-pay filling only the remaining headroom under a shared 25% ceiling."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "late-filing-penalty",
+    "claim": "The automatic 6-month extension does not extend time to pay. Interest runs from the original due date, and late-pay penalties apply, even when the return is filed within the extension.",
+    "value": {
+      "extensionMonths": 6,
+      "extendsPayment": false
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025.pdf",
+    "sourceDate": "2025 Form IT-540 instructions; accessed 2026-10-11",
+    "establishes": "Filing extension and payment due date are decoupled.",
+    "uncertainty": "",
+    "designImplication": "Keep separate filedOn and paidOn clocks. The extension only moves the late-file trigger."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "interest",
+    "claim": "Interest on unpaid tax for Jan 1 to Dec 31, 2026 is 10.50% per year: the judicial rate of 7.50% plus 3 points, under R.S. 47:1601(A)(2). Prior years were 11.25% in 2025 and 11.75% in 2024.",
+    "value": {
+      "annualRate2026": 0.105,
+      "judicialRate2026": 0.075,
+      "annualRate2025": 0.1125,
+      "annualRate2024": 0.1175
+    },
+    "url": "https://dam.ldr.la.gov/lawspolicies/RIB No. 26-001  2026 Annual Interest Rate on Unpaid Taxes Final_1.pdf",
+    "sourceDate": "Revenue Information Bulletin 26-001, January 1, 2026",
+    "establishes": "The 2026 rate, set annually, and its formula.",
+    "uncertainty": "The 2027 rate is not yet published.",
+    "designImplication": "LA interest is one rate per calendar year. Store a year-keyed rate table."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "interest",
+    "claim": "Interest is computed as days late x daily rate x amount owed. The 2026 daily rate is 0.028767% (10.5%/365), and Form R-1111 also lists a monthly rate. The worksheet applies the rate to the tax owed, with no compounding step.",
+    "value": {
+      "dailyRate2026": 0.00028767,
+      "method": "simple, daily",
+      "compounding": "none shown"
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/1111-1-26.pdf",
+    "sourceDate": "Form R-1111 (1/26); IT-540 instructions Interest Calculation Worksheet; accessed 2026-10-11",
+    "establishes": "Daily simple-interest computation on unpaid tax.",
+    "uncertainty": "Neither the statute nor the forms say outright that interest is simple. 'Simple' is inferred from the worksheet's days x daily-rate method. The R-1111 table's text layout was garbled in extraction, but the 2026 daily rate 0.028767% matches 10.5%/365.",
+    "designImplication": "LA interest = principal * 0.105 * days/365, with no compounding."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "interest",
+    "claim": "Whether LA charges interest on penalties: no official LDR or statutory statement found. R.S. 47:1601 (as summarized) does not address it, and the IT-540 worksheet applies interest to the tax owed.",
+    "value": null,
+    "url": "https://www.legis.la.gov/legis/Law.aspx?d=101290",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "An LDR FAQ page, as rendered by a summarizer, implied that interest is not computed on penalties. That is an inference, not a quote.",
+    "designImplication": "Default to interest on tax only for LA, and keep this flag configurable."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "interest",
+    "claim": "Interest is imposed by law and ordinarily cannot be waived. It accrues from the original due date until the liability is paid in full.",
+    "value": {
+      "waivable": false
+    },
+    "url": "https://revenue.louisiana.gov/collections/collections-information/penalties/",
+    "sourceDate": "Page updated July 14, 2026",
+    "establishes": "Interest is non-waivable. Penalties can be waived for reasonable cause under R.S. 47:1603.",
+    "uncertainty": "",
+    "designImplication": "A penalty-abatement mechanic should never remove interest on tax."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "Individual installment agreement: apply through LaTAP, by email, or on Form R-19026 by mail. The non-refundable fee is $105, and there is no fee if Louisiana AGI is $25,000 or less. A 20% down payment may be required. Payments are equal monthly amounts by required automatic bank debit. Penalty, interest and collection fees keep accruing.",
+    "value": {
+      "setupFee": 105,
+      "feeWaivedIfLaAgiAtMost": 25000,
+      "downPaymentFraction": 0.2,
+      "paymentFrequency": "monthly",
+      "autoDebitRequired": true
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/19026-8-25-F.pdf",
+    "sourceDate": "Form R-19026 (8/25)",
+    "establishes": "Fee, down payment, payment mechanics and how to apply.",
+    "uncertainty": "The form gives no maximum number of months. A 2025 proposed rule would let the fee be paid in installments, but its final status was not verified.",
+    "designImplication": "A plan needs a down payment of 20% of the balance and a $105 fee unless income is low, and interest keeps running on the plan balance."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "Under LAC 61:I.4919(D), informal installment agreements are allowed only if the amount owed is under $25,000 and the term is 36 months or less. A formal agreement, with financial disclosure, is required at $25,000 or more or for terms over 36 months.",
+    "value": {
+      "informalMaxBalanceExclusive": 25000,
+      "informalMaxTermMonths": 36,
+      "formalAboveThreshold": true
+    },
+    "url": "https://dam.ldr.la.gov/lawspolicies/LAC%2061.I.4919%20(Current%20Regulation).pdf",
+    "sourceDate": "Louisiana Administrative Code, May 2024 compilation (LR 47:893, July 2021; amended LR 50:1293, Sept 2024)",
+    "establishes": "The streamlined-plan ceiling of under $25,000 and 36 months, with a higher-friction formal path above it.",
+    "uncertainty": "No absolute maximum term is stated for formal agreements. R-19026 asks only for the 'number of months requested'.",
+    "designImplication": "Use two plan tiers: auto-approve under $25k and up to 36 months, and require a financial review above that."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "Default: if any installment is not paid on or before its date, the whole outstanding balance becomes due immediately on notice and demand, and all collection actions resume. There is no grace or cure period. Reinstatement takes taxpayer request, secretary approval and a mandatory $60 fee. If the plan has been cancelled 90 days or longer, a new $105 fee applies instead. No fees apply if LA AGI is $25,000 or less. An NSF debit also cancels the plan and adds an NSF fee.",
+    "value": {
+      "curePeriodDays": 0,
+      "reinstatementFee": 60,
+      "newFeeIfCancelledDays": 90,
+      "newPlanFee": 105
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/19026-8-25-F.pdf",
+    "sourceDate": "Form R-19026 (8/25); LAC 61:I.4919(E)",
+    "establishes": "Missed-payment handling and reinstatement cost.",
+    "uncertainty": "The NSF fee amount is not given on the form.",
+    "designImplication": "One missed LA installment flips the plan to defaulted. Offer a paid reinstatement action ($60, or $105 after 90 days)."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "The taxpayer must stay current: failing to file all required returns, or to pay all taxes that come due during the plan, is a default, so the whole balance becomes due. A new balance does not join the existing plan.",
+    "value": {
+      "newBalanceJoinsPlan": false,
+      "newBalanceDefaultsPlanIfUnpaid": true
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/19026-8-25-F.pdf",
+    "sourceDate": "Form R-19026 (8/25); LAC 61:I.4919(B)(2),(5)",
+    "establishes": "A new liability during a plan is a default trigger, not an add-on.",
+    "uncertainty": "LDR could presumably set up a new or revised agreement after reinstatement, but no published procedure says so.",
+    "designImplication": "When a new year's balance appears mid-plan, require full payment or default the plan."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "Refunds are offset during a plan. All state tax refunds are applied to the debt until it is paid in full, and federal refund offsets (less the IRS offset fee) are credited too. Offsets do not reduce or postpone any scheduled installment. An approved plan does not prevent garnishment of IRS or LDR refunds.",
+    "value": {
+      "stateRefundsOffsetDuringPlan": true,
+      "federalRefundsOffsetDuringPlan": true,
+      "offsetReducesNextInstallment": false
+    },
+    "url": "https://dam.ldr.la.gov/lawspolicies/LAC%2061.I.4919%20(Current%20Regulation).pdf",
+    "sourceDate": "LAC 61:I.4919(C), May 2024 compilation",
+    "establishes": "Offsets continue during a plan and do not count as installments.",
+    "uncertainty": "",
+    "designImplication": "Apply refund offsets to the plan balance (shortening the plan) without crediting the monthly installment due."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "A state tax lien may be filed if the tax due is over $2,500 and/or payments run longer than 12 months. Taxpayers should keep paying monthly even before LDR approves the plan.",
+    "value": {
+      "lienIfBalanceOver": 2500,
+      "lienIfTermMonthsOver": 12
+    },
+    "url": "https://dam.ldr.la.gov/taxforms/19026-8-25-F.pdf",
+    "sourceDate": "Form R-19026 (8/25)",
+    "establishes": "Thresholds at which a plan carries a lien.",
+    "uncertainty": "'May be filed' means discretionary.",
+    "designImplication": "Attach a lien flag to plans over $2,500 or 12 months."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "installment-plan",
+    "claim": "Decision time for an installment request: not published. The form says only that LDR will notify the taxpayer on approval.",
+    "value": null,
+    "url": "https://dam.ldr.la.gov/taxforms/19026-8-25-F.pdf",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "",
+    "designImplication": "Pick a modelled approval latency and label it as an assumption."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "collection-sequence",
+    "claim": "For a non-filer or federal-state match case, LDR's sequence is: questionnaire; 30-day Proposed Assessment; 60-day Formal Assessment; Statement of Account (notice of seizable status); Notice of Intent to Offset and/or Suspend Licenses. If the debt is not paid within 60 days of the Notice of Intent to Offset, it is submitted to the U.S. Treasury Offset Program and may be assigned to a collection agency.",
+    "value": {
+      "steps": [
+        "Proposed Assessment (30 days)",
+        "Formal Assessment (60 days)",
+        "Statement of Account - seizable status",
+        "Notice of Intent to Offset / Suspend Licenses (60 days)",
+        "TOP referral / collection agency"
+      ]
+    },
+    "url": "https://dam.ldr.la.gov/liaison/2017Collection%20Liaison%20Meeting.pdf",
+    "sourceDate": "LDR Collection Division liaison presentation, 2017",
+    "establishes": "The ordered notice ladder and the day counts between steps.",
+    "uncertainty": "The presentation is from 2017. The 2026 LDR web pages name a Notice of Proposed Assessment, Notice of Assessment and Notice of Final Assessment, but give no day counts.",
+    "designImplication": "Drive collections as a state machine: proposed (30d), then assessed (60d), then final/seizable, then offset notice (60d), then TOP and agency referral."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "collection-sequence",
+    "claim": "Under R.S. 47:1565, the notice of assessment gives 60 calendar days to pay or appeal to the Board of Tax Appeals. With no appeal, the assessment becomes final and collectible by distraint and sale. 2026 SB 196 (enrolled) changes 60 to 90 days for notices mailed on or after Jan 1, 2028.",
+    "value": {
+      "assessmentWindowDays": 60,
+      "assessmentWindowDaysFrom2028": 90
+    },
+    "url": "https://www.legis.la.gov/Legis/Law.aspx?d=101265",
+    "sourceDate": "R.S. 47:1565 history through Acts 2024, No. 307; SB 196 (2026 RS) enrolled text https://www.legis.la.gov/legis/ViewDocument.aspx?d=1468441",
+    "establishes": "When an assessment becomes final and enforceable.",
+    "uncertainty": "SB 196 is the enrolled version. Whether the governor signed it was not verified.",
+    "designImplication": "Levy and garnishment are only legal after the 60-day window (90 days from 2028)."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "collection-sequence",
+    "claim": "Once a debt is collectible by distraint and sale, LDR must send a notice that, if the debt is not paid within 60 days, a collection fee of up to 25% of the total liability will be charged. Where the Attorney General takes the account, the fee may not exceed 15%. The fee goes to the collection contractor. (SB 196 would make this 90 days from 2028.)",
+    "value": {
+      "collectionFeeMax": 0.25,
+      "collectionFeeMaxIfAttorneyGeneral": 0.15,
+      "noticeDays": 60,
+      "base": "total liability (tax, interest, penalties, fees)"
+    },
+    "url": "https://dam.ldr.la.gov/lawspolicies/LAC61_I_4913_1.pdf",
+    "sourceDate": "LAC 61:I.4913 (LR 28, Nov 2002); R.S. 47:1516.1(B)(3)",
+    "establishes": "The size and trigger of the LA collection fee.",
+    "uncertainty": "The actual percentage currently charged by LDR's private contractor is not published. 25% is the ceiling, not necessarily the rate. Separately, the Office of Debt Recovery charges 15% on non-tax agency debts referred on or after Jan 1, 2024 (LAC 61:III.3101), which may not apply to LDR tax debts.",
+    "designImplication": "Add a one-time collection fee of up to 25% of total liability 60 days after the final-assessment collection notice. Treat the rate as a parameter."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "collection-sequence",
+    "claim": "LDR collection tools include wage garnishment, bank levy, tax liens, LA and federal refund offsets, driver's and hunting/fishing license suspension, outside collection agency, and merchant-service-provider levy. A collection notice explaining the amount and options is sent before any action. Receiving a collection notice does not by itself mean immediate garnishment or levy.",
+    "value": {
+      "tools": [
+        "wage garnishment",
+        "bank levy",
+        "lien",
+        "refund offset",
+        "driver's license suspension",
+        "hunting/fishing license suspension",
+        "outside collection agency"
+      ]
+    },
+    "url": "https://revenue.louisiana.gov/collections/collections-information/learn-about-collection-actions/",
+    "sourceDate": "Page updated July 8, 2026",
+    "establishes": "The menu of enforcement tools.",
+    "uncertainty": "No day counts are given for when levy or garnishment starts after the final assessment.",
+    "designImplication": "Enforcement events should require a prior notice event in the log."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "collection-sequence",
+    "claim": "Exact number of days from final assessment to the first bank levy or wage garnishment: not published.",
+    "value": null,
+    "url": "https://revenue.louisiana.gov/collections/collections-information/learn-about-collection-actions/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "",
+    "designImplication": "Use an assumed lag after the 'seizable' Statement of Account."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "non-filer-assessment",
+    "claim": "If a taxpayer fails to file, the secretary determines the tax, penalty and interest by estimate or otherwise. The secretary mails a notice of that determination and states the intent to assess it after 30 calendar days from the notice date (R.S. 47:1562). LDR's federal-state match finds residents who filed federally but not with LA, sends a questionnaire, and creates a bill if there is no response.",
+    "value": {
+      "proposedAssessmentDays": 30,
+      "method": "estimate from best information (federal-state match)"
+    },
+    "url": "https://www.legis.la.gov/legis/Law.aspx?d=101262",
+    "sourceDate": "R.S. 47:1562 history through Acts 2006, No. 34; 2017 LDR liaison deck",
+    "establishes": "How and when a non-filer gets an estimated assessment.",
+    "uncertainty": "The federal-state match details come from a 2017 presentation. No separate non-filer penalty beyond the 25% late-file maximum was found.",
+    "designImplication": "A non-filing resident gets an estimated bill (tax from federal data, plus a 25% late-file penalty and interest), then follows the normal assessment ladder."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "payment-application-order",
+    "claim": "General rule: installment agreement payments are 'applied to accounts, taxes, and periods as determined by the department' (LAC 61:I.4919(B)(7)). The only published fixed order (tax, then penalty, then interest, oldest period first) appears in the 2014 amnesty rule, for payments under voided amnesty installment agreements.",
+    "value": {
+      "generalRule": "department discretion",
+      "amnestyRuleOrder": [
+        "tax",
+        "penalty",
+        "interest"
+      ]
+    },
+    "url": "https://dam.ldr.la.gov/lawspolicies/LAC%2061.I.4919%20(Current%20Regulation).pdf",
+    "sourceDate": "LAC 61:I.4915(E) and 4919(B)(7), May 2024 compilation",
+    "establishes": "There is no general published allocation order. Tax-penalty-interest is the order LDR used in its amnesty rule.",
+    "uncertainty": "Applying the amnesty order generally is an extrapolation.",
+    "designImplication": "Default to oldest period first, then tax, penalty, interest, and flag it as an assumption."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "refund-offsets",
+    "claim": "LDR applies LA income tax refunds to eligible debts under the Louisiana Tax Offset Garnishment Act. Debts include LDR tax liabilities and other agency debts (child support, overpayments, fees, fines) collected through the Office of Debt Recovery. Federal offsets are run separately by Treasury.",
+    "value": {
+      "offsetsOwnTaxDebts": true,
+      "offsetsOtherAgencyDebts": true
+    },
+    "url": "https://revenue.louisiana.gov/collections/collections-information/refund-offsets-other-state-agencies",
+    "sourceDate": "Page updated June 30, 2026",
+    "establishes": "State refund offset to state debts.",
+    "uncertainty": "",
+    "designImplication": "Net any LA refund against open LA balances before paying it out."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "refund-offsets",
+    "claim": "LDR participates in the U.S. Treasury Offset Program. If full payment is not received within 60 days of the Notice of Intent to Offset, LDR submits the liability to TOP to offset federal refunds.",
+    "value": {
+      "treasuryOffsetProgram": true,
+      "noticeOfIntentDays": 60
+    },
+    "url": "https://dam.ldr.la.gov/liaison/2017Collection%20Liaison%20Meeting.pdf",
+    "sourceDate": "LDR Collection Division liaison presentation, 2017; corroborated by LAC 61:I.4919(C)(2) (federal refund offsets credited less IRS fee)",
+    "establishes": "LA tax debts can take federal refunds after a 60-day notice.",
+    "uncertainty": "A search snippet attributed to a now-404 LDR 'treasury-refund-offsets' page said the assessment must be more than 180 days and less than 10 years old. That could not be verified on an official page.",
+    "designImplication": "After the 60-day offset notice, an LA debt can intercept the player's federal refund, less a TOP fee."
+  },
+  {
+    "jurisdiction": "LA",
+    "topic": "refund-offsets",
+    "claim": "Multistate or reciprocal state-to-state refund offset agreements for LA: none found on official LDR or legislature sources.",
+    "value": null,
+    "url": "https://revenue.louisiana.gov/collections/collections-information/refund-offsets-other-state-agencies",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "",
+    "designImplication": "Do not model LA refunds offsetting other states' debts unless a source is found."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "late-payment-penalty",
+    "claim": "Failure to pay tax shown on a return (G.L. c. 62C, s.33(b)): 1% of the unpaid tax per month or fraction thereof, up to 25% in the aggregate. Each month it is computed on the tax shown minus amounts paid before that month began.",
+    "value": {
+      "ratePerMonth": 0.01,
+      "fractionCountsAsFullMonth": true,
+      "cap": 0.25,
+      "minimum": null
+    },
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62C/Section33",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Late-pay rate, accrual unit, cap, and that partial payment reduces the base.",
+    "uncertainty": "No minimum penalty.",
+    "designImplication": "Recompute MA late-pay monthly on the remaining unpaid tax, stopping at 25% of tax shown."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "late-payment-penalty",
+    "claim": "Failure to pay a deficiency assessment within 30 days of the Notice of Assessment (s.33(c)): 1% per month or fraction, up to 25% of the assessed tax. DOR's penalty table says this is 'combined with section 33(b)'. The penalty is waived during the first 30 days and while an abatement or appeal is pending.",
+    "value": {
+      "ratePerMonth": 0.01,
+      "cap": 0.25,
+      "graceDaysAfterNOA": 30
+    },
+    "url": "https://www.mass.gov/info-details/massachusetts-penalties-and-interest-assessed-by-dor",
+    "sourceDate": "Page updated January 28, 2025 (read via web.archive.org snapshot 2026-06-06, since mass.gov returned 403 to direct fetch); 830 CMR 62C.33.1(5)(e)",
+    "establishes": "A second late-pay penalty on billed deficiencies.",
+    "uncertainty": "Exactly how s.33(b) and s.33(c) combine under one 25% cap is stated only as 'combined with section 33(b) above'.",
+    "designImplication": "For audit-generated bills, start the 1%/month clock 30 days after the notice."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "late-filing-penalty",
+    "claim": "Failure to file by the due date or extended due date (s.33(a)): 1% per month or fraction thereof of the tax required to be shown (minus timely payments and credits), up to 25%. It stops accruing when the return is filed, at 25%, or when DOR assesses for the missing return. The late-file and late-pay penalties are separate, each capped at 25%, so together they can reach 50% of unpaid tax.",
+    "value": {
+      "ratePerMonth": 0.01,
+      "cap": 0.25,
+      "combinedWithLatePay": "separate caps, stack (each up to 25%)",
+      "minimum": null
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-612-interest-and-penalties",
+    "sourceDate": "AP 612, dated 01/24/2024 (via web.archive.org snapshot 2026-01-16); G.L. c. 62C s.33(a); 830 CMR 62C.33.1(5)(c)",
+    "establishes": "Late-file mechanics, and that MA stacks the penalties while LA shares one cap.",
+    "uncertainty": "The 50% combined figure is derived from the separate caps, not stated as a number by DOR. DOR's FAQ says the penalties are 'each capped at 25 percent of the unpaid tax'.",
+    "designImplication": "MA late-file and late-pay run in parallel, 2%/month combined, each saturating at 25%."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "interest",
+    "claim": "The underpayment rate is the federal short-term rate plus 4 points, compounded daily (G.L. c. 62C s.32(a)), and is set quarterly. 2026 rates: Q1 8%, Q2 7%, Q3 8%. Q4 2026 is reported as 8% (TIR 26-5).",
+    "value": {
+      "formula": "federal short-term rate + 0.04, compounded daily",
+      "q1_2026": 0.08,
+      "q2_2026": 0.07,
+      "q3_2026": 0.08,
+      "q4_2026": 0.08
+    },
+    "url": "https://www.mass.gov/technical-information-release/tir-26-3-interest-rate-on-overpayments-and-underpayments",
+    "sourceDate": "TIR 26-3 dated May 27, 2026 (via web.archive.org snapshot 2026-09-18); Q4 from TIR 26-5",
+    "establishes": "Current rates and the compounding rule.",
+    "uncertainty": "The Q4 2026 8% rate comes from a web-search summary of TIR 26-5. mass.gov blocked direct fetch and no archive snapshot existed, so it is unverified against the page.",
+    "designImplication": "Compound MA interest daily at a quarter-keyed rate, unlike LA's simple annual rate."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "interest",
+    "claim": "Interest is charged on unpaid penalties as well as unpaid tax, at the same rate, compounded daily. On the late-file penalty it runs from the due date (or extended due date) to payment. On the s.33(b)/(c) late-pay penalties it runs from 31 days after the notice of assessment. Interest cannot be waived or abated except as a result of a tax or penalty abatement.",
+    "value": {
+      "interestOnPenalties": true,
+      "interestWaivable": false
+    },
+    "url": "https://www.mass.gov/regulations/830-CMR-62c331-interest-penalties-and-application-of-payments",
+    "sourceDate": "830 CMR 62C.33.1(6) (via web.archive.org 2026 snapshot); G.L. c. 62C s.32(c)",
+    "establishes": "Interest compounds on penalties too.",
+    "uncertainty": "",
+    "designImplication": "MA balances snowball: penalty buckets also accrue daily-compounded interest."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "installment-plan",
+    "claim": "Payment agreements: for liabilities of $10,000 or less, apply online in MassTaxConnect or by phone, for up to 36 months, minimum $25/month. For $10,001 or more, call Collections; Form M-433(I) financials may be required and the minimum is $50/month. Payments can be weekly, bi-weekly or monthly by EFT, check or money order (no card). A Notice of Assessment or Statement of Account must have been issued first, so a taxpayer at the NIA stage must wait.",
+    "value": {
+      "streamlinedMaxBalance": 10000,
+      "streamlinedMaxTermMonths": 36,
+      "minMonthlyUnder10k": 25,
+      "minMonthlyOver10k": 50,
+      "requiresBillIssued": true
+    },
+    "url": "https://www.mass.gov/info-details/ma-dor-payment-agreement-frequently-asked-questions",
+    "sourceDate": "Page updated June 2025 (via web.archive.org snapshot 2026-09-29)",
+    "establishes": "Plan tiers, terms, minimums and eligibility timing.",
+    "uncertainty": "An older DOR FAQ (updated April 30, 2025) says most taxpayers owing under $5,000 can apply online and that agreements generally may not exceed 36 months. The $10,000 figure is the newer one.",
+    "designImplication": "Self-serve plan only after the bill is issued: 36 months maximum and $25/month minimum for balances up to $10k."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "installment-plan",
+    "claim": "Setup fee for an MA payment agreement: none stated on official DOR pages (AP 631, the payment agreement FAQ, or the collections FAQ).",
+    "value": null,
+    "url": "https://www.mass.gov/administrative-procedure/ap-631-the-collection-process",
+    "sourceDate": "accessed 2026-10-11 via web.archive.org",
+    "establishes": "NOT FOUND",
+    "uncertainty": "The absence of a stated fee is not proof that there is no fee.",
+    "designImplication": "Model the MA plan fee as $0 and label it as an assumption."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "installment-plan",
+    "claim": "All outstanding returns must be filed before a plan is considered. A down payment is usually required. Penalties and interest keep accruing, though AP 612.5 says the late-pay penalty may be waived once a payment agreement is entered. The plan extends the collection statute of limitations. A lien may be filed unless the repayment is accelerated (DOR describes a 12-month lien-waiver agreement, per secondary sources). The taxpayer remains subject to intercepts and offsets: refunds from earlier or later years are offset to the liability during the plan.",
+    "value": {
+      "downPaymentUsual": true,
+      "penaltyMayBeWaivedUnderPlan": true,
+      "refundsOffsetDuringPlan": true
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-631-the-collection-process",
+    "sourceDate": "AP 631 dated 01/30/2026 (via web.archive.org snapshot 2026-06-07); 'Understanding an audit or collection activity' updated April 30, 2025",
+    "establishes": "Plan conditions, and that refund offsets continue.",
+    "uncertainty": "The 12-month lien-waiver figure came only from a web-search summary, not an official page read in full. The down payment amount is not specified.",
+    "designImplication": "In MA, entering a plan can freeze the late-pay penalty but not interest. Offsets still sweep refunds."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "installment-plan",
+    "claim": "Default: a missed payment triggers a Notice of Intent to Cancel Payment Agreement. If the missed installment is not paid 'promptly', the plan is cancelled and the full balance is due, with levy and seizure possible. Failing to file current returns or pay current taxes during the plan also triggers the notice. The taxpayer must file and pay immediately, so a new balance must be paid in full, not added to the plan. Reinstatement can be requested by phone after a cancellation notice.",
+    "value": {
+      "curePeriodDays": "unspecified ('promptly')",
+      "newBalanceJoinsPlan": false,
+      "newBalanceDefaultsPlanIfUnpaid": true,
+      "reinstatementFee": null
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-631-the-collection-process",
+    "sourceDate": "AP 631.3.2, dated 01/30/2026 (via web.archive.org)",
+    "establishes": "A two-step default (intent-to-cancel notice, then cancellation), unlike LA's immediate default.",
+    "uncertainty": "The cure period in days is not published.",
+    "designImplication": "Give MA plans a warning state between a missed payment and cancellation, and have new liabilities trigger the same warning."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "installment-plan",
+    "claim": "Decision time for a payment agreement request: not published. The FAQ only says collection activity may continue until the agreement is approved.",
+    "value": null,
+    "url": "https://www.mass.gov/info-details/ma-dor-payment-agreement-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11 via web.archive.org",
+    "establishes": "NOT FOUND",
+    "uncertainty": "",
+    "designImplication": "Keep enforcement live during a pending plan application."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "collection-sequence",
+    "claim": "Bill sequence: an optional Notice of Intent to Assess (30 days to request a pre-assessment conference, G.L. c. 62C s.26(b)); a Notice of Assessment (pay within 30 days, or apply for abatement within 60 days for a deficiency); a Statement of Account (2nd bill, a demand for payment); then a Notice of Collection or Final Notice from the Collections Bureau. Enforcement can start once a Statement of Account has been issued and 60 days have passed since the assessment. By statute, levy is allowed if the tax is unpaid 10 days after demand (s.53).",
+    "value": {
+      "niaConferenceDays": 30,
+      "noaPayDays": 30,
+      "abatementWindowDays": 60,
+      "enforcementAfterAssessmentDays": 60,
+      "levyDaysAfterDemand": 10,
+      "steps": [
+        "Notice of Intent to Assess",
+        "Notice of Assessment",
+        "Statement of Account (demand)",
+        "Notice of Collection / Final Notice",
+        "levy / lien / offset / license suspension"
+      ]
+    },
+    "url": "https://www.mass.gov/info-details/dor-collections-process",
+    "sourceDate": "DOR collections process page (via web.archive.org snapshot 2026-05-15); AP 610 dated 01/27/2025; G.L. c. 62C ss.26, 53",
+    "establishes": "The ordered notices and the day gates before enforcement.",
+    "uncertainty": "The exact days between the Statement of Account and the Final Notice are not published.",
+    "designImplication": "MA state machine: NIA (30d), then NOA (30d to pay), then SOA (10d), then enforcement eligible at 60 days after assessment."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "collection-sequence",
+    "claim": "Enforcement tools: bank levy, wage levy (continuous until paid), 60-day levies on other property, liens (a Notice of Massachusetts Tax Lien, effective 10 years from assessment), state and federal refund intercepts, lottery and casino intercepts, driver's license and registration suspension (Notice of Intent to Suspend, 30 days, then RMV suspends 10 days after marking), professional license non-renewal (30 days to respond), public disclosure for debts of $25,000 or more delinquent 6 months (90 days after notice), seizure (Notice of Intent to Seize, 10 days), and outside collection agency (taxpayer notified at least 30 days before referral).",
+    "value": {
+      "licenseSuspensionNoticeDays": 30,
+      "rmvSuspendAfterMarkDays": 10,
+      "publicDisclosureThreshold": 25000,
+      "publicDisclosureDelinquentMonths": 6,
+      "publicDisclosureNoticeDays": 90,
+      "seizureNoticeDays": 10,
+      "agencyReferralNoticeDays": 30,
+      "lienLifeYears": 10
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-631-the-collection-process",
+    "sourceDate": "AP 631 dated 01/30/2026 (via web.archive.org); 'Understanding an audit or collection activity' updated April 30, 2025",
+    "establishes": "Timings for each escalation tool.",
+    "uncertainty": "",
+    "designImplication": "Each MA enforcement action has its own notice timer, so the game can show them escalating in parallel."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "collection-sequence",
+    "claim": "MA collection costs: a $30 demand charge per demand for payment missed (G.L. c. 62C s.46 and c. 60 s.15), plus levy and seizure expenses recoverable from the taxpayer (s.53). A dishonored payment costs 2% if $1,500 or more, otherwise the lesser of $30 or the payment amount.",
+    "value": {
+      "demandCharge": 30,
+      "dishonoredPaymentRate": 0.02,
+      "dishonoredPaymentFlatUnder1500": 30
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-612-interest-and-penalties",
+    "sourceDate": "AP 612.10-612.11, dated 01/24/2024 (via web.archive.org)",
+    "establishes": "MA's collection fees are flat charges, not a percentage.",
+    "uncertainty": "",
+    "designImplication": "Add a $30 fee each time a demand bill goes unpaid. No percentage surcharge."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "collection-sequence",
+    "claim": "Percentage fee or surcharge charged to the taxpayer when an MA account is referred to an outside collection agency: not found on official sources.",
+    "value": null,
+    "url": "https://www.mass.gov/administrative-procedure/ap-631-the-collection-process",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "AP 631.7 cites G.L. c. 14 s.3A authority and the notice requirement but no fee.",
+    "designImplication": "Do not add an agency-referral surcharge in MA without a source."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "non-filer-assessment",
+    "claim": "For a failure to file, DOR may assess at any time, without a Notice of Intent to Assess, using its best information and belief (s.26(d)); there is no statute of limitations. If the taxpayer was notified of the failure to file and does not file a proper return within 30 days, DOR may assess up to DOUBLE the tax determined (s.28), on top of other penalties. DOR generally requires the current year plus 6 prior years to be filed.",
+    "value": {
+      "daysAfterNoticeToFile": 30,
+      "maxAssessmentMultiple": 2,
+      "statuteOfLimitations": "none if no return filed",
+      "lookbackYearsRequired": 6
+    },
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62C/Section28",
+    "sourceDate": "accessed 2026-10-11; also AP 612.7 and 'Understanding an audit or collection activity' (updated April 30, 2025)",
+    "establishes": "The non-filer path and the double-assessment sanction.",
+    "uncertainty": "'Up to' double is discretionary.",
+    "designImplication": "A non-filer who ignores the MA notice for 30 days can face 2x tax, plus 25% late-file, late-pay, and compounding interest."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "payment-application-order",
+    "claim": "Without written taxpayer instructions (Form TDP-1 or a letter with the payment), DOR applies a payment first by tax type (in a published order), then by tax period in chronological order, then within a period to tax, penalties and interest in that order. DOR may adjust the order when a liability nears the collection statute of limitations. Involuntary payments (levy, distraint) cannot be directed.",
+    "value": {
+      "order": [
+        "tax type (DOR list)",
+        "oldest period first",
+        "tax",
+        "penalties",
+        "interest"
+      ],
+      "taxpayerMayDirectVoluntary": true
+    },
+    "url": "https://www.mass.gov/regulations/830-CMR-62c331-interest-penalties-and-application-of-payments",
+    "sourceDate": "830 CMR 62C.33.1(8)-(9) (via web.archive.org 2026 snapshot)",
+    "establishes": "The default allocation waterfall.",
+    "uncertainty": "",
+    "designImplication": "Allocate MA payments oldest year first, then tax, penalty, interest. Optionally let the player direct voluntary payments."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "refund-offsets",
+    "claim": "DOR applies overpayments to outstanding undisputed tax liabilities, even if the taxpayer asked for the overpayment to be credited to next year's estimated tax (AP 606.1; G.L. c. 62C s.36). A $10 fee is deducted per intercept, and up to $25 for Comptroller (other agency) intercepts. Offset priority: (i) state tax, (ii) child support, (iii) federal income tax (IRS levy), (iv) Medicaid child health costs, (v) unemployment overpayments, then other certified debts.",
+    "value": {
+      "offsetsOwnTaxDebts": true,
+      "interceptFee": 10,
+      "comptrollerInterceptFeeMax": 25,
+      "priorityFirst": "unpaid state tax"
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-606-refund-intercepts",
+    "sourceDate": "AP 606 dated 01/27/2025 (via web.archive.org snapshot 2026-04-05)",
+    "establishes": "Self-offset, the fee, and the priority order.",
+    "uncertainty": "",
+    "designImplication": "When intercepting an MA refund, deduct the $10 fee first, then apply the remainder to state tax debts before other claimants."
+  },
+  {
+    "jurisdiction": "MA",
+    "topic": "refund-offsets",
+    "claim": "Treasury Offset Program: the Commissioner and the State Comptroller may enter a Reciprocal Offset Agreement with Treasury. MA submits state tax liabilities to be offset against federal payments to vendors and contractors, and federal non-tax debts are offset against MA tax refunds. AP 606.7 authorizes reciprocal offset agreements with other states, a separate agreement per state, and a fee may apply. AP 631 adds that delinquent taxpayers are subject to interception of 'state and/or federal refunds'.",
+    "value": {
+      "treasuryOffsetProgram": "reciprocal agreement (federal vendor payments; federal refunds per AP 631)",
+      "multistateReciprocalAuthorized": true,
+      "partnerStates": null
+    },
+    "url": "https://www.mass.gov/administrative-procedure/ap-606-refund-intercepts",
+    "sourceDate": "AP 606.6-606.7 dated 01/27/2025 (via web.archive.org)",
+    "establishes": "MA participates in TOP and is authorized to enter multistate offset agreements.",
+    "uncertainty": "Which states, if any, MA actually has reciprocal offset agreements with: NOT FOUND. Whether MA tax debts are offset against federal income tax refunds specifically (versus vendor payments) is stated only generally in AP 631.",
+    "designImplication": "Treat a cross-state refund offset as possible in MA but unconfirmed for any specific partner state."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "late-payment-penalty",
+    "claim": "Failure to pay tax when due (without intent to evade): one-time penalty of 5% of the tax, for taxes assessed on or after 2023-01-01. Not monthly, no cap beyond the flat 5%.",
+    "value": {
+      "rate": 0.05,
+      "accrual": "one-time",
+      "effectiveFor": "assessed on/after 2023-01-01, until 2027-07-01"
+    },
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-236.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "G.S. 105-236(a)(4), version effective until July 1, 2027; confirmed by NCDOR Penalties and Fees Overview",
+    "uncertainty": "Low. Statute text read directly.",
+    "designImplication": "Model NC late payment as a single flat 5% charge at the due date, not a growing meter."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "late-payment-penalty",
+    "claim": "From July 1, 2027 the failure-to-pay penalty becomes 2% per month or fraction of a month, capped at 10% in aggregate.",
+    "value": {
+      "rate": 0.02,
+      "accrual": "per month or part",
+      "cap": 0.1,
+      "effective": "2027-07-01"
+    },
+    "url": "https://www.ncdor.gov/taxes-forms/policies/penalties-and-interest/penalties-and-fees-overview",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Scheduled change in G.S. 105-236(a)(4) (future version) and NCDOR overview",
+    "uncertainty": "Low on text; whether it applies by assessment date or tax period is not stated on the page.",
+    "designImplication": "A simulation spanning 2027 can switch NC late payment from flat to monthly accrual by date, a built-in rule-change event."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "late-payment-penalty",
+    "claim": "No minimum dollar amount for the failure-to-pay penalty appears in G.S. 105-236(a)(4).",
+    "value": null,
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-236.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Absence of a minimum in the current statute text",
+    "uncertainty": "Medium: absence read from a fetched summary of the section.",
+    "designImplication": "No floor needed for NC penalties; small debts get small penalties."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "late-filing-penalty",
+    "claim": "Failure to file by due date (with extension): 5% of the tax for the first month or less, plus 5% for each additional month or fraction, not exceeding 25% in aggregate.",
+    "value": {
+      "rate": 0.05,
+      "accrual": "per month or part",
+      "cap": 0.25,
+      "minimum": null
+    },
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-236.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "G.S. 105-236(a)(3)",
+    "uncertainty": "Low.",
+    "designImplication": "Late filing grows 5%/month to 25% after five months: a clear incentive to file even when unable to pay."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "late-filing-penalty",
+    "claim": "Late-filing and late-payment penalties both apply (stack) when a return is filed late with tax due; there is no offset of one against the other.",
+    "value": {
+      "combine": "additive",
+      "maxCombinedCurrent": 0.3
+    },
+    "url": "https://www.ncdor.gov/taxes-forms/policies/penalties-and-interest/penalties-and-fees-overview",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR overview states both penalties can apply to the same month and are assessed together",
+    "uncertainty": "Medium: the 30% combined maximum is my arithmetic (25% + 5%), not a published figure.",
+    "designImplication": "NC penalties add; max penalty exposure on unfiled-and-unpaid tax is 30% under current law."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "interest",
+    "claim": "Interest rate on assessments and refunds is 7% per year for both halves of 2026 (Jan-Jun and Jul-Dec); it was 7% throughout 2025 and 8% in 2024.",
+    "value": {
+      "annualRate": 0.07,
+      "period": "2026-01-01 to 2026-12-31"
+    },
+    "url": "https://www.ncdor.gov/interest",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR interest rate table under G.S. 105-241.21",
+    "uncertainty": "Low.",
+    "designImplication": "Use 7%/yr for NC 2026; rates move in six-month steps."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "interest",
+    "claim": "Secretary sets the rate by June 1 and December 1 for six-month periods starting July 1 and January 1; floor 5%, ceiling 16% per year. Interest accrues from the statutory payment date until paid, only on principal tax, never on penalty.",
+    "value": {
+      "floor": 0.05,
+      "ceiling": 0.16,
+      "onPenalties": false,
+      "resetPeriodMonths": 6
+    },
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-241.21.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "G.S. 105-241.21: 'Interest accrues only on the principal of the tax and does not accrue on any penalty.'",
+    "uncertainty": "Low.",
+    "designImplication": "Interest base is tax principal only; penalties are a static add-on."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "interest",
+    "claim": "Whether NC interest is simple or compound, and whether computed daily or monthly, is not stated in G.S. 105-241.21 or the NCDOR interest pages.",
+    "value": null,
+    "url": "https://www.ncdor.gov/taxes-forms/policies/penalties-and-interest/interest-overview",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "High. Statute says interest accrues on principal and not on penalty, which implies no compounding on interest, but not stated.",
+    "designImplication": "Model as simple interest on principal (safest reading), flag as assumption."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "Installment Payment Agreement available after receiving a Notice of Collection, final bill or final determination; maximum 18 monthly installments under the standard criteria; no stated maximum balance. Exceptions requested via Form RO-1062 with 3 months of bank statements.",
+    "value": {
+      "maxMonths": 18,
+      "maxBalance": null
+    },
+    "url": "https://www.ncdor.gov/paymentagreements",
+    "sourceDate": "page last modified 2026-03-17; accessed 2026-10-11",
+    "establishes": "NCDOR Installment Payment Agreements page",
+    "uncertainty": "Low on 18 months; longer terms possible by exception with no stated limit.",
+    "designImplication": "Cap standard NC plans at 18 months; longer plans need an exception path with financial disclosure."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "Eligibility: all required returns filed (or assessed), no prior default on same periods, no active collection warrant or bank garnishment, not under criminal investigation, bank draft required, term within statute of limitations. Apply online with Form RO-1033. Review time not guaranteed.",
+    "value": {
+      "apply": "Form RO-1033 online",
+      "decisionTime": null,
+      "bankDraftRequired": true
+    },
+    "url": "https://www.ncdor.gov/paymentagreements",
+    "sourceDate": "page last modified 2026-03-17; accessed 2026-10-11",
+    "establishes": "NCDOR eligibility list",
+    "uncertainty": "Decision time NOT FOUND (Department says it cannot guarantee review length).",
+    "designImplication": "Plan eligibility should check filing compliance and absence of active garnishment."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "Setup fee for an NC installment agreement: none stated on the official page.",
+    "value": null,
+    "url": "https://www.ncdor.gov/paymentagreements",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND (no fee published)",
+    "uncertainty": "Absence of a fee is not stated explicitly.",
+    "designImplication": "Treat NC plan setup as free unless a source shows otherwise."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "During the plan, interest continues to accrue, the Department offsets any state or federal tax refunds and NC Education Lottery winnings, and the 20% collection assistance fee is waived while the agreement is current (if not already assessed).",
+    "value": {
+      "refundOffsetDuringPlan": true,
+      "interestContinues": true,
+      "cafSuspended": true
+    },
+    "url": "https://www.ncdor.gov/paymentagreements",
+    "sourceDate": "page last modified 2026-03-17; accessed 2026-10-11",
+    "establishes": "NCDOR page: 'During the term of the agreement, the Department is required to offset any state or federal tax refunds and NC Education Lottery winnings'",
+    "uncertainty": "Low.",
+    "designImplication": "Refunds arriving mid-plan should go to the debt, shortening the plan, not to the player."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "Missed scheduled payment or returned payment puts the agreement in default. Default Notice (N0012901/N0012902) gives 30 days from notice date to cure; if the payment processes within 30 days the agreement is automatically reestablished, otherwise forced collection and the 20% fee. A defaulted agreement generally cannot be re-established for the same periods.",
+    "value": {
+      "curePeriodDays": 30,
+      "autoReinstateOnPayment": true
+    },
+    "url": "https://www.ncdor.gov/received-notice/default-notice",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR Default Notice page and Installment Payment Agreements page",
+    "uncertainty": "Low.",
+    "designImplication": "Give the player one 30-day cure window after a missed NC payment before enforcement."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "installment-plan",
+    "claim": "A new balance: the taxpayer must keep filing and paying all returns in full and paying estimated tax during the term; the remedy on the Default Notice includes filing missing returns, implying non-compliance defaults the plan. Whether a new balance can be added to an existing plan is not stated.",
+    "value": {
+      "newBalanceJoinsPlan": null,
+      "noncomplianceDefaults": true
+    },
+    "url": "https://www.ncdor.gov/paymentagreements",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Requirements during the term; joining a new balance NOT FOUND",
+    "uncertainty": "Medium: default-on-new-liability is inferred from the 'pay all returns in full' requirement.",
+    "designImplication": "A new unpaid NC year should threaten the plan, not silently merge into it."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "collection-sequence",
+    "claim": "Notice sequence: Notice of Individual Income Tax Assessment (45 days to pay or respond, else final and collectible) -> Notice of Collection (N0002203/N0002204; or N0002401/N0002402 when amount shown on return not paid in full) once final and collectible -> forced collection.",
+    "value": {
+      "assessmentResponseDays": 45,
+      "notices": [
+        "Notice of Individual Income Tax Assessment",
+        "Notice of Collection (N0002203/N0002204)",
+        "Notice of Collection - Amount Shown Due But Not Paid In Full (N0002401/N0002402)"
+      ]
+    },
+    "url": "https://www.ncdor.gov/received-notice/notice-individual-income-tax-assessment",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR notice pages",
+    "uncertainty": "Days between Notice of Collection and enforcement not stated on notice pages ('respond immediately').",
+    "designImplication": "Model NC as assessment (45-day clock) then collection notice then enforcement."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "collection-sequence",
+    "claim": "Secretary may issue a warrant for collection if tax is not paid within 30 days after it becomes collectible (G.S. 105-241.22). Wage attachment and garnishment capped at 10% of wages; bank garnishment takes 100% of account funds up to the amount due; non-W-2 payments up to 100%.",
+    "value": {
+      "warrantAfterCollectibleDays": 30,
+      "wageGarnishCap": 0.1,
+      "bankGarnish": 1
+    },
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-242.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "G.S. 105-242; NCDOR Attachments and Garnishments for Taxpayers page",
+    "uncertainty": "Low on numbers; actual timing of garnishment after notices is discretionary.",
+    "designImplication": "Wage garnishment drains 10% of pay per period; a bank levy can empty the account at once."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "collection-sequence",
+    "claim": "Collection Assistance Fee: 20% of the overdue tax debt (tax, penalty and interest) unpaid 60 or more days after it becomes collectible; NCDOR must notify at least 60 days before imposing it (the Notice of Collection serves); not imposed while a current installment agreement is in place; waivable like a penalty; not subject to formal review.",
+    "value": {
+      "rate": 0.2,
+      "daysAfterCollectible": 60,
+      "noticeDaysBefore": 60,
+      "base": "tax+penalty+interest"
+    },
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-243.1.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "G.S. 105-243.1; NCDOR Collection Assistance Fee FAQ",
+    "uncertainty": "Low. Whether interest accrues on the fee: NOT FOUND.",
+    "designImplication": "A one-time 20% jump 60 days after the Notice of Collection is the sharpest cliff in NC; a plan avoids it."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "non-filer",
+    "claim": "Delinquent Notice is sent when a return was not filed by its due date; if not filed, NCDOR assesses based on information available. Non-filer programs (IRTF: filed federal not state; IRMF: filed neither) issue a Notice to File a Return (30 days to respond) and then a Notice of Individual Income Tax Assessment (45 days before final).",
+    "value": {
+      "noticeToFileDays": 30,
+      "assessmentDays": 45
+    },
+    "url": "https://www.ncdor.gov/received-notice/notice-individual-income-tax-assessment",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR Assessment notice and Delinquent Notice pages",
+    "uncertainty": "Medium: estimation method (e.g. federal AGI from IRS data) not detailed; penalties on such assessments presumably late-file plus late-pay.",
+    "designImplication": "A never-filing NC player gets a 30-day file demand, then an IRS-data-based assessment with full penalties, then 45 days to final."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "payment-application-order",
+    "claim": "Order in which a partial income tax payment is applied (tax vs penalty vs interest) is not published for individual income tax. G.S. 105-358(b) (penalties, interest, costs first, then principal) is in the Machinery Act and governs property tax, not income tax.",
+    "value": null,
+    "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-358.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND for income tax",
+    "uncertainty": "High.",
+    "designImplication": "Pick an order explicitly and document it as an assumption; do not cite 105-358 for income tax."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "refund-offsets",
+    "claim": "NC offsets its own state income tax refunds to outstanding state tax liabilities (State Offset); refunds can also be sent to another state or federal agency with a claim. Federal Offset: federal income tax refunds forwarded to NCDOR for NC tax debts after a certified Notice of Intent to Offset with 60 days to respond (Treasury Offset Program).",
+    "value": {
+      "ownOffset": true,
+      "treasuryOffsetProgram": true,
+      "topNoticeDays": 60
+    },
+    "url": "https://www.ncdor.gov/refund-offset-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NCDOR Refund Offset FAQ",
+    "uncertainty": "Low.",
+    "designImplication": "A NC debt can eat both the state and federal refund; send a 60-day warning before the federal offset."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "refund-offsets",
+    "claim": "State/local agency debt setoff (Setoff Debt Collection Act): claims of at least $50 against refunds of at least $50; IRS may claim NC refunds for federal debts of at least $50.",
+    "value": {
+      "minimumClaim": 50,
+      "minimumRefund": 50
+    },
+    "url": "https://www.ncdor.gov/refund-offset-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11 (from NCDOR search result snippet of the refund offset pages)",
+    "establishes": "$50 thresholds",
+    "uncertainty": "Medium: thresholds read from NCDOR search snippets, not the fetched FAQ body.",
+    "designImplication": "Ignore offsets below $50."
+  },
+  {
+    "jurisdiction": "NC",
+    "topic": "refund-offsets",
+    "claim": "Multistate/reciprocal refund offset program and the specific participating states: not published. G.S. 105-240.1 authorizes agreements with other states' taxing officials to facilitate collection; the FAQ says refunds may go to 'another state' agency, without naming states.",
+    "value": null,
+    "url": "https://www.ncdor.gov/refund-offset-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND (which states)",
+    "uncertainty": "High.",
+    "designImplication": "Do not model cross-state offsets for NC unless a specific agreement is sourced."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "late-payment-penalty",
+    "claim": "Penalty for failure to pay (negligence, no intent to evade): 2% per month or any fraction of a month from the due date on tax due but not paid, not to exceed 20%.",
+    "value": {
+      "rate": 0.02,
+      "accrual": "per month or part",
+      "cap": 0.2
+    },
+    "url": "https://www.tax.newmexico.gov/individuals/file-your-taxes-overview/penalty-interest-rates/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Penalty & Interest Rates page; Section 7-1-69(A) NMSA 1978",
+    "uncertainty": "Low.",
+    "designImplication": "NM penalty grows 2%/month and stops at 20% after ten months."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "late-filing-penalty",
+    "claim": "NM has a single penalty for late filing or late payment: the greater of (1) 2%/month on tax due but not paid, max 20%, or (2) 2%/month from the filing due date on the liability shown on a late return, max 20%, or (3) $5 minimum. They do not stack.",
+    "value": {
+      "rate": 0.02,
+      "cap": 0.2,
+      "combine": "greater-of, not additive"
+    },
+    "url": "https://codes.findlaw.com/nm/chapter-7-taxation/nm-st-sect-7-1-69/",
+    "sourceDate": "statute current as of 2024-01-01 per FindLaw; accessed 2026-10-11",
+    "establishes": "Section 7-1-69(A) NMSA 1978 (SECONDARY SOURCE: FindLaw; nmonesource.com not reachable). TRD page confirms 2%/20% and single penalty.",
+    "uncertainty": "Low on structure; text from secondary source.",
+    "designImplication": "NM: one penalty meter covers both failures; filing late without paying late costs no extra."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "late-filing-penalty",
+    "claim": "The $5 minimum penalty does not apply to taxes under the Income Tax Act, so there is no minimum penalty for personal income tax.",
+    "value": {
+      "minimum": 0
+    },
+    "url": "https://codes.findlaw.com/nm/chapter-7-taxation/nm-st-sect-7-1-69/",
+    "sourceDate": "statute current as of 2024-01-01 per FindLaw; accessed 2026-10-11",
+    "establishes": "Section 7-1-69(A) exception (SECONDARY SOURCE)",
+    "uncertainty": "Low-medium (secondary source).",
+    "designImplication": "No floor on NM PIT penalties."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "interest",
+    "claim": "Interest equals the IRC section 6621 underpayment rate for individuals, set quarterly, accrued daily from the day after the due date until paid. 2026: Jan 1-Mar 31 7% (0.019178082%/day); Apr 1-Jun 30 6% (0.016438356%/day); Jul 1-Dec 31 7% (0.019178082%/day). Formula: tax due x daily rate x days late.",
+    "value": {
+      "annualRate2026H2": 0.07,
+      "annualRate2026Q2": 0.06,
+      "dailyRate2026H2": 0.00019178082,
+      "accrual": "daily",
+      "resetPeriodMonths": 3
+    },
+    "url": "https://www.tax.newmexico.gov/individuals/file-your-taxes-overview/penalty-interest-rates/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Penalty & Interest Rates page",
+    "uncertainty": "Low.",
+    "designImplication": "NM interest = principal x 7%/365 x days, rate tied to federal quarterly rate."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "interest",
+    "claim": "No interest on interest and no interest on penalty; interest not imposed if under $1.00 or if paid within 10 days of a demand notice; managed-audit assessments paid within 180 days carry no interest.",
+    "value": {
+      "onPenalties": false,
+      "compound": false,
+      "deMinimis": 1,
+      "graceAfterDemandDays": 10
+    },
+    "url": "https://codes.findlaw.com/nm/chapter-7-taxation/nm-st-sect-7-1-67/",
+    "sourceDate": "statute current as of 2024-01-01 per FindLaw; accessed 2026-10-11",
+    "establishes": "Section 7-1-67 NMSA 1978 (SECONDARY SOURCE)",
+    "uncertainty": "Low-medium (secondary source; TRD page confirms interest on unpaid principal only).",
+    "designImplication": "Simple, principal-only interest; a 10-day grace after a demand notice is a playable window."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "installment-plan",
+    "claim": "Two tiers: short-term payment plans of 12 or fewer installments, no lien; installment agreements of 13 to 72 months that require a lien or acceptable security. Self-service setup on Taxpayer Access Point (TAP), choosing down payment and duration up to 72 months.",
+    "value": {
+      "shortTermMaxMonths": 12,
+      "maxMonths": 72,
+      "lienRequiredAboveMonths": 12,
+      "apply": "TAP online (tap.state.nm.us)"
+    },
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/compliance/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Compliance page; Section 7-1-21 NMSA 1978 (72-month maximum, security or lien)",
+    "uncertainty": "Low.",
+    "designImplication": "NM: a plan over 12 months costs a public lien; that is the trade-off for a longer term."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "installment-plan",
+    "claim": "Maximum balance for an NM plan, setup fee, and decision time are not published.",
+    "value": null,
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/compliance/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND (max balance, fee, decision time)",
+    "uncertainty": "High.",
+    "designImplication": "Treat as no cap and no fee, flagged as assumptions."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "installment-plan",
+    "claim": "Default triggers: missed minimum payment, late payment, establishing new debt, or not timely filing returns. Short-term plan: a missed payment terminates the agreement and collection proceeds. Defaulted taxpayers are subject to further collection without notice (levies, seizure including motor vehicles). Statute: agreement does not preclude assessing additional tax and requires paying all later taxes when due.",
+    "value": {
+      "curePeriodDays": 0,
+      "newDebtDefaults": true,
+      "noticeBeforeEnforcement": false
+    },
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/compliance/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Compliance page; Section 7-1-21 (via FindLaw, secondary)",
+    "uncertainty": "Low.",
+    "designImplication": "NM plans are brittle: one missed payment or one new unpaid year ends the plan immediately, unlike NC's 30-day cure."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "installment-plan",
+    "claim": "Whether NM offsets refunds while an installment agreement is in place is not stated.",
+    "value": null,
+    "url": "https://www.tax.newmexico.gov/individuals/refund-intercepts/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "High (general intercept rule applies to outstanding liabilities, which suggests yes).",
+    "designImplication": "Default to offsetting during the plan, flagged as assumption."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "collection-sequence",
+    "claim": "Notices: Notice of Assessment or Statement of Account; taxpayer becomes delinquent if the assessment is not paid, protested or secured within 90 days of assessment or demand; then Notice of Intent to Lien or Final Notice Before Seizure; Notice of Claim of Tax Lien (Section 7-1-37); Notice of Intent to Outsource before referral to a collection agency.",
+    "value": {
+      "delinquentAfterDays": 90,
+      "protestDays": 90,
+      "notices": [
+        "Notice of Assessment",
+        "Statement of Account",
+        "Notice of Intent to Lien",
+        "Final Notice Before Seizure",
+        "Notice of Claim of Tax Lien",
+        "Notice of Intent to Outsource"
+      ]
+    },
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/compliance/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Compliance page; Section 7-1-16 (90 days, via FindLaw, secondary)",
+    "uncertainty": "Days between the later notices NOT FOUND.",
+    "designImplication": "NM gives a long 90-day window before delinquency, then lien and seizure notices."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "collection-sequence",
+    "claim": "Levy by warrant of levy (Section 7-1-31) on delinquent taxpayers: financial institutions must immediately surrender property; employers surrender wages above the amount exempt under Section 7-1-36. Exact wage exemption amount or percent not retrieved.",
+    "value": {
+      "wageLevyLimit": null,
+      "bankLevy": "immediate surrender"
+    },
+    "url": "https://www.srca.nm.gov/parts/title03/03.001.0010.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "3.1.10 NMAC Collections; Section 7-1-31 (search snippet)",
+    "uncertainty": "Wage exemption NOT FOUND.",
+    "designImplication": "NM bank levy behaves like NC's: the account empties up to the debt."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "collection-sequence",
+    "claim": "Any collection fee added in NM (analogous to NC's 20% fee) or collection-agency fee added to the debt: not published.",
+    "value": null,
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/compliance/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "High.",
+    "designImplication": "No NM collection surcharge unless sourced."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "non-filer",
+    "claim": "TRD mails notices to non-filers; on IRS information it estimates personal income tax from federal AGI (or 1099 data) and issues a Notice of Assessment for tax, the 7-1-69 penalty and interest. The assessment is presumed correct (7-1-17(C)). Non-filers can be assessed up to seven years after the end of the calendar year the tax was due.",
+    "value": {
+      "lookbackYears": 7,
+      "method": "estimate from IRS data / federal AGI",
+      "penalty": "2%/month to 20%"
+    },
+    "url": "https://www.tax.newmexico.gov/all-nm-taxes/wp-content/uploads/sites/9/2024/03/24-05-Robert-Debbie-Wade.pdf",
+    "sourceDate": "2024 AHO decision 24-05; accessed 2026-10-11",
+    "establishes": "Administrative Hearings Office decision published on TRD site; Schramm decision 2014-07-16 for IRS-data method",
+    "uncertainty": "Medium: from hearing decisions, not a TRD procedures page; demand-to-file response days NOT FOUND.",
+    "designImplication": "A NM non-filer can be assessed years later with full penalty and interest back to the original due date."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "payment-application-order",
+    "claim": "Order in which NM applies a partial payment among tax, penalty and interest is not published in sources found.",
+    "value": null,
+    "url": "https://www.srca.nm.gov/parts/title03/03.001.0010.html",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "High.",
+    "designImplication": "Choose and document an order as an assumption."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "refund-offsets",
+    "claim": "TRD intercepts PIT refunds to pay outstanding state tax liabilities, and under the Tax Refund Intercept Program Act transfers refunds to agencies for child support, student loans, unemployment overpayments, court debts and workers' compensation. TRD runs the federal Treasury Offset Program by agreement with the IRS to offset federal refunds for NM tax debt; excess is refunded.",
+    "value": {
+      "ownOffset": true,
+      "treasuryOffsetProgram": true
+    },
+    "url": "https://www.tax.newmexico.gov/individuals/refund-intercepts/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "TRD Refund Intercepts page; TOP mention from TRD Audit and Compliance Division page (search snippet)",
+    "uncertainty": "Low on existence; minimums and notice period NOT FOUND.",
+    "designImplication": "Same as NC: state and federal refunds both feed the NM debt."
+  },
+  {
+    "jurisdiction": "NM",
+    "topic": "refund-offsets",
+    "claim": "Multistate/reciprocal refund offset program and participating states for NM: not published on TRD pages found.",
+    "value": null,
+    "url": "https://www.tax.newmexico.gov/individuals/refund-intercepts/",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "High.",
+    "designImplication": "Do not model cross-state offsets for NM."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-payment-penalty",
+    "claim": "A one-time delinquency penalty of 5% of unpaid tax applies when tax is not paid (or a return not filed) by the due date; it applies even if an extension to file was obtained.",
+    "value": {
+      "rate": 0.05,
+      "accrual": "one-time",
+      "base": "unpaid tax after timely payments and credits"
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.400(1),(9); accessed 2026-10-11",
+    "establishes": "Late-payment penalty is a flat 5% assessed once, not per month.",
+    "uncertainty": "Low. DOR page https://www.oregon.gov/dor/programs/individuals/pages/penalties.aspx (accessed 2026-10-11, undated) confirms 5% even with extension.",
+    "designImplication": "Apply a single 5% charge at the due date to the unpaid balance; no monthly ramp."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-payment-penalty",
+    "claim": "No minimum dollar amount for the 5% penalty was found. Payment is not required if the balance due on the return is under $1.",
+    "value": {
+      "minimumPenalty": null,
+      "deMinimisTaxDue": 1
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.401; accessed 2026-10-11",
+    "establishes": "Balances under $1 need not be paid; no penalty floor found.",
+    "uncertainty": "Minimum penalty NOT FOUND in ORS 314.400 or on the DOR penalties page.",
+    "designImplication": "Ignore sub-$1 balances; no minimum-penalty floor needed."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-payment-penalty",
+    "claim": "The 5% penalty is not imposed if, after an amended return with short payment or a deficiency notice, the taxpayer pays full tax plus accrued interest within 30 days of the date on DOR's notice.",
+    "value": {
+      "graceDays": 30
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.400(10); accessed 2026-10-11",
+    "establishes": "30-day pay-in-full waiver of the 5% penalty for amended returns and deficiencies.",
+    "uncertainty": "Low.",
+    "designImplication": "Audit-adjustment bills can carry a 30-day window that avoids the 5% penalty if paid in full."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-filing-penalty",
+    "claim": "If an annual return is filed more than 3 months after the due date (including extensions), a 20% failure-to-file penalty is added on top of the 5% penalty, for a combined 25% of unpaid tax.",
+    "value": {
+      "rate": 0.2,
+      "triggerMonthsLate": 3,
+      "combinedWithLatePayment": 0.25
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.400(2)(a),(8); accessed 2026-10-11",
+    "establishes": "Late filing penalties are step functions: 5% at due date, plus 20% after 3 months.",
+    "uncertainty": "Low. DOR penalties page (accessed 2026-10-11) states the combined total is 25 percent.",
+    "designImplication": "Model late filing as a cliff at 3 months (5% -> 25%), not a monthly accrual."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-filing-penalty",
+    "claim": "If returns are not filed for 3 consecutive years by the due date (incl. extensions) of the third year's return, a penalty of 100% of the tax liability (after credits and prepayments) is imposed for each such year, in addition to other penalties.",
+    "value": {
+      "rate": 1,
+      "consecutiveYears": 3
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.992 (amended 2025 c.371 s.7); accessed 2026-10-11",
+    "establishes": "Chronic non-filing escalates to a 100% penalty per year.",
+    "uncertainty": "Low. Confirmed on DOR penalties page (accessed 2026-10-11).",
+    "designImplication": "Track consecutive unfiled years; on the third, apply a 100% penalty to each of the three years."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-filing-penalty",
+    "claim": "Total penalties under ORS 305.992, 305.265(13) and 314.400 for any tax year may not exceed 100% of the tax liability/deficiency.",
+    "value": {
+      "cap": 1
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.992(2) and ORS 314.400(8); accessed 2026-10-11",
+    "establishes": "Penalties stack but are capped at 100% of tax per year.",
+    "uncertainty": "Low.",
+    "designImplication": "Clamp the per-year penalty total at 100% of tax so 5%+20%+25%+100% cannot exceed the tax."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "late-filing-penalty",
+    "claim": "A 100% penalty on any deficiency applies for failure to file, or false filing, with intent to evade tax (fraud).",
+    "value": {
+      "rate": 1
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.400(6); accessed 2026-10-11",
+    "establishes": "Fraud penalty equals the deficiency.",
+    "uncertainty": "Low.",
+    "designImplication": "Fraud is a separate, intent-based trigger; likely out of scope for a non-fraud simulation."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "interest",
+    "claim": "Interest on deficiencies and delinquencies for interest periods beginning on or after 2026-01-01 is 8% per year (Tier One); daily rate = annual/365 without rounding (about 0.0219% per day). The same rate applies to refunds. The rate is based on the IRS third-quarter underpayment rate.",
+    "value": {
+      "annualRate": 0.08,
+      "dailyRate": "0.08/365",
+      "effective": "2026-01-01"
+    },
+    "url": "https://www.oregon.gov/dor/forms/FormsPubs/Annual%20Interest%20Rate%20Update%20for%202026.pdf",
+    "sourceDate": "Oregon Revenue Bulletin 2025-01, issued 2025-12-15",
+    "establishes": "2026 rate and daily computation basis.",
+    "uncertainty": "Low. ORBs are non-binding information; the binding rate table is OAR 150-305-0140 (not fetched).",
+    "designImplication": "Accrue interest daily at 8%/365 on unpaid tax for 2026."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "interest",
+    "claim": "Interest is simple interest computed on a daily basis (statutory default); the director may adjust the rate by rule at most once a calendar year, taking into account the IRS underpayment rate plus 1 percentage point.",
+    "value": {
+      "method": "simple",
+      "period": "daily",
+      "adjustment": "at most annually; IRS underpayment rate + 1 point"
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.220(1),(3); accessed 2026-10-11",
+    "establishes": "No compounding; daily simple interest.",
+    "uncertainty": "Low.",
+    "designImplication": "Do not compound; interest = principal x rate/365 x days."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "interest",
+    "claim": "Interest is charged on tax only; no interest is charged on penalties.",
+    "value": {
+      "interestOnPenalties": false
+    },
+    "url": "https://www.oregon.gov/dor/programs/individuals/pages/penalties.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated)",
+    "establishes": "Penalties do not bear interest.",
+    "uncertainty": "Low.",
+    "designImplication": "Keep the penalty balance separate from interest-bearing tax principal."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "interest",
+    "claim": "Tier Two: if a deficiency is not paid within 60 days after the notice of assessment (or a short-paid return's delinquency within 60 days of assessment), the rate rises by 4 points (12% for 2026) for interest periods beginning 61 days after the notice.",
+    "value": {
+      "additionalRate": 0.04,
+      "rate2026": 0.12,
+      "triggerDays": 60
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.222(2); ORB 2025-01 issued 2025-12-15",
+    "establishes": "Increased interest rate on aged assessed balances.",
+    "uncertainty": "Low. If appealed to Tax Court without payment, Tier Two starts 61 days after the court order (ORS 305.222(3)).",
+    "designImplication": "Step interest from 8% to 12% once an assessed balance is 60+ days unpaid."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "payment-plan",
+    "claim": "DOR offers payment plans up to 36 months, set up on Revenue Online or by phone (503-945-8200 for individuals). Longer terms require a Statement of Financial Condition with documentation submitted through Revenue Online. Automatic ACH payments can be linked to the plan.",
+    "value": {
+      "maxTermMonths": 36,
+      "apply": "Revenue Online or phone",
+      "longerTerms": "Statement of Financial Condition"
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/payment-plan.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated)",
+    "establishes": "Self-service plan length cap of 36 months.",
+    "uncertainty": "Low for term; other plan parameters not published.",
+    "designImplication": "Allow a self-serve plan of up to 36 monthly installments; beyond that require a financial-disclosure step."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "payment-plan",
+    "claim": "Maximum balance, setup fee, down payment and decision time for payment plans are not published on the DOR pages consulted.",
+    "value": null,
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/payment-plan.aspx",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND.",
+    "uncertainty": "NOT FOUND. No setup fee is mentioned, but absence is not proof there is none.",
+    "designImplication": "Treat the plan as fee-free with no balance cap only as a flagged assumption."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "payment-plan",
+    "claim": "Missed/default handling: DOR states it will take collection action (e.g. garnishment) if you don't make the payments you agreed to. A dishonored-payment penalty of the greater of $25 or 3x the dishonored amount (max $500) applies to 2+ dishonored payments within 2 years. The statutory notice and demand must tell the taxpayer that a warrant may be issued even if they are compliant with an installment agreement. Whether a new balance joins or defaults the plan: NOT FOUND.",
+    "value": {
+      "nsfPenaltyMin": 25,
+      "nsfMultiplier": 3,
+      "nsfPenaltyMax": 500,
+      "nsfTrigger": "2+ dishonored payments in 2 years",
+      "newBalanceRule": null
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/payment-plan.aspx",
+    "sourceDate": "accessed 2026-10-11; ORS 305.895(2)(b) and ORS 305.228, 2025 edition",
+    "establishes": "A plan does not legally shield against a warrant; missed payments lead to collection actions.",
+    "uncertainty": "Exact default grace period and new-balance treatment NOT FOUND.",
+    "designImplication": "On a missed installment, resume the collection ladder; a plan pauses enforcement only at DOR discretion."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "payment-plan",
+    "claim": "Refunds are captured and applied to debt even with a department-approved payment plan (stated for Other Agency Account debt). For tax debt DOR offsets refunds once a balance is owed and the first bill has been sent; in Suspended Collections status refunds are still offset and interest continues.",
+    "value": {
+      "offsetDuringPlan": true
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/collections-process-for-customers-with-other-agency-accounts-(oaa)-debt.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated); also https://www.oregon.gov/dor/programs/collections/pages/suspended-collections.aspx",
+    "establishes": "Being on a plan does not stop refund offsets.",
+    "uncertainty": "Medium: the explicit 'even with a payment plan' wording is on the OAA page, not a tax-debt page.",
+    "designImplication": "Always route refunds to open balances first, plan or not."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "collection-sequence",
+    "claim": "DOR's correspondence sequence: Notice of Assessment -> Notice and Demand for Payment (second request for full payment) -> Distraint Warrant -> State Tax Lien (warrant recorded with county clerk) -> Notice of Intent to Offset Federal Income Tax Refund (certified mail) -> Notice of Intent to Offset Federal Payments -> periodic Statement of Account.",
+    "value": [
+      "Notice of Assessment",
+      "Notice and Demand for Payment",
+      "Distraint Warrant",
+      "State Tax Lien",
+      "Notice of Intent to Offset Federal Income Tax Refund",
+      "Notice of Intent to Offset Federal Payments to an Oregon Debt",
+      "Statement of Account"
+    ],
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/collections.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated)",
+    "establishes": "Named notice ladder.",
+    "uncertainty": "Low for names; the page gives no day intervals.",
+    "designImplication": "Use these names as the stages of the collection state machine."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "collection-sequence",
+    "claim": "Written notice and demand for payment must be mailed at least 30 days before a warrant is issued; if tax is not paid within 30 days after the notice and demand, DOR may issue a warrant including penalties, interest and any collection charge. The warrant may be recorded in a county lien record, after which DOR can direct the sheriff to levy and sell property; until satisfied it has the effect of a judgment. DOR takes no action against property before a warrant (except jeopardy).",
+    "value": {
+      "noticeAndDemandToWarrantDays": 30
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.895 and ORS 314.430; accessed 2026-10-11",
+    "establishes": "Minimum 30-day gap between Notice and Demand and warrant; enforcement against property only after a warrant.",
+    "uncertainty": "Gap between Notice of Assessment and Notice and Demand is not fixed in statute: NOT FOUND. For deficiency assessments, 'time of assessment' is 30 days after the notice of assessment is mailed (ORS 314.407(2)(a)).",
+    "designImplication": "Gate garnishment and levy behind a warrant stage at least 30 days after the demand notice."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "collection-sequence",
+    "claim": "Collection actions include refund offsets, wage/bank/contract-payment garnishment (Social Security and disability protected), seizure and sale of property (not primary residence), real-property tax liens, UCC liens, professional license suspension, cash-register seizure, and public listing on the Delinquent Taxpayers List for debts over $50,000.",
+    "value": {
+      "publicListThreshold": 50000
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/collections.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated)",
+    "establishes": "Menu of enforcement tools.",
+    "uncertainty": "Low.",
+    "designImplication": "Escalating enforcement tools; the public list only above $50,000."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "collection-sequence",
+    "claim": "DOR-originated delinquent accounts must be offered to a private collection firm (PCF) no later than one year from the most recent payment (statute); DOR's OAA page says other-agency debt is assigned after six months with no payment. PCFs charge a non-negotiable fee as a percentage of the amount collected, paid by the debtor; payments sent to DOR while assigned are still subject to the fee.",
+    "value": {
+      "dorDebtAssignMaxMonthsSinceLastPayment": 12,
+      "oaaDebtAssignMonthsNoPayment": 6,
+      "pcfFeePct": null
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors293.html",
+    "sourceDate": "ORS 2025 edition, ORS 293.231(3),(6),(10); PCF page https://www.oregon.gov/dor/programs/collections/pages/accounts-assigned-to-a-private-collection-firm-(pcf).aspx accessed 2026-10-11",
+    "establishes": "A PCF stage exists with a percentage fee.",
+    "uncertainty": "PCF fee percentage NOT FOUND on an official page. A search-engine summary cited 17.9%-26% from an unverified source; not used.",
+    "designImplication": "Add a late-stage PCF assignment that adds a percentage surcharge to whatever is collected."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "non-filer-assessment",
+    "claim": "When a return is not filed, DOR determines the tax on best information and belief, assesses tax plus penalty and interest, and gives written notice of the failure to file and of the determination and assessment. Under ORS 314.400(2)(b), once the 20% penalty applies DOR may send a notice and demand to file within 30 days; if none is filed, the assessment carries an additional 25% penalty on the determined deficiency. If a return is filed before the notice of determination and assessment is issued, only the 20% failure-to-file penalty is added.",
+    "value": {
+      "demandToFileDays": 30,
+      "additionalPenalty": 0.25,
+      "noticeName": "notice of determination and assessment"
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors314.html",
+    "sourceDate": "ORS 2025 edition, ORS 314.400(2)(b),(5) and ORS 305.265(10); accessed 2026-10-11",
+    "establishes": "Non-filer path: demand to file (30 days) -> estimated assessment with extra 25% penalty (subject to the 100% cap).",
+    "uncertainty": "The DOR consumer-facing letter title and typical timing after the due date NOT FOUND on oregon.gov.",
+    "designImplication": "For a non-filer: 5% + 20% at 3 months, then demand-to-file, then an estimated assessment adding 25%, all capped at 100%."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "payment-application-order",
+    "claim": "All payments received are credited first to penalty, then to accrued interest, then to tax due.",
+    "value": [
+      "penalty",
+      "interest",
+      "tax"
+    ],
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.265(13); accessed 2026-10-11",
+    "establishes": "Statutory payment-application order.",
+    "uncertainty": "Low; the sentence sits in the deficiency section but says 'all payments received'.",
+    "designImplication": "Apply partial payments penalty -> interest -> tax, so interest-bearing tax principal is paid last."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "refund-offset",
+    "claim": "DOR automatically offsets the taxpayer's own state refund or overpayment against an owed balance once a balance is owed and the first bill has been sent; a Notice of Refund Offset letter is sent. DOR also collects debts for other state agencies (Other Agency Accounts) and may set off refunds against them.",
+    "value": {
+      "ownDebtOffset": true,
+      "trigger": "after first bill",
+      "otherAgencyDebts": true
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/offsets.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated); ORS 293.250, 2025 edition",
+    "establishes": "Refund offset precondition is a prior bill.",
+    "uncertainty": "Low.",
+    "designImplication": "Offset refunds only after a balance has been billed at least once."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "refund-offset",
+    "claim": "Oregon participates in the federal Treasury Offset Program: federal income tax refunds and certain other federal payments can be offset for state income tax debt (notice by certified mail); the federal processing fee is added to the debtor's debt. The statute also allows offset of state refunds for federal debt.",
+    "value": {
+      "TOP": true,
+      "federalFeeAddedToDebt": true
+    },
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.612; DOR offsets page accessed 2026-10-11",
+    "establishes": "Reciprocal federal offset.",
+    "uncertainty": "Low.",
+    "designImplication": "A federal refund can be intercepted for a state balance, with a small fee added."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "refund-offset",
+    "claim": "No multistate refund-offset program with other states was found. ORS 305.610 provides only reciprocal court recognition of other states' tax liabilities (comity), not refund offset.",
+    "value": null,
+    "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors305.html",
+    "sourceDate": "ORS 2025 edition, ORS 305.610; accessed 2026-10-11",
+    "establishes": "NOT FOUND for state-to-state offset.",
+    "uncertainty": "NOT FOUND; the DOR offsets page does not mention other states.",
+    "designImplication": "Do not model interstate refund interception for Oregon."
+  },
+  {
+    "jurisdiction": "OR",
+    "topic": "collection-sequence",
+    "claim": "Hardship options: Suspended Collections status (household income under 200% of the federal poverty level, under $5,000 assets excluding home and one vehicle, non-garnishable income) stops collection actions but interest continues and refunds are offset; temporary uncollectible status; settlement offers require a 5% nonrefundable good-faith payment.",
+    "value": {
+      "fplLimit": 2,
+      "assetLimit": 5000,
+      "settlementGoodFaithPct": 0.05
+    },
+    "url": "https://www.oregon.gov/dor/programs/collections/pages/suspended-collections.aspx",
+    "sourceDate": "accessed 2026-10-11 (page undated); settlement 5% from https://www.oregon.gov/dor/programs/collections/pages/collections.aspx",
+    "establishes": "Off-ramps from enforcement.",
+    "uncertainty": "Duration: the collections page says 'up to one year'; the suspended-collections page does not state it.",
+    "designImplication": "Low-income players can freeze enforcement, but the balance still grows with interest."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "DRS may make the return itself if a person has not filed within three months after the due date, \"according to the best information obtainable\", and adds the greater of 10% of the tax or $50; the tax bears interest at 1% per month from the original due date.",
+    "value": {
+      "triggerMonthsAfterDue": 3,
+      "penaltyRate": 0.1,
+      "penaltyMinimumUSD": 50,
+      "interestPerMonth": 0.01
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-735(b))",
+    "sourceDate": "accessed 2026-10-11 (current statutes page)",
+    "establishes": "Statutory DRS-prepared return for non-filers, its earliest timing, and the add-on amount.",
+    "uncertainty": "A DRS-made return does not count as the taxpayer filing for 12-733(c) (limitations) or 12-737 purposes. The statute says \"may\", so nothing obliges DRS to act at three months.",
+    "designImplication": "A non-filer in CT can be assessed from month 3 after the due date with max(10% of tax, $50) plus 1%/month interest from the due date."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "A taxpayer cannot be charged both the 10% late-payment penalty (12-735(a)) and the 10%-or-$50 non-filer penalty (12-735(b)) for the same tax period. The commissioner may waive penalties for reasonable cause (12-735(c), subject to 12-3a).",
+    "value": {
+      "mutuallyExclusive": [
+        "12-735(a)",
+        "12-735(b)"
+      ],
+      "waivableForReasonableCause": true
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-735(a)-(c))",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "The penalties do not stack, and they can be waived.",
+    "uncertainty": "The waiver procedure under 12-3a was not researched.",
+    "designImplication": "Model the CT non-filer penalty as replacing the late-payment penalty, not adding to it."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "If no return is filed, a notice of deficiency assessment may be mailed at any time. For filed returns the normal limit is 3 years, or 6 years if more than 25% of income was omitted.",
+    "value": {
+      "noReturn": "unlimited",
+      "normalYears": 3,
+      "substantialOmissionYears": 6
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-733(a)-(c))",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Non-filers never age out of assessment.",
+    "uncertainty": "none",
+    "designImplication": "A non-filing year in CT stays assessable forever, so an old year can come back at any time."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "A notice of proposed deficiency assessment becomes final 60 days after mailing unless the taxpayer files a written protest within those 60 days. The commissioner's determination on a protest becomes final one month after it is mailed unless judicial review is sought.",
+    "value": {
+      "protestDays": 60,
+      "determinationFinalMonths": 1
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-729(a)-(d))",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "The protest window and when the assessment becomes final.",
+    "uncertainty": "12-729 is written for deficiency notices. Applying it to a 12-735(b) DRS-made return is an inference, and DRS operating guidance on that was NOT FOUND.",
+    "designImplication": "Give a CT assessment a 60-day contest window before it becomes collectible."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "A deficiency assessment is payable within 60 days of the notice, with interest at 1% per month from the original due date. There is a 10% penalty for negligence and a 25% penalty for fraud, and no more than one 12-728 penalty per period.",
+    "value": {
+      "payWithinDays": 60,
+      "interestPerMonth": 0.01,
+      "negligencePenalty": 0.1,
+      "fraudPenalty": 0.25
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-728(a))",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Payment timing and the penalty ladder for assessed deficiencies.",
+    "uncertainty": "12-728 is framed around examining filed returns. How it interacts with a 12-735(b) non-filer return is not spelled out.",
+    "designImplication": "Escalation tiers: 10% (non-filer or negligence) and 25% (fraud), at most one per period."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "DRS sends a \"Failure to File Notice\" when its records show a filing requirement and no CT return. If there is no response, DRS makes \"an assessment based on the best available information\", which may leave out the property tax credit, modifications to federal AGI, and CT withholding. The federal refund may also be offset under the federal Debt Collection Improvement Act. DRS identifies non-filers by data mining, including IRS data.",
+    "value": {
+      "noticeName": "Failure to File Notice",
+      "estimateMayOmit": [
+        "property tax credit",
+        "federal AGI modifications",
+        "CT withholding"
+      ]
+    },
+    "url": "https://portal.ct.gov/drs/non-filer-program/non-filer-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11 (no page date shown)",
+    "establishes": "The administrative non-filer process and that its estimates lean against the taxpayer.",
+    "uncertainty": "The number of days given to respond to the Failure to File Notice is NOT FOUND on this page. The data-mining description comes from search-result text for a related DRS page and was not re-read.",
+    "designImplication": "A CT estimated assessment should overstate tax, because it ignores withholding and credits, so filing late is better than not responding."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "non-filer-assessment",
+    "claim": "The number of days a taxpayer has to respond to a CT DRS Failure to File Notice.",
+    "value": null,
+    "url": "https://portal.ct.gov/drs/non-filer-program/non-filer-frequently-asked-questions",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "Not stated on the DRS non-filer FAQ. It is presumably printed on the notice itself.",
+    "designImplication": "Pick a response window as a design assumption, for example 30 days to match NY and CA, and label it as unsourced."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "The commissioner may credit an income tax overpayment against any CT state tax liability of the same person. Municipal taxes, fines and charges count as state taxes where a 12-2 collection agreement exists with the municipality and the debt is more than 30 days past due and not under appeal.",
+    "value": {
+      "ownTaxOffset": true,
+      "municipalDebtsViaAgreement": true
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-739(a))",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "CT offsets its refunds against its own tax debts, and against municipal debts by agreement.",
+    "uncertainty": "none",
+    "designImplication": "CT refunds net against any CT tax debt before payout."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "DRS must withhold income tax refunds for debts that the Commissioner of Administrative Services is collecting, including child support and defaulted CT Student Loan Foundation and CHESLA loans. The debtor has 60 days to request a hearing before the refund is remitted.",
+    "value": {
+      "hearingRequestDays": 60,
+      "debtTypes": [
+        "DAS-collected state debts",
+        "child support",
+        "CT student loan defaults"
+      ]
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_229.htm (CGS 12-742)",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Intercept for other state agencies' debts.",
+    "uncertainty": "The full list of DAS debt types was not enumerated.",
+    "designImplication": "After CT tax debts, a CT refund can also be intercepted for other agency debts after a 60-day notice."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "DRS participates in the federal Treasury Offset Program for state income tax debt. It sends a Notice of Intent to Offset by certified mail. If the debt is not paid or disputed within 60 days, it is referred to FMS (now the Bureau of the Fiscal Service). DRS charges no fee for the offset, and offsets continue even when the taxpayer is on a payment plan.",
+    "value": {
+      "participates": true,
+      "noticeDays": 60,
+      "ctFeeUSD": 0,
+      "continuesDuringPaymentPlan": true
+    },
+    "url": "https://portal.ct.gov/DRS/Individuals/Fed-offset/Federal-Offset-Program",
+    "sourceDate": "accessed 2026-10-11 (no page date shown)",
+    "establishes": "CT state income tax debts are collected from federal tax refunds.",
+    "uncertainty": "The page still names the Financial Management Service (FMS), which is now the Bureau of the Fiscal Service.",
+    "designImplication": "A CT tax debt can intercept the player's federal refund 60 days after notice, with no CT fee."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "DRS says it receives information from other state agencies (in-state and out-of-state) and from the federal government (IRS) about outstanding liabilities, and \"the law requires us to send your refund or overpayment to that agency\". It notifies the taxpayer in writing.",
+    "value": {
+      "inStateAgencies": true,
+      "outOfState": true,
+      "federalIRS": true
+    },
+    "url": "https://portal.ct.gov/DRS/Individuals/Treasury-Offset-Program/Treasury-Offset-Program",
+    "sourceDate": "accessed 2026-10-11 (no page date shown)",
+    "establishes": "CT state refunds can go to other states and to the IRS, which implies SITLP or reciprocal participation.",
+    "uncertainty": "DRS does not name the IRS program (SITLP) or the out-of-state partners.",
+    "designImplication": "A CT refund can flow out to the IRS or to another state, not only to CT creditors."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "CGS 12-35f authorizes reciprocal refund offsets with any \"claimant state\" (another state or DC) that extends like comity. Only finally due, legally enforceable taxes qualify. The taxpayer gets notice and 30 days to protest. On a protest, DRS impounds the refund and the claimant state has 45 days to recertify, or the amount is paid to the taxpayer.",
+    "value": {
+      "reciprocityRequired": true,
+      "protestDays": 30,
+      "claimantRecertifyDays": 45
+    },
+    "url": "https://www.cga.ct.gov/current/pub/chap_202.htm (CGS 12-35f)",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "The legal basis and due process for CT's side of interstate refund offsets.",
+    "uncertainty": "The statute does not name partner states.",
+    "designImplication": "Interstate offset: a 30-day protest window, and only final, non-appealable debts qualify."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "A list of the states CT has 12-35f reciprocal offset agreements with, published by CT DRS.",
+    "value": null,
+    "url": "https://portal.ct.gov/drs",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "NOT FOUND",
+    "uncertainty": "No CT DRS page listing partners was found. Counterparty official sources (the CA FTB MOP partnership page and the NY DTF refund-offsets page) each list Connecticut as a partner, so CA and NY are confirmed indirectly.",
+    "designImplication": "Treat CT's partners as at least CA and NY, from the counterparties' pages."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "Tax Law 681(a): if a taxpayer fails to file a required return, the department may estimate NY taxable income and tax \"from any information in its possession\" and mail a notice of deficiency.",
+    "value": {
+      "estimatedAssessmentAuthorized": true
+    },
+    "url": "https://www.nysenate.gov/legislation/laws/TAX/681",
+    "sourceDate": "accessed 2026-10-11 (NY Senate Open Legislation)",
+    "establishes": "Statutory basis for estimated non-filer assessments.",
+    "uncertainty": "Retrieved through a summarizing fetch tool (the direct download was blocked); the quoted sentence is reported by that tool.",
+    "designImplication": "A NY non-filer is estimated from information returns such as W-2 and 1099 data."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "The first contact is the reminder letter Form AU-222 (\"no record of a NYS return\"). If the return is not received within 30 days of the letter, or another agreed date, the department \"will determine the taxes you owe and send you a bill\". A Statement of Proposed Audit Change may follow even when the taxpayer responded but the return had not arrived.",
+    "value": {
+      "firstLetter": "AU-222",
+      "responseDays": 30,
+      "nextStep": "Statement of Proposed Audit Change / bill"
+    },
+    "url": "https://www.tax.ny.gov/rtf/",
+    "sourceDate": "Updated: February 18, 2026",
+    "establishes": "The NY non-filer letter sequence and its 30-day window.",
+    "uncertainty": "How long after the due date AU-222 letters go out: NOT FOUND.",
+    "designImplication": "NY pipeline: AU-222 reminder, then 30 days, then SoPAC estimate, then Notice of Deficiency."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "If the taxpayer still disagrees after a Statement of Proposed Audit Changes, the department issues a Notice of Determination or Notice of Deficiency. An appeal to BCMS or the Division of Tax Appeals is \"generally\" due within 90 days of the notice.",
+    "value": {
+      "appealDays": 90
+    },
+    "url": "https://www.tax.ny.gov/enforcement/audit/pub-130-d.htm",
+    "sourceDate": "Updated: February 26, 2026",
+    "establishes": "The appeal window after a formal notice.",
+    "uncertainty": "The publication says \"generally\" and to refer to the notice for the applicable limit.",
+    "designImplication": "After the formal notice, a 90-day appeal window, after which the assessment is fixed."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "Tax Law 689(b): the petition is due within 90 days of the mailing of the notice of deficiency, or 150 days if the notice is addressed to a person outside the United States.",
+    "value": {
+      "petitionDays": 90,
+      "petitionDaysAbroad": 150
+    },
+    "url": "https://www.nysenate.gov/legislation/laws/TAX/689",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "Statutory petition window.",
+    "uncertainty": "Retrieved through a summarizing fetch tool.",
+    "designImplication": "Use 90 days, or 150 for a taxpayer abroad."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "Late-filing penalty: 5% of the tax due per month or part of a month, up to 25%. If the return is more than 60 days late, the minimum is the lesser of $100 or the total amount due on the return. The late-payment penalty is 0.5% per month, up to 25%.",
+    "value": {
+      "failureToFileRatePerMonth": 0.05,
+      "failureToFileMax": 0.25,
+      "minimumAfter60Days": "min($100, 100% of tax due)",
+      "lateFileMinUSD": 100,
+      "failureToPayRatePerMonth": 0.005,
+      "failureToPayMax": 0.25
+    },
+    "url": "https://www.tax.ny.gov/pit/file/interest_and_penalties.htm",
+    "sourceDate": "Updated: October 23, 2025",
+    "establishes": "The NY failure-to-file and failure-to-pay penalty schedule (Tax Law 685(a)).",
+    "uncertainty": "The page does not say how 685(a)(1) and (a)(2) offset each other in months when both apply. The federal-style reduction is not confirmed here.",
+    "designImplication": "NY late-file penalty = min(25%, 5% x months) with a floor of min($100, tax) after 60 days."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "Tax Law 685(a)(3): failure to pay tax not shown on a return within 21 calendar days of notice and demand (10 business days if $100,000 or more) adds 0.5% per month, up to 25%.",
+    "value": {
+      "noticeAndDemandDays": 21,
+      "ratePerMonth": 0.005,
+      "max": 0.25
+    },
+    "url": "https://www.nysenate.gov/legislation/laws/TAX/685",
+    "sourceDate": "accessed 2026-10-11",
+    "establishes": "The penalty once an assessed amount is billed.",
+    "uncertainty": "Retrieved through a summarizing fetch tool.",
+    "designImplication": "After the bill, a 21-day grace period, then 0.5% per month."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "non-filer-assessment",
+    "claim": "The three-year audit statute of limitations does not apply to any period for which the taxpayer failed to file a return.",
+    "value": {
+      "noReturn": "unlimited",
+      "normalYears": 3
+    },
+    "url": "https://www.tax.ny.gov/enforcement/audit/pub-130-d.htm",
+    "sourceDate": "Updated: February 26, 2026",
+    "establishes": "Non-filers have no limitations period.",
+    "uncertainty": "none",
+    "designImplication": "In NY, as in CT, a non-filed year never closes."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "refund-offsets",
+    "claim": "The Statewide Offset Program (SWOP): NY tax refunds may be offset for debts owed to NY state agencies, including CUNY, SUNY, the Department of Health, the Department of Labor, Higher Education, the MTA and OTDA. NY refunds are also applied to NY tax debts. Notice is Form DTF-160. A nonobligated spouse has 10 days from the DTF-160 to file IT-280 if it was not filed with the return.",
+    "value": {
+      "ownTaxOffset": true,
+      "agencies": [
+        "CUNY",
+        "SUNY",
+        "Department of Health",
+        "Department of Labor",
+        "Higher Education",
+        "Metro Transit Authority",
+        "OTDA"
+      ],
+      "it280DaysAfterNotice": 10
+    },
+    "url": "https://www.tax.ny.gov/enforcement/collections/refund-offsets.htm",
+    "sourceDate": "Updated: October 14, 2025",
+    "establishes": "NY offsets its own refunds to its own tax debts and to other state agencies' debts.",
+    "uncertainty": "The agency list is \"not limited to\".",
+    "designImplication": "A NY refund nets against NY tax debt and then other agency debts."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "refund-offsets",
+    "claim": "The Federal Refund Offset Program (FROP), the TOP joint program, works both ways. The IRS may send a federal refund to NY for NY personal income tax debt, and NY may send a NY refund to the IRS for a federal tax debt. The notice is DTF-450 with 60 days to resolve or dispute. Any federal refund excess over the NY debt is returned within 60 days. Offset processing fees are deducted.",
+    "value": {
+      "participatesTOP": true,
+      "nyRefundToIRS": true,
+      "noticeForm": "DTF-450",
+      "noticeDays": 60,
+      "feesDeducted": true
+    },
+    "url": "https://www.tax.ny.gov/enforcement/collections/refund-offsets.htm",
+    "sourceDate": "Updated: October 14, 2025",
+    "establishes": "NY participates in TOP and sends its refunds to the IRS (functionally SITLP).",
+    "uncertainty": "The page does not name \"SITLP\", and the fee amount is not stated (NOT FOUND).",
+    "designImplication": "Two-way federal/NY interception; offsets carry a fee."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "refund-offsets",
+    "claim": "Multistate Refund Offset Program (MOP): NY has reciprocal refund offset agreements with California, Connecticut, Delaware, Maryland and New Jersey. The notice is DTF-450 with 60 days before referral.",
+    "value": {
+      "partners": [
+        "CA",
+        "CT",
+        "DE",
+        "MD",
+        "NJ"
+      ],
+      "noticeDays": 60
+    },
+    "url": "https://www.tax.ny.gov/enforcement/collections/refund-offsets.htm",
+    "sourceDate": "Updated: October 14, 2025",
+    "establishes": "NY's interstate offset partners.",
+    "uncertainty": "NY Publication 131 was not checked for a different list.",
+    "designImplication": "An NY debtor's refunds from CA, CT, DE, MD and NJ can be pulled into NY."
+  },
+  {
+    "jurisdiction": "NY",
+    "topic": "refund-offsets",
+    "claim": "Other NY offsets: the Reciprocal Offset Program (ROP) with U.S. Treasury offsets federal non-tax payments for NY personal income or business tax debt (DTF-452, 60 days). The State Contract Offset Program offsets NY vendor and contract payments (DTF-650.1, 30 days). NY also offsets lottery winnings (LWOP), unclaimed funds (UCF) and SLA refunds.",
+    "value": {
+      "rop": {
+        "noticeForm": "DTF-452",
+        "days": 60
+      },
+      "scop": {
+        "noticeForm": "DTF-650.1",
+        "days": 30
+      },
+      "lottery": true,
+      "unclaimedFunds": true
+    },
+    "url": "https://www.tax.ny.gov/enforcement/collections/other-offsets.htm",
+    "sourceDate": "Updated: July 25, 2025",
+    "establishes": "NY participates in the federal State Reciprocal Program (non-tax federal payments) and several in-state payment offsets.",
+    "uncertainty": "Fiscal Service does not publish a per-state SRP list. NY's ROP matches the description of SRP.",
+    "designImplication": "Debt collection can reach federal vendor payments, lottery wins and unclaimed property."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "non-filer-assessment",
+    "claim": "Request for Tax Return (FTB 4600) and Demand for Tax Return (FTB 4601): each gives 30 days from the notice date to file or reply. A Request for Information (PIT 4044) also gives 30 days if the taxpayer claims no requirement without substantiation. If there is no response to the Demand, \"we'll estimate your income and issue a Notice of Proposed Assessment\", including tax, a demand penalty, a delinquent filing penalty and a cost recovery fee.",
+    "value": {
+      "requestForm": "FTB 4600",
+      "demandForm": "FTB 4601",
+      "responseDays": 30,
+      "npaIncludes": [
+        "tax",
+        "demand penalty",
+        "delinquent filing penalty",
+        "cost recovery fee"
+      ]
+    },
+    "url": "https://www.ftb.ca.gov/help/letters/index.html",
+    "sourceDate": "Last updated: 05/21/2026",
+    "establishes": "The CA non-filer notice ladder and what the estimated NPA contains.",
+    "uncertainty": "The time between the due date and the first 4600: NOT FOUND.",
+    "designImplication": "CA ladder: 4600 (30 days), then 4601 (30 days), then an estimated NPA with stacked penalties and a fee."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "non-filer-assessment",
+    "claim": "A Notice of Proposed Assessment may be protested within 60 days, by the \"protest by\" date. It becomes a bill if no action is taken. Paying in full within 15 days of the notice date stops interest.",
+    "value": {
+      "protestDays": 60,
+      "interestStopIfPaidWithinDays": 15
+    },
+    "url": "https://www.ftb.ca.gov/file/after-you-file/audit/notice-of-proposed-assessment.html",
+    "sourceDate": "Last updated: 12/19/2025",
+    "establishes": "The NPA protest window.",
+    "uncertainty": "none",
+    "designImplication": "A CA NPA has 60 days to contest before it becomes a final bill."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "non-filer-assessment",
+    "claim": "Delinquent filing penalty (R&TC 19131): 5% of the tax due per month or part of a month from the original due date, up to 25%. For individuals with a balance of $540 or less, the penalty is the lesser of $135 or 100% of the amount due.",
+    "value": {
+      "ratePerMonth": 0.05,
+      "max": 0.25,
+      "smallBalanceThresholdUSD": 540,
+      "smallBalanceFlatUSD": 135
+    },
+    "url": "https://www.ftb.ca.gov/pay/penalties-and-interest/index.html",
+    "sourceDate": "Last updated: 06/17/2026",
+    "establishes": "The CA failure-to-file penalty schedule.",
+    "uncertainty": "The $135/$540 figures are indexed and may change by year. The statute text on leginfo.legislature.ca.gov could not be retrieved (bot-blocked), so the FTB summary is used.",
+    "designImplication": "CA late-file penalty = min(25%, 5% x months), with an indexed small-balance minimum."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "non-filer-assessment",
+    "claim": "Demand penalty (R&TC 19133): 25% of the total tax amount due, regardless of timely payments or credits, if a return is not filed by the date on the Demand for Tax Return. FTB 1140 states it is \"in addition to the 25 percent late filing penalty imposed pursuant to R&TC Section 19131\".",
+    "value": {
+      "rate": 0.25,
+      "basis": "total tax before payments/credits",
+      "stacksWith19131": true
+    },
+    "url": "https://www.ftb.ca.gov/pay/penalties-and-interest/index.html ; https://www.ftb.ca.gov/forms/misc/1140.html",
+    "sourceDate": "FTB penalties page last updated 06/17/2026; FTB 1140 revised 12/2017",
+    "establishes": "A CA non-filer who ignores a demand can face up to 50% in penalties (25% + 25%).",
+    "uncertainty": "Statute text not retrieved directly (leginfo was blocked). FTB 1140 is an older (12/2017) revision.",
+    "designImplication": "CA is the harshest of the three: ignoring the demand doubles the penalty ceiling, and it applies even when a refund is due."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "non-filer-assessment",
+    "claim": "Filing enforcement cost recovery fee (R&TC 19254) for failing to file in response to a legal demand: $143 for individuals and all other businesses, $122 for corporations and LLCs treated as corporations. \"Fees varies year to year.\"",
+    "value": {
+      "individualUSD": 143,
+      "corporationUSD": 122
+    },
+    "url": "https://www.ftb.ca.gov/pay/penalties-and-interest/index.html",
+    "sourceDate": "Last updated: 06/17/2026",
+    "establishes": "The current flat fee added to a non-filer assessment.",
+    "uncertainty": "Indexed annually. This value is current as of the page date.",
+    "designImplication": "Add a flat $143 enforcement fee to a CA non-filer assessment."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "refund-offsets",
+    "claim": "Interagency Intercept Collections (IIC): FTB intercepts CA personal income tax refunds, lottery winnings and unclaimed property for debts owed to CA cities, schools, counties and state agencies (fines, parking citations, tolls, fees, tuition). The minimum debt is $10. Distribution follows the GC 12419.3 priority: child and family support first, then spousal support, the Restitution Fund, then EDD benefit overpayments, and so on. Taxpayers are also told unpaid CA tax may be satisfied by \"interception of funds due to you from the federal government, other states, or other California state agencies\".",
+    "value": {
+      "revenueSources": [
+        "PIT refunds",
+        "lottery",
+        "unclaimed property"
+      ],
+      "minDebtUSD": 10,
+      "priorityStatute": "GC 12419.3"
+    },
+    "url": "https://www.ftb.ca.gov/pay/collections/interagency-intercept/index.html ; https://www.ftb.ca.gov/forms/misc/2645.html ; https://www.ftb.ca.gov/forms/misc/1140.html",
+    "sourceDate": "IIC page last updated 09/24/2025; FTB 2645 (2026 guide) accessed 2026-10-11",
+    "establishes": "CA refunds are intercepted for state and local agency debts, with a statutory priority order.",
+    "uncertainty": "The application of a CA refund to the taxpayer's own FTB balance is stated only generally (FTB 1140). The specific statute was not retrieved.",
+    "designImplication": "Model intercepts as a priority queue: support, then restitution, then EDD, then other agencies."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "refund-offsets",
+    "claim": "FTB participates in TOP to offset federal tax refunds and federal payments for CA income tax debt. It sends an Intent to Offset Federal Payments (FTB 1102) with 60 days to pay or dispute. FTB charges a federal treasury offset fee of $23.64 (GC 16583.1) and may add a collection cost recovery fee.",
+    "value": {
+      "participatesTOP": true,
+      "noticeForm": "FTB 1102",
+      "noticeDays": 60,
+      "offsetFeeUSD": 23.64
+    },
+    "url": "https://www.ftb.ca.gov/pay/collections/treasury-offset-program/index.html ; https://www.ftb.ca.gov/pay/penalties-and-interest/index.html",
+    "sourceDate": "TOP page last updated 09/24/2025; penalties page 06/17/2026",
+    "establishes": "A CA tax debt reaches the federal refund, and FTB charges a fee for it (CT does not).",
+    "uncertainty": "none",
+    "designImplication": "The CA federal offset charges a $23.64 fee per offset; CT's is free."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "refund-offsets",
+    "claim": "IIC Participation Guide (FTB 2645) cites Government Code 926.8 as authorizing the IRS to intercept funds, meaning CA refunds can go to the IRS for federal tax debt (the SITLP side).",
+    "value": {
+      "caRefundToIRS": true,
+      "authority": "GC 926.8"
+    },
+    "url": "https://www.ftb.ca.gov/forms/misc/2645.html",
+    "sourceDate": "FTB 2645 Participation Guide for 2026, accessed 2026-10-11",
+    "establishes": "California provides the reverse flow, from state refunds to federal debt.",
+    "uncertainty": "Inferred from one citation line. FTB does not describe a SITLP program page, and an IRS list of SITLP states was NOT FOUND (the IRS levy page https://www.irs.gov/businesses/small-businesses-self-employed/federal-and-state-levy-programs lists none).",
+    "designImplication": "CA refunds can be levied for federal tax debt as well."
+  },
+  {
+    "jurisdiction": "CA",
+    "topic": "refund-offsets",
+    "claim": "Multistate Offset Program (MOP): reciprocal agreements under the Delinquent Taxpayer Accountability Act (R&TC 19291, 19377.5, GC 12419.13) with the New York State Department of Taxation and Finance, the Connecticut Department of Revenue Services and the New Jersey Department of Treasury. The notice is FTB 4940 PC with 30 days to pay before FTB asks the partner state for the refund. Partner states charge no fees, and offsets continue during a payment plan.",
+    "value": {
+      "partners": [
+        "NY",
+        "CT",
+        "NJ"
+      ],
+      "noticeForm": "FTB 4940 PC",
+      "noticeDays": 30,
+      "partnerFeesUSD": 0,
+      "continuesDuringPaymentPlan": true
+    },
+    "url": "https://www.ftb.ca.gov/pay/collections/multistate-offset-program/partnership-opportunities.html ; https://www.ftb.ca.gov/pay/collections/multistate-offset-program/index.html",
+    "sourceDate": "Last updated: 09/24/2025",
+    "establishes": "CA's interstate partners. NY and CT are partners of each other and of CA, a triangle that both counterparties confirm.",
+    "uncertainty": "NY lists CA as a partner, and CA lists NY. FTB lists three partners while NY lists five (CA, CT, DE, MD, NJ), because partner sets are bilateral.",
+    "designImplication": "CT, NY and CA form a fully reciprocal triangle: a debt in any one can take the refund from either of the others."
+  },
+  {
+    "jurisdiction": "CT",
+    "topic": "refund-offsets",
+    "claim": "Federal context (applies to all three states): TOP's State Income Tax Program lets state revenue departments refer delinquent state income tax debt for offset of federal tax refunds, with $720.9M collected in FY2024. The State Reciprocal Program offsets non-tax federal payments for states with an agreement, and those states in turn offset their payments for federal debts ($76.2M in FY2024). The IRS separately runs SITLP, levying state refunds for states that participate.",
+    "value": {
+      "sitCollectedFY2024USD": 720900000,
+      "srpCollectedFY2024USD": 76200000
+    },
+    "url": "https://fiscal.treasury.gov/debt-management/treasury-offset-program-top/state-programs ; https://www.irs.gov/businesses/small-businesses-self-employed/federal-and-state-levy-programs",
+    "sourceDate": "Fiscal Service page Last Updated: January 16, 2025; IRS page accessed 2026-10-11",
+    "establishes": "The federal program structure that CT, NY and CA plug into.",
+    "uncertainty": "Neither Fiscal Service nor IRS publishes which states are in SRP or SITLP. A per-state list was NOT FOUND (a secondary search snippet citing \"12 states in SRP\" in FY2023 was not verified).",
+    "designImplication": "Federal refund offset is near-universal for state tax debt; reciprocal non-tax offsets are rarer."
+  }
+]

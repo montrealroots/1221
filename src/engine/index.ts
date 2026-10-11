@@ -61,7 +61,7 @@ import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
 import { WORK_KEPT, countWork } from './systems/evaluation';
 import { drawMateAbilities } from './systems/school';
-import { bindCeiling, ceilingBefore, focusAt, ordinary, upgradeCraft } from './systems/school';
+import { bindCeiling, ceilingBefore, focusAt, ordinary, redateCredits, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
 import { registerClassmates } from './systems/classmates';
 import { registerProduction } from './systems/production';
@@ -912,6 +912,17 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       if (p.engagement && p.engagement.byInterest !== undefined) delete p.engagement.byInterest;
     }
     if (dropped > 0) steps.push(`Let go of ${plural(dropped, 'person’s interests', 'people’s interests')}: the game no longer keeps them.`);
+  }
+
+  // The credits' years, from the acceptance pass of 2026-10-11 on: an older save's dated by their terms' casting notices,
+  // once (`redateCredits`). Until then a credit kept the year it was written down, often the year after its run.
+  {
+    const school = universe.people?.[universe.playerId]?.school;
+    if (school && !school.creditsDated) {
+      const { redated, kept } = redateCredits(school, universe.notifications ?? []);
+      if (redated > 0) steps.push(`Dated ${plural(redated, 'credit', 'credits')} by ${redated === 1 ? 'its run' : 'their runs'}, not the year ${redated === 1 ? 'it was' : 'they were'} written down.`);
+      if (kept > 0) steps.push(`Kept the year of ${plural(kept, 'credit', 'credits')} with no casting notice left to date ${kept === 1 ? 'it' : 'them'}.`);
+    }
   }
 
   // The slot's career line is the player's title. Before 80 it named the film
