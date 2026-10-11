@@ -13,7 +13,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { STATE_TAX, STATE_UNRESEARCHED, type Part, type StateCode, type StateRules } from '../content/statetax';
 import type { OwedParts, TaxReturn } from './taxreturn';
-import { drawFromBank, expenseFor, payFromBank } from './spending';
+import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
 import { payeeAccount } from './cash';
 
 const HOME = 'America/New_York';
@@ -58,13 +58,47 @@ export interface StateDue {
   /** Assessed by the state on a return never filed (`assessStateNonFiler`, from 2026-10-11), and when their own replaced it. */
   assessedBy?: { at: Instant };
   replacedAt?: Instant;
+  /** Its lien, from its notice of intent to its release or withdrawal (`fileStateLien`, from the remaining-gaps pass). */
+  lien?: Lien;
+  /** Oregon's penalty for three years running unfiled, as charged and as waived (`threeYearCheck`, from 2026-10-11). */
+  threeYear?: { at: Instant; amount: Money; waived?: Money; waivedAt?: Instant };
+  /** A non-filer's letters sent before it was assessed or filed: what Oregon's waiver schedule reads. */
+  lettersSent?: number;
+}
+
+/**
+ * A tax lien's record (from the remaining-gaps pass of 2026-10-11): what it is, why it was filed (`trigger`: collection
+ * reached its step, or a plan asked it), what it secured, where and when it was recorded, its fees, and how it ended:
+ * released after payment in full, or withdrawn as filed in error on the taxpayer's request. The IRS's notice of federal
+ * tax lien is kept the same way on the return (`TaxReturn.lien`).
+ */
+export interface Lien {
+  name: string;
+  status: 'intent' | 'filed' | 'paid' | 'released' | 'disputed' | 'withdrawn' | 'dropped';
+  trigger: 'collection' | 'plan';
+  amount: Money;
+  recordedAt: string;
+  intentAt?: Instant;
+  filedAt?: Instant;
+  fee: Money;
+  paidAt?: Instant;
+  releaseDue?: Instant;
+  releasedAt?: Instant;
+  disputedAt?: Instant;
+  decideAt?: Instant;
+  withdrawnAt?: Instant;
+  history: { at: Instant; what: string; amount?: Money }[];
 }
 
 /** A state's payment plan, every year owed to it together. */
 export interface StatePlan {
   state: string;
-  status: 'pending' | 'active' | 'missed' | 'ended' | 'paid';
+  status: 'pending' | 'active' | 'missed' | 'ended' | 'paid' | 'declined';
   appliedAt: Instant;
+  /** A longer arrangement (Pennsylvania's extended plan, Louisiana's formal agreement, New Mexico's 13 to 72 months), and the statement it was asked with. */
+  long?: { name: string; statement?: FinancialStatement };
+  /** What was paid down with the request. */
+  down?: Money;
   decideAt: Instant;
   months: number;
   monthly: Money;
@@ -79,7 +113,7 @@ export interface StatePlan {
 export const rulesOf = (state: string): StateRules | undefined => STATE_TAX[state as StateCode];
 export const stateDuesOf = (r: TaxReturn): Record<string, StateDue> => (r.stateDue ??= {});
 export const agencyOf = (state: string): string => rulesOf(state)?.short ?? `${stateName(state)}’s revenue department`;
-export const stateName = (state: string): string => ({ 'us-ct': 'Connecticut', 'us-ny': 'New York', 'us-ca': 'California', 'us-il': 'Illinois', 'us-ma': 'Massachusetts', 'us-ga': 'Georgia', 'us-co': 'Colorado', 'us-or': 'Oregon', 'us-az': 'Arizona', 'us-nc': 'North Carolina', 'us-la': 'Louisiana', 'us-nm': 'New Mexico', 'us-hi': 'Hawaii', 'us-nj': 'New Jersey', 'us-pa': 'Pennsylvania', 'us-mi': 'Michigan', 'us-oh': 'Ohio', 'us-ut': 'Utah' } as Record<string, string>)[state] ?? state;
+export const stateName = (state: string): string => ({ 'us-ct': 'Connecticut', 'us-ny': 'New York', 'us-ca': 'California', 'us-il': 'Illinois', 'us-ma': 'Massachusetts', 'us-ga': 'Georgia', 'us-co': 'Colorado', 'us-or': 'Oregon', 'us-az': 'Arizona', 'us-nc': 'North Carolina', 'us-la': 'Louisiana', 'us-nm': 'New Mexico', 'us-hi': 'Hawaii', 'us-nj': 'New Jersey', 'us-pa': 'Pennsylvania', 'us-mi': 'Michigan', 'us-oh': 'Ohio', 'us-ut': 'Utah', 'us-in': 'Indiana', 'us-dc': 'District of Columbia', 'us-ok': 'Oklahoma', 'us-pa-philadelphia': 'Philadelphia', 'us-oh-columbus': 'Columbus', 'us-or-portland': 'Portland' } as Record<string, string>)[state] ?? state;
 
 const monthsBegun = (from: Instant, to: Instant) => Math.ceil(Math.max(0, to - from) / MONTH);
 
@@ -154,7 +188,10 @@ function stateAccrual(sd: StateDue, due: Instant, at: Instant): { parts: OwedPar
     const base = p.tax + (i.onPenalty ? p.penalty : 0);
     const raised = raisedFrom(sd, rules);
     const days = (a: Instant, b: Instant) => Math.max(0, b - a) / MS_DAY;
-    if (raised === undefined || raised >= at) interest += base * i.yearly * days(start, at) / 365;
+    if (i.byYear) {
+      // A rate for each calendar year, the year's own where it changes (Indiana's, from 2026-10-11).
+      for (let a = start; a < at;) { const b = Math.min(at, nextJanuary(a)); interest += base * (i.byYear[new Date(a + 5 * 3_600_000).getUTCFullYear()] ?? i.yearly) * days(a, b) / 365; a = b; }
+    } else if (raised === undefined || raised >= at) interest += base * i.yearly * days(start, at) / 365;
     else if (raised <= start) interest += base * i.raised!.yearly * days(start, at) / 365;
     else interest += base * (i.yearly * days(start, raised) + i.raised!.yearly * days(raised, at)) / 365;
   } else if (i.how === 'yearly') {
@@ -271,6 +308,7 @@ export function fileState(sim: Simulation, person: Person, r: TaxReturn, state: 
   if (balance === 0) return { total: 0, paid: true };
   const fileLate = rules ? stateFileLate(rules, balance, r.due, sim.now, cur) : 0;
   setFromDue(sim, sd, rules, r, balance, fileLate, fileLate);
+  chargeThreeYear(sim, r, state, balance);
   const total = sd.owed ?? 0;
   if (payFromBank(sim, person, total, `${stateName(state)} income tax, ${r.year}${total > balance ? ', with penalty and interest' : ''}`, 'tax')) {
     sd.payments = [{ at: sim.now, amount: total, ...partsSplit(sd.parts!), how: 'payment' }];
@@ -289,7 +327,12 @@ const partsSplit = (p: OwedParts) => ({ tax: p.tax, penalty: p.penalty, interest
 /** A collection charge on a balance: a share of the tax or of all owed, or an amount, the smaller one below a balance. */
 function chargeOf(c: NonNullable<StateRules['charges']>[number], sd: StateDue, cur: string): Money {
   const owed = sd.owed ?? 0;
-  if (c.share !== undefined) return Math.round(c.share * (c.of === 'tax' ? sd.parts?.tax ?? 0 : owed));
+  if (c.share !== undefined) {
+    let x = c.share * (c.of === 'tax' ? sd.parts?.tax ?? 0 : owed);
+    if (c.atLeast !== undefined) x = Math.max(x, usd(c.atLeast, cur));
+    if (c.atMost !== undefined) x = Math.min(x, usd(c.atMost, cur));
+    return Math.round(x);
+  }
   if (c.under && owed < usd(c.under.below, cur)) return usd(c.under.flat, cur);
   return c.flat !== undefined ? usd(c.flat, cur) : 0;
 }
@@ -309,7 +352,14 @@ export function applyStatePayment(sim: Simulation, person: Person, r: TaxReturn,
   setStateOwed(sd, p, sim.now);
   // Interest paid off comes out of what was added to the principal first.
   if (sd.compounded !== undefined) sd.compounded = Math.min(sd.compounded, sd.parts?.interest ?? 0);
+  // Paid in full: its lien released after the state's days, or on request where the taxpayer must ask (from 2026-10-11).
+  if (!sd.owed) stateLienPaid(sim, person, r, state);
   if (!sd.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year && one.payload.state === state) sim.timeline.cancel(one.id, sim.now);
+  // Everything owed to the state paid outside its plan ends the plan paid. Until 2026-10-11 the plan stayed in force
+  // with nothing owed until its next payment came round (tests/liens-and-arrangements.test.ts). A plan's own payment
+  // ends it where it's taken.
+  const plan = person.statePlans?.[state];
+  if (how !== 'plan' && plan && ['pending', 'active', 'missed'].includes(plan.status) && owedToState(person, state, sim.now) <= 0) endStatePlan(sim, person, plan, 'paid', 'Paid off');
   return took;
 }
 
@@ -353,25 +403,72 @@ export const statePlansOf = (person: Person): Record<string, StatePlan> => (pers
 const note = (p: StatePlan, at: Instant, what: string, amount?: Money) => { p.history.push({ at, what, ...(amount !== undefined ? { amount } : {}) }); if (p.history.length > 40) p.history.splice(0, p.history.length - 40); };
 
 /** Why a state's plan can't be asked for, or nothing. */
-export function statePlanRefusal(sim: Simulation, person: Person, state: string, months: number): string | undefined {
+export function statePlanRefusal(sim: Simulation, person: Person, state: string, months: number, opts: { long?: boolean; down?: Money } = {}): string | undefined {
   const rules = rulesOf(state);
   if (!rules) return STATE_UNRESEARCHED;
+  const long = rules.plan.long;
   const plan = person.statePlans?.[state];
-  if (plan && ['pending', 'active', 'missed'].includes(plan.status)) return `You have a plan with ${rules.short}.`;
+  const live = Boolean(plan && ['pending', 'active', 'missed'].includes(plan.status));
+  if (opts.long && !long) return `${rules.short} has nothing longer than its ${rules.plan.name.toLowerCase()}.`;
+  // Pennsylvania's extended plan is the way to add to a plan in force (from 2026-10-11).
+  const replacing = Boolean(opts.long && long?.alreadyOnPlan && live && plan!.status === 'active' && !plan!.long);
+  if (live && !replacing) return `You have a plan with ${rules.short}.${long?.alreadyOnPlan && plan!.status === 'active' && !plan!.long ? ` To add to it, ask for its ${long.name.toLowerCase()}.` : ''}`;
   const owed = owedToState(person, state, sim.now);
   if (owed <= 0) return `You owe ${rules.short} nothing.`;
   const cur = saveCurrency(sim.universe);
   const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && r.due < sim.now);
   if (unfiled) return `${rules.short} asks every return filed first: ${unfiled.year}’s isn’t.`;
+  const money = (x: Money) => formatMoney(x, cur, { cents: false });
   const max = rules.plan.max;
-  if (max !== undefined && owed + (rules.plan.feeAdded ? statePlanFee(person, rules, cur) : 0) > usd(max, cur)) return `${rules.short}’s ${rules.plan.name.toLowerCase()} is for ${formatMoney(usd(max, cur), cur, { cents: false })} or less; ${formatMoney(owed, cur)} is owed.${rules.plan.beyond ? ` ${rules.plan.beyond}` : ''}`;
-  if (rules.plan.min !== undefined && owed <= usd(rules.plan.min, cur)) return `${rules.short} sets a plan on more than ${formatMoney(usd(rules.plan.min, cur), cur, { cents: false })}: pay it.`;
+  const overMax = max !== undefined && owed + (rules.plan.feeAdded ? statePlanFee(person, rules, cur) : 0) > usd(max, cur);
+  if (overMax && !opts.long) return `${rules.short}’s ${rules.plan.name.toLowerCase()} is for ${money(usd(max!, cur))} or less; ${formatMoney(owed, cur)} is owed.${long ? ` Ask for its ${long.name.toLowerCase()}.` : rules.plan.beyond ? ` ${rules.plan.beyond}` : ''}`;
+  if (rules.plan.min !== undefined && owed <= usd(rules.plan.min, cur)) return `${rules.short} sets a plan on more than ${money(usd(rules.plan.min, cur))}: pay it.`;
   if (rules.plan.notInCollection && Object.values(person.returns ?? {}).some((r) => (r.stateDue?.[state]?.collection ?? 0) > rules.notices.length)) return `${rules.short} won’t set up a plan on an account it has levied: pay it, or ask by phone, which SLATE doesn’t model.`;
   const after = rules.plan.afterStep;
   if (after && !Object.values(person.returns ?? {}).some((r) => (r.stateDue?.[state]?.collection ?? 0) >= after.step && r.stateDue?.[state]?.owed)) return `${rules.short} offers no plan of its own: ${after.who} does, once the debt is sent there.`;
-  if (!(months >= rules.plan.minMonths && months <= rules.plan.maxMonths)) return `${rules.short} sets a plan over ${rules.plan.minMonths} to ${rules.plan.maxMonths} months.`;
-  if (rules.plan.minMonthly !== undefined && Math.ceil(owed / months) < usd(rules.plan.minMonthly, cur) && months > 1) return `${rules.short} asks at least ${formatMoney(usd(rules.plan.minMonthly, cur), cur, { cents: false })} a month: fewer months.`;
+  // The longest by what's owed (Indiana's tiers, from 2026-10-11).
+  const most = rules.plan.tiers?.find((t) => t.upTo === undefined || owed <= usd(t.upTo, cur))?.maxMonths ?? rules.plan.maxMonths;
+  if (opts.long) {
+    if (!(months > most || overMax || replacing)) return `Its ${rules.plan.name.toLowerCase()} covers this: the ${long!.name.toLowerCase()} is for more than ${most} months${long!.over ? ` or over ${money(usd(long!.over, cur))}` : ''}${long!.alreadyOnPlan ? ', or to add to a plan in force' : ''}.`;
+    if (months > long!.maxMonths) return `${rules.short}’s ${long!.name.toLowerCase()} runs at most ${long!.maxMonths} months${long!.maxAssumed ? ' (SLATE’s: its longest isn’t published)' : ''}.`;
+  } else if (!(months >= rules.plan.minMonths && months <= most)) {
+    return `${rules.short} sets a plan over ${rules.plan.minMonths} to ${most} months${rules.plan.tiers ? ` on ${formatMoney(owed, cur)}` : ''}.${long && months > most ? ` Longer is its ${long.name.toLowerCase()}.` : ''}`;
+  }
+  if (rules.plan.minMonthly !== undefined && Math.ceil(owed / months) < usd(rules.plan.minMonthly, cur) && months > 1) return `${rules.short} asks at least ${money(usd(rules.plan.minMonthly, cur))} a month: fewer months.`;
+  // A down payment: the District's required, Louisiana's offered, Pennsylvania's and New Mexico's any amount (from 2026-10-11).
+  const down = Math.round(opts.down ?? 0);
+  const dp = rules.plan.downPayment;
+  if (down < 0 || down >= owed) return 'A down payment is more than nothing and less than what’s owed.';
+  if (down > 0 && !dp) return `${rules.short}’s plan takes no down payment.`;
+  if (dp?.required && down < downOf(dp, owed)) return `${rules.short} asks ${Math.round((dp.share ?? 0) * 100)}% down, ${formatMoney(downOf(dp, owed), cur)}: ${dp.why}`;
+  if (down > 0 && inTheBank(sim, person) < down) return `The bank can’t cover ${formatMoney(down, cur)} down.`;
   return undefined;
+}
+
+/** A plan's down payment as a share of what's owed. */
+const downOf = (dp: NonNullable<StateRules['plan']['downPayment']>, owed: Money) => Math.round((dp.share ?? 0) * owed);
+
+/**
+ * A financial statement, as a longer arrangement asks (Pennsylvania's REV-488, Louisiana's R-20223), filled from the
+ * player's own records (from 2026-10-11): the last ninety days' money into and out of their own accounts, by the month,
+ * leaving out moves between them, tax paid, and a test's setup; what's left each month; and what the bank holds.
+ */
+export interface FinancialStatement { at: Instant; income: Money; expenses: Money; net: Money; cash: Money }
+export function financialStatement(sim: Simulation, person: Person): FinancialStatement {
+  const from = sim.now - 90 * MS_DAY;
+  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && (a.kind === 'checking' || a.kind === 'savings')).map((a) => a.id));
+  let income = 0;
+  let out = 0;
+  for (const t of sim.universe.transactions) {
+    // Opening balances aren't income: until 2026-10-11 they were, and a new wealthy life's statement showed $168,478 a
+    // month earned (tests/liens-and-arrangements.test.ts).
+    if (t.at < from || t.category === 'tax' || t.category === 'test' || t.category === 'opening') continue;
+    const own = t.postings.filter((p) => mine.has(p.accountId)).reduce((s, p) => s + p.amount, 0);
+    if (t.postings.every((p) => mine.has(p.accountId))) continue;
+    if (own > 0) income += own; else out -= own;
+  }
+  const m = (x: Money) => Math.round(x / 3);
+  return { at: sim.now, income: m(income), expenses: m(out), net: m(income) - m(out), cash: inTheBank(sim, person) };
 }
 
 /** A plan's fee, in the save's currency: none where the year's income is low enough to waive it (Louisiana's, from 2026-10-11). */
@@ -386,6 +483,16 @@ function startStatePlan(sim: Simulation, person: Person, p: StatePlan): void {
   const rules = rulesOf(p.state)!;
   p.status = 'active';
   for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NOTICE_KIND && one.payload.personId === person.id && one.payload.state === p.state) sim.timeline.cancel(one.id, sim.now);
+  // A lien's notice of intent comes to nothing under a plan (California's: filing against a plan in good standing is an
+  // error); and the lien a plan asks is filed with it (New Mexico's longer agreement, Hawaii's and the District's over
+  // twelve months, the District's over $25,000), from 2026-10-11.
+  const lp = rules.lien?.plan;
+  const asks = rules.lien && ((p.long && rules.plan.long?.lien) || (lp && ((lp.monthsOver !== undefined && p.months > lp.monthsOver) || (lp.over !== undefined && p.covers > usd(lp.over, saveCurrency(sim.universe))))));
+  for (const r of Object.values(person.returns ?? {})) {
+    const sd = r.stateDue?.[p.state];
+    if (sd?.lien?.status === 'intent') { sd.lien.status = 'dropped'; lienNote(sd.lien, sim.now, 'A plan set up before it was filed: none was'); cancelLienItems(sim, person, r.year, p.state); }
+    if (asks && sd?.owed) fileStateLien(sim, person, r, p.state, 'plan');
+  }
   // California adds its fee to the balance: owed on the latest year, as a fee, not tax.
   if (p.fee > 0 && rules.plan.feeAdded) {
     const r = Object.values(person.returns ?? {}).filter((x) => x.stateDue?.[p.state]?.owed).sort((a, b) => b.year - a.year)[0];
@@ -480,10 +587,180 @@ export function federalOffsetToState(sim: Simulation, person: Person, state: str
   return take;
 }
 
+// --- Liens (from the remaining-gaps pass of 2026-10-11; research-state-tax-liens-a.json, -b.json). Until then no
+// authority in SLATE filed one.
+
+export const STATE_LIEN_KIND = 'tax.state_lien';
+
+const lienNote = (l: Lien, at: Instant, what: string, amount?: Money) => { l.history.push({ at, what, ...(amount !== undefined ? { amount } : {}) }); if (l.history.length > 20) l.history.splice(0, l.history.length - 20); };
+const livePlan = (person: Person, state: string) => { const p = person.statePlans?.[state]; return Boolean(p && ['pending', 'active', 'missed'].includes(p.status)); };
+const cancelLienItems = (sim: Simulation, person: Person, year: number, state: string) => { for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_LIEN_KIND && one.payload.personId === person.id && one.payload.year === year && one.payload.state === state) sim.timeline.cancel(one.id, sim.now); };
+
+/** The collection step a state files its lien at: filed now, or its notice of intent sent first (California's 30 days). */
+function stateLienStep(sim: Simulation, person: Person, r: TaxReturn, state: string): void {
+  const rules = rulesOf(state)!;
+  const lr = rules.lien!;
+  const sd = r.stateDue![state]!;
+  if (!sd.owed || livePlan(person, state)) return;
+  if (!lr.intent) { fileStateLien(sim, person, r, state, 'collection'); return; }
+  const cur = saveCurrency(sim.universe);
+  sd.lien = { name: lr.name, status: 'intent', trigger: 'collection', amount: sd.owed, recordedAt: lr.recordedAt, intentAt: sim.now, fee: 0, history: [] };
+  lienNote(sd.lien, sim.now, `${lr.intent.title}: filed in ${lr.intent.days} days unless it’s paid or a plan is set up`, sd.owed);
+  sim.schedule({ at: sim.now + lr.intent.days * MS_DAY, kind: STATE_LIEN_KIND, label: lr.name, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, action: 'file' } });
+  notifyPlayer(sim, person, lr.intent.title, `${formatMoney(sd.owed, cur)} on your ${r.year} ${stateName(state)} return: ${rules.short} will file a ${lr.name} with ${lr.recordedAt} in ${lr.intent.days} days unless it’s paid or a plan is set up.`);
+}
+
+/** Its release, in words: after payment in full, by its days, or on request. */
+export function lienReleaseWords(lr: NonNullable<StateRules['lien']>): string {
+  if (lr.releaseOnRequest) return `once it’s paid, on request: ${lr.releaseOnRequest}${lr.releaseFee ? `, with a release fee` : ''}`;
+  if (!lr.releaseDays) return 'as soon as it’s paid in full';
+  return `within ${lr.releaseDays} days of payment in full${lr.releaseAssumed ? ' (SLATE’s days: the state’s aren’t published)' : ''}${lr.releaseFee ? ', on its release fee' : ''}`;
+}
+
+/** A lien filed and recorded: its recording fee owed where the state charges one, its effect said in the state's words. */
+export function fileStateLien(sim: Simulation, person: Person, r: TaxReturn, state: string, trigger: Lien['trigger']): void {
+  const rules = rulesOf(state)!;
+  const lr = rules.lien!;
+  const sd = r.stateDue![state]!;
+  const cur = saveCurrency(sim.universe);
+  if (sd.lien && sd.lien.status !== 'intent' && sd.lien.status !== 'dropped') return;
+  const fee = lr.fee ? usd(lr.fee, cur) : 0;
+  if (fee && sd.parts) { accrueState(sd, r.due, sim.now); setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty + fee }, sim.now); }
+  const l: Lien = sd.lien?.status === 'intent' ? sd.lien : { name: lr.name, status: 'filed', trigger, amount: 0, recordedAt: lr.recordedAt, fee: 0, history: [] };
+  Object.assign(l, { status: 'filed', trigger, amount: sd.owed ?? 0, recordedAt: lr.recordedAt, filedAt: sim.now, fee });
+  sd.lien = l;
+  lienNote(l, sim.now, `Filed with ${lr.recordedAt}${trigger === 'plan' ? ', as the plan asks' : ''}${fee ? `, its ${formatMoney(fee, cur)} recording fee added to what’s owed` : ''}`, l.amount);
+  notifyPlayer(sim, person, `A ${lr.name} Is Filed`, `${rules.short} filed a ${lr.name} for ${formatMoney(l.amount, cur)} on your ${r.year} ${stateName(state)} return with ${lr.recordedAt}${trigger === 'plan' ? ', as its plan asks' : ''}${fee ? `, its ${formatMoney(fee, cur)} recording fee added` : ''}. It’s a public record. ${lr.effect} It’s released ${lienReleaseWords(lr)}.`);
+}
+
+/** Paid in full: its lien released after the state's days, or held for the request the state asks; one not yet filed, dropped. */
+export function stateLienPaid(sim: Simulation, person: Person, r: TaxReturn, state: string): void {
+  const sd = r.stateDue?.[state];
+  const l = sd?.lien;
+  const lr = rulesOf(state)?.lien;
+  if (!l || !lr) return;
+  if (l.status === 'intent') { l.status = 'dropped'; lienNote(l, sim.now, 'Paid before it was filed: none was'); cancelLienItems(sim, person, r.year, state); return; }
+  if (l.status !== 'filed') return;
+  l.status = 'paid';
+  l.paidAt = sim.now;
+  lienNote(l, sim.now, 'Paid in full');
+  if (lr.releaseOnRequest || lr.releaseFee) { notifyPlayer(sim, person, `Ask For Your ${l.name}’s Release`, `Your ${r.year} ${stateName(state)} balance is paid. The ${l.name} is released ${lienReleaseWords(lr)}: ask on Papers.`); return; }
+  releaseLater(sim, person, r, state);
+}
+
+function releaseLater(sim: Simulation, person: Person, r: TaxReturn, state: string): void {
+  const sd = r.stateDue![state]!;
+  const l = sd.lien!;
+  const lr = rulesOf(state)!.lien!;
+  l.releaseDue = sim.now + lr.releaseDays * MS_DAY;
+  if (!lr.releaseDays) { releaseStateLien(sim, person, r, state); return; }
+  lienNote(l, sim.now, `To be released by ${formatDate(l.releaseDue, HOME)}`);
+  sim.schedule({ at: l.releaseDue, kind: STATE_LIEN_KIND, label: l.name, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, action: 'release' } });
+}
+
+function releaseStateLien(sim: Simulation, person: Person, r: TaxReturn, state: string): void {
+  const l = r.stateDue![state]!.lien!;
+  if (l.status === 'released' || l.status === 'withdrawn') return;
+  l.status = 'released';
+  l.releasedAt = sim.now;
+  lienNote(l, sim.now, `Released with ${l.recordedAt}`);
+  notifyPlayer(sim, person, `Your ${l.name} Is Released`, `${agencyOf(state)} released the ${l.name} on your ${r.year} ${stateName(state)} return, recorded with ${l.recordedAt}.`);
+}
+
+/** Why its release can't be asked for now, or nothing: paid in full, where the state releases on request or on its fee. */
+export function lienReleaseRefusal(sim: Simulation, person: Person, r: TaxReturn | undefined, state: string): string | undefined {
+  const l = r?.stateDue?.[state]?.lien;
+  const lr = rulesOf(state)?.lien;
+  if (!l || !lr) return 'There’s no lien on that.';
+  if (l.status === 'released' || l.status === 'withdrawn') return 'It’s been released.';
+  if (l.status !== 'paid') return 'It’s released once the balance it secures is paid in full.';
+  if (!(lr.releaseOnRequest || lr.releaseFee)) return `It’s released on its own, ${lienReleaseWords(lr)}.`;
+  if (l.releaseDue !== undefined) return `Asked: it’s released by ${formatDate(l.releaseDue, HOME)}.`;
+  const fee = lr.releaseFee ? usd(lr.releaseFee, saveCurrency(sim.universe)) : 0;
+  if (fee && inTheBank(sim, person) < fee) return `Its release fee, ${formatMoney(fee, saveCurrency(sim.universe))}, is more than the bank holds.`;
+  return undefined;
+}
+
+/**
+ * Whether a lien was filed in error: the assessment it secured, replaced by their own return, came to no more than they'd
+ * paid toward the year when it was filed. Withdrawn on request, its fees back (California's reading of an error; the
+ * others' process where published, SLATE's 30 days where not).
+ */
+export function lienInError(r: TaxReturn, state: string): boolean {
+  const sd = r.stateDue?.[state];
+  const l = sd?.lien;
+  if (!sd || !l || l.filedAt === undefined || sd.replacedAt === undefined) return false;
+  const paidBefore = (sd.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
+  return Math.max(0, sd.balance) <= paidBefore;
+}
+
+export function lienDisputeRefusal(r: TaxReturn | undefined, state: string): string | undefined {
+  const l = r?.stateDue?.[state]?.lien;
+  if (!l || !['filed', 'paid', 'released'].includes(l.status)) return l?.status === 'disputed' ? `Asked: decided by ${formatDate(l.decideAt!, HOME)}.` : l?.status === 'withdrawn' ? 'It’s been withdrawn.' : 'There’s no lien on that to dispute.';
+  if (!lienInError(r!, state)) return 'It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.';
+  return undefined;
+}
+
 // --- A return never filed (from 2026-10-11). Until then only the IRS acted on one, with its substitute return; a state
 // owed on a return never filed waited for it forever.
 
 export const STATE_NONFILER_KIND = 'tax.state_nonfiler';
+export const THREE_YEAR_KIND = 'tax.three_year';
+
+/**
+ * At a year's extended due date: whether it and the two before it all owed the state tax with no return of their own, and
+ * if so each of the three charged the state's share of its net tax, a year's penalties together held to its tax (ORS
+ * 305.992(2)). Charged once a year; charged now where the state's side exists, else when it's assessed or filed.
+ */
+export function threeYearCheck(sim: Simulation, person: Person, state: string, year: number, owedOf: (r: TaxReturn) => Money): void {
+  const rules = rulesOf(state);
+  const ty = rules?.threeYear;
+  if (!ty) return;
+  const run = [year - 2, year - 1, year].map((y) => person.returns?.[String(y)]);
+  // Tax to file for, and no return of their own: a state's assessment isn't one; their own replacing it is.
+  const own = (sd: StateDue | undefined) => Boolean(sd && sd.filedAt !== undefined && (!sd.assessedBy || sd.replacedAt !== undefined));
+  const unfiled = (r: TaxReturn | undefined) => Boolean(r && owedOf(r) > 0 && !own(r.stateDue?.[state]));
+  if (!run.every(unfiled)) return;
+  for (const r of run) {
+    (r!.threeYearFor ??= {})[state] = true;
+    chargeThreeYear(sim, r!, state, owedOf(r!));
+  }
+  notifyPlayer(sim, person, `${rules!.short}: Three Years Unfiled`, `No ${stateName(state)} return for ${year - 2}, ${year - 1} or ${year} by ${year}’s extended due date: ${Math.round(ty.share * 100)}% of each year’s tax is added as a penalty (ORS 305.992), each year’s penalties held to its tax. File them, and ask for its waiver: ${Math.round(ty.waiver.beforeNotice * 100)}% if filed before any notice, ${Math.round(ty.waiver.afterDemand * 100)}% after a demand, ${Math.round(ty.waiver.afterAssessment * 100)}% after an assessment.`);
+}
+
+/** The penalty charged on a year's side, once: its share of the net tax, held so the year's penalties stay within its tax. */
+export function chargeThreeYear(sim: Simulation, r: TaxReturn, state: string, tax: Money): void {
+  const ty = rulesOf(state)?.threeYear;
+  const sd = r.stateDue?.[state];
+  if (!ty || !r.threeYearFor?.[state] || !sd || sd.threeYear || !sd.parts) return;
+  accrueState(sd, r.due, sim.now);
+  // Every penalty the year has had, paid or not, against its tax.
+  const had = sd.parts.penalty + (sd.payments ?? []).reduce((s, p) => s + p.penalty, 0);
+  const amount = Math.min(Math.round(ty.share * tax), Math.max(0, tax - had));
+  sd.threeYear = { at: sim.now, amount };
+  if (amount) setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty + amount }, sim.now);
+}
+
+/** Why the three-year penalty's waiver can't be asked now, or nothing. */
+export function waiverRefusal(sim: Simulation, r: TaxReturn | undefined, state: string): string | undefined {
+  const ty = rulesOf(state)?.threeYear;
+  const sd = r?.stateDue?.[state];
+  if (!ty || !sd?.threeYear?.amount) return 'There’s no three-year penalty on that year.';
+  if (sd.threeYear.waived !== undefined) return 'Its waiver has been decided.';
+  if (sd.assessedBy && sd.replacedAt === undefined) return 'File your own return for the year first.';
+  const paidAt = sd.owed ? undefined : (sd.payments ?? []).at(-1)?.at;
+  if (paidAt !== undefined && sim.now > paidAt + ty.windowDays * MS_DAY) return 'The waiver is asked before full payment or within a year after: that year has passed.';
+  return undefined;
+}
+
+/** The waiver's share by when their own return came: before any notice, after a demand, after an assessment. */
+export function waiverShare(r: TaxReturn, state: string): number {
+  const ty = rulesOf(state)!.threeYear!;
+  const sd = r.stateDue![state]!;
+  if (sd.assessedBy) return ty.waiver.afterAssessment;
+  if ((r.lettersSent?.[state] ?? 0) > 0) return ty.waiver.afterDemand;
+  return ty.waiver.beforeNotice;
+}
 
 /** A state's letters on a return never filed that owes it, on the calendar from its due date (`StateRules.nonFiler`). */
 export function scheduleStateNonFiler(sim: Simulation, person: Person, r: TaxReturn, owed: Record<string, Money>): void {
@@ -502,6 +779,7 @@ export function stateNonFilerStep(sim: Simulation, person: Person, r: TaxReturn,
   const letters = rules.nonFiler.letters;
   if (step < letters.length) {
     const l = letters[step]!;
+    (r.lettersSent ??= {})[state] = step + 1;
     notifyPlayer(sim, person, l.title, `${l.code}: your ${r.year} ${stateName(state)} return; ${l.words}`);
     sim.schedule({ at: sim.now + l.days * MS_DAY, kind: STATE_NONFILER_KIND, label: `${rules.short} On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, step: step + 1 } });
     return;
@@ -530,6 +808,7 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
     return sum + Math.round(x + (a.flat !== undefined ? usd(a.flat, cur) : 0));
   }, 0);
   setFromDue(sim, sd, rules, r, tax, fileLate + adds, fileLate);
+  chargeThreeYear(sim, r, state, tax);
   // A floor on the whole penalty (Connecticut's $50 on a return DRS made).
   const floor = Math.max(0, ...(rules.nonFiler.adds ?? []).map((a) => (a.minPenalty !== undefined ? usd(a.minPenalty, cur) : 0)));
   if (sd.parts && sd.parts.penalty < floor) setStateOwed(sd, { ...sd.parts, penalty: floor }, sim.now);
@@ -557,6 +836,7 @@ export function reconsiderState(sim: Simulation, person: Person, r: TaxReturn, s
   if (over > 0) sim.post({ memo: `${stateName(state)} tax refund, ${r.year}: its assessment replaced by your return`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: over }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -over }] });
   sd.balance = own;
   sd.replacedAt = sim.now;
+  if (!sd.owed) stateLienPaid(sim, person, r, state);
   if (!sd.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year && one.payload.state === state) sim.timeline.cancel(one.id, sim.now);
   notifyPlayer(sim, person, `Your ${r.year} Return Replaces ${stateName(state)}’s Assessment`, `${agencyOf(state)} took your own return: ${formatMoney(Math.max(0, own), saveCurrency(sim.universe))} of tax for the year. ${sd.owed ? `${formatMoney(sd.owed, saveCurrency(sim.universe))} is still owed, the penalties and interest in proportion.` : over > 0 ? `${formatMoney(over, saveCurrency(sim.universe))} paid past it comes back.` : 'Nothing more is owed.'}`);
 }
@@ -604,6 +884,8 @@ export function registerStateTax(sim: Simulation): void {
     const charged = (rules.charges ?? []).filter((c) => c.step === step).map((c) => ({ c, amount: chargeOf(c, sd, cur) })).filter((x) => x.amount > 0);
     for (const { amount } of charged) setStateOwed(sd, { ...sd.parts!, penalty: sd.parts!.penalty + amount }, s.now);
     const added = charged.map(({ c, amount }) => ` ${c.label}, ${formatMoney(amount, cur)}, is added.`).join('');
+    // The step its lien is filed at, or its notice of intent sent (from 2026-10-11).
+    if (rules.lien?.atStep === step && !sd.lien) stateLienStep(s, person, r, state);
     if (step < rules.notices.length) {
       const n = rules.notices[step]!;
       sd.collection = step + 1;
@@ -642,24 +924,124 @@ export function registerStateTax(sim: Simulation): void {
     return { paid: amount, owed: sd.owed ?? 0, ...split };
   });
 
-  sim.onCommand<{ state: string; months: number }, { decideAt: Instant; monthly: Money; fee: Money }>('tax.apply_state_plan', (p, { sim: s }) => {
+  sim.onCommand<{ state: string; months: number; long?: boolean; down?: Money }, { decideAt: Instant; monthly: Money; fee: Money; down: Money }>('tax.apply_state_plan', (p, { sim: s }) => {
     const person = s.player;
     const state = String(p?.state);
     const months = Math.round(Number(p?.months));
-    const no = statePlanRefusal(s, person, state, months);
+    const opts = { long: p?.long === true, down: Math.round(Number(p?.down ?? 0)) };
+    const no = statePlanRefusal(s, person, state, months, opts);
     if (no) throw new CommandError(no);
     const rules = rulesOf(state)!;
     const cur = saveCurrency(s.universe);
     const fee = statePlanFee(person, rules, cur);
+    // A plan in force replaced by Pennsylvania's extended one: its payments stop, the new one covers everything.
+    const old = person.statePlans?.[state];
+    if (old && old.status === 'active') {
+      old.status = 'ended';
+      old.why = `Replaced by its ${rules.plan.long!.name.toLowerCase()}`;
+      note(old, s.now, old.why);
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === STATE_PLAN_KIND || one.kind === STATE_PLAN_END_KIND) && one.payload.personId === person.id && one.payload.state === state) s.timeline.cancel(one.id, s.now);
+    }
+    // Paid down first, from the bank, to the oldest year.
+    if (opts.down > 0) {
+      if (!payFromBank(s, person, opts.down, `${rules.short}, paid down with a plan request`, 'tax')) throw new CommandError(`The bank can’t cover ${formatMoney(opts.down, cur)} down.`);
+      payStateOldest(s, person, state, opts.down, 'payment');
+    }
     const owed = owedToState(person, state, s.now) + (rules.plan.feeAdded ? fee : 0);
     // Asked for: what Colorado's lower rate reads (`raisedFrom`).
     for (const r of Object.values(person.returns ?? {})) { const sd = r.stateDue?.[state]; if (sd?.owed) sd.planAskedAt ??= s.now; }
     const monthly = Math.ceil(owed / months);
-    const plan: StatePlan = { state, status: 'pending', appliedAt: s.now, decideAt: s.now + Math.max(1, rules.plan.decideDays * MS_DAY), months, monthly, fee, covers: owed, history: [] };
-    note(plan, s.now, `Asked for online${rules.plan.decideAssumed ? ' (how long it takes isn’t published: SLATE decides it at once)' : ''}`);
+    const long = opts.long ? rules.plan.long! : undefined;
+    const decideDays = long ? long.decideDays : rules.plan.decideDays;
+    const plan: StatePlan = { state, status: 'pending', appliedAt: s.now, decideAt: s.now + Math.max(1, decideDays * MS_DAY), months, monthly, fee, covers: owed, history: [], ...(opts.down ? { down: opts.down } : {}),
+      ...(long ? { long: { name: long.name, ...(long.statement ? { statement: financialStatement(s, person) } : {}) } } : {}) };
+    if (opts.down) note(plan, s.now, 'Paid down with the request', opts.down);
+    note(plan, s.now, long ? `${long.name} asked for${long.statement ? `, with ${long.statement}` : ''}${(long.decideAssumed ? ' (how long it takes isn’t published: SLATE’s days)' : '')}` : `Asked for online${rules.plan.decideAssumed ? ' (how long it takes isn’t published: SLATE decides it at once)' : ''}`);
     statePlansOf(person)[state] = plan;
     s.schedule({ at: plan.decideAt, kind: STATE_PLAN_KIND, label: `${rules.short} On Your Plan`, category: 'personal', priority: 25, payload: { personId: person.id, state, decide: true } });
-    return { decideAt: plan.decideAt, monthly, fee };
+    return { decideAt: plan.decideAt, monthly, fee, down: opts.down };
+  });
+
+  // A lien's steps on the calendar: filed after its notice of intent, released after payment, a dispute decided.
+  sim.onSchedule(STATE_LIEN_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person?.returns?.[String(item.payload.year)];
+    const state = String(item.payload.state);
+    const sd = r?.stateDue?.[state];
+    const l = sd?.lien;
+    if (!person || !r || !sd || !l) return;
+    if (item.payload.action === 'file') {
+      if (l.status !== 'intent') return;
+      if (!sd.owed || livePlan(person, state)) { l.status = 'dropped'; lienNote(l, s.now, 'Not filed: paid or under a plan'); return; }
+      fileStateLien(s, person, r, state, 'collection');
+      return;
+    }
+    if (item.payload.action === 'release') { if (l.status === 'paid') releaseStateLien(s, person, r, state); return; }
+    if (item.payload.action === 'decide' && l.status === 'disputed') {
+      // Withdrawn as filed in error, its fees taken off or refunded.
+      const cur = saveCurrency(s.universe);
+      l.status = 'withdrawn';
+      l.withdrawnAt = s.now;
+      const fee = l.fee;
+      if (fee) {
+        if (sd.owed && sd.parts && sd.parts.penalty >= fee) setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty - fee }, s.now);
+        else s.post({ memo: `${agencyOf(state)}: a lien’s fee back, filed in error`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: fee }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -fee }] });
+      }
+      lienNote(l, s.now, `Withdrawn as filed in error${fee ? `, its ${formatMoney(fee, cur)} fee back` : ''}`);
+      notifyPlayer(s, person, `Your ${l.name} Is Withdrawn`, `${agencyOf(state)} withdrew the ${l.name} on your ${r.year} ${stateName(state)} return as filed in error${fee ? `, and its ${formatMoney(fee, cur)} fee with it` : ''}.`);
+    }
+  });
+
+  sim.onCommand<{ state: string; year: number }, { waived: Money }>('tax.request_waiver', (p, { sim: s }) => {
+    const person = s.player;
+    const state = String(p?.state);
+    const r = person.returns?.[String(p?.year)];
+    const no = waiverRefusal(s, r, state);
+    if (no) throw new CommandError(no);
+    const sd = r!.stateDue![state]!;
+    const share = waiverShare(r!, state);
+    const waived = Math.round(sd.threeYear!.amount * share);
+    sd.threeYear!.waived = waived;
+    sd.threeYear!.waivedAt = s.now;
+    if (sd.owed && sd.parts) { accrueState(sd, r!.due, s.now); setStateOwed(sd, { ...sd.parts, penalty: Math.max(0, sd.parts.penalty - waived) }, s.now); }
+    else if (waived) s.post({ memo: `${agencyOf(state)}: a penalty waived and refunded`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: waived }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -waived }] });
+    notifyPlayer(s, person, `${rulesOf(state)!.short} Waived Part Of Your Penalty`, `${Math.round(share * 100)}% of the three-year penalty on your ${r!.year} return, ${formatMoney(waived, saveCurrency(s.universe))}, by its schedule.`);
+    return { waived };
+  });
+
+  sim.onCommand<{ state: string; year: number }, { releaseDue?: Instant }>('tax.lien_release', (p, { sim: s }) => {
+    const person = s.player;
+    const state = String(p?.state);
+    const r = person.returns?.[String(p?.year)];
+    const no = lienReleaseRefusal(s, person, r, state);
+    if (no) throw new CommandError(no);
+    const lr = rulesOf(state)!.lien!;
+    const cur = saveCurrency(s.universe);
+    const l = r!.stateDue![state]!.lien!;
+    const fee = lr.releaseFee ? usd(lr.releaseFee, cur) : 0;
+    if (fee) {
+      if (!payFromBank(s, person, fee, `${agencyOf(state)}: a lien’s release fee`, 'tax')) throw new CommandError(`Its release fee, ${formatMoney(fee, cur)}, is more than the bank can cover.`);
+      lienNote(l, s.now, 'The release fee paid', fee);
+    }
+    lienNote(l, s.now, 'Its release asked for');
+    releaseLater(s, person, r!, state);
+    return { ...(l.releaseDue !== undefined ? { releaseDue: l.releaseDue } : {}) };
+  });
+
+  sim.onCommand<{ state: string; year: number }, { decideAt: Instant }>('tax.lien_dispute', (p, { sim: s }) => {
+    const person = s.player;
+    const state = String(p?.state);
+    const r = person.returns?.[String(p?.year)];
+    const no = lienDisputeRefusal(r, state);
+    if (no) throw new CommandError(no);
+    const lr = rulesOf(state)!.lien!;
+    const l = r!.stateDue![state]!.lien!;
+    l.status = 'disputed';
+    l.disputedAt = s.now;
+    l.decideAt = s.now + lr.error.days * MS_DAY;
+    lienNote(l, s.now, `Asked to be withdrawn as filed in error: ${lr.error.how}`);
+    s.schedule({ at: l.decideAt, kind: STATE_LIEN_KIND, label: l.name, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year, state, action: 'decide' } });
+    return { decideAt: l.decideAt };
   });
 
   sim.onSchedule(STATE_PLAN_KIND, (item, s) => {
@@ -671,6 +1053,17 @@ export function registerStateTax(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     if (item.payload.decide === true) {
       if (p.status !== 'pending') return;
+      // A longer arrangement decided on its statement: approved where the monthly payment fits what it leaves each month,
+      // SLATE's rule where the state publishes none (from 2026-10-11).
+      const st = p.long?.statement;
+      if (st && p.monthly > Math.max(0, st.net)) {
+        p.status = 'declined';
+        p.why = `Declined: ${formatMoney(p.monthly, cur)} a month is more than the ${formatMoney(Math.max(0, st.net), cur)} your statement leaves each month`;
+        note(p, s.now, p.why);
+        for (const r of Object.values(person.returns ?? {})) if (r.stateDue?.[state]?.owed) stateNextNotice(s, person, r, state);
+        notifyPlayer(s, person, `${rules.short} Declined Your ${p.long!.name}`, `${p.why}. Fewer months, a smaller balance, or paying some of it first would fit; collection goes on meanwhile.`);
+        return;
+      }
       startStatePlan(s, person, p);
       notifyPlayer(s, person, `${rules.short} Approved Your Plan`, `${formatMoney(p.monthly, cur)} a month for ${p.months} months, from ${formatDate(p.nextDue!, HOME)}. Interest${rules.payLate.monthly ? ' and the late-payment penalty go' : ' goes'} on; collection has stopped.`);
       return;

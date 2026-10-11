@@ -253,4 +253,7 @@ new tests:
   - Massachusetts's discretionary doubling.
 - **A gap the brief didn't cover:** SLATE computes no income tax for Indiana, the District of Columbia or Oklahoma,
   which have a city each. Those states do tax income. It's the owner's to decide.
+- **Since then:** the owner's next brief took up all seven, the same day. The six unmodeled rules were modeled, and
+  Indiana, the District and Oklahoma were taxed, with the local taxes that had been missing. Massachusetts's doubling
+  stayed discretionary and unapplied. See `REMAINING-GAPS-PASS-2026-10-11.md`.
 - **No bug-free claim:** a finite set of checks passing doesn't prove there are no bugs.

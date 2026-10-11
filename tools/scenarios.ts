@@ -28,7 +28,7 @@ import { recordWages } from '../src/engine/systems/earnings';
 import { owedAll, returnsOf } from '../src/engine/systems/taxreturn';
 import { owedToState } from '../src/engine/systems/statetax';
 import { SWITCH_KIND } from '../src/engine/systems/lending';
-import { attentiveHour, life } from './policy';
+import { POLICY, attentiveHour, life } from './policy';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const SCENARIO = arg('scenario', 'leave');
@@ -36,7 +36,26 @@ const SEED = arg('seed', 'sc-0');
 const NY = 'America/New_York';
 const on = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
 
-interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; daily(sim: Simulation, log: string[]): void }
+interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; ownWork?: false; daily(sim: Simulation, log: string[]): void; stopWhen?(sim: Simulation, log: string[]): boolean }
+
+/** TEST SETUP: a 2026 W-2 of $40,000 with nothing withheld, then the bank emptied and the return filed on 15 February. */
+const owingOnFiling = (sim: Simulation, log: string[]) => {
+  const r = returnsOf(sim.player)['2026'];
+  if (!r && sim.now >= on(2026, 9, 10) && !log.some((l) => l.includes('W-2'))) {
+    recordWages(sim.player, on(2026, 9, 1), NY, { gross: 40_000_00 });
+    log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: W-2`);
+  }
+  if (r && r.filedAt === undefined && sim.now >= on(2027, 2, 15)) {
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] });
+    tryOnce(sim, log, 'tax.file', { year: 2026 });
+  }
+};
+/** TEST SETUP: money from family, once. */
+const gift = (sim: Simulation, log: string[], amount: number) => {
+  if (log.some((l) => l.includes('gift'))) return;
+  sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
+  log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: a gift`);
+};
 
 /** Each day at nine: try what the scenario asks, and say what happened when it changed. */
 const tryOnce = (sim: Simulation, log: string[], kind: string, payload: Record<string, unknown>, when = true) => {
@@ -109,6 +128,34 @@ const SCENARIOS: Record<string, Hook> = {
       if (sim.player.statePlans?.['us-ct']?.status === 'missed') tryOnce(sim, log, 'tax.catch_up_state_plan', { state: 'us-ct' });
     },
   },
+  // Played to the middle of a production's rehearsals with the student's own work on it left undone (from 2026-10-11),
+  // so the built app's rehearsal controls can be used on it (`tools/acceptance-ui.mjs`).
+  // Connecticut's lien filed on the unpaid balance, and money from family to pay it, the run stopped there (from
+  // 2026-10-11): the built app pays it and asks for the release Connecticut gives only on request.
+  lien: {
+    years: 1.5, config: { homeRegionId: 'us-ny-newyork', wealth: 'wealthy' },
+    daily(sim, log) {
+      owingOnFiling(sim, log);
+      if (returnsOf(sim.player)['2026']?.stateDue?.['us-ct']?.lien?.status === 'filed') gift(sim, log, 5_000_00);
+    },
+    stopWhen: (_sim, log) => log.some((l) => l.includes('gift')),
+  },
+  // The IRS's plan in default with nothing in the bank, then money from family, the run stopped there (from 2026-10-11):
+  // the built app catches it up. Connecticut's own plan has no catch-up: its rule on a missed payment wasn't found, so
+  // a missed payment ends it.
+  'missed-plan': {
+    years: 1.5, config: { homeRegionId: 'us-ny-newyork', wealth: 'wealthy' },
+    daily(sim, log) {
+      owingOnFiling(sim, log);
+      if (returnsOf(sim.player)['2026']?.filedAt !== undefined && !sim.player.taxPlan && owedAll(sim.player, sim.now) > 0) tryOnce(sim, log, 'tax.apply_plan', { kind: 'long', directDebit: true });
+      if (sim.player.taxPlan?.status === 'default') gift(sim, log, 3_000_00);
+    },
+    stopWhen: (_sim, log) => log.some((l) => l.includes('gift')),
+  },
+  rehearsal: {
+    years: 0.6, config: { homeRegionId: 'us-ny-newyork' }, ownWork: false,
+    daily() {},
+  },
   withdraw: {
     years: 2.9, config: { homeRegionId: 'us-ny-newyork' },
     daily(sim, log) {
@@ -156,6 +203,7 @@ const SCENARIOS: Record<string, Hook> = {
 
 const hook = SCENARIOS[SCENARIO];
 if (!hook) throw new Error(`No scenario ${SCENARIO}: ${Object.keys(SCENARIOS).join(', ')}`);
+if (hook.ownWork === false) POLICY.ownWork = false;
 let sim = hook.resident ? quickSave(hook.config as never, SEED) : life(SEED, { pronouns: 'they/them', ...hook.config } as never);
 // `--years` stops it early, and `--save <file>` writes the save there, for the screens to open (from 2026-10-10).
 const end = sim.now + Number(arg('years', String(hook.years))) * 365 * MS_DAY;
@@ -171,6 +219,7 @@ try {
     if (p.hour >= 9 && day !== lastDay && (sim.player.awakeSince ?? 0) <= sim.now) {
       lastDay = day;
       hook.daily(sim, log);
+      if (hook.stopWhen?.(sim, log)) break;
       // `--watch`: the first day a breach or an unbalanced entry appears, and what it is.
       if (process.argv.includes('--watch')) {
         const b = breaches(sim.universe);
@@ -200,7 +249,7 @@ console.log(JSON.stringify({
   taxPlan: sim.player.taxPlan ? { status: sim.player.taxPlan.status, payments: sim.player.taxPlan.history.filter((h) => /payment/i.test(h.what)).length, history: sim.player.taxPlan.history.slice(-6).map((h) => h.what) } : undefined,
   owedIrs: owedAll(sim.player, sim.now), irsSubstitute: Object.values(sim.player.returns ?? {}).map((r) => `${r.year}: ${r.substitute ? 'substitute' : r.reconsideredAt !== undefined ? 'replaced' : r.filedAt !== undefined ? 'filed' : 'unfiled'}`),
   // Each state's side (integration pass): what it assessed, owes, took by levy, and its plan.
-  states: Object.fromEntries(Object.values(sim.player.returns ?? {}).flatMap((r) => Object.entries(r.stateDue ?? {}).map(([st, sd]) => [`${r.year} ${st}`, { balance: sd.balance, owed: sd.owed ?? 0, payments: (sd.payments ?? []).map((p) => p.how), notices: sd.collection ?? 0, assessed: Boolean(sd.assessedBy), replaced: sd.replacedAt !== undefined }]))),
+  states: Object.fromEntries(Object.values(sim.player.returns ?? {}).flatMap((r) => Object.entries(r.stateDue ?? {}).map(([st, sd]) => [`${r.year} ${st}`, { balance: sd.balance, owed: sd.owed ?? 0, payments: (sd.payments ?? []).map((p) => p.how), notices: sd.collection ?? 0, lien: sd.lien?.status, assessed: Boolean(sd.assessedBy), replaced: sd.replacedAt !== undefined }]))),
   statePlans: Object.fromEntries(Object.entries(sim.player.statePlans ?? {}).map(([st, p]) => [st, { status: p.status, history: p.history.slice(-5).map((h) => h.what) }])),
   breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads,
 }, null, 1));

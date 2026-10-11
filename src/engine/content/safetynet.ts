@@ -321,7 +321,15 @@ export const MEDICAL_DEBT = { reportAt: 500_00, reportAfterDays: 365, dueDays: 3
 export const STATE_RETURN = {
   georgiaExempt: 5_000_00,
   georgiaExemptShare: 0.05,
-  source: 'https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf; https://www.ftb.ca.gov/forms/2025/2025-540nr-booklet.pdf; https://dor.georgia.gov',
+  /**
+   * Indiana taxes unemployment only to half of federal AGI over $12,000, a single filer's (IC 6-3-2-10); the District
+   * subtracts it all (D-40 line 13); a resident of Kentucky, Michigan, Ohio, Pennsylvania or Wisconsin owes Indiana
+   * nothing on wages earned there (Indiana's reciprocity, WH-47); and the District can't tax a nonresident's income
+   * (the Home Rule Act). From the remaining-gaps pass of 2026-10-11 (research-state-tax-in-dc-ok.json).
+   */
+  indianaUnemploymentBase: 12_000_00,
+  indianaReciprocal: ['us-ky', 'us-mi', 'us-oh', 'us-pa', 'us-wi'] as readonly string[],
+  source: 'https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf; https://www.ftb.ca.gov/forms/2025/2025-540nr-booklet.pdf; https://dor.georgia.gov; https://www.in.gov/dor; https://otr.cfo.dc.gov',
 } as const;
 
 /**

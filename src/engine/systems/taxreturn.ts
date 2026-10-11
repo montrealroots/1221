@@ -34,7 +34,7 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { computeAnnualTax, INCOME_TAX_RULES } from '../content/tax';
+import { computeAnnualTax, INCOME_TAX_RULES, LOCAL_TAX, localRate } from '../content/tax';
 import { f1Of } from './permission';
 import { residenceIn } from './residence';
 import { hasSsn, SSN } from './taxid';
@@ -48,7 +48,7 @@ import { drawFromBank, expenseFor, payFromBank } from './spending';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
-import { reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
+import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -193,7 +193,108 @@ export function applyPayment(sim: Simulation, person: Person, r: TaxReturn, amou
   r.paidTax = (r.paidTax ?? 0) + tax;
   setOwed(r, p, sim.now);
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
+  // Paid in full: its notice of federal tax lien released within 30 days (IRC 6325(a), from 2026-10-11).
+  if (!r.owed) federalLienPaid(sim, person, r);
   return { tax, penalty, interest };
+}
+
+/**
+ * The IRS's notice of federal tax lien (from the remaining-gaps pass of 2026-10-11; research-federal-tax-lien.json). The
+ * statutory lien arises on assessment, demand and non-payment (IRC 6321); the notice is filed where the unpaid balance is
+ * $10,000 or more (IRM 5.12.2.6), which SLATE takes at the LT11, the final notice before levy; below it the IRS files only
+ * at its discretion, which SLATE's doesn't. Letter 3172 follows within five business days with thirty days to ask for a
+ * Collection Due Process hearing (IRC 6320). It's released within 30 days of payment in full (6325(a)), on its own;
+ * after release it can be withdrawn on Form 12277 where the last three years' returns are filed (IRM 5.12.9.9); one filed
+ * in error is released as erroneous within 14 days of the finding (IRM 5.12.3.9). Recording fees are charged to the
+ * account, their amounts unpublished: SLATE charges none.
+ */
+export const FEDERAL_LIEN = {
+  name: 'Notice Of Federal Tax Lien', threshold: 10_000_00, atStep: 3, recordedAt: 'the county recorder where you live', cdpDays: 30,
+  releaseDays: 30, withdrawDays: 30, withdrawAssumed: true, errorDays: 14,
+  effect: 'The IRS says it may limit your ability to get credit, and that employers, landlords and others may not view it favorably.',
+  source: 'IRC 6320, 6321, 6323(j), 6325(a); IRM 5.12.2.6, 5.12.3.9, 5.12.9.9; IRS Pub 594, Pub 1450, Form 12277; research-federal-tax-lien.json',
+} as const;
+export const FEDERAL_LIEN_KIND = 'tax.federal_lien';
+
+const fedNote = (l: Lien, at: Instant, what: string, amount?: Money) => { l.history.push({ at, what, ...(amount !== undefined ? { amount } : {}) }); if (l.history.length > 20) l.history.splice(0, l.history.length - 20); };
+
+/** At the final notice: the notice of federal tax lien filed where $10,000 or more is unpaid. */
+function federalLienStep(sim: Simulation, person: Person, r: TaxReturn): void {
+  const cur = saveCurrency(sim.universe);
+  if (r.lien || !r.owed || owedOn(r, sim.now) < usd(FEDERAL_LIEN.threshold, cur)) return;
+  const amount = owedOn(r, sim.now);
+  r.lien = { name: FEDERAL_LIEN.name, status: 'filed', trigger: 'collection', amount, recordedAt: FEDERAL_LIEN.recordedAt, filedAt: sim.now, fee: 0, history: [] };
+  fedNote(r.lien, sim.now, `Filed with ${FEDERAL_LIEN.recordedAt}; Letter 3172 sent`, amount);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Filed A Notice Of Federal Tax Lien', body: `Letter 3172: a notice of federal tax lien for ${formatMoney(amount, cur)} on your ${r.year} return, filed with ${FEDERAL_LIEN.recordedAt}. You have ${FEDERAL_LIEN.cdpDays} days to ask for a Collection Due Process hearing. ${FEDERAL_LIEN.effect} It’s released within ${FEDERAL_LIEN.releaseDays} days of payment in full.`, importance: 90, route: '/workspace/papers' });
+}
+
+/** Paid in full: released within 30 days, on its own. */
+function federalLienPaid(sim: Simulation, person: Person, r: TaxReturn): void {
+  const l = r.lien;
+  if (!l || l.status !== 'filed') return;
+  l.status = 'paid';
+  l.paidAt = sim.now;
+  l.releaseDue = sim.now + FEDERAL_LIEN.releaseDays * MS_DAY;
+  fedNote(l, sim.now, `Paid in full: to be released by ${formatDate(l.releaseDue, HOME)}`);
+  sim.schedule({ at: l.releaseDue, kind: FEDERAL_LIEN_KIND, label: FEDERAL_LIEN.name, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, action: 'release' } });
+}
+
+/** Whether it was filed in error: their own return, replacing the IRS's, owed no more than was paid when it was filed. */
+export function federalLienInError(r: TaxReturn): boolean {
+  const l = r.lien;
+  if (!l || l.filedAt === undefined || r.reconsideredAt === undefined) return false;
+  const paidBefore = (r.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
+  return Math.max(0, r.figures.owedTo?.irs ?? r.figures.balance) <= paidBefore;
+}
+
+/** Why a withdrawal (Form 12277) can't be asked now, or nothing. */
+export function federalLienWithdrawRefusal(person: Person, r: TaxReturn | undefined, now: Instant): string | undefined {
+  const l = r?.lien;
+  if (!l) return 'There’s no federal tax lien on that year.';
+  if (l.status === 'withdrawn') return 'It’s been withdrawn.';
+  if (l.status === 'disputed') return `Asked: decided by ${formatDate(l.decideAt!, HOME)}.`;
+  if (federalLienInError(r!)) return undefined;
+  if (l.status !== 'released') return 'A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.';
+  const unfiled = [1, 2, 3].map((n) => person.returns?.[String(r!.year + n)]).find((x) => x && x.filedAt === undefined && x.due < now && x.figures.balance > 0);
+  if (unfiled) return `The IRS withdraws one after payment only with the last three years’ returns filed: ${unfiled.year}’s isn’t.`;
+  return undefined;
+}
+
+export function registerFederalLien(sim: Simulation): void {
+  sim.onSchedule(FEDERAL_LIEN_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person?.returns?.[String(item.payload.year)];
+    const l = r?.lien;
+    if (!person || !r || !l) return;
+    if (item.payload.action === 'release' && l.status === 'paid') {
+      l.status = 'released';
+      l.releasedAt = s.now;
+      fedNote(l, s.now, 'Released: a certificate of release recorded');
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Released', body: `The IRS released the notice of federal tax lien on your ${r.year} return. You can ask for it to be withdrawn too, on Form 12277, with your last three years’ returns filed.`, importance: 70, route: '/workspace/papers' });
+      return;
+    }
+    if (item.payload.action === 'withdraw' && l.status === 'disputed') {
+      l.status = 'withdrawn';
+      l.withdrawnAt = s.now;
+      fedNote(l, s.now, item.payload.error ? 'Released as erroneous, and withdrawn' : 'Withdrawn on Form 12277');
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Withdrawn', body: `The IRS withdrew the notice of federal tax lien on your ${r.year} return${item.payload.error ? ', as filed in error' : ''}: it’s as if it had never been filed.`, importance: 70, route: '/workspace/papers' });
+    }
+  });
+
+  sim.onCommand<{ year: number }, { decideAt: Instant; error: boolean }>('tax.federal_lien_withdraw', (p, { sim: s }) => {
+    const person = s.player;
+    const r = person.returns?.[String(p?.year)];
+    const no = federalLienWithdrawRefusal(person, r, s.now);
+    if (no) throw new CommandError(no);
+    const l = r!.lien!;
+    const error = federalLienInError(r!);
+    l.status = 'disputed';
+    l.disputedAt = s.now;
+    l.decideAt = s.now + (error ? FEDERAL_LIEN.errorDays : FEDERAL_LIEN.withdrawDays) * MS_DAY;
+    fedNote(l, s.now, error ? 'Asked to be released as erroneous (IRC 6326)' : 'Form 12277 sent, asking its withdrawal');
+    s.schedule({ at: l.decideAt, kind: FEDERAL_LIEN_KIND, label: FEDERAL_LIEN.name, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year, action: 'withdraw', error } });
+    return { decideAt: l.decideAt, error };
+  });
 }
 
 /** The next step of the IRS's collection on a return, on the calendar. */
@@ -234,6 +335,11 @@ export interface TaxReturn {
   amended?: { form: '1040-X' | '1040-X with 1040-NR'; at: Instant; figures: ReturnFigures; change: Money; processAt: Instant; processedAt?: Instant; refund?: Money; interest?: Money; irs?: Money; states?: Record<string, Money> }[];
   /** A substitute return replaced by their own after it was assessed, and when (`tax.file`, a reconsideration). */
   reconsideredAt?: Instant;
+  /** Its notice of federal tax lien (`FEDERAL_LIEN`, from 2026-10-11). */
+  lien?: Lien;
+  /** States whose non-filer letters were sent for it, and how many; and those whose three-year penalty it's in (from 2026-10-11). */
+  lettersSent?: Record<string, number>;
+  threeYearFor?: Record<string, true>;
   /** The IRS's own figures on a substitute, kept beside the return's. */
   substituteFigures?: ReturnFigures;
   /** A payment plan's months at the reduced failure-to-pay rate: from, and to once it ends (`payLateRateAt`). */
@@ -429,6 +535,8 @@ export interface ReturnFigures {
   credit: Money;
   /** Connecticut's 2026 Temporary Premium Assistance (`ENHANCED_CREDIT`), settled with the return. */
   stateAssistance?: Money;
+  /** Denver's Occupational Privilege Tax, withheld by the employer and filed by nobody: shown, not owed (from 2026-10-11). */
+  denverOpt?: Money;
   mandate: Money;
   withheld: Money;
   /** Positive owed, negative due back. */
@@ -663,8 +771,14 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
   const lastState = stateOf(cityId);
   const stateTaxed = taxed;
-  // California doesn't tax unemployment, which goes to where they lived at the year's end.
-  const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
+  // California doesn't tax unemployment, which goes to where they lived at the year's end; nor does the District; Indiana
+  // only to half of income over $12,000 (`STATE_RETURN`, from 2026-10-11).
+  const benefitOut = (state: string) => {
+    if (state !== lastState) return 0;
+    if (state === 'us-ca' || state === 'us-dc') return y.unemployment;
+    if (state === 'us-in') return Math.max(0, y.unemployment - Math.round(0.5 * Math.max(0, stateTaxed - usd(STATE_RETURN.indianaUnemploymentBase, into))));
+    return 0;
+  };
   // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
   const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income);
   const extra = (state: string) => Math.max(0, itemized - usd(STATE_DEDUCTIONS.standard[state] ?? Number.POSITIVE_INFINITY, into));
@@ -680,6 +794,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     let tax = stateTaxed > 0 ? Math.round(full(state) * Math.min(1, own / Math.max(1, stateTaxed - benefitOut(state)))) : 0;
     // Georgia leaves a nonresident's small wages alone.
     if (state === 'us-ga' && part.resident === 0 && part.source <= Math.min(usd(STATE_RETURN.georgiaExempt, into), STATE_RETURN.georgiaExemptShare * y.acting)) tax = 0;
+    // The District taxes no nonresident; Indiana no resident of a reciprocal state on wages (from 2026-10-11).
+    if (state === 'us-dc' && part.resident === 0) tax = 0;
+    if (state === 'us-in' && part.resident === 0 && Object.keys(y.elsewhere).filter((k) => stateOf(k.split('>')[1]!) === 'us-in').every((k) => STATE_RETURN.indianaReciprocal.includes(k.split('>')[0]!))) tax = 0;
     taxes.set(state, tax);
   }
   // The home state credits another's tax on the same wages, to its own tax on them.
@@ -694,8 +811,25 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     credits.set(lived, (credits.get(lived) ?? 0) + Math.round(Math.min(theirs, ours)));
   }
   const stateLines = [...states.keys()].map((state) => ({ state, tax: taxes.get(state) ?? 0, credit: Math.min(taxes.get(state) ?? 0, credits.get(state) ?? 0) }));
-  // A city's own tax, New York City's, only on what came while living in it.
-  const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)), 0) : 0;
+  // A city's own tax, New York City's, only on what came while living in it; and by the authority that collects it,
+  // the state, or the city itself (`LOCAL_TAX`, from 2026-10-11).
+  const collectorOf = (city: string) => (LOCAL_TAX[city]?.collector === 'city' ? city : stateOf(city));
+  const localBy: Record<string, Money> = {};
+  const addLocal = (who: string, v: Money) => { if (v) localBy[who] = (localBy[who] ?? 0) + v; };
+  if (taxed > 0) for (const [city, amount] of Object.entries(y.byResidence)) addLocal(collectorOf(city), Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)));
+  // And a nonresident's on wages earned in a city that taxes them, which a resident city crediting it takes off its own.
+  for (const [key, amount] of Object.entries(y.elsewhere)) {
+    const city = key.split('>')[1]!;
+    const rate = localRate(LOCAL_TAX[city]?.nonresident, year);
+    if (!rate || y.byResidence[city]) continue;
+    const theirs = Math.round(amount * rate);
+    addLocal(collectorOf(city), theirs);
+    for (const home of Object.keys(y.byResidence)) {
+      const credit = LOCAL_TAX[home]?.creditUpTo;
+      if (credit) addLocal(collectorOf(home), -Math.min(theirs, Math.round(amount * credit), localBy[collectorOf(home)] ?? 0));
+    }
+  }
+  const local = Object.values(localBy).reduce((a, b) => a + b, 0);
   const stateAndLocal = stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
   // Federal, at the standard deduction: itemizing was a home's interest and taxes, which went on 2026-10-09.
   // Filed singly. A joint return for the married (`systems/marriage.ts`, from 2026-10-01) went with the marriages in the
@@ -731,12 +865,11 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     ...(nra ? { form: '1040-NR' as const } : {}),
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
     gainTax, income, deduction,
-    incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), mandate, withheld: y.withheld,
+    incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), ...(y.denverOpt ? { denverOpt: y.denverOpt } : {}), mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit - stateAssistance,
   };
-  // The city tax by the state that collects it: New York City's with New York's (Tax Law 1312(a)).
-  const localBy: Record<string, Money> = {};
-  if (taxed > 0) for (const [city, amount] of Object.entries(y.byResidence)) { const l = Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)); if (l) localBy[stateOf(city)] = (localBy[stateOf(city)] ?? 0) + l; }
+  // The city tax by the authority that collects it: New York City's with New York's (Tax Law 1312(a)), Philadelphia's its
+  // own (`localBy` above).
   figures.owedTo = owedToFrom(person, year, figures, into, localBy);
   return figures;
 }
@@ -804,10 +937,21 @@ export function latePenaltyAll(person: Person, r: TaxReturn, at: Instant, into =
   let total = latePenalty(to.irs, r.due, at, into);
   for (const [state, tax] of Object.entries(to.states)) {
     const rules = rulesOf(state);
-    if (!rules || tax <= 0) continue;
+    // A state that has assessed it already charges its own, in what it says is owed (from 2026-10-11).
+    if (!rules || tax <= 0 || r.stateDue?.[state]?.filedAt !== undefined) continue;
     total += stateLateAt(rules, tax, r.due, at, into);
   }
   return total;
+}
+
+/**
+ * What an unfiled return owes that no authority has assessed yet: the IRS's part, and each state's that hasn't assessed
+ * it itself (from the remaining-gaps pass of 2026-10-11: until then the return's whole balance, so a state's own
+ * assessment, owed and counted in `owedEverywhere`, was counted a second time in the budget).
+ */
+export function unassessedBalance(person: Person, r: TaxReturn): Money {
+  const to = owedToOf(person, r);
+  return Math.max(0, to.irs) + Object.entries(to.states).reduce((s, [state, v]) => s + (r.stateDue?.[state]?.filedAt === undefined ? Math.max(0, v) : 0), 0);
 }
 
 /** Each February, from the one after the business began. */
@@ -877,6 +1021,7 @@ export function settleUkYears(sim: Simulation, person: Person, calendarYear: num
 }
 
 export function registerTaxReturn(sim: Simulation): void {
+  registerFederalLien(sim);
   sim.onSchedule(TAX_SEASON_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
@@ -917,6 +1062,11 @@ export function registerTaxReturn(sim: Simulation): void {
     if (owedToOf(person, r).irs > 0) s.schedule({ at: r.due + SUBSTITUTE.afterDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
     // And each state owed acts on its own (`scheduleStateNonFiler`, from 2026-10-11): until then only the IRS did.
     scheduleStateNonFiler(s, person, r, owedToOf(person, r).states);
+    // Oregon's three-year rule, read at the year's extended due date.
+    for (const [state, v] of Object.entries(owedToOf(person, r).states)) {
+      const ty = rulesOf(state)?.threeYear;
+      if (ty && v > 0) s.schedule({ at: r.due + Math.round(ty.extensionMonths * 30.4375) * MS_DAY, kind: THREE_YEAR_KIND, label: `${stateName(state)}: Three Years`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
+    }
     if (person.id !== s.universe.playerId) return;
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
@@ -953,6 +1103,13 @@ export function registerTaxReturn(sim: Simulation): void {
     nextNotice(s, person, r);
   });
 
+  sim.onSchedule(THREE_YEAR_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (!person) return;
+    const state = String(item.payload.state);
+    threeYearCheck(s, person, state, Number(item.payload.year), (r) => owedToOf(person, r).states[state] ?? 0);
+  });
+
   // A state's letter on a return never filed, or its assessment (`stateNonFilerStep`, from 2026-10-11).
   sim.onSchedule(STATE_NONFILER_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
@@ -971,6 +1128,7 @@ export function registerTaxReturn(sim: Simulation): void {
     accrue(r, s.now);
     const cur = saveCurrency(s.universe);
     const step = r.collection ?? 0;
+    if (step === FEDERAL_LIEN.atStep) federalLienStep(s, person, r);
     if (step < COLLECTION.notices.length) {
       const n = COLLECTION.notices[step]!;
       r.collection = step + 1;
@@ -1301,6 +1459,7 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: M
   r.figures = own;
   r.substitute = false;
   r.reconsideredAt = sim.now;
+  if (!r.owed) federalLienPaid(sim, person, r);
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
   if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });

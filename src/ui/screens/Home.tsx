@@ -27,7 +27,7 @@ import {
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { troubles } from '@/engine/systems/spending';
-import { latePenaltyAll, owedEverywhere } from '@/engine/systems/taxreturn';
+import { latePenaltyAll, owedEverywhere, unassessedBalance } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, schoolEnded, yearOfStudy } from '@/engine/systems/school';
@@ -509,11 +509,14 @@ function PapersLine({ cur }: { cur: string }) {
   // What's owed today, its interest and late-payment penalty since it was last brought up to date (`owedOn`), as Papers
   // says it: until 2026-10-10 the line read the balance as last stored, short of both.
   const owedTax = owedEverywhere(person, sim.now);
+  // What filing it would pay: what no authority has assessed yet, a state's own assessment being in `owedTax` (from
+  // 2026-10-11: until then it was in both).
+  const toPay = open ? unassessedBalance(person, open) : 0;
   const claim = person.unemployment?.claim;
   // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line.
   const alerts = [
     !cover ? 'You have no health cover.' : '',
-    open ? `The ${open.year} return is due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${open.figures.balance > 0 ? `, ${formatMoney(open.figures.balance + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
+    open ? `The ${open.year} return is due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${toPay > 0 ? `, ${formatMoney(toPay + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
     owedTax > 0 ? `${formatMoney(owedTax, cur, { cents: false })} of tax owed, with its interest and a late penalty growing each month.` : '',
   ].filter(Boolean);
   return (

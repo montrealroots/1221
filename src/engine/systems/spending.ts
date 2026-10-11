@@ -34,7 +34,7 @@ import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
-import { latePenaltyAll, owedEverywhere } from './taxreturn';
+import { latePenaltyAll, owedEverywhere, unassessedBalance } from './taxreturn';
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
 const DAY_OF_FOOD_USD = 8;
@@ -385,7 +385,8 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
   const cur = saveCurrency(sim.universe);
   const late = Object.values(person.returns ?? {})
     .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > r.due)
-    .reduce((sum, r) => sum + r.figures.balance + latePenaltyAll(person, r, sim.now, cur), 0);
+    // What no authority has assessed yet: a state's own assessment is in `tax` above (from 2026-10-11).
+    .reduce((sum, r) => sum + unassessedBalance(person, r) + latePenaltyAll(person, r, sim.now, cur), 0);
   if (late > 0) out.push({ kind: 'return_late', amount: late });
   return out;
 }

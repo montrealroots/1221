@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 46
-- Implemented But Unverified: 96
+- Implemented But Unverified: 100
 - Partially Implemented: 4
-- Commands in all: 146
+- Commands in all: 150
 
 ## Commands
 
@@ -159,12 +159,16 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.work_note` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `tax.amend` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your return as filed matches what’s on record: there’s nothing to amend. (also amendRefusal) | — | Yes | tax.amended | 3 | — |
 | `tax.apply_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | The least a month is …, what’s owed over … months. (also planRefusal) | taxPlan; status; why; nextDue; defaultBy | Yes | short; tax.plan_decide; tax.plan_payment; tax.plan_default | 2 | — |
-| `tax.apply_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | — (also statePlanRefusal) | nextDue | Yes | tax.state_plan_payment | 1 | — |
+| `tax.apply_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | The bank can’t cover … down. (also statePlanRefusal) | — | Yes | tax.state_plan_payment | 2 | — |
 | `tax.catch_up_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your plan isn’t behind.; … is more than the bank can cover. | status; nextDue | Yes | tax.plan_payment | 1 | — |
 | `tax.catch_up_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | That plan isn’t behind.; … is more than the bank can cover. | — | Yes | tax.state_plan_payment | 1 | — |
-| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 7 | journey-money.test.ts |
-| `tax.pay` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; Pay something.; … is owed; pay that or less.; … is more than the bank can cover. | — | Yes | — | 3 | journey-money.test.ts |
-| `tax.pay_state` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | You owe … nothing on that year.; Pay something.; … is owed to …; pay that or less.; … is more than the bank can cover. | — | Yes | — | 1 | — |
+| `tax.federal_lien_withdraw` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/taxreturn.ts` | — (also federalLienWithdrawRefusal, planRefusal) | status; startedAt; nextDue; payBy; why; and 3 more | Yes | tax.federal_lien; tax.notice; short; tax.plan_payment; and 5 more | 1 | — |
+| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 9 | journey-money.test.ts |
+| `tax.lien_dispute` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/statetax.ts` | — (also lienDisputeRefusal) | status; why; nextDue | Yes | tax.state_lien; tax.state_plan_payment | 1 | — |
+| `tax.lien_release` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/statetax.ts` | Its release fee, …, is more than the bank can cover. (also lienReleaseRefusal) | — | Yes | — | 1 | — |
+| `tax.pay` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; Pay something.; … is owed; pay that or less.; … is more than the bank can cover. | — | Yes | — | 4 | journey-money.test.ts |
+| `tax.pay_state` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | You owe … nothing on that year.; Pay something.; … is owed to …; pay that or less.; … is more than the bank can cover. | — | Yes | — | 4 | — |
+| `tax.request_waiver` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/statetax.ts` | — (also waiverRefusal) | — | Yes | — | 1 | — |
 | `tax.revise_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Only a monthly plan in force is revised.; The least a month is ….; More than …)} is owed now: a revision needs a financial statement SLATE doesn't model.; The … fee is more than the bank can cover. | — | Yes | tax.plan_payment | 1 | — |
 | `tutorial.read` | Implemented But Unverified | — | Guide.tsx | `world/tutorial.ts` | This life has no guide to read through; everything is open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first; the chapters go in order. | read (added to) | — | — | 1 | — |
 | `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; It’s dismissed already. | — | — | — | 1 | — |
@@ -256,16 +260,19 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.welfare` | `systems/leave.ts` | systems/leave.ts | — | — | school.welfare_decide | 2 |
 | `school.welfare_decide` | `systems/leave.ts` | systems/leave.ts | — | — | medical; school.leave_appeal | 0 |
 | `tax.amended` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 0 |
-| `tax.due` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 0 |
+| `tax.due` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute; tax.three_year | 0 |
+| `tax.federal_lien` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; startedAt; nextDue; payBy; why; and 3 more | Yes | tax.federal_lien; tax.notice; short; and 4 more | 2 |
 | `tax.notice` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 6 |
 | `tax.plan_decide` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; why | — | — | 0 |
 | `tax.plan_default` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; nextDue | Yes | tax.plan_payment; tax.refund; tax.amended | 0 |
 | `tax.plan_payment` | `systems/taxreturn.ts` | systems/taxreturn.ts | nextDue; status; defaultBy | Yes | tax.plan_payment; tax.plan_default | 2 |
 | `tax.refund` | `systems/taxreturn.ts` | systems/statetax.ts; systems/taxreturn.ts | taxPlan | Yes | short; tax.plan_decide | 3 |
 | `tax.season` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.season; tax.due | 2 |
+| `tax.state_lien` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_lien | 6 |
 | `tax.state_nonfiler` | `systems/taxreturn.ts` | systems/statetax.ts | — | — | — | 2 |
-| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 6 |
+| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 7 |
 | `tax.state_plan_end` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 0 |
-| `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | nextDue | Yes | tax.state_plan_payment | 0 |
+| `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | status; why; nextDue | Yes | tax.state_plan_payment | 0 |
 | `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 2 |
+| `tax.three_year` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | — | 2 |
 | `world.tick` | `world/world.ts` | index.ts; world/world.ts | — | — | world.tick | 0 |

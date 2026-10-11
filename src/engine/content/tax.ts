@@ -136,6 +136,23 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   // New York City's resident income tax, a single filer's brackets (NY Form IT-201 instructions, NYC rate schedule;
   // the rates have stood since 2017). Until 2026-09-27 SLATE had none, and a New Yorker paid only the state's.
   { jurisdictionCode: 'US-NY-newyork', label: 'New York City Resident Income Tax', kind: 'progressive', brackets: brackets([[0, 0.03078], [12_000, 0.03762], [25_000, 0.03819], [50_000, 0.03876]]), standardDeduction: 8_000_00, effectiveFrom: YEAR(2018), note: APPROX },
+  // The same for the boroughs SLATE keeps by name (from 2026-10-11: until then Brooklyn, Queens, Manhattan and the Bronx
+  // paid New York State's alone; all five are New York City for its tax, per DTF, research-local-income-taxes.json).
+  ...['brooklyn', 'queens', 'manhattan', 'thebronx'].map((b): IncomeTaxRule => ({ jurisdictionCode: `US-NY-${b}`, label: 'New York City Resident Income Tax', kind: 'progressive', brackets: brackets([[0, 0.03078], [12_000, 0.03762], [25_000, 0.03819], [50_000, 0.03876]]), standardDeduction: 8_000_00, effectiveFrom: YEAR(2018), note: APPROX })),
+  // Philadelphia's resident Wage and Earnings Tax, which changes each 1 July: a calendar year's rate here is its two
+  // halves' mean, SLATE's reading of a year's income as earned evenly (3.74% to June 2026 and 3.735% after; 3.73% from
+  // July 2027). No deduction. Collected by the city's Department of Revenue, not the state (research-local-income-taxes.json).
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0375 + 0.0374) / 2, standardDeduction: 0, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: 'Philadelphia Department of Revenue: 3.75% to June 2025, 3.74% from July; the year’s mean, SLATE’s reading.' },
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0374 + 0.03735) / 2, standardDeduction: 0, effectiveFrom: YEAR(2026), effectiveTo: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.74% to June 2026, 3.735% from July; the year’s mean, SLATE’s reading.' },
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.03735 + 0.0373) / 2, standardDeduction: 0, effectiveFrom: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.735% to June 2027, 3.73% from July; the year’s mean, SLATE’s reading, held after.' },
+  // Columbus's city income tax, 2.5% (2025 confirmed; 2026 and on not restated, held), collected by its Income Tax Division.
+  { jurisdictionCode: 'US-OH-columbus', label: 'Columbus City Income Tax', kind: 'flat', brackets: [], flatRate: 0.025, standardDeduction: 0, effectiveFrom: YEAR(2025), note: 'City of Columbus Income Tax Division: 2.5% (2025 confirmed; held after, SLATE’s assumption).' },
+  // Portland's two regional taxes, collected together by the City of Portland's Revenue Division: Metro's Supportive
+  // Housing Services tax, 1% over $125,000 (2025), $128,000 (2026), $132,000 (2027); Multnomah County's Preschool For All
+  // tax, 1.5% over $125,000 and 1.5% more over $250,000. Kept as one schedule; none below $125,000.
+  { jurisdictionCode: 'US-OR-portland', label: 'Metro SHS And Multnomah PFA Taxes', kind: 'progressive', brackets: brackets([[0, 0], [125_000, 0.025], [250_000, 0.04]]), standardDeduction: 0, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: 'City of Portland Revenue Division: SHS 1% over $125,000 (2025); PFA 1.5% over $125,000 and 1.5% more over $250,000.' },
+  { jurisdictionCode: 'US-OR-portland', label: 'Metro SHS And Multnomah PFA Taxes', kind: 'progressive', brackets: brackets([[0, 0], [125_000, 0.015], [128_000, 0.025], [250_000, 0.04]]), standardDeduction: 0, effectiveFrom: YEAR(2026), effectiveTo: YEAR(2027), note: 'City of Portland Revenue Division: SHS 1% over $128,000 (2026); PFA 1.5% over $125,000 and 1.5% more over $250,000.' },
+  { jurisdictionCode: 'US-OR-portland', label: 'Metro SHS And Multnomah PFA Taxes', kind: 'progressive', brackets: brackets([[0, 0], [125_000, 0.015], [132_000, 0.025], [250_000, 0.04]]), standardDeduction: 0, effectiveFrom: YEAR(2027), note: 'City of Portland Revenue Division: SHS 1% over $132,000 (2027); PFA 1.5% over $125,000 and 1.5% more over $250,000; its increase delayed to 2028, not assumed.' },
   { jurisdictionCode: 'US-NY', label: 'New York State Income Tax', kind: 'progressive', brackets: brackets([[0, 0.04], [8_500, 0.045], [11_700, 0.0525], [13_900, 0.055], [80_650, 0.06], [215_400, 0.0685], [1_077_550, 0.0965], [5_000_000, 0.103]]), standardDeduction: 8_000_00, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-GA', label: 'Georgia Income Tax', kind: 'flat', brackets: [], flatRate: 0.0539, standardDeduction: 12_000_00, effectiveFrom: YEAR(2024), note: APPROX },
   // 4.99% for 2026, by Georgia's Department of Revenue (researched 2026-09-27).
@@ -154,6 +171,26 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'US-PA', label: 'Pennsylvania Income Tax', kind: 'flat', brackets: [], flatRate: 0.0307, standardDeduction: 0, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-MI', label: 'Michigan Income Tax', kind: 'flat', brackets: [], flatRate: 0.0425, standardDeduction: 0, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-OH', label: 'Ohio Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [26_050, 0.0275], [100_000, 0.035]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
+  // Indiana, the District of Columbia and Oklahoma, from the remaining-gaps pass of 2026-10-11
+  // (docs/research/world/research-state-tax-in-dc-ok.json). Until then each had a city in SLATE and no rule: a life
+  // there paid only the IRS. Indiana's is a flat rate by year, 3.0% for 2025, 2.95% for 2026, 2.9% from 2027 to 2029
+  // (IC 6-3-2-1), on federal AGI less the $1,000 personal exemption (it has no standard deduction), kept here as the
+  // deduction. Its county tax is the city's own rule below.
+  { jurisdictionCode: 'US-IN', label: 'Indiana Income Tax', kind: 'flat', brackets: [], flatRate: 0.03, standardDeduction: 1_000_00, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: 'IC 6-3-2-1: 3.0% for 2025, less the $1,000 personal exemption.' },
+  { jurisdictionCode: 'US-IN', label: 'Indiana Income Tax', kind: 'flat', brackets: [], flatRate: 0.0295, standardDeduction: 1_000_00, effectiveFrom: YEAR(2026), effectiveTo: YEAR(2027), note: 'IC 6-3-2-1: 2.95% for 2026, less the $1,000 personal exemption.' },
+  { jurisdictionCode: 'US-IN', label: 'Indiana Income Tax', kind: 'flat', brackets: [], flatRate: 0.029, standardDeduction: 1_000_00, effectiveFrom: YEAR(2027), note: 'IC 6-3-2-1: 2.9% from 2027 to 2029, less the $1,000 personal exemption; cuts from 2030 only on certified revenue growth, not assumed.' },
+  // Marion County's income tax, 2.02% for 2025 and 2026, by county of residence on 1 January, on the state's base (Indiana
+  // AGI less exemptions), filed on the state's return and collected by Indiana's DOR. The 2027 rate isn't published:
+  // 2026's is held, SLATE's assumption.
+  { jurisdictionCode: 'US-IN-indianapolis', label: 'Marion County Income Tax', kind: 'flat', brackets: [], flatRate: 0.0202, standardDeduction: 1_000_00, effectiveFrom: YEAR(2025), note: 'Indiana DOR Departmental Notice 1: Marion County 2.02% for 2025 and 2026; 2027 held at 2026’s, SLATE’s assumption.' },
+  // The District's brackets, unchanged since 2022 (DC Code 47-1806.03), on federal AGI less the $15,000 standard
+  // deduction (2025). The 2026 deduction is $15,000 indexed to local inflation, and the indexed figure isn't published:
+  // $15,000 is held, SLATE's assumption.
+  { jurisdictionCode: 'US-DC', label: 'District Of Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.04], [10_000, 0.06], [40_000, 0.065], [60_000, 0.085], [250_000, 0.0925], [500_000, 0.0975], [1_000_000, 0.1075]]), standardDeduction: 15_000_00, effectiveFrom: YEAR(2022), note: 'DC Code 47-1806.03; the $15,000 standard deduction of 2025, held for 2026 and on (its inflation-indexed 2026 figure unpublished), SLATE’s assumption.' },
+  // Oklahoma's, 2025's six steps, then 2026's four (HB 2764, 68 O.S. 2355); no further cut certified for 2027, so 2026's
+  // stand. A single filer's $6,350 standard deduction and $1,000 exemption, inferred for 2026 from the OW-2 tables.
+  { jurisdictionCode: 'US-OK', label: 'Oklahoma Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0025], [1_000, 0.0075], [2_500, 0.0175], [3_750, 0.0275], [4_900, 0.0375], [7_200, 0.0475]]), standardDeduction: 7_350_00, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: '68 O.S. 2355: 2025’s six steps, single; the $6,350 standard deduction and $1,000 exemption.' },
+  { jurisdictionCode: 'US-OK', label: 'Oklahoma Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [3_750, 0.025], [4_900, 0.035], [7_200, 0.045]]), standardDeduction: 7_350_00, effectiveFrom: YEAR(2026), note: 'HB 2764, 68 O.S. 2355: 2026’s four steps, single, standing for 2027 with no cut certified; the $6,350 deduction and $1,000 exemption (2026’s inferred from the OW-2 tables).' },
   // No state income tax.
   { jurisdictionCode: 'US-TX', label: 'Texas (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'Texas levies no personal income tax.' },
   { jurisdictionCode: 'US-FL', label: 'Florida (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'Florida levies no personal income tax.' },
@@ -484,6 +521,50 @@ export function computeAnnualTax(
     lines,
   };
 }
+
+/**
+ * Who collects a city's income tax, and what it asks of those who only work there (from the remaining-gaps pass of
+ * 2026-10-11; research-local-income-taxes.json, research-state-tax-in-dc-ok.json). New York City's and Marion County's
+ * are filed on the state's return and collected by the state; Philadelphia's, Columbus's and Portland's are each the
+ * city's own, an authority apart. A nonresident owes Philadelphia's lower rate, Columbus's 2.5% and Marion County's
+ * 2.02% on wages earned there; New York City taxes no nonresident; Portland's start over a threshold no wage of SLATE's
+ * reaches. Columbus credits its residents in full, to 2.5%, for a work city's tax on the same wages. Denver's
+ * Occupational Privilege Tax is $5.75 a month withheld by the employer where a month's Denver earnings reach $500, filed
+ * by nobody (`DENVER_OPT`).
+ */
+export const LOCAL_TAX: Readonly<Record<string, { collector: 'state' | 'city'; nonresident?: Readonly<Record<number, number>>; creditUpTo?: number }>> = {
+  'us-ny-newyork': { collector: 'state' }, 'us-ny-brooklyn': { collector: 'state' }, 'us-ny-queens': { collector: 'state' }, 'us-ny-manhattan': { collector: 'state' }, 'us-ny-thebronx': { collector: 'state' },
+  'us-in-indianapolis': { collector: 'state', nonresident: { 2025: 0.0202, 2026: 0.0202 } },
+  'us-pa-philadelphia': { collector: 'city', nonresident: { 2025: (0.0344 + 0.0343) / 2, 2026: (0.0343 + 0.03425) / 2, 2027: (0.03425 + 0.0342) / 2 } },
+  'us-oh-columbus': { collector: 'city', nonresident: { 2025: 0.025 }, creditUpTo: 0.025 },
+  'us-or-portland': { collector: 'city' },
+};
+
+/**
+ * The US cities in SLATE's tables with no local income tax on a resident's wages, each confirmed
+ * (research-local-income-taxes.json, 2026-10-11): California's barred by R&TC 17041.5 (San Francisco's business taxes
+ * fall on employers), Seattle's by RCW 36.65.030, Tennessee's, Nevada's, Florida's and Illinois's by their constitutions,
+ * Phoenix's since 1972, Hudson's outside New York City and Yonkers, the District's own tax its only layer, and the rest by
+ * the Tax Foundation's list (a secondary source). With `LOCAL_TAX` and Denver's, every US city in the tables is
+ * accounted for (`tests/tax-coverage.test.ts`).
+ */
+export const NO_LOCAL_TAX: readonly string[] = [
+  'us-ca-losangeles', 'us-ca-burbank', 'us-ca-santamonica', 'us-ca-sanfrancisco', 'us-ca-sandiego', 'us-ca-sanjose', 'us-ca-bakersfield',
+  'us-ga-atlanta', 'us-tx-austin', 'us-tx-dallas', 'us-tx-houston', 'us-tx-sanantonio', 'us-tx-fortworth', 'us-tx-elpaso',
+  'us-fl-miami', 'us-fl-jacksonville', 'us-il-chicago', 'us-nv-lasvegas', 'us-wa-seattle', 'us-nm-santafe', 'us-la-neworleans',
+  'us-nc-wilmington', 'us-nc-charlotte', 'us-tn-nashville', 'us-ma-boston', 'us-az-phoenix', 'us-hi-honolulu',
+  'us-ct-newhaven', 'us-ct-litchfield', 'us-ny-hudson', 'us-dc-washington', 'us-ok-oklahomacity',
+];
+
+/** A local rate for a year: its own, or the latest before it, held (SLATE's assumption where a later year isn't published). */
+export function localRate(byYear: Readonly<Record<number, number>> | undefined, year: number): number {
+  if (!byYear) return 0;
+  const years = Object.keys(byYear).map(Number).filter((y) => y <= year).sort((a, b) => b - a);
+  return years.length ? byYear[years[0]!]! : 0;
+}
+
+/** Denver's Occupational Privilege Tax on an employee: $5.75 for each month their Denver earnings reach $500. */
+export const DENVER_OPT = { cityId: 'us-co-denver', monthly: 5_75, threshold: 500_00, source: 'Denver Treasury, Occupational Privilege Tax (research-local-income-taxes.json)' } as const;
 
 export function salesTaxRate(cityId: string, at: number, category: string): number {
   const rule = resolveRule(SALES_TAX_RULES, cityId, at);

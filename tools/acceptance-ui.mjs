@@ -332,9 +332,13 @@ if (DIR && existsSync(`${DIR}/tax.json`)) {
     await pay.locator('xpath=ancestor::div[contains(@class,"row")][1]').getByRole('button', { name: /^Pay$/ }).click(); await wait(900);
     const paid = await toast();
     must(/Paid Connecticut DRS/.test(paid), paid);
+    // The plan asked for, and said: until the remaining-gaps pass of 2026-10-11 the step passed with the button absent.
     const ask = page.getByRole('button', { name: /^Ask For The Plan$/ }).first();
-    if (await ask.count() && !(await ask.isDisabled())) { await ask.click(); await wait(1200); }
-    return `${paid} / ${await toast()}`;
+    must(await ask.count() && !(await ask.isDisabled()), 'Ask For The Plan not available');
+    await ask.click(); await wait(1200);
+    const asked = await toast();
+    must(/Asked: \$[\d,.]+ a month, decided by/.test(asked), `asked: ${asked}`);
+    return `${paid} / ${asked}`;
   });
   await overflow('papers tax (save)');
   await step('[save: tax-plan scenario] papers: the IRS plan says it covers federal tax only', async () => {
@@ -365,6 +369,57 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
   });
   await overflow('school casting (save)');
 }
+// From the remaining-gaps pass of 2026-10-11: the rehearsal controls carried out, not only found greyed, from a save the
+// `rehearsal` scenario wrote mid-rehearsal with the student's own work on the part left undone.
+const pctIn = (s) => Number((s.match(/(\d+)%/) ?? [])[1] ?? NaN);
+if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
+  await step('[save: rehearsal scenario] casting: Learn The Part, and the lines rise on the screen', async () => {
+    await openSave('rehearsal.json');
+    await rail('School'); await tab('Casting');
+    const lines = page.getByText(/^Lines$/).first().locator('xpath=..');
+    const before = pctIn(await lines.innerText());
+    const learn = page.getByRole('button', { name: /^Learn The Part$/ }).first();
+    must(await learn.count() && !(await learn.isDisabled()), 'Learn The Part not available');
+    await learn.click(); await wait(1200);
+    const said = await toast();
+    must(/An hour on the part: lines at \d+%/.test(said), `no confirmation: ${said}`);
+    const after = pctIn(await lines.innerText());
+    must(after > before, `lines ${before}% → ${after}%`);
+    return `${said}; lines ${before}% → ${after}%`;
+  });
+  await step('[save: rehearsal scenario] casting: Work On The Note, and the note is marked worked on', async () => {
+    const work = page.getByRole('button', { name: /^Work On The Note$/ }).first();
+    must(await work.count() && !(await work.isDisabled()), 'Work On The Note not available');
+    await work.click(); await wait(1200);
+    const said = await toast();
+    must(/Worked on: the next call will show it/.test(said), `no confirmation: ${said}`);
+    must(await page.getByText(/· Worked On/).count(), 'the note isn’t marked worked on');
+    must(await work.isDisabled(), 'still offered after it was done');
+    return said;
+  });
+  await step('[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call', async () => {
+    const choose = page.getByRole('button', { name: /^Play It This Way$/ }).first();
+    must(await choose.count(), 'no chooser');
+    // The first way the material allows: a radio not marked as not fitting.
+    const options = page.locator('table input[type=radio]');
+    must(await options.count(), 'no ways to choose from');
+    await options.first().check(); await wait(300);
+    must(!(await choose.isDisabled()), 'Play It This Way still greyed after a choice');
+    await choose.click(); await wait(1200);
+    const said = await toast();
+    must(/Chosen: rehearsed in to \d+%/.test(said), `no confirmation: ${said}`);
+    const prepAt = async () => pctIn(((await page.getByText(/Your choice now is rehearsed in to \d+%/).first().innerText().catch(() => '')).match(/rehearsed in to \d+%/) ?? [''])[0]);
+    const before = await prepAt();
+    // On to the next call, gone to as a player does: Advance, and Go at the commitment. The save is a Saturday and its
+    // next call the Tuesday afternoon, so up to five mornings: three stopped short of it (run of 2026-10-11).
+    for (let i = 0; i < 5 && (await prepAt()) <= before; i += 1) { await advance('Tomorrow Morning'); await rail('School'); await tab('Casting'); }
+    const after = await prepAt();
+    must(after > before, `rehearsed in ${before}% → ${after}%`);
+    return `${said}; then at the call: ${before}% → ${after}%`;
+  });
+  await overflow('school casting (rehearsal save)');
+}
+
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
 if (DIR && existsSync(`${DIR}/withdraw.json`)) {
   await step('[save: withdraw scenario] school: the class left goes on, and says so', async () => {
@@ -387,6 +442,70 @@ if (DIR && existsSync(`${DIR}/nonfiler.json`)) {
     return (await said.innerText()).slice(0, 160);
   });
   await overflow('papers tax (nonfiler save)');
+}
+// From the remaining-gaps pass of 2026-10-11: a lien's lifecycle and a plan's recovery, carried out through the screens.
+const lienLine = () => page.getByText(/Connecticut Tax Lien · /).first();
+if (DIR && existsSync(`${DIR}/lien.json`)) {
+  await step('[save: lien scenario] papers: Connecticut’s lien filed, its release refused with why until it’s paid', async () => {
+    await openSave('lien.json');
+    await rail('Papers'); await tab('Tax Returns');
+    must(await lienLine().count(), 'no lien shown');
+    const said = await lienLine().innerText();
+    must(/· Filed\./.test(said) && /recorded with the town clerk/.test(said), `lien said: ${said.slice(0, 200)}`);
+    const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
+    must(await ask.isDisabled(), 'release offered before it’s paid');
+    const why = page.getByText(/once the balance it secures is paid in full/).first();
+    must(await why.count(), 'greyed with no reason on the screen');
+    return `${said.slice(0, 120)} / ${(await why.innerText()).slice(0, 120)}`;
+  });
+  await step('[save: lien scenario] papers: paid in full, then its release asked, and the lien says so', async () => {
+    const pay = page.locator('[id^="tax-pay-us-ct-"]').first();
+    must(await pay.count(), 'no Connecticut pay field');
+    await pay.locator('xpath=ancestor::div[contains(@class,"row")][1]').getByRole('button', { name: /^Pay$/ }).click(); await wait(900);
+    const paid = await toast();
+    must(/Paid Connecticut DRS in full/.test(paid), `paid: ${paid}`);
+    must(/· Paid: Release To Come\./.test(await lienLine().innerText()), `lien: ${(await lienLine().innerText()).slice(0, 160)}`);
+    const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
+    must(!(await ask.isDisabled()), 'release still greyed after payment');
+    await ask.click(); await wait(900);
+    const asked = await toast();
+    must(/Asked: released by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(asked), `asked: ${asked}`);
+    must(/To be released by/.test(await lienLine().innerText()), 'no release date on the lien');
+    must(await ask.isDisabled(), 'release still offered once asked');
+    return `${paid} / ${asked}`;
+  });
+  await step('[save: lien scenario] save and exit, Continue, and weeks on: released', async () => {
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('Papers'); await tab('Tax Returns');
+    must(/To be released by/.test(await lienLine().innerText()), 'the request didn’t survive the reload');
+    for (let i = 0; i < 8 && !/· Released\./.test(await lienLine().innerText()); i += 1) { await advance('One Week'); await rail('Papers'); await tab('Tax Returns'); }
+    const said = await lienLine().innerText();
+    must(/· Released\. .*Released [A-Z][a-z]+ \d{1,2}, \d{4}/s.test(said), `lien: ${said.slice(0, 200)}`);
+    must(!(await page.getByRole('button', { name: /^Ask For Its Release$/ }).count()) || await page.getByRole('button', { name: /^Ask For Its Release$/ }).first().isDisabled(), 'release still offered');
+    return said.slice(0, 200);
+  });
+  await overflow('papers tax (lien save)');
+}
+if (DIR && existsSync(`${DIR}/missed-plan.json`)) {
+  await step('[save: missed-plan scenario] papers: the IRS plan in default, caught up, and back in force', async () => {
+    await openSave('missed-plan.json');
+    await rail('Papers'); await tab('Tax Returns');
+    must(await page.getByText(/^Caught Up By$/).count(), 'no Caught Up By date');
+    const catchUp = page.getByRole('button', { name: /^Catch Up$/ }).first();
+    must(await catchUp.count() && !(await catchUp.isDisabled()), 'Catch Up not available');
+    await catchUp.click(); await wait(900);
+    const said = await toast();
+    must(/Caught up: \$[\d,.]+ paid\./.test(said), `no confirmation: ${said}`);
+    must(!(await page.getByRole('button', { name: /^Catch Up$/ }).count()), 'Catch Up still offered');
+    must(await page.getByText(/^Next Payment$/).count(), 'no next payment shown');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('Papers'); await tab('Tax Returns');
+    must(!(await page.getByRole('button', { name: /^Catch Up$/ }).count()) && await page.getByText(/^Next Payment$/).count(), 'not in force after the reload');
+    return said;
+  });
+  await overflow('papers tax (missed-plan save)');
 }
 if (PHONE) {
   await step('phone: the drawer opens and closes, and Home is reachable from it', async () => {

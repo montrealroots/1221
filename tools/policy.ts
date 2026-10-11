@@ -53,6 +53,12 @@ export function evening(sim: Simulation) {
  * touched the part: its nights went off, and the faculty read the term as work falling short. That was the tool, not
  * the game: a player at eight was often at a call, and the part is the player's to learn.
  */
+/**
+ * What the policy leaves to the player (from 2026-10-11): with `ownWork` off, the part, the blocking and the director's
+ * note are left undone, so a save written mid-rehearsal still has them to do (`tools/scenarios.ts rehearsal`).
+ */
+export const POLICY = { ownWork: true };
+
 export function freeHour(sim: Simulation): boolean {
   const person = sim.player;
   if (occupiedAt(sim, sim.now) || (person.awakeSince ?? 0) > sim.now || person.wellbeing.energy < 30) return false;
@@ -64,7 +70,7 @@ export function freeHour(sim: Simulation): boolean {
     if (r.dueBy !== undefined && left > (r.dueBy - sim.now) / 86_400_000 - 3) sim.execute({ kind: 'school.extend_incomplete', payload: { key } });
     if (!makeUpRefusal(sim, person, key) && sim.execute({ kind: 'school.make_up', payload: { key } }).ok) return true;
   }
-  for (const which of WHICH) {
+  for (const which of POLICY.ownWork ? WHICH : []) {
     for (const [kind, what] of [['school.work_note', 'note'], ['school.review_blocking', 'blocking'], ['school.learn_part', 'part']] as const) {
       if (!ownWorkRefusal(sim, person, which, what) && sim.execute({ kind, payload: { which } }).ok) return true;
     }

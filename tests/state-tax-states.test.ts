@@ -186,7 +186,7 @@ describe('each state by its own numbers', () => {
     // Connecticut's is computed apart from the table (`connecticutTax`).
     taxed.add('us-ct');
     const reached = new Set((CITIES.all() as { parentId?: string }[]).map((c) => c.parentId ?? '').filter((s) => taxed.has(s)));
-    expect([...reached].sort()).toEqual(['us-az', 'us-ca', 'us-co', 'us-ct', 'us-ga', 'us-hi', 'us-il', 'us-la', 'us-ma', 'us-nc', 'us-nm', 'us-ny', 'us-oh', 'us-or', 'us-pa']);
+    expect([...reached].sort()).toEqual(['us-az', 'us-ca', 'us-co', 'us-ct', 'us-dc', 'us-ga', 'us-hi', 'us-il', 'us-in', 'us-la', 'us-ma', 'us-nc', 'us-nm', 'us-ny', 'us-oh', 'us-ok', 'us-or', 'us-pa']);
     for (const s of reached) expect(STATE_TAX[s as keyof typeof STATE_TAX], s).toBeDefined();
   });
 

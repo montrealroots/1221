@@ -16,7 +16,7 @@
  */
 import type { Money } from '../core/money';
 
-export type StateCode = 'us-ct' | 'us-ny' | 'us-ca' | 'us-az' | 'us-co' | 'us-ga' | 'us-hi' | 'us-il' | 'us-la' | 'us-ma' | 'us-nc' | 'us-nm' | 'us-or' | 'us-pa' | 'us-oh';
+export type StateCode = 'us-ct' | 'us-ny' | 'us-ca' | 'us-az' | 'us-co' | 'us-ga' | 'us-hi' | 'us-il' | 'us-la' | 'us-ma' | 'us-nc' | 'us-nm' | 'us-or' | 'us-pa' | 'us-oh' | 'us-in' | 'us-dc' | 'us-ok' | 'us-pa-philadelphia' | 'us-oh-columbus' | 'us-or-portland';
 
 /** The parts a payment goes to, in order. */
 export type Part = 'tax' | 'penalty' | 'interest';
@@ -37,7 +37,9 @@ export interface StateRules {
    */
   interest: { yearly: number; how: 'daily' | 'daily-simple' | 'monthly-simple' | 'yearly'; onPenalty: boolean; raised?: { yearly: number; afterDays: number; unlessPlan: boolean };
     /** On penalties too once collection reaches this step (Ohio's, once the debt is certified to its Attorney General). */
-    onPenaltyFromStep?: number };
+    onPenaltyFromStep?: number;
+    /** A rate for a calendar year, where it changes by year (Indiana's 6%, 7%, 6% for 2025 to 2027), simple by the day. */
+    byYear?: Readonly<Record<number, number>> };
   /**
    * The late-payment penalty, on tax unpaid at the due date: a one-time share, then a share a month or part, to a cap,
    * for at most so many months, and not less than `minimum` once it runs (Colorado's $5). Or by `steps`, the share
@@ -78,7 +80,28 @@ export interface StateRules {
    * What collection adds as it goes: at the notice of index `step` (the first levy at the notices' length), a share of
    * the tax or of everything owed, or an amount, smaller below a balance (Illinois's $30 under $1,000, else $100).
    */
-  charges?: readonly { step: number; share?: number; of?: 'tax' | 'owed'; flat?: Money; under?: { below: Money; flat: Money }; label: string }[];
+  charges?: readonly { step: number; share?: number; of?: 'tax' | 'owed'; flat?: Money; under?: { below: Money; flat: Money }; atLeast?: Money; atMost?: Money; label: string }[];
+  /**
+   * A lien for unpaid tax (from the remaining-gaps pass of 2026-10-11; research-state-tax-liens-a.json, -b.json), recorded
+   * where it says, at the collection step it says (`atStep`, the notices' index; the first levy at their length), after a
+   * notice of intent where there is one; or when a plan asks it (`plan`). Its fees are the taxpayer's where published;
+   * none is charged where none was found. Released so many days after payment in full (`releaseDays`, SLATE's 30 where
+   * the state's wasn't found), or on the taxpayer's request where they must ask or record it. One filed on an assessment
+   * their own return shows was nothing is withdrawn as filed in error on request, its fees back. No credit score is kept,
+   * so it has none; the effect named is the state's own words.
+   */
+  lien?: {
+    name: string;
+    atStep?: number;
+    intent?: { title: string; days: number };
+    recordedAt: string;
+    fee?: Money; releaseFee?: Money;
+    releaseDays: number; releaseAssumed: boolean;
+    releaseOnRequest?: string;
+    plan?: { monthsOver?: number; over?: Money };
+    error: { how: string; days: number; daysAssumed: boolean };
+    effect: string;
+  };
   /** Its payment plan for an individual. */
   plan: {
     name: string;
@@ -105,6 +128,24 @@ export interface StateRules {
     beyond?: string;
     /** Offered only once collection reaches this step, and by whom (Ohio's Attorney General, once the debt is certified to it). */
     afterStep?: { step: number; who: string };
+    /** The most months by what's owed (Indiana's 12 to $1,000, 24 to $5,000, 36 above). */
+    tiers?: readonly { upTo?: Money; maxMonths: number }[];
+    /**
+     * A share paid down with the request: the District's 10%, required; Louisiana's 20%, which "may be required" at the
+     * secretary's discretion, so the taxpayer's to offer and never asked by SLATE; Pennsylvania's and New Mexico's
+     * optional, any amount.
+     */
+    downPayment?: { share?: number; required: boolean; why: string };
+    /**
+     * A longer arrangement beyond the plan's own terms (from 2026-10-11): Pennsylvania's extended plan on its REV-488,
+     * Louisiana's formal agreement, New Mexico's thirteen to 72 months. Asked for where the plan refuses by its length, its
+     * balance, or (Pennsylvania's) a plan already in force; with the financial statement the state asks, which SLATE fills
+     * from the player's own records, and the lien it requires.
+     */
+    long?: {
+      name: string; maxMonths: number; maxAssumed: boolean; over?: Money; alreadyOnPlan?: boolean;
+      statement?: string; lien?: boolean; decideDays: number; decideAssumed: boolean; how: string;
+    };
   };
   /** The share of a year's refund a state keeps for another year's balance first: all of it (each state's offset law). */
   offsetsOwnRefunds: true;
@@ -129,6 +170,14 @@ export interface StateRules {
     /** A share of the tax, held between `atLeast` and `atMost`; an amount; or a floor on the whole penalty (Connecticut's $50). */
     adds?: readonly { share?: number; atLeast?: Money; atMost?: Money; flat?: Money; minPenalty?: Money; label: string }[];
   };
+  /**
+   * Oregon's penalty for three years running unfiled (ORS 305.992, from the remaining-gaps pass of 2026-10-11;
+   * research-state-tax-arrangements.json): no return of their own for three consecutive years with tax to file for, by the
+   * third's due date with its extension, adds this share of each year's net tax, a year's penalties together held to its
+   * tax; a state's own assessment isn't a return. Waived on a written request, before full payment or within a year
+   * after, by its schedule: 70% filed before any notice, 50% after a demand, 25% after an assessment (OAR 150-305-0068).
+   */
+  threeYear?: { share: number; extensionMonths: number; waiver: { beforeNotice: number; afterDemand: number; afterAssessment: number }; windowDays: number };
   /** When a refund comes, SLATE's estimate where the state's wasn't researched. */
   refundDays: number;
   source: string;
@@ -176,6 +225,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       adds: [{ minPenalty: 50_00, label: 'The Penalty For A Return DRS Made, 10% Or $50, The Greater' }],
     },
     refundDays: 21,
+    lien: { name: 'Connecticut Tax Lien', atStep: 1, recordedAt: 'the town clerk’s land records and the Secretary of the State’s UCC filings', releaseDays: 30, releaseAssumed: true, releaseOnRequest: 'DRS issues a release certificate on request, for you to record', error: { how: 'DRS releases it with a statement that it was filed in error', days: 30, daysAssumed: true }, effect: 'It takes priority over liens recorded after it.' },
     source: 'Conn. Gen. Stat. 12-735, 12-39h, 12-35, 12-35f, 12-729, 12-739; portal.ct.gov/drs (payment plans, refund offsets, non-filers); research-state-tax-collection.json and -2b.json',
   },
   'us-ny': {
@@ -219,6 +269,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: true,
     },
     refundDays: 21,
+    lien: { name: 'New York Tax Warrant', atStep: 2, recordedAt: 'the Department of State’s statewide filing, with a copy to the county clerk', fee: 0, releaseDays: 30, releaseAssumed: true, error: { how: 'the warrant is vacated', days: 30, daysAssumed: true }, effect: 'It may affect buying or selling real property.' },
     source: 'NY Tax Law 681, 685, 689, 697(j), 1312(a); tax.ny.gov (interest rates, IPA, collection, Pub 131, refund offsets, AU-222); research-state-tax-collection.json and -2b.json',
   },
   'us-ca': {
@@ -261,6 +312,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       adds: [{ share: 0.25, label: 'The Demand Penalty, 25% Of The Tax (R&TC 19133)' }, { flat: 143_00, label: 'The Filing Enforcement Fee' }],
     },
     refundDays: 21,
+    lien: { name: 'Notice Of State Tax Lien', atStep: 2, intent: { title: 'California Intends To File A Lien', days: 30 }, recordedAt: 'the county recorder and the Secretary of State', fee: 1000, releaseDays: 40, releaseAssumed: false, error: { how: 'released with a statement of error where the balance was resolved before it was recorded', days: 30, daysAssumed: true }, effect: 'It may affect buying, selling or refinancing property, and getting a loan.' },
     source: 'Cal. R&TC 19101, 19131, 19132, 19133, 19254, 19521; ftb.ca.gov (interest rates, payment plans, collection, FTB 1102, FTB 4600, FTB 4940 PC); research-state-tax-collection.json and -2b.json',
   },
   'us-az': {
@@ -296,6 +348,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax (42-1125(B))' }],
     },
     refundDays: 21,
+    lien: { name: 'Arizona Tax Lien', atStep: 1, recordedAt: 'the county recorder', releaseDays: 21, releaseAssumed: false, error: { how: 'withdrawn where it was filed prematurely (A.R.S. 42-1153(B))', days: 30, daysAssumed: true }, effect: 'It takes priority against later purchasers and creditors.' },
     source: 'A.R.S. 42-1109, 42-1123, 42-1125; azdor.gov (payment arrangements, collections, Pub 2); research-state-tax-collection-2a.json',
   },
   'us-co': {
@@ -330,6 +383,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: true,
     },
     refundDays: 21,
+    lien: { name: 'Colorado Judgment Lien', atStep: 3, recordedAt: 'the county clerk and recorder, by a district court judgment', releaseDays: 30, releaseAssumed: true, releaseOnRequest: 'DOR gives you a Release of Lien to record', error: { how: 'Colorado’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'Assets can’t be sold until the debt is paid.' },
     source: 'C.R.S. 39-21-109, 39-21-118, 39-22-621; tax.colorado.gov (interest rates, payment plans, collections, wage garnishments); research-state-tax-collection-2a.json',
   },
   'us-ga': {
@@ -368,6 +422,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: true,
     },
     refundDays: 21,
+    lien: { name: 'State Tax Execution', atStep: 2, recordedAt: 'the clerk of superior court', releaseDays: 5, releaseAssumed: false, error: { how: 'the execution is withdrawn', days: 30, daysAssumed: true }, effect: 'It hampers transferring property.' },
     source: 'O.C.G.A. 48-2-40, 48-7-57, 48-7-86; dor.georgia.gov (payment plans, letters, taxpayer bill of rights); research-state-tax-collection-2a.json',
   },
   'us-hi': {
@@ -389,8 +444,9 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     timingAssumed: true,
     charges: [{ step: 2, flat: 50_00, label: 'The Delinquent Account Fee' }],
     // Over $100, a $50 fee; a new liability defaults it; notice before collection, whose days weren't found. The longest
-    // wasn't found: SLATE's three years. Over twelve months a lien is filed, which SLATE doesn't model.
-    plan: { name: 'Installment Agreement', min: 100_00, minMonths: 1, maxMonths: 36, monthsAssumed: true, fee: 50_00, feeAdded: true, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'Over twelve months it files a lien, which SLATE doesn’t model.' },
+    // wasn't found: SLATE's three years. Over twelve months a lien is filed, which SLATE didn't model until 2026-10-11:
+    // it's `lien.plan` below.
+    plan: { name: 'Installment Agreement', min: 100_00, minMonths: 1, maxMonths: 36, monthsAssumed: true, fee: 50_00, feeAdded: true, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'Over twelve months it files a lien.' },
     offsetsOwnRefunds: true, offsetsFor: [],
     // The department makes the return from what it has (235-107), 30 days to object to the proposed assessment. When
     // wasn't found.
@@ -400,6 +456,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: false,
     },
     refundDays: 21,
+    lien: { name: 'Hawaii Tax Lien', atStep: 2, recordedAt: 'the Bureau of Conveyances', fee: 2500, releaseFee: 2500, releaseDays: 30, releaseAssumed: true, plan: { monthsOver: 12 }, error: { how: 'Hawaii’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It takes priority, and reaches Land Court registered land.' },
     source: 'HRS 231-23, 231-39, 231-53, 235-107; tax.hawaii.gov (payment plans, collections, wage levy, N-11 Taxpayer Bill of Rights); research-state-tax-collection-2a.json',
   },
   'us-il': {
@@ -440,6 +497,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       adds: [{ share: 0.02, atLeast: 250_00, atMost: 5_000_00, label: 'The Penalty For Not Filing After Notice, 2%, At Least $250, At Most $5,000' }],
     },
     refundDays: 21,
+    lien: { name: 'State Tax Lien Registry Notice', atStep: 2, recordedAt: 'the State Tax Lien Registry', releaseDays: 30, releaseAssumed: true, error: { how: 'a release is issued for a lien filed in error', days: 30, daysAssumed: true }, effect: 'In most cases the property can’t be sold or transferred.' },
     source: '35 ILCS 5/904, 5/909, 5/911.2, 5/911.3, 735/3-2, 735/3-3; tax.illinois.gov (letters, payment plans, Pub-103); research-state-tax-collection-2a.json',
   },
   'us-la': {
@@ -465,8 +523,15 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     levy: { title: 'Louisiana Garnished Your Accounts', afterDays: 60, againDays: 91 },
     timingAssumed: true,
     // Under $25,000, up to 36 months, a $105 fee waived at $25,000 of income or less, by automatic debit; one missed
-    // payment makes the whole due; a new balance unpaid is a default. Its 20% down payment isn't modeled.
-    plan: { name: 'Installment Agreement', max: 24_999_99, minMonths: 1, maxMonths: 36, fee: 105_00, feeAdded: true, feeWaivedAtMost: 25_000_00, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'LDR asks up to 20% down, which SLATE doesn’t model.' },
+    // payment makes the whole due; a new balance unpaid is a default. Its 20% down payment wasn't modeled until
+    // 2026-10-11: it's offered, never required (`plan.downPayment`).
+    // Under $50,000 and up to 60 months informally, since the rule of September 2024 (LR 50:1293; until then $25,000 and
+    // 36 months, as SLATE had it until 2026-10-11); beyond, a formal agreement with financial information on request
+    // (R-20223), whose longest isn't published. 20% down "may be required" at the secretary's discretion (LAC
+    // 61:I.4919(B)(6)): offered, never asked by SLATE.
+    plan: { name: 'Installment Agreement', max: 49_999_99, minMonths: 1, maxMonths: 60, fee: 105_00, feeAdded: true, feeWaivedAtMost: 25_000_00, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false,
+      downPayment: { share: 0.2, required: false, why: 'LDR’s form computes 20% down, which “may be required” at the secretary’s discretion; no criterion is published, so SLATE never requires it.' },
+      long: { name: 'Formal Installment Agreement', maxMonths: 84, maxAssumed: true, over: 50_000_00, statement: 'financial information on request (R-20223)', decideDays: 30, decideAssumed: true, how: 'LDR doesn’t publish how it decides a formal agreement: SLATE’s approves one whose monthly payment fits what your statement leaves each month, over at most 84 months.' } },
     offsetsOwnRefunds: true, offsetsFor: [],
     // An estimate from the federal match, by a proposed assessment's 30 days. When wasn't found.
     nonFiler: {
@@ -475,6 +540,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: false,
     },
     refundDays: 21,
+    lien: { name: 'Louisiana Tax Lien', atStep: 1, recordedAt: 'the parish recorder of mortgages and clerk of court', releaseDays: 30, releaseAssumed: true, releaseOnRequest: 'the secretary may authorize its cancellation once paid, on your request; the cancellation fee is the parish’s, and its amount isn’t published', error: { how: 'Louisiana’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It may affect selling, refinancing or transferring property.' },
     source: 'La. R.S. 47:1601, 47:1602; revenue.louisiana.gov (RIB 26-001, R-19026, collections; a 2017 LDR presentation); research-state-tax-collection-2b.json',
   },
   'us-ma': {
@@ -507,12 +573,13 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Notice To File', title: 'Massachusetts Asks For Your Return', words: 'file within 30 days.', days: 30 },
+        { code: 'Notice Of Failure To File', title: 'Massachusetts Asks For Your Return', words: 'file a proper return within 30 days. If you don’t, DOR may assess up to double the tax (G.L. c. 62C, s. 28): it’s DOR’s discretion, it publishes no criterion for when, and SLATE’s DOR doesn’t.', days: 30 },
         { code: 'Notice Of Intent To Assess', title: 'Massachusetts Intends To Assess', words: 'worked out from what was reported; 30 days to file or ask for a conference.', days: 30 },
       ],
       lettersAssumed: true,
     },
     refundDays: 21,
+    lien: { name: 'Massachusetts Tax Lien', atStep: 2, recordedAt: 'the registry of deeds and the Secretary of the Commonwealth', fee: 0, releaseDays: 20, releaseAssumed: false, error: { how: 'Massachusetts’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It may prevent the sale or transfer of property.' },
     source: 'G.L. c. 62C, ss. 26, 32, 33; 830 CMR 62C.33.1; mass.gov (payment agreements, collections, TIR 26-5, AP 631; read from web.archive.org copies); research-state-tax-collection-2b.json',
   },
   'us-nc': {
@@ -547,6 +614,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: false,
     },
     refundDays: 21,
+    lien: { name: 'Certificate Of Tax Liability', atStep: 2, recordedAt: 'the clerk of superior court, as a judgment', releaseDays: 30, releaseAssumed: true, error: { how: 'an appeal to the Secretary (G.S. 105-242(g)); it’s withdrawn as quickly as possible', days: 30, daysAssumed: true }, effect: 'It must be resolved for a clear title.' },
     source: 'N.C.G.S. 105-236, 105-241.21, 105-243.1; ncdor.gov (installment agreements, notices, collection); research-state-tax-collection-2b.json',
   },
   'us-nm': {
@@ -567,9 +635,13 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'New Mexico Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    // Up to 12 months on TAP without a lien; longer needs one, which SLATE doesn't model. A missed payment, a new debt or
-    // a return not filed ends it.
-    plan: { name: 'Installment Agreement', minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'Thirteen to 72 months need a lien, which SLATE doesn’t model.' },
+    // Up to 12 months on TAP without a lien; longer needs one, which SLATE didn't model until 2026-10-11 (`plan.long`).
+    // A missed payment, a new debt or a return not filed ends it.
+    // Twelve installments or fewer with no lien; thirteen to 72 with a lien or security (NMSA 7-1-21; TRD's page): from
+    // 2026-10-11 the longer one too, its lien filed with it. Approved online, many automatically.
+    plan: { name: 'Installment Agreement', minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false,
+      downPayment: { required: false, why: 'TRD’s online agreement takes a down payment of your choosing.' },
+      long: { name: 'Long-Term Installment Agreement', maxMonths: 72, maxAssumed: false, lien: true, decideDays: 0, decideAssumed: true, how: 'Thirteen to 72 months, with a lien filed as its security; approved online.' } },
     offsetsOwnRefunds: true, offsetsFor: [],
     // Estimated from the IRS's data, seven years back. The demand's days weren't found.
     nonFiler: {
@@ -578,6 +650,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: true,
     },
     refundDays: 21,
+    lien: { name: 'Notice Of Claim Of Tax Lien', atStep: 2, recordedAt: 'the county clerk or the Secretary of State', fee: 0, releaseDays: 0, releaseAssumed: false, plan: { monthsOver: 12 }, error: { how: 'released where it was filed prematurely or improperly', days: 30, daysAssumed: true }, effect: 'It establishes the state’s priority among creditors.' },
     source: 'NMSA 7-1-67, 7-1-69 (FindLaw); tax.newmexico.gov (installment agreements, collections, hearing decisions); research-state-tax-collection-2b.json',
   },
   'us-or': {
@@ -587,8 +660,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     interest: { yearly: 0.08, how: 'daily-simple', onPenalty: false, raised: { yearly: 0.12, afterDays: 60, unlessPlan: false } },
     // 5% once (314.400(1)).
     payLate: { once: 0.05, monthly: 0, cap: 0.05 },
-    // 20% more filed past three months late (314.400(2)); 100% for three years running unfiled, which SLATE doesn't
-    // count.
+    // 20% more filed past three months late (314.400(2)). The 100% for three years running unfiled (314.400(5)) wasn't
+    // counted until 2026-10-11: it's threeYear below.
     fileLate: { monthly: 0, cap: 0.2, once: 0.2, afterMonths: 3, combine: 'added' },
     // Penalty, then interest, then tax (305.265(13)).
     order: ['penalty', 'interest', 'tax'], orderAssumed: false,
@@ -616,6 +689,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax' }],
     },
     refundDays: 21,
+    threeYear: { share: 1, extensionMonths: 6, waiver: { beforeNotice: 0.7, afterDemand: 0.5, afterAssessment: 0.25 }, windowDays: 365 },
+    lien: { name: 'Distraint Warrant', atStep: 2, recordedAt: 'the county clerk’s lien record', releaseDays: 30, releaseAssumed: false, error: { how: 'Oregon’s process for a warrant filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It’s the public notice of debt that attaches to real property.' },
     source: 'ORS 305.220, 305.222, 305.265, 314.400; oregon.gov/dor (payment plans, collections, bulletins); research-state-tax-collection-2b.json',
   },
   'us-pa': {
@@ -640,7 +715,11 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     timingAssumed: true,
     // Online, under $50,000 over up to twelve months, by automatic withdrawal, every return filed; not under a
     // garnishment order. Its fee, decision time and what a missed payment does weren't found.
-    plan: { name: 'Payment Plan', max: 49_999_99, minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: true, beyond: 'A larger or longer plan, or a new balance on one, needs its extended plan (REV-488), which SLATE doesn’t model.' },
+    // From 2026-10-11 its extended plan too (REV-488, the Statement of Financial Condition): over 12 months, over $50,000,
+    // or with a plan already in force. Its longest, fee and decision time aren't published (72 P.S. 3310-205 sets none).
+    plan: { name: 'Payment Plan', max: 49_999_99, minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: true,
+      downPayment: { required: false, why: 'A down payment is optional (myPATH), paid within 30 days of the request.' },
+      long: { name: 'Extended Payment Plan', maxMonths: 60, maxAssumed: true, over: 50_000_00, alreadyOnPlan: true, statement: 'a REV-488 Statement of Financial Condition', decideDays: 14, decideAssumed: true, how: 'Pennsylvania doesn’t publish how it decides an extended plan, its longest or how long it takes: SLATE’s approves one whose monthly payment fits what your statement leaves each month, over at most 60 months, in 14 days.' } },
     offsetsOwnRefunds: true, offsetsFor: [],
     // A Non-Filer Notice, 30 days to reply, then an estimated assessment, 90 days to pay or petition (72 P.S. 7338; the
     // reply's days from search excerpts of the department's answers). When the notice comes wasn't found.
@@ -653,6 +732,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       lettersAssumed: false,
     },
     refundDays: 21,
+    lien: { name: 'Pennsylvania Tax Lien', atStep: 2, recordedAt: 'the county prothonotary', releaseDays: 45, releaseAssumed: false, error: { how: 'an appeal of the assessment within 90 days', days: 30, daysAssumed: true }, effect: 'It’s a public court record, on the monthly Lien Publication List.' },
     source: '72 P.S. 7338, 7352 (FindLaw); pa.gov/agencies/revenue (PA Personal Income Tax Guide, REV-1611, payment plans, wage garnishment, REV-554); research-state-tax-collection-2c.json',
   },
   'us-oh': {
@@ -671,9 +751,9 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // statute (R.C. 109.081), 10% as the Attorney General's pages were quoted, which SLATE charges. The days to the
     // assessment, and how the Attorney General garnishes, weren't found.
     notices: [
-      { code: 'BL0001', title: 'A Billing Notice From Ohio', words: 'the tax, its penalties and interest are due.', days: 30 },
-      { code: 'BL0006', title: 'A Notice Of Assessment From Ohio', words: '60 days to pay or appeal.', days: 30 },
-      { code: 'BL0008', title: 'Ohio’s Post Appeal Notice', words: 'the assessment is final; pay now.', days: 60 },
+      { code: 'bL0001', title: 'A Billing Notice From Ohio', words: 'the tax, its penalties and interest are due.', days: 30 },
+      { code: 'bL0006', title: 'A Notice Of Assessment From Ohio', words: '60 days to pay or appeal.', days: 30 },
+      { code: 'bL0008', title: 'Ohio’s Post Appeal Notice', words: 'the assessment is final; pay now.', days: 60 },
       { code: 'Top Notice', title: 'Ohio’s Top Notice', words: 'in 45 days the claim goes to the Attorney General, and your federal refund may be taken.', days: 45 },
       { code: 'Certified Claim', title: 'Your Ohio Tax Went To The Attorney General', words: 'the Attorney General collects it now, with its collection cost; interest runs on the penalties too.', days: 45 },
     ],
@@ -690,12 +770,214 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       firstDays: YEAR, firstAssumed: true,
       letters: [
         { code: 'ITDQ0009', title: 'Ohio: A Failure To File Notice', words: 'its records show income and no return. Reply within 21 days.', days: 21 },
-        { code: 'BL0006', title: 'Ohio Assesses What You Owe', words: 'worked out from what the IRS reported; 60 days to appeal, paid first.', days: 60 },
+        { code: 'bL0006', title: 'Ohio Assesses What You Owe', words: 'worked out from what the IRS reported; 60 days to appeal, paid first.', days: 60 },
       ],
       lettersAssumed: false,
     },
     refundDays: 21,
+    lien: { name: 'Judgment Lien', atStep: 4, recordedAt: 'the clerk of the court of common pleas', releaseDays: 14, releaseAssumed: false, releaseOnRequest: 'the Attorney General mails the release, and you file it with the county', error: { how: 'Ohio’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It lets the state execute on property and offset refunds.' },
     source: 'Ohio R.C. 109.081, 5703.47, 5747.15; tax.ohio.gov (interest rates, notices, assessments, refund offsets, ITDQ0009); research-state-tax-collection-2c.json',
+  },
+  // From the remaining-gaps pass of 2026-10-11 (research-state-tax-in-dc-ok.json, research-local-income-taxes.json,
+  // research-state-tax-liens-a.json, -b.json): Indiana, the District and Oklahoma, which had a city each and no rule;
+  // and the three cities that collect their own tax, each an authority apart from its state.
+  'us-in': {
+    agency: 'Indiana Department of Revenue', short: 'Indiana DOR', form: 'IT-40',
+    // 6% for 2025, 7% for 2026, 6% for 2027 (Departmental Notice #3), on the tax only; simple by the day, SLATE's where
+    // the daily or monthly reckoning wasn't found.
+    interest: { yearly: 0.07, how: 'daily-simple', onPenalty: false, byYear: { 2025: 0.06, 2026: 0.07, 2027: 0.06 } },
+    // 10% once, at least $5, for paying or filing late, one penalty not two (IC 6-8.1-10-2.1).
+    payLate: { once: 0.1, monthly: 0, cap: 0.1, minimum: 5_00 },
+    fileLate: { monthly: 0, cap: 0, combine: 'none' },
+    // Tax, then penalty, then interest, for periods from 2021 (IC 6-8.1-8-1.5).
+    order: ['tax', 'penalty', 'interest'], orderAssumed: false,
+    // The Notice of Proposed Assessment (60 days), the Demand for Payment (20 days), then the Tax Warrant with its 10%
+    // collection fee, which is a judgment and a lien; then the sheriff. The days before the first weren't found.
+    notices: [
+      { code: 'Notice Of Proposed Assessment', title: 'Indiana Proposes An Assessment', words: '60 days to pay or protest.', days: 30 },
+      { code: 'Demand For Payment', title: 'Indiana Demands Payment', words: 'pay within 20 days, or a tax warrant follows with a 10% collection fee.', days: 60 },
+      { code: 'Tax Warrant', title: 'Indiana Issued A Tax Warrant', words: 'a judgment and a lien, with a 10% collection fee; the sheriff may levy.', days: 20 },
+    ],
+    levy: { title: 'Indiana Levied Your Accounts', afterDays: 30, againDays: 91 },
+    timingAssumed: true,
+    charges: [{ step: 2, share: 0.1, of: 'tax', label: 'The Tax Warrant’s Collection Fee, 10% Of The Tax' }],
+    lien: { name: 'Tax Warrant', atStep: 2, recordedAt: 'the circuit court clerk', releaseDays: 30, releaseAssumed: true, error: { how: 'released and expunged within 7 days', days: 7, daysAssumed: false }, effect: 'A title search finds it, and it reaches vehicle titles.' },
+    // Over $100, through INTIME: 12 months to $1,000, 24 to $5,000, 36 above; little or nothing down; a missed payment
+    // may cancel it; a new liability doesn't join on its own. Fee and decision time weren't found.
+    plan: { name: 'Payment Plan', min: 100_00, minMonths: 1, maxMonths: 36, tiers: [{ upTo: 1_000_00, maxMonths: 12 }, { upTo: 5_000_00, maxMonths: 24 }, { maxMonths: 36 }], fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
+    offsetsOwnRefunds: true, offsetsFor: [],
+    // A notice to file, 30 days; then DOR's own return with a 20% penalty in place of the 10%, 60 days to protest (IC
+    // 6-8.1-10-3). The letters' names weren't found.
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [
+        { code: 'Notice To File', title: 'Indiana Asks For Your Return', words: 'file within 30 days, or DOR files one for you with a 20% penalty.', days: 30 },
+        { code: 'Proposed Assessment', title: 'Indiana Made Your Return', words: 'with no return from you, DOR worked it out; 60 days to protest.', days: 60 },
+      ],
+      lettersAssumed: false,
+      adds: [{ share: 0.1, label: 'The Penalty On A Return DOR Made, 20% In Place Of 10%' }],
+    },
+    refundDays: 20,
+    source: 'IC 6-3-2-1, 6-8.1-8-1.5, 6-8.1-10-1, 6-8.1-10-2.1, 6-8.1-10-3; in.gov/dor (Departmental Notices 1 and 3, payment plans, collections); research-state-tax-in-dc-ok.json',
+  },
+  'us-dc': {
+    agency: 'District of Columbia Office of Tax and Revenue', short: 'DC OTR', form: 'D-40',
+    // 10% a year, compounded daily, on penalties too (DC Code 47-4201).
+    interest: { yearly: 0.1, how: 'daily', onPenalty: true },
+    // 5% a month or part, to 25%; filing late the same, less the paying-late penalty in the same months (47-4213, 47-4211).
+    payLate: { once: 0, monthly: 0.05, cap: 0.25 },
+    fileLate: { monthly: 0.05, cap: 0.25, combine: 'reduced-by-payment' },
+    // The collection fee, then penalty, then interest, then tax, once the fee applies; before it, not published: the
+    // same, SLATE's.
+    order: ['penalty', 'interest', 'tax'], orderAssumed: true,
+    // The Notice of Tax Due (15 days), the Notice of Enforcement by certified mail (10 days), the 10% collection fee at 90
+    // days unpaid, a levy, and a lien recorded once the first notice is 10 days unpaid.
+    notices: [
+      { code: 'Notice Of Tax, Penalty And/Or Interest Due', title: 'A Notice Of Tax Due From The District', words: 'pay within 15 days.', days: 30 },
+      { code: 'Notice Of Enforcement', title: 'The District’s Notice Of Enforcement', words: 'unpaid in 10 days, a levy, a lien and, at 90 days, a 10% collection fee.', days: 15 },
+    ],
+    levy: { title: 'The District Levied Your Accounts', afterDays: 45, againDays: 91 },
+    timingAssumed: false,
+    charges: [{ step: 2, share: 0.1, of: 'owed', label: 'The Collection Fee, 10%' }],
+    lien: { name: 'District Tax Lien', atStep: 1, recordedAt: 'the Recorder of Deeds', releaseDays: 30, releaseAssumed: true, plan: { monthsOver: 12, over: 25_000_00 }, error: { how: 'a protest of the assessment, then the Office of Administrative Hearings', days: 30, daysAssumed: true }, effect: 'It’s a preferred claim over other creditors, and can block a loan or a sale.' },
+    // Under $100,000 and up to 24 months, 10% down, by direct debit, every return filed; a lien where it's over $25,000 or
+    // over 12 months. A missed payment cancels it. Fee and decision time weren't found.
+    plan: { name: 'Installment Agreement', max: 99_999_99, minMonths: 1, maxMonths: 24, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: true, notInCollection: false,
+      downPayment: { share: 0.1, required: true, why: 'OTR asks 10% down with the agreement.' } },
+    offsetsOwnRefunds: true,
+    // Other states' tax by reciprocal agreement; which states isn't published.
+    offsetsFor: [],
+    // An Information Request for the period (60 days), then a Notice of Proposed Assessment (30 days to protest).
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [
+        { code: 'Information Request For Non-Filed Period', title: 'The District Asks About Your Return', words: 'its records show income and no return. Answer within 60 days.', days: 60 },
+        { code: 'Notice Of Proposed Assessment', title: 'The District Proposes What You Owe', words: '30 days to protest.', days: 30 },
+      ],
+      lettersAssumed: false,
+    },
+    refundDays: 56,
+    source: 'DC Code 47-1806.03, 47-4201, 47-4211, 47-4213, 47-4421; otr.cfo.dc.gov (collections, installment agreements, refunds); research-state-tax-in-dc-ok.json',
+  },
+  'us-ok': {
+    agency: 'Oklahoma Tax Commission', short: 'Oklahoma OTC', form: '511',
+    // 1.25% a month, simple, on penalties too (68 O.S. 217); counted by months begun, SLATE's.
+    interest: { yearly: 0.15, how: 'monthly-simple', onPenalty: true },
+    // 5% once (68 O.S. 2375); no separate late-filing penalty.
+    payLate: { once: 0.05, monthly: 0, cap: 0.05 },
+    fileLate: { monthly: 0, cap: 0, combine: 'none' },
+    // Tax, oldest first, then interest, then penalties (OAC 710:1-5-27).
+    order: ['tax', 'interest', 'penalty'], orderAssumed: false,
+    // A bill, a proposed assessment (60 days to protest), then a tax warrant filed with the county clerk, a lien for ten
+    // years with its charge, the greater of $15 and 10%, at most $200 (68 O.S. 231.1). The days between weren't found.
+    notices: [
+      { code: 'Billing Notice', title: 'A Bill From Oklahoma', words: 'the tax, its penalty and interest are due.', days: 30 },
+      { code: 'Proposed Assessment', title: 'Oklahoma Proposes An Assessment', words: '60 days to pay or protest.', days: 30 },
+      { code: 'Tax Warrant', title: 'Oklahoma Issued A Tax Warrant', words: 'a lien filed with the county clerk, with its charge; garnishment may follow.', days: 60 },
+    ],
+    levy: { title: 'Oklahoma Garnished Your Accounts', afterDays: 30, againDays: 91 },
+    timingAssumed: true,
+    charges: [{ step: 2, share: 0.1, of: 'owed', atLeast: 15_00, atMost: 200_00, label: 'The Tax Warrant’s Charge, 10% Between $15 And $200' }],
+    lien: { name: 'Tax Warrant', atStep: 2, recordedAt: 'the county clerk', fee: 8_00, releaseFee: 8_00, releaseDays: 30, releaseAssumed: true, error: { how: 'a warrant filed in error is released at no cost', days: 30, daysAssumed: true }, effect: 'It’s on the public warrant register, and must be resolved to sell or refinance.' },
+    // Two to twelve months, $100 or more, nothing down (taxcure.com, a secondary source: the rule found is a business's).
+    plan: { name: 'Payment Plan', min: 100_00, minMonths: 2, maxMonths: 12, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
+    offsetsOwnRefunds: true, offsetsFor: [],
+    // A written demand to file within 10 days, then OTC's estimate, 60 days to protest. Its 25% on a refusal is "may":
+    // discretionary, with no criterion published, so SLATE's OTC doesn't add it.
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [
+        { code: 'Demand To File', title: 'Oklahoma Demands Your Return', words: 'file within 10 days. OTC may add 25% if you refuse; it publishes no criterion for when, and SLATE’s OTC doesn’t.', days: 10 },
+        { code: 'Proposed Assessment', title: 'Oklahoma Estimates What You Owe', words: 'worked out from what was reported; 60 days to protest.', days: 60 },
+      ],
+      lettersAssumed: false,
+    },
+    refundDays: 35,
+    source: '68 O.S. 217, 231, 231.1, 2355, 2375; OAC 710:1-5-27; oklahoma.gov/tax (OW-2, Form 511, collections); research-state-tax-in-dc-ok.json',
+  },
+  'us-pa-philadelphia': {
+    agency: 'City of Philadelphia Department of Revenue', short: 'Philadelphia Revenue', form: 'Earnings Tax Return',
+    // 0.75% a month, 9% a year in 2025 and 2026; counted by months begun.
+    interest: { yearly: 0.09, how: 'monthly-simple', onPenalty: false },
+    // 1.25% a month; its cap wasn't found: SLATE holds it at 25%.
+    payLate: { once: 0, monthly: 0.0125, cap: 0.25 },
+    fileLate: { monthly: 0, cap: 0, combine: 'none' },
+    order: ['tax', 'penalty', 'interest'], orderAssumed: true,
+    // A past-due bill, then referral to an outside agency or law firm, court action and a lien; the days weren't found.
+    notices: [
+      { code: 'Past-Due Bill', title: 'A Past-Due Bill From Philadelphia', words: 'the Earnings Tax, its penalty and interest are due.', days: 30 },
+      { code: 'Referral Notice', title: 'Philadelphia Sends Your Account To Collection', words: 'an outside agency or law firm collects it now; court action and a lien may follow.', days: 60 },
+    ],
+    levy: { title: 'Philadelphia Collected By Court Action', afterDays: 60, againDays: 91 },
+    timingAssumed: true,
+    lien: { name: 'Philadelphia Tax Lien', atStep: 2, recordedAt: 'the court of common pleas', releaseDays: 30, releaseAssumed: true, error: { how: 'Philadelphia’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'It’s a lien on property.' },
+    // Up to 48 months, 60 preferred; a down payment is required and its amount isn't published (SLATE asks none).
+    plan: { name: 'Payment Agreement', minMonths: 1, maxMonths: 48, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false, beyond: 'Philadelphia asks a down payment whose amount isn’t published; SLATE asks none.' },
+    offsetsOwnRefunds: true, offsetsFor: [],
+    // The resident who files assesses the Earnings Tax themselves; the city's own assessment of one who doesn't isn't
+    // published: SLATE's, a bill a year on.
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [{ code: 'Earnings Tax Assessment', title: 'Philadelphia Assessed Your Earnings Tax', words: 'with no return from you, Revenue worked it out from your wages.', days: 30 }],
+      lettersAssumed: true,
+    },
+    refundDays: 60,
+    source: 'Philadelphia Code 19-1500; phila.gov/revenue (Wage and Earnings Tax, payment agreements, collections); research-local-income-taxes.json',
+  },
+  'us-oh-columbus': {
+    agency: 'City of Columbus Income Tax Division', short: 'Columbus Income Tax', form: 'BR-25',
+    // The federal short-term rate plus 5%: 9% for 2026, 10% for 2025 (ORC 718.27); by months begun. SLATE holds 9%, its
+    // returns being 2026's and later.
+    interest: { yearly: 0.09, how: 'monthly-simple', onPenalty: false },
+    // Paying late to 15% (ORC 718.27); filing late $25 a month to $150.
+    payLate: { once: 0.15, monthly: 0, cap: 0.15 },
+    fileLate: { monthly: 0, cap: 0, combine: 'added', monthlyFlat: { amount: 25_00, cap: 150_00 } },
+    order: ['tax', 'penalty', 'interest'], orderAssumed: true,
+    // A bill with penalty and interest, the Delinquent Section, then the City Attorney's civil suit and a judgment; the
+    // days weren't found.
+    notices: [
+      { code: 'Bill', title: 'A Bill From Columbus', words: 'the city income tax, its penalty and interest are due.', days: 30 },
+      { code: 'Delinquent Notice', title: 'Columbus: Your Account Is Delinquent', words: 'unpaid, the City Attorney may sue for it.', days: 60 },
+    ],
+    levy: { title: 'Columbus Collected By Judgment', afterDays: 60, againDays: 91 },
+    timingAssumed: true,
+    lien: { name: 'Judgment Lien', atStep: 2, recordedAt: 'the court of common pleas, by the City Attorney’s suit', releaseDays: 30, releaseAssumed: true, error: { how: 'Columbus’s process for a lien filed in error isn’t published: SLATE’s review takes 30 days', days: 30, daysAssumed: true }, effect: 'A judgment against you.' },
+    // Its plans' terms weren't found: SLATE's twelve months, said.
+    plan: { name: 'Payment Plan', minMonths: 1, maxMonths: 12, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
+    offsetsOwnRefunds: true, offsetsFor: [],
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [{ code: 'Notice To File', title: 'Columbus Asks For Your Return', words: 'file within 30 days.', days: 30 }],
+      lettersAssumed: true,
+    },
+    refundDays: 60,
+    source: 'Ohio R.C. 718.27; Columbus City Code 361; columbus.gov/incometax; research-local-income-taxes.json',
+  },
+  'us-or-portland': {
+    agency: 'City of Portland Revenue Division', short: 'Portland Revenue', form: 'MET-40 And MC-40',
+    // 9% to 15 April 2026, 8% after (simple, monthly, 0.75% then 0.667%): SLATE holds 8%, a balance of 2026 or later's
+    // never having owed at 9%.
+    interest: { yearly: 0.08, how: 'monthly-simple', onPenalty: false },
+    // 5% for filing or paying late, at least $5, only one of the two.
+    payLate: { once: 0.05, monthly: 0, cap: 0.05, minimum: 5_00 },
+    fileLate: { monthly: 0, cap: 0, combine: 'none' },
+    order: ['tax', 'penalty', 'interest'], orderAssumed: true,
+    notices: [
+      { code: 'Bill', title: 'A Bill From Portland Revenue', words: 'the SHS and PFA taxes, their penalty and interest are due.', days: 30 },
+      { code: 'Final Notice', title: 'Portland Revenue’s Final Notice', words: 'unpaid, it goes to a collection agency with up to 25% added.', days: 60 },
+    ],
+    levy: { title: 'Portland Revenue Collected Your Balance', afterDays: 60, againDays: 91 },
+    timingAssumed: true,
+    // Twelve months, 24 over $10,000; $25 to set up, $50 over 24 months; penalties stop while it holds.
+    plan: { name: 'Payment Plan', minMonths: 1, maxMonths: 24, tiers: [{ upTo: 10_000_00, maxMonths: 12 }, { maxMonths: 24 }], fee: 25_00, feeAdded: true, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
+    offsetsOwnRefunds: true, offsetsFor: [],
+    nonFiler: {
+      firstDays: 365, firstAssumed: true,
+      letters: [{ code: 'Notice To File', title: 'Portland Revenue Asks For Your Returns', words: 'file within 30 days.', days: 30 }],
+      lettersAssumed: true,
+    },
+    refundDays: 60,
+    source: 'Metro Code 7.05; Multnomah County Code 11.500; portland.gov/revenue; research-local-income-taxes.json',
   },
 };
 

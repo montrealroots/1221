@@ -12,6 +12,7 @@ import type { Simulation } from '../core/simulation';
 import type { Money } from '../core/money';
 import { zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
+import { DENVER_OPT } from '../content/tax';
 
 export interface YearEarnings {
   /** Wages from acting work, residuals among them. */
@@ -57,6 +58,12 @@ export interface YearEarnings {
    * A year from before it has none, and is read as all American.
    */
   bySource?: Record<string, Money>;
+  /**
+   * Denver's Occupational Privilege Tax, withheld by the employer: $5.75 for each month the Denver earnings reach $500
+   * (`DENVER_OPT`, from the remaining-gaps pass of 2026-10-11), and those months' Denver earnings. Filed by nobody.
+   */
+  denverOpt?: Money;
+  denverMonths?: Record<string, Money>;
   /** Wages for work done in a state they didn't live in, by `livedInState>workedInTown`. */
   elsewhere: Record<string, Money>;
   /** Wages for work done abroad, and what the country withheld, by country; and by the town it was done in. */
@@ -161,6 +168,14 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   }
   y.withheld += pay.withheld ?? 0;
   if (pay.withheld) addWithheld(y, pay.withheld, pay.withheldBy);
+  // Work done in Denver: its occupational privilege tax, once a month its earnings reach $500 there, the employer's to
+  // withhold and remit (from 2026-10-11).
+  if ((pay.where ?? home) === DENVER_OPT.cityId && !pay.workStudy) {
+    const m = (y.denverMonths ??= {});
+    const before = m[month] ?? 0;
+    m[month] = before + pay.gross;
+    if (before < DENVER_OPT.threshold && m[month] >= DENVER_OPT.threshold) y.denverOpt = (y.denverOpt ?? 0) + DENVER_OPT.monthly;
+  }
   y.commission += pay.commission ?? 0;
   y.dues += pay.dues ?? 0;
   if (pay.employer) y.employers[pay.employer] = (y.employers[pay.employer] ?? 0) + pay.gross;

@@ -21,7 +21,8 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { PLAN, amendRefusal, deadline, leastMonthly, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
-import { agencyOf, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { agencyOf, financialStatement, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { FederalLien, StateLienAndPenalty } from '@/ui/components/LienPanels';
 import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
@@ -77,7 +78,7 @@ function WhoIsOwed({ year }: { year: number }) {
         <table>
           <tbody>
             <tr><td>The IRS: federal income tax and payroll tax, less federal withholding and the premium credit</td><td className="num mono">{to.irs >= 0 ? money(to.irs) : `${money(-to.irs)} back`}</td></tr>
-            {Object.entries(to.states).map(([state, v]) => <tr key={state}><td>{agencyOf(state)}: {stateName(state)}’s tax{state === 'us-ny' ? ' and New York City’s' : ''}{state === 'us-ca' ? ', and its penalty for no cover' : ''}, less what it withheld{state === 'us-ct' ? ' and its premium assistance' : ''}</td><td className="num mono">{v >= 0 ? money(v) : `${money(-v)} back`}</td></tr>)}
+            {Object.entries(to.states).map(([state, v]) => <tr key={state}><td>{agencyOf(state)}: {stateName(state)}’s tax{state === 'us-ny' ? ' and New York City’s' : state === 'us-in' && r.figures.local ? ' and Marion County’s' : ''}{state === 'us-ca' ? ', and its penalty for no cover' : ''}, less what it withheld{state === 'us-ct' ? ' and its premium assistance' : ''}</td><td className="num mono">{v >= 0 ? money(v) : `${money(-v)} back`}</td></tr>)}
           </tbody>
         </table>
       </div>
@@ -112,6 +113,7 @@ function WhoIsOwed({ year }: { year: number }) {
                 <ul style={{ margin: 0 }}>{sd.payments!.map((x, i) => <li key={i}>{formatDate(x.at, sim.zone)}: {money(x.amount)}, {x.how === 'levy' ? 'taken by levy' : x.how === 'refund offset' ? 'from a refund' : x.how === 'plan' ? 'by its plan' : 'paid'}; to the tax {money(x.tax)}, penalties {money(x.penalty)}, interest {money(x.interest)}.</li>)}</ul>
               </details>
             )}
+            <StateLienAndPenalty year={year} state={state} />
           </div>
         );
       })}
@@ -127,34 +129,53 @@ function StatePlanPanel({ state }: { state: string }) {
   const money = (c: number) => formatMoney(c, cur);
   const rules = rulesOf(state);
   const [months, setMonths] = useState(String(rules?.plan.maxMonths ?? 12));
+  const [long, setLong] = useState(false);
+  const [down, setDown] = useState('');
   const plan = person.statePlans?.[state];
   const owed = owedToState(person, state, sim.now);
   if (!rules || (owed <= 0 && !plan)) return null;
   const live = plan && ['pending', 'active', 'missed'].includes(plan.status);
-  const no = statePlanRefusal(sim, person, state, Number(months));
+  const dp = rules.plan.downPayment;
+  // A required share is filled in; an offered one is the player's to put in (from 2026-10-11).
+  const suggested = dp?.share ? Math.round(dp.share * owed) : 0;
+  const downCents = down === '' ? (dp?.required ? suggested : 0) : Math.round(Number(down) * 100);
+  const lp = rules.plan.long;
+  const longest = long && lp ? lp.maxMonths : rules.plan.maxMonths;
+  const no = statePlanRefusal(sim, person, state, Number(months), { long, down: downCents });
+  const statement = long && lp?.statement ? financialStatement(sim, person) : undefined;
+  const monthly = Math.ceil(Math.max(0, owed - downCents) / Math.max(1, Number(months)));
+  const lien = rules.lien && ((long && lp?.lien) || (rules.lien.plan && ((rules.lien.plan.monthsOver !== undefined && Number(months) > rules.lien.plan.monthsOver) || (rules.lien.plan.over !== undefined && owed > rules.lien.plan.over))));
+  const STATUS: Record<string, string> = { pending: 'Being decided', active: 'In force', missed: 'A payment missed', ended: 'Ended', paid: 'Paid in full', declined: 'Declined' };
   return (
-    <Panel title={`${rules.short} ${rules.plan.name}`} subtitle={plan ? ({ pending: 'Being decided', active: 'In force', missed: 'A payment missed', ended: 'Ended', paid: 'Paid in full' } as Record<string, string>)[plan.status] : `${money(owed)} owed`}>
+    <Panel title={`${rules.short} ${plan?.long?.name ?? rules.plan.name}`} subtitle={plan ? STATUS[plan.status] : `${money(owed)} owed`}>
       <div className="col gap-3">
         {plan && (
           <div className="grid grid-3">
-            <Stat label="Covers" value={money(plan.covers)} />
+            <Stat label="Covers" value={money(plan.covers)} note={plan.down ? `after ${money(plan.down)} down` : undefined} />
             <Stat label="Each Month" value={money(plan.monthly)} note={`${plan.months} months`} />
-            <Stat label={plan.status === 'missed' ? 'Catch Up By' : 'Next Payment'} value={plan.status === 'missed' && plan.endsBy !== undefined ? formatDate(plan.endsBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : '—'} />
+            <Stat label={plan.status === 'missed' ? 'Catch Up By' : 'Next Payment'} value={plan.status === 'missed' && plan.endsBy !== undefined ? formatDate(plan.endsBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : plan.status === 'pending' ? `Decided ${formatDate(plan.decideAt, sim.zone)}` : '—'} />
           </div>
         )}
-        {plan?.status === 'missed' && <div><Gated feature="tax.catch_up_state_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_state_plan', { state }); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid.`, 'positive'); }}>Catch Up</Gated></div>}
-        {!live && owed > 0 && (
+        {plan?.why && <p className="small" style={{ margin: 0 }}>{plan.why}.</p>}
+        {plan?.long?.statement && <p className="xs dim" style={{ margin: 0 }}>The statement it was asked with: {money(plan.long.statement.income)} a month in, {money(plan.long.statement.expenses)} out, {money(plan.long.statement.net)} left; {money(plan.long.statement.cash)} in the bank.</p>}
+        {plan?.status === 'missed' && <div><Gated feature="tax.catch_up_state_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_state_plan', { state }); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid. The plan is back in force.`, 'positive'); }}>Catch Up</Gated></div>}
+        {(!live || (lp?.alreadyOnPlan && plan?.status === 'active' && !plan.long)) && owed > 0 && (
           <div className="col gap-2">
             <p className="small" style={{ margin: 0 }}>
-              {rules.short}’s own plan, apart from any with the IRS: {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'no most published'}{rules.plan.min !== undefined ? `, over ${money(rules.plan.min)}` : ''}, over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.monthsAssumed ? ' (SLATE’s: the longest isn’t published)' : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? `, a ${money(statePlanFee(person, rules, cur))} fee added to the balance` : ', its fee waived at your income') : ', no fee'}.{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
+              {rules.short}’s own plan, apart from any with the IRS: {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'no most published'}{rules.plan.min !== undefined ? `, over ${money(rules.plan.min)}` : ''}, over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.tiers ? ` (${rules.plan.tiers.map((t) => `${t.maxMonths} to ${t.upTo !== undefined ? money(t.upTo) : 'any amount'}`).join(', ')})` : ''}{rules.plan.monthsAssumed ? ' (SLATE’s: the longest isn’t published)' : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? `, a ${money(statePlanFee(person, rules, cur))} fee added to the balance` : ', its fee waived at your income') : ', no fee'}.{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
+              {dp ? ` ${dp.why}` : ''}{lp ? ` Longer: its ${lp.name.toLowerCase()}, to ${lp.maxMonths} months${lp.maxAssumed ? ' (SLATE’s most)' : ''}. ${lp.how}` : ''}
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+              {lp && <label className="check" htmlFor={`state-plan-long-${state}`}><input id={`state-plan-long-${state}`} type="checkbox" checked={long} onChange={(e) => setLong(e.target.checked)} /><span>{`Ask For Its ${lp.name}`}</span></label>}
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
-                {Array.from({ length: rules.plan.maxMonths - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{m} Months</option>)}
+                {Array.from({ length: longest - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{m} Months</option>)}
               </select></div>
-              <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number }>('tax.apply_state_plan', { state, months: Number(months) }); if (a.ok) toast(`Asked: ${money(a.value!.monthly)} a month, decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For The Plan</Gated>
+              {dp && <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-down-${state}`}>{dp.required ? 'Down Payment (Required)' : 'Down Payment (Optional)'}</label><input id={`state-plan-down-${state}`} inputMode="decimal" value={down} onChange={(e) => setDown(e.target.value)} placeholder={((dp.required ? suggested : 0) / 100).toFixed(2)} /></div>}
+              <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number; down: number }>('tax.apply_state_plan', { state, months: Number(months), long, down: downCents }); if (a.ok) { toast(`Asked${a.value!.down ? ` with ${money(a.value!.down)} down` : ''}: ${money(a.value!.monthly)} a month, decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setDown(''); } }}>{long && lp ? `Ask For The ${lp.name}` : 'Ask For The Plan'}</Gated>
             </div>
-            {no && <span className="xs dim">{no}</span>}
+            <p className="xs dim" style={{ margin: 0 }}>{`About ${money(monthly)} a month over ${months} months.`}{lien ? ` ${rules.short} files a ${rules.lien!.name} with it.` : ''}</p>
+            {statement && <p className="xs dim" style={{ margin: 0 }}>{`The statement ${lp!.statement} asks, from your own records over the last three months: ${money(statement.income)} a month in, ${money(statement.expenses)} out, ${money(statement.net)} left; ${money(statement.cash)} in the bank.`}{monthly > Math.max(0, statement.net) ? ` At ${money(monthly)} a month it would be declined: more than the statement leaves.` : ''}</p>}
+            {no && <span className="xs dim why-not">{no}</span>}
           </div>
         )}
         {plan && plan.history.length > 0 && (
@@ -188,6 +209,7 @@ function ReturnLife({ year }: { year: number }) {
       {r.substitute && <p className="small" style={{ margin: 0 }}>The IRS filed this from what your employers and banks reported{r.substituteFigures ? `, ${money(r.substituteFigures.balance)} of tax with no credit only your own return claims` : ''}. File your own and it reconsiders: the tax becomes what yours says, the penalty and interest fall in proportion, and anything paid past it comes back.</p>}
       {r.reconsideredAt !== undefined && <p className="small" style={{ margin: 0 }}>Your own return replaced the IRS’s on {formatDate(r.reconsideredAt, sim.zone)}.</p>}
       <WhoIsOwed year={year} />
+      <FederalLien year={year} />
       {r.split && <p className="xs dim" style={{ margin: 0 }}>{r.split.how}: SLATE’s division, since payments made before then weren’t kept by who they went to.</p>}
       {parts && <div className="eyebrow">Owed To The IRS</div>}
       {parts && (
@@ -382,13 +404,15 @@ function ReturnsPane() {
           ['Of It, The Credit For Another Country’s Tax', -(f.foreignCredit ?? 0)],
           ['Canada’s Tax Refunded, By Its Treaty Or Its Return', -(f.foreignRefund ?? 0)],
           ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Another State’s Tax`, -l.credit]] : [])] as [string, number][]),
-          ['City Income Tax', f.local ?? 0],
+          ['City And County Income Tax', f.local ?? 0],
           ['Income Tax In All', f.incomeTax],
           ['Social Security And Medicare', f.payroll],
           ['California’s Penalty For No Cover', f.mandate],
           ['Premium Tax Credit', -f.credit],
           ['Connecticut’s Premium Assistance', -(f.stateAssistance ?? 0)],
           ['Withheld From Your Pay And Pension', -f.withheld],
+          // Shown, not owed: the employer withholds and remits it, and nobody files it (from 2026-10-11).
+          ['Denver Occupational Privilege Tax, Withheld And Remitted By The Employer', f.denverOpt ?? 0],
         ];
         return (
           <Panel

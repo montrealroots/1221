@@ -1,6 +1,6 @@
 {
  "title": "The Yale Student, Banking And Papers: Implementation Matrix",
- "asOf": "2026-10-11, after the limitations pass",
+ "asOf": "2026-10-11, after the remaining-gaps pass",
  "basisKey": {
   "documented": "The rule is the institution's or the law's, read in a cited source.",
   "simplified": "The rule follows a cited source, with a stated simplification.",
@@ -1220,7 +1220,7 @@
      "title": "is taxed in part"
     }
    ],
-   "limitations": "No installment agreement; the substitute omits the foreign and premium credits only.",
+   "limitations": "The substitute omits the foreign and premium credits only. The payment plan, which this row once said there was none of, is its own row (papers.taxPlan).",
    "initialGap": "An F-1 student filed as a resident.",
    "resolution": "Fixed.",
    "acceptance": [
@@ -1243,8 +1243,8 @@
      "title": "assessed, partly levied, then reconsidered"
     }
    ],
-   "before": "No partial payment; a substitute return can't be replaced once assessed.",
-   "boundary": "No payment plan; the IRS’s figures otherwise match SLATE’s own."
+   "before": "No partial payment; a substitute return can't be replaced once assessed. Then: no installment agreement; the substitute omits the foreign and premium credits only.",
+   "boundary": "The IRS’s substitute omits the foreign and premium credits; its figures otherwise match SLATE’s own."
   },
   {
    "id": "papers.unemployment",
@@ -2313,6 +2313,270 @@
      "reader": "Collection",
      "file": "tests/state-tax-states.test.ts",
      "title": "filed after Connecticut’s letter and before its assessment"
+    }
+   ]
+  },
+  {
+   "id": "papers.taxPlaces",
+   "area": "Papers",
+   "goal": "Be taxed by each authority where you live and work: the state, the District, the city and the county, each by its own rules",
+   "entry": "Papers, Tax Returns: the year’s return and Who It’s Owed To; each paycheck’s withholding",
+   "prereqs": "Wages in a year; a home city",
+   "choices": "File; pay each authority",
+   "steps": "Withheld by each authority’s own method; filed; each assessed, paid, refunded or collected by its own collector",
+   "costs": "Each authority’s tax; Denver’s $5.75 a month withheld, not owed",
+   "states": "figures.owedTo.states, localBy, denverOpt; YearEarnings.withheldBy",
+   "failure": "Owed and unpaid: each authority’s own collection",
+   "recovery": "Pay; a plan; a refund offsets its own authority",
+   "stateRW": "TaxReturn.figures, stateDue",
+   "consumers": "Collection, plans, the budget, Home, Papers",
+   "notices": "Each authority’s bills, notices and refunds",
+   "saveLoad": "Optional fields; nothing added to a filed return",
+   "source": "research-state-tax-in-dc-ok.json; research-local-income-taxes.json; Indiana DOR Departmental Notice 1; DC Code 47-1806.03; 68 O.S. 2355; NYC Admin. Code 11-1701; Philadelphia Wage Tax; Columbus City Code 361; Metro SHS and Multnomah PFA; Denver OPT",
+   "basis": "simplified",
+   "limitations": "Every life is in New Haven in play, so these are reached by new rules for lives that start elsewhere and by tests; 231 countries with cities have no income-tax rule and can’t be reached in play. The District’s 2026 deduction and Marion County’s 2027 rate are held at the last published, SLATE’s assumption.",
+   "boundary": "Reachable in play only for a life begun outside New Haven; play begins every life at the School.",
+   "commands": [
+    "tax.file",
+    "tax.pay_state"
+   ],
+   "tests": [
+    {
+     "file": "tests/tax-places.test.ts",
+     "title": "Indiana: 2.95% for 2026"
+    },
+    {
+     "file": "tests/tax-coverage.test.ts",
+     "title": "has its state taxed by a researched rule, or explicitly by none"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Indiana and Marion County computed apart and owed to Indiana’s DOR",
+     "reader": "The return and collection",
+     "file": "tests/tax-places.test.ts",
+     "title": "Indiana: 2.95% for 2026"
+    },
+    {
+     "outcome": "New York City’s tax in every borough, Philadelphia’s and Columbus’s their own collectors",
+     "reader": "The return, Who It’s Owed To",
+     "file": "tests/tax-places.test.ts",
+     "title": "New York City’s tax in Brooklyn as in Manhattan"
+    },
+    {
+     "outcome": "Withholding by each authority’s method reconciles on the return",
+     "reader": "The return’s balance",
+     "file": "tests/tax-places.test.ts",
+     "title": "Indiana’s WH-4 and the county’s"
+    },
+    {
+     "outcome": "Every US city’s state and local tax is a rule or a confirmed none",
+     "reader": "The return",
+     "file": "tests/tax-coverage.test.ts",
+     "title": "has its local tax researched, or confirmed absent"
+    },
+    {
+     "outcome": "No engine code moves a person or pays them elsewhere",
+     "reader": "Where a return is computed",
+     "file": "tests/tax-coverage.test.ts",
+     "title": "never moves: no engine code sets a person’s location after creation"
+    }
+   ]
+  },
+  {
+   "id": "papers.liens",
+   "area": "Papers",
+   "goal": "Have a tax lien filed on what’s owed, pay it, and see it released; or have one filed in error withdrawn",
+   "entry": "Papers, Tax Returns: each authority’s lien, and the IRS’s notice of federal tax lien",
+   "prereqs": "A balance unpaid at the authority’s step, or a plan that asks one; the IRS at $10,000 or more at the LT11",
+   "choices": "Pay; Ask For Its Release where it’s released on request; Ask For Its Withdrawal As Filed In Error; Form 12277",
+   "steps": "A notice of intent where the authority sends one; filed and recorded with its fee; paid; released by its days or on request; a dispute decided",
+   "costs": "Each authority’s recording fee (California $10, Hawaii $25 and $25 to release, Oklahoma $8 and the warrant’s 10%, Indiana’s 10%)",
+   "states": "intent → filed → paid → released; disputed → withdrawn; dropped under a plan",
+   "failure": "Refused with why: release before payment, a dispute where the tax was owed, a withdrawal before release",
+   "recovery": "Pay in full; ask for the release; dispute an assessment their own return showed was nothing",
+   "stateRW": "StateDue.lien, TaxReturn.lien",
+   "consumers": "Papers, the history, notifications, the ledger",
+   "notices": "Intent; filed; released; withdrawn; the IRS’s Letter 3172",
+   "saveLoad": "Optional fields; an older save files none after the fact",
+   "source": "research-state-tax-liens-a.json, -b.json; research-federal-tax-lien.json; IRC 6320, 6323(j), 6325(a)",
+   "basis": "simplified",
+   "limitations": "A lien has no effect on credit or property in SLATE: there’s no credit score and no property, so none is invented. Days to decide a dispute, where unpublished, are SLATE’s 30 and said.",
+   "boundary": "The lien’s effect on property and credit is said, not played: neither is in SLATE.",
+   "commands": [
+    "tax.lien_release",
+    "tax.lien_dispute",
+    "tax.federal_lien_withdraw",
+    "tax.pay_state",
+    "tax.pay"
+   ],
+   "tests": [
+    {
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "California: its notice of intent"
+    },
+    {
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Intent, filed thirty days on with its fee, paid, released 40 days later, nothing left pending",
+     "reader": "Collection and the calendar",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "California: its notice of intent"
+    },
+    {
+     "outcome": "A plan set up after the intent: no lien filed",
+     "reader": "Collection",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "California: a plan set up after the notice of intent"
+    },
+    {
+     "outcome": "Released only on request, and once",
+     "reader": "The lien",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "Connecticut: filed with its notice of intent to levy"
+    },
+    {
+     "outcome": "Withdrawn as filed in error with its fee back; refused where the tax was owed",
+     "reader": "The bank and the lien",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "one filed on an assessment their own return shows was nothing"
+    },
+    {
+     "outcome": "The IRS’s notice at $10,000 at the LT11, released, withdrawn",
+     "reader": "The return and notifications",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11"
+    },
+    {
+     "outcome": "The same stepped day by day with reloads as in two jumps, across a year’s change of rate",
+     "reader": "The calendar",
+     "file": "tests/liens-step-skip.test.ts",
+     "title": "is the same stepped a day at a time"
+    },
+    {
+     "outcome": "Each step once: repeated releases and decisions, a payment sent twice",
+     "reader": "The ledger and notifications",
+     "file": "tests/liens-step-skip.test.ts",
+     "title": "runs each step once"
+    }
+   ]
+  },
+  {
+   "id": "papers.longPlans",
+   "area": "Papers",
+   "goal": "Pay a state over longer: an extended or long-term plan, a down payment, a formal agreement",
+   "entry": "Papers, Tax Returns: the state’s plan panel (its longer plan, a down payment)",
+   "prereqs": "A balance beyond the state’s ordinary plan",
+   "choices": "Months; the longer plan; a down payment",
+   "steps": "Asked; decided on the statement from the player’s own 90 days of records where the state asks one; approved or declined; scheduled; a lien where it asks one",
+   "costs": "The down payment; each plan’s fee",
+   "states": "pending → active / declined; a plan in force replaced",
+   "failure": "Declined where the monthly payment exceeds what the statement leaves; refused with why for months or amounts out of bounds",
+   "recovery": "Fewer months, a down payment, or pay",
+   "stateRW": "Person.statePlans (long, down)",
+   "consumers": "Collection, the lien, the budget",
+   "notices": "Approved; declined; the lien",
+   "saveLoad": "Optional fields; a plan from an older save keeps its terms",
+   "source": "research-state-tax-arrangements.json; NMSA 7-1-21; LR 50:1293; Pennsylvania REV-488",
+   "basis": "simplified",
+   "limitations": "Deciding on monthly ≤ the statement’s net is SLATE’s rule, labelled; Pennsylvania’s extended plan’s 60 months is SLATE’s assumption. Louisiana’s 20% down is offered, never required.",
+   "boundary": "Each state’s decision on a financial statement is SLATE’s rule where it isn’t published.",
+   "commands": [
+    "tax.apply_state_plan"
+   ],
+   "tests": [
+    {
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "New Mexico: twelve months with no lien"
+    },
+    {
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "Pennsylvania: its extended plan over $50,000"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Thirteen to 72 months only as the long-term agreement, with a lien",
+     "reader": "The lien",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "New Mexico: twelve months with no lien"
+    },
+    {
+     "outcome": "Decided on the statement from the player’s own records; declined where it doesn’t fit, collection going on",
+     "reader": "Collection",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "Pennsylvania: its extended plan over $50,000"
+    },
+    {
+     "outcome": "20% down offered, never required; a formal agreement from $50,000",
+     "reader": "The plan",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "Louisiana: 20% down offered, never required"
+    },
+    {
+     "outcome": "The District’s 10% down taken with the request, and its lien over twelve months",
+     "reader": "The bank and the lien",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "the District: its 10% down taken with the request"
+    }
+   ]
+  },
+  {
+   "id": "papers.threeYear",
+   "area": "Papers",
+   "goal": "Leave Oregon’s returns unfiled three years running, meet its 100% penalty, and ask its waiver",
+   "entry": "Papers, Tax Returns: Oregon’s panel, the three-year penalty and Ask For Its Waiver",
+   "prereqs": "Three years running with Oregon tax and no return of their own",
+   "choices": "File their own; ask the waiver",
+   "steps": "Checked six months after the third year’s due date; charged against each year’s tax net of penalties charged; waived by its schedule once their own is filed",
+   "costs": "100% of each year’s tax, held to the tax",
+   "states": "charged → waived in part",
+   "failure": "Refused with why: their own not yet filed; decided; a year past full payment",
+   "recovery": "File, then ask",
+   "stateRW": "StateDue.threeYear, TaxReturn.threeYearFor",
+   "consumers": "Collection, Papers",
+   "notices": "The penalty; the waiver",
+   "saveLoad": "Optional fields; an older save charges none after the fact",
+   "source": "ORS 314.400(5); OAR 150-314-0115; research-state-tax-arrangements.json",
+   "basis": "simplified",
+   "limitations": "Massachusetts’s discretionary doubling for a non-filer is said in its letter and never applied.",
+   "commands": [
+    "tax.request_waiver"
+   ],
+   "tests": [
+    {
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "three years with tax and no return of their own"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Charged at what the year’s penalties leave room for; 25% waived after the assessment",
+     "reader": "Collection",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "three years with tax and no return of their own"
+    },
+    {
+     "outcome": "A run broken by a year filed adds nothing",
+     "reader": "Collection",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "a run broken by a year filed adds nothing"
+    },
+    {
+     "outcome": "Massachusetts’s doubling said and not applied",
+     "reader": "The assessment",
+     "file": "tests/liens-and-arrangements.test.ts",
+     "title": "Massachusetts may double a non-filer’s tax"
+    },
+    {
+     "outcome": "An older save opened charges nothing after the fact",
+     "reader": "Opening a save",
+     "file": "tests/save-migration.test.ts",
+     "title": "opens with nothing charged or filed after the fact"
     }
    ]
   },
