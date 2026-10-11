@@ -41,7 +41,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, MS_DAY, type Instant } from '../core/time';
 import { COURSES, EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, YALE_DRAMA } from '../content/school';
 import {
-  ESTIMATE, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, drawCohort, formerProductions, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
+  ESTIMATE, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
   schoolEnded, setStanding, termAccount, termBegins, termLabel, termStart, yearOfTerm, zone, type SchoolRecord,
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
@@ -326,8 +326,11 @@ export function startLeave(sim: Simulation, person: Person, begun = true): void 
   l.withdrawnKeys = keys;
   lapseTerm(sim, person, t);
   leaveCabaret(sim, person, 'a leave of absence');
-  if (school.casting?.term === t) delete school.casting;
-  if (school.rep?.term === t) delete school.rep;
+  // What was played before the leave goes on the résumé now, and the castings close (from the acceptance pass of
+  // 2026-10-11): until then a run finished before a leave waited for the next casting, a year on, to be credited.
+  keepCredit(sim, school);
+  delete school.casting;
+  delete school.rep;
   // The term isn't one enrolled in.
   school.enrolled = enrolledTerms(school).filter((x) => x !== t);
   const n = l.terms ?? LEAVE_RULES.terms;

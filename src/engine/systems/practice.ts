@@ -146,12 +146,14 @@ export function practiceHour(sim: Simulation, person: Person, e: Exercise, tierA
   const discipline = first ? develop(sim, person, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' }) : 0;
   const level = levelOf(sim, person, targetId(e.trains));
   const full = isAbility(targetId(e.trains)) ? abilityFull(sim, person, targetId(e.trains) as never) : 100;
-  return { gained, level, discipline, tier, focus: focusAsked, carried, feedback: practiceFeedback(e, before, tier, focusAsked, focus, gap, carried, { gained, level, full, sessions: rec.sessions, streak: rec.streak, gains: rec.gains, priorTier }) };
+  // The same exercise again today: the hours before it on the day's count (`repeatsToday`), the half it keeps each.
+  const repeats = Math.max(0, (developmentOf(person).counts[`${targetId(e.trains)}<practice:${e.id}`] ?? 1) - 1);
+  return { gained, level, discipline, tier, focus: focusAsked, carried, feedback: practiceFeedback(e, before, tier, focusAsked, focus, gap, carried, { gained, level, full, sessions: rec.sessions, streak: rec.streak, gains: rec.gains, priorTier, repeats, dayFocus: focus }) };
 }
 
 /** What the hour found, in words, from the numbers that moved it. */
 /** What the record says about the hour (from the integration pass of 2026-10-10): its gain, where the level stands, the run and its gains. */
-export interface HourRecord { gained: number; level: number; full: number; sessions: number; streak?: number; gains?: number[]; priorTier?: number }
+export interface HourRecord { gained: number; level: number; full: number; sessions: number; streak?: number; gains?: number[]; priorTier?: number; repeats?: number; dayFocus?: number }
 
 /** How far the next tier's band is, or nothing past the last. */
 const nextBand = (level: number): number | undefined => TIER.bands.find((b) => b > level);
@@ -176,6 +178,10 @@ export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f:
     const label = labelOf(e.trains);
     const band = nextBand(hour.level);
     out.push(`${label} ${hour.gained > 0 ? `rose ${hour.gained.toFixed(2)}, to` : 'stands at'} ${hour.level.toFixed(1)} of ${Math.round(hour.full)}${band !== undefined && band < hour.full ? `, ${(band - hour.level).toFixed(1)} short of the ${TIER.label[matchedTier(band)].toLowerCase()} tier` : ''}.`);
+    // Why an hour gave less, where it did (acceptance pass, 2026-10-11): a tired day scales every hour, not only a
+    // precise one's; a repeat the same day keeps half the one before.
+    if ((hour.repeats ?? 0) > 0) out.push(`Hour ${(hour.repeats ?? 0) + 1} on it today: each repeat keeps half the one before, so another exercise would give more.`);
+    if (f !== 'precision' && (hour.dayFocus ?? 1) < 0.7) out.push('A tired day: the hour counted for less than a rested one would.');
     if (hour.priorTier !== undefined && hour.priorTier < matched && tier === matched) out.push(`You’ve moved up to the ${TIER.label[matched].toLowerCase()} tier since last time.`);
     const g = hour.gains ?? [];
     const slowing = g.length >= 6 && g.slice(-3).reduce((a, b) => a + b, 0) < 0.8 * g.slice(0, 3).reduce((a, b) => a + b, 0);

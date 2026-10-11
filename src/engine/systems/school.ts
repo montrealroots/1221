@@ -1705,11 +1705,15 @@ function scheduleLabs(sim: Simulation, person: Person, term: number): void {
 /** Whether a term brings a Yale Rep assignment: once a year, a first-year's spring and a second and third year's fall. */
 export const repTerm = (term: number) => term === 1 || (termStart(term).fall && term >= 2);
 
-/** A casting done with goes on the résumé where it was played: an understudy only if they went on. */
-function keepCredit(sim: Simulation, school: SchoolRecord): void {
+/**
+ * A casting done with goes on the résumé where it was played: an understudy only if they went on. Its year is its
+ * term's (from the acceptance pass of 2026-10-11): until then it was the year the credit was written, at the next
+ * casting, and a student away on a leave had their spring's Carlotta lead credited to the year they came back.
+ */
+export function keepCredit(_sim: Simulation, school: SchoolRecord): void {
   for (const c of [school.casting, school.rep]) {
     if (!c || c.performed === 0) continue;
-    (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed, ...(c.size ? { size: c.size } : {}) });
+    (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: termStart(c.term).date.year, wentOn: c.performed, ...(c.size ? { size: c.size } : {}) });
   }
 }
 

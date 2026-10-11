@@ -63,6 +63,14 @@ describe('journey: a production, from the read-through to the closing night', ()
     expect(proc()!.dress).toBeDefined();
     expect(casting().performed).toBe(0);
     expect(proc()!.notes.every((n) => n.taken)).toBe(true);
+    // Notes worked are answered (acceptance pass, 2026-10-11): none comes back as 'Still:', and a skill note given again
+    // after it was taken says so.
+    const notes = proc()!.notes;
+    expect(notes.some((n) => /^Still:/.test(n.text))).toBe(false);
+    for (let i = 1; i < notes.length; i += 1) {
+      const a = notes[i - 1]!, b = notes[i]!;
+      if (a.taken && JSON.stringify(a.focus) === JSON.stringify(b.focus)) expect(b.text).toMatch(/^Better since the last note/);
+    }
     const factor = nightFactor(casting());
     expect(factor).toBeGreaterThan(1);
 
@@ -72,5 +80,19 @@ describe('journey: a production, from the read-through to the closing night', ()
     expect(casting().nights).toBeDefined();
     expect(nightFactor(casting())).toBe(factor);
     expect(breaches(sim.universe)).toEqual([]);
+  }, 300_000);
+
+  it('says a note not worked on again, as still, where the next call finds it not taken', () => {
+    const sim = createSave(1, 'jr-production', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.player.school!.classmates[0]!.craft.scene = 99;
+    sim.advanceTo(at(2027, 1, 4) + 60_000);
+    const c = sim.player.school!.casting!;
+    const rehearsals = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.payload.which !== 'rep' && i.payload.call === 'rehearsal').sort((a, b) => a.at - b.at);
+    // Every call kept, nothing learned or worked between: the director's notes go unanswered.
+    tended(sim, rehearsals.at(-1)!.at + 7 * MS_HOUR);
+    const notes = (hasProcess(c) ? c.process : undefined)!.notes;
+    const untaken = notes.filter((n, i) => i > 0 && notes[i - 1]!.taken === false && JSON.stringify(notes[i - 1]!.focus) === JSON.stringify(n.focus));
+    expect(untaken.length).toBeGreaterThan(0);
+    for (const n of untaken) expect(n.text).toMatch(/^Still: /);
   }, 300_000);
 });

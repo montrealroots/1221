@@ -19,6 +19,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/cor
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { breaches } from '../src/engine/core/invariants';
 import { healthOf } from '../src/engine/systems/health';
+import { at, termStart } from '../src/engine/systems/school';
 import { recordWages } from '../src/engine/systems/earnings';
 import { owedAll, returnsOf } from '../src/engine/systems/taxreturn';
 import { owedToState } from '../src/engine/systems/statetax';
@@ -57,6 +58,16 @@ const SCENARIOS: Record<string, Hook> = {
     daily(sim, log) {
       const s = sim.player.school;
       if (s && !s.leaves?.length && !s.leave && sim.now >= on(2027, 1, 20)) tryOnce(sim, log, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 });
+      comeBack(sim, log);
+    },
+  },
+  // A second-year leave (acceptance pass, 2026-10-11): asked the summer after year one, away the second year, back with
+  // the class of 2030, played on to the degree.
+  'leave-year2': {
+    years: 4.1, config: { homeRegionId: 'us-ny-newyork' },
+    daily(sim, log) {
+      const s = sim.player.school;
+      if (s && !s.leaves?.length && !s.leave && sim.now >= on(2027, 7, 10)) tryOnce(sim, log, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 });
       comeBack(sim, log);
     },
   },
@@ -157,6 +168,9 @@ console.log(JSON.stringify({
     standing: s.standing, classOf: s.classOf, offset: s.offset ?? 0, leaves: (s.leaves ?? []).map((l) => ({ kind: l.kind, status: l.status, terms: l.terms, mandatory: Boolean(l.mandatory) })),
     welfares: (s.welfares ?? []).map((w) => w.outcome), formerClasses: (s.formerClasses ?? []).map((c) => ({ classOf: c.classOf, mates: c.classmates.length, playedTo: c.playedTo })),
     classmates: s.classmates.length, terms: (s.history ?? []).map((h) => `${h.term}:${h.standing}`), conferred: titles(/Degree|Conferred|Graduat/),
+    credits: (s.credits ?? []).map((c) => `${c.year} ${c.kind} ${c.size ?? ''}`), joinedHistory: (s.joinedHistory ?? []).map((p) => `${p.term} ${p.play ?? p.name}`), firstClassGraduated: (s.formerClasses ?? []).map((c) => c.graduatedAt !== undefined),
+    // Anything paid, billed or credited inside a leave's own terms: there should be none.
+    duringLeave: (s.leaves ?? []).filter((l) => l.startedAt !== undefined).map((l) => { const to = at(termStart(l.returnTerm).date, 0); return sim.universe.transactions.filter((t) => t.at >= l.startedAt! && t.at < to && /Work-study wages|Living-expense scholarship|Yale Summer Cabaret stipend/.test(t.memo)).length; }),
   } : undefined,
   switches: sim.player.payments?.switches, accounts: Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')).map((a) => `${a.institution} ${a.kind}${a.closedAt ? ' closed' : ''}${a.switchDebt ? ' in debt' : ''}`),
   taxPlan: sim.player.taxPlan ? { status: sim.player.taxPlan.status, payments: sim.player.taxPlan.history.filter((h) => /payment/i.test(h.what)).length, history: sim.player.taxPlan.history.slice(-6).map((h) => h.what) } : undefined,

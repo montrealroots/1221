@@ -42,6 +42,23 @@ describe('an hour’s feedback, from the record', () => {
   });
 });
 
+describe('an hour that gives less, said why', () => {
+  it('names a repeat the same day, and a tired day, from the numbers that made the hour smaller', () => {
+    const sim = life('var-why');
+    Object.assign(sim.player.wellbeing, { energy: 95, stress: 5, sleepDebt: 0 });
+    const first = practiceHour(sim, sim.player, EXERCISE_BY_ID['given-circumstances']!);
+    const again = practiceHour(sim, sim.player, EXERCISE_BY_ID['given-circumstances']!);
+    expect(again.gained).toBeLessThan(first.gained * 0.6);
+    expect(first.feedback).not.toMatch(/on it today/);
+    expect(again.feedback).toMatch(/Hour 2 on it today: each repeat keeps half/);
+    // FIXTURE: a night without sleep.
+    sim.advanceTo(sim.now + 2 * MS_DAY);
+    Object.assign(sim.player.wellbeing, { energy: 25, sleepDebt: 9 });
+    const tired = practiceHour(sim, sim.player, EXERCISE_BY_ID['concentration']!);
+    expect(tired.feedback).toMatch(/A tired day: the hour counted for less/);
+  });
+});
+
 describe('a director’s notes, from the notes before', () => {
   const process = (notes: Process['notes']): Process => ({ lines: 1, blocking: 1, calls: 6, blockingMissed: 0, notes, trained: 0 });
   it('moves on from a skill note that was taken to the next thinnest place; one not taken comes again, said as still', () => {

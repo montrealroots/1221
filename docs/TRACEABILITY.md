@@ -147,11 +147,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.request_aid_review` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; It’s with the aid office, decided by ….; The aid office has reviewed your support.; Support past six terms is reviewed once a seventh is coming: you’re within the six. | — | — | school.aid_decide | 1 | — |
 | `school.request_conversion` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/school.ts` | — (also conversionRefusal) | status; history (added to) | Yes | school.convert; run; school.call | 1 | — |
 | `school.request_extra_term` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — (also extraRefusal) | — | — | school.extra_decide; school.term | 1 | — |
-| `school.request_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Give a reason. | — | — | school.welfare_decide; medical | 2 | — |
+| `school.request_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Give a reason. | — | — | school.welfare_decide; medical | 3 | — |
 | `school.request_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — | — | — | — | 2 | — |
-| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 2 | — |
+| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 3 | — |
 | `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 5 | journey-school-year.test.ts; journey-three-students.test.ts |
-| `school.return_notice` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not on leave.; You gave notice on ….; Its deadline has passed. | — | — | — | 2 | — |
+| `school.return_notice` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not on leave.; You gave notice on ….; Its deadline has passed. | — | — | — | 3 | — |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 1 | — |
 | `school.take_shift` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also shiftRefusal) | — | — | school.shift | 3 | — |
@@ -226,7 +226,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 6 |
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 9 |
-| `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 4 |
+| `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 6 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 7 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.conferral` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 2 |
