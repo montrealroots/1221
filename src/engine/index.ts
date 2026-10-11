@@ -12,6 +12,7 @@
  * that day, and `migrate` takes what they kept off a save (schema 90).
  */
 
+import { registerStateTax } from './systems/statetax';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
 import { registerHomeBenefits } from './systems/homebenefits';
@@ -136,6 +137,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAssistance(sim);
   registerEiSelfEmployed(sim);
   registerTaxReturn(sim);
+  registerStateTax(sim);
   registerLending(sim);
   registerDocuments(sim);
   registerTaxId(sim);

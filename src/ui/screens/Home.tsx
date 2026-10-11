@@ -27,7 +27,7 @@ import {
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { troubles } from '@/engine/systems/spending';
-import { latePenalty, owedOn } from '@/engine/systems/taxreturn';
+import { latePenaltyAll, owedEverywhere } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, schoolEnded, yearOfStudy } from '@/engine/systems/school';
@@ -505,10 +505,10 @@ function PapersLine({ cur }: { cur: string }) {
   const cover = coverOn(person, sim.now);
   const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined);
   // Past its day, the penalty filing now would add; filed and unpaid, what's owed and growing. Until 2026-09-27 neither showed.
-  const penalty = open && open.figures.balance > 0 && sim.now > open.due ? latePenalty(open.figures.balance, open.due, sim.now, cur) : 0;
+  const penalty = open && open.figures.balance > 0 && sim.now > open.due ? latePenaltyAll(person, open, sim.now, cur) : 0;
   // What's owed today, its interest and late-payment penalty since it was last brought up to date (`owedOn`), as Papers
   // says it: until 2026-10-10 the line read the balance as last stored, short of both.
-  const owedTax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, owedOn(r, sim.now)), 0);
+  const owedTax = owedEverywhere(person, sim.now);
   const claim = person.unemployment?.claim;
   // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line.
   const alerts = [

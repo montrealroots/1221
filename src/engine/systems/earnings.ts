@@ -34,6 +34,12 @@ export interface YearEarnings {
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;
+  /**
+   * Of it, what went to each authority (from the integration pass of 2026-10-10): `us` the IRS's (income tax and FICA),
+   * a state's by its code. Until then only the total was kept, and a return couldn't say whose it was; a year without
+   * it is divided from the calculation that withheld it (`withholdingSplit`).
+   */
+  withheldBy?: Record<string, Money>;
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
   dues: Money;
@@ -99,11 +105,21 @@ export function yearOf(person: Person, year: number | string): YearEarnings {
   return y;
 }
 
+/** Withholding put to its authorities: each state's as given, the rest the IRS's. */
+export function addWithheld(y: YearEarnings, amount: Money, by: Record<string, Money> = {}): void {
+  const to = (y.withheldBy ??= {});
+  let states = 0;
+  for (const [k, v] of Object.entries(by)) if (k !== 'us' && v) { to[k] = (to[k] ?? 0) + v; states += v; }
+  to.us = (to.us ?? 0) + amount - states;
+}
+
 export const quarterKey = (year: number, month: number) => `${year}-${Math.floor((month - 1) / 3) + 1}`;
 
 /** Wages paid: to the year and the quarter they're paid in. */
 export function recordWages(person: Person, at: Instant, zone: string, pay: {
   gross: Money; withheld?: Money; commission?: Money; dues?: Money; sag?: boolean; residual?: boolean; employer?: string; workStudy?: boolean;
+  /** Of what was withheld, each authority's; the rest is the IRS's. */
+  withheldBy?: Record<string, Money>;
   /** The town the work was done in, where it isn't where they live. */
   where?: string;
   /** What a country withheld, for work done abroad. */
@@ -144,6 +160,7 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
     if (pay.employer && !pay.residual) (y.sagByProject ??= {})[pay.employer] = (y.sagByProject[pay.employer] ?? 0) + pay.gross;
   }
   y.withheld += pay.withheld ?? 0;
+  if (pay.withheld) addWithheld(y, pay.withheld, pay.withheldBy);
   y.commission += pay.commission ?? 0;
   y.dues += pay.dues ?? 0;
   if (pay.employer) y.employers[pay.employer] = (y.employers[pay.employer] ?? 0) + pay.gross;
@@ -221,6 +238,7 @@ export function recordPension(person: Person, at: Instant, zone: string, amount:
   // Social Security apart, which the return taxes in part (`taxableSocialSecurity`, from 2026-10-10).
   if (socialSecurity) y.socialSecurity = (y.socialSecurity ?? 0) + amount;
   y.withheld += withheld;
+  if (withheld) addWithheld(y, withheld);
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;

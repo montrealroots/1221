@@ -312,7 +312,13 @@ describe('the tax return', () => {
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
     expect(r.refundAt! - sim.now).toBe(RETURN.refundDays * MS_DAY);
     play(sim, r.refundAt! + MS_HOUR);
-    expect(sim.universe.transactions.find((t) => t.memo === 'Tax refund, 2026')!.postings[0]!.amount).toBe(-r.figures.balance);
+    // From the integration pass of 2026-10-10 each authority settles its own part: the IRS refunds what it withheld past
+    // the federal tax; New York, which withheld nothing, is paid its own and New York City's from the bank at filing.
+    const to = r.figures.owedTo!;
+    expect(to.irs + Object.values(to.states).reduce((a, b) => a + b, 0)).toBe(r.figures.balance);
+    expect(to.states['us-ny']).toBeGreaterThan(0);
+    expect(sim.universe.transactions.find((t) => t.memo === 'Federal tax refund, 2026')!.postings[0]!.amount).toBe(-to.irs);
+    expect(sim.universe.transactions.some((t) => t.memo === 'New York income tax, 2026' && t.postings.some((p) => p.amount === to.states['us-ny']))).toBe(true);
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(false);
 
     const owe = pro('owe');
@@ -321,7 +327,10 @@ describe('the tax return', () => {
     for (const a of Object.values(owe.universe.accounts)) if (a.ownerId === owe.player.id && a.balance > 0) a.balance = 0;
     expect(owe.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
     const o = returnsOf(owe.player)['2026']!;
-    expect(o.owed).toBe(o.figures.balance);
+    // Owed to each by its own: the IRS its part, New York its own and the city's.
+    expect(o.owed).toBe(o.figures.owedTo!.irs);
+    expect(o.stateDue!['us-ny']!.owed).toBe(o.figures.owedTo!.states['us-ny']);
+    expect(o.owed! + o.stateDue!['us-ny']!.owed!).toBe(o.figures.balance);
     expect(owe.execute({ kind: 'tax.pay', payload: { year: 2026 } }).ok).toBe(false);
   }, 60_000);
 });

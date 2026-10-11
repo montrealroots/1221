@@ -46,11 +46,16 @@ describe('a balance left owing', () => {
     const { sim } = owing('owing-grows');
     const r = returnsOf(sim.player)['2026']!;
     const owed = r.owed!;
-    expect(owed).toBe(r.figures.balance);
-    const year = owedOn(r, sim.now + 365 * MS_DAY);
+    // The IRS's part (from the integration pass of 2026-10-10); New York's own is owed to New York, under its rules.
+    expect(owed).toBe(r.figures.owedTo!.irs);
+    expect(r.stateDue!['us-ny']!.owed).toBe(r.figures.owedTo!.states['us-ny']);
+    // Nothing before the due date; from it, a year of interest and twelve months of the penalty (from the integration
+    // pass of 2026-10-10: until then both ran from filing, two and a half months early).
+    expect(owedOn(r, r.due - MS_DAY)).toBe(owed);
+    const year = owedOn(r, r.due + 365 * MS_DAY);
     expect(year).toBe(Math.round(owed * (1 + 0.07 / 365) ** 365 + 0.06 * owed));
     // Past four years, the penalty has stopped at a quarter; the interest hasn't.
-    const later = owedOn(r, sim.now + 5 * 365 * MS_DAY);
+    const later = owedOn(r, r.due + 5 * 365 * MS_DAY);
     expect(later).toBe(Math.round(owed * (1 + 0.07 / 365) ** (5 * 365) + 0.25 * owed));
   });
 
@@ -104,8 +109,12 @@ describe('a return never filed', () => {
     // Its File It lapsed on the due date; nothing asks them to file it now.
     expect(Object.values(sim.universe.decisions).filter((d) => d.refType === 'return' && d.refId === '2026' && !d.resolvedAt)).toHaveLength(0);
     // The late-filing penalty and the interest from the due date, on the balance.
-    expect(r.penalty).toBe(latePenalty(r.figures.balance, r.due, r.filedAt!, 'USD'));
-    expect(r.owed).toBeGreaterThan(r.figures.balance + r.penalty!);
+    // On the IRS's part only (from the integration pass of 2026-10-10): New York's isn't the IRS's to assess, and SLATE
+    // doesn't model New York's own estimated assessment of a non-filer, a boundary said in the handoff.
+    const irs = r.figures.owedTo!.irs;
+    expect(r.penalty).toBe(latePenalty(irs, r.due, r.filedAt!, 'USD'));
+    expect(r.owed).toBeGreaterThan(irs + r.penalty!);
+    expect(r.stateDue).toBeUndefined();
     expect(sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending')).toBe(true);
   });
 

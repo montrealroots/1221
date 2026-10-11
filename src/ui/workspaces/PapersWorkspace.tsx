@@ -20,7 +20,9 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
-import { PLAN, amendRefusal, deadline, leastMonthly, owedAll, owedOn, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
+import { PLAN, amendRefusal, deadline, leastMonthly, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
+import { agencyOf, owedToState, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
@@ -52,6 +54,119 @@ const PAPERS_TABS = SECTIONS['/workspace/papers'] as readonly { id: PapersTab; l
  * A filed return's life after filing (from 2026-10-10): what's owed in its parts and a payment of any part of it, every
  * payment and how it was split, the IRS's substitute and replacing it, and an amended return.
  */
+/**
+ * A year's balance by who it's owed to or due back from (from the integration pass of 2026-10-10): the IRS's line and
+ * each state's, what's still owed to it and why, its payments and notices, and a part paid to it. Until then one
+ * balance stood for all of them, and the IRS's rules ran on a state's tax.
+ */
+function WhoIsOwed({ year }: { year: number }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const r = returnsOf(person)[String(year)];
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const [amounts, setAmounts] = useState<Record<string, string>>({});
+  if (!r) return null;
+  const to = owedToOf(person, r);
+  const sides = Object.entries(r.stateDue ?? {});
+  if (!sides.length && !Object.keys(to.states).length) return null;
+  return (
+    <div className="col gap-2">
+      <div className="eyebrow">Who It’s Owed To</div>
+      <div className="table-scroll">
+        <table>
+          <tbody>
+            <tr><td>The IRS: federal income tax and payroll tax, less federal withholding and the premium credit</td><td className="num mono">{to.irs >= 0 ? money(to.irs) : `${money(-to.irs)} back`}</td></tr>
+            {Object.entries(to.states).map(([state, v]) => <tr key={state}><td>{agencyOf(state)}: {stateName(state)}’s tax{state === 'us-ny' ? ' and New York City’s' : ''}{state === 'us-ca' ? ', and its penalty for no cover' : ''}, less what it withheld{state === 'us-ct' ? ' and its premium assistance' : ''}</td><td className="num mono">{v >= 0 ? money(v) : `${money(-v)} back`}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      {to.derived && <p className="xs dim" style={{ margin: 0 }}>The year’s withholding was kept as one total: SLATE divided it by the paychecks’ own tax table.</p>}
+      {sides.map(([state, sd]) => {
+        const rules = rulesOf(state);
+        const p = sd.owed ? statePartsOn(sd, r.due, sim.now) : undefined;
+        const value = Math.round(Number(amounts[state] ?? '') * 100);
+        return (
+          <div key={state} className="col gap-2">
+            <div className="eyebrow">Owed To {agencyOf(state)}</div>
+            {!rules && <p className="xs dim" style={{ margin: 0 }}>{STATE_UNRESEARCHED}</p>}
+            {sd.migrated && <p className="xs dim" style={{ margin: 0 }}>{sd.migrated.how}.</p>}
+            {p ? (
+              <>
+                <div className="grid grid-3">
+                  <Stat label="Tax Unpaid" value={money(p.tax)} />
+                  <Stat label="Penalties" value={money(p.penalty)} note={rules ? (rules.payLate.monthly ? `${rules.payLate.once ? `${Math.round(rules.payLate.once * 100)}% once, then ` : ''}${rules.payLate.monthly * 100}% a month, to ${Math.round(rules.payLate.cap * 100)}%` : `${Math.round(rules.payLate.once * 100)}% once, past the due date`) : 'None added: unresearched'} />
+                  <Stat label="Interest" value={money(p.interest)} note={rules ? (rules.interest.how === 'daily' ? `${(rules.interest.yearly * 100).toFixed(1)}% a year, daily` : '1% a month or part') : 'None added: unresearched'} />
+                </div>
+                {rules && (sd.collection ?? 0) > 0 && <p className="xs dim" style={{ margin: 0 }}>{(sd.collection ?? 0) <= rules.notices.length ? `${rules.notices[(sd.collection ?? 1) - 1]!.code} sent.` : 'Its levy has been made.'}{rules.timingAssumed ? ' The days between its notices are SLATE’s.' : ''}</p>}
+                <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+                  <div className="field"><label htmlFor={`tax-pay-${state}-${year}`}>{`Pay ${stateName(state)} (Blank Pays It All)`}</label><input id={`tax-pay-${state}-${year}`} inputMode="decimal" value={amounts[state] ?? ''} onChange={(e) => setAmounts({ ...amounts, [state]: e.target.value })} placeholder={(stateOwedOn(sd, r.due, sim.now) / 100).toFixed(2)} /></div>
+                  <Gated feature="tax.pay_state" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay_state', amounts[state] ? { state, year, amount: value } : { state, year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid ${agencyOf(state)}: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : `Paid ${agencyOf(state)} in full.`, 'positive'); setAmounts({ ...amounts, [state]: '' }); } }}>Pay</Gated>
+                </div>
+                {rules && <p className="xs dim" style={{ margin: 0 }}>{rules.orderAssumed ? `${rules.short} doesn’t publish the order a part goes in: SLATE puts it to the tax first.` : `By statute a part goes to the penalty first, then the interest, then the tax.`}</p>}
+              </>
+            ) : sd.refund ? <p className="small" style={{ margin: 0 }}>{money(sd.refund)} back from {agencyOf(state)}{sd.refundedAt !== undefined ? `, paid ${formatDate(sd.refundedAt, sim.zone)}` : sd.refundAt !== undefined ? `, due about ${formatDate(sd.refundAt, sim.zone)}` : ''}.</p> : sd.filedAt !== undefined ? <p className="small" style={{ margin: 0 }}>Paid to {agencyOf(state)}.</p> : null}
+            {(sd.payments ?? []).length > 0 && (
+              <details className="small"><summary>{`Payments To ${agencyOf(state)}`}</summary>
+                <ul style={{ margin: 0 }}>{sd.payments!.map((x, i) => <li key={i}>{formatDate(x.at, sim.zone)}: {money(x.amount)}, {x.how === 'levy' ? 'taken by levy' : x.how === 'refund offset' ? 'from a refund' : x.how === 'plan' ? 'by its plan' : 'paid'}; to the tax {money(x.tax)}, penalties {money(x.penalty)}, interest {money(x.interest)}.</li>)}</ul>
+              </details>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** A state's own payment plan, every year owed to it together (`tax.apply_state_plan`, from the integration pass of 2026-10-10). */
+function StatePlanPanel({ state }: { state: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const rules = rulesOf(state);
+  const [months, setMonths] = useState(String(rules?.plan.maxMonths ?? 12));
+  const plan = person.statePlans?.[state];
+  const owed = owedToState(person, state, sim.now);
+  if (!rules || (owed <= 0 && !plan)) return null;
+  const live = plan && ['pending', 'active', 'missed'].includes(plan.status);
+  const no = statePlanRefusal(sim, person, state, Number(months));
+  return (
+    <Panel title={`${rules.short} ${rules.plan.name}`} subtitle={plan ? ({ pending: 'Being decided', active: 'In force', missed: 'A payment missed', ended: 'Ended', paid: 'Paid in full' } as Record<string, string>)[plan.status] : `${money(owed)} owed`}>
+      <div className="col gap-3">
+        {plan && (
+          <div className="grid grid-3">
+            <Stat label="Covers" value={money(plan.covers)} />
+            <Stat label="Each Month" value={money(plan.monthly)} note={`${plan.months} months`} />
+            <Stat label={plan.status === 'missed' ? 'Catch Up By' : 'Next Payment'} value={plan.status === 'missed' && plan.endsBy !== undefined ? formatDate(plan.endsBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : '—'} />
+          </div>
+        )}
+        {plan?.status === 'missed' && <div><Gated feature="tax.catch_up_state_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_state_plan', { state }); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid.`, 'positive'); }}>Catch Up</Gated></div>}
+        {!live && owed > 0 && (
+          <div className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>
+              {rules.short}’s own plan, apart from any with the IRS: up to {money(rules.plan.max)} over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.fee ? `, a ${money(rules.plan.fee)} fee ${rules.plan.feeAdded ? 'added to the balance' : ''}` : ', no fee'}. Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
+            </p>
+            <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
+                {Array.from({ length: rules.plan.maxMonths - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{m} Months</option>)}
+              </select></div>
+              <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number }>('tax.apply_state_plan', { state, months: Number(months) }); if (a.ok) toast(`Asked: ${money(a.value!.monthly)} a month, decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For The Plan</Gated>
+            </div>
+            {no && <span className="xs dim">{no}</span>}
+          </div>
+        )}
+        {plan && plan.history.length > 0 && (
+          <details className="small"><summary>The Plan’s History</summary>
+            <ul style={{ margin: 0 }}>{plan.history.map((h, i) => <li key={i}>{formatDate(h.at, sim.zone)}: {h.what}{h.amount !== undefined ? `, ${money(h.amount)}` : ''}.</li>)}</ul>
+          </details>
+        )}
+        <Fine>Source: {rules.source}.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 function ReturnLife({ year }: { year: number }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -68,6 +183,9 @@ function ReturnLife({ year }: { year: number }) {
     <div className="col gap-2">
       {r.substitute && <p className="small" style={{ margin: 0 }}>The IRS filed this from what your employers and banks reported{r.substituteFigures ? `, ${money(r.substituteFigures.balance)} of tax with no credit only your own return claims` : ''}. File your own and it reconsiders: the tax becomes what yours says, the penalty and interest fall in proportion, and anything paid past it comes back.</p>}
       {r.reconsideredAt !== undefined && <p className="small" style={{ margin: 0 }}>Your own return replaced the IRS’s on {formatDate(r.reconsideredAt, sim.zone)}.</p>}
+      <WhoIsOwed year={year} />
+      {r.split && <p className="xs dim" style={{ margin: 0 }}>{r.split.how}: SLATE’s division, since payments made before then weren’t kept by who they went to.</p>}
+      {parts && <div className="eyebrow">Owed To The IRS</div>}
       {parts && (
         <div className="col gap-2">
           <div className="grid grid-3">
@@ -154,7 +272,7 @@ function TaxPlanPanel() {
         {!live && owed > 0 && (
           <div className="col gap-2">
             <p className="small" style={{ margin: 0 }}>
-              The IRS takes what’s owed on every year in one plan. A short-term plan has {PLAN.shortDays} days and no fee; a monthly plan up to {money(PLAN.longMax)} is approved online, with a setup fee. While it’s in force, collection stops, and on a return filed on time the late-payment penalty runs at a quarter of its rate. A payment missed brings Notice CP523, and {PLAN.defaultDays} days to catch up before the plan ends. The least monthly payment, what’s owed over {PLAN.leastMonths} months, is SLATE’s.
+              The IRS takes what’s owed to it on every year in one plan: federal tax only, a state’s being the state’s, with a plan of its own. A short-term plan has {PLAN.shortDays} days and no fee; a monthly plan up to {money(PLAN.longMax)} is approved online, with a setup fee. While it’s in force, collection stops, and on a return filed on time the late-payment penalty runs at a quarter of its rate. A payment missed brings Notice CP523, and {PLAN.defaultDays} days to catch up before the plan ends. The least monthly payment, what’s owed over {PLAN.leastMonths} months, is SLATE’s.
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="plan-kind">Plan</label><select id="plan-kind" style={{ width: 'auto' }} value={kind} onChange={(e) => setKind(e.target.value as 'long' | 'short')}>
@@ -239,6 +357,7 @@ function ReturnsPane() {
         </Panel>
       )}
       <TaxPlanPanel />
+      {[...new Set(returns.flatMap((r) => Object.keys(r.stateDue ?? {})))].map((state) => <StatePlanPanel key={state} state={state} />)}
       {returns.map((r) => {
         const f = r.figures;
         const lines: [string, number][] = [

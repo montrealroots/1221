@@ -252,6 +252,8 @@ export interface Person {
   returns?: Record<string, TaxReturn>;
   /** An IRS payment plan over what's owed on the returns (`systems/taxreturn.ts`, from 2026-10-10). */
   taxPlan?: import('../systems/taxreturn').TaxPlan;
+  /** Each state's payment plan, by its code (`systems/statetax.ts`, from the integration pass of 2026-10-10). */
+  statePlans?: Record<string, import('../systems/statetax').StatePlan>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */

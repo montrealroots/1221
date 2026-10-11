@@ -90,7 +90,7 @@ import { inSaveMoney } from './banking';
 import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
-import { recordScholarship, recordWages, yearOf } from './earnings';
+import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
@@ -108,7 +108,7 @@ import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
 import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
-import { nonresidentFor } from './taxreturn';
+import { connecticutTax, nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
@@ -2525,7 +2525,8 @@ export function registerSchool(sim: Simulation): void {
         postings: [{ accountId: current.id, amount: account.refund - withheld }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])],
       });
       recordScholarship(person, item.at, zone(), account.taxable);
-      if (withheld) yearOf(person, year).withheld += withheld;
+      // Form 1042-S's withholding is the IRS's.
+      if (withheld) { yearOf(person, year).withheld += withheld; addWithheld(yearOf(person, year), withheld); }
     }
     if (unsupported) {
       billUnsupportedTerm(s, person, term, need);
@@ -2722,7 +2723,7 @@ export function registerSchool(sim: Simulation): void {
     const into = payeeAccount(s, person);
     s.post({ memo: `Grant-in-aid: ${hours} work-study hours converted, ${YALE_DRAMA.name}`, category: 'scholarship', postings: [{ accountId: into.id, amount: grant - withheld }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -grant }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
     recordScholarship(person, item.at, zone(), grant);
-    if (withheld) yearOf(person, year).withheld += withheld;
+    if (withheld) { yearOf(person, year).withheld += withheld; addWithheld(yearOf(person, year), withheld); }
     (school.convertedHours ??= {})[key] = (school.convertedHours[key] ?? 0) + hours;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Hours Converted To Grant Aid', body: `${hours} work-study hours you couldn’t work became ${formatMoney(grant, cur)} of grant aid, paid into your ${into.name}${withheld ? `, ${formatMoney(withheld, cur)} withheld for tax` : ''}. It’s a scholarship for living costs, which the US taxes.`, importance: 60, route: '/workspace/school' });
   });
@@ -3190,9 +3191,13 @@ export function registerSchool(sim: Simulation): void {
     const taxOf = (x: number) => computeAnnualTax(x, YALE_DRAMA.cityId, item.at, { currency: cur });
     // A nonresident alien on an F-1 pays no FICA at all (IRC 3121(b)(19), from 2026-10-10: until then it was withheld).
     const fica = nonresidentFor(person, year) ? taxOf(before + pay).payroll - taxOf(before).payroll : 0;
-    const withheld = taxOf(before + pay).total - taxOf(before).total - fica;
+    // Connecticut's tax withheld too, by its own schedule (`connecticutTax`; SLATE's tax table carries none for it), kept
+    // as Connecticut's (from the integration pass of 2026-10-10). Until then the week's paycheck withheld the IRS's and
+    // payroll tax only, and the return found all of Connecticut's owed.
+    const ct = connecticutTax(before + pay, cur) - connecticutTax(before, cur);
+    const withheld = taxOf(before + pay).total - taxOf(before).total - fica + ct;
     s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
-    recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
+    recordWages(person, item.at, zone(), { gross: pay, withheld, withheldBy: { [stateOf(YALE_DRAMA.cityId)]: ct }, employer: 'yale-summer-cabaret' });
   });
 
   /**

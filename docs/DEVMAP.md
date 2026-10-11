@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-143 commands; 139 named by a test, 4 not.
+146 commands; 142 named by a test, 4 not.
 
 ## bank
 
@@ -212,11 +212,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tax.amend` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
-| `tax.apply_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
+| `tax.amend` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `state-tax.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.apply_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `state-tax.test.ts` | Cover, Benefits And Returns |
+| `tax.apply_state_plan` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
 | `tax.catch_up_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
-| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.catch_up_state_plan` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
+| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `state-tax.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
 | `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.pay_state` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
 | `tax.revise_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
 
 ## tutorial

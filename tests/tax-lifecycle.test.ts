@@ -37,12 +37,17 @@ describe('PLAYER JOURNEY: a tax balance paid in parts, then corrected', () => {
   it('applies each part to the tax, then the penalty, then the interest; the next months’ penalty falls with the tax; an amended return adds what a late form showed', () => {
     let sim = owing('tx-parts');
     const r = () => returnsOf(sim.player)['2026']!;
-    const tax = r().figures.balance;
+    // The IRS's part of the year (from the integration pass of 2026-10-10): New York's is owed to New York, apart.
+    const tax = r().figures.owedTo!.irs;
     expect(r().parts).toEqual({ tax, penalty: 0, interest: 0 });
-    // Two months on: the penalty, half a percent a month on the tax, and the interest beside it.
-    play(sim, sim.now + 61 * MS_DAY);
+    expect(r().stateDue!['us-ny']!.parts!.tax).toBe(r().figures.owedTo!.states['us-ny']);
+    // Before the due date, filed early: nothing added yet (IRC 6601(a), 6651(a)(2); until the integration pass of
+    // 2026-10-10 both ran from filing).
+    expect(partsOn(r(), r().due - MS_DAY)).toEqual({ tax, penalty: 0, interest: 0 });
+    // Two months past the due date: the penalty, half a percent a month on the tax, and the interest beside it.
+    play(sim, r().due + 61 * MS_DAY);
     const two = partsOn(r(), sim.now);
-    const rateTwo = payLate(r().filedAt!, sim.now);
+    const rateTwo = payLate(r().due, sim.now);
     expect(two.penalty).toBe(Math.round(rateTwo * tax));
     expect(two.interest).toBeGreaterThan(0);
     // A part: all of it to the tax.
@@ -55,7 +60,7 @@ describe('PLAYER JOURNEY: a tax balance paid in parts, then corrected', () => {
     sim = reload(sim);
     play(sim, sim.now + 31 * MS_DAY);
     const three = partsOn(r(), sim.now);
-    expect(three.penalty - two.penalty).toBe(Math.round((payLate(r().filedAt!, sim.now) - rateTwo) * (tax - Math.round(tax / 2))));
+    expect(three.penalty - two.penalty).toBe(Math.round((payLate(r().due, sim.now) - rateTwo) * (tax - Math.round(tax / 2))));
     // More than owed is refused; the rest pays it off and the IRS's notices stop.
     expect(sim.execute({ kind: 'tax.pay', payload: { year: 2026, amount: owedOn(r(), sim.now) + 1 } }).error).toMatch(/is owed; pay that or less/);
     fund(sim, owedOn(r(), sim.now) + 10_000_00);
@@ -73,7 +78,10 @@ describe('PLAYER JOURNEY: a tax balance paid in parts, then corrected', () => {
     sim = reload(sim);
     play(sim, amended.processAt + MS_HOUR);
     expect(r().amended![0]!.processedAt).toBeDefined();
-    expect(r().parts!.tax).toBe(amended.change);
+    // The 1040-X's part is the IRS's; New York's IT-201-X part is New York's, owed to it from the due date.
+    expect(r().parts!.tax).toBe(r().amended![0]!.irs);
+    expect(r().amended![0]!.irs! + (r().amended![0]!.states?.['us-ny'] ?? 0)).toBe(amended.change);
+    expect(r().stateDue!['us-ny']!.owed).toBeGreaterThan(r().amended![0]!.states!['us-ny']!);
     expect(r().parts!.interest).toBeGreaterThan(0);
     expect(titled(sim, 'Your Amended 2026 Return Is Processed')).toHaveLength(1);
   }, 60_000);
@@ -92,7 +100,9 @@ describe('PLAYER JOURNEY: a tax balance paid in parts, then corrected', () => {
     expect(amended.change).toBeLessThan(0);
     play(sim, amended.processAt + MS_HOUR);
     const a = r.amended![0]!;
-    expect(a.refund).toBe(-amended.change);
+    // The IRS refunds its own part; New York takes its part off what's owed to it first.
+    expect(a.refund).toBe(-a.irs!);
+    expect(a.irs! + (a.states?.['us-ny'] ?? 0)).toBe(amended.change);
     expect(a.interest).toBeGreaterThan(0);
     expect(sim.universe.transactions.some((t) => t.memo === 'Tax refund, amended 2026 return, with interest')).toBe(true);
   }, 60_000);
@@ -132,13 +142,17 @@ describe('the IRS’s substitute return', () => {
     expect(r().substitute).toBe(true);
     // FIXTURE: the IRS's figures counted a 1099 twice, $8,000 of tax more than their own return shows.
     const own = r().figures.balance;
+    // The IRS assessed its own part only (from the integration pass of 2026-10-10), New York's not being its to assess.
+    const irs = r().figures.owedTo!.irs;
+    expect(r().parts!.tax).toBe(irs);
+    expect(r().stateDue).toBeUndefined();
     r().substituteFigures = { ...r().substituteFigures!, balance: own + 8_000_00 };
-    r().parts = { ...r().parts!, tax: own + 8_000_00 };
+    r().parts = { ...r().parts!, tax: irs + 8_000_00 };
     r().owed = r().parts!.tax + r().parts!.penalty + r().parts!.interest;
     // A part paid, the most the bank holds.
     const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
-    fund(sim, own + 2_000_00 - Math.min(0, primary.balance));
-    sim.must({ kind: 'tax.pay', payload: { year: 2026, amount: own + 2_000_00 } });
+    fund(sim, irs + 2_000_00 - Math.min(0, primary.balance));
+    sim.must({ kind: 'tax.pay', payload: { year: 2026, amount: irs + 2_000_00 } });
     const penaltyBefore = r().parts!.penalty;
     sim = reload(sim);
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
@@ -147,6 +161,9 @@ describe('the IRS’s substitute return', () => {
     expect(r().parts?.tax ?? 0).toBe(0);
     expect(r().penalty).toBeLessThan(penaltyBefore + 1);
     expect(sim.universe.transactions.some((t) => t.memo === 'Tax refund, 2026: the IRS’s return replaced by yours' && t.postings[0]!.amount === 2_000_00)).toBe(true);
+    // New York's side, filed now for the first time with its late penalties, owed to New York.
+    expect(r().stateDue!['us-ny']!.filedAt).toBe(sim.now);
+    expect(r().stateDue!['us-ny']!.penalty).toBeGreaterThan(0);
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toMatch(/amended return/);
   }, 60_000);
 });

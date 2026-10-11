@@ -48,6 +48,8 @@ import { drawFromBank, expenseFor, payFromBank } from './spending';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
+import { stateFileLate, statePayLateRate, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
+import { YALE_DRAMA } from '../content/school';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_NOTICE_KIND = 'tax.notice';
@@ -116,7 +118,9 @@ export function partsOf(r: TaxReturn): OwedParts {
 export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
   const p = partsOf(r);
   if (!r.owed) return { tax: 0, penalty: 0, interest: 0 };
-  const from = r.accruedAt ?? r.filedAt ?? at;
+  // From the due date at the earliest (IRC 6601(a)): a return filed in February with a balance owes no interest on it
+  // until 15 April. Until the integration pass of 2026-10-10 it ran from filing.
+  const from = Math.max(r.accruedAt ?? r.filedAt ?? at, r.due);
   const days = Math.max(0, (at - from) / MS_DAY);
   const interest = p.interest + (p.tax + p.penalty + p.interest) * ((1 + COLLECTION.interest / 365) ** days - 1);
   const rate = payLateRateAt(r, at);
@@ -135,7 +139,10 @@ const monthsBetween = (a: Instant, b: Instant) => Math.ceil(Math.max(0, b - a) /
  * 2026-10-10: `reducedFrom`, `reducedTo`).
  */
 export function payLateRateAt(r: TaxReturn, at: Instant): number {
-  const filed = r.filedAt ?? at;
+  // From the due date at the earliest (IRC 6651(a)(2)); from filing for a return filed late, its months before filing
+  // being in the penalty assessed with it (`latePenalty`). Until the integration pass of 2026-10-10 an early return's ran
+  // from filing.
+  const filed = Math.max(r.filedAt ?? at, r.due);
   let months = RETURN.payLateMonthly * monthsBetween(filed, at);
   if (r.reducedFrom !== undefined && at > r.reducedFrom) {
     const within = monthsBetween(r.reducedFrom, Math.min(at, r.reducedTo ?? at));
@@ -154,7 +161,7 @@ export function owedOn(r: TaxReturn, at: Instant): Money {
 /** Brings a return's balance up to a moment. */
 function accrue(r: TaxReturn, at: Instant): void {
   if (!r.owed) return;
-  const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
+  const months = Math.ceil(Math.max(0, at - Math.max(r.filedAt ?? at, r.due)) / (30.4375 * MS_DAY));
   r.parts = partsOn(r, at);
   r.base ??= r.parts.tax;
   r.payLateRate = Math.max(r.payLateRate ?? 0, Math.min(RETURN.lateCap, RETURN.payLateMonthly * months));
@@ -224,7 +231,7 @@ export interface TaxReturn {
   paidTax?: Money;
   payments?: { at: Instant; amount: Money; tax: Money; penalty: Money; interest: Money; how: 'payment' | 'levy' | 'refund offset' }[];
   /** An amended return: its form, when filed, the figures it carries, the change, when the IRS processes it, and its outcome. */
-  amended?: { form: '1040-X' | '1040-X with 1040-NR'; at: Instant; figures: ReturnFigures; change: Money; processAt: Instant; processedAt?: Instant; refund?: Money; interest?: Money }[];
+  amended?: { form: '1040-X' | '1040-X with 1040-NR'; at: Instant; figures: ReturnFigures; change: Money; processAt: Instant; processedAt?: Instant; refund?: Money; interest?: Money; irs?: Money; states?: Record<string, Money> }[];
   /** A substitute return replaced by their own after it was assessed, and when (`tax.file`, a reconsideration). */
   reconsideredAt?: Instant;
   /** The IRS's own figures on a substitute, kept beside the return's. */
@@ -232,6 +239,16 @@ export interface TaxReturn {
   /** A payment plan's months at the reduced failure-to-pay rate: from, and to once it ends (`payLateRateAt`). */
   reducedFrom?: Instant;
   reducedTo?: Instant;
+  /** When the IRS's refund was paid: a second item for it pays nothing. */
+  refundedAt?: Instant;
+  /**
+   * Each state's side of the year (`systems/statetax.ts`, from the integration pass of 2026-10-10). The fields above are
+   * the IRS's alone from then: `owed`, `parts`, `payments`, `collection`, `refund` and the plan's reduced rate. Until
+   * then they were federal and state together, and an IRS plan, notice and levy ran on Connecticut's tax.
+   */
+  stateDue?: Record<string, StateDue>;
+  /** A combined balance divided when the save was opened (`splitReturns`): when, and how. */
+  split?: { at: Instant; how: string };
 }
 
 /**
@@ -281,8 +298,14 @@ export const TAX_PLAN_KIND = 'tax.plan_payment';
 export const TAX_PLAN_DECIDE_KIND = 'tax.plan_decide';
 export const TAX_PLAN_DEFAULT_KIND = 'tax.plan_default';
 
-/** What's owed across every return, now. */
+/**
+ * What's owed to the IRS across every return, now: what its plan covers. From the integration pass of 2026-10-10 a
+ * state's is apart (`owedToStates`); until then this was both, and an IRS plan took a state's tax in.
+ */
 export const owedAll = (person: Person, at: Instant): Money => Object.values(person.returns ?? {}).reduce((s, r) => s + owedOn(r, at), 0);
+
+/** What's owed to anyone for income tax, the IRS and every state, now: what a budget sets aside. */
+export const owedEverywhere = (person: Person, at: Instant): Money => owedAll(person, at) + owedToStates(person, at);
 
 /** Why a plan can't be applied for, or nothing; and what it would be. */
 export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'long'): string | undefined {
@@ -410,6 +433,14 @@ export interface ReturnFigures {
   withheld: Money;
   /** Positive owed, negative due back. */
   balance: Money;
+  /**
+   * The balance by who it's owed to or due back from (from the integration pass of 2026-10-10): the IRS's (federal tax,
+   * payroll tax, the premium credit, less federal withholding) and each state's (its tax less the credit it gives, New
+   * York City's tax with New York's, California's mandate with California's, Connecticut's assistance with
+   * Connecticut's, less its withholding). They sum to `balance`. `derived` where the withholding was divided after the
+   * fact (`withholdingSplit`).
+   */
+  owedTo?: { irs: Money; states: Record<string, Money>; derived?: boolean };
 }
 
 export function returnsOf(person: Person): Record<string, TaxReturn> {
@@ -696,14 +727,62 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const stateAssistance = Math.round(Math.max(0, enhanced - credit) * share);
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
-  return {
+  const figures: ReturnFigures = {
     ...(nra ? { form: '1040-NR' as const } : {}),
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
     gainTax, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit - stateAssistance,
   };
+  // The city tax by the state that collects it: New York City's with New York's (Tax Law 1312(a)).
+  const localBy: Record<string, Money> = {};
+  if (taxed > 0) for (const [city, amount] of Object.entries(y.byResidence)) { const l = Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)); if (l) localBy[stateOf(city)] = (localBy[stateOf(city)] ?? 0) + l; }
+  figures.owedTo = owedToFrom(person, year, figures, into, localBy);
+  return figures;
 }
+
+/**
+ * What a year's withholding was, by authority: as kept (`withheldBy`), or, for a year paid before it was kept, divided
+ * from the calculation that withheld it: the Summer Cabaret's state share is what its paychecks' tax table gives the
+ * state on the season's stipend, the rest the IRS's (every other withholding in SLATE is federal: Form 1042-S's on a
+ * scholarship). Never more than was withheld in all.
+ */
+export function withholdingSplit(person: Person, year: number, into = 'USD'): { by: Record<string, Money>; derived: boolean } {
+  const y = yearOf(person, year);
+  if (y.withheldBy) {
+    const by = { ...y.withheldBy };
+    const kept = Object.values(by).reduce((s, v) => s + v, 0);
+    // Anything withheld before the split was kept, in a year that has both, is the IRS's.
+    if (kept !== y.withheld) by.us = (by.us ?? 0) + y.withheld - kept;
+    return { by, derived: false };
+  }
+  const cabaret = y.employers['yale-summer-cabaret'] ?? 0;
+  if (!cabaret || !y.withheld) return { by: y.withheld ? { us: y.withheld } : {}, derived: false };
+  const t = computeAnnualTax(cabaret, YALE_DRAMA.cityId, instantFromZoned({ year, month: 7, day: 1, hour: 12 }, HOME), { currency: into });
+  const state = Math.min(y.withheld, Math.max(0, Math.round(t.regional + t.local)));
+  return { by: { us: y.withheld - state, ...(state ? { [stateOf(YALE_DRAMA.cityId)]: state } : {}) }, derived: true };
+}
+
+/** A year's balance by authority (`ReturnFigures.owedTo`), from its own lines; they sum to the balance. */
+export function owedToFrom(person: Person, year: number, f: ReturnFigures, into = 'USD', localBy?: Record<string, Money>): NonNullable<ReturnFigures['owedTo']> {
+  const w = withholdingSplit(person, year, into);
+  const states: Record<string, Money> = {};
+  const add = (s: string, v: Money) => { if (v) states[s] = (states[s] ?? 0) + v; };
+  for (const l of f.states) add(l.state, l.tax - l.credit);
+  // A return from before the city tax was kept by state reads it as its residence's state's.
+  if (localBy) for (const [s, v] of Object.entries(localBy)) add(s, v);
+  else if (f.local) add(stateOf(f.cityId), f.local);
+  if (f.mandate) add('us-ca', f.mandate);
+  if (f.stateAssistance) add('us-ct', -f.stateAssistance);
+  for (const [s, v] of Object.entries(w.by)) if (s !== 'us') add(s, -v);
+  for (const s of Object.keys(states)) if (states[s] === 0) delete states[s];
+  const stateTotal = Object.values(states).reduce((a, b) => a + b, 0);
+  // The IRS's is the rest, so the two sum to the balance to the cent whatever rounding the city tax took.
+  return { irs: f.balance - stateTotal, states, ...(w.derived ? { derived: true } : {}) };
+}
+
+/** A filed return's split: its own, or worked out from its lines. */
+export const owedToOf = (person: Person, r: TaxReturn): NonNullable<ReturnFigures['owedTo']> => r.figures.owedTo ?? owedToFrom(person, r.year, r.figures);
 
 /** The late penalties on a balance filed at a moment: 4.5% a month or part for filing and 0.5% for paying, each to 25%, and the minimum past 60 days. */
 export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into = 'USD'): Money {
@@ -716,6 +795,21 @@ export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into
   return Math.round(payLate + fileLate);
 }
 
+/**
+ * What filing an unfiled return late would add now, by authority (from the integration pass of 2026-10-10): the IRS's
+ * late penalties on its part, and each state's own on its part. Until then the IRS's ran on the whole balance.
+ */
+export function latePenaltyAll(person: Person, r: TaxReturn, at: Instant, into = 'USD'): Money {
+  const to = owedToOf(person, r);
+  let total = latePenalty(to.irs, r.due, at, into);
+  for (const [state, tax] of Object.entries(to.states)) {
+    const rules = rulesOf(state);
+    if (!rules || tax <= 0) continue;
+    total += stateFileLate(rules, tax, r.due, at, into) + Math.round(statePayLateRate(rules, r.due, at) * tax);
+  }
+  return total;
+}
+
 /** Each February, from the one after the business began. */
 /** A balance owed with no collection on the calendar, as a save from before 2026-09-28 holds one: it begins now. */
 export function armCollection(sim: Simulation, person: Person): void {
@@ -724,6 +818,7 @@ export function armCollection(sim: Simulation, person: Person): void {
     if (r.filedAt === undefined && r.figures.balance > 0 && r.due < sim.now && !sim.universe.scheduled.some((i) => i.kind === TAX_SFR_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) {
       sim.schedule({ at: Math.max(sim.now + MS_DAY, r.due + SUBSTITUTE.afterDays * MS_DAY), kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
     }
+    for (const [state, sd] of Object.entries(r.stateDue ?? {})) if (sd.owed && !person.statePlans?.[state] && !sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) stateNextNotice(sim, person, r, state);
     if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
     r.accruedAt ??= sim.now;
     nextNotice(sim, person, r);
@@ -742,6 +837,7 @@ export function owesUsReturn(person: Person, year: number): boolean {
 }
 
 export function armTaxes(sim: Simulation, person: Person): void {
+  splitReturns(sim, person);
   armCollection(sim, person);
   if (sim.universe.scheduled.some((i) => i.kind === TAX_SEASON_KIND && i.status === 'pending' && i.payload.personId === person.id)) return;
   const p = zonedParts(sim.now, HOME);
@@ -815,8 +911,9 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r || r.filedAt !== undefined) return;
-    // Owing and unfiled, the IRS files it for them in a year (`SUBSTITUTE`).
-    if (r.figures.balance > 0) s.schedule({ at: r.due + SUBSTITUTE.afterDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
+    // Owing the IRS and unfiled, the IRS files it for them in a year (`SUBSTITUTE`): on its own part, from the integration
+    // pass of 2026-10-10.
+    if (owedToOf(person, r).irs > 0) s.schedule({ at: r.due + SUBSTITUTE.afterDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
     if (person.id !== s.universe.playerId) return;
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
@@ -832,9 +929,11 @@ export function registerTaxReturn(sim: Simulation): void {
     // replacing it changed nothing.
     const sfr = sfrFigures(r.figures);
     r.substituteFigures = sfr;
-    const penalty = latePenalty(sfr.balance, r.due, s.now, cur);
-    const interest = Math.round(sfr.balance * ((1 + COLLECTION.interest / 365) ** late - 1));
-    const total = sfr.balance + penalty + interest;
+    // The IRS's own part of it: a state's tax isn't the IRS's to assess (from the integration pass of 2026-10-10).
+    const federalPart = Math.max(0, owedToOf(person, r).irs + (sfr.balance - r.figures.balance));
+    const penalty = latePenalty(federalPart, r.due, s.now, cur);
+    const interest = Math.round(federalPart * ((1 + COLLECTION.interest / 365) ** late - 1));
+    const total = federalPart + penalty + interest;
     if (item.payload.step === 'proposed') {
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: with no return from you, the IRS worked out ${formatMoney(total, cur)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
       s.schedule({ at: s.now + SUBSTITUTE.answerDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'assessed' } });
@@ -844,7 +943,7 @@ export function registerTaxReturn(sim: Simulation): void {
     r.filedAt = s.now;
     r.penalty = penalty;
     r.substitute = true;
-    setOwed(r, { tax: sfr.balance, penalty, interest }, s.now);
+    setOwed(r, { tax: federalPart, penalty, interest }, s.now);
     r.collection = 0;
     // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
     if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
@@ -887,7 +986,10 @@ export function registerTaxReturn(sim: Simulation): void {
     // Canada's refund of its withholding, under the treaty, beside the IRS's.
     const canada = item.payload.foreign === true ? r?.figures.foreignRefund ?? 0 : 0;
     if (canada) { s.post({ memo: `Canada Revenue Agency refund, ${r!.year}`, category: 'tax', postings: [{ accountId: account.id, amount: canada }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -canada }] }); return; }
-    if (!r?.refund) return;
+    // A state's own refund, by the state (`payStateRefund`, from the integration pass of 2026-10-10).
+    if (r && typeof item.payload.state === 'string') { payStateRefund(s, person, r, item.payload.state); return; }
+    if (!r?.refund || r.refundedAt !== undefined) return;
+    r.refundedAt = s.now;
     // Owed on another year, the IRS keeps what covers it (IRC 6402(a), from 2026-10-10; a plan's payments are still due).
     let back = r.refund;
     for (const other of Object.values(person.returns ?? {}).sort((a, b) => a.year - b.year)) {
@@ -898,7 +1000,9 @@ export function registerTaxReturn(sim: Simulation): void {
       back -= take;
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your ${r.year} Refund Went To ${other.year}`, body: `${formatMoney(take, saveCurrency(s.universe))} of it paid what you owe on ${other.year}.`, importance: 70, route: '/workspace/papers' });
     }
-    if (back > 0) s.post({ memo: `Tax refund, ${r.year}`, category: 'tax', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
+    // Then to the state on the return's address for its past-due income tax (IRC 6402(e)).
+    back -= federalOffsetToState(s, person, stateOf(r.figures.cityId), back, r.year);
+    if (back > 0) s.post({ memo: `Federal tax refund, ${r.year}`, category: 'tax', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
   });
 
   sim.onCommand<{ kind: 'short' | 'long'; monthly?: Money; directDebit?: boolean }, { status: string; decideAt: Instant; fee: Money }>('tax.apply_plan', (p, { sim: s }) => {
@@ -1014,28 +1118,37 @@ export function registerTaxReturn(sim: Simulation): void {
     r.penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
     for (const d of Object.values(s.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = s.now;
     if (r.figures.foreignRefund > 0) s.schedule({ at: s.now + RETURN.refundDays * MS_DAY, kind: TAX_REFUND_KIND, label: `Canada’s Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, foreign: true } });
-    if (r.figures.balance < 0) {
-      r.refund = -r.figures.balance;
+    // Each state's side first, by its own rules (`fileState`, from the integration pass of 2026-10-10); then the IRS's,
+    // which is what follows here. Until then one balance went to the IRS and its rules ran on all of it.
+    const split = owedToOf(person, r);
+    const stateTotal = Object.values(split.states).reduce((a, b) => a + b, 0);
+    let statesPaid = true;
+    for (const [state, amount] of Object.entries(split.states)) statesPaid = fileState(s, person, r, state, amount).paid && statesPaid;
+    const irs = split.irs;
+    r.penalty = latePenalty(irs, r.due, s.now, cur);
+    if (irs < 0) {
+      r.refund = -irs;
       // A nonresident with no Social Security number files with a W-7 for an ITIN, and the return waits for it: seven
       // weeks more before the refund (`systems/taxid.ts`, from 2026-10-10).
       const itin = r.figures.form === '1040-NR' && !hasSsn(person) ? SSN.itinWeeks * 7 : 0;
       r.refundAt = s.now + (RETURN.refundDays + itin) * MS_DAY;
       s.schedule({ at: r.refundAt, kind: TAX_REFUND_KIND, label: `Tax Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
-      return { balance: r.figures.balance, penalty: 0, paid: true };
+      return { balance: r.figures.balance, penalty: 0, paid: statesPaid };
     }
     // Interest runs from the due date on a balance filed late.
     const late = Math.max(0, (s.now - r.due) / MS_DAY);
-    const interest = r.figures.balance > 0 ? Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
-    const total = r.figures.balance + r.penalty + interest;
-    const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
+    const interest = irs > 0 ? Math.round(irs * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
+    const total = Math.max(0, irs) + r.penalty + interest;
+    const paid = total <= 0 || payFromBank(s, person, total, `Federal income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
     if (!paid) {
-      setOwed(r, { tax: r.figures.balance, penalty: r.penalty, interest }, s.now);
+      setOwed(r, { tax: irs, penalty: r.penalty, interest }, s.now);
       // Under a payment plan, another year's balance joins it or puts it in default (`newLiability`, from 2026-10-10).
       if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) r.reducedFrom = s.now; newLiability(s, person, total); }
       else { r.collection = 0; nextNotice(s, person, r); }
     }
-    else if (total > 0) r.paidTax = r.figures.balance;
-    return { balance: r.figures.balance, penalty: r.penalty, paid };
+    else if (total > 0) r.paidTax = irs;
+    void stateTotal;
+    return { balance: r.figures.balance, penalty: r.penalty, paid: paid && statesPaid };
   });
 
   /**
@@ -1068,10 +1181,14 @@ export function registerTaxReturn(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const figures = figuresFor(person, r!.year, saveCurrency(s.universe), s.now);
     const change = figures.balance - r!.figures.balance;
-    if (change === 0) throw new CommandError('Your return as filed matches what’s on record: there’s nothing to amend.');
+    // Each authority's change (from the integration pass of 2026-10-10): the 1040-X's and each state's amended return's.
+    const was = owedToOf(person, r!);
+    const now = figures.owedTo!;
+    const byState = [...new Set([...Object.keys(was.states), ...Object.keys(now.states)])].map((st) => [st, (now.states[st] ?? 0) - (was.states[st] ?? 0)] as const).filter(([, d]) => d !== 0);
+    if (change === 0 && now.irs === was.irs && !byState.length) throw new CommandError('Your return as filed matches what’s on record: there’s nothing to amend.');
     const form = figures.form === '1040-NR' ? '1040-X with 1040-NR' as const : '1040-X' as const;
     const processAt = s.now + AMEND.weeks * 7 * MS_DAY;
-    (r!.amended ??= []).push({ form, at: s.now, figures, change, processAt });
+    (r!.amended ??= []).push({ form, at: s.now, figures, change, processAt, irs: now.irs - was.irs, ...(byState.length ? { states: Object.fromEntries(byState) } : {}) });
     s.schedule({ at: processAt, kind: TAX_AMEND_KIND, label: `Your Amended ${r!.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year } });
     return { change, processAt, form };
   });
@@ -1084,6 +1201,13 @@ export function registerTaxReturn(sim: Simulation): void {
     a.processedAt = s.now;
     const cur = saveCurrency(s.universe);
     r.figures = a.figures;
+    // Each state's change, by the state (from the integration pass of 2026-10-10): more owed added with its interest
+    // and late-payment penalty from the due date; less off what's owed to it, and the rest refunded.
+    for (const [state, d] of Object.entries(a.states ?? {})) amendState(s, person, r, state, d);
+    // The IRS's change: a return amended before the split carries none, and its whole change is the IRS's as it was.
+    const federal = a.irs ?? a.change;
+    if (federal === 0) { if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `The federal tax didn’t change; each state’s is on Papers.`, importance: 70, route: '/workspace/papers' }); return; }
+    a.change = federal;
     if (a.change > 0) {
       const days = Math.max(0, (s.now - r.due) / MS_DAY);
       const interest = Math.round(a.change * ((1 + COLLECTION.interest / 365) ** days - 1));
@@ -1141,20 +1265,120 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: M
   const cur = saveCurrency(sim.universe);
   accrue(r, sim.now);
   const own = figuresFor(person, r.year, cur, sim.now);
-  const was = r.substituteFigures?.balance ?? r.figures.balance;
+  // The IRS reconsiders its own part (from the integration pass of 2026-10-10); each state's is filed now, for the first time.
+  for (const [state, amount] of Object.entries(own.owedTo!.states)) if (!r.stateDue?.[state]?.filedAt) fileState(sim, person, r, state, amount);
+  const ownIrs = own.owedTo!.irs;
+  const was = r.substituteFigures ? Math.max(0, owedToOf(person, r).irs + (r.substituteFigures.balance - r.figures.balance)) : owedToOf(person, r).irs;
   const paidTax = r.paidTax ?? 0;
   const p = partsOf(r);
-  const ratio = was > 0 ? Math.max(0, own.balance) / was : 1;
-  const tax = Math.max(0, own.balance - paidTax);
+  const ratio = was > 0 ? Math.max(0, ownIrs) / was : 1;
+  const tax = Math.max(0, ownIrs - paidTax);
   setOwed(r, { tax, penalty: Math.round(p.penalty * ratio), interest: Math.round(p.interest * ratio) }, sim.now);
   r.penalty = Math.round((r.penalty ?? 0) * ratio);
-  const over = paidTax - Math.max(0, own.balance);
+  const over = paidTax - Math.max(0, ownIrs);
   if (over > 0) sim.post({ memo: `Tax refund, ${r.year}: the IRS’s return replaced by yours`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: over }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -over }] });
   r.figures = own;
   r.substitute = false;
   r.reconsideredAt = sim.now;
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(own.balance, cur)} of tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
   return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed };
+}
+
+/** A state's change on an amended return, processed: more owed added from the due date, less taken off and refunded. */
+function amendState(sim: Simulation, person: Person, r: TaxReturn, state: string, change: Money): void {
+  const sd = (stateDuesOf(r)[state] ??= { state, balance: 0 });
+  const cur = saveCurrency(sim.universe);
+  sd.balance += change;
+  if (change > 0) {
+    // As if it had been on the return: its tax from the due date, with what the state charges since.
+    const added: StateDue = { state, balance: change, parts: { tax: change, penalty: 0, interest: 0 }, owed: change, accruedAt: r.due, payLateRate: 0, interestMonths: 0 };
+    accrueState(added, r.due, sim.now);
+    if (sd.owed) { accrueState(sd, r.due, sim.now); sd.parts = { tax: sd.parts!.tax + added.parts!.tax, penalty: sd.parts!.penalty + added.parts!.penalty, interest: sd.parts!.interest + added.parts!.interest }; sd.owed = sd.parts.tax + sd.parts.penalty + sd.parts.interest; }
+    else { Object.assign(sd, { parts: added.parts, owed: added.owed, accruedAt: sim.now, payLateRate: added.payLateRate, interestMonths: added.interestMonths }); sd.collection = 0; stateNextNotice(sim, person, r, state); }
+    statePlanNewBalance(sim, person, state, added.owed!);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(change, cur)} more ${stateName(state)} tax, with what it charges from the due date: ${formatMoney(added.owed!, cur)} in all.`, importance: 80, route: '/workspace/papers' });
+    return;
+  }
+  let back = -change;
+  const offset = Math.min(back, sd.owed ? stateOwedOn(sd, r.due, sim.now) : 0);
+  if (offset > 0) { applyStatePayment(sim, person, r, state, offset, 'refund offset'); back -= offset; }
+  if (back > 0) sim.post({ memo: `${stateName(state)} tax refund, amended ${r.year} return`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: back }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(-change, cur)} less ${stateName(state)} tax.${offset > 0 ? ` ${formatMoney(offset, cur)} went to what was owed to it.` : ''}${back > 0 ? ` ${formatMoney(back, cur)} is refunded.` : ''}`, importance: 80, route: '/workspace/papers' });
+}
+
+/**
+ * A save from before the split, opened (from the integration pass of 2026-10-10): each return's one balance divided
+ * between the IRS and the states, without losing a cent, inventing debt, or charging twice.
+ * - Its split is worked out from its own lines (`owedToFrom`), the withholding divided by the calculation that made it.
+ * - What was still owed, in its parts, is divided between the authorities owed in proportion to each one's balance on
+ *   the return: the payments made against the one balance weren't kept by authority, so this is SLATE's division, said
+ *   on the return (`split`). The sum is the old balance to the cent; the IRS keeps its collection where it was; each
+ *   state's begins now, at its first notice.
+ * - A refund not yet paid is divided the same way among the authorities due back, each paid on its day by its own.
+ * - An IRS plan covering the year covers its federal part only from now, said in the plan's history.
+ * Run once: a return with `split` or a state side is left alone.
+ */
+export function splitReturns(sim: Simulation, person: Person): void {
+  let moved = 0;
+  for (const r of Object.values(person.returns ?? {})) {
+    // A return figured since the split carries its own (`owedTo`): only one from before is divided.
+    if (r.split || r.stateDue || r.filedAt === undefined || r.figures.owedTo) continue;
+    const to = owedToOf(person, r);
+    const statesOwed = Object.entries(to.states).filter(([, v]) => v > 0);
+    const statesDue = Object.entries(to.states).filter(([, v]) => v < 0);
+    if (!statesOwed.length && !statesDue.length) continue;
+    r.figures.owedTo = to;
+    const how = `Kept as one balance before ${formatDate(sim.now, HOME)}; divided ${to.derived ? 'with the withholding worked out from the paychecks’ tax table, and ' : ''}in proportion to each authority’s part of the return`;
+    r.split = { at: sim.now, how };
+    const sides = stateDuesOf(r);
+    for (const [state, v] of Object.entries(to.states)) sides[state] = { state, balance: v, filedAt: r.filedAt, migrated: { at: sim.now, how } };
+    // Owed: the parts divided among the authorities owed, by their balances on the return.
+    if (r.owed && statesOwed.length) {
+      accrue(r, sim.now);
+      const p = partsOf(r);
+      const weights: [string, number][] = [['irs', Math.max(0, to.irs)], ...statesOwed];
+      const total = weights.reduce((s, [, w]) => s + w, 0);
+      const shares = (amount: Money) => { const out: Record<string, Money> = {}; let left = amount; weights.forEach(([k, w], i) => { const v = i === weights.length - 1 ? left : Math.round(amount * (w / Math.max(1, total))); out[k] = v; left -= v; }); return out; };
+      const tax = shares(p.tax), penalty = shares(p.penalty), interest = shares(p.interest);
+      for (const [state] of statesOwed) {
+        const sd = sides[state]!;
+        sd.parts = { tax: tax[state]!, penalty: penalty[state]!, interest: interest[state]! };
+        sd.owed = sd.parts.tax + sd.parts.penalty + sd.parts.interest;
+        if (!sd.owed) { delete sd.owed; delete sd.parts; continue; }
+        // What the state charges runs from here on, not again on what was charged.
+        sd.accruedAt = sim.now;
+        const rules = rulesOf(state);
+        sd.payLateRate = rules ? Math.min(rules.payLate.cap, rules.payLate.once + rules.payLate.monthly * Math.min(rules.payLate.months ?? Infinity, Math.ceil(Math.max(0, sim.now - r.due) / (30.4375 * MS_DAY)))) : 0;
+        sd.interestMonths = Math.ceil(Math.max(0, sim.now - r.due) / (30.4375 * MS_DAY));
+        sd.collection = 0;
+        stateNextNotice(sim, person, r, state);
+        moved += sd.owed;
+      }
+      setOwed(r, { tax: tax.irs!, penalty: penalty.irs!, interest: interest.irs! }, sim.now);
+      r.base = r.parts?.tax ?? 0;
+      if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
+    }
+    // A refund not yet paid: divided among those due back, each paid on its day by its own.
+    if (r.refund && r.refundedAt === undefined && r.refundAt !== undefined && r.refundAt > sim.now && statesDue.length) {
+      const weights: [string, number][] = [['irs', Math.max(0, -to.irs)], ...statesDue.map(([k, v]) => [k, -v] as [string, number])];
+      const total = weights.reduce((s, [, w]) => s + w, 0);
+      let left = r.refund;
+      weights.forEach(([k, w], i) => {
+        const v = i === weights.length - 1 ? left : Math.round(r.refund! * (w / Math.max(1, total)));
+        left -= v;
+        if (k === 'irs') return;
+        sides[k]!.refund = v;
+        sides[k]!.refundAt = r.refundAt;
+        sim.schedule({ at: r.refundAt!, kind: TAX_REFUND_KIND, label: `${stateName(k)} Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state: k } });
+      });
+      r.refund = r.refund - Object.values(sides).reduce((s, sd) => s + (sd.refund ?? 0), 0);
+    }
+  }
+  if (moved > 0 && person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) {
+    const p = person.taxPlan;
+    p.covers = owedAll(person, sim.now);
+    planNote(p, sim.now, 'A state’s tax taken out: an IRS plan covers federal tax only', moved);
+  }
 }
