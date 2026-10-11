@@ -1,3 +1,14 @@
+# Read First: Merged To Main, With The Integration And Verification Pass, 2026-10-11
+
+At the owner's word ("Merge it."), `main` was fast-forwarded from `ff837dfa` to `claude/integration-pass`. Nothing was
+force-pushed. The stash and the three worktrees were left untouched.
+
+- **Not deployed.** Schema 94 is unchanged; a save from before has its combined tax balances divided once on opening.
+- **Still the owner's:** decisions #1–#3 from `docs/verification/COVERAGE-GAPS.md`, the 16 deferred items, and the
+  simplifications in §6 of `docs/verification/INTEGRATION-PASS-2026-10-11.md`.
+
+---
+
 # Read First: The Integration And Verification Pass, 2026-10-11
 
 The owner's brief was "Complete SLATE's Next Integration And Verification Pass". The work started from `main` at
