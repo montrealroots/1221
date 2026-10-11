@@ -6,7 +6,7 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Fine } from '@/ui/components/primitives';
+import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatDate, formatTime } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -62,6 +62,7 @@ export function ClassMoments() {
                   );
                 })}
               </div>
+              <WhyNot reasons={CHOICES[m.kind].map((c) => [c.label, respondRefusal(sim, person, m, c.id)] as const)} />
             </div>
           );
         })}

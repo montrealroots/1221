@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine } from '@/ui/components/primitives';
+import { Panel, Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate, formatDateTime, formatTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -71,7 +71,7 @@ function FirstWeek() {
               <span>{o.label}<span className="xs dim"> · {formatDateTime(when, zone())}</span></span>
               {done ? <span className="xs">Done {formatDate(done, zone())}</span>
                 : sim.now < when ? <span className="xs dim">On The Calendar</span>
-                  : <Gated feature="school.orientation" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `Catch it up: ${o.minutes} minutes`} onClick={() => { const r = run<{ told: string }>('school.orientation', { task: o.task }); if (r.ok) toast(r.value!.told, 'positive'); }}>Catch Up</Gated>}
+                  : <span className="row gap-2" style={{ alignItems: 'center' }}>{no && <span className="xs dim">{no}</span>}<Gated feature="school.orientation" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `Catch it up: ${o.minutes} minutes`} onClick={() => { const r = run<{ told: string }>('school.orientation', { task: o.task }); if (r.ok) toast(r.value!.told, 'positive'); }}>Catch Up</Gated></span>}
             </div>
           );
         })}
@@ -129,6 +129,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
             );
           })}
         </div>
+        <WhyNot reasons={activitiesOf(a).filter((x) => x.dim !== 'partner').map((act) => [act.label, prepareRefusal(sim, person, a, act.id)] as const)} />
         {materialOf(a.sceneId) && <MaterialDemands material={materialOf(a.sceneId)!} />}
         {!playingRefusal(a) && (
           <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing"
@@ -215,6 +216,7 @@ function Rehearsals({ a }: { a: Assignment }) {
             <div className="small">{first} asks to rehearse on {formatDateTime(k.at, zone())}. Answer by {formatTime(k.until, zone())} that day.</div>
             <div className="row gap-2">
               <Gated feature="school.answer_partner" className="btn btn-sm" disabled={Boolean(yes)} title={yes ?? 'Yes: It Goes On Your Calendar'} onClick={() => { const r = run<{ booked: boolean }>('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: true }); if (r.ok) toast('On your calendar.', 'positive'); }}>Say Yes</Gated>
+              {yes && <span className="xs dim">{yes}</span>}
               <Gated feature="school.answer_partner" className="btn btn-sm btn-ghost" title="No: They’ll Know, And It Costs Nothing" onClick={() => { if (run('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: false }).ok) toast(`You told ${first} you can’t.`, 'neutral'); }}>Say No</Gated>
             </div>
           </div>
@@ -321,6 +323,7 @@ function Partners() {
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>
                   <span className="xs">{owed === 1 ? 'One time you let them down, not made right.' : `${owed} times you let them down, not made right.`}</span>
+                  {amends && <span className="xs dim">{amends}</span>}
                   <Gated feature="school.make_amends" className="btn btn-sm btn-ghost" disabled={Boolean(amends)} title={amends ?? 'Twenty minutes, in person'} onClick={() => { if (run('school.make_amends', { mate: i }).ok) toast(`You made it right with ${m.name.split(' ')[0]}.`, 'positive'); }}>Make Amends</Gated>
                 </div>
               )}
@@ -358,6 +361,7 @@ function AnotherWay({ a }: { a: Assignment }) {
           );
         })}
       </div>
+      <WhyNot reasons={(Object.keys(APPROACHES) as Approach[]).map((k) => [APPROACHES[k].label, approachRefusal(sim, person, a, k)] as const)} />
     </div>
   );
 }

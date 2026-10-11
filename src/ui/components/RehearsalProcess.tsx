@@ -7,7 +7,7 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Stat, Fine } from '@/ui/components/primitives';
+import { Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -52,6 +52,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         <Gated feature="school.review_blocking" className="btn btn-sm btn-ghost" disabled={Boolean(blocking)} title={blocking ?? 'An hour with the stage manager’s book'} onClick={() => { const r = run<{ blocking: number }>('school.review_blocking', { which }); if (r.ok) toast(`Caught up from the book: blocking at ${pct(r.value!.blocking)}.`, 'positive'); }}>Catch Up The Blocking</Gated>
         <Gated feature="school.work_note" className="btn btn-sm btn-ghost" disabled={Boolean(note)} title={note ?? 'An hour on the director’s note'} onClick={() => { if (run('school.work_note', { which }).ok) toast('Worked on: the next call will show it.', 'positive'); }}>Work On The Note</Gated>
       </div>
+      <WhyNot reasons={[['Learn The Part', part], ['Catch Up The Blocking', blocking], ['Work On The Note', note]]} />
       {materialOf((casting as { play?: string }).play) && <MaterialDemands material={materialOf((casting as { play?: string }).play)!} />}
       {!partPlayingRefusal(sim, person, which) && (
         <PlayingChooser material={materialOf((casting as { play?: string }).play)} current={p?.playing} direction={p?.direction} feature="school.choose_part_playing"

@@ -15,6 +15,23 @@ import type { Subject } from '@/ui/looks/subject';
  * Sources and estimates, folded behind a line: there to read, out of the way
  * of playing. Until 2026-09-28 each panel ended in them in full.
  */
+/**
+ * Why a row's controls can't be used now, said under them (acceptance pass, 2026-10-11): until then the engine's reason
+ * was only a button's tooltip, which a phone never shows and a desktop player had to hover to find, so a row of greyed
+ * buttons said nothing. One line where every reason is the same; each labeled where they differ.
+ */
+export function WhyNot({ reasons }: { reasons: readonly (readonly [label: string, why: string | undefined])[] }) {
+  const shut = reasons.filter((r): r is readonly [string, string] => Boolean(r[1]));
+  if (!shut.length) return null;
+  const distinct = [...new Set(shut.map(([, why]) => why))];
+  const all = shut.length === reasons.length;
+  return (
+    <p className="xs dim why-not" style={{ margin: 0 }}>
+      {distinct.length === 1 && all ? `Not now: ${distinct[0]}` : shut.map(([label, why]) => `${label}: ${why}`).join(' ')}
+    </p>
+  );
+}
+
 export function Fine({ children }: { children: ReactNode }) {
   return (
     <details className="fine">

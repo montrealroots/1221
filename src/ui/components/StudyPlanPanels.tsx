@@ -127,7 +127,7 @@ export function LeavePanel() {
               </select>
             </div>
             {asking !== 'request'
-              ? <button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => setAsking('request')}>Ask For A Leave…</button>
+              ? <><button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => setAsking('request')}>Ask For A Leave…</button>{no && <span className="xs dim">{no}</span>}</>
               : <>
                   <Gated feature="school.request_leave" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_leave', { kind, reason, terms }); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(''); }}>Ask</Gated>
                   <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
