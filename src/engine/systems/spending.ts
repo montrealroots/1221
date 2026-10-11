@@ -34,7 +34,7 @@ import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
-import { latePenaltyAll } from './taxreturn';
+import { latePenaltyAll, owedEverywhere } from './taxreturn';
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
 const DAY_OF_FOOD_USD = 8;
@@ -375,8 +375,10 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
     const debt = accountsOf(sim, person).filter((a) => a.category === kind && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
     if (debt > 0) out.push({ kind, amount: debt });
   }
-  // Owed to the IRS and to each state (from the integration pass of 2026-10-10: a state's is kept apart).
-  const tax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0) + Object.values(r.stateDue ?? {}).reduce((s, sd) => s + Math.max(0, sd.owed ?? 0), 0), 0);
+  // Owed to the IRS and to each state, with what each has charged up to today (`owedEverywhere`), the figure Home and
+  // Papers show (acceptance pass, 2026-10-11: until then the balances as last stored, short of the interest and penalty
+  // since, so the budget set aside less than the screens said was owed).
+  const tax = owedEverywhere(person, sim.now);
   if (tax > 0) out.push({ kind: 'tax', amount: tax });
   // A return past its day with a balance, not filed, its penalty building:
   // until 2026-09-27 it counted for nothing until it was filed.

@@ -12,7 +12,8 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STATE_TAX, STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
-import { connecticutTax, TAX_REFUND_KIND, owedAll, owedOn, owedEverywhere, returnsOf, withholdingSplit } from '@/engine/systems/taxreturn';
+import { troubles } from '@/engine/systems/spending';
+import { connecticutTax, TAX_REFUND_KIND, owedAll, owedEverywhere, owedOn, returnsOf, withholdingSplit } from '@/engine/systems/taxreturn';
 import { STATE_NOTICE_KIND, federalOffsetToState, owedToState, statePartsOn, statePlanRefusal } from '@/engine/systems/statetax';
 
 const NY = 'America/New_York';
@@ -113,6 +114,10 @@ describe('each state by its own rules', () => {
     expect(p.penalty).toBe(Math.round(0.01 * tax));
     expect(p.interest).toBeCloseTo(tax * ((1 + 0.095 / 365) ** 45 - 1), -1);
     // An installment payment agreement: 36 months at most, $20,000 at most.
+    // What the budget sets aside is what the screens say is owed, with today's interest and penalty (acceptance pass).
+    play(sim, r.due + 45 * MS_DAY);
+    expect(troubles(sim, sim.player).find((t) => t.kind === 'tax')!.amount).toBe(owedEverywhere(sim.player, sim.now));
+    expect(owedEverywhere(sim.player, sim.now)).toBeGreaterThan((r.owed ?? 0) + (sd.owed ?? 0));
     expect(statePlanRefusal(sim, sim.player, 'us-ny', 48)).toMatch(/1 to 36 months/);
     sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-ny', months: 12 } });
     play(sim, sim.now + MS_HOUR);

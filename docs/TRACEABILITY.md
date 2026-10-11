@@ -214,7 +214,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `health.week` | `systems/health.ts` | systems/health.ts | — | — | health.week | 3 |
 | `injury.comp` | `systems/injury.ts` | systems/injury.ts | — | — | injury.comp | 2 |
 | `life.birthday` | `systems/birthdays.ts` | systems/birthdays.ts | — | — | — | 2 |
-| `life.commitment` | `world/plans.ts` | world/plans.ts | status; resolvedAt | — | life.commitment | 4 |
+| `life.commitment` | `world/plans.ts` | world/plans.ts | status; resolvedAt | — | life.commitment | 5 |
 | `life.day_rollover` | `systems/life.ts` | index.ts; systems/life.ts | lastSleptAt; awakeSince; wokeWithDebt | Yes | life.day_rollover | 1 |
 | `life.end` | `systems/mortality.ts` | systems/mortality.ts | — | — | — | 3 |
 | `pension.bienestar_payment` | `systems/homepensions.ts` | systems/homepensions.ts | — | Yes | pension.bienestar_payment | 0 |
@@ -260,10 +260,10 @@ money, what it sets going next, and how many test files name it or its constant.
 | `tax.notice` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 6 |
 | `tax.plan_decide` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; why | — | — | 0 |
 | `tax.plan_default` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; nextDue | Yes | tax.plan_payment; tax.refund; tax.amended | 0 |
-| `tax.plan_payment` | `systems/taxreturn.ts` | systems/taxreturn.ts | nextDue; status; defaultBy | Yes | tax.plan_payment; tax.plan_default | 0 |
+| `tax.plan_payment` | `systems/taxreturn.ts` | systems/taxreturn.ts | nextDue; status; defaultBy | Yes | tax.plan_payment; tax.plan_default | 2 |
 | `tax.refund` | `systems/taxreturn.ts` | systems/statetax.ts; systems/taxreturn.ts | taxPlan | Yes | short; tax.plan_decide | 3 |
 | `tax.season` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.season; tax.due | 2 |
-| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 2 |
+| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 4 |
 | `tax.state_plan_end` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 0 |
 | `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | nextDue | Yes | tax.state_plan_payment | 0 |
 | `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 2 |
