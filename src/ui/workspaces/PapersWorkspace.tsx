@@ -72,7 +72,7 @@ function ReturnLife({ year }: { year: number }) {
         <div className="col gap-2">
           <div className="grid grid-3">
             <Stat label="Tax Unpaid" value={money(parts.tax)} />
-            <Stat label="Penalties" value={money(parts.penalty)} note="0.5% a month on the tax unpaid, to 25%" />
+            <Stat label="Penalties" value={money(parts.penalty)} note={r.reducedFrom !== undefined && r.reducedTo === undefined ? "0.25% a month while the payment plan is in force, to 25%" : "0.5% a month on the tax unpaid, to 25%"} />
             <Stat label="Interest" value={money(parts.interest)} note="7% a year, daily" />
           </div>
           <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>

@@ -30,7 +30,7 @@ import { END_WORDS } from '@/engine/systems/accountlife';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import type { Account } from '@/engine/core/ledger';
 import {
-  ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
+  CASS, ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
   FRANCE, CHEX, declines, nextBusinessDay,
 } from '@/engine/systems/lending';
 
@@ -296,7 +296,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
         )}
         {!loan && lending.loan && (
           <div className="col gap-3">
-            {lending.loan.lender && <p className="small" style={{ margin: 0 }}>{bank.name}’s personal loans are {lending.loan.lender}’s.{lending.loan.rateSource === 'third-party' ? ' It publishes no rate of its own: the range is a comparison site’s, said in the source.' : ''}</p>}
+            {lending.loan.lender && <p className="small" style={{ margin: 0 }}>{bank.name}’s personal loans are made by {lending.loan.lender}.{lending.loan.rateSource === 'third-party' ? ' It publishes no rate of its own: the range is a comparison site’s, said in the source.' : ''}</p>}
             <p className="small" style={{ margin: 0 }}>
               {lending.loan.market
                 ? `At the market’s average, ${pct(lending.loan.from)}: the bank publishes no rate of its own.`
@@ -367,7 +367,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                   {switching.payload.keepBalance === true && <p className="small" style={{ margin: 0 }}>Its balance transfer is stopped: your payments move, and the balance stays in the old account, which stays open.</p>}
                   {until !== undefined && !open && switching.payload.keepBalance !== true && switching.payload.partial !== true && (!askStop
                     ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(true)}>Stop The Balance Transfer…</button></div>
-                    : <div className="row gap-2"><Gated feature="bank.stop_balance_transfer" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.stop_balance_transfer', { confirm: true }).ok) toast('Your balance stays in the old account.', 'positive'); setAskStop(false); }}>Keep The Balance There</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(false)}>Move It As Planned</button></div>)}
+                    : <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}><span className="small">Your payments still move on the day; the balance stays in {current?.name ?? 'the old account'}, which stays open.</span><Gated feature="bank.stop_balance_transfer" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.stop_balance_transfer', { confirm: true }).ok) toast('Your balance stays in the old account.', 'positive'); setAskStop(false); }}>Keep The Balance There</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(false)}>Move It As Planned</button></div>)}
                   {open && (!askCancel
                     ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(true)}>Call Off The Switch…</button></div>
                     : <div className="row gap-2"><Gated feature="bank.cancel_switch" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.cancel_switch', { confirm: true }).ok) toast('The switch is called off.', 'positive'); setAskCancel(false); }}>Call It Off</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(false)}>Keep It</button></div>)}
@@ -386,13 +386,15 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
               </details>
             )}
             <Fine>Source: {rule.source}.</Fine>
+            {bank.iso === 'GB' && (
+              <label className="row gap-1 small" style={{ alignItems: 'center' }}><input type="checkbox" checked={partial} onChange={(e) => setPartial(e.target.checked)} /> Partial: your payments move, the old account stays open, and it takes {CASS.partialDays} working days</label>
+            )}
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}
                 {[...others].sort((a, b) => (b.current.monthlyFee ?? 0) - (a.current.monthlyFee ?? 0)).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
               </select></div>
               <div className="field"><label htmlFor="switch-on">On (Optional)</label><input id="switch-on" type="date" value={switchOn} onChange={(e) => setSwitchOn(e.target.value)} /></div>
-              {bank.iso === 'GB' && <label className="row gap-1 small"><input type="checkbox" checked={partial} onChange={(e) => setPartial(e.target.checked)} /> Partial: Keep The Old Account</label>}
               <Gated feature="bank.switch" className="btn btn-sm" disabled={!!switching || !target}
                 onClick={() => { const a = run<{ at: number }>('bank.switch', { bankId: target, ...(switchOn ? { on: switchOn } : {}), ...(partial ? { partial: true } : {}) }); if (a.ok) toast(`Switch set for ${formatDate(a.value!.at, sim.zone)}.`, 'positive'); }}>
                 Switch

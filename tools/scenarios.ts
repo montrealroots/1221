@@ -10,8 +10,9 @@
  * - `switch-uk`: a London student's partial switch in the first fall, a full switch in the spring, two years on.
  * - `tax-plan`: TEST SETUP a 2026 W-2 and an empty bank at filing; a monthly IRS plan, paid through.
  *
- *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0
+ *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  */
+import { writeFileSync } from 'node:fs';
 import { loadSave, quickSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
@@ -110,7 +111,8 @@ const SCENARIOS: Record<string, Hook> = {
 const hook = SCENARIOS[SCENARIO];
 if (!hook) throw new Error(`No scenario ${SCENARIO}: ${Object.keys(SCENARIOS).join(', ')}`);
 let sim = hook.resident ? quickSave(hook.config as never, SEED) : life(SEED, { pronouns: 'they/them', ...hook.config } as never);
-const end = sim.now + hook.years * 365 * MS_DAY;
+// `--years` stops it early, and `--save <file>` writes the save there, for the screens to open (from 2026-10-10).
+const end = sim.now + Number(arg('years', String(hook.years))) * 365 * MS_DAY;
 const log: string[] = [];
 let reloads = 0;
 let lastReload = sim.now;
@@ -135,6 +137,7 @@ try {
   }
 } catch (e) { error = String((e as Error).message ?? e); }
 
+if (process.argv.includes('--save')) writeFileSync(arg('save', ''), serialise(sim.universe));
 const s = sim.player.school;
 const titles = (re: RegExp) => [...new Set(sim.universe.notifications.filter((n) => re.test(n.title)).map((n) => n.title))];
 console.log(JSON.stringify({
