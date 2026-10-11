@@ -205,7 +205,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.review_blocking` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school-journey-gaps.test.ts` `school.test.ts` `work-limits.test.ts` | Drama School |
-| `school.withdraw` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `leave.test.ts` `papers-transitions.test.ts` `student-experience.test.ts` | Drama School |
+| `school.withdraw` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `journey-class-left-behind.test.ts` `leave.test.ts` `papers-transitions.test.ts` `restore-same-names.test.ts` `student-experience.test.ts` | Drama School |
 | `school.work_note` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `journey-school-production.test.ts` | Drama School |
 
 ## tax
@@ -217,7 +217,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `tax.apply_state_plan` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
 | `tax.catch_up_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |
 | `tax.catch_up_state_plan` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
-| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `state-tax.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
+| `tax.file` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` `journey-money.test.ts` `retirement.test.ts` `safetynet.test.ts` `state-tax-states.test.ts` `state-tax.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
 | `tax.pay` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `journey-money.test.ts` `safetynet.test.ts` `tax-lifecycle.test.ts` | Cover, Benefits And Returns |
 | `tax.pay_state` | `src/engine/systems/statetax.ts` | `PapersWorkspace.tsx` | `state-tax.test.ts` | Cover, Benefits And Returns |
 | `tax.revise_plan` | `src/engine/systems/taxreturn.ts` | `PapersWorkspace.tsx` | `finance-paths.test.ts` | Cover, Benefits And Returns |

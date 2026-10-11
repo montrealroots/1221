@@ -941,12 +941,24 @@ function restoreObject(live: Record<string, unknown>, before: Record<string, unk
       // snapshot's copies went in, and after any refused command a class's
       // classmates, a career's bookings and a person's homes were new objects
       // that nothing holding the old ones could see.
+      // A key more than one record shares, the n-th with it is the n-th: until 2026-10-11 every record with a name
+      // was matched to the last live one with it, so after a refused command two years' productions of one name were
+      // one object, and the earlier year's record was lost (found by tests/school-paths.test.ts, when a class's Cabaret
+      // shows, two a season, were added).
       const keyOf = (entry: Record<string, unknown>) => entry['id'] ?? entry['name'];
-      const byKey = new Map<unknown, Record<string, unknown>>();
-      for (const entry of isValue) if (isPlainRecord(entry) && keyOf(entry) !== undefined) byKey.set(keyOf(entry), entry);
+      const byKey = new Map<unknown, Record<string, unknown>[]>();
+      for (const entry of isValue) {
+        if (!isPlainRecord(entry) || keyOf(entry) === undefined) continue;
+        const k = keyOf(entry);
+        byKey.set(k, [...(byKey.get(k) ?? []), entry]);
+      }
+      const taken = new Map<unknown, number>();
       const restored = wasValue.map((was, i) => {
         if (!isPlainRecord(was)) return was;
-        const live = keyOf(was) !== undefined ? byKey.get(keyOf(was)) : isValue[i];
+        const k = keyOf(was);
+        const n = taken.get(k) ?? 0;
+        if (k !== undefined) taken.set(k, n + 1);
+        const live = k !== undefined ? byKey.get(k)?.[n] : isValue[i];
         if (!isPlainRecord(live)) return was;
         restoreObject(live, was);
         return live;

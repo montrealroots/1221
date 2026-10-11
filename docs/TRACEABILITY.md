@@ -155,14 +155,14 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 1 | — |
 | `school.take_shift` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also shiftRefusal) | — | — | school.shift | 3 | — |
-| `school.withdraw` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; Withdrawing gives up your place at the School. Confirm to go ahead. | — | Yes | — | 3 | — |
+| `school.withdraw` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | You’re not at school.; Withdrawing gives up your place at the School. Confirm to go ahead. | — | Yes | — | 5 | — |
 | `school.work_note` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 1 | journey-school-production.test.ts |
 | `tax.amend` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your return as filed matches what’s on record: there’s nothing to amend. (also amendRefusal) | — | Yes | tax.amended | 3 | — |
 | `tax.apply_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | The least a month is …, what’s owed over … months. (also planRefusal) | taxPlan; status; why; nextDue; defaultBy | Yes | short; tax.plan_decide; tax.plan_payment; tax.plan_default | 2 | — |
 | `tax.apply_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | — (also statePlanRefusal) | nextDue | Yes | tax.state_plan_payment | 1 | — |
 | `tax.catch_up_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your plan isn’t behind.; … is more than the bank can cover. | status; nextDue | Yes | tax.plan_payment | 1 | — |
 | `tax.catch_up_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | That plan isn’t behind.; … is more than the bank can cover. | — | Yes | tax.state_plan_payment | 1 | — |
-| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 6 | journey-money.test.ts |
+| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 7 | journey-money.test.ts |
 | `tax.pay` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; Pay something.; … is owed; pay that or less.; … is more than the bank can cover. | — | Yes | — | 3 | journey-money.test.ts |
 | `tax.pay_state` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | You owe … nothing on that year.; Pay something.; … is owed to …; pay that or less.; … is more than the bank can cover. | — | Yes | — | 1 | — |
 | `tax.revise_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Only a monthly plan in force is revised.; The least a month is ….; More than …)} is owed now: a revision needs a financial statement SLATE doesn't model.; The … fee is more than the bank can cover. | — | Yes | tax.plan_payment | 1 | — |
@@ -228,12 +228,12 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 9 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 6 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 7 |
-| `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
+| `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 4 |
 | `school.conferral` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 2 |
 | `school.convert` | `systems/school.ts` | systems/school.ts | — | Yes | — | 2 |
 | `school.evaluation` | `systems/school.ts` | systems/leave.ts; systems/school.ts | history (added to) | — | — | 2 |
 | `school.extra_decide` | `systems/leave.ts` | systems/leave.ts | — | — | school.term; school.aid_decide | 0 |
-| `school.former_class` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
+| `school.former_class` | `systems/leave.ts` | systems/leave.ts | — | — | — | 3 |
 | `school.incomplete_due` | `systems/courserecord.ts` | systems/courserecord.ts | — | — | — | 0 |
 | `school.lab` | `systems/school.ts` | systems/school.ts | status | — | — | 4 |
 | `school.leave_appeal` | `systems/leave.ts` | systems/health.ts; systems/leave.ts | — | — | school.extra_decide | 2 |
@@ -263,7 +263,8 @@ money, what it sets going next, and how many test files name it or its constant.
 | `tax.plan_payment` | `systems/taxreturn.ts` | systems/taxreturn.ts | nextDue; status; defaultBy | Yes | tax.plan_payment; tax.plan_default | 2 |
 | `tax.refund` | `systems/taxreturn.ts` | systems/statetax.ts; systems/taxreturn.ts | taxPlan | Yes | short; tax.plan_decide | 3 |
 | `tax.season` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.season; tax.due | 2 |
-| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 4 |
+| `tax.state_nonfiler` | `systems/taxreturn.ts` | systems/statetax.ts | — | — | — | 2 |
+| `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 6 |
 | `tax.state_plan_end` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 0 |
 | `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | nextDue | Yes | tax.state_plan_payment | 0 |
 | `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 2 |

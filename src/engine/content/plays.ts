@@ -70,6 +70,15 @@ export const THESIS_PLAYS: readonly Play[] = [
     title: 'Spring Awakening', kinds: ['coming_of_age', 'drama'], by: 'Frank Wedekind', reads: { emotion: 2, scene: 2, intimacy: 1, character: 1 },
     parts: [p('Melchior Gabor', 'lead', 'actor'), p('Wendla Bergmann', 'lead', 'actress'), p('Moritz Stiefel', 'lead', 'actor'), p('Ilse', 'supporting', 'actress'), p('Frau Bergmann', 'supporting', 'actress'), p('Frau Gabor', 'featured', 'actress'), p('Hänschen Rilow', 'featured', 'actor'), p('Ernst Röbel', 'featured', 'actor'), p('Martha Bessel', 'featured', 'actress')],
   },
+  // From the limitations pass of 2026-10-11, two more, so later classes are dealt other seasons.
+  {
+    title: 'Ghosts', kinds: ['drama', 'domestic_drama'], by: 'Henrik Ibsen', reads: { scene: 2, emotion: 2, character: 1, script: 1 },
+    parts: [p('Mrs. Alving', 'lead', 'actress'), p('Oswald Alving', 'lead', 'actor'), p('Pastor Manders', 'supporting', 'actor'), p('Jacob Engstrand', 'supporting', 'actor'), p('Regina Engstrand', 'supporting', 'actress')],
+  },
+  {
+    title: 'The Wild Duck', kinds: ['drama', 'tragicomedy', 'domestic_drama'], by: 'Henrik Ibsen', reads: { scene: 2, emotion: 1, character: 2, comedy: 1, script: 1 },
+    parts: [p('Hjalmar Ekdal', 'lead', 'actor'), p('Gina Ekdal', 'lead', 'actress'), p('Hedvig', 'lead', 'actress'), p('Gregers Werle', 'supporting', 'actor'), p('Old Ekdal', 'supporting', 'actor'), p('Håkon Werle', 'supporting', 'actor'), p('Dr. Relling', 'supporting', 'actor'), p('Mrs. Sørby', 'featured', 'actress'), p('Molvik', 'featured', 'actor'), p('Pettersen', 'featured', 'actor')],
+  },
 ];
 
 /** Plays for the Shakespeare Repertory Projects, three a spring. */
@@ -97,6 +106,15 @@ export const SHAKESPEARE_PLAYS: readonly Play[] = [
   {
     title: 'Much Ado About Nothing', kinds: ['romantic_comedy', 'comedy'], by: 'William Shakespeare', reads: { classical: 3, comedy: 2, speech: 1, scene: 1 },
     parts: [p('Beatrice', 'lead', 'actress'), p('Benedick', 'lead', 'actor'), p('Hero', 'supporting', 'actress'), p('Claudio', 'supporting', 'actor'), p('Don Pedro', 'supporting', 'actor'), p('Dogberry', 'supporting', 'either'), p('Leonato', 'featured', 'actor'), p('Don John', 'featured', 'actor'), p('Margaret', 'featured', 'actress'), p('Borachio', 'featured', 'actor')],
+  },
+  // From the limitations pass of 2026-10-11, two more.
+  {
+    title: 'Julius Caesar', kinds: ['tragedy', 'historical_drama', 'political_drama'], by: 'William Shakespeare', reads: { classical: 3, speech: 2, voice: 1, combat: 1, scene: 1 },
+    parts: [p('Brutus', 'lead', 'actor'), p('Cassius', 'lead', 'actor'), p('Mark Antony', 'lead', 'actor'), p('Julius Caesar', 'supporting', 'actor'), p('Portia', 'supporting', 'actress'), p('Calpurnia', 'supporting', 'actress'), p('Casca', 'featured', 'either'), p('Octavius', 'featured', 'actor'), p('Decius Brutus', 'featured', 'either'), p('The Soothsayer', 'featured', 'either'), p('Lucius', 'featured', 'either')],
+  },
+  {
+    title: 'A Midsummer Night’s Dream', kinds: ['comedy', 'romantic_comedy', 'fairy_tale'], by: 'William Shakespeare', reads: { classical: 3, comedy: 2, movement: 1, speech: 1, scene: 1 },
+    parts: [p('Helena', 'lead', 'actress'), p('Hermia', 'lead', 'actress'), p('Bottom', 'lead', 'actor'), p('Lysander', 'supporting', 'actor'), p('Demetrius', 'supporting', 'actor'), p('Puck', 'supporting', 'either'), p('Oberon', 'supporting', 'actor'), p('Titania', 'supporting', 'actress'), p('Theseus', 'featured', 'actor'), p('Hippolyta', 'featured', 'actress'), p('Peter Quince', 'featured', 'either'), p('Francis Flute', 'featured', 'actor'), p('Egeus', 'featured', 'actor')],
   },
 ];
 

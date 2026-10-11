@@ -216,7 +216,7 @@ describe('collection by each state’s steps', () => {
     play(sim, at(2027, 7, 1));
     const ga = r().stateDue!['us-ga']!;
     expect(titled(sim, /Georgia Issued A State Tax Execution/)).toHaveLength(1);
-    expect(titled(sim, /Georgia Issued A State Tax Execution/)[0]!.body).toMatch(/The collection fee with the execution, 20%, \$[\d,.]+, is added/);
+    expect(titled(sim, /Georgia Issued A State Tax Execution/)[0]!.body).toMatch(/The Collection Fee With The Execution, 20%, \$[\d,.]+, is added/);
     expect(ga.collection).toBeGreaterThanOrEqual(3);
     expect(sim.ledger.audit()).toEqual([]);
   }, 120_000);
@@ -241,7 +241,7 @@ describe('a return never filed', () => {
     expect(sd.assessedBy).toBeDefined();
     expect(sd.balance).toBe(owed());
     expect(sd.parts!.penalty).toBe(Math.max(50_00, Math.round(0.1 * sd.balance)));
-    expect(titled(sim, /Connecticut DRS Assessed Your 2026 Return/)).toHaveLength(1);
+    expect(titled(sim, /Connecticut DRS Assessed Your 2026 Return/).map((n) => n.body)).toEqual([expect.stringContaining(', and The Penalty For A Return DRS Made, 10% Or $50, The Greater. File your own')]);
     expect(sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.state === 'us-ct')).toBe(true);
     // Their own, filed now: it takes the assessment's place, its charges in proportion; nothing assessed twice.
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });

@@ -431,4 +431,158 @@ export const MODERN_SCENES: readonly Scene[] = [
       },
     ],
   },
+  // From the limitations pass of 2026-10-11: three more, checked against the texts on Project Gutenberg (Archer's
+  // Ghosts, Gosse and Archer's The Master Builder, Synge's Riders to the Sea). Translations are paraphrased, not quoted.
+  {
+    id: 'ghosts-1', play: 'Ghosts', by: 'Henrik Ibsen, tr. William Archer', year: 1881, where: 'Act One, the garden room at Rosenvold', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
+    summary: 'On the eve of the orphanage’s dedication to her late husband’s memory, Pastor Manders reproaches Mrs. Alving for her books, for once fleeing her marriage to him, and for sending her son away. She answers with what he never knew: her husband died as dissolute as he lived, and she built the orphanage with his money so that her son would inherit nothing from him.',
+    circumstances: [
+      yes('eve', 'A wet day at Rosenvold, the eve of the orphanage’s dedication; Oswald just home from Paris', 'Manders has come for the dedication, and rain has set in.'),
+      no('fire', 'The night the orphanage burns', 'That’s later; here it’s still to be dedicated.'),
+      no('wedding', 'The first year of her marriage', 'That’s what they remember; the scene is twenty-odd years on.'),
+    ],
+    relationship: [
+      yes('old-friends', 'Old friends: she once fled her marriage to him, and he sent her home to her duty', 'He calls it the greatest victory of his life that he sent her back.'),
+      no('lovers', 'Declared lovers', 'Nothing was ever declared between them.'),
+      no('strangers', 'A pastor and a parishioner who barely know each other', 'He was her husband’s friend and has advised her for years.'),
+    ],
+    roles: [
+      {
+        name: 'Mrs. Alving',
+        objective: [
+          yes('truth', 'Make him hear the truth about her marriage', 'She tells him her husband was a profligate to the end.'),
+          yes('free', 'Free herself of the lie she has kept up for her son'),
+          no('forgive', 'Win his forgiveness for leaving her husband', 'She answers his reproaches; she doesn’t ask to be forgiven.'),
+        ],
+        obstacle: [
+          yes('duty', 'His faith in duty and in appearances'),
+          yes('years', 'Years of silence that she has to break'),
+          no('oswald', 'Oswald is in the room', 'Oswald has gone out; they hear him only at the end.'),
+        ],
+        tactic: [
+          yes('facts', 'Tell it plainly, fact by fact'),
+          yes('turn', 'Turn his reproaches back on him'),
+          no('sermon', 'Preach to him', 'He preaches; she tells him what happened.'),
+        ],
+      },
+      {
+        name: 'Pastor Manders',
+        objective: [
+          yes('duty', 'Recall her to her duty', 'He reproaches her for the books she reads and the son she sent away.'),
+          yes('respectable', 'Keep the dedication respectable'),
+          no('court', 'Court her again', 'He is shocked by any hint of that time.'),
+        ],
+        obstacle: [
+          yes('facts', 'Facts he never knew, which she lays before him'),
+          no('bishop', 'The bishop is listening', 'They’re alone.'),
+        ],
+        tactic: [
+          yes('sermon', 'Preach'),
+          yes('memory', 'Recall what he did for her, as his triumph'),
+          no('laugh', 'Laugh it off', 'He is appalled.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'masterbuilder-1', play: 'The Master Builder', by: 'Henrik Ibsen, tr. Edmund Gosse and William Archer', year: 1892, where: 'Act One, Solness’s house', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
+    summary: 'Hilda Wangel, a young stranger with an alpenstock, arrives at the master builder’s house. She reminds Solness of the day ten years ago at Lysanger when he hung the wreath on the church tower he had built, kissed the little girl she was, and promised to come back in ten years and carry her off and give her a kingdom. The ten years are up, and she has come for it.',
+    circumstances: [
+      yes('arrival', 'Solness’s house, the evening she arrives with her knapsack and alpenstock', 'She has come straight from the mountains.'),
+      no('tower', 'The day he climbs the new tower', 'That’s the last act.'),
+      no('lysanger', 'The church at Lysanger, ten years ago', 'That’s what she remembers; the scene is now.'),
+    ],
+    relationship: [
+      yes('met-once', 'A girl he met once, ten years ago, at a church’s dedication'),
+      no('daughter', 'His daughter', 'She is the district doctor’s daughter from Lysanger.'),
+      no('rivals', 'A rival architect', 'His rival is young Ragnar; Hilda is no builder.'),
+    ],
+    roles: [
+      {
+        name: 'Hilda',
+        objective: [
+          yes('kingdom', 'Claim the kingdom he promised her'),
+          yes('remember', 'Make him remember'),
+          no('job', 'Find work in his office', 'She has come for what he promised, not for work.'),
+        ],
+        obstacle: [
+          yes('forgot', 'He says he doesn’t remember'),
+          no('father', 'Her father has come to fetch her', 'She has come alone.'),
+        ],
+        tactic: [
+          yes('detail', 'Give him details until he remembers'),
+          yes('demand', 'Demand it outright, as owed'),
+          no('weep', 'Weep to move him', 'She laughs and insists.'),
+        ],
+      },
+      {
+        name: 'Solness',
+        objective: [
+          yes('youth', 'Keep this youth near him'),
+          yes('understand', 'Understand what she wants of him'),
+          no('dismiss', 'Send her away at once', 'He asks her to stay.'),
+        ],
+        obstacle: [
+          yes('memory', 'He doesn’t remember, or says he doesn’t'),
+          yes('fear', 'His fear of the young knocking at his door'),
+          no('debt', 'His debts', 'Nothing of the kind is in the scene.'),
+        ],
+        tactic: [
+          yes('question', 'Question her'),
+          yes('admit', 'Admit he must have thought it, and so it was so'),
+          no('refuse', 'Refuse to listen', 'He listens closely.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'riders-sea', play: 'Riders to the Sea', by: 'J. M. Synge', year: 1904, where: 'The kitchen of a cottage on an island off the west of Ireland', language: 'prose', size: 'short', genre: 'drama', difficulty: 1,
+    summary: 'While their mother sleeps, Nora brings in a bundle the young priest gave her: a shirt and a plain stocking taken off a drowned man in Donegal. Their brother Michael has been lost at sea, and their other brother Bartley means to sail to the horse fair at Galway. The sisters hide the bundle from their mother; later, alone, they open it and know the stocking by Nora’s own stitches.',
+    circumstances: [
+      yes('kitchen', 'A cottage kitchen on an island off the west of Ireland, their mother asleep within, a wind rising', 'Cathleen is at her work when Nora comes in.'),
+      no('wake', 'Michael’s wake, his body brought home', 'He was found and buried far north in Donegal.'),
+      no('fair', 'The fair at Galway', 'Bartley is only setting out for it.'),
+    ],
+    relationship: [
+      yes('sisters', 'Sisters, a brother lost at sea and another about to sail'),
+      no('strangers', 'Neighbors', 'They’re sisters in the one house.'),
+      no('mother', 'Mother and daughter', 'Maurya is their mother; she isn’t in this part.'),
+    ],
+    roles: [
+      {
+        name: 'Cathleen',
+        objective: [
+          yes('know', 'Know whether it’s Michael’s'),
+          yes('spare', 'Spare their mother until they’re sure'),
+          no('tell', 'Tell their mother at once', 'They hide the bundle in the turf loft.'),
+        ],
+        obstacle: [
+          yes('mother', 'Their mother may wake and come in'),
+          no('priest', 'The priest has forbidden them to open it', 'He told them to look.'),
+        ],
+        tactic: [
+          yes('hide', 'Hide it, and keep busy as if nothing has come'),
+          yes('compare', 'Compare the cloth with what Michael wore'),
+          no('pray', 'Kneel and pray instead of looking', 'They cut the string and look at what is in the bundle.'),
+        ],
+      },
+      {
+        name: 'Nora',
+        objective: [
+          yes('priest', 'Do as the young priest said, and be sure'),
+          yes('know', 'Find out whether it’s their brother'),
+          no('fair', 'Go to the fair herself', 'She stays home.'),
+        ],
+        obstacle: [
+          yes('fear', 'Her fear of what they’ll find'),
+          no('lock', 'The bundle is locked', 'It’s only knotted; they cut the string.'),
+        ],
+        tactic: [
+          yes('stitches', 'Count the stitches of the stocking she knitted'),
+          yes('ask', 'Ask her sister what to do'),
+          no('burn', 'Burn the bundle', 'They keep it, and keep it hidden.'),
+        ],
+      },
+    ],
+  },
 ];

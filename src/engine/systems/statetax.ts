@@ -536,7 +536,8 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
   sd.collection = 0;
   stateNextNotice(sim, person, r, state);
   statePlanNewBalance(sim, person, state, sd.owed ?? 0);
-  notifyPlayer(sim, person, `${rules.short} Assessed Your ${r.year} Return`, `With no return from you, ${rules.short} assessed ${formatMoney(sd.owed ?? 0, cur)}: the tax from what was reported, its late penalties and interest from the due date. File your own to replace it.`);
+  const named = (rules.nonFiler.adds ?? []).map((a) => a.label);
+  notifyPlayer(sim, person, `${rules.short} Assessed Your ${r.year} Return`, `With no return from you, ${rules.short} assessed ${formatMoney(sd.owed ?? 0, cur)}: the tax from what was reported, its late penalties and interest from the due date${named.length ? `, and ${named.join(' and ')}` : ''}. File your own to replace it.`);
 }
 
 /**

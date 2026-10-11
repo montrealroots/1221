@@ -60,7 +60,7 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Chase | action, thriller | none | low | unsupported or single examples | self-tapes | Study It, Tape A Scene In It |
 | Children’s | adventure, comedy | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Christmas | comedy, drama | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
-| Comedy | comedy | Comedy (Comic Timing) | medium | evidence | 10 plays (The Importance Of Being Earnest, The Cherry Orchard, Major Barbara, Twelfth Night, As You Like It, Much Ado About Nothing, Tartuffe, The Playboy Of The Western World, The Bear, A Marriage Proposal): casting, nights; 3 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
+| Comedy | comedy | Comedy (Comic Timing) | medium | evidence | 11 plays (The Importance Of Being Earnest, The Cherry Orchard, Major Barbara, Twelfth Night, As You Like It, Much Ado About Nothing, A Midsummer Night’s Dream, Tartuffe, The Playboy Of The Western World, The Bear, A Marriage Proposal): casting, nights; 6 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
 | Coming Of Age | drama, comedy | none | low | no technical claim found | 1 play (Spring Awakening): casting, nights; self-tapes | Study It, Tape A Scene In It |
 | Concert Film | documentary, musical | none | low | belongs to Concert films of singers and vocal acts (the singing performers themselves) | self-tapes | Study It, Tape A Scene In It |
 | Conspiracy Thriller | thriller | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
@@ -77,8 +77,8 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Docudrama | drama, documentary | Character Work (Physical Transformation) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Character Work |
 | Docufiction | documentary, drama | Improvisation (Improvisation), On Camera (Naturalism On Camera) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Improvisation, practice On Camera |
 | Documentary | documentary | Voice-Over (Voice-Led Performance) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Voice-Over |
-| Domestic Drama | drama | none | medium | Psychologically real, ensemble acting is what all the work reads (Believability, Connection); it names no technique of its own. | 2 plays (Hedda Gabler, A Doll’s House): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It |
-| Drama | drama | none | medium | Truthful acting under the given circumstances is the core every task reads; no technique of its own. | 10 plays (Hedda Gabler, Woyzeck, Three Sisters, Spring Awakening, A Doll’s House, Uncle Vanya, An Enemy Of The People, Mrs Warren’s Profession, Miss Julie, Trifles): casting, nights; 5 coursework scenes; self-tapes | Study It, Tape A Scene In It |
+| Domestic Drama | drama | none | medium | Psychologically real, ensemble acting is what all the work reads (Believability, Connection); it names no technique of its own. | 4 plays (Hedda Gabler, Ghosts, The Wild Duck, A Doll’s House): casting, nights; 3 coursework scenes; self-tapes | Study It, Tape A Scene In It |
+| Drama | drama | none | medium | Truthful acting under the given circumstances is the core every task reads; no technique of its own. | 12 plays (Hedda Gabler, Woyzeck, Three Sisters, Spring Awakening, Ghosts, The Wild Duck, A Doll’s House, Uncle Vanya, An Enemy Of The People, Mrs Warren’s Profession, Miss Julie, Trifles): casting, nights; 6 coursework scenes; self-tapes | Study It, Tape A Scene In It |
 | Dystopian | science_fiction | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Eco-Horror | horror | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Epic | historical, adventure | none | low | belongs to Battle and sword-and-sandal epics (warrior / swashbuckler leads) | self-tapes | Study It, Tape A Scene In It |
@@ -86,7 +86,7 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Espionage | thriller | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Experimental | experimental | none | low | belongs to dance film / choreocinema (screendance) strand of experimental film | self-tapes | Study It, Tape A Scene In It |
 | Exploitation | horror, crime | Intimacy (Staged Intimacy) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Intimacy |
-| Fairy Tale | fantasy | none | low | no technical claim found | 1 play (The Winter’s Tale): casting, nights; self-tapes | Study It, Tape A Scene In It |
+| Fairy Tale | fantasy | none | low | no technical claim found | 2 plays (The Winter’s Tale, A Midsummer Night’s Dream): casting, nights; 1 coursework scene; self-tapes | Study It, Tape A Scene In It |
 | Family | comedy, adventure | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Fantasy | fantasy | none | low | belongs to particular productions with invented languages, and creature or motion-capture roles | self-tapes | Study It, Tape A Scene In It |
 | Farce | farce, comedy | Comedy (Comic Timing), Clown And Mask (Physical Comedy) | medium | evidence | 3 plays (The Importance Of Being Earnest, The Bear, A Marriage Proposal): casting, nights; self-tapes | Study It, Tape A Scene In It, practice Comedy, practice Clown And Mask |
@@ -99,7 +99,7 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Grindhouse | horror, action | none | low | belongs to stunt performers in homage films | self-tapes | Study It, Tape A Scene In It |
 | Hangout | comedy, drama | none | low | belongs to Linklater-style and mumblecore-adjacent naturalistic hangout films | self-tapes | Study It, Tape A Scene In It |
 | Heist | crime, thriller | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
-| Historical Drama | historical, drama | none | low | belongs to British period productions that ask for period Received Pronunciation | 1 play (Macbeth): casting, nights; 1 coursework scene; self-tapes | Study It, Tape A Scene In It |
+| Historical Drama | historical, drama | none | low | belongs to British period productions that ask for period Received Pronunciation | 2 plays (Macbeth, Julius Caesar): casting, nights; 3 coursework scenes; self-tapes | Study It, Tape A Scene In It |
 | Historical Fiction | historical, drama | none | low | belongs to dance: period stories with social-dance scenes (court, Regency, costume romance); heightened: adaptations of period dramatic texts (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric | self-tapes | Study It, Tape A Scene In It |
 | Holiday | comedy, romance | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Hood Film | drama, crime | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
@@ -131,7 +131,7 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Period Drama | drama, historical | none | medium | Period speech, bearing and manners from one series’ advisers; Heightened Language was removed for not fitting. | self-tapes | Study It, Tape A Scene In It |
 | Picaresque | adventure, satire | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Police Procedural | crime, drama | none | medium | Procedure taught for a production (cuffing, clearing a house) is preparation for the material, not a technique. | self-tapes | Study It, Tape A Scene In It |
-| Political Drama | drama | none | low | no technical claim found | 3 plays (Major Barbara, Measure For Measure, An Enemy Of The People): casting, nights; self-tapes | Study It, Tape A Scene In It |
+| Political Drama | drama | none | low | no technical claim found | 4 plays (Major Barbara, Measure For Measure, Julius Caesar, An Enemy Of The People): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It |
 | Political Thriller | thriller | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Post-Apocalyptic | science_fiction, adventure | none | low | belongs to stunt: action-led post-apocalyptic films (Mad Max lineage); transformation: individual starving-survivor lead roles | self-tapes | Study It, Tape A Scene In It |
 | Prison Film | drama, crime | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
@@ -142,7 +142,7 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Road Movie | drama, adventure | none | medium | Side-by-side dialogue in a car is staging; it asks no technique past a scene’s. | self-tapes | Study It, Tape A Scene In It |
 | Rockumentary | documentary, musical | none | low | belongs to The mock rockumentary (This Is Spinal Tap and its imitators): improvisation for the whole cast, song for the actor-musicians in the band roles | self-tapes | Study It, Tape A Scene In It |
 | Romance | romance | none | low | no technical claim found | 1 play (The Winter’s Tale): casting, nights; self-tapes | Study It, Tape A Scene In It |
-| Romantic Comedy | comedy, romance | Comedy (Comic Timing) | medium | by definition (SLATE’s reading) | 3 plays (Twelfth Night, As You Like It, Much Ado About Nothing): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
+| Romantic Comedy | comedy, romance | Comedy (Comic Timing) | medium | by definition (SLATE’s reading) | 4 plays (Twelfth Night, As You Like It, Much Ado About Nothing, A Midsummer Night’s Dream): casting, nights; 5 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
 | Romantic Drama | drama, romance | none | low | no technical claim found | 1 play (Blood Wedding): casting, nights; self-tapes | Study It, Tape A Scene In It |
 | Samurai | action, historical | Stage Combat (Fights And Stunts) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Stage Combat |
 | Satire | satire, comedy | none | low | belongs to Character-comedian satire (Sellers in Dr. Strangelove; improvised character-prank satire) | 4 plays (The Importance Of Being Earnest, Major Barbara, Tartuffe, The Playboy Of The Western World): casting, nights; self-tapes | Study It, Tape A Scene In It |
@@ -174,8 +174,8 @@ The review of 2026-10-10 lowered every applied entry that rested on one film, on
 | Thriller | thriller | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | Time Travel | science_fiction | none | low | belongs to roles playing another actor's character at a different age (past/future self) | self-tapes | Study It, Tape A Scene In It |
 | Tokusatsu | science_fiction, action | none | low | belongs to the suit actor | self-tapes | Study It, Tape A Scene In It |
-| Tragedy | tragedy | none | low | belongs to classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3) | 6 plays (Woyzeck, Blood Wedding, Macbeth, Miss Julie, Riders To The Sea, Salomé): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It |
-| Tragicomedy | tragedy, comedy | Comedy (Comic Timing) | medium | by definition (SLATE’s reading) | 5 plays (Three Sisters, The Cherry Orchard, Measure For Measure, The Winter’s Tale, Uncle Vanya): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
+| Tragedy | tragedy | none | low | belongs to classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3) | 7 plays (Woyzeck, Blood Wedding, Macbeth, Julius Caesar, Miss Julie, Riders To The Sea, Salomé): casting, nights; 4 coursework scenes; self-tapes | Study It, Tape A Scene In It |
+| Tragicomedy | tragedy, comedy | Comedy (Comic Timing) | medium | by definition (SLATE’s reading) | 6 plays (Three Sisters, The Cherry Orchard, The Wild Duck, Measure For Measure, The Winter’s Tale, Uncle Vanya): casting, nights; 2 coursework scenes; self-tapes | Study It, Tape A Scene In It, practice Comedy |
 | True Crime | crime, documentary | none | low | belongs to Dramatised true crime roles portraying real people whose speech differs from the actor's own | self-tapes | Study It, Tape A Scene In It |
 | Vampire | horror, fantasy | none | low | no technical claim found | self-tapes | Study It, Tape A Scene In It |
 | War | war | Stage Combat (Fights And Stunts) | medium | evidence | self-tapes | Study It, Tape A Scene In It, practice Stage Combat |

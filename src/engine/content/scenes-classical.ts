@@ -371,4 +371,570 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
       },
     ],
   },
+  // From the limitations pass of 2026-10-11: eleven more, so a student meets fewer scenes again, each checked against
+  // its play's text as the rest were (shakespeare.mit.edu; Project Gutenberg for Marlowe, Webster, Congreve and
+  // Goldsmith). Lines quoted are the plays' own; the rest is paraphrase.
+  {
+    id: 'hamlet-3-4', play: 'Hamlet', by: 'William Shakespeare', year: 1600, where: 'Act Three, Scene Four, the Queen’s closet', language: 'verse', size: 'long', genre: 'tragedy', difficulty: 3,
+    summary: 'Sent for by his mother after the play, Hamlet comes to her closet. He kills Polonius through the arras, sets the pictures of his father and his uncle side by side, and wrings her heart until the Ghost appears to him, and not to her. She promises to keep what he has said.',
+    circumstances: [
+      yes('closet', 'The Queen’s private room at night, straight after the play, Polonius hidden behind the arras to listen', 'Polonius tells her to be round with him, and hides.'),
+      no('court', 'The court in full session, the King on his throne', 'They’re alone but for Polonius, and the King is at prayer elsewhere.'),
+      no('grave', 'The churchyard, at Ophelia’s grave', 'That’s the fifth act; Ophelia is alive here.'),
+    ],
+    relationship: [
+      yes('mother-son', 'Mother and son: she married his father’s brother within a month of the funeral', 'He tells her she’s the Queen, her husband’s brother’s wife, and, would it weren’t so, his mother.'),
+      no('lovers', 'Lovers quarrelling', 'She is his mother; his love is Ophelia.'),
+      no('strangers', 'A queen and a stranger at court', 'He is her son and Denmark’s prince.'),
+    ],
+    roles: [
+      {
+        name: 'Hamlet',
+        objective: [
+          yes('glass', 'Make her see what she has done', '“You go not till I set you up a glass / Where you may see the inmost part of you.”'),
+          yes('bed', 'Part her from Claudius: keep her from his bed', 'He begs her not to go to his uncle’s bed, and to assume a virtue if she has it not.'),
+          no('kill', 'Kill his mother', 'He resolves to speak daggers to her but use none, as the Ghost bade him leave her to heaven.'),
+        ],
+        obstacle: [
+          yes('rage', 'His own fury, which runs past what he meant to say until the Ghost comes to whet his blunted purpose'),
+          yes('denial', 'She doesn’t know what he means', 'She asks what she has done, that he dares wag his tongue so rudely against her.'),
+          no('guards', 'The King’s guards break in', 'Nobody comes; Polonius is already dead behind the arras.'),
+        ],
+        tactic: [
+          yes('pictures', 'Set the two pictures side by side and make her look', 'He shows her the counterfeit presentment of two brothers.'),
+          yes('wring', 'Wring her heart: hold her down until she looks inward', 'He sits her down and won’t let her go.'),
+          no('gentle', 'Speak gently from the start', 'She cries that his words like daggers enter in her ears.'),
+        ],
+      },
+      {
+        name: 'Gertrude',
+        objective: [
+          yes('rebuke', 'Rebuke him for the play, as Polonius bade her', '“Hamlet, thou hast thy father much offended.”'),
+          yes('calm', 'Calm him, and get through to him', 'She calls him gentle son and asks him what he looks at.'),
+          no('confess', 'Confess she helped murder the old King', 'She doesn’t know of the murder: “As kill a king!”'),
+        ],
+        obstacle: [
+          yes('cannot-see', 'She can’t see the Ghost, and takes him for mad'),
+          yes('spots', 'What he makes her see in herself: black and grained spots in her soul'),
+          no('poison', 'She has drunk the poisoned cup', 'That’s the last scene.'),
+        ],
+        tactic: [
+          yes('command', 'Command him, as his mother and his queen', '“Come, come, you answer with an idle tongue.”'),
+          yes('cry-help', 'Cry out for help when she thinks he means to murder her'),
+          no('send-king', 'Send for the King at once', 'She promises she has no life to breathe what he has said to her.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'caesar-4-3', play: 'Julius Caesar', by: 'William Shakespeare', year: 1599, where: 'Act Four, Scene Three, Brutus’s tent near Sardis', language: 'verse', size: 'long', genre: 'tragedy', difficulty: 3,
+    summary: 'In Brutus’s tent before Philippi, Cassius complains that Brutus condemned a man he had written for; Brutus accuses him of an itching palm and of denying him gold to pay his legions. Their quarrel runs until Cassius bares his breast and offers his dagger; reconciled, Brutus tells him Portia is dead.',
+    circumstances: [
+      yes('tent', 'Brutus’s tent at the camp near Sardis, the two armies outside, their officers sent off so the generals can quarrel unheard', 'Brutus bids them not wrangle before the armies, and they go in.'),
+      no('capitol', 'The Capitol on the Ides of March', 'Caesar is dead; this is the war that came after.'),
+      no('battle', 'The field at Philippi, mid-battle', 'The battle is to come; they plan the march at the end of the scene.'),
+    ],
+    relationship: [
+      yes('comrades', 'Brothers-in-arms, the two who led the conspiracy, now commanding the armies together', 'Cassius calls him most noble brother, and tells him he loves him not.'),
+      no('enemies', 'Open enemies who mean to fight', 'They’re reconciled within the scene and drink together.'),
+      no('master', 'A general and his officer', 'They’re equals in command; Cassius says he’s a soldier, older in practice.'),
+    ],
+    roles: [
+      {
+        name: 'Brutus',
+        objective: [
+          yes('honour', 'Hold Cassius to the honor they killed Caesar for', '“Did not great Julius bleed for justice’ sake?”'),
+          yes('gold', 'Get the gold he asked for to pay his legions', 'He says he did send to Cassius for gold, which Cassius denied him.'),
+          no('break', 'Break with Cassius and fight alone', 'He takes his hand, and they plan the march on Philippi together.'),
+        ],
+        obstacle: [
+          yes('portia', 'Portia is dead, and he carries it unsaid through the quarrel', 'He tells Cassius after: “No man bears sorrow better. Portia is dead.”'),
+          yes('temper', 'Cassius’s temper, against his own cold pride'),
+          no('mutiny', 'His legions have mutinied', 'Nothing of the kind; the quarrel is over bribes and money.'),
+        ],
+        tactic: [
+          yes('scorn', 'Stand cold against his threats', 'He tells Cassius there’s no terror in them: he’s armed so strong in honesty they pass him by.'),
+          yes('shame', 'Shame him with the cause they fought for'),
+          no('draw', 'Draw on him', 'Nobody draws; it’s Cassius who offers his own dagger.'),
+        ],
+      },
+      {
+        name: 'Cassius',
+        objective: [
+          yes('wronged', 'Have Brutus own that he has wronged him', '“That you have wrong’d me doth appear in this.”'),
+          yes('loved', 'Win back Brutus’s love', 'He says a friend should bear his friend’s infirmities.'),
+          no('command', 'Take sole command of the armies', 'He defers to Brutus’s plan for Philippi, against his own judgement.'),
+        ],
+        obstacle: [
+          yes('honesty', 'Brutus is armed so strong in honesty that his threats pass by him'),
+          no('caesar', 'Caesar’s ghost is in the tent', 'The ghost comes to Brutus alone, after Cassius has gone.'),
+        ],
+        tactic: [
+          yes('threaten', 'Threaten', '“I may do that I shall be sorry for.”'),
+          yes('dagger', 'Bare his breast and offer his dagger: strike, as you did at Caesar'),
+          no('bribe', 'Offer Brutus money to drop it', 'It’s Brutus who accuses him of selling offices for gold.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'caesar-2-1', play: 'Julius Caesar', by: 'William Shakespeare', year: 1599, where: 'Act Two, Scene One, Brutus’s orchard', language: 'verse', size: 'medium', genre: 'tragedy', difficulty: 2,
+    summary: 'Before dawn on the Ides of March, the conspirators just gone, Portia finds Brutus sleepless in his orchard and asks what troubles him. She kneels, reminds him she’s Cato’s daughter, and shows the wound she gave herself in the thigh to prove her constancy; he promises to tell her all, and a knock calls him away.',
+    circumstances: [
+      yes('orchard', 'Brutus’s orchard before dawn on the Ides, the conspirators just gone into the night', 'She says he stole from their bed and walked about, musing and sighing.'),
+      no('capitol', 'The Capitol, Caesar on his way', 'That’s later that morning.'),
+      no('tent', 'His tent at Sardis', 'That’s the war after; Portia is dead by then.'),
+    ],
+    relationship: [
+      yes('marriage', 'Husband and wife: she Cato’s daughter, a woman well reputed', 'She says she’s a woman Lord Brutus took to wife.'),
+      no('suitor', 'A suitor and the woman he courts', 'They have long been married.'),
+      no('conspirators', 'Fellow conspirators', 'She doesn’t know of the plot; that’s what she asks to be told.'),
+    ],
+    roles: [
+      {
+        name: 'Portia',
+        objective: [
+          yes('secret', 'Learn what is troubling him', 'She asks him to tell her why he’s heavy, and who came to him tonight.'),
+          yes('wife', 'Be his wife and not his harlot: share his secrets', '“Dwell I but in the suburbs / Of your good pleasure?”'),
+          no('stop', 'Stop the murder', 'She doesn’t know what is planned.'),
+        ],
+        obstacle: [
+          yes('silent', 'He won’t tell her, and pleads that he’s unwell'),
+          no('caesar', 'Caesar is listening', 'They’re alone; only the knocking interrupts.'),
+        ],
+        tactic: [
+          yes('kneel', 'Kneel to him, by her once-commended beauty and their vows'),
+          yes('wound', 'Show him the wound she gave herself, to prove she can keep a secret'),
+          no('threaten', 'Threaten to leave him', 'She asks as his wife; she threatens nothing.'),
+        ],
+      },
+      {
+        name: 'Brutus',
+        objective: [
+          yes('protect', 'Keep her out of it, and send her back to bed', 'He tells her he isn’t well in health, and that’s all.'),
+          yes('worthy', 'Be worthy of her', '“O ye gods, / Render me worthy of this noble wife!”'),
+          no('recruit', 'Recruit her to the plot', 'He promises to tell her, but sends her in as the knocking comes.'),
+        ],
+        obstacle: [
+          yes('knock', 'The knocking: Ligarius has come to join them'),
+          yes('plot', 'The plot itself, which isn’t his alone to tell'),
+          no('jealousy', 'He suspects her of another man', 'Nothing of the kind is in the scene.'),
+        ],
+        tactic: [
+          yes('ill', 'Plead ill health'),
+          yes('raise', 'Raise her up and promise the secrets of his heart'),
+          no('lie', 'Tell her the conspirators were merchants', 'He doesn’t say who they were; he promises to tell her all.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'lear-4-7', play: 'King Lear', by: 'William Shakespeare', year: 1606, where: 'Act Four, Scene Seven, the French camp near Dover', language: 'verse', size: 'medium', genre: 'tragedy', difficulty: 2,
+    summary: 'In the French camp near Dover, Lear, asleep in fresh garments after his madness, is woken with music and his daughter Cordelia’s kiss. He takes her for a soul in bliss, kneels to her, and asks her to forgive a foolish, fond old man; she says she has no cause.',
+    circumstances: [
+      yes('camp', 'A tent in the French camp near Dover, Lear asleep in a chair in fresh garments, music playing, the doctor at hand', 'The doctor has him woken with music.'),
+      no('court', 'The court at the start of the play, the kingdom being divided', 'That’s where she was banished; this is after the storm.'),
+      no('prison', 'A prison after the battle', 'The battle is still to be fought.'),
+    ],
+    relationship: [
+      yes('father-daughter', 'Father and daughter, parted since he disowned her for saying nothing', 'He says she has some cause to hate him, and her sisters none.'),
+      no('king-subject', 'A king and a subject who wronged him', 'She was wronged by him; she kneels for his blessing.'),
+      no('strangers', 'A madman and a stranger', 'He comes to know her as his child Cordelia.'),
+    ],
+    roles: [
+      {
+        name: 'Cordelia',
+        objective: [
+          yes('restore', 'Restore him: let her kiss repair the harms her sisters did'),
+          yes('known', 'Have him know her', '“Sir, do you know me?”'),
+          no('reproach', 'Make him own how he wronged her', '“No cause, no cause.”'),
+        ],
+        obstacle: [
+          yes('mind', 'His wandering mind: he thinks himself in the grave and her a spirit'),
+          no('sisters', 'Her sisters are in the tent', 'Goneril and Regan are with their armies; they aren’t here.'),
+        ],
+        tactic: [
+          yes('blessing', 'Kneel, and ask his blessing', 'She asks him to hold his hands in benediction over her.'),
+          yes('soft', 'Speak softly, as to a child'),
+          no('command', 'Order him to recover his wits', 'She asks; she never commands.'),
+        ],
+      },
+      {
+        name: 'Lear',
+        objective: [
+          yes('where', 'Find out where he is and whether he’s alive', '“Where have I been? Where am I? Fair daylight?”'),
+          yes('forgive', 'Be forgiven', '“Pray you now, forget and forgive.”'),
+          no('rule', 'Take back his kingdom', 'He asks only to be forgiven, and calls himself a very foolish fond old man.'),
+        ],
+        obstacle: [
+          yes('mind', 'His doubt of his own mind', '“I fear I am not in my perfect mind.”'),
+          yes('shame', 'His shame for what he did to her'),
+          no('blind', 'He is blind', 'That’s Gloucester; Lear sees her.'),
+        ],
+        tactic: [
+          yes('kneel', 'Kneel to her'),
+          yes('test', 'Test what is real', 'He tries the prick of a pin to know whether he’s awake.'),
+          no('rage', 'Rage at her as he did at the start', 'He is gentle and ashamed.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'asyoulike-3-2', play: 'As You Like It', by: 'William Shakespeare', year: 1599, where: 'Act Three, Scene Two, the Forest of Arden', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 2,
+    summary: 'In the Forest of Arden, Rosalind, disguised as the youth Ganymede, meets Orlando, who has been hanging verses to her on the trees. She tells him he has none of the marks of a lover, and offers to cure him of love if he will call her Rosalind and come every day to her cottage to woo her.',
+    circumstances: [
+      yes('forest', 'The Forest of Arden, his verses hung on the trees; she in a youth’s clothes, Celia with her as Aliena', 'She has just read his verses, and Celia has told her who wrote them.'),
+      no('wrestling', 'The court, at the wrestling', 'That’s where they met, in the first act; both have fled to the forest since.'),
+      no('wedding', 'The wedding at the end', 'That’s the last scene, when she unmasks.'),
+    ],
+    relationship: [
+      yes('disguised', 'In love since the wrestling; he doesn’t know the youth is her', 'He tells the youth that he’s the man so love-shaked.'),
+      no('rivals', 'Rivals for the same woman', 'She is the woman he loves.'),
+      no('strangers', 'Strangers with no feeling between them', 'Each loves the other; only he doesn’t know who he speaks to.'),
+    ],
+    roles: [
+      {
+        name: 'Rosalind',
+        objective: [
+          yes('test', 'Find out whether he truly loves her', 'She asks if he is the man who hangs odes on hawthorns.'),
+          yes('keep', 'Keep him coming back to her', 'She makes him promise to come every day to her cottage.'),
+          no('reveal', 'Tell him she’s Rosalind', 'She keeps the disguise to the last act.'),
+        ],
+        obstacle: [
+          yes('disguise', 'She can only speak to him as a boy'),
+          yes('heart', 'Her own heart: she’s as much in love as he is'),
+          no('father', 'Her father forbids it', 'Her father is in the forest and knows nothing of this.'),
+        ],
+        tactic: [
+          yes('mock', 'Mock him as no true lover', 'He has no lean cheek, no unkempt beard, his hose ungartered not at all.'),
+          yes('cure', 'Offer the cure: woo her as Rosalind'),
+          no('swoon', 'Swoon to win his pity', 'She swoons later, at the bloody napkin, and not to win him.'),
+        ],
+      },
+      {
+        name: 'Orlando',
+        objective: [
+          yes('prove', 'Prove he truly loves', 'He swears by the white hand of Rosalind that he’s that unfortunate he.'),
+          yes('company', 'Keep the clever youth’s company in the forest'),
+          no('cure', 'Be cured of love', 'He tells the youth he’d rather not be cured.'),
+        ],
+        obstacle: [
+          yes('absent', 'Rosalind isn’t there, he thinks'),
+          no('banished', 'He is under arrest', 'He fled to the forest; he isn’t held.'),
+        ],
+        tactic: [
+          yes('swear', 'Swear to his love'),
+          yes('play', 'Play along, and agree to woo the youth as Rosalind'),
+          no('fight', 'Challenge the youth', 'He takes the mockery and agrees to the game.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'dream-3-2', play: 'A Midsummer Night’s Dream', by: 'William Shakespeare', year: 1595, where: 'Act Three, Scene Two, the wood near Athens', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 2,
+    summary: 'In the wood at night both young men have been turned by Puck’s love-juice to woo Helena. Helena believes Hermia is in on a plot to mock her; Hermia believes Helena has stolen Lysander. The two old school friends quarrel, over love and then over their heights, until Helena hides behind the men.',
+    circumstances: [
+      yes('wood', 'The wood near Athens at night, the young men enchanted by a spell neither woman knows of', 'Lysander and Demetrius both swear love to Helena, who loved Demetrius in vain.'),
+      no('court', 'Theseus’s court in Athens', 'That’s the first act; the four have fled to the wood since.'),
+      no('wedding', 'The wedding night at the end', 'That’s the fifth act, with the spells undone.'),
+    ],
+    relationship: [
+      yes('friends', 'Friends since childhood, like a double cherry, now each sure the other has betrayed her', 'Helena reminds her of their schooldays and the sampler they worked on one cushion.'),
+      no('sisters', 'Sisters', 'They were schoolfellows, not sisters.'),
+      no('rivals-always', 'Rivals who never liked each other', 'Helena says they grew together like a double cherry.'),
+    ],
+    roles: [
+      {
+        name: 'Helena',
+        objective: [
+          yes('mock', 'Make them stop mocking her', 'She is sure all three have joined in a scheme to scorn her.'),
+          yes('escape', 'Get away, back to Athens', 'She begs them to let her go back with her folly to Athens.'),
+          no('lysander', 'Win Lysander', 'She loves Demetrius, and takes Lysander’s vows for scorn.'),
+        ],
+        obstacle: [
+          yes('belief', 'She can’t believe she’s loved'),
+          yes('nails', 'Hermia’s fury, and Hermia’s nails', 'Helena was never curst, she says; she has no gift at all in shrewishness.'),
+          no('spell', 'She knows of the spell and fears it', 'Neither woman knows of the love-juice.'),
+        ],
+        tactic: [
+          yes('schooldays', 'Remind Hermia of their childhood together'),
+          yes('hide', 'Hide behind the men'),
+          no('fight', 'Strike Hermia first', 'She runs; it’s Hermia who wants to fight.'),
+        ],
+      },
+      {
+        name: 'Hermia',
+        objective: [
+          yes('lysander', 'Get Lysander back', 'She can’t believe he has left her.'),
+          yes('truth', 'Find out what Helena has done', '“You juggler! You canker-blossom! / You thief of love!”'),
+          no('demetrius', 'Win Demetrius', 'She has never loved Demetrius; she ran away to marry Lysander.'),
+        ],
+        obstacle: [
+          yes('spell', 'The spell, which she knows nothing of'),
+          yes('height', 'She takes Helena’s words as mocking her for being short'),
+          no('father', 'Her father is in the wood', 'Egeus is in Athens; he comes with Theseus in the morning.'),
+        ],
+        tactic: [
+          yes('attack', 'Go for her', 'She threatens that her nails can reach unto Helena’s eyes.'),
+          yes('demand', 'Demand an answer'),
+          no('plead', 'Plead softly with Helena', 'She is furious, not pleading.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'twelfth-2-4', play: 'Twelfth Night', by: 'William Shakespeare', year: 1601, where: 'Act Two, Scene Four, Orsino’s palace', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 2,
+    summary: 'After Feste’s song, Orsino sends Cesario back to plead with Olivia, and they argue whether a woman can love as deeply as a man. Viola tells him of her father’s daughter, who never told her love but sat like Patience on a monument, smiling at grief.',
+    circumstances: [
+      yes('palace', 'Orsino’s palace, the old song just sung, the others sent away', 'Orsino sends them off and keeps Cesario by him.'),
+      no('olivia', 'Olivia’s house', 'Viola is sent there at the end of the scene.'),
+      no('shore', 'The shore after the wreck', 'That’s the first act, before she disguised herself.'),
+    ],
+    relationship: [
+      yes('master-page', 'Master and page: she loves him, and he doesn’t know she’s a woman', 'She asks what if a lady loved him as he loves Olivia.'),
+      no('lovers', 'Declared lovers', 'Nothing is declared until the last act.'),
+      no('rivals', 'Rivals for Olivia', 'She woos Olivia for him, not for herself.'),
+    ],
+    roles: [
+      {
+        name: 'Viola',
+        objective: [
+          yes('tell', 'Tell him she loves him without telling it', 'She speaks of her father’s daughter who loved a man as she might love him, were she a woman.'),
+          yes('argue', 'Make him see a woman can love as much as a man'),
+          no('reveal', 'Tell him she’s a woman', 'She keeps the disguise to the last act.'),
+        ],
+        obstacle: [
+          yes('disguise', 'Her disguise, and his love for Olivia'),
+          no('olivia-here', 'Olivia is listening', 'Olivia is at her own house.'),
+        ],
+        tactic: [
+          yes('story', 'Tell it as a sister’s story', '“She never told her love.”'),
+          yes('answer', 'Answer his boast point for point'),
+          no('refuse', 'Refuse to go to Olivia again', 'She goes: “Sir, shall I to this lady?”'),
+        ],
+      },
+      {
+        name: 'Orsino',
+        objective: [
+          yes('olivia', 'Send Cesario back to win Olivia', 'He gives Cesario a jewel for her and bids him say his love can give no place.'),
+          yes('greatest', 'Have his own love called the greatest', 'He says no woman’s heart can hold so much.'),
+          no('page', 'Win his page', 'He doesn’t know she’s a woman.'),
+        ],
+        obstacle: [
+          yes('refused', 'Olivia has refused him'),
+          yes('mood', 'His own changeable mood, which the song feeds'),
+          no('war', 'A war calls him away', 'There’s no war in the play.'),
+        ],
+        tactic: [
+          yes('boast', 'Boast the size of his passion'),
+          yes('confide', 'Confide in the boy, as a man of the world', 'He tells Cesario to take a wife younger than himself.'),
+          no('order', 'Order Cesario to be silent', 'He listens to the story, and asks if the sister died of her love.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'faustus-3', play: 'Doctor Faustus', by: 'Christopher Marlowe', year: 1592, where: 'Scene Three, a grove outside Wittenberg, after the conjuring', language: 'verse', size: 'medium', genre: 'tragedy', difficulty: 3,
+    summary: 'Faustus has conjured, and sends the devil away to come back as a Franciscan friar. Mephistopheles tells him he came not at his command but because he heard him rack the name of God; that he serves Lucifer; and that hell is wherever he is. Faustus laughs at it and sends him to offer Lucifer his soul for twenty-four years of service.',
+    circumstances: [
+      yes('conjured', 'Night in a grove outside Wittenberg, the circle drawn, the devil come at his spells', 'Faustus has just spoken the conjuration in Latin.'),
+      no('study', 'His study, the morning he first turns to magic', 'That’s the first scene; by now he has conjured.'),
+      no('bond', 'The night the bond is signed in his blood', 'That comes later; here he only sends the offer.'),
+    ],
+    relationship: [
+      yes('summoner', 'A scholar and the spirit he thinks he has commanded', 'Faustus believes his spells have power; Mephistopheles corrects him.'),
+      no('master', 'A master and his bound servant', 'Mephistopheles says he serves Lucifer and may not follow Faustus without leave.'),
+      no('old-friends', 'Old friends', 'They meet here for the first time.'),
+    ],
+    roles: [
+      {
+        name: 'Faustus',
+        objective: [
+          yes('command', 'Have Mephistopheles serve him and do whatever he commands'),
+          yes('bargain', 'Sell his soul for twenty-four years of power', 'He sends him to Lucifer with the offer.'),
+          no('repent', 'Repent', 'He scorns the warning, and bids him learn of Faustus manly fortitude.'),
+        ],
+        obstacle: [
+          yes('leave', 'Mephistopheles serves Lucifer, and can do nothing without his leave'),
+          yes('warning', 'The devil’s own warning of what hell is'),
+          no('angels', 'The Good and Evil Angels argue with him here', 'They come in other scenes.'),
+        ],
+        tactic: [
+          yes('bravado', 'Laugh the warning off', 'He says this word damnation terrifies not him.'),
+          yes('question', 'Question him like a scholar: who is Lucifer, how came he to fall'),
+          no('pray', 'Pray', 'His conjuring has just bidden the Trinity farewell, in its Latin.'),
+        ],
+      },
+      {
+        name: 'Mephistopheles',
+        objective: [
+          yes('soul', 'Win his soul for Lucifer', 'He came because he heard Faustus abjure the scriptures, in hope to get his glorious soul.'),
+          yes('grief', 'Speak the grief of having lost heaven', '“Why this is hell, nor am I out of it.”'),
+          no('save', 'Save Faustus from damnation', 'He serves Lucifer, and carries Faustus’s offer to him.'),
+        ],
+        obstacle: [
+          yes('leave', 'He can do nothing without Lucifer’s leave'),
+          yes('own-pain', 'His own torment, which the questions make him speak'),
+          no('circle', 'The circle holds him prisoner', 'He says he came of his own accord, not by the spells.'),
+        ],
+        tactic: [
+          yes('plain', 'Tell the plain truth of hell and let Faustus refuse to hear it'),
+          yes('plead', 'Beg him to leave these frivolous demands, which strike a terror to his soul'),
+          no('fable', 'Say hell is a fable', 'It’s Faustus who calls hell a fable, later; here Mephistopheles says he’s in it.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'malfi-1', play: 'The Duchess of Malfi', by: 'John Webster', year: 1613, where: 'Act One, the wooing in the Duchess’s chamber', language: 'verse', size: 'long', genre: 'tragedy', difficulty: 3,
+    summary: 'Her brothers have just forbidden the widowed Duchess to marry again. She calls her steward Antonio in to write her will, turns the talk to marriage, puts her wedding ring on his finger, and woos him, since the great must; with her maid Cariola come out from behind the arras as witness, they marry in secret.',
+    circumstances: [
+      yes('chamber', 'The Duchess’s chamber at Amalfi, her brothers just gone, Cariola hidden behind the arras as a witness', 'She tells Cariola to hide; Cariola comes out at the end.'),
+      no('court', 'Before the whole court', 'She sends everyone away; the marriage is secret.'),
+      no('prison', 'Her prison, near her death', 'That’s the fourth act, years later.'),
+    ],
+    relationship: [
+      yes('mistress-steward', 'A widowed duchess and her steward, far below her, who loves her and hasn’t said so', 'He says that ambition, madam, is a great man’s madness.'),
+      no('lovers', 'Lovers already secretly married', 'They marry in this scene.'),
+      no('brother', 'Brother and sister', 'Ferdinand and the Cardinal are her brothers; Antonio is her steward.'),
+    ],
+    roles: [
+      {
+        name: 'The Duchess',
+        objective: [
+          yes('marry', 'Marry Antonio, in secret'),
+          yes('speak', 'Make him understand her, since a great woman must woo first', 'She says the misery of us that are born great: we’re forced to woo.'),
+          no('will', 'Only make her will', 'The will is her pretext; she turns it to marriage.'),
+        ],
+        obstacle: [
+          yes('rank', 'His rank, which stops his mouth'),
+          yes('brothers', 'Her brothers, who have just forbidden it'),
+          no('suitor', 'A suitor waits outside', 'No one waits; she has sent them away.'),
+        ],
+        tactic: [
+          yes('ring', 'Put her ring on his finger'),
+          yes('will', 'Dictate her will and lead it to a husband'),
+          no('command', 'Order him to marry her', 'She woos; she doesn’t command.'),
+        ],
+      },
+      {
+        name: 'Antonio',
+        objective: [
+          yes('place', 'Keep his place, and not overreach', 'He fears the ambition that would make him look so high.'),
+          yes('accept', 'Accept her, once he believes her'),
+          no('refuse', 'Refuse her', 'He marries her by the end of the scene.'),
+        ],
+        obstacle: [
+          yes('brothers', 'Her brothers, and what they’d do'),
+          yes('disbelief', 'He can’t believe she means it'),
+          no('wife', 'He has a wife already', 'He is unmarried.'),
+        ],
+        tactic: [
+          yes('modest', 'Speak modestly of marriage, as a steward should'),
+          yes('kneel', 'Kneel, then rise to her'),
+          no('boast', 'Boast of his own merit', 'He speaks of his unworthiness.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'wayoftheworld-4', play: 'The Way of the World', by: 'William Congreve', year: 1700, where: 'Act Four, the proviso scene', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 3,
+    summary: 'At Lady Wishfort’s house Mirabell finds Millamant at her poetry, and the two set the terms of their marriage: she will keep her liberty, lie in bed of a morning, be called no names of fondness, and come to be a wife only by degrees; he that she keep no confidante, wear no masks and no tight stays.',
+    circumstances: [
+      yes('house', 'Lady Wishfort’s house, Millamant just rid of a clumsy suitor, Mirabell come in on her lines of verse', 'She is repeating Suckling when he enters and caps the line.'),
+      no('park', 'St James’s Park', 'That’s the second act.'),
+      no('wedding', 'Their wedding', 'They set its terms here; it comes after the last act.'),
+    ],
+    relationship: [
+      yes('lovers', 'Lovers on the point of marriage, each guarding a freedom', 'She says she won’t be called names of fondness after she is married.'),
+      no('strangers', 'Strangers meeting', 'He has loved her through the play.'),
+      no('married', 'Already married', 'This is the bargain before.'),
+    ],
+    roles: [
+      {
+        name: 'Millamant',
+        objective: [
+          yes('liberty', 'Keep her liberty in marriage', 'She will be solicited to the very last, and lie abed of a morning as long as she pleases.'),
+          yes('accept', 'Accept him on her own terms'),
+          no('refuse', 'Refuse him', 'She ends by giving him her hand.'),
+        ],
+        obstacle: [
+          yes('self', 'Her fear of losing herself as a wife'),
+          no('aunt', 'Lady Wishfort is listening', 'They’re alone until Mrs. Fainall comes.'),
+        ],
+        tactic: [
+          yes('conditions', 'Set her conditions one by one, with mock gravity'),
+          yes('tease', 'Tease him with her airs'),
+          no('weep', 'Weep to move him', 'She bargains; she doesn’t weep.'),
+        ],
+      },
+      {
+        name: 'Mirabell',
+        objective: [
+          yes('win', 'Win her'),
+          yes('terms', 'Set his own conditions in turn', 'He asks leave to offer conditions too.'),
+          no('aunt', 'Win her aunt’s favor', 'That’s his plot elsewhere; here he speaks only to Millamant.'),
+        ],
+        obstacle: [
+          yes('wit', 'Her wit, which won’t be held still'),
+          no('rival', 'Her cousin, the country squire, is in the room', 'She has just sent him away.'),
+        ],
+        tactic: [
+          yes('match', 'Match her article for article'),
+          yes('accept', 'Grant her terms gracefully, and keep his own'),
+          no('threaten', 'Threaten to leave', 'He never threatens; he bargains.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'stoops-2', play: 'She Stoops to Conquer', by: 'Oliver Goldsmith', year: 1773, where: 'Act Two, the first meeting', language: 'verse', size: 'medium', genre: 'comedy', difficulty: 2,
+    summary: 'Young Marlow, easy with barmaids and helpless with ladies of his own class, meets Kate Hardcastle, the woman his father means him to marry, in a house he takes for an inn. He can’t look at her or finish a sentence; she finishes them for him, and he bows himself out as soon as he can.',
+    circumstances: [
+      yes('house', 'Mr. Hardcastle’s house, which Marlow takes for an inn; Kate in her finery', 'Tony Lumpkin has told the travelers it’s an inn.'),
+      no('alehouse', 'The Three Pigeons alehouse', 'That’s where the young men were sent astray, before.'),
+      no('barmaid', 'Kate dressed as the barmaid', 'That’s her stoop, in the next act.'),
+    ],
+    relationship: [
+      yes('suitor', 'The suitor her father chose, meeting her for the first time', 'Sir Charles Marlow has sent his son to court her.'),
+      no('old-friends', 'Old friends', 'They have never met.'),
+      no('servant', 'A guest and a servant', 'Here she’s a lady: that’s his trouble.'),
+    ],
+    roles: [
+      {
+        name: 'Kate Hardcastle',
+        objective: [
+          yes('see', 'Get the measure of the man she’s meant to marry'),
+          yes('draw-out', 'Draw him out of his shyness'),
+          no('reject', 'Send him away at once', 'She is amused, and wants to see more of him.'),
+        ],
+        obstacle: [
+          yes('shy', 'His shyness with a lady: he won’t look at her face'),
+          no('father', 'Her father forbids the match', 'Her father wants it.'),
+        ],
+        tactic: [
+          yes('lead', 'Lead the talk, and finish his sentences for him'),
+          yes('agree', 'Agree with everything he half says'),
+          no('barmaid', 'Play the barmaid', 'That comes in the next act.'),
+        ],
+      },
+      {
+        name: 'Marlow',
+        objective: [
+          yes('escape', 'Get out of the interview'),
+          yes('sentiment', 'Seem a man of grave sentiment'),
+          no('woo', 'Woo her boldly', 'He is bold only with women of lower station.'),
+        ],
+        obstacle: [
+          yes('lady', 'She is a lady, and he can’t look at one'),
+          no('rival', 'Hastings is courting her', 'Hastings loves Constance Neville.'),
+        ],
+        tactic: [
+          yes('sentiment', 'Hide in grave sentiments he can’t finish'),
+          yes('bow', 'Bow himself out'),
+          no('flirt', 'Flirt', 'He flirts only with the barmaid, later.'),
+        ],
+      },
+    ],
+  },
 ];

@@ -144,8 +144,8 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
     expect(diff(a, b).slice(0, 8)).toEqual([]);
     expect(a.playedTo).toBe(2);
     // Kept at the School to the first class's sixth term (calendar 5): graduated once, its productions through its
-    // Shakespeare, none after. (Followed while the student is at the School: a student whose time there ended leaves it
-    // where it was, the boundary of SLATE's.)
+    // Shakespeare, none after. (Until 2026-10-11 a class was followed only while the student was at the School, and one
+    // whose time there ended left it where it was: tests/journey-class-left-behind.test.ts follows it now.)
     // Played by the attentive policy (`tools/policy.ts`): classes, coursework, sleep and meals, through its commands.
     const kept = leave('sp-grad');
     while (kept.now < at(2029, 7, 1, 12)) attentiveHour(kept);

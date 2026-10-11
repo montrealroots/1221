@@ -155,8 +155,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // DRS's bills before its notice of intent weren't found: SLATE's bill and reminder thirty days apart, then the
     // statute's thirty-day notice of intent before a bank levy (12-35).
     notices: [
-      { code: 'DRS bill', title: 'A Bill From Connecticut DRS', words: 'the tax, its 10% penalty and 1% a month of interest are due.', days: 30 },
-      { code: 'Notice of intent to levy', title: 'Connecticut DRS Intends To Levy', words: 'in 30 days it may take what you owe from your bank accounts by warrant.', days: 30 },
+      { code: 'DRS Bill', title: 'A Bill From Connecticut DRS', words: 'the tax, its 10% penalty and 1% a month of interest are due.', days: 30 },
+      { code: 'Notice Of Intent To Levy', title: 'Connecticut DRS Intends To Levy', words: 'in 30 days it may take what you owe from your bank accounts by warrant.', days: 30 },
     ],
     levy: { title: 'Connecticut DRS Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
@@ -171,9 +171,9 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // earliest, SLATE's.
     nonFiler: {
       firstDays: 92, firstAssumed: true,
-      letters: [{ code: 'Failure to File Notice', title: 'Connecticut DRS Made Your Return', words: 'with no return from you, DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed.', days: 60 }],
+      letters: [{ code: 'Failure To File Notice', title: 'Connecticut DRS Made Your Return', words: 'with no return from you, DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed.', days: 60 }],
       lettersAssumed: false,
-      adds: [{ minPenalty: 50_00, label: 'The penalty for a return DRS made: 10% or $50, the greater' }],
+      adds: [{ minPenalty: 50_00, label: 'The Penalty For A Return DRS Made, 10% Or $50, The Greater' }],
     },
     refundDays: 21,
     source: 'Conn. Gen. Stat. 12-735, 12-39h, 12-35, 12-35f, 12-729, 12-739; portal.ct.gov/drs (payment plans, refund offsets, non-filers); research-state-tax-collection.json and -2b.json',
@@ -193,9 +193,9 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // A bill, the Notice and Demand (DTF-966-E), a tax warrant, then an income execution or levy (DTF-978). The days
     // between weren't found: SLATE's.
     notices: [
-      { code: 'DTF bill', title: 'A Bill From New York State', words: 'the tax, the penalty and interest are due.', days: 30 },
+      { code: 'DTF Bill', title: 'A Bill From New York State', words: 'the tax, the penalty and interest are due.', days: 30 },
       { code: 'DTF-966-E', title: 'Notice And Demand From New York State', words: 'New York may now begin collection, a tax warrant first.', days: 30 },
-      { code: 'Tax warrant', title: 'New York Filed A Tax Warrant', words: 'it’s a public lien on what you own; a levy on your bank accounts comes next.', days: 30 },
+      { code: 'Tax Warrant', title: 'New York Filed A Tax Warrant', words: 'it’s a public lien on what you own; a levy on your bank accounts comes next.', days: 30 },
     ],
     levy: { title: 'New York Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
@@ -213,8 +213,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       firstDays: YEAR, firstAssumed: true,
       letters: [
         { code: 'AU-222', title: 'New York Asks For Your Return', words: 'its records show income and no return. File within 30 days.', days: 30 },
-        { code: 'Statement of Proposed Audit Change', title: 'New York Proposes What You Owe', words: 'with no return from you, it worked out the tax from what was reported.', days: 30 },
-        { code: 'Notice of Deficiency', title: 'A Notice Of Deficiency From New York', words: 'it’s assessed in 90 days unless you file or petition.', days: 90 },
+        { code: 'Statement Of Proposed Audit Change', title: 'New York Proposes What You Owe', words: 'with no return from you, it worked out the tax from what was reported.', days: 30 },
+        { code: 'Notice Of Deficiency', title: 'A Notice Of Deficiency From New York', words: 'it’s assessed in 90 days unless you file or petition.', days: 90 },
       ],
       lettersAssumed: true,
     },
@@ -235,7 +235,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // forty-five days apart; then an Order to Withhold on the bank, with its $362 collection fee (FTB's Collection
     // Procedure Manual, medium confidence).
     notices: [
-      { code: 'Statement of Tax Due', title: 'A Statement Of Tax Due From California', words: 'the tax, the penalty and interest are due.', days: 35 },
+      { code: 'Statement Of Tax Due', title: 'A Statement Of Tax Due From California', words: 'the tax, the penalty and interest are due.', days: 35 },
       { code: 'FTB 4963', title: 'Income Tax Due: California', words: 'a second notice, the balance still unpaid.', days: 35 },
       { code: 'FTB 4966', title: 'California’s Final Notice Before Levy', words: 'the Franchise Tax Board may take what you owe from your bank accounts.', days: 35 },
     ],
@@ -255,10 +255,10 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       letters: [
         { code: 'FTB 4600', title: 'California Asks For Your Return', words: 'its records show income and no return. File within 30 days.', days: 30 },
         { code: 'FTB 4601', title: 'A Demand For Your California Return', words: 'file within 30 days, or it’s worked out for you with a 25% demand penalty.', days: 30 },
-        { code: 'Notice of Proposed Assessment', title: 'California Proposes What You Owe', words: 'it’s assessed in 60 days unless you file or protest.', days: 60 },
+        { code: 'Notice Of Proposed Assessment', title: 'California Proposes What You Owe', words: 'it’s assessed in 60 days unless you file or protest.', days: 60 },
       ],
       lettersAssumed: false,
-      adds: [{ share: 0.25, label: 'The demand penalty, 25% of the tax (R&TC 19133)' }, { flat: 143_00, label: 'The filing enforcement fee' }],
+      adds: [{ share: 0.25, label: 'The Demand Penalty, 25% Of The Tax (R&TC 19133)' }, { flat: 143_00, label: 'The Filing Enforcement Fee' }],
     },
     refundDays: 21,
     source: 'Cal. R&TC 19101, 19131, 19132, 19133, 19254, 19521; ftb.ca.gov (interest rates, payment plans, collection, FTB 1102, FTB 4600, FTB 4940 PC); research-state-tax-collection.json and -2b.json',
@@ -275,7 +275,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     order: ['tax', 'penalty', 'interest'], orderAssumed: true,
     // A bill, the Final Demand, then a Notice of Levy (ADOR Pub 2, 2014, still posted). The days between weren't found.
     notices: [
-      { code: 'ADOR bill', title: 'A Bill From Arizona', words: 'the tax, its penalties and interest are due.', days: 30 },
+      { code: 'ADOR Bill', title: 'A Bill From Arizona', words: 'the tax, its penalties and interest are due.', days: 30 },
       { code: 'Final Demand', title: 'Arizona’s Final Demand', words: 'unpaid, ADOR may levy your bank accounts or file a lien.', days: 30 },
     ],
     levy: { title: 'Arizona Levied Your Accounts', afterDays: 30, againDays: 91 },
@@ -289,11 +289,11 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Demand to file', title: 'Arizona Demands Your Return', words: 'file within 15 days, or ADOR estimates what you owe.', days: 15 },
-        { code: 'Proposed assessment', title: 'Arizona Proposes What You Owe', words: 'with no return from you, it estimated the tax from what was reported.', days: 45 },
+        { code: 'Demand To File', title: 'Arizona Demands Your Return', words: 'file within 15 days, or ADOR estimates what you owe.', days: 15 },
+        { code: 'Proposed Assessment', title: 'Arizona Proposes What You Owe', words: 'with no return from you, it estimated the tax from what was reported.', days: 45 },
       ],
       lettersAssumed: true,
-      adds: [{ share: 0.25, label: 'The penalty for not filing on demand, 25% of the tax (42-1125(B))' }],
+      adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax (42-1125(B))' }],
     },
     refundDays: 21,
     source: 'A.R.S. 42-1109, 42-1123, 42-1125; azdor.gov (payment arrangements, collections, Pub 2); research-state-tax-collection-2a.json',
@@ -310,14 +310,14 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // The Notice of Deficiency (30 days), the Final Determination and Demand, the Notice of Intent to Issue
     // Judgment/Lien (10 days), then a levy. The days after the demand weren't found.
     notices: [
-      { code: 'Notice of Deficiency', title: 'A Notice Of Deficiency From Colorado', words: 'paid within 30 days, or a plan asked for, interest stays at 8%; after, it’s 11%.', days: 30 },
-      { code: 'Final Determination and Demand', title: 'Colorado’s Final Determination And Demand', words: 'unpaid with no plan, a 15% collection penalty follows.', days: 30 },
-      { code: 'Notice of Intent to Issue Judgment/Lien', title: 'Colorado Intends To File A Lien', words: 'in 10 days it may file a lien and levy your accounts.', days: 30 },
+      { code: 'Notice Of Deficiency', title: 'A Notice Of Deficiency From Colorado', words: 'paid within 30 days, or a plan asked for, interest stays at 8%; after, it’s 11%.', days: 30 },
+      { code: 'Final Determination And Demand', title: 'Colorado’s Final Determination And Demand', words: 'unpaid with no plan, a 15% collection penalty follows.', days: 30 },
+      { code: 'Notice Of Intent To Issue Judgment/Lien', title: 'Colorado Intends To File A Lien', words: 'in 10 days it may file a lien and levy your accounts.', days: 30 },
     ],
     levy: { title: 'Colorado Levied Your Accounts', afterDays: 10, againDays: 91 },
     timingAssumed: true,
     // The final demand unpaid, with no plan: 15% of the tax (39-21-118).
-    charges: [{ step: 2, share: 0.15, of: 'tax', label: 'The collection penalty, 15% of the tax' }],
+    charges: [{ step: 2, share: 0.15, of: 'tax', label: 'The Collection Penalty, 15% Of The Tax' }],
     // Up to 36 months, no fee; a default makes the whole due after a written notice, whose days weren't found; a new
     // balance can be added by asking (SLATE asks for them).
     plan: { name: 'Payment Plan', minMonths: 1, maxMonths: 36, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'joins', newBalanceAssumed: true, notInCollection: false },
@@ -326,7 +326,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // any assessment.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Notice of Deficiency', title: 'Colorado Filed A Return For You', words: 'with no return from you, it worked out the tax from what was reported. File your own within 30 days.', days: 30 }],
+      letters: [{ code: 'Notice Of Deficiency', title: 'Colorado Filed A Return For You', words: 'with no return from you, it worked out the tax from what was reported. File your own within 30 days.', days: 30 }],
       lettersAssumed: true,
     },
     refundDays: 21,
@@ -346,13 +346,13 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // The Notice of Proposed Assessment (45 days), the Official Assessment and Demand (45 days), the State Tax Execution,
     // with its 20% fee, then a levy. The days after the execution weren't found.
     notices: [
-      { code: 'Notice of Proposed Assessment', title: 'Georgia Proposes An Assessment', words: '45 days to pay or appeal.', days: 30 },
-      { code: 'Official Assessment and Demand', title: 'Georgia’s Official Assessment And Demand', words: '45 days, then a state tax execution.', days: 45 },
+      { code: 'Notice Of Proposed Assessment', title: 'Georgia Proposes An Assessment', words: '45 days to pay or appeal.', days: 30 },
+      { code: 'Official Assessment And Demand', title: 'Georgia’s Official Assessment And Demand', words: '45 days, then a state tax execution.', days: 45 },
       { code: 'State Tax Execution', title: 'Georgia Issued A State Tax Execution', words: 'a lien, with a 20% collection fee; a levy may follow.', days: 45 },
     ],
     levy: { title: 'Georgia Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The collection fee with the execution, 20%' }],
+    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The Collection Fee With The Execution, 20%' }],
     // Up to 60 months, at least $25 a month, a $50 fee by bank draft, about 30 days to decide. A late payment or a new
     // balance is a default, and the default letter's days weren't found. How the fee is paid wasn't found: added.
     plan: { name: 'Installment Payment Agreement', minMonths: 1, maxMonths: 60, minMonthly: 25_00, fee: 50_00, feeAdded: true, decideDays: 30, decideAssumed: false, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false },
@@ -362,8 +362,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Notice to Submit Return', title: 'Georgia Asks For Your Return', words: 'file by the date on the letter, or it’s estimated for you.', days: 30 },
-        { code: 'Notice of Proposed Assessment', title: 'Georgia Proposes What You Owe', words: 'estimated from what was reported; 45 days to file or appeal.', days: 45 },
+        { code: 'Notice To Submit Return', title: 'Georgia Asks For Your Return', words: 'file by the date on the letter, or it’s estimated for you.', days: 30 },
+        { code: 'Notice Of Proposed Assessment', title: 'Georgia Proposes What You Owe', words: 'estimated from what was reported; 45 days to file or appeal.', days: 45 },
       ],
       lettersAssumed: true,
     },
@@ -382,12 +382,12 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // A bill, then a written demand at least ten days out; then a $50 fee and a levy, $15 each (231-23(d)). The bills'
     // names and days weren't found.
     notices: [
-      { code: 'DOTAX bill', title: 'A Bill From Hawaii', words: 'the tax, its penalties and interest are due.', days: 30 },
-      { code: 'Written demand', title: 'Hawaii Demands Payment', words: 'pay within 10 days, or a $50 fee and a levy follow.', days: 30 },
+      { code: 'DOTAX Bill', title: 'A Bill From Hawaii', words: 'the tax, its penalties and interest are due.', days: 30 },
+      { code: 'Written Demand', title: 'Hawaii Demands Payment', words: 'pay within 10 days, or a $50 fee and a levy follow.', days: 30 },
     ],
     levy: { title: 'Hawaii Levied Your Accounts', afterDays: 10, againDays: 91, feeEach: 15_00 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 50_00, label: 'The delinquent account fee' }],
+    charges: [{ step: 2, flat: 50_00, label: 'The Delinquent Account Fee' }],
     // Over $100, a $50 fee; a new liability defaults it; notice before collection, whose days weren't found. The longest
     // wasn't found: SLATE's three years. Over twelve months a lien is filed, which SLATE doesn't model.
     plan: { name: 'Installment Agreement', min: 100_00, minMonths: 1, maxMonths: 36, monthsAssumed: true, fee: 50_00, feeAdded: true, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'Over twelve months it files a lien, which SLATE doesn’t model.' },
@@ -396,7 +396,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // wasn't found.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Proposed assessment', title: 'Hawaii Made Your Return', words: 'with no return from you, it worked out the tax from what was reported. 30 days to file your own or object.', days: 30 }],
+      letters: [{ code: 'Proposed Assessment', title: 'Hawaii Made Your Return', words: 'with no return from you, it worked out the tax from what was reported. 30 days to file your own or object.', days: 30 }],
       lettersAssumed: false,
     },
     refundDays: 21,
@@ -420,12 +420,12 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Illinois Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 100_00, under: { below: 1_000_00, flat: 30_00 }, label: 'The cost of collection fee' }],
+    charges: [{ step: 2, flat: 100_00, under: { below: 1_000_00, flat: 30_00 }, label: 'The Cost Of Collection Fee' }],
     // No fee; a new balance joins; over $15,000 a financial statement, which SLATE doesn't model; the longest and what a
     // missed payment does beyond making the whole due weren't found.
     plan: { name: 'Installment Plan', max: 15_000_00, minMonths: 1, maxMonths: 36, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'joins', newBalanceAssumed: false, notInCollection: false, beyond: 'Over $15,000 it asks a financial statement, which SLATE doesn’t model.' },
     offsetsOwnRefunds: true,
-    // 35 ILCS 5/911.2 lets it trade refunds with states that return the favour; which do isn't published.
+    // 35 ILCS 5/911.2 lets it trade refunds with states that return the favor; which do isn't published.
     offsetsFor: [],
     // Best judgment and information (5/904(b)): a nonfiling notice, 30 days, then a Notice of Deficiency, assessed in 60;
     // still unfiled 30 days after the nonfiling notice, a second penalty of 2%, at least $250, at most $5,000. When the
@@ -433,11 +433,11 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Nonfiling notice', title: 'Illinois Asks For Your Return', words: 'file within 30 days, or a second late-filing penalty is added.', days: 30 },
-        { code: 'Notice of Deficiency', title: 'Illinois Proposes What You Owe', words: 'worked out from what was reported; it’s assessed in 60 days.', days: 60 },
+        { code: 'Nonfiling Notice', title: 'Illinois Asks For Your Return', words: 'file within 30 days, or a second late-filing penalty is added.', days: 30 },
+        { code: 'Notice Of Deficiency', title: 'Illinois Proposes What You Owe', words: 'worked out from what was reported; it’s assessed in 60 days.', days: 60 },
       ],
       lettersAssumed: false,
-      adds: [{ share: 0.02, atLeast: 250_00, atMost: 5_000_00, label: 'The penalty for not filing after notice: 2%, at least $250, at most $5,000' }],
+      adds: [{ share: 0.02, atLeast: 250_00, atMost: 5_000_00, label: 'The Penalty For Not Filing After Notice, 2%, At Least $250, At Most $5,000' }],
     },
     refundDays: 21,
     source: '35 ILCS 5/904, 5/909, 5/911.2, 5/911.3, 735/3-2, 735/3-3; tax.illinois.gov (letters, payment plans, Pub-103); research-state-tax-collection-2a.json',
@@ -458,20 +458,20 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // presentation; the days to a levy weren't found. A collection agency's fee of up to 25% isn't charged: the rate
     // LDR's contractor charges isn't published.
     notices: [
-      { code: 'Notice of Assessment', title: 'A Notice Of Assessment From Louisiana', words: '60 days to pay or appeal before it’s final.', days: 30 },
-      { code: 'Notice of Final Assessment', title: 'Louisiana’s Final Assessment', words: 'final; a notice of intent to offset and garnish follows.', days: 60 },
-      { code: 'Notice of Intent to Offset', title: 'Louisiana Intends To Collect', words: 'in 60 days your refunds may be taken and your accounts garnished.', days: 30 },
+      { code: 'Notice Of Assessment', title: 'A Notice Of Assessment From Louisiana', words: '60 days to pay or appeal before it’s final.', days: 30 },
+      { code: 'Notice Of Final Assessment', title: 'Louisiana’s Final Assessment', words: 'final; a notice of intent to offset and garnish follows.', days: 60 },
+      { code: 'Notice Of Intent To Offset', title: 'Louisiana Intends To Collect', words: 'in 60 days your refunds may be taken and your accounts garnished.', days: 30 },
     ],
     levy: { title: 'Louisiana Garnished Your Accounts', afterDays: 60, againDays: 91 },
     timingAssumed: true,
     // Under $25,000, up to 36 months, a $105 fee waived at $25,000 of income or less, by automatic debit; one missed
-    // payment makes the whole due; a new balance unpaid is a default. Its 20% down payment isn't modelled.
+    // payment makes the whole due; a new balance unpaid is a default. Its 20% down payment isn't modeled.
     plan: { name: 'Installment Agreement', max: 24_999_99, minMonths: 1, maxMonths: 36, fee: 105_00, feeAdded: true, feeWaivedAtMost: 25_000_00, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false, beyond: 'LDR asks up to 20% down, which SLATE doesn’t model.' },
     offsetsOwnRefunds: true, offsetsFor: [],
     // An estimate from the federal match, by a proposed assessment's 30 days. When wasn't found.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Notice of Proposed Assessment', title: 'Louisiana Proposes What You Owe', words: 'with no return from you, it estimated the tax from what the IRS reported. 30 days to file or respond.', days: 30 }],
+      letters: [{ code: 'Notice Of Proposed Assessment', title: 'Louisiana Proposes What You Owe', words: 'with no return from you, it estimated the tax from what the IRS reported. 30 days to file or respond.', days: 30 }],
       lettersAssumed: false,
     },
     refundDays: 21,
@@ -491,13 +491,13 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // The Notice of Assessment (30 days to pay), the Statement of Account, a demand, then the final notice; a levy ten
     // days after the demand; $30 for each demand unanswered. The days from the statement weren't found.
     notices: [
-      { code: 'Notice of Assessment', title: 'A Notice Of Assessment From Massachusetts', words: '30 days to pay.', days: 30 },
-      { code: 'Statement of Account', title: 'Massachusetts Demands Payment', words: 'unpaid, a $30 demand charge and collection follow.', days: 30 },
+      { code: 'Notice Of Assessment', title: 'A Notice Of Assessment From Massachusetts', words: '30 days to pay.', days: 30 },
+      { code: 'Statement Of Account', title: 'Massachusetts Demands Payment', words: 'unpaid, a $30 demand charge and collection follow.', days: 30 },
       { code: 'Final Notice', title: 'Massachusetts’s Final Notice', words: 'DOR may now levy your bank accounts.', days: 30 },
     ],
     levy: { title: 'Massachusetts Levied Your Accounts', afterDays: 10, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 30_00, label: 'The demand charge' }],
+    charges: [{ step: 2, flat: 30_00, label: 'The Demand Charge' }],
     // $10,000 or less online, up to 36 months, at least $25 a month; a missed payment brings a notice of intent to
     // cancel, whose days weren't found; a new balance must be paid or it's the same notice. No fee was found.
     plan: { name: 'Payment Agreement', max: 10_000_00, minMonths: 1, maxMonths: 36, minMonthly: 25_00, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false },
@@ -507,8 +507,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Notice to file', title: 'Massachusetts Asks For Your Return', words: 'file within 30 days.', days: 30 },
-        { code: 'Notice of Intent to Assess', title: 'Massachusetts Intends To Assess', words: 'worked out from what was reported; 30 days to file or ask for a conference.', days: 30 },
+        { code: 'Notice To File', title: 'Massachusetts Asks For Your Return', words: 'file within 30 days.', days: 30 },
+        { code: 'Notice Of Intent To Assess', title: 'Massachusetts Intends To Assess', words: 'worked out from what was reported; 30 days to file or ask for a conference.', days: 30 },
       ],
       lettersAssumed: true,
     },
@@ -527,12 +527,12 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // A Notice of Collection; collectible, a warrant may issue in 30 days; 60 days after, a 20% fee unless a plan stands
     // (105-243.1). The days between the notices weren't found.
     notices: [
-      { code: 'Notice of Collection', title: 'A Notice Of Collection From North Carolina', words: 'the amount due isn’t paid in full.', days: 30 },
-      { code: 'Notice of Collection, second', title: 'North Carolina’s Second Notice', words: 'a certificate of tax liability and garnishment may follow; past 60 days, a 20% collection fee.', days: 30 },
+      { code: 'Notice Of Collection', title: 'A Notice Of Collection From North Carolina', words: 'the amount due isn’t paid in full.', days: 30 },
+      { code: 'Notice Of Collection, Second', title: 'North Carolina’s Second Notice', words: 'a certificate of tax liability and garnishment may follow; past 60 days, a 20% collection fee.', days: 30 },
     ],
     levy: { title: 'North Carolina Garnished Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The collection assistance fee, 20%' }],
+    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The Collection Assistance Fee, 20%' }],
     // Up to 18 months, by bank draft; 30 days to cure a default. A fee wasn't stated; a new balance unpaid read as a
     // default, inferred.
     plan: { name: 'Installment Payment Agreement', minMonths: 1, maxMonths: 18, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
@@ -541,8 +541,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Notice to File', title: 'North Carolina Asks For Your Return', words: 'file within 30 days.', days: 30 },
-        { code: 'Notice of Individual Income Tax Assessment', title: 'North Carolina Assesses What You Owe', words: 'worked out from what was reported; 45 days to file or respond.', days: 45 },
+        { code: 'Notice To File', title: 'North Carolina Asks For Your Return', words: 'file within 30 days.', days: 30 },
+        { code: 'Notice Of Individual Income Tax Assessment', title: 'North Carolina Assesses What You Owe', words: 'worked out from what was reported; 45 days to file or respond.', days: 45 },
       ],
       lettersAssumed: false,
     },
@@ -561,8 +561,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // A Notice of Assessment, delinquent after 90 days; a statement, then a final notice before seizure. The later days
     // weren't found.
     notices: [
-      { code: 'Notice of Assessment', title: 'A Notice Of Assessment From New Mexico', words: '90 days to pay or protest.', days: 30 },
-      { code: 'Statement of Account', title: 'New Mexico: Delinquent', words: 'the assessment is delinquent; a lien may follow.', days: 90 },
+      { code: 'Notice Of Assessment', title: 'A Notice Of Assessment From New Mexico', words: '90 days to pay or protest.', days: 30 },
+      { code: 'Statement Of Account', title: 'New Mexico: Delinquent', words: 'the assessment is delinquent; a lien may follow.', days: 90 },
       { code: 'Final Notice Before Seizure', title: 'New Mexico’s Final Notice Before Seizure', words: 'TRD may now levy your bank accounts.', days: 30 },
     ],
     levy: { title: 'New Mexico Levied Your Accounts', afterDays: 30, againDays: 91 },
@@ -574,7 +574,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // Estimated from the IRS's data, seven years back. The demand's days weren't found.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Demand to file', title: 'New Mexico Asks For Your Return', words: 'file, or it’s estimated from what the IRS reported.', days: 30 }],
+      letters: [{ code: 'Demand To File', title: 'New Mexico Asks For Your Return', words: 'file, or it’s estimated from what the IRS reported.', days: 30 }],
       lettersAssumed: true,
     },
     refundDays: 21,
@@ -595,8 +595,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // A Notice of Assessment, a Notice and Demand, then a distraint warrant at least 30 days on, then a levy. The days
     // from the assessment weren't found.
     notices: [
-      { code: 'Notice of Assessment', title: 'A Notice Of Assessment From Oregon', words: 'unpaid in 60 days, interest rises to 12%.', days: 30 },
-      { code: 'Notice and Demand', title: 'Oregon Demands Payment', words: 'a distraint warrant may follow in 30 days.', days: 30 },
+      { code: 'Notice Of Assessment', title: 'A Notice Of Assessment From Oregon', words: 'unpaid in 60 days, interest rises to 12%.', days: 30 },
+      { code: 'Notice And Demand', title: 'Oregon Demands Payment', words: 'a distraint warrant may follow in 30 days.', days: 30 },
       { code: 'Distraint Warrant', title: 'Oregon Issued A Distraint Warrant', words: 'a lien on what you own; a levy may follow.', days: 30 },
     ],
     levy: { title: 'Oregon Levied Your Accounts', afterDays: 30, againDays: 91 },
@@ -609,11 +609,11 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
       letters: [
-        { code: 'Demand to file', title: 'Oregon Demands Your Return', words: 'file within 30 days, or it’s estimated for you with 25% more.', days: 30 },
-        { code: 'Notice of Determination and Assessment', title: 'Oregon Determines What You Owe', words: 'estimated from what was reported.', days: 30 },
+        { code: 'Demand To File', title: 'Oregon Demands Your Return', words: 'file within 30 days, or it’s estimated for you with 25% more.', days: 30 },
+        { code: 'Notice Of Determination And Assessment', title: 'Oregon Determines What You Owe', words: 'estimated from what was reported.', days: 30 },
       ],
       lettersAssumed: true,
-      adds: [{ share: 0.25, label: 'The penalty for not filing on demand, 25% of the tax' }],
+      adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax' }],
     },
     refundDays: 21,
     source: 'ORS 305.220, 305.222, 305.265, 314.400; oregon.gov/dor (payment plans, collections, bulletins); research-state-tax-collection-2b.json',
@@ -633,8 +633,8 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // found; a collection agency's cost of up to 25% isn't charged, its rate unpublished.
     notices: [
       { code: 'Billing Notice', title: 'A Bill From Pennsylvania', words: '30 days to pay or respond.', days: 30 },
-      { code: 'Notice of Assessment', title: 'A Notice Of Assessment From Pennsylvania', words: '90 days to pay or appeal.', days: 30 },
-      { code: 'Notice of Intent to Garnish', title: 'Pennsylvania Intends To Garnish', words: 'a lien is filed; in 30 days your pay or accounts may be garnished.', days: 90 },
+      { code: 'Notice Of Assessment', title: 'A Notice Of Assessment From Pennsylvania', words: '90 days to pay or appeal.', days: 30 },
+      { code: 'Notice Of Intent To Garnish', title: 'Pennsylvania Intends To Garnish', words: 'a lien is filed; in 30 days your pay or accounts may be garnished.', days: 90 },
     ],
     levy: { title: 'Pennsylvania Garnished Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
@@ -648,7 +648,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       firstDays: YEAR, firstAssumed: true,
       letters: [
         { code: 'Personal Income Tax Non-Filer Notice', title: 'Pennsylvania Asks For Your Return', words: 'its records show income and no return. Reply within 30 days.', days: 30 },
-        { code: 'Notice of Estimated Assessment', title: 'Pennsylvania Estimates What You Owe', words: 'worked out from what was reported; 90 days to file, pay or petition.', days: 90 },
+        { code: 'Notice Of Estimated Assessment', title: 'Pennsylvania Estimates What You Owe', words: 'worked out from what was reported; 90 days to file, pay or petition.', days: 90 },
       ],
       lettersAssumed: false,
     },
@@ -671,15 +671,15 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // statute (R.C. 109.081), 10% as the Attorney General's pages were quoted, which SLATE charges. The days to the
     // assessment, and how the Attorney General garnishes, weren't found.
     notices: [
-      { code: 'bL0001', title: 'A Billing Notice From Ohio', words: 'the tax, its penalties and interest are due.', days: 30 },
-      { code: 'bL0006', title: 'A Notice Of Assessment From Ohio', words: '60 days to pay or appeal.', days: 30 },
-      { code: 'bL0008', title: 'Ohio’s Post Appeal Notice', words: 'the assessment is final; pay now.', days: 60 },
+      { code: 'BL0001', title: 'A Billing Notice From Ohio', words: 'the tax, its penalties and interest are due.', days: 30 },
+      { code: 'BL0006', title: 'A Notice Of Assessment From Ohio', words: '60 days to pay or appeal.', days: 30 },
+      { code: 'BL0008', title: 'Ohio’s Post Appeal Notice', words: 'the assessment is final; pay now.', days: 60 },
       { code: 'Top Notice', title: 'Ohio’s Top Notice', words: 'in 45 days the claim goes to the Attorney General, and your federal refund may be taken.', days: 45 },
-      { code: 'Certified claim', title: 'Your Ohio Tax Went To The Attorney General', words: 'the Attorney General collects it now, with its collection cost; interest runs on the penalties too.', days: 45 },
+      { code: 'Certified Claim', title: 'Your Ohio Tax Went To The Attorney General', words: 'the Attorney General collects it now, with its collection cost; interest runs on the penalties too.', days: 45 },
     ],
     levy: { title: 'The Ohio Attorney General Collected From Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 4, share: 0.1, of: 'owed', label: 'The Attorney General’s collection cost, 10%' }],
+    charges: [{ step: 4, share: 0.1, of: 'owed', label: 'The Attorney General’s Collection Cost, 10%' }],
     // The department offers none; the Attorney General up to twelve months once the claim is certified, by a signed
     // contract. Its fee and what a missed payment does weren't found.
     plan: { name: 'Payment Plan With The Attorney General', minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'joins', newBalanceAssumed: true, notInCollection: false, afterStep: { step: 5, who: 'the Ohio Attorney General' } },
@@ -690,7 +690,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       firstDays: YEAR, firstAssumed: true,
       letters: [
         { code: 'ITDQ0009', title: 'Ohio: A Failure To File Notice', words: 'its records show income and no return. Reply within 21 days.', days: 21 },
-        { code: 'bL0006', title: 'Ohio Assesses What You Owe', words: 'worked out from what the IRS reported; 60 days to appeal, paid first.', days: 60 },
+        { code: 'BL0006', title: 'Ohio Assesses What You Owe', words: 'worked out from what the IRS reported; 60 days to appeal, paid first.', days: 60 },
       ],
       lettersAssumed: false,
     },
