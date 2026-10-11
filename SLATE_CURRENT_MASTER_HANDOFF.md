@@ -5,8 +5,8 @@ The owner's brief was "Complete and finish all limitations": the seven left in Â
 
 - **Branch:** `claude/limitations`, pushed. It began from `claude/acceptance-pass` at `98ae1e0b`, so it holds that
   pass too.
-- **Main:** still at `6568dda1`.
-- **Not merged.** Neither pass is; each "Merge it." so far was for its own pass.
+- **Merged:** at the owner's "Merge it.", `main` was fast-forwarded from `6568dda1` to `f470b5e6`, taking the
+  acceptance pass and this one.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged.
   - An older save's credits are dated once on opening, by its casting notices.
@@ -73,7 +73,7 @@ The detail is in `docs/verification/LIMITATIONS-PASS-2026-10-11.md`.
 
 ## Still the owner's
 
-- Merge and deploy, both passes.
+- Deploy.
 - Decisions #1â€“#3 in `docs/verification/COVERAGE-GAPS.md`.
 - The 16 deferred items.
 - SLATE taxes no income in Indiana, DC or Oklahoma, which each have a city: found this pass, not in the brief.
