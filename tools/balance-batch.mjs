@@ -23,11 +23,27 @@ export const GRID = [
   ['one', 'Concentrated: one exercise only', ['--plan', 'one']],
   ['six', 'Broad: six exercises in turn', ['--plan', 'six']],
   ['craft', 'Three techniques a material asks for', ['--plan', 'craft']],
+  ['scene', 'What a scene reads most, practised directly (listening, adaptability, scene study)', ['--plan', 'scene']],
   ['every3', 'One practice day in three', ['--every', '3']],
   ['every3-tired', 'One practice day in three, tired', ['--every', '3', '--tired']],
   ['four-hours', 'Four hours on a practice day', ['--per-day', '4']],
 ];
 const SEEDSETS = ['matched', 'held-out'];
+
+/**
+ * The defensible range of each practice number: the research gives each focus's direction and that it's small, so a
+ * range keeps the direction (a bonus above 1, a cost below) and stays within what such effects are reported as; the
+ * sweep runs each end, on the scenario where the number bites, the matched seeds. A sweep that crosses 1 isn't in the
+ * range: it tests a different claim (that the effect reverses), which the research contradicts.
+ */
+export const RANGES = [
+  ['precision.rested', 1.05, 1.25, []], ['precision.tired', 0.7, 0.95, ['--tired']],
+  ['spaced.within', 1.03, 1.25, []], ['spaced.outside', 0.85, 0.97, ['--every', '3']],
+  ['variation.primary', 0.75, 0.95, []], ['variation.transfer', 0.2, 0.4, ['--plan', 'one']],
+  ['live.primary', 0.75, 0.95, []], ['live.transfer', 0.1, 0.2, ['--plan', 'one']],
+  ['tier.above', 0.65, 0.95, []], ['tier.below', 0.6, 0.9, []],
+];
+const SWEEP_JOBS = RANGES.flatMap(([path, lo, hi, flags]) => [lo, hi].map((v) => ({ id: `sweep ${path}=${v}`, what: `${path} at ${v}`, flags: [...flags, '--set', `${path}=${v}`], seedSet: 'matched', sweep: true })));
 const OUT = 'docs/verification/balance';
 const FILE = `${OUT}/results.jsonl`;
 
@@ -38,7 +54,7 @@ const dirty = sh('git status --porcelain -- src tools').split('\n').filter(Boole
 mkdirSync(OUT, { recursive: true });
 const kept = existsSync(FILE) ? readFileSync(FILE, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
 const done = new Set(kept.filter((r) => r.tree === tree).map((r) => `${r.id}|${r.seedSet}`));
-const jobs = GRID.flatMap(([id, what, flags]) => SEEDSETS.map((seedSet) => ({ id, what, flags, seedSet })));
+const jobs = [...GRID.flatMap(([id, what, flags]) => SEEDSETS.map((seedSet) => ({ id, what, flags, seedSet }))), ...SWEEP_JOBS];
 
 if (process.argv.includes('--status')) {
   console.log(`balance grid on ${commit} (tree ${tree}${dirty ? `, ${dirty} dirty` : ''}): ${jobs.filter((j) => done.has(`${j.id}|${j.seedSet}`)).length} of ${jobs.length} done`);
@@ -50,7 +66,7 @@ if (process.argv.includes('--report')) {
   for (const r of kept) latest.set(`${r.id}|${r.seedSet}`, r);
   const f = (x) => (x === undefined ? '' : x.toFixed(2));
   const lines = ['# The Practice-Balance Grid', '', `Written by \`node tools/balance-batch.mjs --report\` from \`${FILE}\`. Each row is three seeds (n = 3) of 30 days through \`practice.exercise\` inside the School's own week; every strategy on a seed meets the same days. "vs steady" is the paired difference on each seed: its mean, its standard deviation, and on how many seeds it was ahead. Work is the mean change in the expected whole of two scenes (Earnest, Richard III), so points on a target the work doesn't read count for nothing there.`, ''];
-  for (const [id, what] of GRID) {
+  for (const [id, what] of [...GRID, ...SWEEP_JOBS.map((j) => [j.id, j.what])]) {
     for (const seedSet of SEEDSETS) {
       const r = latest.get(`${id}|${seedSet}`);
       if (!r) continue;

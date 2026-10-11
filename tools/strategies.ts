@@ -54,6 +54,8 @@ const PLANS: Record<string, readonly string[]> = {
   one: ['scene-work'],
   six: ['given-circumstances', 'adjustments', 'voice-work', 'scene-work', 'comic-timing', 'verse-speaking'],
   craft: ['scene-work', 'comic-timing', 'verse-speaking'],
+  // What a scene reads most, practised directly: the check on whether live practice's carry-over is a shortcut.
+  scene: ['repetition', 'adjustments', 'scene-work'],
 };
 const PLAN = PLANS[PLAN_NAME]!;
 if (!PLAN) throw new Error(`No plan ${PLAN_NAME}`);
