@@ -1,6 +1,6 @@
 {
  "title": "The Yale Student, Banking And Papers: Implementation Matrix",
- "asOf": "2026-10-10, after the remaining features and the engine pass",
+ "asOf": "2026-10-11, after the integration and verification pass",
  "basisKey": {
   "documented": "The rule is the institution's or the law's, read in a cited source.",
   "simplified": "The rule follows a cited source, with a stated simplification.",
@@ -1917,7 +1917,7 @@
    "saveLoad": "taxPlan optional",
    "source": "IRS.gov payment plans; IRM 5.14; IRC 6651(h)",
    "basis": "simplified",
-   "limitations": "A return’s balance is one, federal and state together, so the plan covers a state’s tax that the state would collect: a simplification older than the plan. The least monthly payment is SLATE’s.",
+   "limitations": "The least monthly payment is SLATE’s. Until the integration pass of 2026-10-11 a return’s balance was one, federal and state together, and the plan covered a state’s tax; it covers the IRS’s alone now (papers.stateTax).",
    "id": "papers.taxPlan",
    "area": "Papers",
    "goal": "Pay what’s owed to the IRS over time",
@@ -1957,7 +1957,8 @@
      "file": "tests/finance-paths.test.ts",
      "title": "a refund goes to what’s owed on another year first"
     }
-   ]
+   ],
+   "before": "A return’s balance is one, federal and state together, so the plan covers a state’s tax that the state would collect: a simplification older than the plan. The least monthly payment is SLATE’s."
   },
   {
    "entry": "Papers, Health Cover: bills",
@@ -1991,6 +1992,174 @@
      "reader": "repriceCare",
      "file": "tests/finance-paths.test.ts",
      "title": "keeps every event a cover change can reach and any whose bill is open"
+    }
+   ]
+  },
+  {
+   "entry": "Papers, Tax Returns: Who It’s Owed To; each agency’s panel and plan",
+   "prereqs": "A filed return with a balance",
+   "choices": "Pay a state in part or in full; a state’s own plan, its months",
+   "steps": "Filed: each authority assessed and paid from the bank if it can be; owed, each state’s notices and levy; a part paid; a plan asked for, approved, paid, missed and caught up",
+   "costs": "Each state’s penalties and interest by its rules; California’s $34 plan fee and $362 levy fee",
+   "states": "figures.owedTo, stateDue, statePlans, withheldBy",
+   "failure": "A state’s levy; a plan ended",
+   "recovery": "Pay or catch up; a later refund offsets the same authority’s balance; a federal refund goes to the return’s state after its notice",
+   "stateRW": "TaxReturn.stateDue, Person.statePlans, YearEarnings.withheldBy",
+   "consumers": "Collection, plans, refunds and offsets, the IRS plan’s cover, the budget’s reserve, Home",
+   "notices": "Each state’s bills, notices, levy, refund and plan",
+   "saveLoad": "Optional fields; a combined balance from before divided once on opening (splitReturns)",
+   "source": "research-state-tax-collection.json; Conn. Gen. Stat. 12-735, 12-39h; NY Tax Law 685, 697; Cal. R&TC 19131–19132, 19521; IRC 6159, 6402",
+   "basis": "simplified",
+   "limitations": "Unresearched states keep a balance with nothing added; New York’s and California’s payment order, and notice timing where unpublished, are SLATE’s; a state doesn’t assess a non-filer on its own; a balance netted against a refund before the split stays netted.",
+   "id": "papers.stateTax",
+   "area": "Papers",
+   "goal": "Owe and pay each tax authority its own: the IRS federal, each state its own, by its own rules",
+   "commands": [
+    "tax.pay_state",
+    "tax.apply_state_plan",
+    "tax.catch_up_state_plan"
+   ],
+   "tests": [
+    {
+     "file": "tests/state-tax.test.ts",
+     "title": "an IRS plan covers federal tax only"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "The split sums to the balance; withholding by authority, derived for a year without it",
+     "reader": "Filing",
+     "file": "tests/state-tax.test.ts",
+     "title": "splits a Connecticut year"
+    },
+    {
+     "outcome": "Connecticut’s 10% once, 1% a month simple, penalty first",
+     "reader": "Accrual and payments",
+     "file": "tests/state-tax.test.ts",
+     "title": "Connecticut: 10% once past the due date"
+    },
+    {
+     "outcome": "New York’s plan: a missed payment cured by the next due date, then ended",
+     "reader": "The plan",
+     "file": "tests/state-tax.test.ts",
+     "title": "New York: half a percent a month"
+    },
+    {
+     "outcome": "California’s fee added; a new balance defaults the plan",
+     "reader": "The plan",
+     "file": "tests/state-tax.test.ts",
+     "title": "California: 5% and half a percent a month"
+    },
+    {
+     "outcome": "A refund offsets its own authority first, paid once however often its item fires",
+     "reader": "Refunds",
+     "file": "tests/state-tax.test.ts",
+     "title": "a state’s refund pays what’s owed to it for another year first"
+    },
+    {
+     "outcome": "A combined balance from before divided to the cent, once",
+     "reader": "Opening a save",
+     "file": "tests/state-tax.test.ts",
+     "title": "divides a combined balance between the IRS and the state"
+    },
+    {
+     "outcome": "An unresearched state adds nothing and refuses a plan, saying why",
+     "reader": "Accrual and plans",
+     "file": "tests/state-tax.test.ts",
+     "title": "a state SLATE hasn’t researched"
+    }
+   ]
+  },
+  {
+   "entry": "School, Standing And Craft: Your Classes",
+   "prereqs": "",
+   "choices": "",
+   "steps": "Each term over, the first class’s classes played, then its productions cast from its fifteen, grown and judged; at its sixth term, its degree, said once",
+   "costs": "",
+   "states": "formerClasses[].productions, playedTo, graduatedAt; joinedHistory",
+   "failure": "",
+   "recovery": "",
+   "stateRW": "SchoolRecord.formerClasses, joinedHistory",
+   "consumers": "The first class’s casting balance and craft; Your Classes",
+   "notices": "The Class Of … Graduates",
+   "saveLoad": "Optional; ceilings bound on load",
+   "source": "SLATE’s, by the School’s season (schoolProduction, playOf)",
+   "basis": "simplified",
+   "limitations": "Followed while the student is at the School; the Rep’s and the Cabaret’s parts aren’t played for it; a joined class’s history before the join is tested by fixture.",
+   "id": "school.firstClass",
+   "area": "School",
+   "goal": "Leave a class behind and find it gone on: its classes, its productions, its degree",
+   "commands": [
+    "school.request_leave",
+    "school.return_notice"
+   ],
+   "tests": [
+    {
+     "file": "tests/school-paths.test.ts",
+     "title": "keeps the first class whole and played forward"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Productions each once, its own cast, the student in none; its draws its own",
+     "reader": "Your Classes",
+     "file": "tests/school-paths.test.ts",
+     "title": "keeps the first class whole and played forward, draws the new one at the same stage"
+    },
+    {
+     "outcome": "The same whether time passes in steps or at once; graduated once",
+     "reader": "The first class",
+     "file": "tests/school-paths.test.ts",
+     "title": "follows the first class to its degree once"
+    },
+    {
+     "outcome": "A class joined in its second year comes with the production it had",
+     "reader": "Your Classes",
+     "file": "tests/school-paths.test.ts",
+     "title": "brings a class joined in its second year"
+    }
+   ]
+  },
+  {
+   "entry": "Player Profile: Practice; a production’s notes",
+   "prereqs": "",
+   "choices": "",
+   "steps": "An hour’s feedback from the exercise’s record; a note from the notes before it",
+   "costs": "",
+   "states": "experience.exercises[].streak, gains, lastTier; notes[].taken",
+   "failure": "",
+   "recovery": "",
+   "stateRW": "Person.experience, Process.notes",
+   "consumers": "The hour’s feedback; the next note’s skill and words",
+   "notices": "The hour’s feedback; the note",
+   "saveLoad": "Optional fields",
+   "source": "tools/variety.ts (docs/verification/VARIETY-2026-10-10.json)",
+   "basis": "simplified",
+   "limitations": "The content is finite: 42 scenes, 26 plays, 27 exercises; variety comes from the record.",
+   "id": "school.history",
+   "area": "School",
+   "goal": "Practice and rehearsal that answer to what came before",
+   "commands": [
+    "practice.exercise"
+   ],
+   "tests": [
+    {
+     "file": "tests/variety.test.ts",
+     "title": "says what the hour moved and where it stands"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Feedback differs as the level rises, and names a long run",
+     "reader": "The Player Profile",
+     "file": "tests/variety.test.ts",
+     "title": "says what the hour moved and where it stands"
+    },
+    {
+     "outcome": "A note moves on from one taken; one not taken comes again as still",
+     "reader": "The production",
+     "file": "tests/variety.test.ts",
+     "title": "moves on from a skill note that was taken"
     }
    ]
   }

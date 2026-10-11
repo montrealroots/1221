@@ -1,0 +1,304 @@
+{
+ "note": "tools/scenarios.ts, seed sc-0, each with --watch, on src 9ee4b8d9 (commits 5b4e507b and f3915368; the tools commit between added state-plan and the state report), 2026-10-11.",
+ "runs": {
+  "leave": {
+   "scenario": "leave",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2027-01-20 school.request_leave",
+    "2027-01-27 school.return_notice",
+    "2028-01-03 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "personal",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": false
+     }
+    ],
+    "welfares": [],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates",
+     "Your MFA Is Conferred"
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "mandatory": {
+   "scenario": "mandatory",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2026-10-20 TEST SETUP: two stays",
+    "refused school.return_notice: You’re in hospital: a Yale Health physician can’t clear you to come back yet.",
+    "2026-12-01 school.return_notice",
+    "2027-08-23 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "medical",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": true
+     }
+    ],
+    "welfares": [
+     "leave"
+    ],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "2:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "The Class Of 2029 Graduates",
+     "Your MFA Is Conferred"
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "switch-uk": {
+   "scenario": "switch-uk",
+   "seed": "sc-0",
+   "ended": "2028-01-05",
+   "log": [
+    "2026-10-02 bank.switch",
+    "2027-03-02 bank.switch"
+   ],
+   "switches": [
+    {
+     "at": 1793350800000,
+     "fromBank": "Barclays",
+     "toBank": "HSBC UK",
+     "outcome": "partial",
+     "on": 1793350800000
+    },
+    {
+     "at": 1804755600000,
+     "fromBank": "HSBC UK",
+     "toBank": "NatWest",
+     "outcome": "complete",
+     "on": 1804755600000
+    }
+   ],
+   "accounts": [
+    "Barclays checking",
+    "Barclays savings",
+    "HSBC UK checking closed",
+    "NatWest checking"
+   ],
+   "owedIrs": 0,
+   "states": {},
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 24
+  },
+  "tax-plan": {
+   "scenario": "tax-plan",
+   "seed": "sc-0",
+   "ended": "2029-02-21",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-02-16 TEST SETUP: a gift",
+    "refused tax.catch_up_plan: $84.40 is more than the bank can cover.",
+    "2028-01-22 tax.catch_up_plan",
+    "2028-03-25 tax.catch_up_plan"
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:good",
+     "4:good"
+    ],
+    "conferred": []
+   },
+   "accounts": [
+    "Chase checking closed",
+    "Chase savings closed",
+    "Bank of America checking closed",
+    "Capital One checking"
+   ],
+   "taxPlan": {
+    "status": "ended",
+    "payments": 14,
+    "history": [
+     "Caught up",
+     "A payment",
+     "A payment missed: CP523",
+     "Caught up",
+     "A payment missed: CP523",
+     "Ended: not caught up after CP523"
+    ]
+   },
+   "owedIrs": 534430,
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 0,
+     "payments": [
+      "levy"
+     ],
+     "notices": 3
+    }
+   },
+   "statePlans": {},
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 29
+  },
+  "state-plan": {
+   "scenario": "state-plan",
+   "seed": "sc-0",
+   "ended": "2029-02-21",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-02-15 tax.apply_state_plan",
+    "2027-02-16 TEST SETUP: a gift",
+    "refused tax.catch_up_plan: $84.40 is more than the bank can cover."
+   ],
+   "school": {
+    "standing": "good",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:good",
+     "4:good"
+    ],
+    "conferred": []
+   },
+   "accounts": [
+    "Chase checking closed",
+    "Chase savings closed",
+    "Citi checking closed",
+    "Capital One checking"
+   ],
+   "taxPlan": {
+    "status": "ended",
+    "payments": 15,
+    "history": [
+     "A payment",
+     "A payment",
+     "A payment",
+     "A payment",
+     "A payment missed: CP523",
+     "Ended: not caught up after CP523"
+    ]
+   },
+   "owedIrs": 493784,
+   "states": {
+    "2026 us-ct": {
+     "balance": 134116,
+     "owed": 0,
+     "payments": [
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan",
+      "plan"
+     ],
+     "notices": 0
+    }
+   },
+   "statePlans": {
+    "us-ct": {
+     "status": "paid",
+     "history": [
+      "A payment",
+      "A payment",
+      "A payment",
+      "A payment",
+      "Paid off"
+     ]
+    }
+   },
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 29
+  }
+ }
+}

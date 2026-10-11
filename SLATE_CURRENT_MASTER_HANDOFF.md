@@ -1,3 +1,88 @@
+# Read First: The Integration And Verification Pass, 2026-10-11
+
+The owner's brief was "Complete SLATE's Next Integration And Verification Pass". The work started from `main` at
+`ff837dfa`, the commit the brief reviewed. Nothing newer had landed.
+
+- **Branch:** `claude/integration-pass`, pushed.
+- **Not merged.** That's the owner's word to give: the "Merge it." of 2026-10-10 was for the pass before.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged. Every new field is optional:
+  - `TaxReturn.stateDue`, `split`, `refundedAt`;
+  - `ReturnFigures.owedTo`;
+  - `YearEarnings.withheldBy`;
+  - `Person.statePlans`;
+  - a first class's `productions`, `graduatedAt` and `offset`; `SchoolRecord.joinedHistory`;
+  - an exercise record's `streak`, `gains` and `lastTier`; `Experience.lastExercise`.
+
+  A save from before has its combined tax balances divided once when it's opened (`splitReturns`), to the cent, and
+  says so on the return.
+- **Untouched:** the stash (`stash@{0}`), the three worktrees, and the untracked files at the root.
+
+## Where each thing is
+
+- **`docs/verification/INTEGRATION-PASS-2026-10-11.md`** holds:
+  - every changed feature traced from the player's action through to recovery;
+  - the research and the assumptions;
+  - the migration;
+  - the exact commits and commands;
+  - the tests, runs and results;
+  - the bugs and their fixes;
+  - the limitations;
+  - whether later code changes invalidate any earlier result (they don't).
+- **`docs/ENGINE-MODEL.md`:**
+  - §4, the wider balance grid and the defensible ranges;
+  - §6, what feedback and notes read;
+  - §7, the content's limits.
+- **Results:**
+  - `docs/verification/BALANCE-GRID.md` and `balance/results.jsonl`;
+  - `SCENARIOS-2026-10-11.json`;
+  - `VARIETY-2026-10-10.json` (written on the final source);
+  - `REPORT.md` (the 18 lives);
+  - `STUDENT-MATRIX.md` (48 of 48 rows verified).
+- **Tools:** each is resumable or reports its seeds.
+
+  | Tool | What it does |
+  |---|---|
+  | `tools/strategies.ts` | Practice strategies against each other: profiles, fatigue, breadth, schedules, the work it's for |
+  | `tools/balance-batch.mjs` | The grid, keyed by the engine's source tree |
+  | `tools/variety.ts` | Repetition and continuity over played years |
+  | `tools/scenarios.ts` | The long scenarios, now with `state-plan` |
+
+## What changed
+
+1. **Federal and state tax are kept apart.**
+   - Each authority has its own assessed tax, outstanding parts, payments, notices, levy, refund, offset and plan.
+     Connecticut, New York (with New York City) and California each run by their own researched rules.
+   - An IRS plan covers federal tax only.
+   - Unresearched states keep their balance and add nothing.
+   - New commands: `tax.pay_state`, `tax.apply_state_plan`, `tax.catch_up_state_plan`.
+2. **A first class goes on with its productions.** Each term is played once it's over: cast, grown, judged and
+   recorded. The class graduates once, and Your Classes shows it.
+3. **An hour's feedback and a director's notes read what came before.**
+
+## Verification on the final engine source
+
+All of these ran on `src` `9ee4b8d9`.
+
+- **Gate:** 154 files and 1,660 tests pass, along with all sixteen checks.
+- **Mutations:** 18, of which 4 survived at first. Three were test weaknesses, now fixed and killed. One was an
+  equivalent redundant guard, now removed.
+- **The 18 lives:** 15 graduated, and the 3 autopilot lives were dismissed, as kept. 0 breaches, 0 unbalanced.
+- **Five scenarios:** all 0 breaches, 0 unbalanced.
+- **Balance grid:** 48 jobs, identical on the two source trees the pass used.
+- **Variety:** three seeds, two years each.
+- **Built app:** checked at 1440 and 390 with real clicks.
+
+## Still the owner's
+
+- Merge and deploy.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- The simplifications in §6 of the integration document. The main one: a state doesn't assess a non-filer on its
+  own.
+
+---
+
 # Read First: Merged To Main, With The Remaining Features And The Deeper Engines, 2026-10-10
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `2f376a08` to `claude/remaining-and-engines`.

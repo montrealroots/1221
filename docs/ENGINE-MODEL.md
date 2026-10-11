@@ -235,6 +235,83 @@ leave the focus with no use, and test 9 would fail.
 **A finding on target 3.** Adaptive ≈ precision here because the policy's students practice rested. The late
 scenario shows the reverse, but its sample is small (about 5 hours).
 
+### The wider grid (integration pass, 2026-10-11)
+
+The first comparison was mostly rested students. The integration pass widened it with `tools/strategies.ts`, run by
+`tools/balance-batch.mjs`. The full tables are in `docs/verification/BALANCE-GRID.md` and the raw lines in
+`docs/verification/balance/results.jsonl`.
+
+**Sample.** There are 13 scenarios, each on the matched seeds (`st-0` to `st-2`) and the held-out ones (`st-10` to
+`st-12`), plus 20 sweeps on the matched seeds.
+
+- Each cell is n = 3 runs of 30 days, inside the School's own week.
+- Every strategy on a seed meets the same days.
+- Each cell reports its mean, standard deviation and range, and the paired difference from steady.
+
+**Scenarios.**
+
+- Beginner, developing, specialist, uneven and mastered starting levels. The levels are TEST SETUP.
+- Rested and tired days. A tired day is TEST SETUP of the night before: mean focus about 0.62, over about 60
+  practice hours a run.
+- One, three or six exercises, three techniques, or what a scene reads.
+- Every day or one day in three; two or four hours a practice day.
+
+**Measures.**
+
+- The levels gained.
+- Work: the change in two scenes' expected whole (The Importance of Being Earnest, Richard III).
+
+**Validity.** The grid ran first on `src` `c73d2b43`, then again on the final `src` `9ee4b8d9`. All 336
+strategy-scenario cells came out identical: this pass's engine changes didn't touch practice gains.
+
+**What it showed.**
+
+- **Tired days, now a real sample:**
+  - Precision loses about 15% to steady on every seed.
+  - Spaced gains about 9% on every seed.
+  - The late-practice sample of the first comparison (about 5 hours) is replaced by about 60 hours a run.
+- **The matched tier is best** in every profile with room above it. A specialist already in the top band has no
+  tier above, so tier-above equals steady.
+- **A mastered student gains nothing** whatever the strategy. Practice stops mattering at full; the hour's
+  feedback says the work is in new material.
+- **Breadth focuses trade:**
+  - Variation and live lose about 15% on the plan's targets.
+  - They often gain on the scenes' work, because they carry over to what the scenes read.
+  - With a plan that trains what a scene reads directly, precision beats both on work on every seed. So live's lead
+    on work came from plans that trained something else, not from a shortcut.
+- **One day in three.** Under the School's load, one exercise comes round every 9 to 15 days. That is past
+  spacing's 7-day window, so spaced practice falls slightly behind steady (−0.06 to −0.08). This is the long-gap side
+  of the spacing ridge appearing under a real constraint, not a bug.
+- **No exploit:**
+  - The same exercise again the same day keeps half (the repeat source is the exercise's).
+  - Carry-over is its own source per exercise and halves on its own repeats.
+  - Four hours of variation carry at most 4 × 0.3 to kin targets, against 1.875 from the same four hours spent
+    directly.
+
+**Defensible ranges, and the reversal explained.** The research gives each focus's direction and says the effects
+are small. A defensible range keeps the direction (a bonus above 1, a cost below 1) within sizes such effects are
+reported at. The first comparison's ×0.8 sweep took spaced practice's bonus to 0.88: below 1, contradicting the
+direction of the research. A reversal there is the sweep testing a different claim, not a balance fault.
+
+Swept at each end of its range on the matched seeds, every conclusion held:
+
+- Precision wins on a rested day and loses on a tired one.
+- Spaced stays ahead of steady across its whole range, and loses only where gaps run past its window.
+- The matched tier stays best.
+- Variation and live always cost on the targets.
+
+| Number | Range | Where it bites | Both ends |
+|---|---|---|---|
+| precision.rested | 1.05–1.25 | rested | ahead of steady at both |
+| precision.tired | 0.70–0.95 | tired | behind steady at both |
+| spaced.within | 1.03–1.25 | rested | ahead of steady at both |
+| spaced.outside | 0.85–0.97 | one day in three | behind steady at 0.85; level at 0.97 |
+| variation.primary / live.primary | 0.75–0.95 | rested | behind steady on targets at both |
+| variation.transfer / live.transfer | 0.20–0.40 / 0.10–0.20 | one exercise | ahead on work at both |
+| tier.above / tier.below | 0.65–0.95 / 0.60–0.90 | rested | the matched tier best at both |
+
+No number needed changing this pass.
+
 ---
 
 ## 5. Mastery Kept Interesting
@@ -249,3 +326,50 @@ is in new material. Three things change what is interesting at full:
 A fully mastered actor still loses points to a misfit choice or an unrehearsed one. The tests are in
 `tests/material.test.ts`: "a choice the material forbids … holds the dimensions it leans on under 100 even at
 mastery", and "an unprepared choice is a visible part of preparation".
+
+---
+
+## 6. What Feedback And Notes Read (integration pass, 2026-10-11)
+
+`tools/variety.ts` played three students through two School years each and counted situations, not text. A
+paraphrase isn't a new situation. The results are in `docs/verification/VARIETY-2026-10-10.json`.
+
+Two places read the moment alone and ignored the history behind it.
+
+- **An hour's feedback** (`practiceFeedback`). One student was told "Developing: … Pitched where you are." 175 hours
+  in a row while imagination rose from 53 to 70. The exercise's record now keeps its run of sessions and its last
+  gains, and the feedback says:
+  - what the hour moved, and where the level now stands against the next tier;
+  - that the student has moved up a tier since last time, when they have;
+  - from the sixth session in a row, how long the run is;
+  - when gains are falling (the last three under 80% of the first three), what a variation hour would carry to
+    instead.
+- **A director's skill note** (`noteFor`, `noteText`) went to the weakest skill the play reads every time, whether or
+  not the last note had been taken. Now:
+  - a taken note moves the next one to the next thinnest place;
+  - the same note again says "Still:" when it wasn't taken;
+  - the same note again is acknowledged when it was taken.
+
+**After the fixes, on the final source, across all three seeds:**
+
+- Feedback was never the same twice in a row.
+- No note was repeated on something just taken without a word.
+- No scene was set twice in a row, and every scene met again asked something new (8 of 8).
+- All 15 classmates were partnered, never the same one twice in a row in a course.
+- A recommendation was ignored at most one week (top while two hours or more went to other practice), never stuck,
+  and never made for a target at full.
+
+## 7. The Content's Limits
+
+The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
+
+- **Material:** 42 scenes and 26 plays, each with its structured profile.
+- **Practice:** 27 exercises, each with three tiers and five focuses.
+- **Choices:** three axes of choice and two sides each. A director asks for a side half the time.
+- **Coverage in two years:** a student meets about 38 of the scenes. After that, a scene comes back asking
+  something new of it (`revisitOf`):
+  - a different part;
+  - a different partner;
+  - a different reading.
+- **Weeks with no work decision:** 47 of 105, the School's breaks and written-work weeks. Practice's exercise, tier
+  and focus remain a choice every day.
