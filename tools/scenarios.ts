@@ -21,6 +21,7 @@ import { breaches } from '../src/engine/core/invariants';
 import { healthOf } from '../src/engine/systems/health';
 import { recordWages } from '../src/engine/systems/earnings';
 import { owedAll, returnsOf } from '../src/engine/systems/taxreturn';
+import { owedToState } from '../src/engine/systems/statetax';
 import { SWITCH_KIND } from '../src/engine/systems/lending';
 import { attentiveHour, life } from './policy';
 
@@ -81,6 +82,16 @@ const SCENARIOS: Record<string, Hook> = {
       const pending = sim.universe.scheduled.some((i) => i.kind === SWITCH_KIND && i.status === 'pending');
       if (n === 0 && !pending && sim.now >= on(2026, 10, 1)) tryOnce(sim, log, 'bank.switch', { bankId: 'gb-hsbc', partial: true });
       if (n === 1 && !pending && sim.now >= on(2027, 3, 1)) tryOnce(sim, log, 'bank.switch', { bankId: 'gb-natwest' });
+    },
+  },
+  // The same, the IRS's plan left aside: Connecticut's own balance and its own plan (integration pass, 2026-10-10).
+  'state-plan': {
+    years: 2.5, config: { homeRegionId: 'us-ny-newyork', wealth: 'wealthy' },
+    daily(sim, log) {
+      SCENARIOS['tax-plan']!.daily(sim, log);
+      const ct = owedToState(sim.player, 'us-ct', sim.now);
+      if (ct > 0 && !sim.player.statePlans?.['us-ct']) tryOnce(sim, log, 'tax.apply_state_plan', { state: 'us-ct', months: 12 });
+      if (sim.player.statePlans?.['us-ct']?.status === 'missed') tryOnce(sim, log, 'tax.catch_up_state_plan', { state: 'us-ct' });
     },
   },
   'tax-plan': {
@@ -150,6 +161,9 @@ console.log(JSON.stringify({
   switches: sim.player.payments?.switches, accounts: Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')).map((a) => `${a.institution} ${a.kind}${a.closedAt ? ' closed' : ''}${a.switchDebt ? ' in debt' : ''}`),
   taxPlan: sim.player.taxPlan ? { status: sim.player.taxPlan.status, payments: sim.player.taxPlan.history.filter((h) => /payment/i.test(h.what)).length, history: sim.player.taxPlan.history.slice(-6).map((h) => h.what) } : undefined,
   owedIrs: owedAll(sim.player, sim.now),
+  // Each state's side (integration pass): what it assessed, owes, took by levy, and its plan.
+  states: Object.fromEntries(Object.values(sim.player.returns ?? {}).flatMap((r) => Object.entries(r.stateDue ?? {}).map(([st, sd]) => [`${r.year} ${st}`, { balance: sd.balance, owed: sd.owed ?? 0, payments: (sd.payments ?? []).map((p) => p.how), notices: sd.collection ?? 0 }]))),
+  statePlans: Object.fromEntries(Object.entries(sim.player.statePlans ?? {}).map(([st, p]) => [st, { status: p.status, history: p.history.slice(-5).map((h) => h.what) }])),
   breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads,
 }, null, 1));
 
