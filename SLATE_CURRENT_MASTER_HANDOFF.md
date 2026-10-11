@@ -1,3 +1,80 @@
+# Read First: The Remaining Features, And The Attribute And Genre Engines Deepened, 2026-10-10
+
+The owner's brief was "Complete SLATE's Remaining Features And Deepen Its Attribute And Genre Engines". The work
+started from `main` at `2f376a08`.
+
+- **Branch:** `claude/remaining-and-engines`, pushed.
+- **Not merged:** that's the owner's word to give.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged. Every new field is optional:
+  - on `SchoolRecord`: `welfare`, `welfares`, `formerClasses` (with `offset`), `joinsCohort`, `extra`,
+    `extraRequest`, `repeatedYears`, `aidReview`, `reviews`;
+  - `Person.experience`, `Person.taxPlan`;
+  - `Account.switchDebt`, `payments.switches`;
+  - `HealthRecord.careArchive`, and the care log's `adjusted`;
+  - `TaxReturn.reducedFrom` and `reducedTo`.
+- **Untouched:** the stash (`stash@{0}`) and the three worktrees (`scratchpad/tue` at `7e976601`,
+  `slate-lives` at `81f77592`, `slate-balance-5d64d860`). The untracked files at the root were left alone.
+
+## Where each thing is
+
+- **The commits.**
+
+  | Commit | What it holds |
+  |---|---|
+  | `a55de67a` | The engine |
+  | `c400aa5f` | School |
+  | `7e44117b` | Finance and Papers |
+  | `6470a2f4` | Balance runs and the engine model |
+  | `c7dd706f` | First classes followed to their degree; the 18 lives; the scenarios |
+  | `89796845` | Screen fixes |
+  | (this one) | The scope inventory, the evidence matrix, the student-matrix rows and this handoff |
+
+- **`docs/ENGINE-MODEL.md`.** Each formula, which numbers are research and which are SLATE's, the 11 invariants,
+  the balance targets and the measured results.
+- **`docs/verification/REMAINING-FEATURES-2026-10-10.md`.** The scope inventory, the research, the evidence matrix
+  and the before and after.
+- **`docs/verification/STUDENT-MATRIX.md`.** 45 of 45 rows verified. Seven rows are new: the mandatory leave, the
+  cohort, the extra term, practice, the switch stages, the tax plan and the care log.
+- **The raw runs.** `docs/verification/STRATEGIES-2026-10-10.json` and `SCENARIOS-2026-10-10.json`.
+- **The tools.**
+  - `tools/strategies.ts` compares practice strategies on matched and held-out seeds, with `--scale` for
+    sensitivity.
+  - `tools/scenarios.ts` plays the brief's paths for years, with `--watch` to stop at the first breach and
+    `--save` to write the save.
+
+## Verification
+
+- **Gate.** 152 files and 1,644 tests pass, along with all sixteen checks, on `89796845` and on this commit.
+- **The 18 lives on `6470a2f4`.**
+  - 15 graduated, and the 3 autopilot lives were dismissed, as kept.
+  - 0 breaches and 0 unbalanced ledgers.
+  - Later commits changed only paths none of the 18 lives reaches: the first class after a leave, and the UI.
+- **Scenarios.** Leave, mandatory leave, UK switch and IRS plan, all with seed `sc-0`. Each had 0 breaches and
+  0 unbalanced ledgers.
+- **Mutations.** 18 were run: 17 killed and 1 equivalent (a redundant clamp).
+- **Screens.** Checked at 1440 and 390 wide. One layout fix was needed (the partial checkbox at 390) and two
+  wording fixes.
+
+## What the balance work changed
+
+- **Spaced practice.** It was never worse than steady. It is now 0.9 outside its 1–7 day window.
+- **Live practice.** It beat variation on both measures. It is now 0.85 on the target and 0.15 to each of two
+  others, which matches variation per hour.
+- **Recommendations.** They suggest steady, not spaced.
+- **Sensitivity.** Spacing and precision pay only while their factors stay above 1. The research gives the
+  direction, not the size.
+
+## Still the owner's
+
+- Merge and deploy.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- A known simplification: a return's balance is one, federal and state together, so an IRS plan covers state tax
+  too. Splitting it means a balance per authority.
+
+---
+
 # Read First: Merged To Main, With School, Banking And Papers Finished End To End, 2026-10-10
 
 At the owner's word ("Merge it."), `main` was fast-forwarded from `55c46cd5` to `claude/school-bank-papers-complete`. Nothing was force-pushed. The stash and the three worktrees were left untouched.
