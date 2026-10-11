@@ -183,6 +183,29 @@
    ]
   }
  },
+ "bodyByLoad": {
+  "physical and vocal 0–1": {
+   "n": 85,
+   "mean": -8.97,
+   "sd": 0.76,
+   "min": -11,
+   "max": -7.2
+  },
+  "2–3": {
+   "n": 46,
+   "mean": -6.22,
+   "sd": 1.16,
+   "min": -7.8,
+   "max": -3.9
+  },
+  "4 or more": {
+   "n": 18,
+   "mean": -3.21,
+   "sd": 0.69,
+   "min": -4.6,
+   "max": -2.3
+  }
+ },
  "kinds": {
   "scene": {
    "pieces": 56,

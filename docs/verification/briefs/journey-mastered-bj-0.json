@@ -1,0 +1,147 @@
+{
+ "profile": "mastered",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 105.1,
+  "training": 86,
+  "study": 12
+ },
+ "takes": 15,
+ "briefs": 4,
+ "readings": 7,
+ "genres": 4,
+ "purposes": {
+  "first": 4,
+  "callback": 7,
+  "another-reading": 4
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 83.9,
+   "min": 83.8,
+   "max": 84
+  },
+  "m2": {
+   "n": 2,
+   "mean": 94.5,
+   "min": 91.3,
+   "max": 97.7
+  },
+  "m3": {
+   "n": 11,
+   "mean": 90.5,
+   "min": 84.8,
+   "max": 97.9
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 4,
+  "mean": 0.35,
+  "max": 0.5,
+  "over1": 0
+ },
+ "recommendations": {
+  "weeks": 15,
+  "distinctTargets": 1,
+  "longestSameTarget": 15,
+  "sequence": [
+   "21:stamina@96",
+   "28:stamina@94",
+   "35:stamina@93",
+   "42:stamina@92",
+   "49:stamina@91",
+   "56:stamina@89",
+   "63:stamina@88",
+   "70:stamina@87",
+   "77:stamina@86",
+   "84:stamina@84",
+   "91:stamina@83",
+   "98:stamina@82",
+   "105:stamina@80",
+   "112:stamina@79",
+   "119:stamina@78"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 100,
+  "presence": 100,
+  "listening": 100,
+  "imagination": 100,
+  "focus": 100,
+  "memory": 100,
+  "adaptability": 100,
+  "composure": 100,
+  "vocal": 100,
+  "physical": 100,
+  "discipline": 100,
+  "stamina": 78
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 111,
+   "brief": "brief-chase",
+   "genre": "chase",
+   "reading": "breath",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 95.8,
+   "chief": "Stamina held back the consistency by 10.5 points"
+  },
+  {
+   "day": 111,
+   "brief": "brief-chase",
+   "genre": "chase",
+   "reading": "persuade",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 97.9,
+   "chief": "Stamina held back the consistency by 7.1 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-chase",
+   "genre": "chase",
+   "reading": "persuade",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 96.8,
+   "chief": "Stamina held back the consistency by 10.7 points"
+  },
+  {
+   "day": 116,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "fear",
+   "sides": "",
+   "purpose": "first",
+   "overall": 88.5,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 31.7 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "fear",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 88.6,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 31.7 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-adventure",
+   "genre": "adventure",
+   "reading": "quest",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 89.9,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 23.8 points"
+  }
+ ]
+}

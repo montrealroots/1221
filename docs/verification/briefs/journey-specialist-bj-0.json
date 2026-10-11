@@ -1,0 +1,149 @@
+{
+ "profile": "specialist",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 100.9,
+  "training": 89,
+  "study": 21
+ },
+ "takes": 14,
+ "briefs": 7,
+ "readings": 9,
+ "genres": 7,
+ "purposes": {
+  "first": 7,
+  "callback": 5,
+  "another-reading": 2
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 65,
+   "min": 63.4,
+   "max": 66.6
+  },
+  "m2": {
+   "n": 1,
+   "mean": 58.7,
+   "min": 58.7,
+   "max": 58.7
+  },
+  "m3": {
+   "n": 11,
+   "mean": 64.1,
+   "min": 59.1,
+   "max": 69.7
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 7,
+  "mean": 1.29,
+  "max": 3.2,
+  "over1": 4
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 6,
+  "sequence": [
+   "7:listening@50",
+   "14:listening@50",
+   "21:listening@50",
+   "28:vocal@50",
+   "35:stamina@44",
+   "42:physical@51",
+   "49:listening@52",
+   "56:stamina@40",
+   "63:stamina@39",
+   "70:stamina@37",
+   "77:stamina@36",
+   "84:stamina@35",
+   "91:stamina@35",
+   "98:listening@54",
+   "105:listening@56",
+   "112:listening@58",
+   "119:listening@60"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 60,
+  "imagination": 90,
+  "focus": 52,
+  "memory": 52,
+  "adaptability": 51,
+  "composure": 90,
+  "vocal": 52,
+  "physical": 56,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 111,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "fear",
+   "sides": "set",
+   "purpose": "callback",
+   "overall": 59.1,
+   "chief": "Listening And Responsiveness held back the connection by 34.9 points"
+  },
+  {
+   "day": 112,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "",
+   "purpose": "first",
+   "overall": 66.2,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 33.4 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 60.6,
+   "chief": "Listening And Responsiveness held back the connection by 35.9 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-concert_film",
+   "genre": "concert_film",
+   "reading": "decided",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 69.7,
+   "chief": "Listening And Responsiveness held back the connection by 24.3 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-concert_film",
+   "genre": "concert_film",
+   "reading": "decided",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 63,
+   "chief": "Listening And Responsiveness held back the connection by 35.3 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "mother",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 33.4 points"
+  }
+ ]
+}

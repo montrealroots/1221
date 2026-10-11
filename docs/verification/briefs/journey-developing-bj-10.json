@@ -1,0 +1,148 @@
+{
+ "profile": "developing",
+ "seed": "bj-10",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 83.1,
+  "training": 81,
+  "study": 36
+ },
+ "takes": 19,
+ "briefs": 11,
+ "readings": 17,
+ "genres": 11,
+ "purposes": {
+  "first": 11,
+  "another-reading": 8
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 53.1,
+   "min": 53.1,
+   "max": 53.1
+  },
+  "m2": {
+   "n": 3,
+   "mean": 55.3,
+   "min": 54.9,
+   "max": 55.8
+  },
+  "m3": {
+   "n": 15,
+   "mean": 58.3,
+   "min": 56.5,
+   "max": 61.5
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 11,
+  "mean": 0.24,
+  "max": 0.5,
+  "over1": 0
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 2,
+  "longestSameTarget": 6,
+  "sequence": [
+   "7:listening@55",
+   "14:listening@56",
+   "21:imagination@56",
+   "28:imagination@57",
+   "35:imagination@57",
+   "42:imagination@57",
+   "49:imagination@58",
+   "56:imagination@58",
+   "63:listening@58",
+   "70:imagination@59",
+   "77:imagination@60",
+   "84:imagination@60",
+   "91:imagination@60",
+   "98:imagination@61",
+   "105:imagination@62",
+   "112:listening@61",
+   "119:listening@63"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 59,
+  "presence": 70,
+  "listening": 63,
+  "imagination": 62,
+  "focus": 58,
+  "memory": 58,
+  "adaptability": 56,
+  "composure": 55,
+  "vocal": 59,
+  "physical": 64,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 114,
+   "brief": "brief-neorealism",
+   "genre": "neorealism",
+   "reading": "plain",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57.5,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27.8 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-fairy_tale",
+   "genre": "fairy_tale",
+   "reading": "forgive",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 57.5,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27.3 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-stoner_comedy",
+   "genre": "stoner_comedy",
+   "reading": "host",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57.6,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-hood_film",
+   "genre": "hood_film",
+   "reading": "own",
+   "sides": "",
+   "purpose": "first",
+   "overall": 58,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26.9 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-road_movie",
+   "genre": "road_movie",
+   "reading": "friends",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 60,
+   "chief": "Listening And Responsiveness held back the connection by 24.5 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-road_movie",
+   "genre": "road_movie",
+   "reading": "driver",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 61.5,
+   "chief": "Listening And Responsiveness held back the connection by 26.5 points"
+  }
+ ]
+}

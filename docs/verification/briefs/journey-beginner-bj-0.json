@@ -1,0 +1,148 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 84.8,
+  "training": 87,
+  "study": 39
+ },
+ "takes": 21,
+ "briefs": 12,
+ "readings": 21,
+ "genres": 12,
+ "purposes": {
+  "first": 12,
+  "another-reading": 9
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 52.7,
+   "min": 50.5,
+   "max": 54.8
+  },
+  "m2": {
+   "n": 3,
+   "mean": 54.7,
+   "min": 54.4,
+   "max": 55.3
+  },
+  "m3": {
+   "n": 16,
+   "mean": 56.1,
+   "min": 54.2,
+   "max": 58.6
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 12,
+  "mean": 0.47,
+  "max": 1.1,
+  "over1": 1
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 8,
+  "sequence": [
+   "7:listening@53",
+   "14:listening@53",
+   "21:imagination@57",
+   "28:imagination@57",
+   "35:imagination@58",
+   "42:imagination@58",
+   "49:imagination@58",
+   "56:imagination@58",
+   "63:imagination@59",
+   "70:imagination@59",
+   "77:stamina@36",
+   "84:imagination@60",
+   "91:imagination@60",
+   "98:composure@45",
+   "105:imagination@62",
+   "112:listening@58",
+   "119:listening@60"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 58,
+  "presence": 68,
+  "listening": 60,
+  "imagination": 63,
+  "focus": 56,
+  "memory": 57,
+  "adaptability": 55,
+  "composure": 46,
+  "vocal": 54,
+  "physical": 58,
+  "discipline": 62,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 56.4,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 28.4 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-horror",
+   "genre": "horror",
+   "reading": "training",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 58.5,
+   "chief": "Listening And Responsiveness held back the connection by 25.7 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-cyberpunk",
+   "genre": "cyberpunk",
+   "reading": "person",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 56,
+   "chief": "Listening And Responsiveness held back the connection by 26.4 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-vampire",
+   "genre": "vampire",
+   "reading": "brother",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57.9,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 28.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-blaxploitation",
+   "genre": "blaxploitation",
+   "reading": "known",
+   "sides": "",
+   "purpose": "first",
+   "overall": 55.7,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27.6 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "mother",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 55.4,
+   "chief": "Stamina held back the consistency by 29.7 points"
+  }
+ ]
+}

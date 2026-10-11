@@ -1,0 +1,149 @@
+{
+ "profile": "specialist",
+ "seed": "bj-10",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 90.6,
+  "training": 82,
+  "study": 27
+ },
+ "takes": 15,
+ "briefs": 9,
+ "readings": 12,
+ "genres": 9,
+ "purposes": {
+  "first": 9,
+  "another-reading": 3,
+  "callback": 3
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 62.8,
+   "min": 62.8,
+   "max": 62.8
+  },
+  "m2": {
+   "n": 3,
+   "mean": 63.4,
+   "min": 62.6,
+   "max": 64.6
+  },
+  "m3": {
+   "n": 11,
+   "mean": 63.4,
+   "min": 58.4,
+   "max": 69.2
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 9,
+  "mean": 1.19,
+  "max": 2.8,
+  "over1": 4
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 4,
+  "sequence": [
+   "7:listening@50",
+   "14:listening@50",
+   "21:stamina@46",
+   "28:stamina@45",
+   "35:vocal@50",
+   "42:vocal@51",
+   "49:listening@51",
+   "56:stamina@40",
+   "63:listening@52",
+   "70:listening@53",
+   "77:stamina@36",
+   "84:stamina@35",
+   "91:stamina@35",
+   "98:listening@54",
+   "105:listening@55",
+   "112:listening@58",
+   "119:listening@60"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 60,
+  "imagination": 90,
+  "focus": 52,
+  "memory": 52,
+  "adaptability": 51,
+  "composure": 90,
+  "vocal": 53,
+  "physical": 57,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 110,
+   "brief": "brief-supernatural",
+   "genre": "supernatural",
+   "reading": "welcome",
+   "sides": "",
+   "purpose": "first",
+   "overall": 69.2,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27.8 points"
+  },
+  {
+   "day": 112,
+   "brief": "brief-supernatural",
+   "genre": "supernatural",
+   "reading": "welcome",
+   "sides": "measured",
+   "purpose": "callback",
+   "overall": 58.4,
+   "chief": "Listening And Responsiveness held back the connection by 34.3 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-nordic_noir",
+   "genre": "nordic_noir",
+   "reading": "reach",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 64.6,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 33.4 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-hood_film",
+   "genre": "hood_film",
+   "reading": "own",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.5,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 30.6 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-neorealism",
+   "genre": "neorealism",
+   "reading": "plain",
+   "sides": "",
+   "purpose": "first",
+   "overall": 65.9,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 33.9 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-neorealism",
+   "genre": "neorealism",
+   "reading": "plain",
+   "sides": "set",
+   "purpose": "callback",
+   "overall": 61.1,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 31.6 points"
+  }
+ ]
+}

@@ -1,0 +1,148 @@
+{
+ "profile": "beginner",
+ "seed": "bj-10",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 81.2,
+  "training": 85,
+  "study": 33
+ },
+ "takes": 19,
+ "briefs": 10,
+ "readings": 19,
+ "genres": 10,
+ "purposes": {
+  "first": 10,
+  "another-reading": 9
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 51.1,
+   "min": 51.1,
+   "max": 51.1
+  },
+  "m2": {
+   "n": 3,
+   "mean": 53.1,
+   "min": 52,
+   "max": 54.3
+  },
+  "m3": {
+   "n": 15,
+   "mean": 54.4,
+   "min": 51.7,
+   "max": 57.3
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 10,
+  "mean": 0.34,
+  "max": 0.8,
+  "over1": 0
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 2,
+  "longestSameTarget": 6,
+  "sequence": [
+   "7:listening@53",
+   "14:listening@53",
+   "21:imagination@54",
+   "28:imagination@54",
+   "35:imagination@54",
+   "42:imagination@55",
+   "49:imagination@55",
+   "56:imagination@55",
+   "63:listening@55",
+   "70:imagination@56",
+   "77:imagination@57",
+   "84:imagination@57",
+   "91:imagination@57",
+   "98:imagination@58",
+   "105:imagination@59",
+   "112:listening@58",
+   "119:listening@60"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 55,
+  "presence": 70,
+  "listening": 60,
+  "imagination": 60,
+  "focus": 55,
+  "memory": 51,
+  "adaptability": 55,
+  "composure": 45,
+  "vocal": 58,
+  "physical": 64,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-neorealism",
+   "genre": "neorealism",
+   "reading": "plain",
+   "sides": "",
+   "purpose": "first",
+   "overall": 53.4,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 25.5 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-supernatural",
+   "genre": "supernatural",
+   "reading": "skeptic",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 54.4,
+   "chief": "Emotional Depth held back the believability by 27.3 points"
+  },
+  {
+   "day": 116,
+   "brief": "brief-stoner_comedy",
+   "genre": "stoner_comedy",
+   "reading": "host",
+   "sides": "",
+   "purpose": "first",
+   "overall": 54.1,
+   "chief": "Emotional Depth held back the believability by 29.3 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-vampire",
+   "genre": "vampire",
+   "reading": "brother",
+   "sides": "",
+   "purpose": "first",
+   "overall": 54.4,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26.5 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-neorealism",
+   "genre": "neorealism",
+   "reading": "pride",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 51.9,
+   "chief": "Emotional Depth held back the believability by 29.1 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-vampire",
+   "genre": "vampire",
+   "reading": "hunger",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 57.2,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27 points"
+  }
+ ]
+}
