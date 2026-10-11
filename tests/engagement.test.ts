@@ -15,12 +15,16 @@ import { GENRE_DEFS } from '@/engine/content/genres';
 import { DEMAND_TECHNIQUE, GENRE_DEMANDS, demandReads, genreTags, withDemands } from '@/engine/content/demands';
 import { engagementOf, genreSpeed, practiceGenres, tapeReads } from '@/engine/systems/engagement';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { briefsOf } from '@/engine/content/briefs';
+import { tapeReadsOf } from '@/engine/systems/briefs';
 
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 /** A Sunday evening at the start of the first term, rested: nothing scheduled. */
 const sunday = (sim: Simulation) => play(sim, instantFromZoned({ year: 2026, month: 9, day: 6, hour: 17 }, 'America/New_York'));
 const rested = (sim: Simulation) => Object.assign(sim.player.wellbeing, { energy: 95, stress: 50, sleepDebt: 0, nourishment: 85, morale: 50 });
+/** A self-tape is of a genre's brief, played one way (from 2026-10-12): its first reading chosen, as a player chooses before taping. */
+const pick = (sim: Simulation, genre: string) => { const b = briefsOf(genre)[0]!; sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[0]!.id } }); return b; };
 describe('an hour of a genre', () => {
   // Until 2026-10-10 this was an interest's hour (`interest.pursue`); the owner removed the interests that day.
   it('lives an action sent twice once, and refuses an hour that would run into a commitment', () => {
@@ -40,7 +44,9 @@ describe('an hour of a genre', () => {
     sim.onSchedule('test.commitment', () => {});
     sim.schedule({ at: sim.now + 30 * 60_000, kind: 'test.commitment', label: 'A Test Call', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 60, payload: { personId: sim.player.id } });
     expect(sim.execute({ kind: 'genre.study', payload: { genre: 'drama' } }).error).toMatch(/A Test Call starts/);
+    pick(sim, 'drama');
     expect(sim.execute({ kind: 'practice.self_tape', payload: { genre: 'drama' } }).error).toMatch(/A Test Call starts/);
+    expect(sim.execute({ kind: 'brief.prepare', payload: { brief: 'brief-drama', step: 'lines' } }).error).toMatch(/A Test Call starts/);
     expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'concentration' } }).ok).toBe(false);
   });
 });
@@ -69,6 +75,8 @@ describe('every genre', () => {
       for (const tag of genreTags(g.id)) {
         const skill = DEMAND_TECHNIQUE[tag];
         expect((tapeReads(g.id) as Record<string, number>)[skill], `${g.id} ${tag}`).toBeDefined();
+        // And the genre's brief stages it (from 2026-10-12).
+        expect((tapeReadsOf(briefsOf(g.id)[0]!) as Record<string, number>)[skill], `${g.id} brief ${tag}`).toBeDefined();
       }
     }
     // A tag two genres share is asked for once, and a technique the work already reads keeps its own weight.
@@ -82,6 +90,7 @@ describe('every genre', () => {
       sunday(s);
       rested(s);
       s.player.craft!.singing = level;
+      pick(s, singing);
       const r = s.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: singing } });
       return r.ok ? r.value!.overall : -1;
     };
@@ -97,15 +106,20 @@ describe('every genre', () => {
       const s = sim.execute<{ familiarity: number }>({ kind: 'genre.study', payload: { genre: g.id } });
       expect(s.ok, `${g.id}: ${s.ok ? '' : s.error}`).toBe(true);
       rested(sim);
+      const b = pick(sim, g.id);
       const t = sim.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: g.id } });
       expect(t.ok, `${g.id}: ${t.ok ? '' : t.error}`).toBe(true);
       const state = engagementOf(sim.player).byGenre[g.id]!;
       expect(state.familiarity, g.id).toBeGreaterThan(0);
       expect(state.practice, g.id).toBeGreaterThan(0);
       const work = sim.player.work!.at(-1)!;
-      expect(work.task).toBe('camera');
-      expect(work.inputs.families).toEqual([...new Set(GENRE_DEFS[g.id]!.families)]);
-      expect(Object.keys(work.inputs.techniques).sort()).toEqual(Object.keys(tapeReads(g.id)).sort());
+      // A taped brief (from 2026-10-12): judged as one, its material's lean in place of the families', its reads the brief's.
+      expect(work.task).toBe('tape');
+      expect(work.inputs.families).toEqual([]);
+      expect(work.inputs.lean).toBeDefined();
+      expect(Object.keys(work.inputs.techniques).sort()).toEqual(Object.keys(tapeReadsOf(b)).sort());
+      for (const k of Object.keys(demandReads([g.id]))) expect(work.inputs.techniques, `${g.id} ${k}`).toHaveProperty(k);
+      expect(GENRE_DEFS[g.id]).toBeDefined();
       expect(genreSpeed(sim.player, [g.id])).toBeGreaterThan(1);
     }
   }, 300_000);
@@ -123,6 +137,7 @@ describe('every genre', () => {
     const tapes = life('genres-twice');
     sunday(tapes);
     rested(tapes);
+    pick(tapes, 'drama');
     tapes.execute({ kind: 'practice.self_tape', payload: { genre: 'drama' } });
     const first = engagementOf(tapes.player).byGenre.drama!.practice;
     rested(tapes);

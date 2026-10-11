@@ -45,7 +45,7 @@ import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } fro
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
-import { SELF_TAPE, selfTapeRefusal, studyRefusal, tapeReads } from '@/engine/systems/engagement';
+import { SELF_TAPE, studyRefusal } from '@/engine/systems/engagement';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -54,6 +54,8 @@ import { genresOfPlay } from '@/engine/content/plays';
 import { journeyOf, WORK_KEPT } from '@/engine/systems/evaluation';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
+import { BriefPane } from '@/ui/components/BriefPane';
+import { briefsOf } from '@/engine/content/briefs';
 
 const one = (x: number) => x.toFixed(1);
 const PAGE = 16;
@@ -317,6 +319,8 @@ function GenresPanel() {
   const [text, setText] = useState('');
   const [show, setShow] = useState('All');
   const [limit, setLimit] = useState(PAGE);
+  // The genre whose brief is open (from 2026-10-12): its scene, preparation, choice and takes.
+  const [open, setOpen] = useState<string | undefined>(undefined);
   const list = FILM_GENRES.filter((g) => g.label.toLowerCase().includes(text.toLowerCase())).filter((g) => {
     if (show === 'Loved') return (person.genres ?? []).includes(g.id);
     if (show === 'Studied Or Practiced') return Boolean(person.engagement?.byGenre[g.id]);
@@ -327,17 +331,25 @@ function GenresPanel() {
     <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or practiced`}>
       <div className="col gap-3">
         <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is the kind your next part’s play is, and the one of its kinds you know least.' : 'is the one you love and know least; no part asks for a kind yet.'}</> : null}</p>
+        {open && (
+          <div className="card col gap-2" style={{ padding: 'var(--space-3, 12px)' }}>
+            <div className="row gap-2" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="eyebrow">{GENRE_BY_ID[open]?.label}: Its Brief</div>
+              <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpen(undefined)}>Close The Brief</button>
+            </div>
+            <BriefPane key={open} genre={open} onOpen={setOpen} practice={(id) => <PracticeButton id={id as AbilityId} />} />
+          </div>
+        )}
         <ListControls id="genres" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Studied Or Practiced', 'With Requirements']} count={Math.min(limit, list.length)} />
         <LookRegion className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Genre</th><th scope="col">It Asks For</th><th scope="col" className="num">Familiarity</th><th scope="col" className="num">Practice</th><th scope="col">Study Or Tape</th></tr></thead>
+            <thead><tr><th scope="col">Genre</th><th scope="col">It Asks For</th><th scope="col" className="num">Familiarity</th><th scope="col" className="num">Practice</th><th scope="col">Study, Or Its Brief</th></tr></thead>
             <tbody>
               {list.slice(0, limit).map((g) => {
                 const e = person.engagement?.byGenre[g.id];
                 const tags = genreTags(g.id);
                 const d = GENRE_DEMANDS[g.id];
                 const study = studyRefusal(sim, person, g.id);
-                const tape = selfTapeRefusal(sim, person, g.id);
                 return (
                   <tr key={g.id}>
                     <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}</td>
@@ -346,8 +358,8 @@ function GenresPanel() {
                     <td className="num mono">{one(e?.practice ?? 0)}</td>
                     <td className="nowrap">
                       <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half with a work of the kind'} onClick={() => run('genre.study', { genre: g.id })}>Study It</Gated>{' '}
-                      <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? `Tape a scene in it: reads ${Object.keys(tapeReads(g.id)).map((k) => TECHNIQUE_LABEL[k as keyof typeof TECHNIQUE_LABEL]).join(', ')}`} onClick={() => run('practice.self_tape', { genre: g.id })}>Tape A Scene In It</Gated>
-                      {(study ?? tape) && <div className="xs dim">{study ?? tape}</div>}
+                      <button type="button" className="btn btn-sm" title={`${briefsOf(g.id)[0]?.title ?? 'Its brief'}: read it, prepare it, choose how to play it, tape it`} onClick={() => setOpen(g.id)}>Open Its Brief</button>
+                      {study && <div className="xs dim">{study}</div>}
                     </td>
                   </tr>
                 );
@@ -356,7 +368,7 @@ function GenresPanel() {
           </table>
         </LookRegion>
         {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>What a genre asks for is a technique its work reads, shown before you begin: mastered at {MASTERED}, it asks nothing more. A self-tape also asks you to know the genre: familiarity {SELF_TAPE.genreComplete * 100} counts as complete, and Study It builds it. Loving a genre makes a day of work in it better; knowing it and having worked in it make its work quicker to prepare; neither caps it.</Fine>
+        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: familiarity {SELF_TAPE.genreComplete * 100} counts as complete, and Study It builds it. Loving a genre makes a day of work in it better; having worked in it makes its briefs quicker to prepare; neither caps them.</Fine>
       </div>
     </Panel>
   );

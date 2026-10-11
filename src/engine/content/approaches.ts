@@ -71,6 +71,14 @@ export const FEATURE_EFFECT: Readonly<Record<Feature, { lean: Partial<Record<Dim
 /** A tone change or an emotional turn, each: what transitions ask. */
 export const TRANSITION_EFFECT = { lean: { believability: 0.05, consistency: 0.05 }, inputs: { believability: [{ ability: 'adaptability' as AbilityId, weight: 0.3 }], consistency: [{ ability: 'composure' as AbilityId, weight: 0.2 }] } } as const;
 
+/**
+ * A beat played two ways at once, funny and frightening together, each (from 2026-10-12): holding both asks depth of
+ * feeling and the imagination to find where they meet, where a change between beats asks adaptability and composure
+ * (`TRANSITION_EFFECT`). SLATE's design, from what the two are; research-self-tape-briefs.json topic 2 says what the
+ * acting texts support.
+ */
+export const BLEND_EFFECT = { lean: { believability: 0.05, interpretation: 0.05 }, inputs: { believability: [{ ability: 'emotionalDepth' as AbilityId, weight: 0.3 }], interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.2 }] } } as const;
+
 /** Heightened prose and verse: what the language asks of interpretation and of the voice. */
 export const LANGUAGE_EFFECT = {
   heightened: { lean: { interpretation: 1.15 }, inputs: { interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.5 }] } },
@@ -79,3 +87,6 @@ export const LANGUAGE_EFFECT = {
 
 /** The camera: what a close frame weighs most. */
 export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };
+
+/** A voice alone at a microphone (from 2026-10-12): the voice carries everything, so its execution weighs most. SLATE's design. */
+export const VOICE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };

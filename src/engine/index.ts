@@ -67,6 +67,7 @@ import { registerClassmates } from './systems/classmates';
 import { registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
+import { registerBriefs } from './systems/briefs';
 import { genresOfPlay } from './content/plays';
 import { registerPlayReading } from './systems/playreading';
 import { registerAppointments } from './systems/appointments';
@@ -122,6 +123,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerProduction(sim, focusAt, ordinary);
   registerPractice(sim);
   registerEngagement(sim);
+  registerBriefs(sim);
   registerPlayReading(sim);
   registerHealth(sim);
   registerAppointments(sim);

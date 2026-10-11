@@ -40,7 +40,8 @@ export interface MaterialProfile {
   /** A scene's id, or a play's title. */
   id: string;
   title: string;
-  medium: 'stage' | 'camera';
+  /** `voice`: recorded alone at a microphone, a practice brief's narration or animated part (from 2026-10-12). */
+  medium: 'stage' | 'camera' | 'voice';
   language: 'everyday' | 'heightened' | 'verse';
   timing: Level;
   physical: Level;
@@ -49,6 +50,12 @@ export interface MaterialProfile {
   improvisation: Level;
   tones: readonly Tone[];
   turns: number;
+  /**
+   * A practice brief's beats, in order, each with the tones it plays (from 2026-10-12; `content/briefs/`). Where they're
+   * given, a transition is a change of tones from one beat to the next and `turns` isn't read, and a beat with two
+   * tones is one held two ways at once (`blendsOf`), which asks something different from a change.
+   */
+  beats?: readonly { tones: readonly Tone[] }[];
   techniques?: Partial<Record<Skill, number>>;
   allows?: Partial<Record<Axis, readonly AxisValue[]>>;
   /** Why, feature by feature, from the text. */

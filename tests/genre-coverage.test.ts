@@ -18,6 +18,8 @@ import { SELF_TAPE, genreState, tapeReads } from '@/engine/systems/engagement';
 import { judge, type Performer } from '@/engine/systems/evaluation';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
+import { briefsOf } from '@/engine/content/briefs';
+import { BRIEF, briefContext, tapeReadsOf } from '@/engine/systems/briefs';
 
 /** A new life as the game makes one (enrolled, so with a craft), with nothing on the calendar in the way (test setup). */
 function free(seed: string): Simulation {
@@ -42,18 +44,23 @@ describe('every genre, played', () => {
     }
   });
 
-  it('is taped through its command, reading the camera’s techniques and its applied demands once each, and nothing more where none is applied', () => {
+  // From 2026-10-12 a tape is of the genre's brief, its reading chosen first: what it reads is the medium's own, the
+  // brief's staged techniques and the genre's applied demands once each. Until then a tape read the camera's and the
+  // genre's demands alone; a low-confidence genre now reads a technique only where its brief's scene stages one, and says why.
+  it('is taped through its command, of its brief, reading the medium’s techniques, the brief’s own and its applied demands once each', () => {
     const sim = free('cover-tape');
     for (const g of FILM_GENRES) {
       rest(sim);
+      const b = briefsOf(g.id)[0]!;
+      expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[0]!.id } }).ok, g.id).toBe(true);
       const r = sim.execute({ kind: 'practice.self_tape', payload: { genre: g.id } });
       expect(r.ok, `${g.id}: ${r.error}`).toBe(true);
       const read = sim.player.work!.at(-1)!.inputs.techniques;
-      const demanded = genreTags(g.id).map((t) => DEMAND_TECHNIQUE[t]);
-      const expected: Record<string, number> = { ...SELF_TAPE.reads };
-      for (const s of demanded) expected[s] ??= 1;
-      expect(read, g.id).toEqual(expected);
-      if (!applied(g.id)) expect(read, g.id).toEqual({ ...SELF_TAPE.reads });
+      expect(read, g.id).toEqual(tapeReadsOf(b));
+      for (const s of genreTags(g.id).map((t) => DEMAND_TECHNIQUE[t])) expect(read, `${g.id} ${s}`).toHaveProperty(s);
+      const own = Object.keys(read).filter((k) => !(k in BRIEF.base[b.medium]));
+      if (!applied(g.id) && own.length) expect(b.why.techniques, g.id).toBeTruthy();
+      if (b.medium === 'camera') expect(Object.keys(SELF_TAPE.reads).every((k) => k in read)).toBe(true);
     }
   });
 });
@@ -66,6 +73,13 @@ describe('the guarantee in every genre', () => {
       const e = judge(sim.universe.meta.seed ?? 'seed', full, { task: TASK_PROFILES.camera!, techniques: tapeReads(g.id), prep: { genre: 1 }, required: { genre: SELF_TAPE.genreComplete }, difficulty: SELF_TAPE.difficulty, condition: { readiness: 90 }, key: `full:${g.id}` });
       expect(e.overall, g.id).toBe(100);
       expect(e.mastery, g.id).toBe(true);
+      // And its brief, as a tape is now judged (from 2026-10-12), every reading.
+      const b = briefsOf(g.id)[0]!;
+      for (const r of b.readings) {
+        const t = judge(sim.universe.meta.seed ?? 'seed', full, { ...briefContext(sim.player, b, { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] }, { reading: r.id, prep: { genre: 1 } }), condition: { readiness: 90 }, key: `full:${b.id}` });
+        expect(t.overall, `${b.id} ${r.id}`).toBe(100);
+        expect(t.mastery).toBe(true);
+      }
     }
   });
 });
@@ -85,7 +99,7 @@ describe('preference isn’t expertise', () => {
     const not = free('cover-love');
     loved.player.genres = ['musical'];
     not.player.genres = [];
-    for (const sim of [loved, not]) { rest(sim); sim.execute({ kind: 'genre.study', payload: { genre: 'musical' } }); rest(sim); sim.execute({ kind: 'practice.self_tape', payload: { genre: 'musical' } }); }
+    for (const sim of [loved, not]) { rest(sim); sim.execute({ kind: 'genre.study', payload: { genre: 'musical' } }); rest(sim); sim.execute({ kind: 'brief.choose', payload: { brief: 'brief-musical', reading: briefsOf('musical')[0]!.readings[0]!.id } }); sim.execute({ kind: 'practice.self_tape', payload: { genre: 'musical' } }); }
     expect(genreState(loved.player, 'musical').familiarity).toBe(genreState(not.player, 'musical').familiarity);
     expect(loved.player.work!.at(-1)!.overall).toBe(not.player.work!.at(-1)!.overall);
   });

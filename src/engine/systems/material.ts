@@ -16,7 +16,7 @@
 import type { AbilityId } from '../content/abilities';
 import type { Dimension, TaskProfile } from '../content/tasks';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
-import { APPROACH_EFFECT, AXES, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, type Inputs } from '../content/approaches';
+import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
 
 /** How the player has chosen to play a piece, and how far the choice is rehearsed in. */
@@ -47,8 +47,20 @@ export const materialOf = (id: string | undefined): MaterialProfile | undefined 
 /** A choice's chosen sides, in order. */
 export const sidesOf = (p: Playing | undefined): AxisValue[] => (p ? (['pace', 'scale', 'structure'] as Axis[]).map((a) => p[a]).filter((v): v is NonNullable<typeof v> => v !== undefined) : []);
 
-/** The transitions a material asks: each change of tone, and each turn. */
-export const transitionsOf = (p: MaterialProfile): number => p.tones.slice(1).filter((t, i) => t !== p.tones[i]).length + p.turns;
+/**
+ * The transitions a material asks: each change of tone, and each turn. A brief's beats (from 2026-10-12) count a
+ * change of the tones played from one beat to the next instead, its turns already being its beats.
+ */
+export function transitionsOf(p: MaterialProfile): number {
+  if (p.beats?.length) {
+    const key = (b: { tones: readonly string[] }) => [...b.tones].sort().join('+');
+    return p.beats.slice(1).filter((b, i) => key(b) !== key(p.beats![i]!)).length;
+  }
+  return p.tones.slice(1).filter((t, i) => t !== p.tones[i]).length + p.turns;
+}
+
+/** The beats a material holds two ways at once (from 2026-10-12): a brief's beats with two tones; none for a material without beats. */
+export const blendsOf = (p: MaterialProfile): number => (p.beats ?? []).filter((b) => new Set(b.tones).size > 1).length;
 
 /** Why a side of an axis doesn't fit a material or a direction, or nothing. */
 export function misfitOf(axis: Axis, side: AxisValue, material?: MaterialProfile, direction?: Partial<Record<Axis, AxisValue>>): string | undefined {
@@ -97,12 +109,17 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
     const t = transitionsOf(material);
     for (const [d, per] of Object.entries(TRANSITION_EFFECT.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * t);
     for (const [d, xs] of Object.entries(TRANSITION_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, t);
+    // Beats held two ways at once (from 2026-10-12), each.
+    const bl = blendsOf(material);
+    for (const [d, per] of Object.entries(BLEND_EFFECT.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * bl);
+    for (const [d, xs] of Object.entries(BLEND_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, bl);
     if (material.language !== 'everyday') {
       const e = LANGUAGE_EFFECT[material.language];
       for (const [d, x] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
       for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs);
     }
     if (material.medium === 'camera') for (const [d, x] of Object.entries(CAMERA_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
+    if (material.medium === 'voice') for (const [d, x] of Object.entries(VOICE_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
   }
   for (const axis of Object.keys(AXES) as Axis[]) {
     const side = playing?.[axis];

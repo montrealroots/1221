@@ -201,6 +201,8 @@ export interface Person {
   journey?: import('../systems/evaluation').Journey;
   /** What was met and done, kept specifically: material features, ways of playing, materials, exercises (`systems/experience.ts`, from 2026-10-10). */
   experience?: import('../systems/experience').Experience;
+  /** Practice briefs prepared, chosen and taped, each with its takes and any callback (`systems/briefs.ts`, from 2026-10-12). */
+  briefs?: Record<string, import('../systems/briefs').BriefRecord>;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
   /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */

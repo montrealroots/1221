@@ -23,6 +23,8 @@ import { MATERIAL_BY_ID } from '@/engine/content/material';
 import { judgeWork, type Assignment } from '@/engine/systems/coursework';
 import { FILM_GENRES } from '@/engine/content/film-genres';
 import { genreState, SELF_TAPE } from '@/engine/systems/engagement';
+import { briefsOf } from '@/engine/content/briefs';
+import { recordOf } from '@/engine/systems/briefs';
 
 const life = (seed: string, title: 'she/her' | 'he/him' = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: title });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
@@ -197,6 +199,10 @@ describe('the guarantee, with a genre’s demands in the work', () => {
     p.wellbeing.fitness = abilityFull(sim, p, 'stamina');
     for (const id of FILM_GENRES.map((g) => g.id).filter((g) => genreTags(g).length).slice(0, 12)) {
       genreState(p, id).familiarity = SELF_TAPE.genreComplete * 100;
+      // A taped brief (from 2026-10-12): its reading chosen and its preparation complete, as the guarantee asks.
+      const b = briefsOf(id)[0]!;
+      sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[0]!.id } });
+      recordOf(p, b.id).prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
       Object.assign(p.wellbeing, { energy: 95, stress: 5, sleepDebt: 0, nourishment: 90, morale: 80 });
       const r = sim.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: id } });
       expect(r.ok && r.value!.overall, id).toBe(100);

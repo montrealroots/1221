@@ -151,6 +151,21 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
       consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ALL },
     },
   },
+  // A practice brief taped (from 2026-10-12, `systems/briefs.ts`): the camera's four dimensions, and the two a reader
+  // off camera brings: connection (what passes to the reader and the lens) and responsiveness (taking what the reader
+  // gives). The self-tape's own (`camera`) has neither, since until then it had no scene and no reader.
+  tape: {
+    id: 'tape', label: 'A Taped Brief', what: 'A practice brief prepared, played to a reader off camera or alone at a microphone, and watched back.',
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 1)], prep: ['rehearsal'], conditions: ALL },
+      execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
+      consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ALL },
+      responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
+    },
+  },
   audition: {
     id: 'audition', label: 'An Audition', what: 'Two contrasting monologues, shown as an audition.', prepLabel: COURSEWORK_PREP,
     dims: {

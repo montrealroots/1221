@@ -19,16 +19,13 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatTime, zonedParts } from '../core/time';
+import { formatTime } from '../core/time';
 import { ENGAGEMENT } from '../content/engagement';
-import { GENRE_DEFS, familiesOf } from '../content/genres';
+import { GENRE_DEFS } from '../content/genres';
 import { withDemands } from '../content/demands';
 import { GENRE_BY_ID } from '../content/film-genres';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
-import { TASK_PROFILES } from '../content/tasks';
 import { alreadyApplied, markApplied, repeatsToday } from './attributes';
-import { conditionAt, focusAt, ordinary } from './school';
-import { evaluate, recordWork, type Evaluation } from './evaluation';
 import { commitmentWithin, occupiedAt } from './life';
 import { inHospital } from './health';
 
@@ -118,29 +115,11 @@ export function selfTapeRefusal(sim: Simulation, person: Person, id: string): st
   return hourRefusal(sim, person, SELF_TAPE.minutes);
 }
 
-/** A self-tape in a genre: a scene taped at home and judged as finished work, practice in the genre and the camera. */
-export function selfTape(sim: Simulation, person: Person, id: string): Evaluation {
-  const focus = focusAt(sim, person, sim.now);
-  const condition = conditionAt(sim, person, sim.now);
-  const g = genreState(person, id);
-  // Each take its own piece, keyed by the home day and the take's number that day (from 2026-10-10): until then a
-  // second take the same day had the first's key and replaced it in the record, and the journey's best kept a score
-  // from a take no longer there; and the day was UTC's, so near midnight two days' takes could share one.
-  const p = zonedParts(sim.now, sim.homeZone);
-  const day = `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
-  const again = repeatsToday(sim, person, `genre:${id}<tape`);
-  const e = evaluate(sim, person, {
-    task: TASK_PROFILES.camera!, techniques: tapeReads(id), prep: { genre: g.familiarity / 100 }, required: { genre: SELF_TAPE.genreComplete },
-    difficulty: SELF_TAPE.difficulty, condition, families: familiesOf([id]), key: `tape:${person.id}:${id}:${day}:${again}`,
-  });
-  sim.advanceTo(sim.now + SELF_TAPE.minutes * 60_000);
-  person.wellbeing.energy = clamp(person.wellbeing.energy - ENGAGEMENT.energy.desk, 0, 100);
-  recordWork(sim, person, e, { at: sim.now, what: `${GENRE_BY_ID[id]!.label}, Taped At Home` });
-  ordinary(sim, person, 'screen', focus, 0.5, 'self-tape');
-  // The same genre taped again the same day is half the practice of the one before (from 2026-10-10).
-  practiceGenres(sim, person, [id], 0.5 ** again);
-  return e;
-}
+/**
+ * A self-tape in a genre was taped here until 2026-10-12, of no scene: the camera's task, the genre's demands and its
+ * familiarity. Every self-tape is of a practice brief now, prepared and chosen first (`systems/briefs.ts`, which
+ * registers `practice.self_tape`); `SELF_TAPE` and `tapeReads` are kept for what a genre asks of the camera.
+ */
 
 export function registerEngagement(sim: Simulation): void {
   // Each with an optional `actionId` (from 2026-10-10): the same action sent twice is lived once.
@@ -150,12 +129,5 @@ export function registerEngagement(sim: Simulation): void {
     if (no) throw new CommandError(no);
     markApplied(s.player, p?.actionId);
     return study(s, s.player, id);
-  });
-  sim.onCommand<{ genre: string; actionId?: string }, { overall: number }>('practice.self_tape', (p, { sim: s }) => {
-    const id = String(p?.genre);
-    const no = alreadyApplied(s.player, p?.actionId) ?? selfTapeRefusal(s, s.player, id);
-    if (no) throw new CommandError(no);
-    markApplied(s.player, p?.actionId);
-    return { overall: selfTape(s, s.player, id).overall };
   });
 }

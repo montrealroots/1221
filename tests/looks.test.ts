@@ -25,7 +25,8 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
-import { selfTape } from '@/engine/systems/engagement';
+import { chooseBrief, tapeBrief } from '@/engine/systems/briefs';
+import { BRIEF_BY_ID } from '@/engine/content/briefs';
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 import { readiness, readinessParts } from '@/engine/systems/life';
@@ -59,7 +60,8 @@ function world(student = false): Simulation {
   player.health = { ...healthOf(player), chronic: { ...healthOf(player).chronic, asthma: { treated: false } } };
   setWork(sim, player, 'DRAM 103a/b', { year: 2026, month: 9, day: 28 });
   // And a self-tape taped, so a piece of finished work is on the record to open (from 2026-10-09).
-  if (student) selfTape(sim, player, 'comedy');
+  // A brief taped from 2026-10-12, its reading chosen first.
+  if (student) { chooseBrief(sim, player, BRIEF_BY_ID['brief-comedy']!, BRIEF_BY_ID['brief-comedy']!.readings[0]!.id, {}); tapeBrief(sim, player, BRIEF_BY_ID['brief-comedy']!, 'comedy'); }
 
   sim.onSchedule('life.appointment', () => {});
   sim.onSchedule('life.dinner', () => {});

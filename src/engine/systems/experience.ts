@@ -22,7 +22,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import type { MaterialProfile } from '../content/material';
 import { ENGAGEMENT } from '../content/engagement';
-import { transitionsOf } from './material';
+import { blendsOf, transitionsOf } from './material';
 
 export interface Experience {
   features: Record<string, { met: number; practiced: number; best?: number; last?: Instant }>;
@@ -51,14 +51,17 @@ export function featuresOf(m: MaterialProfile): string[] {
   for (const f of ['timing', 'physical', 'partner', 'vocal', 'improvisation'] as const) if (m[f] >= 2) out.push(f);
   if (m.language !== 'everyday') out.push(`language:${m.language}`);
   if (m.medium === 'camera') out.push('medium:camera');
+  if (m.medium === 'voice') out.push('medium:voice');
   if (transitionsOf(m) >= 3) out.push('transitions');
   if (new Set(m.tones).size > 1) out.push('mixed-tone');
+  if (blendsOf(m) > 0) out.push('held-tones');
   return out;
 }
 
 export const FEATURE_LABEL: Readonly<Record<string, string>> = {
   timing: 'Exact Timing', physical: 'Physical Work', partner: 'Playing Off A Partner', vocal: 'Vocal Demand', improvisation: 'Improvised Freedom',
   'language:heightened': 'Heightened Prose', 'language:verse': 'Verse', 'medium:camera': 'The Camera', transitions: 'Many Transitions', 'mixed-tone': 'Mixed Tone',
+  'medium:voice': 'The Microphone', 'held-tones': 'Two Tones At Once',
 };
 
 /** How many times a feature must have been met for familiarity to be full. SLATE's estimate. */

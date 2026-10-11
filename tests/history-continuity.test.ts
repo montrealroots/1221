@@ -25,13 +25,15 @@ describe('two takes on one day', () => {
   it('are two pieces, each kept and counted, and the best is the better of them', () => {
     const sim = life('history-takes');
     free(sim);
+    // A self-tape is of a brief, its reading chosen first (from 2026-10-12).
+    sim.execute({ kind: 'brief.choose', payload: { brief: 'brief-drama', reading: 'guarded' } });
     expect(sim.execute({ kind: 'practice.self_tape', payload: { genre: 'drama' } }).ok).toBe(true);
     free(sim);
     expect(sim.execute({ kind: 'practice.self_tape', payload: { genre: 'drama' } }).ok).toBe(true);
-    const tapes = (sim.player.work ?? []).filter((w) => w.inputs.key.startsWith(`tape:${sim.player.id}:drama:`));
+    const tapes = (sim.player.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${sim.player.id}:brief-drama:`));
     expect(tapes).toHaveLength(2);
     expect(new Set(tapes.map((t) => t.inputs.key)).size).toBe(2);
-    const camera = journeyOf(sim.player).totals.camera!;
+    const camera = journeyOf(sim.player).totals.tape!;
     expect(camera.n).toBe(2);
     expect(camera.best).toBe(Math.max(...tapes.map((t) => t.overall)));
     expect(camera.sum).toBeCloseTo(tapes.reduce((s, t) => s + t.overall, 0), 1);

@@ -496,7 +496,7 @@ export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 
 export const PREP_KNOB: Partial<Record<PrepDim, PersonalityKnob>> = { interpretation: 'readsAround', memorization: 'drills', familiarity: 'skims', revision: 'revises' };
 
 /** How far this kind of step goes for this person, by the knob `PREP_KNOB` names: each read where it's asked, so `tools/wired.mjs` sees it. */
-function prepLean(person: Person, dim: PrepDim): number {
+export function prepLean(person: Person, dim: PrepDim): number {
   switch (dim) {
     case 'interpretation': return personalityOf(person, 'readsAround');
     case 'memorization': return personalityOf(person, 'drills');
