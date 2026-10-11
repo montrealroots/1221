@@ -112,7 +112,7 @@ import { nonresidentFor } from './taxreturn';
 import { momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
-import { considerWelfare, facultyReview, joinCohort, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
+import { considerWelfare, facultyReview, followFormerClasses, joinCohort, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -436,7 +436,7 @@ export interface SchoolRecord {
    * (`systems/leave.ts`, from 2026-10-10): each class's year, its classmates, and the calendar term it's been played
    * forward to (`advanceMates`).
    */
-  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant }[];
+  formerClasses?: { classOf: number; classmates: Classmate[]; playedTo: number; left: Instant; offset?: number }[];
   /**
    * A new cohort to join at the next term of study, set by a leave's start or a repeat granted: the offset the student
    * had before falling behind, which is still the first class's, and the last calendar term spent with that class.
@@ -2397,6 +2397,8 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     const term = Number(item.payload.term);
     if (!person || !school || schoolEnded(school.standing)) return;
+    // A first class goes on through its own terms, whatever the student's are (`followFormerClasses`).
+    followFormerClasses(school, term);
     // A leave granted for this term begins with it; one under way ends at its return term, with notice given
     // (`systems/leave.ts`, from 2026-10-10). A term already begun isn't begun again.
     if (school.leave?.status === 'granted' && school.leave.firstTerm === term) { school.termsBegun = Math.max(school.termsBegun, term + 1); startLeave(s, person, false); return; }

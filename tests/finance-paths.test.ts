@@ -25,6 +25,8 @@ const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAcc
 const fund = (sim: Simulation, id: string, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: id, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
+/** FIXTURE: every account of the player's with money in it emptied, by a posting, so the ledger still balances. */
+const empty = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
 const switches = (sim: Simulation) => sim.player.payments?.switches ?? [];
 
 describe('a switch’s stages', () => {
@@ -127,7 +129,7 @@ function owingOnTime(seed: string): Simulation {
   const sim = lifeIn('us-ny-newyork', { wealth: 'wealthy' }, seed);
   recordWages(sim.player, at(2026, 5, 1), NY, { gross: 40_000_00 });
   play(sim, at(2027, 2, 1, 12));
-  for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0) a.balance = 0;
+  empty(sim);
   sim.must({ kind: 'tax.file', payload: { year: 2026 } });
   return sim;
 }
@@ -154,13 +156,15 @@ describe('an IRS payment plan', () => {
     const now = partsOn(r(), sim.now);
     expect(now.penalty - before.penalty).toBeLessThanOrEqual(Math.round(0.0025 * 3 * before.tax) + 1);
     // A payment missed: CP523, and caught up.
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0) a.balance = 0;
+    empty(sim);
     sim.advanceTo(sim.now + 31 * MS_DAY);
     expect(plan().status).toBe('default');
     expect(titled(sim, 'Notice CP523: A Payment Missed')).toHaveLength(1);
     fund(sim, primary(sim).id, 2_000_00);
     sim.must({ kind: 'tax.catch_up_plan', payload: {} });
     expect(plan().status).toBe('active');
+    // Every payment a posting: the ledger balances.
+    expect(sim.ledger.audit()).toEqual([]);
   }, 60_000);
 
   it('ends after CP523’s thirty days uncaught, and collection resumes', () => {
@@ -168,7 +172,7 @@ describe('an IRS payment plan', () => {
     fund(sim, primary(sim).id, 100_00);
     const applied = sim.must<{ decideAt: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 1_000_00 } });
     sim.advanceTo(applied.decideAt + MS_HOUR);
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0) a.balance = 0;
+    empty(sim);
     sim.advanceTo(sim.now + 31 * MS_DAY);
     sim.advanceTo(sim.now + 31 * MS_DAY);
     expect(sim.player.taxPlan!.status).toBe('ended');

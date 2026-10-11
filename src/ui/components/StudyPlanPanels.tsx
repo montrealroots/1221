@@ -13,7 +13,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, instantFromZoned } from '@/engine/core/time';
 import { EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
 import {
-  LEAVE_REASONS, accountOwed, clearedToReturn, enrolledTerms, extraRefusal, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, yaleAccount,
+  LEAVE_REASONS, accountOwed, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
 import { termAccount, academicTerm, conversionRefusal, convertibleHours, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
@@ -299,10 +299,10 @@ export function ClassesPanel() {
       <p className="small" style={{ margin: 0 }}>You go on with the class of {school.classOf}: {school.classmates.map((m) => m.name).join(', ')}.</p>
       {school.formerClasses!.map((c) => (
         <p key={c.classOf} className="small" style={{ margin: 0 }}>
-          Your first class, the class of {c.classOf}, went on from {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record; they’re a year ahead now.
+          Your first class, the class of {c.classOf}, went on from {formatDate(c.left, sim.zone)}: {c.classmates.map((m) => `${m.name}${m.bond !== undefined && Math.abs(m.bond) >= 25 ? (m.bond > 0 ? ' (a friend)' : ' (a rival)') : ''}`).join(', ')}. What you shared stays on your record. {(() => { const at = formerStage(c, Math.max(0, school.termsBegun - 1)); return at === undefined ? 'They’re a year ahead.' : at >= YALE_DRAMA.terms ? 'They have their degrees.' : `They’re in year ${Math.floor(at / 2) + 1}, its ${at % 2 === 0 ? 'fall' : 'spring'} term.`; })()}
         </p>
       ))}
-      <Fine>The first class is played forward through the terms it had without you: its classes, as a class day grows a classmate. Its productions in those terms aren’t played forward, a boundary of SLATE’s.</Fine>
+      <Fine>The first class is played forward through every term it has, to its degree: its classes, as a class day grows a classmate. Its productions aren’t played forward, a boundary of SLATE’s.</Fine>
     </div>
   );
 }

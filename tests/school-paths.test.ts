@@ -14,7 +14,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { CLASSES_KIND, CONFERRAL_KIND, TERM_KIND, coursesFor, evaluate, meanCraft, termStart } from '@/engine/systems/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { healthOf } from '@/engine/systems/health';
-import { accountOwed, considerWelfare, enrolledTerms, extraRefusal, leaveLengths, WELFARE_KIND, APPEAL_KIND } from '@/engine/systems/leave';
+import { formerStage, accountOwed, considerWelfare, enrolledTerms, extraRefusal, leaveLengths, WELFARE_KIND, APPEAL_KIND } from '@/engine/systems/leave';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
@@ -66,7 +66,16 @@ describe('PLAYER JOURNEY: back from a leave, with the class a year below', () =>
     const past = courseworkOf(sim, sim.player)!.assignments.filter((a) => a.partner !== undefined && a.setOn < '2027-01-01');
     expect(past.every((a) => a.partnerName && names.includes(a.partnerName))).toBe(true);
     expect(titled(sim, 'The Class Of 2030')).toHaveLength(1);
-  });
+    // And goes on after: a term later it's had another term, its second year's spring (found by tools/scenarios.ts,
+    // 2026-10-10: until then it stopped where the student rejoined).
+    const atJoin = meanCraft(former.classmates[1]!.craft);
+    expect(formerStage(former, 2)).toBe(2);
+    tended(sim, at(2028, 1, 20, 12));
+    const later = sim.player.school!.formerClasses![0]!;
+    expect(later.playedTo).toBe(2);
+    expect(formerStage(later, 3)).toBe(3);
+    expect(meanCraft(later.classmates[1]!.craft)).toBeGreaterThan(atJoin);
+  }, 60_000);
 });
 
 describe('a mandatory medical leave', () => {

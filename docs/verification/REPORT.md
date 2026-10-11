@@ -4,7 +4,7 @@ Written by `node tools/verify-report.mjs` from `docs/verification/<suite>/result
 
 ## Played Lives
 
-Ran on f899ecd7 (tree 8894a59c, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
+Ran on 6470a2f4 (tree bc5d8f22, 0 dirty). Each plays a student from creation for 3.3 years through public commands (`tools/lives.ts`), saving and reopening every thirty days.
 
 | Profile and seed | Policy | Dates | Outcome | Terms (standing, attendance %) | Pieces judged (mastery) | Fitness, first and last month | Condition at end | Breaches | Unbalanced | Reloads | Error |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -13,10 +13,10 @@ Ran on f899ecd7 (tree 8894a59c, 0 dirty). Each plays a student from creation for
 | new-york, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | mexico-city, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| mexico-city, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | london, early riser and curious, attentive / lives-0 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| london, early riser and curious, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
-| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| london, early riser and curious, attentive / lives-1 | attentive | 2026-08-24 to 2029-12-11 | Graduated | good 100; good 100; good 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
+| london, early riser and curious, attentive / lives-2 | attentive | 2026-08-24 to 2029-12-10 | Graduated | good 100; good 100; concern 100; good 100; good 100; good 100 | 160 (0) | 50 → 35 | 91 | 0 | 0 | 39 |  |
 | reykjavik, autopilot / lives-0 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-1 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |
 | reykjavik, autopilot / lives-2 | autopilot | 2026-08-24 to 2029-12-11 | dismissed | concern 100; warning 100; dismissed 100 | 160 (0) | 49.8 → 35 | 91 | 0 | 0 | 40 |  |

@@ -1,0 +1,200 @@
+{
+ "note": "tools/scenarios.ts, seed sc-0, 2026-10-10, each with --watch (stops at the first breach or unbalanced entry). The switch-uk run was before its pending check used SWITCH_KIND, so a second daily attempt was refused and logged.",
+ "runs": {
+  "sc-leave": {
+   "scenario": "leave",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2027-01-20 school.request_leave",
+    "2027-01-27 school.return_notice",
+    "2028-01-03 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "personal",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": false
+     }
+    ],
+    "welfares": [],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "Your MFA Is Conferred"
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "sc-mandatory": {
+   "scenario": "mandatory",
+   "seed": "sc-0",
+   "ended": "2032-01-16",
+   "log": [
+    "2026-10-20 TEST SETUP: two stays",
+    "refused school.return_notice: You’re in hospital: a Yale Health physician can’t clear you to come back yet.",
+    "2026-12-01 school.return_notice",
+    "2027-08-23 school.reregister"
+   ],
+   "school": {
+    "standing": "graduated",
+    "classOf": 2030,
+    "offset": 2,
+    "leaves": [
+     {
+      "kind": "medical",
+      "status": "returned",
+      "terms": 2,
+      "mandatory": true
+     }
+    ],
+    "welfares": [
+     "leave"
+    ],
+    "formerClasses": [
+     {
+      "classOf": 2029,
+      "mates": 15,
+      "playedTo": 6
+     }
+    ],
+    "classmates": 15,
+    "terms": [
+     "2:good",
+     "3:good",
+     "4:good",
+     "5:good",
+     "6:good",
+     "7:good"
+    ],
+    "conferred": [
+     "Your MFA Is Conferred"
+    ]
+   },
+   "accounts": [
+    "Chase checking",
+    "Chase savings closed"
+   ],
+   "owedIrs": 0,
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 65
+  },
+  "sc-switch": {
+   "scenario": "switch-uk",
+   "seed": "sc-0",
+   "ended": "2028-01-05",
+   "log": [
+    "2026-10-02 bank.switch",
+    "refused bank.switch: A switch is already under way.",
+    "2027-03-02 bank.switch"
+   ],
+   "switches": [
+    {
+     "at": 1793350800000,
+     "fromBank": "Barclays",
+     "toBank": "HSBC UK",
+     "outcome": "partial",
+     "on": 1793350800000
+    },
+    {
+     "at": 1804755600000,
+     "fromBank": "HSBC UK",
+     "toBank": "NatWest",
+     "outcome": "complete",
+     "on": 1804755600000
+    }
+   ],
+   "accounts": [
+    "Barclays checking",
+    "Barclays savings",
+    "HSBC UK checking closed",
+    "NatWest checking"
+   ],
+   "owedIrs": 0,
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 24
+  },
+  "sc-tax": {
+   "scenario": "tax-plan",
+   "seed": "sc-0",
+   "ended": "2029-02-21",
+   "log": [
+    "2026-09-10 TEST SETUP: W-2",
+    "2027-02-15 tax.file",
+    "2027-02-15 tax.apply_plan",
+    "2027-02-16 TEST SETUP: a gift",
+    "refused tax.catch_up_plan: $103.03 is more than the bank can cover.",
+    "2027-10-09 tax.catch_up_plan",
+    "2028-01-22 tax.catch_up_plan",
+    "2028-04-22 tax.catch_up_plan"
+   ],
+   "school": {
+    "standing": "warning",
+    "classOf": 2029,
+    "offset": 0,
+    "leaves": [],
+    "welfares": [],
+    "formerClasses": [],
+    "classmates": 15,
+    "terms": [
+     "0:good",
+     "1:good",
+     "2:good",
+     "3:concern",
+     "4:warning"
+    ],
+    "conferred": []
+   },
+   "accounts": [
+    "Chase checking closed",
+    "Chase savings closed",
+    "Bank of America checking closed",
+    "Capital One checking"
+   ],
+   "taxPlan": {
+    "status": "ended",
+    "payments": 14,
+    "history": [
+     "A payment",
+     "A payment",
+     "A payment missed: CP523",
+     "Caught up",
+     "A payment missed: CP523",
+     "Ended: not caught up after CP523"
+    ]
+   },
+   "owedIrs": 667757,
+   "breaches": 0,
+   "unbalanced": 0,
+   "reloads": 30
+  }
+ }
+}

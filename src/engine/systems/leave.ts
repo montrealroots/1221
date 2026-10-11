@@ -405,6 +405,26 @@ export function returnFromLeave(sim: Simulation, person: Person): void {
 }
 
 /**
+ * A first class played on through each term it has (from 2026-10-10, `tools/scenarios.ts`): until then it was played
+ * forward to the term the student rejoined and stopped there, still a year ahead a year after its own degree. Each
+ * term the student's calendar reaches, the classes they began with have theirs, to their sixth. A class kept before
+ * its offset was (`offset` absent) stays where it was.
+ */
+export function followFormerClasses(school: SchoolRecord, term: number): void {
+  for (const c of school.formerClasses ?? []) {
+    if (c.offset === undefined) continue;
+    const terms: number[] = [];
+    for (let t = c.playedTo + 1; t < term; t += 1) terms.push(t - c.offset);
+    if (!terms.length) continue;
+    advanceMates(c.classmates, terms);
+    c.playedTo = term - 1;
+  }
+}
+
+/** Where a first class is in its program at a calendar term: its academic term, past the sixth once it has its degree. */
+export const formerStage = (c: NonNullable<SchoolRecord['formerClasses']>[number], term: number): number | undefined => (c.offset === undefined ? undefined : term - c.offset);
+
+/**
  * Fallen a year behind, by a leave or a repeated year, a student goes on with the class that's now at their stage
  * (from 2026-10-10; until then the first class waited for them, frozen, and was still at their side on return). The
  * first class is kept whole, every relationship and record, and played forward through the terms it went on without
@@ -423,7 +443,7 @@ export function joinCohort(sim: Simulation, person: Person, term: number): void 
   advanceMates(old, terms);
   const stamp = courseworkOf(sim, person);
   for (const a of stamp?.assignments ?? []) if (a.partner !== undefined && a.partnerName === undefined) a.partnerName = old[a.partner]?.name;
-  (school.formerClasses ??= []).push({ classOf: school.classOf - 1, classmates: old, playedTo: term - 1, left: sim.now });
+  (school.formerClasses ??= []).push({ classOf: school.classOf - 1, classmates: old, playedTo: term - 1, left: sim.now, offset: behind.offsetBefore });
   const next = drawCohort(sim, person, school.classOf);
   advanceMates(next, Array.from({ length: Math.max(0, academic) }, (_, i) => i));
   school.classmates = next;
