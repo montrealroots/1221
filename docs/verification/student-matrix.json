@@ -1,6 +1,6 @@
 {
  "title": "The Yale Student, Banking And Papers: Implementation Matrix",
- "asOf": "2026-10-11, after the player-facing acceptance pass",
+ "asOf": "2026-10-11, after the limitations pass",
  "basisKey": {
   "documented": "The rule is the institution's or the law's, read in a cited source.",
   "simplified": "The rule follows a cited source, with a stated simplification.",
@@ -2010,7 +2010,7 @@
    "saveLoad": "Optional fields; a combined balance from before divided once on opening (splitReturns)",
    "source": "research-state-tax-collection.json; Conn. Gen. Stat. 12-735, 12-39h; NY Tax Law 685, 697; Cal. R&TC 19131–19132, 19521; IRC 6159, 6402",
    "basis": "simplified",
-   "limitations": "Unresearched states keep a balance with nothing added; New York’s and California’s payment order, and notice timing where unpublished, are SLATE’s; a state doesn’t assess a non-filer on its own; a balance netted against a refund before the split stays netted.",
+   "limitations": "New Jersey, Michigan and Utah have tax tables and no city, so no life owes them, and their collection is unresearched; payment order, notice timing, plan terms and a state’s first letter to a non-filer, where unpublished, are SLATE’s and said; a balance netted against a refund before the split stays netted.",
    "id": "papers.stateTax",
    "area": "Papers",
    "goal": "Owe and pay each tax authority its own: the IRS federal, each state its own, by its own rules",
@@ -2067,6 +2067,18 @@
      "reader": "Accrual and plans",
      "file": "tests/state-tax.test.ts",
      "title": "a state SLATE hasn’t researched"
+    },
+    {
+     "outcome": "Twelve more states by their own numbers: steps, raised rates, combined caps, charges at a step, plans’ terms",
+     "reader": "Accrual, collection and plans",
+     "file": "tests/state-tax-states.test.ts",
+     "title": "Illinois: 2% late within 30 days"
+    },
+    {
+     "outcome": "A refund pays a partner state’s past-due tax under their agreement, and no other’s",
+     "reader": "Refunds",
+     "file": "tests/state-tax-states.test.ts",
+     "title": "California’s refund pays New York’s balance"
     }
    ]
   },
@@ -2085,7 +2097,7 @@
    "saveLoad": "Optional; ceilings bound on load",
    "source": "SLATE’s, by the School’s season (schoolProduction, playOf)",
    "basis": "simplified",
-   "limitations": "Followed while the student is at the School; the Rep’s and the Cabaret’s parts aren’t played for it; a joined class’s history before the join is tested by fixture.",
+   "limitations": "A classmate’s standing isn’t simulated, so none is kept out of a Cabaret show by a warning; how many of a class take a Cabaret show is SLATE’s estimate; a joined class’s history before the join is tested by fixture.",
    "id": "school.firstClass",
    "area": "School",
    "goal": "Leave a class behind and find it gone on: its classes, its productions, its degree",
@@ -2117,6 +2129,18 @@
      "reader": "Your Classes",
      "file": "tests/school-paths.test.ts",
      "title": "brings a class joined in its second year"
+    },
+    {
+     "outcome": "The class left after a withdrawal goes on to its degree, its runs under way into its record, the days had not replayed",
+     "reader": "Your Classes",
+     "file": "tests/journey-class-left-behind.test.ts",
+     "title": "goes on without them through its degree"
+    },
+    {
+     "outcome": "A third-year fall’s best in the Rep’s company, out of the School’s productions",
+     "reader": "Your Classes",
+     "file": "tests/journey-class-left-behind.test.ts",
+     "title": "plays a third-year fall’s best in the Rep’s company"
     }
    ]
   },
@@ -2135,7 +2159,7 @@
    "saveLoad": "Optional fields",
    "source": "tools/variety.ts (docs/verification/VARIETY-2026-10-10.json)",
    "basis": "simplified",
-   "limitations": "The content is finite: 42 scenes, 26 plays, 27 exercises; variety comes from the record.",
+   "limitations": "The content is finite: 56 scenes, 30 plays, 27 exercises (42 and 26 until 2026-10-11); variety comes from the record.",
    "id": "school.history",
    "area": "School",
    "goal": "Practice and rehearsal that answer to what came before",
@@ -2246,6 +2270,84 @@
      "reader": "The budget",
      "file": "tests/state-tax.test.ts",
      "title": "New York: half a percent a month"
+    }
+   ]
+  },
+  {
+   "entry": "Papers, Tax Returns: the year’s return",
+   "prereqs": "A return owing a state, unfiled past its due date",
+   "choices": "File, before or after the assessment",
+   "steps": "The state’s letters at its days; its assessment with its late penalties and what a non-filer’s adds; collection; their own filed, the assessment replaced",
+   "costs": "Late penalties, interest, California’s 25% and $143, Arizona’s and Oregon’s 25%, Connecticut’s $50 floor, Illinois’s 2% at least $250",
+   "states": "StateDue.assessedBy, replacedAt",
+   "failure": "Levied while unpaid",
+   "recovery": "File their own; the charges fall in proportion",
+   "stateRW": "TaxReturn.stateDue",
+   "consumers": "Collection, Papers, the budget",
+   "notices": "Each state’s letters; its assessment; the replacement",
+   "saveLoad": "Played across reloads by tools/scenarios.ts nonfiler",
+   "source": "research-state-tax-collection-2a.json, -2b.json, -2c.json",
+   "basis": "simplified",
+   "limitations": "When a state first acts is SLATE’s year where unpublished; a state’s estimate is the return’s own figure for it, withholding credited.",
+   "id": "papers.stateNonFiler",
+   "area": "Papers",
+   "goal": "Never file, be assessed by the state itself, and replace its assessment with your own",
+   "commands": [
+    "tax.file"
+   ],
+   "tests": [
+    {
+     "file": "tests/state-tax-states.test.ts",
+     "title": "Connecticut makes it three months on"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Letter, assessment at 10% or $50, collection; their own replaces it; nothing assessed twice",
+     "reader": "Papers and collection",
+     "file": "tests/state-tax-states.test.ts",
+     "title": "Connecticut makes it three months on"
+    },
+    {
+     "outcome": "Filed between the letter and the assessment, the letter comes to nothing",
+     "reader": "Collection",
+     "file": "tests/state-tax-states.test.ts",
+     "title": "filed after Connecticut’s letter and before its assessment"
+    }
+   ]
+  },
+  {
+   "entry": "Save slots: Continue; the Player Profile",
+   "prereqs": "",
+   "choices": "",
+   "steps": "Opened: each credit matched in order to its term’s casting notice by production and part, and dated by it; one with none keeps its year, said",
+   "costs": "",
+   "states": "SchoolRecord.credits, creditsDated",
+   "failure": "",
+   "recovery": "",
+   "stateRW": "SchoolRecord",
+   "consumers": "The résumé line on the Player Profile",
+   "notices": "The opening’s migration steps",
+   "saveLoad": "Once, on opening",
+   "source": "The casting notices a save keeps",
+   "basis": "simplified",
+   "limitations": "A save keeps its last 500 notifications: a credit whose notice is gone keeps the year it was written down, said.",
+   "id": "school.oldCredits",
+   "area": "School",
+   "goal": "Open an older save and see each credit dated by its run",
+   "commands": [],
+   "tests": [
+    {
+     "file": "tests/credits-dated.test.ts",
+     "title": "are dated by their terms’ casting notices once"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Dated once by their runs; one with no notice kept and said; nothing dated twice",
+     "reader": "The résumé",
+     "file": "tests/credits-dated.test.ts",
+     "title": "are dated by their terms’ casting notices once"
     }
    ]
   }

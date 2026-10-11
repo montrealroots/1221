@@ -260,6 +260,8 @@ Each has a regression test:
 
 ## 6. Limitations
 
+> **Since then:** the limitations pass of 2026-10-11 closed every simplified item below but the joined class's history, still tested by fixture (`docs/verification/LIMITATIONS-PASS-2026-10-11.md`).
+
 **Simplified:**
 
 - A state doesn't assess a non-filer's tax on its own. SLATE models only the IRS's substitute return. A state

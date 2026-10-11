@@ -176,7 +176,10 @@ function ReturnLife({ year }: { year: number }) {
   const money = (c: number) => formatMoney(c, cur);
   const [amount, setAmount] = useState('');
   const [amending, setAmending] = useState(false);
-  if (!r || r.filedAt === undefined) return null;
+  if (!r) return null;
+  // Unfiled, but a state has assessed it itself (`assessStateNonFiler`, from 2026-10-11): who it's owed to, and the
+  // state's balance to pay, before their own is filed. Until then nothing of an unfiled return's showed here.
+  if (r.filedAt === undefined) return Object.values(r.stateDue ?? {}).some((sd) => sd.filedAt !== undefined) ? <WhoIsOwed year={year} /> : null;
   const parts = r.owed ? partsOn(r, sim.now) : undefined;
   const amendNo = amendRefusal(sim, r);
   const value = Math.round(Number(amount) * 100);

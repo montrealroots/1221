@@ -4,7 +4,7 @@ Written by `node tools/balance-batch.mjs --report` from `docs/verification/balan
 
 ## baseline (matched): A new student, rested, three abilities, two hours a day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -18,21 +18,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## baseline (held-out): A new student, rested, three abilities, two hours a day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
 | steady | 36.00 | 1.15 | 8.05 ± 0.47 (7.72–8.59) | 0.00 | 1.03 ± 0.08 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
-| precision | 36.00 | 1.15 | 9.18 ± 0.54 (8.81–9.80) | 0.00 | 1.12 ± 0.08 | 1.13 ± 0.07 | 0.08 ± 0.03 | 3, 3 of 3 |
+| precision | 36.00 | 1.15 | 9.18 ± 0.54 (8.81–9.80) | 0.00 | 1.10 ± 0.05 | 1.13 ± 0.07 | 0.07 ± 0.03 | 3, 3 of 3 |
 | spaced | 36.00 | 1.15 | 8.72 ± 0.51 (8.37–9.31) | 0.00 | 1.07 ± 0.03 | 0.67 ± 0.04 | 0.03 ± 0.06 | 3, 1 of 3 |
 | variation | 36.00 | 1.15 | 6.87 ± 0.40 (6.59–7.33) | 2.51 | 0.93 ± 0.08 | -1.18 ± 0.07 | -0.10 ± 0.00 | 0, 0 of 3 |
 | live | 36.00 | 1.15 | 6.85 ± 0.40 (6.57–7.31) | 2.06 | 1.22 ± 0.08 | -1.20 ± 0.07 | 0.18 ± 0.03 | 0, 3 of 3 |
-| tier-above | 36.00 | 1.15 | 6.45 ± 0.38 (6.19–6.89) | 0.00 | 0.92 ± 0.08 | -1.60 ± 0.09 | -0.12 ± 0.03 | 0, 0 of 3 |
-| adaptive | 36.00 | 1.15 | 9.20 ± 0.54 (8.83–9.82) | 0.00 | 1.13 ± 0.08 | 1.15 ± 0.07 | 0.10 ± 0.00 | 3, 3 of 3 |
+| tier-above | 36.00 | 1.15 | 6.45 ± 0.38 (6.19–6.89) | 0.00 | 0.88 ± 0.03 | -1.60 ± 0.09 | -0.15 ± 0.05 | 0, 0 of 3 |
+| adaptive | 36.00 | 1.15 | 9.20 ± 0.54 (8.83–9.82) | 0.00 | 1.12 ± 0.06 | 1.15 ± 0.07 | 0.08 ± 0.03 | 3, 3 of 3 |
 
 ## beginner (matched): Everything near 30
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -46,7 +46,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## beginner (held-out): Everything near 30
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -60,7 +60,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## specialist (matched): The plan’s targets at 85, the rest 40
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -74,21 +74,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## specialist (held-out): The plan’s targets at 85, the rest 40
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
 | steady | 36.00 | 1.15 | 4.29 ± 0.00 (4.28–4.29) | 0.00 | 1.07 ± 0.08 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
 | precision | 36.00 | 1.15 | 4.90 ± 0.02 (4.88–4.91) | 0.00 | 1.10 ± 0.05 | 0.61 ± 0.01 | 0.03 ± 0.03 | 3, 2 of 3 |
 | spaced | 36.00 | 1.15 | 4.65 ± 0.00 (4.65–4.66) | 0.00 | 1.10 ± 0.05 | 0.37 ± 0.00 | 0.03 ± 0.03 | 3, 2 of 3 |
-| variation | 36.00 | 1.15 | 3.64 ± 0.00 (3.64–3.64) | 3.04 | 1.03 ± 0.03 | -0.64 ± 0.00 | -0.03 ± 0.06 | 0, 0 of 3 |
+| variation | 36.00 | 1.15 | 3.64 ± 0.00 (3.64–3.64) | 3.04 | 1.02 ± 0.06 | -0.64 ± 0.00 | -0.05 ± 0.05 | 0, 0 of 3 |
 | live | 36.00 | 1.15 | 3.64 ± 0.00 (3.64–3.64) | 1.95 | 1.28 ± 0.08 | -0.64 ± 0.00 | 0.22 ± 0.03 | 0, 3 of 3 |
 | tier-above | 36.00 | 1.15 | 4.29 ± 0.00 (4.28–4.29) | 0.00 | 1.07 ± 0.08 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
 | adaptive | 36.00 | 1.15 | 4.92 ± 0.01 (4.91–4.92) | 0.00 | 1.10 ± 0.05 | 0.63 ± 0.00 | 0.03 ± 0.03 | 3, 2 of 3 |
 
 ## uneven (matched): The plan’s targets weak (30), the rest strong (80)
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -102,7 +102,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## uneven (held-out): The plan’s targets weak (30), the rest strong (80)
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -116,7 +116,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## mastered (matched): Everything full
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -130,7 +130,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## mastered (held-out): Everything full
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -144,7 +144,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## tired (matched): A new student, every practice hour on a tired day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -158,7 +158,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## tired (held-out): A new student, every practice hour on a tired day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -172,7 +172,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## tired-beginner (matched): A beginner, tired
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -186,7 +186,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## tired-beginner (held-out): A beginner, tired
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -200,7 +200,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## one (matched): Concentrated: one exercise only
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -214,21 +214,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## one (held-out): Concentrated: one exercise only
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
-| steady | 36.67 | 1.14 | 7.76 ± 0.72 (7.11–8.54) | 0.00 | 1.02 ± 0.10 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
-| precision | 36.67 | 1.14 | 8.78 ± 0.82 (8.05–9.67) | 0.00 | 1.12 ± 0.10 | 1.02 ± 0.10 | 0.10 ± 0.00 | 3, 3 of 3 |
-| spaced | 36.67 | 1.14 | 8.35 ± 0.78 (7.64–9.18) | 0.00 | 1.05 ± 0.05 | 0.59 ± 0.05 | 0.03 ± 0.06 | 3, 1 of 3 |
-| variation | 36.67 | 1.14 | 6.68 ± 0.62 (6.12–7.35) | 2.38 | 1.32 ± 0.10 | -1.09 ± 0.10 | 0.30 ± 0.00 | 0, 3 of 3 |
-| live | 36.67 | 1.14 | 6.68 ± 0.62 (6.12–7.35) | 2.36 | 1.18 ± 0.08 | -1.09 ± 0.10 | 0.17 ± 0.03 | 0, 3 of 3 |
-| tier-above | 36.33 | 1.14 | 6.24 ± 0.61 (5.77–6.93) | 0.00 | 0.88 ± 0.08 | -1.53 ± 0.16 | -0.13 ± 0.03 | 0, 0 of 3 |
-| adaptive | 36.67 | 1.14 | 8.80 ± 0.82 (8.07–9.69) | 0.00 | 1.12 ± 0.10 | 1.04 ± 0.10 | 0.10 ± 0.00 | 3, 3 of 3 |
+| steady | 36.67 | 1.14 | 7.76 ± 0.72 (7.11–8.54) | 0.00 | 1.00 ± 0.09 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
+| precision | 36.67 | 1.14 | 8.78 ± 0.82 (8.05–9.67) | 0.00 | 1.10 ± 0.09 | 1.02 ± 0.10 | 0.10 ± 0.00 | 3, 3 of 3 |
+| spaced | 36.67 | 1.14 | 8.35 ± 0.78 (7.64–9.18) | 0.00 | 1.05 ± 0.05 | 0.59 ± 0.05 | 0.05 ± 0.05 | 3, 2 of 3 |
+| variation | 36.67 | 1.14 | 6.68 ± 0.62 (6.12–7.35) | 2.38 | 1.32 ± 0.10 | -1.09 ± 0.10 | 0.32 ± 0.03 | 0, 3 of 3 |
+| live | 36.67 | 1.14 | 6.68 ± 0.62 (6.12–7.35) | 2.36 | 1.18 ± 0.08 | -1.09 ± 0.10 | 0.18 ± 0.03 | 0, 3 of 3 |
+| tier-above | 36.33 | 1.14 | 6.24 ± 0.61 (5.77–6.93) | 0.00 | 0.88 ± 0.08 | -1.53 ± 0.16 | -0.12 ± 0.03 | 0, 0 of 3 |
+| adaptive | 36.67 | 1.14 | 8.80 ± 0.82 (8.07–9.69) | 0.00 | 1.10 ± 0.09 | 1.04 ± 0.10 | 0.10 ± 0.00 | 3, 3 of 3 |
 
 ## six (matched): Broad: six exercises in turn
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -242,7 +242,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## six (held-out): Broad: six exercises in turn
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -256,7 +256,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## craft (matched): Three techniques a material asks for
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -270,21 +270,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## craft (held-out): Three techniques a material asks for
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
-| steady | 36.67 | 1.14 | 8.38 ± 0.57 (7.96–9.03) | 0.00 | 0.83 ± 0.08 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
-| precision | 36.67 | 1.14 | 9.51 ± 0.65 (9.03–10.24) | 0.00 | 0.85 ± 0.05 | 1.13 ± 0.07 | 0.02 ± 0.03 | 3, 1 of 3 |
-| spaced | 36.67 | 1.14 | 9.08 ± 0.62 (8.63–9.79) | 0.00 | 0.85 ± 0.05 | 0.70 ± 0.05 | 0.02 ± 0.03 | 3, 1 of 3 |
-| variation | 36.67 | 1.14 | 7.15 ± 0.49 (6.79–7.71) | 3.36 | 1.15 ± 0.10 | -1.23 ± 0.08 | 0.32 ± 0.03 | 0, 3 of 3 |
-| live | 36.67 | 1.14 | 7.15 ± 0.49 (6.79–7.71) | 2.50 | 1.07 ± 0.08 | -1.23 ± 0.08 | 0.23 ± 0.03 | 0, 3 of 3 |
-| tier-above | 36.67 | 1.14 | 6.71 ± 0.46 (6.38–7.24) | 0.00 | 0.77 ± 0.06 | -1.66 ± 0.11 | -0.07 ± 0.03 | 0, 0 of 3 |
-| adaptive | 36.67 | 1.14 | 9.57 ± 0.65 (9.09–10.31) | 0.00 | 0.85 ± 0.05 | 1.19 ± 0.08 | 0.02 ± 0.03 | 3, 1 of 3 |
+| steady | 36.67 | 1.14 | 8.38 ± 0.57 (7.96–9.03) | 0.00 | 0.82 ± 0.06 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
+| precision | 36.67 | 1.14 | 9.51 ± 0.65 (9.03–10.24) | 0.00 | 0.85 ± 0.05 | 1.13 ± 0.07 | 0.03 ± 0.03 | 3, 2 of 3 |
+| spaced | 36.67 | 1.14 | 9.08 ± 0.62 (8.63–9.79) | 0.00 | 0.85 ± 0.05 | 0.70 ± 0.05 | 0.03 ± 0.03 | 3, 2 of 3 |
+| variation | 36.67 | 1.14 | 7.15 ± 0.49 (6.79–7.71) | 3.36 | 1.15 ± 0.10 | -1.23 ± 0.08 | 0.33 ± 0.06 | 0, 3 of 3 |
+| live | 36.67 | 1.14 | 7.15 ± 0.49 (6.79–7.71) | 2.50 | 1.07 ± 0.08 | -1.23 ± 0.08 | 0.25 ± 0.05 | 0, 3 of 3 |
+| tier-above | 36.67 | 1.14 | 6.71 ± 0.46 (6.38–7.24) | 0.00 | 0.77 ± 0.06 | -1.66 ± 0.11 | -0.05 ± 0.00 | 0, 0 of 3 |
+| adaptive | 36.67 | 1.14 | 9.57 ± 0.65 (9.09–10.31) | 0.00 | 0.85 ± 0.05 | 1.19 ± 0.08 | 0.03 ± 0.03 | 3, 2 of 3 |
 
 ## scene (matched): What a scene reads most, practised directly (listening, adaptability, scene study)
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -298,21 +298,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## scene (held-out): What a scene reads most, practised directly (listening, adaptability, scene study)
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
-| steady | 36.67 | 1.14 | 8.39 ± 0.67 (7.96–9.16) | 0.00 | 1.32 ± 0.10 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
-| precision | 36.67 | 1.14 | 9.52 ± 0.76 (9.04–10.39) | 0.00 | 1.43 ± 0.13 | 1.13 ± 0.09 | 0.12 ± 0.03 | 3, 3 of 3 |
-| spaced | 36.67 | 1.14 | 9.09 ± 0.72 (8.63–9.92) | 0.00 | 1.37 ± 0.08 | 0.70 ± 0.06 | 0.05 ± 0.05 | 3, 2 of 3 |
-| variation | 36.67 | 1.14 | 7.12 ± 0.56 (6.75–7.77) | 2.46 | 1.37 ± 0.08 | -1.27 ± 0.10 | 0.05 ± 0.05 | 0, 2 of 3 |
-| live | 36.67 | 1.14 | 7.12 ± 0.56 (6.76–7.77) | 1.63 | 1.37 ± 0.08 | -1.27 ± 0.10 | 0.05 ± 0.05 | 0, 2 of 3 |
-| tier-above | 36.33 | 1.14 | 6.66 ± 0.59 (6.26–7.34) | 0.00 | 1.12 ± 0.08 | -1.73 ± 0.13 | -0.20 ± 0.05 | 0, 0 of 3 |
-| adaptive | 36.67 | 1.14 | 9.58 ± 0.76 (9.09–10.46) | 0.00 | 1.43 ± 0.13 | 1.19 ± 0.10 | 0.12 ± 0.03 | 3, 3 of 3 |
+| steady | 36.67 | 1.14 | 8.39 ± 0.67 (7.96–9.16) | 0.00 | 1.30 ± 0.09 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
+| precision | 36.67 | 1.14 | 9.52 ± 0.76 (9.04–10.39) | 0.00 | 1.42 ± 0.10 | 1.13 ± 0.09 | 0.12 ± 0.03 | 3, 3 of 3 |
+| spaced | 36.67 | 1.14 | 9.09 ± 0.72 (8.63–9.92) | 0.00 | 1.37 ± 0.08 | 0.70 ± 0.06 | 0.07 ± 0.06 | 3, 2 of 3 |
+| variation | 36.67 | 1.14 | 7.12 ± 0.56 (6.75–7.77) | 2.46 | 1.37 ± 0.08 | -1.27 ± 0.10 | 0.07 ± 0.06 | 0, 2 of 3 |
+| live | 36.67 | 1.14 | 7.12 ± 0.56 (6.76–7.77) | 1.63 | 1.37 ± 0.08 | -1.27 ± 0.10 | 0.07 ± 0.06 | 0, 2 of 3 |
+| tier-above | 36.33 | 1.14 | 6.66 ± 0.59 (6.26–7.34) | 0.00 | 1.12 ± 0.08 | -1.73 ± 0.13 | -0.18 ± 0.06 | 0, 0 of 3 |
+| adaptive | 36.67 | 1.14 | 9.58 ± 0.76 (9.09–10.46) | 0.00 | 1.42 ± 0.10 | 1.19 ± 0.10 | 0.12 ± 0.03 | 3, 3 of 3 |
 
 ## every3 (matched): One practice day in three
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -326,7 +326,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## every3 (held-out): One practice day in three
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -340,7 +340,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## every3-tired (matched): One practice day in three, tired
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -354,7 +354,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## every3-tired (held-out): One practice day in three, tired
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -368,7 +368,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
 
 ## four-hours (matched): Four hours on a practice day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -382,21 +382,21 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## four-hours (held-out): Four hours on a practice day
 
-Ran on 804bde39 (tree f4d7033c), seeds st-10, st-11, st-12, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-10, st-11, st-12, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
-| steady | 46.00 | 1.07 | 9.19 ± 0.54 (8.82–9.81) | 0.00 | 1.13 ± 0.08 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
-| precision | 46.00 | 1.07 | 10.24 ± 0.60 (9.82–10.93) | 0.00 | 1.20 ± 0.05 | 1.05 ± 0.06 | 0.07 ± 0.03 | 3, 3 of 3 |
-| spaced | 46.00 | 1.07 | 9.91 ± 0.58 (9.51–10.58) | 0.00 | 1.15 ± 0.05 | 0.72 ± 0.04 | 0.02 ± 0.03 | 3, 1 of 3 |
-| variation | 46.00 | 1.07 | 7.85 ± 0.46 (7.53–8.38) | 2.88 | 1.02 ± 0.08 | -1.34 ± 0.08 | -0.12 ± 0.03 | 0, 0 of 3 |
-| live | 46.00 | 1.07 | 7.82 ± 0.46 (7.51–8.35) | 2.35 | 1.32 ± 0.08 | -1.37 ± 0.08 | 0.18 ± 0.03 | 0, 3 of 3 |
-| tier-above | 46.00 | 1.05 | 7.24 ± 0.43 (6.95–7.74) | 0.00 | 0.97 ± 0.06 | -1.95 ± 0.11 | -0.17 ± 0.03 | 0, 0 of 3 |
-| adaptive | 46.00 | 1.07 | 10.41 ± 0.61 (9.99–11.11) | 0.00 | 1.20 ± 0.05 | 1.22 ± 0.07 | 0.07 ± 0.03 | 3, 3 of 3 |
+| steady | 46.00 | 1.07 | 9.19 ± 0.54 (8.82–9.81) | 0.00 | 1.12 ± 0.06 | 0.00 ± 0.00 | 0.00 ± 0.00 | 0, 0 of 3 |
+| precision | 46.00 | 1.07 | 10.24 ± 0.60 (9.82–10.93) | 0.00 | 1.20 ± 0.05 | 1.05 ± 0.06 | 0.08 ± 0.03 | 3, 3 of 3 |
+| spaced | 46.00 | 1.07 | 9.91 ± 0.58 (9.51–10.58) | 0.00 | 1.17 ± 0.08 | 0.72 ± 0.04 | 0.05 ± 0.05 | 3, 2 of 3 |
+| variation | 46.00 | 1.07 | 7.85 ± 0.46 (7.53–8.38) | 2.88 | 1.02 ± 0.08 | -1.34 ± 0.08 | -0.10 ± 0.05 | 0, 0 of 3 |
+| live | 46.00 | 1.07 | 7.82 ± 0.46 (7.51–8.35) | 2.35 | 1.32 ± 0.08 | -1.37 ± 0.08 | 0.20 ± 0.05 | 0, 3 of 3 |
+| tier-above | 46.00 | 1.05 | 7.24 ± 0.43 (6.95–7.74) | 0.00 | 0.97 ± 0.06 | -1.95 ± 0.11 | -0.15 ± 0.00 | 0, 0 of 3 |
+| adaptive | 46.00 | 1.07 | 10.41 ± 0.61 (9.99–11.11) | 0.00 | 1.20 ± 0.05 | 1.22 ± 0.07 | 0.08 ± 0.03 | 3, 3 of 3 |
 
 ## sweep precision.rested=1.05 (matched): precision.rested at 1.05
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -410,7 +410,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep precision.rested=1.25 (matched): precision.rested at 1.25
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -424,7 +424,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep precision.tired=0.7 (matched): precision.tired at 0.7
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -438,7 +438,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep precision.tired=0.95 (matched): precision.tired at 0.95
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -452,7 +452,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep spaced.within=1.03 (matched): spaced.within at 1.03
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -466,7 +466,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep spaced.within=1.25 (matched): spaced.within at 1.25
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -480,7 +480,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep spaced.outside=0.85 (matched): spaced.outside at 0.85
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -494,7 +494,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep spaced.outside=0.97 (matched): spaced.outside at 0.97
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -508,7 +508,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep variation.primary=0.75 (matched): variation.primary at 0.75
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -522,7 +522,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep variation.primary=0.95 (matched): variation.primary at 0.95
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -536,7 +536,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep variation.transfer=0.2 (matched): variation.transfer at 0.2
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -550,7 +550,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep variation.transfer=0.4 (matched): variation.transfer at 0.4
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -564,7 +564,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep live.primary=0.75 (matched): live.primary at 0.75
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -578,7 +578,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep live.primary=0.95 (matched): live.primary at 0.95
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -592,7 +592,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep live.transfer=0.1 (matched): live.transfer at 0.1
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -606,7 +606,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep live.transfer=0.2 (matched): live.transfer at 0.2
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -620,7 +620,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep tier.above=0.65 (matched): tier.above at 0.65
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -634,7 +634,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep tier.above=0.95 (matched): tier.above at 0.95
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -648,7 +648,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep tier.below=0.6 (matched): tier.below at 0.6
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|
@@ -662,7 +662,7 @@ Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
 
 ## sweep tier.below=0.9 (matched): tier.below at 0.9
 
-Ran on 804bde39 (tree f4d7033c), seeds st-0, st-1, st-2, 30 days.
+Ran on 3963fb8c (tree b19797ea), seeds st-0, st-1, st-2, 30 days.
 
 | Strategy | Hours | Focus | On the targets (mean ± sd, min–max) | Carried | Work | vs steady: targets | vs steady: work | Ahead (targets, work) |
 |---|---|---|---|---|---|---|---|---|

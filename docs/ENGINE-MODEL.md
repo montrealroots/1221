@@ -363,7 +363,7 @@ Two places read the moment alone and ignored the history behind it.
 
 The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
 
-- **Material:** 42 scenes and 26 plays, each with its structured profile.
+- **Material:** 56 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11).
 - **Practice:** 27 exercises, each with three tiers and five focuses.
 - **Choices:** three axes of choice and two sides each. A director asks for a side half the time.
 - **Coverage in two years:** a student meets about 38 of the scenes. After that, a scene comes back asking

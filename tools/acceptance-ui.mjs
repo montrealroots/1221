@@ -365,6 +365,29 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
   });
   await overflow('school casting (save)');
 }
+// From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
+if (DIR && existsSync(`${DIR}/withdraw.json`)) {
+  await step('[save: withdraw scenario] school: the class left goes on, and says so', async () => {
+    await openSave('withdraw.json');
+    await rail('School'); await tab('Standing And Craft');
+    must(await page.getByText('Your Classes').count(), 'no Your Classes');
+    const said = page.getByText(/who went on without you after you left the School/).first();
+    must(await said.count(), 'the class left isn’t said to go on');
+    return (await said.innerText()).slice(0, 160);
+  });
+  await overflow('school standing (withdraw save)');
+}
+if (DIR && existsSync(`${DIR}/nonfiler.json`)) {
+  await step('[save: nonfiler scenario] papers: Connecticut’s own assessment of a return never filed, and its rules in words', async () => {
+    await openSave('nonfiler.json');
+    await rail('Papers'); await tab('Tax Returns');
+    const said = page.getByText(/Assessed by Connecticut DRS with no return from you/).first();
+    must(await said.count(), 'no assessment said');
+    must(await page.getByText(/12% a year, a month or part, simple/).count(), 'no interest in words');
+    return (await said.innerText()).slice(0, 160);
+  });
+  await overflow('papers tax (nonfiler save)');
+}
 if (PHONE) {
   await step('phone: the drawer opens and closes, and Home is reachable from it', async () => {
     await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click(); await wait(400);

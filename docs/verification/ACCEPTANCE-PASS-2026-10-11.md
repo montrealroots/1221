@@ -172,6 +172,8 @@ reasons under a greyed row.
 
 ## 6. Remaining Limitations, And What The Player Meets
 
+> **Since then:** the limitations pass of 2026-10-11 closed the first five rows and the seventh, and enlarged the content of the sixth, which is still finite (`docs/verification/LIMITATIONS-PASS-2026-10-11.md`). The seventh row's player-facing claim was wrong when it was written: nothing read a credit's year, so the résumé never showed it.
+
 | Limitation | What the player meets |
 |---|---|
 | A first class's Rep and Cabaret parts aren't played. | Your Classes lists its School productions only. |
