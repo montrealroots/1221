@@ -4,7 +4,8 @@ The owner's brief was "Bring SLATE’s Attributes, Genres, And Their Integration
 from `main` at `e53eaa89`. The evidence, requirement by requirement, is
 `docs/verification/ATTRIBUTES-GENRES-PASS-2026-10-12.md`; the model is `docs/ENGINE-MODEL.md` §8.
 
-- **Branch:** `claude/attributes-genres`, pushed. **Not merged:** `main` is still `e53eaa89`, for the owner.
+- **Branch:** `claude/attributes-genres`, pushed.
+- **Merged:** at the owner's "Merge it.", `main` was fast-forwarded from `e53eaa89` to this pass.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged.
   - `person.briefs` is a new optional field, written on first use.
@@ -65,7 +66,7 @@ from `main` at `e53eaa89`. The evidence, requirement by requirement, is
 
 ## Still the owner's
 
-- Merge, and deploy.
+- Deploy.
 - Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
 - The 16 deferred items.
 - On camera a taped brief favors the feeling abilities. The body's and the voice's specialists are rewarded by the
