@@ -507,7 +507,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(/held back the|wasn’t complete|didn’t fit/.test(text), 'what held it back isn’t said');
     must(/What To Work On/i.test(text), 'no weakness named');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t in the takes table');
-    return `${said} / ${text.match(/What To Work On\n[^\n]+/)?.[0]?.slice(0, 160)}`;
+    return `${said} / ${text.match(/What To Work On\n[^\n]+/i)?.[0]?.slice(0, 160)}`;
   });
   await step('[save: brief scenario] brief: the weakness trained from the brief, an hour of practice', async () => {
     const open = briefPane().locator('button', { hasText: /…$/ }).first();
