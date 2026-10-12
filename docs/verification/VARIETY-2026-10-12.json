@@ -1,0 +1,167 @@
+{
+ "note": "tools/variety.ts, two school years each, the practicing policy, on src of ebf76adb (the attributes-and-genres pass), 2026-10-12.",
+ "runs": {
+  "v-0": {
+   "seed": "v-0",
+   "years": 2,
+   "ended": "2028-08-23",
+   "standing": "good",
+   "pool": {
+    "scenes": 56,
+    "plays": 30,
+    "exercises": 27
+   },
+   "coursework": {
+    "set": 184,
+    "withScene": 46,
+    "distinctScenes": 44,
+    "longestSameSceneInARow": 1,
+    "longestSameSceneInACourse": 1,
+    "metAgain": 2,
+    "metAgainAskingSomethingNew": 2,
+    "longestSamePartnerInACourse": 1,
+    "partnersUsed": 15,
+    "classSize": 15,
+    "objectives": 5
+   },
+   "recommendations": {
+    "weeks": 105,
+    "weeksWithOne": 102,
+    "distinctTops": 7,
+    "longestIgnored": 1,
+    "longestStuck": 0,
+    "longestUnresolved": 1,
+    "recommendedAtFull": 0
+   },
+   "practice": {
+    "hours": 1308,
+    "distinctSituations": 33,
+    "longestSameSituationInARow": 3,
+    "longestSameFeedbackInARow": 1,
+    "distinctFeedback": 1308
+   },
+   "productions": {
+    "met": 5,
+    "directed": 1,
+    "notes": 14,
+    "notesAgainAfterTakenUnsaid": 0,
+    "sameNoteTextInARow": 1
+   },
+   "choices": {
+    "weeksWithNoWorkDecision": 47,
+    "weeks": 105,
+    "note": "Practice’s exercise, tier and focus are a choice every day; this counts weeks with no moment to answer and no scene to choose a way of playing."
+   },
+   "breaches": 0,
+   "unbalanced": 0
+  },
+  "v-1": {
+   "seed": "v-1",
+   "years": 2,
+   "ended": "2028-08-23",
+   "standing": "good",
+   "pool": {
+    "scenes": 56,
+    "plays": 30,
+    "exercises": 27
+   },
+   "coursework": {
+    "set": 184,
+    "withScene": 46,
+    "distinctScenes": 44,
+    "longestSameSceneInARow": 1,
+    "longestSameSceneInACourse": 1,
+    "metAgain": 2,
+    "metAgainAskingSomethingNew": 2,
+    "longestSamePartnerInACourse": 1,
+    "partnersUsed": 15,
+    "classSize": 15,
+    "objectives": 5
+   },
+   "recommendations": {
+    "weeks": 105,
+    "weeksWithOne": 102,
+    "distinctTops": 8,
+    "longestIgnored": 1,
+    "longestStuck": 0,
+    "longestUnresolved": 1,
+    "recommendedAtFull": 0
+   },
+   "practice": {
+    "hours": 1330,
+    "distinctSituations": 39,
+    "longestSameSituationInARow": 3,
+    "longestSameFeedbackInARow": 1,
+    "distinctFeedback": 1330
+   },
+   "productions": {
+    "met": 5,
+    "directed": 5,
+    "notes": 14,
+    "notesAgainAfterTakenUnsaid": 0,
+    "sameNoteTextInARow": 1
+   },
+   "choices": {
+    "weeksWithNoWorkDecision": 47,
+    "weeks": 105,
+    "note": "Practice’s exercise, tier and focus are a choice every day; this counts weeks with no moment to answer and no scene to choose a way of playing."
+   },
+   "breaches": 0,
+   "unbalanced": 0
+  },
+  "v-2": {
+   "seed": "v-2",
+   "years": 2,
+   "ended": "2028-08-23",
+   "standing": "good",
+   "pool": {
+    "scenes": 56,
+    "plays": 30,
+    "exercises": 27
+   },
+   "coursework": {
+    "set": 184,
+    "withScene": 46,
+    "distinctScenes": 44,
+    "longestSameSceneInARow": 1,
+    "longestSameSceneInACourse": 1,
+    "metAgain": 2,
+    "metAgainAskingSomethingNew": 2,
+    "longestSamePartnerInACourse": 1,
+    "partnersUsed": 15,
+    "classSize": 15,
+    "objectives": 5
+   },
+   "recommendations": {
+    "weeks": 105,
+    "weeksWithOne": 102,
+    "distinctTops": 7,
+    "longestIgnored": 1,
+    "longestStuck": 0,
+    "longestUnresolved": 1,
+    "recommendedAtFull": 0
+   },
+   "practice": {
+    "hours": 1320,
+    "distinctSituations": 36,
+    "longestSameSituationInARow": 3,
+    "longestSameFeedbackInARow": 1,
+    "distinctFeedback": 1319
+   },
+   "productions": {
+    "met": 5,
+    "directed": 2,
+    "notes": 14,
+    "notesAgainAfterTakenUnsaid": 0,
+    "sameNoteTextInARow": 1
+   },
+   "choices": {
+    "weeksWithNoWorkDecision": 47,
+    "weeks": 105,
+    "note": "Practice’s exercise, tier and focus are a choice every day; this counts weeks with no moment to answer and no scene to choose a way of playing."
+   },
+   "breaches": 0,
+   "unbalanced": 0
+  }
+ }
+}

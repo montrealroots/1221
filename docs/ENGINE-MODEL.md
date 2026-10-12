@@ -41,9 +41,14 @@ When fatigue is the limit removed, its spread goes too.
 
 `content/material.ts`, `content/approaches.ts`, `systems/material.ts`.
 
-- Each of the 68 materials carries five feature levels (timing, physical, partner, vocal, improvisation, 0 to 3),
-  its language, tones, turns and medium. The reasons for each level are written beside it.
+- Each of the 68 materials, and from 2026-10-12 each of the 149 practice briefs, carries five feature levels (timing,
+  physical, partner, vocal, improvisation, 0 to 3), its language, tones, turns and medium. The reasons for each level
+  are written beside it.
 - A feature multiplies the lean of the dimensions it reaches by `1 + per·level`, and adds abilities to their inputs.
+  Both were doubled on 2026-10-12 (§8): until then a level-3 feature, the material built on it, made its ability about
+  a fifth of one dimension.
+- A brief's beats count apart (§8): a change of tones between beats is a transition (adaptability, composure); a beat
+  with two tones held at once is a blend (emotional depth, imagination). Each asks more rehearsal before it counts.
 - A choice of pace, scale and structure leans the weights (×0.9 to ×1.2 per side) and adds inputs.
 - Where a choice's lean is 1.1 or more, the choice must be rehearsed in (prep part `approach`, complete at 0.9).
 - A change of choice keeps half of what was rehearsed (`PLAYING.keptOnChange`).
@@ -94,7 +99,8 @@ Two rules stop the focus from being a way round the repeat rule:
 
 - **Familiarity.** For each of a material's features: `min(1, (met + practised)/6)`, then the mean over its features.
 - **Preparation speed.** `max(genre speed, feature speed)`, each `1 + (1/6)·familiarity`. Taking the larger, never
-  the sum, is what stops double-counting.
+  the sum, is what stops double-counting. A brief's steps (§8) take feature speed alone: knowing its genre is a part
+  of the take's own preparation, so it doesn't also speed it.
 - **No effect on quality.** Experience reaches no evaluation input. It only makes preparation faster.
 - **Recommendations.** These weigh recent limits toward the latest result, drop any input already at full, and scale
   by the room left since.
@@ -363,7 +369,8 @@ Two places read the moment alone and ignored the history behind it.
 
 The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
 
-- **Material:** 56 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11).
+- **Material:** 56 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11),
+  and from 2026-10-12 149 practice briefs, one written for each genre, with 302 readings among them (§8).
 - **Practice:** 27 exercises, each with three tiers and five focuses.
 - **Choices:** three axes of choice and two sides each. A director asks for a side half the time.
 - **Coverage in two years:** a student meets about 38 of the scenes. After that, a scene comes back asking
@@ -373,3 +380,154 @@ The pool is finite, and nothing here claims otherwise. Variety comes from the re
   - a different reading.
 - **Weeks with no work decision:** 47 of 105, the School's breaks and written-work weeks. Practice's exercise, tier
   and focus remain a choice every day.
+
+## 8. Practice Briefs (2026-10-12)
+
+`content/briefs/`, `systems/briefs.ts`, `ui/components/BriefPane.tsx`. Until this pass a self-tape in a genre had no
+material: the camera's task, the genre's applied demands and its familiarity. 98 of the 149 genres reached the player
+only that way. Every self-tape is now of a brief, an original scene written for SLATE, one for each genre.
+
+### What a brief is
+
+- **Its setup:** circumstances, relationship, who you play and who the reader plays off camera, objective, obstacle,
+  and two to four beats. This is the breakdown the acting texts set out: Stanislavski's given circumstances and tasks,
+  and Hagen's questions (`docs/research/attributes/research-self-tape-briefs.json`). Every number is SLATE's.
+- **Its material profile:** the five features, language, medium (`camera`, or `voice` at a microphone for the five
+  voice genres), beats, and the techniques its scene stages. A genre adds no demand of its own: a brief listed under a
+  genre with applied demands stages them (`tests/briefs-content.test.ts`).
+- **Its readings:** two or three, each supported by the brief. Each leans the dimensions (0.85 to 1.25) and draws on
+  abilities (0.3 to 1). None misfits; only the material's `allows` and a callback's note can hold a choice back.
+- **Staged for a tape:** nothing touches the reader. A fight is marked solo against called cues, and an embrace is
+  played to the eyeline beside the lens.
+
+### How a take is judged
+
+- **The task** is `tape`: the camera's four dimensions, plus connection (listening, presence) and responsiveness
+  (listening, adaptability), which a reader off camera brings.
+- **A reading's** leans are squared and its abilities' weights doubled (`BRIEF.readingLean`, `readingDraw`). Then
+  everything is normalized together.
+- **Preparation** has four parts:
+  - the breakdown, complete at 0.8;
+  - the lines, complete at 0.8;
+  - rehearsal, complete at `0.5 + 0.08·transitions + 0.04·blends`, at most 0.85;
+  - knowing the genre, the better of familiarity and practice, complete at 0.3.
+
+  A way of playing it adds its own rehearsal, complete at 0.9.
+- **The steps:** Break It Down takes 30 minutes, Learn The Lines 30 or 50, Rehearse It On Your Feet 45. Each moves
+  its part by `gain · focus · trait · featureSpeed · (1 − part)`, at gains of 0.6, 0.6 and 0.5, halved again the same
+  day.
+- **Pitch:** a brief is pitched at a student (−0.2); a callback adds 0.3.
+- **A take's purpose:**
+  - first;
+  - a callback;
+  - another reading;
+  - another way of playing it;
+  - improved: its expected result a point or more over the last take's;
+  - the same again, which counts and is worth half as practice (`againWorth`) on any day.
+- **Callbacks:** a Strong take earns one callback, a harder pitch with a note on one side of one axis the brief
+  allows, said before the take. Answering it earns none; a fresh take can.
+
+### Invariants added
+
+Each is a test in `tests/briefs.test.ts` unless named.
+
+1. **The guarantee.** Over 900 cases, every brief × reading × fitting way of playing it, fully prepared, mastered and
+   on a sufficient day, comes to exactly 100 with `mastery: true` and no limits. A callback answered as its note asks
+   is 100 too.
+2. **No reading misfits,** and no lean adds weight.
+3. **What it doesn't read changes nothing.** An ability or technique a brief doesn't read leaves the take where it was;
+   one it reads raises it. This holds for every brief and every ability.
+4. **Readings matter to someone.** For every brief, at least one of three actors of different strengths comes out
+   differently by the reading.
+5. **Tone held and tone changed.** A change of tone between beats and a beat held two ways each ask more rehearsal. The
+   change asks adaptability and the held beat depth, so different actors meet each differently.
+6. **Tags.** A brief's genres reordered or repeated change nothing, 0 of 149 moved (`tools/brief-balance.ts`), and they
+   share one session's practice.
+7. **Played through the commands:**
+   - each step's time;
+   - the refusals, each with its reason;
+   - an action sent twice lived once;
+   - the purposes;
+   - one callback a round;
+   - the record and the draw across a save and a reload.
+
+### What the measurements showed, and what they changed
+
+**Catalog-wide,** every brief, by the evaluation's expected result (`docs/verification/BRIEF-BALANCE.md`).
+
+- **Specialist and generalist, the same budget.** Across every kind of work the School sets, each specialist is ahead
+  somewhere and behind elsewhere.
+  - The feeling specialist leads on taped briefs, songs and auditions, and trails on all 56 scenes shown and all 30
+    nights.
+  - The body specialist leads on voice, movement and clown work, and trails on every taped brief. Its deficit there
+    falls as the brief is built more on the body and the voice:
+
+    | Physical plus vocal level | Body specialist against the generalist |
+    |---|---|
+    | 0–1 | −9.0 |
+    | 2–3 | −6.2 |
+    | 4 or more | −3.2 |
+- **Readings.**
+  - A specialist's best and worst reading of a brief are 0.7 to 1.4 points apart on average, up to 3.6.
+  - Two specialists' best readings differ on 42 to 133 of the 149 briefs.
+  - For an even actor they tie, as they must.
+- **Preparation.** For the developing actor: 20 unprepared, 44 half prepared, 56 complete.
+- **A weakness trained.**
+  - +20 on the input that costs a brief most adds 2.0 (1.2 to 4.2), n = 149.
+  - +20 on an input the brief doesn't read adds exactly 0, for all 149.
+- **Transfer.** +10 on emotional depth moves all 149 briefs, by 1.4 on average. Vocal moves 76 of them and physical 85.
+
+**Played** (`tools/brief-strategies.ts`, results in `docs/verification/briefs/`): 24 hours each, n = 3 a cell, on
+matched and held-out seeds.
+
+| Way | Mean Take | Genre Practice Per Take | Abilities Gained |
+|---|---|---|---|
+| Prepared | 46.6 | 10 | −0.9 |
+| Trained between | 47.2 | 10 | +1.6 |
+| Tape only | 21.1 | 2.2 | −1.4 |
+| Breadth | 21.1 | 10 | −1.0 |
+| Repeat one | 58.3 | 2.8 | −1.4 |
+
+Repeat one has the best takes because its own takes build that genre's knowledge. It's ahead on that one brief and
+level everywhere else: on the 20 held-out briefs every way is within 0.3.
+
+**Long runs** (`tools/brief-journeys.ts`): 120 days of term, four profiles, two seeds.
+
+- No take was the same again in any run.
+- The purposes were first takes, other readings and callbacks.
+- Quality rose over the term for the beginner, 52.7 to 56.1, and for the developing student, 53.9 to 57.3.
+- 0 breaches and 0 unbalanced entries.
+
+**What the runs changed**, each explained where it lives:
+
+1. **The pitch went from 0.125 to −0.2.** A first-year's well-prepared take came out at 30, with nothing to do but
+   wait.
+2. **Feature effects were doubled.** One kind of actor led the even one on 139 of 149 briefs, whatever each was built
+   on.
+3. **Readings were strengthened.** A specialist's choice of reading moved the result by under a point on most briefs.
+4. **Knowing the genre changed.** It became the better of familiarity and practice, complete at 0.3, and no longer
+   speeds preparation. A student had spent 21 hours of a month studying one genre and taped nothing.
+5. **The steps were lightened.** A first brief in a new genre took about 14 hours to have ready; it takes about 4 now.
+6. **One callback a round.** A mastered student taped one brief 84 times, a new note each time. The same runs found
+   that a way of playing chosen after rehearsal was complete could never be rehearsed in. Coursework had the same bug.
+7. **The same again is worth half.** Unprepared repetition had credited a genre with more practice than preparing did.
+
+### Mutation record (2026-10-12)
+
+Twenty mutations of the new rules, each run alone against the brief, content, genre-coverage and engagement tests.
+All twenty were killed.
+
+Four first survived:
+- two were tests comparing against the constant they mutated (rehearsal per transition, the microphone's lean);
+- two were rules with no test (a step's same-day halving, a held beat's own demand).
+
+Each has a test now.
+
+### Limits
+
+- **The content is finite:** 149 briefs, one written for each genre, with 302 readings.
+- **On camera, a taped brief favors feeling.** The body and voice specialists are rewarded by the School's movement,
+  voice and clown work, not by taping.
+- **Sizes are SLATE's design.** That covers the pitch, the steps, the completes, the reading strength and the callback's
+  lift. The research supports the shape of a breakdown and that a scene has more than one valid reading (Hagen). It
+  also supports that an adjustment given before a take is expected to be taken (Merlin). It supports no size.
