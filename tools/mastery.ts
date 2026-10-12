@@ -7,9 +7,11 @@
  *
  * - `--mode single --target <id>`: one ability or technique trained by its own exercise (Stamina by workouts,
  *   Discipline by a day's practice kept), as many sessions a day as `--per-day` allows, until full.
- * - `--mode plan --genre <id>`: what a self-tape in a genre reads (the camera task's abilities, its techniques and the
- *   genre's demands) trained in turn, the least full first, four hours a day; the genre studied until it's known; a
- *   tape every thirty days to show the way there; and once everything it reads is full, tapes through the command.
+ * - `--mode plan --genre <id>`: what a taped brief of the genre reads (from 2026-10-12: the taped brief's abilities, its
+ *   material's and its first reading's, and its techniques) trained in turn, the least full first, four hours a day; the
+ *   genre studied until it's known and the brief prepared until complete; a tape every thirty days to show the way
+ *   there; and once everything it reads is full, tapes through the command. Until then it trained what a self-tape of
+ *   no scene read, the camera task's.
  *   Then matched twins of that mastered save tape ill, hurt and recovered (TEST SETUP: the condition put on, as
  *   `tools/condition.ts` puts it).
  *
@@ -24,12 +26,14 @@ import { breaches } from '../src/engine/core/invariants';
 import { abilityFull, developmentOf, levelOf, targetId, type Target } from '../src/engine/systems/attributes';
 import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
 import { lookAfterRefusal } from '../src/engine/systems/life';
-import { genreState, selfTapeRefusal, studyRefusal, tapeReads, SELF_TAPE } from '../src/engine/systems/engagement';
+import { genreState, studyRefusal } from '../src/engine/systems/engagement';
+import { briefsOf } from '../src/engine/content/briefs';
+import { briefContext, genreKnown, prepareRefusal, recordOf, requiredOf, tapeReadsOf, tapeRefusal } from '../src/engine/systems/briefs';
+import type { Person } from '../src/engine/domain/model';
 import { careFor, healthOf } from '../src/engine/systems/health';
 import { journeyOf } from '../src/engine/systems/evaluation';
 import { EXERCISES, PRACTICE, exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, type AbilityId } from '../src/engine/content/abilities';
-import { TASK_PROFILES } from '../src/engine/content/tasks';
 import { INJURY_KIND, type InjuryKind } from '../src/engine/content/injury';
 import type { Skill } from '../src/engine/content/school';
 import { attentiveHour, life } from './policy';
@@ -139,27 +143,39 @@ function single(target: Target) {
 }
 
 function plan(genre: string) {
-  const camera = TASK_PROFILES.camera!;
-  const abilities = [...new Set(Object.values(camera.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))))];
-  const techniques = (Object.keys(tapeReads(genre)) as Skill[]).filter((s) => TECHNIQUES.includes(s));
+  const b = briefsOf(genre)[0]!;
+  const reading = b.readings[0]!.id;
+  const ctx = briefContext({ engagement: { byGenre: {} } } as unknown as Person, b, { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] }, { reading });
+  const abilities = [...new Set([...Object.values(ctx.task.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))), ...Object.values(ctx.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability))])];
+  const techniques = (Object.keys(tapeReadsOf(b)) as Skill[]).filter((s) => TECHNIQUES.includes(s));
   const targets: Target[] = [...abilities, ...techniques];
   const tapes: { date: string; overall: number; mastery: boolean; readiness: number }[] = [];
+  const req = requiredOf(b);
+  const prepared = (sim: Simulation) => { const p = recordOf(sim.player, b.id).prep; return p.interpretation >= req.interpretation! && p.memorization >= req.memorization! && p.rehearsal >= req.rehearsal!; };
+  const known = (sim: Simulation) => genreKnown(sim.player, b) >= req.genre!;
   const tape = (sim: Simulation) => {
-    const no = selfTapeRefusal(sim, sim.player, genre);
+    if (!recordOf(sim.player, b.id).reading) sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading } });
+    const no = tapeRefusal(sim, sim.player, genre, b);
     if (no) return false;
-    const r = sim.execute({ kind: 'practice.self_tape', payload: { genre } });
+    const r = sim.execute({ kind: 'practice.self_tape', payload: { genre, brief: b.id } });
     if (!r.ok) return false;
     const w = sim.player.work!.at(-1)!;
     tapes.push({ date: dayKey(sim), overall: w.overall, mastery: w.mastery, readiness: Math.round(w.inputs.condition.readiness) });
     return true;
   };
   let tapeDue = false;
-  const ready = (sim: Simulation) => targets.every((t) => level(sim, t) >= (isAbility(t) ? fullOf(sim, t) : MASTERED)) && genreState(sim.player, genre).familiarity >= SELF_TAPE.genreComplete * 100;
-  // The genre studied until it's known, an hour a day; a tape when one is due.
+  const ready = (sim: Simulation) => targets.every((t) => level(sim, t) >= (isAbility(t) ? fullOf(sim, t) : MASTERED)) && known(sim) && prepared(sim);
+  // The genre studied until it's known, an hour a day; the brief prepared a step at a time; a tape when one is due.
   const extraHour = (sim: Simulation) => {
     if (tapeDue && tape(sim)) { tapeDue = false; return true; }
-    if (genreState(sim.player, genre).familiarity < SELF_TAPE.genreComplete * 100 && !studyRefusal(sim, sim.player, genre) && (developmentOf(sim.player).counts[`genre:${genre}<study`] ?? 0) === 0) {
+    if (!known(sim) && !studyRefusal(sim, sim.player, genre) && (developmentOf(sim.player).counts[`genre:${genre}<study`] ?? 0) === 0) {
       return sim.execute({ kind: 'genre.study', payload: { genre } }).ok;
+    }
+    if (!prepared(sim)) {
+      const rec = recordOf(sim.player, b.id);
+      const short = (s: 'read' | 'lines' | 'rehearse') => { const part = s === 'read' ? 'interpretation' : s === 'lines' ? 'memorization' : 'rehearsal'; return 1 - rec.prep[part] / (req[part] ?? 1); };
+      const s = (['read', 'lines', 'rehearse'] as const).filter((x) => short(x) > 0 && !prepareRefusal(sim, sim.player, b, x)).sort((x, y) => short(y) - short(x))[0];
+      if (s) return sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok;
     }
     return false;
   };
@@ -194,8 +210,8 @@ function plan(genre: string) {
       let got: unknown = 'no tape in ten days';
       for (let h = 0; h < 240; h += 1) {
         const hour = zonedParts(twin.now, twin.zone).hour;
-        if (hour >= 10 && hour < 20 && twin.player.wellbeing.energy > 60 && !selfTapeRefusal(twin, twin.player, genre)) {
-          const ok = twin.execute({ kind: 'practice.self_tape', payload: { genre } });
+        if (hour >= 10 && hour < 20 && twin.player.wellbeing.energy > 60 && !tapeRefusal(twin, twin.player, genre, b)) {
+          const ok = twin.execute({ kind: 'practice.self_tape', payload: { genre, brief: b.id } });
           const w = twin.player.work!.at(-1)!;
           got = ok.ok ? { overall: w.overall, mastery: w.mastery, dims: w.dims, condition: w.inputs.condition, limits: w.limits.map((l) => `${l.dimension}: ${l.label} (−${l.by})`) } : ok.error;
           break;
@@ -209,7 +225,7 @@ function plan(genre: string) {
   const j = journeyOf(sim.player);
   return {
     mode: 'plan', genre, seed: SEED, targets, masteredOn, graduated: r.graduatedOn.date ?? null, standing: sim.player.school?.standing,
-    progress: report(r.progress, sim), familiarity: Math.round(genreState(sim.player, genre).familiarity * 10) / 10,
+    brief: b.id, progress: report(r.progress, sim), familiarity: Math.round(genreState(sim.player, genre).familiarity * 10) / 10, known: Math.round(genreKnown(sim.player, b) * 100), prep: recordOf(sim.player, b.id).prep,
     tapesOnTheWay: tapes.slice(0, tapes.length - payoff.length), payoff, twins,
     journeyMastery: Object.fromEntries(Object.entries(j.totals).map(([k, x]) => [k, x!.mastery])),
     refused: r.refused, breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length, reloads: r.reloads,

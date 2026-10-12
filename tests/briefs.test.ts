@@ -418,3 +418,17 @@ describe('what each new rule holds (2026-10-12)', () => {
     }
   });
 });
+
+describe('found by the mastery tool’s twins (2026-10-12)', () => {
+  it('an injury holds back a brief built on physical work, and leaves one that isn’t where it was', () => {
+    const dance = BRIEFS.find((x) => x.physical >= 2)!;
+    const still = BRIEFS.find((x) => x.physical === 0)!;
+    for (const b of [dance, still]) {
+      const ctx = { ...briefContext(nobody, b, blank(), { reading: b.readings[0]!.id, prep: FULL_PREP }), key: 'injury', expected: true };
+      const well = judge('seed', FULL, { ...ctx, condition: { readiness: 100 } }).overall;
+      const hurt = judge('seed', FULL, { ...ctx, condition: { readiness: 100, injured: true } }).overall;
+      expect(well, b.id).toBe(100);
+      if (b === dance) expect(hurt, b.id).toBeLessThan(100); else expect(hurt, b.id).toBe(100);
+    }
+  });
+});

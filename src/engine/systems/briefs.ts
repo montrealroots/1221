@@ -15,7 +15,8 @@
  *   reading is valid: it leans the work's dimensions and draws on different abilities, normalized, so it moves weight
  *   and adds none. A change of reading keeps half the breakdown; a change of how it's played keeps half its rehearsal.
  *   Only the material's own `allows` and a callback's direction, said before the take, can hold a choice back.
- * - **The take** (`practice.self_tape`): judged as a taped brief (`TASK_PROFILES.tape`), kept on the work record and the
+ * - **The take** (`practice.self_tape`): judged as a taped brief (`TASK_PROFILES.tape`, or `tapeOnFeet` where the scene is
+ *   built on physical work, so an injury reaches it), kept on the work record and the
  *   brief's own record with its reading, its playing, its preparation, its result and what held it back most, and its
  *   purpose (`purposeOf`): a first take, another reading, another way of playing it, a take answering a callback's
  *   direction, an improved one, or the same again, said plainly and not refused.
@@ -204,8 +205,11 @@ const directionOf = (rec: BriefRecord): Partial<Record<Axis, AxisValue>> | undef
  * What a take of a brief asks, but the day: its task, techniques, preparation, difficulty, and the material's, the
  * reading's and the playing's reads. `over` replaces the record's own reading, playing or preparation, for a preview.
  */
+/** The task a brief is judged as: on its feet where its scene is built on physical work, so an injury reaches it. */
+export const taskOf = (b: Brief) => (b.physical >= 2 ? TASK_PROFILES.tapeOnFeet! : TASK_PROFILES.tape!);
+
 export function briefContext(person: Person, b: Brief, rec: BriefRecord, over: { reading?: string; playing?: Playing; prep?: Partial<Record<string, number>>; callback?: boolean } = {}) {
-  const task = TASK_PROFILES.tape!;
+  const task = taskOf(b);
   const material = briefMaterial(b);
   const playing = over.playing ?? rec.playing;
   const callback = over.callback ?? Boolean(rec.callback);

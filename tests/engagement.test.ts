@@ -16,7 +16,7 @@ import { DEMAND_TECHNIQUE, GENRE_DEMANDS, demandReads, genreTags, withDemands } 
 import { engagementOf, genreSpeed, practiceGenres, tapeReads } from '@/engine/systems/engagement';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { briefsOf } from '@/engine/content/briefs';
-import { tapeReadsOf } from '@/engine/systems/briefs';
+import { tapeReadsOf, taskOf } from '@/engine/systems/briefs';
 
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
@@ -114,7 +114,7 @@ describe('every genre', () => {
       expect(state.practice, g.id).toBeGreaterThan(0);
       const work = sim.player.work!.at(-1)!;
       // A taped brief (from 2026-10-12): judged as one, its material's lean in place of the families', its reads the brief's.
-      expect(work.task).toBe('tape');
+      expect(work.task).toBe(taskOf(b).id);
       expect(work.inputs.families).toEqual([]);
       expect(work.inputs.lean).toBeDefined();
       expect(Object.keys(work.inputs.techniques).sort()).toEqual(Object.keys(tapeReadsOf(b)).sort());

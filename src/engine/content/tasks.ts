@@ -166,6 +166,22 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
       responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
     },
   },
+  // A brief whose scene is built on physical work (physical 2 or more: a fight, a dance, a fall), taped: the same as a
+  // taped brief, and an injury reaches its execution and its consistency (from 2026-10-12). Until then the mastery
+  // tool's sprained twin taped the musical's brief, a song and a dance, at 100: a camera scene of no material had never
+  // been reached by an injury, and the brief inherited that.
+  tapeOnFeet: {
+    id: 'tapeOnFeet', label: 'A Taped Brief, On Its Feet', what: 'A practice brief built on physical work, prepared, played to a reader off camera, and watched back.',
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 1)], prep: ['rehearsal'], conditions: ALL },
+      execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
+      responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
+    },
+  },
   audition: {
     id: 'audition', label: 'An Audition', what: 'Two contrasting monologues, shown as an audition.', prepLabel: COURSEWORK_PREP,
     dims: {
