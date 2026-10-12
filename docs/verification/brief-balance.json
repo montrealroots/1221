@@ -357,6 +357,21 @@
     "behind": 79
    }
   },
+  "tapeOnFeet": {
+   "pieces": 1,
+   "feeling specialist": {
+    "ahead": 1,
+    "behind": 0
+   },
+   "body specialist": {
+    "ahead": 0,
+    "behind": 1
+   },
+   "partner specialist": {
+    "ahead": 0,
+    "behind": 1
+   }
+  },
   "audition": {
    "pieces": 1,
    "feeling specialist": {

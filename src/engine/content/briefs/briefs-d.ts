@@ -345,7 +345,7 @@ export const BRIEFS_D: readonly Brief[] = [
     },
     readings: [
       { id: 'plain', label: 'Just The Errand', reading: 'She plays it as a job to get done, with the strain showing only in her hands on the machine.', rests: 'The doctor won’t come again until he’s paid, and the boy is at home with a neighbor.', lean: { believability: 1.25, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.5 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
-      { id: 'pride', label: 'What It Costs', reading: 'The machine is her living and her independence, and selling it is the hardest thing she’s done.', rests: 'She names what it cost new and keeps back the needles and thread.', lean: { interpretation: 1.15, connection: 1.15 }, draws: [{ dim: 'interpretation', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
+      { id: 'pride', label: 'What It Costs', reading: 'The machine is her living and her independence, and selling it costs her more than anything she’s done.', rests: 'She names what it cost new and keeps back the needles and thread.', lean: { interpretation: 1.15, connection: 1.15 }, draws: [{ dim: 'interpretation', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
     ],
   },
   {

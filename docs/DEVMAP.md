@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-150 commands; 146 named by a test, 4 not.
+152 commands; 148 named by a test, 4 not.
 
 ## bank
 
@@ -51,6 +51,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `benefits.assistance` | `src/engine/systems/assistance.ts` | `PapersWorkspace.tsx` | `assistance.test.ts` | Cover, Benefits And Returns |
 | `benefits.claim` | `src/engine/systems/unemployment.ts` | `PapersWorkspace.tsx` | `coverage-gaps-papers.test.ts` `homebenefits.test.ts` `papers-complete.test.ts` `safetynet.test.ts` | Cover, Benefits And Returns |
 | `benefits.ei_register` | `src/engine/systems/eiself.ts` | `PapersWorkspace.tsx` | `cabenefits.test.ts` | Cover, Benefits And Returns |
+
+## brief
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `brief.choose` | `src/engine/systems/briefs.ts` | `BriefPane.tsx` | `attributes-complete.test.ts` `briefs.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
+| `brief.prepare` | `src/engine/systems/briefs.ts` | `BriefPane.tsx` | `briefs.test.ts` `engagement.test.ts` | You As An Actor |
 
 ## calendar
 
@@ -116,7 +123,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `genre.study` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `engagement.test.ts` `genre-coverage.test.ts` `migration-94.test.ts` | You As An Actor |
+| `genre.study` | `src/engine/systems/engagement.ts` | `BriefPane.tsx` `ProfileWorkspace.tsx` | `briefs.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `migration-94.test.ts` | You As An Actor |
 
 ## health
 
@@ -166,7 +173,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `practice.exercise` | `src/engine/systems/practice.ts` | `ProfileWorkspace.tsx` | `development.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
-| `practice.self_tape` | `src/engine/systems/engagement.ts` | `ProfileWorkspace.tsx` | `attributes-complete.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
+| `practice.self_tape` | `src/engine/systems/briefs.ts` | `BriefPane.tsx` | `attributes-complete.test.ts` `briefs.test.ts` `engagement.test.ts` `genre-coverage.test.ts` `history-continuity.test.ts` | You As An Actor |
 
 ## school
 

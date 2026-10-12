@@ -34,6 +34,7 @@ Techniques even (55) for every actor, so only the abilities differ. A task with 
 | A Clown Turn | 1 | 0/1 | 1/0 | 0/1 |
 | A Self-Tape | 1 | 1/0 | 0/1 | 0/1 |
 | A Taped Brief | 149 | 127/20 | 0/149 | 68/79 |
+| A Taped Brief, On Its Feet | 1 | 1/0 | 0/1 | 0/1 |
 | An Audition | 1 | 1/0 | 0/1 | 0/1 |
 | A Night On Stage | 30 | 0/30 | 0/30 | 1/29 |
 

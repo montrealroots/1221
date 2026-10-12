@@ -1,6 +1,6 @@
 {
  "title": "The Yale Student, Banking And Papers: Implementation Matrix",
- "asOf": "2026-10-11, after the remaining-gaps pass",
+ "asOf": "2026-10-12, after the attributes-and-genres pass",
  "basisKey": {
   "documented": "The rule is the institution's or the law's, read in a cited source.",
   "simplified": "The rule follows a cited source, with a stated simplification.",
@@ -2612,6 +2612,87 @@
      "reader": "The résumé",
      "file": "tests/credits-dated.test.ts",
      "title": "are dated by their terms’ casting notices once"
+    }
+   ]
+  },
+  {
+   "id": "school.briefs",
+   "area": "School",
+   "goal": "Work a genre’s practice brief: read it, prepare it, choose a reading and a way of playing it, tape it, see what held it back, train it, and tape it again",
+   "entry": "Player Profile, Genres: Open Its Brief",
+   "prereqs": "Training begun; awake, out of hospital, nothing on the calendar inside the hour; a reading chosen before a take; some lines before rehearsal; energy to work on your feet",
+   "choices": "Which genre and brief; which reading; pace, scale and structure; which step; when to tape; a callback’s note",
+   "steps": "Break It Down (30 min), Learn The Lines (30 or 50), Rehearse It On Your Feet (45); choose; Tape It (60); a Strong take earns one callback",
+   "costs": "Hours and energy; nothing in money",
+   "states": "briefs[id]: prep, reading, playing, takes (purpose, result, what held it back), callback",
+   "failure": "Refused with its reason; an unprepared take comes out low and says what cost it",
+   "recovery": "Prepare further, train what it names, choose another reading, answer the note",
+   "stateRW": "Person.briefs, work, journey, engagement.byGenre, experience",
+   "consumers": "Recommendations and the next suggestion; practice in its genres; the camera’s or the microphone’s technique; the Profile’s journey",
+   "notices": "Each step’s and the take’s confirmation, with what it moved",
+   "saveLoad": "Optional field; kept across a save and a reload",
+   "source": "research-self-tape-briefs.json (Hagen, Stanislavski, Spotlight, Merlin); every size SLATE’s",
+   "basis": "simplified",
+   "limitations": "One brief written for each genre, 149, with 302 readings; on camera a taped brief favors the feeling abilities, and the body’s and the voice’s are rewarded by the School’s movement, voice and clown work.",
+   "boundary": "The content is finite: one brief per genre.",
+   "commands": [
+    "brief.prepare",
+    "brief.choose",
+    "practice.self_tape",
+    "genre.study"
+   ],
+   "tests": [
+    {
+     "file": "tests/briefs.test.ts",
+     "title": "is chosen, prepared and taped, kept with its purpose"
+    },
+    {
+     "file": "tests/briefs.test.ts",
+     "title": "full abilities, mastered techniques, complete preparation"
+    }
+   ],
+   "acceptance": [
+    {
+     "outcome": "Exactly 100 at full, in every brief, reading and fitting way of playing it",
+     "reader": "The guarantee",
+     "file": "tests/briefs.test.ts",
+     "title": "full abilities, mastered techniques, complete preparation"
+    },
+    {
+     "outcome": "Refused before a reading, and a rehearsal before any lines, each with its reason",
+     "reader": "The take",
+     "file": "tests/briefs.test.ts",
+     "title": "refuses a take before a reading is chosen"
+    },
+    {
+     "outcome": "Chosen, prepared, taped and kept with its purpose; a better take after more preparation",
+     "reader": "Recommendations, the journey",
+     "file": "tests/briefs.test.ts",
+     "title": "is chosen, prepared and taped, kept with its purpose"
+    },
+    {
+     "outcome": "A callback earned, answered and cleared, one a round",
+     "reader": "The next take",
+     "file": "tests/briefs.test.ts",
+     "title": "earns one callback a round"
+    },
+    {
+     "outcome": "The same take again is worth half as practice",
+     "reader": "Genre practice",
+     "file": "tests/briefs.test.ts",
+     "title": "a take that’s the same again is worth half as practice"
+    },
+    {
+     "outcome": "The brief that leans most on a named weakness suggested",
+     "reader": "The next brief",
+     "file": "tests/briefs.test.ts",
+     "title": "suggests the brief that leans most on a named weakness"
+    },
+    {
+     "outcome": "Kept across a save and a reload, the same draw",
+     "reader": "The save",
+     "file": "tests/briefs.test.ts",
+     "title": "keeps the record across a save and a reload"
     }
    ]
   }

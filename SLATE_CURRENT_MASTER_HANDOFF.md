@@ -1,3 +1,78 @@
+# Read First: Attributes, Genres And Their Integration, 2026-10-12
+
+The owner's brief was "Bring SLATE’s Attributes, Genres, And Their Integration To The Highest Demonstrable Standard",
+from `main` at `e53eaa89`. The evidence, requirement by requirement, is
+`docs/verification/ATTRIBUTES-GENRES-PASS-2026-10-12.md`; the model is `docs/ENGINE-MODEL.md` §8.
+
+- **Branch:** `claude/attributes-genres`, pushed. **Not merged:** `main` is still `e53eaa89`, for the owner.
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged.
+  - `person.briefs` is a new optional field, written on first use.
+  - A save from before keeps every result it has.
+  - Its next self-tape asks for a reading first.
+- **Untouched:**
+  - the stash (`stash@{0}`);
+  - the three worktrees;
+  - the untracked files at the root.
+- **Kept deferred:**
+  - the 16 deferred items;
+  - no removed system restored;
+  - no parental leave.
+
+## What the pass did
+
+1. **Every genre has playable material.**
+   - 149 original briefs, one written for each genre, with 302 readings (`src/engine/content/briefs/`). 98 genres had
+     none.
+   - Each sets out circumstances, relationship, objective, obstacle, beats, medium and demands.
+   - Each is prepared, read, played and taped through the Player Profile's Genres (`systems/briefs.ts`,
+     `ui/components/BriefPane.tsx`).
+2. **Choices reach performance.** A reading leans the work and draws on abilities, normalized, and never misfits. A
+   way of playing it is rehearsed in. A take keeps its purpose, and a Strong take earns one callback.
+3. **Tone held and tone changed are counted apart,** and tags change nothing.
+4. **Balance measured across the catalog and in play,** on matched and held-out seeds (`docs/verification/BRIEF-BALANCE.md`,
+   `docs/verification/briefs/`). Seven changes were made from what it showed, each explained in ENGINE-MODEL §8.
+   - The doubled feature effects also reach coursework and productions.
+   - A scene shown moved by −0.6 on average and a night by −0.5.
+5. **The audit:**
+   - the itemized matrix gains material demands and training actions;
+   - the genre coverage gives each genre its kind of demand and its brief.
+
+## Bugs found and fixed
+
+- **Callbacks looped:** every Strong callback earned another.
+- **A late choice could never be rehearsed in:** a way of playing chosen after rehearsal was complete was refused,
+  here and in coursework.
+- **Unprepared repetition was rewarded:** repeating a take earned more genre practice than preparing did.
+- **A taped brief built on the body was never reached by an injury.**
+- **Knowing a genre was a grind,** and **a first brief took about 14 hours to prepare.**
+- **The reading toast was wrong:** it said the breakdown was halved on a first choice.
+
+## Verification
+
+- **Engine runs,** on `7cd5b34b`, src `d0acec9a`:
+  - 18 lives, identical field for field to `65d311e8`'s: 15 graduated, the 3 autopilot lives dismissed, 0 breaches,
+    0 unbalanced;
+  - both mastery plans: exactly 100 at mastery, and a sprain now holds back the musical's brief and not the drama's;
+  - the eight brief journeys, the two strategy comparisons and the catalog analysis.
+  - The grid and variety ran on `65d311e8`; the later commits reach only taped briefs.
+- **Built app,** the build of `7cd5b34b`, saves from it:
+  - 1440: 36 passed, 1 skipped;
+  - 390: 37 passed, 1 skipped;
+  - 0 errors and 0 overflows.
+- **Mutation:** twenty mutations of the new rules, all killed.
+- **Gate:** GATE_LINE
+
+## Still the owner's
+
+- Merge, and deploy.
+- Decisions #1–#3 in `docs/verification/COVERAGE-GAPS.md`.
+- The 16 deferred items.
+- On camera a taped brief favors the feeling abilities. The body's and the voice's specialists are rewarded by the
+  School's movement, voice and clown work; whether briefs should reward them more is a design question, not a defect.
+
+---
+
 # Read First: The Remaining In-Scope Gaps, 2026-10-11
 
 The owner's brief was "Finish SLATE's Remaining In-Scope Gaps And Verify Completion", from `main` at `086d00ca`. Its
