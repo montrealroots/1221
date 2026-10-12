@@ -234,7 +234,7 @@ weak or missing test, and each now has one.
 
 ## 10. Verification
 
-- **The gate**, `npm run gate`, exit status read from a file, ran on the final commit (the handoff gives its numbers).
+- **The gate**, `npm run gate`, exit status read from a file, ran on `8bc85232`: exit 0, read from a file; 167 files and 1,914 tests passed, with all sixteen checks. The commit after it changes documents only.
 - **The 18 lives** (`node tools/verify.mjs lives`), on `7cd5b34b`:
   - 15 graduated and the 3 autopilot lives dismissed, as before;
   - 0 breaches, 0 unbalanced;

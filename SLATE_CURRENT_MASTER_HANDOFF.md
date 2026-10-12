@@ -61,7 +61,7 @@ from `main` at `e53eaa89`. The evidence, requirement by requirement, is
   - 390: 37 passed, 1 skipped;
   - 0 errors and 0 overflows.
 - **Mutation:** twenty mutations of the new rules, all killed.
-- **Gate:** GATE_LINE
+- **Gate:** on `8bc85232`, exit status read from a file: 0. 167 files and 1,914 tests pass, with all sixteen checks.
 
 ## Still the owner's
 
