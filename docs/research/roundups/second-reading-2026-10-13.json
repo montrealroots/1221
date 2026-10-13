@@ -1,0 +1,709 @@
+[
+ {
+  "bankId": "us-chase",
+  "field": "insufficientFunds / unknowns[1]",
+  "was": "Autosave insufficient-funds behavior comes from the fetch tool's summary of chase.com/business/support/banking/savings/autosave. It was not re-read word for word.",
+  "now": "Re-read word for word on 2026-10-13. The page says: \"If you don't have enough money in your checking account or linked Overdraft Protection backup account, we'll automatically skip any transfers that occur whenever you get a deposit. For transfers on a schedule (e.g., weekly or monthly), we'll try again over the next three business days, and if there are still insufficient funds, we'll skip the transfer.\" It also says: \"If your transfer falls on a weekend or holiday, we'll schedule it 1 business day earlier.\" and \"For transfers whenever you get a deposit, you can set only one repeat transfer per checking account.\" This unknown is resolved, and the researcher's paraphrase was correct. It changes nothing about round-ups: Chase US still offers none.",
+  "evidence": "https://www.chase.com/business/support/banking/savings/autosave (fetched raw with curl and read in full). The page states that it covers personal accounts too: \"you can also make Autosave transfers between personal Chase checking accounts and personal Chase savings accounts, excluding First Banking℠ accounts.\" A second search of chase.com for round up, round-up and spare change found only education articles about third-party apps. The old 'Chase Automatic Savings Program' module (chase.com/content/chase-ux/.../automatic-savings-program.html) describes only 'a repeating, automatic transfer'. chase.com/personal/checking/savings-program now redirects to /personal/financial-tools/plan/automate-savings."
+ },
+ {
+  "bankId": "us-bank-of-america",
+  "field": "sources[0].quote / optIn",
+  "was": "The quote ends at 'At our discretion, we may cancel or modify the Keep the Change service at any time for any reason.' optIn names only an appointment or 800-432-1000 for stopping.",
+  "now": "The terms paragraph continues: \"Should you have any questions on the Keep the Change program, please contact your nearest financial center.\" A separate line follows: \"Keep the Change® Patent No. US 8,301,530B2.\" The FAQ's answer on how to stop is exactly '[Schedule an appointment] or call 800-432-1000 (Mon-Fri 8 a.m.-11 p.m., Sat-Sun 8 a.m.-8 p.m. ET)', with 1-315-724-4022 from outside the U.S. The page's code defines a 'Log in to Online Banking and cancel Keep the Change' link, but the live answer doesn't use it. So no online way to cancel is offered.",
+  "evidence": "Personal Schedule of Fees PDF, 'Effective August 7, 2026', 'Applies in all states.', 91-11-3000B 08/2026. Its Keep the Change paragraph matches the researcher's quote word for word and has these extra sentences. bankofamerica.com/deposits/keep-the-change-faqs/ raw HTML, FAQ 'How do I stop my Keep the Change® savings program?'"
+ },
+ {
+  "bankId": "us-bank-of-america",
+  "field": "timing (posting order)",
+  "was": "In nightly posting order, Keep the Change transfers come last, after fees.",
+  "now": "They come last among the categories the Deposit Agreement shows, after Fees. But the table opens with: \"Some, but not all, categories are shown below, in the order in which they are processed.\" So 'last of all' is not established. The table's row reads: \"Transfers to an enrolled savings account as part of the optional Keep the Change service\".",
+  "evidence": "Deposit Agreement and Disclosures, Effective May 15, 2026 (91-11-2000B 05/26), page 8, 'Step Two: We group your items into categories...'. This is the PDF served at bankofamerica.com/salesservices/deposits/resources/deposit-agreements/."
+ },
+ {
+  "bankId": "us-bank-of-america",
+  "field": "excluded",
+  "was": "The terms cover only debit card purchases... none is listed by name.",
+  "now": "Add one point. The Deposit Agreement describes Keep the Change as transferring money \"with each eligible debit card purchase\". That implies some debit card purchases are not eligible, but no official source lists which. The product page says only \"Keep the Change is not available for Small Business debit cards.\"",
+  "evidence": "Deposit Agreement, Effective May 15, 2026, Optional Services: \"Keep the Change® - helps you grow your savings by automatically transferring money from your personal checking to the enrolled savings account with each eligible debit card purchase.\""
+ },
+ {
+  "bankId": "us-bank-of-america",
+  "field": "slateRecord (engine gap 3)",
+  "was": "The bank also cancels the day's transfer if any transaction overdrew the account that day, even if the balance later recovers.",
+  "now": "The words 'even if the balance later recovers' are the researcher's reading, not the bank's. The terms say only: \"If on a business day you do not have sufficient available funds in your checking account, or if any transaction has overdrawn your checking account, we do not round-up purchases posted on that business day and we cancel the Keep the Change transfer for that day.\" They don't say what happens when the account is overdrawn and then brought back the same day. The core gap is confirmed: the engine tests only current.balance >= pending (systems/accountlife.ts, line 231) and then sets pending to 0 either way (line 233).",
+  "evidence": "Personal Schedule of Fees, Effective August 7, 2026. The FAQ repeats the rule: 'if you do not have sufficient available funds in your checking account or if any transaction has overdrawn your Checking Account on a business day, we do not round up purchases posted on that business day and we cancel the Keep the Change® transfer for that day.'"
+ },
+ {
+  "bankId": "us-bank-of-america",
+  "field": "unknowns[5] (historic match)",
+  "was": "The bank match the program had at launch: 100% for the first 3 months, then 5%.",
+  "now": "Third-party accounts give the match as 100% for the first three months, then 5%, 'up to a maximum total of $250 per year'. One forum post says the match still applied in January 2013. This is still news and forums only. No official page gives the match or when it ended, and the current terms (Aug 7, 2026) have none.",
+  "evidence": "WebSearch results summarizing nbcnews.com/id/wbna9593071, kiplinger.com and a bogleheads.org thread (all non-official). A search for an official end date found nothing."
+ },
+ {
+  "bankId": "us-wells-fargo",
+  "field": "sources[4].effective",
+  "was": "2026 article (Wells Fargo Stories); no effective date",
+  "now": "Published February 24, 2026. Its footnote 3 repeats the Consumer Schedule's Save As You Go paragraph word for word, including the business-day count, the next-business-day transfer and the 'transfer won't occur' sentence.",
+  "evidence": "https://stories.wf.com/your-money/2026-financial-resolutions-tips/ (raw HTML: 'February 24, 2026', footnotes 3 and 5)."
+ },
+ {
+  "bankId": "us-wells-fargo",
+  "field": "sources[2] (addenda scope)",
+  "was": "No addendum through October 7, 2026 changes them.",
+  "now": "That holds only for the edition fetched. The addenda at fetch-pdf?documentName=Account%20Addenda (CNS5159-A, In-use 10/7/2026) say they \"govern deposit accounts maintained at Wells Fargo Bank, N.A. (except in Arkansas, Colorado, Florida, Illinois, Michigan, Nevada, Texas, and Wisconsin)\". The October 2026 addenda for those eight states were not seen. However, the January 2026 state bundles (Arkansas/Texas, Illinois/Michigan/Wisconsin, and the bundles for CO and FL) contain CNS2013 (In-use 11/4/2025), and its Save As You Go text is byte-identical to CNS2013 (In-use 7/28/2026). The wording has been stable since at least November 4, 2025 in every edition seen.",
+  "evidence": "wellsfargo.com/assets/pdf/about/community-reinvestment/{wi,ar,tx,co,fl}-consumer-disclosures.pdf, compared by md5 of the extracted Save As You Go paragraph against the CNS2013 7/28/2026 text."
+ },
+ {
+  "bankId": "us-wells-fargo",
+  "field": "eligibility",
+  "was": "For Way2Save, the primary owner must be 13 or older; minors 12 and under need an adult co-owner; online opening requires age 18+.",
+  "now": "Confirmed. The page adds: \"17 and under must open at a branch.\" How Save As You Go is turned on (online, app or branch) is still not stated anywhere official. The page and the story say only 'Set up' and 'activated'.",
+  "evidence": "https://www.wellsfargo.com/savings-cds/way2save/: 'Anyone 13 and older can open as a primary owner', 'You must be 18 or older to apply online. 17 and under must open at a branch.' The debit card terms (wellsfargo.com/assets/pdf/personal/debit-card/terms-and-conditions.pdf) don't mention Save As You Go."
+ },
+ {
+  "bankId": "us-citi",
+  "field": "sources[2] (document name)",
+  "was": "Client Manual, U.S. Markets ... Effective November 20, 2025",
+  "now": "The PDF's own title is 'Consumer Deposit Account Agreement, U.S. Markets, Effective November 20, 2025' (document code CMDPAGE0_261001). The effective date is confirmed. It has no Spend & Save or Ways to Save text. Its only rounding is Safety Check's 'rounded up to the next $100 increment'.",
+  "evidence": "https://online.citi.com/JRS/popups/ao/CDAA.pdf, text extracted with pdftotext, lines 1-3, 1027 and 2542."
+ },
+ {
+  "bankId": "us-citi",
+  "field": "insufficientFunds",
+  "was": "The minimum makes it impossible for a transfer to overdraw the account.",
+  "now": "This is the researcher's reading. The terms test only whether the available balance is below the minimum 'at the time of a scheduled Spend & Save transfer'. They don't test whether the transfer would take the balance below the minimum. (Contrast Earn & Save: 'you would never see a Earn & Save transfer to savings that would bring your Source Account balance below' the minimum.) The minimum is at least $50 and a transfer is at most $15, so a transfer alone can't overdraw the account when it starts. It can still leave the balance below the customer's chosen minimum.",
+  "evidence": "citi.com/online-services/ways-to-save, footnote 1: 'So, if you set a $50 minimum available balance amount and your Source Account's available balance is below $50 at the time of a scheduled Spend & Save transfer, Citi will not initiate the transfer to savings.' Earn & Save T&C on the same page."
+ },
+ {
+  "bankId": "us-citi",
+  "field": "method / unknowns",
+  "was": "(omitted)",
+  "now": "Add the omitted terms sentences. Purchases count only on cards in the customer's designated \"Spending Accounts\": 'When you make a purchase using a Citi credit or debit card from your designated \"Spending Accounts\"'. Also: 'Your original purchase amount will remain the same, and any applicable interest, fees, and rewards earned are based on that amount.' And: 'You will not receive advance notice of these transfers except as described above.' Add one unknown. A Ways to Save sentence says same-day transfers 'will be debited from your Source Account from lowest to highest dollar amount', but it sits in the Earn & Save terms, and whether it governs Spend & Save is not stated.",
+  "evidence": "citi.com/online-services/ways-to-save, footnote 1 ('Spend & Save — Terms & Conditions') and the Earn & Save T&C. These were decoded from the page's embedded content. The page has no effective date."
+ },
+ {
+  "bankId": "us-capital-one",
+  "field": "product (truncated at 'Its A...')",
+  "was": "None. Capital One offers no round-up or per-purchase transfer. Its A[...] (the rest was cut off in the brief and could not be checked)",
+  "now": "Confirmed: there is no round-up or per-purchase transfer. The nearest tool is Autopilot, and it is not tied to purchases. In Capital One's words: \"Autopilot makes daily small-dollar transfers to your savings account—from a few cents up to $15, based on your recent checking account activity—each day your available checking balance is above a certain amount.\" There is one Autopilot rule per checking account. Autopilot needs a Capital One checking account (360 Checking or Total Control Checking; MONEY Teen Checking only for recurring transfers or paycheck percentage) and a Capital One savings account (360 Performance Savings, 360 Savings, 360 Money Market, Confidence Savings, Savings Now or Kids Savings). It is set up only in the Capital One Mobile app. The other tools are Recurring transfers and Paycheck percentage.",
+  "evidence": "https://www.capitalone.com/bank/autosave/ (raw HTML), plus the footnote on /bank/savings-accounts/online-performance-savings-account/features/: 'To set up the Autopilot and Paycheck Percentage feature, you must sign in with the Capital One Mobile app.' The 360 Checking and Performance Savings disclosures have no round-up; the savings one has only 'Automatic Savings Plan (\"ASP\")'. A WebSearch summary claimed Capital One has a 'Round-Up' feature, but no fetched page (smartasset, mybanktracker, moneyrates, fool, zogby) contains 'round up'. gobankingrates says 'Capital One does not currently offer a round-up feature' (non-official)."
+ },
+ {
+  "bankId": "gb-nationwide",
+  "field": "entire record (offers, product, method, timing, slateRecord)",
+  "was": "Never received. The findings I was given stop partway through gb-santander's first source quote, so there was nothing on gb-nationwide to check.",
+  "now": "I researched it myself. Answer: Nationwide has a round-up, but it is NOT automatic. The member moves the money. Product: 'Round-ups', a tool in the Nationwide Banking App. Jurisdiction: UK (Nationwide Building Society). Checked 2026-10-13. Eligibility: holders of a Nationwide current account. Method: debit card transactions are rounded up to the nearest pound (fixed £1 unit, no multiplier, no fixed amount per purchase). Timing: the app works out the spare change, then the member transfers the last 7 days of it in one go. Nothing is swept automatically. Unknown, because no terms, FAQ or conditions document was found: which savings accounts qualify, the opt-in steps, which purchases are excluded, what happens with insufficient funds, refunds and closure. The app demo (nationwidedemo.co.uk) is rendered by JavaScript and could not be read. SLATE has no roundUp for gb-nationwide, and that is correct. In SLATE's engine, any roundUp words turn on an automatic nightly transfer (roundUpsOn in src/engine/systems/accountlife.ts; the nightly post is at lines 226-233). Adding Nationwide's words would make SLATE move money that Nationwide never moves by itself. SLATE cannot express a manual round-up. That is the only gap.",
+  "evidence": "nationwide.co.uk/savings/help/helping-you-save (read live 2026-10-13): \"Round-ups If you have a Nationwide current account, the app can round-up your debit card transactions to the nearest pound. We call this your spare change. You can then transfer all your spare change from the last 7 days to your savings account.\" On the same page, Quick save is a separate tool (\"move money ... in just a couple of taps\"). nationwide.co.uk/savings/instant-access-savings-accounts: \"save your change using round-ups and quick save with a Nationwide current account.\" Nationwide press release of 18 Feb 2021 (media/news/lockdown-savers-...): \"Round-ups: This allows members to roundup the 'spare change' from debit card transactions and transfer this into a savings account.\" Nationwide's reply, quoted by the Mirror (AOL, 31 Aug 2026, news only): \"We do currently offer a Rounds Ups feature, which'll round-up your debit card transactions to the nearest pound.\" Brit Brief's paraphrase on the same day (\"with the extra amount transferred into their savings account\") is looser than Nationwide's own words. Not official, but it agrees: an MSE forum member (thread 6607884) wrote \"it just tells you what you could have rounded up and offers you a button to do it ... The money just stays in your current account if you don't press that button\"."
+ },
+ {
+  "bankId": "gb-hsbc",
+  "field": "product (history) and unknowns",
+  "was": "Historically (news sources only): the SmartSave trial (Dec 2016) and round-ups listed as 'being worked on' for Connected Money (May 2018), which was turned off from September 2019.",
+  "now": "Add a third plan that also never shipped. Coverage of HSBC UK's 2025 app redesign said a round-up was 'expected to launch in the coming months'. It would round each transaction to the nearest pound and move the spare change into a savings 'pot'. That coverage was neobanque.ch, 15 April 2025, and Financial Promoter in the same words; that URL now returns 404. No official HSBC source was found for this plan, and nothing shows it launched. Also add an unknown: on 31 Aug 2026 the press said round-ups were 'also available with big name banks such as Lloyds Bank and HSBC'. No HSBC page supports that, so treat it as a press error. The verdict 'no' stands.",
+  "evidence": "The neobanque.ch article (WebFetch): 'A \"round-up\" feature that automatically rounds transactions to the nearest pound and transfers the spare change to a savings pot' was due in later updates, and 'Currently, users must manually transfer funds' into pots. On 2026-10-13, hsbc.co.uk/ways-to-bank/mobile/money-management/ listed only Spending insights, Monthly budgets, Savings goals and Balance forecast. The UK App Store listing (latest version 3.74.31, 23 Sept) has no round-up and no pots. HSBC's own guides send readers to other banks or apps: students/how-to-save-money-as-a-student says \"Some bank accounts let you round up purchases to the nearest pound\", and financial-fitness/9-steps says \"use an app to round up your spare change\". The press claim appears in the Mirror via aol.co.uk ('To nearest pound' payment update..., 31 Aug 2026) and in Brit Brief, which repeats it in its lead. I also confirmed the researcher's own HSBC quotes. money-watch: \"Selected customers are being invited to take part in the trial today, with up to 2,000 downloading the app\". ffnews: the round-ups text sits under the heading 'HSBC UK is already working on additional features'. Computer Weekly (WebFetch got 403; read with curl): \"Connected Money will be turned off from September...\"."
+ },
+ {
+  "bankId": "gb-lloyds",
+  "field": "optIn",
+  "was": "With no online banking, by phone or in branch (the help page).",
+  "now": "The help page names the app and online banking for set-up. For anyone not registered for online banking it says: \"You can call us if you're not registered for online banking. If you prefer to bank in person, there's a range of services in your local area.\" It never says Save the Change can be set up in a branch, so the 'in branch' part is an inference. For cancelling or changing the savings account, both the conditions and the help page name only online banking.",
+  "evidence": "Help page, Wayback capture 20260922055259 (read with curl). The conditions (M57299 (04/26)) say: \"Use online banking to cancel Save the Change or alter the savings account you transfer your change to.\""
+ },
+ {
+  "bankId": "gb-lloyds",
+  "field": "sources[0].effective / checked",
+  "was": "Capture dated 2026-09-22, the latest the Wayback Machine holds. The live URL served Lloyds' 'Error 1007' page.",
+  "now": "Confirmed, with more detail. Wayback's capture index shows the 2026-07-10 capture has the same digest as the 2026-09-22 one (ZKIHQDBB...). So the May 2026 conditions were live by 2026-07-10 at the latest, and were in force when SLATE sourced its record on 2026-09-26. The M57299 (11/24) version is the 2025-03-26 capture. The 2025-12-14 capture is an HTML error page, not a PDF. On 2026-10-13 the live URL returns HTTP 200 text/html, titled 'Lloyds Bank - Internet Banking - Error' and containing '1007'.",
+  "evidence": "web.archive.org/cdx/search/cdx?url=lloydsbank.com/assets/media/pdfs/savings/savethechange_termsconditions.pdf lists 20250326151224 3ZOL..., 20251214032920 AZUD... (HTML), 20260710203106 ZKIH... and 20260922055302 ZKIH.... I checked the PDF text with pdftotext: \"For use from May 2026\", \"This information is correct as of April 2026\", \"M57299 (04/26)\". Every quote the researcher gives from it matches word for word."
+ },
+ {
+  "bankId": "gb-lloyds",
+  "field": "omitted details (eligiblePurchases / other)",
+  "was": "(not mentioned)",
+  "now": "Add two lines from the conditions. First: \"If you sign up for Everyday Offers, the cashback you earn will be based on the amount of your debit card purchase or payment without the change you save.\" Second: these Special conditions sit alongside the Personal Banking Terms and the account conditions, and \"If there's a conflict, these Save the Change Special conditions apply.\" Neither line changes method, timing, funds, refunds or closure.",
+  "evidence": "savethechange_termsconditions.pdf, M57299 (04/26), 'Good to know' and 'Lloyds Save the Change Special conditions' (Wayback capture of 2026-09-22)."
+ },
+ {
+  "bankId": "gb-natwest",
+  "field": "eligibility / unknowns",
+  "was": "Which current accounts count as eligible is never listed: the product page asks only for 'A NatWest current account'.",
+  "now": "Correct, and the pages admit conditions exist without naming them. The product page says \"Account eligibility apply.\" The Digital Regular Saver page says \"Eligibility criteria and conditions apply for Round Ups.\" No Round Ups conditions document was found. A text search of the October 2026 current-account terms (NWB6770), the 1 October 2026 savings terms (NWB7585) and the mobile app terms (effective 24 April 2025) found no 'Round Up', 'auto transfer' or 'sweep'. So 'auto transfer arrangement' remains undefined. Everything else in the NatWest record is confirmed word for word against the live pages.",
+  "evidence": "Read live with curl on 2026-10-13: natwest.com/savings/tools-for-savings/round-ups.html; the support-centre what-is-round-ups.html (multiplier 1-5, the savings list, \"This can take up to 4 days\", the six won't-transfer reasons, joint accounts, \"Your Round Ups arrangement will stop\"); flexible-saver, defined-access-saver and digital-regular-saver (\"Round Ups and Rewards won't count towards your monthly £150 limit\"). Terms PDFs pulled with pdftotext; 'round up' appears 0 times in each."
+ },
+ {
+  "bankId": "gb-barclays",
+  "field": "unknowns",
+  "was": "Absence can't be proven ... none was found in the app page, the savings pages, the guides, a barclays.co.uk-restricted search or news coverage.",
+  "now": "Add one item. A YouTube video, 'How to Set Up Roundup In Barclays - AshleyHowTo' (published 2025-11-16), describes 'Navigating to Investments Tab ... Selecting Roundup'. It comes from a generic how-to channel, and no Barclays page supports it. Search summaries pass it on as 'Barclays offers a round-up feature that ... invests the spare change'. It is not evidence of a feature, and even if one existed it would invest, not save. Six more Barclays pages I checked show no round-up: build-savings-plan, how-to-save-money, saving-tips, rainy-day-saver, reward-saver and spending-within-your-means. The verdict 'no' stands.",
+  "evidence": "YouTube oembed and the page's shortDescription for watch?v=aXqnUeY9iIE. The three cited barclays.co.uk pages, read live on 2026-10-13, match the researcher's quotes word for word, including \"There are apps that round up your online purchases to the nearest pound...\" and the heading 'Transfer money to your savings automatically' (about standing orders)."
+ },
+ {
+  "bankId": "gb-santander",
+  "field": "sources[0].url and unknowns",
+  "was": "https://www.santander.co.uk/personal/support/ways-to-bank/on-your-mobile",
+  "now": "That URL now redirects to https://www.santander.co.uk/personal/support/digital-banking/on-your-mobile. The tools listed there are still My Money Manager, My Home Manager, Santander Boosts and Open Banking, with no round-up. Add: Santander's 'Ways to cut your spend' page sends readers to third-party 'automatic savings apps' (linked to moneysavingexpert.com/savings/auto-saving-apps/). Santander customers' round-ups through Moneybox's Open Banking integration (August 2018) are Moneybox's feature, not Santander's. The verdict 'no' stands. I could check the record only up to where the findings text was cut off.",
+  "evidence": "curl -L on 2026-10-13 gave url_effective .../digital-banking/on-your-mobile, with the text 'Handy features at your fingertips', My Money Manager, My Home Manager, Santander Boosts and 'Open Banking – a streamlined view of your balances in one place.' On santander.co.uk/personal/support/help-with-managing-my-money/ways-to-cut-spending the link 'Make savings simple with these automatic savings apps' points to href=https://www.moneysavingexpert.com/savings/auto-saving-apps/. Open Banking Expo quotes Moneybox's co-founder: \"Santander roundups has been our most popular feature request since we launched Moneybox.\" A search restricted to santander.co.uk and the savings, Edge Saver, Easy Access Saver, Edge Up and My Money Manager pages show no round-up."
+ },
+ {
+  "bankId": "de-commerzbank",
+  "field": "sources (comdirect community thread) and closure history of comdirect Wechselgeld-Sparen",
+  "was": "The comdirect thread returned HTTP 403 and was not read. The feature was 'reported ended on 28.02.2025'.",
+  "now": "The thread can be read with '?nobounce' appended (https://community.comdirect.de/t5/konto-depot-karte/beendigung-wechselgeldsparen-zum-28-02-2025/td-p/329982?nobounce). Its opening post (18.12.2024) confirms the letter: 'Das Schreiben vom 10.12.2024 das das Wechselgeldsparen zum 28.02.2025 zwecks Optimierung der IT-Landschaft eingestellt wird.' Later posts say it kept running after that date. 12.03.2025: 'komisch bis jetzt lief es noch weiter…trotz der Kündigung.' 14.03.2025: 'Unter \"Meine Karten\" ist es bei mir auch immer noch sichtbar und aktiviert.' 26.03.2025: 'Vorhanden ist es bei mir unter Karten nicht mehr. abgerechnet wird es trotzdem.' So 28.02.2025 is the announced end date, and some customers saw it run into March 2025. These are all customer posts, not comdirect statements.",
+  "evidence": "Fetched 2026-10-13 with curl. Page 2 of the thread still returns 403. The official FAQ that a poster linked (kunde.comdirect.de/faq/wechselgeld-sparen) redirects to a login page (HTTP 401)."
+ },
+ {
+  "bankId": "de-commerzbank",
+  "field": "method/history (comdirect Wechselgeld-Sparen: when it closed, and where it credited)",
+  "was": "It was 'closed to new sign-ups years earlier' and 'credited the difference monthly to Tagesgeld PLUS', from third-party and forum sources only.",
+  "now": "A second comdirect community thread (https://community.comdirect.de/t5/konto-depot-karte/wechselgeld-sparen-gegenkonto/td-p/13476?nobounce) has replies signed 'Mario' (account now shown as 'ehemaliger Nutzer', 19.895 Beiträge). They read like the community team, but that cannot be confirmed. 28.07.2017: 'die Sparbeträge des Wechselgeldsparens können ausschließlich auf dem Tagesgeld PLUS gutgeschrieben werden. Solltest du bisher noch kein Tagesgeld PLUS haben, werden die Beträge intern gesammelt und erst bei Eröffnung eines Tagesgeld PLUS gutgeschrieben ... Ab Oktober 2017 wird das Wechselgeldsparen eingestellt. Ab diesem Zeitpunkt entfallen die Bonuszahlungen.' 03.09.2020: 'Das Wechselgeldsparen wurde im Oktober 2017 komplett eingestellt. Zu diesem Zeitpunkt gutgeschriebene Beträge blieben natürlich erhalten.' So the likely sequence is: the bonus and new use ended in October 2017, existing activations ran on, and the 2024 letter ended them. Nothing official supports 'monthly' crediting, and third-party summaries (udongo.de, schnaeppchenfuchs.com) say weekly crediting plus a 10% monthly bonus. Mark the crediting rhythm as unknown or conflicting. All of this is comdirect, not the de-commerzbank bank id.",
+  "evidence": "Thread td-p/13476 fetched 2026-10-13 (HTTP 200 with ?nobounce). Threads td-p/4285 and td-p/3118 returned 403."
+ },
+ {
+  "bankId": "de-commerzbank",
+  "field": "sources (URLs)",
+  "was": "https://www.commerzbank.de/blog/aktuelles/sparmethoden/ and https://www.commerzbank.de/sparen-anlegen/wissen/sparziele-definieren/",
+  "now": "Both now redirect, to https://www.commerzbank.de/privatkunden/wissen/ratgeber/sparen/sparmethoden/ and https://www.commerzbank.de/privatkunden/wissen/ratgeber/sparen/sparziele-definieren/. The quoted text and the datePublished/dateModified values (2025-03-06/2025-08-12; 2026-04-24) are unchanged at the new URLs.",
+  "evidence": "curl -L final url_effective, 2026-10-13. Quote 'Nehmen Sie sich vor ... den Kaufbetrag im Kopf auf den nächsten vollen Betrag aufzurunden ... sparen die 4,01 Euro im Sparschwein oder auf Ihrem Tagesgeldkonto' was present."
+ },
+ {
+  "bankId": "de-postbank",
+  "field": "product/method (Pockets: how they are filled)",
+  "was": "Pockets 'are filled only by manual internal transfers or incoming payments'.",
+  "now": "Pockets can also be fed automatically by an incoming standing order to the Pocket's own IBAN. The cited Pockets page says: 'Kann ich einen eingehenden Dauerauftrag für meine Pockets einrichten? Ja, das Einrichten von Daueraufträgen zu Gunsten eines Pockets ist möglich. Nutzen Sie hierfür die IBAN des jeweiligen Pockets.' Pockets still have no card-linked round-up, so 'offers: no' stands.",
+  "evidence": "https://www.postbank.de/privatkunden/services/konten-und-karten/pockets-einrichten.html, fetched 2026-10-13."
+ },
+ {
+  "bankId": "de-postbank",
+  "field": "eligibility (Pockets and P-Konto)",
+  "was": "Pockets: 'not for minors or P-Konto'.",
+  "now": "The rule is broader. Holding any Pfändungsschutzkonto at the bank blocks Pockets on every account: 'Unterhält der Kunde bei der Bank ein Pfändungsschutzkonto, so können zu diesem und zu sonstigen Konten keine Pockets eröffnet werden.' Also, 'Pockets werden ausschließlich auf Guthabenbasis geführt'.",
+  "evidence": "Sonderbedingungen Postbank Pockets, Nr. 1 (5) and 3 (2), Stand 02/2025 (923 933 097 02.25), fetched 2026-10-13."
+ },
+ {
+  "bankId": "de-berliner-sparkasse",
+  "field": "closure (Plussparen)",
+  "was": "Not stated for Plussparen.",
+  "now": "The Plussparen page lists 'Jederzeit kündbar' among its points, so the order can be cancelled at any time. What happens to a pending sweep on cancellation or account closure is still not stated. The page also lists 'Bestehende Sparkonten verwenden' (existing savings accounts can be used) and advises: 'Am besten legen Sie fest, dass das von Ihnen nicht benötigte Guthaben immer 3 Tage vor dem Gehaltseingang auf das Konto Ihrer Wahl überwiesen wird.'",
+  "evidence": "https://www.berliner-sparkasse.de/de/home/privatkunden/sparen-und-anlegen/plussparen.html, fetched 2026-10-13. The set-up form (plussparen/antrag.html) is script-driven and publishes no terms."
+ },
+ {
+  "bankId": "de-ing",
+  "field": "eligibility/unknowns",
+  "was": "'Girokonto Student is not named separately. The sources say nothing about joint accounts or minors.'",
+  "now": "Correct as far as it goes, but two more variants are not named on any Kleingeld Plus page. One is the ING Girokonto Junior, for ages 7 to 17 ('Die oder der Minderjährige ist zwischen 7 und 17 Jahre alt'); its page does not mention Kleingeld Plus. The other is partner cards: ING issues a 'VISA Card [Debitkarte] einschließlich Partnerkarte', and the FAQ counts only cards 'mit dem ausgewählten Girokonto verknüpft'. Whether a partner card linked to the same Girokonto rounds up is unknown. The Girokonto AGB (Stand 19.06.2026), the Extra-Konto Vereinbarungen (Stand 19.06.2026) and the ING-DiBa price list (Stand 14.05.2026) were all searched and none mentions Kleingeld Plus. That confirms the savings mode has no contractual text.",
+  "evidence": "https://www.ing.de/girokonto/junior/, https://www.ing.de/girokonto/konditionen/, https://www.ing.de/dokumente/agb-girokonto/, https://www.ing.de/dokumente/ing-diba-preise-leistungen/, all fetched 2026-10-13."
+ },
+ {
+  "bankId": "de-ing",
+  "field": "optIn",
+  "was": "In the ING App: open the Girokonto, tap 'Mehr' (3 dots), then 'Kleingeld Plus'.",
+  "now": "The product page gives a second app path: 'Aktivieren Sie Kleingeld Plus einfach in der ING App im Profil unter „Services“'. It also says the amounts already rounded up show 'tagesaktuell' under 'Service' (Girokonto, gear icon, 'Zusätzliche Funktionen', 'Kleingeld Plus'). The FAQ adds that the push notifications for Kleingeld Plus cannot be switched off. Neither point changes the mechanism.",
+  "evidence": "https://www.ing.de/banking/online-banking/kleingeld-sparen/ and https://www.ing.de/hilfe/online-services/kleingeld-sparen/kundenservice/, fetched 2026-10-13."
+ },
+ {
+  "bankId": "fr-lcl",
+  "field": "closure (when the 'not credited on deactivation' rule began)",
+  "was": "This rule appears in the terms from 07/12/2023 on. The 2020 Inventive terms said the opposite ('seront crédités').",
+  "now": "The rule was already in the Visa Premier Dispositions Générales effective 01/01/2023 (ref. 11/22). The Visa Cléo terms effective 01/01/2021 (V3 2021) still said the round-ups 'seront crédités'. So it reversed between 01/01/2021 and 01/01/2023, not on 07/12/2023. The current and 2027 terms keep the 'ne seront pas crédités' wording.",
+  "evidence": "https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/2cdc9d33-116f-49e4-8181-74e7a633a593_CG-CARTE-VISA-PREMIER-LCL-112022.pdf ('En cas de désactivation du service, les arrondis cumulés avant la désactivation ne seront pas crédités sur les comptes désignés par le Titulaire de la Carte.' / 'Conditions en vigueur à partir du 01/01/2023 - 11/22'); https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/13d72482-a6ac-46e3-b160-3ad4b50db74a_Disposition-generales-carte-visa-cleo-LCL-Banque-V32021.pdf ('les arrondis cumulés avant la désactivation seront crédités sur les comptes désignés par le titulaire de la carte' / 'en vigueur à partir du 01/01/2021'). Read 2026-10-13."
+ },
+ {
+  "bankId": "fr-lcl",
+  "field": "eligibility / unknowns (which cards carry the option)",
+  "was": "The clause is in the 2026 Visa Cléo terms and in the (older) Visa Premier, Visa Infinite and Inventive Mastercard/MacarteLCL terms. Whether it is available on Mouv by LCL, the virtual card, the Visa Crédit Renouvelable or L by LCL wasn't established.",
+  "now": "The current 2026 Dispositions Générales of five more cards carry the identical 'OPTION SYSTEM'ÉPARGNE' clause: Visa Premier (from 01/01/2026), Visa Infinite (01/01/2026), Platinum (01/01/2026), Mouv by LCL / Inventive Mastercard (CGU Mouv, from 01/01/2026) and Inventive/MaCarteLCL (from 01/11/2025). It isn't only in older terms, and Mouv by LCL is covered. The DG Visa Crédit Renouvelable 2026 and the DG Utilicarte 2027 (a systematic-authorisation card) contain no 'arrondi', so those cards don't carry it. The virtual card and L by LCL are still not established.",
+  "evidence": "All linked from https://www.lcl.fr/cartes-bancaires/dispositions-generales-cartes-bancaires: .../aN6Og55xUNkB1apu_CARTEPREMIER_pour2026_VF.pdf, .../aN6PBJ5xUNkB1aqU_CARTEINFINITEpour2026_VF.pdf, .../aN6OxZ5xUNkB1ap7_DGPLATINUMpour2026_VF.pdf, .../aZbsMMFoBIGEgjP1_Carte_Inventive_MouvbyLCL_CGUMouv_2026_VFJanv.pdf, .../aN6PjJ5xUNkB1aq7_Carte_Inventive_MaCarteLCL_CGUMouv_2026_VF.pdf each contain 'Option System'Epargne est proposée gratuitement.' and the same 1 €/5 €, quinzaine/fin de mois and annulé-en-totalité wording. 'arrondi' doesn't occur in .../aN6P_J5xUNkB1arh_DGVisaCr%C3%A9ditRenouvelable_pour2026VF_2.pdf or .../ZeUhCIPc3eEAthZy_DG_UTILICARTE_2027.pdf (base https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/)."
+ },
+ {
+  "bankId": "fr-lcl",
+  "field": "sources / effective (a change is already published)",
+  "was": "The 2026 Visa Cléo terms ('Conditions en vigueur à partir du 01/01/2026 - 08/25') are cited as the current terms, and no later change is mentioned.",
+  "now": "LCL has already published Dispositions Générales 'Applicables au 1er janvier 2027' for Visa Cléo, Visa Premier, Visa Infinite, Platinum and Mouv by LCL / Inventive Mastercard. The option isn't withdrawn, and the clause is substantively unchanged (now numbered Article 17), with one exception. From 01/01/2027 the Mouv by LCL / Inventive Mastercard terms restrict the option to adults: 'Option System'Epargne est proposée gratuitement aux clients majeurs.' The 2026 version said only 'proposée gratuitement.' The other 2027 cards keep 'proposée gratuitement.'",
+  "evidence": "https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/p2jRjLxLjOB7bQ_Q_DG_MOUVBYLCLetINVENTIVEMASTERCARD_2027.pdf ('Article 17 : OPTION SYSTEM'ÉPARGNE ... proposée gratuitement aux clients majeurs'; 'Conditions en vigueur à partir du 01/01/2027'); https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/liPbAvvhgSUjOV0L_DG_VISA_CLEO_2027.pdf ('Applicables au 1er janvier 2027'; word-diffed against the 2026 Cléo clause: only numbering and 'crédité'→'créditée' differ); also .../kaBQqw9SyiDtnqKG_DG_VISA_PREMIER_2027.pdf, .../Q2NIz7250KIJ20Kh_DG_VISA_INFINITE_2027.pdf, .../0mIEgZdox1WMdPeX_DG_PLATINUM%2B_2027.pdf."
+ },
+ {
+  "bankId": "fr-lcl",
+  "field": "slateRecord point (2), scope",
+  "was": "It is wrong in scope. Only payments in euros count, and cash withdrawals are excluded; it isn't every card purchase.",
+  "now": "The only real scope error is the euro-only limit. A cash withdrawal isn't a purchase, so excluding withdrawals doesn't falsify SLATE's 'every card purchase'. SLATE's words should read 'every card payment made in euros', with the customer's choice of the next 1 € or the next 5 €. Point (1)'s suggestion stands: 1 € or 5 € is chosen by the customer and the bank states no default, which matches ROUND_UP_AMOUNT's own definition of { chosen: true }, as for ca-td. Separately, SLATE's source string for fr-lcl (the Compte à Terme Optilion Stratégique Plus page, 2026-09-26) says nothing about System'Épargne; I confirmed this by parsing ACCOUNT_LIFE.",
+  "evidence": "2026 Visa Cléo DG (https://portail-lcl-web.cdn.prismic.io/portail-lcl-web/aN6PUJ5xUNkB1aqm_DG_CARTECLEOpour2026_VF.pdf): 'Option System'Epargne permet, pour chaque paiement effectué en euros, d'être débité du montant de la somme pour aller soit à l'euro supérieur soit aux cinq euros supérieurs. [...] Les retraits espèces ne sont pas concernés.' SLATE: ACCOUNT_LIFE['fr-lcl'].roundUp = \"System'Épargne: free option; every card purchase is rounded up to the next euro [...] cancelable free from the next day.\" and source 'https://www.lcl.fr/livrets-epargne-logement/compte-a-terme-optilion-strategique-plus, 2026-09-26'. fr-lcl is absent from ROUND_UP_AMOUNT (src/engine/content/accountlife.ts:75-79)."
+ },
+ {
+  "bankId": "fr-la-banque-postale",
+  "field": "destination (Ma French Bank, withdrawn)",
+  "was": "Third parties say the Tirelire paid no interest. The bank's answer to 'Le compte Ma Tirelire est-il rémunéré ?' wasn't captured in the archive.",
+  "now": "It was captured, on 2024-05-29, and the bank's own answer goes further: 'Non, le compte Ma Tirelire n'est pas un compte épargne, il n'est pas rémunéré.' So even while it existed, Ma Tirelire moved card spending into a non-interest-bearing pot attached to the current account, not into a savings account. It never met the question's test of a current account feeding an easy-access savings account at the same bank. This strengthens the 'no' for the group, and needs no third-party source.",
+  "evidence": "http://web.archive.org/web/20240529180200/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/le-compte-ma-tirelire-est-il-remunere.html ('Le compte Ma Tirelire est-il rémunéré ? Non, le compte Ma Tirelire n'est pas un compte épargne, il n'est pas rémunéré.'). The Wayback CDX index lists 13 archived Ma Tirelire FAQ pages, this one included."
+ },
+ {
+  "bankId": "fr-la-banque-postale",
+  "field": "sources (citation of archived FAQ quotes)",
+  "was": "The quotes on timing ('quelques jours après votre paiement ou retrait...'), closure ('La clôture du compte bancaire Ma French Bank entraîne la clôture de Ma Tirelire') and amounts ('Il n'y a pas de montant minimum ni de plafond') are all attributed to one archived URL, comment-fonctionne-le-compte-ma-tirelire.html (20240529171659).",
+  "now": "That URL holds only the '3 façons' sentence. The other quotes are on separate archived pages, each worded as quoted: timing at .../j-ai-paye-par-carte-chez-un-commercant-mais-ma-tirelire-n-a-pas-ete-immediatement-alimentee-pourquoi.html (20240524061049), closure at .../comment-cloturer-mon-compte-ma-tirelire.html (20240529181824) and amounts at .../combien-puis-je-mettre-dans-ma-tirelire.html (20240528234101). Facts the record left out, from the same FAQ: Ma Tirelire could be closed on its own (online form, letter or registered letter) or simply left unfed; money could be taken back to the Ma French Bank account at any time ('arrivent illico'); one Tirelire per customer; it could also be fed by scheduled transfers; and it was free ('Aucun !').",
+  "evidence": "http://web.archive.org/web/20240524061049/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/j-ai-paye-par-carte-chez-un-commercant-mais-ma-tirelire-n-a-pas-ete-immediatement-alimentee-pourquoi.html ; http://web.archive.org/web/20240529181824/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/comment-cloturer-mon-compte-ma-tirelire.html ; http://web.archive.org/web/20240528234101/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/combien-puis-je-mettre-dans-ma-tirelire.html ; http://web.archive.org/web/20240528223919/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/puis-je-fermer-ma-tirelire-sans-fermer-mon-compte-ma-french-bank.html ('vous pouvez demander la résiliation de votre compte Ma Tirelire en envoyant un courrier recommandé [...] Ou plus simplement, vous pouvez cesser d'alimenter votre Tirelire'); http://web.archive.org/web/20240529175554/https://www.mafrenchbank.fr/information/questions-frequentes/mes-services/ma-tirelire/comment-profiter-de-votre-tirelire.html ('Vous pouvez à tout moment puiser dans votre Tirelire. L'argent mis de côté arrivent illico sur votre compte Ma French Bank')."
+ },
+ {
+  "bankId": "fr-societe-generale",
+  "field": "sources / unknowns (current tariff and card terms)",
+  "was": "Negative rests on 'Tarifs au 1er avril 2026' (sg-bt-2026.pdf); 'The SG card terms (Conditions générales cartes) were not read clause by clause.'",
+  "now": "The April 2026 brochure has been superseded by 'Conditions et tarifs appliqués aux opérations bancaires au 1er octobre 2026' (sg-bt-10-26.pdf). It still lists Déclic Régulier and Déclic Seuil as 'Gratuit' and contains no 'arrondi' or 'tirelire'. The card terms now checked: the Conditions Générales des cartes de débit Particuliers (June 2026 version, applying from 15 November 2026), the CG Banque à distance (13/09/2026) and the Convention de compte (CG-CAV-PRI). None contains 'arrondi' or 'tirelire'. That was a full-text search, not a clause-by-clause reading. The 'no' stands.",
+  "evidence": "https://static.sg.fr/bigfiles/pri/sg-bt-10-26.pdf ('au 1er octobre 2026'; '■ Déclic Régulier (virements automatiques du compte bancaire Société Générale vers un compte ou livret d'épargne Société Générale) Gratuit ■ Déclic Seuil [...] Gratuit'); https://particuliers.sg.fr/static/Particuliers/Medias/Home/Nos-engagements/Information-reglementaire/02_736304A_247685_SGRF_CG_Carte_Debit_loi_DDADDUE_juin_2026_VF_230326_LIGHT.pdf ('à compter du 15 novembre 2026'; 0 occurrences of 'arrondi'); https://static.sg.fr/bigfiles/pri/cgbad13092026.pdf; https://static.sg.fr/bigfiles/pri/CG-CAV-PRI.pdf. The 2016 'Tirelire' unknown is now settled: the archived capitaine-epargne article (http://web.archive.org/web/20160420005849/http://www.capitaine-epargne.com/actualite-epargne/societe-generale-enrichit-son-application-mobile-avec-nouvelle-fonctionnalite-dediee-epargne/) says only 'Intitulée « Tirelire » cette nouvelle fonctionnalité actuellement en test sur l'Appli LAB pourrait être de l'épargne par projet', and says nothing about rounding."
+ },
+ {
+  "bankId": "fr-credit-agricole",
+  "field": "unknowns (coverage of caisses régionales)",
+  "was": "Only two 2026 tariff brochures (Nord Est and Charente-Périgord), the national site, the EKO page and the national magazine were checked.",
+  "now": "Five more caisses' 2026 brochures also contain no 'arrondi': Sud Rhône Alpes, Centre France, Morbihan, Normandie-Seine and Nord de France (April 2026). Three of them list écopage/écrêtage/TANDEM services, and so do Centre France and Morbihan. These copies are hosted by Moneyvox, a third party, not at official URLs, so they widen the search but aren't official evidence. That makes seven of the 39 caisses checked. Also beware: a search-engine summary claimed Crédit Agricole offers the round-up 'through its EKO by CA service'. That is false: the magazine page mentions 'Offre Eko' only in its site navigation, and the EKO page contains no 'arrondi'. The 'no' stands.",
+  "evidence": "https://www.moneyvox.fr/tarif-bancaire/credit-agricole-sud-rhone-alpes/pdf/tarifs-2026-b.pdf ; https://www.moneyvox.fr/tarif-bancaire/credit-agricole-centre-france/pdf/tarifs-2026.pdf ; https://www.moneyvox.fr/tarif-bancaire/credit-agricole-du-morbihan/pdf/tarifs-2026-l.pdf ; https://www.moneyvox.fr/tarif-bancaire/credit-agricole-de-normandie-seine/pdf/tarifs-2026-d.pdf ; https://www.moneyvox.fr/tarif-bancaire/credit-agricole-nord-de-france/pdf/tarifs-avril-2026.pdf (0 occurrences of 'arrondi' in each); https://www.credit-agricole.fr/particulier/compte/service-bancaire/eko.html (0 occurrences of 'arrondi'); the magazine's datePublished is '2025-08-08' and its text reads 'aujourd'hui encore très peu ont développé cette fonctionnalité'."
+ },
+ {
+  "bankId": "mx-santander",
+  "field": "method",
+  "was": "Redondeo is the only purchase-linked rule: a fixed $10 MXN unit, with each purchase rounded up 'a los $10.00 MXN siguientes'. 'Disfruta y guarda' was listed only as one of the 'other rules'.",
+  "now": "Santander has two purchase-linked rules. (1) Redondeo: each purchase with a Santander debit or credit card is rounded up to the next $10.00 MXN and the difference is saved. The customer cannot change the unit. (2) Disfruta y guarda: on each purchase with a Santander card at a participating merchant, Santander saves a fixed amount that the customer sets. That is a 'fixed amount a purchase' and is in scope. No official page publishes the merchant list or the range of the amount. The 2019 press release says only '5 de los comercios más utilizados', meaning convenience stores and fast-food chains. The merchant names that circulate (OXXO, Starbucks and others) come from non-official sites only. For Disfruta y guarda, the timing, insufficient funds, refunds and closure are all unknown, as they are for Redondeo.",
+  "evidence": "Live product page, read on 2026-10-13 through r.jina.ai, and the Wayback capture of 2026-09-29 (https://www.santander.com.mx/personas/santander-digital/app-santander/mis-metas/): 'Disfruta y guarda: Al comprar con tu tarjeta Santander en alguno de los comercios participantes, automáticamente guardaremos la cantidad que definiste.' Mis_metas.pdf (https://www.santander.com.mx/PDF/SM/Mis_metas.pdf): 'Disfruta y guarda: acumula la misma cantidad al consumir en comercios participantes.' Press release of 14 Jul 2019 (Wayback): 'Disfruta y Guarda: donde \"Mis Metas\", ahorra en cada compra que se hace en 5 de los comercios más utilizados por los clientes como tiendas de conveniencia y cadenas de comida rápida, al pagar con tarjetas Santander.'"
+ },
+ {
+  "bankId": "mx-santander",
+  "field": "slateRecord",
+  "was": "Fix: add roundUp words and a fixed $10 unit (1000 centavos). The current ROUND_UP_AMOUNT shapes cannot express a fixed rounding unit.",
+  "now": "That holds, but it is incomplete. The roundUp words should also name Disfruta y guarda: a customer-chosen fixed amount a purchase, at participating merchants only. ROUND_UP_AMOUNT cannot express that either. { chosen: true } has no merchant restriction, and roundUpFor would still move the change to the next whole peso, not the chosen amount. Checked in src/engine/systems/accountlife.ts:164-170: roundUpFor returns inSaveMoney(flat) for { flat } and roundUpOf(amount) for everything else.",
+  "evidence": "src/engine/content/accountlife.ts:75-79 (ROUND_UP_AMOUNT has only { flat } and { chosen }). src/engine/systems/accountlife.ts:154-170 (roundUpOf rounds to the next 100 hundredths; roundUpFor falls back to it). ACCOUNT_LIFE['mx-santander'] has no roundUp field (parsed from line 82)."
+ },
+ {
+  "bankId": "mx-santander",
+  "field": "destination",
+  "was": "The official sources on interest are the product page ('Con rendimientos'), the FAQ ('No, no genera rendimiento'), contract V.28 ('podrá pagar rendimientos') and the 2020-21 rate sheet (0.50%–1.20%).",
+  "now": "Add a fifth official source. Mis_metas.pdf (server publish time 1 Mar 2024) says 'Rendimientos diarios a partir de $1 peso', and that Mis Metas balances are exempt from ISR up to 5 UMAs. The 2020-21 sheet says the same about the exemption ('no retención del ISR de hasta 5 UMA's'). On 2026-10-13 the live FAQ still said 'No, no genera rendimiento' and the live product page still said 'Con rendimientos', so the sources still contradict each other. Whether metas earn interest remains unknown.",
+  "evidence": "https://www.santander.com.mx/PDF/SM/Mis_metas.pdf, read through r.jina.ai: 'Rendimientos diarios a partir de $1 peso.' ... 'Se exentará el ISR en la suma total de los saldos en todas las cuentas de \"Mis Metas\" que el cliente mantenga hasta alcanzar el equivalente a 5 UMA´s.' Live FAQ (https://www.santander.com.mx/faqs/santander-digital/, read through r.jina.ai on 2026-10-13): '¿Genera algún rendimiento guardar dinero en Mis Metas? No, no genera rendimiento.'"
+ },
+ {
+  "bankId": "mx-santander",
+  "field": "unknowns",
+  "was": "The live Santander pages could not be read on 2026-10-13 (HTTP 403 to automated fetches). The newest product-page text is from the 2026-09-29 Wayback capture.",
+  "now": "Direct fetches still return 403 (confirmed with curl on 2026-10-13). However, the live product page and the live FAQ both read on 2026-10-13 through r.jina.ai, and they match the 2026-09-29 and 2026-05-14 captures on every point the findings use: Redondeo 'a los $10.00 MXN siguientes', Disfruta y guarda, 'Con rendimientos', 'El saldo no es visible en ATM', 'hasta 5 objetivos financieros por cuenta asociada', '7 reglas ... y próximamente regla ATM', 'No, no genera rendimiento', and 'no aplica para Cuentas Junior, Básicas ni en Dólares'. The sources' effective date can be given as 'live on 2026-10-13'.",
+  "evidence": "r.jina.ai/https://www.santander.com.mx/personas/santander-digital/app-santander/mis-metas/ (HTTP 200 on 2026-10-13: 'Redondea tus compras con tarjetas de crédito o débitoa los $10.00 MXN siguientes, guardando la diferencia.'). r.jina.ai/https://www.santander.com.mx/faqs/santander-digital/ (HTTP 200: 'Actualmente, tenemos 7 reglas ... Monto Fijo, Aparta nómina, Redondeo, Disfruta y guarda, Reto 52 semanas, Pasión futbolera y próximamente regla ATM.')."
+ },
+ {
+  "bankId": "mx-bbva",
+  "field": "sourceAccount",
+  "was": "For a debit card: the account linked to that card (contract), which the ficha calls the 'cuenta de débito (cuenta favorita)'.",
+  "now": "The contract and the ficha name accounts that may be different. The contract charges debit-card rules to the account linked to the debit card. The ficha sends every purchase-rule amount from the cuenta favorita, which the customer picks when creating the meta. The two agree only when the card's account is the cuenta favorita. If they differ, which account is debited is unknown. Credit cards: the contract charges the CUENTA DOMICILIADA, or the CUENTA FAVORITA if the card is not domiciled. Plan para chavos: the Link Card account only.",
+  "evidence": "CONTRATO_MARCO.pdf, chapter I.IV, clause OCTAVA: 'los depósitos a la \"CUENTA PLAN\" se harán con cargo a la \"CUENTA DOMICILIADA\" o a la cuenta asociada a la Tarjeta de Débito en su caso'. ficha-TCR-Plan.pdf (05/01/2023): 'Los importes resultantes de la regla de depósito por compras elegida se transferirán de tu cuenta de débito (cuenta favorita) a tu meta (cuenta Plan)'; Procedimiento step 6: 'Escoge la cuenta de débito BBVA de la cual se descontarán tus aportaciones (cuenta favorita).' plan.html, chavos tab: 'Esta cuenta solo permite aportaciones desde la cuenta Link Card ligada.'"
+ },
+ {
+  "bankId": "mx-bbva",
+  "field": "method",
+  "was": "The other per-card rule is Porcentaje: 5%, 10%, 15% or 20% of each purchase (also capped by the bank).",
+  "now": "For adults, Porcentaje is 5%, 10%, 15% or 20%. For Plan para chavos it is 5%, 10% or 15% only, with no 20% option. Redondeo for chavos is the same $10, $50 or $100 and applies to Link Card purchases, physical or digital.",
+  "evidence": "https://www.bbva.mx/personas/productos/cuentas/plan.html, 'Plan para chavos' tab, read 2026-10-13: 'Cada que hagan una compra con la tarjeta Link Card (física o digital), se podría tomar de su cuenta el 5%, 10% o 15% de lo que gasten y se mandará a su meta.' / '...se podría redondear a $10, $50 o $100. El dinero extra irá a su meta.' Adult tab: 'puede ser el 5%, 10%, 15% o 20%.'"
+ },
+ {
+  "bankId": "mx-bbva",
+  "field": "closure",
+  "was": "The terms do not say what happens to rules or in-flight contributions when the source debit account or card is closed.",
+  "now": "That is still true for a closed account or card. The contract does cover two nearby cases. (a) If a credit card stops being domiciled, its rule stays active and the money comes from the cuenta favorita. (b) BBVA can add or change the deposit rules on its own with an in-app notice. This matters for 'products change': the Redondeo units ($10/$50/$100) and the percentage options are not fixed by the contract.",
+  "evidence": "CONTRATO_MARCO.pdf, chapter I.IV, clause OCTAVA: 'En caso de que el pago de la Tarjeta de Crédito deje de estar domiciliado con cargo a la \"CUENTA DOMICILIADA\", las partes acuerdan que la \"REGLA DE DEPÓSITO\" se mantendrá activa. En caso de que la Tarjeta de Crédito no este domiciliada, \"EL CLIENTE\" acepta que únicamente para los fines de cumplir su \"META\" los retiros se realizaran de la \"CUENTA FAVORITA.\"' and '\"EL BANCO\" podrá agregar o modificar la \"REGLA DE DEPÓSITO\" bastando una notificación por medio de los \"MEDIOS ELECTRÓNICOS\" que \"EL BANCO\" tenga habilitados.'"
+ },
+ {
+  "bankId": "mx-banamex",
+  "field": "destination",
+  "was": "For reference, Ahorro Fácil pays GAT nominal 0.00% from $1, with interest only from $1,000,000.",
+  "now": "Those are still the standard terms: GAT nominal 0.00% from $1, calculated 05/08/2026 and valid to 05/02/2027, with rendimientos from $1,000,000. Separately, Banamex runs a promotion paying 5% on bolsas opened in August and September 2026. It is not a round-up and does not change offers = no.",
+  "evidence": "https://www.banamex.com/personas/cuentas/cuenta-digital-switch/, read through r.jina.ai on 2026-10-13: '¿Abriste tu bolsa de ahorro durante agosto y septiembre 2026? Checa las bases de la promoción del 5% de rendimiento.' Ahorro Fácil page: 'Tus Bolsas de ahorro generan rendimientos a partir de $1,000,000.'"
+ },
+ {
+  "bankId": "mx-banamex",
+  "field": "sources",
+  "was": "The automatic option was cited only from the nómina help page: '¿Puedo ahorrar de forma automática? Sí, programar tu Ahorro Automático...'",
+  "now": "Add Banamex's own Ahorro Automático help article, which makes the 'no' stronger. Ahorro Automático is a fixed amount moved daily, weekly or monthly from the cuenta eje, never per purchase. If funds are short, that one charge is skipped and the schedule carries on. Closing the cuenta eje or the Ahorro Fácil switches it off.",
+  "evidence": "https://www.banamex.com/es/centro-de-ayuda/cuentas/ahorro-facil/ahorro-automatico.htm (read 2026-10-13): 'Ahorro Automático es una funcionalidad en donde puedes seleccionar el monto y periodicidad para ahorrar automáticamente.' / 'Puedes elegir el monto que desees ahorrar de forma diaria, semanal o mensual.' / 'En caso de no contar con saldo suficiente no se podrá realizar el cargo por esa ocasión, y el siguiente cargo se hará según como lo hayas programado.' / '¿Qué pasa con mi Ahorro Automático si cancelo mi cuenta o mi Ahorro Fácil/Inversión Vista? La funcionalidad de Ahorro Automático se desactiva.'"
+ },
+ {
+  "bankId": "ca-scotiabank",
+  "field": "sources[https://www.scotiabank.com/ca/en/about/contact-us/security/digital-access-agreement.html].effective",
+  "was": "none stated on the page",
+  "now": "Dated February 2025. The date sits directly under the page title.",
+  "evidence": "I fetched the page on 2026-10-13. Its text runs 'Digital Access Agreement' / 'February 2025' / 'Introduction and Scope'. The Card Payment definition quoted by the researcher is word for word right: '...by using the Card(s) in physical form, or from your Mobile Wallet, at a Card Payment Terminal.'"
+ },
+ {
+  "bankId": "ca-scotiabank",
+  "field": "slateRecord point (8)",
+  "was": "Nothing records that the $5 choice exists or that $1 is SLATE's pick",
+  "now": "SLATE's words do record the $5 choice: 'rounded up to the next multiple of $1 or $5 (chosen at enrolment)'. What is missing is any mark that $1 is SLATE's own pick. ca-scotiabank has no ROUND_UP_AMOUNT entry, so roundUpFor falls through to roundUpOf, which is the change to the next whole dollar. The UI note 'SLATE rounds each purchase up to the next whole unit in its place, SLATE's estimate' only shows for `chosen` banks, so Scotiabank players never see it.",
+  "evidence": "ACCOUNT_LIFE['ca-scotiabank'].roundUp in src/engine/content/accountlife.ts. ROUND_UP_AMOUNT there holds only us-wells-fargo, ca-td and is-landsbankinn. src/engine/systems/accountlife.ts roundUpFor, lines 164-170. src/ui/bank/BankAccountLife.tsx lines 35-36 and 94 (roundUpChosen)."
+ },
+ {
+  "bankId": "ca-rbc",
+  "field": "sources[https://discover.rbcroyalbank.com/save-without-sacrificing/].effective",
+  "was": "undated article",
+  "now": "Published September 18, 2024 and modified September 20, 2024. It is still generic advice and names no RBC round-up product.",
+  "evidence": "Page meta: article:published_time 2024-09-18T16:49:22+00:00 and article:modified_time 2024-09-20T19:21:38+00:00. The visible content_date reads 'September 18, 2024'. The quoted sentences match: 'Watch your savings grow by setting up deposits or using tools like roundups that move extra cash into your savings account.' and 'RBC clients can use NOMI to find extra dollars in their cash flow and automatically move them to savings.'"
+ },
+ {
+  "bankId": "ca-bmo",
+  "field": "sources[https://www.bmo.com/en-ca/main/personal/ways-to-bank/app-features/savings-goals/].quote",
+  "was": "NOT READ: bmo.com HTML pages timed out or refused the connection from this environment ... not verified from the page",
+  "now": "Read on 2026-10-13. The page says: 'Create custom transfers: Contribute regularly to your goals while maintaining a minimum balance on your account.' The FAQ says: 'Savings Goals is a new mobile banking feature ... helps you keep track of your contributions towards those goals and stay motivated to achieve them by linking your Canadian Savings account.' It also says: 'Any money you transfer on a weekend or holiday to a Savings account that's linked to your savings goals will go into your Reserve fund.' Nothing in it is triggered by a purchase, and nothing rounds up. BMO's savings-accounts page answers 'How can I automate my savings?' with: 'You can automate your savings by setting up recurring transfers (also called automatic deposits).'",
+  "evidence": "bmo.com stalls plain curl through TLS renegotiation from bot management. It answers HTTP 200 when the request sends browser-like headers (Accept, Accept-Language, Sec-Fetch-*). That was enough to fetch the Savings Goals page, the savings-accounts index, Savings Amplifier, Savings Builder and the agreements PDF. None of them mentions a round-up of card purchases."
+ },
+ {
+  "bankId": "ca-bmo",
+  "field": "unknowns",
+  "was": "BMO's Canadian HTML pages (Savings Goals, Savings Amplifier) could not be loaded, so the 'no' rests on the June 2, 2026 everyday-banking agreements PDF ... and on search-index summaries",
+  "now": "The 'no' now rests on BMO's own pages and terms as well as the PDF: the agreements PDF (effective June 2, 2026; its only 'rounded up' clause is the Overdraft Transfer Service), the Savings Goals page, the savings-accounts index with its automation FAQ, and the Savings Amplifier and Savings Builder pages, all read on 2026-10-13. One search summary claimed 'BMO offers a RoundUps feature'. I traced it to money.ca's 'Best BMO Savings Accounts' page, where the RoundUps text belongs to an embedded KOHO review widget ('No physical branches or tellers ... RoundUps feature helps you save ... Credit Building ... Cover'). It is not about BMO.",
+  "evidence": "pdftotext of Agreements_Bank_Plans_and_Fees_for_Everyday_Banking.pdf. Header: 'Effective date June 2, 2026'. Its 'round' hits are only the Overdraft Transfer Service ('Amounts will be rounded up to the nearest dollar amount selected... $121.42, $122.00 will be transferred') and points rounding. Footnote 3: 'The set-up fee is not applicable where the transfer is for automatic savings or regular contributions to a mutual fund, RSP or savings account.' The money.ca HTML holds a schema.org Review block whose positiveNotes are KOHO's."
+ },
+ {
+  "bankId": "ca-cibc",
+  "field": "offers (whole record)",
+  "was": "No ca-cibc finding was received: the findings text was cut off partway through ca-bmo's slateRecord.",
+  "now": "offers: no. I researched it independently. CIBC has no feature that moves money into savings from card purchases, whether as a round-up, a fixed amount per purchase or a sweep. Its automatic-savings tool, AutoSave, is recurring scheduled transfers. SLATE has no roundUp for ca-cibc, which is correct. The probe note 'No CIBC round-up feature found (search surfaced only AutoSave scheduled transfers)' holds up.",
+  "evidence": "cibc.com/en/personal-banking/bank-accounts/savings-accounts.html: 'Set up automatic transfers with AutoSave in less than 1 minute and quickly turn a little into a lot.' The eAdvantage Savings page: 'Set up automatic transfers with AutoSave so you can grow your savings without even thinking about it' and 'Set up recurring transfers between your accounts to meet your savings goals faster.' The how-to-transfer tutorial: 'Select how often you want the money to be transferred ... set up recurring transfers.' Personal Account Service Fees (March 12, 2026, cibc-pasf-en.pdf) and the CIBC Advantage Debit Card PDF (7929_Debit_Card.pdf) contain no round-up or spare-change program. The Insights, New Digital Banking Features and Smart Account pages have none either. Three web searches turned up no CIBC round-up product."
+ },
+ {
+  "bankId": "ie-bank-of-ireland",
+  "field": "product",
+  "was": "Its only 'pot', the Smart Start Money Pot, is a children's demand savings account (ages 7 to 15) paid into in branch or at An Post.",
+  "now": "Bank of Ireland also lets adults use its Instant Access Demand Account as a 'Money Pot' alongside their current account. Money moves in by hand, by transfers the customer makes. It is not linked to card purchases and has no round-up. The verdict 'offers: no' still stands.",
+  "evidence": "https://personalbanking.bankofireland.com/save-and-invest/savings/instant-access-and-notice-accounts/demand-deposit-account/features-and-benefits/ (read live 2026-10-13): 'If you are an existing Bank of Ireland Current Account customer you can create and move money between separate Money Pots and your current account' and 'You won't be able to use your money pots for payments or withdrawals with your debit card, however, this can be done through your current account.' The page names no automatic or card-linked funding."
+ },
+ {
+  "bankId": "ie-bank-of-ireland",
+  "field": "sources[Instant-Access-Demand-Account-Terms-and-Conditions-09.26.pdf].effective",
+  "was": "Effective date 26 November 2025",
+  "now": "The PDF states no effective date. Its version codes are Part 1: 37-1573R.2 (09/26) and Part 2: 37-1369R.10 (08/25). '26 November 2025' is the effective date of AIB's Online Banking terms, which looks like a mix-up. The finding itself, that the text has no 'round', 'spare' or 'sweep', is confirmed. Its only 'round' hits are 'grounds' and 'around'.",
+  "evidence": "pdftotext of https://personalbanking.bankofireland.com/app/uploads/Instant-Access-Demand-Account-Terms-and-Conditions-09.26.pdf (fetched 2026-10-13): neither 'Effective date' nor 'November 2025' appears. Page footers read '37-1573R.2 (09/26)' and 'Part 2: 37-1369R.10 (08/25) (A)'. Clause 1.3: 'You cannot use the Instant Access Demand Account to process day to day payment transactions'. Clause 2.1: 'You cannot be overdrawn on this account.'"
+ },
+ {
+  "bankId": "ie-aib",
+  "field": "unknowns",
+  "was": "(not mentioned)",
+  "now": "Add a warning. A web search for 'AIB round up' returns allibtonline.com/en/aib/savings/tools-for-savings/round-ups.html. It describes 'Round Ups' and 'Double Round Ups' in pounds for an 'AIB Trust Mobile App', in NatWest/Ulster Bank wording. It is not an AIB domain and must not be cited as AIB's own words. The ROI 'no' stands. AIB's own savings FAQ (Wayback capture of 2026-04-23) names only standing orders for automatic saving.",
+  "evidence": "WebSearch 'AIB round up savings app 2026' returned https://allibtonline.com/en/aib/savings/tools-for-savings/round-ups.html, a non-aib.ie domain giving GBP examples ('£2.30 coffee, 70p'). Wayback capture web/20260423022242 of https://www.aib.ie/help-and-guidance/savings-deposits-faqs: 'By using a Standing Order you can put the money you are saving into your savings account without having to think about it because it will be put into your savings automatically for the same amount and at the same time each month.' It has no round-up or card-linked saving."
+ },
+ {
+  "bankId": "is-landsbankinn",
+  "field": "slateRecord (mechanics match)",
+  "was": "The mechanics match: SLATE sweeps the day's total at day rollover, drops it whole if the current balance cannot cover it, never uses overdraft, and does not reverse on refunds. So do the bank's debit terms.",
+  "now": "The mechanics mostly match, with two gaps. (1) Timing: SLATE sweeps at every 'world.day_rollover', weekends and holidays included. The bank sweeps 'Í lok hvers bankadags', at the end of each banking day. (2) Destination: SLATE pays only into the person's own easy-access savings at the current account's bank. The bank's terms also allow another Landsbankinn customer's account or a charity in 'Góð málefni'. Everything else in the finding is confirmed: the 100/500/1,000 kr round-up, the flat 100/250/500/1,000 kr option, POS-only purchases, debit and Visa credit (except Plúskort), the daily debit sweep moved 'samdægurs', the day's saving dropped if the account has no funds, no saving on overdraft, no reversal on refunds, and closing through branch or contact centre with effect the same day.",
+  "evidence": "SLATE C:/Users/sande/Downloads/1221-GIT/src/engine/systems/accountlife.ts lines 219-233: the round-up sweep runs on 'world.day_rollover' and posts only if 'current.balance >= pending', into savings where 'a.bankId === current.bankId'. Wayback 20191208110526 terms: 'Í lok hvers bankadags eru teknar saman færslur dagsins ...', destinations '- Leggja inn á reikning í eigu annars viðskiptavinar Landsbankans - Leggja inn á eitt af þeim góðu málefnum ...'. Wayback 20200918164825 page: 'millifærður samdægurs í einni upphæð'."
+ },
+ {
+  "bankId": "is-islandsbanki",
+  "field": "product (sister option 'Gefðu afganginn')",
+  "was": "Its sister option, 'Gefðu afganginn', sends the difference to a charity.",
+  "now": "No official Íslandsbanki source names a product 'Gefðu afganginn'. The charity route is part of Eigðu afganginn itself: when registering, the customer can enter a charity's account as the destination. The bank's words are 'Þú getur gefið afganginn til góðgerðarmála' ('You can give the change to charity').",
+  "evidence": "Wayback captures of https://www.islandsbanki.is/einstaklingar/sparnadur/eigdu-afganginn/ from 2013-12-28, 2016-04-02 and 2018-08-25: 'Þú getur gefið afganginn til góðgerðarmála. Við skráningu getur þú valið að gefa afganginn til góðargerðamála með því að velja reikning góðgerðasamtaka sem innborgunarreikning afgangs.' A grep of every capture and live page I fetched found no 'Gefðu afganginn'. A web search for '\"Gefðu afganginn\" Íslandsbanki' returned no Íslandsbanki product page."
+ },
+ {
+  "bankId": "is-islandsbanki",
+  "field": "eligiblePurchases / excluded",
+  "was": "(The findings passed to me were cut off after the first source URL. The visible summary says only 'Each debit card transaction is rounded up'.)",
+  "now": "Íslandsbanki's own rules include ATM withdrawals, unlike Landsbankinn's. Eigðu afganginn works only on debit card payments for goods or services in shops (POS transactions) and on ATM withdrawals. Debit only: the FAQ says 'Öll debetkort Íslandsbanka', and no credit card is mentioned. The FAQ adds that it works wherever the debit card is 'rennt í gegnum posa' (run through a POS terminal). Online, card-not-present and contactless purchases are not addressed. If the record says ATM withdrawals are excluded, it is wrong. SLATE, which rounds up only card purchases, would also differ from the bank.",
+  "evidence": "Wayback web/20180825101107 of islandsbanki.is/einstaklingar/sparnadur/eigdu-afganginn/ (the same text appears in the 2013 and 2016 captures): 'Eigðu afganginn virkar eingöngu þegar debetkort er notað til greiðslu á vörum eða þjónustu í verslunum (posafærslur) og við úttekt í hraðbanka.' FAQ: 'Hvers konar kort er hægt að tengja við \"Eigðu afganginn\"? Öll debetkort Íslandsbanka.' and 'Þjónustan virkar í öllum verslunum og þjónustuaðilum svo lengi sem greitt er með debetkorti og því rennt í gegnum posa.'"
+ },
+ {
+  "bankId": "is-islandsbanki",
+  "field": "timing / insufficientFunds / refunds / destination / eligibility / closure",
+  "was": "(Not visible: the findings were cut off.)",
+  "now": "From the bank's own archived rules, last captured 2018-08-25. Timing: at the end of each working banking day ('virka bankadags'), the day's change is totalled and moved as one amount. Insufficient funds: if the checking account balance falls below the withdrawal threshold (default 0 kr), that day's whole saving is cancelled. The overdraft is never used. Refunds: if a debit transaction is cancelled or refunded, the change is not reversed and stays in savings. Destination: any account at Íslandsbanki, including another person's account (for example a child's Framtíðarreikningur) or a charity, given by account number and kennitala. Eligibility: the customer must have withdrawal rights on the debit card's account and leaves the service automatically on losing them. More than one card can be registered. Opt-in, change and stop: in the online bank, through 'Eigðu afganginn' then 'breyta', 'eyða' or 'Skrá nýtt kort'. The live link is isb.is/netbank/payments/savethechange/, which redirects to the bank's login. Íslandsbanki may discontinue the service in whole or in part. Unknown: what happens to change not yet moved when the service or an account closes. No current dated terms exist. None of the debit card terms (EY-9092, 06.05.25), the digital-channel terms (EY-12118, 31.3.2026) or the price list (from 19 March 2026) mention the service.",
+  "evidence": "Wayback web/20180825101107: 'Í lok hvers virka bankadags eru teknar saman færslur dagsins, afgangur lagður saman og millifærður í einni upphæð ...'; 'Ef innistæða á tékkareikningi fer undir úttektarmörk (sem er sjálfgefið 0 kr.) er hætt við úttekt sparnaðar þess dags. Það þýðir að ekki er hægt að taka út fyrir sparnaði með því að notfæra sér yfirdráttarheimild.'; 'Ef debetkortafærsla viðskiptavinar fellur niður eða er endurgreidd inn á kortið þá færist afgangurinn ekki til baka ...'; 'Hægt er að nota hvaða reikning sem er hjá Íslandsbanka ... Hægt er að leggja fyrir inn á reikning í eigu annarra.'; 'Viðskiptavinur sem skráir sig í þjónustuna þarf að vera með úttektarheimild á reikning debetkorts. Missi viðkomandi heimild á þann reikning fellur hann sjálfkrafa úr þjónustu.'; 'Íslandsbanki áskilur sér rétt til að hætta með þjónustuna að öllu leyti eða hluta'. Live https://www.islandsbanki.is/is/timamot/byrjadu-ad-spara (2026-10-13): 'Eigðu afganginn: Þegar þú notar debetkortið þitt er lagt fyrir í sparnað, inn á reikning að eigin vali. Hækka má upphæðina sem keypt er fyrir upp í næstu 100, 500 eða 1.000 krónur.' A grep of all three cdn.islandsbanki.is PDFs found no 'afgang'."
+ },
+ {
+  "bankId": "is-islandsbanki",
+  "field": "slateRecord",
+  "was": "(Not visible: the findings were cut off.)",
+  "now": "SLATE is wrong and out of date for Íslandsbanki. ACCOUNT_LIFE['is-islandsbanki'] has no roundUp, and its source is only the Fastvaxtareikningur PDF. ROUND_UP_AMOUNT has no 'is-islandsbanki' entry, so roundUpsOn() is false and SLATE offers no round-ups at Íslandsbanki. The bank's live page advertises Eigðu afganginn on 2026-10-13. To model it, SLATE needs: (1) a roundUp text; (2) a rule for a rounding unit the customer chooses from 100, 500 or 1,000 kr. ROUND_UP_AMOUNT's { flat } | { chosen } cannot express a unit, and SLATE's change to the next 1 kr is not one of the bank's options; (3) a sweep only on working banking days; (4) ATM withdrawals counted as well as POS purchases, per the bank's 2013–2018 rules. SLATE's drop-whole on a short balance, no overdraft and no reversal on refunds already match.",
+  "evidence": "Extracted from C:/Users/sande/Downloads/1221-GIT/src/engine/content/accountlife.ts: is-islandsbanki = {\"source\":\"https://cdn.islandsbanki.is/image/upload/v1/documents/Fastvaxtareikningur.pdf, 2026-09-26\"} with no roundUp. ROUND_UP_AMOUNT holds only us-wells-fargo, ca-td and is-landsbankinn. roundUpsOn() in src/engine/systems/accountlife.ts line 173 requires ACCOUNT_LIFE[bankId].roundUp. roundUpOf() returns the change to the next whole unit."
+ },
+ {
+  "bankId": "jp-mufg",
+  "field": "product (nearest product)",
+  "was": "Its nearest product is 自動つみたて定期預金, a scheduled fixed monthly transfer (from ¥10,000) from 普通預金 into a time deposit.",
+  "now": "The 自動つみたて定期預金 quote checks out, but MUFG has a closer analogue that goes into easy-access savings: スーパー貯蓄 (貯蓄預金) with 貯蓄預金スイング（自動振替）. On a set date it moves a fixed amount, or the part of the 普通預金 balance above a level the customer sets, into the 貯蓄預金. It is still scheduled and not tied to purchases, so offers=no stands.",
+  "evidence": "https://www.bk.mufg.jp/tameru/yen/samazama/chochiku/btm/index.html (read 2026-10-13): \"普通預金からご指定金額（1円以上1円単位）を貯蓄預金へ振り替えます\"; \"普通預金にご指定残高だけを残して、それ以上の金額を貯蓄預金へ振り替えます\". The page does not mention purchases, debit cards or おつり. https://www.bk.mufg.jp/tameru/yen/tsumitate/btm/index.html confirmed: \"つみたて（自動振替）金額は、毎月1万円からご指定いただけます。\""
+ },
+ {
+  "bankId": "jp-smbc",
+  "field": "product (nearest product)",
+  "was": "Its nearest products are 積立預金 (a scheduled fixed amount) and 定額自動入金 (a fixed monthly pull from another bank).",
+  "now": "Add SMBC's 貯蓄預金 スイングサービス: on a set day each month it moves a fixed amount between 普通預金 and the easy-access 貯蓄預金. It is scheduled, not tied to purchases, so offers=no stands. The 積立預金 quote and its minimums were confirmed (1,000円以上1円単位, or 10,000円以上 for 総合口座).",
+  "evidence": "https://www.smbc.co.jp/kojin/yokin/chochiku/ (read 2026-10-13): \"普通預金と貯蓄預金との間で毎月のご指定日に特定の金額を自動的に振り替え（スイング）することができます。\" https://www.smbc.co.jp/kojin/special/tsumitate/product/yokin/: \"毎月指定日に指定の金額を円の普通預金口座から円定期預金として積み立てできます。\" \"1,000円以上1円単位※で積み立てできます。※総合口座の場合は10,000円以上1円単位\". A site search of smbc.co.jp for おつり 貯金 returned only money-advice columns."
+ },
+ {
+  "bankId": "jp-mizuho",
+  "field": "sources (official API contract page)",
+  "was": "mizuhobank.co.jp/company/activity/api/contract_nestegg/index.html quoted from a Wayback snapshot of 2026-05-13 (1号 更新系 振込振替取引; 2号 照会系).",
+  "now": "I could not reopen it: live returned 403 (Akamai) and Wayback returned 429 from here. The Wayback CDX shows the 2026-05-13 capture has the same digest (ZK5MBADW…) as the 2024-06-22 one, so the content has not changed since 2024. The transfer capability is confirmed independently. Leave the quote marked as read via Wayback and not re-verified on 2026-10-13. Every finbee help-centre claim the researcher made was confirmed word for word. Corrected detail: help article 360002694711 is dated 更新 2025-01-14, not as read 2026-10-13.",
+  "evidence": "finbee.jp/news/20171024/ (2017-10-24): Mizuho 更新系API enabling transfers between 普通預金口座 and a separate 貯金用口座. finbee.jp/api_agreement/ lists みずほ銀行 among the 11 contracted banks. finbee.zendesk.com/hc/ja/articles/360002694711: \"②finbee上の「手動振替する」ボタンの操作を行うことで…「連携口座」から「貯金用口座」へ振替されます。… ※手動の振込/振替は１日１回まで、上限は50万円となります\". Article 360000835472: \"ご利用明細に記載される日付と反映日が14日以上差が出る場合は、おつり貯金、クレカ先取り貯金は実行されません。\""
+ },
+ {
+  "bankId": "jp-resona",
+  "field": "eligiblePurchases / sources",
+  "was": "Unknown in detail. Presumably payments made with the wallet's prepaid or debit card, but no official page read says which.",
+  "now": "Partly established, with low confidence. A search-engine excerpt of Resona Holdings' own 2019-02-18 release says おつり貯蓄 (Powered by finbee) saved 'おつりの相当金額等' each time the customer used the debit card or the wallet app. I could not open that page (403), so the wording is unverified verbatim. Also: every resonabank.co.jp notice now returns 403 and Wayback returns 429, so the withdrawal facts were confirmed only through search excerpts of the official notice. Impress Watch adds that all app functions stopped on 2023-03-16, the day after the 2023-03-15 service end.",
+  "evidence": "Excerpt for resona-gr.co.jp/holdings/news/newsrelease/detail/20190218_955.html: \"「おつり貯蓄」(Powered by finbee)…デビットカードやウォレットアプリを利用するたびに設定したおつりの相当金額等を自動的に貯蓄\". Excerpt for resonabank.co.jp/kojin/oshirase/detail_c/2022/20220701_yousouhaishi.html: \"「おつり貯蓄（finbee）」機能を2022年9月30日を以て…終了\", \"2022年10月3日以降、貯蓄金額をりそなウォレットプリペイド残高へと自動的にチャージ\", \"2022年7月末をもって、finbeeの新規お申込みの受付は終了\", \"2022年8月末をもって…新たな貯蓄目的の設定はご利用になれなくなった\". https://www.watch.impress.co.jp/docs/news/1444440.html: \"2023年3月15日をもって全サービスを終了する\"; \"'23年3月16日にりそなウォレットアプリの全機能を停止する\"."
+ },
+ {
+  "bankId": "jp-japan-post-bank",
+  "field": "insufficientFunds (自動積立定額貯金, context only)",
+  "was": "that month's saving is skipped, with no automatic loan to cover it; after 1 year with no saving, saving stops.",
+  "now": "The month is skipped with no 貯金担保自動貸付け. Saving stops after the transfer fails for 12 or more consecutive months, or 24 or more on a plan that saves once a year. Separately, the ゆうちょ通帳アプリ update of 2026-05-18 added no round-up or おつり feature, and the 参照系-only status for ネストエッグ was confirmed.",
+  "evidence": "https://www.jp-bank.japanpost.jp/kojin/chokin/teigaku/kj_cho_tg_tumteigaku.html: \"その月の積立はできません。（この貯金の預入のための貯金担保自動貸付けは行いません。）\" … \"それ以後の積立は行いません\". https://www.jp-bank.japanpost.jp/aboutus/activity/api/abt_act_api_keiyaku.html: \"株式会社ネストエッグ | 参照系API | ―\". https://www.jp-bank.japanpost.jp/news/2026/news_id002413.html (2026-05-18): it adds only 取引時認証, 送金限度額変更, 10-year 担保定期貯金 and app linkage, with no おつり or 自動貯金."
+ },
+ {
+  "bankId": "kr-kb-kookmin",
+  "field": "product / unknowns (adjacent feature)",
+  "was": "No card-purchase round-up found; only the open-banking 잔액 모으기 예약 (자투리 모으기, per 2020 news).",
+  "now": "Confirmed. Add an adjacent feature that must not be mistaken for a round-up: KB모바일현금카드 '잔돈적립'. When the customer pays a merchant in cash or gift certificates, the change is deposited to their own account instead of being handed back in coins. It is not tied to card purchases and is not a savings sweep. I found no official 2026 page naming the 자투리 option; all live KB pages show only the 잔액 모으기 예약 menu. The KB Star 정기예금 page SLATE cites mentions 잔액 모으기 only in its navigation menu.",
+  "evidence": "https://omoney.kbstar.com/quics?page=C041777: \"가맹점에서 현금 또는 상품권 결제시 발생한 잔돈을 적립할 수 있는 서비스\"; \"현금 또는 상품권 결제 시 발생한 잔돈을 KB모바일현금카드를 통하여 본인 계좌로 입금\". https://obank.kbstar.com/quics?page=C021090: \"잔액 모으기 즉시 00:05~23:55 … 예약 등록 24시간 … 잔액모으기 예약 해지는 예약 실행일 전일까지만 가능합니다.\" biz.newdaily.co.kr 2020-05-18: \"선택한 출금계좌에서 1000원, 5000원, 1만원 등 지정한 금액 미만의 잔돈을 매월‧매주‧매일 등 예약일에 자동으로 출금해 모아준다\"."
+ },
+ {
+  "bankId": "kr-kb-kookmin",
+  "field": "slateRecord",
+  "was": "SLATE's KB roundUp comes from 2020 news, not its cited source; the engine applies per-purchase change of at most 0.99 won.",
+  "now": "Confirmed against the code, with one more mismatch. roundUpsOn() (src/engine/systems/accountlife.ts:173-176) returns true whenever ACCOUNT_LIFE['kr-kb-kookmin'].roundUp exists. roundUpFor() falls back to roundUpOf(), which is 100 - amount%100 in hundredths. That moves 0 to 0.99 won per debit purchase, and 0 on a whole-won price. The nightly move (accountlife.ts:226-233) then drops the day's amount if the current balance is short. The bank's 자투리 모으기 instead sweeps the balance below 1,000, 5,000 or 10,000원 on a daily, weekly or monthly schedule, from up to 5 accounts including other banks', into a KB account. Recommendation: remove KB's roundUp until an official page confirms it, or model it as a scheduled balance-remainder sweep.",
+  "evidence": "src/engine/content/accountlife.ts, kr-kb-kookmin roundUp: \"KB스타뱅킹 '자투리 모으기' (added May 2020): on a scheduled day (daily/weekly/monthly) it withdraws the spare change below a chosen unit (1,000/5,000/10,000원) from the selected account and collects it.\" Its source: obank.kbstar.com …prcode=DP01000938 (the KB Star 정기예금 page). src/engine/systems/accountlife.ts:154-176 and :226-233."
+ },
+ {
+  "bankId": "kr-shinhan",
+  "field": "sources (news attribution)",
+  "was": "The no-spend-day fixed amount and 'money came from the Kakao Pay Money balance' were attributed generally to news, and the cited news is digitaltoday 533593.",
+  "now": "The digitaltoday Season 2 article (2024-09-12) confirms only the 10–200% ratio and 70,000 accounts. It says nothing about no-spend days or Kakao Pay Money. Those two claims come from Season 1 coverage (techm.kr 117181 / etoday, December 2023), which should be cited instead. The bank PDF claims were all confirmed verbatim: sale period, 일 10만원 and 월 50만원 caps, 6-month term, 17+, the partner service stopping on early closure, and 2 partial withdrawals. I found no Season 3 or successor product, and no Shinhan round-up from its own cards.",
+  "evidence": "https://img.shinhan.com/sbank2016/seol/20231012000001020004LC000030.PDF: \"판매기간 내 선착순 7만좌 한도 소진 시 종료\", \"2024.09.12 ~ 2025.01.20\", \"일 최대 10만원 이하, 월 50만원 이하\", \"예금 중도해지 시 연계∙제휴서비스 제공을 중단합니다\". Search excerpt of techm.kr/news/articleView.html?idxno=117181: \"카카오페이에 충전돼 있던 선불충전금 중에서 3000원이 적금 계좌에 적립됩니다. 또한 결제하지 않는 날은 원하는 금액만큼 정액으로 저축하는 것도 가능\". etoday.co.kr/news/view/2309283 is dated 2023-12-06."
+ },
+ {
+  "bankId": "kr-hana",
+  "field": "product / history (destinations by terms version)",
+  "was": "Under its 2021-11-18 to 2025-08-27 terms it included '결제잔돈', which took the under-1,000원 change of each check-card, credit-card or 간편결제 purchase into a fund or a (내맘) 적금.",
+  "now": "결제잔돈 (credit card, check card, 간편결제; the under-1,000원 change of each purchase) appears in every version from 2021-11-18 to 2025-08-27. The (내맘) 적금 (자유적립식) destination did not exist until 2022-10-19. The destinations by version were: 2021-11-18, 잔돈펀드 only (funds with a 1,000원 minimum opening and 100원 minimum top-up, excluding 하이로보); 2022-03-10, 원화 투자 펀드 (online only, opened from 2021-03-01); 2022-05-02, 원화 투자 펀드 (opened non-face-to-face from 2021-03-01, at a branch from 2022-04-01); from 2022-10-19, funds or (내맘) 적금. The weekly 통장잔돈 (balance below 1만원 at Friday midnight) also ended 2025-08-28, which leaves only the daily sweep. Per news, the change took effect at 17:00 on 2025-08-28.",
+  "evidence": "https://image.kebhana.com/cont/download/documents/provide/a000000000515_20211118.pdf, [별지2]: \"…“금융투자상품”은 아래와 같습니다. … 1. 잔돈펀드 투자하기\" (no 적금). The _20220310.pdf and _20220502.pdf [별지2] list 원화 투자 펀드 only. _20221019.pdf [별지2] 2: \"(내맘) 적금 (자유적립식)\"; [별지1] 5: \"매주 금요일 자정(24시)에 확인하여, 그 중 1만원 미만의 잔액을 자동으로 투자\". https://www.etoday.co.kr/news/view/2499336 (2025-08-24): \"28일 오후 5시부터\"; the options ended were 매주(토요일) 1만 원 미만, 쓸 때마다 남는 잔돈 투자, 두드려 쌓는 잔돈 투자 and 달성하고 쌓는 잔돈 투자."
+ },
+ {
+  "bankId": "kr-hana",
+  "field": "current terms (additions)",
+  "was": "No fee, monthly-cap or suspension conditions recorded.",
+  "now": "Add from the 2025-08-28 terms. There is no fee (제13조). The amount swept counts toward the 투자상품's monthly deposit cap (제10조③); (내맘) 적금 allows 1원 to 1,000만원 a month. The sweep does not run where a fund's sales limit is exceeded (제10조⑤), or where a fund's risk grade changes to 1 and the customer's profile or prospectus delivery does not fit (제10조⑥). The sweep can be suspended by 압류 and similar orders (제10조④). All other researcher claims were confirmed verbatim: units, midnight balance on business days, 투자실패 with no retry, the overdraft line excluded, and the 7-day auto-termination.",
+  "evidence": "a000000000515_20250828.pdf: \"“이용자”는 “서비스”에 대한 수수료를 부담하지 않습니다.\"; \"“투자상품”의 월 불입한도가 정해진 경우, “잔돈투자”로 입금한 “투자금액”도 “투자상품”의 월 불입한도에 포함됩니다.\"; \"“투자상품”이 판매한도 적용 대상 상품인 경우 판매한도 초과시 “잔돈투자”는 진행되지 않습니다.\" https://www.kebhana.com/cont/mall/mall08/mall0801/mall080102/1461831_115157.jsp: \"자유적립식 : 매월 1원 이상 ~ 1,000만원 이하 (원단위)\". The terms list page shows 시행일 2025.08.28 / 2022.10.19 / 2022.05.02 / 2022.03.10 / 2021.11.18."
+ },
+ {
+  "bankId": "kr-kakaobank",
+  "field": "sources (coinbox page quote)",
+  "was": "\"2. 저축금액 : 연결된 계좌의 전일자 최종 잔액의 1천원 미만에 해당하는 금액 … 저축시점 연결된 계좌 잔액이 1만원 이하인 경우에는 저축을 실시하지 않음\"",
+  "now": "This quote joins two different rules. On kakaobank.com/products/coinbox the 1만원 이하 skip belongs to 자동 모으기. The 동전 모으기 rule says it does not run when the linked balance at saving time is 1천원 이하. The researcher's insufficientFunds conclusion is right, but the quote should be split. The page describes 자동 모으기 as \"고객이 직접 선택한 최대값을 고려해 산출된 1천원 이상 1만원 이하의 금액\". The 상품설명서 states it as a base band of 1,000–5,000원 that the customer may raise to 10,000원.",
+  "evidence": "https://www.kakaobank.com/products/coinbox (read 2026-10-13), 동전 모으기: \"2. 저축금액 : 연결된 계좌의 전일자 최종 잔액의 1천원 미만에 해당하는 금액 3. 유의사항 저축시점 연결된 계좌의 잔액이 1천원 이하인 경우에는 저축을 실시하지 않음\". 자동 모으기: \"저축시점 연결된 계좌 잔액이 1만원 이하인 경우에는 저축을 실시하지 않음\". Also \"2026.10.13 기준, 세금공제 전 연 4.00%\" and 심의필 26-1796."
+ },
+ {
+  "bankId": "kr-kakaobank",
+  "field": "insufficientFunds / eligibility (additions)",
+  "was": "Skipped, never partial and never overdrawn. Eligibility: real-name Korean nationals aged 14+, linked 입출금통장 or 외국인통장.",
+  "now": "Add the bank's own warning that the automatic saving can leave the linked account short for later debits such as loan interest. The 저금통 never overdraws, but the linked account can end up short. On eligibility, the bank's documents conflict. The 특약 and the product page say 만 14세 이상 실명의 내국인, while the 상품설명서 gives no age. All three list 외국인통장 as a linkable account, which sits oddly with a 내국인-only rule. Whether foreigners can open a 저금통 is unknown. All other claims were confirmed verbatim against the 특약 (부칙 2026-09-23, applies to existing customers) and the 상품설명서 (심의필 26-1719): weekdays regardless of holidays, the previous-day closing balance, the 10만원 deposit cap with the 캐시백 exception, full withdrawal only except for brand coupons, and proceeds paid to the linked account on closure.",
+  "evidence": "https://og.kakaobank.io/download/7f7c5e39-806a-4a97-89e1-367fabb15b7b: \"자동저축서비스 이용 시, 해당 서비스로 인해 연결된 계좌에서 대출 이자 등 결제대금 출금을 위한 잔액이 부족한 상황이 발생할 수 있으므로 이 점 유의하시기 바랍니다.\"; \"가입대상 카카오뱅크 입출금이자유로운예금을 보유한 실명의 내국인\"; \"※ 연결가능 상품: 카카오뱅크 입출금통장, 외국인통장\"; \"이 통장을 해지하는 경우 원금 및 결산이자는 연결된 계좌로 이체 처리됩니다.\" https://og.kakaobank.io/download/807c3311-8f79-4fa2-980e-84a50bb61719 제3조: \"만 14 세 이상의 실명의 내국인\"; 부칙 (2026. 9. 23.): \"기존 가입고객에게도 적용됩니다\"."
+ },
+ {
+  "bankId": "kr-kakaobank",
+  "field": "slateRecord",
+  "was": "(The researcher's slateRecord was cut off in the findings I received.) SLATE roundUp: \"저금통: linked to a KakaoBank 입출금 account; '동전 모으기' sweeps the under-1,000원 remainder (1-999원) of the account into the 저금통 on weekdays (Mon-Fri); '자동 모으기' saves an algorithm-chosen 1,000-10,000원 each Saturday; balance capped at 10만원; can be emptied to the linked account at any time.\"",
+  "now": "SLATE's record is right in substance but incomplete, and its source is wrong. (1) The cited source, kakaobank.com/products/deposit, is the 정기예금 page and shows 저금통 only as a navigation link. Cite products/coinbox and the 특약 (부칙 2026-09-23). (2) It omits that 동전 모으기 reads the previous day's closing balance, runs regardless of public holidays, and is skipped when the linked balance at saving time is 1,000원 or less. (3) 자동 모으기 is a base band of 1,000–5,000원 that the customer may raise to 10,000원, and it is skipped at a balance of 10,000원 or less. (4) It omits 캐시백 모으기, which can exceed the 10만원 cap. (5) The engine misapplies it, as with KB. roundUpsOn() is true for KakaoBank, and roundUpFor() moves the change to the next whole unit per debit purchase, 0 to 0.99 won in KRW hundredths, every night, into SLATE's KakaoBank savings product 세이프박스. The bank instead sweeps 1–999원 of the balance on weekdays into the separate 저금통 (4.00%, capped at 10만원). There is no ROUND_UP_AMOUNT entry for any kr bank.",
+  "evidence": "src/engine/content/accountlife.ts, kr-kakaobank: source \"https://www.kakaobank.com/products/deposit, 2026-09-26\". That page, fetched 2026-10-13, has the title \"정기예금 | 카카오뱅크\" and shows 저금통 only in its navigation. src/engine/content/banks-thirteen.ts: kr-kakaobank savings is \"세이프박스 (savings box)\". src/engine/systems/accountlife.ts:154-176 and :226-233. src/engine/systems/spending.ts:374. 특약 제9조①: \"동전모으기 저축금액은 근거계좌 전일자 최종 잔액의 1 천원 미만에 해당하는 금액\"; \"저축시점 근거계좌의 잔액이 1 천원 이하인 경우에는 실시되지 않습니다\"."
+ },
+ {
+  "bankId": "es-santander",
+  "field": "slateRecord.source (SLATE)",
+  "was": "SLATE cites https://roams.es/actualidad/finanzas/depositos-santander-rinden-mas-2-tae-15000-euros-nuevas-condiciones/ (the researcher calls it a third-party article about deposits)",
+  "now": "The cited article does not support SLATE's words at all. It is about Santander deposits, and its static HTML has no 'Hucha Santander' and no 'redondeo'. The only 'hucha' on it is an image alt text about Openbank. Replace it with https://www.bancosantander.es/particulares/cuentas-bancarias/hucha-digital/ and the Cuenta Hucha precontract.",
+  "evidence": "Fetched 2026-10-13. Page title: 'Los depósitos de Santander ya rinden más del 2% TAE desde 15.000 euros: así quedan las nuevas condiciones'. The only 'hucha' match is alt text: 'Móvil con el logotipo de Openbank y una cuenta de ahorro al 3,25% TAE junto a una hucha de cerdito'."
+ },
+ {
+  "bankId": "es-santander",
+  "field": "closure",
+  "was": "Closing the Hucha: the customer picks an account for the balance. Closing all Santander accounts closes the Hucha. Santander may close it on two months' written notice.",
+  "now": "Confirmed. Add from the precontract that the bank carries out the customer's cancellation within 24 hours, and that the customer can cancel at any time without notice. Pending round-ups at closure are still unknown.",
+  "evidence": "Precontract (assets.santandermedia.com ... ES_1110021p ... _WebP.pdf; XMP CreateDate 2024-03-27, ModifyDate 2025-04-24): 'El Cliente puede cancelar la cuenta y el contrato en cualquier momento, sin necesidad de avisar al Banco. El Banco cumplirá la orden de cancelación del contrato en un plazo máximo de 24 horas a partir de la solicitud. El Banco puede cerrar la cuenta y cancelar el contrato si avisa al Cliente por escrito con dos meses de antelación.'"
+ },
+ {
+  "bankId": "es-bbva",
+  "field": "eligiblePurchases (attribution of 'credit coming soon')",
+  "was": "'A 2020 BBVA AM blog said debit or credit, and the 2019 release said credit was coming soon.'",
+  "now": "The 2019-06-25 release (bbva.com/es/salud-financiera/bbva-facilita-a-los-clientes-automatizar-la-gestion-de-sus-finanzas/) does not mention credit cards; it names debit only. The 'coming soon' line is in a different bbva.com article, dated 2019-08-27: https://www.bbva.com/es/es/programa-tu-cuenta-alcanza-ya-mas-de-55-000-reglas-creadas-por-los-clientes-para-ahorrar-y-gestionar-sus-finanzas/ . That is also the article that gives the launch date of 10 June 2019 and says round-up was the most-used rule (26,100 rules).",
+  "evidence": "2019-08-27 article: 'próximamente permitirá, por ejemplo, destinar el dinero ahorrado a planes de pensiones, se enviarán notificaciones con el dinero ahorrado cada dos meses o permitirá el redondeo de las compras realizadas también con la tarjeta de crédito'. 2019-06-25 release: 'Se trata del redondeo de las compras con tarjeta de débito' (no credit mention)."
+ },
+ {
+  "bankId": "es-bbva",
+  "field": "optIn",
+  "was": "'Programa tu Cuenta > Mis Reglas > Redondeo en compras. Choose the debit card, the source account and the destination ... then sign.'",
+  "now": "BBVA's pages give step-by-step instructions only for the minors' flow: Mis Reglas > 'Configurar las reglas del menor' > 'Redondeo en compras' > select the representative's card > select the minor (over 12) and the destination (Cuenta Ahorro Metas para Menores) > Firmar. For adults, the pages say the source is the account linked to the card. The customer chooses the card, not a separate source account. The adult steps are the researcher's inference, not BBVA's words.",
+  "evidence": "app-redondeo-ahorro.html (Actualizado 13 de octubre de 2025): 'La primera es la de origen, de la que sale el redondeo (y la que está asociada a la tarjeta).' reglas-programa-tu-cuenta.html: 'Pinchar en ‘Mis Reglas’ y, una vez entremos, en ‘Configurar las reglas del menor’ ... Seleccionar la tarjeta del representante ... Indicar el menor (mayor de 12 años) y la cuenta de destino ... Firmar.'"
+ },
+ {
+  "bankId": "es-bbva",
+  "field": "sources (missing official product pages)",
+  "was": "Sources were only BBVA's educational pages, the Cuenta Metas page and press releases.",
+  "now": "Add BBVA's official product page for the service and the Cuenta Metas rules fragment. Neither mentions a multiplier or a card type, which supports 'multiplier unconfirmed in 2026'. Note: direct and WebFetch requests to bbva.es returned 403 (Akamai), so I read the live pages through a reader proxy. Wayback captures from 2024-05-27 (reglas) and 2024-12-11 (app-redondeo) carry the same Redondeo text, so the mechanics have been stable since at least 2024.",
+  "evidence": "https://www.bbva.es/personas/banca-online/programa-tu-cuenta.html: 'Redondeo en compras — Redondea el importe de lo que pagas en tus compras y ahórralo en la cuenta, plan de pensiones o fondo de inversión BBVA que decidas.' https://www.bbva.es/personas/productos/cuentas/cuenta-ahorro-metas/reglas-ahorro.content.html: 'La regla más utilizada por los clientes. Cada vez que hagas una compra, redondearemos y acumularemos los céntimos que sobren.'"
+ },
+ {
+  "bankId": "es-bbva",
+  "field": "slateRecord (SLATE source)",
+  "was": "SLATE cites the BBVA Depósito Combinado precontract (via a Wayback snapshot of 2025-06-12)",
+  "now": "Confirmed: that PDF ('Información precontractual Depósito combinado 30F/70D', Mod. DP IP VINCULADO FONDOS V.4 25-02-2018) contains no 'redondeo'. SLATE's 'optional multiplier' rests only on BBVA communications from 2019 and 2020 (x2, x3, up to x4 in the 2020-01-15 BBVA AM blog). No 2025 or 2026 official page states it. Mark it unconfirmed or drop it, and cite reglas-programa-tu-cuenta.html instead.",
+  "evidence": "Reader text of the PDF: 0 matches for 'redonde'. BBVA AM blog (datePublished 2020-01-15): 'puedes programar que el redondeo se multiplique por 2, por 3 y hasta por 4'."
+ },
+ {
+  "bankId": "es-caixabank",
+  "field": "unknowns (last date the product was live)",
+  "was": "'the product page was live in archives 2017-06-16 (es) and 2019-07-23 (ca) and redirected by 2024-05-08'",
+  "now": "A later official capture exists. https://www.caixabank.es/particular/tarjetas/ahorraelcambio2_ca.html, titled '“Estalvia el Canvi” 2', is a contract iframe page that Wayback captured with HTTP 200 on 2019-08-25. The /ahorraelcambio_es.html URL now returns 301 to /particular/tarjetas/innovacion_es.html. The withdrawal date is still unknown: no official notice was found.",
+  "evidence": "Wayback CDX: '20190825032157 https://www.caixabank.es/particular/tarjetas/ahorraelcambio2_ca.html 200'. Capture text: '“Estalvia el Canvi” 2 | Targetes | CaixaBank ... Per a veure el contracte accedeix a aquest enllaç'. curl -I today: 'HTTP/1.1 301 ... Location: https://www.caixabank.es/particular/tarjetas/innovacion_es.html'."
+ },
+ {
+  "bankId": "es-sabadell",
+  "field": "eligiblePurchases / excluded",
+  "was": "The researcher's record of the round-up scope was truncated; the visible part relies on 'redondeo de cada compra' / 'Redondea tus compras'.",
+  "now": "Card purchases only cannot be established. The bank's own 2020 brochure rounds 'el importe de tus pagos en cuenta', meaning payments from the account, including a direct-debited electricity bill. A 2020 press report says 'cualquier compra o recibo domiciliado' qualifies. Today's official pages say only 'redondeo de cada compra' and give no card type and no exclusions. A third-party page (busconomico, undated) says 'Cuando pagues con tus tarjetas del Sabadell'. Record the scope as unknown: possibly all account payments, including direct debits (per 2020), possibly card payments only.",
+  "evidence": "Banco Sabadell brochure 'Ahorro Expansión' (Documento publicitario, Ed. 06-20, Fecha de emisión: Septiembre 2020; hosted at geografos.org/wp-content/uploads/2020/09/811-Ahorro-expansion_COL_08.pdf, a copy also at greincat.cat): 'Redondeo: Redondea el importe de tus pagos en cuenta al siguiente euro y así ahorrarás la diferencia. De este modo, cuando vas al restaurante, pagas la compra o te pasan el recibo de la luz, ahorrarás redondeando cada importe hasta el siguiente euro, acumulándose semanalmente.' Diario de León, 2020-10-10: 'cualquier compra o recibo domiciliado podrá ser susceptible de este ahorro'."
+ },
+ {
+  "bankId": "es-sabadell",
+  "field": "method (multiplier)",
+  "was": "(Truncated in the researcher's text.) SLATE: 'round up each purchase'; ROUND_UP_AMOUNT has no entry, so SLATE moves the change to the next euro.",
+  "now": "The next euro is stated only in the 2020 brochure. Current official pages give no unit. A round-up multiplier is reported only by non-official sources: x2 to x5 in 2020 press, written in the future tense ('se dispondrá'), and x3 on busconomico ('Ahora también puedes multiplicar esta cantidad x3'). No Sabadell page or help article mentions one. Treat the multiplier as unconfirmed. Leave ROUND_UP_AMOUNT empty (next euro), which matches the only bank-authored wording.",
+  "evidence": "Diario de León 2020-10-10: 'se dispondrá además de multiplicadores de redondeo que facilitarían que cada céntimo se multiplicase hasta el siguiente euro por 2, 3, 4 o 5'. El Nacional branded content 2020-09-30: 'Se dispondrá de multiplicadores de redondeo que permitirán acelerar el ahorro.' busconomico.com/cuenta/banco-sabadell/cuenta-ahorro-sabadell.aspx: 'Ahora también puedes multiplicar esta cantidad x3'. Searching the Sabadell help centre (Zendesk API) for 'redondeo' returns one unrelated article about POS terminals."
+ },
+ {
+  "bankId": "es-sabadell",
+  "field": "timing / source dates",
+  "was": "Help article 360021714899 'updated 2024-05-01'",
+  "now": "Weekly timing confirmed: the routine transfer runs in the night from Friday to Saturday. The article's text was last edited on 2022-06-27; 2024-05-01 is only the metadata update date. Launch: about mid-August 2020 as 'Ahorro Expansión'. On 2020-10-01 Via Empresa wrote that it had gone live a month and a half earlier, and El Nacional says round-up was the most-activated routine in August 2020.",
+  "evidence": "Zendesk API: article 360021714899, edited_at 2022-06-27T06:18:06Z, updated_at 2024-05-01T18:34:12Z: 'el proceso en el que se traspasa el ahorro a la Cuenta Ahorro Sabadell se realiza en la madrugada del viernes al sábado.' Via Empresa 2020-10-01: 'La nueva modalidad de cuenta del Banco Sabadell se puso en marcha hace un mes y medio.'"
+ },
+ {
+  "bankId": "es-sabadell",
+  "field": "optIn / eligibility (details to add)",
+  "was": "(Truncated) SLATE: 'Ahorro Sabadell (free with the Cuenta Online)'",
+  "now": "Add these points. Opening from the app or web turns on a routine by default, so it is opt-out: 'la rutina de ahorro más adaptada a tu día a día se activará por defecto, aunque puedes cambiarla o desactivarla'. Any client over 18 who holds an account can open one, not only Cuenta Online holders; it also works with the Cuenta Sabadell. Each customer has one Ahorro Sabadell. Joint holding is possible from the web or a branch only if neither person already has one, and the app opens it for a single holder only. The source is 'tu cuenta habitual de Banco Sabadell'. App withdrawals ('Mover dinero') are capped at €1,000 each; larger amounts go through web banking. Closing requires a zero balance. Insufficient funds, refunds and pending round-ups at closure: not stated anywhere official.",
+  "evidence": "bancsabadell.com/bsnacional/es/particulares/ahorro/ahorro-sabadell/ FAQ: '¿Quién puede contratarlo? Cualquier cliente mayor de 18 años titular de una cuenta.' '¿Puedo contratar más de una cuenta ahorro? No'. Zendesk 360021714839 (2026-05-26): 'Desde el móvil solo podrás contratar la Cuenta Ahorro Sabadell con un solo titular.' 360021714879 (2026-05-22): 'Introduce el importe (máximo 1.000 €)'. 16411754107154 (2025-11-13): 'es necesario que el saldo sea cero'."
+ },
+ {
+  "bankId": "es-sabadell",
+  "field": "slateRecord.source (SLATE)",
+  "was": "https://www.bancsabadell.com/bsnacional/en/personal/savings/deposits/, 2026-09-26",
+  "now": "The cited deposits page (title 'Features of deposits'...) contains no 'Ahorro Sabadell', no round-up and no rain wording in its HTML today. It covers only term deposits and their 1% early-cancellation penalty. Cite https://www.bancsabadell.com/bsnacional/es/particulares/ahorro/ahorro-sabadell/ (or the /en/personal/savings/sabadell-savings-account/ page) and the help-centre articles instead.",
+  "evidence": "curl of the deposits page on 2026-10-13: no matches for 'Ahorro Sabadell', 'round up' or 'rains'. The English savings-account page has: 'When you open the Sabadell Online Account, your Ahorro Sabadell will be included at no cost ... You can also use it with the Sabadell Account.'"
+ },
+ {
+  "bankId": "es-bankinter",
+  "field": "researcher findings (absent)",
+  "was": "The task text was truncated inside es-sabadell, so there were no es-bankinter findings to check.",
+  "now": "Researched independently. Bankinter offers it: Cuenta Modo Ahorro (Spain, Bankinter S.A.). Sources: https://www.bankinter.com/banca/cuentas-tarjetas/cuentas/cuenta-modo-ahorro (es) and https://www.bankinter.com/banca/en/accounts-cards/accounts/savings-mode-account (en), both undated and live on 2026-10-13. No precontract or contract is linked from the page. Eligibility: adults only. A Modo Ahorro account has the same holders as its source account, and a customer can have at most 3, each with different holders. Opt-in: open the account in web or app, define a goal, then choose tools (round-up, a % of income, periodic transfers). Eligible purchases: 'compras con tarjeta', with no card type and no exclusions stated; a card linked to another account can be used, but the charge comes from the associated account. Timing: once a day, the day after; all the day's purchases are grouped into one charge. Withdrawal: 'Retirar Dinero' moves all or part of the balance and appears 'en el momento'; 'Recuperar tu Ahorro' moves a goal's whole balance and arrives the next day. Unknown: debit vs credit, exclusions (ATM, direct debits), insufficient funds, refunds, closure and pending round-ups, and what a whole-euro purchase moves.",
+  "evidence": "Spanish FAQ: 'el traspaso del importe ahorrado desde la cuenta asociada se realiza una vez al día, en concreto al día siguiente ... agruparemos todas las compras que hayas hecho ese día, de forma que veas un solo movimiento'. 'Puedes tener tres Cuentas Modo ahorro como máximo y además deben tener distinta titularidad.' 'la Cuenta Modo Ahorro solo pueden abrirla mayores de edad.' 'no podrás cambiar la cuenta asociada a tu Cuenta Modo Ahorro.'"
+ },
+ {
+  "bankId": "es-bankinter",
+  "field": "ROUND_UP_AMOUNT (SLATE)",
+  "was": "No 'es-bankinter' entry, so SLATE moves the change to the next whole euro.",
+  "now": "Add 'es-bankinter': { chosen: true }. The customer picks €1, €2 or any other amount, and Bankinter states no default. The file's own convention, used for TD and Landsbankinn, makes this a `chosen` case.",
+  "evidence": "'Te ponemos un ejemplo con una compra de 6,30€. Podrías redondear de tres formas: 1€. Pasarían a la Cuenta Modo Ahorro 0,70€. 2€. Pasarían a la Cuenta Modo Ahorro 1,70€. Cualquier otro importe que decidas, por ejemplo, 5€, pasarían a la Cuenta Modo Ahorro 4,70€. El importe que resulte del método que hayas elegido, saldrá de tu cuenta corriente, no de tu tarjeta.'"
+ },
+ {
+  "bankId": "es-bankinter",
+  "field": "roundUp (method wording, SLATE)",
+  "was": "'card purchases rounded up to €1, €2 or any chosen amount (a €6.30 purchase sends €0.70, €1.70 or €4.70)'",
+  "now": "The quoted example is right, but 'rounded up to ... any chosen amount' misdescribes the arithmetic. With €5, €6.30 sends €4.70, reaching €11.00. Rounding up to a multiple of 5 would send €3.70 and reach €10.00. All three examples fit 'chosen figure minus the cents' (the change to the next euro plus N−1 euros). Only €1 and €2 also fit 'next multiple of N'. Say it that way, and say that what a whole-euro purchase moves is unknown.",
+  "evidence": "Same Bankinter example: 6.30 → 0.70 (=7), 1.70 (=8), 4.70 (=11). For N=5, 5 − 0.30 = 4.70, while ceil(6.30/5)·5 − 6.30 = 3.70."
+ },
+ {
+  "bankId": "es-bankinter",
+  "field": "roundUp (incomplete, SLATE)",
+  "was": "'debited from the linked current account once a day, the day after; withdrawals to the linked account any time, immediately.'",
+  "now": "This is correct but incomplete. Add four points. The round-up is charged once for each goal that uses the method, so a round-up set on several goals moves that many times. All of a day's card purchases are grouped into one charge. Immediate withdrawals are only the 'Retirar Dinero' path; 'Recuperar tu Ahorro' takes a goal's whole balance and arrives the next day. The account pays 0% TIN/TAE and cannot hold cards, cheques or direct debits.",
+  "evidence": "FAQ: 'Si tienes varios objetivos de ahorro dados de alta, se realizan tantos cargos como objetivos dados de alta en el que hayas incluido el mismo método de ahorro.' 'Recuperar tu Ahorro ... solo se puede traspasar todo el saldo ahorrado ... lo tendrás disponible en la cuenta corriente asociada al día siguiente'. 'Retirar Dinero ... aparecerá en el momento en la cuenta corriente asociada'."
+ },
+ {
+  "bankId": "es-bankinter",
+  "field": "slateRecord.source (SLATE)",
+  "was": "https://www.bankinter.com/banca/en/investment-savings/savings/features-of-deposits, 2026-09-26",
+  "now": "The cited page ('Features of deposits and FAQs | Bankinter') does not mention Modo Ahorro or round-ups. It is about term deposits, their tax treatment and investment funds. Cite https://www.bankinter.com/banca/cuentas-tarjetas/cuentas/cuenta-modo-ahorro instead.",
+  "evidence": "curl on 2026-10-13: no matches for 'Modo Ahorro' or 'round' in the page HTML. The Modo Ahorro page itself has the €6.30 example and the once-a-day FAQ that SLATE quotes."
+ },
+ {
+  "bankId": "nz-asb",
+  "field": "insufficientFunds",
+  "was": "With an arranged overdraft, the transfer goes ahead within the limit... Without an overdraft, only the 2010 launch news (interest.co.nz) says the transfer happens 'only ... if there were sufficient funds ... at the end of the day'. ASB's own pages do not say whether a short day's change is dropped, carried forward or partly transferred.",
+  "now": "ASB's own help page settles it: when the account can't cover the day's change at the end of the day, nothing is moved that day. It is not a partial transfer. Neither ASB source says the change carries forward. 'Won't happen that day' reads as dropped. The arranged-overdraft rule is as the researcher found: the transfer goes ahead if it stays within the limit and 'will increase your overdrawn balance'.",
+  "evidence": "https://www.asb.co.nz/help/what-happens-if-i-only-have-enough-money-for-my-purchase.html ('Last Updated: 17 Dec 2015'; the live site returns 403, so this was read from the Wayback copy of 2026-05-14). It is not cited by the researcher, but it is linked from ASB's Save the Change help tag page: \"Don't worry, the purchase will still go through. Save the Change calculates your savings at the end of each day and transfers the money overnight. If you don't have enough money in your account to cover it at the end of the day, Save the Change just won't happen that day.\" ASB's own launch release of 5 October 2010 (https://www.scoop.co.nz/stories/BU1010/S00103/asb-launches-save-the-change.htm) says the same: \"If a customer only has funds in their account to cover a transaction, then the transaction will be processed but Save the Change will not happen. A Save the Change transfer will only occur if there are sufficient funds in the customer's account at the end of the day\"."
+ },
+ {
+  "bankId": "nz-asb",
+  "field": "unknowns",
+  "was": "'Without an arranged overdraft: whether a day's change that cannot be paid is dropped, carried or partly transferred.'",
+  "now": "Remove it as an unknown. ASB says the day's Save the Change 'just won't happen that day', so there is no partial transfer. Only one narrower unknown is left: ASB does not say in so many words that the skipped change is never carried to the next day.",
+  "evidence": "Same help page as above (Wayback 2026-05-14, Last Updated 17 Dec 2015) and ASB's 5 October 2010 release on Scoop."
+ },
+ {
+  "bankId": "nz-asb",
+  "field": "slateRecord",
+  "was": "(Cut off in the findings received at '(1) The r'.)",
+  "now": "(a) The record's `source` is https://www.asb.co.nz/content/dam/asb/documents/term-investments/2023/asb-term-deposit-early-withdrawal-information-april-2023.pdf. That is an 82-line term-deposit sheet with no Save the Change wording; the words come from the Save the Change page and help pages. (b) The engine's rule is to move the day's change at rollover only if the current account's balance covers it, and otherwise zero it. For ASB that matches the bank's own stated rule, so there it is ASB's rule and not only SLATE's. (c) The record says Save the Change 'keeps running into an arranged overdraft', but the engine does not do this. The check `current.balance >= pending` in src/engine/systems/accountlife.ts skips the transfer whenever the balance is below the day's change, even inside an arranged overdraft, which SLATE does model (`overdraftHeadroom` in src/engine/systems/lending.ts). ASB moves it as long as it stays within the limit. (d) ROUND_UP_AMOUNT has no nz-asb entry, so SLATE always rounds to the next $1. ASB lets the customer choose $1, $2, $5 or $10. ASB's 2021 release says 'Save the Change starts by rounding purchases to the nearest dollar', which supports $1 as the starting choice, but the UI does not say it is a choice. (e) The engine rounds only debit card purchases (`onDebit` in src/engine/systems/spending.ts). The record also names direct debits and automatic payments, which ASB rounds only under the customer's option 2 and the engine never rounds. (f) The record leaves out several things: overseas transactions and branch or Contact Centre transactions are excluded; the change can be split across up to 10 accounts; a failed transfer goes back to the transaction account; and closing the accounts switches the feature off.",
+  "evidence": "Save the Change page (Wayback 2026-06-18): 'Save the Change will continue to operate as normal on accounts with arranged overdrafts and the rounded-up value will increase your overdrawn balance.' Overdraft help page (Last Updated 17 Dec 2015): 'your Save the Change transfer will happen as usual if it keeps you within that limit.' ASB media release 'Small change adds up to nearly $4m a month' (Wayback 2026-04-10): 'That's why Save the Change starts by rounding purchases to the nearest dollar.' Engine: src/engine/systems/accountlife.ts, `if (current && savings && current.balance >= pending) { s.post(...) } person.roundUps.pending = 0;`. The ASB term-deposit PDF (Wayback 2024-05-08) contains 'save the change' 0 times."
+ },
+ {
+  "bankId": "nz-anz",
+  "field": "sources",
+  "was": "moneybalance.co.nz/banking/anz-vs-asb-vs-bnz-vs-westpac/: 'A blog says ANZ NZ's goMoney app has 'round-up savings'.'",
+  "now": "The moneybalance page makes no such claim. Its only line on goMoney is 'ANZ's goMoney has card controls, spending insights and PayID', and it has no round-up text (page 'Updated April 2026'). The blog that does make the claim is steady.nz (10 March 2026, updated 15 Sept): 'The goMoney app has decent spending insights and round-up savings.' That claim is still contradicted by ANZ NZ's terms and by the petition. An NZ Herald column of 29 Aug 2026 also contradicts it: 'ASB is the only major bank I could find offering this itself, through Save the Change'. offers='no' stands.",
+  "evidence": "https://moneybalance.co.nz/banking/anz-vs-asb-vs-bnz-vs-westpac/ (curl and WebFetch on 2026-10-13: 'round-up', 'Round-up' and 'spare' not found); https://steady.nz/blog/nz-bank-accounts-compared-2026; https://www.nzherald.co.nz/business/personal-finance/automatic-saving-tips-how-round-ups-feijoa-and-sharesies-investback-work-nadine-higgins/premium/NQWUE62ZMVCGZL7QZT6U74J4ZY/ (29 Aug 2026)."
+ },
+ {
+  "bankId": "au-commbank",
+  "field": "product",
+  "was": "None. CommBank has no round-up or per-purchase saving feature.",
+  "now": "There is none today, and offers='no' stands. But CommBank did trial a round-up. In April 2017, 'Savings Jar' ('rounding up daily transactions') was offered to select customers in the experimental CommBank Labs app. No source shows it was released generally or says when it ended. A third-party page (Debt Busters) later credited 'NAB and Commonwealth' with a 'round-up jar'. It echoes this trial's names (Savings Jar and Savings Challenge) and is not evidence of a current product.",
+  "evidence": "CommBank media release, 3 April 2017, https://www.commbank.com.au/guidance/newsroom/financial-wellbeing-goals-201704.html: 'Currently being trialled in CommBank Labs app: ... Savings Jar – a transaction account experience that allows customers to set aside pots of money for unforeseen events by rounding up daily transactions. Customers will have access to their money in their transaction account whenever they need it.' The same release says the features 'will be available to select customers in an experimentation version of the CommBank app, called CommBank Labs apps.' EFTM, 3 April 2017: 'Savings Jar takes the Acorns approach and rounds up any transactions for saving.'"
+ },
+ {
+  "bankId": "au-nab",
+  "field": "unknowns",
+  "was": "Neither of the two addenda nor the off-sale terms mention a round-up, but the NAB app's in-app terms, if any, were not read.",
+  "now": "Add one point. A third-party page (debtbusters.com.au/what-are-round-up-savings/, now HTTP 410) said, in a search snippet, that 'NAB and Commonwealth have savings tools like the round-up jar and savings challenge'. No NAB page or terms support it. The names match CommBank Labs' 2017 trials. NAB's Spaces 'Sorting Rule' splits incoming funds between Spaces by equal split or custom percentages. It is not purchase-linked. offers='no' stands.",
+  "evidence": "https://www.nab.com.au/personal/online-banking/setup-savings-goal: 'Equal split – divide incoming funds evenly across all Spaces; or Custom allocation – set specific percentages for each Space'. The NAB terms (effective 31 October 2025) contain 'round' 0 times. The Debt Busters URL returned 410 on 2026-10-13."
+ },
+ {
+  "bankId": "au-anz",
+  "field": "method",
+  "was": "Unit choices: the next multiple of $1, $2, $5 or $10, chosen by the customer...",
+  "now": "The unit choices are correct, but they come only from the support page. The terms themselves, which this task prefers, define Round Ups only as 'the difference between the amount of an Eligible Card Transaction and the nearest dollar amount' and name no $2, $5 or $10 option. The record should cite both.",
+  "evidence": "https://www.anz.com.au/plus/terms-conditions/product-terms-conditions/ (dated 24 November 2025; page effectiveDate 2026-09-29), with the identical 829-character clause in /upcoming/ (from 30 October 2026): 'We may allow you to ask us to transfer the difference between the amount of an Eligible Card Transaction and the nearest dollar amount from one eligible Account to another eligible ANZ Plus Account. We call this 'Round Ups'.'"
+ },
+ {
+  "bankId": "au-anz",
+  "field": "timing",
+  "was": "Each purchase separately, on the day it is made... There is no daily batch.",
+  "now": "ANZ says only that 'the Round Up will appear on the day you make the transaction'. 'Each purchase separately' and 'There is no daily batch' are the researcher's inferences, not ANZ's words. The 'gold coin' marker on each rounded-up transaction supports per-purchase posting but does not state it. Either way it differs from SLATE's engine, which moves one total for the day at rollover.",
+  "evidence": "https://www.anz.com.au/plus/support/money-transactions/savings-goals/round-ups/ (effectiveDate 2025-10-27): 'look for the gold coin on your transactions to find the ones that have been rounded up' and 'the Round Up will appear on the day you make the transaction and the transaction will appear on the day it is processed.'"
+ },
+ {
+  "bankId": "nz-bnz",
+  "field": "offers",
+  "was": "(Not received: the findings handed to this check were cut off inside nz-asb's slateRecord, so there was no claim for this bank to check.)",
+  "now": "Checked independently: offers='no'. BNZ has no round-up, per-purchase or spare-change sweep. Its savings automation is automatic payments into Rapid Save. ACCOUNT_LIFE['nz-bnz'].roundUp is absent, which is correct as of 2026-10-13. Unknown: the BNZ app's in-app terms.",
+  "evidence": "BNZ Standard Terms and Conditions, 'Effective 1 October 2026' (https://www.bnz.co.nz/assets/about-us/governance/pdfs/BNZ-Standard-Terms-and-Conditions.pdf): no 'round up', 'spare change' or 'sweep' clause. BNZ Account Terms and Conditions 14.04.2026 (YouMoney, Rapid Save): none. Rapid Save page (https://www.bnz.co.nz/personal-banking/everyday-banking/rapid-save): 'Automate your savings: Set up automatic payments into your Rapid Save account.' NZ Herald, 29 Aug 2026: 'ASB is the only major bank I could find offering this itself, through Save the Change'."
+ },
+ {
+  "bankId": "nz-westpac",
+  "field": "offers",
+  "was": "(Not received: the findings handed to this check were cut off inside nz-asb's slateRecord.)",
+  "now": "Checked independently: offers='no'. Westpac NZ's 'Sweep Over' is not a sweep of spare change. It is an end-of-day balance sweep with a trigger amount, a target amount and a minimum amount, set up in a branch or by phone, and no purchase triggers it. ACCOUNT_LIFE['nz-westpac'].roundUp is absent, which is correct. Unknown: the personal Sweep Over terms. The only published form is the 'Authority for Hierarchical (Two-Way) Sweep', which is marked for organisational accounts.",
+  "evidence": "The Bonus Saver page (Wayback 2026-07-19) says: 'Sweep Over automatically moves money from your transaction account to your Savings account, so you can save faster and have enough in reserve to cover unexpected bills. Set up in branch or call 0800 400 600.' The sweep form (westpac.co.nz/assets/Personal/accounts-cards/documents/Authority-for-Hierarchical-2-way-Sweep-Form-Westpac-NZ.pdf, Wayback 2024-09-01) says: 'at the end of each calendar Day: If a Nominated Account has a balance that is more than the Trigger Amount, Westpac is to transfer an amount ... so that ... the balance ... is equal to the Target Amount'. The Westpac NZ General Terms and Conditions (28 May 2026) have no round-up or sweep clause."
+ },
+ {
+  "bankId": "nz-kiwibank",
+  "field": "offers",
+  "was": "(Not received: the findings handed to this check were cut off inside nz-asb's slateRecord.)",
+  "now": "Checked independently: offers='no'. Kiwibank's savings automation is scheduled automatic payments and Goal Tracker. Round-ups for Kiwibank customers exist only through the third-party Feijoa app, which pays into KiwiSaver, not Kiwibank savings. ACCOUNT_LIFE['nz-kiwibank'].roundUp is absent, which is correct. Unknown: kiwibank.co.nz product pages timed out from here, so only the terms PDF (via Wayback) and search results were read.",
+  "evidence": "Kiwibank General Terms and Conditions, 'Effective 29 May 2026' (https://media.kiwibank.co.nz/media/documents/General_Terms_and_Conditions_May26.pdf, Wayback 2026-10-09): no round-up, spare-change or sweep clause; 'round' appears only as 'around'. https://www.feijoa.kiwi/ is a third-party round-up into KiwiSaver. NZ Herald, 29 Aug 2026: 'ASB is the only major bank I could find offering this itself'."
+ }
+]
