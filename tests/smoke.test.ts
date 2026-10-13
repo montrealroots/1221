@@ -167,7 +167,7 @@ describe('the Decision Center', () => {
     expect(openDecisions(sim)).toHaveLength(0);
   });
 
-  it('stops asking once the row is waved away', () => {
+  it('is marked dismissed when waved away, and isn’t among the open rows eight days on', () => {
     const sim = quickSave({}, 'decisions-dismiss');
     raiseOne(sim);
     const row = openDecisions(sim)[0]!;

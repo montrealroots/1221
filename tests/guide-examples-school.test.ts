@@ -577,7 +577,8 @@ describe('the guide’s worked examples on staying at school, played', () => {
     // Asked on the fifth class day, it begins when granted, the decision so many working days on.
     expect(r.asked.firstTerm).toBe(1);
     expect(r.asked.startsNow).toBe(true);
-    expect(r.asked.decideAt).toBe(businessDaysOn(r.askedAt, Number(said(ex.steps[1]!, /grant it (\d+) working days later/)[0])));
+    // Yale’s working days, its holidays closed (from 2026-10-13: until then weekdays, and this counted them so).
+    expect(r.asked.decideAt).toBe(businessDaysOn(r.askedAt, Number(said(ex.steps[1]!, /grant it (\d+) working days later/)[0]), 'yale'));
     expect(r.leave.status).toBe('on');
     expect(keyOf(dayOf(r.leave.startedAt!))).toBe(keyOf(dayOf(r.asked.decideAt)));
     expect(r.leave.terms).toBe(n(said(ex.steps[0]!, /Length (\w+) Terms?/)[0]!));

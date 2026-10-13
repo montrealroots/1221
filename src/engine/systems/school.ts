@@ -3851,8 +3851,10 @@ export function registerSchool(sim: Simulation): void {
       if (held.some(([a, b]) => a < when + hours * 3_600_000 && when < b)) continue;
       // Within Yale's weekly cap across its jobs, 19 hours in term (from 2026-10-10).
       if (weekHours(s, person, when) + hours > weekCap(when)) { capped = true; continue; }
-      const term = termOf(day);
-      if (keyOf(day) < keyOf(classPeriod(term).from) || keyOf(day) > keyOf(classPeriod(term).to)) continue;
+      // Nor on a day off within it, a holiday or a recess, as the classes skip them (`inPeriod`): from 2026-10-13, when
+      // until then the term’s first to last day was all it read, and Labor Day was booked (found by that day’s final
+      // defect pass).
+      if (!inPeriod(termOf(day), day)) continue;
       school.workStudy.electiveHours += hours;
       schedule(s, person, when, { kind: SHIFT_KIND, label: 'Elective Shift: Front Of House, Yale Rep', minutes: hours * 60, payload: { hours, elective: true } });
       return { at: when, hours };

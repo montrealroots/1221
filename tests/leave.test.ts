@@ -90,7 +90,10 @@ describe('PLAYER JOURNEY: a medical leave and the way back', () => {
 describe('a personal leave', () => {
   it('granted for the next term after the fall’s evaluation: the spring never begins, and the fall’s cover runs to 31 January', () => {
     const sim = student('lv-next');
-    tended(sim, at(2026, 12, 18));
+    // Asked on Monday 14 December, after the fall's evaluation, and decided on the 21st. Until 2026-10-13 it was asked on
+    // the 18th and decided on Christmas Day; asked then now, Yale closed from the 24th, it's decided only as the spring
+    // begins on 4 January (found by that day's final defect pass).
+    tended(sim, at(2026, 12, 14));
     const asked = sim.must<{ firstTerm: number; startsNow: boolean }>({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } });
     expect(asked).toMatchObject({ firstTerm: 1, startsNow: false });
     tended(sim, at(2027, 1, 2));

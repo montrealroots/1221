@@ -595,14 +595,10 @@ describe('practice.exercise', () => {
     sim.player.wellbeing.energy = 20;
     refused('movement-work', 'You’re too tired to work on your feet. Sleep first.');
     expect(hourOf(sim, 'sense-memory').ok).toBe(true);
-    // TEST SETUP: the class gone, which a student never is: what wants a classmate is refused, and what doesn't isn't.
+    // Until 2026-10-13 the class was taken away here by hand, which a student’s never is, and what wanted a classmate was
+    // refused with “It takes a classmate, and you have no class to ask.”: a refusal no play reached, which went that day.
     dials(sim); // TEST SETUP: rested again.
-    const classmates = sim.player.school!.classmates;
-    sim.player.school!.classmates = [];
-    refused('repetition', 'It takes a classmate, and you have no class to ask.');
-    refused('sense-memory', 'It takes a classmate, and you have no class to ask.', { focus: 'live' });
     expect(hourOf(sim, 'concentration').ok).toBe(true);
-    sim.player.school!.classmates = classmates; // TEST SETUP undone.
     for (const e of ['recall-drill', 'adjustments']) { dials(sim); /* TEST SETUP */ expect(hourOf(sim, e).ok).toBe(true); }
     refused('voice-work', 'You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.');
   });

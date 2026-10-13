@@ -155,6 +155,15 @@ export interface CardState {
   bonusUsed?: Record<string, Money>;
   /** A US card's introductory rates, lost for a payment sixty days late (Reg Z §1026.55(b)(4)). */
   introLost?: boolean;
+  /**
+   * A statement cut before the next one whose due date comes after it (from 2026-10-13): what it said was owed, the
+   * least its due date judges, what autopay asks for it, and what has been paid since it, so its due date judges it and
+   * not the newer statement. Until then a card whose grace runs past the next statement (Nordea’s and OTP Moldova’s 30
+   * days, monobank’s 30, Postbank’s and Banco General’s 28, Banrural’s 55) had each due date judge the newer statement,
+   * against what was paid since that one: a statement paid in full was taken for one left unpaid (found by that day’s
+   * final defect pass).
+   */
+  waiting?: { at: Instant; statement: Money; due: Money; want: Money; paid: Money }[];
 }
 
 /**
@@ -183,7 +192,7 @@ export interface CreditState extends CardState {
 const CARD_KEYS: readonly (keyof CardState)[] = [
   'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
-  'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
+  'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost', 'waiting',
 ];
 
 /** A new card's state: nothing owed, nothing carried, paid by autopay as the holder pays their others. */
@@ -619,6 +628,8 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false,
   if (person.credit) {
     const state = stateOf(person, card);
     state.paidSinceStatement += paid;
+    // Toward a statement still waiting for its due date too (`waiting`): what’s owed on it is in the newer one as well.
+    for (const w of state.waiting ?? []) w.paid += paid;
     // Paid from another bank, the card's bank may hold back the credit it frees
     // for its days while the payment clears; paid from its own, it doesn't. The bank is the drawn account's: autopay's
     // own account, or the primary by hand. Until 2026-10-12 it was always the primary's, so autopay from the card's
@@ -720,7 +731,8 @@ export function dueAt(zone: string, statementAt: Instant, graceDays?: number): I
 
 function scheduleDue(sim: Simulation, person: Person, statementAt: Instant, graceDays: number | undefined, card: Account): void {
   const at = dueAt(zoneOf(sim, person), statementAt, graceDays);
-  sim.schedule({ at, kind: DUE_KIND, label: 'Card Payment Due', category: 'home', priority: 36, payload: { personId: person.id, accountId: card.id } });
+  // The statement it’s for (from 2026-10-13), which a due date after the next statement judges from `waiting`.
+  sim.schedule({ at, kind: DUE_KIND, label: 'Card Payment Due', category: 'home', priority: 36, payload: { personId: person.id, accountId: card.id, statementAt } });
 }
 
 export function registerCredit(sim: Simulation): void {
@@ -730,6 +742,13 @@ export function registerCredit(sim: Simulation): void {
     const card = person ? cardFor(s, person, item.payload.accountId) : undefined;
     if (!person || !record || !card) return;
     const credit = stateOf(person, card);
+    // A statement whose due date hasn’t come yet is kept as it stood, for its due date to judge (`waiting`).
+    for (const ahead of s.universe.scheduled) {
+      if (ahead.kind !== DUE_KIND || ahead.status !== 'pending' || ahead.payload.personId !== person.id || ahead.payload.accountId !== card.id || typeof ahead.payload.statementAt !== 'number') continue;
+      const { due, minimum } = autopayAsk(s, person, card);
+      const want = credit.hardship ? due : credit.autopay === 'full' ? credit.statementBalance : minimum;
+      credit.waiting = [...(credit.waiting ?? []).filter((w) => w.at !== ahead.payload.statementAt), { at: ahead.payload.statementAt, statement: credit.statementBalance, due, want, paid: credit.paidSinceStatement }];
+    }
     credit.statementAt = s.now;
     (credit.cuts ??= []).push(s.now);
     if (credit.cuts.length > 60) credit.cuts.splice(0, credit.cuts.length - 60);
@@ -834,22 +853,30 @@ export function registerCredit(sim: Simulation): void {
     const credit = stateOf(person, card);
     const currency = saveCurrency(s.universe);
     const terms = cardTerms(s, card, record.score);
-    const statement = credit.statementBalance;
-    const { asked, due } = autopayAsk(s, person, card);
+    // Judged on its own statement: a newer one cut since leaves this one in `waiting` (from 2026-10-13).
+    const waited = credit.waiting?.find((w) => w.at === item.payload.statementAt);
+    if (waited) credit.waiting = credit.waiting!.filter((w) => w !== waited);
+    if (credit.waiting?.length === 0) delete credit.waiting;
+    const paidNow = () => waited?.paid ?? credit.paidSinceStatement;
+    const statement = waited?.statement ?? credit.statementBalance;
+    const { asked, due } = waited ? { asked: Math.max(0, waited.want - waited.paid), due: waited.due } : autopayAsk(s, person, card);
     // Autopay asks the bank for the whole amount; a current account that
     // can't cover it sends it back, and the card charges for that (C59).
     if (asked > 0) {
-      if (autopayReach(s, person, card) >= asked) payCard(s, person, asked, false, card);
+      if (autopayReach(s, person, card) >= asked) {
+        const got = payCard(s, person, asked, false, card);
+        if (waited) waited.paid += got;
+      }
       else {
         // One penalty fee for one event on a US card (Reg Z §1026.52(b)(2)(ii)): a bounce that leaves the minimum
         // unpaid is charged the late fee below, and not the returned payment's as well, as until 2026-10-10 it was.
-        const lateToo = bankById(card.bankId ?? '')?.iso === 'US' && credit.paidSinceStatement < due;
+        const lateToo = bankById(card.bankId ?? '')?.iso === 'US' && paidNow() < due;
         const returned = lateToo ? 0 : terms.returnedPaymentFee;
         if (returned > 0) s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
         if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. ${returned > 0 ? `The card charged ${formatMoney(returned, currency)} for that.` : 'It’s late now, and the late fee is the one fee for it.'}`, importance: 75 });
       }
     }
-    const paid = credit.paidSinceStatement;
+    const paid = paidNow();
     // Paid in full: a card that wasn't carrying keeps its grace period and the
     // cycle's interest is dropped; one that was carrying regains it, and what
     // built up to today is charged on the next statement, as trailing interest.

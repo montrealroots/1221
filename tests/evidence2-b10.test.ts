@@ -25,7 +25,7 @@
  *   Keeps Accounts, which said it changed a deduction and no more, is held to its own look's "decides nothing now"; it
  *   failed until later on 2026-10-13, when the sentence said its receipts decide nothing for a student.
  * - `c-wealth`: what tests/school.test.ts's 'comes from a wealthy family, with its money in the bank, and has no
- *   birthplace chosen for it' says and doesn't check: Identity drawn from a new life asks for a birthplace and holds
+ *   birthplace chosen for it' said and didn’t check (its title, from later on 2026-10-13, says only what it asserts): Identity drawn from a new life asks for a birthplace and holds
  *   Continue, Begin's life is the wealthy family's with $92,391 and $413,043 at Chase, and the term's Yale Health plan,
  *   the $1,882 What Is Yours says goes each term (half Yale Health's published $3,764 for 2026–27), comes out of that
  *   checking at 9 AM. Found here: a plan the bank couldn’t pay was dropped, not owed, and the test of it failed, until

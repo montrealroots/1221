@@ -1,3 +1,47 @@
+# Read First: The Verification Gaps Closed, 2026-10-13
+
+The owner's brief of 2026-10-13, "Close The Verification Gaps And Complete The Current Build's Acceptance Evidence",
+done on `claude/verification-gaps` from `main` at `fca00d8f`, pushed, **not merged and not deployed**. The full account
+is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verification/audit/*.json`, drawn as
+`docs/GAMEPLAY-COVERAGE.md`.
+
+## What the pass did
+
+- Every coverage row was held to one standard: a gate test that reaches the action as a player does, checks the
+  consequence, expects an independent figure and can't pass vacuously. Each row records its review (against
+  `fca00d8f`), its evidence by kind, the tests added, defects, mutations, skeptics' checks and the verdict now.
+- Two rounds of evidence (`tests/evidence-g01..g34-*`, `tests/evidence2-b01..b13`), each checked by independent
+  skeptics, then a final check after every fix. Mutations in copies of the tree: 672 of 675 and 166 of 169 killed,
+  every survivor explained.
+- **Rows: 258 of 328 verified** (from 54 the review found at `fca00d8f`), 23 partial, 19 unresolved, 17 deferred, 3
+  legacy, 8 informational. The 134 rows that claimed verified unread: 123 verified now. The 100 partial: 86 verified.
+- About 140 defects fixed, each with a test that failed before it; 52 guide and tutorial findings fixed, two of them
+  built-app defects (a reload opened Home; a top-bar menu lost its focus to help).
+- Round-ups for 20 banks as their own sources say (`docs/research/roundups/`); the director's craft-note journey in the
+  built app at 1440 and 390; help's rules held by `tests/help-mechanics.test.ts`.
+- `tools/coverage.mjs --check` joined the gate (seventeen checks now; CLAUDE.md says so).
+
+## Verification on the final tree
+
+`npm run gate`, exit read from a file: **0**; 317 files, 3,833 tests. Built app: 60 passed, 0 failed, 2 skipped at
+1440 and at 390. Long runs (`tools/lives.ts --seeds 2 --years 1`): breaches 0, unbalanced 0.
+
+## Still the owner's
+
+- **The federal tax table is 2024's** for every year (`src/engine/content/tax.ts`); 2026's isn't in.
+- The forced wealthy family puts need-based paths (conversion of hours, leave aid, `school.request_conversion`) out of a
+  new life's reach: Unresolved or Deferred?
+- The 90-day rule for an undated decision; a skipped shower's cost past the day; `companyPart`'s floored lead; creation's
+  units by birthplace against the look's by residence; `receipts`, which multiplies nothing.
+- Merging to `main` and any Base44 deployment (read §10 below first).
+
+## For the next session
+
+The 23 partial rows each name what they lack (`after.gapsOpen` and the final check's problems): most need a played
+path a gate test can't reach in 60 seconds, or a second person in the world. The session's working files (the merge
+script, checks, mutation runner) were in its scratchpad and are not in the repository; the audit JSON holds their
+results.
+
 # Read First: The Connected Journey, 2026-10-12
 
 The owner's brief was "SLATE: Complete The Tutorial, Acting Depth, Balance, And Connected Player Journey", from `main`

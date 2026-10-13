@@ -49,11 +49,13 @@ function observed(y: number, m: number, d: number, saturdayToFriday: boolean): s
 
 const cache = new Map<string, Set<string>>();
 
-function year(kind: 'fed' | 'sag', y: number): Set<string> {
+function year(kind: 'fed' | 'sag' | 'yale', y: number): Set<string> {
   const id = `${kind}-${y}`;
   const hit = cache.get(id);
   if (hit) return hit;
-  const sag = kind === 'sag';
+  // Yale’s nine holidays are SAG-AFTRA’s but Presidents’ Day, moved off a weekend the same way, and its recess days
+  // added below.
+  const sag = kind !== 'fed';
   const days = new Set<string>([
     ...observed(y, 1, 1, sag),
     nth(y, 1, 1, 3), // Martin Luther King Jr. Day
@@ -77,6 +79,10 @@ function year(kind: 'fed' | 'sag', y: number): Set<string> {
   }
   // New Year's Day of the next year, observed on this year's last Friday.
   if (sag && weekday(y + 1, 1, 1) === 6) days.add(key(y, 12, 31));
+  // Yale keeps no Presidents’ Day; its recess days are the day after Thanksgiving, above, and every weekday from 24 to
+  // 31 December.
+  if (kind === 'yale') days.delete(nth(y, 2, 1, 3));
+  if (kind === 'yale') for (let d = 24; d <= 31; d += 1) if (weekday(y, 12, d) % 6 !== 0) days.add(key(y, 12, d));
   cache.set(id, days);
   return days;
 }
@@ -89,6 +95,17 @@ export function usBankHoliday(date: string): boolean {
 /** Whether a date is one of SAG-AFTRA's holidays, on which a production doesn't shoot. */
 export function sagHoliday(date: string): boolean {
   return year('sag', Number(date.slice(0, 4))).has(date);
+}
+
+/**
+ * Whether Yale is closed on a date, 'YYYY-MM-DD': its nine official holidays (New Year’s Day, Martin Luther King Jr.
+ * Day, Good Friday, Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving, Christmas), one on a Saturday
+ * kept on the Friday and one on a Sunday on the Monday, and its six recess days, the day after Thanksgiving and the
+ * weekdays of the last week of December ("Official Yale Holidays", your.yale.edu, 2026 and 2027, read on 2026-10-13).
+ * From that day the School’s working days (`systems/leave.ts`) skip them; until then they counted Monday to Friday.
+ */
+export function yaleHoliday(date: string): boolean {
+  return year('yale', Number(date.slice(0, 4))).has(date);
 }
 
 export const US_HOLIDAYS_SOURCE = 'https://www.federalreserve.gov/aboutthefed/k8.htm; https://www.sagaftra.org/contracts-industry-resources/contracts/2023-tvtheatrical-contracts (MLK Day and Juneteenth from 2024)';

@@ -14,7 +14,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine, Empty, WhyNot } from '@/ui/components/primitives';
+import { Panel, Stat, Fine, Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
@@ -24,7 +24,7 @@ import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, TIER, exerciseFor, PRACTICE, type PracticeFocus } from '@/engine/content/practice';
 import { experienceOf, FEATURE_LABEL, practicedDaysAgo, recommendations } from '@/engine/systems/experience';
-import { focusRefusal, matchedTier } from '@/engine/systems/practice';
+import { matchedTier } from '@/engine/systems/practice';
 import { levelOf } from '@/engine/systems/attributes';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { ETHNICITIES } from '@/engine/content/ethnicity';
@@ -229,7 +229,9 @@ function PracticeControl({ exercise }: { exercise: string }) {
   const [tier, setTier] = useState<0 | 1 | 2>(matchedTier(level));
   const [focus, setFocus] = useState<PracticeFocus>('steady');
   const [found, setFound] = useState<string | undefined>();
-  const no = practiceRefusal(sim, person, e) ?? focusRefusal(person, e, focus);
+  // A focus chosen here is one of `FOCUS`, which nothing refuses since 2026-10-13: until then a focus refused was grayed
+  // out with its reason under it, for refusals no play reached (`focusRefusal`).
+  const no = practiceRefusal(sim, person, e);
   const rec = experienceOf(person).exercises[exercise];
   if (!openUp) return <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpenUp(true)}>{e.label}…</button>;
   return (
@@ -237,8 +239,7 @@ function PracticeControl({ exercise }: { exercise: string }) {
       <span className="xs"><strong>{e.label}.</strong> {design?.challenge}</span>
       <label className="xs">Tier <select value={tier} onChange={(x) => setTier(Number(x.target.value) as 0 | 1 | 2)}>{TIER.label.map((l, i) => <option key={l} value={i}>{l}{i === matchedTier(level) ? ' (Your Level)' : ''}</option>)}</select></label>
       {design && <span className="xs dim">{design.tiers[tier]}</span>}
-      <label className="xs">Focus <select value={focus} onChange={(x) => setFocus(x.target.value as PracticeFocus)}>{(Object.keys(FOCUS) as PracticeFocus[]).map((f) => <option key={f} value={f} disabled={Boolean(focusRefusal(person, e, f))}>{FOCUS[f].label}</option>)}</select></label>
-      <WhyNot reasons={(Object.keys(FOCUS) as PracticeFocus[]).map((f) => [FOCUS[f].label, focusRefusal(person, e, f)] as const)} />
+      <label className="xs">Focus <select value={focus} onChange={(x) => setFocus(x.target.value as PracticeFocus)}>{(Object.keys(FOCUS) as PracticeFocus[]).map((f) => <option key={f} value={f}>{FOCUS[f].label}</option>)}</select></label>
       <span className="xs dim">{FOCUS[focus].words}</span>
       <Gated feature="practice.exercise" className="btn btn-sm" disabled={Boolean(no)} title={no ?? e.how} onClick={() => { const r = run<{ gained: number; feedback: string }>('practice.exercise', { exercise, tier, focus }); if (r.ok) { setFound(r.value!.feedback); toast(`${e.label}: +${r.value!.gained.toFixed(2)}.`, 'positive'); } }}>Practice An Hour</Gated>
       {no && <span className="xs dim">{no}</span>}

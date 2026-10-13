@@ -21,7 +21,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, dateKey, formatDate, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { usBankHoliday } from '../content/usholidays';
+import { usBankHoliday, yaleHoliday } from '../content/usholidays';
 import { WORK_RULES } from '../content/workrules';
 import { payFromBank } from './spending';
 import { citizenOf } from './documents';
@@ -45,7 +45,9 @@ function inSave(sim: Simulation, amount: number, currency: string): Money {
  * observed holidays, or days on which Federal Government offices are closed", 8 CFR 106.4, read on 2026-10-13 at
  * law.cornell.edu). From 2026-10-13: until then every count was Monday to Friday, and an OPT premium filing of Friday
  * 1 June 2029 was decided on Friday 13 July, Juneteenth and the Fourth counted, not Tuesday 17 July (found by the
- * second round of that day). Yale’s working days (`systems/leave.ts`) count Monday to Friday; SAVE’s
+ * second round of that day). Yale’s working days (`systems/leave.ts`), `federal` given as 'yale', skip Yale’s own
+ * holidays and recess days (`yaleHoliday`) from later that day: until then they counted Monday to Friday, and a leave
+ * asked for on 18 December 2026 was decided on Christmas Day (found by that day’s final defect pass). SAVE’s
  * (`systems/identity.ts`) are federal workdays from later that day (until then this said they still counted Monday to
  * Friday).
  *
@@ -53,12 +55,13 @@ function inSave(sim: Simulation, amount: number, currency: string): Money {
  * until then it was the day in UTC, so a count begun in a New Haven evening, past midnight in UTC, took a Sunday for a
  * Monday and a Friday for a Saturday, and a holiday for the day after it; found by that day’s loose ends).
  */
-export function businessDaysOn(at: Instant, days: number, federal = false, zone: TimeZone = 'America/New_York'): Instant {
+export function businessDaysOn(at: Instant, days: number, federal: boolean | 'yale' = false, zone: TimeZone = 'America/New_York'): Instant {
   let t = at;
   for (let left = days; left > 0;) {
     t += MS_DAY;
     const d = zonedParts(t, zone).weekday;
-    if (d !== 0 && d !== 6 && !(federal && federalHoliday(dateKey(t, zone)))) left -= 1;
+    const closed = federal === 'yale' ? yaleHoliday(dateKey(t, zone)) : federal && federalHoliday(dateKey(t, zone));
+    if (d !== 0 && d !== 6 && !closed) left -= 1;
   }
   return t;
 }
@@ -103,7 +106,10 @@ export function programEnd(person: Person): Instant | undefined {
  */
 export function usWorkAuthorized(person: Person, at: Instant): boolean {
   if (citizenOf(person, 'US')) return true;
-  if (person.usOutOfStatus !== undefined) return false;
+  // Out of status needs no line of its own: status outlives every permit in force (`usStatusEnds`: an OPT's end and sixty
+  // days; one canceled for its idle days, no longer valid, the moment it's canceled), and none is granted after it, one
+  // pending holding the status open. A line refusing it went on 2026-10-13: the permits settled every case it did (found
+  // by that day's final checks).
   return usPermits(person).some((d) => d.status === 'valid' && inForce(d, at));
 }
 

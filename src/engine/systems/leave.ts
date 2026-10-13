@@ -288,7 +288,7 @@ export function requestLeave(sim: Simulation, person: Person, kind: LeaveKind, r
   if (!length) throw new CommandError('A leave is one, two or three terms.');
   if (length.why) throw new CommandError(length.why);
   const start = leaveStart(sim, school, kind);
-  const decideAt = Math.min(businessDaysOn(sim.now, LEAVE_RULES.decideWorkingDays), start.now ? Number.POSITIVE_INFINITY : Math.max(sim.now + 3_600_000, at(termStart(start.term).date, 8)));
+  const decideAt = Math.min(businessDaysOn(sim.now, LEAVE_RULES.decideWorkingDays, 'yale'), start.now ? Number.POSITIVE_INFINITY : Math.max(sim.now + 3_600_000, at(termStart(start.term).date, 8)));
   const leave: Leave = { id: `leave-${(school.leaves?.length ?? 0) + 1}`, kind, reason, requestedAt: sim.now, status: 'pending', firstTerm: start.term, returnTerm: start.term + terms, terms, decideAt };
   school.leave = leave;
   sim.schedule({ at: decideAt, kind: LEAVE_DECIDE_KIND, label: 'Your Leave: The Decision', category: 'school', priority: 33, payload: { personId: person.id, leaveId: leave.id } });
@@ -599,7 +599,9 @@ export function extraRefusal(sim: Simulation, person: Person): { why?: string; t
   if (school.repeat?.status === 'pending') return { why: 'Your request to repeat the year is being decided.' };
   const t = termNow(school);
   if (school.repeatBy === undefined && !school.awaitingDegree) return { why: 'An additional term comes after your last year’s evaluation, for what it left unpassed.' };
-  if (school.repeatBy !== undefined && sim.now > school.repeatBy) return { why: 'Its thirty days have run out.' };
+  // Past the thirty days nothing is left to ask in: a request pending at their end is refused above, its decision or
+  // its calling off ends them (`school.cancel_repeat`). Until 2026-10-13 “Its thirty days have run out.” stood here,
+  // said only to a student whose repeat was called off after them, who has been withheld since that day.
   const plan = extraCourses(school);
   if (!plan.length) return { why: 'Every course is passed: there’s nothing to retake.' };
   // The next term whose season has retakes.
@@ -636,7 +638,7 @@ export function considerWelfare(sim: Simulation, person: Person): void {
   if (!school || school.welfare || school.leave) return;
   const trigger = welfareTrigger(sim, person);
   if (!trigger) return;
-  const assessAt = businessDaysOn(sim.now, MANDATORY_LEAVE.assessWorkingDays);
+  const assessAt = businessDaysOn(sim.now, MANDATORY_LEAVE.assessWorkingDays, 'yale');
   school.welfare = { at: sim.now, trigger, assessAt, status: 'scheduled' };
   sim.schedule({ at: assessAt, kind: WELFARE_KIND, label: 'Yale Health: An Assessment', category: 'school', priority: 34, requiresPlayer: true, durationMinutes: MANDATORY_LEAVE.assessMinutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id } });
   notify(sim, person, 'Yale Health Asks To See You', `With ${trigger}, Yale Health has asked to assess whether you can go on with your studies for now, on ${formatDate(assessAt, zone())}. It’s an individual assessment of how you’re managing and what the School can adjust for you, not of any diagnosis; it can end with nothing changed, with modifications, or with a recommendation of a medical leave that the dean decides. You can ask for a medical leave yourself first. Refusing the assessment is itself a ground the Bulletin names.`, 90);
@@ -855,7 +857,8 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
   const academic = academicTerm(school, t);
   if (academic < 1 || academic % 2 === 0 || !evaluated(school, t)) return 'A year is repeated from its end, after the spring’s evaluation.';
   if (school.repeatBy === undefined && academic === YALE_DRAMA.terms - 1) return 'Your last year’s evaluation is past.';
-  if (school.repeatBy !== undefined && sim.now > school.repeatBy) return 'Its thirty days have run out.';
+  // “Its thirty days have run out.” stood here until 2026-10-13, past them, where a request pending at their end is
+  // refused above and its decision or its calling off ends them (as `extraRefusal` says).
   if (school.repeatBy === undefined && sim.now >= at(termStart(t + 1).date, 0)) return 'The next year has begun.';
   if (!repeatCourses(school, t).length) return 'Every course this year was passed: there’s nothing to repeat it for.';
   // SLATE's faculty grant a year once (from 2026-10-10: until then one repeat in all, whatever the year).
@@ -871,6 +874,8 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
  * the confirm on its first press, so this was never shown).
  */
 export function cancelRepeatWarning(sim: Simulation, school: SchoolRecord): string {
+  // Past the thirty days, it withholds the degree at once (`school.cancel_repeat`, from 2026-10-13).
+  if (school.repeatBy !== undefined && sim.now >= school.repeatBy) return `Calling it off withholds the degree now: its thirty days ended on ${formatDate(school.repeatBy, sim.zone)}.`;
   return school.repeatBy !== undefined
     ? `Calling it off leaves the degree withheld if you don’t ask again by ${formatDate(school.repeatBy, sim.zone)}.`
     : 'Calling it off carries you on to the next year with the course not passed, and the degree can’t be completed without it.';
@@ -888,7 +893,7 @@ export function requestRepeat(sim: Simulation, person: Person): Repeat {
   const school = person.school!;
   const t = termNow(school);
   const next = school.repeatBy === undefined ? at(termStart(t + 1).date, 8) : Number.POSITIVE_INFINITY;
-  const decideAt = Math.max(sim.now + 3_600_000, Math.min(businessDaysOn(sim.now, EXTENDED_STUDY.decideWorkingDays), next));
+  const decideAt = Math.max(sim.now + 3_600_000, Math.min(businessDaysOn(sim.now, EXTENDED_STUDY.decideWorkingDays, 'yale'), next));
   const repeat: Repeat = { requestedAt: sim.now, status: 'pending', decideAt, year: yearOfTerm(academicTerm(school, t)), terms: [t - 1, t], courses: repeatCourses(school, t) };
   school.repeat = repeat;
   sim.schedule({ at: decideAt, kind: REPEAT_DECIDE_KIND, label: 'Repeating The Year: The Decision', category: 'school', priority: 33, payload: { personId: person.id } });
@@ -957,7 +962,7 @@ export function registerLeave(sim: Simulation): void {
     w.outcome = a.outcome;
     w.why = a.why;
     if (a.outcome === 'leave') {
-      w.decideAt = businessDaysOn(s.now, 1);
+      w.decideAt = businessDaysOn(s.now, 1, 'yale');
       s.schedule({ at: w.decideAt, kind: WELFARE_DECIDE_KIND, label: 'The Dean’s Decision', category: 'school', priority: 34, payload: { personId: person.id } });
       notify(s, person, 'Yale Health Recommends A Medical Leave', `${w.why} Yale Health has recommended a medical leave to the dean, who decides by ${formatDate(w.decideAt, zone())}. You can still ask for one yourself.`, 90);
       return;
@@ -995,7 +1000,7 @@ export function registerLeave(sim: Simulation): void {
     if (!l?.mandatory) throw new CommandError('Only a leave the dean imposed can be appealed.');
     if (l.mandatory.appeal) throw new CommandError(`You appealed on ${formatDate(l.mandatory.appeal.at, s.zone)}.`);
     if (s.now > l.mandatory.appealBy) throw new CommandError(`The appeal had to be in by ${formatDate(l.mandatory.appealBy, s.zone)}.`);
-    const decideAt = businessDaysOn(s.now, MANDATORY_LEAVE.appealDecideWorkingDays);
+    const decideAt = businessDaysOn(s.now, MANDATORY_LEAVE.appealDecideWorkingDays, 'yale');
     l.mandatory.appeal = { at: s.now, decideAt };
     s.schedule({ at: decideAt, kind: APPEAL_KIND, label: 'The Dean On Your Appeal', category: 'school', priority: 34, payload: { personId: person.id } });
     return { decideAt };
@@ -1019,7 +1024,7 @@ export function registerLeave(sim: Simulation): void {
     const school = person.school;
     const plan = extraRefusal(s, person);
     if (plan.why || !school) throw new CommandError(plan.why ?? 'You’re not at school.');
-    const decideAt = businessDaysOn(s.now, EXTENDED_STUDY.decideWorkingDays);
+    const decideAt = businessDaysOn(s.now, EXTENDED_STUDY.decideWorkingDays, 'yale');
     school.extraRequest = { requestedAt: s.now, decideAt, status: 'pending', term: plan.term!, courses: plan.courses! };
     s.schedule({ at: decideAt, kind: EXTRA_DECIDE_KIND, label: 'An Additional Term: The Decision', category: 'school', priority: 33, payload: { personId: person.id } });
     return { decideAt, term: plan.term! };
@@ -1054,7 +1059,7 @@ export function registerLeave(sim: Simulation): void {
     const school = person.school;
     const no = aidReviewRefusal(s, person);
     if (no || !school) throw new CommandError(no ?? 'You’re not at school.');
-    const decideAt = businessDaysOn(s.now, EXTENDED_STUDY.decideWorkingDays);
+    const decideAt = businessDaysOn(s.now, EXTENDED_STUDY.decideWorkingDays, 'yale');
     school.aidReview = { requestedAt: s.now, decideAt, status: 'pending' };
     s.schedule({ at: decideAt, kind: AID_DECIDE_KIND, label: 'The Aid Office’s Review', category: 'school', priority: 33, payload: { personId: person.id } });
     return { decideAt };
@@ -1168,6 +1173,14 @@ export function registerLeave(sim: Simulation): void {
     if (!p?.confirm) throw new CommandError(`${cancelRepeatWarning(s, school)} Confirm to go ahead.`);
     for (const i of s.universe.scheduled) if (i.status === 'pending' && i.kind === REPEAT_DECIDE_KIND && i.payload.personId === s.player.id) s.timeline.cancel(i.id, s.now);
     school.repeat.status = 'canceled';
+    // Called off after the thirty days ran out, with nothing else asked for: the degree is withheld now, as it would have
+    // been at their end. Until 2026-10-13 nothing withheld it: the end had passed with the request pending, so the
+    // student stayed in good standing with no way on, every request refused as “Its thirty days have run out.” (found
+    // by that day’s final defect pass).
+    if (school.repeatBy !== undefined && s.now >= school.repeatBy && school.extraRequest?.status !== 'pending' && !school.extra) {
+      delete school.repeatBy;
+      setStanding(s, s.player, 'withheld', 'The thirty days to finish the degree ended, and the request to repeat the year was called off after them; the degree needs every course passed.');
+    }
     return { canceled: true };
   });
 

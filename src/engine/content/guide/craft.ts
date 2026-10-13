@@ -401,8 +401,8 @@ export const CRAFT: readonly GuideEntry[] = [
       '“Not from a hospital bed.”, “You’re asleep.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
       `“You’ve practiced ${plural(PRACTICE.dailyHours, 'hour')} today: past that, more stops helping. Tomorrow.”`,
       '“You’re too tired to work on your feet. Sleep first.”, or an injury’s “Not with …; it has … days yet to mend.”',
-      '“It takes a classmate, and you have no class to ask.”',
-      `“This exercise has nothing it carries over to.”: ${FOCUS.variation.label} shows dimmed in its list.`,
+      // Until 2026-10-13 this named “It takes a classmate, and you have no class to ask.” and “This exercise has nothing it
+      // carries over to.”, refusals no play reached, which went that day (`systems/practice.ts`).
       'Stamina has no exercise: its row says Work Out, under Look After Yourself. Discipline has none either: it grows from practice kept up, day after day.',
     ],
     mistakes: [

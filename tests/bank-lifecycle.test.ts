@@ -132,5 +132,12 @@ describe('instructions on a closing account', () => {
     sim.universe.accounts[cap]!.closingAt = sim.now + 5 * MS_DAY;
     const card = cardsOf(sim, sim.player)[0]!;
     expect(sim.execute({ kind: 'card.set_autopay_from', payload: { cardId: card.id, accountId: cap } }).error).toMatch(/closing/);
+    // A standing order is made from the primary, which is never a closing account, and can’t be moved onto one. Until
+    // 2026-10-13 this test said so in its title and didn’t assert it.
+    const saver = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'savings' && a.bankId === 'us-chase' && !a.closedAt && a.category !== 'term')
+      ?? sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: { bankId: 'us-chase' } }).accountId]!;
+    const order = sim.must<{ id: string }>({ kind: 'bank.add_standing_order', payload: { toId: saver.id, amount: 100_00, day: 15 } }).id;
+    const capName = sim.universe.accounts[cap]!.name;
+    expect(sim.execute({ kind: 'bank.set_order_source', payload: { orderId: order, accountId: cap } }).error).toBe(`${capName} is closing.`);
   });
 });

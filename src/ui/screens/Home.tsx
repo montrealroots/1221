@@ -62,7 +62,10 @@ export function Home() {
         const card = t.accountId ? s.universe.accounts[t.accountId] : undefined;
         const state = card && s.player.credit ? stateOf(s.player, card) : s.player.credit;
         const which = card && cardsOf(s, s.player).length > 1 ? `The ${card.name}` : 'Your card';
-        said.push(state?.suspended ? `${which} is suspended, owing ${m(t.amount)}.` : `${which} is ${state?.missed === 1 ? 'a payment' : `${state?.missed} payments`} behind, owing ${m(t.amount)}.`);
+        // Unsuspended, a card is one payment behind: the second missed suspends it (`SUSPEND_AFTER`), and every way a
+        // suspension lifts puts the count back to none. “N payments behind” for two or more went on 2026-10-13, reached by
+        // no played life once a card paid off reset its count (defect 68 of that day’s third round; found by its final checks).
+        said.push(`${which} is ${state?.suspended ? 'suspended' : 'a payment behind'}, owing ${m(t.amount)}.`);
       }
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);

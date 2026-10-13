@@ -185,7 +185,7 @@ describe('a new life', () => {
     expect(sim.universe.accounts[p.primaryAccountId!]!.institution).toBe('Chase');
   });
 
-  it('comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it', () => {
+  it('comes from a wealthy family, and has no birthplace chosen for it', () => {
     const config = newLifeConfig();
     expect(config).toMatchObject({ homeRegionId: '', wealth: 'wealthy', family: 'wealthy' });
     const p = life().player;

@@ -197,12 +197,15 @@ describe('alerts', () => {
     const ready = () => sim.universe.notifications.filter((n) => n.title.startsWith('Statement Ready')).length;
     const before = ready();
     expect(before).toBeGreaterThan(0);
+    // On, a statement with nothing to pay tells them too: what turning it off stops.
+    const quiet = (from: number) => sim.universe.notifications.slice(from).filter((n) => n.title.startsWith('Statement Ready') && !/to pay/.test(n.body)).length;
+    expect(quiet(0)).toBeGreaterThan(0);
     sim.execute({ kind: 'bank.set_alerts', payload: { statements: false } });
     const notices = sim.universe.notifications.length;
     sim.advanceBy(35 * MS_DAY);
     // Off, only a statement with a payment due still tells them.
-    expect(sim.universe.notifications.slice(notices).filter((n) => n.title.startsWith('Statement Ready')).every((n) => /to pay/.test(n.body))).toBe(true);
-    expect(ready()).toBeGreaterThanOrEqual(before);
+    // Until 2026-10-13 this also held that the count hadn’t fallen, which no count can.
+    expect(quiet(notices)).toBe(0);
   });
 
   it('refuses a line that isn’t an amount', () => {

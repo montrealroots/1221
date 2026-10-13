@@ -569,11 +569,14 @@ function CoursesPanel() {
       </p>
       {incomplete.map((r) => {
         const key = `${r.term}:${r.code}`;
-        const no = makeUpRefusal(sim, person, key);
+        // Not offered once they’ve left, as Ask For A Month More, Call In Sick and Take A Shift aren’t (from 2026-10-13:
+        // until then it stayed, grayed with “You’re not at school.”, for good; found by that day’s final checks).
+        const left = school.endedAt !== undefined;
+        const no = left ? undefined : makeUpRefusal(sim, person, key);
         return (
           <div key={key} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
             <span className="small"><strong>{r.name}</strong>, Incomplete: {(r.owed ?? 0) - (r.madeUp ?? 0)} of {r.owed} make-up sessions left, by {formatDate(r.dueBy!, sim.zone)}.</span>
-            <Gated feature="school.make_up" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ passed: boolean }>('school.make_up', { key }); if (a.ok) toast(a.value!.passed ? `${r.name}: passed.` : 'A session made up.', 'positive'); }}>Make Up A Session</Gated>
+            {!left && <Gated feature="school.make_up" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ passed: boolean }>('school.make_up', { key }); if (a.ok) toast(a.value!.passed ? `${r.name}: passed.` : 'A session made up.', 'positive'); }}>Make Up A Session</Gated>}
             {!extendRefusal(sim, person, key) && <Gated feature="school.extend_incomplete" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ dueBy: number }>('school.extend_incomplete', { key }); if (a.ok) toast(`Extended to ${formatDate(a.value!.dueBy, sim.zone)}.`, 'positive'); }}>Ask For A Month More</Gated>}
             {no && <span className="xs dim">{no}</span>}
           </div>

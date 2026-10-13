@@ -44,9 +44,13 @@
  * TEST SETUP, said again where it's done: the body kept fed, rested and awake as the clock moves (`tended`); good
  * standing before joining the Summer Cabaret, which a passive spring doesn't keep; a ChexSystems report's date moved
  * across 80 dates, each standing for another life's report, since the draw is keyed to the report; a stay in hospital
- * and a concussion on the record before a week is certified, which no command brings and the clock draws only at a few
- * in a hundred a year; and on the screen, the Papers tab chosen. A static render can't keep state between renders, so
- * each `useState` is kept here in render order and a press of a button's own onClick sets it, as React would.
+ * and a concussion on the record before a week is certified, the stay brought by no command and drawn by the clock at
+ * 0.04 a year, the concussion an everyday injury the clock draws at a few in a hundred a year; and on the screen, the
+ * Papers tab chosen. A static render can't keep state between renders, so each `useState` is kept here in render order
+ * and a press of a button's own onClick sets it, as React would. An injury that keeps her off work is brought by play as
+ * well: Work Out (`life.look_after`, exercise) draws a run's, a broken bone among them, and the benefits journey after the
+ * first lays her up that way. Until 2026-10-13 this said a concussion was one no command brings, which the final checks
+ * of that day found false: an elective shift ushering, taken from the School, can bring one, and a workout a broken bone.
  *
  * What can't be closed, and why: Open An Account's "in a branch where you live" (`openRefusal`) compares
  * `currentLocationId` with `homeOf`, which is `currentLocationId`; `bank.set_order_source`'s "It pays into that account."
@@ -625,7 +629,7 @@ describe('benefits.claim', () => {
     run(sim, 'school.withdraw', { confirm: true });
     sim.advanceTo(at(2027, 10, 6, 9, 5));
     expect(sim.universe.transactions.filter((t) => t.memo === 'Work-study wages, 6 hours: David Geffen School of Drama at Yale University' && t.at > at(2027, 10, 2)).map((t) => [t.at, t.category, t.postings[0]!.amount])).toEqual([[at(2027, 10, 6, 9, 1), 'salary', 138_00]]);
-    // Filed in October, its basic base period, April 2026 to June 2027, holds June's $1,500 alone, under 40 times
+    // Filed in October, its basic base period, July 2026 to June 2027, holds June's $1,500 alone, under 40 times
     // Connecticut's $45 floor; the alternate, October 2026 to September 2027, holds $1,500 and $3,375: (1,500 + 3,375) / 2
     // / 26 = $93.75, $93 to the dollar (CGS 31-231a), 40 times it $3,720, and 26 weeks $2,418.
     expect(run(sim, 'benefits.claim', {})).toEqual({ weekly: 93_00, maxTotal: 2_418_00 });
@@ -648,6 +652,58 @@ describe('benefits.claim', () => {
     expect(unemploymentOf(sim.player).claim).toMatchObject({ paid: 279_00, weekly: 93_00 });
     expect(yearOf(sim.player, 2027).unemployment).toBe(279_00);
     expect(titled(sim, 'Your Waiting Week')).toEqual([]);
+  }, 60_000);
+
+  it('PLAYER JOURNEY: claiming from Wednesday 6 October 2027, Work Out at 6:26 PM on Monday 18 October breaks a bone on the run, and the Sunday after pays nothing, laid up, where a twin who stayed in is paid $93', () => {
+    const sim = student('g15-claim');
+    tended(sim, at(2027, 3, 20, 12));
+    // TEST SETUP: good standing before joining, as in the journey above.
+    sim.player.school!.standing = 'good';
+    run(sim, 'school.summer_cabaret', {});
+    tended(sim, at(2027, 10, 6, 9));
+    run(sim, 'school.withdraw', { confirm: true });
+    sim.advanceTo(at(2027, 10, 6, 9, 5));
+    expect(run(sim, 'benefits.claim', {})).toEqual({ weekly: 93_00, maxTotal: 2_418_00 });
+    tended(sim, at(2027, 10, 18, 18, 26));
+    const twin = reload(sim);
+    // An hour's run in fine weather, its injury drawn at 7.7 in a thousand hours (`INJURY.perThousandHours.run`), a broken
+    // bone a tenth of those: at the hour's end, 7:26 PM, this life's draw is one (found by searching the week's minutes).
+    run(sim, 'life.look_after', { action: 'exercise' });
+    expect(sim.now).toBe(at(2027, 10, 18, 19, 26));
+    const injury = healthOf(sim.player).injury!;
+    expect(injury).toMatchObject({ kind: 'fracture', at: at(2027, 10, 18, 19, 26) });
+    expect(injury.offWorkUntil!).toBeGreaterThan(sunday(10, 24));
+    expect(titled(sim, 'A Broken Bone')).toHaveLength(1);
+    tended(sim, sunday(10, 24) + MS_HOUR);
+    tended(twin, sunday(10, 24) + MS_HOUR);
+    // Before it, the same two Sundays; the third, certified laid up, nothing (CGS 31-235: able and available for work).
+    expect(benefitPaid(sim)).toEqual([[sunday(10, 10), 93_00], [sunday(10, 17), 93_00]]);
+    expect(benefitPaid(twin)).toEqual([[sunday(10, 10), 93_00], [sunday(10, 17), 93_00], [sunday(10, 24), 93_00]]);
+    expect(healthOf(twin.player).injury).toBeUndefined();
+  }, 60_000);
+
+  it('PLAYER JOURNEY: a Connecticut week is judged on most of its days (Regs. Conn. State Agencies §31-235-12): in hospital from Saturday morning over the Sunday it’s certified is paid $93, and laid up from Monday morning to Sunday noon is paid nothing', () => {
+    const sim = student('g15-claim');
+    tended(sim, at(2027, 3, 20, 12));
+    // TEST SETUP: good standing before joining, as in the journey above.
+    sim.player.school!.standing = 'good';
+    run(sim, 'school.summer_cabaret', {});
+    tended(sim, at(2027, 10, 6, 9));
+    run(sim, 'school.withdraw', { confirm: true });
+    sim.advanceTo(at(2027, 10, 6, 9, 5));
+    expect(run(sim, 'benefits.claim', {})).toEqual({ weekly: 93_00, maxTotal: 2_418_00 });
+    tended(sim, at(2027, 10, 23, 9));
+    // TEST SETUP: a stay in hospital from Saturday 23 October at nine to an hour past the Sunday’s certification. Each
+    // day begun from Monday 18 to Saturday 23 October began able, Sunday’s in hospital: six of seven, the major portion.
+    healthOf(sim.player).inHospitalUntil = sunday(10, 24) + MS_HOUR;
+    tended(sim, at(2027, 10, 25, 9));
+    // TEST SETUP: a concussion from Monday 25 October at nine, off work until noon on Sunday the 31st: that Sunday’s
+    // certification finds her well, but only Monday’s day began able, one of seven.
+    healthOf(sim.player).injury = { kind: 'concussion', at: sim.now, until: at(2027, 11, 3, 12), offWorkUntil: at(2027, 10, 31, 12) };
+    tended(sim, sunday(11, 7) + MS_HOUR);
+    // Break: `ableOnMost` reading only the certification’s moment, as every week was until 2026-10-13: 24 October unpaid
+    // and 31 October paid.
+    expect(benefitPaid(sim)).toEqual([[sunday(10, 10), 93_00], [sunday(10, 17), 93_00], [sunday(10, 24), 93_00], [sunday(11, 7), 93_00]]);
   }, 60_000);
 
   it('PLAYER JOURNEY: withdrawn on Saturday 2 October 2027 at five, after the six hours worked at ten, the claim’s first Sunday, the next evening, holds that work: $93 less two-thirds of $138, $1; the next Sunday $93', () => {

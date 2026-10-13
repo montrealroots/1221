@@ -531,7 +531,8 @@ export const PAPERS: readonly GuideEntry[] = [
       'Apply: the SNAP case opens, and the toast gives the day the first month comes.',
     ],
     later: [
-      `Each Sunday at 8 in the evening the week is certified. In the US, out of school, allowed to work and not in hospital or laid up, you’re paid the benefit less ${PARTIAL} of the week’s pay, into the account your payments go to.`,
+      // Until 2026-10-13 this said the hospital and an injury were read at the certification alone (`ableOnMost`).
+      `Each Sunday at 8 in the evening the week is certified. In the US, out of school, allowed to work, and out of hospital and not laid up for most of the week’s days, you’re paid the benefit less ${PARTIAL} of the week’s pay, into the account your payments go to.`,
       'The claim closes when it has paid its most, or a year after filing, with the notice “Your Unemployment Claim Ended”.',
       // Until 2026-10-13 this said a month whose income left nothing due paid nothing. `snapMonth` (`systems/assistance.ts`)
       // pays an eligible household of one SNAP’s least from that day, except in its first month.
@@ -558,7 +559,8 @@ export const PAPERS: readonly GuideEntry[] = [
       'Counting on work-study to qualify a claim: Yale’s pay to its own student is outside the base period. The Summer Cabaret’s stipend is what counts.',
       'Filing while still enrolled: Connecticut refuses it. File once you’ve graduated, withdrawn or been dismissed.',
       'Spending the summer recess without work: a student’s SNAP case closes. Join The Summer Company, or apply again in the fall.',
-      'Being in hospital at 8 on a Sunday evening: that week goes uncertified, and pays nothing.',
+      // Until 2026-10-13 this was being in hospital at 8 on a Sunday evening, which then cost the week whatever the days before.
+      'Being in hospital or laid up for most of a week: that week pays nothing.',
     ],
     related: ['papers.pensions', 'taxes.return', 'productions.cabaret', 'school.shifts', 'body.look-after'],
     connections: [

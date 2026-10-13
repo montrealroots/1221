@@ -1,7 +1,9 @@
 /**
  * The Papers repairs of 2026-10-10, each held by the behavior it fixed: a status isn't reported lost with its paper;
  * OPT applied for answers the status's decision, which offers the standard filing first and premium by name; a
- * dismissed student's status ends fifteen days from the dismissal; and the week's work-study is read as work.
+ * dismissed student's status ends on the dismissal, with no grace; and the week's work-study is read as work. Until
+ * 2026-10-13 this and the dismissal's title said fifteen days, the withdrawal's grace, which the rule of 2026-10-10
+ * (`graceDays`) had already taken from a dismissal, while the test asserted none (found by that day's final checks).
  */
 import { describe, expect, it } from 'vitest';
 import { createSave, quickSave } from '@/engine';
@@ -50,11 +52,13 @@ describe('the status’s ending', () => {
 });
 
 describe('a dismissed student', () => {
-  it('keeps their status fifteen days from the dismissal, not to the degree’s end', () => {
+  it('loses their status on the day of the dismissal, with no grace, not at the degree’s end', () => {
     const sim = graduate('dismissed', 400);
     // TEST SETUP: the school's record, dismissed today.
     sim.player.school = { standing: 'dismissed', endedAt: sim.now } as never;
-    expect(usStatusEnds(sim.player)).toBe(sim.now + STATUS_GRACE_DAYS.dismissed * MS_DAY);
+    // Failing to maintain status leaves no grace (8 CFR 214.2(f)(5)(iv)): it ends the moment of the dismissal.
+    expect(STATUS_GRACE_DAYS.dismissed).toBe(0);
+    expect(usStatusEnds(sim.player)).toBe(sim.now);
   });
 });
 

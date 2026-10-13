@@ -153,18 +153,28 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
 }
 
 /**
+ * The longest a card opened in the life waits for its first statement: its day moved before the old day’s first date
+ * (31 days at most), and the new day’s first date 27 days on (`MIN_CYCLE_DAYS`) at most a month later.
+ */
+const FIRST_CYCLE_MOST_DAYS = 62;
+
+/**
  * A card's periods from its kept cuts (from 2026-10-10): the open one from the last cut to the next statement on the
  * calendar, each past one between two cuts, so a moved statement day moves only what comes after it. Before the first
  * cut kept, a save from before then, or a card held from before the life began: monthly on that first cut’s day, back to
  * the card’s opening, each marked rebuilt. The first cut’s own period isn’t: it’s that statement, kept with its figures
  * (`issued`), from the statement day a month before it or the card’s opening. Until 2026-10-13 it was marked rebuilt too,
  * so every life’s first card statement read “(Rebuilt)”, with the note that it came from before statements were kept
- * (found by that day’s third round of defects). Its start is drawn, not kept: where the day was moved before that first
- * cut, it’s the moved day a month back, and a first statement the move put more than a month after the card’s opening
- * is drawn as two, the older one rebuilt.
+ * (found by that day’s third round of defects). Its start is drawn, not kept: the card’s opening, for a card opened in
+ * the life whose first statement came within two months of it, since no statement came before; otherwise the day a
+ * month back. Until 2026-10-13 it was always the day a month back, so a card opened in the life whose day was moved
+ * before its first statement, putting that statement more than a month after the opening, was drawn as two statements,
+ * the older a rebuilt one that never came (found by that day’s final defect pass).
  */
 function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]): Period[] {
-  const zone = sim.zone;
+  // The bank’s own zone, as `periodsOf` reads it (from 2026-10-13: until then where the player was, `sim.zone`, which no
+  // played life can tell apart from it, since nothing has moved either since travel went; found by that day’s final checks).
+  const zone = sim.homeZone;
   const cuts = [...kept].sort((a, b) => a - b);
   const labelOf = (to: Instant) => { const p = zonedParts(to, zone); return `Statement Of ${MONTHS[p.month - 1]} ${p.day}, ${p.year}`; };
   const next = sim.universe.scheduled
@@ -180,11 +190,17 @@ function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]
     out.push({ from: last, to, label: `${labelOf(to)}, ${account.closedAt ? 'To Its Closing' : 'So Far'}` });
   }
   for (let i = cuts.length - 1; i >= 1; i -= 1) out.push({ from: cuts[i - 1]!, to: cuts[i]!, label: labelOf(cuts[i]!) });
-  // Before the first kept cut: a month back at a time, on its day.
+  // Before the first kept cut: a month back at a time, on its day. A card opened in the life (at or after its holder’s
+  // creation) has its first statement scheduled from its opening, and a day moved before it puts it at most two months on
+  // (`card.set_statement_day`: the new day’s first date `MIN_CYCLE_DAYS` from the opening, moved before the old day’s
+  // first date came): that one statement runs from the opening. Kept cuts began on 2026-10-10, so a card opened in the
+  // life under an older build, with a statement before its first kept cut, would have that statement drawn into the first.
   const first = zonedParts(cuts[0]!, zone);
+  const owner = sim.universe.people[account.ownerId];
+  const firstFromOpening = owner !== undefined && account.openedAt >= owner.createdAt && cuts[0]! - account.openedAt <= FIRST_CYCLE_MOST_DAYS * MS_DAY;
   let to = cuts[0]!;
   for (let n = 1; n < 600 && to > account.openedAt; n += 1) {
-    const from = Math.max(account.openedAt, edge(first.year, first.month - n, first.day, 9, zone));
+    const from = n === 1 && firstFromOpening ? account.openedAt : Math.max(account.openedAt, edge(first.year, first.month - n, first.day, 9, zone));
     const rebuilt = n > 1;
     out.push({ from, to, label: rebuilt ? `${labelOf(to)} (Rebuilt)` : labelOf(to), ...(rebuilt ? { rebuilt: true } : {}) });
     to = from;
@@ -369,7 +385,8 @@ export interface YearSummary {
  * earned before tax and the tax taken off it, and every fee, by kind.
  */
 export function yearSummary(sim: Simulation, ownerId: string, year: number): YearSummary {
-  const zone = sim.zone;
+  // The bank’s year, in its own zone (from 2026-10-13: until then where the player was, as `cardPeriods` read it).
+  const zone = sim.homeZone;
   const from = instantFromZoned({ year, month: 1, day: 1, hour: 0 }, zone);
   const to = instantFromZoned({ year: year + 1, month: 1, day: 1, hour: 0 }, zone);
   const mine = new Map(Object.values(sim.universe.accounts).filter((a) => a.ownerId === ownerId && !a.nominal).map((a) => [a.id, a]));

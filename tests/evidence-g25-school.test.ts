@@ -14,8 +14,9 @@
  *   taxable scholarship, at 10% over the $14,600 standard deduction; the second year's twenty-six class-week Saturdays
  *   booked to the 150 assigned hours and no further, the first year having stopped at 144; Shifts And Pay drawn, Take An
  *   Elective Shift pressed and its evening paid that Friday, and a Saturday slept through missed, unpaid and counted.
- * - school.request_leave: asked on the third day of spring classes and begun on its decision five weekdays on, the term's
- *   scholarship returned in full; a medical leave begun past a quarter of the term returning a quarter; asked a week
+ * - school.request_leave: asked on the third day of spring classes and begun on its decision five of Yale's working days
+ *   on, Martin Luther King Jr. Day closed, past a tenth of the classes, half the term's scholarship returned (until
+ *   2026-10-13 five weekdays, the holiday counted, and all of it); a medical leave begun past a quarter of the term returning a quarter; asked a week
  *   before the spring's evaluation and refused at its decision for the course that evaluation failed, the next fall then
  *   begun as if never asked, where a twin with every course passed is granted; an F-1 student's personal leave refused
  *   through the command; Ask For A Leave… opened and Ask pressed. The review's own todo, a personal leave asked in the
@@ -165,10 +166,15 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** The button of that label, as drawn. */
 const button = (html: string, label: string) => new RegExp(`<button[^>]*>${escape(label)}</button>`).exec(html)?.[0];
 
-/** A personal leave asked on the third day of spring classes, Wednesday 13 January 2027, and begun on its decision. */
+/**
+ * A personal leave asked on the second day of spring classes, Tuesday 12 January 2027, and begun on its decision, five of
+ * Yale's working days on with Martin Luther King Jr. Day closed: Wednesday 20 January. Until 2026-10-13 it was asked on
+ * the third day, Wednesday 13 January, and decided on the 20th by five weekdays, the holiday counted; asked then now, it's
+ * decided on the 21st, past a tenth of the classes (the third-day journey below).
+ */
 function personalLeave(seed: string): Simulation {
   const sim = student(seed, onAid);
-  tended(sim, at(2027, 1, 13, 12));
+  tended(sim, at(2027, 1, 12, 12));
   const asked = sim.must<{ decideAt: number; firstTerm: number; startsNow: boolean }>({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } });
   tended(sim, asked.decideAt + MS_HOUR);
   expect(sim.player.school!.leave!.status).toBe('on');
@@ -257,9 +263,11 @@ describe('work-study', () => {
     const take = pressed('school.take_shift');
     expect(take).toHaveLength(1);
     take[0]!.onClick!();
-    // The next free evening, seven to eleven, front of house: Monday 7 September, four hours.
+    // The next free evening in the term’s class days, seven to eleven, front of house: Tuesday 8 September, four hours.
+    // Until 2026-10-13 this held Monday 7 September, Labor Day, a day off the term’s classes skip, which the booking
+    // didn’t (found by that day’s final defect pass).
     const evening = pendingOf(sim, SHIFT_KIND).filter((i) => i.payload.elective === true);
-    expect(evening.map((i) => i.at)).toEqual([at(2026, 9, 7, 19)]);
+    expect(evening.map((i) => i.at)).toEqual([at(2026, 9, 8, 19)]);
     expect(evening[0]!.payload.hours).toBe(4);
     shown = drawn(sim, SchoolWorkspace, [], 'work');
     expect(shown.text).toContain('Elective Hours Asked For 4');
@@ -284,34 +292,36 @@ describe('work-study', () => {
 });
 
 describe('school.request_leave', () => {
-  it('PLAYER JOURNEY: asked on the third day of spring classes, decided five weekdays on and begun that day: the term’s scholarship goes back in full on the rebate schedule, $15,200.50 owed on the Yale account; kept through a reload, and not done twice', () => {
+  it('PLAYER JOURNEY: asked on the third day of spring classes, decided five of Yale’s working days on, Martin Luther King Jr. Day closed, and begun that day: past a tenth of the classes, half the term’s scholarship goes back on the rebate schedule, $7,600.25 owed on the Yale account; kept through a reload, and not done twice', () => {
     let sim = student('g25-third', onAid);
     tended(sim, at(2027, 1, 13, 12));
     const asked = sim.must<{ decideAt: number; firstTerm: number; startsNow: boolean }>({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } });
-    // Wednesday 13 January to Wednesday 20 January: five weekdays.
-    expect(asked).toEqual({ decideAt: at(2027, 1, 20, 12), firstTerm: 1, startsNow: true });
-    expect(pendingOf(sim, LEAVE_DECIDE_KIND).map((i) => i.at)).toEqual([at(2027, 1, 20, 12)]);
+    // Wednesday 13 January to Thursday 21 January: the 14th, 15th, 19th, 20th and 21st, Yale closed on Monday the 18th
+    // for Martin Luther King Jr. Day (“Official Yale Holidays”). Until 2026-10-13 this held Wednesday the 20th, five
+    // weekdays with the holiday counted, and all of the scholarship returned.
+    expect(asked).toEqual({ decideAt: at(2027, 1, 21, 12), firstTerm: 1, startsNow: true });
+    expect(pendingOf(sim, LEAVE_DECIDE_KIND).map((i) => i.at)).toEqual([at(2027, 1, 21, 12)]);
     sim = reload(sim);
     expect(sim.player.school!.leave!.status).toBe('pending');
     tended(sim, asked.decideAt + MS_HOUR);
     const school = sim.player.school!;
     const l = school.leave!;
-    expect(l).toMatchObject({ status: 'on', startedAt: at(2027, 1, 20, 12), firstTerm: 1, returnTerm: 3 });
-    // A tenth of the spring's classes not yet gone (11 January to 23 April): all of the term's living-expense
-    // scholarship, (28,028 + 2,373) / 2, back on the Yale account.
-    expect(l.aidReturned).toBe(15_200_50);
-    expect(accountOwed(sim, sim.player)).toBe(15_200_50);
-    expect(memoed(sim, 'Living-expense scholarship returned on the rebate schedule (100%), Spring Term 2027: leave of absence')).toHaveLength(1);
+    expect(l).toMatchObject({ status: 'on', startedAt: at(2027, 1, 21, 12), firstTerm: 1, returnTerm: 3 });
+    // 10.5 days into the 103 from 11 January to 23 April, past a tenth and short of a quarter: half of the term's
+    // living-expense scholarship, (28,028 + 2,373) / 2 = $15,200.50, back on the Yale account, $7,600.25.
+    expect(l.aidReturned).toBe(7_600_25);
+    expect(accountOwed(sim, sim.player)).toBe(7_600_25);
+    expect(memoed(sim, 'Living-expense scholarship returned on the rebate schedule (50%), Spring Term 2027: leave of absence')).toHaveLength(1);
     expect(school.offset).toBe(2);
     expect(enrolledTerms(school)).toEqual([0]);
     expect(Object.values(school.courses ?? {}).filter((r) => r.term === 1).every((r) => r.result === 'withdrawn')).toBe(true);
-    expect(coverOn(sim.player, at(2027, 1, 21))).not.toBe('yale');
+    expect(coverOn(sim.player, at(2027, 1, 22))).not.toBe('yale');
     expect(titled(sim, 'Your Leave Has Begun')).toHaveLength(1);
     // Saved and opened again, nothing of it happens twice; asked again, refused.
     sim = reload(sim);
     tended(sim, sim.now + 2 * MS_DAY);
     expect(titled(sim, 'Your Leave Has Begun')).toHaveLength(1);
-    expect(accountOwed(sim, sim.player)).toBe(15_200_50);
+    expect(accountOwed(sim, sim.player)).toBe(7_600_25);
     expect(sim.execute({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } }).error).toBe('You’re on leave.');
   }, 60_000);
 
@@ -386,18 +396,24 @@ describe('school.request_leave', () => {
     const ask = pressed('school.request_leave');
     expect(ask).toHaveLength(1);
     ask[0]!.onClick!();
-    expect(sim.player.school!.leave).toMatchObject({ status: 'pending', kind: 'personal', reason: 'family', terms: 2, firstTerm: 1, decideAt: at(2026, 12, 25, 9) });
+    // Friday 18 December 2026: Yale's working days are the 21st, 22nd and 23rd, then closed from the 24th to New Year's
+    // Day, and the spring term begins at 8 AM on Monday 4 January, before the fifth, which decides it then. Until
+    // 2026-10-13 this held Christmas Day, five weekdays on (found by that day's final defect pass).
+    expect(sim.player.school!.leave).toMatchObject({ status: 'pending', kind: 'personal', reason: 'family', terms: 2, firstTerm: 1, decideAt: at(2027, 1, 4, 8) });
     expect(pendingOf(sim, LEAVE_DECIDE_KIND)).toHaveLength(1);
     shown = drawn(sim, LeavePanel);
     expect(shown.text).toContain('Your Leave With The Chair And The Dean Personal, Family');
-    expect(shown.text).toContain('Decided by December 25, 2026');
+    expect(shown.text).toContain('Decided by January 4, 2027');
   }, 60_000);
 });
 
 describe('school.cancel_leave', () => {
   it('PLAYER JOURNEY: a leave granted for the spring and not yet begun, called off on Call It Off after its warning: the spring begins as if it was never asked, through a reload, where a twin left alone begins the leave', () => {
     let sim = student('g25-cancel');
-    tended(sim, at(2026, 12, 18));
+    // Asked on Monday 14 December, after the fall's evaluation on the 11th, decided on Monday the 21st, before the spring.
+    // Until 2026-10-13 it was asked on the 18th and decided on Christmas Day; asked then now, it's decided as the spring
+    // begins (the Ask journey above).
+    tended(sim, at(2026, 12, 14));
     const asked = sim.must<{ decideAt: number; firstTerm: number }>({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } });
     tended(sim, asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave).toMatchObject({ status: 'granted', firstTerm: 1, returnTerm: 3 });
@@ -634,9 +650,9 @@ describe('school.buy_affiliate', () => {
     let sim = personalLeave('g25-aff');
     const l = sim.player.school!.leave!;
     // Student cover ended the day the leave began; Affiliate cover can be bought until thirty days from asking, later
-    // than 31 January.
+    // than 31 January: 11 February, asked on the 12th (until 2026-10-13 the 12th, asked on the 13th).
     expect(l.coverEnds).toBe(at(2027, 1, 20, 12));
-    expect(l.affiliateBy).toBe(at(2027, 2, 12, 12));
+    expect(l.affiliateBy).toBe(at(2027, 2, 11, 12));
     expect(l.feeCredit).toBe(1_882_00);
     expect(sim.player.school!.uncovered).toEqual([{ from: at(2027, 1, 20, 12) }]);
     tended(sim, sim.now + 2 * MS_DAY);
@@ -646,7 +662,7 @@ describe('school.buy_affiliate', () => {
     expect(billed).toBeGreaterThan(0);
     let shown = drawn(sim, LeavePanel);
     expect(button(shown.html, 'Buy Affiliate Cover…')).toBeDefined();
-    expect(shown.text).toContain('Affiliate cover can be bought until February 12, 2027.');
+    expect(shown.text).toContain('Affiliate cover can be bought until February 11, 2027.');
     expect(sim.execute({ kind: 'school.buy_affiliate', payload: {} }).error).toBe('Affiliate cover for the leave’s two terms is $8,950.00, with the $1,882.00 student fee you paid credited, paid in full now. Confirm to buy it.');
     // TEST SETUP: the bank emptied, as spending would leave it.
     drain(sim);
@@ -685,11 +701,11 @@ describe('school.buy_affiliate', () => {
 
   it('past its deadline it’s refused in its words, with the money there: no cover, no charge, the lapse open, and the button gone', () => {
     const sim = personalLeave('g25-aff-late');
-    tended(sim, at(2027, 2, 12, 13));
+    tended(sim, at(2027, 2, 11, 13));
     // TEST SETUP: money put in, so the deadline alone refuses it.
     fund(sim, 9_000_00);
     expect(button(drawn(sim, LeavePanel).html, 'Buy Affiliate Cover…')).toBeUndefined();
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('It could be bought until February 12, 2027.');
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('It could be bought until February 11, 2027.');
     expect(sim.player.school!.leave!.affiliate).toBeUndefined();
     expect(memoed(sim, 'Yale Health Affiliate Coverage, a leave of absence')).toHaveLength(0);
     expect(coverOn(sim.player, at(2027, 1, 25))).not.toBe('yale');

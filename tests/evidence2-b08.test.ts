@@ -72,6 +72,7 @@ import type { WorkRecord } from '@/engine/systems/evaluation';
 import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '@/engine/content/plays';
 import { DEMAND_TECHNIQUE, genreTags } from '@/engine/content/demands';
+import type { Skill } from '@/engine/content/school';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -450,15 +451,15 @@ describe('genre demands', () => {
     expect(b!.overall).toBe(a!.overall);
   }, 60_000);
 
-  it('the farce’s look says what a farce’s work reads: not Clown, which a farce’s night by the clock doesn’t read', () => {
-    // DEFECT, failed when written (2026-10-13). The genre look (src/ui/looks/actor.tsx, the 'Applied as requirements.'
-    // paragraph) says of every applied genre "Work in it reads" each demanded technique, with the player's level beside
-    // it. Of a farce it says the work reads Clown And Mask. A self-tape's brief in a farce does, since every brief stages
+  it('the farce’s look says Clown And Mask is what a self-tape in a farce reads, and that a farce’s night, which by the clock reads no Clown, reads its own material’s', () => {
+    // A defect, failed when written (2026-10-13). The genre look (src/ui/looks/actor.tsx, the 'Applied as requirements.'
+    // paragraph) said of every applied genre "Work in it reads" each demanded technique, with the player's level beside
+    // it. Of a farce it said the work reads Clown And Mask. A self-tape's brief in a farce does, since every brief stages
     // what its genres demand (tests/briefs-content.test.ts); a farce's night doesn't, since every play has a material
     // profile and reads its own techniques and its material's (`playReads`, from 2026-10-10), and the test before this
-    // one played one with clown mastered and found it the same. So the look tells a player that clown counts in work
-    // where it changes nothing. The smallest fix: say the demands are what a self-tape in the genre reads ("A self-tape
-    // in it reads ..."), and that a play or a class scene reads its own material's.
+    // one played one with clown mastered and found it the same. So the look told a player that clown counted in work
+    // where it changed nothing. The fix, the same day: it says the demands are what a self-tape in the genre reads ("A
+    // self-tape in it reads ..."), and that a play or a class scene reads its own material's.
     const s = proposalEve();
     s.advanceTo(at(2027, 6, 25, 20, 1));
     const [night] = nightsOf(s, 'A Marriage Proposal');
@@ -469,9 +470,14 @@ describe('genre demands', () => {
     // The demand is shown, with the player's level beside it, as the research applies it.
     expect(body).toContain('Applied as requirements.');
     expect(body).toContain(`${TECHNIQUE_LABEL.clown} (you: ${s.player.craft!.clown.toFixed(1)} of 90)`);
-    // And it isn't among what the look says work in a farce reads.
-    const workReads = /Work in it reads (.*?) : /.exec(body)?.[1] ?? '';
-    expect(workReads).not.toContain(TECHNIQUE_LABEL.clown);
+    // What it says the demands are read by: a self-tape in a farce, Comedy and Clown And Mask, each with the player’s
+    // level; and a farce’s night or class scene, its own material’s techniques. Until later on 2026-10-13 this looked
+    // for “Work in it reads”, which the look no longer says, so it found nothing and passed whatever the look said.
+    const said = body.replace(/ ([,:.)])/g, '$1').replace(/\( /g, '(');
+    const level = (t: Skill) => `${TECHNIQUE_LABEL[t]} (you: ${(s.player.craft![t] ?? 0).toFixed(1)} of 90)`;
+    expect(said).toContain(`A self-tape in it reads ${level(DEMAND_TECHNIQUE.comic)}, ${level(DEMAND_TECHNIQUE.physicalComedy)}:`);
+    expect(said).toContain('A night of a play of its kind, or a class scene from one, reads its own material’s techniques instead.');
+    expect(said).not.toContain('Work in it reads');
   }, 60_000);
 });
 

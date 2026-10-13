@@ -108,11 +108,13 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-sixteen checks: title-case, label-sweep, plural-check, voice-check, tics,
+seventeen checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
-traceability, capabilities (added 2026-10-08) and student-matrix (added
+traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
+which fails an audit row whose cited test or line doesn't hold, and
+`docs/GAMEPLAY-COVERAGE.md` behind the audit) and student-matrix (added
 2026-10-10, which fails a matrix row whose cited test or command is gone).
-This said fifteen until 2026-10-10, and fourteen until
+This said sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with
 the catalogs it counted in the owner's scope reset. Read its exit

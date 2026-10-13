@@ -276,7 +276,7 @@ describe('savings', () => {
     expect(moved.postings.find((q) => q.accountId === current(sim).id)!.amount).toBeGreaterThanOrEqual(held);
   }, 120_000);
 
-  it('calls off the standing orders into savings it closes, and says a closed account is why an order failed', () => {
+  it('calls off the standing orders into savings it closes, and leaves none of their payments on the clock', () => {
     const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-close-orders');
     let saver = savings(sim);
     if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;

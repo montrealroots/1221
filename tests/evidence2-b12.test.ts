@@ -457,7 +457,8 @@ describe('h-papers', () => {
     expect(drawn(sim).affairs).toContain('$111 of tax owed, with its interest and a late penalty growing each month. Papers How This Works');
   });
 
-  it('DEFECT: filed early and left unpaid, Home says the tax is “growing each month” on the day it’s filed, though nothing accrues before the due date; it should say so only once the date has passed', () => {
+  it('filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date, nothing accruing before it, and says it once the date has passed', () => {
+    // Until later on 2026-10-13 Home said it on the day of filing (defect 42), and this was titled as that defect.
     const sim = feb1();
     // TEST SETUP: the bank emptied, so filing can't pay.
     for (const a of [primary(sim), own(sim, 'savings')]) setBalance(sim, a, 0);
@@ -675,7 +676,9 @@ describe('n-decision-us-status', () => {
     expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.']);
   });
 
-  it('DEFECT: Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July; SLATE counts both, and decides it Friday 13 July', () => {
+  it('Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July', () => {
+    // Until later on 2026-10-13 SLATE counted both holidays and decided it Friday 13 July (defect 43), and this was titled
+    // as that defect.
     const sim = graduate('b12-opt-premium');
     drawn(sim);
     press('Apply For OPT, Premium Processing');

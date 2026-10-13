@@ -18,7 +18,11 @@
  * household, Frugal, Spender and Generous move what food costs somebody
  * (`spending`). Keeps Accounts was about what other people owe, and waited
  * for other people until 2026-09-27; since then its receipts are what a
- * return can deduct of the work's costs (`receipts`), and Chaotic loses some.
+ * return can deduct of the work’s costs (`receipts`), and Chaotic loses some,
+ * a knob that decides nothing yet: a student pays no cost of the work, and
+ * nothing records one (`recordJobCost` has no caller). Until 2026-10-13
+ * Chaotic’s cost and Keeps Accounts’ description said the receipts as an
+ * effect, which no play saw; they don’t claim it now.
  *
  * A trait's description and cost are written for a whole life. The game
  * charges the part of them its knobs reach, and says the rest back. What
@@ -176,7 +180,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
     description: 'The mess is genuinely invisible to you, and it never weighs on you.',
-    cost: 'It shows on you sooner, and receipts go missing at tax time.',
+    cost: 'It shows on you sooner.',
     systemMods: { hygieneDrift: 1.3, stressGain: 0.92, receipts: 0.9 },
     conflictsWith: ['orderly'],
   },
@@ -264,7 +268,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',
-    description: 'What you’re owed and by whom, down to the coffee, stays remembered, and every receipt with it.',
+    description: 'What you’re owed and by whom, down to the coffee, stays remembered.',
     cost: 'So does everybody else, about you: a slight cuts deeper both ways.',
     conflictsWith: ['generous'],
     systemMods: { receipts: 1.3, bondWound: 1.1 },

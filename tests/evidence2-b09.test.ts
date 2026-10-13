@@ -388,7 +388,7 @@ describe('school.make_up', () => {
     expect(titled(twin, 'Your MFA Is Conferred')).toHaveLength(0);
   }, 60_000);
 
-  it('DEFECT: a student who has withdrawn with an Incomplete open is refused a make-up session in the School’s words, before its month runs out and after, and the Standing tab grays the button with them', () => {
+  it('a student who has withdrawn with an Incomplete open is refused a make-up session in the School’s words, before its month runs out and after, and the Standing tab lists the Incomplete with no Make Up A Session', () => {
     const sim = thaw(fallWithdrawn().withdrawn);
     const acting = () => sim.player.school!.courses![ACTING_I]!;
     expect(sim.player.school!.standing).toBe('withdrawn');
@@ -408,9 +408,13 @@ describe('school.make_up', () => {
     expect(sim.execute({ kind: 'school.make_up', payload: { key: ACTING_I } }).error).toBe('You’re not at school.');
     expect(sim.now).toBe(before);
     expect(acting()).toMatchObject({ result: 'incomplete', madeUp: 0 });
-    // The Standing tab still lists each Incomplete; each one's Make Up A Session grayed, with why.
-    drawn(sim, SchoolWorkspace);
-    expect(drew('school.make_up').map((c) => [c.disabled, c.title])).toEqual(incompletes.map(() => [true, 'You’re not at school.']));
+    // The Standing tab still lists each Incomplete, and offers no Make Up A Session, as Ask For A Month More, Call In Sick
+    // and Take A Shift offer nothing once you’ve left: until 2026-10-13 it stayed, grayed with “You’re not at school.”, for good
+    // (found by that day’s final checks).
+    const tab = drawn(sim, SchoolWorkspace);
+    expect(tab.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by January 10, 2027.');
+    expect(drew('school.make_up')).toHaveLength(0);
+    expect(tab.text).not.toContain('You’re not at school.');
     // Past the month: still the School's words, not the month's.
     tend(after, at(2027, 1, 11, 12));
     expect(after.execute({ kind: 'school.make_up', payload: { key: ACTING_I } }).error).toBe('You’re not at school.');

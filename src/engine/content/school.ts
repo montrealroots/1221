@@ -415,7 +415,8 @@ export const YALE_COST_GROWTH = {
  * length is the student's, one to three terms, refused where it would bring them back in the other season to the
  * second halves of year-long courses (`leaveLengths`), and `terms` is the length asked for when none is given. The
  * decision comes within five working days, or by the start of the term the leave begins with if that comes first
- * (`requestLeave`). A mandatory medical leave was modeled from 2026-10-10 (`MANDATORY_LEAVE`); this said it wasn't
+ * (`requestLeave`), working days being Yale’s, Monday to Friday less its holidays and recess days (`yaleHoliday`), from
+ * 2026-10-13: until then Monday to Friday, Christmas Day among them. A mandatory medical leave was modeled from 2026-10-10 (`MANDATORY_LEAVE`); this said it wasn’t
  * until 2026-10-12. A parental leave isn't modeled.
  */
 export const LEAVE_RULES = {

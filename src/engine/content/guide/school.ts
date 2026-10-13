@@ -581,7 +581,8 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Finishing The Degree says where a request stands: with the chair and the dean, granted, refused and why, or called off.',
     ],
     unavailable: [
-      '“There’s no Incomplete in that course to make up.”, “You’re not at school.” or “Its month runs out at …: there isn’t the time for a session before it.”',
+      '“There’s no Incomplete in that course to make up.” or “Its month runs out at …: there isn’t the time for a session before it.”',
+      '“You’re not at school.”: Make Up A Session then stops showing.',
       '“You’re not at school.” or “It’s been extended once already.”: Ask For A Month More then stops showing.',
       '“A year is repeated from its end, after the spring’s evaluation.”',
       '“Every course this year was passed: there’s nothing to repeat it for.”',
@@ -589,7 +590,8 @@ export const SCHOOL: readonly GuideEntry[] = [
       '“Your request for an additional term is with the chair and the dean, decided by …” or “Your additional term is …”: a repeat isn’t asked for beside one; and for an additional term, “Your request to repeat the year is being decided.”',
       '“Not with a leave under way.”',
       '“Repeating would make N semesters, past the nine the Bulletin allows for the degree.”: the semesters enrolled, the year’s two again and the program’s terms still to come after it; and for an additional term “It would make N semesters, past the nine the Bulletin allows.”: the semesters enrolled and the term itself. A leave’s terms are left out of both.',
-      '“The next year has begun.” or “Its thirty days have run out.”',
+      // Until 2026-10-13 this also named “Its thirty days have run out.”, which no play reaches since that day (`repeatRefusal`).
+      '“The next year has begun.”',
       '“An additional term comes after your last year’s evaluation, for what it left unpassed.”',
       '“The faculty’s disqualification stands against it.”',
     ],

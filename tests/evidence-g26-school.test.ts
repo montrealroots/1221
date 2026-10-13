@@ -682,6 +682,26 @@ describe('school.cancel_repeat', () => {
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
   }, 120_000);
 
+  it('called off after the thirty days ended with it pending, withholds the degree then: until 2026-10-13 nothing did, and every request was refused as “Its thirty days have run out.”', () => {
+    const sim = thaw(l3().lastEval);
+    const school = () => sim.player.school!;
+    expect(school().repeatBy).toBe(at(2029, 5, 27, 17));
+    // Asked on Thursday 24 May 2029: Yale’s fifth working day on, Memorial Day (28 May) closed, is Friday 1 June.
+    tend(sim, at(2029, 5, 24, 10));
+    expect(sim.must<{ decideAt: number }>({ kind: 'school.request_repeat', payload: {} }).decideAt).toBe(at(2029, 6, 1, 10));
+    // The thirty days end on the 27th with the request pending, and withhold nothing.
+    tend(sim, at(2029, 5, 28, 10));
+    expect(school().standing).toBe('good');
+    expect(sim.execute({ kind: 'school.cancel_repeat', payload: {} }).error).toBe('Calling it off withholds the degree now: its thirty days ended on May 27, 2029. Confirm to go ahead.');
+    // Break: the withholding in `school.cancel_repeat` taken out: still in good standing, and `extraRefusal` and
+    // `repeatRefusal`, their old lines back, say “Its thirty days have run out.”
+    sim.must({ kind: 'school.cancel_repeat', payload: { confirm: true } });
+    expect(school()).toMatchObject({ standing: 'withheld', endedAt: at(2029, 5, 28, 10) });
+    expect(school().repeatBy).toBeUndefined();
+    expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
+    expect(sim.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('You’re not at school.');
+  }, 120_000);
+
   it('a twin not called off is granted at the decision: the next term on the calendar, the I-20 a year longer, and the thirty days’ end withholds nothing', () => {
     const sim = thaw(l3().lastEval);
     const school = sim.player.school!;

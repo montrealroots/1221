@@ -759,14 +759,14 @@ describe('h-needs: What Needs You on Home', () => {
       expect(weighs(sim)).toBe('No Decisions Waiting Your card is nearly at its limit, owing $59,000.');
     });
 
-    it('the card behind: a payment, two payments, suspended', () => {
+    it('the card behind: a payment, and suspended', () => {
       const sim = clear('g32-weigh-behind');
       setBalance(sim, card(sim).id, -500_00); // TEST SETUP
       expect(weighs(sim)).toBe(ALL_CLEAR);
       Object.assign(sim.player.credit!, { missed: 1 }); // TEST SETUP
       expect(weighs(sim)).toBe('No Decisions Waiting Your card is a payment behind, owing $500.');
-      Object.assign(sim.player.credit!, { missed: 2 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is 2 payments behind, owing $500.');
+      // Until 2026-10-13 two missed and unsuspended read “Your card is 2 payments behind”, set here by hand: no played life
+      // reaches it, the second miss suspending the card (`SUSPEND_AFTER`), and the words went.
       Object.assign(sim.player.credit!, { missed: 0, suspended: true }); // TEST SETUP
       expect(weighs(sim)).toBe('No Decisions Waiting Your card is suspended, owing $500.');
     });

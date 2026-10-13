@@ -46,7 +46,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createElement, type ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { createSave, quickSave } from '@/engine';
+import { createSave, loadSave, quickSave } from '@/engine';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
+import { TERM_NOTICE_KIND } from '@/engine/systems/accountlife';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -221,7 +223,24 @@ describe('bank.break_term', () => {
    */
   const CHARGE = Math.floor(10_000_00 * 0.0411 * 35 / 365);
 
-  it('closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, less the £39.41 it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice)', () => {
+  it('closes a notice given in a save from before the close went on the clock, at its own day, once', () => {
+    const { sim, select, term } = natwestBeside('b04-natwest-old');
+    press(draw(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' })).button('Give 35 Days’ Notice'));
+    // TEST SETUP: the save as a build before 2026-10-13 wrote it, the notice running with nothing on the clock for it.
+    const old = JSON.parse(serialise(sim.universe)) as { scheduled: { kind: string; status: string }[] };
+    old.scheduled = old.scheduled.filter((i) => i.kind !== TERM_NOTICE_KIND);
+    const opened = loadSave(deserialise(JSON.stringify(old)) as never);
+    const pending = () => opened.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === TERM_NOTICE_KIND);
+    expect(pending().map((i) => i.at)).toEqual([gmt(2, 10, 7, 30)]);
+    const s0 = opened.universe.accounts[select.id]!.balance;
+    opened.advanceTo(gmt(2, 10, 7, 31));
+    expect(opened.universe.accounts[term.id]!.closedAt).toBe(gmt(2, 10, 7, 30));
+    expect(opened.universe.accounts[select.id]!.balance - s0).toBe(10_000_00);
+    // Opened again after, nothing more is put on the clock.
+    expect(loadSave(deserialise(serialise(opened.universe)) as never).universe.scheduled.filter((i) => i.status === 'pending' && i.kind === TERM_NOTICE_KIND)).toEqual([]);
+  });
+
+  it('closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, the £10,000.00 whole after the £39.41 charge taken from what it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice)', () => {
     const { sim, barclays, select, term } = natwestBeside('b04-natwest-beside');
     expect(CHARGE).toBe(39_41);
     const first = draw(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' }));
@@ -233,11 +252,12 @@ describe('bank.break_term', () => {
     expect(closing.button('Give 35 Days’ Notice').disabled).toBe(true);
     const s0 = select.balance;
 
-    sim.advanceTo(gmt(2, 10, 23, 59));
+    sim.advanceTo(gmt(2, 10, 7, 29));
     expect(term.closedAt).toBeUndefined();
-    sim.advanceTo(gmt(2, 11, 0, 30));
-    // At the first midnight past the notice: the whole £10,000 into the NatWest account at once.
-    expect(term.closedAt).toBe(gmt(2, 11, 0, 0));
+    sim.advanceTo(gmt(2, 10, 7, 31));
+    // On the day the screen named, the moment the notice runs out: the whole £10,000 into the NatWest account at once.
+    // Until 2026-10-13 it closed at the first midnight after, 00:00 on 11 February, a day after the one the screen named.
+    expect(term.closedAt).toBe(gmt(2, 10, 7, 30));
     expect(term.balance).toBe(0);
     expect(moved(sim, select, 'Fixed-Term Savings broken early')).toEqual([10_000_00]);
     expect(select.balance - s0).toBe(10_000_00);
@@ -266,11 +286,15 @@ describe('bank.break_term', () => {
     hungry(sim); // TEST SETUP
     expect(eat(sim).error).toBe('You can’t afford it.');
 
-    sim.advanceTo(gmt(2, 11, 0, 30));
-    expect(term.closedAt).toBe(gmt(2, 11, 0, 0));
-    // In one move from the deposit to Barclays, at the closing midnight: nothing in transit, nothing via NatWest.
+    // Still refused at 7:29 AM on 10 February, the day the screen names, and bought at 7:31 once the money is in.
+    sim.advanceTo(gmt(2, 10, 7, 29));
+    hungry(sim); // TEST SETUP
+    expect(eat(sim).error).toBe('You can’t afford it.');
+    sim.advanceTo(gmt(2, 10, 7, 31));
+    expect(term.closedAt).toBe(gmt(2, 10, 7, 30));
+    // In one move from the deposit to Barclays, the moment the notice ran out: nothing in transit, nothing via NatWest.
     expect(between(sim, term, barclays).map((t) => ({ at: t.at, memo: t.memo, amount: t.postings.find((p) => p.accountId === barclays.id)!.amount }))).toEqual([
-      { at: gmt(2, 11, 0, 0), memo: 'To Barclays Bank Account at Barclays', amount: 10_000_00 },
+      { at: gmt(2, 10, 7, 30), memo: 'To Barclays Bank Account at Barclays', amount: 10_000_00 },
     ]);
     expect(between(sim, term, select)).toHaveLength(1); // its opening, from the NatWest account, and nothing since
     expect(barclays.balance).toBe(10_000_00);

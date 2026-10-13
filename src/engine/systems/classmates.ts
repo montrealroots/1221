@@ -361,6 +361,9 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
   }
   if (m.kind === 'study' && choice === 'yes') {
     const when = m.when!;
+    // Reached only from a save made before 2026-10-12, whose moments waited until ten the next evening, past the seven
+    // o’clock they asked for (`CLASS.answerHours`); one made since lapses at seven that morning. Kept for those saves,
+    // as the final defect pass of 2026-10-13 found.
     if (when <= sim.now) return 'That evening has passed.';
     const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + CLASS.study.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
     if (clash) return `You have ${clash.label} then: say no instead.`;

@@ -58,6 +58,20 @@
  * shower and an hour unwinding checked. Since then each row not verified is named by its own id, a row of one of the
  * command's actions (life.look_after:wash) by the action's.
  *
+ * The review of 2026-10-13 (the owner's brief of that day, section 1) read every row against one standard, the 328 here
+ * and the 45 live capabilities, by readers who wrote nothing: what the row claims, the code and what reads it, each
+ * test's assertions read, whether it reaches the action as a player does (a command, the clock, the screen) and checks
+ * the consequence with an expectation of its own, and the UI evidence a row about a screen needs. Each row carries it as
+ * `review`: where it stood at `fca00d8f` (`before`), its evidence by kind, the verdict and its gaps; and where that
+ * pass's own work reached it, `after`: the tests added, the defects fixed, the gaps left and the mutations run. Its
+ * status is the verdict now. Until then a row could be called verified and not read (134 were), and the page counted
+ * them apart. Since then every row has a review, and a row called verified has at least one test in the gate that
+ * reaches the action through a command, the clock or the rendered screen, checks the consequence, and expects what
+ * an independent reading gives: a fixture, a function called in its place, the code read, the built app or a long run
+ * supports a row and never makes it verified alone. The capabilities' own reviews are
+ * `docs/verification/review-2026-10-13/capabilities.json`, one for every live capability. Since then too the gate runs
+ * this page's check.
+ *
  *   node tools/coverage.mjs           writes docs/GAMEPLAY-COVERAGE.md
  *   node tools/coverage.mjs --check   fails when the page is behind the JSON
  * Both fail on a citation that doesn't land, a verified row the script can see isn't, or a command the two registries
@@ -72,7 +86,32 @@ const AREAS = [
   ['papers', 'Papers'],
   ['ui', 'Creation, Profile, Home And The Looks'],
 ];
-const ORDER = ['verified', 'partial', 'unresolved', 'legacy', 'informational'];
+const ORDER = ['verified', 'partial', 'unresolved', 'deferred', 'legacy', 'informational'];
+/** Where a row stood at `fca00d8f`, before the review of 2026-10-13, in the order the page lists them. */
+const BEFORE = ['verified, read', 'verified, not read', 'partial', 'unresolved', 'legacy', 'informational'];
+/** Evidence kinds, as the review records them: what can make a row verified, and what supports one. */
+const HOLDS = new Set(['command', 'render']);
+const KINDS = ['command', 'render', 'fixture', 'inspection', 'built-app', 'long-run'];
+/** The evidence that makes a row verified: a test in the gate that reaches the action, checks the consequence and expects independently. */
+const holding = (i) => [
+  ...(i.review?.evidence ?? []).filter((e) => HOLDS.has(e.kind) && e.reachesAction && e.checksConsequence && e.independent),
+  ...(i.after?.tests ?? []).filter((t) => HOLDS.has(t.kind)),
+];
+/** A row's evidence by kind, the review's and the tests added since. */
+const evidenceCell = (i) => {
+  const n = Object.fromEntries(KINDS.map((k) => [k, 0]));
+  for (const e of i.review?.evidence ?? []) n[e.kind] = (n[e.kind] ?? 0) + 1;
+  for (const t of i.after?.tests ?? []) n[t.kind] = (n[t.kind] ?? 0) + 1;
+  const said = KINDS.filter((k) => n[k]).map((k) => `${k} ${n[k]}`).join(', ');
+  return `${said || 'none'}; ${holding(i).length} hold${i.after?.tests?.length ? `; ${i.after.tests.length} added 2026-10-13` : ''}`;
+};
+const nowOf = (i) => i.status;
+/** A row's Note: a claim corrected on 2026-10-13 and what's still open, else what the row said before. */
+const noteOf = (i) => {
+  const fixed = i.after?.claimCorrection ? `Corrected on 2026-10-13${i.after.claimCorrection.field ? ` (${i.after.claimCorrection.field})` : ''}: ${i.after.claimCorrection.now}` : '';
+  const open = i.after?.gapsOpen?.length ? `Still open: ${i.after.gapsOpen.join(' ')}` : '';
+  return [fixed, open, i.after?.afterCheck ?? ''].filter(Boolean).join(' ') || (i.corrected?.now ?? i.settled ?? i.issue);
+};
 const percent = (n, of) => (of ? `${Math.round((100 * n) / of)}%` : '—');
 const cell = (v) => (v === undefined || v === null || v === '' ? '—' : String(Array.isArray(v) ? v.join('; ') : v).replace(/\|/g, '/').replace(/\n/g, ' '));
 
@@ -85,6 +124,8 @@ const moved = [];
 const corrected = [];
 /** Items in no row until the third review of 2026-10-12, traced and read that day (`traced`). */
 const traced = [];
+/** Every item with its area's title, for the review of 2026-10-13. */
+const reviewed = [];
 /** Every item, by area, for the agreement with docs/capabilities.json. */
 const everyItem = [];
 /** The status the open-items revisit left, before any correction of 2026-10-12. */
@@ -183,7 +224,6 @@ const readByEye = [];
 for (const [area, title] of AREAS) {
   const a = JSON.parse(readFileSync(`docs/verification/audit/${area}.json`, 'utf8'));
   const count = Object.fromEntries(ORDER.map((s) => [s, 0]));
-  let readVerified = 0;
   const readHere = [];
   const readInPart = [];
   for (const i of a.items) {
@@ -194,19 +234,25 @@ for (const [area, title] of AREAS) {
     if (i.corrected) corrected.push({ title, i });
     if (i.traced) traced.push({ title, i });
     for (const miss of citationsMissed(i)) stale.push(`${area} ${i.id}: ${miss}`);
-    if (i.read === true) { readHere.push(i); if (i.status === 'verified') readVerified += 1; }
+    if (i.review?.on !== '2026-10-13') stale.push(`${area} ${i.id}: no review of 2026-10-13`);
+    else if (!BEFORE.includes(i.review.before)) stale.push(`${area} ${i.id}: review.before is ${JSON.stringify(i.review.before)}, not one of ${BEFORE.join(', ')}`);
+    if (i.status === 'verified' && !holding(i).length) stale.push(`${area} ${i.id}: verified, and no test in the gate reaches the action, checks the consequence and expects independently`);
+    // A test's own title, its describe path (cited as “row > title”) left off, as the file's titles are read.
+    for (const t of i.after?.tests ?? []) for (const miss of landing(`${t.file} ‘${t.title.split(' > ').pop().replace(/’/g, "'")}’`, true)) stale.push(`${area} ${i.id}: added: ${miss}`);
+    reviewed.push({ title, i });
+    if (i.read === true) readHere.push(i);
     else if (typeof i.read === 'string') readInPart.push(i);
     else if (i.read !== undefined) stale.push(`${area} ${i.id}: read is true or what was read, not ${JSON.stringify(i.read)}`);
     if (i.traced && i.read !== true) stale.push(`${area} ${i.id}: traced on ${i.traced}, and not read whole`);
   }
-  readByEye.push({ title, verified: count.verified, readVerified, whole: readHere, inPart: readInPart });
-  rows.push([title, a.items.length, count.verified, readVerified, percent(readVerified, count.verified), count.verified - readVerified, ...ORDER.slice(1).map((s) => count[s])]);
+  readByEye.push({ title, whole: readHere, inPart: readInPart });
+  rows.push([title, a.items.length, ...ORDER.map((s) => count[s]), percent(count.verified, a.items.length - count.deferred - count.legacy - count.informational)]);
   const body = [
     `## ${title}`, '',
-    `${a.items.length} items: ${readVerified} verified and read by eye, ${count.verified - readVerified} called verified and not read, ${ORDER.slice(1).map((s) => `${count[s]} ${s}`).join(', ')}.`, '',
-    '| Item | Kind | Entry | Reads | Changes | Downstream | Persists | Explained | Tested by | Status | Note |',
-    '|---|---|---|---|---|---|---|---|---|---|---|',
-    ...[...a.items].sort((x, y) => ORDER.indexOf(x.status) - ORDER.indexOf(y.status)).map((i) => `| ${cell(i.id)} | ${cell(i.kind)} | ${cell(i.entry)} | ${cell(i.reads)} | ${cell(i.changes)} | ${cell(i.downstream)} | ${cell(i.persistent)} | ${cell(i.explanation)} | ${cell(i.tests)} | ${statusCell(i)}${i.status === 'verified' && i.read !== true ? ', not read' : ''} | ${cell(i.corrected?.now ?? i.settled ?? i.issue)} |`),
+    `${a.items.length} items: ${ORDER.map((s) => `${count[s]} ${s}`).join(', ')}.`, '',
+    '| Item | Kind | Entry | Reads | Changes | Downstream | Persists | Explained | Tested by | Evidence (2026-10-13) | Status | At fca00d8f | Note |',
+    '|---|---|---|---|---|---|---|---|---|---|---|---|---|',
+    ...[...a.items].sort((x, y) => ORDER.indexOf(x.status) - ORDER.indexOf(y.status)).map((i) => `| ${cell(i.id)} | ${cell(i.kind)} | ${cell(i.entry)} | ${cell(i.reads)} | ${cell(i.changes)} | ${cell(i.downstream)} | ${cell(i.persistent)} | ${cell(i.explanation)} | ${cell([i.tests, ...(i.after?.tests ?? []).map((t) => `${t.file} ‘${t.title}’`)].filter(Boolean).join('; '))} | ${cell(evidenceCell(i))} | ${statusCell(i)} | ${cell(i.review?.before)} | ${cell(noteOf(i))} |`),
     '',
   ];
   sections.push(body.join('\n'));
@@ -224,12 +270,15 @@ for (const [area, title] of AREAS) {
 const disagree = [];
 const capabilities = JSON.parse(readFileSync('docs/capabilities.json', 'utf8')).capabilities.filter((c) => c.status !== 'Retired');
 const TRACE = readFileSync('docs/verification/connected-journey/TRACE.md', 'utf8');
+const CAP_REVIEW = 'docs/verification/review-2026-10-13/capabilities.json';
+// Every live capability reviewed on 2026-10-13.
+if (existsSync(CAP_REVIEW)) { const had = new Set(JSON.parse(readFileSync(CAP_REVIEW, 'utf8')).map((c) => c.id)); for (const c of capabilities) if (!had.has(c.id)) disagree.push(`${c.id}: a live capability with no review of 2026-10-13 in ${CAP_REVIEW}`); }
 const rowsOf = (command) => everyItem.filter((i) => i.kind === 'command' && (i.id === command || i.id.startsWith(`${command}:`)));
 /** A text's sentences: it ends at a stop, and the next begins with a capital, a quote, a bracket or code. */
 const sentencesOf = (text) => (text ?? '').split(/(?<=[.!?])\s+(?=[A-Z‘“(`])/);
 const names = (sentence, command) => new RegExp(String.raw`(?<![\w.])${command.replace(/\./g, '\\.')}(?!\w)`).test(sentence);
 /** The words a capability's limits may give a command that isn't verified here: its status here, or out of reach. */
-const WORDS = { partial: /\bpartial\b/i, unresolved: /\bunresolved\b|\bout of reach\b/i };
+const WORDS = { partial: /\bpartial\b/i, unresolved: /\bunresolved\b|\bout of reach\b/i, deferred: /\bdeferred\b/i };
 let bothName = 0;
 for (const c of capabilities) for (const command of c.commands ?? []) {
   const mine = rowsOf(command);
@@ -238,8 +287,8 @@ for (const c of capabilities) for (const command of c.commands ?? []) {
   const short = mine.filter((i) => i.status !== 'verified');
   const said = (i) => `${i.id} is ${i.status}`;
   if (c.status === 'Verified' && short.length) disagree.push(`${command}: ${c.id} is Verified, and ${short.map(said).join(', ')} here`);
-  const unread = mine.filter((i) => i.status === 'verified' && i.read !== true);
-  if (c.status === 'Verified' && unread.length) disagree.push(`${command}: ${c.id} is Verified, and ${unread.map((i) => i.id).join(', ')} is called verified here and not read`);
+  const unread = mine.filter((i) => i.status === 'verified' && i.review?.on !== '2026-10-13');
+  if (c.status === 'Verified' && unread.length) disagree.push(`${command}: ${c.id} is Verified, and ${unread.map((i) => i.id).join(', ')} is called verified here and not reviewed`);
   if (mine.some((i) => i.status === 'unresolved') && c.status !== 'Partial') disagree.push(`${command}: unresolved here, reached only by a fixture, and ${c.id} is ${c.status}, not Partial`);
   if (short.length && c.layers?.verified === 'Verified') disagree.push(`${command}: ${short.map(said).join(', ')} here, and ${c.id}’s verified layer is Verified`);
   // Each row by its own id: a row of one of the command's actions (life.look_after:wash) by the action's, which the
@@ -258,18 +307,91 @@ const demoted = corrected.filter(({ i }) => i.corrected.status && i.corrected.st
 for (const { i } of demoted) if (i.corrected.status !== 'verified' || !['partial', 'unresolved'].includes(i.status)) throw new Error(`${i.id}: corrected from ${i.corrected.status} to ${i.status}, which the page doesn’t say`);
 const demotedTo = (s) => demoted.filter(({ i }) => i.status === s).length;
 const all = Object.values(totals).reduce((a, b) => a + b, 0);
-const readVerified = readByEye.reduce((n, r) => n + r.readVerified, 0);
-const unreadVerified = totals.verified - readVerified;
-const readAll = readByEye.reduce((n, r) => n + r.whole.length, 0);
-/** The rows read whole that were verified when they were read, and those of them the reading moved off verified. A row
- * traced on the day it was read wasn't verified before it, so it's one only where a later review read it again as
- * verified (`corrected.status`); until the fourth review of 2026-10-12 none had been. */
-const openedVerified = readByEye.flatMap((r) => r.whole).filter((i) => (i.traced ? i.corrected?.status : i.corrected?.status ?? i.status) === 'verified');
-const failedReading = openedVerified.filter((i) => i.status !== 'verified').length;
 const tracedTo = (s) => traced.filter(({ i }) => i.status === s).length;
 /** Rows traced and verified by the third review that the fourth moved. */
 const tracedMoved = traced.filter(({ i }) => i.corrected?.status === 'verified' && i.status !== 'verified').length;
 const ids = (items) => items.map((i) => i.id).join(', ');
+/** What can be verified: every row but the deferred, the legacy and the informational. */
+const canBe = all - totals.deferred - totals.legacy - totals.informational;
+
+/**
+ * The review of 2026-10-13, and what came of it: where each row stood at fca00d8f and where it stands now, the rows
+ * called verified and not read, the rows that were partial, the evidence by kind, the capabilities reviewed, and how
+ * this page's rows and the capabilities' count differently.
+ */
+function reviewSection() {
+  const cross = BEFORE.map((b) => [b, ...ORDER.map((s) => reviewed.filter(({ i }) => i.review?.before === b && nowOf(i) === s).length)]);
+  const of = (b) => reviewed.filter(({ i }) => i.review?.before === b);
+  const unreadRows = of('verified, not read');
+  const partialRows = of('partial');
+  const added = reviewed.reduce((n, { i }) => n + (i.after?.tests?.length ?? 0), 0);
+  const files = new Set(reviewed.flatMap(({ i }) => (i.after?.tests ?? []).map((t) => t.file)));
+  const fixed = reviewed.flatMap(({ i }) => (i.after?.defects ?? []).filter((d) => d.fixed));
+  const mutRun = reviewed.reduce((n, { i }) => n + (i.after?.mutations?.run ?? 0), 0);
+  const mutKilled = reviewed.reduce((n, { i }) => n + (i.after?.mutations?.killed ?? 0), 0);
+  const has = (i, k) => (i.review?.evidence ?? []).some((e) => e.kind === k) || (i.after?.tests ?? []).some((t) => t.kind === k);
+  const holds = (i, k) => holding(i).some((e) => e.kind === k);
+  const byKind = KINDS.map((k) => [k, reviewed.filter(({ i }) => has(i, k)).length, HOLDS.has(k) ? String(reviewed.filter(({ i }) => holds(i, k)).length) : '—']);
+  const none = reviewed.filter(({ i }) => !KINDS.some((k) => has(i, k))).length;
+  const held = reviewed.filter(({ i }) => holding(i).length).length;
+  const what = (i) => {
+    const a = i.after;
+    if (!a) return i.review?.verdict === nowOf(i) ? 'As the review found it' : '—';
+    const parts = [];
+    if (a.tests?.length) parts.push(`${a.tests.length} test${a.tests.length === 1 ? '' : 's'} added`);
+    const f = (a.defects ?? []).filter((d) => d.fixed).length;
+    if (f) parts.push(`${f} defect${f === 1 ? '' : 's'} fixed`);
+    if (a.claimCorrection) parts.push('its claim corrected');
+    if (a.gapsOpen?.length) parts.push(`${a.gapsOpen.length} gap${a.gapsOpen.length === 1 ? '' : 's'} left`);
+    return parts.join(', ') || 'Read again, nothing added';
+  };
+  const caps = existsSync(CAP_REVIEW) ? JSON.parse(readFileSync(CAP_REVIEW, 'utf8')) : [];
+  return [
+    '## The Review Of 2026-10-13',
+    '',
+    `The owner’s brief of 2026-10-13 asked for every coverage claim held to one standard. Every row here and every live capability was read on that day against \`fca00d8f\` by readers who changed nothing: what the row claims, the code and what reads the change, each test’s assertions read, whether the test reaches the action as a player does and checks the consequence with an expectation of its own, and the UI evidence a row about a screen needs. Each row keeps it as \`review\` in \`docs/verification/audit/*.json\`. The evidence is recorded by kind: **command** (a test in the gate that issues the command or runs the clock), **render** (a test in the gate that renders the screen and reads it), **fixture** (state set by hand, or a function called in place of the command or the clock), **inspection** (the code read), **built-app** (\`tools/acceptance-ui.mjs\`, outside the gate) and **long-run** (played lives and scenarios). Only the first two make a row verified, and only where the test reaches the action, checks the consequence and expects what an independent reading of the rule gives; the rest support. The pass that followed added ${added} tests in ${files.size} files for the rows the review left partial, fixed ${fixed.length} defects the tests found, and ran ${mutRun} mutations of the code those tests protect, ${mutKilled} of them killed; what each row gained is its \`after\`.`,
+    '',
+    '### Where Each Row Stood, And Where It Stands',
+    '',
+    `Rows by where they stood at \`fca00d8f\` (down) and their status now (across), all ${all}.`,
+    '',
+    `| At fca00d8f | Rows | ${ORDER.map((s) => s[0].toUpperCase() + s.slice(1)).join(' | ')} |`,
+    `|---|---|${ORDER.map(() => '---').join('|')}|`,
+    ...cross.map(([b, ...n]) => `| ${b} | ${n.reduce((x, y) => x + y, 0)} | ${n.join(' | ')} |`),
+    '',
+    '### The Rows Called Verified And Not Read',
+    '',
+    `${unreadRows.length} rows were called verified at \`fca00d8f\` without being read. The review found ${unreadRows.filter(({ i }) => i.review.verdict === 'verified').length} of them verified, ${unreadRows.filter(({ i }) => i.review.verdict === 'partial').length} partial, and ${unreadRows.filter(({ i }) => !['verified', 'partial'].includes(i.review.verdict)).length} otherwise; now ${unreadRows.filter(({ i }) => nowOf(i) === 'verified').length} are verified.`,
+    '',
+    '| Area | Item | The Review Found | Its Gaps | What Was Done | Now |',
+    '|---|---|---|---|---|---|',
+    ...unreadRows.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.review.verdict}${i.review.disposition ? ` (${i.review.disposition})` : ''} | ${i.review.gaps.length} | ${what(i)} | ${nowOf(i)} |`),
+    '',
+    '### The Rows That Were Partial',
+    '',
+    `${partialRows.length} rows were partial at \`fca00d8f\`. Each has a disposition from the review: missing evidence (it works, and no test showed it), missing implementation (in this build’s scope, and wrong or absent), a stale claim (the row said what the code doesn’t do), or deferred or removed (the owner’s). Now ${partialRows.filter(({ i }) => nowOf(i) === 'verified').length} are verified.`,
+    '',
+    '| Area | Item | Disposition | What Was Done | Gaps Left | Now |',
+    '|---|---|---|---|---|---|',
+    ...partialRows.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.review.disposition ?? i.review.verdict} | ${what(i)} | ${cell(i.after?.gapsOpen?.length ? i.after.gapsOpen.join(' ') : i.review.verdict === 'verified' ? '' : i.after ? '' : i.review.gaps.join(' '))} | ${nowOf(i)} |`),
+    '',
+    '### The Evidence, By Kind',
+    '',
+    `The rows with each kind of evidence, a row counted under every kind it has, and, for the two kinds that can make a row verified, the rows where at least one holds: reaches the action, checks the consequence and expects independently. ${held} of the ${all} rows have evidence that holds; ${none} have none of any kind.`,
+    '',
+    '| Kind | Rows With It | Rows Where It Holds |',
+    '|---|---|---|',
+    ...byKind.map(([k, n, h]) => `| ${k} | ${n} | ${h} |`),
+    '',
+    '### The Capabilities, Reviewed',
+    '',
+    `The ${caps.length} live capabilities of \`docs/capabilities.json\`, read the same day against the same standard (\`${CAP_REVIEW}\`). The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, ${all} of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. ${bothName} commands are named by both; a command only a capability names is traced in \`docs/verification/connected-journey/TRACE.md\`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.`,
+    '',
+    '| Capability | Status In The Registry | The Review Found | Disposition | Gaps |',
+    '|---|---|---|---|---|',
+    ...caps.map((c) => `| ${cell(c.id)} | ${cell(capabilities.find((x) => x.id === c.id)?.status ?? 'Retired')} | ${c.verdict} | ${cell(c.partialClass === 'none' ? '' : c.partialClass)} | ${(c.gaps ?? []).length} |`),
+  ];
+}
 const page = [
   '# Gameplay Coverage',
   '',
@@ -281,20 +403,22 @@ const page = [
   '',
   `## Totals`,
   '',
-  '| Area | Items | Called Verified | Verified, Read By Eye | Share Read | Called Verified, Not Read | Partial | Unresolved | Legacy | Informational |',
-  '|---|---|---|---|---|---|---|---|---|---|',
+  '| Area | Items | Verified | Partial | Unresolved | Deferred | Legacy | Informational | Verified, Of What Can Be |',
+  '|---|---|---|---|---|---|---|---|---|',
   ...rows.map((r) => `| ${r.join(' | ')} |`),
-  `| **All** | **${all}** | **${totals.verified}** | **${readVerified}** | **${percent(readVerified, totals.verified)}** | **${unreadVerified}** | **${totals.partial}** | **${totals.unresolved}** | **${totals.legacy}** | **${totals.informational}** |`,
+  `| **All** | **${all}** | ${ORDER.map((s) => `**${totals[s]}**`).join(' | ')} | **${percent(totals.verified, canBe)}** |`,
   '',
-  `**Read by eye against the standard:** ${readVerified} of the ${totals.verified} rows called verified (${percent(readVerified, totals.verified)}), and ${readAll} of all ${all} rows. Those ${readVerified} are the verified rows. The other ${unreadVerified} are called verified as the audit of 2026-10-10 and the open-items revisit left them, with what a script can hold held (each citation lands, a verified row names a test in the gate, a verified command names a test file that issues it), and whether their tests check what reads the change wasn’t read, so they’re counted apart, as the audit’s word, not as verified. Of the ${openedVerified.length} rows that were verified when they were read, ${failedReading} (${percent(failedReading, openedVerified.length)}) failed the standard. They were read for being named by a review or because a capability \`docs/capabilities.json\` called Verified names their command, not drawn at random, so that isn’t a measure of the rest, but it’s reason to hold none of the rest as verified until it’s read.`,
+  `**What the numbers are:** each row is counted once, by its status now, and every one of the ${all} has been read against the standard by the review of 2026-10-13 (below). Verified: ${totals.verified} of the ${all} rows (${percent(totals.verified, all)}), and of the ${canBe} that can be verified (${percent(totals.verified, canBe)}): the ${totals.deferred} deferred are the owner’s, out of this build, the ${totals.legacy} legacy are paths only a save from before reaches, and the ${totals.informational} informational decide nothing, so those ${totals.deferred + totals.legacy + totals.informational} are left out of what can be. Partial: works, with a gap named in the row. Unresolved: reached only by a fixture or a removed system. Until 2026-10-13 this table counted ${134} rows as called verified and not read, apart from the verified; none is now.`,
   '',
-  '## Read By Eye',
+  ...reviewSection(),
   '',
-  'Each row’s tests and code, read against the standard on 2026-10-12: every row the four reviews named, in the settlement of each, every command row of a capability `docs/capabilities.json` called Verified that day, and every command found in no row. A row read for only what a review named in it is listed apart, and not counted as read; a verified row not listed wasn’t read.',
+  '## Read By Eye On 2026-10-12',
   '',
-  '| Area | Verified, Read | Read Whole | Read In Part |',
-  '|---|---|---|---|',
-  ...readByEye.map((r) => `| ${r.title} | ${r.readVerified} of ${r.verified} | ${cell(ids(r.whole))} | ${cell(r.inPart.map((i) => `${i.id} (${i.read})`).join('; '))} |`),
+  'Superseded by the review of 2026-10-13, which read every row; kept as that day left it. Each row’s tests and code, read against the standard on 2026-10-12: every row the four reviews named, in the settlement of each, every command row of a capability `docs/capabilities.json` called Verified that day, and every command found in no row. A row read for only what a review named in it is listed apart, and not counted as read; a verified row not listed wasn’t read.',
+  '',
+  '| Area | Read Whole | Read In Part |',
+  '|---|---|---|',
+  ...readByEye.map((r) => `| ${r.title} | ${cell(ids(r.whole))} | ${cell(r.inPart.map((i) => `${i.id} (${i.read})`).join('; '))} |`),
   '',
   '## Traced On 2026-10-12',
   '',
@@ -330,7 +454,7 @@ if (process.argv.includes('--check')) {
   console.log(`${path} matches the audit: ${all} items.`);
 } else {
   writeFileSync(path, `${page}\n`);
-  console.log(`Wrote ${path}: ${all} items, ${readVerified} verified and read, ${unreadVerified} called verified and not read, ${ORDER.slice(1).map((s) => `${totals[s]} ${s}`).join(', ')}.`);
+  console.log(`Wrote ${path}: ${all} items, ${ORDER.map((s) => `${totals[s]} ${s}`).join(', ')}.`);
 }
 if (disagree.length) {
   const commands = new Set(disagree.map((d) => d.split(':')[0])).size;

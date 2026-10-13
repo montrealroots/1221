@@ -71,7 +71,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, MS_MINUTE, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { COURSES } from '@/engine/content/school';
+import { CLASSES_2026_27, COURSES } from '@/engine/content/school';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { CABARET_KIND, CALL_KIND, ESTIMATE, SHIFT_KIND, registered } from '@/engine/systems/school';
 import { ORIENTATION_KIND, courseworkOf, mateRecord, notesOf, trustOf } from '@/engine/systems/coursework';
@@ -825,9 +825,17 @@ describe('school.take_shift', () => {
     expect(r.at).toBeGreaterThan(tomorrow);
     expect(zonedParts(r.at, NY).hour).toBe(19);
     expect(overlaps(r.at)).toBe(false);
-    // The first evening from tomorrow that no night on call and nothing that wants her holds.
-    let free = tomorrow;
-    while (overlaps(free) || wants(free)) free += MS_DAY;
+    // The first evening from tomorrow that no night on call and nothing that wants her holds, on a day the term’s classes
+    // aren’t off. Until 2026-10-13 a day off counted as any other, and this found Sunday 7 March 2027, in the spring
+    // recess (6 to 14 March, CLASSES_2026_27.off), where the theater is dark (found by that day’s final defect pass).
+    const dayOff = (at: number) => { const p = zonedParts(at, NY); const key = `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; return CLASSES_2026_27.off.some(([a, b]) => key >= a && key <= b); };
+    // Each evening at seven by the calendar, across the change to daylight time on 14 March 2027.
+    const t0 = zonedParts(tomorrow, NY);
+    const evening7 = (k: number) => { const d = new Date(Date.UTC(t0.year, t0.month - 1, t0.day + k)); return on(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), 19); };
+    let k = 0;
+    while (overlaps(evening7(k)) || wants(evening7(k)) || dayOff(evening7(k))) k += 1;
+    const free = evening7(k);
+    expect(free).toBe(on(2027, 3, 15, 19));
     expect(r.at).toBe(free);
   }, 60_000);
 

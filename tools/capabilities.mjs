@@ -89,7 +89,7 @@ const names = (text, k) => new RegExp(`(?<![\\w.])${k.replace(/\./g, '\\.')}(?!\
 /** A text's sentences, split as `tools/coverage.mjs` splits them: at a stop, before a capital, a quote, a bracket or code. */
 const sentencesOf = (text) => (text ?? '').split(/(?<=[.!?])\s+(?=[A-Z‘“(`])/);
 /** The words a sentence of limits gives a command that isn't verified there: its status there, or out of reach. */
-const WORDS = { partial: /\bpartial\b/i, unresolved: /\bunresolved\b|\bout of reach\b/i };
+const WORDS = { partial: /\bpartial\b/i, unresolved: /\bunresolved\b|\bout of reach\b/i, deferred: /\bdeferred\b/i };
 /** The commands both registries name, for the count the run ends on. */
 const bothName = new Set();
 
@@ -119,8 +119,9 @@ for (const c of json.capabilities) {
     const short = rows.filter((i) => i.status !== 'verified');
     const said = (items) => items.map((i) => `${i.id} ${i.status}`).join(', ');
     if (c.status === 'Verified' && short.length) problems.push(`${at}: Verified, and docs/GAMEPLAY-COVERAGE.md calls ${said(short)}`);
-    const unread = rows.filter((i) => i.status === 'verified' && i.read !== true);
-    if (c.status === 'Verified' && unread.length) problems.push(`${at}: Verified, and docs/GAMEPLAY-COVERAGE.md calls ${unread.map((i) => i.id).join(', ')} verified without reading it`);
+    // Read: by the review of 2026-10-13, which read every row; until then a row read by eye carried `read`.
+    const unread = rows.filter((i) => i.status === 'verified' && i.review?.on !== '2026-10-13');
+    if (c.status === 'Verified' && unread.length) problems.push(`${at}: Verified, and docs/GAMEPLAY-COVERAGE.md calls ${unread.map((i) => i.id).join(', ')} verified without reviewing it`);
     if (rows.some((i) => i.status === 'unresolved') && c.status !== 'Partial') problems.push(`${at}: ${c.status}, and docs/GAMEPLAY-COVERAGE.md calls ${k} unresolved, reached only by a fixture, which is Partial here`);
     // Each row by its own id, as `tools/coverage.mjs` reads it: a row of one of the command's actions
     // (life.look_after:wash) by the action's, which the command's kind alone doesn't name.

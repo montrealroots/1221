@@ -3,7 +3,7 @@
  * and a keyboard can't reach (from 2026-10-12, the completeness critic's item 14 in
  * docs/verification/CONNECTED-JOURNEY-MAP-2026-10-12.md). Until then a practice focus refused (Live With A Partner, with
  * no class to ask) was grayed out in its list with its reason nowhere, not even in a title; it's said under the focus
- * now, by the house's WhyNot. Practice An Hour and Study It already said theirs under the button, and are held here
+ * then, by the house’s WhyNot, until 2026-10-13, when that refusal went, reached by no play. Practice An Hour and Study It already said theirs under the button, and are held here
  * too.
  *
  * The screen is rendered to markup (react-dom/server) over real saves, as tests/defects-r8-1.test.ts renders it:
@@ -75,27 +75,25 @@ const desk = EXERCISES.find((e) => !e.partnered && !e.feet)!;
 /** An exercise the player can open on the Profile, partnered or not, one per row. */
 const shown = (sim: Simulation) => EXERCISES.filter((e) => drawn(sim, false).html.includes(`>${e.label}…</button>`));
 
-describe('a practice focus refused, on the Player Profile', () => {
-  it('says which focus and why under the focus, outside any title, and nothing once it isn’t refused', () => {
+describe('a practice focus, on the Player Profile', () => {
+  // Until 2026-10-13 this held Live With A Partner refused with the class taken away by hand, grayed out with “It takes a
+  // classmate, and you have no class to ask.” under it: a refusal no play reached, since every student keeps a class,
+  // and it went that day with the Profile’s reasons under the focus (found by that day’s final defect pass).
+  it('offers every focus to every opened exercise, none grayed out and none said to be refused, even with the class taken away by hand', () => {
     const sim = student('whynot-profile-live');
     const opened = shown(sim);
     expect(opened.length).toBeGreaterThan(0);
-    const label = FOCUS.live.label;
-    // With a class to ask, no focus is refused, and none is said to be.
-    expect(opened.every((e) => !focusRefusal(sim.player, e, 'live'))).toBe(true);
-    expect(drawn(sim, true).text).not.toContain(`${label}:`);
     // TEST SETUP: the class taken away by hand; no command takes a student's class away.
     sim.player.school!.classmates = [];
-    const why = focusRefusal(sim.player, opened[0]!, 'live')!;
-    expect(why).toBe('It takes a classmate, and you have no class to ask.');
+    for (const f of Object.keys(FOCUS)) expect(focusRefusal(f)).toBeUndefined();
+    expect(focusRefusal('shouting')).toBe('There’s no such way to practice.');
     const { html, text } = drawn(sim, true);
-    // The option is grayed out, as it was, and carries no reason of its own.
-    expect(html).toContain(`<option value="live" disabled="">${label}</option>`);
-    // Each opened exercise says it under its focus, with the focus's label; the other focuses aren't named.
-    expect(count(text, `${label}: ${why}`)).toBe(opened.length);
-    for (const f of ['steady', 'precision', 'spaced', 'variation'] as const) expect(text).not.toContain(`${FOCUS[f].label}: `);
-    // The falsifiability test: closed, no focus is drawn and none is said.
-    expect(drawn(sim, false).text).not.toContain(`${label}: ${why}`);
+    expect(html).not.toMatch(/<option[^>]*disabled/);
+    for (const f of Object.keys(FOCUS) as (keyof typeof FOCUS)[]) {
+      expect(count(html, `<option value="${f}"`)).toBe(opened.length);
+      expect(text).not.toContain(`${FOCUS[f].label}: `);
+    }
+    expect(text).not.toContain('no class to ask');
   });
 });
 

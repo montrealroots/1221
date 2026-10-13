@@ -52,7 +52,7 @@ import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../
 import { moveRoundUps, setRoundUps } from './roundups';
 import { dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
-import { checkingAt, lendingOf } from './lending';
+import { checkingAt, checkingsOf, lendingOf } from './lending';
 import { ensurePrimary, stateOf } from './credit';
 import { sendBetweenBanks } from './bankmoves';
 import { recordInterest } from './earnings';
@@ -181,6 +181,9 @@ export function savingsDebit(sim: Simulation, account: Account): { room: Money; 
  */
 export const BREAK_NOTICE: Readonly<Record<string, number>> = { 'gb-natwest': 35 };
 
+/** A term deposit closing on the notice given (`bank.break_term`), on the clock for the moment its notice runs out. */
+export const TERM_NOTICE_KIND = 'bank.term_notice';
+
 /**
  * A bank whose early rate is a rule rather than days of interest: MUFG's
  * 期限前解約利率 pays the ordinary deposit's rate on a time deposit broken in
@@ -232,14 +235,9 @@ export function registerAccountLife(sim: Simulation): void {
       for (const account of Object.values(s.universe.accounts)) {
         if (account.ownerId !== person.id || account.closedAt || !account.bankId) continue;
         const rules = ACCOUNT_LIFE[account.bankId];
-        // An early close on notice, once the notice has run.
-        if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now) {
-          const done = breakTerm(s, person, account);
-          // What’s paid is after the charge (`breakTerm`): until 2026-10-13 this said “£10,000.00 … less £39.41”, where
-          // £10,000.00 was what arrived, the £39.41 already kept back (found by that day’s third round of defects).
-          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, after ${formatMoney(done.penalty, saveCurrency(s.universe))} taken for closing early.`, importance: 50, route: '/workspace/bank' });
-          continue;
-        }
+        // An early close on notice is on the clock for the moment the notice runs out (`TERM_NOTICE_KIND`): until
+        // 2026-10-13 it waited here for the first midnight after, so a notice the screen said closed on 10 February
+        // paid on the 11th (found by that day's final checks).
         // A term deposit's end: the bank writes a month before, or in time
         // for any notice it needs to change what happens (B41).
         if (account.category === 'term' && account.maturesAt !== undefined && rules?.atEnd && !account.maturityNoticed && account.maturesAt - s.now <= noticeLead(rules) * MS_DAY) {
@@ -274,9 +272,21 @@ export function registerAccountLife(sim: Simulation): void {
     if (notice) {
       if (term.breakAt !== undefined) throw new CommandError(`It closes on ${formatDate(term.breakAt, s.zone)}, on the notice given.`);
       term.breakAt = s.now + notice * MS_DAY;
+      s.schedule({ at: term.breakAt, kind: TERM_NOTICE_KIND, label: `${term.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: term.id } });
       return { paid: 0, penalty: quote.penalty, at: term.breakAt };
     }
     return breakTerm(s, person, term);
+  });
+
+  // The early close on notice, the moment the notice has run, on the day the screen and the refusal name.
+  sim.onSchedule(TERM_NOTICE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const account = s.universe.accounts[String(item.payload.accountId)];
+    if (!person || !account || account.closedAt || account.breakAt === undefined) return;
+    const done = breakTerm(s, person, account);
+    // What’s paid is after the charge (`breakTerm`): until 2026-10-13 this said “£10,000.00 … less £39.41”, where
+    // £10,000.00 was what arrived, the £39.41 already kept back (found by that day’s third round of defects).
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, after ${formatMoney(done.penalty, saveCurrency(s.universe))} taken for closing early.`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onCommand<{ accountId: string }, { paid: Money }>('bank.take_term_interest', (p, { sim: s }) => {
@@ -328,9 +338,13 @@ export function registerAccountLife(sim: Simulation): void {
     // account's orders into it go with it, as they always have (`dropPaymentsFor`).
     const links = account.kind === 'checking' ? linkedTo(s, person, account.id) : [];
     if (links.length > 0) throw new CommandError(`${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`);
-    // The deposit's money back whole: no interest, no penalty.
+    // The deposit’s money back whole: no interest, no penalty. Into a current account at its own bank; with none there,
+    // sent to the primary one in the bank’s days, as a term broken and a savings account closed are (from 2026-10-13:
+    // until then into the primary account at once, whatever bank it was at; found by that day’s final defect pass).
     const back = Math.max(0, account.balance);
-    if (back > 0) s.post({ memo: `${account.name} canceled`, category: 'transfer', postings: [{ accountId: account.id, amount: -back }, { accountId: into.id, amount: back }] });
+    const to = checkingsOf(s, person).find((a) => a.bankId === account.bankId && a.id !== account.id) ?? into;
+    if (back > 0 && to.bankId !== account.bankId) sendBetweenBanks(s, person, account, to, back);
+    else if (back > 0) s.post({ memo: `${account.name} canceled`, category: 'transfer', postings: [{ accountId: account.id, amount: -back }, { accountId: to.id, amount: back }] });
     account.accrued = 0;
     account.closedAt = s.now;
     dropPaymentsFor(s, person, account);

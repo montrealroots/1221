@@ -52,7 +52,7 @@ import { registerStatements } from './systems/statements';
 import { armPayments, freshPayments, registerPayments } from './systems/payments';
 import { armCardLife, registerCardLife } from './systems/cardlife';
 import { registerCash } from './systems/cash';
-import { registerAccountLife } from './systems/accountlife';
+import { registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
@@ -293,6 +293,13 @@ export function loadSave(universe: SaveUniverse): Simulation {
       t.whole = Math.round((t.whole + x.whole) * 10) / 10;
       t.last = Math.max(t.last, w.at);
     }
+  }
+  // A term deposit's notice running in a save from before 2026-10-13, when its close moved from the midnight after to
+  // an item on the clock at the notice's end (`TERM_NOTICE_KIND`): put on the clock, at its date or now if that's past.
+  for (const account of Object.values(universe.accounts)) {
+    if (account.breakAt === undefined || account.closedAt !== undefined || !account.ownerId) continue;
+    if (universe.scheduled.some((i) => i.status === 'pending' && i.kind === TERM_NOTICE_KIND && i.payload.accountId === account.id)) continue;
+    sim.schedule({ at: Math.max(account.breakAt, sim.now), kind: TERM_NOTICE_KIND, label: `${account.name} Closes`, category: 'home', priority: 36, payload: { personId: account.ownerId, accountId: account.id } });
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

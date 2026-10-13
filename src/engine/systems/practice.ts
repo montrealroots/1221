@@ -64,7 +64,9 @@ export function practiceRefusal(sim: Simulation, person: Person, e: Exercise | u
     const hurt = trainingRefusal(person, sim.now);
     if (hurt) return hurt;
   }
-  if (e.partnered && !person.school?.classmates.length) return 'It takes a classmate, and you have no class to ask.';
+  // “It takes a classmate, and you have no class to ask.” stood here until 2026-10-13, reached by no play: a craft is
+  // the School’s to begin, refused above without one, and a student always has a class, kept through withdrawal and
+  // after the degree (found by that day’s final defect pass).
   return undefined;
 }
 
@@ -96,10 +98,11 @@ export function focusFactor(f: PracticeFocus, dayFocus: number, gap: number | un
 }
 
 /** Why a focus can't be taken for an exercise now, or nothing. */
-export function focusRefusal(person: Person, e: Exercise, f: PracticeFocus): string | undefined {
+export function focusRefusal(f: string): string | undefined {
   if (!(f in FOCUS)) return 'There’s no such way to practice.';
-  if (f === 'live' && !person.school?.classmates.length) return 'It takes a classmate, and you have no class to ask.';
-  if (f === 'variation' && !(EXERCISE_DESIGN[e.id]?.transfer.length)) return 'This exercise has nothing it carries over to.';
+  // Until 2026-10-13 a live focus was refused with no class to ask, and a variation for an exercise carrying over to
+  // nothing; no play reached either: every student has a class (`practiceRefusal`), and each of the 27 exercises
+  // carries over to something (`EXERCISE_DESIGN`; found by that day’s final defect pass).
   return undefined;
 }
 
@@ -197,7 +200,7 @@ export function registerPractice(sim: Simulation): void {
     const focus = (p?.focus ?? 'steady') as PracticeFocus;
     const tier = p?.tier === undefined ? undefined : Number(p.tier);
     if (tier !== undefined && tier !== 0 && tier !== 1 && tier !== 2) throw new CommandError('There’s no such tier.');
-    const no = alreadyApplied(person, p?.actionId) ?? practiceRefusal(s, person, e) ?? focusRefusal(person, e!, focus);
+    const no = alreadyApplied(person, p?.actionId) ?? practiceRefusal(s, person, e) ?? focusRefusal(focus);
     if (no) throw new CommandError(no);
     markApplied(person, p?.actionId);
     return practiceHour(s, person, e!, tier as 0 | 1 | 2 | undefined, focus);

@@ -52,6 +52,11 @@ export interface Claim {
   waited: boolean;
   basePeriod: string[];
   closedAt?: Instant;
+  /**
+   * Whether they were able and available on each day begun since the last certification, as it began (from 2026-10-13):
+   * a Connecticut week is judged on the major portion of it (`ableOnMost`). Absent on a claim from before then.
+   */
+  days?: boolean[];
 }
 
 export interface UnemploymentRecord { claim?: Claim; past: Claim[] }
@@ -178,7 +183,32 @@ export function studentUnavailable(person: Person, state: BenefitState): string 
   return 'Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.';
 }
 
+/** Not in hospital and not laid up by an injury at a moment: what can change from day to day within a claim’s week. */
+const ableAt = (person: Person, at: Instant) => !inHospital(person, at) && !laidUp(person, at);
+
+/**
+ * Whether a Connecticut claimant was able and available for the major portion of the week (Regs. Conn. State
+ * Agencies §31-235-12: "available for work with respect to a given week if the individual is available for work during
+ * the major portion of the week"; §31-235-4: able "during those days and hours which are lawful and customary"; read on
+ * 2026-10-13 at law.cornell.edu): more than half the days begun since the last certification. A claim from before then,
+ * with no days kept, is judged on the certification’s moment, as every claim was until that day, when two days in
+ * hospital over a Sunday cost the week and five days laid up from a Monday cost nothing (found by that day’s final
+ * defect pass). New York’s and California’s own rules for a part-week weren’t read, and their weeks still are.
+ */
+export function ableOnMost(claim: Claim, person: Person, at: Instant): boolean {
+  if (claim.state !== 'ct' || !claim.days?.length) return ableAt(person, at);
+  return claim.days.filter(Boolean).length * 2 > claim.days.length;
+}
+
 export function registerUnemployment(sim: Simulation): void {
+  // Each day as it begins, while a claim is open: whether they could work that day (`ableOnMost`).
+  sim.onEvent('world.day_rollover', 'benefits.days', (_event, { sim: s }) => {
+    for (const person of Object.values(s.universe.people)) {
+      const claim = person.unemployment?.claim;
+      if (claim) (claim.days ??= []).push(ableAt(person, s.now));
+    }
+  });
+
   sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money; firstPaymentAt?: Instant }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
     // Living in Britain, the claim is Universal Credit's (`systems/universalcredit.ts`).
@@ -219,9 +249,10 @@ export function registerUnemployment(sim: Simulation): void {
     // not from abroad, where they aren't available for work. Until 2026-09-27
     // it paid only in the claim's state, and a New York claimant who moved to
     // Los Angeles was paid nothing for the rest of the benefit year.
-    // Able and available: in the country, not a student, allowed to work, and not in hospital or laid up on the day
-    // the week is certified (the last two from 2026-10-10).
-    const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state) && usWorkAuthorized(person, s.now) && !inHospital(person, s.now) && !laidUp(person, s.now);
+    // Able and available: in the country, not a student, allowed to work, and not in hospital or laid up (the last two
+    // from 2026-10-10): on the day the week is certified, or in Connecticut for most of the week (`ableOnMost`).
+    const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state) && usWorkAuthorized(person, s.now) && ableOnMost(claim, person, s.now);
+    delete claim.days;
     // The week’s hours and pay worked: the career’s days until the career went on 2026-10-09; from 2026-10-10 the
     // school’s work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none; and
     // from 2026-10-13 the work done in it, paid then or later (`workDoneIn`), as a claimant reports it. Until then a
