@@ -1014,6 +1014,9 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // fresh out of clean clothes; the wardrobe went with the home.
     if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
     else { eatWhatThereIs(w); eatsShort(person); }
+    // The morning's wash: every day starts at 82 hygiene at least, so a shower skipped costs nothing past the day it
+    // was skipped in. The owner decided on 2026-10-14 that it stays so: the grime of a skipped shower is the day’s, its
+    // hours under 50 charged as they pass, and not carried into the next.
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, 82), 0, 100);
   }
 }

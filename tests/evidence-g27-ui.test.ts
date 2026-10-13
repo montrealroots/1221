@@ -454,7 +454,10 @@ describe('c-birthplace', () => {
     expect(mean('is-39-mosfellsbr')).toBeGreaterThan(mean('jp-13-tokyo') + 5);
   });
 
-  it('asks Your Body in feet, inches and pounds of the US-born and in centimeters and kilograms of the Tokyo-born, both living in New Haven', () => {
+  // Until 2026-10-14 this asked the Tokyo-born student living in New Haven in centimeters and kilograms, the units of
+  // where she was born. Since the owner's rule of that day (`bodyUnits`) they're the units of where the person lives:
+  // both students at Yale are asked in feet and pounds, and the metric fields are a life in Tokyo's.
+  it('asks Your Body in feet, inches and pounds of the US-born and the Tokyo-born living in New Haven, and in centimeters and kilograms of the Tokyo-born living in Tokyo', () => {
     // 177.8 cm is 70 inches, 5 feet 10; 72.6 kg is 160 pounds at 0.45359237 kg the pound; a body mass index of
     // 72.6 ÷ 1.778² = 22.97.
     const body = { heightCm: 177.8, weightKg: 72.6 };
@@ -465,7 +468,10 @@ describe('c-birthplace', () => {
     expect(us.text).not.toContain('Centimeters');
     expect([input(us, 'height-ft'), input(us, 'height-in'), input(us, 'weight-lb')]).toEqual([5, 10, 160]);
     expect(us.text).toContain('A body mass index of 23.0.');
-    const jp = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', ...body }));
+    const jpAtYale = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', ...body }));
+    expect(jpAtYale.text).toContain('Height (Feet)');
+    expect([input(jpAtYale, 'height-ft'), input(jpAtYale, 'height-in'), input(jpAtYale, 'weight-lb')]).toEqual([5, 10, 160]);
+    const jp = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', school: undefined, startLocationId: 'jp-13-tokyo', livesWhereBorn: true, ...body }));
     expect(jp.text).toContain('Height (Centimeters)');
     expect(jp.text).toContain('Weight (Kilograms)');
     expect(jp.text).not.toContain('Feet');

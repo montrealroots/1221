@@ -248,7 +248,7 @@ describe('school.stipend', () => {
     expect(f.balance).toBe(Math.round(0.1 * f.workStudy));
   }, 60_000);
 
-  it('PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February’s return reads the summer the clock paid whole: $3,819.96 federal, Connecticut’s $1,733.84, $3,432.94 of payroll tax, $1,357.88 withheld, a $7,628.86 balance split $6,294.96 to the IRS and $1,333.90 to Connecticut', () => {
+  it('PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February’s return reads the summer the clock paid whole: $3,623.96 federal, Connecticut’s $1,733.84, $3,432.94 of payroll tax, $1,357.88 withheld, a $7,432.86 balance split $6,098.96 to the IRS and $1,333.90 to Connecticut', () => {
     const { sim } = toFirstFriday('g22-stipend-wages');
     // TEST SETUP: $40,000 of wages from a job earlier in 2027, recorded as a job's pay is, nothing withheld on them.
     recordWages(sim.player, at(2027, 1, 15, 12), zone, { gross: 40_000_00, employer: 'an earlier job' });
@@ -274,9 +274,11 @@ describe('school.stipend', () => {
     expect(f.form).toBeUndefined();
     // Income: $44,875 of wages, $3,450 of work-study and $41.31 of interest, $48,366.31.
     expect(f.income).toBe(48_366_31);
-    // Federal, at 2024's brackets the tax table holds: $14,600 deducted, 10% to $11,600 ($1,160.00) and 12% of the
-    // $22,166.31 past it ($2,659.96), $3,819.96.
-    expect(f.federal).toBe(3_819_96);
+    // Federal, 2027 on 2026's table, which the tax table holds until the IRS publishes 2027's (Rev. Proc. 2025-32):
+    // $16,100 deducted, $32,266.31 taxed; 10% to $12,400 ($1,240.00) and 12% of the $19,866.31 past it ($2,383.9572,
+    // $2,383.96), $3,623.96. Until 2026-10-14 this held $3,819.96, on 2024's table: $14,600 deducted, $1,160.00 and 12%
+    // of $22,166.31, $2,659.96.
+    expect(f.federal).toBe(3_623_96);
     // Connecticut: $18,366.31 past $30,000 takes the whole $15,000 exemption; 2% of $10,000 and 4.5% of $38,366.31,
     // $1,926.48; its credit at this income 10%: $1,733.84. Nothing credited for another state's tax.
     expect(f.states).toEqual([{ state: 'us-ct', tax: 1_733_84, credit: 0 }]);
@@ -284,11 +286,13 @@ describe('school.stipend', () => {
     expect(f.payroll).toBe(3_432_94);
     expect(f.withheld).toBe(1_357_88);
     // What's owed: the federal, Connecticut's and the payroll tax, less the year's withholding.
-    expect(f.balance).toBe(3_819_96 + 1_733_84 + 3_432_94 - 1_357_88);
-    expect(f.balance).toBe(7_628_86);
+    // $3,623.96 + $1,733.84 + $3,432.94 - $1,357.88, $7,432.86 (until 2026-10-14, $7,628.86, on 2024's table).
+    expect(f.balance).toBe(3_623_96 + 1_733_84 + 3_432_94 - 1_357_88);
+    expect(f.balance).toBe(7_432_86);
     // And by authority: Connecticut's own $399.94 withheld against its $1,733.84, the IRS the rest.
-    expect(f.owedTo).toEqual({ irs: 6_294_96, states: { 'us-ct': 1_333_90 } });
-    expect(f.owedTo!.irs).toBe(3_819_96 + 3_432_94 - (585_00 + 372_94));
+    // The IRS's: $3,623.96 + $3,432.94 - $957.94 withheld, $6,098.96 (until 2026-10-14, $6,294.96, on 2024's table).
+    expect(f.owedTo).toEqual({ irs: 6_098_96, states: { 'us-ct': 1_333_90 } });
+    expect(f.owedTo!.irs).toBe(3_623_96 + 3_432_94 - (585_00 + 372_94));
   }, 60_000);
 });
 

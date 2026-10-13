@@ -7,8 +7,9 @@
  *
  * - `c-wealth`: a new life's money is the wealthy profile's euros at SLATE's 0.92 to the dollar, to the whole dollar:
  *   85,000 € in checking is $92,391, 380,000 € in savings $413,043, a 60,000 € card limit $65,217, and a credit score
- *   of 795. Starting Point shows those four tiles, a draft that asked for "nothing" is still made wealthy (`newLifeFrom`)
- *   and the picker isn't drawn (`choosesWealth`); Begin opens exactly those accounts at Chase, the net worth on the
+ *   of 795. Starting Point shows those four tiles, a draft that asked for "nothing" is made a Nothing family's life
+ *   (`newLifeFrom`, from 2026-10-14: until then it was made wealthy all the same, and this test held that) and the
+ *   picker isn't drawn on Starting Point (`choosesWealth`: the family is chosen on Genres & Background); Begin opens exactly those accounts at Chase, the net worth on the
  *   save's slot reads $505K, and Money shows the two balances and the card's limit.
  * - `c-bank`: the Your Bank select lists the five US banks for a student born in New York and three for one born in
  *   London (Capital One and Citi open for US persons only, `OPENING`); the select's own change carries Wells Fargo to
@@ -391,21 +392,25 @@ describe('c-wealth', () => {
     expect(cards).toContain('Now $65,217');
   });
 
-  it('makes a draft that asked for nothing a wealthy life all the same, on the screen and in the bank', async () => {
+  // Until 2026-10-14 this was 'makes a draft that asked for nothing a wealthy life all the same', and held $92,391 and a
+  // wealthy family: the draft's family was thrown away. Since then it's the family the player chose (tests/need-paths.test.ts).
+  it('makes a draft that asked for nothing a Nothing family’s life, on the screen and in the bank', async () => {
     // TEST SETUP: the browser's storage, holding a draft from this build that says "nothing" and no family.
     const store = new Map<string, string>([['slate.draft.1', JSON.stringify({ build: `${APP_VERSION}/${SAVE_SCHEMA_VERSION}`, config: { ...ada(), wealth: 'nothing', family: undefined } })]]);
     const g = globalThis as { localStorage?: unknown };
     g.localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => { store.set(k, v); }, removeItem: (k: string) => { store.delete(k); } };
     try {
+      // 40 € at 0.92 to the dollar, $43, and nothing in savings; no card, and a credit score of 520.
       const point = creation(STARTING_POINT, h.keep);
-      expect(point.text).toContain('Checking $92,391');
-      expect(point.text).toContain('Savings $413,043');
+      expect(point.text).toContain('Checking $43');
+      expect(point.text).toContain('Savings $0');
+      expect(point.text).not.toContain('Credit Card');
       expect(point.text).not.toContain('What You Are Starting With');
       const { sim, config } = await begin(creation(REVIEW, h.keep));
-      expect(config.wealth).toBe('wealthy');
-      expect(sim.player.family).toBe('wealthy');
-      expect(primary(sim).balance).toBe(92_391_00);
-      expect(sim.player.credit!.score).toBe(795);
+      expect(config.wealth).toBe('nothing');
+      expect(sim.player.family).toBeUndefined();
+      expect(primary(sim).balance).toBe(43_00);
+      expect(sim.player.credit!.score).toBe(520);
       // Begin cleared the draft.
       expect(store.has('slate.draft.1')).toBe(false);
     } finally {

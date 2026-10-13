@@ -33,7 +33,7 @@
  * - `world.tick`: a second real raiser through the tick. The status notice is dated fifteen days on, closed by the
  *   tick after its date, and dropped from Home, and the save forgets it 180 days later. Every raiser a played life
  *   meets dates its row inside a season, so the tick's ninety-day rule for an undated row, and its keeping a dismissed
- *   row to a date more than 180 days off, are reached by no played life.
+ *   row to a date more than 180 days off, were reached by no played life; the owner had both go on 2026-10-14.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and an actress at Yale in
  * New Haven from Monday 24 August 2026 at 7:30 AM, with what creation lets a player choose: a height and weight in feet
@@ -599,10 +599,11 @@ describe('health.choose_clinic', () => {
 describe('world.tick', () => {
   it('PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is', () => {
     const { sim, decisionId, ends } = statusEnding('b01-tick');
-    // The raiser dated it, fifteen days on: inside the ninety days that quiet an undated row and the 180 a closed row
-    // is kept, so neither the undated rule nor the keeping of a dismissed row to its date reaches it.
+    // The raiser dated it, fifteen days on: inside the ninety days that quieted an undated row and the 180 a closed row
+    // is kept, so neither the undated rule nor the keeping of a dismissed row to its date reached it, before both went
+    // on 2026-10-14.
     const row = sim.universe.decisions[decisionId]!;
-    expect(row.dueAt! - row.createdAt).toBe(15 * MS_DAY - MS_MINUTE);
+    expect(row.dueAt - row.createdAt).toBe(15 * MS_DAY - MS_MINUTE);
     expect(drawn(sim, Home).text).toContain('Your US Status Is Ending');
     let again = reload(sim);
     expect(again.universe.scheduled.filter((i) => i.kind === 'world.tick' && i.status === 'pending')).toHaveLength(1);

@@ -31,8 +31,9 @@
  *   calls); the end a birthday drew, reached; LifeEnded drawn by GameShell, and the slot's "Died At 24" through the
  *   real save adapter.
  * - `world.tick`: a real raiser's row, the London-born student's 2026 return, closed by the tick after its date and
- *   gone from Home; an undated row waved away after ninety days; deletions 180 days on, a dismissed row kept to its
- *   date; the timeline's 400 days; the tick armed once across a reload.
+ *   gone from Home; deletions 180 days on, a dismissed row with its date ahead among them; the timeline's 400 days; the
+ *   tick armed once across a reload. Until 2026-10-14 it waved an undated row away after ninety days and kept a
+ *   dismissed row to its date, both raised by hand, as no raiser reached either; the owner had both rules go that day.
  *
  * Two of these failed when written, each on an engine defect, until it was fixed on 2026-10-13: a plan come due while
  * the player was in hospital was kept (`registerPlans` never asked), so its hours refused a sleep from the hospital
@@ -736,41 +737,24 @@ describe('world.tick', () => {
     expect(sim.universe.decisions[ret.id]).toBeUndefined();
   });
 
-  it('PLAYER JOURNEY: an undated row is waved away by the tick after ninety days and forgotten 180 days on; one dismissed with its date ahead is kept to its date; a day’s done items go after 400 days, across a reload', () => {
+  it('PLAYER JOURNEY: a row dismissed with its date 300 days ahead is forgotten 180 days on; a day’s done items go after 400 days, across a reload', () => {
     let sim = student('g04-tick2');
     const start = sim.now;
-    // TEST SETUP: two rows raised as a raiser raises them. Every raiser in the engine dates its row (the return,
-    // US status, a bank's escheat notice), so an undated one is raised here by hand.
-    sim.requireDecision({ urgency: 40, category: 'test', title: 'An Undated Question', detail: 'Raised in the test.', refType: 'test', refId: 'undated' });
+    // TEST SETUP: a row raised as a raiser raises one, dated past the 180 days no raiser in the engine reaches. Until
+    // 2026-10-14 an undated row was raised beside it by hand, to be waved away after ninety days, and this one was kept
+    // to its date; the owner had both rules go that day.
     sim.requireDecision({ urgency: 40, category: 'test', title: 'A Dated Question', detail: 'Raised in the test.', dueAt: start + 300 * MS_DAY, refType: 'test', refId: 'dated' });
-    const undated = decisionTitled(sim, 'An Undated Question')!.id;
     const dated = decisionTitled(sim, 'A Dated Question')!.id;
     sim.must({ kind: 'world.dismiss_decision', payload: { decisionId: dated } });
-    expect(openDecisions(sim).map((d) => d.id)).toEqual([undated]);
-    expect(drawn(sim, Home).text).toContain('An Undated Question');
+    expect(openDecisions(sim)).toHaveLength(0);
+    expect(drawn(sim, Home).text).not.toContain('A Dated Question');
     const firstNight = sim.universe.scheduled.find((i) => i.kind === 'life.day_rollover')!;
     expect(firstNight.at).toBe(EDT(2026, 8, 25, 0));
-    sim.advanceTo(start + 89 * MS_DAY);
-    expect(openDecisions(sim).map((d) => d.id)).toEqual([undated]);
-    sim.advanceTo(start + 92 * MS_DAY + 3_600_000);
-    const waved = sim.universe.decisions[undated]!;
-    expect(waved.dismissedAt! - start).toBeGreaterThan(90 * MS_DAY);
-    expect(waved.dismissedAt! - start).toBeLessThanOrEqual(92 * MS_DAY + 3_600_000);
-    expect(waved.resolvedAt).toBeUndefined();
-    expect(openDecisions(sim)).toHaveLength(0);
-    expect(drawn(sim, Home).text).not.toContain('An Undated Question');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: undated, actionIndex: 0 } }).error).toBe('It’s dismissed.');
     sim = reload(sim);
     expect(pendingTicks(sim)).toHaveLength(1);
-    sim.advanceTo(waved.dismissedAt! + 179 * MS_DAY);
-    expect(sim.universe.decisions[undated]).toBeDefined();
-    sim.advanceTo(waved.dismissedAt! + 183 * MS_DAY);
-    expect(sim.universe.decisions[undated]).toBeUndefined();
-    // Dismissed on the first day, but dated 300 days on: kept past 180 days, to its date.
+    sim.advanceTo(start + 179 * MS_DAY);
     expect(sim.universe.decisions[dated]).toBeDefined();
-    sim.advanceTo(start + 299 * MS_DAY);
-    expect(sim.universe.decisions[dated]).toBeDefined();
-    sim.advanceTo(start + 302 * MS_DAY);
+    sim.advanceTo(start + 183 * MS_DAY);
     expect(sim.universe.decisions[dated]).toBeUndefined();
     // The timeline keeps what's been done for 400 days: the first midnight goes, one five nights later stays.
     const fifthNight = sim.universe.scheduled.find((i) => i.kind === 'life.day_rollover' && i.at === EDT(2026, 8, 30, 0))!;

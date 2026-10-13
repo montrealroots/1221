@@ -5239,7 +5239,7 @@
           "weakTests": [
             {
               "title": "school.stipend > PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February's return reads the summer the clock paid whole: $3,819.96 federal, ...",
-              "why": "The federal literal is worked on SLATE's one federal table: 2024's brackets and $14,600 deduction, applied to 2027 (src/engine/content/tax.ts:135, effectiveFrom 2018; tax.due's defect 77, not fixed). It will move when that is fixed. Connecticut's $1,733.84 follows connecticutTax's single final rounding; the comment's own arithmetic gives $1,733.83. Neither undermines this row's withholding and recording claim."
+              "why": "The federal literal is worked on SLATE's one federal table: 2024's brackets and $14,600 deduction, applied to 2027 (src/engine/content/tax.ts:135, effectiveFrom 2018; tax.due's defect 77, not fixed). It will move when that is fixed. Connecticut's $1,733.84 follows connecticutTax's single final rounding; the comment's own arithmetic gives $1,733.83. Neither undermines this row's withholding and recording claim. The literal moved on 2026-10-14, when the table took 2026’s, held for 2027."
             }
           ]
         },
@@ -8008,7 +8008,7 @@
           "problems": [
             "The test file passes in full: 20 of 20 tests on 2026-10-13, including the make_up defect test, which passes since courserecord.ts was fixed.",
             "All three gaps are closed by played tests. (1) Cap: played to 1 May 2028, it books 25 class-week Saturdays in year two, assignedBooked is 150, and nothing is booked on 22 April 2028, a Saturday between two class days. Year one stops at 144, and Shifts And Pay shows 'Assigned Hours Booked 150 of 150'. The agent's mutation that removes the cap at school.ts:1688 fails this test. (2) Tax: twelve Fridays are paid by the clock, giving $1,656 = 12 × 6 × $23 in yearOf(2026).workStudy. The tax season's 2026 return carries workStudy 1,656_00 and scholarship 14,014_00 (28,028/2), and its income includes both. (3) Render: the Work tab is drawn, Take An Elective Shift is pressed through its onClick, and Friday pays $230 for 10 hours. A Saturday slept through with life.sleep is missed, unpaid, tally {shifts 2, worked 1}, and the Standing tab shows '1 of 2 assigned shifts'.",
-            "Minor, outside the named gaps: the federal-tax assertion's $14,600 standard deduction is the engine's own approximate rule (content/tax.ts:131, the 2024 figure, labelled APPROX). It is not the real 2026 figure, so that line checks the engine's approximation rather than the 2026 law. The gaps it was written for are closed by the workStudy and income assertions.",
+            "Minor, outside the named gaps: the federal-tax assertion's $14,600 standard deduction is the engine's own approximate rule (content/tax.ts:131, the 2024 figure, labelled APPROX). It is not the real 2026 figure, so that line checks the engine's approximation rather than the 2026 law. The gaps it was written for are closed by the workStudy and income assertions. On 2026-10-14 the table took 2026’s $16,100, and the assertion with it.",
             "Minor, outside the gaps: the elective evening that Take An Elective Shift books is Monday 7 September 2026, which is Labor Day (a no-class day in CLASSES_2026_27.off). The test asserts this date without remarking on it."
           ],
           "weakTests": []

@@ -90,7 +90,7 @@ import { expenseFor, owe, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
 import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
-import { YALE_COST_GROWTH } from '../content/school';
+import { YALE_COST_GROWTH, needFor } from '../content/school';
 import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
 import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
 import { armTaxes } from './taxreturn';
@@ -1394,8 +1394,8 @@ export function buyPpe(sim: Simulation, person: Person): boolean {
 /** The work-study rate in a currency. */
 export const hourlyIn = (into: string): Money => (into === 'USD' ? WORK_STUDY.hourly : exchange(WORK_STUDY.hourly, 'USD', into) ?? WORK_STUDY.hourly);
 
-/** Whether the need assessment finds need: the family's means are read, and a wealthy family's rule it out. */
-export const hasNeed = (person: Person) => person.family !== 'wealthy';
+/** Whether the need assessment finds need: the family's means are read, by the rule creation reads too (`needFor`). */
+export const hasNeed = (person: Person) => needFor(person.family);
 
 /**
  * A term's support, by how many terms are enrolled with it: past the six the tuition scholarship supports it has none
@@ -2171,9 +2171,13 @@ export function rehearse(craft: Craft, focus: number): void {
 /**
  * A part in the company’s own shows, the Cabaret’s and the Summer Cabaret’s, which the company casts among itself
  * (SLATE’s estimate of how a company that isn’t the chair’s casts): the leads written for their title to the four the
- * play reads best, and to the rest the supporting parts. Where the play writes none of that size for them, the part it
- * does write for them, whatever its size, so a play whose only part for a woman is a lead gives it to an actress outside
- * the four (SLATE’s estimate, the owner’s to settle). A new piece names no parts, and its part is the size alone.
+ * play reads best, and to the rest the supporting parts. Where the play writes none of that size for them, the next
+ * smaller part it writes for them, and for one outside the four never a lead: where the play writes them nothing below
+ * a lead, the company’s unnamed part (`In The Company`, featured), as the chair’s casting gives a student the company
+ * when no part written for them is left (`partsFor`). The owner settled it so on 2026-10-14. Until then a part the play
+ * wrote for them of any size was given, so a play whose only part for a woman is a lead (A Marriage Proposal, The Bear,
+ * Trifles’ two) gave it to an actress outside the four, a lead she hadn’t earned. A new piece names no parts, and its
+ * part is the size alone.
  * From 2026-10-12 each is read as the chair reads a student for a play (`castFit`): the evaluation’s expected night
  * from the abilities a night asks and the techniques and material the play reads. Until then it was the raw craft
  * against the play’s reads alone, a second casting model blind to the abilities and the material (the completeness
@@ -2187,8 +2191,10 @@ export function companyPart(sim: Simulation, person: Person, reads: Partial<Craf
   const size: PartSize = place <= 4 ? 'lead' : 'supporting';
   const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
   const fits = (p: Part) => p.for === 'either' || p.for === title;
-  const part = parts?.find((p) => p.size === size && fits(p)) ?? parts?.find(fits);
-  return part ? { role: part.name, size: part.size } : { role: `${SIZE_WORD[size]} In A New Piece`, size };
+  if (!parts) return { role: `${SIZE_WORD[size]} In A New Piece`, size };
+  const sizes: PartSize[] = size === 'lead' ? ['lead', 'supporting', 'featured'] : ['supporting', 'featured'];
+  const part = sizes.map((z) => parts.find((p) => p.size === z && fits(p))).find((p) => p !== undefined);
+  return part ? { role: part.name, size: part.size } : { role: 'In The Company', size: 'featured' };
 }
 
 /** The Summer Cabaret's three plays for a summer: dealt from `SUMMER_PLAYS` in the save's own shuffled order, three a summer from the first. */
@@ -3754,9 +3760,9 @@ export function registerSchool(sim: Simulation): void {
     // Nonresident Alien Employees, Table 2, a 2020-or-later Form W-4: $14,600 a year in its 2024 edition, $15,000 in
     // 2025’s, $16,100 in 2026’s, and 2027’s not yet published). India’s students, whom it spares, aren’t among SLATE’s
     // birthplaces. Each year’s figure takes back the deduction in that year’s own tables, and the tables here are SLATE’s
-    // tax table, which holds 2024’s brackets and deduction for every year (`INCOME_TAX_RULES`): so what’s added is the
-    // deduction the table takes at the payday (`federalStandardDeduction`), 2025’s and 2026’s figures coming in with
-    // their brackets, not onto 2024’s. The wages are then withheld on from the first dollar, as the 1040-NR the same
+    // tax table, which keeps each year’s brackets and deduction (`INCOME_TAX_RULES`; until 2026-10-14 2024’s for every
+    // year): so what’s added is the deduction the table takes at the payday (`federalStandardDeduction`), 6,100 on a
+    // 2026 payday, with 2026’s brackets. The wages are then withheld on from the first dollar, as the 1040-NR the same
     // save files taxes them (`figuresFor`). It moves the federal line alone: the table carries no Connecticut layer, and
     // the payroll tax it would move is taken back out below. Until 2026-10-13 an F-1 student’s stipend was withheld on a
     // resident’s standard deduction, and the first $375 of a year withheld nothing federal (found by that day’s

@@ -32,8 +32,11 @@
  * is missed but the hospital’s, which sends no notice even after Go.
  *
  * Read again later on 2026-10-13: What Needs You said a question with no date went quiet 90 days after it was raised.
- * The world’s rule for it is still there (`expireDecisions`), but no raiser reaches it, since every one dates its row
- * (a year’s return, a US status’s end, an idle account’s handover to the state), so the sentence went.
+ * The world’s rule for it was still there (`expireDecisions`), but no raiser reached it, since every one dates its row
+ * (a year’s return, a US status’s end, an idle account’s handover to the state), so the sentence went. The rule went
+ * on 2026-10-14, the owner’s decision, and with it the keeping of a closed question to a date still to come, which no
+ * raiser reached either: What Needs You said the save forgot a closed question 180 days on “or on its date if that’s
+ * later” until then.
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
@@ -312,8 +315,8 @@ export const DAY: readonly GuideEntry[] = [
       'Mark Read marks every unread notice read, and the count beside Home falls by that many.',
     ],
     later: [
-      'A question with a date closes on its date, answered or not, at the world’s next look, which comes every 2 days.',
-      'The save forgets a closed question 180 days after it closed, or on its date if that’s later, and keeps your last 500 notices.',
+      'Every question has a date, and closes on it, answered or not, at the world’s next look, which comes every 2 days.',
+      'The save forgets a closed question 180 days after it closed, and keeps your last 500 notices.',
       'The same thing raised again after you dismissed it comes back as a new question.',
       'A notice said again word for word while the last is still unread takes the new time, and isn’t added twice.',
     ],

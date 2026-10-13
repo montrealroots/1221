@@ -120,10 +120,18 @@ const ICELAND_NOTE = 'Tekjuskattur and average útsvar together. The personal cr
   + 'deduction worth the same at the first band. Calibrated approximation. Not tax advice.';
 
 export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
-  // The federal brackets and standard deduction are 2024's (10% to $11,600, $14,600 deducted), held for every year
-  // since: 2025's and 2026's (Rev. Proc. 2024-40 and 2025-32, $16,100 deducted for 2026) aren't in. Recorded as a
-  // limitation on 2026-10-13, when the filing threshold that reads this deduction was checked; correcting it re-figures
-  // every US return, which that pass left alone.
+  // The federal brackets and standard deduction of a single filer, by tax year, from the IRS’s own revenue procedures:
+  // - 2024 and before: 2024’s, Rev. Proc. 2023-34, §3.01 Table 3 and §3.15(1) (10% to $11,600, $14,600 deducted), held
+  //   back to 2018.
+  // - 2025: Rev. Proc. 2024-40, §2.01 Table 3 (10% to $11,925, 12% to $48,475, 22% to $103,350, 24% to $197,300, 32% to
+  //   $250,525, 35% to $626,350, 37% over). Its $15,000 deduction (§2.15(1)) was removed by Rev. Proc. 2025-32, §3.01: the
+  //   One Big Beautiful Bill Act (Pub. L. 119-21, §70102) made 2025’s $15,750. Its §70101 kept the rates and left 2025’s
+  //   brackets as 2024-40 had them (Rev. Proc. 2025-32, §2.01, and §3, which modifies only 2024-40’s §2.15(1) and §2.25).
+  // - 2026: Rev. Proc. 2025-32, §4.01 Table 3 (10% to $12,400, 12% to $50,400, 22% to $105,700, 24% to $201,775, 32% to
+  //   $256,225, 35% to $640,600, 37% over) and §4.14(1), $16,100 deducted; held for every year after, the IRS not having
+  //   published 2027’s. (All three read from irs.gov/pub/irs-drop/rp-23-34.pdf, rp-24-40.pdf and rp-25-32.pdf on 2026-10-14.)
+  // Until 2026-10-14 2024’s table was held for every year from 2018 (recorded as a limitation on 2026-10-13), so a 2026
+  // return deducted $14,600, not $16,100, and the filing threshold that reads this deduction was 2024’s.
   {
     jurisdictionCode: 'US',
     label: 'United States Federal Income Tax',
@@ -134,7 +142,33 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
     ]),
     standardDeduction: 14_600_00,
     effectiveFrom: YEAR(2018),
-    note: APPROX,
+    effectiveTo: YEAR(2025),
+    note: 'Rev. Proc. 2023-34: 2024’s single filer’s table, held back to 2018. Not tax advice.',
+  },
+  {
+    jurisdictionCode: 'US',
+    label: 'United States Federal Income Tax',
+    kind: 'progressive',
+    brackets: brackets([
+      [0, 0.10], [11_925, 0.12], [48_475, 0.22], [103_350, 0.24],
+      [197_300, 0.32], [250_525, 0.35], [626_350, 0.37],
+    ]),
+    standardDeduction: 15_750_00,
+    effectiveFrom: YEAR(2025),
+    effectiveTo: YEAR(2026),
+    note: 'Rev. Proc. 2024-40 brackets; the One Big Beautiful Bill Act’s $15,750 deduction (Rev. Proc. 2025-32, §3.01). Not tax advice.',
+  },
+  {
+    jurisdictionCode: 'US',
+    label: 'United States Federal Income Tax',
+    kind: 'progressive',
+    brackets: brackets([
+      [0, 0.10], [12_400, 0.12], [50_400, 0.22], [105_700, 0.24],
+      [201_775, 0.32], [256_225, 0.35], [640_600, 0.37],
+    ]),
+    standardDeduction: 16_100_00,
+    effectiveFrom: YEAR(2026),
+    note: 'Rev. Proc. 2025-32: 2026’s single filer’s table, held after until the IRS publishes 2027’s. Not tax advice.',
   },
   { jurisdictionCode: 'US-CA', label: 'California Income Tax', kind: 'progressive', brackets: brackets([[0, 0.01], [10_412, 0.02], [24_684, 0.04], [38_959, 0.06], [54_081, 0.08], [68_350, 0.093], [349_137, 0.103], [418_961, 0.113], [698_271, 0.123]]), standardDeduction: 5_363_00, effectiveFrom: YEAR(2018), note: APPROX },
   // New York City's resident income tax, a single filer's brackets (NY Form IT-201 instructions, NYC rate schedule;
@@ -575,6 +609,15 @@ export function salesTaxRate(cityId: string, at: number, category: string): numb
   if (!rule) return 0;
   if (rule.exemptCategories.includes(category)) return 0;
   return rule.rate;
+}
+
+/**
+ * A single filer’s US federal standard deduction for the tax year an instant falls in, wherever the filer lives: the
+ * filing threshold and a nonresident’s 1040-NR read it (`systems/taxreturn.ts`). From 2026-10-14, when the table
+ * gained 2025’s and 2026’s rules; until then those readers took the one rule there was, 2024’s, for every year.
+ */
+export function usStandardDeduction(at: number): Money {
+  return effective(INCOME_TAX_RULES, 'US', at)?.standardDeduction ?? 0;
 }
 
 /** The federal standard deduction where a town is, from the federal layer of its rules. */

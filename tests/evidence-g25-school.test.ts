@@ -11,7 +11,7 @@
  *
  * - work-study: the first fall's twelve class-week Saturdays (none in the work period or the fall recess) booked, worked
  *   and paid each Friday, $1,656 in 2026's work-study and on the 2026 return the tax season makes, beside the $14,014 of
- *   taxable scholarship, at 10% over the $14,600 standard deduction; the second year's twenty-six class-week Saturdays
+ *   taxable scholarship, under 2026's $16,100 standard deduction and so taxed at nothing federal; the second year's twenty-six class-week Saturdays
  *   booked to the 150 assigned hours and no further, the first year having stopped at 144; Shifts And Pay drawn, Take An
  *   Elective Shift pressed and its evening paid that Friday, and a Saturday slept through missed, unpaid and counted.
  * - school.request_leave: asked on the third day of spring classes and begun on its decision five of Yale's working days
@@ -193,7 +193,7 @@ function medicalLeave(seed: string): Simulation {
 }
 
 describe('work-study', () => {
-  it('PLAYER JOURNEY: the first fall’s twelve class-week Saturdays are booked, worked and paid on the Fridays as wages; 2026’s $1,656 is the year’s work-study and on the return the tax season makes, which taxes it with the scholarship', () => {
+  it('PLAYER JOURNEY: the first fall’s twelve class-week Saturdays are booked, worked and paid on the Fridays as wages; 2026’s $1,656 is the year’s work-study and on the return the tax season makes, which reckons it with the scholarship under 2026’s deduction', () => {
     let sim = student('g25-ws', onAid);
     // The first Saturday, Saturday 5 September 2026, ten to four: six hours owed.
     tended(sim, at(2026, 9, 5, 16, 1));
@@ -218,13 +218,17 @@ describe('work-study', () => {
     // The year's earnings, as work-study: twelve Saturdays at $138.
     expect(yearOf(sim.player, 2026).workStudy).toBe(1_656_00);
     // The return the tax season made for 2026: the wages beside the fall's taxable scholarship, $15,200.50 less the
-    // books' $1,186.50, and the bank's interest; taxed at 10% on what's over the $14,600 standard deduction.
+    // books' $1,186.50, and the bank's interest; under 2026's $16,100 standard deduction (Rev. Proc. 2025-32), so taxed
+    // at nothing federal.
     const r = returnsOf(sim.player)['2026'];
     expect(r).toBeDefined();
     expect(r!.figures.workStudy).toBe(1_656_00);
     expect(r!.figures.scholarship).toBe(14_014_00);
     expect(r!.figures.income).toBe(14_014_00 + 1_656_00 + (r!.figures.interest ?? 0));
-    expect(r!.figures.federal).toBe(Math.round((r!.figures.income - 14_600_00) / 10));
+    // $14,014.00 + $1,656.00 + cents of interest, less $16,100, is below nothing: $0. Until 2026-10-14
+    // this held 10% of what was over $14,600, $107.00, on 2024's table.
+    expect(r!.figures.income).toBeLessThan(16_100_00);
+    expect(r!.figures.federal).toBe(0);
   }, 60_000);
 
   it('PLAYER JOURNEY: the second year’s twenty-six class-week Saturdays are booked to its 150 assigned hours and no further, twenty-five and none on 22 April 2028, after a first year of twenty-four that stopped at 144', () => {

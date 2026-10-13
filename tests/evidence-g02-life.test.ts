@@ -13,13 +13,14 @@
  * - `world.dismiss_decision`: the real "Your 2026 Tax Return", raised on 1 February 2027, dismissed from Home's card;
  *   refused a second time and for an unknown id; across a reload its File It is refused "It’s dismissed."; the return
  *   is still unfiled and unpaid, comes late in April, and the IRS is set to file it; the row is kept 180 days and
- *   forgotten after. A dated row is kept until its date has passed; an undated one is not; and a raiser asking again
- *   after a dismissal raises a fresh row, which is what `requireDecision` does (so `world.ts`'s note that a raiser
+ *   forgotten after. A dated row was kept until its date had passed, and an undated one not, until 2026-10-14, when the
+ *   owner had the keeping and the undated row go: a dismissed row is forgotten 180 days on, its date ahead or not. A
+ *   raiser asking again after a dismissal raises a fresh row, which is what `requireDecision` does (so `world.ts`'s note that a raiser
  *   reads a dismissal off a kept row was not true; it was corrected on 2026-10-13, and says so in the past tense).
  * - `world.take_decision_action`: File It pressed on Home files the return (`filedAt`) and pays its tax, 10% of the
  *   income on a 1040-NR; refused a second time with nothing filed or paid again, across a reload too, and nothing
- *   late in April; an undated row whose button calls off a plan is closed by the press itself and forgotten 180 days
- *   on; an unknown id and an index with no action are refused in their words, the row left open.
+ *   late in April; a row whose button calls off a plan (undated until 2026-10-14) is closed by the press itself and
+ *   forgotten 180 days on; an unknown id and an index with no action are refused in their words, the row left open.
  * - `world.set_preferences`: a key that isn't a preference is refused in its words and nothing is kept; Pause on the
  *   top bar stops the page's live clock (`GameProvider`'s tick, `SPEED_MULTIPLIER` 0) and Play runs it a second a
  *   second, and a paused save opens paused.
@@ -387,30 +388,25 @@ describe('world.dismiss_decision', () => {
     expect(again.universe.decisions[decisionId]).toBeUndefined();
   });
 
-  it('keeps a dismissed row about a date not yet come until the date has passed, and forgets an undated one 180 days on', () => {
+  // Until 2026-10-14 this kept a dismissed row about a date not yet come until the date had passed, and forgot an undated
+  // one 180 days on, both on rows raised by hand: no raiser dates a row more than 180 days ahead or leaves one undated,
+  // and the owner had both rules go that day. A row dismissed is forgotten 180 days on, whatever its date.
+  it('forgets a dismissed row 180 days on, its date ahead or not', () => {
     const sim = student('g02-dismiss-prune');
-    const raise = (title: string, dueAt?: number) => {
-      // TEST SETUP: the raiser's call, as a system raises a row.
-      sim.requireDecision({ urgency: 50, category: 'test', title, detail: 'A row raised by the test.', refType: 'test', refId: title, ...(dueAt === undefined ? {} : { dueAt }) });
-      return Object.values(sim.universe.decisions).find((d) => d.title === title)!.id;
-    };
     const start = sim.now;
-    const undated = raise('Undated');
-    const dated = raise('Dated', start + 200 * MS_DAY);
-    expect(dismiss(sim, undated).ok).toBe(true);
+    // TEST SETUP: the raiser's call, as a system raises a row, dated past the 180 days no raiser reaches.
+    sim.requireDecision({ urgency: 50, category: 'test', title: 'Dated', detail: 'A row raised by the test.', dueAt: start + 200 * MS_DAY, refType: 'test', refId: 'dated' });
+    const dated = Object.values(sim.universe.decisions).find((d) => d.title === 'Dated')!.id;
     expect(dismiss(sim, dated).ok).toBe(true);
     sim.advanceTo(start + 179 * MS_DAY);
-    expect(Object.keys(sim.universe.decisions)).toEqual(expect.arrayContaining([undated, dated]));
-    sim.advanceTo(start + 185 * MS_DAY);
-    expect(sim.universe.decisions[undated]).toBeUndefined();
     expect(sim.universe.decisions[dated]).toBeDefined();
-    sim.advanceTo(start + 203 * MS_DAY);
+    sim.advanceTo(start + 185 * MS_DAY);
     expect(sim.universe.decisions[dated]).toBeUndefined();
   });
 
   it('is read by no raiser: the same row raised again after a dismissal is a fresh one, open on Home, and the dismissed one is kept as it was', () => {
     const sim = student('g02-dismiss-raise');
-    const spec = { urgency: 60, category: 'test', title: 'Asked Again', detail: 'A row raised by the test.', refType: 'test', refId: 'again' };
+    const spec = { urgency: 60, category: 'test', title: 'Asked Again', detail: 'A row raised by the test.', dueAt: sim.now + 30 * MS_DAY, refType: 'test', refId: 'again' };
     sim.requireDecision(spec); // TEST SETUP: the raiser
     const first = openDecisions(sim)[0]!;
     expect(dismiss(sim, first.id).ok).toBe(true);
@@ -468,7 +464,7 @@ describe('world.take_decision_action', () => {
     clearCalendar(sim); // TEST SETUP
     const { id: plan } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Coffee', at: NH(9), durationMinutes: 30 } });
     // TEST SETUP: the raiser's call, a row whose button calls the plan off.
-    sim.requireDecision({ urgency: 50, category: 'test', title: 'Coffee At Nine', detail: 'A row raised by the test.', refType: 'test', refId: plan, actions: [{ label: 'Call It Off', commandKind: 'calendar.cancel', payload: { entryId: plan } }] });
+    sim.requireDecision({ urgency: 50, category: 'test', title: 'Coffee At Nine', detail: 'A row raised by the test.', dueAt: NH(9), refType: 'test', refId: plan, actions: [{ label: 'Call It Off', commandKind: 'calendar.cancel', payload: { entryId: plan } }] });
     const row = openDecisions(sim)[0]!;
 
     expect(decide(sim, { decisionId: 'decision_none', actionIndex: 0 }).error).toBe('No such decision.');

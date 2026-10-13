@@ -126,8 +126,11 @@ describe('the Decision Center', () => {
   const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) =>
     sim.execute<{ ok: boolean; id?: string; error?: string }>({ kind, payload }).value!;
 
-  /** Puts a plan on the calendar and raises a row whose one button calls it off. */
-  function raiseOne(sim: Simulation, dueInDays?: number): { entryId: string } {
+  /**
+   * Puts a plan on the calendar and raises a row whose one button calls it off, dated thirty days on unless the test
+   * says otherwise: undated, until 2026-10-14, when `requireDecision` took no row without a date.
+   */
+  function raiseOne(sim: Simulation, dueInDays = 30): { entryId: string } {
     const put = run(sim, 'calendar.schedule', { title: 'Dentist', at: sim.now + 10 * MS_DAY });
     expect(put.ok, put.error).toBe(true);
     sim.requireDecision({
@@ -136,7 +139,7 @@ describe('the Decision Center', () => {
       title: 'Keep The Dentist?',
       detail: 'It is on the calendar in ten days.',
       actions: [{ label: 'Call It Off', commandKind: 'calendar.cancel', payload: { entryId: put.id } }],
-      ...(dueInDays !== undefined ? { dueAt: sim.now + dueInDays * MS_DAY } : {}),
+      dueAt: sim.now + dueInDays * MS_DAY,
       refType: 'sched',
       refId: put.id,
     });
@@ -148,7 +151,7 @@ describe('the Decision Center', () => {
     raiseOne(sim);
     const [row] = openDecisions(sim);
     sim.requireDecision({
-      urgency: 80, category: row!.category, title: row!.title, detail: 'Still there.',
+      urgency: 80, category: row!.category, title: row!.title, detail: 'Still there.', dueAt: row!.dueAt,
       refType: row!.refType, refId: row!.refId,
     });
     expect(openDecisions(sim)).toHaveLength(1);
@@ -185,7 +188,7 @@ describe('the Decision Center', () => {
 
     sim.advanceTo(sim.now + 8 * MS_DAY);
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeDefined();
-    expect(sim.universe.decisions[row.id]!.resolvedAt!).toBeGreaterThanOrEqual(row.dueAt!);
+    expect(sim.universe.decisions[row.id]!.resolvedAt!).toBeGreaterThanOrEqual(row.dueAt);
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBeUndefined();
 
     sim.advanceTo(sim.now + 200 * MS_DAY);
@@ -198,8 +201,9 @@ describe('the Decision Center', () => {
     const row = openDecisions(sim)[0]!;
 
     // Past the start, a plan can no longer be called off, and the command
-    // says so inside a successful envelope. The dated row would close on its
-    // own, so this one is undated.
+    // says so inside a successful envelope. A row dated before the plan would
+    // close on its own, so this one is dated thirty days on (it was undated
+    // until 2026-10-14, when every row came to have a date).
     sim.advanceTo(sim.timeline.get(entryId)!.at + MS_HOUR);
 
     // Read off the envelope, because the envelope is what the screen reads.

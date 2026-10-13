@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, BODY_GIVEN, bodyGiven, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote,
+  APP_VERSION, BODY_GIVEN, FAMILIES, bodyGiven, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote, withFamily,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -44,6 +44,7 @@ import {
 import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { termAccount } from '@/engine/systems/school';
+import { bodyUnits } from '@/engine/systems/body';
 import { outOf, said } from '@/ui/looks/words';
 
 /**
@@ -84,6 +85,8 @@ type StepIndex = number;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
+/** A wealth level, or the family that has it, as a select and Review name it. */
+const wealthLabel = (w: StartingWealth): string => w.charAt(0).toUpperCase() + w.slice(1);
 
 /** The seven sliders, each with the word for either end. */
 const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; high: string }[] = [
@@ -247,13 +250,14 @@ function ageAtStart(config: NewSaveConfig): number {
 }
 
 /**
- * Height and weight, in the units of where they were born: feet, inches and
- * pounds for an American, centimeters and kilograms for everyone else. Left
- * blank, the body is drawn from that country's adult averages
- * (`systems/body.ts`).
+ * Height and weight, in the units of where they will live (`bodyUnits`, the rule the person look reads): feet, inches
+ * and pounds in the United States, centimeters and kilograms everywhere else. The step comes after Identity, so a
+ * birthplace is chosen by then, and with it, for a life outside the school, the town. Until 2026-10-14 these were the
+ * units of where they were born, and a London-born student at Yale typed centimeters here and read feet on her own
+ * page. Left blank, the body is drawn from the birth country's adult averages (`systems/body.ts`).
  */
 function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
-  const imperial = countryOfPlace(config.homeRegionId) === 'us';
+  const { imperial } = bodyUnits(config.startLocationId);
   const cm = config.heightCm;
   const kg = config.weightKg;
   // Whole inches first, then feet and the inches over (from 2026-10-10: until then 9 feet read back as 8 feet 12 inches,
@@ -663,18 +667,19 @@ function PersonalityStep({ config, setConfig }: {
             <h2>Traits</h2>
             {/* Until 2026-10-13 this said Keeps Accounts changed how much of the work’s costs could be
                 deducted, and stopped there, where no played life has a cost of the work (`recordJobCost`
-                has no caller) and the trait’s own look said it decided nothing now. */}
+                has no caller) and the trait’s own look said it decided nothing now. From then until
+                2026-10-14 it said that deduction decided nothing for a student; the owner had the
+                knob (`receipts`) go that day, and Keeps Accounts moves how a slight cuts alone. */}
             <p className="muted small">
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
               you sleep, how much a night puts back, how quickly you stop being clean, how far your
               mood swings, what illness takes out of you, how sharp you are in the morning or the
-              evening, which part of preparing a scene goes furthest, and how you warm to classmates.
-              Each description and cost is written for a whole life, and the game charges only the
-              part of it that touches those. Frugal, Spender and Generous change what your food costs
-              and how much a meal lifts you, and Keeps Accounts how much of what your work costs you
-              can deduct, which decides nothing for a student, who pays no cost of the work. Once
-              you’re playing, each opens from your own page into what it moves.
+              evening, which part of preparing a scene goes furthest, and how you warm to classmates
+              and how a slight from one cuts. Each description and cost is written for a whole life,
+              and the game charges only the part of it that touches those. Frugal, Spender and
+              Generous change what your food costs and how much a meal lifts you. Once you’re
+              playing, each opens from your own page into what it moves.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -830,6 +835,46 @@ function PersonalStep({
           />
         </div>
       </div>
+
+      {config.school && <FamilyChoice config={config} setConfig={setConfig} />}
+    </div>
+  );
+}
+
+/**
+ * The family they come from, beside the background (from 2026-10-14): the six starting-wealth levels (`FAMILIES`), each
+ * the money in their name on the first morning (`wealthIn`) and the means Yale's need assessment reads (`withFamily`,
+ * `findsNeed`, the rule `hasNeed` reads). Until then no screen asked, and every new life's family was wealthy, so no
+ * player could reach the living-expense scholarship, conversion to grant aid, or the aid a leave returns.
+ */
+function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>> }) {
+  const cur = currencyFor(config.startLocationId);
+  const wealth = wealthIn(config.wealth, cur);
+  const whole = (cents: number) => formatMoney(cents, cur, { cents: false });
+  const aided = termAccount(cur);
+  const card = wealth.cardLimit > 0
+    ? `, and a card with a ${whole(wealth.cardLimit)} limit${wealth.cardBalance < 0 ? `, ${whole(-wealth.cardBalance)} owed on it` : ' owing nothing'}`
+    : ', and no card';
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Your Family</h2>
+          <p className="muted small">The family you come from: the money in your name on the first morning, and what Yale’s need assessment reads.</p>
+        </div>
+      </div>
+      <div className="field">
+        <label htmlFor="family">The Family You Come From</label>
+        <select id="family" value={config.wealth} onChange={(e) => setConfig((c) => withFamily(c, e.target.value as StartingWealth))}>
+          {FAMILIES.map((w) => <option key={w} value={w}>{wealthLabel(w)}</option>)}
+        </select>
+      </div>
+      <div className="callout">
+        {wealthNote(config.wealth)} {`${whole(wealth.checking)} in checking and ${whole(wealth.savings)} in savings${card}.`}{' '}
+        {findsNeed(config)
+          ? `Yale finds need: its living-expense scholarship, ${formatMoney(aided.livingScholarship, cur)} a term, meets the term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, and pays the rest, ${formatMoney(aided.refund, cur)}, into your bank each fall and spring. Work-study hours missed ill can be converted to grant aid, and a leave begun mid-term returns part of the scholarship.`
+          : `Yale finds no need: the family’s means rule it out, so there’s no aid for living costs, and the term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, comes from your bank each fall and spring.`}
+      </div>
     </div>
   );
 }
@@ -858,7 +903,7 @@ function StartingPointStep({ config, set, setConfig }: {
         <div className="panel-head">
           <div>
             <h2>Your Body</h2>
-            <p className="muted small">Your height and weight on the first morning, in the units of where you were born.</p>
+            <p className="muted small">Your height and weight on the first morning. {bodyUnits(config.startLocationId).why}</p>
           </div>
         </div>
         <BodyFields config={config} setConfig={setConfig} />
@@ -947,7 +992,7 @@ function StartingPointStep({ config, set, setConfig }: {
             <div className="field">
               <label htmlFor="wealth">What You Are Starting With</label>
               <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
-                {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
+                {WEALTH.map((w) => <option key={w} value={w}>{wealthLabel(w)}</option>)}
               </select>
             </div>
             <div className="callout">{wealthNote(config.wealth)}</div>
@@ -1137,6 +1182,7 @@ function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (
       <div className="card">
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Genres &amp; Background</div>
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+        {config.school && <Line label="Family" value={`${wealthLabel(config.wealth)}, ${findsNeed(config) ? 'Need Found' : 'No Need Found'}`} />}
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
         {config.background.trim() ? (

@@ -11,10 +11,10 @@
  * - n-dismiss-expire: the tax season's row for a London-born student, Dismiss pressed on Home, takes it off What Needs
  *   You at once; a second press is refused with "It’s dismissed already." and the day of the first is kept, across a
  *   save and a load; through its due date nothing asks again; it's kept for 180 days from the dismissal and gone at the
- *   first world tick after, when the command says "No such decision.". An undated row left alone is dismissed by the
- *   world at the first tick past 90 days, never resolved, and deleted at the first tick past 180 more, a rule no play
- *   reaches, since every raiser dates its row: the row is raised by hand, and the test says so; a dismissed row
- *   dated 300 days on outlives the 180 until its date; and Home lists what's open overdue first, then by urgency, then
+ *   first world tick after, when the command says "No such decision.". Until 2026-10-14 an undated row left alone was
+ *   dismissed by the world at the first tick past 90 days, and a dismissed row dated 300 days on outlived the 180 until
+ *   its date, rules no play reached, held here on rows raised by hand; the owner had both go that day, and a dismissed
+ *   row dated 300 days on is gone at the first tick past its 180; and Home lists what's open overdue first, then by urgency, then
  *   by the soonest date, with nothing answered or waved away among it (the two tests of tests/simulation.test.ts that
  *   held the order and the absence looped over no rows at all).
  * - i-ui-text: creation's five steps, Genres & Background's controls and Review, the Profile, the person's look and the
@@ -47,7 +47,7 @@
  * provider, and a button pressed through its own `onClick`.
  *
  * TEST SETUP, said again where it's done: a row raised with `requireDecision` where nothing a student's life reaches
- * raises one of that shape (undated, or dated 300 days on; every raiser in this build dates its row, none more than a
+ * raises one of that shape (dated 300 days on; every raiser in this build dates its row, none more than a
  * return's four and a half months ahead); a save rewritten as schema 93 wrote it (the interests and their record put back, the
  * version set to 93), as tests/migration-94.test.ts writes one; the day's dials each six hours (`tended`) and the
  * coursework each midnight (`working`), so what the clock does at a call is what's measured and a student stays in
@@ -261,43 +261,11 @@ describe('n-dismiss-expire', () => {
     expect(dismiss(sim, 'decision_999999').error).toBe('No such decision.');
   }, 60_000);
 
-  // A rule no play reaches: every raiser dates its row (a year’s return, a US status’s end, an idle account’s handover),
-  // so only this row, raised by hand, meets it. It’s kept while the decision look describes it (`QUIET_AFTER_DAYS`,
-  // ui/looks/attention.tsx); the guide’s sentence for it went on 2026-10-13 (found by that day’s third round).
-  it('RULE NO PLAY REACHES: dismisses an undated row left alone once it is more than 90 days old, at the next world tick, never resolving it; keeps it 180 days from then, across a save and a load, and lets it go at the tick after', () => {
-    const sim0 = student('g34-undated');
-    const t0 = sim0.now;
-    // Monday 24 August 2026, 7:30 AM, the life's first morning.
-    expect(t0).toBe(EDT(2026, 8, 24, 7, 30));
-    // TEST SETUP: an undated row, raised by hand; every raiser this life reaches dates its row.
-    sim0.requireDecision({ urgency: 40, category: 'personal', title: 'Write Home', detail: 'Nobody has heard from you since the term began.', refType: 'g34', refId: 'undated' });
-    const id = Object.keys(sim0.universe.decisions)[0]!;
-    expect(needs(drawn(sim0, Home).text)).toContain('What Needs You 1 open');
-
-    // 90 days to the minute: still asking.
-    sim0.advanceTo(t0 + 90 * MS_DAY);
-    expect(sim0.universe.decisions[id]!.dismissedAt).toBeUndefined();
-    expect(openDecisions(sim0).map((d) => d.id)).toEqual([id]);
-    // The world ticks every second day at the hour the life began, 7:30 AM: the first past 90 days is Sunday 22
-    // November, on Eastern Standard Time by then, an hour after 90 days of 24 hours.
-    sim0.advanceTo(t0 + 92 * MS_DAY);
-    const row = sim0.universe.decisions[id]!;
-    expect(row.dismissedAt).toBe(EST(2026, 11, 22, 7, 30));
-    expect(row.resolvedAt).toBeUndefined();
-    expect(openDecisions(sim0)).toEqual([]);
-    expect(needs(drawn(sim0, Home).text)).toContain('What Needs You No decision is waiting on you.');
-
-    // Saved and loaded: the dismissal is the save's, and the ticks after don't move it.
-    const sim = reload(sim0);
-    sim.advanceTo(row.dismissedAt! + 180 * MS_DAY);
-    expect(sim.universe.decisions[id]!.dismissedAt).toBe(EST(2026, 11, 22, 7, 30));
-    expect(sim.universe.decisions[id]!.resolvedAt).toBeUndefined();
-    sim.advanceTo(row.dismissedAt! + 182 * MS_DAY + MS_HOUR);
-    expect(sim.universe.decisions[id], 'an undated row outlived its 180 days').toBeUndefined();
-    expect(dismiss(sim, id).error).toBe('No such decision.');
-  }, 60_000);
-
-  it('keeps a dismissed row dated 300 days on past the 180 days, to its date, and lets it go at the first tick after the date', () => {
+  // Until 2026-10-14 a test here held a rule no play reached, on a row raised by hand with no date: an undated row left
+  // alone was dismissed at the first tick past 90 days and deleted 180 days on. And the next kept a dismissed row dated
+  // 300 days on to its date. The owner had both go that day; every raiser dates its row, which
+  // tests/decisions-2026-10-14.test.ts holds through each raiser's own play.
+  it('lets a dismissed row dated 300 days on go at the first tick past its 180 days, its date not come', () => {
     const sim = student('g34-far');
     const t0 = sim.now;
     const dueAt = t0 + 300 * MS_DAY + 3 * MS_HOUR;
@@ -307,22 +275,22 @@ describe('n-dismiss-expire', () => {
     expect(dismiss(sim, id).ok).toBe(true);
     expect(sim.universe.decisions[id]!.dismissedAt).toBe(t0);
 
-    sim.advanceTo(t0 + 200 * MS_DAY);
-    expect(sim.universe.decisions[id], 'a dismissed row was let go before its date').toBeDefined();
-    sim.advanceTo(dueAt - MS_MINUTE);
+    sim.advanceTo(t0 + 180 * MS_DAY);
     expect(sim.universe.decisions[id]).toBeDefined();
     // Not reopened, not resolved: still the dismissal of the first morning.
     expect([sim.universe.decisions[id]!.dismissedAt, sim.universe.decisions[id]!.resolvedAt]).toEqual([t0, undefined]);
-    sim.advanceTo(dueAt + 2 * MS_DAY + MS_HOUR);
-    expect(sim.universe.decisions[id], 'kept past its date and its 180 days').toBeUndefined();
+    sim.advanceTo(t0 + 182 * MS_DAY + MS_HOUR);
+    expect(sim.universe.decisions[id], 'a dismissed row was kept past its 180 days, to its date').toBeUndefined();
   }, 60_000);
 
   it('lists on Home what is open, overdue first, then by urgency, then the soonest date; nothing answered or waved away is among it', () => {
     const sim = student('g34-order');
     const t0 = sim.now;
-    const raise = (title: string, urgency: number, dueAt?: number, actions?: { label: string; commandKind: string; payload: Record<string, unknown> }[]) => {
+    // Four were undated until 2026-10-14, when requireDecision took no row without a date: dated twenty days on, the last
+    // of the open ones still sorts after the two of its urgency with sooner dates.
+    const raise = (title: string, urgency: number, dueAt = t0 + 20 * MS_DAY, actions?: { label: string; commandKind: string; payload: Record<string, unknown> }[]) => {
       // TEST SETUP: rows raised by hand, as tests/smoke.test.ts raises them; nothing raises seven in a first week.
-      sim.requireDecision({ urgency, category: 'personal', title, detail: `${title}.`, refType: 'g34', refId: title, ...(dueAt !== undefined ? { dueAt } : {}), ...(actions ? { actions } : {}) });
+      sim.requireDecision({ urgency, category: 'personal', title, detail: `${title}.`, dueAt, refType: 'g34', refId: title, ...(actions ? { actions } : {}) });
       return Object.values(sim.universe.decisions).find((d) => d.refId === title)!.id;
     };
     const planned = sim.must<{ ok: boolean; id: string }>({ kind: 'calendar.schedule', payload: { title: 'Dentist', at: t0 + 10 * MS_DAY } });
@@ -373,11 +341,13 @@ describe('i-ui-text', () => {
       }
     }
     const personal = steps[2]!;
-    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background']);
+    // Your Family beside the background, from 2026-10-14 (the family a life comes from, `FamilyChoice`).
+    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background', 'Your Family']);
     expect(personal.controls.filter((c) => c.type === 'button' && c.props.className === 'chip')).toHaveLength(149);
     expect(personal.controls.find((c) => c.type === 'label' && c.props.htmlFor === 'background')?.text).toBe('In Your Own Words');
     // Review says back the genres and the background, under that one heading.
-    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy In Your Own Words —');
+    // The family between them from 2026-10-14, as Review names it.
+    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy Family Wealthy, No Need Found In Your Own Words —');
   });
 
   it('PLAYER JOURNEY: the Profile, on the first morning and after a week lived, has no Interests section and no interest in its words or its controls; it says the genres back', () => {

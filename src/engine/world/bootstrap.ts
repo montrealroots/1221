@@ -26,7 +26,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 import { freshWellbeing } from '../systems/life';
 import { citizenshipFor } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
-import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
+import { ORIENTATION_2026, YALE_DRAMA, needFor } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 import { drawnBody, settle } from '../systems/body';
 
@@ -99,9 +99,11 @@ export interface NewSaveConfig {
    */
   school?: 'yale-drama';
   /**
-   * The family they come from, which the engine reads and no screen shows:
-   * a wealthy family's means rule out need, so Yale's aid for living costs
-   * doesn't come (`systems/school.ts`, `hasNeed`).
+   * The family they come from, as the need assessment reads it: a wealthy
+   * family's means rule out need, so Yale's aid for living costs doesn't come
+   * (`systems/school.ts`, `hasNeed`). Creation sets it from the family the
+   * player chooses with their background (`familyOf`); until 2026-10-14 no
+   * screen showed it, and every new life's was wealthy.
    */
   family?: 'wealthy';
 
@@ -168,13 +170,6 @@ export function atSchool(config: NewSaveConfig): NewSaveConfig {
 }
 
 /**
- * A new life in the game: beginning at drama school, from a wealthy
- * family, with the family's money behind them in the bank. The birthplace is
- * the player's to choose, and none is chosen for them (until 2026-09-26 it
- * was New York). The engine's `defaultConfig` stays where it was for saves
- * made by tests and tools, which choose their own town and day.
- */
-/**
  * The height and weight creation takes, in centimeters and kilograms: an adult's range, outside which the body is
  * drawn from where they were born. Creation says so where the fields are (from 2026-10-10: until then a figure
  * outside them, or one of the two left blank, was dropped without a word, and feet and inches reached 241 cm).
@@ -187,25 +182,53 @@ export function bodyGiven(config: Pick<NewSaveConfig, 'heightCm' | 'weightKg'>):
   return h !== undefined && w !== undefined && h >= BODY_GIVEN.heightCm[0] && h <= BODY_GIVEN.heightCm[1] && w >= BODY_GIVEN.weightKg[0] && w <= BODY_GIVEN.weightKg[1];
 }
 
+/**
+ * The families a new life can come from, poorest first: the six starting-wealth levels, chosen on Genres & Background
+ * (from 2026-10-14). Each sets the money in the bank on the first morning (`WEALTH_PROFILE`) and the means the need
+ * assessment reads (`familyOf`).
+ */
+export const FAMILIES: readonly StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
+
+/**
+ * The family the need assessment reads, for a starting wealth: a wealthy family's means, or an inheritance's, rule need
+ * out; the four below them don't, and Yale finds need. SLATE's reading of the engine's one rule (`needFor`), which
+ * knows a wealthy family and no other.
+ */
+export const familyOf = (wealth: StartingWealth): NewSaveConfig['family'] => (wealth === 'wealthy' || wealth === 'inherited' ? 'wealthy' : undefined);
+
+/** A config with its family chosen: the money and the means together, so the two can't disagree. */
+export const withFamily = (config: NewSaveConfig, wealth: StartingWealth): NewSaveConfig => ({ ...config, wealth, family: familyOf(wealth) });
+
+/**
+ * A new life in the game: beginning at drama school, from the family the player chooses, a wealthy one unless they
+ * choose another (the one every new life had until 2026-10-14, when the choice came to creation), with the family's
+ * money behind them in the bank. The birthplace is the player's to choose, and none is chosen for them (until
+ * 2026-09-26 it was New York). The engine's `defaultConfig` stays where it was for saves made by tests and tools, which
+ * choose their own town and day.
+ */
 export function newLifeConfig(): NewSaveConfig {
-  return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy' });
+  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002 }, 'wealthy'));
 }
 
 /**
- * A draft carried back into a new life: what the player chose, at the
- * school, with the family and money the life comes with rather than any the
- * draft had.
+ * A draft carried back into a new life: what the player chose, at the school, with the family the draft chose and the
+ * means that family has. A draft naming no family the game knows comes back wealthy. Until 2026-10-14 every draft came
+ * back wealthy, whatever it said.
  */
 export function newLifeFrom(draft: Partial<NewSaveConfig>): NewSaveConfig {
-  const life = newLifeConfig();
-  return atSchool({ ...life, ...draft, wealth: life.wealth, family: life.family });
+  const wealth = FAMILIES.includes(draft.wealth as StartingWealth) ? draft.wealth! : newLifeConfig().wealth;
+  return atSchool(withFamily({ ...newLifeConfig(), ...draft }, wealth));
 }
 
-/** Whether the player picks what they start with: not in a life whose family sets it. */
-export const choosesWealth = (config: NewSaveConfig) => config.family === undefined;
+/**
+ * Whether the player picks what they start with on Starting Point: only in a life outside the school, which a test or a
+ * tool makes. A life at the school has it from the family chosen with the background. Until 2026-10-14 this read
+ * whether a family was set, which every new life's was.
+ */
+export const choosesWealth = (config: NewSaveConfig) => config.school === undefined;
 
-/** Whether the school's need assessment would find need, as `hasNeed` reads a person (`systems/school.ts`). */
-export const findsNeed = (config: NewSaveConfig) => config.family !== 'wealthy';
+/** Whether the school's need assessment would find need, by the rule `hasNeed` reads a person by (`needFor`). */
+export const findsNeed = (config: NewSaveConfig) => needFor(config.family);
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Next to nothing to your name, and no savings behind it.' },

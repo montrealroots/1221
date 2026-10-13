@@ -34,18 +34,15 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { computeAnnualTax, INCOME_TAX_RULES, LOCAL_TAX, localRate } from '../content/tax';
+import { computeAnnualTax, LOCAL_TAX, localRate, usStandardDeduction } from '../content/tax';
 import { f1Of } from './permission';
 import { residenceIn } from './residence';
 import { hasSsn, SSN } from './taxid';
 
-/** The federal standard deduction in the tax table, which a nonresident alien doesn't take (`figuresFor`). */
-const US_STANDARD_DEDUCTION = INCOME_TAX_RULES.find((r) => r.jurisdictionCode === 'US')!.standardDeduction;
 import { CITIES } from '../content/geography';
-import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
+import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
 import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
-import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
 import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
@@ -890,9 +887,10 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const otherIncome = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : (y.interest ?? 0) + (y.pension ?? 0) - ss);
   const income = otherIncome + (nra ? 0 : taxableSocialSecurity(ss, otherIncome, into));
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
-  // Of the rest of the work's costs, the ones there's a receipt for.
-  const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
-  const expenses = y.commission + y.dues + Math.round((y.jobCosts ?? 0) * kept);
+  // The rest of the work's costs, the ones there was a receipt for (`RECEIPTS.kept` times the `receipts` knob), were
+  // added here until 2026-10-14, when the owner had the knob go: nothing recorded a cost of the work (`recordJobCost`
+  // had no caller), so the line added nothing to any played return.
+  const expenses = y.commission + y.dues;
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
@@ -991,8 +989,10 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   // Filed singly. A joint return for the married (`systems/marriage.ts`, from 2026-10-01) went with the marriages in the
   // scope reset of 2026-10-09.
   // A nonresident takes no standard deduction (Form 1040-NR; India's students excepted by treaty, whose citizens aren't
-  // among SLATE's birthplaces): the rule's deduction is added back so its graduated rates fall on the whole.
-  const federalBefore = computeAnnualTax(taxed + (nra ? usd(US_STANDARD_DEDUCTION, into) : 0), cityId, at, { currency: into }).federal;
+  // among SLATE's birthplaces): the rule's deduction is added back so its graduated rates fall on the whole. The year's
+  // deduction (`usStandardDeduction`, read at 31 December of the year, as the brackets are): until 2026-10-14 the one
+  // rule's, 2024's $14,600, for every year.
+  const federalBefore = computeAnnualTax(taxed + (nra ? usd(usStandardDeduction(at), into) : 0), cityId, at, { currency: into }).federal;
   // 3.8% on investment income, the banks' interest, over $200,000 of income.
   const gainTax = nra ? 0 : Math.round(NIIT.rate * Math.min(y.interest ?? 0, Math.max(0, taxed - usd(NIIT.from, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
@@ -1223,9 +1223,11 @@ export function registerTaxReturn(sim: Simulation): void {
     // filer under 65: no return to file. A nonresident student files Form 8843 every year, income or none (from
     // 2026-10-10), so theirs is always ready. Until 2026-10-13 any income at all made a return, so a played student with
     // $1,670.59 of work-study and interest was asked to file one at $0, and told when it went unfiled that a refund
-    // waited for it (found by the review of that day).
+    // waited for it (found by the review of that day). The threshold is the year's own deduction, $16,100 for 2026 and
+    // $15,750 for 2025: until 2026-10-14 it was 2024's $14,600 for every year, so a 2026 income between the two made a
+    // return the IRS doesn't ask for.
     const nra = figures.form === '1040-NR';
-    if (!nra && figures.balance === 0 && figures.foreignRefund === 0 && figures.income < usd(US_STANDARD_DEDUCTION, cur)) return;
+    if (!nra && figures.balance === 0 && figures.foreignRefund === 0 && figures.income < usd(usStandardDeduction(instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME)), cur)) return;
     const due = nra ? nonresidentDeadline(year, figures.workStudy + figures.acting > 0) : deadline(year);
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });

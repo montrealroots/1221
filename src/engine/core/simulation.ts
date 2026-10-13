@@ -702,7 +702,8 @@ export class Simulation {
     /** Where to act on it. Omitted when the screen for it is not built. */
     route?: string;
     actions?: { label: string; commandKind: string; payload: Record<string, unknown> }[];
-    dueAt?: Instant;
+    /** Where it ends. Required from 2026-10-14: every raiser dated its row, and the rule for an undated one went. */
+    dueAt: Instant;
     refType?: string;
     refId?: Id;
   }): void {

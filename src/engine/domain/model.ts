@@ -281,7 +281,7 @@ export interface Person {
   taxPlan?: import('../systems/taxreturn').TaxPlan;
   /** Each state's payment plan, by its code (`systems/statetax.ts`, from the integration pass of 2026-10-10). */
   statePlans?: Record<string, import('../systems/statetax').StatePlan>;
-  /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
+  /** Where they come from, for what a school's need assessment reads: chosen at creation as a family (`familyOf`), and shown there and on Review. Until 2026-10-14 it was shown nowhere, and every new life's was wealthy. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
   fraud?: { accountId: string; which: 'debit' | 'credit'; /** Taken with the account's number alone, not a card (from 2026-10-10). */ via?: 'number'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
@@ -377,7 +377,11 @@ export interface DecisionItem {
   route?: string;
   /** Optional inline actions the Decision Center can execute directly. */
   actions: { label: string; commandKind: string; payload: Record<string, unknown> }[];
-  dueAt?: Instant;
+  /**
+   * Where it ends, answered or not (`expireDecisions`). Every row has one from 2026-10-14; until then it could be left
+   * off, and an undated row went quiet after a season, which no raiser reached.
+   */
+  dueAt: Instant;
   createdAt: Instant;
   dismissedAt?: Instant;
   resolvedAt?: Instant;

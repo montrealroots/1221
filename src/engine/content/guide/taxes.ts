@@ -52,7 +52,7 @@
 import { CHAPTER_FOR } from '../tutorial';
 import { RETURN } from '../safetynet';
 import { STATE_TAX } from '../statetax';
-import { INCOME_TAX_RULES } from '../tax';
+import { usStandardDeduction } from '../tax';
 import { formatMoney } from '../../core/money';
 import { MS_DAY, formatDate } from '../../core/time';
 import { AMEND, COLLECTION, DEMAND_DAYS, FEDERAL_LIEN, PLAN, SUBSTITUTE, deadline, irsGrowth, latePenalty, leastMonthly } from '../../systems/taxreturn';
@@ -70,8 +70,13 @@ const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const day = (at: number): string => formatDate(at, NEW_HAVEN);
 
 const CHAPTER = CHAPTER_FOR['tax.file']!.title;
-/** A single filer’s federal standard deduction, the income under which a year with nothing either way has no return (`registerTaxReturn`). */
-const US_DEDUCTION = INCOME_TAX_RULES.find((r) => r.jurisdictionCode === 'US')!.standardDeduction;
+/**
+ * A single filer’s federal standard deduction for the year, the income under which a year with nothing either way has no
+ * return (`registerTaxReturn`), said for 2026, the first year a life begun in 2026 files. Until 2026-10-14 the guide said
+ * $14,600, 2024’s, the one figure the tax table then held for every year.
+ */
+const US_DEDUCTION = (year: number) => usd(usStandardDeduction(Date.UTC(year, 6, 1)));
+const DEDUCTIONS = `${US_DEDUCTION(2026)} for 2026`;
 const CT = STATE_TAX['us-ct'];
 const CT_LIEN = CT.lien!;
 const CT_FLOOR = CT.nonFiler.adds?.find((a) => a.minPenalty !== undefined)?.minPenalty ?? 0;
@@ -154,7 +159,7 @@ export const TAXES: readonly GuideEntry[] = [
       'To correct a year you filed, press Amend The Return…, then File The Amendment; Not Now leaves it.',
     ],
     needs: [
-      `A return for the year. One is made each February 1 for a year that left anything owed or due back, Canada’s refund among it, or income of ${usd(US_DEDUCTION)}, a single filer’s standard deduction, or more; a student on an F-1 has one every year they’re here, for Form 8843.`,
+      `A return for the year. One is made each February 1 for a year that left anything owed or due back, Canada’s refund among it, or income of a single filer’s standard deduction for the year or more (${DEDUCTIONS}); a student on an F-1 has one every year they’re here, for Form 8843.`,
       'To pay a balance at filing, enough in your current account and savings for each authority’s part: the IRS’s and each state’s are taken apart, each whole or not at all.',
       `To amend: a return you filed yourself, within ${AMEND.years} years of filing or ${AMEND.paidYears} of your last payment on it, with no amendment already being processed.`,
     ],
@@ -198,7 +203,7 @@ export const TAXES: readonly GuideEntry[] = [
       'Late Penalties is what filing late added on the day you filed. What the IRS charges after that grows under Penalties in Owed To The IRS.',
     ],
     unavailable: [
-      `A year with nothing owed or due back and income under the standard deduction, ${usd(US_DEDUCTION)}, has no return, and so no File It; a student on an F-1 always has one.`,
+      `A year with nothing owed or due back and income under the year’s standard deduction (${DEDUCTIONS}) has no return, and so no File It; a student on an F-1 always has one.`,
       'File It shows only on a year not yet filed, or one the IRS filed, where it reads File Your Own In Its Place. A year you’ve filed is changed by amending it.',
       'Amend The Return… is grayed out with its reason beside it: “An amended return for the year is with the IRS.”, or the date the time to amend it ran out. A year the IRS filed shows no Amend The Return…: file your own in its place first.',
       'File The Amendment: “Your return as filed matches what’s on record: there’s nothing to amend.” The year hasn’t changed since you filed.',

@@ -33,16 +33,8 @@ import { defineLook, lookExists, resolveLook, type Way } from './registry';
 import { at, subjectForRef, type Subject } from './subject';
 import { outOf, spokenList } from './words';
 
-/**
- * Untouched for this long and the world stops nagging. `expireDecisions`.
- *
- * Only where there is no date on it. A dated row is exempt from the season
- * rule, because the raiser that wrote a date already said where the row ends —
- * and the reimbursement, which carries a hundred and five days of runway, was
- * being waved off eleven days before its own deadline while the claim was still
- * worth millions.
- */
-const QUIET_AFTER_DAYS = 90;
+// Untouched for ninety days, an undated row went quiet (`QUIET_AFTER_DAYS`), and the look said so, until 2026-10-14,
+// when the owner had the rule go: no raiser left a row undated, and every row has a date now (`expireDecisions`).
 
 /** And this long after it closes there is nothing left of it. `prune`. */
 const FORGOTTEN_AFTER_DAYS = 180;
@@ -158,7 +150,7 @@ type Stage = 'open' | 'answered' | 'ran out' | 'let go';
 function stageOf(decision: DecisionItem): Stage {
   if (decision.dismissedAt !== undefined) return 'let go';
   if (decision.resolvedAt !== undefined) {
-    return decision.dueAt !== undefined && decision.dueAt <= decision.resolvedAt ? 'ran out' : 'answered';
+    return decision.dueAt <= decision.resolvedAt ? 'ran out' : 'answered';
   }
   return 'open';
 }
@@ -169,24 +161,18 @@ const closedAtOf = (decision: DecisionItem): number | undefined =>
 /** One sentence, second person, true at this instant. */
 function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation): string {
   const urgency = Math.round(decision.urgency);
-  const quietAt = decision.createdAt + QUIET_AFTER_DAYS * MS_DAY;
   switch (stage) {
     case 'open':
-      if (decision.dueAt !== undefined && decision.dueAt < sim.now) {
+      if (decision.dueAt < sim.now) {
         return `It went past its date ${formatRelative(decision.dueAt, sim.now)}, it’s carrying ${outOf(urgency)}, and being overdue is what holds it at the top of everything waiting on you.`;
       }
-      if (decision.dueAt !== undefined) {
-        return `It’s asking you at ${outOf(urgency)} and it wants an answer ${formatRelative(decision.dueAt, sim.now)}.`;
-      }
-      return `It’s asking you at ${outOf(urgency)} with no date on it, and left alone it goes quiet ${formatRelative(quietAt, sim.now)}.`;
+      return `It’s asking you at ${outOf(urgency)} and it wants an answer ${formatRelative(decision.dueAt, sim.now)}.`;
     case 'answered':
       return `You dealt with this one ${formatRelative(decision.resolvedAt ?? sim.now, sim.now)}, so it isn’t on the list any more.`;
     case 'ran out':
       return 'Its date had already gone by the time it closed, so it isn’t asking you for anything now.';
     case 'let go':
-      return decision.dueAt !== undefined
-        ? `You waved it off Home. The thing it was about stands on its own screen until ${formatDate(decision.dueAt, sim.zone)}, and can still be answered there.`
-        : 'It isn’t waiting on you any more — either you waved it away or it sat ninety days without being touched.';
+      return `You waved it off Home. The thing it was about stands on its own screen until ${formatDate(decision.dueAt, sim.zone)}, and can still be answered there.`;
   }
 }
 
@@ -203,8 +189,7 @@ defineLook<DecisionItem>('decision', {
     const urgency = Math.round(decision.urgency);
     const waiting = openDecisions(sim);
     const place = waiting.findIndex((d) => d.id === decision.id) + 1;
-    const overdue = decision.dueAt !== undefined && decision.dueAt < sim.now;
-    const quietAt = decision.createdAt + QUIET_AFTER_DAYS * MS_DAY;
+    const overdue = decision.dueAt < sim.now;
     const closedAt = closedAtOf(decision);
     const forgottenAt = (closedAt ?? sim.now) + FORGOTTEN_AFTER_DAYS * MS_DAY;
 
@@ -222,9 +207,7 @@ defineLook<DecisionItem>('decision', {
       : `It closed ${formatRelative(closedAt ?? sim.now, sim.now)} and nothing on Home lists it now.`;
 
     const ending = stage === 'open'
-      ? (decision.dueAt !== undefined
-        ? `It closes when you answer it, here or on its own screen, or on its date: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things does not touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
-        : `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered. The world only looks in every ${countWord(TICK_DAYS)} days, so that lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`)
+      ? `It closes when you answer it, here or on its own screen, or on its date: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. Six months after it closes the save keeps no record of it.`
       : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
 
     // Home renders the actions, a way through where there is a route, and
@@ -258,23 +241,14 @@ defineLook<DecisionItem>('decision', {
             <Stat
               label="Raised"
               value={formatDate(decision.createdAt, sim.zone)}
-              // A dated row is exempt from the season rule, so printing the
-              // ninety-day date beside it put a figure on the panel that the
-              // paragraph underneath flatly contradicts: the reimbursement row
-              // raised on 7 January 2026 read "Quiet by April 7, 2026" while
-              // its own date was 20 April and the panel said the ninety-day
-              // rule does not touch it. There is nothing to say about a dated
-              // row here that the Due field is not already saying.
-              note={stage !== 'open'
-                ? `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}`
-                : decision.dueAt !== undefined
-                  ? 'It ends on its own date'
-                  : `Quiet by ${formatDate(quietAt, sim.zone)}`}
+              // An undated row’s note was the day it would go quiet ("Quiet by"), until 2026-10-14, when every row
+              // had a date and the rule went.
+              note={stage !== 'open' ? `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}` : 'It ends on its own date'}
             />
             <Stat
               label="Due"
-              value={decision.dueAt !== undefined ? formatDate(decision.dueAt, sim.zone) : 'No date'}
-              note={decision.dueAt !== undefined ? formatRelative(decision.dueAt, sim.now) : 'Never forced'}
+              value={formatDate(decision.dueAt, sim.zone)}
+              note={formatRelative(decision.dueAt, sim.now)}
               tone={overdue ? 'negative' : undefined}
             />
             <Stat
@@ -291,9 +265,8 @@ defineLook<DecisionItem>('decision', {
         </>
       ),
       ways,
-      provenance: decision.dueAt !== undefined
-        ? 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. A dated thing closes on its date, and the save drops it six months after it closed or on the date itself, whichever is later.'
-        : 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. Ninety days untouched closes an undated one; six months after that the save drops it.',
+      // Until 2026-10-14 it said the save kept a row waved away early to its date, and an undated row’s ninety days.
+      provenance: 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. A thing closes on its date, and the save drops it six months after it closed.',
     };
   },
 });

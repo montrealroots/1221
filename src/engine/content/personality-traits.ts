@@ -17,12 +17,14 @@
  * said back and nothing more until something in the game spent: since the
  * household, Frugal, Spender and Generous move what food costs somebody
  * (`spending`). Keeps Accounts was about what other people owe, and waited
- * for other people until 2026-09-27; since then its receipts are what a
- * return can deduct of the work’s costs (`receipts`), and Chaotic loses some,
- * a knob that decides nothing yet: a student pays no cost of the work, and
- * nothing records one (`recordJobCost` has no caller). Until 2026-10-13
- * Chaotic’s cost and Keeps Accounts’ description said the receipts as an
- * effect, which no play saw; they don’t claim it now.
+ * for other people until 2026-09-27; from then until 2026-10-14 its receipts
+ * were what a return could deduct of the work’s costs (`receipts`), and
+ * Chaotic lost some, a knob that decided nothing: a student pays no cost of the
+ * work, and nothing recorded one (`recordJobCost` had no caller). The owner
+ * had the knob go on 2026-10-14, with the return’s line that read it and
+ * `recordJobCost`; Keeps Accounts keeps its slights (`bondWound`), and
+ * Chaotic its grime and its calm. Until 2026-10-13 Chaotic’s cost and Keeps
+ * Accounts’ description said the receipts as an effect, which no play saw.
  *
  * A trait's description and cost are written for a whole life. The game
  * charges the part of them its knobs reach, and says the rest back. What
@@ -45,8 +47,9 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
  * `systems/life.ts`, and since 2026-09-27 what illness takes
  * (`systems/health.ts`), what a night away puts back (`systems/life.ts`) and
  * what an early call or a late performance costs (`systems/career.ts`), and
- * how much of the work's costs a return can prove (`systems/taxreturn.ts`),
- * and since 2026-09-28 how a classmate grows closer or apart and what friends
+ * from then until 2026-10-14 how much of the work's costs a return could prove
+ * (`receipts`, `systems/taxreturn.ts`, which no student's return had), and
+ * since 2026-09-28 how a classmate grows closer or apart and what friends
  * in a cast are worth (`systems/school.ts`). Since 2026-10-09 how sharp the
  * mornings and the evenings are for school work (`morning`, `evening`, read
  * by `focusAt` in `systems/school.ts`), what each kind of preparation moves
@@ -59,7 +62,7 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
   | 'hygieneDrift' | 'moraleSwing' | 'spending'
-  | 'illnessToll' | 'receipts'
+  | 'illnessToll'
   | 'bondWarmth' | 'bondWound' | 'company' | 'appetite'
   | 'morning' | 'evening' | 'readsAround' | 'drills' | 'skims' | 'revises' | 'mealMood';
 
@@ -78,9 +81,9 @@ export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   moraleSwing: 'How far the mood moves, up and down',
   spending: 'What the day’s food costs you',
   illnessToll: 'How hard an illness hits, and how long an injury takes to mend',
-  // Read by the return's deduction of a work's costs (`figuresFor`), and nothing in a school life is one: said so here from
-  // 2026-10-10, as the research that day found no receipt a student's return can use (docs/research/world/research-coverage-gaps.json).
-  receipts: 'How many of the work’s costs you keep a receipt for, which the tax return deducts. A student pays no cost of the work, so it decides nothing now',
+  // `receipts` said how many of the work’s costs you kept a receipt for, and that it decided nothing for a student, until
+  // 2026-10-14, when the owner had the knob go (docs/research/world/research-coverage-gaps.json found no receipt a
+  // student's return can use).
   bondWarmth: 'How fast you warm to a classmate',
   bondWound: 'How hard a slight from a classmate cuts',
   company: 'How much friends in a cast lift you, and how much their absence weighs',
@@ -181,7 +184,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
     description: 'The mess is genuinely invisible to you, and it never weighs on you.',
     cost: 'It shows on you sooner.',
-    systemMods: { hygieneDrift: 1.3, stressGain: 0.92, receipts: 0.9 },
+    systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },
     conflictsWith: ['orderly'],
   },
   {
@@ -271,7 +274,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     description: 'What you’re owed and by whom, down to the coffee, stays remembered.',
     cost: 'So does everybody else, about you: a slight cuts deeper both ways.',
     conflictsWith: ['generous'],
-    systemMods: { receipts: 1.3, bondWound: 1.1 },
+    systemMods: { bondWound: 1.1 },
   },
 
   // --- People: how they are with others -------------------------------------

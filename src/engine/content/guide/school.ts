@@ -67,6 +67,7 @@ import { ORIENTATION } from '../../systems/coursework';
 import { STATUS_GRACE_DAYS } from '../../systems/permission';
 import { WORKERS_COMP } from '../injury';
 import type { GuideEntry } from './types';
+import { FAMILIES, findsNeed, newLifeConfig, wealthIn, withFamily } from '../../world/bootstrap';
 
 const CHAPTER = CHAPTER_BY_ID['school']!.title;
 const OPENED = `From the guide’s chapter “${CHAPTER}”`;
@@ -149,6 +150,16 @@ const OWED = Math.max(0, Math.ceil((PASS_AT - ATTENDED) / ACTING.perWeek));
 // chair casts from the first spring.
 const weekdayOf = (d: SchoolDate): number => new Date(Date.UTC(d.year, d.month - 1, d.day)).getUTCDay();
 const LAB_MONDAY = labDays(0, 0)?.days.find((d) => weekdayOf(d) === 1 && coursesOn(d).some((c) => c.code === ACTING.code));
+
+// The family chosen at creation, beside the background (from 2026-10-14: until then every new life's was wealthy, and
+// the entries said need as if a player could have it): which families Yale finds need for, by the rule `hasNeed` reads
+// (`findsNeed`), and what each puts in the bank on the first morning.
+const FAMILY_WORD = (w: string): string => upper(w);
+const NEEDY = FAMILIES.filter((w) => findsNeed(withFamily(newLifeConfig(), w)));
+const MEANS = FAMILIES.filter((w) => !NEEDY.includes(w));
+const or = (words: readonly string[]): string => (words.length < 2 ? words.join('') : `${words.slice(0, -1).join(', ')} or ${words.at(-1)}`);
+const AIDED = termAccount('USD', true, 0);
+const FAMILY_MONEY = FAMILIES.map((w) => { const m = wealthIn(w, 'USD'); return `${FAMILY_WORD(w)}, ${formatMoney(m.checking, 'USD', { cents: false })} in checking and ${formatMoney(m.savings, 'USD', { cents: false })} in savings`; }).join('; ');
 
 // A term's bill, without need: the first term's, and a seventh's, the first past the tuition scholarship's six.
 const FIRST = termAccount('USD', false, 0);
@@ -449,7 +460,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     costs: [
       { label: 'Asking', value: `None; decided within ${LEAVE_RULES.decideWorkingDays} working days, or by the term it begins with if that comes first`, estimate: true },
       { label: 'Affiliate Cover', value: `${usd(LEAVE_RULES.affiliatePerTerm)} a term for a personal leave, all paid at once, less the term’s Yale Health fee where the leave began after the first day of classes; the School pays on a medical leave` },
-      { label: 'Aid Returned', value: `A leave begun mid-term charges the term’s living scholarship back to your Yale account on the rebate schedule, ${REBATE} of the term’s classes, and none after. It’s due ${EXTENDED_STUDY.dueDays} days after the leave begins, as a term’s bill is`, estimate: true },
+      { label: 'Aid Returned', value: `Where need was found (a family of ${or(NEEDY.map(FAMILY_WORD))} means), a leave begun mid-term charges the term’s living scholarship back to your Yale account on the rebate schedule, ${REBATE} of the term’s classes, and none after. It’s due ${EXTENDED_STUDY.dueDays} days after the leave begins, as a term’s bill is`, estimate: true },
       { label: 'Withdrawing', value: 'Free. Within fifteen days of a term’s first class day, a Yale Health premium paid from your bank comes back', estimate: false },
     ],
     reads: [
@@ -648,7 +659,8 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'The Balance', value: 'The sum of the account’s postings: what was charged, less what was paid or credited' },
-      { label: 'Need', value: 'Yale’s assessment of your family’s means; a family that rules need out leaves no living aid and no hours to convert' },
+      { label: 'Need', value: `Yale’s assessment of your family’s means, the family you chose at creation beside your background. ${or(NEEDY.map(FAMILY_WORD))}: need is found, and the living-expense scholarship, ${usd(AIDED.livingScholarship)} a term in 2026–27, meets the term’s Yale Health plan, ${usd(AIDED.healthPlan)}, and pays the rest, ${usd(AIDED.refund)}, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. ${or(MEANS.map(FAMILY_WORD))}: the means rule need out, so there’s no living aid, no hours to convert, and the plan comes from your bank` },
+      { label: 'Your Family’s Money', value: `What each family puts in your name on the first morning: ${FAMILY_MONEY}` },
       { label: 'The Aid Office', value: `An exception to ${SIX} terms of tuition support only where you’ve had a medical leave; living aid, which meets the term’s Yale Health fee, kept only where need was found`, estimate: true },
       { label: 'Hours To Convert', value: `Assigned hours excused ill or hurt this year; and the hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; to ${WORK_LIMITS.convertibleHours} less any converted` },
     ],

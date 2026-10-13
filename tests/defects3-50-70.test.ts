@@ -4,7 +4,7 @@
  * the defect and were corrected with it: tests/evidence2-b06.test.ts (Your US Status on OPT, Covered Connecticut out of
  * status, SNAP on a claim and to the dollar), tests/evidence-g16-papers.test.ts, tests/assistance.test.ts,
  * tests/evidence-g32-ui.test.ts (a plan missed elsewhere, on its own clock), tests/evidence-g03-life.test.ts (a
- * prescription’s renewal booked over a visit owed) and tests/evidence-g34-ui.test.ts (the undated rule, labelled). What
+ * prescription’s renewal booked over a visit owed) and tests/evidence-g34-ui.test.ts (the undated rule, labelled, until it went on 2026-10-14). What
  * those don’t reach is here, each failing before its fix:
  *
  * - `documents.us_status`: Covered Connecticut begun before the status ends is ended with the month too, and the notice
@@ -254,7 +254,10 @@ describe('What Needs You', () => {
     // Until 2026-10-13 What Needs You said a question with no date went quiet 90 days after it was raised.
     const needs = DAY.find((e) => e.id === 'day.needs')!;
     expect(needs.later.some((line) => /no date/.test(line))).toBe(false);
-    expect(needs.later).toContain('A question with a date closes on its date, answered or not, at the world’s next look, which comes every 2 days.');
+    // It said “A question with a date closes on its date” until 2026-10-14, when every question came to have one, and the
+    // save’s keeping a closed question to its date went from the line after.
+    expect(needs.later).toContain('Every question has a date, and closes on it, answered or not, at the world’s next look, which comes every 2 days.');
+    expect(needs.later).toContain('The save forgets a closed question 180 days after it closed, and keeps your last 500 notices.');
   }, 60_000);
 
   it('the Papers entry gives Home’s tax owed as growing only once its return’s due date has passed, as the alert says it (`growing`, ui/screens/Home.tsx)', () => {

@@ -21,7 +21,8 @@
  * - `h-papers`: the Unemployment clause played: a fall kept up, a part in the Summer Cabaret's company paid $375 a
  *   week for thirteen Fridays, a withdrawal on 1 September 2027 and a claim on 1 October, "Unemployment, $93 a week.",
  *   Connecticut's 1/26 of the two best quarters' average ($1,500 and $3,375). The tax owed told from the stored balance
- *   by four dollars, $176 against $172, 180 days past due; and Connecticut's half of what's owed, $3.72 of $111. And a
+ *   by four dollars, $176 against $172, 180 days past due; and Connecticut's half of what's owed, $3.72, all of the $4
+ *   Home says since 2026's table came in on 2026-10-14 (until then $3.72 of $111, the IRS owed $107.56). And a
  *   defect, below: filed early and unpaid, the alert said interest and a penalty were "growing each month" before the
  *   due date, when nothing grows; from later on 2026-10-13 it says so only past the due date.
  * - `l-person`: the creation side of the unit split, played through Who Are You Going To Be?: born in London, the
@@ -48,7 +49,7 @@
  * on the next render, its subject given back as its LookRegion's state.
  *
  * TEST SETUP, said again where it's done: a life's only current account closed by hand; a bank emptied before a return
- * is filed, by a posting against a test equity line; a family with need, which creation doesn't offer; the class's
+ * is filed, by a posting against a test equity line; a family with need, which creation didn't offer until 2026-10-14; the class's
  * craft records set so their means are known; a second Person put in the world by hand; and a graduate's degree
  * conferred on the first day by the School's own `setStanding`, which no played life reaches inside a test's minute.
  */
@@ -435,26 +436,27 @@ describe('h-papers', () => {
     expect(dollars(sim.player.returns!['2026']!.owed!)).toBe('$172');
   });
 
-  it('Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110', () => {
-    // TEST SETUP: a family with need, which creation doesn't offer (`newLifeFrom` makes every new life the wealthy
-    // family's): its living scholarship is income no one withholds on.
+  it('Connecticut’s half: a student with need owes nothing to the IRS on 2026’s table and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $4, Connecticut’s $3.72 with its 10% and a month’s 1%, where the balance stored would say $3', () => {
+    // TEST SETUP: a family with need, which creation didn't offer until 2026-10-14 (`newLifeFrom` made every new life the
+    // wealthy family's; since then it's creation's Scraping family): its living scholarship is income no one withholds on.
     const sim = life('b12-needy', { family: undefined, wealth: 'scraping' });
     sim.advanceTo(at(2027, 2, 1, 12));
-    expect(sim.player.returns!['2026']!.figures.owedTo).toEqual({ irs: 107_00, states: { 'us-ct': 3_35 } });
+    // Her 2026 income, $14,014.00 of taxable scholarship, $1,656.00 of work-study and cents of interest, is under 2026's
+    // $16,100 standard deduction (Rev. Proc. 2025-32): nothing federal. Until 2026-10-14 the IRS's part was $107.00, on
+    // 2024's table, 10% of what was over $14,600; the day past the due date Home said $111, $107.56 of it the IRS's.
+    expect(sim.player.returns!['2026']!.figures.owedTo).toEqual({ irs: 0, states: { 'us-ct': 3_35 } });
     // TEST SETUP: the bank emptied, so filing can't pay.
     for (const a of [primary(sim), own(sim, 'savings')]) setBalance(sim, a, 0);
-    expect(sim.must({ kind: 'tax.file', payload: { year: 2026 } })).toMatchObject({ paid: false, irs: 107_00, states: { 'us-ct': 3_35 } });
+    expect(sim.must({ kind: 'tax.file', payload: { year: 2026 } })).toMatchObject({ paid: false, irs: 0, states: { 'us-ct': 3_35 } });
     sim.advanceTo(DUE + MS_DAY);
     const r = sim.player.returns!['2026']!;
-    // The IRS: a month begun at 0.5% and a day at 7% a year, $107.56. Connecticut: 10% once and 1% for a month begun on
-    // the tax (Conn. Gen. Stat. 12-735), $3.35 and $0.34 and $0.03, $3.72.
-    const irs = Math.round(107_00 * 1.005 + 107_00 * (0.07 / 365));
+    // Connecticut: 10% once and 1% for a month begun on the tax (Conn. Gen. Stat. 12-735), $3.35 and $0.34 and $0.03,
+    // $3.72; the IRS's nothing grows nothing.
     const ct = 3_35 + Math.round(3_35 * 0.1) + Math.round(3_35 * 0.01);
-    expect([irs, ct]).toEqual([107_56, 3_72]);
-    expect(dollars(irs + ct)).toBe('$111');
-    expect(dollars(irs)).toBe('$108');
-    expect(dollars(r.owed! + r.stateDue!['us-ct']!.owed!)).toBe('$110');
-    expect(drawn(sim).affairs).toContain('$111 of tax owed, with its interest and a late penalty growing each month. Papers How This Works');
+    expect(ct).toBe(3_72);
+    expect(dollars(ct)).toBe('$4');
+    expect(dollars((r.owed ?? 0) + r.stateDue!['us-ct']!.owed!)).toBe('$3');
+    expect(drawn(sim).affairs).toContain('$4 of tax owed, with its interest and a late penalty growing each month. Papers How This Works');
   });
 
   it('filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date, nothing accruing before it, and says it once the date has passed', () => {
@@ -531,7 +533,10 @@ function creation() {
 }
 
 describe('l-person', () => {
-  it('PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in centimeters and kilograms; 170 and 65 begun, her look in New Haven says “5 ft 7 in and 143 lb”', () => {
+  // Until 2026-10-14 this asked the London-born student in centimeters and kilograms, the units of where she was born,
+  // and her look in New Haven said them back in feet and pounds. Since the owner's rule of that day (`bodyUnits`) both
+  // are the units of where she lives, and each says so.
+  it('PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in feet, inches and pounds, the units of New Haven where she’ll live; 5, 7 and 143 begun, her look in New Haven says them back', () => {
     const play = creation();
     play.draw();
     play.type('first', 'Ada');
@@ -544,20 +549,19 @@ describe('l-person', () => {
     play.next('Continue');
     play.next('Continue');
     page = play.next('Continue');
-    expect(page).toContain('Your Body Your height and weight on the first morning, in the units of where you were born.');
-    expect(page).toContain('Height (Centimeters) Weight (Kilograms) Body Mass Index');
-    expect(page).not.toMatch(/Feet|Pounds/);
-    play.type('height-cm', '170');
-    play.type('weight-kg', '65');
-    // 65 / 1.70², 22.49.
-    expect(play.field('bmi').value).toBe('22.5');
+    expect(page).toContain('Your Body Your height and weight on the first morning. In feet, inches and pounds, the units of the United States, where you live.');
+    expect(page).toContain('Height (Feet) Inches Weight (Pounds)');
+    expect(page).not.toMatch(/Centimeters|Kilograms/);
+    play.type('height-ft', '5');
+    play.type('height-in', '7');
+    // 67 inches at 2.54 cm, 170.18, kept to a tenth; 143 lb at 0.45359237 kg, 64.86, 64.9; 64.9 / 1.702², 22.40.
+    expect(play.type('weight-lb', '143')).toContain('A body mass index of 22.4.');
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;
-    expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', startLocationId: 'us-ct-newhaven', heightCm: 170, weightKg: 65 });
+    expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', startLocationId: 'us-ct-newhaven', heightCm: 170.2, weightKg: 64.9 });
     const sim = createSave(1, 'b12-born-london', config);
-    // Where she lives, the United States: 170 cm is 66.93 inches, 5 ft 7 in; 65 kg is 143.30 lb.
-    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight.']);
+    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('born in New York, the same step asks feet, inches and pounds: 5, 7 and 143 are 170.2 cm and 64.9 kg, a body mass index of 22.4, and the look says them back in New Haven', () => {
@@ -580,7 +584,8 @@ describe('l-person', () => {
     play.next('Begin');
     const config = play.started()!;
     expect(config).toMatchObject({ homeRegionId: 'us-ny-newyork', heightCm: 170.2, weightKg: 64.9 });
-    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight.']);
+    // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
+    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('PLAYER JOURNEY: the first morning’s run breaks a bone at 8:30 AM: “till October 6, 2026”, 43 days, inside a broken bone’s 42 to 84; the clock still has it at 8 AM that day and has mended it by 9', () => {

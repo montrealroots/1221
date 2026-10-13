@@ -112,7 +112,7 @@ describe('Look After Yourself', () => {
 describe('a decision', () => {
   it('acted on once, or dismissed, isn’t acted on again', () => {
     const sim = life('fix-decision');
-    sim.requireDecision({ urgency: 50, category: 'test', title: 'Sleep', detail: 'A test', refType: 'test', refId: 'one', actions: [{ label: 'Sleep', commandKind: 'life.sleep', payload: { hours: 1 } }] });
+    sim.requireDecision({ urgency: 50, category: 'test', title: 'Sleep', detail: 'A test', dueAt: sim.now + 30 * MS_DAY, refType: 'test', refId: 'one', actions: [{ label: 'Sleep', commandKind: 'life.sleep', payload: { hours: 1 } }] });
     const id = Object.values(sim.universe.decisions).find((d) => d.refId === 'one')!.id;
     sim.universe.decisions[id]!.resolvedAt = sim.now;
     expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('That’s been done already.');
@@ -124,7 +124,7 @@ describe('a decision', () => {
   it('runs its command past the same guards as the command given directly', () => {
     const sim = life('fix-guard');
     sim.guardCommands((c) => (c.kind === 'life.sleep' ? 'Held by the guide.' : undefined));
-    sim.requireDecision({ urgency: 50, category: 'test', title: 'Sleep', detail: 'A test', refType: 'test', refId: 'two', actions: [{ label: 'Sleep', commandKind: 'life.sleep', payload: { hours: 1 } }] });
+    sim.requireDecision({ urgency: 50, category: 'test', title: 'Sleep', detail: 'A test', dueAt: sim.now + 30 * MS_DAY, refType: 'test', refId: 'two', actions: [{ label: 'Sleep', commandKind: 'life.sleep', payload: { hours: 1 } }] });
     const id = Object.values(sim.universe.decisions).find((d) => d.refId === 'two')!.id;
     expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('Held by the guide.');
   });

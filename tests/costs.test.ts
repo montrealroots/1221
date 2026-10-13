@@ -7,11 +7,11 @@
  */
 import { createSave,quickSave } from '@/engine';
 import { exchange } from '@/engine/content/currency';
-import { CARE,CHRONIC,DENTAL_PLANS,DENTAL_VISION,INSULIN,PHARMACY,RECEIPTS,STATE_DEDUCTIONS,medicalGrowth } from '@/engine/content/safetynet';
+import { CARE,CHRONIC,DENTAL_PLANS,DENTAL_VISION,INSULIN,PHARMACY,STATE_DEDUCTIONS,medicalGrowth } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY,instantFromZoned,zonedParts } from '@/engine/core/time';
-import { recordJobCost,recordWages } from '@/engine/systems/earnings';
+import { recordWages } from '@/engine/systems/earnings';
 import { drawChronic,fillMedicine,grown,healthMonth,healthOf,illnessWeek,insulinShareOf,keepUp,monitorShareOf,rxShareOf,shareOf,teethAndEyesShareOf } from '@/engine/systems/health';
 import { evenCraft } from '@/engine/systems/school';
 import { figuresFor } from '@/engine/systems/taxreturn';
@@ -48,12 +48,13 @@ describe('tax on money that isn’t dollars', () => {
 
 describe('an actor’s working costs', () => {
 
+  // Until 2026-10-14 the costs here were a commission and $12,000 of other costs recorded by hand (`recordJobCost`),
+  // four in five of them with a receipt (`RECEIPTS`). Those went that day with the `receipts` knob, as nothing in play
+  // recorded such a cost; the commission alone is large enough here to itemize.
   it('counts the work’s costs in New York’s itemized deduction, above 2% of income', () => {
     const sim = pro('itemize');
-    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 8_000_00 });
-    recordJobCost(sim.player, at(2027, 5, 1), 12_000_00);
-    // Four in five of the rest have a receipt, for somebody who doesn't keep accounts.
-    const extra = 8_000_00 + 12_000_00 * RECEIPTS.kept - 0.02 * 100_000_00 - STATE_DEDUCTIONS.standard['us-ny']!;
+    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 15_000_00 });
+    const extra = 15_000_00 - 0.02 * 100_000_00 - STATE_DEDUCTIONS.standard['us-ny']!;
     const ny = figuresFor(sim.player, 2027).states.find((s) => s.state === 'us-ny')!;
     expect(ny.tax).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12), { deductions: extra }).regional);
   });

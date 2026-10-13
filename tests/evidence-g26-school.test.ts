@@ -58,7 +58,8 @@
  * - an injury that keeps them off work for the first week, and the flu for a day called in sick and for a medical
  *   leave's physician's recommendation: illness and injury come by the draw;
  * - for need-based aid, a life with no family money behind it (family unset, wealth 'scraping'), as
- *   tests/work-limits.test.ts makes one: `newLifeConfig` gives every new life a wealthy family, with no need found;
+ *   tests/work-limits.test.ts makes one: `newLifeConfig` gives a new life a wealthy family, with no need found, unless
+ *   the player chooses another (from 2026-10-14; until then every new life's was wealthy);
  * - the bank emptied, as tests/guide-examples-school.test.ts empties it, and money put back, as savings would be;
  * - a screen's two-step choice pressed (Ask To Repeat The Year…, Call Off The Request…), which a static render can't
  *   press its way into: the panel drawn with its choice made, as tests/defects-g8-2.test.ts draws it.

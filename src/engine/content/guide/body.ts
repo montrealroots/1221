@@ -273,6 +273,7 @@ export const BODY: readonly GuideEntry[] = [
     later: [
       `Fitness holds for ${plural(FITNESS.heldDays, 'day')} after a workout, then falls ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS}.`,
       `Awake, nourishment falls ${NOURISHMENT_DRAIN_PER_HOUR} an hour. Each midnight the day’s groceries are bought at the town’s prices, and the day starts fed to at least 76 nourishment, or 40 if they can’t be paid for, and washed to at least 82 hygiene.`,
+      'A shower skipped costs nothing past its day: the morning washes you to 82 whatever the day before was. That’s the owner’s decision, of 2026-10-14.',
       `Your weight follows the day’s eating against what you burn, half the way to its new level in ${plural(A_BODY.halfLifeDays, 'day')}. Eat A Meal is part of the day’s eating and adds nothing to it; Order In adds its ${A_BODY.eatenOut} calories. A run burns ${A_BODY.met.run} METs against a workout indoors’ ${A_BODY.met.workout}, and none of it is eaten back.`,
       `An hour’s run risks an injury ${RUN_RISK}% of the time and a workout indoors ${GYM_RISK}%. A sprain or a pulled muscle keeps you from training till it mends; a broken bone or a concussion keeps you from classes too.`,
     ],

@@ -76,6 +76,14 @@ export const COST_2026_27: YearCost = {
   source: 'Yale Bulletin 2026–2027, Tuition, Fees and Other Expenses; Yale Health student rates 2026–2027 (https://yalehealth.yale.edu/topic/student-rates-2026-2027)',
 };
 
+/**
+ * Whether the need assessment finds need, by the family's means: a wealthy family's rule it out, and with them the
+ * living-expense scholarship, conversion to grant aid and the aid a leave returns. The one rule both `hasNeed`
+ * (`systems/school.ts`, a person) and creation's `findsNeed` (`world/bootstrap.ts`, a family not yet a person) read,
+ * from 2026-10-14: until then each wrote its own copy, and no test held them to agree.
+ */
+export const needFor = (family: 'wealthy' | undefined): boolean => family !== 'wealthy';
+
 /** A day on the school's calendar, local to New Haven. */
 export interface SchoolDate { year: number; month: number; day: number }
 

@@ -107,7 +107,7 @@ export const KNOB_LIMITS: Readonly<Record<PersonalityKnob, readonly [number, num
   moraleSwing: [0.65, 1.35],
   spending: [0.7, 1.4],
   illnessToll: [0.5, 1.5],
-  receipts: [0.7, 1.6],
+  // `receipts`, 0.7 to 1.6, went with its knob on 2026-10-14.
   bondWarmth: [0.6, 1.4],
   bondWound: [0.6, 1.5],
   company: [0.4, 1.8],

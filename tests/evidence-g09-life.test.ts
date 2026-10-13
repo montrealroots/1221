@@ -31,8 +31,8 @@
  *   restless 0.387 and the others nothing; and each of the four ways a part is prepared (scattered, single minded,
  *   curious, self critical: 1.15 → 1.1364, inside [0.8, 1.3]) moves its own part 1.1364 times a plain twin's step, a
  *   scene read, its lines learned, a speech transcribed and a note worked on, to nine places where the review found
- *   the earlier test held it to one, and the other three parts as the plain twin's. Receipts stays open: nothing in
- *   play writes the job costs it multiplies.
+ *   the earlier test held it to one, and the other three parts as the plain twin's. Receipts stayed open (nothing in
+ *   play wrote the job costs it multiplied) until 2026-10-14, when the owner had the knob go.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York (the birthplace a player
  * picks on Identity, which `newLifeConfig` leaves empty) and an actor at Yale in New Haven, starting Monday 24 August

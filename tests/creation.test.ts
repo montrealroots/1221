@@ -64,7 +64,9 @@ describe('the steps', () => {
   });
 
   it('leave no trace of the ones that went', () => {
-    for (const gone of ['CareerStep', 'YourPeopleStep', 'ESTATE_', 'studioName', 'family']) {
+    // 'family' was among these until 2026-10-14, when the family a life comes from came back as a choice beside the
+    // background (`FamilyChoice`); the people it once named stay gone with YourPeopleStep.
+    for (const gone of ['CareerStep', 'YourPeopleStep', 'FamilyStep', 'ESTATE_', 'studioName']) {
       expect(SOURCE, `${gone} is back in creation`).not.toContain(gone);
     }
   });

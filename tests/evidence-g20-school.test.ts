@@ -8,7 +8,8 @@
  *
  * - `school.summer_cabaret`: refused for a student in concern in `summerRefusal`'s words, joined in the first spring,
  *   its three plays cast within the company by `castFit` (a mastered actress plays Maurya in Riders To The Sea, a
- *   floored one Cathleen, the supporting part written for a woman); the first show's four nights (Friday, Saturday's
+ *   floored one Cathleen, the supporting part written for a woman, and from 2026-10-14 the company’s unnamed part in
+ *   the two that write a woman only leads); the first show's four nights (Friday, Saturday's
  *   two, Sunday; dark Monday) kept in the run record; the first Friday's $375 on the year's wages with FICA's 7.65%,
  *   $28.69, withheld and nothing for the IRS's income tax or Connecticut's on $375; the second fall's casting reading
  *   the three shows at half weight, min(nights, 8) × 0.5 = 2, 4 and 4, into the delivery the chair reads, once, across
@@ -266,7 +267,7 @@ describe('school.summer_cabaret', () => {
     expect(last.weight).toBe(4);
   });
 
-  it('casts its parts within the company by castFit: mastered, she plays the lead written for a woman in each play; floored, the supporting part where the play writes one for a woman, and the one part written for her where it doesn’t', () => {
+  it('casts its parts within the company by castFit: mastered, she plays the lead written for a woman in each play; floored, the supporting part where the play writes one for a woman, and the company’s unnamed part where it writes her only a lead', () => {
     const cast = (to: number) => {
       const sim = spring();
       sim.player.school!.standing = 'good'; // TEST SETUP: good standing, as above.
@@ -280,7 +281,9 @@ describe('school.summer_cabaret', () => {
     // The casts as published (content/plays.ts): A Marriage Proposal and Trifles write a woman only leads, Riders To The
     // Sea writes Maurya, the lead, and Cathleen and Nora, supporting.
     expect(cast(100)).toEqual([['A Marriage Proposal', 'Natalya Stepanovna', 'lead'], ['Trifles', 'Mrs Hale', 'lead'], ['Riders To The Sea', 'Maurya', 'lead']]);
-    expect(cast(10)).toEqual([['A Marriage Proposal', 'Natalya Stepanovna', 'lead'], ['Trifles', 'Mrs Hale', 'lead'], ['Riders To The Sea', 'Cathleen', 'supporting']]);
+    // Floored, until 2026-10-14 she was given the one part each play wrote for a woman, a lead she hadn’t earned; the owner
+    // settled that day that she takes the company’s unnamed part where the play writes her nothing below a lead.
+    expect(cast(10)).toEqual([['A Marriage Proposal', 'In The Company', 'featured'], ['Trifles', 'In The Company', 'featured'], ['Riders To The Sea', 'Cathleen', 'supporting']]);
   });
 
   it('on the Casting tab, a student in concern is told why in words and offered nothing; in good standing, Join The Summer Company pressed puts her in the company, says so, and the panel lists the three plays, her parts and their dates, the button gone', () => {

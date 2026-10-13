@@ -817,7 +817,9 @@ describe('h-needs: What Needs You on Home', () => {
     const urgencies = [90, 85, 84, 65, 64, 50, 40];
     urgencies.forEach((urgency, i) => sim.requireDecision({
       urgency, category: 'test', title: `question ${i + 1}`, detail: `Detail ${i + 1}.`, refType: 'test', refId: String(i),
-      ...(i === 0 ? { route: '/workspace/bank' } : {}), ...(i === 4 ? { dueAt: sim.now - MS_HOUR } : {}),
+      // Every row is dated (from 2026-10-14, when requireDecision took no row without one): the fifth past its date, the
+      // rest thirty days on, so the order past the overdue one is the urgency's.
+      ...(i === 0 ? { route: '/workspace/bank' } : {}), dueAt: i === 4 ? sim.now - MS_HOUR : sim.now + 30 * MS_DAY,
     }));
     const { html } = drawn(sim, Home);
     const shown = needs(sim);

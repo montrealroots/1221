@@ -33,7 +33,8 @@
  *   back. createSave refuses what the page refuses. Frugal pressed on the page makes the first meal $4.29 where a plain
  *   twin's is $5.00, and lifts her mood 1.718 where the twin's lifts 2 (`mealMood`, the one knob no other evidence file
  *   reaches). And every knob a trait declares moves for a life made with it. The review's other finding stays open:
- *   tests/personality.test.ts still holds the declared knobs to a typed list, and `receipts` reads nothing a student does.
+ *   tests/personality.test.ts still holds the declared knobs to a typed list, and `receipts` read nothing a student did
+ *   until it went on 2026-10-14.
  * - c-genres: the 149 chips, the 17 a play's kinds name unmarked and the rest marked ·, a chip pressed, Select All and
  *   Clear These, Review and the Profile. Then, at a second-year's every call that reads a kind (a Rep understudy
  *   rehearsal, a thesis read-through, a night sent on as an understudy, a thesis curtain, the understudies'
@@ -827,8 +828,12 @@ describe('c-body', () => {
     expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, a body mass index of 22.7: healthy weight.');
   });
 
-  it('PLAYER JOURNEY: Your Body says it in centimeters and kilograms for a Londoner, its index beside them, and the life made out of range is drawn', () => {
-    const london = ada({ homeRegionId: 'uk-eng-london' });
+  // Until 2026-10-14 the Londoner was a London-born student at Yale, asked in the units of where she was born. Since the
+  // owner's rule of that day (`bodyUnits`) the units are those of where the person lives, so a London-born student at
+  // Yale is asked in feet and pounds (tests/need-paths.test.ts), and the Londoner here lives in London, a life outside
+  // the school, which a test can make and the creation screen draws as it would.
+  it('PLAYER JOURNEY: Your Body says it in centimeters and kilograms for a Londoner living in London, its index beside them, and the life made out of range is drawn', () => {
+    const london = ada({ homeRegionId: 'uk-eng-london', school: undefined, startLocationId: 'uk-eng-london', livesWhereBorn: true });
     const drawnTwin = begun('g28-body-london', london).sim.player.body!;
     let config = london;
     let page = creation(STEP.starting, config);

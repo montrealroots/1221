@@ -30,9 +30,10 @@
  * - `school.request_extra_term`: past the Bulletin's nine semesters, refused at the asking and, at the decision, the
  *   degree withheld; and a disqualification the faculty never judged, refused at the asking and at the decision. Each
  *   from a fixture (a ninth term or a second Fail put on the record), which no play makes, beside a twin without it.
- * - `school.request_conversion`: a life made as the creation screen makes one has no need found, whatever its draft
- *   said, so the drawn button is grayed and the command refused, while its twin with need is paid for the same
- *   Saturday; the command's returned hours are the hours May's processing pays; and the processing's 'No Hours To
+ * - `school.request_conversion`: a life made with the family creation leaves chosen, Wealthy, has no need found, so
+ *   the drawn button is grayed and the command refused, while its twin with need is paid for the same Saturday (until
+ *   2026-10-14 every draft was made wealthy, whatever it said; since then a family below Wealthy, chosen on Genres &
+ *   Background, finds need, and tests/need-paths.test.ts plays one from creation); the command's returned hours are the hours May's processing pays; and the processing's 'No Hours To
  *   Convert', from a fixture no play makes.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York (the birthplace a player
@@ -46,9 +47,10 @@
  * - the coursework prepared each midnight and the student rested, fed and awake each time the clock moves, as
  *   tests/guide-examples-school.test.ts plays one, so nothing but a row's own steps falls short at an evaluation;
  * - an injury off work for the first week, and the flu on a day called in sick: illness and injury come by the draw;
- * - for need-based aid, a life with no family money behind it (family unset, wealth 'scraping'), which no life made on
- *   the creation screen can have (`newLifeConfig` and `newLifeFrom` give every one a wealthy family, the owner's choice
- *   of 2026-09-27), as tests/work-limits.test.ts makes one;
+ * - for need-based aid, a life with no family money behind it (family unset, wealth 'scraping'), as tests/work-limits.test.ts
+ *   makes one, and as creation's Scraping family makes one from 2026-10-14 (until then no life made on the creation
+ *   screen could have it: `newLifeConfig` and `newLifeFrom` gave every one a wealthy family, the owner's choice of
+ *   2026-09-27);
  * - a second Fail, a ninth enrolled term, or six hours already converted, put on the record by hand, where the row's
  *   branch is reached by no play: each is said where it's done, with why no play reaches it;
  * - a screen's two-step choice pressed (Ask To Repeat The Year…), which a static render can't press its way into: the
@@ -145,7 +147,7 @@ const working = (sim: Simulation): Simulation => {
 };
 const ADA = { homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' };
 const life = (seed: string, extra: Record<string, unknown> = {}) => working(createSave(1, seed, { ...newLifeConfig(), ...ADA, ...extra }));
-/** TEST SETUP: need found, a family of no means, which no creation-screen life can have (`newLifeFrom` makes every one wealthy). */
+/** TEST SETUP: need found, a family of no means, as creation's Scraping family has it (until 2026-10-14 no creation-screen life could). */
 const ON_AID = { family: undefined, wealth: 'scraping' };
 const LONDON = { homeRegionId: 'uk-eng-london' };
 const reload = (sim: Simulation) => working(loadSave(deserialise(serialise(sim.universe)) as never));
@@ -710,9 +712,12 @@ const c0 = once(() => {
 });
 
 describe('school.request_conversion', () => {
-  it('PLAYER JOURNEY: a life made as the creation screen makes one, whatever its draft said of the family, has no need found: an assigned Saturday called in sick, the drawn button grayed and the command refused in its words, and nothing paid in January, where its twin with need is paid for the same six hours', () => {
-    // The draft asks for a family of no means; the creation screen's `newLifeFrom` gives the family it gives every life.
-    const made = newLifeFrom({ ...ADA, family: undefined, wealth: 'scraping' });
+  // Until 2026-10-14 this was 'a life made as the creation screen makes one, whatever its draft said of the family, has no
+  // need found', its draft asking for Scraping and `newLifeFrom` making it wealthy all the same. Since then the draft's
+  // family is kept, and the life with no need is the one creation leaves at Wealthy.
+  it('PLAYER JOURNEY: a life made with the family creation leaves chosen, Wealthy, has no need found: an assigned Saturday called in sick, the drawn button grayed and the command refused in its words, and nothing paid in January, where its twin with need is paid for the same six hours', () => {
+    // The draft leaves the family as creation chose it.
+    const made = newLifeFrom({ ...ADA });
     expect(made.family).toBe('wealthy');
     expect(made.wealth).toBe('wealthy');
     const sim = working(createSave(1, 'b09-new', made));
@@ -723,7 +728,7 @@ describe('school.request_conversion', () => {
     expect(stat(panel.html, 'Hours Excused This Year')?.value).toBe('6');
     expect(stat(panel.html, 'Convertible To Grant Aid')).toEqual({ value: 'Not On Aid', note: undefined });
     expect(drew('school.request_conversion').map((c) => [c.label, c.disabled, c.title])).toEqual([['Ask For Conversion To Grant Aid', true, words]]);
-    // TEST SETUP: the twin, the same life at the same moment with need found, as no creation-screen life has it.
+    // TEST SETUP: the twin, the same life at the same moment with need found, as a family below Wealthy has it.
     const twin = thaw(freeze(sim));
     twin.player.family = undefined;
     expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe(words);

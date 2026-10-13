@@ -35,7 +35,8 @@
  *   read by the first class's growth and by the work judged at nine on 8 September, the evening by the first Cabaret
  *   night's; a detached player's slower warmth keeping a co-lead under a Friend where her plain twin's makes one, read by
  *   the cast list's lift, the classmate's look and the first Carlotta night's company; and a slight cut deeper making a
- *   Rival on the look. Receipts stays open: nothing in play writes the job costs it multiplies.
+ *   Rival on the look. Receipts stayed open (nothing in play wrote the job costs it multiplied) until 2026-10-14, when
+ *   the owner had the knob go.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and an actress at Yale in
  * New Haven from Monday 24 August 2026 at 7:30 AM, every disposition at the middle, played by the clock to each moment

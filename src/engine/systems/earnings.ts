@@ -48,8 +48,8 @@ export interface YearEarnings {
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
   dues: Money;
-  /** And the rest of what the work cost: casting sites, headshots, a kit, a class, a coach. */
-  jobCosts?: Money;
+  // `jobCosts`, the rest of what the work cost (casting sites, headshots, a kit, a class, a coach), went on 2026-10-14
+  // with `recordJobCost`, its one writer, which nothing called, and the return's line that read it.
   /** Productions that paid $200 or more, for the performing artist deduction. */
   employers: Record<string, Money>;
   /** Where they lived when last paid, which the return is filed from. */
@@ -272,11 +272,7 @@ export function recordScholarship(person: Person, at: Instant, zone: string, amo
   y.residence = home;
 }
 
-/** A cost of the work paid from the bank, for the year's return. */
-export function recordJobCost(person: Person, at: Instant, amount: Money): void {
-  const y = yearOf(person, zonedParts(at, 'America/New_York').year);
-  y.jobCosts = (y.jobCosts ?? 0) + amount;
-}
+// `recordJobCost`, a cost of the work paid from the bank for the year's return, went on 2026-10-14: nothing called it.
 
 /** The UK tax year a moment is in, by the year it began: 6 April to 5 April. */
 export function ukTaxYear(at: Instant): string {

@@ -21,9 +21,11 @@
  *   for a life made with the trait pressed on Dispositions & Traits, against a twin who pressed nothing: on empty, awake,
  *   soiling, a meal and its price, a night's depth and what it puts back, a midnight's weight, a bone's mending, the
  *   morning's and the evening's work, the four ways of preparing, a classmate warmed and cut, and a friend in the cast.
- *   Only `receipts` reaches no reader in play (nothing writes the work's costs it multiplies), and the page's sentence on
- *   Keeps Accounts, which said it changed a deduction and no more, is held to its own look's "decides nothing now"; it
- *   failed until later on 2026-10-13, when the sentence said its receipts decide nothing for a student.
+ *   Only `receipts` reached no reader in play (nothing wrote the work's costs it multiplied), and the page's sentence on
+ *   Keeps Accounts, which said it changed a deduction and no more, was held to its own look's "decides nothing now"; it
+ *   failed until later on 2026-10-13, when the sentence said its receipts decide nothing for a student. On 2026-10-14
+ *   the owner had the knob go: every knob a trait declares is held to a reader here, and Keeps Accounts' look and the
+ *   page say its slights alone.
  * - `c-wealth`: what tests/school.test.ts's 'comes from a wealthy family, with its money in the bank, and has no
  *   birthplace chosen for it' said and didn’t check (its title, from later on 2026-10-13, says only what it asserts): Identity drawn from a new life asks for a birthplace and holds
  *   Continue, Begin's life is the wealthy family's with $92,391 and $413,043 at Chase, and the term's Yale Health plan,
@@ -678,21 +680,17 @@ describe('c-traits', () => {
     HELD.add('company');
   });
 
-  it('holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches', () => {
+  // Until 2026-10-14 this held every knob but `receipts`, which multiplied the work's costs a return deducted, where the
+  // one writer of those costs (`recordJobCost`) was called by nothing. The owner had the knob go that day, with it.
+  it('holds every knob a trait declares to a reader in the journeys above', () => {
     const declared = new Set(PERSONALITY_TRAITS.flatMap((t) => Object.keys(t.systemMods ?? {}) as PersonalityKnob[]));
-    expect([...declared].filter((k) => !HELD.has(k)).sort()).toEqual(['receipts']);
+    expect([...declared].filter((k) => !HELD.has(k)).sort()).toEqual([]);
     expect([...HELD].filter((k) => !declared.has(k))).toEqual([]);
     expect(HELD.size).toBe(19);
-    // receipts multiplies the work's costs a return deducts (taxreturn.ts), and the one writer of those costs,
-    // `recordJobCost` (earnings.ts), is called by nothing in the engine: no played life has a cost of the work.
-    const calls = (dir: string): string[] => readdirSync(dir).flatMap((name) => {
-      const path = join(dir, name);
-      return statSync(path).isDirectory() ? calls(path) : /\.tsx?$/.test(name) && /recordJobCost\(/.test(readFileSync(path, 'utf8').replace(/export function recordJobCost\(/, '')) ? [path] : [];
-    });
-    expect(calls(fileURLToPath(new URL('../src', import.meta.url)))).toEqual([]);
   });
 
-  it('says of Keeps Accounts on Dispositions & Traits what its own look says, that its receipts decide nothing for a student', () => {
+  // Until 2026-10-14 both said its receipts decided nothing for a student; the knob went that day.
+  it('says of Keeps Accounts on Dispositions & Traits what its own look says: how a slight cuts, and no receipt', () => {
     const sim = withTrait('b10-accounts', 'Keeps Accounts');
     expect(sim.player.personalityTraits).toEqual(['keeps_accounts']);
     h.sim = sim;
@@ -701,12 +699,12 @@ describe('c-traits', () => {
     const found = resolveLook(sim, lookAt('trait', 'keeps_accounts'));
     if (!found || 'gone' in found) throw new Error('the Keeps Accounts look didn’t resolve');
     const look = onScreen(renderToStaticMarkup(createElement('div', null, found.body)));
-    expect(look).toContain('A student pays no cost of the work, so it decides nothing now');
+    expect(look).toContain('How hard a slight from a classmate cuts');
+    expect(look).not.toMatch(/receipt|deduct/i);
     const page = creation(STEP.dispositions, ada()).text;
-    // What the page says Keeps Accounts changes, to the stop: a deduction no played life has, and nothing more said.
-    const said = page.match(/Keeps Accounts how much[^.]*\./)?.[0] ?? '';
-    expect(said).toMatch(/^Keeps Accounts how much of what your work costs you can deduct/);
-    expect(said).toContain('decides nothing');
+    // The page names no deduction, and says the slight among what the traits change.
+    expect(page).not.toMatch(/Keeps Accounts how much|deduct/);
+    expect(page).toContain('how you warm to classmates and how a slight from one cuts');
   });
 });
 

@@ -114,26 +114,18 @@ function runWorldTick(sim: Simulation): void {
 }
 
 /**
- * Decisions do not sit in the list forever, and there are two ways one ends.
+ * Decisions do not sit in the list forever: each one ends on its date, as whoever raised it chose by dating it.
  *
- * A dated one ends on its date: whoever raised it chose where it ends by
- * dating it, so the season rule below never touches it. An undated one that
- * nobody has answered in a season stops nagging, though since the scope reset
- * of 2026-10-09 no raiser has left a row undated.
+ * Every raiser dates its row (a year’s return, a US status’s end, an idle account’s handover to the state), and since
+ * 2026-10-14 `requireDecision` takes no row without a date. Until then an undated row left a season unanswered was
+ * dismissed here, a rule no raiser reached after the scope reset of 2026-10-09 and only a row a test raised by hand
+ * met; the owner had it go on 2026-10-14, with the decision look’s words for it. A row an older build left undated is
+ * dated as the save loads (`migrate`, `engine/index.ts`).
  */
 function expireDecisions(sim: Simulation): void {
   for (const decision of Object.values(sim.universe.decisions)) {
     if (decision.resolvedAt || decision.dismissedAt) continue;
-    if (decision.dueAt !== undefined) {
-      if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;
-      continue;
-    }
-    // Anything undated and untouched for a season stops nagging. No raiser reaches this: every one dates its row (a
-    // year’s return, a US status’s end, an idle account’s handover to the state), so only a row a test raises by hand
-    // meets it (tests/evidence-g34-ui.test.ts). It stays while the decision look describes it (`QUIET_AFTER_DAYS`,
-    // ui/looks/attention.tsx), to go with those words; the guide’s sentence for it went on 2026-10-13 (found by that
-    // day’s third round).
-    if (sim.now - decision.createdAt > 90 * MS_DAY) decision.dismissedAt = sim.now;
+    if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;
   }
 }
 
@@ -145,12 +137,11 @@ function prune(sim: Simulation): void {
   for (const [id, decision] of Object.entries(sim.universe.decisions)) {
     const closedAt = decision.resolvedAt ?? decision.dismissedAt;
     if (closedAt === undefined) continue;
-    // A closed row about a date that has not arrived yet is kept until the date has passed, as the guide says
-    // (`guide/day.ts`). Until 2026-10-13 this said a raiser could read a dismissal off it to know it was told to stop
-    // asking; none does: `requireDecision` passes over a dismissed row and raises a fresh one. And every raiser dates
-    // its row within 180 days of raising it (a year’s return, a US status’s end, an idle account’s handover to the
-    // state), so no played life reaches this; a row a test raises does (tests/evidence-g02-life.test.ts).
-    if (decision.dueAt !== undefined && decision.dueAt > sim.now) continue;
+    // A closed row about a date that had not arrived was kept here until the date had passed, until 2026-10-14, when
+    // the owner had it go: every raiser dates its row within 180 days of raising it (a year’s return, a US status’s
+    // end, an idle account’s handover to the state), so a closed row is past its date before its 180 days are, and
+    // only a row a test raised by hand reached the keeping. `requireDecision` passes over a dismissed row and raises a
+    // fresh one, so nothing read a dismissal off a kept row either.
     if (sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {
       delete sim.universe.decisions[id];
     }
@@ -167,11 +158,11 @@ export function openDecisions(sim: Simulation): DecisionItem[] {
     .filter((d) => !d.resolvedAt && !d.dismissedAt)
     .sort((a, b) => {
       // Overdue first, then urgency, then soonest due.
-      const aOverdue = a.dueAt !== undefined && a.dueAt < sim.now;
-      const bOverdue = b.dueAt !== undefined && b.dueAt < sim.now;
+      const aOverdue = a.dueAt < sim.now;
+      const bOverdue = b.dueAt < sim.now;
       if (aOverdue !== bOverdue) return aOverdue ? -1 : 1;
       if (a.urgency !== b.urgency) return b.urgency - a.urgency;
-      return (a.dueAt ?? Number.POSITIVE_INFINITY) - (b.dueAt ?? Number.POSITIVE_INFINITY);
+      return a.dueAt - b.dueAt;
     });
 }
 

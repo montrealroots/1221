@@ -140,9 +140,9 @@ worked examples are played against outcomes worked independently (`tests/guide-e
 
 ## Known Limits, Deferred, And The Owner's
 
-- **The federal tax table is 2024's** (10% to $11,600, $14,600 deducted), held for every year (`src/engine/content/tax.ts`).
-  2026's ($16,100 deducted, Rev. Proc. 2025-32) isn't in; correcting it re-figures every US return. The late-filing
-  least is 2027's $535.
+- **The federal tax table was 2024's** (10% to $11,600, $14,600 deducted), held for every year, until 2026-10-14, when
+  2025's ($15,750 deducted, Rev. Proc. 2024-40 as Rev. Proc. 2025-32 §3.01 changed it) and 2026's ($16,100, Rev. Proc.
+  2025-32) came in by year, 2026's held after (`src/engine/content/tax.ts`). The late-filing least is 2027's $535.
 - **Reached only by a fixture in a gate test** (the 14 rows "working, evidence missing"): a second person in the world, a
   degree conferred, a family with need, a marketplace plan's income. The forced wealthy family puts need-based paths
   (conversion of hours, leave aid) out of a new life's reach: whether they move to Unresolved or Deferred is the owner's.

@@ -609,6 +609,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }
 
+  // Every decision has a date from 2026-10-14, when the rule that quieted an undated one after ninety days went
+  // (`expireDecisions`, world/world.ts). A row an older build left undated is given the date that rule would have ended
+  // it on, ninety days from its raising, and closes on it; one already closed is let go, as its record says nothing a
+  // date would change.
+  let dated = 0;
+  let undatedGone = 0;
+  for (const [id, decision] of Object.entries(universe.decisions ?? {})) {
+    if (typeof decision.dueAt === 'number') continue;
+    if (decision.resolvedAt !== undefined || decision.dismissedAt !== undefined) { delete universe.decisions[id]; undatedGone += 1; continue; }
+    decision.dueAt = decision.createdAt + 90 * MS_DAY;
+    dated += 1;
+  }
+  if (dated > 0) steps.push(`Dated ${plural(dated, 'question', 'questions')} an older build left undated, ninety days from when each was raised.`);
+  if (undatedGone > 0) steps.push(`Let go ${plural(undatedGone, 'closed question', 'closed questions')} with no date.`);
+
   // SLATE's own reduced-motion setting went on 2026-10-02; nothing could change it, and the system's preference stands.
   if (universe.preferences && 'reducedMotion' in universe.preferences) delete (universe.preferences as unknown as Record<string, unknown>).reducedMotion;
   if (!universe.preferences) {

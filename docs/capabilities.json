@@ -858,7 +858,7 @@
         "world.dismiss_decision",
         "world.mark_read"
       ],
-      "effects": "An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); a dated one ends on its date, an undated one after a season",
+      "effects": "An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); each is dated by its raiser and ends on its date (an undated one ended after a season until 2026-10-14, when the owner had the rule go)",
       "persists": "universe.decisions (resolvedAt, dismissedAt), universe.notifications[].read",
       "readers": [
         "openDecisions and unreadNotifications, which leave out a decision resolved or dismissed and a notice read (world/world.ts)",

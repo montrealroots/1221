@@ -245,13 +245,12 @@ export function Home() {
                       <span className="small strong">
                         <Open subject={at('decision', decision.id)}>{titleCaseLabel(decision.title)}</Open>
                       </span>
-                      {decision.dueAt !== undefined && (
-                        <span className={`xs ${decision.dueAt < sim.now ? 'negative' : 'dim'}`}>
-                          <Open subject={at('decision', decision.id)}>
-                            {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
-                          </Open>
-                        </span>
-                      )}
+                      {/* Every row has a date from 2026-10-14; until then an undated one showed none here. */}
+                      <span className={`xs ${decision.dueAt < sim.now ? 'negative' : 'dim'}`}>
+                        <Open subject={at('decision', decision.id)}>
+                          {decision.dueAt < sim.now ? 'Overdue' : formatRelative(decision.dueAt, sim.now)}
+                        </Open>
+                      </span>
                     </div>
                     <p className="xs muted" style={{ margin: '2px 0 0' }}>{decision.detail}</p>
                     <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>

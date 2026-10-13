@@ -469,7 +469,8 @@ describe('l-person', () => {
     // 170 cm is 66.93 inches, 5 ft 7 in; 65 kg is 143.30 lb; 65 / 1.70² is 22.49, inside the WHO's 18.5 to 24.9.
     expect(lines).toEqual([
       ['Who you are. ', 'Curious.'],
-      ['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight.'],
+      // The units' why after the figures, from 2026-10-14 (`bodyUnits`): until then the line ended at the weight's word.
+      ['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight. In feet, inches and pounds, the units of the United States, where you live.'],
       ['On your papers. ', 'she/her, a citizen of United Kingdom.'],
       ['In your own terms. ', 'Black Or African, British Caribbean.'],
       ['Where you come from. ', 'Grew up over a chip shop in Peckham.'],
@@ -511,7 +512,8 @@ describe('l-person', () => {
     // A life in London, which a New Haven life doesn't reach: quickSave.
     const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, heightCm: 170, weightKg: 65 }, 'g33-person-london');
     const { lines } = personLook(drawn(sim, [subject('person', sim.player.id)]).html);
-    expect(lines.find(([label]) => label === 'Your body. ')).toEqual(['Your body. ', '170 cm and 65.0 kg, a body mass index of 22.5: healthy weight.']);
+    // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
+    expect(lines.find(([label]) => label === 'Your body. ')).toEqual(['Your body. ', '170 cm and 65.0 kg, a body mass index of 22.5: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where you live.']);
   });
 
   it('PLAYER JOURNEY: the first morning’s run breaks a bone: “Mending. A Broken Bone, till October 6, 2026, and off work till then.” and An Injury, both gone once it has mended', () => {

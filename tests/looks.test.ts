@@ -428,7 +428,7 @@ describe('a decision opens onto the thing it is about', () => {
     }).value!;
     sim.requireDecision({
       urgency: 60, category: 'personal', title: 'Keep The Dentist?', detail: 'It is in four days.',
-      refType: 'entry', refId: made.id,
+      dueAt: sim.now + 4 * MS_DAY, refType: 'entry', refId: made.id,
     });
 
     const row = openDecisions(sim)[0]!;

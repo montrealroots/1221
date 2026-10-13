@@ -226,6 +226,10 @@ describe('the receipts knob’s traits', () => {
     // nothing records a cost of the work for a receipt to keep (`recordJobCost` has no caller).
     expect(PERSONALITY_TRAIT_BY_ID.chaotic!.cost).toBe('It shows on you sooner.');
     expect(PERSONALITY_TRAIT_BY_ID.keeps_accounts!.description).toBe('What you’re owed and by whom, down to the coffee, stays remembered.');
-    expect(KNOB_READS.receipts).toMatch(/decides nothing now$/);
+    // The knob's own words said it decided nothing now, until 2026-10-14, when the owner had the knob go: neither trait
+    // declares it, and no knob reads it.
+    expect(Object.keys(KNOB_READS)).not.toContain('receipts');
+    expect(PERSONALITY_TRAIT_BY_ID.chaotic!.systemMods).toEqual({ hygieneDrift: 1.3, stressGain: 0.92 });
+    expect(PERSONALITY_TRAIT_BY_ID.keeps_accounts!.systemMods).toEqual({ bondWound: 1.1 });
   });
 });

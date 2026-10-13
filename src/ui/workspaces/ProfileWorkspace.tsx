@@ -31,7 +31,7 @@ import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import type { Personality } from '@/engine/domain/model';
 import { theCountry } from '@/engine/systems/documents';
-import { CARRIES_A_BALANCE } from '@/engine/systems/credit';
+import { CARRIES_A_BALANCE, cardOf } from '@/engine/systems/credit';
 
 // Where `openCredit` starts a card’s autopay on the minimum, over `CARRIES_A_BALANCE`, is read from `systems/credit.ts`
 // itself from 2026-10-13: until then it was kept here as a 65 of its own, since credit.ts didn’t export it.
@@ -41,18 +41,21 @@ import { CARRIES_A_BALANCE } from '@/engine/systems/credit';
  * the line printed the rule beside every figure, “over 65, the card’s autopay starts on the minimum”, so a life at 65
  * read “over 65” while its autopay started on the whole statement. Every disposition is a whole number
  * (`cleanPersonality`, at creation and on every load), so the figure shown is the one decided on. Every life with a
- * Profile began at the drama school, from a wealthy family, with a card (`newLifeConfig`, since 2026-09-26), and none of
- * them a charge card, which is paid in full whatever this is: its bank is in New Haven, and no American bank’s card is
- * one (`content/cards.ts`).
+ * Profile began at the drama school (`newLifeConfig`, since 2026-09-26), none of them with a charge card, which is paid in
+ * full whatever this is: its bank is in New Haven, and no American bank’s card is one (`content/cards.ts`). Until
+ * 2026-10-14 every one began from a wealthy family, with a card; since then a family is chosen, and the Nothing family's
+ * life begins with no card, so the line says it set none rather than name an autopay that never started.
  */
-function riskWords(person: Person): string {
+function riskWords(person: Person, sim: Simulation): string {
+  const side = person.personality.riskTolerance > CARRIES_A_BALANCE ? `over ${CARRIES_A_BALANCE}` : `${CARRIES_A_BALANCE} or under`;
+  if (!cardOf(sim, person)) return `${side}, which sets where a card’s autopay starts; you hold no card, so it set none`;
   return person.personality.riskTolerance > CARRIES_A_BALANCE
     ? `over ${CARRIES_A_BALANCE}, so the card’s autopay started on the minimum`
     : `${CARRIES_A_BALANCE} or under, so the card’s autopay started on the whole statement`;
 }
 
 /** Each disposition, as creation names it, and what it does in play; Risk Tolerance’s, what it did in this life. */
-const DISPOSITIONS: readonly [keyof Personality, string, string | ((person: Person) => string)][] = [
+const DISPOSITIONS: readonly [keyof Personality, string, string | ((person: Person, sim: Simulation) => string)][] = [
   ['emotionalStability', 'Emotional Stability', 'how fast stress comes and clears, and where composure starts'],
   ['conscientiousness', 'Conscientiousness', 'how well a night’s sleep restores you, and where discipline starts'],
   ['ambition', 'Ambition', 'how fast every stress comes'],
@@ -180,7 +183,7 @@ function IdentityPanel() {
               until then the panel had no region and Open drew them as plain names, so none of them opened). */}
           {person.personalityTraits.length > 0 && <LookRegion><p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t, i) => <span key={t}>{i ? ', ' : ''}<Open subject={at('trait', t)}>{PERSONALITY_TRAIT_BY_ID[t]?.name ?? t}</Open></span>)}.</p></LookRegion>}
           {/* The dispositions set at creation, and what each does (from 2026-10-10: until then the Profile didn't show them). */}
-          <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {typeof does === 'string' ? does : does(person)}</span>)}.</p>
+          <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {typeof does === 'string' ? does : does(person, sim)}</span>)}.</p>
           <div className="row gap-2 wrap">
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{money}</button>
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>{cover ? 'Papers, Covered' : 'Papers, No Health Cover'}</button>

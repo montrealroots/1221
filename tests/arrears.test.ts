@@ -6,7 +6,6 @@
 import { quickSave } from '@/engine';
 import { bankById } from '@/engine/content/banks';
 import { exchange } from '@/engine/content/currency';
-import { RECEIPTS } from '@/engine/content/safetynet';
 import { computeAnnualTax } from '@/engine/content/tax';
 import type { Account } from '@/engine/core/ledger';
 import type { Simulation } from '@/engine/core/simulation';
@@ -16,7 +15,7 @@ import { BREAK_NOTICE } from '@/engine/systems/accountlife';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { BONUSES,bonusRewards } from '@/engine/systems/cardoffers';
 import type { CreditState } from '@/engine/systems/credit';
-import { recordJobCost,recordWages } from '@/engine/systems/earnings';
+import { recordWages } from '@/engine/systems/earnings';
 import { DISPOSED,LOVED_WORK,enjoyWork,lovedInWork,takeTheHouse } from '@/engine/systems/enjoyment';
 import { careFor } from '@/engine/systems/health';
 import { CHEX,FRENCH_CARDS,cardCeilingRoom,chargeForItem,closeForOverdraft,declines,lowestFirst,monthOrder,overdraftRoom,termsOf } from '@/engine/systems/lending';
@@ -101,21 +100,21 @@ describe('what a trait costs, where the game now reaches it', () => {
     expect(resilient).toBeLessThan(plain);
   });
 
-  it('deducts every receipt for somebody who keeps accounts, and fewer for the chaotic', () => {
+  // Until 2026-10-14 this held Keeps Accounts to deducting every receipt of the work's other costs and Chaotic to fewer,
+  // on a cost the test recorded by hand (`recordJobCost`, which nothing in play called). The owner had the `receipts`
+  // knob go that day, with `recordJobCost` and the return's line that read them: the return is the same whoever keeps
+  // accounts, and its New York itemizing takes the commission alone.
+  it('files the same return for somebody who keeps accounts, the chaotic and the plain: the receipts knob went on 2026-10-14', () => {
     const tax = (traits: string[]) => {
       const sim = pro('receipts', { personalityTraits: traits });
       recordWages(sim.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 8_000_00 });
-      recordJobCost(sim.player, at(2027, 5, 1), 12_000_00);
       return figuresFor(sim.player, 2027).states.find((one) => one.state === 'us-ny')!.tax;
     };
-    const kept = tax(['keeps_accounts']);
     const plain = tax([]);
-    const chaotic = tax(['chaotic']);
-    expect(kept).toBeLessThan(plain);
-    expect(plain).toBeLessThan(chaotic);
-    // Every receipt, and never more than was spent.
-    expect(kept).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12), { deductions: 20_000_00 - 2_000_00 - 8_000_00 }).regional);
-    expect(RECEIPTS.kept * personalityOf(traited(['keeps_accounts']), 'receipts')).toBeGreaterThan(1);
+    expect(tax(['keeps_accounts'])).toBe(plain);
+    expect(tax(['chaotic'])).toBe(plain);
+    // The standard deduction beats the commission over 2% of income: nothing itemized.
+    expect(plain).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12), {}).regional);
   });
 });
 

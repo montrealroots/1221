@@ -35,8 +35,8 @@ import { CONDITION_LABEL, type Condition } from '@/engine/systems/health';
 import { CHRONIC } from '@/engine/content/safetynet';
 import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 import { describeEthnicity } from '@/engine/content/ethnicity';
-import { CITIES, COUNTRIES } from '@/engine/content/geography';
-import { bmiOf, bmiWord, type Body } from '@/engine/systems/body';
+import { COUNTRIES } from '@/engine/content/geography';
+import { bmiOf, bmiWord, bodyUnits, type Body } from '@/engine/systems/body';
 import { injuryOf } from '@/engine/systems/injury';
 import { formatDate } from '@/engine/core/time';
 import { INJURY_KIND } from '@/engine/content/injury';
@@ -146,7 +146,8 @@ defineLook<Person>('person', {
     // The traits they picked. Most of them, unlike the rest of this, move the
     // dials below: the nights of a light sleeper and the stress of an even
     // temper are theirs. Three of the money traits move what food costs, and
-    // Keeps Accounts, only said back until 2026-09-27, what a return deducts.
+    // Keeps Accounts how a slight cuts; it moved what a return deducts from
+    // 2026-09-27 until 2026-10-14, when that knob (`receipts`) went.
     const traits = (person.personalityTraits ?? [])
       .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
     const said = [
@@ -157,11 +158,12 @@ defineLook<Person>('person', {
         </p>
       ),
       // Their pronouns and their citizenship, as creation took them: the citizenship is the country of birth’s.
-      // Their height and weight, in the units of where they live, and what the weight comes to.
+      // Their height and weight, in the units of where they live, and what the weight comes to; and which units, and why
+      // (`bodyUnits`, the rule creation’s Your Body reads too, from 2026-10-14: until then the units went unsaid).
       person.body && (
         <p key="body" className="small">
           <span className="dim">{isYou ? 'Your body. ' : 'Their body. '}</span>
-          {bodyWords(person.body, CITIES.get(person.currentLocationId)?.countryId === 'us')}.
+          {`${bodyWords(person.body, bodyUnits(person.currentLocationId, isYou).imperial)}. ${bodyUnits(person.currentLocationId, isYou).why}`}
         </p>
       ),
       // An injury mending, and whether it keeps them off work (`systems/injury.ts`).

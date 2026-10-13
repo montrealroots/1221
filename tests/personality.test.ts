@@ -34,7 +34,8 @@ import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
   'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
-  'illnessToll', 'receipts', 'bondWarmth', 'bondWound', 'company', 'appetite',
+  // 'receipts' was here until 2026-10-14, when the owner had the knob go: nothing in play recorded a cost it multiplied.
+  'illnessToll', 'bondWarmth', 'bondWound', 'company', 'appetite',
   // From the connected world of 2026-10-09 (`tests/traits-connected.test.ts`).
   'morning', 'evening', 'readsAround', 'drills', 'skims', 'revises', 'mealMood',
 ];
@@ -386,7 +387,7 @@ describe('what it does', () => {
       .toBeGreaterThan(personalityOf(person([], { conscientiousness: 5 }), 'sleepQuality'));
   });
 
-  it('keeps the four axes read elsewhere off the knobs, and Keeps Accounts to its receipts and its slights', () => {
+  it('keeps the four axes read elsewhere off the knobs, and Keeps Accounts to its slights', () => {
     // Openness, extraversion and agreeableness are read by a day's work
     // (`systems/enjoyment.ts`), risk tolerance by the card: none by a knob.
     for (const axis of ['openness', 'extraversion', 'agreeableness', 'riskTolerance'] as const) {
@@ -396,9 +397,9 @@ describe('what it does', () => {
       }
     }
     // From 2026-10-09 somebody who keeps accounts keeps them on a slight too (`bondWound`).
-    for (const knob of KNOBS.filter((k) => k !== 'receipts' && k !== 'bondWound')) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+    // Its receipts (`receipts`, above 1.2) went on 2026-10-14 with the knob, and its slights are all it moves.
+    for (const knob of KNOBS.filter((k) => k !== 'bondWound')) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
     expect(personalityOf(person(['keeps_accounts']), 'bondWound')).toBeGreaterThan(1);
-    expect(personalityOf(person(['keeps_accounts']), 'receipts')).toBeGreaterThan(1.2);
   });
 
   it('makes a frugal person spend less on the same day’s food than a spender', () => {

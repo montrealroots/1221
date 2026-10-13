@@ -177,9 +177,10 @@ Settled that day: the coursework and a late run reaching the term's standing, th
 growth, a director's note's unread fields, `school.filmed`, the TSA rule read only by a sentence, the statement-day
 farm, a status reported lost, and a dozen more, each in its commit. What it left, each kept rather than deleted:
 
-- **The `receipts` knob and `jobCosts`.** Unreachable. The tax return deducts a work's costs by the receipts a
-  trait keeps, and nothing in the game is a cost of the work since the career went. Chaotic's and Keeps Accounts'
-  receipts lean on nothing.
+- **The `receipts` knob and `jobCosts`.** Unreachable, and gone on 2026-10-14, the owner's decision. The tax return
+  deducted a work's costs by the receipts a trait kept, and nothing in the game was a cost of the work since the
+  career went; the knob, its line in the return, `jobCosts` and `recordJobCost` went together, and Chaotic and Keeps
+  Accounts lean on what else they move.
 - **The Mexican residence chain** (residence, renewal, settlement, naturalization). Reachable, and read by nothing
   outside itself, since no life can move to Mexico; from 2026-10-10 the offer says so before it’s paid for. It’s
   reached on savings, which a student’s start decides: measured on 2026-10-12 in New Haven, a wealthy start’s MXN 9.1
@@ -377,8 +378,8 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
   a whole life, and since 2026-09-27 the game charges every part of it that
   touches something it has: stress, sleep, the energy a night puts back and
   a night away (Homebody, Restless), hygiene, mood, illness (Resilient), an
-  early call or a late performance (Night Owl, Early Riser) and the receipts
-  a return can deduct (Keeps Accounts, Chaotic). What they said about other
+  early call or a late performance (Night Owl, Early Riser) and, until
+  2026-10-14, the receipts a return could deduct (Keeps Accounts, Chaotic). What they said about other
   people was said back until 2026-09-28, when the classmates were there to
   read it: how fast a bond grows (`bondWarmth`: Even Tempered, Disciplined,
   Independent and Guarded slower, Generous and An Open Book faster), how hard

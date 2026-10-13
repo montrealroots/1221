@@ -30,7 +30,8 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { clamp, rngFor } from '../core/rng';
 import { MS_DAY, type Instant } from '../core/time';
-import { CITIES } from '../content/geography';
+import { CITIES, COUNTRIES, countryOfPlace } from '../content/geography';
+import { theCountry } from './documents';
 import { BMI_EDGES, BODY, BODY_BY_COUNTRY, BODY_DEFAULT, HEIGHT_SPREAD } from '../content/body';
 import { personalityOf } from './personality';
 
@@ -155,4 +156,20 @@ export function bodyDay(person: Person, at: Instant): void {
 /** The body mass index's category, as the WHO names them. */
 export function bmiWord(bmi: number): string {
   return bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Healthy Weight' : bmi < 30 ? 'Overweight' : 'Obese';
+}
+
+/**
+ * The units a body is said in, and why: those of the country the person lives in, feet, inches and pounds in the
+ * United States and centimeters and kilograms everywhere else. The owner's rule of 2026-10-14, the one both the person
+ * look and creation's Your Body read (creation once a birthplace is chosen, by the town the life begins in). Until then
+ * creation asked in the units of where they were born, and a London-born student at Yale typed centimeters on the
+ * screen that made her and read feet on her own page the first morning.
+ */
+export function bodyUnits(livesIn: string, you = true): { imperial: boolean; why: string } {
+  const countryId = countryOfPlace(livesIn);
+  const imperial = countryId === 'us';
+  const country = countryId ? COUNTRIES.get(countryId)?.name : undefined;
+  const lives = you ? 'where you live' : 'where they live';
+  const where = country ? `${theCountry(country)}, ${lives}` : lives;
+  return { imperial, why: imperial ? `In feet, inches and pounds, the units of ${where}.` : `In centimeters and kilograms, the units of ${where}.` };
 }
