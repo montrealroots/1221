@@ -20,7 +20,8 @@ import { CASH } from '../cash';
 import { LENDING, SWITCHING } from '../banks-lending';
 import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, OPENING, TRANSFERS } from '../bankopening';
 import { FRAUD_LAW, SECURITY, type DebitTier } from '../security';
-import { ACCOUNT_LIFE, ROUND_UP_AMOUNT, UNCLAIMED } from '../accountlife';
+import { ACCOUNT_LIFE, UNCLAIMED } from '../accountlife';
+import { ROUND_UPS, type RoundUpRule } from '../roundups';
 import { US_SAFE_HARBOR } from '../latefees';
 import { CHAPTER_FOR } from '../tutorial';
 import { APPROVE_FROM, INQUIRY } from '../../systems/cardlife';
@@ -32,6 +33,7 @@ import { BRANCH_MINUTES, PRIMARY_DOES } from '../../systems/bankmoves';
 import { DEPOSIT_LEAD, PAYER_LEAD } from '../../systems/routing';
 import { ESTIMATE_DAYS, ESTIMATE_REFUND_DAYS, ESTIMATE_RUSH_DAYS, ESTIMATE_YEARS, EXPOSURE } from '../../systems/security';
 import { BREAK_NOTICE, END_WORDS, ESCHEAT_NOTICE_DAYS } from '../../systems/accountlife';
+import { roundUpMoney } from '../../systems/roundups';
 import { LOOKAHEAD_DAYS } from '../../systems/obligations';
 import { wealthIn } from '../../world/bootstrap';
 import type { GuideEntry } from './types';
@@ -101,10 +103,19 @@ const clockOf = (tier: DebitTier, word: 'of' | 'from'): string => `${tier.within
 /** Japan's and Canada's schemes, the two where money between banks neither lands at once nor waits on a bank's own days. */
 const JAPAN = TRANSFERS.JP!;
 const CANADA = TRANSFERS.CA!;
-/** Wells Fargo's flat amount a purchase in place of round-ups, and the banks whose amount the customer chooses. */
-const WF_ROUND = ROUND_UP_AMOUNT['us-wells-fargo'];
-const WF_FLAT = WF_ROUND && 'flat' in WF_ROUND ? WF_ROUND.flat : 0;
-const ROUND_CHOSEN = Object.entries(ROUND_UP_AMOUNT).filter(([, rule]) => 'chosen' in rule).map(([id]) => bankById(id)?.name ?? id);
+/** Round-ups, bank by bank (`content/roundups.ts`): the banks a rule picks out, by name, and Wells Fargo's and NatWest's figures. */
+const roundBanks = (keep: (rule: RoundUpRule) => boolean): string[] => Object.entries(ROUND_UPS).filter(([, rule]) => keep(rule)).map(([id]) => bankById(id)?.name ?? id);
+const ROUND_ALL = roundBanks(() => true);
+const WF_RULE = ROUND_UPS['us-wells-fargo']!.ways[0]!;
+const WF_FLAT = WF_RULE.kind === 'flat' ? Math.round((WF_RULE.amounts?.[0] ?? 0) * 100) : 0;
+const NATWEST_RULE = ROUND_UPS['gb-natwest']!.ways[0]!;
+const NATWEST_MOST = NATWEST_RULE.kind === 'change' ? NATWEST_RULE.multipliers?.at(-1) ?? 1 : 1;
+const CITI = ROUND_UPS['us-citi']!;
+const TD_WAY = ROUND_UPS['ca-td']!.ways[0]!;
+const TD_RANGE = TD_WAY.kind === 'flat' && TD_WAY.range ? TD_WAY.range : { min: 0, max: 0 };
+const ING_FLOOR = ROUND_UPS['de-ing']!.pausedUnder ?? 0;
+/** Pounds as NatWest writes them: pence under a pound, else pounds and pence. */
+const gbp = (pence: number): string => (pence < 100 ? `${pence}p` : formatMoney(pence, 'GBP'));
 /** The banks whose plan made in the card's introductory months costs nothing for its life. */
 const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? id);
 
@@ -449,31 +460,28 @@ export const MONEY: readonly GuideEntry[] = [
     id: 'bank.upkeep',
     title: 'Keeping An Account',
     goal: 'money',
-    covers: ['bank.set_round_ups', 'bank.reactivate', 'bank.cancel_new', 'bank.claim_unclaimed', 'bank.set_alerts'],
-    synonyms: ['round-ups', 'keep the change', 'dormant account', 'inactive account', 'unclaimed money', 'escheat', 'cooling-off', 'low balance alert', 'large payment alert', 'statement ready', 'short for a payment'],
-    questions: ['Why is my account blocked?', 'Where did my untouched savings go?', 'Can I cancel an account I just opened?', 'How do I get told when my balance is low?', 'What are round-ups?'],
+    covers: ['bank.reactivate', 'bank.cancel_new', 'bank.claim_unclaimed', 'bank.set_alerts'],
+    synonyms: ['dormant account', 'inactive account', 'unclaimed money', 'escheat', 'cooling-off', 'low balance alert', 'large payment alert', 'statement ready', 'short for a payment'],
+    questions: ['Why is my account blocked?', 'Where did my untouched savings go?', 'Can I cancel an account I just opened?', 'How do I get told when my balance is low?'],
     where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, Accounts, Your Accounts Over Time; Statements, Alerts' },
     available: `From the guide’s chapter “${chapter('bank.set_alerts')}”.`,
-    short: `Accounts change over time, and the bank tells you things. Round-ups move the change from each debit card purchase into savings at your primary account’s bank, where the bank offers them; Wells Fargo moves a flat ${usd(WF_FLAT)} a purchase instead. An account left untouched goes inactive, then dormant and blocked, and after the country’s years its money goes to the state, to be claimed back. Where the country gives a cooling-off period, a new savings account, term deposit or card can be canceled in it. Alerts tell you when an account runs low, a large payment goes out, a statement is ready, or an account is short for a payment due.`,
+    short: `Accounts change over time, and the bank tells you things. An account left untouched goes inactive, then dormant and blocked, and after the country’s years its money goes to the state, to be claimed back. Where the country gives a cooling-off period, a new savings account, term deposit or card can be canceled in it. Alerts tell you when an account runs low, a large payment goes out, a statement is ready, or an account is short for a payment due.`,
     steps: [
       'On Accounts, find Your Accounts Over Time. It shows only when it has something to show: a term deposit, round-ups your bank offers, an idle account, something new enough to cancel, money to claim back, or savings withdrawal fees.',
-      'Press Round-Ups to turn them On or Off.',
       'A dormant account shows Reactivate, something new enough shows Cancel It, and money handed to the state shows Claim It Back.',
       'When the bank writes that it’s about to hand an account to the state, What Needs You offers Keep The Account.',
       'On Statements, under Alerts, type Any Current Account Under and A Payment Over (blank turns one off) and press Save Alerts. Statement Ready and Short For A Payment turn On or Off with a press.',
     ],
     needs: [
-      `Round-ups: a bank that offers them at your primary account, and easy-access savings at the same bank. Bank of America and Citi round up, Wells Fargo moves a flat ${usd(WF_FLAT)} a purchase, and Chase doesn’t.`,
       `Cancel It: a country with a cooling-off period, ${UNCLAIMED.CA?.coolingOffDays} days in Canada, Britain, Ireland, Iceland, Korea, France, Germany and Spain and ${UNCLAIMED.MX?.coolingOffDays} in Mexico. The US, Japan, Australia and New Zealand have none, and Britain leaves out fixed-rate deposits.`,
       'Claim It Back: money of yours handed over as unclaimed, and a current account to take it.',
     ],
     costs: [
       { label: 'Time', value: 'None' },
-      { label: 'Money', value: 'None to set; round-ups move your own money into savings' },
+      { label: 'Money', value: 'None' },
       { label: 'An Idle Account', value: 'Some banks charge a yearly fee for an account left untouched, said under Other Charges' },
     ],
     reads: [
-      { label: 'A Round-Up', value: `The change to the next whole unit on what the debit card paid, even where a bank lets you round to a larger one; at Wells Fargo a flat ${usd(WF_FLAT)} a purchase, a whole-dollar one included. At ${andList(ROUND_CHOSEN)}, which move an amount you set in place of the change, the change is SLATE’s estimate, and the panel says so` },
       { label: 'Idle', value: 'Months since you last moved money in or out yourself; interest, the bank’s fees and a tax refund don’t count' },
       { label: 'Chase’s Months', value: `Inactive after ${CHASE_LIFE.inactiveMonths} months untouched, dormant after ${CHASE_LIFE.dormantMonths}` },
       { label: 'Unclaimed', value: `In the US, ${US_IDLE.years} years untouched, then the state’s unclaimed-property office` },
@@ -483,14 +491,12 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'A Payment Over', value: 'Every payment out of a current account, savings or a card at or over the line, moves between your own accounts left out' },
     ],
     now: [
-      `Round-ups On: each debit card purchase sets aside the change to the next whole unit for tonight, or at Wells Fargo a flat ${usd(WF_FLAT)}.`,
       'Reactivate: the account is unblocked at once, and its idle months count again from today.',
       'Cancel It: a savings account or term deposit closes with its money back whole into your primary account, without interest or penalty; a card closes to anything new, with what was spent on it still to repay.',
       'Claim It Back: all of it comes back into your primary current account.',
       'Save Alerts: the lines are kept, and checked from the day’s end on.',
     ],
     later: [
-      'Round-ups: at the day’s end what was set aside moves into easy-access savings at your primary account’s bank if the primary account holds it. On a day it’s short, or with no savings at that bank, that day’s round-ups stay in the current account.',
       'Idle: on the first of each month the bank looks again. A dormant account refuses Move Money, into it or out of it, and a dormant primary account refuses cash taken out, until it’s reactivated; at Bank of America and Capital One it stops earning interest.',
       `Unclaimed: on the first of a month within the ${ESCHEAT_NOTICE_DAYS} days before the country’s years run out, the bank writes and What Needs You asks. Left past them, on the first of the month the balance goes to the state and the account closes, with the standing orders into it. Your primary account is never handed over.`,
       'Alerts arrive in What Needs You at the day’s end.',
@@ -502,7 +508,6 @@ export const MONEY: readonly GuideEntry[] = [
       'Short For A Payment names the account, the payment, its date and what the account holds, with what to do.',
     ],
     unavailable: [
-      '“… doesn’t round purchases up into savings.”',
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
       '“Your primary current account can’t be canceled. Make another primary first.”',
@@ -514,13 +519,14 @@ export const MONEY: readonly GuideEntry[] = [
       'Turning Short For A Payment off: it’s the one alert on from the start, and the only warning before an autopay bounces.',
       'Setting A Payment Over too high: a stranger’s charge under it is found only on the statement.',
     ],
-    related: ['bank.accounts', 'bank.term', 'bank.card-security', 'bank.payments'],
+    related: ['bank.accounts', 'bank.term', 'bank.round-ups', 'bank.card-security', 'bank.payments'],
     connections: [
       { to: 'bank.card-security', kind: 'immediate', why: `A Payment Over set at or under a stranger’s charge tells you the day it happens, and you’ve learned of it then: in the US, a debit card charge reported within ${clockOf(DEBIT_PROMPT, 'of')} leaves you at most ${usd(DEBIT_PROMPT.max ?? 0)}.` },
       { to: 'bank.payments', kind: 'optional', why: `Short For A Payment watches each standing order and payment set for a date, ${LOOKAHEAD_DAYS} days ahead.` },
       { to: 'bank.card', kind: 'optional', why: 'Short For A Payment watches each card’s autopay against the account it pays from.' },
       { to: 'day.needs', kind: 'scheduled', why: 'Alerts, the dormancy notice and the bank’s letter before it hands money over come to What Needs You.' },
       { to: 'bank.term', kind: 'optional', why: 'A term deposit’s end and its early break are run from the same panel.' },
+      { to: 'bank.round-ups', kind: 'optional', why: 'Round-ups are set on the same panel, where your bank offers them.' },
     ],
     example: {
       setup: `A life with Modest means leaves ${usd(MODEST.savings)} in ${SAVINGS.name} and never touches it.`,
@@ -530,6 +536,80 @@ export const MONEY: readonly GuideEntry[] = [
         `On the first of a month within ${ESCHEAT_NOTICE_DAYS} days of ${US_IDLE.years} years, What Needs You asks, with Keep The Account.`,
       ],
       result: `Keep The Account or Reactivate counts as using it, and its months start again. Ignored, on the first of the month after ${US_IDLE.years} years its ${usd(MODEST.savings)} and the interest it built go to the state’s unclaimed-property office and the account closes; Claim It Back puts it all into your primary account.`,
+    },
+  },
+  {
+    id: 'bank.round-ups',
+    title: 'Round-Ups',
+    goal: 'money',
+    covers: ['bank.set_round_ups'],
+    synonyms: ['round-ups', 'keep the change', 'save the change', 'spare change', 'save as you go', 'simply save', 'bank the rest', 'kleingeld', 'redondeo', 'coin box'],
+    questions: ['What are round-ups?', 'Why aren’t my round-ups moving?', 'Why can’t I turn round-ups on?', 'Which banks round up?', 'Where did my round-ups go?'],
+    where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, Accounts, Your Accounts Over Time, Round-Ups' },
+    available: `From the guide’s chapter “${chapter('bank.set_round_ups')}”, at a bank that offers them: ${ROUND_ALL.length} of SLATE’s banks.`,
+    short: `Round-ups move money from your current account into savings at the same bank as you spend, each bank its own way: the change to the next unit you choose, times a multiplier at NatWest, a set amount a purchase (Wells Fargo’s ${usd(WF_FLAT)}, TD’s from ${roundUpMoney('ca-td', TD_RANGE.min)} to ${roundUpMoney('ca-td', TD_RANGE.max)}), or at KakaoBank the remainder of the day’s balance. Each moves on its bank’s day, and never into an overdraft. A choice the bank leaves to you has to be made before it starts: nothing is filled in.`,
+    steps: [
+      'On Accounts, under Your Accounts Over Time, find Round-Ups: what your bank’s feature does, and its choices.',
+      'Make the choices it asks for: How It Counts, Round Up To, Multiplier, Each Purchase, Amount, How Often or Minimum Balance, whichever your bank has.',
+      'Press Round-Ups: Off to turn them on. Changing a choice while they’re on shows Save The Choices.',
+      'Pay for the day by debit card (How You Pay). The panel shows what’s counted and not yet moved, and what came of the last transfer.',
+    ],
+    needs: [
+      `A bank that offers them at your primary current account: ${andList(ROUND_ALL)}. Chase, Capital One and the rest don’t.`,
+      'Easy-access savings at the same bank, where they go.',
+      'The choices your bank leaves to you, made: where it states no default, SLATE fills none in.',
+      'Purchases on the debit card: the day’s food is SLATE’s one purchase. Citi, BBVA México and Santander México count their own credit card’s purchases too.',
+    ],
+    costs: [
+      { label: 'Time', value: 'None' },
+      { label: 'Money', value: 'None: they move your own money into your savings' },
+    ],
+    reads: [
+      { label: 'A Purchase’s Round-Up', value: `The change to the next multiple of the unit you chose: a purchase already at one moves nothing, except at BBVA México, where it moves a whole unit. NatWest multiplies the change by the 1 to ${NATWEST_MOST} you pick. A set amount moves the same whatever the purchase. Bankinter moves the change to the next euro and the rest of the €1 or €2 you choose` },
+      { label: 'When It Moves', value: `At the day’s start, the day before’s: every day at most banks; at a business day’s end at ${andList(roundBanks((r) => r.when === 'business'))}; at the next business day’s start at ${andList(roundBanks((r) => r.when === 'next-business'))}; overnight into Saturday at ${andList(roundBanks((r) => r.when === 'friday-night'))}; on the 1st and the 16th at ${andList(roundBanks((r) => r.when === 'half-month'))}; Monday to Friday at ${andList(roundBanks((r) => r.when === 'weekdays'))}; as often as you choose at ${andList(roundBanks((r) => Boolean(r.every)))}` },
+      { label: 'The 1st And The 16th', value: 'LCL’s terms say twice a month without the days', estimate: true },
+      { label: 'When It’s Short', value: `All or nothing, never into an overdraft: what was counted isn’t moved, stays in your current account, and isn’t counted again. At Citi a transfer waits for your minimum balance, at least ${usd((CITI.minimumAtLeast ?? 0) * 100)}, two more days, and after three below it Citi turns Spend & Save off; at most ${usd((CITI.perTransfer ?? 0) * 100)} moves a time, the rest carried. ING counts nothing while the account holds under ${ING_FLOOR} €` },
+      { label: 'Where A Bank Is Silent', value: 'Each bank’s panel lists what its sources leave open and what SLATE does there, and what the bank does that SLATE doesn’t, with the source and the day it was read', estimate: true },
+    ],
+    now: [
+      'Round-Ups: On, with the choices made: each purchase from then on counts toward savings, to move on the bank’s day.',
+      'Off: nothing counts, and what was counted and hadn’t moved is dropped. It was never taken from your current account.',
+    ],
+    later: [
+      'On the bank’s day, what was counted moves from your current account to easy-access savings at the same bank, one transfer, Round-ups in your history.',
+      'A day the account can’t cover it, nothing moves, and the panel says what didn’t and why.',
+      'Making another bank’s account your primary one, or closing the savings it goes into, turns them off.',
+    ],
+    interpret: [
+      '“Counted, not yet moved” is waiting for the bank’s day; at Wells Fargo and Lloyds, what’s “to move at the next business day’s start” has been counted already.',
+      '“Last moved: … into savings” is the last transfer. “Not moved: …, because …” says why one didn’t happen.',
+      '“Not counting: …” under Round-Ups: On names a choice still to make, as a save from before 2026-10-13 can have.',
+    ],
+    unavailable: [
+      '“… doesn’t round purchases up into savings.”',
+      '“Round-ups go into savings at …: open easy-access savings there first.”',
+      '“Choose what to round up to: …” and the other choices, until they’re made.',
+      '“Round-ups at … run from a … current account made your primary one.”',
+    ],
+    mistakes: [
+      'Expecting a round-up on a whole purchase: most banks move nothing on one.',
+      'Running the current account near zero: a day it can’t cover the round-ups, they don’t move, and they aren’t made up later.',
+      'Switching your primary account to another bank and expecting them to follow: they’re set up at a bank, and stop there.',
+    ],
+    related: ['bank.upkeep', 'bank.accounts', 'bank.payments'],
+    connections: [
+      { to: 'bank.payments', kind: 'immediate', why: 'Only what the debit card pays rounds up: How You Pay sets whether the day goes on the debit card, the credit card or in cash.' },
+      { to: 'bank.accounts', kind: 'scheduled', why: 'Each transfer is a move from your current account into savings at the same bank, on the bank’s day.' },
+      { to: 'bank.upkeep', kind: 'optional', why: 'Round-ups are set on Your Accounts Over Time, with the term deposits and idle accounts.' },
+    ],
+    example: {
+      setup: `A life in London at NatWest, with savings there and money in the current account.`,
+      steps: [
+        'On Round-Ups, choose a Multiplier of ×3 and press Round-Ups: Off to turn them on.',
+        `A purchase of ${gbp(230)} is paid by debit card.`,
+        'The day ends.',
+      ],
+      result: `The purchase counts ${gbp(210)}, its change of ${gbp(70)} three times, as NatWest’s own example has it. At the next day’s start ${gbp(210)} moves from the current account to savings in one transfer, and the panel says “Last moved: ${gbp(210)} into savings”.`,
     },
   },
   {

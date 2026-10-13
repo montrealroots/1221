@@ -43,12 +43,13 @@
 import type { Simulation } from '../core/simulation';
 import { linkedTo } from './routing';
 import { CommandError } from '../core/simulation';
-import type { Person } from '../domain/model';
+import type { Person, RoundUpChoice } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
-import { ACCOUNT_LIFE, ROUND_UP_AMOUNT, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
+import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
+import { moveRoundUps, setRoundUps } from './roundups';
 import { dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
@@ -150,31 +151,6 @@ export function savingsDebit(sim: Simulation, account: Account): { room: Money; 
   return { room: Math.max(0, Math.min(account.balance - fee, left ?? Infinity)), fee };
 }
 
-/** The change to the next whole unit a purchase rounds up to. Until 2026-10-12 it was what every bank's round-ups moved. */
-export function roundUpOf(amount: Money): Money {
-  const rest = amount % 100;
-  return rest === 0 ? 0 : 100 - rest;
-}
-
-/**
- * What a debit card purchase puts toward savings tonight, at the person's current account's bank: its flat amount a
- * purchase where its words say it moves one (Wells Fargo's $1, from 2026-10-12), in the save's money, else the change
- * to the next whole unit, which at a bank whose amount the customer chooses is SLATE's estimate (`ROUND_UP_AMOUNT`).
- */
-export function roundUpFor(sim: Simulation, person: Person, amount: Money): Money {
-  const bankId = currentOf(sim, person)?.bankId;
-  const rule = bankId ? ROUND_UP_AMOUNT[bankId] : undefined;
-  const bank = bankId ? bankById(bankId) : undefined;
-  if (rule && 'flat' in rule && bank) return inSaveMoney(sim, rule.flat, bank.currency);
-  return roundUpOf(amount);
-}
-
-/** Whether the bank offers round-ups, and they're on. */
-export function roundUpsOn(sim: Simulation, person: Person): boolean {
-  const current = currentOf(sim, person);
-  return Boolean(person.roundUps?.on && current?.bankId && ACCOUNT_LIFE[current.bankId]?.roundUp);
-}
-
 /**
  * The days' notice a bank needs before it closes a term deposit early, where
  * its terms ask for it: NatWest's Fixed Term Savings, 35 (its own words are
@@ -219,19 +195,10 @@ function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money;
 export function registerAccountLife(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.account_life', (_event, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
-      // Round-ups: the day's change into savings, where the current account has it. Into easy-access savings at the
-      // current account's bank, as every bank's words name its own, and as a link to savings is (`savingsOf` in
-      // `spending.ts`); none there, it stays in the current account. Until 2026-10-12 it went into the first savings
-      // found at any bank.
-      const pending = person.roundUps?.pending ?? 0;
-      if (pending > 0 && person.roundUps) {
-        const current = currentOf(s, person);
-        const savings = Object.values(s.universe.accounts).find((a) => a.ownerId === person.id && a.kind === 'savings' && a.category !== 'term' && !a.closedAt && (!current?.bankId || a.bankId === current.bankId));
-        if (current && savings && current.balance >= pending) {
-          s.post({ memo: 'Round-ups', category: 'transfer', postings: [{ accountId: current.id, amount: -pending }, { accountId: savings.id, amount: pending }] });
-        }
-        person.roundUps.pending = 0;
-      }
+      // Round-ups, by the bank's own rule (`systems/roundups.ts`, from 2026-10-13): until then the day's change moved
+      // every night at every bank, into easy-access savings at the current account's bank (from 2026-10-12; the first
+      // savings found at any bank before), and stayed in the current account on a day it was short.
+      moveRoundUps(s, person);
       for (const account of Object.values(s.universe.accounts)) {
         if (account.ownerId !== person.id || account.closedAt || !account.bankId) continue;
         const rules = ACCOUNT_LIFE[account.bankId];
@@ -298,14 +265,7 @@ export function registerAccountLife(sim: Simulation): void {
     return { paid: earned - tax };
   });
 
-  sim.onCommand<{ on: boolean }, { on: boolean }>('bank.set_round_ups', (p, { sim: s }) => {
-    const person = s.player;
-    const current = currentOf(s, person);
-    const offered = current?.bankId ? ACCOUNT_LIFE[current.bankId]?.roundUp : undefined;
-    if (!offered) throw new CommandError(`${current?.institution ?? 'Your bank'} doesn’t round purchases up into savings.`);
-    person.roundUps = { on: Boolean(p.on), pending: person.roundUps?.pending ?? 0 };
-    return { on: Boolean(p.on) };
-  });
+  sim.onCommand<{ on: boolean } & RoundUpChoice, { on: boolean }>('bank.set_round_ups', (p, { sim: s }) => setRoundUps(s, p));
 
   sim.onCommand<{ accountId: string }, { accountId: string }>('bank.reactivate', (p, { sim: s }) => {
     const account = s.universe.accounts[p.accountId];

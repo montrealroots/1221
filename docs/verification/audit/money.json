@@ -344,19 +344,19 @@
     {
       "id": "bank.set_round_ups",
       "kind": "command",
-      "entry": "BankAccountLife.tsx:88 (only banks with roundUp)",
-      "reads": "ACCOUNT_LIFE[bank].roundUp",
-      "changes": "person.roundUps.on (accountlife.ts:281)",
-      "downstream": "spending.ts:286 accrues pending; accountlife.ts:206 moves current->savings at rollover (skipped if short)",
+      "entry": "RoundUps.tsx (on Your Accounts Over Time, BankAccountLife.tsx), at the 20 banks content/roundups.ts names: the choices the bank leaves to the customer, Round-Ups: On or Off, Save The Choices",
+      "reads": "ROUND_UPS[bank] (content/roundups.ts): the bank’s way, its choices and any default, when it moves, a floor, Citi’s minimum and cap, whether its own credit card counts",
+      "changes": "person.roundUps: on, the bank, the choices, since (systems/roundups.ts setRoundUps); off drops what was counted",
+      "downstream": "spending.ts countRoundUps counts each debit purchase (and the bank’s own credit card’s at Citi, BBVA México and Santander México) by the bank’s way; roundups.ts moveRoundUps, from the day’s rollover (accountlife.ts), moves it current->savings at the same bank on the bank’s day, all or nothing when short, Citi’s minimum waiting two days then off; the panel shows what’s waiting and the last transfer",
       "persistent": "settings + transfers",
-      "explanation": "round-ups line",
-      "tests": "accountlife.test.ts:354 ‘rounds Bank of America’s debit purchases up into savings at the day’s end, and not Chase’s’ (on a New York life no new one lives, at Bank of America, which a New Haven life can bank at; the purchase made by calling spend)",
+      "explanation": "the round-ups panel: the bank’s feature in words, its choices, what’s counted and waiting, the last transfer or why it didn’t move, when it’s short, and what the bank leaves open, with source and date; the guide’s Round-Ups entry",
+      "tests": "roundups.test.ts (22 tests: each bank’s way held to its own published example, no default filled in, when it moves by each bank’s day, short days, Citi’s minimum and cap, turning off, switching banks, a save from before, the ledger, a reload and a long skip, the panel rendered); defects-g4-2.test.ts ‘won’t start at TD … until both are chosen’, ‘won’t be turned on without savings …’; guide-examples-money.test.ts, the play for bank.round-ups (NatWest’s £2.30 at ×3); accountlife.test.ts:354 ‘rounds Bank of America’s debit purchases up into savings at the day’s end, and not Chase’s’",
       "status": "verified",
-      "issue": "minor: round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short (spending.ts:286)",
+      "issue": "",
       "corrected": {
-        "on": "2026-10-12",
-        "said": "Note: ‘round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short’. Tested By didn’t say its life was New York’s.",
-        "now": "Since 2026-10-10 the round-up is on what the debit card paid, not the part the credit card took. No test checks the short case."
+        "on": "2026-10-13",
+        "said": "Entry: BankAccountLife.tsx:88 (only banks with roundUp). Reads: ACCOUNT_LIFE[bank].roundUp. Downstream: spending.ts:286 accrues pending; accountlife.ts:206 moves current->savings at rollover (skipped if short). Tests: accountlife.test.ts:354 ‘rounds Bank of America’s debit purchases up into savings at the day’s end, and not Chase’s’ (on a New York life no new one lives, at Bank of America, which a New Haven life can bank at; the purchase made by calling spend). Note: minor: round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short (spending.ts:286)",
+        "now": "Round-ups were researched again bank by bank from official sources on 2026-10-13 and rebuilt to each bank’s own way: until then every bank moved the change to the next whole unit nightly (a cent at most a purchase in won, yen or krónur), TD and Landsbankinn moved it as SLATE’s estimate of an amount the customer chooses, Citi’s cap, frequency, minimum and credit card were words only, Íslandsbanki and Santander México were left out and KB Kookmin offered one no official page confirms. The review of 2026-10-13 found Off, the short day and Wells Fargo’s dollar moved untested; each is tested now."
       },
       "read": true
     },

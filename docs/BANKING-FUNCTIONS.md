@@ -261,7 +261,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | B8 | Scheduled transfers from checking | Has it | A standing order into savings. |
-| B9 | Round-up saving | Has it | Round-ups into savings where the bank offers them. |
+| B9 | Round-up saving | Has it | Round-ups into savings at the twenty banks that offer them, each its own way (`content/roundups.ts`, researched 2026-10-13): the change to the next unit the customer chooses, a multiplier, a set amount a purchase, or a balance's remainder; on the bank's day; all or nothing when short. Until 2026-10-13 every bank's was the change to the next whole unit, moved nightly. |
 | B10 | Self-service deposit to savings | Has it | Cash into savings. |
 | B11 | No top-ups on a CD mid-term | Has it | A term deposit takes nothing more. |
 

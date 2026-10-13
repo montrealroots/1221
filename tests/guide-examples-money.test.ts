@@ -56,7 +56,7 @@ import { breakQuote, END_WORDS, termEndOf } from '@/engine/systems/accountlife';
 import { cardTerms, DUE_KIND, dueAt, stateOf, STATEMENT_KIND } from '@/engine/systems/credit';
 import { withdrawalQuote } from '@/engine/systems/cash';
 import { REPLACED_KIND, somebodyElse } from '@/engine/systems/security';
-import { payFromCurrent } from '@/engine/systems/spending';
+import { payFromCurrent, spend } from '@/engine/systems/spending';
 import { STANDING_ORDER_KIND } from '@/engine/systems/payments';
 import { closeRefusal, openingDeposit } from '@/engine/systems/bankmoves';
 import { depositAccount } from '@/engine/systems/routing';
@@ -79,6 +79,7 @@ vi.mock('@/app/game-context', () => {
 });
 
 const { Home } = await import('@/ui/screens/Home');
+const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
 
 /** Home as the player has it, its text with the tags taken out. */
 function homeText(sim: Simulation): string {
@@ -142,6 +143,8 @@ function grab(text: string, before: string, inner: string, after: string): strin
 }
 /** A sum the text states between two phrases, in cents. */
 const sum = (text: string, before: string, after: string) => Math.round(Number(grab(text, before, String.raw`\$(\d[\d,]*(?:\.\d\d)?)`, after).replace(/,/g, '')) * 100);
+/** Pounds the text states between two phrases, "£2.10" or "70p", in pence. */
+const pence = (text: string, before: string, after: string) => { const v = grab(text, before, String.raw`(£\d+\.\d\d|\d+p)`, after); return v.startsWith('£') ? Math.round(Number(v.slice(1)) * 100) : Number(v.slice(0, -1)); };
 /** A rate the text states, as a fraction. */
 const rate = (text: string, before: string, after: string) => Number(grab(text, before, String.raw`(\d+(?:\.\d+)?)%`, after)) / 100;
 /** A count the text states. */
@@ -150,6 +153,41 @@ const count = (text: string, before: string, after: string) => Number(grab(text,
 // --- the examples -----------------------------------------------------------------------------------------------------
 
 const PLAYS: Record<string, () => void> = {
+  // From 2026-10-13: NatWest's own example (natwest.com, Round Ups: "£2.30 gives 70p; ×3 gives £2.10"), played.
+  'bank.round-ups': () => {
+    const { setup, steps, result } = example('bank.round-ups');
+    expect(setup).toBe('A life in London at NatWest, with savings there and money in the current account.');
+    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', bankId: 'gb-natwest' }, 'guide-round-ups');
+    const current = primary(sim);
+    const savings = own(sim, 'savings', 'gb-natwest')!;
+    expect(current.bankId).toBe('gb-natwest');
+    expect(savings).toBeDefined();
+    expect(current.balance).toBeGreaterThan(100_00);
+    // The labels the steps name are the panel's (`ui/bank/RoundUps.tsx`): its Multiplier and its On/Off button.
+    const panel = readFileSync('src/ui/bank/RoundUps.tsx', 'utf8');
+    expect(panel).toContain("select('Multiplier', 'multiplier'");
+    expect(panel).toContain("Round-Ups: {on ? 'On' : 'Off'}");
+    const factor = count(steps[0]!, 'choose a Multiplier of ×', ' and press Round-Ups: Off to turn them on.');
+    must(sim, 'bank.set_round_ups', { on: true, multiplier: factor });
+    must(sim, 'bank.set_payments', { everyday: 'debit' });
+    const price = pence(steps[1]!, 'A purchase of ', ' is paid by debit card.');
+    // TEST SETUP: a purchase of a set amount on the debit card, as the day's groceries are made.
+    const before = sim.player.roundUps!.pending;
+    expect(spend(sim, sim.player, price, 'A purchase', 'food')).toBe(true);
+    const counted = sim.player.roundUps!.pending - before;
+    expect(counted).toBe(pence(result, 'The purchase counts ', ', its change of'));
+    expect(counted).toBe(pence(result, 'its change of ', ' three times') * factor);
+    expect(steps[2]).toBe('The day ends.');
+    const night = at(sim, 2026, 1, 6, 0);
+    sim.advanceTo(night + 60_000);
+    const moved = postings(sim, savings, /^Round-ups$/, night - HOUR);
+    expect(moved).toEqual([{ at: night, amount: pence(result, 'At the next day’s start ', ' moves from the current account') }]);
+    expect(postings(sim, current, /^Round-ups$/, night - HOUR)).toEqual([{ at: night, amount: -moved[0]!.amount }]);
+    h.sim = sim;
+    const shown = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-natwest' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    const said = grab(result, 'the panel says “', '(Last moved: £\\d+\\.\\d\\d into savings)', '”');
+    expect(shown).toContain(said);
+  },
   'money.affairs': () => {
     const { setup, result } = example('money.affairs');
     const sim = life('modest');

@@ -1520,17 +1520,17 @@
         "Person"
       ],
       "state": "src/engine/systems/accountlife.ts",
-      "preconditions": "A bank with a round-up; an account dormant; money handed to the state",
+      "preconditions": "A bank with round-ups, savings there and its choices made; an account dormant; money handed to the state",
       "commands": [
         "bank.set_alerts",
         "bank.set_round_ups",
         "bank.reactivate",
         "bank.claim_unclaimed"
       ],
-      "effects": "Alerts notify a low balance, a large payment or a statement; round-ups move each purchase’s change to savings; an account untouched for three years goes to the state’s unclaimed-property office, warned first, and comes back when claimed",
+      "effects": "Alerts notify a low balance, a large payment or a statement; round-ups move into savings at the same bank by the bank’s own way and on its own day (content/roundups.ts), all or nothing when the account is short; an account untouched for three years goes to the state’s unclaimed-property office, warned first, and comes back when claimed",
       "persists": "Person.alerts, roundUps, unclaimed; account dormancy and escheatWarned",
       "readers": [
-        "spend, for round-ups (systems/spending.ts)",
+        "spend, for round-ups (systems/spending.ts), and the day’s rollover that moves them (systems/roundups.ts)",
         "the statement and alert handlers (systems/statements.ts)",
         "the dormancy and unclaimed handlers (systems/accountlife.ts)",
         "cash, lending and banking, which refuse a dormant account"
@@ -1544,12 +1544,15 @@
         "/workspace/bank"
       ],
       "saveLoad": "",
-      "provenance": "Banks’ deposit agreements (content/accountlife.ts); unclaimed-property law, the US’s from New York’s (UNCLAIMED)",
+      "provenance": "Banks’ deposit agreements (content/accountlife.ts); each bank’s round-up pages and terms, checked 2026-10-13 (content/roundups.ts); unclaimed-property law, the US’s from New York’s (UNCLAIMED)",
       "tests": [
         "tests/account-alerts.test.ts",
         "tests/accountlife.test.ts",
         "tests/defects-g17-1.test.ts",
+        "tests/defects-g4-2.test.ts",
+        "tests/guide-examples-money.test.ts",
         "tests/playthrough-fixes.test.ts",
+        "tests/roundups.test.ts",
         "tests/security.test.ts",
         "tests/statements.test.ts"
       ],
@@ -1561,7 +1564,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Until 2026-10-12 this was called Verified, while an account’s dormancy and its hand-over to the state were reached only by calling their handler. Driven through the commands and the clock: round-ups at Bank of America, the day’s change moved into savings at its end, and refused at Chase, on New York lives (tests/accountlife.test.ts); a low balance’s alert and a statement’s, set through bank.set_alerts and read through the clock (tests/statements.test.ts, on Icelandic lives; tests/account-alerts.test.ts, on a New Haven student); money claimed back from the state into the current account, once (tests/accountlife.test.ts). What isn’t: dormancy and the hand-over are reached by calling idleAccounts with the idle time typed in, never by the clock, and what reads a reactivation through bank.reactivate, the idle time counted again from it, is checked the same way (tests/accountlife.test.ts); no test sets the large-payment alert the effects name through bank.set_alerts: tests/security.test.ts and tests/defects-g17-1.test.ts set it by hand (sim.player.alerts) and read the liability it leaves at a dispute; a dormant account’s refusal is checked at TD Canada, where no New Haven life banks, and an American bank’s interest stopping while dormant is checked with the flag set by hand. docs/GAMEPLAY-COVERAGE.md calls bank.set_alerts and bank.reactivate partial for the same gaps. Decided on 2026-10-12 by opening the tests, under the standard both registries keep: a reader called as a function, its input typed in, checks less. Chase and Capital One offer no round-up. The US’s unclaimed rule is read from New York’s law. Until 2026-10-12 this row named bank.switch too, and was called Verified with it, though a New Haven life’s switch is refused: the US has no switching service. It’s in switching-service now"
+      "limits": "Until 2026-10-12 this was called Verified, while an account’s dormancy and its hand-over to the state were reached only by calling their handler. Driven through the commands and the clock: round-ups bank by bank (from 2026-10-13), each bank’s way held to its own published example, the day it moves on, a short day, Citi’s minimum and cap, turning off, switching banks, a save from before, the ledger, a reload and a long skip, and the panel, on a life at each bank (tests/roundups.test.ts), and NatWest’s example played from the guide (tests/guide-examples-money.test.ts); until 2026-10-13 only Bank of America’s, on New York lives (tests/accountlife.test.ts); a low balance’s alert and a statement’s, set through bank.set_alerts and read through the clock (tests/statements.test.ts, on Icelandic lives; tests/account-alerts.test.ts, on a New Haven student); money claimed back from the state into the current account, once (tests/accountlife.test.ts). Until 2026-10-13 this said dormancy and the hand-over were reached only by calling idleAccounts with the idle time typed in, never by the clock, and that no test set the large-payment alert through bank.set_alerts: the guide’s worked examples did both by then, dormancy, the bank’s letter, Keep The Account, Reactivate and the hand-over month by month through the clock on a New Haven Chase life, and the alert set through bank.set_alerts (tests/guide-examples-money.test.ts, bank.upkeep and bank.card-security). What isn’t: the payment that trips the large-payment alert there is a stranger’s, given as the day’s draw would make it, and no test trips it with an ordinary payment of the player’s; tests/security.test.ts and tests/defects-g17-1.test.ts set the alert by hand (sim.player.alerts) and read the liability it leaves at a dispute; a dormant account’s refusal is checked at TD Canada, where no New Haven life banks, and an American bank’s interest stopping while dormant is checked with the flag set by hand. docs/GAMEPLAY-COVERAGE.md calls bank.set_alerts and bank.reactivate partial for the same gaps. Decided on 2026-10-12 by opening the tests, under the standard both registries keep: a reader called as a function, its input typed in, checks less. Chase and Capital One offer no round-up. The US’s unclaimed rule is read from New York’s law. Until 2026-10-12 this row named bank.switch too, and was called Verified with it, though a New Haven life’s switch is refused: the US has no switching service. It’s in switching-service now"
     },
     {
       "id": "foreign-banking-rights",

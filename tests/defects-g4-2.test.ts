@@ -9,8 +9,11 @@
  *   the scope reset of 2026-10-09, and nothing takes the player to another city.
  * - Round-ups go into savings at the current account's bank: they went into the first savings found at any bank.
  * - At Wells Fargo a purchase moves the flat $1 its words say, not the change to the next dollar. At TD and
- *   Landsbankinn, whose amount the customer chooses with no default stated, SLATE still rounds up, and says it's its
- *   estimate beside their words.
+ *   Landsbankinn, whose amount the customer chooses with no default stated, SLATE rounded up and said it was its
+ *   estimate beside their words, until 2026-10-13: the choice is the player's now, and nothing counts until it's made
+ *   (`systems/roundups.ts`; `tests/roundups.test.ts` holds every bank to its rule).
+ * - Round-ups stayed in the current account where there was no savings at its bank, until 2026-10-13: every bank's
+ *   round-ups go into savings the customer holds there, and turning them on without it is refused now.
  *
  * PLAYER JOURNEYS through the commands the screens give, on real saves. A TEST SETUP clears the calendar, funds an
  * account or books an entry in another city, as named where it's done. The bank's panel is rendered as the player has
@@ -26,9 +29,9 @@ import type { Account } from '@/engine/core/ledger';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
+import { ROUND_UPS } from '@/engine/content/roundups';
 import { bankAccountsOf } from '@/engine/systems/banking';
-import { roundUpOf } from '@/engine/systems/accountlife';
+import { roundUpOf } from '@/engine/systems/roundups';
 import { checkingsOf } from '@/engine/systems/lending';
 import { spend } from '@/engine/systems/spending';
 import { hoursUntilNextCommitment, suggestedSleep } from '@/engine/systems/life';
@@ -155,7 +158,7 @@ function citiThenBankOfAmerica(seed: string, savingsThere: boolean): { sim: Simu
   sim.must({ kind: 'bank.set_primary', payload: { accountId: currentAt(sim, 'us-bank-of-america')!.id } });
   if (savingsThere) sim.must({ kind: 'bank.open_savings', payload: { bankId: 'us-bank-of-america' } });
   give(sim, currentAt(sim, 'us-bank-of-america')!, 1_000_00);
-  sim.must({ kind: 'bank.set_round_ups', payload: { on: true } });
+  if (savingsThere) sim.must({ kind: 'bank.set_round_ups', payload: { on: true } });
   sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
   return { sim, citi };
 }
@@ -171,17 +174,26 @@ describe('round-ups', () => {
     expect(roundUpsInto(sim, citi)).toBe(0);
   });
 
-  it('stay in the current account where there’s no savings at its bank, as they did before', () => {
+  // Until 2026-10-13 they could be turned on there and stayed in the current account each night; every bank's round-ups
+  // go into savings held at it.
+  it('won’t be turned on without savings at the current account’s bank, and stop, what was counted dropped, when it closes', () => {
     const { sim, citi } = citiThenBankOfAmerica('g4-2-roundups-none-there', false);
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error).toBe('Round-ups go into savings at Bank of America: open easy-access savings there first.');
+    expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
+    expect(sim.player.roundUps?.pending ?? 0).toBe(0);
+    sim.must({ kind: 'bank.open_savings', payload: { bankId: 'us-bank-of-america' } });
+    sim.must({ kind: 'bank.set_round_ups', payload: { on: true } });
     expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
     expect(sim.player.roundUps!.pending).toBe(66);
+    sim.must({ kind: 'bank.close_savings', payload: { accountId: savingsAt(sim, 'us-bank-of-america')!.id } });
     sim.advanceBy(MS_DAY);
+    expect(sim.player.roundUps).toMatchObject({ on: false, pending: 0, last: { notMoved: 66, why: 'there’s no easy-access savings at Bank of America' } });
     expect(roundUpsInto(sim, citi)).toBe(0);
     expect(sim.universe.transactions.some((t) => t.memo === 'Round-ups')).toBe(false);
   });
 
   it('move Wells Fargo’s flat $1 for each debit card purchase, whole-dollar ones too, as its own words on screen say', () => {
-    expect(ACCOUNT_LIFE['us-wells-fargo']!.roundUp).toMatch(/^Not a round-up\. .* a flat \$1 /);
+    expect(ROUND_UPS['us-wells-fargo']!.words).toMatch(/^Not a round-up: a flat \$1 for each one-time debit card purchase/);
     const sim = lifeIn('us-ny-newyork', 'us-wells-fargo', 'g4-2-wells-flat');
     give(sim, sim.universe.accounts[sim.player.primaryAccountId!]!, 1_000_00);
     sim.must({ kind: 'bank.set_round_ups', payload: { on: true } });
@@ -190,21 +202,30 @@ describe('round-ups', () => {
     expect(sim.player.roundUps!.pending).toBe(1_00);
     expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
     expect(sim.player.roundUps!.pending).toBe(2_00);
+    expect(panel(sim, 'us-wells-fargo')).toContain(ROUND_UPS['us-wells-fargo']!.words.replace(/'/g, '&#x27;'));
   });
 
-  it('round up at TD, whose amount the customer chooses, and its panel says that’s SLATE’s estimate; Bank of America’s doesn’t', () => {
+  // Until 2026-10-13 TD and Landsbankinn rounded up to the next whole unit as "SLATE's estimate", a default neither bank
+  // states: the amount is the player's to choose now, and nothing counts until it's chosen.
+  it('won’t start at TD, whose amount and how often are the customer’s with no default, until both are chosen; then each purchase counts the amount', () => {
     const sim = lifeIn('ca-on-toronto', 'ca-td', 'g4-2-td-estimate');
     give(sim, sim.universe.accounts[sim.player.primaryAccountId!]!, 1_000_00);
-    sim.must({ kind: 'bank.set_round_ups', payload: { on: true } });
+    if (!savingsAt(sim, 'ca-td')) sim.must({ kind: 'bank.open_savings', payload: { bankId: 'ca-td' } });
     sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error).toBe('Choose the amount each purchase, C$0.50 to C$5.00.');
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true, amount: 5.01 } }).error).toBe('Choose the amount each purchase, C$0.50 to C$5.00.');
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true, amount: 1.25 } }).error).toBe('Choose how often it moves: daily, weekly, every two weeks.');
     expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
-    expect(sim.player.roundUps!.pending).toBe(roundUpOf(12_34));
-    const estimate = 'It’s an amount you choose, and the bank states no default: SLATE rounds each purchase up to the next whole unit in its place, SLATE’s estimate.';
+    expect(sim.player.roundUps?.pending ?? 0).toBe(0);
+    sim.must({ kind: 'bank.set_round_ups', payload: { on: true, amount: 1.25, every: 'week' } });
+    expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
+    expect(spend(sim, sim.player, 12_00, 'Groceries', 'food')).toBe(true);
+    expect(sim.player.roundUps!.pending).toBe(2 * 1_25);
+    expect(roundUpOf(12_34)).not.toBe(1_25);
     for (const bankId of ['ca-td', 'is-landsbankinn']) {
       const words = panel(sim, bankId);
-      expect(words).toContain(`Round-ups: ${ACCOUNT_LIFE[bankId]!.roundUp!.replace(/&/g, '&amp;').replace(/'/g, '&#x27;')}`);
-      expect(words).toContain(estimate);
+      expect(words).toContain(ROUND_UPS[bankId]!.words);
+      expect(words).not.toContain('estimate');
     }
-    for (const bankId of ['us-bank-of-america', 'us-wells-fargo']) expect(panel(sim, bankId)).not.toContain('SLATE’s estimate.');
   });
 });

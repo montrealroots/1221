@@ -13,7 +13,9 @@ import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { ACCOUNT_LIFE, ROUND_UP_AMOUNT, UNCLAIMED } from '@/engine/content/accountlife';
+import { ACCOUNT_LIFE, UNCLAIMED } from '@/engine/content/accountlife';
+import { ROUND_UPS } from '@/engine/content/roundups';
+import { RoundUps } from '@/ui/bank/RoundUps';
 import { bankById } from '@/engine/content/banks';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { BREAK_NOTICE, breakQuote, END_WORDS, inCoolingOff, termEndOf } from '@/engine/systems/accountlife';
@@ -32,8 +34,6 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
   const person = useWorld((s) => s.player);
   const accounts = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && !a.closedAt && !a.nominal));
   const rules = ACCOUNT_LIFE[bankId];
-  const roundUp = ROUND_UP_AMOUNT[bankId];
-  const roundUpChosen = roundUp !== undefined && 'chosen' in roundUp;
   const terms = accounts.filter((a) => a.category === 'term');
   const dormant = accounts.filter((a) => a.dormant);
   const inactive = accounts.filter((a) => a.inactive && !a.dormant);
@@ -42,7 +42,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
   const bank = bankById(bankId);
   const country = bank ? UNCLAIMED[bank.iso] : undefined;
   const DAY = 86_400_000;
-  if (terms.length === 0 && !rules?.roundUp && dormant.length === 0 && inactive.length === 0 && cancelable.length === 0 && unclaimed.length === 0 && !rules?.withdrawalFee) return null;
+  if (terms.length === 0 && !ROUND_UPS[bankId] && dormant.length === 0 && inactive.length === 0 && cancelable.length === 0 && unclaimed.length === 0 && !rules?.withdrawalFee) return null;
 
   return (
     <Panel title="Your Accounts Over Time" subtitle="Term deposits, round-ups, idle accounts, and changing your mind." help="bank.upkeep">
@@ -86,18 +86,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
         {rules?.withdrawalFee !== undefined && rules.freeWithdrawals !== undefined && (
           <p className="small" style={{ margin: 0 }}>Savings here: {rules.freeWithdrawals} withdrawal{rules.freeWithdrawals === 1 ? '' : 's'} free a month, a payment the savings makes counted among them, then {money(inSaveMoney(sim, rules.withdrawalFee, bank?.currency ?? cur))} each.</p>
         )}
-        {rules?.roundUp && (
-          <div>
-            {/* Where the amount is the customer's to choose, what SLATE moves in its place is said (from 2026-10-12). */}
-            <p className="small" style={{ margin: '0 0 4px' }}>
-              Round-ups: {rules.roundUp}
-              {roundUpChosen ? ' It’s an amount you choose, and the bank states no default: SLATE rounds each purchase up to the next whole unit in its place, SLATE’s estimate.' : ''}
-            </p>
-            <Gated feature="bank.set_round_ups" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_round_ups', { on: !person.roundUps?.on })}>
-              Round-Ups: {person.roundUps?.on ? 'On' : 'Off'}
-            </Gated>
-          </div>
-        )}
+        <RoundUps bankId={bankId} />
         {inactive.map((a) => (
           <p key={a.id} className="small" style={{ margin: 0 }}>
             <Open subject={at('account', a.id)}>{a.name}</Open> is inactive, untouched for months{a.bankId && ACCOUNT_LIFE[a.bankId]?.dormantMonths !== undefined ? `, and goes dormant at ${ACCOUNT_LIFE[a.bankId]!.dormantMonths} months untouched` : ''}. Using it wakes it.

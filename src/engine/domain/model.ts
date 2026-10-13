@@ -76,6 +76,13 @@ export interface Wellbeing {
   hygiene: number;
 }
 
+/**
+ * The choices a bank leaves to the customer for its round-ups (`content/roundups.ts`): which way counts (Landsbankinn's
+ * round-up or set amount), the unit to round up to, a set amount in whole units of the bank's currency, a multiplier,
+ * how often it moves, and Citi's minimum balance.
+ */
+export interface RoundUpChoice { way?: number; unit?: number; amount?: number; multiplier?: number; every?: 'day' | 'week' | 'fortnight'; minimum?: number }
+
 export interface Person {
   id: Id;
   saveId: Id;
@@ -175,8 +182,25 @@ export interface Person {
    * way it ran, everything from the bank with savings swept.
    */
   payments?: PaymentSettings;
-  /** Round-ups into savings, where the bank offers them, and the day's change so far. */
-  roundUps?: { on: boolean; pending: Money };
+  /**
+   * Round-ups into savings, where the bank offers them (`systems/roundups.ts`): what's counted and not yet moved, and
+   * from 2026-10-13 the bank they were set up at, the choices the bank leaves to the customer, what's counted to move at
+   * the next business day's start (`due`), what of it was counted on the day `todayKey` names (`today`: the night's groceries
+   * wait for their own day's transfer), the day they were turned on (`since`), days in a row Citi's minimum wasn't met
+   * (`below`), what KakaoBank's sweeps have put into the 저금통 (`held`), and what came of the last transfer.
+   */
+  roundUps?: RoundUpChoice & {
+    on: boolean;
+    pending: Money;
+    bankId?: string;
+    due?: Money;
+    today?: Money;
+    todayKey?: string;
+    since?: Instant;
+    below?: number;
+    held?: Money;
+    last?: { at: Instant; moved?: Money; notMoved?: Money; why?: string };
+  };
   /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
   unclaimed?: { amount: Money; to: string; at: Instant }[];
   /** Drama school, while they're at one and after (`systems/school.ts`). */

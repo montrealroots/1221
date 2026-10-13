@@ -37,7 +37,8 @@ import { personalityOf } from './personality';
 import { cardCeilingRoom, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
-import { roundUpFor, roundUpsOn, savingsDebit } from './accountlife';
+import { savingsDebit } from './accountlife';
+import { countRoundUp, roundUpFor, roundUpsOn, roundsUpCard } from './roundups';
 import { hold } from './pending';
 import { latePenaltyAll, owedEverywhere, unassessedBalance } from './taxreturn';
 
@@ -304,6 +305,18 @@ export function canSpend(sim: Simulation, person: Person, amount: Money, categor
  * debit card: what the bank and the card couldn't pay was owed in Bills
  * Owed, with nothing owed allowed.
  */
+/**
+ * A purchase's round-ups (B9), counted toward savings by the bank's own way (`systems/roundups.ts`): on what the debit
+ * card paid, and on what the credit card paid where it's the bank's own and the bank counts it (Citi, BBVA and Santander
+ * in Mexico; from 2026-10-13). Until 2026-10-13 it was the change to the next whole unit at every bank, Wells Fargo's
+ * flat $1 aside, and a credit card's purchases never counted.
+ */
+function countRoundUps(sim: Simulation, person: Person, onDebit: Money, onCard: Money, card: Account | undefined): void {
+  if (!roundUpsOn(sim, person)) return;
+  if (onDebit > 0) countRoundUp(sim, person, roundUpFor(sim, person, onDebit));
+  if (onCard > 0 && roundsUpCard(sim, person, card)) countRoundUp(sim, person, roundUpFor(sim, person, onCard));
+}
+
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);
@@ -335,6 +348,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
     if (amount > onCredit && wallet) postings.push({ accountId: wallet.id, amount: -(amount - onCredit) });
     const txn = sim.post({ memo, category, postings });
     if (onCredit > 0 && card) hold(sim, txn, card);
+    countRoundUps(sim, person, 0, onCredit, card);
     return true;
   }
   // On the credit card first where that's how they pay for the day, then the debit card.
@@ -365,14 +379,9 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   // A debit the bank couldn't pay went back unpaid first, where it charges
   // for that; a card purchase it can't pay is only declined.
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
-  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) {
-    chargeForPurchase(sim, person);
-    // The change to the next whole unit, or the bank's flat amount a purchase where its words say so (`roundUpFor`,
-    // from 2026-10-12: the change at every bank until then), into savings tonight, where the bank rounds up (B9): on
-    // what the debit card paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
-    const onDebit = amount - creditFirst - bank.short;
-    if (roundUpsOn(sim, person) && onDebit > 0) person.roundUps!.pending += roundUpFor(sim, person, onDebit);
-  }
+  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) chargeForPurchase(sim, person);
+  // On what the debit card paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
+  if (category === 'food') countRoundUps(sim, person, amount - creditFirst - bank.short, fromCard, card);
   return true;
 }
 

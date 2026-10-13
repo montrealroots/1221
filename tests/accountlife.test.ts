@@ -1,7 +1,6 @@
 /**
- * An account's life (`systems/accountlife.ts`): module 7 of
- * `docs/BANKING-FUNCTIONS.md`. Each claim against the bank's own terms in
- * `content/accountlife.ts`.
+ * An account's life (`systems/accountlife.ts`): module 7 of `docs/BANKING-FUNCTIONS.md`. Each claim against the bank's
+ * own terms in `content/accountlife.ts`; round-ups, bank by bank, are `tests/roundups.test.ts`'s from 2026-10-13.
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
@@ -16,7 +15,8 @@ import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { paymentsOf } from '@/engine/systems/payments';
 import { termsOf } from '@/engine/systems/lending';
 import { inTheBank, payFromCurrent, spend } from '@/engine/systems/spending';
-import { breakQuote, idleAccounts, inCoolingOff, roundUpOf, savingsDebit, savingsWithdrawalFee, termEndOf } from '@/engine/systems/accountlife';
+import { breakQuote, idleAccounts, inCoolingOff, savingsDebit, savingsWithdrawalFee, termEndOf } from '@/engine/systems/accountlife';
+import { roundUpOf } from '@/engine/systems/roundups';
 import { yearOf } from '@/engine/systems/earnings';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'life') =>
