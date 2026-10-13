@@ -6,22 +6,24 @@
  * one place each, the techniques from the craft, the genres from the engagement record, the day from wellbeing and
  * the evaluation's own condition, the school from its record, the history from the development ledger, the recent
  * work and the journey's lasting counts. Nothing is drawn for the screen. What it suggests is worked out by the
- * engine's own comparisons (the last work's limits, the next part's play), and changes with them. Identity is shown as
+ * engine's own comparisons (the last work's limits, the next part's play, and from 2026-10-12 the weakness the work for
+ * life keeps coming back to, `systems/artistry.ts`), and changes with them. Identity is shown as
  * given and decides nothing: it is kept apart from every ability. An Interests section stood between the techniques
  * and the genres until 2026-10-10, when the owner removed the interests.
  */
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine, Empty } from '@/ui/components/primitives';
-import { Gated, useFeature } from '@/ui/guide/Guide';
+import { Panel, Stat, Fine, Empty, WhyNot } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
 import { formatDate, ageOn } from '@/engine/core/time';
+import { ARTISTRY, identityOf } from '@/engine/systems/artistry';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, TIER, exerciseFor, PRACTICE, type PracticeFocus } from '@/engine/content/practice';
-import { experienceOf, FEATURE_LABEL, recommendations } from '@/engine/systems/experience';
+import { experienceOf, FEATURE_LABEL, practicedDaysAgo, recommendations } from '@/engine/systems/experience';
 import { focusRefusal, matchedTier } from '@/engine/systems/practice';
 import { levelOf } from '@/engine/systems/attributes';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
@@ -45,7 +47,10 @@ import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } fro
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
-import { SELF_TAPE, studyRefusal } from '@/engine/systems/engagement';
+import { studyRefusal } from '@/engine/systems/engagement';
+import { BRIEF } from '@/engine/systems/briefs';
+import { DEVELOPMENT } from '@/engine/content/abilities';
+import { BAND_WORD } from '@/ui/looks/actor';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -54,7 +59,7 @@ import { genresOfPlay } from '@/engine/content/plays';
 import { journeyOf, WORK_KEPT } from '@/engine/systems/evaluation';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
-import { BriefPane } from '@/ui/components/BriefPane';
+import { BriefPane, studiedWords } from '@/ui/components/BriefPane';
 import { briefsOf } from '@/engine/content/briefs';
 
 const one = (x: number) => x.toFixed(1);
@@ -92,9 +97,9 @@ export function todayFor(sim: Simulation, person: Person, id: AbilityId): string
 }
 
 export function ProfileWorkspace() {
-  const { open } = useFeature('ui.profile');
   const person = useWorld((s) => s.player);
-  if (!open) return <Empty title="Your Profile" body="It opens with its chapter in the guide, “You As An Actor”." />;
+  // Locked, it's WorkspaceRouter's LockedScreen, with the way into its chapter (from 2026-10-12; until then an Empty
+  // here with nothing to press).
   if (!person.craft) return <Empty title="Your Profile" body="This life began outside drama school, so it has no craft to read." />;
   return (
     <>
@@ -109,6 +114,7 @@ export function ProfileWorkspace() {
         <GenresPanel />
         <ConditionPanel />
         <JourneyPanel />
+        <WorkSoFarPanel />
         <HistoryPanel />
       </div>
     </>
@@ -127,7 +133,7 @@ function IdentityPanel() {
   const said = [...(person.raceEthnicity ?? []).map((id) => ETHNICITIES.find((e) => e.id === id)?.label ?? id), ...(person.raceEthnicityOwn ? [person.raceEthnicityOwn] : [])];
   const school = person.school;
   return (
-    <Panel title="Identity And Background" subtitle="As the character was made">
+    <Panel title="Identity And Background" subtitle="As the character was made" help="ui.profile">
       <div className="row gap-4 wrap identity-row" style={{ alignItems: 'flex-start' }}>
         {person.portrait
           ? <img src={person.portrait} alt={`${person.displayName}’s portrait`} width={128} height={160} style={{ borderRadius: 8, objectFit: 'cover' }} />
@@ -143,7 +149,9 @@ function IdentityPanel() {
           </div>
           {person.background && <p className="small" style={{ margin: 0 }}><strong>In their own words.</strong> {person.background}</p>}
           {said.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Race and ethnicity, as given.</strong> {said.join(', ')}.</p>}
-          {person.personalityTraits.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t, i) => <span key={t}>{i ? ', ' : ''}<Open subject={at('trait', t)}>{PERSONALITY_TRAIT_BY_ID[t]?.name ?? t}</Open></span>)}.</p>}
+          {/* The traits in a region of their own, so each opens under them once "How You Are" is read (from 2026-10-12:
+              until then the panel had no region and Open drew them as plain names, so none of them opened). */}
+          {person.personalityTraits.length > 0 && <LookRegion><p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t, i) => <span key={t}>{i ? ', ' : ''}<Open subject={at('trait', t)}>{PERSONALITY_TRAIT_BY_ID[t]?.name ?? t}</Open></span>)}.</p></LookRegion>}
           {/* The dispositions set at creation, and what each does (from 2026-10-10: until then the Profile didn't show them). */}
           <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {does}</span>)}.</p>
           <div className="row gap-2 wrap">
@@ -181,7 +189,8 @@ function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] })
 /**
  * An exercise as practice on a challenge (from 2026-10-10): its challenge, its material at the tier chosen (the one
  * matching the level preselected), the focus for the hour with what each does, and what the hour found, said from the
- * numbers that moved it. Each refusal is on the button.
+ * numbers that moved it. Each refusal is said under what it refuses: the hour's under the button, and from 2026-10-12 a
+ * focus's under the focus. Until then a focus refused was only grayed out in its list, with its reason nowhere.
  */
 function PracticeControl({ exercise }: { exercise: string }) {
   const { sim, run, toast } = useGame();
@@ -202,6 +211,7 @@ function PracticeControl({ exercise }: { exercise: string }) {
       <label className="xs">Tier <select value={tier} onChange={(x) => setTier(Number(x.target.value) as 0 | 1 | 2)}>{TIER.label.map((l, i) => <option key={l} value={i}>{l}{i === matchedTier(level) ? ' (Your Level)' : ''}</option>)}</select></label>
       {design && <span className="xs dim">{design.tiers[tier]}</span>}
       <label className="xs">Focus <select value={focus} onChange={(x) => setFocus(x.target.value as PracticeFocus)}>{(Object.keys(FOCUS) as PracticeFocus[]).map((f) => <option key={f} value={f} disabled={Boolean(focusRefusal(person, e, f))}>{FOCUS[f].label}</option>)}</select></label>
+      <WhyNot reasons={(Object.keys(FOCUS) as PracticeFocus[]).map((f) => [FOCUS[f].label, focusRefusal(person, e, f)] as const)} />
       <span className="xs dim">{FOCUS[focus].words}</span>
       <Gated feature="practice.exercise" className="btn btn-sm" disabled={Boolean(no)} title={no ?? e.how} onClick={() => { const r = run<{ gained: number; feedback: string }>('practice.exercise', { exercise, tier, focus }); if (r.ok) { setFound(r.value!.feedback); toast(`${e.label}: +${r.value!.gained.toFixed(2)}.`, 'positive'); } }}>Practice An Hour</Gated>
       {no && <span className="xs dim">{no}</span>}
@@ -212,19 +222,61 @@ function PracticeControl({ exercise }: { exercise: string }) {
   );
 }
 
-/** What to work on next, from what cost recent work, dropping a weakness once it's addressed (`recommendations`). */
+/**
+ * What to work on next, from what cost recent work, dropping a weakness once it's addressed (`recommendations`), and
+ * from 2026-10-12 the weakness the work so far keeps coming back to (`Identity.recurring`), said with the pieces it has
+ * held back for life and what that rests on, and first within half a point of the top.
+ */
 function NextWork() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
-  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (ABILITY_DEFS.some((d) => d.id === id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier);
+  // Days since an exercise was last practised, for the focus (`recommendations`, from 2026-10-12), as a brief's pane
+  // reads them (`practicedDaysAgo`).
+  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (ABILITY_DEFS.some((d) => d.id === id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring);
+  // Nothing judged yet isn't nothing held back (from 2026-10-12: until then a new student read that their recent work
+  // wasn’t held back by anything).
+  if (!(person.work ?? []).length) return <p className="small" style={{ margin: 0 }}>No work of yours has been judged yet: what to work on is read from what holds judged work back.</p>;
   if (!recs.length) return <p className="small" style={{ margin: 0 }}>Your recent work wasn’t held back by any ability or technique with room to grow: the work now is in new material and new ways of playing it.</p>;
   return (
     <div className="col gap-1">
       <div className="eyebrow">What To Work On Next</div>
       <ul className="small" style={{ margin: 0 }}>
-        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0].toLowerCase()} tier` : ''}. {r.why}</li>)}
+        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0].toLowerCase()} tier` : ''}. {r.why}{r.recurring && <> <span className="xs dim">From your work for life: {r.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(r.recurring.last, sim.zone)}.</span></>}</li>)}
       </ul>
     </div>
+  );
+}
+
+/**
+ * The actor the work so far shows (from 2026-10-12, `systems/artistry.ts`): strengths, what keeps holding the work back,
+ * the material met and not, habits of playing and of reading, range, how direction is taken, reliability and playing
+ * with others, each with what it rests on. Read from the record, never stored, and it adds nothing to any result.
+ */
+function WorkSoFarPanel() {
+  const person = useWorld((s) => s.player);
+  const id = identityOf(person);
+  const lines = (title: string, xs: readonly { label: string; line: string; evidence: string[] }[]) => xs.length > 0 && (
+    <div className="col gap-1">
+      <div className="eyebrow">{title}</div>
+      <ul className="small" style={{ margin: 0 }}>{xs.map((x) => <li key={x.label}>{x.line} <span className="xs dim">From: {x.evidence.join('; ')}.</span></li>)}</ul>
+    </div>
+  );
+  const one = (x?: { label: string; line: string; evidence: string[] }) => (x ? [x] : []);
+  return (
+    <Panel title="Your Work So Far" subtitle={id.early ? `Early days: ${id.pieces} ${id.pieces === 1 ? 'piece' : 'pieces'} judged. Patterns are named from ${ARTISTRY.least}.` : `Read from ${id.pieces} pieces judged, the material met and the choices made`} help="craft.identity">
+      <div className="col gap-3">
+        {lines('What Your Work Shows Most', id.strengths)}
+        {lines('What Keeps Holding It Back', id.weaknesses)}
+        {lines('Material You Know', id.familiar)}
+        {id.unfamiliar.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Not met yet:</strong> {id.unfamiliar.join(', ')}. <span className="xs dim">A brief built on one is suggested beside a brief.</span></p>}
+        {lines('How You Tend To Play It', id.habits)}
+        {lines('Range', [id.versatility])}
+        {lines('Taking Direction', one(id.direction))}
+        {lines('Reliability', one(id.reliability))}
+        {lines('Playing With Others', one(id.collaboration))}
+        <Fine>Read from the work record and the record kept for life; nothing here is stored, and none of it adds to any result: a strength is your abilities’ and techniques’ already. A pattern is named only from {ARTISTRY.least} pieces, a habit from {ARTISTRY.habitAt} choices, so early work isn’t taken for who you are.</Fine>
+      </div>
+    </Panel>
   );
 }
 
@@ -235,7 +287,7 @@ function AbilitiesPanel() {
   const last = (id: string) => [...recent].reverse().find((h) => h.id === id);
   const staminaFull = abilityFull(sim, person, 'stamina');
   return (
-    <Panel title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100; today’s practice ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`}>
+    <Panel title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100; today’s practice ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`} help="practice.exercise">
       <div className="col gap-3">
         <NextWork />
         <LookRegion className="table-scroll">
@@ -276,7 +328,7 @@ function TechniquesPanel() {
   const person = useWorld((s) => s.player);
   const craft = person.craft!;
   return (
-    <Panel title="Techniques" subtitle={`Seventeen learned methods; mastered at ${MASTERED}`}>
+    <Panel title="Techniques" subtitle={`Seventeen learned methods; mastered at ${MASTERED}`} help="practice.exercise">
       <LookRegion className="table-scroll">
         <table>
           <thead><tr><th scope="col">Technique</th><th scope="col" className="num">Now</th><th scope="col" className="num">Classes Reach</th><th scope="col">Mastered</th><th scope="col">Practice</th></tr></thead>
@@ -313,7 +365,7 @@ function ListControls({ id, text, setText, show, setShow, options, count }: { id
 }
 
 function GenresPanel() {
-  const { sim, run } = useGame();
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const suggested = nextGenre(person);
   const [text, setText] = useState('');
@@ -321,6 +373,7 @@ function GenresPanel() {
   const [limit, setLimit] = useState(PAGE);
   // The genre whose brief is open (from 2026-10-12): its scene, preparation, choice and takes.
   const [open, setOpen] = useState<string | undefined>(undefined);
+  const [openBrief, setOpenBrief] = useState<string | undefined>(undefined);
   const list = FILM_GENRES.filter((g) => g.label.toLowerCase().includes(text.toLowerCase())).filter((g) => {
     if (show === 'Loved') return (person.genres ?? []).includes(g.id);
     if (show === 'Studied Or Practiced') return Boolean(person.engagement?.byGenre[g.id]);
@@ -328,16 +381,19 @@ function GenresPanel() {
     return true;
   });
   return (
-    <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or practiced`}>
+    <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or practiced`} help="genre.study">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is the kind your next part’s play is, and the one of its kinds you know least.' : 'is the one you love and know least; no part asks for a kind yet.'}</> : null}</p>
+        {/* In a region of its own, so a genre named here opens under it once the chapter that opens a genre is read (from
+            2026-10-12: until then it stood outside any region and Open drew the loved genres and the one suggested as
+            plain names, so none of them opened, whatever was read). */}
+        <LookRegion><p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is the kind your next part’s play is, and the one of its kinds you know least.' : 'is the one you love and know least; no part asks for a kind yet.'}</> : null}</p></LookRegion>
         {open && (
           <div className="card col gap-2" style={{ padding: 'var(--space-3, 12px)' }}>
             <div className="row gap-2" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="eyebrow">{GENRE_BY_ID[open]?.label}: Its Brief</div>
               <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpen(undefined)}>Close The Brief</button>
             </div>
-            <BriefPane key={open} genre={open} onOpen={setOpen} practice={(id) => <PracticeButton id={id as AbilityId} />} />
+            <BriefPane key={`${open}:${openBrief ?? ''}`} genre={open} {...(openBrief ? { brief: openBrief } : {})} onOpen={(g, b) => { setOpen(g); setOpenBrief(b); }} practice={(id) => <PracticeButton id={id as AbilityId} />} />
           </div>
         )}
         <ListControls id="genres" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Studied Or Practiced', 'With Requirements']} count={Math.min(limit, list.length)} />
@@ -357,8 +413,8 @@ function GenresPanel() {
                     <td className="num mono">{one(e?.familiarity ?? 0)}</td>
                     <td className="num mono">{one(e?.practice ?? 0)}</td>
                     <td className="nowrap">
-                      <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half with a work of the kind'} onClick={() => run('genre.study', { genre: g.id })}>Study It</Gated>{' '}
-                      <button type="button" className="btn btn-sm" title={`${briefsOf(g.id)[0]?.title ?? 'Its brief'}: read it, prepare it, choose how to play it, tape it`} onClick={() => setOpen(g.id)}>Open Its Brief</button>
+                      <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half with a work of the kind'} onClick={() => { const r = run<{ familiarity: number; with: string }>('genre.study', { genre: g.id }); if (r.ok) toast(studiedWords(g.id, r.value!), 'positive'); }}>Study It</Gated>{' '}
+                      <button type="button" className="btn btn-sm" title={`${briefsOf(g.id)[0]?.title ?? 'Its brief'}: read it, prepare it, choose how to play it, tape it`} onClick={() => { setOpen(g.id); setOpenBrief(undefined); }}>Open Its Brief</button>
                       {study && <div className="xs dim">{study}</div>}
                     </td>
                   </tr>
@@ -368,7 +424,7 @@ function GenresPanel() {
           </table>
         </LookRegion>
         {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: familiarity {SELF_TAPE.genreComplete * 100} counts as complete, and Study It builds it. Loving a genre makes a day of work in it better; having worked in it makes its briefs quicker to prepare; neither caps them.</Fine>
+        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}, and Study It builds it. Loving a genre makes a day of work in it better and caps nothing; material met before (its features, not its genre) makes a brief quicker to prepare.</Fine>
       </div>
     </Panel>
   );
@@ -403,7 +459,7 @@ function JourneyPanel() {
   const work = [...(person.work ?? [])].reverse();
   const terms = Object.entries(j.byTerm);
   return (
-    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'}>
+    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'} help="look.work">
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
         {terms.length > 0 && (
@@ -434,7 +490,7 @@ function JourneyPanel() {
                     <td className="nowrap"><Open subject={at('work', w.inputs.key)}>{w.what}</Open></td>
                     <td>{w.taskLabel}</td>
                     <td className="num mono">{one(w.overall)}</td>
-                    <td>{w.band ?? ''}</td>
+                    <td>{w.band ? BAND_WORD[w.band] ?? w.band : ''}</td>
                     <td>{formatDate(w.at, sim.zone)}</td>
                   </tr>
                 ))}
@@ -455,7 +511,7 @@ function HistoryPanel() {
   const [limit, setLimit] = useState(15);
   const history = [...developmentOf(person).history].reverse();
   return (
-    <Panel title="Development History" subtitle="Every change kept, newest first">
+    <Panel title="Development History" subtitle={`The latest ${DEVELOPMENT.historyKept} changes, newest first`}>
       {history.length ? (
         <LookRegion>
           <ul className="small" style={{ margin: 0 }}>

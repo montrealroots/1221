@@ -13,7 +13,7 @@
 import type { Simulation } from '@/engine';
 import type { Person } from '@/engine/domain/model';
 import { formatDate } from '@/engine/core/time';
-import { ABILITY_DEFS, ABILITY_KIN, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
+import { ABILITY_DEFS, ABILITY_KIN, DEVELOPMENT, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { DIMENSION_LABEL, DIMENSION_MEANS, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { EXERCISES, exerciseFor } from '@/engine/content/practice';
 import { GENRE_DEFS } from '@/engine/content/genres';
@@ -26,6 +26,8 @@ import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
 import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
+import { Segments } from '@/ui/components/WorkThrough';
+import { BRIEF_BY_ID } from '@/engine/content/briefs';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 
@@ -51,6 +53,9 @@ export function recentOf(person: Person, id: string, n = 6) {
   return developmentOf(person).history.filter((h) => h.id === id).slice(-n).reverse();
 }
 
+/** A kept band, in words: coursework’s and a brief’s (LAMDA’s), and a night’s (from 2026-10-12: until then shown as stored, in lowercase, two vocabularies in one column). */
+export const BAND_WORD: Readonly<Record<string, string>> = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional', off: 'An Off Night', solid: 'Solid', remarkable: 'Remarkable' };
+
 /** What a development source is, in words. */
 export function sourceWords(source: string): string {
   const [kind, rest] = source.split(':') as [string, string | undefined];
@@ -60,6 +65,12 @@ export function sourceWords(source: string): string {
   if (kind === 'interest') return 'An interest, from before they were removed';
   if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
   if (kind === 'read' || kind === 'research') return 'Reading a play';
+  // A skill grown into another, a brief’s preparation, the nerves of a performance, and working a problem through had no
+  // words until 2026-10-12, and showed as their raw keys.
+  if (kind === 'transfer') return 'Carried over from a related skill';
+  if (kind === 'brief') return `A practice brief: ${rest === 'interpretation' ? 'the breakdown' : rest === 'memorization' ? 'the lines' : rest ?? 'its preparation'}`;
+  if (kind === 'workbook') return 'Working a problem through';
+  if (kind === 'nerves') return 'The nerves of a performance';
   return ({ 'practice-day': 'A day of practice kept', call: 'A call answered', night: 'A night on stage', 'partner-rehearsal': 'Rehearsing with a partner', 'learn-part': 'Learning the part', blocking: 'The blocking book', 'work-note': 'A director’s note worked', 'self-tape': 'A self-tape' } as Record<string, string>)[kind] ?? kind;
 }
 
@@ -108,7 +119,7 @@ defineLook<TheAbility>('ability', {
           <div className="grid grid-3">
             <Stat label="Now" value={one(level)} note={level >= full ? 'Full: work that reads it asks nothing more' : `${one(full - level)} to full`} />
             <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Where ordinary work levels off; practice goes past it' : id === 'stamina' ? 'Classes don’t build it; workouts do' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; work in front of people does'} />
-            <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : 'Nothing has moved it since the history began'} />
+            <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : `None in the latest ${DEVELOPMENT.historyKept} changes kept`} />
           </div>
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
@@ -147,18 +158,22 @@ defineLook<TheGenre>('genre', {
     const loved = (person.genres ?? []).includes(id);
     const speed = genreSpeed(person, [id]);
     const play = playOfGenre(id);
-    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`tape:${person.id}:${id}:`)).slice(-3).reverse();
+    // Its briefs' takes (from 2026-10-12: until then this looked for keys a self-tape stopped writing when briefs came, and listed nothing).
+    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && (BRIEF_BY_ID[w.inputs.key.split(':')[2] ?? '']?.kinds ?? []).includes(id)).slice(-3).reverse();
     const demand = GENRE_DEMANDS[id];
     return {
       name: GENRE_BY_ID[id]!.label,
       kind: loved ? 'A Genre You Love' : 'A Genre',
-      summary: g ? `Familiarity ${one(g.familiarity)} and practice ${one(g.practice)}: work in it is prepared ${Math.round((speed - 1) * 100)}% faster.` : `You haven’t studied it or worked in it yet. ${def.conventions}`,
+      summary: g ? `Familiarity ${one(g.familiarity)} and practice ${one(g.practice)}: a part in a play of its kind is learned ${Math.round((speed - 1) * 100)}% faster, and a brief in it reads knowing it as part of its preparation.` : `You haven’t studied it or worked in it yet. ${def.conventions}`,
       body: (
         <>
           <div className="grid grid-3">
             <Stat label="Familiarity" value={one(g?.familiarity ?? 0)} note="Watched, read and studied" />
             <Stat label="Practice" value={one(g?.practice ?? 0)} note="Work done in it: nights, self-tapes" />
-            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="The best of the two, never a cap on the work" />
+            {/* What it speeds, said (from 2026-10-12: until then "The best of the two, never a cap on the work", beside a
+                summary saying a brief in it reads knowing it, so it read as speeding the brief; a brief’s steps read the
+                material met before, `prepSpeed`, and never this). */}
+            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="The better of the two, for a scene or a part from a play of its kind; a brief’s steps read the material met before instead" />
           </div>
           <p className="small"><strong>Its conventions.</strong> {def.conventions}</p>
           {demand && (
@@ -173,7 +188,7 @@ defineLook<TheGenre>('genre', {
               <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>
             </>
           )}
-          <p className="small"><strong>To study it.</strong> {play ? `Read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of the kind the game has, or watch a film of the kind.` : 'Watch a film of the kind.'} A self-tape in it is finished work, judged as a camera scene leaning to its families ({def.families.join(', ')}).</p>
+          <p className="small"><strong>To study it.</strong> {play ? `Read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of the kind the game has, or watch a film of the kind.` : 'Watch a film of the kind.'} A brief in it is finished work: taped, and judged beat by beat as a taped brief, its own material leaning it.</p>
           <p className="xs dim">Its definition’s source: {def.source}.{demand ? ` Its demands’ source: ${demand.source}.` : ''}</p>
           <p className="small">{loved ? 'You love it: a day of work in it is a better day. Loving it doesn’t speed the work or cap it.' : 'Loving a genre makes a day of work in it better; it doesn’t make you better at it.'}</p>
         </>
@@ -207,10 +222,16 @@ defineLook<TheWorkDone>('work', {
     const abilities = Object.keys(w.inputs.abilities) as AbilityId[];
     const profile = TASK_PROFILES[w.task];
     const again = profile ? replay(w, profile) : undefined;
+    // Each part of preparation by the task’s own words, the way of playing it as the limits name it, and each family by
+    // its genre’s (from 2026-10-12: until then by their keys, "interpretation 66% of 80%, … approach 49% of 90%;
+    // leaning to science_fiction").
+    const partWords = (k: string) => (profile?.prepLabel?.[k] ?? (k === 'approach' ? 'The way you chose to play it' : k.replace(/_/g, ' '))).toLowerCase();
+    const familyWords = (f: string) => (GENRE_BY_ID[f]?.label ?? f.replace(/_/g, ' ')).toLowerCase();
+    const prepared = Object.entries(w.inputs.prep).map(([k, v]) => `${partWords(k)} at ${Math.round(v * 100)}% of ${Math.round((w.inputs.required[k] ?? 1) * 100)}%`);
     return {
       name: w.what,
       kind: w.taskLabel,
-      summary: `Judged ${one(w.overall)} of 100${w.band ? `, ${w.band}` : ''}, on ${formatDate(w.at, zoneOf(sim))}.${chief ? ` ${chief}.` : w.mastery ? ' Everything it asked was met: the most it can be.' : ''}`,
+      summary: `Judged ${one(w.overall)} of 100${w.band ? `, ${BAND_WORD[w.band] ?? w.band}` : ''}, on ${formatDate(w.at, zoneOf(sim))}.${chief ? ` ${chief}.` : w.mastery ? ' Everything it asked was met: the most it can be.' : ''}`,
       body: (
         <>
           <div className="grid grid-3">
@@ -218,14 +239,15 @@ defineLook<TheWorkDone>('work', {
           </div>
           {w.limits.length > 0 && (
             <ul className="small">
-              {w.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points off the {DIMENSION_LABEL[l.dimension].toLowerCase()}</li>)}
+              {w.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points off the {DIMENSION_LABEL[l.dimension].toLowerCase()}{l.whole !== undefined ? `, ${l.whole} of the whole` : ''}</li>)}
             </ul>
           )}
-          <p className="xs dim">Judged with readiness {Math.round(w.inputs.condition.readiness)}{w.inputs.condition.ill ? ', the flu' : ''}{w.inputs.condition.injured ? ', an injury' : ''}; difficulty {w.inputs.difficulty.toFixed(2)}; preparation {Object.entries(w.inputs.prep).map(([k, v]) => `${k} ${Math.round(v * 100)}% of ${Math.round((w.inputs.required[k] ?? 1) * 100)}%`).join(', ') || 'not read'}{w.inputs.families.length ? `; leaning to ${w.inputs.families.join(', ')}` : ''}.</p>
+          {again?.piece && <Segments e={again} caption="Part By Part" />}
+          <p className="xs dim">Judged with readiness {Math.round(w.inputs.condition.readiness)}{w.inputs.condition.ill ? ', the flu' : ''}{w.inputs.condition.injured ? ', an injury' : ''}{w.inputs.condition.concussed ? ', a concussion mending' : ''}; difficulty {w.inputs.difficulty.toFixed(2)}; {prepared.length ? `preparation: ${prepared.join(', ')}` : 'preparation not read'}{w.inputs.families.length ? `; leaning to ${w.inputs.families.map(familyWords).join(', ')}` : ''}.</p>
         </>
       ),
       ways: abilities.map((a) => ({ to: at('ability', a), label: abilityDef(a).label, detail: `Read at ${one(w.inputs.abilities[a]!)}` })),
-      provenance: again ? `Judged under ${w.ruleset}; worked out again from its own inputs, ${one(again.overall)}.` : `Judged under ${w.ruleset}, before results kept their levels (2026-10-10), so it isn’t worked out again.`,
+      provenance: again ? `Judged under ${w.ruleset}; worked out again from its own inputs, ${one(again.overall)}.` : w.inputs.levels ? `Judged under ${w.ruleset}, rules since changed, so it isn’t worked out again under today’s: what it was is kept as it was.` : `Judged under ${w.ruleset}, before results kept their levels (2026-10-10), so it isn’t worked out again.`,
     };
   },
 });

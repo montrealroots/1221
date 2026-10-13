@@ -17,6 +17,9 @@ import type { AdvanceResult } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { refreshMeta } from '@/engine';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
+import { dialogOpen } from '@/ui/components/primitives';
+import { keep } from '@/ui/kept';
+import { tabKey } from '@/ui/shell/sections';
 
 export interface Toast {
   id: number;
@@ -44,6 +47,12 @@ export interface GameContextValue {
   clearStandingAt: () => void;
   /** Forces a re-read without mutating. */
   refresh: () => void;
+  /**
+   * Holds the live clock while `on`, by a key of the holder's own (from 2026-10-12): the guide and the reference hold
+   * it while they're open, so reading moves no time. No command: the save's own Play or Pause is untouched, and the
+   * clock goes on from where it was when the last hold lets go, with the time spent reading not counted.
+   */
+  hold: (key: string, on: boolean) => void;
 
   route: string;
   navigate: (route: string, label?: string) => void;
@@ -58,6 +67,8 @@ export interface GameContextValue {
 
   saving: boolean;
   saveError?: string;
+  /** Whether the world has changed since the last save (from 2026-10-12): what the save indicator reads. */
+  unsaved: () => boolean;
   saveNow: () => Promise<void>;
 
   exitToMenu: () => void;
@@ -95,15 +106,14 @@ const AUTOSAVE_INTERVAL_MS = 45_000;
  *
  * Live is one to one — a minute of your evening is a minute of theirs, which
  * is the whole point of a life you live alongside rather than fast-forward
- * through. The faster settings were for waiting out a shoot or a pregnancy,
- * which went with the systems that had them; the time controls offer only
- * Play and Pause now, so nothing reaches them.
+ * through. The faster settings, 'fast' at 60 and 'faster' at 600, were for
+ * waiting out a shoot or a pregnancy, which went with the systems that had
+ * them; the time controls offered only Play and Pause, so nothing reached
+ * them, and they went from the engine and from here (from 2026-10-12).
  */
 const SPEED_MULTIPLIER: Record<string, number> = {
   paused: 0,
   live: 1,
-  fast: 60,
-  faster: 600,
 };
 
 /** How often the loop wakes. Often enough to feel continuous, cheap to ignore. */
@@ -137,6 +147,8 @@ export function GameProvider({
   const [saveError, setSaveError] = useState<string | undefined>();
   const toastId = useRef(0);
   const dirty = useRef(false);
+  const holds = useRef(new Set<string>());
+  const hold = useCallback((key: string, on: boolean) => { if (on) holds.current.add(key); else holds.current.delete(key); }, []);
 
   // Re-read on every render so the ticker restarts when the player changes it.
   const timeSpeed = sim.universe.preferences.timeSpeed;
@@ -225,7 +237,11 @@ export function GameProvider({
    * hash, so the browser's Back and Forward move between screens, and a reload or a link to `#/workspace/school`
    * opens there. `moved` is the state change alone, for a move the browser already made.
    */
-  const moved = useCallback((next: string, label?: string) => {
+  const moved = useCallback((to: string, label?: string) => {
+    // A tab in the address (`?tab=`, from 2026-10-12) opens the screen at it, kept as the screen keeps its own.
+    const [next, query] = to.split('?') as [string, string | undefined];
+    const tab = new URLSearchParams(query ?? '').get('tab');
+    if (tab) keep(tabKey(next), tab);
     setRoute(next);
     const entry: NavEntry = { route: next, label: label ?? labelForRoute(next) };
     setBreadcrumbs((crumbs) => {
@@ -236,8 +252,9 @@ export function GameProvider({
     setRecent((list) => [entry, ...list.filter((r) => r.route !== next)].slice(0, 10));
   }, []);
 
-  const navigate = useCallback((next: string, label?: string) => {
-    moved(next, label);
+  const navigate = useCallback((to: string, label?: string) => {
+    moved(to, label);
+    const next = to.split('?')[0]!;
     try {
       if (window.location.hash !== `#${next}`) window.history.pushState({ route: next, label }, '', `#${next}`);
     } catch { /* no history to keep: the screen moves all the same */ }
@@ -246,13 +263,16 @@ export function GameProvider({
   useEffect(() => {
     const onPop = (event: PopStateEvent) => {
       const state = event.state as { route?: string; label?: string } | null;
-      const fromHash = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home';
+      const fromHash = window.location.hash.startsWith('#/') ? window.location.hash.slice(1).split('?')[0]! : '/home';
       moved(state?.route ?? fromHash, state?.label);
     };
-    // Where the game opens: an address's own screen, else Home, written into history as the first entry.
-    const start = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home';
-    try { window.history.replaceState({ route: start }, '', `#${start}`); } catch { /* as above */ }
-    if (start !== '/home') moved(start);
+    // Where the game opens: an address's own screen, else Home, written into history as the first entry. Its tab is
+    // taken from the address; a help entry (`?help=`) is left in it for the reference to open (`ui/guide/Help.tsx`).
+    const address = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home';
+    const start = address.split('?')[0]!;
+    const help = new URLSearchParams(address.split('?')[1] ?? '').get('help');
+    try { window.history.replaceState({ route: start }, '', `#${start}${help ? `?help=${encodeURIComponent(help)}` : ''}`); } catch { /* as above */ }
+    if (address !== '/home') moved(address);
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, [moved]);
@@ -320,6 +340,8 @@ export function GameProvider({
       lastPage = page;
       // A finished life has no more time in it, and none is counted as played.
       if (sim.universe.meta.endedAt !== undefined) return;
+      // Held while the guide or the reference is open: the time spent reading is no time in the world.
+      if (holds.current.size > 0) return;
 
       const step = stepper.feed(elapsed);
       if (step < 1) return;
@@ -386,6 +408,9 @@ export function GameProvider({
       const typing = target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
 
       if (typing) return;
+      // Not behind a dialog (from 2026-10-12): H, C and P used to move the screen under an open guide, so closing it
+      // didn't return the player to where they'd been.
+      if (dialogOpen()) return;
       if (event.key.toLowerCase() === 'h' && !event.metaKey && !event.ctrlKey) navigate('/home', 'Home');
       if (event.key.toLowerCase() === 'c' && !event.metaKey && !event.ctrlKey) navigate('/workspace/calendar', 'Calendar');
       if (event.key.toLowerCase() === 'p' && !event.metaKey && !event.ctrlKey) navigate('/workspace/profile', 'Player Profile');
@@ -401,11 +426,11 @@ export function GameProvider({
   }, [saveNow, onExit]);
 
   const value: GameContextValue = {
-    sim, version, run, advance, advanceTo, refresh,
+    sim, version, run, advance, advanceTo, refresh, hold,
     standingAt, clearStandingAt: () => setStandingAt(null),
     route, navigate, back, breadcrumbs, recent, favourites, toggleFavourite,
     toasts, toast,
-    saving, saveError, saveNow,
+    saving, saveError, saveNow, unsaved: () => dirty.current,
     exitToMenu,
   };
 

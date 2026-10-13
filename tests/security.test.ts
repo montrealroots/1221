@@ -162,11 +162,17 @@ describe('somebody else’s use', () => {
     const done = sim.player.fraud![0]!;
     expect(done.refunded).toBe(one.amount - answer.carried);
     expect(sim.universe.transactions.some((t) => t.memo === 'Refund: a payment you didn’t make' && t.postings.some((p) => p.accountId === account.id && p.amount === done.refunded))).toBe(true);
+    // Each tier on its own clock, from the use's record as the game keeps it. Until 2026-10-12 these passed a bare
+    // number of days (1, 30, 90), which counted every tier from it, a path the game never took; the record replaced
+    // it. Learned of and reported the same moment: $50. Learned of by an alert 70 days ago, its statement 42 days ago:
+    // past the $50 tier's two business days, inside the $500 tier's 60 from the statement, where 70 days from learning
+    // of it would have left all of it. The statement 90 days ago: all of it on a debit card, and a credit card's $50.
+    const now = sim.now;
     const debit = cardAccount(sim, sim.player, 'debit')!;
-    expect(liabilityFor(sim, debit, 'debit', 900_00, 1)).toBe(50_00);
-    expect(liabilityFor(sim, debit, 'debit', 900_00, 30)).toBe(500_00);
-    expect(liabilityFor(sim, debit, 'debit', 900_00, 90)).toBe(900_00);
-    expect(liabilityFor(sim, cardOf(sim, sim.player)!, 'credit', 900_00, 90)).toBe(50_00);
+    expect(liabilityFor(sim, debit, 'debit', 900_00, { learnedAt: now, statedAt: now })).toBe(50_00);
+    expect(liabilityFor(sim, debit, 'debit', 900_00, { learnedAt: now - 70 * MS_DAY, statedAt: now - 42 * MS_DAY })).toBe(500_00);
+    expect(liabilityFor(sim, debit, 'debit', 900_00, { learnedAt: now - 90 * MS_DAY, statedAt: now - 90 * MS_DAY })).toBe(900_00);
+    expect(liabilityFor(sim, cardOf(sim, sim.player)!, 'credit', 900_00, { learnedAt: now - 90 * MS_DAY, statedAt: now - 90 * MS_DAY })).toBe(50_00);
   });
 
   it('never comes in Japan, which publishes no rate for it', () => {

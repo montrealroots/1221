@@ -28,7 +28,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { clamp } from '../core/rng';
+import { clamp, rngFor } from '../core/rng';
 import { MS_DAY, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { BMI_EDGES, BODY, BODY_BY_COUNTRY, BODY_DEFAULT, HEIGHT_SPREAD } from '../content/body';
@@ -60,16 +60,29 @@ export function restingKcal(weightKg: number, heightCm: number, age: number): nu
 export const bmiOf = (body: Pick<Body, 'heightCm' | 'weightKg'>): number => body.weightKg / (body.heightCm / 100) ** 2;
 
 /**
- * A person's body, drawn the first time it's asked for where creation set
- * none: from one side or the other of their birth country's adults, half and
- * half, a height about that side's mean and a body mass index from its bands
- * (`BODY_BY_COUNTRY`).
+ * A person's body, drawn the first time it's asked for where they have none
+ * (`drawnBody`). A new life has one from its first moment (`createUniverse`,
+ * from 2026-10-12); what asks here is a save made before that, which drew it
+ * at its first midnight, and a test that takes the body away to draw it again.
  */
 export function bodyOf(sim: Simulation, person: Person, at = sim.now): Body {
-  if (person.body) return person.body;
+  return person.body ??= drawnBody(sim.universe.meta.seed, person, at);
+}
+
+/**
+ * A body drawn for a person where creation set none: from one side or the
+ * other of their birth country's adults, half and half, a height about that
+ * side's mean and a body mass index from its bands (`BODY_BY_COUNTRY`). By the
+ * save's seed alone, the same draw `sim.rng` makes, so a life is made with it
+ * before there's a simulation to ask (`createUniverse`). Until 2026-10-12 only
+ * `bodyOf` drew it, and nothing asked before the first midnight: a life made
+ * without a height and a weight had no body all its first day, and a workout
+ * that day burned calories nothing counted (`exerts` returns with no body).
+ */
+export function drawnBody(seed: string, person: Person, at: Instant): Body {
   const country = CITIES.get(person.homeRegionId)?.countryId ?? '';
   const norms = BODY_BY_COUNTRY[country] ?? BODY_DEFAULT;
-  const rng = sim.rng('body.draw', person.id);
+  const rng = rngFor(seed, 'body.draw', person.id);
   const side = rng.next() < 0.5 ? 0 : 1;
   // A standard normal, near enough: six uniforms summed, centered and scaled.
   let sum = 0;
@@ -80,8 +93,7 @@ export function bodyOf(sim: Simulation, person: Person, at = sim.now): Body {
   let band = 0;
   while (band < bands.length - 1 && (left -= bands[band]!) > 0) band += 1;
   const bmi = BMI_EDGES[band]! + rng.next() * (BMI_EDGES[band + 1]! - BMI_EDGES[band]!);
-  person.body = settle({ heightCm, weightKg: Math.round(bmi * (heightCm / 100) ** 2 * 10) / 10 }, person, at);
-  return person.body;
+  return settle({ heightCm, weightKg: Math.round(bmi * (heightCm / 100) ** 2 * 10) / 10 }, person, at);
 }
 
 /** What a day spends at a weight: the sedentary day's rest, Hall's added cost of a heavier body past what rest itself carries, and the day's exertion. */

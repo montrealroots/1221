@@ -197,7 +197,7 @@ function AlertsView() {
     if (answer.ok) toast('Alerts saved.', 'positive');
   };
   return (
-    <Panel title="Alerts" subtitle="What the bank tells you, in What Needs You. Short For A Payment tells you, once, when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days (SLATE’s design).">
+    <Panel title="Alerts" subtitle="What the bank tells you, in What Needs You. Short For A Payment tells you, once, when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days (SLATE’s design)." help="bank.set_alerts">
       <div className="field-row">
         <div className="field">
           <label htmlFor="alert-low">Any Current Account Under ({cur})</label>

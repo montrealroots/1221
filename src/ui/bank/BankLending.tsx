@@ -19,6 +19,7 @@ import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -95,7 +96,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
   return (
     <div className="grid grid-2" style={{ margin: 'var(--s5) 0' }}>
       {show.includes('borrowing') && (
-      <Panel title="Overdraft" subtitle={current?.secondChance ? 'None on a second-chance account' : od ? undefined : 'None on record'}>
+      <Panel title="Overdraft" subtitle={current?.secondChance ? 'None on a second-chance account' : od ? undefined : 'None on record'} help="bank.borrowing">
         {current?.secondChance && (
           <p className="small">
             A second-chance account: {formatMoney(inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), cur)} a month, SLATE’s estimate, in place of the ordinary account’s fee, and no overdraft. A payment it can’t cover comes back unpaid with its fee. Source: {CHEX.source}.
@@ -217,7 +218,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
       )}
 
       {show.includes('term') && (
-      <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'}>
+      <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'} help="bank.term">
         {!lending.term && <p className="small">{bank.name} publishes no term deposit rate SLATE found.</p>}
         {lending.term && (
           <div className="col gap-3">
@@ -249,7 +250,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
       )}
 
       {show.includes('borrowing') && debt && (
-        <Panel title="In Collections" subtitle={<Open subject={at('account', debt.id)}>{`${money(-debt.balance)} owed`}</Open>} look={at('account', debt.id)}>
+        <Panel title="In Collections" subtitle={<Open subject={at('account', debt.id)}>{`${money(-debt.balance)} owed`}</Open>} look={at('account', debt.id)} help="bank.pay_collections">
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {debt.institution} closed your account after it was overdrawn {bank.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. It’s on your record until it’s paid.
@@ -267,13 +268,13 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
 
       {show.includes('borrowing') && current?.creditOffered && (
         <Panel title="A Loan For The Overrun" subtitle={`${money(current.creditOffered.amount)} over ${current.creditOffered.months} months at ${pct(current.creditOffered.apr)}`}
-          actions={<Gated feature="bank.take_overrun_loan" className="btn btn-sm" onClick={() => { if (run('bank.take_overrun_loan', {}).ok) toast('The overrun is a loan now.', 'positive'); }}>Take The Loan</Gated>}>
+          actions={<Gated feature="bank.take_overrun_loan" className="btn btn-sm" onClick={() => { if (run('bank.take_overrun_loan', { accountId: current.id }).ok) toast('The overrun is a loan now.', 'positive'); }}>Take The Loan</Gated>} help="bank.take_overrun_loan">
           <p className="small" style={{ margin: 0 }}>Three months past your overdraft, French law has the bank offer another credit for it. The rate is the top of its personal loan rates, SLATE’s estimate of what it would offer. Source: {FRANCE.source}.</p>
         </Panel>
       )}
 
       {show.includes('borrowing') && (
-      <Panel title="Personal Loan" subtitle={loan ? <Open subject={at('account', loan.id)}>{`${money(-loan.balance)} owed`}</Open> : lending.loan ? undefined : 'None on record'} look={loan ? at('account', loan.id) : undefined}>
+      <Panel title="Personal Loan" subtitle={loan ? <Open subject={at('account', loan.id)}>{`${money(-loan.balance)} owed`}</Open> : lending.loan ? undefined : 'None on record'} look={loan ? at('account', loan.id) : undefined} help="bank.borrowing">
         {!lending.loan && !loan && <p className="small">{bank.name} publishes no personal loan rate SLATE found.</p>}
         {loan && (
           <div className="col gap-3">
@@ -345,7 +346,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
       {/* Only where a switching service runs it: with none, until 2026-10-10 this moved everything the same day, and
           its text said you did it yourself. The steps are in Your Banks now (`BankMoves`). */}
       {show.includes('switch') && rule && (
-      <Panel title="Switch Bank" subtitle={switching ? `Under way, done ${formatDate(switching.at, sim.zone)}` : undefined}>
+      <Panel title="Switch Bank" subtitle={switching ? `Under way, done ${formatDate(switching.at, sim.zone)}` : undefined} help="bank.other-banks">
         {others.length === 0 ? <p className="small">No other bank where you live is on record.</p> : (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
@@ -367,7 +368,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                   {switching.payload.keepBalance === true && <p className="small" style={{ margin: 0 }}>Its balance transfer is stopped: your payments move, and the balance stays in the old account, which stays open.</p>}
                   {until !== undefined && !open && switching.payload.keepBalance !== true && switching.payload.partial !== true && (!askStop
                     ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(true)}>Stop The Balance Transfer…</button></div>
-                    : <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}><span className="small">Your payments still move on the day; the balance stays in {current?.name ?? 'the old account'}, which stays open.</span><Gated feature="bank.stop_balance_transfer" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.stop_balance_transfer', { confirm: true }).ok) toast('Your balance stays in the old account.', 'positive'); setAskStop(false); }}>Keep The Balance There</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(false)}>Move It As Planned</button></div>)}
+                    : <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}><span className="small">Your payments still move on the day; the balance stays in {current?.name ?? 'the old account'}, which stays open.</span><Gated feature="bank.stop_balance_transfer" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.stop_balance_transfer', { confirm: true }).ok) toast('Your balance stays in the old account.', 'positive'); setAskStop(false); }}>Keep The Balance There</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskStop(false)}>Move It As Planned</button><HowItWorks help="bank.stop_balance_transfer" /></div>)}
                   {open && (!askCancel
                     ? <div><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(true)}>Call Off The Switch…</button></div>
                     : <div className="row gap-2"><Gated feature="bank.cancel_switch" className="btn btn-sm btn-danger" onClick={() => { if (run('bank.cancel_switch', { confirm: true }).ok) toast('The switch is called off.', 'positive'); setAskCancel(false); }}>Call It Off</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setAskCancel(false)}>Keep It</button></div>)}

@@ -5,11 +5,12 @@
  * engine, not here.
  */
 
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import type { Subject } from '@/ui/looks/subject';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 
 /**
  * Sources and estimates, folded behind a line: there to read, out of the way
@@ -17,7 +18,7 @@ import type { Subject } from '@/ui/looks/subject';
  */
 /**
  * Why a row's controls can't be used now, said under them (acceptance pass, 2026-10-11): until then the engine's reason
- * was only a button's tooltip, which a phone never shows and a desktop player had to hover to find, so a row of greyed
+ * was only a button's tooltip, which a phone never shows and a desktop player had to hover to find, so a row of grayed
  * buttons said nothing. One line where every reason is the same; each labeled where they differ.
  */
 export function WhyNot({ reasons }: { reasons: readonly (readonly [label: string, why: string | undefined])[] }) {
@@ -42,7 +43,7 @@ export function Fine({ children }: { children: ReactNode }) {
 }
 
 export function Panel({
-  title, subtitle, actions, children, flush, tight, look,
+  title, subtitle, actions, children, flush, tight, look, help,
 }: {
   title?: ReactNode;
   subtitle?: ReactNode;
@@ -57,14 +58,19 @@ export function Panel({
    * beneath the whole panel rather than inside one of its rows.
    */
   look?: Subject;
+  /**
+   * The guide's entry for what the panel holds (from 2026-10-12; `content/guide/`), by its id or a feature it covers:
+   * How This Works in the panel's head opens it over the screen.
+   */
+  help?: string;
 }) {
-  const head = (title || actions) && (
+  const head = (title || actions || help) && (
     <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
       <div>
         {title && <h2>{look ? <Open subject={look}>{title}</Open> : title}</h2>}
         {subtitle && <p className="muted small" style={{ margin: 0 }}>{subtitle}</p>}
       </div>
-      {actions && <div className="row gap-2">{actions}</div>}
+      {(actions || help) && <div className="row gap-2 panel-actions">{actions}{help && <HowItWorks help={help} />}</div>}
     </div>
   );
   return (
@@ -184,26 +190,67 @@ export function Empty({ title, body, action }: { title: string; body: string; ac
   );
 }
 
+/** The dialogs open, oldest first: only the one on top answers Escape and keeps focus. */
+const OPEN_DIALOGS: number[] = [];
+let dialogCount = 0;
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/** Whether any dialog is open: the keyboard's shortcuts don't act behind one. */
+export const dialogOpen = (): boolean => OPEN_DIALOGS.length > 0;
+
+/**
+ * A dialog over the screen, which stays mounted under it with whatever was typed there.
+ *
+ * From 2026-10-12 it takes focus when it opens (its `data-autofocus` element, else its first control), keeps Tab and
+ * Shift-Tab inside it, and gives focus back to whatever opened it when it closes; Escape closes only the dialog on top,
+ * where until then one Escape closed every dialog stacked open, a plan's form under the guide with it. `keepOnOutside`
+ * keeps it open when the shade outside it is pressed, for a dialog with a form a stray press would lose.
+ */
 export function Modal({
-  title, children, footer, onClose, wide,
+  title, children, footer, onClose, wide, keepOnOutside,
 }: {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
   onClose: () => void;
   wide?: boolean;
+  keepOnOutside?: boolean;
 }) {
+  const box = useRef<HTMLDivElement>(null);
+  const id = useMemo(() => ++dialogCount, []);
+  const close = useRef(onClose);
+  close.current = onClose;
   // Escape closes it, the way every dialog on every platform closes. Without
   // this a modal could only be left by finding its button, and anything
   // underneath it stayed unreachable until then.
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    OPEN_DIALOGS.push(id);
+    const node = box.current;
+    const first = node?.querySelector<HTMLElement>('[data-autofocus]') ?? node?.querySelector<HTMLElement>(FOCUSABLE);
+    (first ?? node)?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (OPEN_DIALOGS[OPEN_DIALOGS.length - 1] !== id) return;
+      if (event.key === 'Escape') { event.stopPropagation(); close.current(); return; }
+      if (event.key !== 'Tab' || !node) return;
+      const items = [...node.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((x) => x.offsetParent !== null || x === document.activeElement);
+      if (!items.length) { event.preventDefault(); node.focus(); return; }
+      const [head, tail] = [items[0]!, items[items.length - 1]!];
+      if (event.shiftKey && (document.activeElement === head || document.activeElement === node)) { event.preventDefault(); tail.focus(); }
+      else if (!event.shiftKey && document.activeElement === tail) { event.preventDefault(); head.focus(); }
+    };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      OPEN_DIALOGS.splice(OPEN_DIALOGS.indexOf(id), 1);
+      if (opener && document.contains(opener)) opener.focus();
+    };
+  }, [id]);
   return (
-    <div className="overlay" onClick={onClose}>
+    <div className="overlay" onClick={keepOnOutside ? undefined : onClose}>
       <div
+        ref={box}
+        tabIndex={-1}
         className="modal"
         style={wide ? { width: 'min(880px, 100%)' } : undefined}
         onClick={(e) => e.stopPropagation()}

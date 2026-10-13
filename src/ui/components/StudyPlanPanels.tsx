@@ -9,11 +9,12 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Fine, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, instantFromZoned } from '@/engine/core/time';
 import { EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
 import {
-  LEAVE_REASONS, accountOwed, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, yaleAccount,
+  LEAVE_REASONS, accountOwed, affiliateQuote, aidReviewRefusal, cancelRepeatWarning, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, termsInWords, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
 import { termAccount, academicTerm, conversionRefusal, convertibleHours, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
@@ -42,12 +43,13 @@ export function LeavePanel() {
   const lengths = ended || school.termsBegun === 0 ? [] : leaveLengths(sim, school, kind);
   const w = school.welfare;
   const start = !ended && school.termsBegun > 0 ? leaveStart(sim, school, kind) : undefined;
-  const affiliateCost = LEAVE_RULES.terms * inSaveMoney(sim, LEAVE_RULES.affiliatePerTerm, 'USD') - (l?.feeCredit ?? 0);
+  // The leave's own terms, the figure `school.buy_affiliate` charges (from 2026-10-12: until then `LEAVE_RULES.terms`).
+  const affiliate = l ? affiliateQuote(sim, l) : undefined;
   const noticeNo = l?.status === 'on' && l.kind === 'medical' ? clearedToReturn(person, sim.now) : undefined;
 
   return (
     <div className="col gap-2">
-      <div className="eyebrow">A Leave Of Absence</div>
+      <div className="row-between"><div className="eyebrow">A Leave Of Absence</div><HowItWorks help="school.leave" /></div>
       {w && (
         <p className="small" style={{ margin: 0 }}>
           <strong>Yale Health’s assessment</strong>, {w.status === 'scheduled' ? `on ${formatDate(w.assessAt, sim.zone)}: be there, at Yale Health, or ask for a medical leave yourself first.` : w.status === 'assessed' ? `found: ${w.why} The dean decides by ${formatDate(w.decideAt ?? sim.now, sim.zone)}.` : w.why} <span className="xs dim">Started by {w.trigger}: how you’re managing, not a diagnosis.</span>
@@ -81,7 +83,7 @@ export function LeavePanel() {
                 {l.kind === 'personal' && !l.affiliate && sim.now <= (l.affiliateBy ?? 0) && (asking !== 'affiliate'
                   ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('affiliate')}>Buy Affiliate Cover…</button>
                   : <>
-                      <span className="small">Yale Health for the leave’s two terms, {money(affiliateCost)}{l.feeCredit ? `, with the ${money(l.feeCredit)} student fee you paid credited` : ''}, paid in full now; care since your cover ended is billed as Yale Health pays it.</span>
+                      <span className="small">Yale Health for the leave’s {termsInWords(affiliate!.terms)}, {money(affiliate!.cost)}{affiliate!.credit ? `, with the ${money(affiliate!.credit)} student fee you paid credited` : ''}, paid in full now; care since your cover ended is billed as Yale Health pays it.</span>
                       <Gated feature="school.buy_affiliate" className="btn btn-sm" onClick={() => { if (run('school.buy_affiliate', { confirm: true }).ok) toast('Affiliate cover bought.', 'positive'); setAsking(''); }}>Buy It</Gated>
                       <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
                     </>)}
@@ -127,13 +129,14 @@ export function LeavePanel() {
               </select>
             </div>
             {asking !== 'request'
-              ? <><button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => setAsking('request')}>Ask For A Leave…</button>{no && <span className="xs dim">{no}</span>}</>
+              ? <button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => setAsking('request')}>Ask For A Leave…</button>
               : <>
                   <Gated feature="school.request_leave" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_leave', { kind, reason, terms }); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(''); }}>Ask</Gated>
                   <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
                 </>}
           </div>
           {lengths.filter((x) => x.why).map((x) => <p key={x.terms} className="xs dim" style={{ margin: 0 }}>{x.terms === 1 ? 'One term' : x.terms === 2 ? 'Two terms' : 'Three terms'}: {x.why}</p>)}
+          {/* Why Ask For A Leave… is refused, said once, under the form (from 2026-10-12: until then it was said beside the button as well, so the screen said it twice). */}
           {no ? <p className="xs dim" style={{ margin: 0 }}>{no}</p> : start && (
             <p className="small" style={{ margin: 0 }}>
               {asking === 'request' ? 'Asking puts it to the chair and the dean, who decide in five working days. ' : ''}
@@ -160,7 +163,7 @@ export function RepeatPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school!;
-  const [asking, setAsking] = useState(false);
+  const [asking, setAsking] = useState<'' | 'request' | 'cancel'>('');
   if (schoolEnded(school.standing) && !school.repeat) return null;
   const no = repeatRefusal(sim, person);
   const r = school.repeat;
@@ -173,18 +176,18 @@ export function RepeatPanel() {
   const past = enrolledTerms(school).length + 2 - EXTENDED_STUDY.supportedTerms;
   return (
     <div className="col gap-2">
-      <div className="eyebrow">Finishing The Degree</div>
+      <div className="row-between"><div className="eyebrow">Finishing The Degree</div><HowItWorks help="school.repeat" /></div>
       {r && <p className="small" style={{ margin: 0 }}>Year {r.year}, asked {formatDate(r.requestedAt, sim.zone)}: {r.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(r.decideAt, sim.zone)}` : r.status === 'granted' ? 'granted' : r.status === 'refused' ? `refused. ${r.why ?? ''}` : 'called off'}{r.courses.length ? `, for ${r.courses.join(', ')}` : ''}.</p>}
       {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the degree is withheld.</p>}
       {!no && (
         <div className="col gap-2">
-          {asking && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms: ${past} of the year’s would be billed to your Yale account, about ${formatMoney(past * termAccount(saveCurrency(sim.universe), false, t + 1).tuition, saveCurrency(sim.universe))} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
+          {asking === 'request' && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms: ${past} of the year’s would be billed to your Yale account, about ${formatMoney(past * termAccount(saveCurrency(sim.universe), false, t + 1).tuition, saveCurrency(sim.universe))} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
           <div className="row gap-2">
-            {!asking
-              ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking(true)}>Ask To Repeat The Year…</button>
+            {asking !== 'request'
+              ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('request')}>Ask To Repeat The Year…</button>
               : <>
-                  <Gated feature="school.request_repeat" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_repeat'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(false); }}>Ask</Gated>
-                  <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking(false)}>Not Now</button>
+                  <Gated feature="school.request_repeat" className="btn btn-sm" onClick={() => { const a = run<{ decideAt: number }>('school.request_repeat'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setAsking(''); }}>Ask</Gated>
+                  <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
                 </>}
           </div>
         </div>
@@ -197,7 +200,18 @@ export function RepeatPanel() {
           <div><Gated feature="school.request_extra_term" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_extra_term'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Additional Term</Gated></div>
         </div>
       )}
-      {r?.status === 'pending' && <div><Gated feature="school.cancel_repeat" className="btn btn-sm btn-ghost" onClick={() => { if (run('school.cancel_repeat', { confirm: true }).ok) toast('Called off.', 'neutral'); }}>Call Off The Request</Gated></div>}
+      {/* Asked first, with what calling it off leaves, as Call Off The Leave… asks (from 2026-10-12: until then the button sent the confirm on its first press, and the command's warning never showed). */}
+      {r?.status === 'pending' && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+          {asking !== 'cancel'
+            ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('cancel')}>Call Off The Request…</button>
+            : <>
+                <span className="small">{cancelRepeatWarning(sim, school)}</span>
+                <Gated feature="school.cancel_repeat" className="btn btn-sm btn-danger" onClick={() => { if (run('school.cancel_repeat', { confirm: true }).ok) toast('Called off.', 'neutral'); setAsking(''); }}>Call It Off</Gated>
+                <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Keep It</button>
+              </>}
+        </div>
+      )}
       {no && failed.length > 0 && !r && <p className="xs dim" style={{ margin: 0 }}>{no}</p>}
       <Fine>No rule for repeating a failed acting course was found in the Bulletin; this is SLATE’s faculty model, under the Bulletin’s nine semesters for the degree, six terms of tuition support and its disqualification at two Fails in a term or seven in all (pp.148, 182, 194). A year is approved once, asked at its end or within thirty days of the last year’s evaluation; after the last year, what’s unpassed can be retaken in an additional term of its season instead. The faculty review a disqualification rather than apply it: the first time, academic warning and the year to repeat. Source: {EXTENDED_STUDY.source}.</Fine>
     </div>
@@ -206,7 +220,7 @@ export function RepeatPanel() {
 
 const f1 = (person: { documents?: { kind: string; destination?: string; name: string }[] }) => (person.documents ?? []).some((d) => d.kind === 'visa' && d.destination === 'US' && d.name.startsWith('F-1'));
 
-/** The Yale account: what's billed and paid on it, a hold, and paying it. */
+/** The Yale account: what's billed and paid on it, a hold, paying it, and the aid office's review of a term past six. */
 export function YaleAccountPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -215,45 +229,45 @@ export function YaleAccountPanel() {
   const money = (c: number) => formatMoney(c, cur);
   const [amount, setAmount] = useState('');
   const acc = yaleAccount(sim, person, false);
-  if (!acc && !school.aidReview && !school.extra && school.repeat?.status !== 'granted') return null;
+  // The aid review is offered exactly when it can be asked, with an account open or not (`aidReviewRefusal`, from
+  // 2026-10-12: until then nothing here drew without an account, a review, an additional term or a granted repeat, so in
+  // the sixth term, when no account is usually open, Ask For An Aid Review never showed though the command took it).
+  const reviewNo = aidReviewRefusal(sim, person);
+  const ar = school.aidReview;
+  if (!acc && !ar && reviewNo) return null;
   const owed = accountOwed(sim, person);
   const lines = acc ? sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === acc.id)).slice(-12).reverse() : [];
   const value = Math.round(Number(amount) * 100);
   return (
     <div className="col gap-2">
-      <div className="grid grid-3">
+      {acc && <div className="grid grid-3">
         <Stat label="Owed On Your Yale Account" value={money(Math.max(0, owed))} tone={owed > 0 ? 'warning' : undefined} />
         <Stat label="Financial Hold" value={school.hold !== undefined ? `Since ${formatDate(school.hold, sim.zone)}` : 'None'} note={school.hold !== undefined ? 'No registration and no diploma while it stands' : undefined} tone={school.hold !== undefined ? 'negative' : undefined} />
         <Stat label="Terms Enrolled" value={`${enrolledTerms(school).length}`} note={`Six have tuition support; the degree within ${EXTENDED_STUDY.maxSemesters}`} />
-      </div>
+      </div>}
       {owed > 0 && (
         <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
           <div className="field"><label htmlFor="yale-pay">Pay (Blank Pays It All)</label><input id="yale-pay" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder={(owed / 100).toFixed(2)} /></div>
           <Gated feature="school.pay_balance" className="btn btn-sm" onClick={() => { const a = run<{ owed: number }>('school.pay_balance', amount ? { amount: value } : {}); if (a.ok) { toast(a.value!.owed > 0 ? `Paid. ${money(a.value!.owed)} still owed.` : 'Paid in full.', 'positive'); setAmount(''); } }}>Pay From Your Bank</Gated>
         </div>
       )}
-      <div className="table-scroll">
+      {acc && <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Date</th><th scope="col">What</th><th scope="col" className="num">Charged</th><th scope="col" className="num">Paid Or Credited</th></tr></thead>
           <tbody>
             {lines.map((t) => {
-              const p = t.postings.find((q) => q.accountId === acc!.id)!;
+              const p = t.postings.find((q) => q.accountId === acc.id)!;
               return <tr key={t.id}><td>{formatDate(t.at, sim.zone)}</td><td className="small">{t.memo}</td><td className="num mono">{p.amount < 0 ? money(-p.amount) : ''}</td><td className="num mono">{p.amount > 0 ? money(p.amount) : ''}</td></tr>;
             })}
           </tbody>
         </table>
-      </div>
-      {(() => {
-        const ar = school.aidReview;
-        const coming = enrolledTerms(school).length >= EXTENDED_STUDY.supportedTerms || school.extra || school.repeat?.status === 'granted';
-        if (!coming && !ar) return null;
-        return (
-          <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-            <span className="small">{ar ? (ar.status === 'pending' ? `The aid office is reviewing your support past six terms, by ${formatDate(ar.decideAt, sim.zone)}.` : ar.why) : 'Support past six terms: the aid office can review it.'}</span>
-            {!ar && <Gated feature="school.request_aid_review" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_aid_review'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Aid Review</Gated>}
-          </div>
-        );
-      })()}
+      </div>}
+      {(ar || !reviewNo) && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+          <span className="small">{ar ? (ar.status === 'pending' ? `The aid office is reviewing your support past six terms, by ${formatDate(ar.decideAt, sim.zone)}.` : ar.why) : 'Support past six terms: the aid office can review it.'}</span>
+          {!reviewNo && <Gated feature="school.request_aid_review" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_aid_review'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Aid Review</Gated>}
+        </div>
+      )}
       <Fine>Tuition support ordinarily covers six terms (p.182); a term past it is billed tuition and the Yale Health fee, due in thirty days, SLATE’s estimate. Unpaid, the Bulletin’s late fee, {money(inSaveMoney(sim, EXTENDED_STUDY.lateFee, 'USD'))} a month to {money(inSaveMoney(sim, EXTENDED_STUDY.lateFeeTermCap, 'USD'))} a term, and a hold on registration and the diploma (p.184). A scholarship returned on a leave is charged here too. The balance is the sum of the account’s postings.</Fine>
     </div>
   );
@@ -280,6 +294,7 @@ export function WorkLimitsBlock() {
       </div>
       <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
         <Gated feature="school.request_conversion" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ at: number; hours: number }>('school.request_conversion'); if (a.ok) toast(`Asked: processed ${formatDate(a.value!.at, sim.zone)}.`, 'positive'); }}>Ask For Conversion To Grant Aid</Gated>
+        <HowItWorks help="school.request_conversion" />
         {no && <span className="xs dim">{no}</span>}
       </div>
       <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is refused, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found; SLATE’s is Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>

@@ -12,7 +12,11 @@
  * reading it opens what it names.
  *
  * A save with no `tutorial` has everything open: one begun before the guide
- * existed, or made by a test or a tool.
+ * existed, or made by a test or a tool, or, from 2026-10-12, a life made with
+ * "I Know SLATE". So does a guide finished (`tutorial.finished`), whatever
+ * chapters are added after it: until then a chapter added to the game would
+ * have reopened the guide on every finished save, and its commands would have
+ * been refused there until it was read.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -33,6 +37,7 @@ export function chaptersRead(sim: Simulation): readonly string[] {
 
 /** The next chapter to read, or undefined when every one has been. */
 export function nextChapter(sim: Simulation): Chapter | undefined {
+  if (sim.universe.tutorial?.finished) return undefined;
   const read = new Set(chaptersRead(sim));
   return CHAPTERS.find((c) => !read.has(c.id));
 }
@@ -45,7 +50,7 @@ export function guideFinished(sim: Simulation): boolean {
 /** Whether a part of the game is open: its chapter read, or no chapter owns it. */
 export function isOpen(sim: Simulation, feature: string): boolean {
   const chapter = CHAPTER_FOR[feature];
-  if (!chapter) return true;
+  if (!chapter || sim.universe.tutorial?.finished) return true;
   return chaptersRead(sim).includes(chapter.id);
 }
 
@@ -85,6 +90,7 @@ export function registerTutorial(sim: Simulation): void {
     const next = nextChapter(s);
     if (next && next.id !== chapter.id) throw new CommandError(`Read “${next.title}” first; the chapters go in order.`);
     state.read.push(chapter.id);
+    if (!nextChapter(s)) state.finished = true;
     return { read: chapter.id, next: nextChapter(s)?.id };
   });
 

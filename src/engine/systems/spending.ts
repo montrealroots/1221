@@ -9,10 +9,15 @@
  * Each payment is made the way the character pays (`systems/payments.ts`):
  * the day's food on the debit card, the credit card or in cash; a fee or a
  * bill from the current account, with its overdraft and any savings linked
- * to it, or from any account named. A payment the account can't make goes
- * back unpaid, with the bank's fee, and what's owed is paid off the first
- * day there is money to pay it. Owing, or a card at its limit, weighs on
- * somebody every day it lasts.
+ * to it, or from any account named. A purchase the way of paying can't
+ * cover isn't made (`spendRefusal`). With owing allowed (`spend`'s `owe`,
+ * which nothing in the game has asked for since the scope reset of
+ * 2026-10-09), a payment the account can't make goes back unpaid, with the
+ * bank's fee, and what's owed is paid off the first day there is money to
+ * pay it. Until 2026-10-12 a purchase was owed, unasked, where
+ * cash in hand that the way of paying doesn't spend made it look
+ * affordable. Owing, or a card at its limit, weighs on somebody every day
+ * it lasts.
  *
  * Until the reset what went unpaid was owed to the landlord, and rent and
  * bills fell due on the first of the month. A save that owed rent then still
@@ -32,7 +37,7 @@ import { personalityOf } from './personality';
 import { cardCeilingRoom, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
-import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
+import { roundUpFor, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { latePenaltyAll, owedEverywhere, unassessedBalance } from './taxreturn';
 
@@ -111,14 +116,18 @@ function savingsOf(sim: Simulation, person: Person, checking = checkingOf(sim, p
 }
 
 /** What can come out of savings now, its fee and any monthly allowance allowed for. */
-function savingsRoom(sim: Simulation, person: Person): Money {
-  const savings = savingsOf(sim, person);
+function savingsRoom(sim: Simulation, person: Person, checking = checkingOf(sim, person)): Money {
+  const savings = savingsOf(sim, person, checking);
   return savings ? savingsDebit(sim, savings).room : 0;
 }
 
-/** What checking and savings can pay between them, now. */
-export function inTheBank(sim: Simulation, person: Person): Money {
-  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + savingsRoom(sim, person);
+/**
+ * What a current account and the easy-access savings at its bank can pay between them, now: the primary's, or the
+ * account a payment comes from (from 2026-10-12, for a card's autopay from another account than the primary).
+ */
+export function inTheBank(sim: Simulation, person: Person, from?: Account): Money {
+  const checking = from && !from.closedAt ? from : checkingOf(sim, person);
+  return Math.max(0, checking?.balance ?? 0) + savingsRoom(sim, person, checking);
 }
 
 /** What a payment from the current account can reach: the account, and savings where it's linked to it. */
@@ -166,12 +175,22 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
   return { postings, short: left };
 }
 
-/** What the current account (with linked savings), its overdraft where it may be used, and the card can pay between them, now. */
+/**
+ * What the current account (with linked savings), its overdraft where it may be used, and the card can pay between
+ * them, now. Cash in hand isn't counted (from 2026-10-12): `spendRefusal` adds it where `spend` spends it. Until then
+ * it was counted here for every payer and every payment, though `spend` spends it only on food, for somebody paying
+ * the day in cash or behind a locked debit card. So with a cent in the account, $3 left on the credit card and $100
+ * in cash, a meal paid by debit card was bought by owing it in Bills Owed with nothing owed allowed, and one paid by
+ * credit card didn't balance.
+ */
 export function canPay(sim: Simulation, person: Person, overdraft = true): Money {
   const free = cardRoom(person, cardOf(sim, person));
-  // Cash in hand pays for food first (`spend`), so it counts.
-  const cash = Math.max(0, accountsOf(sim, person).find((a) => a.kind === 'cash')?.balance ?? 0);
-  return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free + cash;
+  return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free;
+}
+
+/** Cash in hand, as far as there is any. */
+function cashInHand(sim: Simulation, person: Person): Money {
+  return Math.max(0, accountsOf(sim, person).find((a) => a.kind === 'cash')?.balance ?? 0);
 }
 
 /**
@@ -224,17 +243,73 @@ export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other
 
 
 
+const CANT_AFFORD = 'You can’t afford it.';
+const CASH_UNSPENT = 'The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.';
+
+/**
+ * Why `spend` would refuse an amount now, with nothing owed allowed, in the world's words, or nothing if it would go
+ * through (from 2026-10-12). It is `spend`'s own precondition, and `spend` asks it first, so a purchase offered on
+ * it isn't then refused by `spend`. Until then Look After Yourself asked `canPay` with the overdraft counted whatever
+ * the bank: at Chase with no debit card opt-in, a cent in the account and $500 of overdraft headroom, the menu
+ * offered a meal and the command, after the hour, said the payment didn't go through.
+ *
+ * Cash in hand counts where `spend` spends it, for food alone: first for somebody paying the day in cash, and behind
+ * a locked or stopped debit card for anybody (from 2026-10-12, later the same day). Until then it counted for every
+ * payer and every payment through `canPay`, so somebody paying by card with a cent in the account, $3 left on the
+ * credit card and $100 in cash was offered a $7 meal: by debit card it was owed in Bills Owed, by credit card the
+ * command failed on a transaction that didn't balance. A payment that isn't food was owed the same way.
+ */
+export function spendRefusal(sim: Simulation, person: Person, amount: Money, category: string): string | undefined {
+  if (amount <= 0) return undefined;
+  const food = category === 'food';
+  // A debit card purchase goes into an overdraft only where the bank may pay it there.
+  const overdraft = !food || purchaseMayOverdraw(sim, person);
+  const cash = food ? cashInHand(sim, person) : 0;
+  const cardFree = cardRoom(person, cardOf(sim, person));
+  const reach = canPay(sim, person, overdraft);
+  const everyday = paymentsOf(person).everyday;
+  // A debit card locked or stopped: the credit card and the cash in hand, whichever way the day is paid.
+  const plastic = food ? checkingOf(sim, person)?.plastic : undefined;
+  if (plastic && (plastic.locked || plastic.stopped)) {
+    if (cardFree + cash >= amount) return undefined;
+    return reach + cash < amount ? CANT_AFFORD : `Your debit card is ${plastic.stopped ? 'stopped' : 'locked'}, and there isn’t enough on the credit card or in cash.`;
+  }
+  // The rest after the cash somebody paying the day in cash spends first; paid by card, the cash isn't spent, and the
+  // words say what would spend it.
+  const left = everyday === 'cash' ? amount - Math.min(amount, cash) : amount;
+  if (reach < left) return everyday !== 'cash' && reach + cash >= amount ? CASH_UNSPENT : CANT_AFFORD;
+  if (!food) return undefined;
+  // A French debit card past its ceiling: what's left after what a credit card payer's card takes first goes on the
+  // credit card, or isn't bought.
+  const room = cardCeilingRoom(sim, person);
+  if (room === undefined) return undefined;
+  const creditFirst = everyday === 'credit' ? Math.min(left, cardFree) : 0;
+  return left - creditFirst > room && cardFree < left ? 'Your debit card is past its payment ceiling, and there isn’t enough on the credit card.' : undefined;
+}
+
+/** Whether `spend` would pay an amount now with nothing owed allowed (`spendRefusal`). */
+export function canSpend(sim: Simulation, person: Person, amount: Money, category: string): boolean {
+  return spendRefusal(sim, person, amount, category) === undefined;
+}
+
 /**
  * Pays an amount out of checking, then the card; what's left is owed where
  * `owe` allows it. Returns whether all of it was paid or owed. With nothing
- * owed allowed and not enough to pay, nothing is spent at all.
+ * owed allowed and not enough to pay (`canSpend`), nothing is spent at all.
+ * Until 2026-10-12 that was false for somebody paying the day in cash: the
+ * cash in hand was taken first, and a locked debit card or a French card's
+ * ceiling then refused the rest, so a meal not bought still cost the cash.
+ * Until later that day it was false for somebody paying by card with cash
+ * in hand, which `canSpend` counted and this spends only behind a locked
+ * debit card: what the bank and the card couldn't pay was owed in Bills
+ * Owed, with nothing owed allowed.
  */
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);
   // A debit card purchase goes into an overdraft only where the bank may pay it there.
   const overdraft = category !== 'food' || purchaseMayOverdraw(sim, person);
-  if (!owe && canPay(sim, person, overdraft) < amount) return false;
+  if (!owe && !canSpend(sim, person, amount, category)) return false;
   // In cash first, where that's how they pay for the day.
   if (category === 'food' && paymentsOf(person).everyday === 'cash') {
     const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
@@ -271,8 +346,12 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
     creditFirst = amount;
   }
   const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
-  const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);
-  const owed = bank.short - fromCard;
+  // The card takes what the bank came up short on, as far as the room it has after what it took first, and the rest
+  // is owed. Until 2026-10-12 what was owed took what the card took first off a second time, so a day paid by credit
+  // card that the bank came up short on didn't balance, and the purchase threw.
+  const shortOnCard = Math.min(bank.short, cardFree - creditFirst);
+  const fromCard = creditFirst + shortOnCard;
+  const owed = bank.short - shortOnCard;
   const postings = [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, ...bank.postings];
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
@@ -288,10 +367,11 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
   if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) {
     chargeForPurchase(sim, person);
-    // The change to the next whole unit, into savings tonight, where the bank rounds up (B9): on what the debit card
-    // paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
+    // The change to the next whole unit, or the bank's flat amount a purchase where its words say so (`roundUpFor`,
+    // from 2026-10-12: the change at every bank until then), into savings tonight, where the bank rounds up (B9): on
+    // what the debit card paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
     const onDebit = amount - creditFirst - bank.short;
-    if (roundUpsOn(sim, person) && onDebit > 0) person.roundUps!.pending += roundUpOf(onDebit);
+    if (roundUpsOn(sim, person) && onDebit > 0) person.roundUps!.pending += roundUpFor(sim, person, onDebit);
   }
   return true;
 }
@@ -315,10 +395,15 @@ export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
   const bought = spend(sim, person, cost, 'Groceries', 'food');
   if (bought) person.fedOn = sim.now;
   if (!bought && person.id === sim.universe.playerId) {
+    // Why, where it's more than the money running out (`spendRefusal`, from 2026-10-12): behind a locked debit card
+    // the bank can be full, and paid by card the cash in hand isn't spent. Until then it said there was nothing left to
+    // pay with, whatever the reason.
+    const why = spendRefusal(sim, person, cost, 'food');
+    const price = formatMoney(cost, saveCurrency(sim.universe));
     sim.notify({
       category: 'money',
       title: 'No Money For Food Today',
-      body: `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. It's what's in the cupboard today, and not enough of it.`,
+      body: `${why && why !== CANT_AFFORD ? `A day’s groceries cost ${price}. ${why}` : `A day’s groceries cost ${price}, and there’s nothing left to pay with.`} It’s what’s in the cupboard today, and not enough of it.`,
       importance: 70,
     });
   }

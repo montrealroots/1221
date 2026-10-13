@@ -46,7 +46,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
     && (sim.universe.accounts[one.accountId]?.bankId === bankId || cards.some((c) => c.account.id === one.accountId)));
 
   return (
-    <Panel title="Your Cards" subtitle="Locking, loss and theft, and payments that weren’t yours">
+    <Panel title="Your Cards" subtitle="Locking, loss and theft, and payments that weren’t yours" help="bank.card-security">
       <LookRegion className="col gap-3">
         {cards.map(({ which, account }) => {
           const p = plasticView(sim, account, which);

@@ -10,10 +10,19 @@
  * - **Everyday spending**, the day's groceries and a meal, on the debit card,
  *   the credit card or in cash (C27), through `spend` in
  *   `systems/spending.ts`.
- * - Savings pays nothing directly: it backs the current account only where
- *   the holder links it as overdraft protection (A108, B13, B19).
+ * - Savings pays nothing directly: it backs a current account only where
+ *   the holder links it as overdraft protection (A108, B13, B19). The link
+ *   covers each current account a payment comes from with easy-access
+ *   savings at the same bank: the primary, and a loan's repayment account at
+ *   another bank (`linkCovers`). The money was drawn that way from
+ *   2026-10-10; How You Pay said so from 2026-10-12, group r3b, and until
+ *   then counted the primary account's bank alone.
  * - **Standing orders** of the holder's own, into savings on a day each
  *   month (A67, B8), and **one-off payments** scheduled for a date (A70).
+ *   Between two of the holder's banks each goes as Move Money goes, out on
+ *   its day and in on the sending bank's, held to its limits, and neither
+ *   touches a term deposit or an account the bank has blocked (from
+ *   2026-10-12: until then each went straight across on its day).
  *
  * Until the connected world of 2026-10-09 the rent and the bills were paid
  * here too, each the country's usual way (`content/payments.ts`): a
@@ -34,6 +43,9 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { savingsDebit } from './accountlife';
 import { orderSource } from './routing';
+import { sendBetweenBanks } from './bankmoves';
+import { loansOf, repaymentAccount } from './lending';
+import { autopaySource, cardsOf } from './credit';
 
 export interface StandingOrder { id: string; toId: string; amount: Money; day: number; /** The account it pays from (from 2026-10-10, `orderSource`). */ fromId?: string }
 
@@ -70,6 +82,67 @@ export function paymentsOf(person: Person): PaymentSettings {
   return person.payments ?? { everyday: 'debit', linkSavings: true, standingOrders: [] };
 }
 
+/** A current account a payment comes from, what it pays, and the savings the link draws on for it (`linkCovers`). */
+export interface LinkCover {
+  /** The account, or nothing where there's no primary account. */
+  from: Account | undefined;
+  /** The primary, which pays the day's spending. */
+  primary: boolean;
+  /** The cards whose autopay comes from it (from 2026-10-12). */
+  cards: Account[];
+  /** The open loans repaid from it. */
+  loans: Account[];
+  /** Easy-access savings at its bank, which the link draws on for it, or nothing. */
+  savings: Account | undefined;
+}
+
+/**
+ * Each current account a payment comes from, with the savings the link draws on for it, as `drawFromBank` in
+ * `systems/spending.ts` draws: easy-access savings at that account's own bank, or at any bank for an account at none.
+ * The primary account comes first. Each open loan is repaid from its repayment account (`payFromBank` and
+ * `repaymentAccount` in `systems/lending.ts`), which a change of primary doesn't move, so a loan repaid from another
+ * bank's current account draws on linked savings at that bank. A card's autopay comes from the account it's set on
+ * (`autopaySource` in `systems/credit.ts`), which a change of primary pins where it was, and draws on linked savings at
+ * that account's bank (`payCard`); until later on 2026-10-12 it drew none from another account than the primary, and
+ * wasn't counted here, so a card's autopay from Chase bounced with Chase savings full while the screen said the link
+ * covered Chase's current account.
+ *
+ * From 2026-10-12, group r3b. Until then How You Pay and `bank.set_payments` read the primary account's bank alone
+ * (`linkableSavings`, removed later on 2026-10-12 when nothing but two tests read it), and said the link reached nothing more, while the money code drew it at a loan's repayment
+ * account's bank: with Chase savings, a Citi loan repaid from Chase and Citi made primary, the screen said On covered
+ * nothing and the bank refused to turn it On, though On paid that loan from Chase savings.
+ */
+export function linkCovers(sim: Simulation, person: Person): LinkCover[] {
+  const primary = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  const covers: LinkCover[] = [{ from: primary, primary: true, cards: [], loans: [], savings: undefined }];
+  const coverOf = (from: Account | undefined): LinkCover => {
+    const had = covers.find((one) => one.from?.id === from?.id);
+    if (had) return had;
+    const made: LinkCover = { from, primary: false, cards: [], loans: [], savings: undefined };
+    covers.push(made);
+    return made;
+  };
+  // A card with autopay (`autopaySource`; a card at no account pays nothing by itself), and each loan (where there's no
+  // repayment account, `drawFromBank` draws on the primary).
+  for (const card of person.credit ? cardsOf(sim, person) : []) {
+    const from = autopaySource(sim, person, card);
+    if (from && !from.closedAt) coverOf(from).cards.push(card);
+  }
+  for (const loan of loansOf(sim, person)) coverOf(repaymentAccount(sim, person, loan) ?? primary).loans.push(loan);
+  const savings = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'savings' && a.category !== 'term');
+  for (const cover of covers) cover.savings = savings.find((a) => !cover.from?.bankId || a.bankId === cover.from.bankId);
+  return covers;
+}
+
+/**
+ * The banks of the current accounts payments come from, as a sentence names them: “Citi”, or “Citi or Chase”. Each
+ * is at a bank of its own, as a bank opens one current account to a holder.
+ */
+export function coveredBanks(covers: LinkCover[]): string {
+  const names = covers.map((one) => one.from?.institution ?? 'your bank');
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} or ${names.at(-1)}` : names[0] ?? 'your bank';
+}
+
 function settle(person: Person): PaymentSettings {
   if (!person.payments) person.payments = paymentsOf(person);
   return person.payments;
@@ -88,6 +161,38 @@ function nextOn(sim: Simulation, day: number, after: Instant): Instant {
   return at;
 }
 
+/**
+ * Why the bank won't make a payment between two of the holder's accounts on its day, as `bank.transfer` refuses one,
+ * or nothing: a term deposit, locked until its end; an account dormant or closing; or one a switch left in debt,
+ * blocked to all but repayment. Until 2026-10-12 a standing order and a payment set for a date read none of them, and
+ * a payment a save set from a term deposit before then took money out of it with no penalty.
+ */
+function blockedBy(from: Account, to: Account): string | undefined {
+  const term = [from, to].find((a) => a.category === 'term');
+  if (term) return `${term.name} is a term deposit, locked until its end`;
+  if (from.switchDebt) return `${from.name} is blocked to everything but paying off what it owes, since the switch`;
+  const dormant = [from, to].find((a) => a.dormant);
+  if (dormant) return `${dormant.name} is dormant`;
+  const closing = [from, to].find((a) => a.closingAt !== undefined);
+  if (closing) return `${closing.name} is closing`;
+  return undefined;
+}
+
+/**
+ * Sends a payment between two of the holder's banks as Move Money sends it (`sendBetweenBanks`): out now, in on the
+ * sending bank's day, held to Citi's limits. Until 2026-10-12 it went straight across on the day, whatever the two
+ * banks were. Returns why the sending bank refused it, or nothing.
+ */
+function sendAcross(s: Simulation, person: Person, from: Account, to: Account, amount: Money): string | undefined {
+  try {
+    sendBetweenBanks(s, person, from, to, amount);
+    return undefined;
+  } catch (error) {
+    if (error instanceof CommandError) return error.message.replace(/\.$/, '');
+    throw error;
+  }
+}
+
 export function registerPayments(sim: Simulation): void {
   // A standing order of the holder's own: made on its day if the current account can make it.
   sim.onSchedule(STANDING_ORDER_KIND, (item, s) => {
@@ -98,10 +203,16 @@ export function registerPayments(sim: Simulation): void {
     const source = orderSource(s, person, order);
     const current = source && !source.closedAt ? source : undefined;
     const to = s.universe.accounts[order.toId];
-    if (current && to && !to.closedAt && current.balance >= order.amount) {
-      s.post({ memo: `Standing order to ${to.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: to.id, amount: order.amount }] });
-    } else if (person.id === s.universe.playerId) {
-      const why = !to || to.closedAt ? `${to?.name ?? 'The account'} is closed` : !current ? `${source?.name ?? 'The account it pays from'} is closed` : `It wasn’t in ${current.name} on the day`;
+    const open = to && !to.closedAt ? to : undefined;
+    let why: string | undefined;
+    if (!open) why = `${to?.name ?? 'The account'} is closed`;
+    else if (!current) why = `${source?.name ?? 'The account it pays from'} is closed`;
+    else {
+      why = blockedBy(current, open) ?? (current.balance >= order.amount ? undefined : `It wasn’t in ${current.name} on the day`);
+      if (!why && current.bankId !== open.bankId) why = sendAcross(s, person, current, open, order.amount);
+      else if (!why) s.post({ memo: `Standing order to ${open.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: open.id, amount: order.amount }] });
+    }
+    if (why && person.id === s.universe.playerId) {
       s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'}: ${why}, so the bank didn’t make it.`, importance: 50, route: '/workspace/bank' });
     }
     s.schedule({ at: nextOn(s, order.day, item.at), kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });
@@ -122,11 +233,14 @@ export function registerPayments(sim: Simulation): void {
     }
     // From savings, what it lets out, and its withdrawal fee: until 2026-09-27 neither was read here.
     const { room, fee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
-    if (room >= amount) {
-      s.post({ memo: `Scheduled payment to ${to.name}`, category: 'transfer', postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }] });
+    const short = room < amount;
+    const across = from.bankId !== to.bankId;
+    const refused = blockedBy(from, to) ?? (!short && across ? sendAcross(s, person, from, to, amount) : undefined);
+    if (!refused && !short) {
+      if (!across) s.post({ memo: `Scheduled payment to ${to.name}`, category: 'transfer', postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }] });
       if (fee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee }] });
     } else if (person.id === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn't in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: refused ? `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} didn’t go: ${refused}.` : `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn’t in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -137,7 +251,12 @@ export function registerPayments(sim: Simulation): void {
       if (p.everyday !== 'debit' && p.everyday !== 'credit' && p.everyday !== 'cash') throw new CommandError('Everyday spending goes in cash, on the debit card or on the credit card.');
       pay.everyday = p.everyday;
     }
-    if (p.linkSavings === true && !Object.values(s.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term')) throw new CommandError('There’s no savings account to cover the current account.');
+    // On only where it covers something: easy-access savings at the bank of a current account a payment comes from, the
+    // primary or a loan's repayment account (`linkCovers`). Until 2026-10-12 savings at any bank let it be turned on,
+    // and then it covered nothing. Later the same day, until group r3b, only the primary account's bank was read, so it
+    // was refused with savings at the bank of a loan's repayment account, though On paid that loan from it.
+    const covers = linkCovers(s, person);
+    if (p.linkSavings === true && !covers.some((one) => one.savings)) throw new CommandError(`There’s no savings account at ${coveredBanks(covers)} to cover ${covers.length > 1 ? 'the current accounts your payments come from' : 'the current account'}.`);
     if (p.linkSavings !== undefined) pay.linkSavings = Boolean(p.linkSavings);
     return { payments: pay };
   });
@@ -146,6 +265,8 @@ export function registerPayments(sim: Simulation): void {
     const person = s.player;
     const to = s.universe.accounts[p.toId];
     if (!to || to.ownerId !== person.id || to.closedAt || to.kind !== 'savings') throw new CommandError('A standing order of your own goes into one of your savings accounts.');
+    // Until 2026-10-12 a term deposit was taken here, and money went into it every month though the screen never offered it.
+    if (to.category === 'term') throw new CommandError(`${to.name} is a term deposit, locked until its end: a standing order goes into easy-access savings.`);
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much each month.');
     const day = Math.round(Number(p.day));
@@ -172,6 +293,9 @@ export function registerPayments(sim: Simulation): void {
     const to = s.universe.accounts[p.toId];
     const mine = (a?: Account) => a && a.ownerId === person.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings');
     if (!mine(from) || !mine(to) || from!.id === to!.id) throw new CommandError('A scheduled payment goes between two of your own accounts.');
+    // Until 2026-10-12 a term deposit was taken here too, so money went into one, or came out of it with no penalty.
+    const term = [from!, to!].find((a) => a.category === 'term');
+    if (term) throw new CommandError(`${term.name} is a term deposit, locked until its end: a payment set for a date goes between your current and easy-access savings accounts.`);
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much.');
     const at = Number(p.at);

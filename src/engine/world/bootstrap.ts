@@ -28,7 +28,7 @@ import { citizenshipFor } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
 import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
-import { settle } from '../systems/body';
+import { drawnBody, settle } from '../systems/body';
 
 import { APP_VERSION } from '../version';
 export { APP_VERSION };
@@ -121,6 +121,8 @@ export interface NewSaveConfig {
    * saves do; a save made for a test or a tool doesn't unless it asks.
    */
   tutorial?: boolean;
+  /** Whether the clock starts paused without the guide (from 2026-10-12: a life made with "I Know SLATE"). */
+  paused?: boolean;
 }
 
 /**
@@ -320,10 +322,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);
-  if (config.tutorial) {
-    universe.tutorial = { read: [] };
-    universe.preferences.timeSpeed = 'paused';
-  }
+  if (config.tutorial) universe.tutorial = { read: [] };
+  if (config.tutorial || config.paused) universe.preferences.timeSpeed = 'paused';
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
@@ -382,10 +382,12 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     wokeWithDebt: 0,
     createdAt: now,
   };
-  // Their height and weight as they gave them, the life they start with holding it (`settle`).
-  if (bodyGiven(config)) {
-    player.body = settle({ heightCm: config.heightCm!, weightKg: config.weightKg! }, player, now);
-  }
+  // Their height and weight as they gave them, the life they start with holding it (`settle`), and where they gave
+  // none, drawn from where they were born (`drawnBody`). Until 2026-10-12 the drawn one waited for the first midnight
+  // (`bodyOf`), so a workout on the first day burned calories nothing counted.
+  player.body = bodyGiven(config)
+    ? settle({ heightCm: config.heightCm!, weightKg: config.weightKg! }, player, now)
+    : drawnBody(seed, player, now);
   universe.people[playerId] = player;
   idAlreadyIssued(universe, 'person', 1);
 

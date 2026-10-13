@@ -87,7 +87,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAY
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { ATTRIBUTES, CRAFT_ABILITY, abilityGain, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
+import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
 import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
@@ -95,11 +95,14 @@ import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
-import { bandOfQuality, evaluate as judgeWork, judge, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
+import { bandOfQuality, countTogether, judge, leanedWeights, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
+import { evaluatePiece, judgePiece, loadOf, pieceWeights, toneSegments, withBook, type PieceSpec } from './piece';
+import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
 import { withDemands } from '../content/demands';
-import { materialContext, materialOf, type Playing } from './material';
+import { materialContext, materialOf, sidesOf, type Playing } from './material';
+import { noteMaterial } from './experience';
 import { PLAYING } from '../content/approaches';
 import { practiceGenres } from './engagement';
 import { INJURY, INJURY_KIND } from '../content/injury';
@@ -226,9 +229,11 @@ export interface LastWork {
   size?: PartSize;
   /**
    * How much of their ability they brought to it, 0 to 1 (from 2026-10-10): the player's, the mean of each night's
-   * preparation and condition as the evaluation found them; a classmate's, the share of calls they keep
-   * (`reliabilityOf`), as their calls aren't played one by one. What the chair reads of a last run since, in place
-   * of the nights' bands, which read the craft a second time.
+   * preparation and the day's condition as the evaluation found them (`DimensionResult.day`); a classmate's, the share
+   * of calls they keep (`reliabilityOf`), as their calls aren't played one by one. What the chair reads of a last run
+   * since, in place of the nights' bands, which read the craft a second time. Until 2026-10-12 the condition read was
+   * the whole of it, with the stamina's drain late in the play and a slip's shake in it, which read the stamina and the
+   * night's draw a second time.
    */
   delivery?: number;
   /**
@@ -362,7 +367,10 @@ export interface SchoolRecord {
   awaitingDegree?: boolean;
   /** When they registered for the program (`registered`, from 2026-10-10): classes count them, and work-study's I-9 is done, from then. */
   registeredAt?: Instant;
-  /** In the casting pool: out after missed rehearsal calls, back after a good evaluation. */
+  /**
+   * In the casting pool: out after missed calls, labs among them from 2026-10-12 (`missedCallsOut`), back after a good
+   * evaluation. Until then only a missed rehearsal or run-through took a student out.
+   */
   castable: boolean;
   /**
    * Runs played after their term's evaluation and not yet judged, kept from the next casting for the next
@@ -371,6 +379,12 @@ export interface SchoolRecord {
   unreviewed?: Casting[];
   classmates: Classmate[];
   tally: TermTally;
+  /**
+   * The calls of the terms before this one, made and answered, folded in as each new term's tally starts (from
+   * 2026-10-12): what Your Work So Far's Reliability reads with this term's (`identityOf`). Until then it read this
+   * term's alone, and was gone at each new term until six more were made. Absent on a save from before, and read as none.
+   */
+  callsBefore?: { calls: number; answered: number };
   /** The player's last part, for the chair's next casting. */
   lastWork?: LastWork;
   /** Every run played, the latest last, the most recent twelve (`RunRecord`, from 2026-10-10). */
@@ -493,6 +507,8 @@ export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, sourc
 export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
+/** The Summer Cabaret as an employer: its stipend's wages, and an injury at its work (`Injury.atWork.employer`). */
+const SUMMER_EMPLOYER = 'yale-summer-cabaret';
 export const RECESS_KIND = 'school.recess';
 export const LAB_KIND = 'school.lab';
 export const CONVERT_KIND = 'school.convert';
@@ -579,7 +595,10 @@ export const ESTIMATE = {
    * SLATE's reading of "appropriate standards".
    */
   coursework: { shown: 3, unready: 0.5, strong: 0.5 },
-  /** Missed rehearsal calls in a term that take an actor out of the casting pool: the removal is the Bulletin's, the count SLATE's estimate. */
+  /**
+   * Missed calls in a term that take an actor out of the casting pool, labs and rehearsals together (`missedCallsOut`;
+   * a missed lab took nobody out until 2026-10-12): the removal is the Bulletin's, the count SLATE's estimate.
+   */
   missedCallsOut: 2,
   /**
    * The acting (`actingOf`) at which a director asks for a third-year in a
@@ -1366,14 +1385,42 @@ export const hourlyIn = (into: string): Money => (into === 'USD' ? WORK_STUDY.ho
 /** Whether the need assessment finds need: the family's means are read, and a wealthy family's rule it out. */
 export const hasNeed = (person: Person) => person.family !== 'wealthy';
 
+/**
+ * A term's support, by how many terms are enrolled with it: past the six the tuition scholarship supports it has none
+ * (`unsupported`) unless the aid office's review granted an exception (`AidReview.tuition`); living aid (`need`) goes by
+ * need, past six only where the review kept it (`AidReview.living`). The term's start bills by it and Terms And Award
+ * shows by it (from 2026-10-12: until then the screen counted terms alone, and showed a term the review waived as billed
+ * to the Yale account with its health fee, and no living aid).
+ */
+export function termSupport(person: Person, enrolledCount: number): { unsupported: boolean; need: boolean } {
+  const review = person.school?.aidReview?.status === 'decided' ? person.school.aidReview : undefined;
+  const unsupported = enrolledCount > YALE_DRAMA.terms && !review?.tuition;
+  return { unsupported, need: hasNeed(person) && (!unsupported || review?.living === true) };
+}
+
 // ---------------------------------------------------------------------------
 // The record
 // ---------------------------------------------------------------------------
 
-/** Which year of the degree a student is in: the first until the second fall term begins. */
+/**
+ * Which year of the degree a student is in: the first until the second fall term begins. It's the year of the
+ * program's terms begun as the school look's Terms Begun counts them (`programTermsBegun`, `ui/looks/school.tsx`), from
+ * 2026-10-12: the calendar's less those a leave or a repeated year took (from 2026-10-10), and on a leave, or with the
+ * School left during one, the program's terms before the term the leave began in, which is taken again on return. A
+ * leave's length, which `startLeave` put on the offset, is its first term to its return term: every leave sets them
+ * `terms` apart, and one from before `terms` was kept, `LEAVE_RULES.terms` apart. Until then it read the calendar's
+ * terms less the offset on a leave too, while `startLeave` adds the whole leave to the offset as it begins and
+ * `termsBegun` follows the calendar only to that term: a two-term leave from the second spring or the third read a year
+ * low for the whole of it (measured: on leave from the second spring, Terms Begun 3 of 6 and "your first year of
+ * three" on the same look, and Year 1 on the Profile and the save's slot), and one from the first spring or a fall
+ * read the same year either way.
+ */
 export function yearOfStudy(person: Person): number {
-  // Terms of the program begun, less the calendar terms a leave or a repeated year took (from 2026-10-10).
-  const begun = (person.school?.termsBegun ?? 0) - (person.school?.offset ?? 0);
+  const school = person.school;
+  if (!school) return 1;
+  const away = school.leave?.status === 'on' ? school.leave : school.leaves?.find((l) => l.status === 'dismissed' || l.status === 'withdrawn');
+  const offset = school.offset ?? 0;
+  const begun = away ? away.firstTerm - (offset - (away.returnTerm - away.firstTerm)) : school.termsBegun - offset;
   return Math.max(1, Math.ceil(begun / 2));
 }
 
@@ -1442,6 +1489,9 @@ export function cabaretRefusal(sim: Simulation, person: Person): string | undefi
   const school = person.school;
   if (!school || schoolEnded(school.standing)) return 'The Cabaret is for students.';
   if (school.standing === 'warning') return 'Nobody on academic warning may take part in the Cabaret.';
+  // On a leave, as `leaveCabaret`'s notice says and `startLeave` calls off a show begun (from 2026-10-12: until then a
+  // student on one, still in good standing, could join a show after the leave had begun).
+  if (school.leave?.status === 'on') return 'You’re on leave: a student on leave takes no part in the Yale Cabaret.';
   const term = school.termsBegun - 1;
   if (term < 0) return 'The Cabaret’s season begins with the term.';
   if (school.cabaret?.term === term) return 'You’re in a Cabaret show this term already.';
@@ -1460,6 +1510,9 @@ export function cabaretRefusal(sim: Simulation, person: Person): string | undefi
 export function summerRefusal(sim: Simulation, person: Person): string | undefined {
   const school = person.school;
   if (!school || school.standing !== 'good') return 'The Summer Cabaret’s company takes a student in good standing.';
+  // On a leave, whose start calls off a company's calls and stipends (`startLeave`), from 2026-10-12: until then a
+  // student on one could join the company after the leave had begun.
+  if (school.leave?.status === 'on') return 'You’re on leave: a student on leave takes no part in the Summer Cabaret.';
   const term = school.termsBegun - 1;
   // A spring term with a year still to come: the summer after the first or second year.
   if (term < 0 || termStart(term).fall || yearOfTerm(academicTerm(school, term)) === 3) return 'The company forms in the spring, for students with a year still to come.';
@@ -1472,6 +1525,9 @@ export function summerRefusal(sim: Simulation, person: Person): string | undefin
 export function shiftRefusal(person: Person): string | undefined {
   const school = person.school;
   if (!school || schoolEnded(school.standing)) return 'You’re not at school.';
+  // On a leave nothing is worked (`startLeave`), as the leave's panel says (from 2026-10-12: until then an elective
+  // shift was booked, worked and paid on a leave, since a student on one is still registered).
+  if (school.leave?.status === 'on') return 'You’re on leave: no shifts until you’re back.';
   // The Bulletin's 50 elective hours are part of a minimum of 200, not a cap (from 2026-10-10: until then a shift past 50
   // was refused). The award's ceiling isn't published, so SLATE sets none: the calendar's own hours are the limit.
   return undefined;
@@ -1751,6 +1807,21 @@ export function leaveCabaret(sim: Simulation, person: Person, why: string): void
   if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so the ${ahead.length} calls still to come are off and the show goes on without you. What you rehearsed and played stays on your record, and it isn’t held against you as a missed call.`, importance: 70, route: '/workspace/school' });
 }
 
+/**
+ * A missed call that brings the term's missed calls to `ESTIMATE.missedCallsOut`: out of the casting pool until a good
+ * evaluation, said once; whether it did. A missed rehearsal, a missed run-through and a lab missed unexcused reach it,
+ * as the tutorial's "labs and rehearsals together" says (from 2026-10-12: until then a missed lab was counted and never
+ * checked, so two labs missed left a student castable where one lab and one rehearsal took them out, and a missed
+ * run-through took them out without a word). A missed performance is counted among them and is a breach of its own.
+ */
+function missedCallsOut(sim: Simulation, person: Person): boolean {
+  const school = person.school!;
+  if (!school.castable || school.tally.calls - school.tally.answered < ESTIMATE.missedCallsOut) return false;
+  school.castable = false;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Casting Pool', body: 'Missed calls this term: the chair takes you out of the casting pool to reacquire the discipline. You fulfill what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });
+  return true;
+}
+
 /** A grave breach: straight to warning, or dismissal from warning. */
 function breach(sim: Simulation, person: Person, what: string): void {
   const school = person.school!;
@@ -2018,10 +2089,17 @@ export function rehearse(craft: Craft, focus: number): void {
  * for them where the play names it. SLATE's estimate of how a company that
  * isn't the chair's casts.
  */
-export function companyPart(person: Person, reads: Partial<Craft>, parts?: readonly Part[]): { role: string; size: PartSize } {
+/**
+ * A part in the company's own shows, the Cabaret's and the Summer Cabaret's: the leads to the four the play reads best.
+ * From 2026-10-12 each is read as the chair reads a student for a play (`castFit`): the evaluation's expected night
+ * from the abilities a night asks and the techniques and material the play reads. Until then it was the raw craft
+ * against the play's reads alone, a second casting model blind to the abilities and the material (the completeness
+ * critic of 2026-10-12).
+ */
+export function companyPart(sim: Simulation, person: Person, reads: Partial<Craft>, parts?: readonly Part[], play?: string): { role: string; size: PartSize } {
   const school = person.school!;
-  const mine = readOf(person.craft!, reads);
-  const place = 1 + school.classmates.filter((m) => readOf(m.craft, reads) > mine).length;
+  const mine = castFit(sim, performerOf(sim, person), reads, [], `company:${person.id}`, play);
+  const place = 1 + school.classmates.filter((_m, i) => castFit(sim, classmatePerformer(sim, person, i), reads, [], `company:${i}`, play) > mine).length;
   const size: PartSize = place <= 4 ? 'lead' : 'supporting';
   const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
   const fits = (p: Part) => p.for === 'either' || p.for === title;
@@ -2066,7 +2144,19 @@ export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unk
  * of ±0.2 that could pull down any night; the luck is the evaluation's bounded variation now, and nothing at full
  * capacity.
  */
-export function nightEvaluation(sim: Simulation, person: Person, key: string, holder: NightHolder, at: Instant, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school'): Evaluation {
+/**
+ * A play as a piece in its movements (from 2026-10-12, `systems/piece.ts`): its tones in order, two at least, a first
+ * half and a second where the play holds one; each movement's blocking refined by any work on it, and the evening's
+ * load. A play with no profile, a festival's or a cabaret's new one, was judged whole until 2026-10-12; from then it's
+ * its two halves with no tones assumed (`toneSegments` with two at least).
+ */
+export function playPiece(holder: NightHolder): PieceSpec {
+  const material = materialOf(holder.play);
+  const proc = hasProcess(holder) ? holder.process : undefined;
+  return withBook({ segments: toneSegments(material?.tones ?? [], 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
+}
+
+export function nightEvaluation(sim: Simulation, person: Person, key: string, holder: NightHolder, at: Instant, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school', expected = false): Evaluation {
   const E = TASK_PROFILES.performance!;
   const prep = prepOf(holder) ?? {};
   // Complete is what every call makes, but never asks less than a part's lines and blocking at their least.
@@ -2080,10 +2170,42 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const prepWith: Record<string, number> = { ...prep };
   if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = PLAYING.complete; }
   const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;
-  return judgeWork(sim, person, {
+  const ctx = {
     task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
     condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
-  });
+    ...(expected ? { expected: true } : {}),
+  };
+  return evaluatePiece(sim, person, ctx, playPiece(holder));
+}
+
+/**
+ * The company of a night (from 2026-10-12, `systems/ensemble.ts`): the classmates cast with you, as one partner. Their
+ * preparation is the share of the calls they keep (`reliabilityOf`), their timing their listening and focus, and the
+ * play's partner level how much of the night is played off them. None cast with you that the class knows: none.
+ */
+export function companyRead(sim: Simulation, person: Person, holder: NightHolder & { cast?: { name: string }[] }): PartnerRead | undefined {
+  const school = person.school;
+  const material = materialOf(holder.play);
+  if (!school || !holder.cast?.length) return undefined;
+  const idx = holder.cast.map((c) => school.classmates.findIndex((m) => m.name === c.name)).filter((i) => i >= 0);
+  if (!idx.length) return undefined;
+  const mean = (f: (i: number) => number) => idx.reduce((a, i) => a + f(i), 0) / idx.length;
+  const rel = mean((i) => reliabilityOf(sim, person, i));
+  const timing = mean((i) => { const p = classmatePerformer(sim, person, i); return 0.5 + 0.5 * ((Math.min(100, p.ability('listening')) + Math.min(100, p.ability('focus'))) / 200); });
+  // A new play with no profile is played off the company as an ordinary play is, at 2 (SLATE's middle).
+  return { name: 'The Company', prep: rel, timing, agree: 1, reliability: rel, level: material?.partner ?? 2 };
+}
+
+/** A night together: your night with the company's contribution, where there's a company (`companyRead`). */
+export function nightTogether(sim: Simulation, person: Person, holder: NightHolder & { cast?: { name: string }[] }, evaluation: Evaluation): SharedResult | undefined {
+  const read = companyRead(sim, person, holder);
+  if (!read) return undefined;
+  const material = materialOf(holder.play);
+  const proc = hasProcess(holder) ? holder.process : undefined;
+  const lean = material || proc?.playing ? materialContext(TASK_PROFILES.performance!, material, proc?.playing, proc?.direction).lean : undefined;
+  const weights = lean ? pieceWeights(TASK_PROFILES.performance!, lean, playPiece(holder)) : leanedWeights(TASK_PROFILES.performance!, familiesOf(genresOfPlay(holder.play) ?? []));
+  const norm = (id: AbilityId) => Math.min(1, abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)));
+  return sharedOf(evaluation, read, sim.universe.meta.seed, evaluation.inputs.key, (norm('listening') + norm('adaptability')) / 2, weights);
 }
 
 /**
@@ -2097,7 +2219,8 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const proc = hasProcess(holder) ? holder.process : undefined;
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
   const read = materialContext(E, material, chosen, proc?.direction);
-  return judge(sim.universe.meta.seed, performerOf(sim, person), { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, key: `preview:${holder.play ?? ''}`, expected: true });
+  const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, key: `preview:${holder.play ?? ''}`, expected: true };
+  return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder));
 }
 
 /** The least a night's lines and blocking must be at to count complete, however few the calls: off book (`PROCESS.offBook`), and the blocking set. */
@@ -2294,10 +2417,12 @@ export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>,
   // The play's material as a night reads it (from 2026-10-10), before anyone has chosen how to play it.
   const material = materialOf(title);
   const read = material ? materialContext(TASK_PROFILES.performance!, material) : undefined;
-  return judge(sim.universe.meta.seed, castingPerformer(perf), {
+  const ctx = {
     task: TASK_PROFILES.performance!, techniques: reads, prep: {}, required: {}, difficulty: 0,
     condition: { readiness: 100 }, ...(read ? { lean: read.lean, inputs: read.inputs } : { families: familiesOf(kinds) }), key, expected: true,
-  }).overall;
+  };
+  // Judged in its movements as a night is (from 2026-10-12).
+  return judgePiece(sim.universe.meta.seed, castingPerformer(perf), ctx, playPiece({ ...(title ? { play: title } : {}) })).overall;
 }
 
 /**
@@ -2443,7 +2568,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   classCabaret(sim, person, term, callsOf);
   castListRead(person);
   if (!school.castable) {
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
   }
   // Both assignments' calls, worked out before any is booked, so the one
@@ -2479,8 +2604,9 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     // At eight, as Carlotta's 2026 curtains were (from 2026-10-10; until then at seven, which nothing published).
     production.runs.forEach((d, k) => ours.push({ at: at(d, 20), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
-    staged(ours, production.name);
   }
+  // Staged once the calls each production keeps are known (below), from 2026-10-12.
+  let repStaged: { name: string; understudy: boolean } | undefined;
   if (repTerm(academic) && school.standing === 'good') {
     const rep = repProduction(term);
     const inRole = playerAtRep;
@@ -2489,7 +2615,12 @@ function cast(sim: Simulation, person: Person, term: number): void {
     const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
     const pick = (size: PartSize) => play?.parts.find((x) => x.size === size && (x.for === title || x.for === 'either'))?.name;
     const role = term === 1 ? (title === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? (pick('featured') ?? 'A Featured Part In The Company') : (pick('lead') ?? 'An Understudy In The Company');
-    school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0, ...(inRole ? { size: 'featured' as const } : {}), ...(play ? { play: play.title, by: play.by } : {}) };
+    // The class's others asked into the company with you, as a School production's cast lists them (from 2026-10-12), so a
+    // curtain counts the friends among them and the nights together read them. Until then the Rep's casting had no cast,
+    // and every Rep curtain weighed on somebody who needs company as one played among strangers, classmates on the stage
+    // with them or not. An understudy sent on still plays with none of the class.
+    const fellows = inRole ? [...matesAtRep].map((i) => ({ name: school.classmates[i]!.name, part: 'A Featured Part In The Company' })) : [];
+    school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0, ...(inRole ? { size: 'featured' as const } : {}), ...(fellows.length ? { cast: fellows } : {}), ...(play ? { play: play.title, by: play.by } : {}) };
     // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
     for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.rehearsals.to; d = addDays(d, 1)) {
       const wd = weekday(d);
@@ -2503,7 +2634,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     const final = reps.filter((r) => r.call === 'performance').at(-1);
     if (final) final.last = true;
-    staged(reps, rep.name, !inRole);
+    repStaged = { name: rep.name, understudy: !inRole };
     // An understudy's run-through: the understudies play the show once for the
     // director and stage management, on the dark Monday of the run's second
     // week (SLATE's estimate of when).
@@ -2514,8 +2645,32 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
   }
   const overlaps = (a: Call, b: Call) => a.at < b.at + b.minutes * 60_000 && b.at < a.at + a.minutes * 60_000;
-  const keptOurs = ours.filter((c) => !reps.some((r) => overlaps(c, r) && (c.call === 'rehearsal' || r.call === 'performance')));
+  // An understudy on call needs nobody at the theater unless they're sent on (from 2026-09-28), so an evening on call
+  // doesn't take a School rehearsal's place: only a Rep rehearsal, performance or run-through does (from 2026-10-12;
+  // until then every School rehearsal on a Rep performance night was dropped, the technical and the dress among them).
+  const keptOurs0 = ours.filter((c) => !reps.some((r) => r.call !== 'oncall' && overlaps(c, r) && (c.call === 'rehearsal' || r.call === 'performance')));
+  // A School rehearsal on an evening on call ends when the call begins, so an understudy sent on can go, and one after a
+  // matinee on call starts when it's over; under two hours left of it, it isn't called.
+  const keptOurs = keptOurs0.flatMap((c) => {
+    if (c.call !== 'rehearsal') return [c];
+    const call = reps.find((r) => r.call === 'oncall' && overlaps(c, r));
+    if (!call) return [c];
+    // A matinee on call before it: it starts when the call is over instead.
+    if (call.at <= c.at) {
+      const from = call.at + call.minutes * 60_000;
+      const minutes = Math.floor((c.at + c.minutes * 60_000 - from) / 60_000);
+      return minutes >= 120 ? [{ ...c, at: from, minutes }] : [];
+    }
+    const minutes = Math.floor((call.at - c.at) / 60_000);
+    return minutes >= 120 ? [{ ...c, minutes }] : [];
+  });
   const keptReps = reps.filter((r) => !(r.call === 'oncall' && keptOurs.some((c) => c.call === 'performance' && overlaps(c, r))));
+  // Each production's rehearsals numbered and staged on the calls it keeps (from 2026-10-12). Until then they were
+  // staged before the overlap filter dropped any, so a call numbered 4 of 20 could be the student's second of eight, the
+  // par counted calls never given, and the technical and the dress could be among the dropped: measured on seed 'of-a',
+  // a Thesis I casting with a Rep understudy kept 8 of 20 numbered calls and could never reach complete preparation.
+  if (production) staged(keptOurs, production.name);
+  if (repStaged) staged(keptReps, repStaged.name, repStaged.understudy);
   for (const c of [...keptOurs, ...keptReps]) {
     // A night on call is a call at five (`ESTIMATE.onCallAt`), in New Haven and reachable, and needs nobody at the theater unless they're sent on. Until 2026-09-28 it held the evening at the theater and stopped the clock every performance night.
     if (c.call === 'oncall') {
@@ -2544,7 +2699,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     const r = school.rep;
     if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
-    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfil the casting.`, importance: 75, route: '/workspace/school' });
+    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfill the casting.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -2556,18 +2711,29 @@ function cast(sim: Simulation, person: Person, term: number): void {
  * warned and then dismissed for growing less than the rest. The evaluation
  * and the School's screen both read it.
  */
+/**
+ * The room a growth is measured against, at its least (from 2026-10-12): within this of the ceiling a student has the
+ * reach the classes level off at, and has met the growth the term asks. Until then the room was floored at 0.01, so a
+ * student at every skill's ceiling who grew nothing was judged behind the class and stepped toward dismissal, and one a
+ * hair under it who grew 0.3 was judged a hundred times ahead (the completeness critic of 2026-10-12, measured).
+ */
+export const ROOM_LEAST = 0.02;
+
 export function termGrowth(person: Person): { growth: number; classGrowth: number; grewTooLittle: boolean; pace: 'ahead of' | 'in line with' | 'behind' } {
   const school = person.school!;
   const t = school.tally;
-  const room = (start: number, ceiling: number) => Math.max(0.01, Math.max(0, 1 - start / ceiling) ** 1.5);
+  const roomLeft = (start: number, ceiling: number) => Math.max(0, 1 - start / ceiling) ** 1.5;
+  const room = (start: number, ceiling: number) => Math.max(ROOM_LEAST, roomLeft(start, ceiling));
   const growth = meanCraft(person.craft!) - meanCraft(t.craftAtStart);
   const gains = school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))).sort((a, b) => a - b);
   const classGrowth = gains[Math.floor(gains.length / 2)] ?? 0;
   const paced = growth / room(meanCraft(t.craftAtStart), person.craftCeiling ? meanCraft(person.craftCeiling) : 100);
   const classPaced = school.classmates.map((m, i) => { const start = t.classAtStart[i] ?? meanCraft(m.craft); return (meanCraft(m.craft) - start) / room(start, m.ceiling ? meanCraft(m.ceiling) : 100); }).sort((a, b) => a - b);
   const classPace = classPaced[Math.floor(classPaced.length / 2)] ?? 0;
-  const grewTooLittle = paced < ESTIMATE.growthFloor * classPace;
-  const pace = classPace <= 0 ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';
+  // At the reach: nothing left to grow isn't growing too little.
+  const atReach = roomLeft(meanCraft(t.craftAtStart), person.craftCeiling ? meanCraft(person.craftCeiling) : 100) < ROOM_LEAST;
+  const grewTooLittle = !atReach && paced < ESTIMATE.growthFloor * classPace;
+  const pace = classPace <= 0 || atReach ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';
   return { growth, classGrowth, grewTooLittle, pace };
 }
 
@@ -2609,21 +2775,25 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const counted = cw.shown >= ESTIMATE.coursework.shown;
   const unreadyWork = counted && cw.unready >= ESTIMATE.coursework.unready * cw.shown;
   const strongWork = counted && !unreadyWork && cw.strong >= ESTIMATE.coursework.strong * cw.shown;
-  // A grave breach in the term keeps it short of good standing, whatever else went well.
-  // A course failed this term falls short too (`settleCourses`, from 2026-10-10).
+  // A course failed this term falls short (`settleCourses`, from 2026-10-10).
   const failedNow = Object.values(school.courses ?? {}).filter((r) => r.term === term && r.result === 'fail');
-  const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || t.breaches > 0 || failedNow.length > 0;
+  const shortOtherwise = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || failedNow.length > 0;
+  // A grave breach in the term keeps it short of good standing, whatever else went well; it has already stepped the
+  // standing (`breach`), so on its own it holds the term where the breach put it. Until 2026-10-12 the evaluation stepped
+  // again on the same breach, and one missed performance in good standing ended in dismissal at that term's evaluation.
+  const short = shortOtherwise || t.breaches > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
-  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}`;
+  const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
+  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
   const extraTerm = school.extra?.term === term;
   const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || extraTerm;
   // A faculty review this term that kept them on warning (`facultyReview`) has judged these Fails: the evaluation doesn't
   // step past it on the same Fails (from 2026-10-10).
   const reviewed = school.reviews?.at(-1)?.term === term && school.reviews.at(-1)!.outcome === 'warning';
-  const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
+  const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : !shortOtherwise ? school.standing : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
   const shortfall = degreeShortfall(school);
   // A last year with a course failed: a repeat offered for thirty days (`offerRepeat`, from 2026-10-10), before the degree
   // is withheld; with a warning unmet, withheld as it was.
@@ -2702,15 +2872,19 @@ export function registerSchool(sim: Simulation): void {
     // A hold on the Yale account at a term's start: registration again once it's paid (Bulletin p.184).
     if (school.hold !== undefined) school.mustRegister = true;
     // Past the six terms the tuition scholarship supports, no aid: tuition and the health fee billed (`EXTENDED_STUDY`).
-    const review = school.aidReview?.status === 'decided' ? school.aidReview : undefined;
-    const unsupported = school.enrolled.length > YALE_DRAMA.terms && !review?.tuition;
-    if (term > 0) school.tally = freshTally(person, school);
+    // Living aid past six terms where the aid review keeps it (`AidReview.living`), as tuition support where it grants
+    // an exception: `termSupport`, which Terms And Award reads too.
+    const { unsupported, need } = termSupport(person, school.enrolled.length);
+    if (term > 0) {
+      // The ending term's calls kept for life before its tally starts again (`callsBefore`, from 2026-10-12).
+      const before = school.callsBefore ?? { calls: 0, answered: 0 };
+      school.callsBefore = { calls: before.calls + school.tally.calls, answered: before.answered + school.tally.answered };
+      school.tally = freshTally(person, school);
+    }
     // A new year's hours from the second fall; the first's began at enrollment, and resetting them
     // here lost an elective shift asked for before the first term's morning.
     if (term > 0 && termStart(term).fall) school.workStudy = { electiveHours: 0, owedHours: school.workStudy.owedHours };
     const cur = saveCurrency(s.universe);
-    // Living aid past six terms where the aid review keeps it (`AidReview.living`), as tuition support where it grants an exception.
-    const need = hasNeed(person) && (!unsupported || review?.living === true);
     const account = termAccount(cur, need, term);
     // Paid where their payments are paid (`payeeAccount`, from 2026-10-10: until then into whichever account was primary).
     const current = payeeAccount(s, person);
@@ -2952,9 +3126,12 @@ export function registerSchool(sim: Simulation): void {
     const evaluation = nightEvaluation(s, person, `${casting.production}-${item.at}`, casting, item.at, casting.size ?? 'lead', rep ? 'rep' : 'school');
     const night = nightBand(evaluation.overall);
     recordWork(s, person, evaluation, { at: item.at, what: casting.play ?? casting.production, band: night });
-    // How much of themselves they brought (`LastWork.delivery`): each dimension's preparation and condition, averaged.
+    // How much of themselves they brought (`LastWork.delivery`): each dimension's preparation and the day's condition
+    // (`DimensionResult.day`), averaged. From 2026-10-12 the day's alone: until then the condition read with it the
+    // stamina's drain, which the fit already reads, and a slip's shake, which the night's draw brings, so a night held
+    // to the last movement read as less delivered by a stamina under full or a chance slip.
     const d = (casting as Run & { delivered?: { sum: number; n: number } }).delivered ??= { sum: 0, n: 0 };
-    const tonight = evaluation.dimensions.reduce((a, x) => a + x.prepared * x.condition, 0) / Math.max(1, evaluation.dimensions.length);
+    const tonight = evaluation.dimensions.reduce((a, x) => a + x.prepared * x.day, 0) / Math.max(1, evaluation.dimensions.length);
     d.sum += tonight;
     d.n += 1;
     // And in the record of runs the next casting reads, whatever kind of run (`noteRun`, from 2026-10-10).
@@ -2964,26 +3141,55 @@ export function registerSchool(sim: Simulation): void {
     ordinary(s, person, 'listening', focusAt(s, person, item.at), 0.5, 'night');
     practiceGenres(s, person, genresOfPlay(casting.play) ?? []);
     (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
+    // The night together (from 2026-10-12, `systems/ensemble.ts`): your own night is the band and the record; how the
+    // show went as a whole, with the company, is the mood it leaves you in.
+    const together = nightTogether(s, person, casting, evaluation);
+    const proc = hasProcess(casting) ? casting.process : undefined;
+    if (together && proc) {
+      const t = (proc.together ??= { sum: 0, n: 0, slips: 0, covered: 0 });
+      t.sum = Math.round((t.sum + together.overall) * 10) / 10;
+      t.n += 1;
+      if (together.slip) { t.slips += 1; if (together.slip.covered >= 0.5) t.covered += 1; }
+    }
+    if (together) countTogether(person, together);
+    const felt = together ? nightBand(together.overall) : night;
     const w = person.wellbeing;
-    if (night === 'off') w.morale = Math.max(0, w.morale - n.sting);
-    else if (night !== 'solid') w.morale = Math.min(100, w.morale + n.lift);
+    if (felt === 'off') w.morale = Math.max(0, w.morale - n.sting);
+    else if (felt !== 'solid') w.morale = Math.min(100, w.morale + n.lift);
     if (night === 'remarkable') {
       nudge(s, person, 'presence', n.presence, true, 'night');
     }
-    if (item.payload.last !== true) return night;
-    // The run, kept for the journey whatever drops from the detail (`milestone`, from 2026-10-10).
-    const runNights = (person.work ?? []).filter((w) => w.task === 'performance' && w.what === (casting.play ?? casting.production) && w.at > item.at - 120 * MS_DAY);
-    milestone(person, { at: item.at, kind: 'run', what: `${casting.role}, ${casting.play ?? casting.production}`, overall: runNights.length ? Math.round(runNights.reduce((a, w) => a + w.overall, 0) / runNights.length * 10) / 10 : evaluation.overall, detail: Object.entries(casting.nights ?? {}).map(([b, n]) => `${n} ${b}`).join(', ') });
-    // What to work on: the skill the play asks that's weakest in them.
-    const reads = castingReads(casting);
-    const weakest = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b])[0];
-    casting.note = `${directorsNote(nightsMean(casting.nights))}${weakest ? ` Work on your ${SKILLS.find((k) => k.id === weakest)!.label.toLowerCase()}.` : ''}`;
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
-    // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).
-    reflect(s, person, casting, casting.play ?? casting.production);
+    // The night's material met and shown, as coursework's and a brief's are (from 2026-10-12: until then a night of
+    // Woyzeck added nothing to the record of material met, and its way of playing nothing to the ways shown).
+    noteMaterial(person, { ...(materialOf(casting.play) ? { material: materialOf(casting.play)! } : {}), at: item.at, overall: evaluation.overall, approaches: hasProcess(casting) ? sidesOf(casting.process.playing) : [], shown: true });
+    if (item.payload.last === true) closeRun(s, person, casting, item.at);
     // A classmate in the cast asked you out after it from 2026-10-08 (`celebrate`), until the people they are and the
     // restaurants went in the scope reset of 2026-10-09.
     return night;
+  };
+
+  /**
+   * A run closed, once, when its last night passes, played or not (from 2026-10-12: until then only a closing night
+   * played reached it, and a run whose closing night was missed in hospital never had its milestone, its note or its
+   * look back, and its open notes never reached class). The milestone where any night was played; the director's note
+   * from the nights, with what held the run's nights back most where something did (until then the play's weakest raw
+   * craft skill, named even at mastery and whatever the nights showed); and the process looked back on.
+   */
+  const closeRun = (s: Simulation, person: Person, casting: Run, at: Instant): void => {
+    const done = casting as Run & { closed?: Instant };
+    if (done.closed !== undefined) return;
+    done.closed = at;
+    const runNights = (person.work ?? []).filter((w) => w.task === 'performance' && w.what === (casting.play ?? casting.production) && w.at > at - 120 * MS_DAY);
+    if (runNights.length) milestone(person, { at, kind: 'run', what: `${casting.role}, ${casting.play ?? casting.production}`, overall: Math.round(runNights.reduce((a, w) => a + w.overall, 0) / runNights.length * 10) / 10, detail: Object.entries(casting.nights ?? {}).map(([b, n]) => `${n} ${b}`).join(', ') });
+    // What held the nights back most, ability or technique, by what it cost the whole.
+    const held = new Map<string, { label: string; whole: number }>();
+    for (const w of runNights) for (const l of w.limits) if (l.kind === 'ability' || l.kind === 'technique') { const h = held.get(l.what) ?? { label: l.label, whole: 0 }; h.whole += l.whole ?? l.by / 4; held.set(l.what, h); }
+    const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
+    const workOn = top && top.whole / Math.max(1, runNights.length) >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held the nights back most.` : '';
+    casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}))}${workOn}` : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
+    // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).
+    reflect(s, person, casting, casting.play ?? casting.production);
   };
 
   // A production's run over: the classmates in it grew by its rehearsals and nights, as the player does by theirs.
@@ -3019,6 +3225,7 @@ export function registerSchool(sim: Simulation): void {
       // The blocking set without them is still a gap in the book to catch up (from 2026-10-10: until then an excused
       // call left none, and `school.review_blocking` refused, where an unexcused one could be caught up).
       if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
+      if (call === 'performance' && item.payload.last === true) closeRun(s, person, casting, item.at);
       return;
     }
     if (call === 'oncall' && item.payload.check === true) {
@@ -3040,7 +3247,7 @@ export function registerSchool(sim: Simulation): void {
       school.tally.calls += 1;
       if (!present(person, item.at)) {
         item.status = 'missed';
-        if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) school.castable = false;
+        missedCallsOut(s, person);
         return;
       }
       school.tally.answered += 1;
@@ -3093,7 +3300,7 @@ export function registerSchool(sim: Simulation): void {
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
-        const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting));
+        const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting), item.payload.which === 'rep' ? 'rep' : 'school');
         grewFrom(s, person, `rehearsal:${casting.production}`, (c) => rehearse(c, focusAt(s, person, item.at) * weight));
         // The dress, played through as a night would be, with no house: its reading kept, nothing counted as a performance.
         if (stage === 'dress') {
@@ -3109,12 +3316,8 @@ export function registerSchool(sim: Simulation): void {
     if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
     // A performance not played, and not excused: a breach, and a night delivered at nothing in the record the next
     // casting reads, as a classmate's delivery is the share of calls they keep (from 2026-10-10).
-    if (call === 'performance') { noteRun(school, casting, item.payload.which === 'rep', item.at, 'missed'); breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
-    if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) {
-      school.castable = false;
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Casting Pool', body: 'Missed rehearsal calls: the chair takes you out of the casting pool to reacquire the discipline. You fulfil what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });
-      return;
-    }
+    if (call === 'performance') { noteRun(school, casting, item.payload.which === 'rep', item.at, 'missed'); breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); if (item.payload.last === true) closeRun(s, person, casting, item.at); return; }
+    if (missedCallsOut(s, person)) return;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Rehearsal Call', body: 'Missed calls take an actor out of the casting pool.', importance: 65, route: '/workspace/school' });
   });
 
@@ -3150,10 +3353,11 @@ export function registerSchool(sim: Simulation): void {
     // An Incomplete outstanding: no part in Commencement (Bulletin p.26), and the degree waits for it (from 2026-10-10).
     const open = degreeShortfall(school);
     if (open.failed.length) { setStanding(s, person, 'withheld', `The degree needs every course passed, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'wasn’t' : 'weren’t'}.`); return; }
-    // A financial hold keeps the diploma until the Yale account is paid (Bulletin p.184, from 2026-10-10).
+    // A financial hold keeps the diploma until the Yale account is paid (Bulletin p.184, from 2026-10-10). Paid on the
+    // tab Your Yale Account is on (from 2026-10-12: until then the notice said the Standing tab, where it isn't).
     if (school.hold !== undefined) {
       school.awaitingDegree = true;
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Diploma Is Held', body: `${formatMoney(accountOwed(s, person), saveCurrency(s.universe))} is owed on your Yale account, and a financial hold keeps the diploma until it’s paid. Pay it on the Standing tab.`, importance: 85, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Diploma Is Held', body: `${formatMoney(accountOwed(s, person), saveCurrency(s.universe))} is owed on your Yale account, and a financial hold keeps the diploma until it’s paid. Pay it on the Terms And Award tab.`, importance: 85, route: '/workspace/school' });
       if (!open.incomplete.length) return;
     }
     if (open.incomplete.length) {
@@ -3182,7 +3386,7 @@ export function registerSchool(sim: Simulation): void {
     const term = school.termsBegun - 1;
     const week = cabaretWeek(s, person, term)!;
     // A new piece, made by the students, cast within the company (`companyPart`).
-    school.cabaret = { term, week: keyOf(week), performed: 0, production: cabaretSeason(term), ...companyPart(person, NEW_PLAYS_READ) };
+    school.cabaret = { term, week: keyOf(week), performed: 0, production: cabaretSeason(term), ...companyPart(s, person, NEW_PLAYS_READ) };
     const c = YALE_CABARET;
     // Each evening its stage in a new piece's week (`cabaretStages`, from 2026-10-08): read, block, work, and the
     // technical and dress at once; until then every evening was the same rehearsal.
@@ -3203,16 +3407,26 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     if (!person || !school?.cabaret || !person.craft) return;
     const stage = item.payload.stage as Stage | undefined;
-    if (!present(person, item.at)) {
+    // In hospital, laid up, or with the day called in sick: excused, as a School call is (from 2026-10-12: until then a
+    // sick day called in was read by no Cabaret call, and the show was played as if nothing had been said).
+    const sick = offSick(person, item.at) || school.sickDay === dayKeyAt(item.at);
+    if (!present(person, item.at) || sick) {
       item.status = 'missed';
+      // The evening's stage set without them is still a gap to catch up, excused or not.
       if (stage) callMissed(school.cabaret, stage, Number(item.payload.of ?? 0));
-      // A show not played, out of hospital: a night delivered at nothing in the record (from 2026-10-10).
-      if (item.payload.call === 'performance' && !offSick(person, item.at) && school.cabaret.role) noteRun(school, school.cabaret as typeof school.cabaret & Run, false, item.at, 'missed');
+      // A show not played, and not excused: a night delivered at nothing in the record (from 2026-10-10).
+      if (item.payload.call === 'performance' && !sick && school.cabaret.role) noteRun(school, school.cabaret as typeof school.cabaret & Run, false, item.at, 'missed');
+      // The closing show missed after others were played: on the résumé all the same, and the run closed (from
+      // 2026-10-12; until then only a closing show played reached either).
+      if (item.payload.call === 'performance' && item.payload.last === true && school.cabaret.performed > 0) {
+        (school.credits ??= []).push({ production: cabaretSeason(school.cabaret.term), role: school.cabaret.role ?? '', kind: 'cabaret', year: zonedParts(item.at, zone()).year, wentOn: school.cabaret.performed });
+        closeRun(sim, person, school.cabaret as typeof school.cabaret & Run, item.at);
+      }
       return;
     }
     const cab = school.cabaret;
     // A show joined before 2026-09-28 has no part yet: the company's, now.
-    if (!cab.role) Object.assign(cab, { production: cabaretSeason(cab.term), ...companyPart(person, NEW_PLAYS_READ) });
+    if (!cab.role) Object.assign(cab, { production: cabaretSeason(cab.term), ...companyPart(sim, person, NEW_PLAYS_READ) });
     const run = cab as typeof cab & Run;
     // A Cabaret piece is new work, taken by openness (from 2026-10-09, `WorkDay.novel`).
     if (item.payload.call === 'performance') {
@@ -3226,13 +3440,13 @@ export function registerSchool(sim: Simulation): void {
       enjoyWork(person, { novel: true });
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
-      const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run)) : 1;
+      const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run), 'cabaret') : 1;
       grewFrom(sim, person, 'rehearsal:cabaret', (c) => rehearse(c, focusAt(sim, person, item.at) * weight));
       if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, run, item.at, run.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { novel: true, rehearsal: true });
     }
-    // The closing night played: on the résumé (a show never played never reaches here).
+    // The closing night played: on the résumé. A closing show missed after others were played is credited above.
     if (item.payload.last === true) {
       (school.credits ??= []).push({ production: cabaretSeason(cab.term), role: run.role, kind: 'cabaret', year: zonedParts(item.at, zone()).year, wentOn: cab.performed });
     }
@@ -3248,23 +3462,35 @@ export function registerSchool(sim: Simulation): void {
     const from = at(addDays(runs[0]!.from, -7 * SUMMER_CABARET.rehearsalWeeks), SUMMER_CABARET.rehearsalFrom);
     const until = at(runs[runs.length - 1]!.to, 23);
     // Each show a real play, and a part in it cast within the company (`summerPlaysOf`, `companyPart`).
-    const shows: Run[] = summerPlaysOf(s, person, year).slice(0, runs.length).map((p, n) => ({ production: `Yale Summer Cabaret ${year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(person, p.reads, p.parts) }));
+    const shows: Run[] = summerPlaysOf(s, person, year).slice(0, runs.length).map((p, n) => ({ production: `Yale Summer Cabaret ${year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(s, person, p.reads, p.parts, p.title) }));
     school.summer = { year, played: runs.map(() => 0), until, shows };
+    // Dark on Mondays; the closing is the run's last night played, which a later summer's Monday can move.
+    const nightsOf = (run: { from: SchoolDate; to: SchoolDate }): SchoolDate[] => {
+      const nights: SchoolDate[] = [];
+      for (let d = run.from; keyOf(d) <= keyOf(run.to); d = addDays(d, 1)) if (weekday(d) !== 1) nights.push(d);
+      return nights;
+    };
+    // Every show's performances, worked out before any rehearsal is booked: the Saturday matinees at two and the nights
+    // at eight. A rehearsal on the afternoon of another show's performance gives way to it, as a School rehearsal gives
+    // way to a lab's showing (from 2026-10-12: until then each show's rehearsals were booked without reading the others'
+    // calls, and in 2027 the third show rehearsed from one to six over the second's matinees of 24 and 31 July).
+    const SHOW_MINUTES = 150;
+    const performances = runs.map((run) => nightsOf(run).flatMap((d) => [...(weekday(d) === 6 ? [at(d, 14)] : []), at(d, 20)]));
+    const playing = (n: number, from: Instant) => performances.some((times, m) => m !== n && times.some((t) => t < from + SUMMER_CABARET.rehearsalMinutes * 60_000 && from < t + SHOW_MINUTES * 60_000));
     runs.forEach((run, n) => {
-      // Each show a full production's process (`stagesOf`, from 2026-10-08): its read-through, blocking, work, technical and dress.
+      // Each show a full production's process (`stagesOf`, from 2026-10-08): its read-through, blocking, work, technical
+      // and dress, staged and numbered over the days kept.
       const days: SchoolDate[] = [];
       for (let d = addDays(run.from, -7 * SUMMER_CABARET.rehearsalWeeks); keyOf(d) < keyOf(run.from); d = addDays(d, 1)) {
         const wd = weekday(d);
-        if (wd >= 2 && wd <= 6) days.push(d);
+        if (wd >= 2 && wd <= 6 && !playing(n, at(d, SUMMER_CABARET.rehearsalFrom))) days.push(d);
       }
       const stages = stagesOf(days.length);
       days.forEach((d, i) => schedule(s, person, at(d, SUMMER_CABARET.rehearsalFrom), { kind: SUMMER_KIND, label: `Summer Cabaret: ${STAGE_LABEL[stages[i]!]}`, minutes: SUMMER_CABARET.rehearsalMinutes, payload: { call: 'rehearsal', run: n, stage: stages[i]!, n: i + 1, of: days.length } }));
-      // Dark on Mondays; the closing is the run's last night played, which a later summer's Monday can move.
-      const nights: SchoolDate[] = [];
-      for (let d = run.from; keyOf(d) <= keyOf(run.to); d = addDays(d, 1)) if (weekday(d) !== 1) nights.push(d);
+      const nights = nightsOf(run);
       nights.forEach((d, i) => {
-        if (weekday(d) === 6) schedule(s, person, at(d, 14), { kind: SUMMER_KIND, label: 'Summer Cabaret: Matinee', minutes: 150, payload: { call: 'performance', run: n } });
-        schedule(s, person, at(d, 20), { kind: SUMMER_KIND, label: 'Summer Cabaret: Performance', minutes: 150, payload: { call: 'performance', run: n, last: i === nights.length - 1 } });
+        if (weekday(d) === 6) schedule(s, person, at(d, 14), { kind: SUMMER_KIND, label: 'Summer Cabaret: Matinee', minutes: SHOW_MINUTES, payload: { call: 'performance', run: n } });
+        schedule(s, person, at(d, 20), { kind: SUMMER_KIND, label: 'Summer Cabaret: Performance', minutes: SHOW_MINUTES, payload: { call: 'performance', run: n, last: i === nights.length - 1 } });
       });
     });
     // The stipend, each Friday from the first rehearsal week to the closing.
@@ -3281,11 +3507,14 @@ export function registerSchool(sim: Simulation): void {
     if (!person || !summer || summer.out || !person.craft) return;
     const run = Number(item.payload.run);
     const stage = item.payload.stage as Stage | undefined;
-    if (!present(person, item.at)) {
+    // A day called in sick excused as a stay in hospital is (from 2026-10-12: until then no Summer Cabaret call read it,
+    // and the night was played).
+    const sick = offSick(person, item.at) || school!.sickDay === dayKeyAt(item.at);
+    if (!present(person, item.at) || sick) {
       item.status = 'missed';
       if (stage && summer.shows?.[run]) callMissed(summer.shows[run]!, stage, Number(item.payload.of ?? 0));
-      // In hospital, the company covers the night and keeps them.
-      if (item.payload.call !== 'performance' || offSick(person, item.at)) return;
+      // In hospital, laid up or called in sick, the company covers the night and keeps them.
+      if (item.payload.call !== 'performance' || sick) return;
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops; and the night
       // is in the record the next casting reads, delivered at nothing (from 2026-10-10).
       if (summer.shows?.[run]) noteRun(school!, summer.shows[run]!, false, item.at, 'missed');
@@ -3299,14 +3528,16 @@ export function registerSchool(sim: Simulation): void {
       return;
     }
     // A company joined before 2026-09-28 has no plays yet: the summer's, now.
-    summer.shows ??= summerPlaysOf(s, person, summer.year).slice(0, summer.played.length).map((p, n) => ({ production: `Yale Summer Cabaret ${summer.year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(person, p.reads, p.parts) }));
+    summer.shows ??= summerPlaysOf(s, person, summer.year).slice(0, summer.played.length).map((p, n) => ({ production: `Yale Summer Cabaret ${summer.year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(s, person, p.reads, p.parts, p.title) }));
     const show = summer.shows[run]!;
     // A call's risk to the body, as the School's calls carry it (from 2026-10-10; until then the Summer Cabaret's calls
     // carried none). The company pays a stipend, so this is paid work: hurt badly enough to be kept off it, workers'
-    // compensation pays two-thirds of the week's stipend (`compWeek`), the one place in the game a wage and a stage meet.
+    // compensation pays Connecticut's share of the week's stipend, 75% after tax (`compWeek`), the one place in the game
+    // a wage and a stage meet, and the stipend for the days it pays stops (`STIPEND_KIND`). Until 2026-10-12 this said
+    // two-thirds, New York's share, and the full stipend was paid beside it.
     const cur = saveCurrency(s.universe);
     const weeklyWage = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
-    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage });
+    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage, employer: SUMMER_EMPLOYER });
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       nerves(s, person, 'performance');
@@ -3317,7 +3548,7 @@ export function registerSchool(sim: Simulation): void {
       enjoyWork(person, { genres: genresOfPlay(show.play) });
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
-      const weight = stage ? callAnswered(s, person, show, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(show)) : 1;
+      const weight = stage ? callAnswered(s, person, show, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(show), 'summer') : 1;
       grewFrom(s, person, 'rehearsal:summer', (c) => rehearse(c, focusAt(s, person, item.at) * weight));
       if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, show, item.at, show.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
@@ -3340,7 +3571,8 @@ export function registerSchool(sim: Simulation): void {
     const note = (how: 'attended' | 'excused' | 'missed') => { if (LAB_CODES[labAcademic] && lab) noteMeeting(school, labTerm, LAB_CODES[labAcademic]!, lab.name, how); };
     if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; note('excused'); return; }
     school.tally.calls += 1;
-    if (!present(person, item.at)) { item.status = 'missed'; note('missed'); return; }
+    // Missed unexcused: a call toward the casting pool's count, and out at it (`missedCallsOut`, from 2026-10-12).
+    if (!present(person, item.at)) { item.status = 'missed'; note('missed'); missedCallsOut(sim, person); return; }
     school.tally.answered += 1;
     note('attended');
     if (item.payload.showing === true) {
@@ -3385,7 +3617,13 @@ export function registerSchool(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const week = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
     // A week cut short when the company let them go: its days worked.
-    const pay = Math.round(week * (typeof item.payload.share === 'number' ? item.payload.share : 1));
+    const share = typeof item.payload.share === 'number' ? item.payload.share : 1;
+    // And the days of it kept off the stage by an injury at the company's work, which workers' compensation pays in its
+    // place (from 2026-10-12: until then both were paid for the same days).
+    const injury = healthOf(person).injury;
+    const from = item.at - 7 * MS_DAY;
+    const off = injury?.atWork?.employer === SUMMER_EMPLOYER && injury.offWorkUntil ? Math.max(0, Math.min(injury.offWorkUntil, item.at) - Math.max(injury.at, from)) : 0;
+    const pay = Math.round(week * share * (1 - off / (7 * MS_DAY)));
     if (pay <= 0) return;
     // Summer wages, with tax withheld as a paycheck's: a student out of term
     // isn't exempt from FICA. Until 2026-09-27 nothing was withheld, and the
@@ -3401,7 +3639,7 @@ export function registerSchool(sim: Simulation): void {
     const ct = connecticutTax(before + pay, cur) - connecticutTax(before, cur);
     const withheld = taxOf(before + pay).total - taxOf(before).total - fica + ct;
     s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
-    recordWages(person, item.at, zone(), { gross: pay, withheld, withheldBy: { [stateOf(YALE_DRAMA.cityId)]: ct }, employer: 'yale-summer-cabaret' });
+    recordWages(person, item.at, zone(), { gross: pay, withheld, withheldBy: { [stateOf(YALE_DRAMA.cityId)]: ct }, employer: SUMMER_EMPLOYER });
   });
 
   /**
@@ -3428,16 +3666,20 @@ export function registerSchool(sim: Simulation): void {
     const refund = paid ? termAccount(cur, false, term).healthPlan : 0;
     if (refund > 0) s.post({ memo: `Refund: ${memo}, withdrawn`, category: 'school', postings: [{ accountId: payeeAccount(s, person).id, amount: refund }, { accountId: s.nominalAccount('expense', expenseFor('school')).id, amount: -refund }] });
     // Canceled back to the insurance term's start, care had since is billed as uninsured care is (`repriceCare`, from
-    // 2026-10-10: until then it stayed as Yale Health had paid it).
+    // 2026-10-10: until then it stayed as Yale Health had paid it). In a spring the insurance term starts on 1 February,
+    // after the fifteenth day of classes, so the cover ends on the day (`yaleUntil`) and nothing is repriced.
+    const from = insuranceStart(term);
     if (early) {
-      const from = insuranceStart(term);
       (school.uncovered ??= []).push({ from });
       repriceCare(s, person, from, s.now, 'Yale Health cover canceled back to the insurance term’s start, on withdrawing');
     }
     const f1 = f1Of(person) !== undefined;
+    // Said as it falls (from 2026-10-12): until then the notice said the cover was canceled back to the term's start,
+    // where it went back to the insurance term's, three weeks before a fall term began, and in a spring to nothing.
+    const ends = from < s.now ? `is canceled back to ${formatDate(from, zone())}, the start of its insurance term` : 'ends today';
     setStanding(s, person, 'withdrawn', [
       'You gave up your place at the School today.',
-      early ? `It was by the fifteenth day of classes, so Yale Health’s cover is canceled back to the term’s start${refund > 0 ? `, and its ${formatMoney(refund, cur)} premium is refunded` : ''}.` : 'Yale Health covers you for thirty days more.',
+      early ? `It was by the fifteenth day of classes, so Yale Health’s cover ${ends}${refund > 0 ? `, and its ${formatMoney(refund, cur)} premium is refunded` : ''}.` : 'Yale Health covers you for thirty days more.',
       'Hours you worked are still paid.',
       f1 ? 'As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.' : '',
       'The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.',

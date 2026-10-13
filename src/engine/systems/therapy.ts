@@ -21,7 +21,17 @@
  * one's. Until then New Haven, where every student lives, had no therapist,
  * and a student's depression could only be kept up by its medicine.
  *
- * A session missed, away from the town, is held the next week. The course
+ * From 2026-10-12, Adna Linden Psychotherapy in New Haven too, a private
+ * practice drawing on cognitive-behavioral models among others, at its full
+ * fee of $240 for 60 minutes (adnalinden.com, Fees & Insurance, read
+ * 2026-10-12); its sliding scale and its reduced fee for graduate students
+ * aren't published, so they aren't kept. Until then New Haven had only Yale's,
+ * and somebody Yale Health no longer covered had no therapist there, though the
+ * notice of a course ended at Yale said one outside it could take it on.
+ *
+ * A session missed, asleep or in hospital, is held the next week; until the
+ * journeys went on 2026-10-09 one missed away from the town was too, and the
+ * check for that went on 2026-10-12. The course
  * done, the depression lifts at the published rate: NHS Talking Therapies'
  * 48.5% reliable recovery (NHS England, March 2025), or for a private course
  * Cuijpers and colleagues' 36% remission with CBT (2023, read from a
@@ -45,6 +55,7 @@ export interface Therapist { cityId: string; name: string; price: number; curren
 export const THERAPISTS: readonly Therapist[] = [
   { cityId: 'us-ny-newyork', name: 'The Center for CBT', price: (260 + 385) / 2, currency: 'USD', minutes: 45 },
   { cityId: 'us-ct-newhaven', name: 'Yale Mental Health & Counseling', price: 0, currency: 'USD', minutes: 50, yale: true },
+  { cityId: 'us-ct-newhaven', name: 'Adna Linden Psychotherapy', price: 240, currency: 'USD', minutes: 60 },
   { cityId: 'us-ca-losangeles', name: 'UCLA Psychology Clinic', price: (30 + 150) / 2, currency: 'USD', minutes: 60 },
   { cityId: 'uk-eng-london', name: 'NHS Talking Therapies', price: 0, currency: 'GBP', minutes: 60, nhs: true },
   { cityId: 'uk-eng-london', name: 'Priory', price: 124, currency: 'GBP', minutes: 50 },
@@ -112,9 +123,10 @@ export function registerTherapy(sim: Simulation): void {
     const course = person?.therapy;
     if (!person || !course) return;
     const t = THERAPISTS.find((x) => x.name === course.therapist && x.cityId === course.cityId)!;
-    // Away, asleep or in hospital, the session is held next week: until 2026-10-10 only away was, and a session slept
-    // through was paid, counted and could lift the depression.
-    if (!presentForCare(person, item.at, t.cityId)) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
+    // Asleep or in hospital, the session is held next week: until 2026-10-10 only away was, and a session slept
+    // through was paid, counted and could lift the depression. Away was until the journeys went on 2026-10-09; the
+    // check for it read the town the course began in, the only one they could be in, and went on 2026-10-12.
+    if (!presentForCare(person, item.at)) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
     // Yale's counseling sees students Yale Health covers: with the cover gone, the course ends there, and the sessions
     // had stay had (from 2026-10-10: until then it ran on after the cover ended).
     if (t.yale && coverOn(person, item.at) !== 'yale') {

@@ -27,15 +27,21 @@
  *   its time costs a little.
  * - a request for help with their own lines: help (three quarters of an hour,
  *   then and there) and they trust you more and are closer; no costs nothing.
- * - encouragement after work of yours that went badly, from a friend only.
+ * - encouragement after work of yours that went badly, from a classmate at a
+ *   bond of `CLASS.encourage.bondFrom` or more, under a friend's
+ *   (`BONDS.friend`). Until 2026-10-12 this said from a friend only.
  * - an apology, after they didn't come to a rehearsal agreed: take it and
  *   you're closer; take it coolly and you're further apart.
  * - a boundary, after you've let them down twice without making it right:
  *   from then they'll rehearse only if asked a day ahead. Accept it and they
  *   trust you a little more; push back and you're further apart.
  * Making it right is yours to start (\`school.make_amends\`): twenty minutes,
- * in New Haven, for what's happened since you last did; it restores some of
- * their trust and lifts a boundary once three rehearsals have been kept since.
+ * in New Haven, for what's happened since you last did; it gives back the
+ * trust and bond each thing unrepaired took (`CLASS.amends`). It lifts no
+ * boundary: one lifts only by rehearsals kept since it was set
+ * (`boundaryLiftsAfter`: two where it was accepted, four where it was pushed
+ * back on, three for one set before 2026-10-10). Until 2026-10-12 this said
+ * making it right lifted a boundary once three rehearsals had been kept since.
  *
  * Every number here is SLATE's estimate.
  */
@@ -59,7 +65,10 @@ import { exerts } from './body';
 export const CLASS = {
   /** How likely a class day brings a moment, and how long before the same kind comes from the same classmate again. */
   chance: 0.3, sameKindDays: 21,
-  /** An answer is due by ten the next evening. */
+  /**
+   * An answer is due this many hours after the class that brought it (`momentInClass`): seven the next morning, for a
+   * class at nine. Until 2026-10-12 this said ten the next evening.
+   */
   answerHours: 22,
   /** What each answer does: to their trust in you, and to the bond (before your own warmth or wound, `bondMove`). */
   hold: { trust: 0, bond: 0 }, holdAgainstText: { trust: -1, bond: 0 }, theirs: { trust: 2, bond: 1 }, both: { trust: 3, bond: 1 },
@@ -85,7 +94,12 @@ export const CLASS = {
    * off late and apologized ending school closer to the class than the one who kept every plan.
    */
   amends: { minutes: 20, missed: { trust: 6, bond: 2 }, lateCancel: { trust: 0, bond: 1 } },
-  /** Trying both readings at the next rehearsal moves the table work this much of what's left. */
+  /**
+   * Trying both readings at the next rehearsal kept moves the step's half of the table work this much of what's left,
+   * where a course has a step at the table (`interpretationOf`). Until 2026-10-12 it also moved a figure on a scene
+   * whose table work is the answers alone, which the showing never read and only the partner's words after a rehearsal
+   * did (`peerNote`); from then those words read the answers there, as the showing does.
+   */
   bothGain: 0.15,
 } as const;
 
@@ -234,7 +248,8 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning) });
     // A request for help: those under pressure to be seen, or with a life outside, are behind.
     if (!recent(mate, 'help') && (pr === 'career' || pr === 'home')) cands.push({ kind: 'help', mate: i, build: () => ({ text: `${first(mate)} is behind on their lines and asks if you’d run them for three quarters of an hour now. ${pr === 'home' ? 'They’ve had a hard week away from school.' : 'They’re auditioning outside school and short of time.'}` }) });
-    // Encouragement, from a friend only, after work of yours that went badly in the last days.
+    // Encouragement, from a classmate at a bond of `CLASS.encourage.bondFrom` or more, after work of yours that went
+    // badly in the last days. Until 2026-10-12 this said from a friend only, a bond the gate doesn't ask (`BONDS.friend`).
     const bad = cw.assignments.find((a) => a.shown?.band === 'unready' && now - a.shown.at < 3 * 86_400_000);
     if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => ({ text: `${first(mate)} caught you after class: everyone has a showing like that, and yours will come back.`, assignmentId: bad.id }) });
     // An apology, after a rehearsal they didn't come to, once a time.
@@ -376,16 +391,19 @@ export function registerClassmates(sim: Simulation): void {
           const against = mine && !mine.supported && theirs.supported;
           const e = against ? CLASS.holdAgainstText : CLASS.hold;
           move(person, mate, e.trust, e.bond);
+          // Held apart (from 2026-10-12): the scene together reads your readings as apart until you try theirs or both.
+          a.readsApart = m!.question;
           remember(s, mate, `Read the scene differently; you kept your reading`);
           return { done: against ? `You kept yours. ${f} isn’t persuaded, and the text is on their side.` : `You kept yours, and ${f} respects it: both readings stand.` };
         }
         if (choice === 'theirs') {
           a.answers[m!.question as never] = theirs.id as never;
+          delete a.readsApart;
           move(person, mate, CLASS.theirs.trust, CLASS.theirs.bond);
           remember(s, mate, 'You tried their reading of the scene');
           return { done: `You’ll play it ${f}’s way.` };
         }
-        (a as Assignment & { tryBoth?: boolean }).tryBoth = true;
+        a.tryBoth = true;
         move(person, mate, CLASS.both.trust, CLASS.both.bond);
         remember(s, mate, 'You agreed to try both readings at the next rehearsal');
         return { done: `You’ll try both at your next rehearsal with ${f}.` };

@@ -4,6 +4,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
@@ -161,6 +162,7 @@ export function CalendarWorkspace() {
               <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>
             </>
           )}
+          help="day.plans"
         >
           {selectedDay.entries.length === 0 ? (
             <Empty
@@ -360,6 +362,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
       onClose={onClose}
       footer={mine ? (
         <>
+          <HowItWorks help="calendar.cancel" />
           <button className="btn btn-ghost" onClick={onClose}>Leave It</button>
           <Gated feature="calendar.cancel" className="btn" onClick={callOff}>Call It Off</Gated>
         </>

@@ -854,7 +854,9 @@ export interface Template {
 
 const read: Activity = { id: 'read', label: 'Read The Scene', minutes: 40, dim: 'familiarity', gain: 0.55 };
 const learn: Activity = { id: 'learn', label: 'Learn Lines', minutes: 60, dim: 'memorization', gain: 0.32, requires: { dim: 'familiarity', at: 0.3, why: 'Read it first: lines are learned from a scene you know.' }, trains: 'memorization' };
-const alone: Activity = { id: 'rehearse', label: 'Rehearse Alone', minutes: 60, dim: 'rehearsal', gain: 0.28, requires: { dim: 'memorization', at: 0.25, why: 'Learn some of the lines first.' } };
+// Rehearse Alone is the scene's time on its feet, as its notes say, so it needs your feet (from 2026-10-12): until then it
+// named no need, so it could be done spent, injured or from a hospital bed, and it counted as desk work (`WORK.met`).
+const alone: Activity = { id: 'rehearse', label: 'Rehearse Alone', minutes: 60, dim: 'rehearsal', gain: 0.28, needs: ['feet'], requires: { dim: 'memorization', at: 0.25, why: 'Learn some of the lines first.' } };
 const withPartner: Activity = { id: 'partner', label: 'Rehearse With Your Partner', minutes: 90, dim: 'partner', gain: 0.4, needs: ['partner'] };
 const revise: Activity = { id: 'revise', label: 'Work On The Note', minutes: 60, dim: 'revision', gain: 0.45 };
 

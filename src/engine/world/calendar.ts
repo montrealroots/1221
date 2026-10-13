@@ -195,9 +195,19 @@ export function upcoming(sim: Simulation, limit = 8): CalendarEntry[] {
     .map(toEntry);
 }
 
+/**
+ * The next commitment that wants the player, counting one due now: the clock has stopped at it and they stand there
+ * (Stand Here), and it hasn't run (from 2026-10-12). Until then Home, the Sleep dialog and its suggestion asked the
+ * timeline for one strictly after now, as the clock's own stops still do, and standing at a plan they said nothing was
+ * coming above a list, and beside a warning, that held it.
+ */
+export function nextCommitmentItem(sim: Simulation): ScheduledItem | undefined {
+  return sim.timeline.next(sim.now - 1, (i) => i.requiresPlayer === true);
+}
+
 /** The single next thing, for HOME. */
 export function nextCommitment(sim: Simulation): CalendarEntry | undefined {
-  const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
+  const next = nextCommitmentItem(sim);
   return next ? toEntry(next) : undefined;
 }
 
@@ -208,8 +218,12 @@ export interface SkipTarget {
   crossed: CalendarEntry[];
   /** Crossed commitments that need the player and would be missed. */
   missed: CalendarEntry[];
-  /** True when the player is not in the right city and has no travel booked. */
-  needsTravel: boolean;
+  /**
+   * True when it's in another city than the player's. It was `needsTravel` until 2026-10-12, said to ask too whether
+   * travel was booked, and Skip To Event marked it Travel: travel and its booking went with the scope reset of
+   * 2026-10-09, and nothing takes the player to another city.
+   */
+  elsewhere: boolean;
   travelNote?: string;
   daysAway: number;
 }
@@ -229,11 +243,11 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
     const crossed = crossedItems.map(toEntry);
     const missed = crossed.filter((e) => e.requiresPlayer);
 
-    const needsTravel = Boolean(
+    const elsewhere = Boolean(
       item.locationId && player && item.locationId !== player.currentLocationId,
     );
     let travelNote: string | undefined;
-    if (needsTravel && item.locationId) {
+    if (elsewhere && item.locationId) {
       travelNote = `You’re in ${CITIES.get(player?.currentLocationId ?? '')?.name ?? 'another city'} and this is in ${CITIES.get(item.locationId)?.name ?? 'another city'}.`;
     }
 
@@ -242,7 +256,7 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
       entry: toEntry(item),
       crossed,
       missed,
-      needsTravel,
+      elsewhere,
       travelNote,
       daysAway: Math.max(0, Math.round((item.at - sim.now) / MS_DAY)),
     };

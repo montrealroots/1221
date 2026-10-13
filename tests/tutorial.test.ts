@@ -35,6 +35,8 @@ function featuresOnScreen(): Set<string> {
     const text = readFileSync(file, 'utf8');
     for (const m of text.matchAll(/feature="([^"]+)"/g)) found.add(m[1]!);
     for (const m of text.matchAll(/useFeature\('([^']+)'\)/g)) found.add(m[1]!);
+    // A destination's screen is gated by its feature, on the rail and in WorkspaceRouter (from 2026-10-12).
+    if (file.endsWith('destinations.ts')) for (const m of text.matchAll(/feature: '([^']+)'/g)) found.add(m[1]!);
   }
   return found;
 }

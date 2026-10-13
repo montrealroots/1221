@@ -6,11 +6,17 @@
  * acting courses are Pass/Fail; the degree is recommended by the faculty for a student who has completed the course
  * work and every requirement (p.151); an Incomplete is due within a month of the term's end, or it becomes a Permanent
  * Incomplete with no credit (p.152); a student with one outstanding takes no part in Commencement (p.26); and the
- * degree must be finished within nine semesters (p.194), which SLATE's three years don't reach.
+ * degree must be finished within nine semesters (p.194). SLATE counts the semesters enrolled (`enrolledTerms`), which
+ * a repeated year or an additional term can bring to nine, and refuses either past them (`EXTENDED_STUDY` in
+ * `content/school.ts`, read in `systems/leave.ts`). A leave doesn't count toward them, as the term it begins in isn't
+ * one enrolled in, and has its own limit, three terms in all (`LEAVE_RULES.maxTerms`). Until 2026-10-12 this said
+ * SLATE's three years didn't reach the nine.
  *
  * - **A course's meetings** are counted as they happen (`noteMeeting`): there, excused (a sick day, a hospital stay or
- *   a lay-up) or missed. The labs, DRAM 50a, 51b and 363a, are courses too, Pass/Fail, and count here; they don't
- *   count toward the casting pool's missed calls, which are the productions' (SLATE's reading of p.146).
+ *   a lay-up) or missed. The labs, DRAM 50a, 51b and 363a, are courses too, Pass/Fail, and count here; a lab missed
+ *   without excuse is a call missed too, among the casting pool's missed calls (`LAB_KIND`, `systems/school.ts`), as
+ *   the tutorial and the guide say. Until 2026-10-12 this said labs didn't count there, the productions' calls alone
+ *   (SLATE's reading of p.146); the code had counted them all along.
  * - **At the term's evaluation** (`settleCourses`): a course is failed where the unexcused absences took attendance
  *   under the line, or half or more of its work due wasn't shown; incomplete where only excused absences did; passed
  *   otherwise. The line, three quarters of the meetings, is SLATE's estimate: the Bulletin says the faculty judge.
@@ -20,8 +26,11 @@
  *   run on 2026-10-10 a session made up one meeting's work and nothing extended it: a student ill for half a spring
  *   owed 62 sessions in a month across nine courses, and lost the degree for it.
  * - **The degree** needs every course passed (`degreeShortfall`). A failed course or a Permanent Incomplete withholds
- *   it; one still incomplete at Commencement holds it until it's made up, or its month runs out. SLATE models no
- *   repeated course and no added semester: the Bulletin's nine semesters would allow one, and the screen says so.
+ *   it; one still incomplete at Commencement holds it until it's made up, or its month runs out. From 2026-10-10 a
+ *   year with a course failed can be repeated (`school.request_repeat`), and what the last year left unpassed retaken
+ *   in an additional term (`school.request_extra_term`), both in `systems/leave.ts` and refused past nine semesters;
+ *   each attempt keeps its own record, and the degree reads the best. Until 2026-10-12 this said SLATE modeled no
+ *   repeated course and no added semester, and that the screen said so.
  */
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -110,7 +119,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
     settled.push(r);
   }
   if (person.id === sim.universe.playerId) {
-    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} meetings. Make up ${r.owed} session${r.owed === 1 ? '' : 's'} of work with its teachers, a week's each, by ${formatDate(r.dueBy!, sim.zone)}, on the Standing tab (it can be extended once by a month), or it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
+    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} meetings. Make up ${r.owed} session${r.owed === 1 ? '' : 's'} of work with its teachers, a week’s each, by ${formatDate(r.dueBy!, sim.zone)}, on the Standing tab (it can be extended once by a month), or it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
     for (const r of settled.filter((x) => x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.`, importance: 85, route: '/workspace/school' });
   }
   return settled;

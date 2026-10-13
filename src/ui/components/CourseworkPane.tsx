@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatDate, formatDateTime, formatTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COURSES, YALE_DRAMA } from '@/engine/content/school';
@@ -22,10 +23,12 @@ import {
   activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
+import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
 import { playingPreview, playingRefusal } from '@/engine/systems/coursework';
 import { materialOf } from '@/engine/systems/material';
 import { at } from '@/ui/looks/subject';
+import { LookRegion, Open } from '@/ui/looks/Look';
 import { PRIORITY_WORDS, amendsRefusal, boundaryLiftsAfter, owesYouLines, personOf, stoppedAsking } from '@/engine/systems/classmates';
 import { APPROACHES, OBJECTIVE_DIM, noteSubject, objectiveLabel, type Approach, type NoteKind, type NoteRecord } from '@/engine/systems/learning';
 
@@ -45,7 +48,7 @@ export function CourseworkPane() {
     <div className="col gap-5">
       {!cw.orientation.behind && <FirstWeek />}
       {open.length === 0
-        ? <Panel title="Work Set"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
+        ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
       {past.length > 0 && <Shown list={past} />}
       <NotesLedger />
@@ -60,7 +63,7 @@ function FirstWeek() {
   const person = useWorld((s) => s.player);
   const cw = courseworkOf(sim, person)!;
   return (
-    <Panel title="Orientation" subtitle="The first week, 24 to 28 August: each session changes what you know or have arranged, once">
+    <Panel title="Orientation" subtitle="The first week, 24 to 28 August: each session changes what you know or have arranged, once" help="school.orientation">
       <div className="col gap-2">
         {ORIENTATION.map((o) => {
           const done = cw.orientation.done[o.task];
@@ -96,7 +99,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
   const course = COURSES.find((c) => c.code === a.course)!;
   const weights = weightsOf(a);
   return (
-    <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`}>
+    <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`} help="school.prepare">
       <div className="col gap-3">
         <div className="small">
           {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {scene.where}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
@@ -132,13 +135,14 @@ function AssignmentCard({ a }: { a: Assignment }) {
         <WhyNot reasons={activitiesOf(a).filter((x) => x.dim !== 'partner').map((act) => [act.label, prepareRefusal(sim, person, a, act.id)] as const)} />
         {materialOf(a.sceneId) && <MaterialDemands material={materialOf(a.sceneId)!} />}
         {!playingRefusal(a) && (
-          <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing"
+          <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing" help="school.choose_playing"
             preview={(c) => playingPreview(sim, person, a, due, c)}
             onChoose={(c) => { const r = run<{ prep: number }>('school.choose_playing', { assignmentId: a.id, ...c }); if (r.ok) toast(`Chosen: rehearsed in to ${pct(r.value!.prep)}.`, 'positive'); }} />
         )}
         <AnotherWay a={a} />
         {questionsFor(a).length > 0 && <TableWork a={a} />}
         {mate && <Rehearsals a={a} />}
+        {materialOf(a.sceneId) && <WorkThrough piece={`assignment:${a.id}`} />}
         {a.feedback && <FeedbackBlock a={a} />}
       </div>
     </Panel>
@@ -150,7 +154,7 @@ function TableWork({ a }: { a: Assignment }) {
   const choose = useFeature('school.choose');
   return (
     <div className="col gap-2">
-      <div className="eyebrow">Table Work</div>
+      <div className="row-between"><div className="eyebrow">Table Work</div><HowItWorks help="school.choose" /></div>
       {questionsFor(a).map(({ q, options }) => (
         <div key={q.id} className="field" style={{ margin: 0 }}>
           <label htmlFor={`${a.id}-${q.id}`}>{q.label}</label>
@@ -189,7 +193,7 @@ function Rehearsals({ a }: { a: Assignment }) {
   const m = mateRecord(mate);
   return (
     <div className="col gap-2">
-      <div className="eyebrow">Rehearsing With {first}</div>
+      <div className="row-between"><div className="eyebrow">Rehearsing With {first}</div><HowItWorks help="school.ask_partner" /></div>
       <div className="xs dim">{`Trust ${Math.round(trustOf(mate))} of 100 · Came to ${m.kept ?? 0} of ${(m.kept ?? 0) + (m.stoodUp ?? 0)} agreed${m.missedByYou ? ` · You missed ${m.missedByYou}` : ''}${m.reliability !== undefined ? ` · Reliability ${pct(m.reliability)}` : ''}`}</div>
       {days.length > 0 ? (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -242,9 +246,10 @@ function FeedbackBlock({ a }: { a: Assignment }) {
   const f = a.feedback!;
   return (
     <div className="col gap-1">
-      <div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div>
+      <div className="row-between"><div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div><HowItWorks help="school.read_feedback" /></div>
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
+      {a.shown?.together && <div className="small"><strong>The Scene Together.</strong> {a.shown.together.words} The band is your own work.</div>}
       <div className="xs dim">Simulated feedback in {f.course}, taught by {f.teachers}: the game’s words, not theirs.</div>
       {!f.seen && <div><Gated feature="school.read_feedback" className="btn btn-sm btn-ghost" onClick={() => run('school.read_feedback', { assignmentId: a.id })}>Mark As Read</Gated></div>}
     </div>
@@ -269,7 +274,7 @@ function NotesLedger() {
   if (!notes.length) return null;
   const sorted = [...notes].sort((x, y) => (x.status === y.status ? (x.last < y.last ? 1 : -1) : x.status === 'open' ? -1 : 1));
   return (
-    <Panel title="Your Notes" subtitle="What showings have named, across courses, and where each stands">
+    <Panel title="Your Notes" subtitle="What showings have named, across courses, and where each stands" help="school.read_feedback">
       <div className="col gap-1">
         {sorted.map((n) => (
           <div key={n.key} className="row-between small">
@@ -286,7 +291,7 @@ function NotesLedger() {
 function Shown({ list }: { list: Assignment[] }) {
   const person = useWorld((s) => s.player);
   return (
-    <Panel title="Work Shown" subtitle="The last twelve">
+    <Panel title="Work Shown" subtitle="The last twelve" help="school.read_feedback">
       <div className="col gap-2">
         {list.map((a) => {
           const t = templateById(a.template)!;
@@ -310,15 +315,16 @@ function Partners() {
   const mates = person.school!.classmates.map((m, i) => ({ m, i, r: mateRecord(m) })).filter((x) => x.r.log?.length || x.r.kept || x.r.stoodUp || x.r.missedByYou);
   if (mates.length === 0) return null;
   return (
-    <Panel title="Your Partners" subtitle="Who you’ve worked with, and how it’s gone">
-      <div className="col gap-2">
+    <Panel title="Your Partners" subtitle="Who you’ve worked with, and how it’s gone" help="school.make_amends">
+      {/* A name opens the classmate (from 2026-10-12, `looks/classmate.tsx`): what the scene together reads of them. */}
+      <LookRegion className="col gap-2">
         {mates.map(({ m, i, r }) => {
           const p = personOf(m);
           const amends = amendsRefusal(sim, person, i);
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong>{m.name}</strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ` · Ask A Day Ahead (Lifts After ${boundaryLiftsAfter(p.boundary) - p.boundary.keptSince} More Kept)` : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
+              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ` · Ask A Day Ahead (Lifts After ${boundaryLiftsAfter(p.boundary) - p.boundary.keptSince} More Kept)` : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>
@@ -330,7 +336,7 @@ function Partners() {
             </div>
           );
         })}
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -349,7 +355,10 @@ function AnotherWay({ a }: { a: Assignment }) {
   if (!weak) return null;
   return (
     <div className="col gap-1">
-      <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose another way at it for this work, one.</span></div>
+      <div className="row-between" style={{ alignItems: 'flex-start' }}>
+        <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose another way at it for this work, one.</span></div>
+        <HowItWorks help="school.approach" />
+      </div>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {(Object.keys(APPROACHES) as Approach[]).map((k) => {
           const no = approachRefusal(sim, person, a, k);

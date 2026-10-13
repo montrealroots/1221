@@ -15,10 +15,10 @@
 
 import { dateKey, formatDate, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { COURSES, SKILLS, YALE_DRAMA, type Course, type Skill } from '@/engine/content/school';
+import { COURSES, LEAVE_RULES, SKILLS, YALE_DRAMA, type Course, type Skill } from '@/engine/content/school';
 import {
-  STANDING_LABEL, ceilingOf, coursesOn, meanCraft, nextClasses, rankIn, termLabel, termOf, termStart, yearOfStudy,
-  schoolEnded,
+  STANDING_LABEL, ceilingOf, coursesFor, meanCraft, nextClasses, rankIn, termLabel, termOf, termStart, yearOfStudy,
+  schoolEnded, type SchoolRecord,
 } from '@/engine/systems/school';
 import type { Person } from '@/engine/domain/model';
 import { templateById, type PrepDim } from '@/engine/content/coursework';
@@ -27,9 +27,15 @@ import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, lookExists, type Way } from './registry';
 import { at } from './subject';
-import { spokenList } from './words';
+import { said, spokenList } from './words';
 
 const YEAR_WORD = ['', 'First', 'Second', 'Third'] as const;
+/**
+ * A standing still at the School, as the school look’s sentence says it (from 2026-10-12): until then the sentence
+ * put “standing” after the label, which ends in it already, so good standing was said with the word twice, and a
+ * warning as “in academic warning standing”.
+ */
+const STANDING_SAID: Readonly<Record<'good' | 'concern' | 'warning', string>> = { good: 'in good standing', concern: 'with a notice of academic concern', warning: 'on academic warning' };
 const schoolZone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const skillLabel = (id: Skill) => SKILLS.find((s) => s.id === id)?.label ?? id;
 const median = (xs: number[]) => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)] ?? 0; };
@@ -47,21 +53,58 @@ function ordinal(n: number): string {
   return `${n}${n % 10 === 1 ? 'st' : n % 10 === 2 ? 'nd' : n % 10 === 3 ? 'rd' : 'th'}`;
 }
 
-/** The term a moment falls in, by New Haven’s calendar. */
+/**
+ * The calendar term a moment falls in, by New Haven’s calendar, past the program’s sixth too. Until 2026-10-12 it was
+ * capped at the sixth, so a third-year fall after a leave or a repeated year was named as the spring before it, and
+ * read that spring’s courses.
+ */
 function termNow(sim: Simulation): number {
   const p = zonedParts(sim.now, schoolZone());
-  return Math.min(termOf({ year: p.year, month: p.month, day: p.day }), YALE_DRAMA.terms - 1);
+  return termOf({ year: p.year, month: p.month, day: p.day });
 }
 
-/** The next day, within six weeks, a course meets, as an instant at nine in New Haven. */
-function nextMeeting(sim: Simulation, course: Course): number | undefined {
+/**
+ * The courses a student takes in a calendar term (from 2026-10-12): none on a leave, an additional term’s retaken
+ * ones in it, and otherwise their program year’s for the season. Until then the looks took a year’s courses on a
+ * leave, as `nextClasses` doesn’t, and none in an additional term, whose year of study reads past the third.
+ */
+function takenIn(school: SchoolRecord, year: number, term: number): Course[] {
+  if (school.leave?.status === 'on') return [];
+  const extra = school.extra;
+  if (extra && extra.term === term) return COURSES.filter((c) => extra.courses.some((x) => x.code === c.code));
+  const season = termStart(term).fall ? 'fall' : 'spring';
+  return COURSES.filter((c) => c.year === year && c.terms.includes(season));
+}
+
+/**
+ * The program’s terms begun, for Terms Begun (from 2026-10-12): the calendar’s less those a leave or a repeated year
+ * took, as `yearOfStudy` counts them. Before that it was the calendar’s, which a leave carried to eight of six. On a
+ * leave, or with the School left during one, it’s the program’s terms before the term the leave began in, which is
+ * taken again on return: `startLeave` adds the whole leave to the offset as it begins, while `termsBegun` follows the
+ * calendar only to that term. Until a second reading the same day, a leave read short by all but one of its terms for
+ * the whole of it, a two-term leave one short (measured: back from the first year and on leave from the second fall,
+ * 1 of 6 with two terms passed, and still 1 once withdrawn), and a leave from the first term read 0 only because the
+ * figure was clamped at 0; nothing needs the clamp now.
+ */
+function programTermsBegun(school: SchoolRecord): number {
+  const away = school.leave?.status === 'on' ? school.leave : school.leaves?.find((l) => l.status === 'dismissed' || l.status === 'withdrawn');
+  if (away) return away.firstTerm - ((school.offset ?? 0) - (away.terms ?? LEAVE_RULES.terms));
+  return school.termsBegun - (school.offset ?? 0);
+}
+
+/**
+ * The next day, within six weeks, a course meets for a student, as an instant at nine in New Haven: their own
+ * timetable (`coursesFor`), the program’s year a leave or a repeated year left them in and an additional term’s
+ * courses. Until 2026-10-12 it read the calendar year’s, so back from a leave a first-year course never met next.
+ */
+function nextMeeting(sim: Simulation, school: SchoolRecord, course: Course): number | undefined {
   const start = new Date(sim.now);
   for (let n = 0; n < 42; n += 1) {
     const t = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate() + n));
     const day = { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() };
     const nine = instantFromZoned({ ...day, hour: 9 }, schoolZone());
     if (nine <= sim.now) continue;
-    if (coursesOn(day).some((c) => c.code === course.code)) return nine;
+    if (coursesFor(school, day).some((c) => c.code === course.code)) return nine;
   }
   return undefined;
 }
@@ -87,8 +130,12 @@ defineLook<TheSchool>('school', {
     const done = !school || schoolEnded(school.standing);
     const year = person ? yearOfStudy(person) : 1;
     const term = termNow(sim);
-    const season = termStart(term).fall ? 'fall' : 'spring';
-    const courses = COURSES.filter((c) => c.year === year && (school ? c.terms.includes(season) : true));
+    const courses = school ? takenIn(school, year, term) : COURSES.filter((c) => c.year === year);
+    // What this term is for them (from 2026-10-12): a leave, an additional term, or their year’s courses.
+    const thisTerm = school?.leave?.status === 'on' ? `and you’re on leave until ${termLabel(school.leave.returnTerm)}.`
+      : school?.extra?.term === term ? `your additional term, and you’re retaking ${spokenList(courses.map((c) => c.name))} in it.`
+        : `and ${courses.length} courses meet in it for your year.`;
+    const begun = school ? programTermsBegun(school) : 0;
     const rank = person ? rankIn(person) : 0;
     const next = done ? undefined : nextClasses(sim.now, person.school);
     const city = CITIES.get(YALE_DRAMA.cityId);
@@ -117,7 +164,7 @@ defineLook<TheSchool>('school', {
             ? 'You withdrew from the school, and left without the degree.'
             : school.standing === 'withheld'
               ? 'You finished the three years, and the faculty didn’t recommend the degree.'
-          : `You’re in your ${YEAR_WORD[year]?.toLowerCase() ?? 'last'} year of three, in ${STANDING_LABEL[school.standing].toLowerCase()} standing, and ${ordinal(rank)} of ${YALE_DRAMA.classSize} in the class overall.`;
+          : `You’re in your ${YEAR_WORD[year]?.toLowerCase() ?? 'last'} year of three, ${STANDING_SAID[school.standing]}, and ${ordinal(rank)} of ${YALE_DRAMA.classSize} in the class overall.`;
 
     return {
       name: YALE_DRAMA.name,
@@ -128,13 +175,13 @@ defineLook<TheSchool>('school', {
         <>
           <p className="small">
             The {YALE_DRAMA.degree} in {YALE_DRAMA.program}{school ? `, class of ${school.classOf},` : ''} in {city?.name ?? 'New Haven'}, over {YALE_DRAMA.terms} terms. {YALE_DRAMA.dean.name} is the dean, and {YALE_DRAMA.actingChair.name}, the chair of acting, casts every student.
-            {school && !done ? ` This is ${termLabel(term)}, and ${courses.length} courses meet in it for your year.` : ''}
+            {school && !done ? ` This is ${termLabel(term)}, ${thisTerm}` : ''}
             {!school ? ` It teaches ${courses.length} courses in the first year, each training part of an actor’s craft.` : ''}
           </p>
           {school && person?.craft && (
             <div className="grid grid-3">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} note={school.castable ? 'In the casting pool' : 'Out of the casting pool'} />
-              <Stat label="Terms Begun" value={`${school.termsBegun} of ${YALE_DRAMA.terms}`} note={`Class of ${school.classOf}`} />
+              <Stat label="Terms Begun" value={`${Math.min(begun, YALE_DRAMA.terms)} of ${YALE_DRAMA.terms}`} note={`Class of ${school.classOf}${school.offset ? `; ${school.offset} on leave or repeated` : ''}${begun > YALE_DRAMA.terms ? `; ${said(begun - YALE_DRAMA.terms, 'additional term')}` : ''}`} />
               <Stat label="Your Place" value={`${ordinal(rank)} of ${YALE_DRAMA.classSize}`} note={`Overall craft ${meanCraft(person.craft).toFixed(1)}`} />
             </div>
           )}
@@ -162,10 +209,9 @@ defineLook<TheCourse>('course', {
     const craft = person?.craft;
     const school = person?.school;
     const year = person ? yearOfStudy(person) : 0;
-    const season = termStart(termNow(sim)).fall ? 'fall' : 'spring';
     const enrolled = !!school && !schoolEnded(school.standing);
-    const taking = enrolled && course.year === year && course.terms.includes(season);
-    const next = taking ? nextMeeting(sim, course) : undefined;
+    const taking = enrolled && takenIn(school, year, termNow(sim)).some((c) => c.code === course.code);
+    const next = taking ? nextMeeting(sim, school, course) : undefined;
     const terms = course.terms.length === 2 ? 'the fall and the spring' : `the ${course.terms[0]}`;
     const often = course.perWeek === 1 ? 'once' : `${course.perWeek} times`;
 
@@ -316,7 +362,7 @@ defineLook<TheWork>('assignment', {
       parent: course ? at('course', course.code) : undefined,
       body: (
         <table>
-          <thead><tr><th scope="col">Part</th><th scope="col" className="num">Prepared</th><th scope="col" className="num">Of The Showing</th></tr></thead>
+          <thead><tr><th scope="col">Part</th><th scope="col" className="num">Prepared</th><th scope="col" className="num">Weighs</th></tr></thead>
           <tbody>
             {dims.map((k) => (
               <tr key={k}>
@@ -329,7 +375,13 @@ defineLook<TheWork>('assignment', {
         </table>
       ),
       ways,
-      provenance: 'Prepared is how far each part stands on the day it’s due, what fades by then taken off; the showing weighs each part by its share. The steps that prepare it are on the School’s coursework.',
+      // Until 2026-10-12 the weights were headed Of The Showing, and this said Prepared was how far each part stood on
+      // the day it was due, what faded by then taken off, and that the showing weighed each part by its share. Nothing
+      // fades (`preparedParts` reads the parts as they stand), and the result reads each part through the dimensions
+      // it bears on, each held to its least prepared part; the weights only choose the note (`noteCandidates`). Weighs
+      // is the coursework panel’s name for the same figure. Under a line long, as `tests/looks.test.ts` holds every
+      // look’s provenance.
+      provenance: 'Prepared is how far each part stands now; nothing fades. Weighs is its share when the showing chooses its note; the result reads each part through the dimensions it bears on. Its steps are on the School’s coursework.',
     };
   },
 });

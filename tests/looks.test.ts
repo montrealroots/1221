@@ -488,10 +488,11 @@ describe('the sentence the player wrote', () => {
     player.background = '   ';
     player.genres = [];
 
-    // Only the papers, which a person always has: no empty line where the background, the interests and the films would be.
+    // Only the body and the papers, which a person always has: no empty line where the background, the interests and
+    // the films would be. Until 2026-10-12 a new life had no body till its first midnight, and this found the papers alone.
     const found = resolveLook(sim, at('person', player.id)) as Looked;
     const kids = (found.body as { props: { children: { key: string }[] } }).props.children.filter(Boolean);
-    expect(kids.map((k) => k.key)).toEqual(['papers']);
+    expect(kids.map((k) => k.key)).toEqual(['body', 'papers']);
   });
 });
 

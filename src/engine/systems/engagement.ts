@@ -4,8 +4,11 @@
  * The character sheet says which genres somebody loves; this keeps what they've done about them, apart from that
  * (`person.engagement`): each genre's familiarity (`genre.study`: a film of the kind, or a play of it the game has)
  * and practice (work done in it: a night of a play of the kind, a self-tape in it, `practice.self_tape`).
- * Familiarity and practice speed the preparation of work in the genre (`genreSpeed`), the best of a work's genres
- * and never their sum, and a self-tape reads familiarity as its "knowing the genre". Neither caps what work can reach.
+ * A take of a brief reads how well its genres are known, the better of familiarity and practice (`genreKnown` in
+ * `systems/briefs.ts`), and the two speed a scene for class from a play of the kind and a part's lines in one
+ * (`genreSpeed`), the best of a work's genres and never their sum. Neither caps what work can reach. This said a
+ * self-tape read familiarity alone as its "knowing the genre" and the genre sped the preparation of all work in it:
+ * a brief's own steps read the material met before (`prepSpeed`), not the genre (from 2026-10-12).
  *
  * What stops farming: each is an hour that passes, the same study or tape again the same day gives half, a work's
  * genres share one session's practice, and choosing or dropping a genre on the character sheet gives nothing: only
@@ -102,23 +105,20 @@ export function genreSpeed(person: Person, genres: readonly string[] | undefined
   return 1 + ENGAGEMENT.genreSpeed * best / 100;
 }
 
-/** What a self-tape in a genre reads: the camera's own techniques, and the genre's demands (`withDemands`). */
+/** What a self-tape in a genre read until 2026-10-12: the camera's own techniques, and the genre's demands (`withDemands`). */
 export const tapeReads = (genre: string) => withDemands({ ...SELF_TAPE.reads }, [genre]);
 
-/** A self-tape's techniques, as the self-tape coursework reads them, and its difficulty by that work's par (55). */
+/** A self-tape's techniques, as the self-tape coursework reads them, its difficulty by that work's par (55), and its hour. */
 export const SELF_TAPE = { reads: { screen: 2, scene: 1 }, difficulty: 0.125, genreComplete: 0.6, minutes: 60 } as const;
-
-export function selfTapeRefusal(sim: Simulation, person: Person, id: string): string | undefined {
-  if (!GENRE_DEFS[id] || !GENRE_BY_ID[id]) return 'There’s no such genre.';
-  // A craft is the School's to begin (`enroll`): a life with none (a test's or a tool's, never a new life's) is refused, where until 2026-10-10 the command threw.
-  if (!person.craft) return 'Your training hasn’t begun: there’s no craft to tape yet.';
-  return hourRefusal(sim, person, SELF_TAPE.minutes);
-}
 
 /**
  * A self-tape in a genre was taped here until 2026-10-12, of no scene: the camera's task, the genre's demands and its
  * familiarity. Every self-tape is of a practice brief now, prepared and chosen first (`systems/briefs.ts`, which
- * registers `practice.self_tape`); `SELF_TAPE` and `tapeReads` are kept for what a genre asks of the camera.
+ * registers `practice.self_tape`), and its take reads the brief's techniques (`tapeReadsOf`). This said `SELF_TAPE`
+ * and `tapeReads` were kept for what a genre asks of the camera; the game reads `SELF_TAPE.minutes` alone (from
+ * 2026-10-12), a take's hour, and only tests read `tapeReads` and `SELF_TAPE`'s reads, difficulty and genreComplete:
+ * engagement, genre-coverage and attributes-complete. `selfTapeRefusal` was deleted that day, read by nothing once
+ * `tapeRefusal` refused a take in its place.
  */
 
 export function registerEngagement(sim: Simulation): void {

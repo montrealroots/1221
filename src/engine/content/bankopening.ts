@@ -102,7 +102,7 @@ export const TRANSFERS: Readonly<Record<string, { instant?: boolean; days?: numb
   FR: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   ES: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   IS: { instant: true, scheme: 'the Central Bank\'s real-time system', source: 'Central Bank of Iceland: domestic krónur transfers settle in real time' },
-  JP: { sameDayBefore: 15.5, scheme: 'Zengin', source: 'Zengin-Net: in real time in its core hours, 8:30 to 15:30 on business days; at night and on holidays only between banks in its extended hours since October 2018, so SLATE takes the next business day then' },
+  JP: { sameDayBefore: 15.5, scheme: 'Zengin', source: 'Zengin-Net: in real time in its core hours, 8:30 AM to 3:30 PM on business days; at night and on holidays only between banks in its extended hours since October 2018, so SLATE takes the next business day then' },
   KR: { instant: true, scheme: 'KFTC interbank network', source: 'Korea Financial Telecommunications and Clearings Institute (BIS CPMI): in seconds' },
   MX: { instant: true, scheme: 'SPEI', source: 'Banco de México, SPEI rules: credited within 5 or 30 seconds, every day' },
   AU: { instant: true, scheme: 'NPP / Osko', source: 'Reserve Bank of Australia: near real time, every day, where both banks are on the NPP' },

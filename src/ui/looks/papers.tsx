@@ -4,12 +4,17 @@
  * The Papers screen lists every passport, visa, travel authorization,
  * license, permit and ID card a life has held, and until 2026-10-02 each was a
  * row of dead text. A document is a thing: a country or an authority issued
- * it, it carries a number, it was issued on a day and runs out on another, and
- * it lets you do something — cross a border, drive, work — or it doesn’t any
- * more. So it opens, and what it says is read from `systems/documents.ts` at
- * the moment you look: whether it is in force, how many of the countries SLATE
- * has entry rules for would let you in on it today, whether you may drive on
- * it where you stand.
+ * it, it carries a number, and it was issued on a day and runs out on another.
+ * Until 2026-10-09 it let you do something — cross a border, drive, work — or
+ * it didn’t any more; crossing a border, driving, and applying for a visa or a
+ * travel authorization went in that day’s scope reset. So it opens, and what it
+ * says is read from `systems/documents.ts` at the moment you look: whether it
+ * is in force, how many of the countries SLATE has entry rules for would let
+ * you in on it today, and whether it would let you drive where you stand, each
+ * a reading. Until 2026-10-12 a passport’s page still called it the one you
+ * travel on, and a visa’s said it let you into its country; from 2026-10-12 the
+ * passport is the one in force in your name, which a new bank and the Social
+ * Security office ask for, and a visa would let you in.
  *
  * Its ways lead to the country that issued it, the country it is for, the
  * passport a visa is issued on (and back), and the days it was issued and runs
@@ -21,7 +26,7 @@ import { CITIES, COUNTRIES, REGIONS } from '@/engine/content/geography';
 import { ENTRY } from '@/engine/content/entry';
 import { LICENSES } from '@/engine/content/licenses';
 import {
-  documentsOf, inForce, mayDrive, mayEnter, passportOf, type PersonDocument,
+  documentsOf, inForce, mayDrive, mayEnter, passportOf, theCountry, type PersonDocument,
 } from '@/engine/systems/documents';
 import { VISITS } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
@@ -93,24 +98,29 @@ function standingOf(doc: PersonDocument, now: number): 'pending' | 'valid' | 'lo
 function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
   const now = sim.now;
   const live = inForce(doc, now);
-  const where = (iso?: string) => (iso ? countryOfIso(iso)?.name ?? iso : 'the country it names');
+  // A country as a sentence says it, the United Kingdom, as `mayEnter` says a citizenship (from 2026-10-12: until then
+  // “It would let you into United Kingdom”, and a permit’s “It lets you work in United States”).
+  const where = (iso?: string) => (iso ? theCountry(countryOfIso(iso)?.name ?? iso) : 'the country it names');
   switch (doc.kind) {
     case 'passport': {
-      if (!live) return 'Out of force, it takes you across no border now.';
+      // Said, not played: nothing crosses a border since the scope reset of 2026-10-09. Until 2026-10-12 this called
+      // it "the passport you travel on", and said one out of force "takes you across no border now".
+      if (!live) return 'Out of force, it’s no use to a bank or an office now.';
       const carried = passportOf(person, now)?.id === doc.id;
       const rules = Object.keys(ENTRY);
       const open = carried ? rules.filter((iso) => mayEnter(person, iso, now).ok).length : 0;
       return carried
-        ? `It’s the passport you travel on. Of the ${rules.length} countries SLATE has entry rules for, ${open} would let you in on it today for a week’s visit.`
-        : 'In force, but another passport is the one you travel on.';
+        ? `It’s the passport in force in your name. Of the ${rules.length} countries SLATE has entry rules for, ${open} would let you in on it today for a week’s visit; nothing in SLATE travels since 2026-10-09.`
+        : 'In force, but another passport is the one in force in your name.';
     }
     case 'visa':
     case 'authorization': {
       if (!live) return `${where(doc.destination).replace(/^./, (c) => c.toUpperCase())} won’t let you in on it now.`;
       const answer = doc.destination ? mayEnter(person, doc.destination, now) : undefined;
+      // A reading, as the passport’s is: until 2026-10-12 it said "It lets you into" the country, and "the visit".
       return answer?.ok
-        ? `It lets you into ${where(doc.destination)}, and nothing else is missing for a week’s visit there. ${answer.stay ?? ''}`.trim()
-        : `It’s in force for ${where(doc.destination)}, but the visit still asks more: ${answer?.missing[0] ?? 'the rule wasn’t found'}`;
+        ? `It would let you into ${where(doc.destination)}, and nothing else is missing for a week’s visit there. ${answer.stay ?? ''}`.trim()
+        : `It’s in force for ${where(doc.destination)}, but a week’s visit there would still ask more: ${answer?.missing[0] ?? 'the rule wasn’t found'}`;
     }
     case 'license': {
       if (!live) return 'Nowhere lets you drive on it now.';
@@ -148,7 +158,8 @@ defineLook<ThePaper>('document', {
     const state = standingOf(doc, sim.now);
     const country = issuerCountry(doc);
     const region = issuerRegion(doc);
-    const issuer = doc.kind === 'license' && LICENSES[doc.issuer] ? LICENSES[doc.issuer]!.authority : region?.name ?? country?.name ?? doc.issuer.toUpperCase();
+    // A country opens the sentence as one says it, the United Kingdom (from 2026-10-12: until then “United Kingdom issued it”).
+    const issuer = (doc.kind === 'license' && LICENSES[doc.issuer] ? LICENSES[doc.issuer]!.authority : region?.name ?? (country ? theCountry(country.name) : doc.issuer.toUpperCase())).replace(/^./, (c) => c.toUpperCase());
     const last = lastOf(doc.number);
 
     // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
@@ -169,12 +180,12 @@ defineLook<ThePaper>('document', {
     }
     const dest = doc.destination ? countryOfIso(doc.destination) : undefined;
     if (dest && dest.id !== country?.id && lookExists(sim, at('country', dest.id))) {
-      ways.push({ to: at('country', dest.id), label: dest.name, detail: 'The country it lets you into, and what that country is like' });
+      ways.push({ to: at('country', dest.id), label: dest.name, detail: 'The country it would let you into, and what that country is like' });
     }
     const on = doc.passportId ? documentsOf(person).find((d) => d.id === doc.passportId) : undefined;
     if (on) ways.push({ to: at('document', on.id), label: nameOf(on), detail: `The passport it was issued on, ending ${lastOf(on.number)}` });
     for (const child of documentsOf(person).filter((d) => d.passportId === doc.id)) {
-      ways.push({ to: at('document', child.id), label: nameOf(child), detail: `Issued on this passport${child.destination ? `, for ${countryOfIso(child.destination)?.name ?? child.destination}` : ''}` });
+      ways.push({ to: at('document', child.id), label: nameOf(child), detail: `Issued on this passport${child.destination ? `, for ${theCountry(countryOfIso(child.destination)?.name ?? child.destination)}` : ''}` });
     }
     if (doc.issuedAt !== undefined) {
       ways.push({ to: at('day', dateKey(doc.issuedAt, sim.homeZone)), label: `Issued ${formatDate(doc.issuedAt, zone)}`, detail: 'The day it was issued, as the calendar has it' });

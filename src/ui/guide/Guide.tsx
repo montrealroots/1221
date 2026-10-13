@@ -13,6 +13,11 @@
  * paint.
  *
  * Words only, as the rail is: a locked thing says Locked, not a padlock.
+ *
+ * From 2026-10-12 every chapter can be opened and read at any time, and only the next one can be marked read, so a
+ * player can see what a later part of the game does before getting there; until then the later chapters were shut in
+ * the contents. The clock holds while the guide is open. The counts count only the chapters there are now: a save
+ * from before the chapters were cut to these seventeen still holds the old ones' ids.
  */
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
@@ -122,7 +127,7 @@ export function LockedPanel({ feature, title }: { feature: string; title: string
 export function GuideStrip() {
   const guide = useGuide();
   const next = useWorld((s) => (guided(s) ? nextChapter(s) : undefined));
-  const done = useWorld((s) => chaptersRead(s).length);
+  const done = useWorld((s) => readNow(s).length);
   if (!next) return null;
   return (
     <div className="guide-strip" role="status">
@@ -139,7 +144,7 @@ export function GuideStrip() {
 /** The top bar’s way back into the guide, for any chapter, any time. */
 export function GuideButton() {
   const guide = useGuide();
-  const left = useWorld((s) => CHAPTERS.length - chaptersRead(s).length);
+  const left = useWorld((s) => CHAPTERS.length - readNow(s).length);
   return (
     <button type="button" className="btn btn-ghost btn-sm" onClick={() => guide.show()}>
       Guide{left > 0 ? ` (${left} Left)` : ''}
@@ -147,17 +152,17 @@ export function GuideButton() {
   );
 }
 
+/** The chapters read that are chapters now. */
+const readNow = (s: Parameters<typeof chaptersRead>[0]) => chaptersRead(s).filter((id) => CHAPTER_BY_ID[id]);
+
 function GuideDialog({ start, onClose }: { start: string; onClose: () => void }) {
-  const { run } = useGame();
+  const { run, hold } = useGame();
+  useEffect(() => { hold('guide', true); return () => hold('guide', false); }, [hold]);
   const read = useWorld((s) => chaptersRead(s));
   const next = useWorld((s) => nextChapter(s));
   const isGuided = useWorld((s) => guided(s));
-  // An empty start, or a chapter not reachable yet, is the next one.
-  const [at, setAt] = useState(() => {
-    const asked = CHAPTER_BY_ID[start];
-    if (asked && (read.includes(asked.id) || asked.id === next?.id)) return asked.id;
-    return next?.id ?? CHAPTERS[0]!.id;
-  });
+  // An empty start is the next chapter; any chapter asked for opens, to read.
+  const [at, setAt] = useState(() => CHAPTER_BY_ID[start]?.id ?? next?.id ?? CHAPTERS[0]!.id);
   // The chapter asked for, when it had to wait for another.
   const [waiting] = useState(() => {
     const asked = CHAPTER_BY_ID[start];
@@ -204,14 +209,13 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
           {CHAPTERS.map((c, i) => {
             const done = read.includes(c.id);
             const upNext = next?.id === c.id;
-            const reachable = done || upNext;
             return (
               <button
                 key={c.id}
                 type="button"
                 className="guide-toc-item"
                 aria-current={c.id === at ? 'step' : undefined}
-                disabled={!reachable}
+                aria-label={`${i + 1}. ${c.title}, ${done ? 'Read' : upNext ? 'Next' : 'Later'}`}
                 onClick={() => goTo(c.id)}
               >
                 <span className="guide-toc-num mono">{i + 1}</span>
@@ -238,9 +242,14 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
             </>
           ) : (
             <>
-              {waiting && at !== waiting.id && (
+              {waiting && at === waiting.id && next && (
                 <div className="callout small" style={{ marginBottom: 'var(--s3)' }}>
-                  “{waiting.title}” opens what you pressed. The chapters go in order, and this one comes first.
+                  This chapter opens what you pressed. Chapters are marked read in order, and “{next.title}” comes first.
+                </div>
+              )}
+              {!isNext && isGuided && !read.includes(chapter.id) && !waiting && next && (
+                <div className="callout small" style={{ marginBottom: 'var(--s3)' }}>
+                  Read ahead as you like. Chapters are marked read in order, and “{next.title}” comes first.
                 </div>
               )}
               <div className="eyebrow">Chapter {index + 1} Of {CHAPTERS.length}</div>

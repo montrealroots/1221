@@ -6,10 +6,14 @@
  * then. Now, for the player, where the place's wait is published, it's an
  * appointment: booked at their own doctor's practice, or the town's first,
  * for the place's wait, on a weekday morning, on the calendar like any other
- * commitment. Kept, it's the visit, billed as before. Missed (away, asleep,
- * in hospital or laid up), it isn't had and isn't billed, and the need stays
- * until they book again. Ireland publishes no GP wait, so a visit there is
- * had as before; so is the flu, which is mostly not seen at all.
+ * commitment. Kept, it's the visit, billed as before. Missed, it isn't had
+ * and isn't billed, and the need stays until they book again: asleep or in
+ * hospital (`presentForCare`). Laid up by an injury missed one until
+ * 2026-10-10, and being away from the town until the journeys went in the
+ * scope reset of 2026-10-09; the check for it compared the town they were in
+ * with itself after that, and went on 2026-10-12. Ireland publishes no GP
+ * wait, so a visit there is had as before; so is the flu, which is mostly not
+ * seen at all.
  *
  * **A referral**, from 2026-10-02 (`research-referrals-childday.json`): a
  * visit kept ends in one to a specialist as often as the place's doctors
@@ -111,14 +115,20 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
   return bookIn(sim, person, what, days);
 }
 
+/**
+ * Booked, and the player told. A specialist booked again after one was called off, with no referral to give `why`,
+ * reads "A specialist, referred: booked for …" (from 2026-10-12: until then it read "booked specialist, booked for …",
+ * the referral's clause added to it). The practice is looked up for the person as they are: until 2026-10-12 it was
+ * for a copy of them put in their own town, which was the town they were in.
+ */
 function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string): Appointment {
-  const clinic = clinicFor({ ...person, currentLocationId: homeCity(person) } as Person, 'visit');
+  const clinic = clinicFor(person, 'visit');
   const h = healthOf(person);
   h.seq = (h.seq ?? 0) + 1;
   const a: Appointment = { id: `a${h.seq}`, at: slot(sim, person, days), what, ...(clinic ? { clinicId: clinic.id } : {}) };
   appointmentsOf(person).push(a);
   sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: what === SPECIALIST ? 'A Specialist' : `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? ' specialist, booked' : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 
@@ -128,7 +138,7 @@ export function registerAppointments(sim: Simulation): void {
     const a = person ? appointmentsOf(person).find((x) => x.id === item.payload.appointmentId) : undefined;
     if (!person || !a) return;
     healthOf(person).appointments = appointmentsOf(person).filter((x) => x.id !== a.id);
-    if (!presentForCare(person, item.at, homeCity(person))) {
+    if (!presentForCare(person, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
       if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again when you can.`, importance: 60, route: '/workspace/papers' });

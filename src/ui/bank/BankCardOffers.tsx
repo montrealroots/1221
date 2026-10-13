@@ -3,7 +3,8 @@
  * (`systems/cardoffers.ts`): its introductory rate, a balance moved from a
  * card at another bank (applied for on `ui/bank/BankCard.tsx` since
  * 2026-09-28), a money transfer into the current account, a plan
- * that pays a purchase off in equal months for a fee, and rewards.
+ * that pays a purchase off in equal months for a fee (none for its life on one
+ * made in Chase's introduction, from 2026-10-12), and rewards.
  */
 
 import { useState } from 'react';
@@ -16,7 +17,7 @@ import { Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
 import { cardsOf, cardTerms, stateOf } from '@/engine/systems/credit';
 import type { Account } from '@/engine/core/ledger';
-import { BONUSES, PLAN_MONTHS, planMonthsOf, planRoom, transferRate } from '@/engine/systems/cardoffers';
+import { BONUSES, PLAN_MONTHS, planFreeIfMadeNow, planMonthsOf, planRoom, transferRate } from '@/engine/systems/cardoffers';
 import { INTEREST_PLANS } from '@/engine/content/plans';
 import { inSaveMoney } from '@/engine/systems/banking';
 
@@ -56,7 +57,12 @@ function CardOffers({ card }: { card: Account }) {
   for (const one of transfers) {
     lines.push(`${one.kind === 'balance' ? 'A balance transfer' : 'A money transfer'}: ${money(one.owed)} at ${pct(transferRate(sim, credit, one))}${one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? ` until ${formatDate(one.introUntil, sim.zone)}, then ${pct(one.apr)}` : ''}, interest from the day it was made.`);
   }
+  // Each plan's fee is the one it was made with, for its life, nothing on one made in Chase's introduction
+  // (`PLAN_FREE_IN_INTRO`): until 2026-10-12 that plan carried its 1.72%, and this said so.
   for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
+  // A plan made today is free for its life while Chase's introduction runs (`planFreeIfMadeNow`); until 2026-10-12
+  // the offer said 1.72% a month then too.
+  const freeUntil = planFreeIfMadeNow(sim, card, credit, terms) && terms.introUntil !== undefined ? formatDate(terms.introUntil, sim.zone) : undefined;
   const bonus = card?.bankId ? BONUSES[card.bankId] : undefined;
   // Each category as the card pays it (`BONUSES`), not a base rate the rest may not earn: until 2026-09-27 this
   // said "the rest at the base rate" of cards that pay nothing on the rest, or less past a cap.
@@ -67,7 +73,7 @@ function CardOffers({ card }: { card: Account }) {
   if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'Groceries are what a card buys here: nothing pays a bill since 2026-10-09.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
 
   return (
-    <Panel title="The Card’s Offers" subtitle={<Open subject={at('account', card.id)}>{terms.name}</Open>} look={at('account', card.id)}>
+    <Panel title="The Card’s Offers" subtitle={<Open subject={at('account', card.id)}>{terms.name}</Open>} look={at('account', card.id)} help="bank.card-offers">
       <div className="col gap-3">
         {lines.map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
         {terms.rewardsRate && (
@@ -90,7 +96,9 @@ function CardOffers({ card }: { card: Account }) {
             <p className="small" style={{ margin: 0 }}>
               {interestPlan
                 ? `A plan pays part of what purchases owe off in equal months: ${Object.entries(interestPlan.months).map(([m, t]) => `${m} months ${t.apr !== undefined ? `at ${pct(t.apr)} a year` : t.fee ? `for ${pct(t.fee)} of it` : 'free'}`).join(', ')}${interestPlan.min !== undefined ? `, on ${formatMoney(inSaveMoney(sim, interestPlan.min, bankById(card!.bankId!)!.currency), cur)} or more` : ''}. ${money(room)} can go into one.`
-                : `A plan pays part of what purchases owe off in equal months for ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges, instead of interest. ${money(room)} can go into one.`}
+                : freeUntil
+                  ? `A plan pays part of what purchases owe off in equal months instead of interest. One made while the introductory rate runs, until ${freeUntil}, is free to its last month; one made after costs ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges. ${money(room)} can go into one.`
+                  : `A plan pays part of what purchases owe off in equal months for ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges, instead of interest. ${money(room)} can go into one.`}
             </p>
             <div className="field-row">
               <div className="field">

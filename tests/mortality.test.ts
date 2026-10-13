@@ -70,8 +70,12 @@ describe('the chance of the end', () => {
 
   it('ends lives about as often as the table says, drawn one by one', () => {
     // Two thousand people of seventy in the US, at their best: the table's
-    // 0.018 a year, times 0.8.
+    // 0.018 a year, times 0.8. With no body on record, so their weight leans
+    // on none of it: a new life has one from its first moment (from
+    // 2026-10-12; until then it had none till its first midnight, and this
+    // save's player had none here without asking).
     const sim = quickSave({}, 'end-count');
+    delete sim.player.body;
     const from = sim.now;
     let ended = 0;
     for (let i = 0; i < 2000; i += 1) {

@@ -43,7 +43,7 @@ import { registerSpending } from './systems/spending';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
-import { registerTutorial } from './world/tutorial';
+import { nextChapter, registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerBankMoves } from './systems/bankmoves';
 import { registerTaxId } from './systems/taxid';
@@ -59,7 +59,8 @@ import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
-import { WORK_KEPT, countWork } from './systems/evaluation';
+import { WORK_KEPT, countWork, limitsOnce } from './systems/evaluation';
+import { bodyOf } from './systems/body';
 import { drawMateAbilities } from './systems/school';
 import { bindCeiling, ceilingBefore, focusAt, ordinary, redateCredits, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
@@ -68,6 +69,8 @@ import { registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
 import { registerBriefs } from './systems/briefs';
+import { registerWorkbook } from './systems/workbook';
+import { workPiece } from './systems/workpieces';
 import { genresOfPlay } from './content/plays';
 import { registerPlayReading } from './systems/playreading';
 import { registerAppointments } from './systems/appointments';
@@ -124,6 +127,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPractice(sim);
   registerEngagement(sim);
   registerBriefs(sim);
+  registerWorkbook(sim, workPiece);
   registerPlayReading(sim);
   registerHealth(sim);
   registerAppointments(sim);
@@ -277,8 +281,26 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // What held work back, for life (`Journey.limits`, from 2026-10-12): a save from before reads it from the detail it
+  // kept, once; the pieces it no longer kept aren't invented.
+  for (const person of Object.values(universe.people)) {
+    if (!person.journey || person.journey.limits) continue;
+    person.journey.limits = {};
+    // Each piece once for each input that held it back (`limitsOnce`), as `countWork` counts it.
+    for (const w of person.work ?? []) for (const [k, x] of limitsOnce(w.limits)) {
+      const t = (person.journey.limits[k] ??= { label: x.label, n: 0, whole: 0, last: w.at });
+      t.n += 1;
+      t.whole = Math.round((t.whole + x.whole) * 10) / 10;
+      t.last = Math.max(t.last, w.at);
+    }
+  }
+  // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
+  if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;
   // A save from before the attributes draws them on opening, the same draw a new life makes.
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
+  // A save made before 2026-10-12 and opened on its first day has its body on opening, as a new life does from its first
+  // moment (`drawnBody`, `systems/body.ts`): until then such a life had none until its first midnight.
+  if (universe.people[universe.playerId] && !sim.player.body) bodyOf(sim, sim.player);
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
@@ -496,6 +518,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   if (preferences?.timeSpeed === 'standard') {
     preferences.timeSpeed = 'live';
     steps.push('Moved the clock to real time.');
+  }
+  // 'fast' and 'faster' went on 2026-10-12: no control sent either, and the command takes neither now.
+  if (preferences?.timeSpeed === 'fast' || preferences?.timeSpeed === 'faster') {
+    preferences.timeSpeed = 'live';
+    steps.push('Moved the clock from a faster speed to live.');
   }
 
   // Schema 11 put every label in Title Case. Labels are written into the save
@@ -930,7 +957,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // The slot's career line is the player's title. Before 80 it named the film
   // career, and under 80 it was left empty.
   const player = universe.people?.[universe.playerId];
-  if (player) universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
+  // The slot's line, where a save has none: `refreshMeta` writes the year at school or how it ended beside the title,
+  // and an open doesn't take that back off (from 2026-10-12; until then every open wrote the bare title over it, and
+  // a slot that migrated was saved back without the school year until the next autosave). A save from before 80 has
+  // the film career's line, and that goes, whatever it says.
+  if (player && (from < 80 || !universe.meta.careerLabel)) universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;
   if (from < SAVE_SCHEMA_VERSION) steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);

@@ -3,12 +3,21 @@
  * 2026-09-30, from `docs/research/world/research-documents-safetynet.json`.
  *
  * REAL ID: since 7 May 2025 the TSA has asked a REAL ID-compliant license or
- * ID card, or a passport, at its checkpoints. A traveler with neither pays
- * $45 for TSA ConfirmID, good for ten days of travel, and is screened
- * further. A license or ID card issued or renewed from then costs the same
- * as a REAL ID one in New York, Connecticut and California, and SLATE issues
- * REAL ID. Connecticut upgrades one before its renewal for its $30 duplicate
- * fee; New York's and California's off-cycle price wasn't read.
+ * ID card, or a passport, at its checkpoints. New York, Connecticut and
+ * California charge the same for a REAL ID card as for one that isn't, and an
+ * American state's ID card that SLATE issues is REAL ID.
+ *
+ * Until 2026-10-09 SLATE read more of it: that date, TSA ConfirmID's $45 for
+ * ten days of travel to a traveler with neither, and Connecticut's upgrade of
+ * a license before its renewal for its $30 duplicate fee (New York's and
+ * California's off-cycle price wasn't read). ConfirmID at the checkpoint
+ * (`atTheCheckpoint`, which read the date, the fee and the days), and Papers'
+ * line naming its fee, went in that day's scope reset; the upgrade
+ * (`documents.real_id`, which read its fee) went later that day. The four
+ * figures only they read (`enforcedFrom`, `confirmIdUsd`, `confirmIdDays`,
+ * `ctUpgradeUsd`) stayed, read by nothing, and went too (from 2026-10-12).
+ * Now the only REAL ID figure a save reads is a starting license's REAL ID
+ * share.
  *
  * A starting license is REAL ID at its state's published share of holders
  * (`docs/research/world/research-home-effects.json`): California's 58% (DMV,
@@ -25,10 +34,6 @@
  */
 
 export const REAL_ID = {
-  enforcedFrom: Date.UTC(2025, 4, 7),
-  confirmIdUsd: 45,
-  confirmIdDays: 10,
-  ctUpgradeUsd: 30,
   /** The share of a state's licenses that are REAL ID or Enhanced, where published. */
   share: { 'us-ca': 0.58, 'us-ct': 0.73, 'us-ny': 0.5 } as Readonly<Record<string, number>>,
 } as const;

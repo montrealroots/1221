@@ -50,6 +50,7 @@ export function BankWorkspace() {
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const bank = useWorld((s) => bankOf(s, s.player));
   const accounts = useWorld((s) => bankAccountsOf(s, s.player));
+  const currents = useWorld((s) => checkingsOf(s, s.player));
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [amount, setAmount] = useState('');
@@ -63,7 +64,12 @@ export function BankWorkspace() {
   // The primary account (from 2026-10-10: until then the first current account found, which with two banks could be the
   // other one, named as where savings closes and where Move Money starts from).
   const current = accounts.find((a) => a.id === sim.player.primaryAccountId) ?? accounts.find((a) => a.kind === 'checking');
-  const savings = accounts.find((a) => a.kind === 'savings');
+  // Savings to open: at each bank kept with a current account and no savings there, as `bank.open_savings` opens it
+  // (from 2026-10-12: until then one panel, shown only while no bank held savings, opened at the primary account's bank
+  // alone, so savings at a second bank hid the primary bank's and a second bank's couldn't be opened from any screen).
+  const unsaved = [...new Set(currents.map((a) => a.bankId))]
+    .map((id) => (id ? bankById(id) : undefined))
+    .filter((b): b is NonNullable<typeof b> => !!b && !accounts.some((a) => a.kind === 'savings' && a.bankId === b.id));
   const fromId = from || current?.id || '';
   const toId = to || accounts.find((a) => a.id !== fromId)?.id || '';
   const monthStart = monthStartOf(sim, sim.now);
@@ -72,7 +78,10 @@ export function BankWorkspace() {
   // What a move out of savings costs, and what Germany's month still lets out, before it's made.
   const moving = accounts.find((a) => a.id === fromId);
   const savingsTerms = moving?.kind === 'savings' ? savingsDebit(sim, moving) : undefined;
-  const freeLeft = moving?.kind === 'savings' && ACCOUNT_LIFE[bank.id]?.freeWithdrawals !== undefined && ACCOUNT_LIFE[bank.id]?.withdrawalFee ? savingsTerms!.fee === 0 : undefined;
+  // By the rules of the bank the savings is at, as `savingsDebit` charges (from 2026-10-12: until then the primary
+  // account's bank's, so savings elsewhere had its fee unsaid, or was told of a fee its bank doesn't charge).
+  const rules = moving?.kind === 'savings' && moving.bankId ? ACCOUNT_LIFE[moving.bankId] : undefined;
+  const freeLeft = rules?.freeWithdrawals !== undefined && rules.withdrawalFee ? savingsTerms!.fee === 0 : undefined;
   const allowanceLeft = moving ? savingsLeftThisMonth(sim, moving) : undefined;
 
   const move = () => {
@@ -97,7 +106,7 @@ export function BankWorkspace() {
           // As the bank counts them: until 2026-09-27 wages only, where the bank counts any electronic deposit.
           const paidIn = directDeposits(sim, account, monthStart, product?.deposits);
           return (
-            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.institution} {account.number}</Open>} look={at('account', account.id)}>
+            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.institution} {account.number}</Open>} look={at('account', account.id)} help="bank.accounts">
               <div className="col gap-3">
                 <div className="stat">
                   <Open subject={at('account', account.id)}>
@@ -140,20 +149,20 @@ export function BankWorkspace() {
             </Panel>
           );
         })}
-        {!savings && (
-          <Panel title={bank.savings.name} subtitle="Not opened">
+        {unsaved.map((there) => (
+          <Panel key={`open-${there.id}`} title={there.savings.name} subtitle={`${there.name}, not opened`} help="bank.open_savings">
             <p className="small">
-              {interestWords(sim, bank.savings, bankingIn(bank.iso)?.interestTax?.rate ?? 0, money, bank.currency, sim.now, bank.iso === 'DE')} {bank.savings.monthlyFee ? `It costs ${formatMoney(inSaveMoney(sim, bank.savings.monthlyFee, bank.currency), cur)} a month${waiverWords(bank.savings, (c) => money(inSaveMoney(sim, c, bank.currency)))}.` : 'Opening one costs nothing.'}
+              {interestWords(sim, there.savings, bankingIn(there.iso)?.interestTax?.rate ?? 0, money, there.currency, sim.now, there.iso === 'DE')} {there.savings.monthlyFee ? `It costs ${formatMoney(inSaveMoney(sim, there.savings.monthlyFee, there.currency), cur)} a month${waiverWords(there.savings, (c) => money(inSaveMoney(sim, c, there.currency)))}.` : 'Opening one costs nothing.'}
             </p>
-            <Gated feature="bank.open_savings" className="btn btn-sm" onClick={() => run('bank.open_savings', {})}>
-              Open A {bank.savings.name}
+            <Gated feature="bank.open_savings" className="btn btn-sm" onClick={() => run('bank.open_savings', { bankId: there.id })}>
+              Open A {there.savings.name}
             </Gated>
           </Panel>
-        )}
+        ))}
       </div>
 
       {accounts.length > 1 && (
-        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days.">
+        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days." help="bank.transfer">
           <div className="field-row">
             <div className="field">
               <label htmlFor="move-from">From</label>

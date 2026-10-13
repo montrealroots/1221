@@ -42,7 +42,7 @@ import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { ABILITY_DEFS, ABILITY_KIN, DEVELOPMENT, type AbilityId } from '../content/abilities';
 import type { Skill } from '../content/school';
-import { zonedParts } from '../core/time';
+import { zonedParts, type Instant } from '../core/time';
 import { takeTheHouse } from './enjoyment';
 import { ceilingAt } from '../content/lifespan';
 import { yearsSince } from './life';
@@ -206,16 +206,25 @@ export function abilityGain(level: number, reach: number, t: Pick<GrowthTerms, '
   return Math.max(ordinary, past);
 }
 
-const dayOf = (sim: Simulation) => { const p = zonedParts(sim.now, sim.homeZone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
+const dayAt = (sim: Simulation, at: Instant = sim.now) => { const p = zonedParts(at, sim.homeZone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
 
 /** Today's count of a source on an id, advanced by one: the same practice again today gives less (`DEVELOPMENT.repeat`). */
 export function repeatsToday(sim: Simulation, person: Person, key: string): number {
   const led = developmentOf(person);
-  const day = dayOf(sim);
+  const day = dayAt(sim);
   if (led.day !== day) { led.day = day; led.counts = {}; }
   const n = led.counts[key] ?? 0;
   led.counts[key] = n + 1;
   return n;
+}
+
+/**
+ * The count `repeatsToday` would give for the day an instant falls in, counting nothing (from 2026-10-12): what a
+ * preview reads, where `repeatsToday` would count the preview as a repeat.
+ */
+export function repeatsSoFar(sim: Simulation, person: Person, key: string, at: Instant = sim.now): number {
+  const led = person.development;
+  return led && led.day === dayAt(sim, at) ? led.counts[key] ?? 0 : 0;
 }
 
 /** How many applied action ids are kept. */

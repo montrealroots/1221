@@ -44,8 +44,9 @@ export function SlateApp() {
       // of the world clock. Everything after this point goes through the clock.
       // eslint-disable-next-line no-restricted-syntax
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
-      // A life begun here begins with the guide.
-      const sim = createSave(slot, seed, { ...config, tutorial: true });
+      // A life begun here begins with the guide, unless the player chose "I Know SLATE" (from 2026-10-12), and with the
+      // clock paused either way.
+      const sim = createSave(slot, seed, { ...config, tutorial: config.tutorial !== false, paused: true });
       // The home country's holidays, which its banks keep as business days.
       await loadPlacesFor(sim.universe);
       refreshMeta(sim);

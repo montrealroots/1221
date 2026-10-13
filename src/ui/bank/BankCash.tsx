@@ -44,7 +44,7 @@ export function BankCash({ bankId }: { bankId: string }) {
   };
 
   return (
-    <Panel title="Cash" subtitle={`${money(inHand)} in hand.`}>
+    <Panel title="Cash" subtitle={`${money(inHand)} in hand.`} help="bank.cash">
       <div className="field-row">
         <div className="field">
           <label htmlFor="cash-out">Take Out ({cur})</label>

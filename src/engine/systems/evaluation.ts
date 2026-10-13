@@ -76,6 +76,7 @@ import { abilityFull, abilityOf, abilityDef, type AbilityId } from './attributes
 import { MASTERED, TECHNIQUES, TECHNIQUE_LABEL } from '../content/abilities';
 import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, EVALUATION, RULESET } from '../content/tasks';
 import type { Skill } from '../content/school';
+import { judgePiece, type PieceResult, type PieceSpec } from './piece';
 
 export type { Dimension, TaskProfile } from '../content/tasks';
 
@@ -130,6 +131,13 @@ export interface EvalContext {
   key: string;
   /** What the work would be expected to come to, with no draw: a casting read, which judges no night (from 2026-10-10). */
   expected?: boolean;
+  /**
+   * A segment of a piece late enough to tire (from 2026-10-12, `systems/piece.ts`): the factor on what tiring reaches,
+   * and why. Stamina's way into a piece judged in segments, in place of its share of consistency.
+   */
+  drain?: { f: number; label: string };
+  /** A segment after a slip, not wholly recovered from (from 2026-10-12): the factor on believability and consistency, and why. */
+  shaken?: { f: number; label: string };
 }
 
 /** The day's condition as the task meets it: readiness (with the hour's fit), and anything concrete that limits a dimension. */
@@ -149,6 +157,13 @@ export interface Limit {
   dimension: Dimension;
   /** The points it cost the dimension: the dimension again with it made whole, less the dimension as it was. */
   by: number;
+  /**
+   * The points it cost the whole (from 2026-10-12): the whole again with this dimension at what it would have been, less
+   * the whole as it was. What the limits are ranked by, since a dimension's weight and the weakest dimension decide how
+   * much of the whole a dimension's points are; until then a 15-point loss in a dimension weighted 1 outranked a
+   * 10-point loss in one weighted 3, which cost the whole about twice as much.
+   */
+  whole?: number;
 }
 
 export interface DimensionResult {
@@ -158,6 +173,11 @@ export interface DimensionResult {
   capacity: number;
   prepared: number;
   condition: number;
+  /**
+   * The day's share of the condition (from 2026-10-12): its fatigue, illness, injury or concussion, without a piece's
+   * own stamina drain or a slip's shake, which the piece and the night's draw bring. What a night's delivery reads.
+   */
+  day: number;
   /** The way it's played against the material or the direction: 1 where it fits (from 2026-10-10). */
   fit?: number;
   variation: number;
@@ -188,7 +208,11 @@ export interface Evaluation {
     inputs?: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>>;
     extraPrep?: Partial<Record<Dimension, readonly string[]>>;
     fit?: Partial<Record<Dimension, { f: number; label: string }>>;
+    /** A piece judged in segments (from 2026-10-12, `systems/piece.ts`): the segments, their work, the part and the load. */
+    piece?: PieceSpec;
   };
+  /** The segments' own results and the continuity read from them, for a piece judged in segments. */
+  piece?: PieceResult;
 }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
@@ -275,11 +299,17 @@ export function evaluate(sim: Simulation, person: Person, ctx: EvalContext): Eva
   return judge(sim.universe.meta.seed, performerOf(sim, person), ctx);
 }
 
-/** A kept result worked out again from its own inputs, under its seed: the same, whatever the person is now. */
-export function replay(record: { inputs: Evaluation['inputs']; task: string }, profile: TaskProfile): Evaluation | undefined {
+/**
+ * A kept result worked out again from its own inputs, under its seed: the same, whatever the person is now. A result
+ * kept under other rules (`ruleset`, from 2026-10-12) isn't: today's judge would give another number and call it the
+ * same work, so there's nothing to show but what it was.
+ */
+export function replay(record: { inputs: Evaluation['inputs']; task: string; ruleset?: string }, profile: TaskProfile): Evaluation | undefined {
   const i = record.inputs;
   if (!i.levels || !i.fulls || i.seed === undefined) return undefined;
-  return judge(i.seed, frozenPerformer(i), { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}) });
+  if (record.ruleset !== undefined && record.ruleset !== RULESET) return undefined;
+  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}) };
+  return i.piece ? judgePiece(i.seed, frozenPerformer(i), ctx, i.piece) : judge(i.seed, frozenPerformer(i), ctx);
 }
 
 /** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. */
@@ -313,13 +343,17 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     const prepared = parts.reduce((m, p) => Math.min(m, p.f), 1);
     // Condition: readiness under sufficient, and a named cause where it reaches this dimension.
     const reaches = spec.conditions ?? [];
-    const causes: { what: 'fatigue' | 'illness' | 'injury'; label: string; f: number }[] = [];
+    const causes: { what: 'fatigue' | 'illness' | 'injury' | 'stamina' | 'shaken'; label: string; f: number }[] = [];
     if (ctx.condition.readiness < E.sufficientReadiness && reaches.includes('fatigue')) causes.push({ what: 'fatigue', label: `Readiness At ${Math.round(ctx.condition.readiness)}, Under ${E.sufficientReadiness}`, f: E.fatigueFloor + (1 - E.fatigueFloor) * clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1) });
     if (ctx.condition.ill && reaches.includes('illness')) causes.push({ what: 'illness', label: 'Down With The Flu', f: E.illness });
     if (ctx.condition.injured && reaches.includes('injury')) causes.push({ what: 'injury', label: 'An Injury Still Mending', f: E.injury });
     // A concussion reaches every dimension, whatever its conditions name: it's thinking and memory, not the body only.
     else if (ctx.condition.concussed) causes.push({ what: 'injury', label: 'A Concussion Still Mending', f: E.injury });
+    // A segment late in a piece, where the stamina doesn't hold, and one after a slip (`systems/piece.ts`).
+    if (ctx.drain && ctx.drain.f < 1 && reaches.includes('fatigue')) causes.push({ what: 'stamina', label: ctx.drain.label, f: ctx.drain.f });
+    if (ctx.shaken && ctx.shaken.f < 1 && (d === 'believability' || d === 'consistency')) causes.push({ what: 'shaken', label: ctx.shaken.label, f: ctx.shaken.f });
     const condition = causes.reduce((p, c) => p * c.f, 1);
+    const day = causes.filter((c) => c.what !== 'stamina' && c.what !== 'shaken').reduce((p, c) => p * c.f, 1);
     // A tired day widens the draw (`fatigueSpread`); a sufficient day leaves it as it is.
     const spread = ctx.condition.readiness < E.sufficientReadiness ? 1 + E.fatigueSpread * (1 - clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1)) : 1;
 
@@ -348,18 +382,29 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
       limits.push({ kind: 'fit', what: 'fit', label: fit!.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, 1, spread).quality) });
     }
     const strongest = terms.reduce<Term | undefined>((b, t) => (!b || t.n > b.n ? t : b), undefined);
-    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, ...(f < 1 ? { fit: f } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
+    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, day, ...(f < 1 ? { fit: f } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
   }
 
+  const overall = r1(wholeOf(dims, weights));
+  // Each limit's cost to the whole: the whole again with its dimension at what the limit made whole would leave it.
+  for (const x of dims) {
+    for (const l of x.limits) l.whole = r1(Math.max(0, wholeOf(dims.map((y) => (y === x ? { ...y, quality: Math.min(100, y.quality + l.by) } : y)), weights) - wholeOf(dims, weights)));
+    x.limits.sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
+  }
+  return {
+    ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
+    limits: dims.flatMap((x) => x.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
+    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}) },
+  };
+}
+
+/** The whole of a set of dimensions: their weighted mean for `meanShare` of it, the weakest for the rest. */
+export function wholeOf(dims: readonly Pick<DimensionResult, 'dimension' | 'quality'>[], weights: Partial<Record<Dimension, number>>): number {
+  const E = EVALUATION;
   const wTotal = dims.reduce((s, x) => s + (weights[x.dimension] ?? 0), 0);
   const weighted = wTotal > 0 ? dims.reduce((s, x) => s + x.quality * (weights[x.dimension] ?? 0), 0) / wTotal : 0;
   const weakest = dims.length ? Math.min(...dims.map((x) => x.quality)) : 0;
-  const overall = r1(E.meanShare * weighted + (1 - E.meanShare) * weakest);
-  return {
-    ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
-    limits: dims.flatMap((x) => x.limits).sort((a, b) => b.by - a.by),
-    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}) },
-  };
+  return E.meanShare * weighted + (1 - E.meanShare) * weakest;
 }
 
 /**
@@ -399,6 +444,16 @@ export interface Journey {
   milestones: { at: number; kind: 'run' | 'first-strong' | 'first-exceptional' | 'first-mastery'; what: string; overall: number; detail?: string }[];
   since?: number;
   detailBefore?: number;
+  /**
+   * What has held work back, for life (from 2026-10-12, `systems/artistry.ts`): each limit among a piece's kept three,
+   * by kind and what, how many pieces and the points of the whole summed. The detail keeps 160 pieces; a weakness that
+   * recurs across years is read here.
+   */
+  limits?: Record<string, { label: string; n: number; whole: number; last: number }>;
+  /** Notes given on the craft and by direction, worked and answered, and the ways reached for (from 2026-10-12). */
+  direction?: { given: number; worked: number; answered: number; ways: Record<string, number> };
+  /** Work played with others: scenes, takes with a reader and nights with a company, their sum, the slips and those covered. */
+  together?: { n: number; sum: number; slips: number; covered: number };
 }
 export const MILESTONES_KEPT = 300;
 
@@ -422,13 +477,36 @@ function addTo(t: Tally | undefined, r: Pick<WorkRecord, 'overall' | 'mastery'>,
   return out;
 }
 
+/** A piece's limits, each input once: its cost the sum across the dimensions it reaches (`countWork`, the backfill in `loadSave`). */
+export function limitsOnce(limits: readonly Pick<Limit, 'kind' | 'what' | 'label' | 'by' | 'whole'>[]): Map<string, { label: string; whole: number }> {
+  const once = new Map<string, { label: string; whole: number }>();
+  for (const l of limits) {
+    const k = `${l.kind}:${l.what}`;
+    const x = once.get(k) ?? { label: l.label, whole: 0 };
+    x.whole += l.whole ?? l.by / 4;
+    once.set(k, x);
+  }
+  return once;
+}
+
 /** A result counted in the journey (`sign` -1 to take one back out, when the same work is judged again). */
-export function countWork(person: Person, r: Pick<WorkRecord, 'at' | 'task' | 'overall' | 'mastery' | 'what'>, sign: 1 | -1 = 1): void {
+export function countWork(person: Person, r: Pick<WorkRecord, 'at' | 'task' | 'overall' | 'mastery' | 'what'> & Partial<Pick<WorkRecord, 'limits'>>, sign: 1 | -1 = 1): void {
   const j = journeyOf(person);
   j.since = Math.min(j.since ?? r.at, r.at);
   j.totals[r.task] = addTo(j.totals[r.task], r, sign);
   const term = (j.byTerm[halfOf(r.at)] ??= {});
   term[r.task] = addTo(term[r.task], r, sign);
+  // What held it back, for life (from 2026-10-12): a piece judged again takes its last limits back out. A limit is
+  // listed once for each dimension it reaches, so a piece counts once for what held it back, its cost the sum across
+  // the dimensions (from 2026-10-12, round three of the defect pass: until then each dimension counted, and a piece
+  // held back by listening in three dimensions counted as three pieces, n=15 against 12 pieces on a played save).
+  for (const [k, x] of limitsOnce((r as Pick<WorkRecord, 'limits'>).limits ?? [])) {
+    const t = ((j.limits ??= {})[k] ??= { label: x.label, n: 0, whole: 0, last: r.at });
+    t.n += sign;
+    t.whole = Math.round((t.whole + sign * x.whole) * 10) / 10;
+    if (sign > 0) t.last = Math.max(t.last, r.at);
+    if (t.n <= 0) delete j.limits![k];
+  }
   if (sign < 0) return;
   // The firsts, once each.
   const first = (kind: Journey['milestones'][number]['kind']) => !j.milestones.some((m) => m.kind === kind);
@@ -436,6 +514,22 @@ export function countWork(person: Person, r: Pick<WorkRecord, 'at' | 'task' | 'o
   if ((band === 'strong' || band === 'exceptional') && first('first-strong')) milestone(person, { at: r.at, kind: 'first-strong', what: r.what, overall: r.overall });
   if (band === 'exceptional' && first('first-exceptional')) milestone(person, { at: r.at, kind: 'first-exceptional', what: r.what, overall: r.overall });
   if (r.mastery && first('first-mastery')) milestone(person, { at: r.at, kind: 'first-mastery', what: r.what, overall: r.overall });
+}
+
+/** Work played with others counted for life (`Journey.together`, from 2026-10-12). */
+export function countTogether(person: Person, t: { overall: number; slip?: { covered: number } }): void {
+  const x = (journeyOf(person).together ??= { n: 0, sum: 0, slips: 0, covered: 0 });
+  x.n += 1;
+  x.sum = Math.round((x.sum + t.overall) * 10) / 10;
+  if (t.slip) { x.slips += 1; if (t.slip.covered >= 0.5) x.covered += 1; }
+}
+
+/** A note on the craft or a direction counted for life (`Journey.direction`, from 2026-10-12): given, worked (and how), answered. */
+export function countDirection(person: Person, what: { given?: boolean; worked?: string; answered?: boolean }): void {
+  const x = (journeyOf(person).direction ??= { given: 0, worked: 0, answered: 0, ways: {} });
+  if (what.given) x.given += 1;
+  if (what.worked) { x.worked += 1; x.ways[what.worked] = (x.ways[what.worked] ?? 0) + 1; }
+  if (what.answered) x.answered += 1;
 }
 
 export function milestone(person: Person, m: Journey['milestones'][number]): void {

@@ -16,7 +16,10 @@
  *   marked simulated), on what most needs it now: a blocking call missed,
  *   the lines past the off-book call, the blocking, or the craft the play asks. Worked on before
  *   the next call (`school.work_note`), it's taken there, and that call's
- *   growth is the better for it; not worked on, it's still there.
+ *   growth is the better for it; not worked on, it's still there. A note on
+ *   the craft whose problem is a limit on the weakness the actor's work keeps
+ *   coming back to says so, with the pieces it has held back before this
+ *   (from 2026-10-12, `noteText`; until then a note knew only the part).
  * - **The dress**, played through as a night with no house, its reading kept.
  *
  * - **How the part is played** (from 2026-10-10): the actor's choice of pace, scale and structure
@@ -24,12 +27,17 @@
  *   drawn once for the production and shown from the first call, which the material's own constraints bound. A choice
  *   against the request is given as a note at a work-through, and taken at the next call if the choice has changed.
  *
- * A night reads all of it: lines, blocking and the notes taken make a
- * readiness factor around 1, 0.85 to 1.15, measured against what an actor who
- * came to every one of this casting's calls and did no more would have
- * (`parFor`), who plays at 1, as nights read before this. In the first
- * version that par was one number, 0.7, and such an actor in the Carlotta's
- * twelve calls played at 0.988, a little worse for doing everything asked.
+ * A night reads all of it. Until 2026-10-09 the lines, blocking and notes
+ * taken made a readiness factor around 1, 0.85 to 1.15, measured against what
+ * an actor who came to every one of this casting's calls and did no more would
+ * have (`parFor`), who played at 1, and a night played at that factor. In the
+ * first version that par was one number, 0.7, and such an actor in the
+ * Carlotta's twelve calls played at 0.988, a little worse for doing everything
+ * asked. From 2026-10-09 the factor reaches only a night's growth
+ * (`nightFactor`), and the night itself is judged by the evaluation, which reads
+ * the process as its preparation against what every call kept makes of it
+ * (`completeFor`), never under `NIGHT_LEAST` of the lines and the blocking (this
+ * said until 2026-10-12 that a night played at the factor).
  * Every number here is SLATE's estimate: no school publishes a rehearsal's
  * arithmetic.
  */
@@ -52,6 +60,12 @@ import { AXES, APPROACH_EFFECT } from '../content/approaches';
 import type { Axis, AxisValue } from '../content/material';
 import { choose, materialOf, misfitOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { noteMaterial } from './experience';
+import { countDirection } from './evaluation';
+import { identityOf } from './artistry';
+import { WORKBOOK, ADJUSTMENTS, type AdjustmentId } from '../content/workbook';
+import { optionsOf, problemsOf, tryAdjustment, wayRefusal, type Problem, type WorkPiece } from './workbook';
+import { workPiece } from './workpieces';
+import { rehearseWays } from './piece';
 
 export const PROCESS = {
   /** What a call attended does to lines and blocking, as a share of what's left. */
@@ -80,8 +94,23 @@ export const STAGE_LABEL: Record<Stage, string> = { read: 'Read-Through', blocki
  */
 export type Format = 'production' | 'cabaret';
 
-export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill } | { kind: 'direction'; axis: Axis; side: AxisValue };
-export interface DirectorNote { at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean }
+/**
+ * What a director's note is about (from 2026-10-12, `craft`): something the part's own forecast shows, named as a
+ * director names it: what the character wants (`objective`), taking what the others give (`listening`), the pace and
+ * the stamina to hold it (`pacing`), the physical life (`behavior`), a change between parts of the play
+ * (`transitions`), what the character is to the others (`relationship`). Each is a problem the workbook can work
+ * (`systems/workbook.ts`), with several ways at it, and its figure when given, so the next call can read whether it was
+ * addressed. Until then a note past the lines and the blocking named the play's weakest raw craft skill and was taken
+ * by working it once, whatever the skill or the work.
+ */
+export type CraftNote = 'objective' | 'listening' | 'pacing' | 'behavior' | 'transitions' | 'relationship';
+export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill } | { kind: 'direction'; axis: Axis; side: AxisValue }
+  | { kind: 'craft'; note: CraftNote; problem: string; segment?: number; where?: string; measure: number };
+export interface DirectorNote {
+  at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean;
+  /** How it was answered (from 2026-10-12): the way tried and its own evidence, before and after it, and the note's figure at the next call. */
+  answer?: { solution?: string; before: number; after: number; now?: number };
+}
 
 export interface Process {
   lines: number;
@@ -102,6 +131,15 @@ export interface Process {
   /** How the actor plays the part, and the director's request on an axis (none asked: `{}`), from 2026-10-10. */
   playing?: Playing;
   direction?: Partial<Record<Axis, AxisValue>>;
+  /** Focused work on each movement of the play, 0 to 1 (from 2026-10-12, `systems/workbook.ts`): each refines the blocking there. */
+  work?: number[];
+  /**
+   * The nights together (from 2026-10-12, `systems/ensemble.ts`): the company's nights summed, how many, the slips in the
+   * company, and those you covered. Read by the run's looking back and the morale a night leaves.
+   */
+  together?: { sum: number; n: number; slips: number; covered: number };
+  /** The problem being worked on, the tries and the discoveries kept (from 2026-10-12, `systems/workbook.ts`). */
+  book?: import('./piece').Workbook;
 }
 
 /** The share of productions whose director asks for a particular way on one axis: SLATE's estimate. */
@@ -198,10 +236,14 @@ function parProcess(of: number, understudy = false, format: Format = 'production
 }
 
 /**
- * What makes a night's preparation complete (`prepOf`, `content/tasks.ts` `performance`), from 2026-10-09: what
- * every call attended makes of the lines, the blocking and the notes, as the par did for the night's factor before.
- * An actor who came to every call is fully prepared; a call missed leaves a gap, and the actor's own work (an hour on
- * the part, the book, a note) is how it's made up.
+ * What every call attended makes of the lines, the blocking and the notes (`prepOf`, `content/tasks.ts`
+ * `performance`), from 2026-10-09, as the par did for the night's factor before. A night asks this, but never less than
+ * `NIGHT_LEAST` of the lines and the blocking however few the calls (`nightEvaluation`), so a short run is complete only
+ * with the actor's own work: Learn The Part for the lines, and for the blocking Work On The Note when a work-through's
+ * note is on it, or Work It Through. Measured on
+ * 2026-10-12, a Yale Cabaret show's nine evenings make lines 68% and blocking 58%, and a ten-call production's blocking
+ * 68%, all under 70%. A call missed leaves a further gap, made up the same way. Until 2026-10-12 this said an actor who
+ * came to every call was fully prepared, which the night, asking `NIGHT_LEAST` from the day it read this, never held.
  */
 export function completeFor(holder: Holder | undefined): { lines: number; blocking: number; notes: number } | undefined {
   if (!hasProcess(holder)) return undefined;
@@ -229,10 +271,47 @@ export function nightFactor(holder: Holder | undefined): number {
   return Math.max(f.least, Math.min(f.most, 1 + f.slope * (scoreOf(p) - parFor(p.of ?? 0, p.understudy, p.format))));
 }
 
-/** The note a director gives at a work-through: a gap in the blocking, the lines past off-book, the blocking short, else the play's craft weakest in the actor. */
-export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: number, of: number): NoteFocus {
+/**
+ * What kind of note a problem the part's forecast shows is, as a director says it. A movement held back most by tiring
+ * (the stamina drain, `systems/piece.ts`) is a note on its pacing, "It sags in…" (from 2026-10-12): until then it was
+ * read by the quality the drain cost most, believability, and given "I don't know what you want in…".
+ */
+export function craftNoteOf(problem: Problem, e: { piece?: { segments: { chief?: { kind: string; what: string; dimension: string } }[] }; limits: { kind: string; what: string; dimension: string }[] }): CraftNote {
+  if (problem.kind === 'turn') return 'transitions';
+  if (problem.kind === 'stamina') return 'pacing';
+  if (problem.kind === 'partner') return 'listening';
+  if (problem.kind === 'objective') return 'objective';
+  const chief = problem.kind !== 'limit' && problem.segment !== undefined ? e.piece?.segments[problem.segment]?.chief : undefined;
+  if (chief?.kind === 'condition' && chief.what === 'stamina') return 'pacing';
+  const dim = problem.kind === 'limit'
+    ? e.limits.find((l) => `limit:${l.what}` === problem.id)?.dimension
+    : chief?.dimension;
+  return dim === 'connection' ? 'relationship' : dim === 'responsiveness' ? 'listening' : dim === 'execution' ? 'behavior' : dim === 'consistency' ? 'pacing' : 'objective';
+}
+
+/**
+ * The craft note a director would give now, from the part's own forecast (`problemsOf`, from 2026-10-12): its worst
+ * problem past the lines and the blocking, which the calls themselves answer. A note just taken moves on to the next
+ * problem. Nothing the forecast shows: no craft note.
+ */
+export function craftNoteFrom(piece: WorkPiece | undefined, p: Process): NoteFocus | undefined {
+  if (!piece) return undefined;
+  const e = piece.forecast();
+  const last = [...p.notes].reverse().find((x) => x.focus.kind === 'craft');
+  // A note there's a way to work: the worst problem with at least one way at it.
+  const problems = problemsOf(piece).filter((x) => x.kind !== 'prep' && !(last?.taken && last.focus.kind === 'craft' && last.focus.problem === x.id));
+  const pick = problems.find((x) => optionsOf(piece, x).length > 0);
+  if (!pick) return undefined;
+  const where = pick.segment !== undefined ? e.piece?.segments[pick.segment]?.label : undefined;
+  return { kind: 'craft', note: craftNoteOf(pick, e), problem: pick.id, ...(pick.segment !== undefined ? { segment: pick.segment } : {}), ...(where ? { where } : {}), measure: pick.measure };
+}
+
+/** The note a director gives at a work-through: a gap in the blocking, the lines past off-book, the blocking short, else what the part's forecast shows (`craftNoteFrom`), else the play's craft weakest in the actor. */
+export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: number, of: number, piece?: WorkPiece): NoteFocus {
   const kind = noteKind(p, n, of);
   if (kind !== 'skill') return { kind } as NoteFocus;
+  const craft = craftNoteFrom(piece, p);
+  if (craft) return craft;
   const order = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b]);
   // A skill note just taken moves the next one on to the next thinnest place (from the integration pass of 2026-10-10):
   // until then the same note came at every work-through while that skill stayed the weakest, taken or not.
@@ -245,18 +324,67 @@ export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: nu
 /**
  * A note's words, and where the same note was given before at this work, what came of it (from the integration pass of
  * 2026-10-10): not taken, it's said again as still; taken, it's acknowledged before more is asked.
+ *
+ * `recurring` is the weakness the actor's work so far keeps coming back to (`Identity.recurring`, `systems/artistry.ts`).
+ * A note on the craft whose problem is a limit on it says so, and how many pieces it has held back before this (from
+ * 2026-10-12): until then a note knew only this part, never the actor's history. It's words alone: the note's problem,
+ * its figure and what answers it are the same either way.
  */
-export function noteText(f: NoteFocus, before?: DirectorNote): string {
+export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }): string {
   const words = noteWords(f);
-  if (!before) return words;
-  return before.taken ? `Better since the last note. ${words}` : `Still: ${words.charAt(0).toLowerCase()}${words.slice(1)}`;
+  const history = f.kind === 'craft' && recurring && f.problem === `limit:${recurring.target}` ? ` It’s your ${recurring.label.toLowerCase()} again: it’s held back ${recurring.pieces} of your pieces before this.` : '';
+  if (!before) return `${words}${history}`;
+  // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12).
+  const tried = before.answer?.solution ? ` You tried ${(ADJUSTMENTS[before.answer.solution as AdjustmentId]?.label ?? before.answer.solution).toLowerCase()}: ${before.answer.before} then, ${before.answer.after} now.` : '';
+  return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${words.charAt(0).toLowerCase()}${words.slice(1)}${tried}${history}`;
 }
 
 function noteWords(f: NoteFocus): string {
   if (f.kind === 'lines') return 'Be off book: the lines aren’t there yet, and the scene can’t start until they are.';
   if (f.kind === 'blocking') return 'The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.';
   if (f.kind === 'direction') return `I want it ${APPROACH_EFFECT[f.side].label.toLowerCase()}: ${APPROACH_EFFECT[f.side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[f.side].words.slice(1)}`;
+  if (f.kind === 'craft') {
+    const at = (f.where ?? 'the whole play').toLowerCase();
+    switch (f.note) {
+      case 'objective': return `I don’t know what you want in ${at}. Find it, and play it.`;
+      case 'listening': return `You’re not taking what they give you in ${at}: listen, and let it change you.`;
+      case 'pacing': return f.problem === 'stamina' ? `You’re spent by ${at}: find where the play lets you breathe.` : `It sags in ${at}: hold it the whole way through.`;
+      case 'behavior': return `The physical life in ${at} isn’t clean yet: what you do is telling the story too.`;
+      case 'transitions': return `The change into ${at} lurches: find what turns it.`;
+      case 'relationship': return `Who are they to you in ${at}? Decide, and let it show.`;
+    }
+  }
   return `Find more ${labelOf(f.skill).toLowerCase()} in it: that’s where the part is thin.`;
+}
+
+/** The ways at a note, for its screen: what the workbook offers for its problem (from 2026-10-12). Lines, blocking and a direction have their own. */
+export function solutionsOf(piece: WorkPiece | undefined, note: DirectorNote | undefined): ReturnType<typeof optionsOf> {
+  if (!piece || !note || note.focus.kind !== 'craft') return [];
+  const f = note.focus;
+  const problem: Problem = { id: f.problem, kind: (f.problem.split(':')[0] === 'limit' ? 'limit' : f.problem === 'stamina' ? 'stamina' : f.problem === 'partner' ? 'partner' : f.problem.split(':')[0]) as Problem['kind'], ...(f.segment !== undefined ? { segment: f.segment } : {}), label: '', why: '', measure: f.measure };
+  return optionsOf(piece, problem);
+}
+
+/**
+ * Whether a craft note was answered by the next call: worked a way that didn't make it worse (its own evidence, the
+ * figure before and after the way was tried), and the way kept; or its problem gone from the part's forecast, whatever
+ * did it. A note left alone is taken only where the calls answered it. Its figure now is kept beside it either way.
+ */
+function addressed(piece: WorkPiece | undefined, note: DirectorNote & { focus: Extract<NoteFocus, { kind: 'craft' }> }): { yes: boolean; now: number } {
+  const f = note.focus;
+  if (!piece) return { yes: Boolean(note.worked), now: f.measure };
+  const still = problemsOf(piece).find((x) => x.id === f.problem);
+  const e = piece.forecast();
+  const now = f.segment !== undefined && !f.problem.startsWith('limit:') ? e.piece?.segments[f.segment]?.overall ?? e.overall : e.overall;
+  const kept = piece.peek()?.tries.filter((t) => t.problem === f.problem).at(-1)?.verdict !== 'revised';
+  const worked = Boolean(note.worked && note.answer && kept && note.answer.after >= note.answer.before - WORKBOOK.evidence / 10);
+  return { yes: !still || worked, now };
+}
+
+/** A craft note worked a way that was then put back: it can be worked another way. */
+export function reworkable(p: Process): boolean {
+  const last = p.notes.at(-1);
+  return Boolean(last && last.focus.kind === 'craft' && last.worked && last.taken === undefined && p.book?.tries.filter((t) => last.focus.kind === 'craft' && t.problem === last.focus.problem).at(-1)?.verdict === 'revised');
 }
 
 /**
@@ -264,7 +392,7 @@ function noteWords(f: NoteFocus): string {
  * note where it's a work-through. What it makes of the call's growth (1, or
  * more with a note taken).
  */
-export function callAnswered(sim: Simulation, person: Person, holder: Holder, stage: Stage, n: number, of: number, reads: Partial<Craft>): number {
+export function callAnswered(sim: Simulation, person: Person, holder: Holder, stage: Stage, n: number, of: number, reads: Partial<Craft>, which?: Which): number {
   const p = processOf(holder);
   p.calls += 1;
   p.of = of;
@@ -275,19 +403,36 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   // The director's request, from the first call (from 2026-10-10).
   p.direction ??= drawDirection(sim, person, holder);
   // Every call works the part on its feet, and with it the way it's being played.
-  if (stage !== 'read') rehearseChoice(p.playing, 0.3);
+  if (stage !== 'read') { rehearseChoice(p.playing, 0.3); rehearseWays(p.book, 0.3); }
   // The last note, taken or not at this call: a note on the director's request is taken when the playing has changed.
   let weight = 1;
   const last = p.notes.at(-1);
+  // The part as the workbook reads it, for a note on the craft (from 2026-10-12); a part with no play profile has none.
+  const piece = which ? workPiece(sim, person, `part:${which}`) : undefined;
+  // A change tried and not put back by the next call is the one played at it: kept (from 2026-10-12).
+  const waiting = p.book?.tries.find((t) => t.verdict === 'pending');
+  if (waiting && p.book) { waiting.verdict = 'kept'; delete p.book.undo; }
   if (last && last.taken === undefined) {
-    last.taken = last.focus.kind === 'direction' ? !againstDirection(p) : Boolean(last.worked) || takenUnworked(p, last.focus.kind);
+    if (last.focus.kind === 'craft') {
+      // A craft note is taken where the work answered it (`addressed`); its figure at the call is kept beside it.
+      const a = addressed(piece, last as DirectorNote & { focus: Extract<NoteFocus, { kind: 'craft' }> });
+      last.taken = a.yes;
+      last.answer = { ...(last.answer ?? { before: last.focus.measure, after: last.focus.measure }), now: Math.round(a.now * 10) / 10 };
+    } else last.taken = last.focus.kind === 'direction' ? !againstDirection(p) : Boolean(last.worked) || takenUnworked(p, last.focus.kind);
     if (last.taken) weight = PROCESS.noteTaken;
+    // Answered direction, for life (`Journey.direction`, from 2026-10-12): the craft's notes and the director's requests.
+    if (last.taken && (last.focus.kind === 'craft' || last.focus.kind === 'direction')) countDirection(person, { answered: true });
   }
   if (stage === 'work') {
     const against = againstDirection(p);
-    const focus: NoteFocus = against ? { kind: 'direction', ...against } : noteFor(person, p, reads, n, of);
-    const before = [...p.notes].reverse().find((x) => JSON.stringify(x.focus) === JSON.stringify(focus));
-    p.notes.push({ at: sim.now, text: noteText(focus, before), focus });
+    const focus: NoteFocus = against ? { kind: 'direction', ...against } : noteFor(person, p, reads, n, of, piece);
+    // The same note before: a craft note is the same where it's the same kind in the same place.
+    const same = (x: NoteFocus) => (focus.kind === 'craft' && x.kind === 'craft' ? x.note === focus.note && x.segment === focus.segment : JSON.stringify(x) === JSON.stringify(focus));
+    const before = [...p.notes].reverse().find((x) => same(x.focus));
+    // A limit on the weakness the actor's work keeps coming back to is said as one (from 2026-10-12, `noteText`).
+    const recurring = focus.kind === 'craft' && focus.problem.startsWith('limit:') ? identityOf(person).recurring : undefined;
+    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring), focus });
+    if (focus.kind === 'craft' || focus.kind === 'direction') countDirection(person, { given: true });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }
   return weight;
@@ -298,18 +443,27 @@ export function callMissed(holder: Holder, stage: Stage, of: number): void {
   const p = processOf(holder);
   p.of = of;
   p.understudy = stage === 'understudy';
-  if (stage === 'blocking' || stage === 'tech' || stage === 'techdress') p.blockingMissed += 1;
+  // An understudy's call sets blocking too (`attend`), so one missed is a gap in it as well (from 2026-10-12).
+  if (stage === 'blocking' || stage === 'tech' || stage === 'techdress' || stage === 'understudy') p.blockingMissed += 1;
 }
 
 /** Where a part is: the School production, the Rep, this term's Cabaret show, or the Summer Cabaret's show now rehearsing or running. */
 export type Which = 'school' | 'rep' | 'cabaret' | 'summer';
 export const WHICH: readonly Which[] = ['school', 'rep', 'cabaret', 'summer'];
+export const runPending = (sim: Simulation, person: Person, which: Which): boolean => pendingOf(sim, person, which).length > 0;
 const pendingOf = (sim: Simulation, person: Person, which: Which) => sim.universe.scheduled.filter((i) => i.status === 'pending' && i.payload.personId === person.id && (
   which === 'cabaret' ? i.kind === CABARET_KIND : which === 'summer' ? i.kind === SUMMER_KIND : i.kind === CALL_KIND && (i.payload.which === 'rep') === (which === 'rep')));
-/** The Summer Cabaret show whose calls come next. */
+/**
+ * The Summer Cabaret show that's the summer's part: the one rehearsing, its read-through past and rehearsals to come,
+ * else the earliest with a call to come, running or next. Until 2026-10-12 it was the show whose next call came soonest,
+ * and from the third show's read-through to the second's closing, as the second's nights and the third's afternoons
+ * took turns, the part on the School tab, Learn The Part and Work On The Note moved from one show to the other and back.
+ */
 const summerShow = (sim: Simulation, person: Person): number | undefined => {
-  const next = pendingOf(sim, person, 'summer').filter((i) => i.payload.run !== undefined).sort((a, b) => a.at - b.at)[0];
-  return next ? Number(next.payload.run) : undefined;
+  const calls = pendingOf(sim, person, 'summer').filter((i) => i.payload.run !== undefined);
+  const shows = [...new Set(calls.map((i) => Number(i.payload.run)))].sort((a, b) => a - b);
+  const rehearsals = (n: number) => calls.filter((i) => Number(i.payload.run) === n && i.payload.call === 'rehearsal');
+  return shows.find((n) => rehearsals(n).length > 0 && !rehearsals(n).some((i) => Number(i.payload.n) === 1)) ?? shows[0];
 };
 export function holderFor(sim: Simulation, person: Person, which: Which): Holder | undefined {
   const school = person.school;
@@ -332,7 +486,13 @@ export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, wh
   if (what === 'note') {
     const last = p.notes.at(-1);
     if (!last || last.taken !== undefined) return 'There’s no note to work on.';
-    if (last.worked) return 'You’ve worked on it: the next call will show it.';
+    // A note on the director's request is answered by the part played as asked (`callAnswered`), never by an hour on it
+    // (from 2026-10-12: until then the hour was spent, the note marked worked, and it stayed unanswered).
+    if (last.focus.kind === 'direction') return againstDirection(p) ? 'This note asks for the part played another way: change it under How You’ll Play It.' : 'You’ve changed how you play it: the next call will show it.';
+    if (last.worked && !reworkable(p)) return 'You’ve worked on it: the next call will show it.';
+    // A note on the craft is worked one of its ways, and the way's own checks and minutes refuse it (`wayRefusal`), as
+    // the command asks them. Until 2026-10-12 a fixed hour was asked here and nothing else.
+    if (last.focus.kind === 'craft') return undefined;
   }
   return startRefusal(sim, person, PROCESS.own.minutes);
 }
@@ -382,13 +542,16 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     if (no) throw new CommandError(no);
     const pr = processOf(holderFor(s, person, which)!);
     const pick = <T extends string>(v: unknown, of: readonly T[]): T | undefined => ((of as readonly unknown[]).includes(v) ? (v as T) : undefined);
+    const before = sidesOf(pr.playing);
     pr.playing = choose(pr.playing, { pace: pick(p?.pace, ['measured', 'driven'] as const), scale: pick(p?.scale, ['restrained', 'expansive'] as const), structure: pick(p?.structure, ['set', 'open'] as const) }, s.now);
     if (!sidesOf(pr.playing).length) delete pr.playing;
-    noteMaterial(person, { approaches: sidesOf(pr.playing) });
+    // Only a side newly chosen counts toward the habits (from 2026-10-12): until then a side kept while another axis
+    // changed was counted again with it, as `chooseBrief` says.
+    noteMaterial(person, { approaches: sidesOf(pr.playing).filter((x) => !before.includes(x)) });
     return { prep: pr.playing?.prep ?? 0 };
   });
 
-  sim.onCommand<{ which?: Which }, { worked: true }>('school.work_note', (p, { sim: s }) => {
+  sim.onCommand<{ which?: Which; solution?: string; option?: string }, { worked: true; before?: number; after?: number; pending?: boolean }>('school.work_note', (p, { sim: s }) => {
     const person = s.player;
     const which: Which = WHICH.includes(p?.which as Which) ? (p!.which as Which) : 'school';
     const no = ownWorkRefusal(s, person, which, 'note');
@@ -396,13 +559,44 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     const proc = processOf(holderFor(s, person, which)!);
     const note = proc.notes.at(-1)!;
     const focus = focusAt(s, person, s.now);
+    // A craft note is worked one of its ways (from 2026-10-12): a way the workbook offers for its problem, tried on the
+    // part, its time spent and its evidence kept on the note. A change of how a part is played waits there to be kept
+    // or put back (`work.settle`).
+    if (note.focus.kind === 'craft') {
+      const piece = workPiece(s, person, `part:${which}`);
+      const ways = solutionsOf(piece, note);
+      const way = ways.find((o) => o.adjustment === p?.solution && (o.option ?? '') === String(p?.option ?? '')) ?? (p?.solution ? undefined : ways[0]);
+      if (!piece || !way) throw new CommandError(ways.length ? 'That isn’t one of the ways at this note.' : 'There’s no way left at this note that hasn’t been tried and put back.');
+      const book = piece.book();
+      if (book.tries.some((t) => t.verdict === 'pending')) throw new CommandError('Keep or put back the change you tried first.');
+      // What refuses the way through Work It Through refuses it here (from 2026-10-12): until then a way was worked
+      // from a hospital bed, asleep, spent, hurt, or with too little of the part learned.
+      const refused = wayRefusal(s, person, piece, way.adjustment);
+      if (refused) throw new CommandError(refused);
+      const f = note.focus;
+      book.problem = { id: f.problem, kind: (f.problem.startsWith('limit:') ? 'limit' : f.problem === 'stamina' ? 'stamina' : f.problem === 'partner' ? 'partner' : f.problem.split(':')[0]) as Problem['kind'], ...(f.segment !== undefined ? { segment: f.segment } : {}), label: noteWords(f), why: note.text, measure: f.measure, at: s.now };
+      const t = tryAdjustment(s, person, piece, way.adjustment, way.option);
+      note.worked = true;
+      note.answer = { solution: way.adjustment, before: t.before, after: t.after };
+      countDirection(person, { worked: way.adjustment });
+      ordinary(s, person, 'adaptability', focus, PROCESS.own.trainingWeight, 'work-note');
+      return { worked: true, before: t.before, after: t.after, pending: t.verdict === 'pending' };
+    }
     take(s, person);
     note.worked = true;
     // A director's note taken into the work is practice in taking direction (from 2026-10-09).
     ordinary(s, person, 'adaptability', focus, PROCESS.own.trainingWeight, 'work-note');
     // Working a lines or blocking note is the work itself.
-    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * (1 - proc.lines));
-    if (note.focus.kind === 'blocking') proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
+    // As an hour on the part moves the lines (`school.learn_part`), by the hour's focus and the play's kind known (from
+    // 2026-10-12; until then the same hour on the lines moved them by a different amount from this button).
+    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay((holderFor(s, person, which) as { play?: string } | undefined)?.play)) * (1 - proc.lines));
+    // A blocking note given for a missed call asks the book gone back through, as Catch Up The Blocking does: worked, it
+    // closes one gap (from 2026-10-12). Until then the gap stayed open, the next call counted the note taken, and the
+    // next work-through gave the same note again as "Better since the last note".
+    if (note.focus.kind === 'blocking') {
+      if (proc.blockingMissed > 0) proc.blockingMissed -= 1;
+      proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
+    }
     return { worked: true };
   });
 }
@@ -422,8 +616,11 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
   const given = p.notes.filter((n) => n.taken !== undefined);
   const taken = given.filter((n) => n.taken).length;
   const open = p.notes.filter((n) => n.taken === false || (n.taken === undefined && !n.worked));
-  const factor = Math.round(nightFactor(holder) * 100);
-  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${p.dress ? `; the dress ${p.dress}` : ''}; you played at ${factor}% of what every call kept makes.${open.length ? ' What’s still open goes with you into class.' : ''}`;
+  // How the nights went with the company (`together`, from 2026-10-12). Until then this said "you played at N% of what
+  // every call kept makes", the readiness factor that from 2026-10-09 reached only a night's growth, not the night.
+  const company = p.together?.n ? ` With the company the nights came to ${Math.round(p.together.sum / p.together.n)} on average${p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered` : ''}` : ''}.` : '';
+  const answered = p.notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
+  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${answered ? `, ${answered} answered in the work` : ''}${p.dress ? `; the dress ${p.dress}` : ''}.${company}${open.length ? ' What’s still open goes with you into class.' : ''}`;
   p.reflection = { on: sim.now, text };
   const cw = courseworkOf(sim, person);
   if (cw) {
@@ -433,7 +630,11 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
     for (const n of open) {
       // A note on the director's request isn't a weakness for the ledger: it's a choice, said on the part's process.
       if (n.focus.kind === 'direction') continue;
-      const f: LedgerFocus = n.focus.kind === 'lines' ? { kind: 'dim', dim: 'memorization' } : n.focus.kind === 'blocking' ? { kind: 'dim', dim: 'rehearsal' } : { kind: 'skill', skill: n.focus.skill };
+      // A craft note goes in as the part of a scene's preparation that answers it: the objective as the breakdown, listening
+      // and the relationship as the partner's part, the rest as time on its feet (from 2026-10-12).
+      const f: LedgerFocus = n.focus.kind === 'lines' ? { kind: 'dim', dim: 'memorization' } : n.focus.kind === 'blocking' ? { kind: 'dim', dim: 'rehearsal' }
+        : n.focus.kind === 'craft' ? { kind: 'dim', dim: n.focus.note === 'objective' ? 'interpretation' : n.focus.note === 'listening' || n.focus.note === 'relationship' ? 'partner' : 'rehearsal' }
+          : { kind: 'skill', skill: n.focus.skill };
       const key = JSON.stringify(f);
       if (seen.has(key)) continue;
       seen.add(key);

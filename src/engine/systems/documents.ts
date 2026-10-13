@@ -69,7 +69,13 @@ export interface PersonDocument {
   /** A license's stage on a graduated path, and whether its holder may drive with nobody beside them; a license without them is full. */
   stage?: import('../content/licensepaths').LicenseStage;
   alone?: boolean;
-  /** An American license or ID card that meets REAL ID, which the TSA asks from 2025-05-07 (`systems/identity.ts`, from 2026-09-30). */
+  /**
+   * An American license or ID card that meets REAL ID (from 2026-09-30): a starting license's drawn at its state's
+   * share (`realIdShare`, `content/identity.ts`), and every American state ID card SLATE issues (`systems/identity.ts`).
+   * Its page says so, and nothing else reads it. The TSA's rule (`tsaAccepts`) read it for the checkpoint until the
+   * scope reset of 2026-10-09 and for an ID card's page until 2026-10-10, and the TSA's date of 2025-05-07 in
+   * `content/identity.ts` went on 2026-10-12; until then this said the TSA asks it, citing `systems/identity.ts`.
+   */
   realId?: boolean;
   /** A license's class, where it isn't a car's: the motorcycle class (from 2026-09-30). */
   vehicleClass?: VehicleClass;

@@ -49,8 +49,11 @@ export function inspectPayload(payload, expectedSlot) {
   if (typeof payload !== 'string' || payload.length === 0) {
     throw new GuardError('The save payload was missing or empty.');
   }
-  if (payload.length > MAX_PAYLOAD_BYTES) {
-    throw new GuardError(`That save is ${payload.length} bytes, over the ${MAX_PAYLOAD_BYTES} byte limit.`, 413);
+  // Measured in bytes as sent, UTF-8 (from 2026-10-12): until then the string's length, its UTF-16 code units, was said
+  // as bytes, and a save of accented names was under-measured.
+  const bytes = new TextEncoder().encode(payload).length;
+  if (bytes > MAX_PAYLOAD_BYTES) {
+    throw new GuardError(`That save is ${bytes} bytes, over the ${MAX_PAYLOAD_BYTES} byte limit.`, 413);
   }
 
   let universe;

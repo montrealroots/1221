@@ -262,7 +262,9 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
     if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${formatMoney(past, cur)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
   }
   const loan = lendingOf(bank).loan;
-  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person)) {
+  // Not where a loan is held at this bank (from 2026-10-12: until then a loan at any bank stopped the offer, though a
+  // person may hold one at each bank since 2026-10-10).
+  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id)) {
     const apr = loan.to ?? loan.from;
     current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
     if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${formatMoney(past, cur)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${formatMoney(monthlyPayment(past, apr, FRANCE.offerMonths), cur)} a month. Take it from Your Bank.`, importance: 75 });
@@ -625,7 +627,10 @@ function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
 /** Pays an amount from the bank, overdraft and all, and says what it couldn't. */
 function payFromBank(sim: Simulation, person: Person, amount: Money, from?: Account): { postings: { accountId: string; amount: Money }[]; short: Money } {
   // As every other payment is taken (`drawFromBank`): savings only where it's linked, and with its fee. Until
-  // 2026-09-28 a loan's took from savings whatever the setting, and skipped the fee and a German allowance.
+  // 2026-09-28 a loan's took from savings whatever the setting, and skipped the fee and a German allowance. The savings
+  // is at the bank of the account it's drawn from, the loan's repayment account, whichever bank that is. How You Pay and
+  // `bank.set_payments` count it (`linkCovers` in `systems/payments.ts`) from 2026-10-12, group r3b. Until then they read
+  // the primary account's bank alone, and said On covered nothing while this drew on linked savings at another bank.
   return drawFromBank(sim, person, amount, true, undefined, from);
 }
 
@@ -646,7 +651,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   }
   // Card payments still pending on the day: the old bank holds back what covers them and sends the rest once they post
   // (from 2026-10-10: until then they were settled into the new account as if posted). Everything else moves as on a
-  // switch that completes: the savings, the orders, the wages, the autopay.
+  // switch that completes: the savings, the orders, the wages, the autopay, the loan repayments (from 2026-10-12).
   const pending = -pendingOn(sim, old);
   const held = pending > 0 && old.balance >= 0 && !quietly ? pending : 0;
   let across = 0;
@@ -705,8 +710,10 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     order.toId = moved.get(order.toId) ?? order.toId;
     if (order.fromId) order.fromId = moved.get(order.fromId) ?? order.fromId;
   }
-  // So do wages and other payments, and each card's autopay, where they were set to the old accounts (from 2026-10-10,
-  // when each became an instruction of its own: `systems/routing.ts`). One never set follows the primary account here.
+  // So do wages and other payments, each card's autopay, and each loan's repayment, where they were set to the old
+  // accounts (from 2026-10-10, when each became an instruction of its own: `systems/routing.ts`). One never set follows
+  // the primary account here. Until 2026-10-12 a loan's repayment stayed set to the closed account, and fell to the
+  // current account at the lender's bank where one was kept, not to the account that took over.
   const pay = person.payments;
   if (pay?.depositTo) pay.depositTo = moved.get(pay.depositTo) ?? pay.depositTo;
   if (pay?.depositChange) pay.depositChange.to = moved.get(pay.depositChange.to) ?? pay.depositChange.to;
@@ -715,6 +722,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
       if (state.autopayFrom) state.autopayFrom = moved.get(state.autopayFrom) ?? state.autopayFrom;
     }
   }
+  for (const loan of loansOf(sim, person)) if (loan.repayFromId) loan.repayFromId = moved.get(loan.repayFromId) ?? loan.repayFromId;
   for (const one of sim.universe.scheduled) {
     if (one.status !== 'pending' || one.kind !== 'bank.scheduled_payment' || one.payload.personId !== person.id) continue;
     one.payload = { ...one.payload, fromId: moved.get(String(one.payload.fromId)) ?? one.payload.fromId, toId: moved.get(String(one.payload.toId)) ?? one.payload.toId };
@@ -1259,13 +1267,18 @@ export function registerLending(sim: Simulation): void {
     return { repayFromId: account.id };
   });
 
-  sim.onCommand<Record<string, never>, { apr: number; payment: Money }>('bank.take_overrun_loan', (_p, { sim: s }) => {
+  sim.onCommand<{ accountId?: string }, { apr: number; payment: Money }>('bank.take_overrun_loan', (p, { sim: s }) => {
     const person = s.player;
-    const bank = bankOf(s, person);
-    const current = currentOf(s, person);
+    // The offer on the current account named, at whichever bank made it, else the primary's (from 2026-10-12: until
+    // then only the primary's was read, so a second bank's offer was refused as none made).
+    const named = p?.accountId ? checkingsOf(s, person).find((a) => a.id === p.accountId) : undefined;
+    if (p?.accountId && !named) throw new CommandError('That isn’t an open current account of yours.');
+    const current = named ?? currentOf(s, person);
+    const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const offer = current?.creditOffered;
     if (!bank || !current || !offer) throw new CommandError('Your bank has offered no loan for an overrun.');
-    if (loanOf(s, person)) throw new CommandError('You already have a loan with the bank.');
+    // A loan at that bank (from 2026-10-12: until then at any bank).
+    if (loanOf(s, person, bank.id)) throw new CommandError('You already have a loan with the bank.');
     const payment = monthlyPayment(offer.amount, offer.apr, offer.months);
     const loan = s.openAccount({
       id: s.nextId('account'), kind: 'loan', category: 'personal', name: `${bank.name} Personal Loan`, ownerId: person.id,

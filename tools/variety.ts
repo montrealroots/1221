@@ -25,7 +25,8 @@ import { breaches } from '../src/engine/core/invariants';
 import { abilityFull, levelOf } from '../src/engine/systems/attributes';
 import { courseworkOf } from '../src/engine/systems/coursework';
 import { momentsOf } from '../src/engine/systems/classmates';
-import { recommendations } from '../src/engine/systems/experience';
+import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
+import { identityOf } from '../src/engine/systems/artistry';
 import { matchedTier } from '../src/engine/systems/practice';
 import { exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
@@ -72,7 +73,7 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined) {
   const week = Math.floor((sim.now - start) / (7 * MS_DAY));
   if (week !== lastWeek) {
     lastWeek = week;
-    const recs = recommendations((id) => levelOf(sim, sim.player, id as never), (id) => full(sim, id), sim.player.work ?? [], (id) => exerciseFor(id as never), matchedTier);
+    const recs = recommendations((id) => levelOf(sim, sim.player, id as never), (id) => full(sim, id), sim.player.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(sim.player, sim.now, sim.homeZone), identityOf(sim.player).recurring);
     const top = recs.find((r) => r.exercise);
     const cw = courseworkOf(sim, sim.player);
     // A decision about how to do the work open this week: a moment to answer, open work with a way of playing to choose.
@@ -100,7 +101,7 @@ const runs = <T>(xs: readonly T[], same: (a: T, b: T) => boolean) => { let best 
 const cw = courseworkOf(sim, sim.player);
 const set = [...(cw?.assignments ?? [])].sort((a, b) => a.setOn.localeCompare(b.setOn));
 const withScene = set.filter((a) => a.sceneId);
-const byCourse = (xs: typeof set) => Object.values(Object.groupBy(xs, (a) => a.course) as Record<string, typeof set>);
+const byCourse = (xs: typeof set) => Object.values(xs.reduce<Record<string, typeof set>>((m, a) => { (m[a.course] ??= []).push(a); return m; }, {}));
 const met = new Set<string>();
 let again = 0, againNew = 0;
 for (const a of withScene) { if (met.has(a.sceneId!)) { again += 1; if (a.revisit) againNew += 1; } met.add(a.sceneId!); }

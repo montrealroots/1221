@@ -371,7 +371,7 @@ export const SCHOOL_POLICIES: readonly { rule: string; page: string }[] = [
   { rule: 'Attendance is required at every class, rehearsal and call. Running late for a call, tell the stage manager at least thirty minutes ahead.', page: 'p.149' },
   { rule: 'Ill, email your teachers and copy the program chair; the work missed is made up on the schedule each teacher sets. SLATE: Call In Sick, and an Incomplete made up on the Standing tab.', page: 'p.149' },
   { rule: 'Every acting course is Pass/Fail. An Incomplete is due within a month of the term’s end, or it becomes a Permanent Incomplete with no credit.', page: 'pp.26, 152' },
-  { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. SLATE counts two missed rehearsal calls.', page: 'p.146' },
+  { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. SLATE counts two missed calls in a term, labs and rehearsals together.', page: 'p.146' },
   { rule: 'Failing to be available as an understudy is a grave breach of professionalism, and may be grounds for dismissal.', page: 'p.146' },
   { rule: 'No student on academic warning may take part in the Yale Cabaret, which also needs the chair’s approval and never wins a conflict.', page: 'pp.147–148' },
   { rule: 'Work-study is 200 hours a year, 150 assigned and 50 elective. Failing to do assigned work-study may lead to academic warning or dismissal.', page: 'p.147' },
@@ -410,9 +410,13 @@ export const YALE_COST_GROWTH = {
  * refunded where the registrar heard by the first day of classes; Affiliate cover at $5,416 a term, the student fee
  * paid credited against it, asked for by 15 September or 31 January or within 30 days of the leave, whichever is later,
  * and paid by the School for a medical leave, to three terms; notice of return in writing eight weeks before the leave
- * ends, and a student who doesn't return, with no extension, is dismissed. SLATE's: the leave is a year, two terms,
- * because the acting courses run fall to spring in sequence, and a one-term leave would come back out of it; the
- * decision takes five working days; and a parental or mandatory medical leave isn't modeled.
+ * ends, and a student who doesn't return, with no extension, is dismissed. SLATE's: until 2026-10-10 the leave was a
+ * year, two terms, whatever was asked, because the acting courses run fall to spring in sequence; since then the
+ * length is the student's, one to three terms, refused where it would bring them back in the other season to the
+ * second halves of year-long courses (`leaveLengths`), and `terms` is the length asked for when none is given. The
+ * decision comes within five working days, or by the start of the term the leave begins with if that comes first
+ * (`requestLeave`). A mandatory medical leave was modeled from 2026-10-10 (`MANDATORY_LEAVE`); this said it wasn't
+ * until 2026-10-12. A parental leave isn't modeled.
  */
 export const LEAVE_RULES = {
   terms: 2,
@@ -455,9 +459,10 @@ export const LEAVE_RULES = {
  * physician's permission. Not found: notice before it, a meeting, or how long it runs. SLATE's model, labeled so: what
  * starts an assessment is the student's observed function, never a diagnosis (two stays in hospital in four weeks, or
  * most of a term's class days missed ill); the assessment weighs whether they're fit now, will be within two weeks
- * (when the modifications the School already makes, excused absences and Incompletes, are enough), or not; the dean
- * decides the next working day; and an appeal is upheld unless the student is cleared and the term is young enough
- * to resume.
+ * (when the modifications the School already makes, excused absences and Incompletes, are enough), or not; an
+ * assessment not come to is the Bulletin's refusal, and a leave is recommended on it whatever the records say (from
+ * 2026-10-12: until then not coming changed only the finding's sentence); the dean decides the next working day; and
+ * an appeal is upheld unless the student is cleared and the term is young enough to resume.
  */
 export const MANDATORY_LEAVE = {
   lookbackDays: 28,

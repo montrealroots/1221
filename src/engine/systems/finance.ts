@@ -2,10 +2,13 @@
  * SLATE — What the money adds up to.
  *
  * The bills, the credit, the tax years and the standing orders went with the
- * systems that raised them; rent, bills, food, wages and the card came back
- * in their own systems (`work.ts`, `household.ts`, `credit.ts`). What is
- * here is the one read model Home and the save-slot summary ask for: what a
- * person is worth right now, derived from the ledger, never stored.
+ * systems that raised them. Wages came back in `work.ts`, which went with the
+ * job engine on 2026-09-26; rent, bills and food came back in `household.ts`,
+ * which went with the home on 2026-10-09; the card came back in `credit.ts`,
+ * which is still here. This header named all three as where they were until
+ * 2026-10-12. What is here is the one read model Home and the save-slot
+ * summary ask for: what a person is worth right now, derived from the ledger,
+ * never stored.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -14,10 +17,25 @@ import type { Money } from '../core/money';
 import type { Id } from '../domain/model';
 
 export interface Worth {
-  /** In the bank: every account of theirs but a deposit a landlord holds. */
+  /**
+   * In the bank and in hand: every account of theirs that isn’t held, a pension or owed, Cash In Hand
+   * (`systems/cash.ts`) among them. Until 2026-10-12 this said every account but a deposit a landlord held.
+   */
   cash: Money;
-  /** Theirs, held by somebody else: a rent deposit (`systems/household.ts`). */
+  /**
+   * Theirs, held apart in an escrow account: Money In Transit between their banks (`systems/bankmoves.ts`) and SNAP
+   * on an EBT card (`systems/assistance.ts`). It was a rent deposit (`systems/household.ts`) until the home went on
+   * 2026-10-09, when the deposit was paid back and its account closed (`returnTheHomesMoney`, `engine/index.ts`); this
+   * said so until 2026-10-12.
+   */
   held: Money;
+  /**
+   * `held` by what holds it: each escrow account’s balance, summed under its category (`'in_transit'`, `'ebt'`), so
+   * the parts sum to `held`. From 2026-10-12, so that net worth names each part from what holds it. Until then it had
+   * one phrase for all of it, "held as a deposit", and for part of that day "held apart, on its way between your
+   * banks or as SNAP on an EBT card", in Toronto as in New York.
+   */
+  heldAs: Readonly<Record<string, Money>>;
   /**
    * In a pension fund, theirs but locked until they retire. The day job's pay
    * went into one until the job engine went on 2026-09-26; a save from before
@@ -40,16 +58,20 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   let held = 0;
   let pension = 0;
   let liabilities = 0;
+  const heldAs: Record<string, Money> = {};
   // A deposit counted as money in the bank, and Home said 343,750 kr was in
   // the bank when 112,750 of it was with the landlord.
   for (const account of sim.ledger.accountsOf(ownerId)) {
     if (isLiability(account.kind)) liabilities += Math.max(0, -account.balance);
-    else if (account.kind === 'escrow') held += account.balance;
-    else if (account.category === 'pension') pension += account.balance;
+    else if (account.kind === 'escrow') {
+      held += account.balance;
+      const as = account.category ?? '';
+      heldAs[as] = (heldAs[as] ?? 0) + account.balance;
+    } else if (account.category === 'pension') pension += account.balance;
     else cash += account.balance;
   }
 
   // Homes, cars, a plane, a boat and land, each at its value and its loan among the debts, were counted here until
   // they went in the scope reset of 2026-10-09.
-  return { cash, held, pension, liabilities, total: cash + held + pension - liabilities };
+  return { cash, held, heldAs, pension, liabilities, total: cash + held + pension - liabilities };
 }

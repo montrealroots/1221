@@ -7,6 +7,14 @@
  *   npm run build && npx vite preview --port 4173
  *   node tools/acceptance-ui.mjs OUT WIDTH [SAVEDIR]
  *
+ * SLATE_BASE names another address (from 2026-10-12, when a preview left running held 4173 on an older build).
+ *
+ * From 2026-10-12 it also plays the connected journey (the owner's brief of that day, section 16): How This Works opened
+ * beside a feature, a connected system followed and Back, a search, Show Me Where and Back To Help, the keyboard's ? and
+ * /, a half-typed form kept across it, and the live clock held while it's read; Work It Through on a scene, a problem
+ * named, a way tried and kept; a brief taped with a classmate reading; a director's note on the craft worked one of its
+ * ways; and the On The Way stop, where a commitment interrupts an advance.
+ *
  * It writes OUT/report.json (every step, every page or console error, every screen past the right edge) and a
  * screenshot of each failed step.
  */
@@ -14,7 +22,7 @@ import { chromium } from 'playwright';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { launchOptions } from './browser.mjs';
 
-const BASE = 'http://localhost:4173';
+const BASE = process.env.SLATE_BASE ?? 'http://localhost:4173';
 const [OUT = 'acceptance', W = '1440', DIR] = process.argv.slice(2);
 const WIDTH = Number(W);
 const PHONE = WIDTH < 600;
@@ -213,11 +221,11 @@ await step('coursework: a step of preparation done from its button, the clock mo
   const labels = /^(Read The Scene|Read The Play|Learn Lines|Rehearse Alone|Research It At The Library|Write It Up|Review The Lesson|Practice The Sequence|Practice The Directions|Drill The Sounds|Run It Alone|Write Out The Score|Devise The Score)/;
   let b = page.getByRole('button', { name: labels }).filter({ hasNot: page.locator('.is-locked') }).first();
   if (!(await b.count())) skip('no preparation button on the open work');
-  // Greyed, the reason is on the screen, not only in a tooltip; then the evening, when it can be done.
+  // Grayed, the reason is on the screen, not only in a tooltip; then the evening, when it can be done.
   let why = '';
   if (await b.isDisabled()) {
     why = await page.locator('.why-not').first().innerText().catch(() => '');
-    must(why.length > 0, 'preparation greyed with no reason on the screen');
+    must(why.length > 0, 'preparation grayed with no reason on the screen');
     await advance('This Evening'); await rail('School'); await tab('Coursework');
     // A partner's request to rehearse comes first, as the reason says: answered, as a player would.
     if (/asked to rehearse: answer first/.test(await page.locator('.why-not').first().innerText().catch(() => ''))) {
@@ -225,13 +233,13 @@ await step('coursework: a step of preparation done from its button, the clock mo
       if (await yes.count()) { await yes.click(); await wait(900); why += ' → answered the partner'; }
     }
     b = page.getByRole('button', { name: labels }).filter({ hasNot: page.locator('.is-locked') }).first();
-    must(!(await b.isDisabled()), `still greyed in the evening: ${await page.locator('.why-not').first().innerText().catch(() => '')}`);
+    must(!(await b.isDisabled()), `still grayed in the evening: ${await page.locator('.why-not').first().innerText().catch(() => '')}`);
   }
   const label = (await b.innerText()).split('\n')[0];
   const before = await clock();
   await b.click(); await wait(1500); await settleDialogs();
   const said = await toast();
-  return `${why ? `greyed first (${why}); ` : ''}"${label}": ${before} → ${await clock()}; ${said}`;
+  return `${why ? `grayed first (${why}); ` : ''}"${label}": ${before} → ${await clock()}; ${said}`;
 });
 await step('coursework: a way of playing it chosen and rehearsed in', async () => {
   const choose = page.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).first();
@@ -248,7 +256,152 @@ await step('coursework: table work answered from its select', async () => {
   await sel.selectOption({ index: Math.min(1, opts.length - 1) }); await wait(800);
   return `${opts.length} options; ${await toast()}`;
 });
+/**
+ * Work It Through on a piece (from 2026-10-12): each problem the forecast names in turn, until one has a way that can be
+ * tried now (a way on the feet waits for the energy and the hour); the way tried, its evidence said, and kept or put
+ * back; the try in the record.
+ */
+async function workThrough(wb) {
+  // Each problem in turn, until one has a way that can be tried now (a way on the feet waits for the energy and the hour).
+  const tried = [];
+  let label = '';
+  let way = wb.locator('li button:not([disabled])', { hasText: /\(\d+ Min\)$/ }).first();
+  for (let i = 0; i < 6; i += 1) {
+    const next = wb.locator('li button:not([disabled])').filter({ hasNotText: /\(\d+ Min\)$/ }).filter({ hasNotText: new RegExp(`^(${tried.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') || '\\u0000'})$`) }).first();
+    if (!(await next.count())) break;
+    label = await next.innerText();
+    tried.push(label);
+    await next.click(); await wait(800);
+    must(/Working On:/.test(await wb.innerText()), `"${label}" isn’t shown as worked on`);
+    way = wb.locator('li button:not([disabled])', { hasText: /\(\d+ Min\)$/ }).first();
+    if (await way.count()) break;
+  }
+  if (!tried.length) skip(`nothing to work through: ${(await wb.innerText()).slice(0, 120)}`);
+  if (!(await way.count())) skip(`no way at ${tried.join(', ')} can be tried now: ${(await wb.locator('.why-not').allInnerTexts()).join(' ').slice(0, 200)}`);
+  const wayLabel = await way.innerText();
+  const t0 = await clock();
+  await way.click(); await wait(1200); await settleDialogs();
+  const said = await toast();
+  must(/: \d+(\.\d)? to \d+(\.\d)?\./.test(said), `no evidence said: ${said}`);
+  const keep = wb.getByRole('button', { name: /^Keep It$/ }).first();
+  if (await keep.count()) { await keep.click(); await wait(800); }
+  must(await wb.locator('table[data-tries] tbody tr').count() >= 1, 'the try isn’t in the record');
+  return `"${label}" → ${wayLabel}, ${t0} → ${await clock()}: ${said}`;
+}
+await step('coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back', async () => {
+  const wb = page.locator('[data-workbook^="assignment:"]').first();
+  if (!(await wb.count())) skip('no scene open to work through');
+  return workThrough(wb);
+});
+
+// The guide's reference, beside the features it explains (from 2026-10-12).
+const helpDialog = () => page.getByRole('dialog', { name: /How This Works/ }).last();
+const entryTitle = async () => (await helpDialog().locator('article.help-entry h3').first().innerText().catch(() => '')).trim();
+await step('help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus', async () => {
+  await rail('School'); await tab('Coursework');
+  const how = page.locator('[id^="school-pane-coursework"] button[aria-label^="How This Works:"]').first();
+  must(await how.count(), 'no How This Works on the Coursework tab');
+  const aria = await how.getAttribute('aria-label');
+  const t0 = `${await dateText()} ${await clock()}`;
+  await how.click(); await wait(700);
+  must(await helpDialog().getByText('The clock waits while you read.').count(), 'the help doesn’t say the clock waits');
+  const first = await entryTitle();
+  must(first && aria.endsWith(first), `opened "${first}" from "${aria}"`);
+  const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
+  must(await connected.count(), `"${first}" shows no Connected Systems`);
+  await connected.locator('summary').click(); await wait(300);
+  const link = connected.locator('button.help-link').first();
+  const to = await link.innerText();
+  await link.click(); await wait(500);
+  must((await entryTitle()) === to, `followed "${to}", showing "${await entryTitle()}"`);
+  const trail = await helpDialog().getByRole('navigation', { name: 'Help Trail' }).innerText();
+  must(trail.includes(first) && trail.includes(to), `the trail says "${trail.replace(/\s+/g, ' ')}"`);
+  await helpDialog().getByRole('button', { name: /^Back$/ }).click(); await wait(400);
+  must((await entryTitle()) === first, `Back went to "${await entryTitle()}"`);
+  await page.keyboard.press('Escape'); await wait(500);
+  must(!(await helpDialog().isVisible().catch(() => false)), 'Escape didn’t close it');
+  const selected = await page.getByRole('tab', { selected: true }).first().innerText();
+  must(/Coursework/.test(selected), `the tab came back as ${selected}`);
+  const focused = await page.evaluate(() => document.activeElement?.getAttribute('aria-label') ?? '');
+  must(focused === aria, `focus went back to "${focused}"`);
+  const t1 = `${await dateText()} ${await clock()}`;
+  must(t0 === t1, `the clock moved while reading: ${t0} → ${t1}`);
+  return `${first} → ${to} → Back; the tab and the focus kept; ${t1}`;
+});
+await step('help: the keyboard: ? opens the contents, / goes to the search, a word finds entries', async () => {
+  await page.locator('body').click({ position: { x: 5, y: 5 } }).catch(() => {});
+  await page.keyboard.press('?'); await wait(600);
+  must(await helpDialog().isVisible().catch(() => false), '? opened nothing');
+  must(await helpDialog().getByRole('heading', { name: 'Getting Started' }).count(), 'no contents by goal');
+  await page.keyboard.press('Escape'); await wait(400);
+  await page.keyboard.press('/'); await wait(600);
+  const q = page.locator('#help-q');
+  must(await q.count() && (await page.evaluate(() => document.activeElement?.id)) === 'help-q', '/ didn’t go to the search');
+  await q.fill('partner'); await wait(200);
+  await helpDialog().getByRole('button', { name: /^Search$/ }).click(); await wait(400);
+  const found = helpDialog().locator('ul.help-results button.help-link');
+  must(await found.count() > 0, 'searching "partner" found nothing');
+  const n = await found.count();
+  await page.keyboard.press('Escape'); await wait(400);
+  return `${n} entries for "partner"`;
+});
+await step('help: Show Me Where goes to the entry’s screen, Back To Help returns to the trail', async () => {
+  await page.keyboard.press('/'); await wait(500);
+  await page.locator('#help-q').fill('transfer'); await page.keyboard.press('Enter'); await wait(400);
+  const hit = helpDialog().locator('ul.help-results button.help-link').first();
+  must(await hit.count(), 'searching "transfer" found nothing');
+  await hit.click(); await wait(400);
+  const title = await entryTitle();
+  // The screen is in the address's hash (`#/workspace/...`), so the address is compared whole: first written against
+  // its path, which is "/" on every screen.
+  const from = page.url();
+  await helpDialog().getByRole('button', { name: /^Show Me Where$/ }).click(); await wait(1000);
+  const to = page.url();
+  must(to !== from, `Show Me Where stayed on ${from}`);
+  const back = page.getByRole('button', { name: /^Back To Help$/ }).first();
+  must(await back.count(), 'no Back To Help');
+  await back.click(); await wait(600);
+  must((await entryTitle()) === title, `Back To Help opened "${await entryTitle()}"`);
+  await page.keyboard.press('Escape'); await wait(400);
+  return `"${title}": ${from} → ${to}, and back to the entry`;
+});
+await step('help: a half-typed amount kept across How This Works', async () => {
+  await rail('Money');
+  const amount = page.locator('input[inputmode="decimal"], input[type="number"]').first();
+  if (!(await amount.count())) skip('no amount field on the Money screen');
+  await amount.fill('12.34'); await wait(200);
+  const how = page.locator('button[aria-label^="How This Works:"]').first();
+  must(await how.count(), 'no How This Works on the Money screen');
+  await how.click(); await wait(600);
+  await page.keyboard.press('Escape'); await wait(400);
+  const kept = await amount.inputValue();
+  must(kept === '12.34', `the amount came back as "${kept}"`);
+  await amount.fill(''); await wait(100);
+  return 'kept: 12.34';
+});
+if (!PHONE) {
+  await step('help: reading it holds the live clock: a minute open, the same minute; closed, it moves', async () => {
+    const play = page.getByRole('group', { name: 'Time Controls' }).getByRole('button', { name: /^Play$/ }).first();
+    if (!(await play.count())) skip('no Play control');
+    await play.click(); await wait(500);
+    const how = page.locator('button[aria-label^="How This Works:"]').first();
+    await how.click(); await wait(500);
+    const open0 = await clock();
+    await wait(65_000);
+    const open1 = await clock();
+    await page.keyboard.press('Escape'); await wait(500);
+    must(open0 === open1, `the clock ran while the help was open: ${open0} → ${open1}`);
+    await wait(65_000);
+    const after = await clock();
+    await page.getByRole('group', { name: 'Time Controls' }).getByRole('button', { name: /^Pause$/ }).first().click().catch(() => {}); await wait(300);
+    must(after !== open1, `the clock didn’t run again after: ${open1} → ${after}`);
+    return `open: ${open0} → ${open1}; closed: → ${after}`;
+  });
+}
+
 await step('navigation keeps context: School’s tab kept across Money and back', async () => {
+  // The help steps before it end on Money (from 2026-10-12): School first.
+  await rail('School');
   await tab('Casting');
   await rail('Money'); await rail('School');
   const sel = await page.getByRole('tab', { selected: true }).first().innerText();
@@ -320,6 +473,27 @@ await step('save and exit, then Continue: the same day and hour', async () => {
   return after;
 });
 
+await step('interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is', async () => {
+  await page.getByRole('button', { name: /^Advance/ }).first().click(); await wait(300);
+  await page.getByRole('menuitem', { name: /^Next Monday/ }).first().click(); await wait(1500);
+  const d = page.locator('[role=dialog]:visible').last();
+  if (!(await d.count())) skip('nothing on the way to Next Monday');
+  const title = ((await d.innerText()).split('\n')[0] ?? '').slice(0, 60);
+  if (/^On The Way/.test(title)) {
+    must(/on the way\. The clock stops at\s+each/.test(await d.innerText()), 'On The Way doesn’t say the clock stops');
+    await d.getByRole('button', { name: /^Advance$/ }).first().click(); await wait(1500);
+  }
+  const due = page.locator('[role=dialog]:visible').last();
+  if (!(await due.count())) skip(`no stop at a commitment after "${title}"`);
+  const at = `${await dateText()} ${await clock()}`;
+  const stand = due.getByRole('button', { name: /^Stand Here$/ }).first();
+  if (!(await stand.count())) { await settleDialogs(); skip(`stopped at "${((await due.innerText()).split('\n')[0] ?? '').slice(0, 60)}" with no Stand Here`); }
+  await stand.click(); await wait(800);
+  const after = `${await dateText()} ${await clock()}`;
+  must(at === after, `Stand Here moved the clock: ${at} → ${after}`);
+  await advance('One Hour').catch(() => {});
+  return `stopped at ${at}; Stand Here kept it there`;
+});
 // Journeys from saves the scenarios wrote: a tax balance owed to the IRS and Connecticut, and a student back from a leave.
 if (DIR && existsSync(`${DIR}/tax.json`)) {
   await step('[save: tax-plan scenario] papers: who it’s owed to, a part paid to Connecticut, its plan asked for', async () => {
@@ -361,15 +535,15 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
     if (!(await learn.count())) skip('no part with calls in this save');
     if (await learn.isDisabled()) {
       const why = await page.locator('.why-not').first().innerText().catch(() => '');
-      must(why.length > 0, 'greyed with no reason on the screen');
-      return `greyed: ${why}`;
+      must(why.length > 0, 'grayed with no reason on the screen');
+      return `grayed: ${why}`;
     }
     await learn.click(); await wait(1200);
     return await toast();
   });
   await overflow('school casting (save)');
 }
-// From the remaining-gaps pass of 2026-10-11: the rehearsal controls carried out, not only found greyed, from a save the
+// From the remaining-gaps pass of 2026-10-11: the rehearsal controls carried out, not only found grayed, from a save the
 // `rehearsal` scenario wrote mid-rehearsal with the student's own work on the part left undone.
 const pctIn = (s) => Number((s.match(/(\d+)%/) ?? [])[1] ?? NaN);
 if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
@@ -388,14 +562,20 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     return `${said}; lines ${before}% → ${after}%`;
   });
   await step('[save: rehearsal scenario] casting: Work On The Note, and the note is marked worked on', async () => {
-    const work = page.getByRole('button', { name: /^Work On The Note$/ }).first();
+    const work = page.getByRole('button', { name: /^Work On The Note/ }).first();
     must(await work.count() && !(await work.isDisabled()), 'Work On The Note not available');
+    // A note on the craft (from 2026-10-12) offers its ways; the second, where there is one, is chosen.
+    const ways = page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+    const offered = (await ways.count()) ? await ways.locator('option').allInnerTexts() : [];
+    if (offered.length > 1) { await ways.selectOption({ index: 1 }); await wait(300); }
     await work.click(); await wait(1200);
     const said = await toast();
-    must(/Worked on: the next call will show it/.test(said), `no confirmation: ${said}`);
+    must(/Worked on: the next call will show it|Worked [^:]+: \d+(\.\d)? to \d+(\.\d)?\./.test(said), `no confirmation: ${said}`);
+    const keep = page.locator('[data-workbook^="part:"]').getByRole('button', { name: /^Keep It$/ }).first();
+    if (await keep.count()) { await keep.click(); await wait(800); }
     must(await page.getByText(/· Worked On/).count(), 'the note isn’t marked worked on');
     must(await work.isDisabled(), 'still offered after it was done');
-    return said;
+    return `${offered.length ? `ways offered: ${offered.join(', ')}; ` : ''}${said}`;
   });
   await step('[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call', async () => {
     const choose = page.getByRole('button', { name: /^Play It This Way$/ }).first();
@@ -404,7 +584,7 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     const options = page.locator('table input[type=radio]');
     must(await options.count(), 'no ways to choose from');
     await options.first().check(); await wait(300);
-    must(!(await choose.isDisabled()), 'Play It This Way still greyed after a choice');
+    must(!(await choose.isDisabled()), 'Play It This Way still grayed after a choice');
     await choose.click(); await wait(1200);
     const said = await toast();
     must(/Chosen: rehearsed in to \d+%/.test(said), `no confirmation: ${said}`);
@@ -463,7 +643,7 @@ async function openBrief(label) {
 async function briefButton(re) {
   const b = briefPane().getByRole('button', { name: re }).first();
   must(await b.count(), `no button ${re}`);
-  must(!(await b.isDisabled()), `${re} greyed: ${await b.getAttribute('title')}`);
+  must(!(await b.isDisabled()), `${re} grayed: ${await b.getAttribute('title')}`);
   await b.click(); await wait(900); await settleDialogs();
   return await toast();
 }
@@ -533,12 +713,33 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(/Better prepared or better able/.test(top), `its purpose: ${top}`);
     return `${first} → ${second}: ${top.replace(/\s+/g, ' ').slice(0, 160)}`;
   });
+  await step('[save: brief scenario] brief: Work It Through on its beats: a problem named, a way tried, its evidence shown, kept', async () => {
+    const wb = briefPane().locator('[data-workbook^="brief:"]').first();
+    if (!(await wb.count())) skip('no Work It Through on the brief');
+    return workThrough(wb);
+  });
+  await step('[save: brief scenario] brief: a classmate chosen to read opposite, taped, the take together said beside your own', async () => {
+    const who = briefPane().getByRole('combobox', { name: 'Who Reads Opposite You' }).first();
+    if (!(await who.count())) skip('a voice brief: no reader');
+    const opts = await who.locator('option').allInnerTexts();
+    must(opts.length >= 2, `only ${opts.join(', ')} to read with`);
+    await who.selectOption({ index: 1 }); await wait(300);
+    const said = await briefButton(/^Read With Them$/);
+    must(/Reading with /.test(said), `no confirmation: ${said}`);
+    const taped = await briefButton(/^Tape It/);
+    must(/Taped: \d+\.\d/.test(taped), `no take: ${taped}`);
+    const text = await briefPane().innerText();
+    must(/together|Together/.test(text), 'the take together isn’t said');
+    return `${said}; ${taped}; ${text.match(/[^\n]*[Tt]ogether[^\n]*/)?.[0]?.slice(0, 160)}`;
+  });
   await step('[save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept', async () => {
+    // The takes as they stand before, however many the steps above made (the reader's take, from 2026-10-12, is a third).
+    const kept = await briefPane().locator('table[data-takes] tbody tr').count();
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await openBrief('Drama');
     const rows = briefPane().locator('table[data-takes] tbody tr');
-    must(await rows.count() === 2, `takes after reload: ${await rows.count()}`);
+    must(kept >= 2 && await rows.count() === kept, `takes after reload: ${await rows.count()} of ${kept}`);
     must(/Chosen/.test(await briefPane().innerText()), 'the reading chosen isn’t kept');
     return 'kept';
   });
@@ -557,7 +758,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
     must(await ask.isDisabled(), 'release offered before it’s paid');
     const why = page.getByText(/once the balance it secures is paid in full/).first();
-    must(await why.count(), 'greyed with no reason on the screen');
+    must(await why.count(), 'grayed with no reason on the screen');
     return `${said.slice(0, 120)} / ${(await why.innerText()).slice(0, 120)}`;
   });
   await step('[save: lien scenario] papers: paid in full, then its release asked, and the lien says so', async () => {
@@ -568,7 +769,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     must(/Paid Connecticut DRS in full/.test(paid), `paid: ${paid}`);
     must(/· Paid: Release To Come\./.test(await lienLine().innerText()), `lien: ${(await lienLine().innerText()).slice(0, 160)}`);
     const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
-    must(!(await ask.isDisabled()), 'release still greyed after payment');
+    must(!(await ask.isDisabled()), 'release still grayed after payment');
     await ask.click(); await wait(900);
     const asked = await toast();
     must(/Asked: released by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(asked), `asked: ${asked}`);

@@ -9,7 +9,8 @@
  * - **Opening** (`bank.open_current`): an application for one bank's current account. It opens at once, or after the
  *   bank's review where it says it reviews (Bank of America, one to two business days), at nothing: never with another
  *   account's money or history. Its opening deposit, where it asks for one, is sent from another of the holder's
- *   accounts and arrives in the sending bank's days. Its debit card follows in the bank's days. An account the bank
+ *   accounts and arrives in the sending bank's days. Its debit card follows in the bank's days, or, where the bank gives a
+ *   digital card at once (Bank of America), works from the day it opens and no plastic follows. An account the bank
  *   says it closes unfunded, or idle at zero, it closes (Capital One, Citi).
  * - **Moving money between banks** (`bank.transfer` across two banks): out of the one account now, into the other in
  *   the sending bank's business days, with nothing in either in between; back where it came from if the other closed.

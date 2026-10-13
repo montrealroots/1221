@@ -293,7 +293,7 @@ describe('experience and recommendations', () => {
   });
 
   it('recommends what cost recent work, and stops once it’s been addressed', () => {
-    const work = [1, 2, 3].map((i) => ({ at: i, limits: [{ kind: 'ability', what: 'listening', label: 'Listening', by: 6 }, { kind: 'ability', what: 'focus', label: 'Focus', by: 2 }], inputs: { abilities: { listening: 40, focus: 50 } as Record<string, number | undefined> } }));
+    const work = [1, 2, 3].map((i) => ({ at: i, limits: [{ kind: 'ability', what: 'listening', label: 'Listening', by: 6, whole: 3 }, { kind: 'ability', what: 'focus', label: 'Focus', by: 2, whole: 1 }], inputs: { abilities: { listening: 40, focus: 50 } as Record<string, number | undefined> } }));
     const levels: Record<string, number> = { listening: 40, focus: 50 };
     const ex = (id: string) => ({ id: `ex-${id}` });
     const first = recommendations((id) => levels[id] ?? 0, () => 100, work, ex, matchedTier);

@@ -18,8 +18,9 @@ import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
+import { Panel, Empty, Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { copyAt, partFor, readRefusal, researchRefusal } from '@/engine/systems/playreading';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -31,7 +32,7 @@ import { courseworkOf } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded } from '@/engine/systems/school';
+  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -145,7 +146,7 @@ function StandingPane() {
 
   return (
     <div className="col gap-5">
-        <Panel title="Your Standing" subtitle={evaluation ? `Evaluation On ${formatDate(evaluation.at, zone())}` : undefined}>
+        <Panel title="Your Standing" subtitle={evaluation ? `Evaluation On ${formatDate(evaluation.at, zone())}` : undefined} help="school.standing">
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
@@ -155,7 +156,7 @@ function StandingPane() {
             <p className="small" style={{ margin: 0 }}>
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
             </p>
-            <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
+            <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed calls, until a good evaluation.'}</p>
             <WithdrawControl />
             <LeavePanel />
             <CoursesPanel />
@@ -257,29 +258,43 @@ function ClassesPane() {
   const enrolled = !schoolEnded(school.standing);
   const p = zonedParts(sim.now, zone());
   const today = { year: p.year, month: p.month, day: p.day };
-  const term = Math.min(termOf(today), YALE_DRAMA.terms - 1);
-  const year = yearOfTerm(term);
-  const fall = termStart(term).fall;
-  const week = timetable(year, fall ? 'fall' : 'spring');
+  // The calendar term for its name, its class days and its breaks; the program year by where the student is in it
+  // (from 2026-10-12): until then both came from the calendar term capped at the sixth, so back from a leave or a
+  // repeated year this showed the year ahead's week and courses, and past the sixth calendar term the spring before.
+  const term = termOf(today);
+  const year = yearOfTerm(Math.min(YALE_DRAMA.terms - 1, Math.max(0, academicTerm(school, term))));
+  const season = termStart(term).fall ? 'fall' : 'spring';
+  // An additional term has only the courses retaken, each on its own year's days for the season, as `coursesFor` has them.
+  const extra = school.extra?.term === term ? school.extra : undefined;
+  const week = extra
+    ? WEEKDAYS.map((_, i) => extra.courses.flatMap((c) => (timetable(yearOfTerm(c.academic), season)[i] ?? []).filter((x) => x.code === c.code)))
+    : timetable(year, season);
   const period = classPeriod(term);
   const next = enrolled ? nextClasses(sim.now, school) : undefined;
   const off = daysOffIn(term);
   // Offered until the day's classes have run, as the command takes it.
   const classToday = enrolled && ahead(sim, person, [CLASSES_KIND]).some((c) => c.payload.day === keyOf(today));
-  const courses = COURSES.filter((c) => c.year === year);
+  const courses = extra ? COURSES.filter((c) => extra.courses.some((x) => x.code === c.code)) : COURSES.filter((c) => c.year === year);
   const skillLabel = (id: Skill) => SKILLS.find((s) => s.id === id)!.label;
+  // Offered on any day with something at school, with why it can't be used where it can't (from 2026-10-10); not at all
+  // once they've left (from 2026-10-12: until then it stayed, grayed with "You’re not at school.", for good).
+  const sick = sickRefusal(sim, person);
+  const offerSick = enrolled && !(sick === 'There’s nothing at school today to miss.' && !classToday);
 
   return (
     <div className="col gap-5">
       <Panel
         title={`Your Week, ${termLabel(term)}`}
-        subtitle={`Year ${year}: nine to three on class days`}
-        actions={sickRefusal(sim, person) === 'There’s nothing at school today to miss.' && !classToday ? undefined : (
-          // Offered on any day with something at school, with why it can't be used where it can't (from 2026-10-10).
-          <Gated feature="school.call_in_sick" disabled={Boolean(sickRefusal(sim, person))} title={sickRefusal(sim, person) ?? 'Today’s classes, calls and shift excused'} onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
-        )}
+        subtitle={`${extra ? 'Your additional term' : `Year ${year}`}: nine to three on class days`}
+        actions={offerSick ? (
+          <Gated feature="school.call_in_sick" disabled={Boolean(sick)} title={sick ?? 'Today’s classes, calls and shift excused'} onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
+        ) : undefined}
+        help="school.sick"
       >
         <LookRegion className="col gap-3">
+          {/* Why it's grayed, said under the panel's head where it sits (from 2026-10-12): until then only its tooltip said
+              it, which a phone never shows and a keyboard never reaches. */}
+          {offerSick && <WhyNot reasons={[['Call In Sick', sick]]} />}
           <div className="table-scroll">
             <table>
               <thead><tr><th scope="col">Day</th>{SLOTS.map((s) => <th key={s} scope="col">{s}</th>)}</tr></thead>
@@ -302,7 +317,7 @@ function ClassesPane() {
         </LookRegion>
       </Panel>
 
-      <Panel title={`Year ${year} Courses`} subtitle="Required, every term they run">
+      <Panel title={extra ? 'Your Additional Term’s Courses' : `Year ${year} Courses`} subtitle={extra ? `Retaken in ${termLabel(term)}, and only these` : 'Required, every term they run'} help="school.standing">
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Code</th><th scope="col">Course</th><th scope="col">Taught By</th><th scope="col">Trains</th><th scope="col" className="num">A Week</th><th scope="col">Terms</th></tr></thead>
@@ -357,7 +372,7 @@ function CastReadPanel() {
   const you = read.rows.find((r) => r.you);
   const asks = Object.keys(read.reads).map((k) => SKILLS.find((x) => x.id === k)?.label ?? k).join(', ');
   return (
-    <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`}>
+    <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`} help="productions.casting">
       <div className="col gap-3">
         <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions; the best read takes the biggest part written for them.</p>
         {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered is read from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, weighted ${f.weight})`).join('; ')}. A Cabaret or Summer run weighs half a School production’s, each run up to eight nights; a night missed out of hospital is delivered at nothing. How the nights were judged isn’t read here: it’s in your work.</p>}
@@ -405,7 +420,7 @@ function CastingPane() {
         const onCallLeft = casting.kind === 'understudy' ? onCall.filter(mine).length : 0;
         const left = every.filter(mine).length + onCallLeft;
         return (
-        <Panel key={casting.production} title={casting.play ?? casting.production} subtitle={casting.play ? `${casting.production}, by ${casting.by}${left === 0 ? ', finished' : ''}` : left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
+        <Panel key={casting.production} title={casting.play ?? casting.production} subtitle={casting.play ? `${casting.production}, by ${casting.by}${left === 0 ? ', finished' : ''}` : left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]} help="productions.nights">
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Role" value={casting.kind === 'understudy' && !casting.role.includes('Understudy') ? `${casting.role} (Understudy)` : casting.role} note={casting.size && !casting.role.startsWith('A ') ? SIZE_WORD[casting.size] : undefined} />
@@ -419,9 +434,12 @@ function CastingPane() {
               </p>
             )}
             <RehearsalProcess casting={casting} which={casting === school.rep ? 'rep' : 'school'} />
+            {/* The Rep's company is the Rep's own past the class's few asked into it with you, each in a featured part (from 2026-10-12, when the Rep's casting first listed them). */}
             {casting.cast && casting.cast.length > 0 && (
               <p className="small" style={{ margin: 0 }}>
-                From the class with you: {casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.
+                {casting === school.rep
+                  ? `From the class in the company with you, each in a featured part: ${casting.cast.map((c) => c.name).join(', ')}. The rest of the company is the Rep’s own.`
+                  : `From the class with you: ${casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.`}
               </p>
             )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
@@ -434,11 +452,11 @@ function CastingPane() {
         );
       })}
       {castings.length === 0 && (
-        <Panel title="Not Cast Yet">
+        <Panel title="Not Cast Yet" help="productions.casting">
           <p className="small" style={{ margin: 0 }}>
             {school.castable
               ? 'The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a second-year’s and a third-year’s fall; a thesis or the Carlotta Festival in the second spring; a Shakespeare Repertory Project in the last spring; and once a year, for a student in good standing, Yale Rep.'
-              : 'Out of the casting pool after missed rehearsal calls. A good evaluation puts you back.'}
+              : 'Out of the casting pool after missed calls. A good evaluation puts you back.'}
           </p>
         </Panel>
       )}
@@ -453,7 +471,7 @@ function CastingPane() {
         </Panel>
       )}
       <Fine>
-        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
+        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfills it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
       </Fine>
 
       <CabaretPanel />
@@ -490,6 +508,7 @@ function CabaretPanel() {
       title="The Yale Cabaret"
       subtitle={mine ? `Your show plays the week of ${dayOf(parseDay(mine.week))}` : cabaretSeason(Math.max(0, term))}
       actions={mine || cabaretRefusal(sim, person) ? undefined : <Gated feature="school.cabaret" onClick={() => { const a = run<{ week: string }>('school.cabaret'); if (a.ok) toast(`In the Cabaret: your show plays the week of ${dayOf(parseDay(a.value!.week))}.`, 'positive'); }}>Join A Cabaret Show</Gated>}
+      help="school.cabaret"
     >
       <div className="col gap-3">
         {mine && (
@@ -541,7 +560,7 @@ function CoursesPanel() {
   const passed = all.filter(([, r]) => r.result === 'pass').length;
   return (
     <div className="col gap-2">
-      <div className="eyebrow">Courses And The Degree</div>
+      <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed so far.{' '}
         {failed.length ? `The degree needs ${failed.map((r) => r.name).join(', ')}, not passed yet: a course left on a leave is taken on return, and a year with a course failed can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
@@ -585,7 +604,7 @@ function WithdrawControl() {
     <div className="col gap-2">
       {asking && (
         <p className="small" style={{ margin: 0 }}>
-          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health is canceled back to the term’s start and its premium refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, which SLATE doesn’t model.
+          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (1 August, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, which SLATE doesn’t model.
         </p>
       )}
       <div className="row gap-2">
@@ -597,6 +616,7 @@ function WithdrawControl() {
               <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking(false)}>Stay</button>
             </>
           )}
+        <HowItWorks help="school.withdraw" />
       </div>
     </div>
   );
@@ -615,6 +635,7 @@ function SummerPanel() {
       title="The Yale Summer Cabaret"
       subtitle={summer ? (summer.out ? 'The company let you go' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
       actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
+      help="school.summer_cabaret"
     >
       {!summer && summerRefusal(sim, person) && <p className="small muted" style={{ margin: '0 0 var(--s2)' }}>{summerRefusal(sim, person)}</p>}
       {summer && (
@@ -655,6 +676,7 @@ function WorkPane() {
       title="Work-Study"
       subtitle={`${WORK_STUDY.assignedHours} assigned hours and at least ${WORK_STUDY.electiveHours} elective a year`}
       actions={shiftRefusal(person) ? undefined : <Gated feature="school.take_shift" onClick={() => { const a = run<{ at: number }>('school.take_shift'); if (a.ok && a.value) toast(`Front of house, ${formatDateTime(a.value.at, zone())}.`, 'positive'); }}>Take An Elective Shift</Gated>}
+      help="school.shifts"
     >
       <div className="col gap-3">
         {shiftRefusal(person) && <p className="small muted" style={{ margin: 0 }}>{shiftRefusal(person)}</p>}
@@ -696,12 +718,15 @@ function TermsPane() {
   const school = person.school!;
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
-  const need = hasNeed(person);
+  const found = hasNeed(person);
   // The term they're in, as the engine bills it; until 2026-09-27 the first year's, whatever the year.
-  // The calendar term they're in, past the sixth too (from 2026-10-10), and whether it has tuition support.
+  // The calendar term they're in, past the sixth too (from 2026-10-10), and whether it has tuition support and living
+  // aid, by the engine's own rule (`termSupport`, from 2026-10-12: until then a term past six counted as unsupported
+  // here whatever the aid office's review granted, so a waived term showed as billed and a kept living aid didn't show).
   const current = Math.max(0, school.termsBegun - 1);
-  const unsupported = enrolledTerms(school).length > YALE_DRAMA.terms;
-  const account = termAccount(cur, need && !unsupported, current);
+  const { unsupported, need } = termSupport(person, enrolledTerms(school).length);
+  const waived = !unsupported && enrolledTerms(school).length > YALE_DRAMA.terms;
+  const account = termAccount(cur, need, current);
   // This year's figures, as the engine grows them; until 2026-09-27 the sentence quoted 2026–27's in every year.
   const aid = termAccount(cur, true, current);
   const aidBooks = 2 * (aid.livingScholarship - aid.taxable);
@@ -729,7 +754,7 @@ function TermsPane() {
         </LookRegion>
       </Panel>
 
-      <Panel title="Your Yale Account" subtitle={termLabel(current)}>
+      <Panel title="Your Yale Account" subtitle={termLabel(current)} help="school.money">
         <div className="col gap-3">
           <div className="table-scroll">
             <table>
@@ -738,17 +763,21 @@ function TermsPane() {
                 <tr><td>Tuition</td><td className="num mono">{money(account.tuition)}</td><td /></tr>
                 {!unsupported && <tr><td>Tuition Scholarship</td><td /><td className="num mono">{money(account.tuition)}</td></tr>}
                 <tr><td>Yale Health Plan</td><td className="num mono">{money(account.healthPlan)}</td><td /></tr>
-                {need && !unsupported && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
-                <tr className="strong">
-                  <td>{unsupported ? 'On Your Yale Account' : need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
-                  <td className="num mono">{unsupported ? money(account.tuition + account.healthPlan) : need ? '' : money(account.healthPlan)}</td>
-                  <td className="num mono">{need && !unsupported ? money(account.refund) : ''}</td>
-                </tr>
+                {need && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
+                {/* A term billed past six: its tuition on the Yale account, and its health fee too unless living aid meets it, as `billUnsupportedTerm` charges them. */}
+                {unsupported && <tr className="strong"><td>On Your Yale Account</td><td className="num mono">{money(account.tuition + (need ? 0 : account.healthPlan))}</td><td className="num mono" /></tr>}
+                {(need || !unsupported) && (
+                  <tr className="strong">
+                    <td>{need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
+                    <td className="num mono">{need ? '' : money(account.healthPlan)}</td>
+                    <td className="num mono">{need ? money(account.refund) : ''}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {unsupported ? 'This term is past the six the tuition scholarship supports, so its tuition and health fee are billed to your Yale account. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
+            {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept meets its health fee' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {found ? (need ? 'Yours found need, and the scholarship meets it.' : 'Yours found need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
           <YaleAccountPanel />
           <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</Fine>
@@ -772,19 +801,25 @@ function PlaysToRead() {
   const copy = copyAt(person);
   const studies = person.plays ?? {};
   const notes = CONTEMPORARY_PLAYS.flatMap((p) => (studies[p.id]?.notes[0] ? [{ p, n: studies[p.id]!.notes[0]! }] : [])).sort((a, b) => b.n.at - a.n.at).slice(0, 5);
+  const plays = CONTEMPORARY_PLAYS.map((p) => ({ p, st: studies[p.id], noRead: readRefusal(sim, person, p.id), noResearch: researchRefusal(sim, person, p.id) }));
+  // Why a Read It or a Research It is grayed, in words above the plays (from 2026-10-12): until then only each button's
+  // tooltip said it, which a phone never shows and a keyboard never reaches. Above the list, not under it, since it's
+  // twenty-nine plays long, and each button's reason once: the copy and the hour refuse every play alike.
+  const shut = new Map(plays.flatMap(({ st, noRead, noResearch }) => [
+    [st ? 'Read It Again' : 'Read It', noRead ?? (read.open ? undefined : read.reason)] as const,
+    ...(st && !st.researchedAt ? [['Research It', noResearch ?? (research.open ? undefined : research.reason)] as const] : []),
+  ]).map((one) => [`${one[0]}: ${one[1] ?? ''}`, one] as const));
   return (
-    <Panel title="Plays To Read" subtitle={'library' in copy ? `A Copy From ${copy.library}` : 'No Copy To Hand'}>
+    <Panel title="Plays To Read" subtitle={'library' in copy ? `A Copy From ${copy.library}` : 'No Copy To Hand'} help="plays.read">
       <div className="col gap-2">
         <div className="xs dim">Twenty-nine plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
+        <WhyNot reasons={[...shut.values()]} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Play</th><th scope="col">Cast</th><th scope="col">Read</th></tr></thead>
             <tbody>
-              {CONTEMPORARY_PLAYS.map((p) => {
-                const st = studies[p.id];
+              {plays.map(({ p, st, noRead, noResearch }) => {
                 const fit = partFor(person, p, sim.now, sim.zone);
-                const noRead = readRefusal(sim, person, p.id);
-                const noResearch = researchRefusal(sim, person, p.id);
                 return (
                   <tr key={p.id}>
                     <td><span className="small">{p.title}</span><div className="xs dim">{p.by}; first staged {p.premiere.year}, {p.premiere.venue}</div></td>

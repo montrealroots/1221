@@ -45,7 +45,11 @@
  * SLATE's benefit was the lower one a household with low rent gets. Paid onto an EBT card that buys groceries only, which a day's
  * food draws on first. An able-bodied adult of 18 to 64 without 80 hours of
  * work a month is paid three months in three years (7 U.S.C. 2015(o), as the
- * 2025 law widened it). A citizen's; a non-citizen's eligibility isn't kept.
+ * 2025 law widened it), unless exempt from work registration, as a student
+ * enrolled at least half-time is (7 U.S.C. 2015(o)(3)(D), (d)(2); 7 CFR
+ * 273.24(c), 273.7(b)(1)(viii)). Until 2026-10-12 that exemption wasn't kept,
+ * and a student in term was counted. A citizen's; a non-citizen's eligibility
+ * isn't kept.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -166,12 +170,20 @@ export function provincialMonth(scheme: 'ontario-works' | 'bc-assistance', rentC
 }
 
 /**
+ * SNAP's fiscal year in force at a moment, which `snapMonth` pays from and Papers' At Most shows (from 2026-10-12:
+ * until then At Most showed the last year kept, $306, in the five weeks before 1 October 2026 that pay $298).
+ */
+export function snapYearOn(at: Instant): (typeof SNAP.fy)[number] {
+  return [...SNAP.fy].reverse().find((f) => at >= Date.parse(`${f.from}T00:00:00Z`)) ?? SNAP.fy[0]!;
+}
+
+/**
  * A month's SNAP, in dollar cents: the maximum less 30% of net income, net of
  * the excess shelter deduction where shelter costs are given; or none over the
  * state's gross limit.
  */
 export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant, shelterUsd = 0, state?: string): Money {
-  const fy = [...SNAP.fy].reverse().find((f) => at >= Date.parse(`${f.from}T00:00:00Z`)) ?? SNAP.fy[0]!;
+  const fy = snapYearOn(at);
   if (state && grossUsd > Math.round(fy.poverty * (SNAP.grossLimit[state] ?? 1) * 100)) return 0;
   const before = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction) - fy.standard * 100);
   const shelter = Math.min(fy.shelterCap * 100, Math.max(0, shelterUsd - Math.round(before / 2)));
@@ -220,7 +232,11 @@ export function registerAssistance(sim: Simulation): void {
       const hours = workedBetween(s, person, item.at - 30 * MS_DAY, item.at).hours;
       const key = monthKey(item.at);
       const within = (claim.counted ?? []).filter((m) => m > monthKey(item.at - SNAP.abawd.window * 30.44 * MS_DAY));
-      const limited = age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
+      // A student enrolled at least half-time is exempt from work registration, and so from the time limit, through
+      // vacations and recess too (7 CFR 273.7(b)(1)(viii), 273.24(c)): from 2026-10-12; until then a student in term was
+      // counted, and three months of SNAP stopped it.
+      const enrolled = person.school !== undefined && !schoolEnded(person.school.standing);
+      const limited = !enrolled && age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
       if (limited && within.length >= SNAP.abawd.months) {
         if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'Three months in three years without 80 hours of work a month: SNAP pays no more until you work them.', importance: 60, route: '/workspace/papers' });
         schedule(s, person, item.at + 30 * MS_DAY);

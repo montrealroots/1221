@@ -16,7 +16,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, instantFromZoned } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { paymentsOf, SCHEDULED_KIND } from '@/engine/systems/payments';
+import { coveredBanks, linkCovers, paymentsOf, SCHEDULED_KIND, type LinkCover } from '@/engine/systems/payments';
 import { FRENCH_CARDS, cardCeilingRoom } from '@/engine/systems/lending';
 
 export function BankPayments() {
@@ -28,6 +28,8 @@ export function BankPayments() {
   const accounts = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term'));
   const savings = accounts.filter((a) => a.kind === 'savings');
   const current = accounts.find((a) => a.id === person.primaryAccountId);
+  const covers = useWorld((s) => linkCovers(s, s.player));
+  const linkable = covers.some((one) => one.savings);
   const scheduled = useWorld((s) => s.universe.scheduled.filter((i) => i.kind === SCHEDULED_KIND && i.status === 'pending' && i.payload.personId === s.player.id));
   const ceiling = current?.bankId ? FRENCH_CARDS[current.bankId] : undefined;
   const ceilingRoom = cardCeilingRoom(sim, person);
@@ -56,7 +58,7 @@ export function BankPayments() {
   };
 
   return (
-    <Panel title="How You Pay" subtitle="The day’s spending, and where it’s paid from.">
+    <Panel title="How You Pay" subtitle="The day’s spending, and where it’s paid from." help="bank.payments">
       <div className="field-row">
         <div className="field">
           <label htmlFor="pay-everyday">The Day’s Spending</label>
@@ -70,10 +72,15 @@ export function BankPayments() {
       <p className="small" style={{ margin: 'var(--s2) 0' }}>
         {pay.everyday === 'debit' && ceiling && ceilingRoom !== undefined ? `The debit card pays up to its ceiling ${ceiling.window === 'month' ? 'each calendar month' : 'over any 30 days'}, ${money(ceilingRoom)} still; past it the day’s shopping goes on the credit card, or isn’t bought. ` : ''}
       </p>
-      {/* Only with savings to cover it: until 2026-09-27 it was offered with none, and On changed nothing. */}
-      {savings.length > 0 && (
+      {/* Only with savings the link draws on for a current account a payment comes from (`linkCovers`), or while it's
+          On, so it can be turned Off. Until 2026-09-27 it was offered with no savings, and On changed nothing; until
+          2026-10-12 it was offered with savings only at a bank no payment came from, and On covered nothing and then
+          was refused.
+          Later the same day, until group r3b, it read the primary account's bank alone: with savings at the bank of a
+          loan's repayment account it went once Off, and said On covered nothing, though On paid that loan. */}
+      {(linkable || pay.linkSavings) && (
         <div className="col gap-2">
-          <p className="small" style={{ margin: 0 }}>On, a payment the current account can’t make comes from savings, as far as savings lets it out, and the card’s autopay can draw on it too.</p>
+          <p className="small" style={{ margin: 0 }}>{coverText(covers)}</p>
           <div>
             <Gated feature="bank.set_payments" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_payments', { linkSavings: !pay.linkSavings })}>
               Savings Covers The Current Account: {pay.linkSavings ? 'On' : 'Off'}
@@ -141,6 +148,26 @@ export function BankPayments() {
       {/* Checks not yet cashed and direct debits to take back were listed here until 2026-10-09: only the rent and the bills went by them. */}
     </Panel>
   );
+}
+
+const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
+
+/**
+ * What the link covers, account by account, as `linkCovers` reads it: the primary for the day's spending, the account a
+ * card's autopay is set on for that autopay (from later on 2026-10-12: until then the primary was said to pay 'a card's
+ * autopay from it' even where the autopay stayed on another account), and each loan's repayment account for its loan.
+ * From 2026-10-12, group r3b: until then one line
+ * said a payment “the current account” couldn't make came from savings, or, with no easy-access savings at the primary
+ * account's bank, that On covered nothing, which was false with savings at the bank of a loan's repayment account.
+ */
+function coverText(covers: LinkCover[]): string {
+  if (!covers.some((one) => one.savings)) return `There’s no easy-access savings at ${coveredBanks(covers)} for it to draw on, so On covers nothing until there is.`;
+  const each = covers.map((one) => {
+    const name = one.from?.name ?? 'your current account';
+    const pays = andList([...(one.primary ? ['the day’s spending'] : []), ...one.cards.map((card) => `the ${card.name}’s autopay`), ...one.loans.map((loan) => `the ${loan.name}`)]);
+    return one.savings ? `${one.savings.name} covers ${name}, which pays ${pays}.` : `${name[0]!.toUpperCase()}${name.slice(1)}, which pays ${pays}, has no easy-access savings at ${one.from?.institution ?? 'your bank'} to draw on.`;
+  });
+  return ['On, a payment a current account can’t make comes from easy-access savings at the same bank, as far as savings lets it out.', ...each].join(' ');
 }
 
 function ordinal(n: number): string {

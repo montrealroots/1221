@@ -163,9 +163,13 @@ const lengthOf = (entry: CalendarEntry): string | undefined =>
   (entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : undefined);
 
 /**
- * What missing a commitment costs, as its handler has it (`systems/school.ts`,
- * `systems/career.ts`). Until 2026-09-27 the entry look said only that it
- * cost "what the Guide says".
+ * What missing a commitment costs, as its handler has it (`systems/school.ts`).
+ * Until 2026-09-27 the entry look said only that it cost "what the Guide
+ * says". It also had the career’s costs (`systems/career.ts`): an audition an
+ * agency got you, a job’s day and a showcase. Those kinds went with the career
+ * on 2026-10-09 and their cases stayed here, so a save from before it, which
+ * keeps what it had settled, was still told an agency would let it go; the
+ * cases went from 2026-10-12.
  */
 function missCost(sim: Simulation, id: string): string {
   const item = sim.universe.scheduled.find((one) => one.id === id);
@@ -180,9 +184,6 @@ function missCost(sim: Simulation, id: string): string {
     case 'school.shift': return ': the hours aren’t paid, and an assigned shift counts against your attendance';
     case 'school.summer': return call === 'performance' ? ', and the company lets you go' : ', and the rehearsal goes on without you';
     case 'school.cabaret': return ', and the show goes on without you';
-    case 'career.audition': return ', and one your agency got you counts: three and it lets you go';
-    case 'career.work': return ': the job ends, and an agency you have lets you go';
-    case 'career.showcase': return ', and the room never sees you';
     default: return '';
   }
 }
@@ -636,10 +637,14 @@ defineLook<TheEntry>('entry', {
                 : 'This one the world handles on its own when the clock reaches it.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
+          {/* Until 2026-10-12 an entry somewhere else said "a job’s travel takes you there on its own, and anything
+              else needs you to be there by then". There’s been no job since 2026-10-09, and nothing writes where the
+              player is after a life begins (`world/bootstrap.ts`), so one that wants them and hasn’t come round says
+              it’ll be missed, as its handler has it (from 2026-10-12). */}
           <p className="small muted">
             {city
               ? elsewhere
-                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}: a job’s travel takes you there on its own, and anything else needs you to be there by then.</>
+                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}{entry.requiresPlayer && entry.status === 'pending' ? ', and nothing takes you there, so it’ll be missed' : ''}.</>
                 : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
               : 'It names no city, so wherever you are is close enough.'}
             {clashes.length > 0

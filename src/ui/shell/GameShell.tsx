@@ -24,6 +24,7 @@ import { isOpen } from '@/engine/world/tutorial';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
+import { HelpProvider } from '@/ui/guide/Help';
 import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
@@ -62,6 +63,7 @@ export function GameShell() {
 
   return (
     <GuideProvider>
+    <HelpProvider>
     <div className="shell">
       <a className="skip-link" href="#main">Skip To Content</a>
 
@@ -149,8 +151,7 @@ export function GameShell() {
               className="rail-you rail-item"
               aria-current={route === '/workspace/profile' ? 'page' : undefined}
               aria-label={`${sim.player.displayName}, Open Your Player Profile`}
-              disabled={!profileOpen}
-              title={profileOpen ? 'Your Player Profile' : 'Opens with “You As An Actor” in the guide'}
+              title={profileOpen ? 'Your Player Profile' : 'Locked: opens with its chapter in the guide'}
               onClick={() => go('/workspace/profile', 'Player Profile')}
             >
               <span className="col">
@@ -201,6 +202,7 @@ export function GameShell() {
         ))}
       </div>
     </div>
+    </HelpProvider>
     </GuideProvider>
   );
 }
@@ -211,8 +213,12 @@ function Screen({ route }: { route: string }) {
   return <Home />;
 }
 
+/**
+ * Where the save stands (from 2026-10-12: until then it said Saved whenever no save was under way, through up to the
+ * 45 seconds of play before the next autosave, and phones never showed it).
+ */
 function SaveIndicator() {
-  const { saving, saveError, saveNow } = useGame();
+  const { saving, saveError, saveNow, unsaved } = useGame();
   if (saveError) {
     return (
       <button className="btn btn-sm btn-danger" onClick={() => void saveNow()} title={saveError}>
@@ -221,8 +227,8 @@ function SaveIndicator() {
     );
   }
   return (
-    <span className="xs dim hide-sm" aria-live="polite" style={{ minWidth: 52, textAlign: 'right' }}>
-      {saving ? 'Saving…' : 'Saved'}
+    <span className="xs dim" aria-live="polite" style={{ minWidth: 52, textAlign: 'right' }}>
+      {saving ? 'Saving…' : unsaved() ? 'Not Saved Yet' : 'Saved'}
     </span>
   );
 }

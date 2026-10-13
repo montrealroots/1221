@@ -1,0 +1,261 @@
+/**
+ * Five Papers and School defects found by the triage of 2026-10-12, each held here against the engine and the screen
+ * that shows it (from 2026-10-12): a withdrawal by the fifteenth day of classes said Yale Health was canceled back to
+ * the term's start, where it went back to the insurance term's (1 August) in a fall and only to the day of withdrawing
+ * in a spring; HUSKY D's work test counted a benefit, interest or a pension as work, and never read the 80 hours it
+ * named; Your Cover, Home and the bills' subtitle called Covered Connecticut and HUSKY D the Essential Plan; Yale's
+ * dental plan bought in August covered five weeks, and the degree ended a paid year with no refund; and Your Doctor's
+ * and Your Pharmacy's empty options did nothing once a choice was made, beside a pharmacy price with no currency.
+ *
+ * The screens are rendered to markup (react-dom/server) over real saves, as tests/defects-g8-3.test.ts renders them:
+ * `useGame` stands in for the provider and `run` is the save's own `execute`. React's `useState(false)` is answered
+ * `true` while `h.asking` is set, which is the one press that opens the withdrawal's explanation (nothing else on the
+ * Standing tab keeps a `false` state). PLAYER JOURNEYS play through commands; FIXTURES set a state by hand to reach one
+ * rule, and say so.
+ */
+import { describe, expect, it, vi } from 'vitest';
+import { createElement, type FunctionComponent } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createSave, quickSave } from '@/engine';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { PUBLIC_COVER } from '@/engine/content/safetynet';
+import { US_PHARMACIES } from '@/engine/content/carevisits';
+import { recordBenefit, recordInterest } from '@/engine/systems/earnings';
+import { coverLabel, coverOn, healthMonth, healthOf, teethAndEyesShareOf } from '@/engine/systems/health';
+import { DOCTOR_KINDS, clinicsIn } from '@/engine/systems/clinics';
+
+const h = vi.hoisted(() => ({
+  sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
+  tabs: {} as Record<string, string>,
+  asking: false,
+}));
+
+// The withdrawal's explanation shows after a press (`asking`): answered open while `h.asking` is set.
+vi.mock('react', async (orig) => {
+  const real = await orig<typeof import('react')>();
+  const useState = ((init: unknown) => (h.asking && init === false ? [true, () => undefined] : real.useState(init))) as typeof real.useState;
+  return { ...real, useState, default: { ...real, useState } };
+});
+
+// The screens' kept tab: the store it's kept in has no server snapshot to render from.
+vi.mock('@/ui/kept', async (orig) => {
+  const real = await orig<typeof import('@/ui/kept')>();
+  return { ...real, useKept: <T,>(key: string, initial: T) => [(h.tabs[key] ?? initial) as T, () => undefined] as const };
+});
+
+// Without the original: it imports the looks, which import it back, and would get the original's hooks.
+vi.mock('@/app/game-context', () => {
+  const noop = () => undefined;
+  const game = () => new Proxy({
+    get sim() { return h.sim; },
+    version: 0,
+    run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }),
+    toast: noop,
+    navigate: noop,
+  } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });
+  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
+});
+
+const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
+const { Home } = await import('@/ui/screens/Home');
+
+const NY = 'America/New_York';
+const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
+const student = (seed: string, extra: Record<string, unknown> = {}) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+/** A life in New Haven with no school, as tests/safetynet.test.ts makes one: it starts on 5 January 2026. */
+const newHaven = (seed: string) => quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'comfortable' }, seed);
+/** Played by somebody who looks after themselves, as tests/leave.test.ts plays one. */
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
+const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
+
+/** A screen as the player has it: its markup, and its text with the tags taken out. */
+function drawn(sim: Simulation, screen: FunctionComponent, tabs: Record<string, string> = {}, asking = false): { html: string; text: string } {
+  h.sim = sim;
+  h.tabs = tabs;
+  h.asking = asking;
+  try {
+    const html = renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '');
+    return { html, text: html.replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ') };
+  } finally {
+    h.asking = false;
+  }
+}
+const healthTab = { 'tab:/workspace/papers': 'health' };
+/** A select's options as drawn: each one's value and its words. */
+const optionsOf = (html: string, id: string) => [...(html.match(new RegExp(`<select id="${id}"[\\s\\S]*?</select>`))?.[0] ?? '').matchAll(/<option value="([^"]*)"[^>]*>([^<]*)<\/option>/g)].map((m) => ({ value: m[1]!, words: m[2]! }));
+/** FIXTURE: a work posting as Yale's payroll makes one, its hours in its memo (`workedBetween`), on a day of our choosing. */
+const worked = (sim: Simulation, when: number, hours: number, pay: number) => sim.post({ at: when, memo: `Work-study wages, ${hours} hours: Yale`, category: 'salary', postings: [{ accountId: sim.player.primaryAccountId!, amount: pay }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -pay }] });
+
+describe('a withdrawal by the fifteenth day of classes says when Yale Health’s cover ends', () => {
+  it('PLAYER JOURNEY: in a fall it goes back to 1 August, the insurance term’s start, three weeks before the term began', () => {
+    const sim = student('g84-withdraw-fall');
+    tended(sim, at(2026, 9, 8, 12));
+    expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
+    // What the cover did: care on 10 August, two weeks before the term began on 24 August, is no longer Yale's.
+    expect(coverOn(sim.player, at(2026, 8, 10))).not.toBe('yale');
+    const body = titled(sim, 'You Withdrew From The School')[0]!.body;
+    expect(body).not.toMatch(/back to the term’s start/);
+    expect(body).toMatch(/canceled back to August 1, 2026, the start of its insurance term/);
+  });
+
+  it('PLAYER JOURNEY: in a spring it ends that day, and care since 4 January stays covered by the fall’s insurance term', () => {
+    const sim = student('g84-withdraw-spring');
+    tended(sim, at(2027, 1, 13, 12));
+    expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
+    // The term began on 4 January; its insurance term on 1 February, after the withdrawal. Care before it was Yale's.
+    expect(coverOn(sim.player, at(2027, 1, 6))).toBe('yale');
+    expect(coverOn(sim.player, at(2027, 1, 14))).not.toBe('yale');
+    const body = titled(sim, 'You Withdrew From The School')[0]!.body;
+    expect(body).not.toMatch(/back to the term’s start|canceled back/);
+    expect(body).toMatch(/Yale Health’s cover ends today/);
+  });
+
+  it('the Standing tab says it before the press that confirms it: the day you withdraw, or 1 August where that came first', () => {
+    const sim = student('g84-withdraw-screen');
+    const { text } = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }, true);
+    expect(text).toMatch(/Withdrawing gives up your place today/);
+    expect(text).not.toMatch(/back to the term’s start/);
+    expect(text).toMatch(/ends the day you withdraw, or goes back to the start of its insurance term \(1 August, for a fall term\) where that came first/);
+  });
+});
+
+describe('HUSKY D’s work test reads last month’s work: its hours and its pay', () => {
+  // FIXTURE: HUSKY D held since January 2027 and up for renewal on 1 July, after the work test began (2027).
+  const huskyD = (seed: string) => {
+    const sim = newHaven(seed);
+    healthOf(sim.player).program = { kind: 'medicaid', state: 'ct', from: at(2027, 1, 1, 0), band: 'low', renewAt: at(2027, 7, 1, 0) };
+    return sim;
+  };
+  const renewal = at(2027, 7, 1, 1);
+
+  it('ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much', () => {
+    expect(PUBLIC_COVER.workFrom <= '2027-07-01').toBe(true);
+    const sim = huskyD('g84-work-benefit');
+    recordBenefit(sim.player, at(2027, 6, 10), NY, 700_00);
+    recordInterest(sim.player, at(2027, 6, 30), NY, 20_00);
+    healthMonth(sim, sim.player, renewal);
+    expect(healthOf(sim.player).program!.until).toBe(renewal);
+    expect(titled(sim, 'Your Public Cover Ended At Renewal')[0]!.body).toMatch(/80 hours’ work or \$580\.00 of earnings a month, and last month had neither/);
+  });
+
+  it('renews on $580 of pay, worked in June, whatever the hours', () => {
+    const sim = huskyD('g84-work-pay');
+    worked(sim, at(2027, 6, 12), 20, 600_00);
+    healthMonth(sim, sim.player, renewal);
+    expect(healthOf(sim.player).program!.until).toBeUndefined();
+    expect(healthOf(sim.player).program!.renewAt).toBe(at(2028, 1, 1, 0));
+  });
+
+  it('renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s', () => {
+    // FIXTURE: 80 hours at $5 an hour, under the $580 the pay test asks. At SLATE's own wages (work-study's $23 an hour,
+    // the Summer Cabaret's 40 hours a week for $375) 80 hours are always over $580, so the hours never decide alone.
+    const enough = huskyD('g84-work-hours');
+    worked(enough, at(2027, 6, 12), 80, 400_00);
+    healthMonth(enough, enough.player, renewal);
+    expect(enough.player.health!.program!.until).toBeUndefined();
+    const short = huskyD('g84-work-hours-short');
+    worked(short, at(2027, 6, 12), 79, 400_00);
+    worked(short, at(2027, 5, 31, 12), 80, 1_840_00);
+    worked(short, at(2027, 7, 1, 0) + 30 * 60_000, 80, 1_840_00);
+    healthMonth(short, short.player, renewal);
+    expect(short.player.health!.program!.until).toBe(renewal);
+  });
+});
+
+describe('a program is called by its own name', () => {
+  // FIXTURE: a program held since a day before, as Enroll on Papers makes one.
+  const holding = (sim: Simulation, state: 'ny' | 'ca' | 'ct', kind: 'medicaid' | 'essential') => {
+    healthOf(sim.player).program = { kind, state, from: sim.now - MS_DAY, band: 'low', renewAt: sim.now + 180 * MS_DAY };
+    return sim;
+  };
+
+  it('in each state SLATE keeps: HUSKY D, Covered Connecticut, Medi-Cal, the Essential Plan and Medicaid', () => {
+    const sim = newHaven('g84-label');
+    const label = (state: 'ny' | 'ca' | 'ct', kind: 'medicaid' | 'essential') => coverLabel(holding(sim, state, kind).player, sim.now);
+    expect(label('ct', 'medicaid')).toBe('HUSKY D');
+    expect(label('ct', 'essential')).toBe('Covered Connecticut');
+    expect(label('ca', 'medicaid')).toBe('Medi-Cal');
+    expect(label('ny', 'essential')).toBe('Essential Plan');
+    expect(label('ny', 'medicaid')).toBe('Medicaid');
+    expect(coverLabel(student('g84-label-yale').player, at(2026, 8, 25))).toBe('Yale Health');
+    delete healthOf(sim.player).program;
+    expect(coverLabel(sim.player, sim.now)).toBeUndefined();
+  });
+
+  /** FIXTURE: the degree conferred in May 2026, so Yale Health ended on 1 August: Home shows Papers to a student's life. */
+  const graduate = (seed: string) => {
+    const sim = student(seed);
+    Object.assign(sim.player.school!, { standing: 'graduated', endedAt: at(2026, 5, 18) });
+    return sim;
+  };
+
+  it('on Your Cover, on the bills’ subtitle and on Home’s Papers line', () => {
+    const husky = holding(graduate('g84-label-husky'), 'ct', 'medicaid');
+    const papers = drawn(husky, PapersWorkspace, healthTab).text;
+    expect(papers).toMatch(/This Month HUSKY D/);
+    expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 of/);
+    expect(papers).not.toMatch(/Essential Plan:|This Month Medicaid/);
+    expect(drawn(husky, Home).text).toMatch(/Cover: HUSKY D\./);
+    const covered = holding(graduate('g84-label-covered'), 'ct', 'essential');
+    expect(drawn(covered, PapersWorkspace, healthTab).text).toMatch(/This Month Covered Connecticut .*Care And Its Bills Covered Connecticut: /);
+    expect(drawn(covered, Home).text).toMatch(/Cover: Covered Connecticut\./);
+  });
+});
+
+describe('Yale’s dental plan runs Yale’s plan year', () => {
+  it('PLAYER JOURNEY: bought on the first day, 24 August, it runs to 30 September a year on, at the year’s price', () => {
+    const sim = student('g84-dental');
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: true, value: { plan: 'yale' } });
+    expect(zonedParts(healthOf(sim.player).dental!.until!, NY)).toMatchObject({ year: 2027, month: 10, day: 1 });
+  });
+
+  it('bought in October or in July, it runs to the next 30 September', () => {
+    const fall = student('g84-dental-oct');
+    tended(fall, at(2026, 10, 2));
+    fall.must({ kind: 'health.dental', payload: { on: true } });
+    expect(zonedParts(healthOf(fall.player).dental!.until!, NY)).toMatchObject({ year: 2027, month: 10, day: 1 });
+  });
+
+  it('a paid year isn’t ended by the degree: it covers a cleaning in September after Yale Health ended on 1 August', () => {
+    const sim = student('g84-dental-degree');
+    sim.must({ kind: 'health.dental', payload: { on: true } });
+    // FIXTURE: the degree conferred in May 2027, as Commencement confers it, so Yale Health covers to 31 July.
+    Object.assign(sim.player.school!, { standing: 'graduated', endedAt: at(2027, 5, 24) });
+    expect(coverOn(sim.player, at(2027, 8, 2))).not.toBe('yale');
+    healthMonth(sim, sim.player, at(2027, 8, 1, 1));
+    healthMonth(sim, sim.player, at(2027, 9, 1, 1));
+    expect(zonedParts(healthOf(sim.player).dental!.until!, NY)).toMatchObject({ year: 2027, month: 10, day: 1 });
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', at(2027, 9, 15))).toBe(0);
+  });
+
+  it('a monthly plan still ends with the health cover it’s bought beside', () => {
+    // FIXTURE: New York's own dental plan, held by somebody who has moved to New Haven, where SLATE sells none.
+    const sim = newHaven('g84-dental-monthly');
+    healthOf(sim.player).dental = { plan: 'ny', from: sim.now, deductible: {}, paid: {} };
+    healthMonth(sim, sim.player, at(2026, 2, 1, 1));
+    expect(healthOf(sim.player).dental!.until).toBe(at(2026, 2, 1, 1));
+  });
+});
+
+describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
+  it('shows the empty choice only while nothing is chosen, and the chain’s price in the save’s money', () => {
+    const sim = newHaven('g84-doctor');
+    let { html } = drawn(sim, PapersWorkspace, healthTab);
+    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The Town’s First Practice' });
+    expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Median' });
+    expect(optionsOf(html, 'own-pharmacy').map((o) => o.words)).toContain('Walmart Pharmacy, A Generic $4.00 Uninsured');
+    const practice = clinicsIn(sim.player.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind)).at(-1)!;
+    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: practice.id } });
+    sim.must({ kind: 'health.choose_pharmacy', payload: { chain: US_PHARMACIES[0]!.id } });
+    ({ html } = drawn(sim, PapersWorkspace, healthTab));
+    expect(optionsOf(html, 'own-doctor').map((o) => o.value)).not.toContain('');
+    expect(optionsOf(html, 'own-pharmacy').map((o) => o.value)).not.toContain('');
+    expect(optionsOf(html, 'own-doctor').length).toBeGreaterThan(0);
+    // The empty choice was refused by the engine anyway: there was nothing it could do once a choice was made.
+    expect(sim.execute({ kind: 'health.choose_clinic', payload: { clinicId: '' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'health.choose_pharmacy', payload: { chain: '' } }).ok).toBe(false);
+  });
+});

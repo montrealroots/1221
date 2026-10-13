@@ -548,9 +548,11 @@ export class Simulation {
     const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
     const eventsBefore = this.pendingEvents.length;
     this.depth++;
+    let done = false;
     try {
       const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
       const events = this.pendingEvents.splice(eventsBefore).map((e) => e.kind);
+      done = true;
       return { ok: true, value, events };
     } catch (err) {
       restoreUniverse(this.universe, snapshot);
@@ -559,90 +561,14 @@ export class Simulation {
       return { ok: false, error: message };
     } finally {
       this.depth--;
+      if (done && this.depth === 0) this.settleNotices();
     }
   }
 
-  /**
-   * A command tried and put back: what it would do now, by the same rules and
-   * refusals as `execute`, and the world exactly as it was afterwards. The
-   * built-in assistant shows a proposal this way before the player takes it
-   * (`systems/assistant.ts`, from 2026-10-02).
-   */
-  preview<R = unknown, T = undefined>(command: Command<Record<string, unknown>, R>, read?: (sim: Simulation) => T): CommandResult<R> & { notices: string[]; read?: T } {
-    if (this.depth > 0 || this.advancing) return { ok: false, error: 'A proposal is tried only while the clock is still.', notices: [] };
-    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
-    const eventsBefore = this.pendingEvents.length;
-    const noticesBefore = this.universe.notifications.length;
-    let result: CommandResult<R>;
-    let notices: string[] = [];
-    let seen: T | undefined;
-    try {
-      result = this.execute<R>(command);
-      // Whatever the caller asked to read, in the world the command left, before it is put back.
-      if (result.ok && read) seen = read(this);
-    } finally {
-      // Read what it said before the log is put back.
-      notices = this.universe.notifications.slice(noticesBefore).map((n) => n.title);
-      restoreUniverse(this.universe, snapshot);
-      this.pendingEvents.length = eventsBefore;
-    }
-    return { ...result, notices, ...(seen !== undefined ? { read: seen } : {}) };
-  }
-
-  /**
-   * Commands tried in order and all put back (from 2026-10-06): each by `execute`'s own rules against the world the
-   * ones before it leave, a refused one leaving it as it was; with what each said, and what the caller reads before
-   * and after each.
-   */
-  previewAll<T>(commands: readonly Command<Record<string, unknown>>[], read: (sim: Simulation) => T): (CommandResult & { notices: string[]; before: T; after?: T })[] {
-    if (this.depth > 0 || this.advancing) return commands.map(() => ({ ok: false, error: 'A proposal is tried only while the clock is still.', notices: [], before: read(this) }));
-    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
-    const eventsBefore = this.pendingEvents.length;
-    try {
-      return commands.map((command) => {
-        const noticesBefore = this.universe.notifications.length;
-        const before = read(this);
-        const result = this.execute(command);
-        const notices = this.universe.notifications.slice(noticesBefore).map((n) => n.title);
-        return { ...result, notices, before, ...(result.ok ? { after: read(this) } : {}) };
-      });
-    } finally {
-      restoreUniverse(this.universe, snapshot);
-      this.pendingEvents.length = eventsBefore;
-    }
-  }
-
-  /**
-   * Commands run in order, all or none (from 2026-10-06, for the assistant's proposals taken together): each by
-   * `execute`'s own rules, and if one is refused, the world goes back to before the first, and which one and why
-   * is said.
-   */
-  executeAll(commands: readonly Command<Record<string, unknown>>[]): { ok: true } | { ok: false; at: number; error: string } {
-    if (this.depth > 0 || this.advancing) return { ok: false, at: 0, error: 'These are taken only while the clock is still.' };
-    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
-    const eventsBefore = this.pendingEvents.length;
-    for (const [at, command] of commands.entries()) {
-      const done = this.execute(command);
-      // A command that answers with a refusal of its own (the calendar's `{ ok: false, error }`) wasn't done either.
-      const answered = refusedIn(done.value);
-      if (!done.ok || answered !== undefined) {
-        restoreUniverse(this.universe, snapshot);
-        this.pendingEvents.length = eventsBefore;
-        return { ok: false, at, error: done.error ?? answered ?? `${command.kind} failed` };
-      }
-    }
-    return { ok: true };
-  }
-
-  /** A reading of the world that leaves it untouched, whatever the reading's helpers set up on the way (from 2026-10-02). */
-  peek<T>(read: (sim: Simulation) => T): T {
-    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
-    try {
-      return read(this);
-    } finally {
-      restoreUniverse(this.universe, snapshot);
-    }
-  }
+  // `preview`, `previewAll`, `executeAll` and `peek`, a command tried and put back, several, several all or none, and a
+  // reading put back, went on 2026-10-12: the built-in assistant they were for (`systems/assistant.ts`) went in the scope
+  // reset of 2026-10-09, and nothing in the game, its tests or its tools called them after it. A worked example in the
+  // guide's reference is read from the rules, never run on the player's save.
 
   /** Throws on failure. For internal call sites that treat failure as a bug. */
   must<R = unknown>(command: Command<Record<string, unknown>, R>): R {
@@ -724,9 +650,12 @@ export class Simulation {
 
   notify(spec: { category: string; title: string; body: string; importance?: number; route?: string; refType?: string; refId?: Id }): void {
     // Said again word for word while the last is unread (from 2026-10-06): that one is brought up to now, not said twice.
-    // A played life to 89 had one towel notice as 354 of its last 500.
+    // A played life to 89 had one towel notice as 354 of its last 500. Inside a command the notice is only added, and
+    // the earlier one taken off once the command is done (`settleNotices`, from 2026-10-12): a command's rollback cuts
+    // the log back to its length, and a notice moved or a cap applied mid-command left the refused command's notice in
+    // the save and lost the oldest.
     const notes = this.universe.notifications;
-    const same = notes.findIndex((n) => !n.read && n.title === spec.title && n.body === spec.body && n.category === spec.category);
+    const same = this.depth > 0 ? -1 : notes.findIndex((n) => !n.read && n.title === spec.title && n.body === spec.body && n.category === spec.category);
     if (same >= 0) {
       const [again] = notes.splice(same, 1);
       notes.push({ ...again!, at: this.now });
@@ -745,9 +674,23 @@ export class Simulation {
       refId: spec.refId,
       importance: spec.importance ?? 50,
     });
-    if (this.universe.notifications.length > 500) {
-      this.universe.notifications.splice(0, this.universe.notifications.length - 500);
+    if (this.depth === 0) this.settleNotices();
+  }
+
+  /**
+   * The notices put in order once nothing can roll them back (from 2026-10-12): a notice said again while an earlier one
+   * of the same words is unread takes the earlier one's place, and the log keeps its latest 500.
+   */
+  private settleNotices(): void {
+    const notes = this.universe.notifications;
+    const seen = new Set<string>();
+    for (let i = notes.length - 1; i >= 0; i -= 1) {
+      const n = notes[i]!;
+      if (n.read) continue;
+      const key = `${n.category}\u0000${n.title}\u0000${n.body}`;
+      if (seen.has(key)) notes.splice(i, 1); else seen.add(key);
     }
+    if (notes.length > 500) notes.splice(0, notes.length - 500);
   }
 
   /** Raises something into the Decision Center. Deduplicates on refType+refId+category. */
@@ -811,11 +754,13 @@ export class Simulation {
 /**
  * Rollback support.
  *
- * `transactions` and `notifications` are strictly
- * append-only, so rolling them back is a truncation rather than a clone. That
- * matters: those four are the collections that grow without bound over a
- * decade of play, and cloning them on every command would make a long save
- * progressively slower to play.
+ * `transactions` and `notifications` are only appended to while a command runs,
+ * so rolling them back is a truncation rather than a clone. That matters: those
+ * two are the collections that grow without bound over a decade of play, and
+ * cloning them on every command would make a long save progressively slower to
+ * play. Until 2026-10-12 this said they were "strictly append-only" and "those
+ * four", and neither was so: a notice said again was moved, and the log was cut
+ * at 500, mid-command; both wait for the command to finish now (`settleNotices`).
  */
 const APPEND_ONLY_LOGS = ['transactions', 'notifications'] as const;
 
@@ -824,17 +769,7 @@ export interface UniverseSnapshot {
   logLengths: Record<string, number>;
 }
 
-/**
- * The refusal a command answered with instead of throwing, or nothing (from 2026-10-06). The calendar's commands
- * answer `{ ok: false, error }` so the screen can print it beside the field; a sequence taken all or none, and the
- * assistant's check of one, read that as the refusal it is. Until then a calendar plan the world declined was
- * checked as done.
- */
-export function refusedIn(value: unknown): string | undefined {
-  if (typeof value !== 'object' || value === null || (value as { ok?: unknown }).ok !== false) return undefined;
-  const error = (value as { error?: unknown }).error;
-  return typeof error === 'string' && error ? error : 'It wasn’t done.';
-}
+// `refusedIn`, the refusal a command answered with instead of throwing, went on 2026-10-12 with `executeAll`, its one reader.
 
 export function snapshotUniverse(u: SaveUniverse): UniverseSnapshot {
   const logLengths: Record<string, number> = {};

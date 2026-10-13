@@ -31,8 +31,9 @@ import { latePenaltyAll, owedEverywhere, unassessedBalance } from '@/engine/syst
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, schoolEnded, yearOfStudy } from '@/engine/systems/school';
-import { COVER_LABEL, coverOn } from '@/engine/systems/health';
+import { coverLabel, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -151,6 +152,7 @@ export function Home() {
             Open Calendar
           </Gated>
         )}
+        help="day.calendar"
       >
         <LookRegion>
           {next ? (
@@ -197,6 +199,9 @@ export function Home() {
               </div>
             </>
           )}
+          <div className="row" style={{ justifyContent: 'flex-end', marginTop: 'var(--s2)' }}>
+            <HowItWorks help="ui.open-calendar" label="How Your Own Plans Work" />
+          </div>
         </LookRegion>
       </Panel>
       )}
@@ -212,6 +217,7 @@ export function Home() {
               Mark {unread.length} Read
             </Gated>
           ) : undefined}
+          help="day.needs"
         >
           {decisions.length === 0 && unread.length === 0 ? (
             weighing.length === 0 ? (
@@ -309,7 +315,7 @@ export function Home() {
 
         <div className="col gap-4">
           {!shows.how ? <LockedPanel feature="ui.how" title="How You Are" /> : (
-          <Panel title="How You Are" tight look={at('person', player.id)}>
+          <Panel title="How You Are" tight look={at('person', player.id)} help="body.how">
             {/*
               The summary names you, and the three bars name their dials, so
               each is the way into itself. Six more dials are simulated every
@@ -331,7 +337,7 @@ export function Home() {
 
           {!shows.where && <LockedPanel feature="ui.where" title="Where You Are" />}
           {place && shows.where && (
-            <Panel title="Where You Are" tight look={at('place', place.city.id)}>
+            <Panel title="Where You Are" tight look={at('place', place.city.id)} help="start.home">
               <LookRegion>
                 <div className="strong">
                   <Open subject={at('place', place.city.id)}>{place.city.name}</Open>
@@ -378,7 +384,7 @@ export function Home() {
 
           {!shows.weather && <LockedPanel feature="ui.weather" title="Weather" />}
           {weather && city && shows.weather && (
-            <Panel title="Weather" tight look={at('weather', city.id)}>
+            <Panel title="Weather" tight look={at('weather', city.id)} help="day.weather">
               {/*
                 Every day in the strip is its own moment and opens as one. The
                 climate band used to sit in the header as a chip that did
@@ -434,7 +440,7 @@ export function Home() {
       {/* Your affairs, in a line each (from 2026-10-10): money, the school and the papers were three panels of their own
           here, each with three or four tiles, the same figures as their workspaces. Each is a summary now, with only what
           needs doing as an alert, and its workspace for the rest. */}
-      <Panel title="Your Affairs" tight look={at('networth', player.id)}>
+      <Panel title="Your Affairs" tight look={at('networth', player.id)} help="money.affairs">
         <div className="col gap-3">
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
@@ -442,6 +448,7 @@ export function Home() {
               line={`${primary?.name ?? 'No account'}: ${formatMoney(primary?.balance ?? 0, cur)}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
+              help="bank.accounts"
             />
           )}
           {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : <SchoolLine />)}
@@ -453,12 +460,13 @@ export function Home() {
 }
 
 /** One of your affairs on Home: what it is, one line of where it stands, what needs doing if anything, and the way in. */
-function AffairLine({ title, line, alert, action }: { title: string; line: string; alert?: string; action: React.ReactNode }) {
+function AffairLine({ title, line, alert, action, help }: { title: string; line: string; alert?: string; action: React.ReactNode; help: string }) {
   return (
     <div className="row gap-3 wrap" style={{ alignItems: 'baseline' }}>
       <strong className="small" style={{ minWidth: 64 }}>{title}</strong>
       <span className="small grow" style={{ minWidth: 0 }}>{line}{alert && <span className="xs" style={{ display: 'block', color: 'var(--warning)' }}>{alert}</span>}</span>
       {action}
+      <HowItWorks help={help} />
     </div>
   );
 }
@@ -491,6 +499,7 @@ function SchoolLine() {
       line={`${where}, ${STANDING_LABEL[school.standing].toLowerCase()}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
       alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}: the School screen says why.` : undefined}
       action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>{YALE_DRAMA.short}</Gated>}
+      help="school.standing"
     />
   );
 }
@@ -522,9 +531,10 @@ function PapersLine({ cur }: { cur: string }) {
   return (
     <AffairLine
       title="Papers"
-      line={`Cover: ${cover ? COVER_LABEL[cover] : 'none'}.${claim ? ` Unemployment, ${formatMoney(claim.weekly, cur, { cents: false })} a week.` : ''}`}
+      line={`Cover: ${coverLabel(person, sim.now) ?? 'none'}.${claim ? ` Unemployment, ${formatMoney(claim.weekly, cur, { cents: false })} a week.` : ''}`}
       alert={alerts.length ? alerts.join(' ') : undefined}
       action={<Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>Papers</Gated>}
+      help="papers.overview"
     />
   );
 }

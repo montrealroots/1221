@@ -40,7 +40,7 @@ const SPELLINGS = {
   vapour: 'vapor', odour: 'odor', odours: 'odors', savour: 'savor', savoury: 'savory',
   endeavour: 'endeavor', harbour: 'harbor', harbours: 'harbors',
   labour: 'labor', labours: 'labors', laboured: 'labored',
-  grey: 'gray', greys: 'grays', greying: 'graying',
+  grey: 'gray', greys: 'grays', greying: 'graying', greyed: 'grayed',
   centre: 'center', centres: 'centers', centred: 'centered',
   theatre: 'theater', theatres: 'theaters',
   metre: 'meter', metres: 'meters', kilometre: 'kilometer', kilometres: 'kilometers',
@@ -69,6 +69,9 @@ const SPELLINGS = {
   spelt: 'spelled', dreamt: 'dreamed', sceptical: 'skeptical', scepticism: 'skepticism',
   mould: 'mold', moulded: 'molded', smoulder: 'smolder', smouldering: 'smoldering',
   gemmologist: 'gemologist', gemmology: 'gemology',
+  // From 2026-10-12: until then the British spelling of fulfill reached a casting notice, the School's casting fine print
+  // and a genre's conventions, and nothing here knew the word.
+  fulfil: 'fulfill', fulfils: 'fulfills', fulfilment: 'fulfillment',
   jewel_: 'jewel_',
 };
 

@@ -19,7 +19,12 @@
  *   months for a fixed monthly fee instead of interest, where the card
  *   charges one (Chase's and Bank of America's 1.72%, RBC's, BMO's, the
  *   Japanese banks' installments). The fee is the most the bank says it
- *   charges, as SLATE can't know the offer it would make on the day.
+ *   charges, as SLATE can't know the offer it would make on the day. It's set
+ *   when the plan is made and kept until the plan's paid, as Chase's terms
+ *   say: from 2026-10-12 a plan made on Chase's card while its introductory
+ *   purchase rate is in force costs nothing for its life
+ *   (`PLAN_FREE_IN_INTRO`); until then it paid its 1.72% from its first
+ *   statement.
  * - **Rewards** (C39): the card's base rate on every purchase, counted at
  *   each statement from the ledger and redeemed onto the card; and, since
  *   2026-09-27, a card's bonus on the groceries, at the bank's rate to its
@@ -55,6 +60,29 @@ export const PLAN_MONTHS = [3, 6, 12] as const;
 export function planMonthsOf(card: Account): number[] {
   const own = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
   return own ? Object.keys(own.months).map(Number) : [...PLAN_MONTHS];
+}
+
+/**
+ * The banks whose plan made while the card's introductory purchase rate is in
+ * force costs nothing for its life (from 2026-10-12; until then Chase's plan
+ * paid its fee from its first statement, with purchases at 0%). Chase's terms,
+ * the page `content/cards.ts` cites for its plan fee (LGC61498): a "Monthly
+ * fee of 0% of the amount ... selected to create a Chase Pay Over Time plan
+ * while in the 0% Intro Purchase APR period", and the fee "will be determined
+ * each time a fee-based plan is created and will remain the same until the
+ * plan balance is paid in full". So `card.plan` sets the fee and the
+ * statement charges what the plan carries. The first fix that day waived the
+ * fee at each statement while the introduction ran instead, which charged a
+ * plan made in it its fee once the introduction ended or a payment sixty days
+ * late ended it, where the terms charge it nothing. Bank of America's words
+ * say only "never more than 1.72% of the amount a month", so its plan pays
+ * its fee from the start.
+ */
+export const PLAN_FREE_IN_INTRO: ReadonlySet<string> = new Set(['us-chase']);
+
+/** Whether a plan made today costs nothing for its life: its bank's is free when made in the introduction, and the introductory purchase rate is in force, not ended by a payment sixty days late. */
+export function planFreeIfMadeNow(sim: Simulation, card: Account, credit: CardState, terms: CardTerms): boolean {
+  return Boolean(card.bankId && PLAN_FREE_IN_INTRO.has(card.bankId)) && terms.introUntil !== undefined && sim.now < terms.introUntil && !credit.introLost;
 }
 
 /**
@@ -122,8 +150,8 @@ export function planRoom(person: Person, card: Account): Money {
 
 /**
  * At each statement: each transfer's interest charged onto it, each plan's
- * month moved into what's due with its fee, and the cycle's purchases'
- * rewards counted.
+ * month moved into what's due with the fee it was made with (`card.plan`),
+ * and the cycle's purchases' rewards counted.
  */
 export function statementOffers(sim: Simulation, card: Account, credit: CardState, terms: CardTerms): void {
   for (const one of credit.transfers ?? []) {
@@ -252,7 +280,8 @@ export function registerCardOffers(sim: Simulation): void {
       ? { left: amount, monthly: planPayment(amount, term.apr, months), fee: 0, monthsLeft: months, apr: term.apr }
       : term?.fee !== undefined
         ? { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * term.fee / months), monthsLeft: months }
-        : { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * terms.planFeeShare!), monthsLeft: months };
+        // The fee for the plan's life, set now: nothing on one made in Chase's introduction (`PLAN_FREE_IN_INTRO`), which until 2026-10-12 was charged its 1.72%.
+        : { left: amount, monthly: Math.ceil(amount / months), fee: planFreeIfMadeNow(s, card, credit, terms) ? 0 : Math.round(amount * terms.planFeeShare!), monthsLeft: months };
     credit.plans = [...(credit.plans ?? []), plan];
     return { plan };
   });

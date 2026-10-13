@@ -12,7 +12,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { PREP_DIMS, sceneById } from '@/engine/content/coursework';
-import { courseworkOf, interpretationOf, notesOf, questionsFor, readingDiffers, setWork, show, weightsOf, type Assignment } from '@/engine/systems/coursework';
+import { courseworkOf, interpretationOf, judgeWork, notesOf, questionsFor, readingDiffers, setWork, show, weightsOf, type Assignment } from '@/engine/systems/coursework';
 import { LEARNING } from '@/engine/systems/learning';
 
 const zone = 'America/New_York';
@@ -88,10 +88,13 @@ describe('the learning objective', () => {
     const world = weightsOf(a);
     expect(lines.memorization!).toBeGreaterThan(world.memorization!);
     expect(Object.values(lines).reduce((x, y) => x + y!, 0)).toBeCloseTo(1, 10);
-    // The same work, lines weak: scored lower where the objective is the lines.
+    // The same work, lines weak: scored lower where the objective is the lines. Until 2026-10-12 this compared
+    // `Showing.parts.prep`, a sum of these weights that nothing in the game read, and which went then; it compares the
+    // judged result now, under the same key, which is what the band and the score read.
     const twin = { ...a, prep: { ...a.prep }, answers: { ...a.answers }, objective: 'lines' as const };
-    const under = show(sim, sim.player, a, '2026-10-01', instantFromZoned({ year: 2026, month: 10, day: 1, hour: 10 }, zone)).parts.prep;
-    const over = show(sim, sim.player, twin, '2026-10-01', instantFromZoned({ year: 2026, month: 10, day: 1, hour: 10 }, zone)).parts.prep;
+    const when = instantFromZoned({ year: 2026, month: 10, day: 1, hour: 10 }, zone);
+    const under = judgeWork(sim, sim.player, a, '2026-10-01', when, 'fb-objective').overall;
+    const over = judgeWork(sim, sim.player, twin, '2026-10-01', when, 'fb-objective').overall;
     expect(over).toBeLessThan(under);
   });
 });

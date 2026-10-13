@@ -110,7 +110,9 @@ defineLook<Person>('person', {
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
-      detail: 'What seven of the eight come to: your chance at an audition, and what a class, a day’s work or a workout builds',
+      // What reads it now (from 2026-10-12): until then this named an audition and a day’s work, which went with the
+      // career on 2026-10-09.
+      detail: 'What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in',
     });
     // The traits held and the conditions carried, each opening into what it does (from 2026-10-09: until then the
     // traits were a sentence here and the conditions a row on Papers, and neither said what it moved).
@@ -137,8 +139,9 @@ defineLook<Person>('person', {
     const before = (person.background ?? '').trim();
     // What they did before acting was said here until 2026-09-26, when the
     // question went with the job engine.
-    // The films they love, said back for the same reason; `systems/enjoyment.ts` reads them for what a day of work
-    // gives. What they cared about was said here too until 2026-10-10, when the owner removed the interests.
+    // The films they love, said back for the same reason; `systems/enjoyment.ts` reads them for what a rehearsal or a
+    // night of a play gives, and read them for a day of work until the career went on 2026-10-09. What they cared
+    // about was said here too until 2026-10-10, when the owner removed the interests.
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
     // The traits they picked. Most of them, unlike the rest of this, move the
     // dials below: the nights of a light sleeper and the stress of an even

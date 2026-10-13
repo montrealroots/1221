@@ -1,0 +1,57 @@
+/**
+ * SLATE — a piece of work judged in its parts (from 2026-10-12; `systems/piece.ts`).
+ *
+ * Until then a take, a scene shown in class and a night on stage were each one judgment, as if the whole were played
+ * at once: a brief's beats only counted how many times its tone changed, and a night had no first half and second.
+ * The owner's brief of 2026-10-12 asked for the whole piece, beats and scenes, to be evaluated: whether the character
+ * is sustained, the transitions, continuity, stamina, and recovery from a mistake, with nothing counted twice.
+ *
+ * So a piece is cut into segments (a brief's beats, a scene's tones in order, a play's movements, two at least), and
+ * each is judged by the one evaluation every piece of work goes through, with four things of its own:
+ * - **its tones**, which lean its dimensions (`TONE_LEAN`, normalized as every lean is): a comic beat weighs timing and
+ *   response, a grave one belief;
+ * - **its rehearsal**: the piece's own rehearsal, and whatever focused work went into that segment, so working a beat
+ *   makes that beat more secure. A segment a turn leads into, or one held two ways at once, asks a little more of it
+ *   (`perTurn`, `perBlend`, where the kind of work sets them);
+ * - **where it falls**: stamina is read as a drain growing through the piece, with its load (`drain`), in place of the
+ *   share of consistency it had, so a stamina that can't hold costs the late beats and not the first;
+ * - **a slip before it**: a segment that came out well under what it was expected to (`slipAt`) carries some of it into
+ *   the next, less as composure and adaptability recover it (`rattle`).
+ *
+ * The piece's result is the mean of its segments, weighted by their length. At full abilities, mastered techniques,
+ * complete preparation, a sufficient day and a choice that fits, every segment is 100, so the piece is; there is no
+ * draw at mastery, so there is no slip. Continuity, how evenly the character held across the segments, is read from the
+ * segments and shown, and isn't added to the result: it's what the segments already are.
+ *
+ * Every size here is SLATE's estimate. The shape is the rehearsal room's (a scene worked in units, a run that tires),
+ * not a measured one.
+ */
+
+import type { Dimension } from './tasks';
+import type { Tone } from './material';
+
+/** How a segment's tones lean its dimensions, multiplied in and normalized: a lean moves weight, never adds it. */
+export const TONE_LEAN: Readonly<Record<Tone, Partial<Record<Dimension, number>>>> = {
+  comic: { responsiveness: 1.15, execution: 1.1 },
+  grave: { believability: 1.15, consistency: 1.05 },
+  lyric: { interpretation: 1.1, connection: 1.1 },
+  grotesque: { execution: 1.1, interpretation: 1.1 },
+};
+
+export const PIECE = {
+  /** The stamina drain at the last segment of a piece of load 1, by an actor with none: a factor of 1 − drain on what tiring reaches. */
+  drain: 0.3,
+  /** A segment this many points under what it was expected to come to, with no draw, is a slip. */
+  slipAt: 3,
+  /** The share of a slip carried into the next segment, before composure and adaptability recover it. */
+  rattle: 0.5,
+  /** What a brief's segment asks of rehearsal more, for a turn into it and for being held two ways. */
+  brief: { perTurn: 0.15, perBlend: 0.08 },
+  /** A scene's, against coursework's complete; never past what preparation can reach. */
+  scene: { perTurn: 0.05, perBlend: 0, most: 0.95 },
+  /**
+   * How hard a piece is on stamina, 0 to 1: a base for its kind and length, and a share for each level of the body's
+   * and the voice's work it stages. A night is a whole evening; a brief or a scene a few minutes.
+   */
+  load: { brief: 0.1, briefMedium: 0.2, scene: 0.15, night: 0.4, perLevel: 1 / 6, nightPerLevel: 0.1 },
+} as const;

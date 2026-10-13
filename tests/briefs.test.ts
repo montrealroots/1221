@@ -20,8 +20,10 @@ import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief } from '@/engine/content/brie
 import { AXES } from '@/engine/content/approaches';
 import { MASTERED } from '@/engine/content/abilities';
 import type { Axis } from '@/engine/content/material';
-import { BRIEF, briefContext, briefMaterial, genreKnown, prepSpeed, recordOf, requiredOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
-import { judge, leanedWeights, type Performer } from '@/engine/systems/evaluation';
+import { BRIEF, briefContext, briefMaterial, briefPiece, genreKnown, prepSpeed, recordOf, requiredOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
+import { leanedWeights, type Performer } from '@/engine/systems/evaluation';
+import { judgePiece, segmentRequired } from '@/engine/systems/piece';
+import { PIECE } from '@/engine/content/piece';
 import { addPractice, genreState } from '@/engine/systems/engagement';
 import { materialContext, misfitOf, type Playing } from '@/engine/systems/material';
 import { TASK_PROFILES } from '@/engine/content/tasks';
@@ -35,7 +37,8 @@ const blank = (): BriefRecord => ({ prep: { interpretation: 1, memorization: 1, 
 const FULL_PREP = { interpretation: 1, memorization: 1, rehearsal: 1, genre: 1, approach: 1 };
 const performer = (abilities: Partial<Record<string, number>>, technique = 0, techs: Partial<Record<string, number>> = {}): Performer => ({ ability: (id) => abilities[id] ?? 50, full: () => 100, technique: (s) => techs[s] ?? technique });
 const FULL: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
-const run = (p: Performer, b: Brief, rec: BriefRecord, over: Parameters<typeof briefContext>[3] = {}, readiness = 100) => judge('seed', p, { ...briefContext(nobody, b, rec, { prep: FULL_PREP, ...over }), condition: { readiness }, key: `t:${b.id}`, expected: true });
+// A take as the game judges one: in its beats (`systems/piece.ts`), from 2026-10-12.
+const run = (p: Performer, b: Brief, rec: BriefRecord, over: Parameters<typeof briefContext>[3] = {}, readiness = 100) => judgePiece('seed', p, { ...briefContext(nobody, b, rec, { prep: FULL_PREP, ...over }), condition: { readiness }, key: `t:${b.id}`, expected: true }, briefPiece(b, rec));
 
 /** The ways a brief can be played that fit it: nothing chosen, and each side of each axis it allows. */
 type Sides = Omit<Playing, 'chosenAt' | 'prep'>;
@@ -86,7 +89,8 @@ describe('what a brief reads', () => {
     for (const b of BRIEFS) {
       const r = b.readings[0]!.id;
       const ctx = briefContext(nobody, b, blank(), { reading: r });
-      const read = new Set<string>([...Object.values(ctx.task.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))), ...Object.values(ctx.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability))]);
+      // Stamina is read by every brief, from 2026-10-12, as the drain through its beats (`systems/piece.ts`).
+      const read = new Set<string>([...Object.values(ctx.task.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))), ...Object.values(ctx.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability)), 'stamina']);
       const base = run(performer({}), b, blank(), { reading: r }).overall;
       for (const a of ABILITIES) {
         const up = run(performer({ [a]: 80 }), b, blank(), { reading: r }).overall;
@@ -122,13 +126,21 @@ describe('tone held and tone changed', () => {
   const change = shaped([{ what: 'a joke', tones: ['comic'] }, { what: 'the grief', tones: ['grave'] }], 'brief-drama-t1');
   const held = shaped([{ what: 'a joke that is grief', tones: ['comic', 'grave'] }, { what: 'the same', tones: ['comic', 'grave'] }], 'brief-drama-t2');
 
-  it('asks more rehearsal for a change, and for a beat held two ways, said in what completes it', () => {
-    expect(requiredOf(none).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal, 9);
-    expect(requiredOf(change).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal + BRIEF.complete.perTransition, 9);
-    expect(requiredOf(held).rehearsal).toBeCloseTo(BRIEF.complete.rehearsal + 2 * BRIEF.complete.perBlend, 9);
-    // Independent of the sizes: a scene that changes tone, or holds two at once, asks more rehearsal than one that doesn't.
-    expect(requiredOf(change).rehearsal!).toBeGreaterThan(requiredOf(none).rehearsal! + 0.01);
-    expect(requiredOf(held).rehearsal!).toBeGreaterThan(requiredOf(none).rehearsal! + 0.01);
+  it('asks more rehearsal of the beat a change leads into, and of a beat held two ways, said in what completes it', () => {
+    // From 2026-10-12 the beat asks it, not the whole brief (`systems/piece.ts`).
+    const at = (b: Brief, s: number) => segmentRequired(briefPiece(b, {}), requiredOf(b).rehearsal!, s);
+    expect([at(none, 0), at(none, 1)]).toEqual([BRIEF.complete.rehearsal, BRIEF.complete.rehearsal]);
+    expect(at(change, 0)).toBeCloseTo(BRIEF.complete.rehearsal, 9);
+    expect(at(change, 1)).toBeCloseTo(BRIEF.complete.rehearsal + PIECE.brief.perTurn, 9);
+    expect(at(held, 0)).toBeCloseTo(BRIEF.complete.rehearsal + PIECE.brief.perBlend, 9);
+    // Independent of the sizes: the beat after a change, or one held two ways, asks more than a beat that does neither.
+    expect(at(change, 1)).toBeGreaterThan(at(change, 0) + 0.01);
+    expect(at(held, 1)).toBeGreaterThan(at(none, 1) + 0.01);
+    // And it reaches the result: rehearsed only to the base, the beat after the change comes out under the beat before it.
+    const part = { prep: { interpretation: 1, memorization: 1, rehearsal: BRIEF.complete.rehearsal }, takes: [] };
+    const e = run(performer({}, 60), change, part, { prep: { ...FULL_PREP, rehearsal: BRIEF.complete.rehearsal } });
+    expect(e.piece!.segments[1]!.part).toBeLessThan(e.piece!.segments[1]!.required);
+    expect(e.piece!.segments[0]!.part).toBeGreaterThanOrEqual(e.piece!.segments[0]!.required);
   });
 
   it('asks adaptability of a change and depth of a held beat, so different actors meet each differently', () => {
@@ -302,6 +314,37 @@ describe('what the record makes of it', () => {
     expect(suggestions(sim.player).some((x) => x.brief === 'brief-drama' && /another reading/.test(x.why))).toBe(true);
   });
 
+  it('offers a brief new to them in the genre their work knows least, ahead of another reading (from 2026-10-12)', () => {
+    const sim = student('brief-suggest-genre');
+    go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
+    go(sim, 'practice.self_tape', { genre: 'drama' });
+    const s = suggestions(sim.player);
+    const fresh = s.findIndex((x) => /knows least/.test(x.why));
+    const again = s.findIndex((x) => /another reading/.test(x.why));
+    expect(fresh).toBeGreaterThanOrEqual(0);
+    expect(again).toBeGreaterThan(fresh);
+    const pick = BRIEFS.find((b) => b.id === s[fresh]!.brief)!;
+    expect(sim.player.briefs?.[pick.id]).toBeUndefined();
+    const known = (g: string) => sim.player.engagement?.byGenre[g]?.familiarity ?? 0;
+    expect(BRIEFS.every((b) => b.id === 'brief-drama' || known(b.kinds[0]!) >= known(pick.kinds[0]!))).toBe(true);
+    // Drama, now taped, is not the least known; practicing the suggested genre moves the next suggestion on.
+    expect(pick.kinds[0]).not.toBe('drama');
+  });
+
+  it('offers a weakness a brief not yet taped, once the one leaning most has been (from 2026-10-12)', () => {
+    const sim = student('brief-suggest-fresh');
+    const weak = { target: 'listening', label: 'Listening', level: 30, full: 100 };
+    const first = suggestions(sim.player, weak)[0]!;
+    const b = BRIEFS.find((x) => x.id === first.brief)!;
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });
+    const next = suggestions(sim.player, weak).find((x) => /leans on listening/.test(x.why))!;
+    expect(next.brief).not.toBe(b.id);
+    expect(next.why).toMatch(/haven’t taped/);
+    const second = BRIEFS.map((x) => ({ id: x.id, share: shareOf(sim.player, x, 'listening') })).sort((x, y) => y.share - x.share || x.id.localeCompare(y.id)).filter((x) => x.id !== b.id)[0]!;
+    expect(next.brief).toBe(second.id);
+  });
+
   it('every genre has a brief, reachable by the genre’s own tape', () => {
     for (const b of BRIEFS) expect(briefsOf(b.kinds[0]!)[0], b.id).toBeDefined();
   });
@@ -425,8 +468,8 @@ describe('found by the mastery tool’s twins (2026-10-12)', () => {
     const still = BRIEFS.find((x) => x.physical === 0)!;
     for (const b of [dance, still]) {
       const ctx = { ...briefContext(nobody, b, blank(), { reading: b.readings[0]!.id, prep: FULL_PREP }), key: 'injury', expected: true };
-      const well = judge('seed', FULL, { ...ctx, condition: { readiness: 100 } }).overall;
-      const hurt = judge('seed', FULL, { ...ctx, condition: { readiness: 100, injured: true } }).overall;
+      const well = judgePiece('seed', FULL, { ...ctx, condition: { readiness: 100 } }, briefPiece(b, blank())).overall;
+      const hurt = judgePiece('seed', FULL, { ...ctx, condition: { readiness: 100, injured: true } }, briefPiece(b, blank())).overall;
       expect(well, b.id).toBe(100);
       if (b === dance) expect(hurt, b.id).toBeLessThan(100); else expect(hurt, b.id).toBe(100);
     }

@@ -199,14 +199,12 @@ export interface Person {
   work?: import('../systems/evaluation').WorkRecord[];
   /** The journey's durable counts and milestones, beside the recent detail (`Journey`, from 2026-10-10). */
   journey?: import('../systems/evaluation').Journey;
-  /** What was met and done, kept specifically: material features, ways of playing, materials, exercises (`systems/experience.ts`, from 2026-10-10). */
+  /** What was met and done, kept specifically: material features, ways of playing, exercises (`systems/experience.ts`, from 2026-10-10; each material's showings too until 2026-10-12, read by nothing). */
   experience?: import('../systems/experience').Experience;
   /** Practice briefs prepared, chosen and taped, each with its takes and any callback (`systems/briefs.ts`, from 2026-10-12). */
   briefs?: Record<string, import('../systems/briefs').BriefRecord>;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
-  /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */
-  pensionStart?: { at: number; factor: number };
   /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */
   health?: HealthRecord;
   /** Unemployment insurance claims (`systems/unemployment.ts`). */
@@ -220,8 +218,6 @@ export interface Person {
   /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
   irishPension?: { from: number; weeklyEur: number };
   bienestarFrom?: number;
-  /** What they have on now, and since when: the day's outfit as it's put on, or what they changed into (`systems/wardrobe.ts`, from 2026-10-02). */
-  wornNow?: { itemIds: string[]; since: number };
   /** A course of therapy under way (`systems/therapy.ts`, from 2026-10-03). */
   therapy?: import('../systems/therapy').Course;
   // A wheelchair said on Papers and a disability parking permit were kept here from 2026-10-02 (`systems/access.ts`), read
@@ -229,10 +225,9 @@ export interface Person {
   // that day the two went after them, schema 91 shedding them.
   /** The real plays read and researched, by play (`systems/playreading.ts`, from 2026-10-08). */
   plays?: Record<string, import('../systems/playreading').PlayStudy>;
-  /** When their fingernails and toenails were last trimmed at home (`systems/homegrooming.ts`, from 2026-10-06). */
-  nailsAt?: { fingers?: number; toes?: number };
-  /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */
-  pilotLicences?: { authority: string; country: string; issuedAt: number; /** When its medical runs out, from 2026-10-01. */ medicalUntil?: number }[];
+  // A SAG-AFTRA pension's start, the outfit worn now, the nails trimmed at home and pilot's licenses abroad were declared
+  // here until 2026-10-12, citing systems that went in the scope reset of 2026-10-09; nothing read or wrote them, and
+  // `migrate` sheds them from an older save (`GONE_AT_90`, `engine/index.ts`).
   /** Their IMSS record under the 1997 law: days contributed, the AFORE account, the pension claimed (`systems/imss.ts`). */
   imss?: import('../systems/imss').ImssRecord;
   /** Citizenships taken since birth, by naturalization (`systems/citizenship.ts`, from 2026-09-30). */
@@ -384,10 +379,12 @@ export interface Notification {
 export interface Preferences {
   /**
    * How fast the world runs against real time. 'live' is one to one: a minute
-   * of your evening is a minute of theirs. The faster settings are there for
-   * waiting something out, not because the game needs them.
+   * of your evening is a minute of theirs. Until 2026-10-12 there were two
+   * faster settings, 'fast' and 'faster', for waiting something out; the only
+   * control, Play and Pause, never sent either, so they went (from 2026-10-12),
+   * and `migrate` opens a save that stored one at 'live'.
    */
-  timeSpeed: 'paused' | 'live' | 'fast' | 'faster';
+  timeSpeed: 'paused' | 'live';
 }
 
 /**
@@ -436,6 +433,14 @@ export interface Preferences {
  * COBRA, reputation and recognition, the return home, and a home's, a
  * lodger's and a farm's lines on a year's earnings. A build at 90 would offer
  * COBRA on a union plan nothing earns.
+ *
+ * 92 is the connected attributes of 2026-10-09: the five new abilities drawn
+ * from what's already true of a person, and genre practice from the nights a
+ * save's credits say were played. 93 finished them on 2026-10-10: each
+ * classmate's abilities drawn and kept, and the journey's durable counts built
+ * from the results a save holds. 94 removed the interests, at the owner's word,
+ * the same day. The passes since (to 2026-10-12) added only optional fields,
+ * written when first used, so a build at 94 reads their saves; the number stays.
  *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
@@ -516,9 +521,10 @@ export interface SaveUniverse {
   /**
    * The guide (`world/tutorial.ts`): the chapters read, in the order they
    * were. Absent on a save begun before the guide, or made without it, and
-   * such a save has everything open.
+   * such a save has everything open. `finished` (from 2026-10-12) is set when
+   * the last chapter is read, and keeps the life open if a chapter is added.
    */
-  tutorial?: { read: string[] };
+  tutorial?: { read: string[]; finished?: true };
 
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;

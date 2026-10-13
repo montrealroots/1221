@@ -22,7 +22,7 @@
 
 import { formatMoney, saveCurrency, type Money } from '@/engine/core/money';
 import { Ledger, isLiability, type Account, type AccountKind } from '@/engine/core/ledger';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, formatDate } from '@/engine/core/time';
 import { titleCaseLabel } from '@/engine/core/text';
 import { netWorth, type Worth } from '@/engine/systems/finance';
 import type { Person } from '@/engine/domain/model';
@@ -34,7 +34,7 @@ import { isAre, spokenList } from './words';
 import { cardTerms, stateOf } from '@/engine/systems/credit';
 import { lendingOf } from '@/engine/systems/lending';
 import { cashOwedOn } from '@/engine/systems/cash';
-import { transferRate } from '@/engine/systems/cardoffers';
+import { planLeftOf, transferRate } from '@/engine/systems/cardoffers';
 import { bankById } from '@/engine/content/banks';
 
 /** The window every "lately" sentence in this file means, and its word. */
@@ -89,7 +89,8 @@ const ratePercent = (apr: number): string => `${(apr * 100).toFixed(2)}%`;
  */
 function rateOf(sim: Simulation, a: Account): number | undefined {
   // A current account overdrawn, or with one arranged, is charged its overdraft’s rate day by day (`systems/lending.ts`):
-  // until 2026-09-27 it read as charging nothing. What’s owed the landlord carries none, and read as 0%.
+  // until 2026-09-27 it read as charging nothing. Bills Owed, what went unpaid, carries none, and read as 0%; until
+  // 2026-10-12 this called it what’s owed the landlord, which it was until the home went on 2026-10-09.
   if (a.kind === 'checking') {
     const od = a.bankId ? lendingOf(bankById(a.bankId)).overdraft : undefined;
     const rate = a.overdraftRate ?? (od && 'rate' in od ? od.rate : undefined);
@@ -103,8 +104,12 @@ function rateOf(sim: Simulation, a: Account): number | undefined {
 
 /**
  * A year of interest on what an account owes, as the engine charges it: a
- * card’s cash and transfers at their own rates, the rest at the purchase
- * rate. Until 2026-09-27 the whole card was taken at the purchase rate.
+ * card’s cash and transfers at their own rates, a plan charged as interest at
+ * its own and a plan with a fee at none (its fee is in place of interest), and
+ * the rest at the purchase rate. Until 2026-09-27 the whole card was taken at
+ * the purchase rate; until 2026-10-12 a plan’s balance was too, as the engine
+ * never charges it (`planLeftOf`), so a plan charged as interest during a 0%
+ * introduction read as "charged no interest today" while its interest posted.
  */
 function yearOfInterest(sim: Simulation, a: Account): Money {
   const owed = owedOn(a);
@@ -116,8 +121,9 @@ function yearOfInterest(sim: Simulation, a: Account): Money {
   let transferInterest = 0;
   const state = stateOf(owner, a);
   for (const one of state.transfers ?? []) { transfers += one.owed; transferInterest += one.owed * transferRate(sim, state, one); }
-  const rest = Math.max(0, owed - cash - transfers);
-  return Math.round(rest * terms.apr + cash * (terms.cashApr ?? terms.apr) + transferInterest);
+  const planInterest = (state.plans ?? []).reduce((s, plan) => s + plan.left * (plan.apr ?? 0), 0);
+  const rest = Math.max(0, owed - cash - transfers - planLeftOf(state));
+  return Math.round(rest * terms.apr + cash * (terms.cashApr ?? terms.apr) + transferInterest + planInterest);
 }
 
 /** How long it has been there, in the words a person uses for it. */
@@ -207,7 +213,9 @@ function accountSentence(a: Account, sim: Simulation): string {
     return limit > 0
       ? `You owe ${formatMoney(owed, cur)} on it${where}, which leaves ${formatMoney(free, cur)} of a ${formatMoney(limit, cur)} line still free.`
       : a.category === 'arrears'
-        ? `You owe ${formatMoney(owed, cur)} on it${where}. It’s taken from the first money in the bank each night, unless you pay rent by hand.`
+        // Settled each night from the current account and then its savings (`settleArrears`, `systems/spending.ts`).
+        // Until 2026-10-12 this ended "unless you pay rent by hand": the rent went with the home on 2026-10-09.
+        ? `You owe ${formatMoney(owed, cur)} on it${where}. It’s taken each night from the first money in the account you spend from, then from your savings beside it.`
         : `You owe ${formatMoney(owed, cur)} on it${where}, and it comes down only as fast as you pay it down.`;
   }
 
@@ -231,8 +239,10 @@ function movementSentence(inward: number, outward: number, cur: string): string 
 /** What the money in this sort of account is for. */
 function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
   switch (kind) {
+    // Until 2026-10-12 the last of it was "for what’s owed the landlord": what went unpaid has been Bills Owed since
+    // the home went on 2026-10-09, and savings is drawn on for it each night (`settleArrears`, `systems/spending.ts`).
     case 'savings':
-      return 'set aside, and drawn on to pay what the current account can’t where you’ve linked it, and for what’s owed the landlord.';
+      return 'set aside, and drawn on to pay what the current account can’t where you’ve linked it, and for what went unpaid.';
     case 'brokerage':
       return 'and what it’s worth moves with the market.';
     case 'escrow':
@@ -342,7 +352,7 @@ defineLook<Holdings>('networth', {
       name: 'Net Worth',
       kind: 'What It All Comes To',
       parent: at('person', person.id),
-      summary: worthSentence(worth, cur),
+      summary: worthSentence(worth, cur, inHand(accounts)),
       body: worthBody(held, cur),
       facets: [
         {
@@ -357,15 +367,35 @@ defineLook<Holdings>('networth', {
   },
 });
 
+/**
+ * Whether any of `Worth.cash` is cash in hand (`systems/cash.ts`), which it counts with the bank. Until 2026-10-12
+ * net worth called all of it "in the bank".
+ */
+const inHand = (accounts: readonly Account[]): boolean => accounts.some((a) => a.kind === 'cash' && !a.closedAt && a.balance > 0);
+
+/**
+ * What the money an escrow account holds is doing, by the account’s category, in the net-worth sentence: money sent
+ * between the holder’s banks (`systems/bankmoves.ts`) and SNAP on the EBT card (`systems/assistance.ts`). Any other is
+ * held for later, as the account’s own kind is called.
+ */
+const HELD_AS: Readonly<Record<string, string>> = {
+  in_transit: 'on its way between your banks',
+  ebt: 'in SNAP on your EBT card',
+};
+
 /** Both sides of it, spoken. */
-function worthSentence(w: Worth, cur: string): string {
+function worthSentence(w: Worth, cur: string, withCash: boolean): string {
   // One precision through the sentence: whole units where any figure is past where formatMoney drops cents.
   const whole = [w.cash, w.held, w.pension, w.liabilities, w.total].some((x) => Math.abs(x) >= 100_000_00);
   const say = (c: number) => formatMoney(c, cur, { cents: !whole });
   const parts: string[] = [];
-  if (w.cash > 0) parts.push(`${say(w.cash)} in the bank`);
+  if (w.cash > 0) parts.push(`${say(w.cash)} ${withCash ? 'in the bank or in hand' : 'in the bank'}`);
   if (w.cash < 0) parts.push(`${say(-w.cash)} overdrawn`);
-  if (w.held > 0) parts.push(`${say(w.held)} held as a deposit`);
+  // Held is what an escrow account holds, each part named from the account that holds it (`Worth.heldAs`). It was a
+  // landlord’s deposit until the home went on 2026-10-09, and this said "held as a deposit" until 2026-10-12. For part
+  // of 2026-10-12 it said of all of it "held apart, on its way between your banks or as SNAP on an EBT card", which
+  // told a Torontonian moving money between banks that it might be a US benefit.
+  for (const [as, amount] of Object.entries(w.heldAs)) if (amount > 0) parts.push(`${say(amount)} ${HELD_AS[as] ?? 'held for later'}`);
   if (w.pension > 0) parts.push(`${say(w.pension)} in a pension, locked until you retire`);
   // A home, cars and land were said here too until they went in the scope reset of 2026-10-09.
   if (w.liabilities > 0) parts.push(`${say(w.liabilities)} owed against it`);
@@ -389,7 +419,10 @@ function worthBody(held: Holdings, cur: string) {
         {names.length > 0 && spending ? `, and ${spending.name} is the one the day comes out of.` : names.length > 0 ? '.' : ''}
       </p>
       <div className="grid grid-3">
-        <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash, cur)}</span>} note="Across every account" />
+        {/* Cash in hand is counted here with the bank; until 2026-10-12 the label said "In The Bank" over it all. */}
+        {inHand(accounts)
+          ? <Stat label="In The Bank And In Hand" value={<span className="mono">{formatMoney(worth.cash, cur)}</span>} note="Every account, and the cash on you" />
+          : <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash, cur)}</span>} note="Across every account" />}
         <Stat
           label="Owed"
           value={<span className="mono">{formatMoney(worth.liabilities, cur)}</span>}
@@ -480,18 +513,34 @@ function debtBody(owing: Owing, cur: string, sim: Simulation) {
   const used = limits > 0
     ? Math.round((revolving.reduce((s, a) => s + owedOn(a), 0) / limits) * 100)
     : 0;
+  // Only a rate above nothing is expensive. Until 2026-10-12 a card in a 0% introduction was "the expensive one, at
+  // 0.00%", after "None of them carries a rate".
   const dearest = owing.debts
-    .filter((a) => rateOf(sim, a) !== undefined)
+    .filter((a) => (rateOf(sim, a) ?? 0) > 0)
     .sort((a, b) => (rateOf(sim, b) ?? 0) - (rateOf(sim, a) ?? 0))[0];
+  // A card in its introduction, and when its own rate comes: `cardTerms` gives a `standardApr` only while one is in
+  // force. The year above stays at the rate charged now.
+  const intros = owing.debts.flatMap((a) => {
+    if (a.kind !== 'credit_card') return [];
+    const owner = sim.universe.people[a.ownerId];
+    const terms = cardTerms(sim, a, owner?.credit?.score ?? 650);
+    return terms.standardApr !== undefined && terms.introUntil !== undefined
+      ? [`The ${a.name} is at ${ratePercent(terms.apr)} until ${formatDate(terms.introUntil, sim.zone)}, then ${ratePercent(terms.standardApr)}.`]
+      : [];
+  });
+  const said = [
+    yearly > 0
+      ? `Carried at the rates they charge now, that would come to about ${formatMoney(yearly, cur)} a year, or ${formatMoney(Math.round(yearly / 12), cur)} a month for standing still. A card paid in full each month is charged none.`
+      : intros.length > 0
+        ? 'They’re charged no interest today.'
+        : 'None of them carries a rate, so the balance sits where it is until you pay it.',
+    ...intros,
+    ...(dearest ? [`The ${dearest.name} is the expensive one, at ${ratePercent(rateOf(sim, dearest) ?? 0)}.`] : []),
+  ];
 
   return (
     <>
-      <p className="small">
-        {yearly > 0
-          ? `Carried at the rates they charge now, that would come to about ${formatMoney(yearly, cur)} a year, or ${formatMoney(Math.round(yearly / 12), cur)} a month for standing still. A card paid in full each month is charged none.`
-          : 'None of them carries a rate, so the balance sits where it is until you pay it.'}
-        {dearest ? ` The ${dearest.name} is the expensive one, at ${ratePercent(rateOf(sim, dearest) ?? 0)}.` : ''}
-      </p>
+      <p className="small">{said.join(' ')}</p>
       <p className="small">
         {limits > 0
           ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you. Over 30%, each month’s report costs your record points, more the more of it is used.`

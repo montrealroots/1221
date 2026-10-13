@@ -79,7 +79,7 @@ function CardApplication({ held }: { held: Account[] }) {
   const refused = from && chosen ? transferRefusal(sim, sim.player, chosen.id, limitFor(sim, credit.score), from.id) : undefined;
   const pending = credit.applied ? bankById(credit.applied.bankId) : undefined;
   return (
-    <Panel title={held.length ? 'Another Card' : 'Credit Card'} subtitle={credit.applied ? 'On its way' : held.length ? `${held.length} held` : 'None'}>
+    <Panel title={held.length ? 'Another Card' : 'Credit Card'} subtitle={credit.applied ? 'On its way' : held.length ? `${held.length} held` : 'None'} help="bank.card">
       {credit.applied
         ? <LookRegion><p className="small" style={{ margin: 0 }}>{pending ? <Open subject={at('bank', pending.id)}>{pending.name}</Open> : 'The bank'} approved a card with a {money(credit.applied.limit)} limit. It arrives <Open subject={at('day', dateKey(credit.applied.arrivesAt, sim.homeZone))}>{formatDate(credit.applied.arrivesAt, sim.zone)}</Open>.</p></LookRegion>
         : !chosen
@@ -202,7 +202,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
       : '';
 
   return (
-    <Panel title={terms.name} subtitle={<Open subject={at('account', card.id)}>{`${many && everyday ? 'The everyday card, ' : ''}···${card.last4 ?? ''}`}</Open>} look={at('account', card.id)}>
+    <Panel title={terms.name} subtitle={<Open subject={at('account', card.id)}>{`${many && everyday ? 'The everyday card, ' : ''}···${card.last4 ?? ''}`}</Open>} look={at('account', card.id)} help="bank.card">
       <div className="col gap-3">
         <div className="grid grid-3">
           <div className="stat">

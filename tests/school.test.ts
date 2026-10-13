@@ -82,10 +82,18 @@ describe('one student, one calendar', () => {
       const calls = pending(sim, CALL_KIND).sort((a, b) => a.at - b.at);
       expect(calls.some((c) => c.payload.which === 'rep')).toBe(true);
       expect(calls.some((c) => c.payload.which !== 'rep')).toBe(true);
+      // A night on call is a check at five that holds nobody anywhere (in New Haven and reachable): it isn't a place. From
+      // 2026-10-12 a School rehearsal that evening runs instead of being dropped, and ends by the curtain an understudy
+      // could be sent on for.
+      const placed = calls.filter((c) => !(c.payload.call === 'oncall' && c.durationMinutes === 0));
       let end = 0;
-      for (const c of calls) {
+      for (const c of placed) {
         expect(c.at).toBeGreaterThanOrEqual(end);
         end = Math.max(end, c.at + c.durationMinutes! * 60_000);
+      }
+      for (const check of calls.filter((c) => c.payload.call === 'oncall')) {
+        const curtain = Number(check.payload.perfAt);
+        for (const c of placed) if (c.at < curtain) expect(c.at + c.durationMinutes! * 60_000, c.label).toBeLessThanOrEqual(curtain);
       }
     }
   });

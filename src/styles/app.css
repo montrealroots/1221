@@ -704,6 +704,10 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   background: var(--surface); border-bottom: 1px solid var(--line);
   flex-shrink: 0; position: relative; z-index: 20;
 }
+/* Why a control in the bar is refused, on a row of its own at the bar's foot (from 2026-10-12): the bar wraps and
+   grows by that row only while it shows. */
+.topbar:has(> .topbar-why) { flex-wrap: wrap; height: auto; min-height: var(--nav-h); row-gap: 0; }
+.topbar > .topbar-why { flex-basis: 100%; order: 99; padding-bottom: var(--s1); }
 .topbar-brand {
   display: flex; align-items: center; gap: var(--s2);
   font-weight: 600; letter-spacing: .18em; font-size: var(--size-sm);
@@ -755,6 +759,7 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   .topbar > .topbar-clock { grid-area: clock; min-width: 0; }
   .topbar > .topbar-group { grid-area: save; gap: var(--s1); }
   .topbar > .topbar-time { grid-area: time; display: flex; gap: var(--s1); }
+  .topbar > .topbar-why { grid-column: 1 / -1; order: 0; padding-bottom: 0; }
   .topbar-time > * { flex: 1 1 auto; justify-content: center; }
   .topbar > .grow, .topbar-divider { display: none; }
   /* The date comes back, shortened by the room, never pushing a button off. */
@@ -1373,3 +1378,38 @@ td, th { overflow-wrap: break-word; }
 /* A statement's lines keep their columns, scrolling as one on a phone. */
 .statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .statement-lines > .row-between { min-width: 520px; }
+
+/* --- The guide's reference (ui/guide/Help.tsx, from 2026-10-12) ---------- */
+.panel-actions { flex-wrap: wrap; justify-content: flex-end; }
+.how-it-works { white-space: nowrap; }
+.help { display: flex; flex-direction: column; gap: var(--s3); }
+.help-trail { margin: 0; flex-wrap: wrap; }
+.help-search { display: flex; flex-direction: column; gap: var(--s1); }
+.help-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px var(--s3); }
+.help-results { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.help-link {
+  background: none; border: 0; padding: 2px 0; color: var(--accent-strong); cursor: pointer; text-align: left;
+  font: inherit; text-decoration: underline; text-underline-offset: 2px;
+}
+.help-link:hover { color: var(--text); }
+.help-short { margin: 0; line-height: 1.55; }
+.help-section { border-top: 1px solid var(--line); padding: var(--s2) 0; }
+.help-section > summary { cursor: pointer; font-weight: 600; font-size: var(--size-sm); }
+.help-section-body { padding-top: var(--s2); }
+.help-items { margin: 0; padding-left: var(--s4); display: flex; flex-direction: column; gap: var(--s1); }
+.help-facts { margin: 0; display: flex; flex-direction: column; gap: var(--s1); }
+.help-facts > div { display: grid; grid-template-columns: minmax(120px, 30%) 1fr; gap: var(--s3); }
+.help-facts dt { color: var(--text-muted); }
+.help-facts dd { margin: 0; }
+.help-related { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s2); }
+.help-return {
+  position: fixed; right: var(--s4); bottom: var(--s4); z-index: 250; display: flex; gap: var(--s1);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: var(--s1); box-shadow: var(--shadow);
+}
+@media (max-width: 720px) {
+  .help-facts > div { grid-template-columns: 1fr; gap: 0; }
+  .help-list { grid-template-columns: 1fr; }
+  /* The chapter titles stay readable on a phone: the contents wrap as a list instead of hiding them. */
+  .guide-toc { flex-direction: column; max-height: 30vh; overflow-y: auto; }
+  .guide-toc-item .grow { display: inline; }
+}

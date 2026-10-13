@@ -1,11 +1,21 @@
 /**
  * SLATE — the papers a person holds, on the Papers screen
  * (`systems/documents.ts`): the passport, applying for one or renewing it at
- * the office's fee and time; going abroad, what a country asks of their
- * citizenship and what they're missing, and the travel authorizations they
- * hold or can apply for; the state ID card; and permission to work, a
+ * the office's fee and time; what a country asks of their citizenship for a
+ * week's visit, and what they're missing, as a rule to read; the visas and
+ * travel authorizations they hold; the state ID card; and permission to work, a
  * student's status and OPT. Every figure is the engine's own, and each rule
  * names its source.
+ *
+ * Crossing a border, and applying for a visa or a travel authorization, went in
+ * the scope reset of 2026-10-09. Until 2026-10-12 this header still had them
+ * going abroad and applying for travel authorizations, Your Passport said a
+ * passport was "Needed to cross a border", Going Abroad answered "You may
+ * go.", and Residence Abroad said a naturalized life travels on the passport
+ * it was born to; from 2026-10-12 the note names what asks for a passport, a
+ * new bank (`photoIdOf`) and the Social Security office (`ssnRefusal`), the
+ * answer says the country would let them in, and the birth citizenship's
+ * passport is the one in force in their name (`passportOf`).
  *
  * Its Driving tab (the license, earning one, the boating and flying
  * certificates), the O-1 and a production's Canadian permit went with the
@@ -104,10 +114,10 @@ export function PassportPane() {
   };
   return (
     <div className="col gap-5">
-      <Panel title="Your Passport" subtitle={rule ? rule.issuer : undefined} look={passport ? at('document', passport.id) : undefined}>
+      <Panel title="Your Passport" subtitle={rule ? rule.issuer : undefined} look={passport ? at('document', passport.id) : undefined} help="documents.passport-id">
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Needed to cross a border'} />
+            <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Asked by a new bank and the Social Security office'} />
             <Stat label="A New One" value={rule && terms ? money(inSaveMoney(sim, Math.round(terms.fee * 100), rule.currency)) : '—'} note={rule ? `${rule.daysEstimated ? 'About ' : 'Up to '}${rule.days} days; good for ${terms!.years} years` : 'SLATE doesn’t have your country’s office'} />
             <Stat label="Faster" value={rule?.expedite ? money(inSaveMoney(sim, Math.round((terms!.fee + rule.expedite.extra) * 100), rule.currency)) : 'Not Offered'} note={rule?.expedite ? `${rule.expedite.days === 0 ? 'The same day' : `${rule.expedite.days} days`}${rule.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} sells no faster service`} />
           </div>
@@ -137,7 +147,7 @@ export function PassportPane() {
           </div>
           {answer && (
             answer.ok
-              ? <p className="small" style={{ margin: 0 }}>You may go. {answer.stay ?? ''}{authorizationFor(person, chosen, sim.now) ? ' Your authorization is in force.' : ''}</p>
+              ? <p className="small" style={{ margin: 0 }}>It would let you in for a week’s visit. {answer.stay ?? ''}{authorizationFor(person, chosen, sim.now) ? ' Your authorization is in force.' : ''}</p>
               : <ul className="small" style={{ margin: 0 }}>{answer.missing.map((m) => <li key={m}>{m}</li>)}</ul>
           )}
           {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
@@ -156,7 +166,7 @@ function IdPanel() {
   const card = idCardHere(person);
   const idNo = idCardRefusal(person, sim.now);
   return (
-    <Panel title="Your ID" subtitle={card ? card.card.name : 'Where SLATE issues one'}>
+    <Panel title="Your ID" subtitle={card ? card.card.name : 'Where SLATE issues one'} help="documents.passport-id">
       <LookRegion className="col gap-3">
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
@@ -187,7 +197,7 @@ export function WorkPane() {
   };
   return (
     <div className="col gap-5">
-      <Panel title="Permission To Work" subtitle="Apart from permission to enter">
+      <Panel title="Permission To Work" subtitle="Apart from permission to enter" help="documents.work">
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'OPT is filed from 90 days before to 60 after' : 'For a student on an F-1'} />
@@ -199,7 +209,7 @@ export function WorkPane() {
 
       <TaxIdPanel />
 
-      <Panel title="OPT" subtitle={`${opt.form}, after the degree`}>
+      <Panel title="OPT" subtitle={`${opt.form}, after the degree`} help="documents.apply_opt">
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>Up to twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days without work in all. There’s no work to be had in SLATE after the degree since the career went, so an OPT approved ends after its {opt.unemploymentDays} days without work, and your US status ends with it: it keeps you here about {opt.unemploymentDays} days from its start. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -229,7 +239,7 @@ function TaxIdPanel() {
   const ssn = person.ssn;
   const where = citizen ? 'Held, as a US citizen' : ssn?.status === 'issued' ? 'Held' : ssn?.status === 'applied' ? `Applied for; the card comes ${formatDate(ssn.arrivesAt!, sim.zone)}` : 'Not yet';
   return (
-    <Panel title="Social Security Number" subtitle={where}>
+    <Panel title="Social Security Number" subtitle={where} help="documents.apply_ssn">
       <div className="col gap-2">
         {!citizen && (
           <p className="small" style={{ margin: 0 }}>
@@ -256,7 +266,7 @@ function ResidencePanel() {
   const places = (['CA', 'IE', 'MX', 'GB', 'US'] as const).filter((iso) => iso !== isoOfCountry(person.citizenshipId) && !(person.naturalized ?? []).some((n) => n.iso === iso));
   const act = (kind: string, iso: string, what: string) => { const a = run<{ paid: number }>(kind, { country: iso }); if (a.ok) toast(`${what}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); };
   return (
-    <Panel title="Residence Abroad" subtitle="The right to make a home in another country">
+    <Panel title="Residence Abroad" subtitle="The right to make a home in another country" help="documents.residence">
       <LookRegion className="table-scroll">
         <table>
           <thead><tr><th scope="col">Country</th><th scope="col">Where You Stand</th><th scope="col" /></tr></thead>
@@ -285,7 +295,7 @@ function ResidencePanel() {
           </tbody>
         </table>
       </LookRegion>
-      <Fine>Britain’s Global Talent visa and a green card by extraordinary ability were read on a career’s record until the career went on 2026-10-09; there’s none to read now. Mexico’s temporary residence lets you live there, not work. Naturalizing keeps the citizenship you were born with; you travel on its passport.</Fine>
+      <Fine>Britain’s Global Talent visa and a green card by extraordinary ability were read on a career’s record until the career went on 2026-10-09; there’s none to read now. Mexico’s temporary residence lets you live there, not work. Naturalizing keeps the citizenship you were born with, and its passport stays the one in force in your name.</Fine>
     </Panel>
   );
 }

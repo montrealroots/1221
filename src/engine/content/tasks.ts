@@ -19,8 +19,12 @@
 
 import type { AbilityId } from './abilities';
 
-/** The version of these rules, kept on every result so an old one is read under its own terms. */
-export const RULESET = 'evaluation-2 (2026-10-10)';
+/**
+ * The version of these rules, kept on every result so an old one is read under its own terms. Three from 2026-10-12:
+ * a piece judged in segments, stamina read as a drain through it, a slip carried into the next segment, and the limits
+ * ranked by what they cost the whole.
+ */
+export const RULESET = 'evaluation-3 (2026-10-12)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 
@@ -154,13 +158,16 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   // A practice brief taped (from 2026-10-12, `systems/briefs.ts`): the camera's four dimensions, and the two a reader
   // off camera brings: connection (what passes to the reader and the lens) and responsiveness (taking what the reader
   // gives). The self-tape's own (`camera`) has neither, since until then it had no scene and no reader.
+  // The connection a take makes is to the reader and to the lens (from 2026-10-12): presence, what a camera sees, read
+  // twice as the audition's connection reads it. Until then it read presence once beside listening, and presence was
+  // under 3% of a take, the least of any ability on a medium built on being seen (tools/specialists.ts).
   tape: {
     id: 'tape', label: 'A Taped Brief', what: 'A practice brief prepared, played to a reader off camera or alone at a microphone, and watched back.',
     prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
     dims: {
       believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
       interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
-      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 1)], prep: ['rehearsal'], conditions: ALL },
+      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
       execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
       consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ALL },
       responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
@@ -176,7 +183,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     dims: {
       believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
       interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
-      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 1)], prep: ['rehearsal'], conditions: ALL },
+      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
       execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
       consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
       responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
@@ -240,8 +247,12 @@ export const EVALUATION = {
    * (its 2024 Performance Syllabus, read directly; topic 1).
    */
   bands: { working: 50, strong: 65, exceptional: 80 },
-  /** Preparation complete: each coursework part at this, and a part's lines, blocking and notes at theirs. */
-  complete: { coursework: 0.9, lines: 0.95, blocking: 0.9, notes: 0.8, genre: 0.6 },
+  /**
+   * Preparation complete: each coursework part at this. A night's lines, blocking and notes count complete at what every
+   * call makes (`completeFor`, `systems/production.ts`), and a brief's parts at its own (`BRIEF.complete`); the lines,
+   * blocking, notes and genre figures declared here until 2026-10-12 were read by nothing.
+   */
+  complete: { coursework: 0.9 },
   /**
    * How a genre family leans a work's dimensions, from what each form asks of a performer (topic 10 of the research;
    * SLATE's reading of it): the mean of a work's families, normalized, so a genre leans the weights and never adds to

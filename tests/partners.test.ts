@@ -13,7 +13,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
-import { ASK_KIND, PARTNER_KIND, WORK, courseworkOf, mateRecord, peerNote, trustOf, type Assignment, type PartnerAsk } from '@/engine/systems/coursework';
+import { ASK_KIND, PARTNER_KIND, WORK, courseworkOf, mateRecord, peerNote, questionsFor, trustOf, type Assignment, type PartnerAsk } from '@/engine/systems/coursework';
 
 const zone = 'America/New_York';
 const at = (month: number, day: number, hour = 9) => instantFromZoned({ year: 2026, month, day, hour }, zone);
@@ -108,11 +108,27 @@ describe('what a partner says', () => {
     tended(sim, at(8, 30, 20));
     const a = courseworkOf(sim, sim.player)!.assignments.find((x) => x.template === 'scene-study')!;
     const first = firstOf(sim, a);
-    Object.assign(a.prep, { familiarity: 0.9, memorization: 0.1, interpretation: 0.8, rehearsal: 0.8 });
+    // Scene Study's table work is the answers alone (`interpretationOf`). Until 2026-10-12 this test moved the choices
+    // through `prep.interpretation` with no question answered, a figure the showing never reads here, because that's
+    // what `peerNote` read; the choices move through the answers now, every one the text supports or every one it cuts
+    // against (left unanswered where it cuts against none).
+    const answer = (supported: boolean) => {
+      for (const { q, options } of questionsFor(a)) {
+        const o = options.find((x) => x.supported === supported);
+        if (o) a.answers[q.id] = o.id;
+        else delete a.answers[q.id];
+      }
+    };
+    answer(true);
+    Object.assign(a.prep, { familiarity: 0.9, memorization: 0.1, interpretation: 0, rehearsal: 0.8 });
     expect(peerNote(a, first)).toMatch(/on book/);
-    Object.assign(a.prep, { memorization: 0.9, interpretation: 0.2 });
+    a.prep.memorization = 0.9;
+    answer(false);
     expect(peerNote(a, first)).toMatch(/what you’re playing for/);
-    Object.assign(a.prep, { interpretation: 0.9 });
+    // The figure nothing reads here moves nothing.
+    a.prep.interpretation = 0.9;
+    expect(peerNote(a, first)).toMatch(/what you’re playing for/);
+    answer(true);
     expect(peerNote(a, first)).toBe(`${first} says it’s coming together.`);
   });
 });

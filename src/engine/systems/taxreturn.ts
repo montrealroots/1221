@@ -44,7 +44,7 @@ const US_STANDARD_DEDUCTION = INCOME_TAX_RULES.find((r) => r.jurisdictionCode ==
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
-import { drawFromBank, expenseFor, payFromBank } from './spending';
+import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
@@ -57,10 +57,13 @@ export const TAX_SFR_KIND = 'tax.substitute';
 
 /**
  * A return never filed that owes: the IRS files one for them, a substitute
- * for return, from what employers and banks reported (the CP2566 notice), and
- * it's theirs to replace with their own until the Notice of Deficiency's 90
- * days run out; then it's assessed, with the penalty for filing late and the
- * interest from the due date, and collected as any balance is. SLATE's
+ * for return, from what employers and banks reported (the CP2566 notice).
+ * Their own, filed before the Notice of Deficiency's 90 days run out, replaces
+ * it and nothing of it is assessed; after, it's assessed, with the penalty for
+ * filing late and the interest from the due date, and collected as any balance
+ * is. Until 2026-10-10 an assessed one stood, and this said it was theirs to
+ * replace only until then; from 2026-10-10 their own return filed after it
+ * reconsiders it (`reconsider`), the tax becoming what theirs says. SLATE's
  * estimates: the year after the due date it comes, the 30 days to answer the
  * CP2566 before the 90 of the notice, and the figures SLATE's own return
  * reaches, the IRS's taking only the standard deduction. Until 2026-09-28 a
@@ -112,8 +115,9 @@ export function partsOf(r: TaxReturn): OwedParts {
 
 /**
  * The parts at a moment: interest at the IRS's rate, compounded daily, on all that's owed since it was last brought up to
- * date; the failure-to-pay penalty, 0.5% a month or part since filing to 25%, on the tax still unpaid, so a part payment
- * lowers what the next months charge (IRC 6651(a)(2)).
+ * date; the failure-to-pay penalty, 0.5% a month or part since filing to 25% less what a late return was charged of it
+ * with filing (`payLateRateAt`), on the tax still unpaid, so a part payment lowers what the next months charge
+ * (IRC 6651(a)(2)).
  */
 export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
   const p = partsOf(r);
@@ -134,22 +138,46 @@ export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
 const monthsBetween = (a: Instant, b: Instant) => Math.ceil(Math.max(0, b - a) / (30.4375 * MS_DAY));
 
 /**
- * The failure-to-pay penalty's rate charged by a moment: half a percent a month or part since filing, to a quarter;
- * a quarter percent for the months a payment plan was in force, where the return was filed on time (IRC 6651(h), from
- * 2026-10-10: `reducedFrom`, `reducedTo`).
+ * The failure-to-pay penalty's rate charged by a moment, month by month: each month or part of one begun since the due
+ * date, or since filing on a return filed late, at half a percent (IRC 6651(a)(2)); or at a quarter percent where the
+ * month began while a payment plan stood, on a return filed on time (6651(h), from 2026-10-10: `reducedFrom`,
+ * `reducedTo`); to a quarter in all, less the share a late return was charged with filing (`payLateBeforeFiling`). So it
+ * never falls as time passes. The law's month is under the plan where it begins after the day the plan is entered into;
+ * SLATE keeps moments, not days, and takes a month that begins at the very moment the plan does as begun under it, as a
+ * plan entered into on the due date stands for the first month, which begins the day after.
+ *
+ * Until 2026-10-12 the months after filing had a quarter of their own, so a return filed nine months late and never
+ * paid had been charged 29.5% of its tax for paying late five years after filing. Until later on 2026-10-12 a plan's
+ * months were counted from the plan's start, each month or part of one since it, and taken off the months counted from
+ * the due date. The two counts stepped on different days, so for about half of each month the rate stood a step above
+ * the month's and then fell back, and the penalty shown fell with it; and a plan begun before the due date had its
+ * months before it taken off those after, so the guide's plan example, played, charged its later year 0% for 60 days
+ * past due, then 0.25%, 0%, 0.5%, 0.25% (tests/plan-rate.test.ts).
  */
 export function payLateRateAt(r: TaxReturn, at: Instant): number {
   // From the due date at the earliest (IRC 6651(a)(2)); from filing for a return filed late, its months before filing
   // being in the penalty assessed with it (`latePenalty`). Until the integration pass of 2026-10-10 an early return's ran
   // from filing.
   const filed = Math.max(r.filedAt ?? at, r.due);
-  let months = RETURN.payLateMonthly * monthsBetween(filed, at);
-  if (r.reducedFrom !== undefined && at > r.reducedFrom) {
-    const within = monthsBetween(r.reducedFrom, Math.min(at, r.reducedTo ?? at));
-    months -= (RETURN.payLateMonthly - PLAN.reducedRate) * within;
-  }
-  return Math.min(RETURN.lateCap, Math.max(0, months));
+  const months = monthsBetween(filed, at);
+  // For each plan, the months begun before it was entered into, and those begun by now and before it ended: the second
+  // less the first began under it. A plan ended earlier keeps its months (`reducedBefore`, from later on 2026-10-12:
+  // until then a second plan reset the first's start, and its months went back to the full rate, an overcharge of a
+  // quarter percent of the tax for each).
+  const spans = [...(r.reducedBefore ?? []), ...(r.reducedFrom !== undefined ? [{ from: r.reducedFrom, to: r.reducedTo }] : [])];
+  const under = Math.min(months, spans.reduce((sum, span) => {
+    const before = monthsBetween(filed, span.from);
+    const ended = span.to === undefined ? months : Math.min(months, monthsBetween(filed, span.to));
+    return sum + Math.max(0, ended - before);
+  }, 0));
+  return Math.min(RETURN.lateCap - payLateBeforeFiling(r), RETURN.payLateMonthly * (months - under) + PLAN.reducedRate * under);
 }
+
+/**
+ * The pay-late share a return filed late was charged with filing, as `latePenalty` works it out from the due date and
+ * the filing date (from 2026-10-12): no field of its own, so a save from before needs nothing added.
+ */
+const payLateBeforeFiling = (r: TaxReturn): number => (r.filedAt !== undefined && r.filedAt > r.due ? Math.min(RETURN.lateCap, RETURN.payLateMonthly * monthsBetween(r.due, r.filedAt)) : 0);
 
 /** What a return owes at a moment: its parts summed, rounded once. */
 export function owedOn(r: TaxReturn, at: Instant): Money {
@@ -158,13 +186,17 @@ export function owedOn(r: TaxReturn, at: Instant): Money {
   return Math.round(p.tax + p.penalty + p.interest);
 }
 
-/** Brings a return's balance up to a moment. */
+/**
+ * Brings a return's balance up to a moment. The rate it records as charged is the one `partsOn` charged by (from
+ * 2026-10-12): until then it recorded the full half-point a month, which under a plan was above the plan's rate, so after
+ * a plan's first accrual its penalty charged nothing more, during the plan or after it. A save from before keeps that
+ * higher mark, and its penalty starts again once the plan's rate passes it, never charging a month twice.
+ */
 function accrue(r: TaxReturn, at: Instant): void {
   if (!r.owed) return;
-  const months = Math.ceil(Math.max(0, at - Math.max(r.filedAt ?? at, r.due)) / (30.4375 * MS_DAY));
   r.parts = partsOn(r, at);
   r.base ??= r.parts.tax;
-  r.payLateRate = Math.max(r.payLateRate ?? 0, Math.min(RETURN.lateCap, RETURN.payLateMonthly * months));
+  r.payLateRate = Math.max(r.payLateRate ?? 0, payLateRateAt(r, at));
   r.owed = r.parts.tax + r.parts.penalty + r.parts.interest;
   r.accruedAt = at;
 }
@@ -255,7 +287,10 @@ export function federalLienWithdrawRefusal(person: Person, r: TaxReturn | undefi
   if (l.status === 'disputed') return `Asked: decided by ${formatDate(l.decideAt!, HOME)}.`;
   if (federalLienInError(r!)) return undefined;
   if (l.status !== 'released') return 'A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.';
-  const unfiled = [1, 2, 3].map((n) => person.returns?.[String(r!.year + n)]).find((x) => x && x.filedAt === undefined && x.due < now && x.figures.balance > 0);
+  // The three tax years before this one (from 2026-10-12: until then the three after the lien's year, so a lien on 2026
+  // released in 2033 read 2027 to 2029 and let 2030 to 2032 go unfiled). A year not yet due never stops it.
+  const y = zonedParts(now, HOME).year;
+  const unfiled = [1, 2, 3].map((n) => person.returns?.[String(y - n)]).find((x) => x && x.filedAt === undefined && x.due < now && x.figures.balance > 0);
   if (unfiled) return `The IRS withdraws one after payment only with the last three years’ returns filed: ${unfiled.year}’s isn’t.`;
   return undefined;
 }
@@ -345,6 +380,8 @@ export interface TaxReturn {
   /** A payment plan's months at the reduced failure-to-pay rate: from, and to once it ends (`payLateRateAt`). */
   reducedFrom?: Instant;
   reducedTo?: Instant;
+  /** Plans ended before the one above, each its span (from 2026-10-12, `underPlan`); a save from before has none. */
+  reducedBefore?: { from: Instant; to: Instant }[];
   /** When the IRS's refund was paid: a second item for it pays nothing. */
   refundedAt?: Instant;
   /**
@@ -355,6 +392,23 @@ export interface TaxReturn {
   stateDue?: Record<string, StateDue>;
   /** A combined balance divided when the save was opened (`splitReturns`): when, and how. */
   split?: { at: Instant; how: string };
+}
+
+/**
+ * What `tax.file` did, which File It's toast reads (from 2026-10-12): the whole return's balance and the IRS's late
+ * penalty; whether the bank paid everything owed; the IRS's side, owed where positive and a refund where negative, and
+ * the day that refund arrives; each state's side; and, on a reconsidered substitute, what was paid past their own
+ * return's tax, back now. Until 2026-10-12 it gave the balance alone, and the toast read the IRS's and every state's
+ * together as one refund, said to come back in 21 days.
+ */
+export interface Filed {
+  balance: Money;
+  penalty: Money;
+  paid: boolean;
+  irs: Money;
+  states: Record<string, Money>;
+  refundAt?: Instant;
+  refunded?: Money;
 }
 
 /**
@@ -422,7 +476,7 @@ export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'lo
   if (unfiled) return `The IRS asks every return filed first: ${unfiled.year}’s isn’t.`;
   const cur = saveCurrency(sim.universe);
   if (kind === 'short' && owed >= usd(PLAN.shortMax, cur)) return `A short-term plan is for less than ${formatMoney(usd(PLAN.shortMax, cur), cur, { cents: false })}.`;
-  if (kind === 'long' && owed > usd(PLAN.longMax, cur)) return `A Simple Payment Plan is for ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} or less; more needs a financial statement SLATE doesn't model.`;
+  if (kind === 'long' && owed > usd(PLAN.longMax, cur)) return `A Simple Payment Plan is for ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} or less; more needs a financial statement SLATE doesn’t model.`;
   return undefined;
 }
 
@@ -440,17 +494,35 @@ export const leastMonthly = (owed: Money): Money => Math.ceil(owed / PLAN.leastM
 
 const planNote = (p: TaxPlan, at: Instant, what: string, amount?: Money) => { p.history.push({ at, what, ...(amount !== undefined ? { amount } : {}) }); if (p.history.length > 40) p.history.splice(0, p.history.length - 40); };
 
-/** A plan begun: collection stopped, the reduced rate from today on each return filed on time, the first payment set. */
+/**
+ * A return's months under a payment plan begun at a moment (from 2026-10-12): a span already open stays as it is; one
+ * that ended is kept (`reducedBefore`) and a new one begins. Until then each plan, and a balance that joined one, set
+ * the start again, and a plan's months before it went back to the full rate; an amendment under a later plan kept the
+ * ended plan's start (`??=`), so the later plan's rate never came.
+ */
+export function underPlan(r: TaxReturn, at: Instant): void {
+  if (r.reducedFrom !== undefined && r.reducedTo === undefined) return;
+  if (r.reducedFrom !== undefined) (r.reducedBefore ??= []).push({ from: r.reducedFrom, to: r.reducedTo! });
+  r.reducedFrom = at;
+  delete r.reducedTo;
+}
+
+/**
+ * A plan begun: collection stopped, the reduced rate on each return filed on time from the first month that begins
+ * under it (the month already begun stays at the full rate, `payLateRateAt`; until later on 2026-10-12 this said "from
+ * today", which the rate counted that way then), the first payment set. Its
+ * setup fee is paid before it, on the IRS's decision (`TAX_PLAN_DECIDE_KIND`); until 2026-10-12 it was paid here and what
+ * came of it went unread, so a bank that couldn't cover the fee began a plan with nothing charged.
+ */
 function startPlan(sim: Simulation, person: Person, p: TaxPlan): void {
   p.status = 'active';
   p.startedAt = sim.now;
   for (const r of Object.values(person.returns ?? {})) {
     if (!r.owed) continue;
     accrue(r, sim.now);
-    if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) { r.reducedFrom = sim.now; delete r.reducedTo; }
+    if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) underPlan(r, sim.now);
     for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
   }
-  if (p.fee > 0) payFromBank(sim, person, p.fee, 'IRS payment plan setup fee', 'tax');
   if (p.kind === 'long') {
     p.nextDue = sim.now + 30 * MS_DAY;
     sim.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } });
@@ -459,6 +531,32 @@ function startPlan(sim: Simulation, person: Person, p: TaxPlan): void {
     sim.schedule({ at: p.payBy, kind: TAX_PLAN_KIND, label: 'IRS Short-Term Plan: Paid By', category: 'personal', priority: 25, payload: { personId: person.id, last: true } });
   }
   planNote(p, sim.now, p.kind === 'long' ? `Approved: ${formatMoney(p.monthly!, saveCurrency(sim.universe))} a month` : `Approved: paid in full by ${formatDate(p.payBy!, HOME)}`);
+}
+
+/**
+ * The IRS's collection back on the calendar where a plan's hold on it ends without a plan: each year owed with no notice
+ * pending gets its next one. True where any year owes. Collection holds while a plan is decided (`TAX_NOTICE_KIND`), so
+ * a reminder due in Form 9465's thirty days is held back; until 2026-10-12 a plan refused left it so, and nothing but
+ * opening the save again (`armCollection`) put it back: 200 days after one, no letter had come.
+ */
+function resumeCollection(sim: Simulation, person: Person): boolean {
+  let owes = false;
+  for (const r of Object.values(person.returns ?? {})) {
+    if (!r.owed) continue;
+    owes = true;
+    if (sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
+    nextNotice(sim, person, r);
+  }
+  return owes;
+}
+
+/** A plan refused on the IRS's decision: why, in its history and to the player, and collection resumed. */
+function refusePlan(sim: Simulation, person: Person, p: TaxPlan, why: string): void {
+  p.status = 'refused';
+  p.why = why;
+  planNote(p, sim.now, `Refused: ${why}`);
+  const owes = resumeCollection(sim, person);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Refused A Payment Plan', body: `${why}${owes ? ' The IRS’s letters about what you owe start again.' : ''}`, importance: 85, route: '/workspace/papers' });
 }
 
 /** A plan ended, by default or paid off: the reduced rate stops, and anything still owed goes back to collection. */
@@ -1123,7 +1221,8 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r?.owed) return;
-    // A payment plan in force or being decided stops collection (from 2026-10-10).
+    // A payment plan in force or being decided stops collection (from 2026-10-10); refused, it starts again
+    // (`resumeCollection`, from 2026-10-12).
     if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return;
     accrue(r, s.now);
     const cur = saveCurrency(s.universe);
@@ -1186,6 +1285,9 @@ export function registerTaxReturn(sim: Simulation): void {
     const monthly = kind === 'long' ? Math.round(Number(p?.monthly ?? leastMonthly(owed))) : undefined;
     if (monthly !== undefined && monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}, what’s owed over ${PLAN.leastMonths} months.`);
     const fee = planFee(s, person, kind, directDebit);
+    // The setup fee leaves the bank on approval, so a bank that can't cover it now isn't applied with (from 2026-10-12, as
+    // a revision's fee is; until then the plan began with nothing charged).
+    if (fee > 0 && inTheBank(s, person) < fee) throw new CommandError(`The ${formatMoney(fee, cur)} setup fee is more than the bank can cover.`);
     // Online with a Social Security number, decided at once; without one, Form 9465 by mail.
     const online = hasSsn(person);
     const decideAt = online ? s.now + 60_000 : s.now + PLAN.mailDays * MS_DAY;
@@ -1204,9 +1306,12 @@ export function registerTaxReturn(sim: Simulation): void {
     p.status = 'refused';
     const no = planRefusal(s, person, p.kind);
     p.status = 'pending';
-    if (no && !/payment plan|application/.test(no)) { p.status = 'refused'; p.why = no; planNote(p, s.now, `Refused: ${no}`); if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Refused A Payment Plan', body: no, importance: 85, route: '/workspace/papers' }); return; }
+    if (no && !/payment plan|application/.test(no)) { refusePlan(s, person, p, no); return; }
+    // The setup fee, paid on approval; a bank emptied in Form 9465's thirty days can't, and there's no plan (from
+    // 2026-10-12).
+    if (p.fee > 0 && !payFromBank(s, person, p.fee, 'IRS payment plan setup fee', 'tax')) { refusePlan(s, person, p, `The ${formatMoney(p.fee, saveCurrency(s.universe))} setup fee is more than the bank can cover.`); return; }
     startPlan(s, person, p);
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Is Approved', body: p.kind === 'long' ? `${formatMoney(p.monthly!, saveCurrency(s.universe))} a month${p.directDebit ? ' by direct debit' : ''}, from ${formatDate(p.nextDue!, HOME)}. Interest goes on; ${Object.values(person.returns ?? {}).some((r) => r.reducedFrom === p.startedAt) ? 'the late-payment penalty halves while it stands' : 'the penalty stays at its full rate, since the return wasn’t filed on time'}. Collection has stopped.` : `Pay what’s owed by ${formatDate(p.payBy!, HOME)}; there’s no setup fee. Interest and the penalty go on.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Is Approved', body: p.kind === 'long' ? `${formatMoney(p.monthly!, saveCurrency(s.universe))} a month${p.directDebit ? ' by direct debit' : ''}, from ${formatDate(p.nextDue!, HOME)}. Interest goes on; ${Object.values(person.returns ?? {}).some((r) => r.reducedFrom === p.startedAt) ? 'the late-payment penalty halves for each month that begins while it stands' : 'the penalty stays at its full rate, since the return wasn’t filed on time'}. Collection has stopped.` : `Pay what’s owed by ${formatDate(p.payBy!, HOME)}; there’s no setup fee. Interest and the penalty go on.`, importance: 80, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_PLAN_KIND, (item, s) => {
@@ -1263,7 +1368,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const monthly = Math.round(Number(p?.monthly ?? leastMonthly(owed)));
     if (monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}.`);
-    if (owed > usd(PLAN.longMax, cur)) throw new CommandError(`More than ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} is owed now: a revision needs a financial statement SLATE doesn't model.`);
+    if (owed > usd(PLAN.longMax, cur)) throw new CommandError(`More than ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} is owed now: a revision needs a financial statement SLATE doesn’t model.`);
     const fee = usd(PLAN.reviseFee, cur);
     if (!payFromBank(s, person, fee, 'IRS payment plan revision fee', 'tax')) throw new CommandError(`The ${formatMoney(fee, cur)} fee is more than the bank can cover.`);
     plan.monthly = monthly;
@@ -1274,7 +1379,7 @@ export function registerTaxReturn(sim: Simulation): void {
     return { monthly, fee };
   });
 
-  sim.onCommand<{ year: number }, { balance: Money; penalty: Money; paid: boolean }>('tax.file', (p, { sim: s }) => {
+  sim.onCommand<{ year: number }, Filed>('tax.file', (p, { sim: s }) => {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     if (!r) throw new CommandError('There’s no return for that year.');
@@ -1308,7 +1413,7 @@ export function registerTaxReturn(sim: Simulation): void {
       const itin = r.figures.form === '1040-NR' && !hasSsn(person) ? SSN.itinWeeks * 7 : 0;
       r.refundAt = s.now + (RETURN.refundDays + itin) * MS_DAY;
       s.schedule({ at: r.refundAt, kind: TAX_REFUND_KIND, label: `Tax Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
-      return { balance: r.figures.balance, penalty: 0, paid: statesPaid };
+      return { balance: r.figures.balance, penalty: 0, paid: statesPaid, irs, states: split.states, refundAt: r.refundAt };
     }
     // Interest runs from the due date on a balance filed late.
     const late = Math.max(0, (s.now - r.due) / MS_DAY);
@@ -1318,12 +1423,12 @@ export function registerTaxReturn(sim: Simulation): void {
     if (!paid) {
       setOwed(r, { tax: irs, penalty: r.penalty, interest }, s.now);
       // Under a payment plan, another year's balance joins it or puts it in default (`newLiability`, from 2026-10-10).
-      if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) r.reducedFrom = s.now; newLiability(s, person, total); }
+      if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) underPlan(r, s.now); newLiability(s, person, total); }
       else { r.collection = 0; nextNotice(s, person, r); }
     }
     else if (total > 0) r.paidTax = irs;
     void stateTotal;
-    return { balance: r.figures.balance, penalty: r.penalty, paid: paid && statesPaid };
+    return { balance: r.figures.balance, penalty: r.penalty, paid: paid && statesPaid, irs, states: split.states };
   });
 
   /**
@@ -1349,7 +1454,7 @@ export function registerTaxReturn(sim: Simulation): void {
    * filing or two of paying; the IRS takes eight to twelve weeks, sixteen at most (SLATE takes ten). More owed is added
    * with interest from the due date; less comes off what's owed, and the rest back with the IRS's interest on it.
    */
-  sim.onCommand<{ year: number }, { change: Money; processAt: Instant; form: string }>('tax.amend', (p, { sim: s }) => {
+  sim.onCommand<{ year: number }, { change: Money; processAt: Instant; form: string; irs: Money; states?: Record<string, Money> }>('tax.amend', (p, { sim: s }) => {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     const no = amendRefusal(s, r);
@@ -1363,9 +1468,11 @@ export function registerTaxReturn(sim: Simulation): void {
     if (change === 0 && now.irs === was.irs && !byState.length) throw new CommandError('Your return as filed matches what’s on record: there’s nothing to amend.');
     const form = figures.form === '1040-NR' ? '1040-X with 1040-NR' as const : '1040-X' as const;
     const processAt = s.now + AMEND.weeks * 7 * MS_DAY;
-    (r!.amended ??= []).push({ form, at: s.now, figures, change, processAt, irs: now.irs - was.irs, ...(byState.length ? { states: Object.fromEntries(byState) } : {}) });
+    const sides = { irs: now.irs - was.irs, ...(byState.length ? { states: Object.fromEntries(byState) } : {}) };
+    (r!.amended ??= []).push({ form, at: s.now, figures, change, processAt, ...sides });
     s.schedule({ at: processAt, kind: TAX_AMEND_KIND, label: `Your Amended ${r!.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year } });
-    return { change, processAt, form };
+    // Each side's change too (from 2026-10-12), for a toast that says which moved when the total didn't.
+    return { change, processAt, form, ...sides };
   });
 
   sim.onSchedule(TAX_AMEND_KIND, (item, s) => {
@@ -1392,7 +1499,7 @@ export function registerTaxReturn(sim: Simulation): void {
       setOwed(r, { tax: p.tax + a.change, penalty: p.penalty, interest: p.interest + interest }, s.now);
       a.interest = interest;
       // Under a payment plan, the new tax joins it or puts it in default (`newLiability`); otherwise collection.
-      if (person.taxPlan?.status === 'active') { if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) r.reducedFrom ??= s.now; newLiability(s, person, a.change + interest); }
+      if (person.taxPlan?.status === 'active') { if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) underPlan(r, s.now); newLiability(s, person, a.change + interest); }
       else if (!had) { r.collection = 0; nextNotice(s, person, r); }
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(a.change, cur)} more tax, with ${formatMoney(interest, cur)} of interest from the due date. ${formatMoney(r.owed ?? 0, cur)} is owed on the year.`, importance: 85, route: '/workspace/papers' });
       return;
@@ -1436,14 +1543,16 @@ export function sfrFigures(f: ReturnFigures): ReturnFigures {
  * return says, less what's been paid toward it; the penalty and interest charged on the substitute fall in proportion;
  * and anything paid past it comes back. Before 2026-10-10 an assessed substitute couldn't be answered at all.
  */
-function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: Money; penalty: Money; paid: boolean } {
+function reconsider(sim: Simulation, person: Person, r: TaxReturn): Filed {
   const cur = saveCurrency(sim.universe);
   accrue(r, sim.now);
   const own = figuresFor(person, r.year, cur, sim.now);
-  // The IRS reconsiders its own part (from the integration pass of 2026-10-10); each state's is filed now, for the first time.
+  // The IRS reconsiders its own part (from the integration pass of 2026-10-10); each state's is filed now, for the first
+  // time. Whether each was paid is kept for the toast (from 2026-10-12): until then `paid` read the IRS's alone.
+  let statesPaid = true;
   for (const [state, amount] of Object.entries(own.owedTo!.states)) {
-    if (r.stateDue?.[state]?.assessedBy) reconsiderState(sim, person, r, state, amount);
-    else if (!r.stateDue?.[state]?.filedAt) fileState(sim, person, r, state, amount);
+    if (r.stateDue?.[state]?.assessedBy) { reconsiderState(sim, person, r, state, amount); statesPaid = !r.stateDue[state]!.owed && statesPaid; }
+    else if (!r.stateDue?.[state]?.filedAt) statesPaid = fileState(sim, person, r, state, amount).paid && statesPaid;
   }
   for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NONFILER_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   const ownIrs = own.owedTo!.irs;
@@ -1463,7 +1572,7 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): { balance: M
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
   if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
-  return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed };
+  return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed && statesPaid, irs: ownIrs, states: own.owedTo!.states, refunded: Math.max(0, over) };
 }
 
 /** A state's change on an amended return, processed: more owed added from the due date, less taken off and refunded. */

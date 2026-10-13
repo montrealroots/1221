@@ -39,8 +39,8 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
-import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
-import { FRAUD_LAW, SECURITY } from '../content/security';
+import { afterBusinessDays, businessDaysBetween, daysOfAccount } from '../content/bankdays';
+import { FRAUD_LAW, SECURITY, type DebitTier } from '../content/security';
 import { cardFor, cardOf } from './credit';
 import { accountNumber } from './banknumber';
 import { alertsOf } from './statements';
@@ -147,8 +147,31 @@ function replace(sim: Simulation, account: Account, which: Which, why: NonNullab
   return p.replacementAt;
 }
 
-/** What the law leaves the holder to carry of an amount used without them, reported so many days after they learned of it. */
-export function liabilityFor(sim: Simulation, account: Account, which: Which, amount: Money, daysLate: number, via?: 'number'): Money {
+/** When the holder learned of a use and when the statement that showed it went out: where the law's clocks start. */
+export type FraudClocks = Pick<NonNullable<Person['fraud']>[number], 'learnedAt' | 'statedAt'>;
+
+/**
+ * Days late on a debit tier's own clock (`DebitTier`), reported now: business days in the account's country where it
+ * counts them, from the statement where it runs from there, calendar days from learning of it otherwise. Until
+ * 2026-10-12 a bare number of days was taken too and stood for every clock, so it counted each tier from the one day;
+ * only tests passed one, and it went, since no one number is late on clocks that start on different days.
+ */
+function daysLateOn(sim: Simulation, account: Account, tier: DebitTier, late: FraudClocks): number {
+  const from = tier.from === 'statement' ? late.statedAt : late.learnedAt;
+  if (!tier.business) return Math.floor((sim.now - from) / MS_DAY);
+  const kept = daysOfAccount(account, sim.universe.people[account.ownerId ?? '']);
+  return businessDaysBetween(from, sim.now, kept.countryId, sim.homeZone, kept.regionId);
+}
+
+/**
+ * What the law leaves the holder to carry of an amount used without them, reported now: each tier on its own clock,
+ * the US's $50 two business days from learning of it, its $500 sixty days from the statement. Until 2026-10-12 every
+ * tier counted calendar days from learning of it, so a charge learned of on a Friday and reported on Monday left
+ * $500, and one an alert caught weeks before its statement left all of it, reported inside the 60 days from the
+ * statement that `disputeRefusal` accepted. It reads the use's own record (`FraudClocks`), and took a bare number of
+ * days for every tier too until the same day.
+ */
+export function liabilityFor(sim: Simulation, account: Account, which: Which, amount: Money, late: FraudClocks, via?: 'number'): Money {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   const law = bank ? FRAUD_LAW[bank.iso] : undefined;
   if (!bank || !law) return amount;
@@ -157,7 +180,7 @@ export function liabilityFor(sim: Simulation, account: Account, which: Which, am
   if (via === 'number' && bank.iso === 'US') return 0;
   const money = law.inEuros ? 'EUR' : bank.currency;
   if (which === 'credit' && law.creditMax !== undefined) return Math.min(amount, inSave(sim, law.creditMax, money));
-  const tier = law.debitTiers.find((t) => t.withinDays === undefined || daysLate <= t.withinDays);
+  const tier = law.debitTiers.find((t) => t.withinDays === undefined || daysLateOn(sim, account, t, late) <= t.withinDays);
   if (!tier || tier.max === undefined) return amount;
   return Math.min(amount, inSave(sim, tier.max, money));
 }
@@ -301,7 +324,7 @@ export function registerSecurity(sim: Simulation): void {
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
     one.reportedAt = s.now;
-    one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY), one.via);
+    one.carried = liabilityFor(s, account, one.which, one.amount, one, one.via);
     const kept = daysOfAccount(account, person);
     const refundAt = afterBusinessDays(s.now, law?.refundDays ?? ESTIMATE_REFUND_DAYS, kept.countryId, s.homeZone, kept.regionId);
     s.schedule({ at: refundAt, kind: REFUND_KIND, label: 'A Refund From The Bank', category: 'home', priority: 38, payload: { personId: person.id, index: Number(p.index) } });

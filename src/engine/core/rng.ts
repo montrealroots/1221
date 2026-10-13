@@ -109,11 +109,13 @@ export function makeRng(seedInput: string | number): Rng {
 }
 
 /**
- * Derives a named stream. Keys are joined so that, for example, the audition
- * roll for a given person/role pair is always the same roll.
+ * Derives a named stream. Keys are joined so that, for example, a classmate's
+ * reliability for a given person and place in the class is always the same draw.
  */
 export function rngFor(saveSeed: string, stream: string, ...keys: (string | number)[]): Rng {
-  return makeRng(`${saveSeed}|${stream}|${keys.join('|')}`);
+  // A key holding the separator is escaped (from 2026-10-12), so ['a|b'] and ['a', 'b'] can't draw the same: no key holds
+  // one today, and every draw keyed without one is as it was.
+  return makeRng(`${saveSeed}|${stream}|${keys.map((k) => String(k).replace(/\\/g, '\\\\').replace(/\|/g, '\\|')).join('|')}`);
 }
 
 /** Clamp helper used pervasively by scoring systems. */

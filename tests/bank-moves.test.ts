@@ -105,7 +105,8 @@ describe('PLAYER JOURNEY: a second bank, opened and funded', () => {
     sim.advanceTo(answer.decidedAt + 120_000);
     const bofa = at(sim, 'us-bank-of-america')!;
     expect(bofa).toBeDefined();
-    // Bank of America's digital card works while the plastic is on its way.
+    // Bank of America's digital card works from the day the account opens, and no plastic is sent after it (until later
+    // on 2026-10-12 this said it worked "while the plastic is on its way", which none ever was).
     expect(bofa.plastic?.stopped).toBeUndefined();
     sim.advanceTo(Math.max(answer.arrivesAt, answer.decidedAt) + 2 * MS_DAY);
     expect(sim.universe.accounts[bofa.id]!.balance).toBe(100_00);

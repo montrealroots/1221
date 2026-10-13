@@ -52,9 +52,14 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, conditionAt, ordinary, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
-import { bandOfQuality, chiefLimit, evaluate, recordWork, type Evaluation } from './evaluation';
-import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK } from '../content/tasks';
+import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bandOfQuality, chiefLimit, countTogether, evaluate, leanedWeights, performerOf, recordWork, type Evaluation } from './evaluation';
+import { evaluatePiece, familyLean, judgePiece, loadOf, pieceWeights, rehearseWays, toneSegments, withBook, type PieceSpec, type Workbook } from './piece';
+import { ENSEMBLE, sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
+import { PIECE } from '../content/piece';
+import { UNPERFORMED } from './material';
+import { abilityFull, abilityOf } from './attributes';
+import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
@@ -66,11 +71,11 @@ import { personalityOf } from './personality';
 import type { PersonalityKnob } from '../content/personality-traits';
 import { inHospital } from './health';
 import {
-  ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
+  ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteRecord, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
   type Approach, type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
 } from './learning';
 import { actingOf } from './school';
-import { boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
+import { CLASS, boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp, trainingRefusal } from './injury';
 import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, type SchoolRecord } from './school';
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
@@ -92,7 +97,10 @@ export const WORK = {
   weight: { unready: 0.85, working: 1, strong: 1.1, exceptional: 1.2 },
   /** A revision's meeting, the note taken or not. */
   revision: { applied: 1.1, notApplied: 0.95, dimRise: 0.2, dimEnough: 0.8, worked: 0.6 },
-  /** What a partner prepares on their own, a week of it at an ordinary drive, and the most. */
+  /**
+   * What a partner prepares on their own, a week of it at an ordinary drive, and the most. From 2026-10-12 it's the
+   * partner's own preparation, read by the scene together (`systems/ensemble.ts`), and no longer a part of yours.
+   */
   partnerOwnPerWeek: 0.35, partnerOwnMost: 0.85,
   /** A classmate's reliability, drawn once: how often they come when they've said they will. */
   reliability: { from: 0.72, to: 0.98 },
@@ -116,11 +124,27 @@ export const WORK = {
   ask: { chance: 0.4, hour: 19, withinDays: 3, unanswered: -2 },
   /** A rehearsal with a partner: how long, the hours a call may be in, and how far ahead it must be asked for. */
   rehearsal: { minutes: 90, from: 7, until: 22, aheadHours: 2 },
-  /** A partner's share of a scene: their own work against what you've done together. */
-  partnerMix: { together: 0.6, own: 0.4 },
+  // A partner's share of your own partner part, six tenths together and four their own (`partnerMix`), went on
+  // 2026-10-12: it held a mastered student under 100 for what the partner hadn't done (`systems/ensemble.ts`).
   /** Effort, as METs: work at a desk, on one's feet in a room. */
   met: { desk: 1.5, feet: 2.5 },
 } as const;
+
+/** What a scene together at Strong or better adds to the bond, and what covering a partner's slip adds to their trust (from 2026-10-12). SLATE's. */
+export const TOGETHER_BOND = 1;
+export const TOGETHER_COVERED = 2;
+
+/** What a scene played together leaves between you and the classmate: a bond for one that went well, trust for a slip of theirs you covered. */
+export function afterTogether(sim: Simulation, person: Person, mateIndex: number, together: SharedResult, what: string): void {
+  const mate = person.school?.classmates[mateIndex];
+  if (!mate) return;
+  const went = bandOfQuality(together.overall);
+  if (went === 'strong' || went === 'exceptional') moveTrust(mate, 0, { person, by: TOGETHER_BOND });
+  if (together.slip && together.slip.covered >= 0.5) {
+    moveTrust(mate, TOGETHER_COVERED);
+    remember(sim, mate, `You covered for them when they slipped in ${what}`);
+  }
+}
 
 export type Band = 'unready' | 'working' | 'strong' | 'exceptional';
 export const BAND_LABEL: Record<Band, string> = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' };
@@ -128,11 +152,21 @@ export const BAND_LABEL: Record<Band, string> = { unready: 'Unready', working: '
 /** What a note is about (`NoteFocus` in `systems/learning.ts`): a part of the preparation, a choice at the table, a skill, or the next step beyond the work. */
 export type Focus = NoteFocus;
 
+/**
+ * Until 2026-10-12 a showing also kept `parts`: the preparation summed by `weightsOf`, the craft, the readiness and the
+ * partner part, which nothing but a test read (the band and score have come from the judged result since 2026-10-09).
+ * It went then; a save from before still carries it, unread.
+ */
 export interface Showing {
   band: Band; score: number; at: Instant;
-  parts: { prep: number; craft: number; ready: number; partner?: number };
   /** What helped, in words. */
   strengths: string[];
+  /**
+   * The scene together, on paired work (from 2026-10-12, `systems/ensemble.ts`): your result with your partner's
+   * contribution blended in, apart from your own, which the band reads. What it came to, what the partner brought,
+   * a slip and how much of it you covered, and the words for it.
+   */
+  together?: { overall: number; contribution: number; partner: string; slip?: SharedResult['slip']; words: string };
 }
 
 /**
@@ -193,6 +227,19 @@ export interface Assignment {
   feedback?: Feedback;
   /** `missed`: not there to show it again, unexcused, which the term's evaluation reads as unready (from 2026-10-10). */
   revision?: { dueOn: string; before: number; applied?: boolean; band?: Band; missed?: boolean };
+  /** A disagreement over the table work answered by both readings tried at the next rehearsal kept (`systems/classmates.ts`). */
+  tryBoth?: boolean;
+  /** The partner worked the weakness with you once, where that's the way chosen (`approach`). */
+  partnerWorked?: boolean;
+  /**
+   * The table-work question your partner reads another way, where you kept your reading (from 2026-10-12): the scene
+   * together reads your readings as apart (`ENSEMBLE.apart`) until you try theirs or try both at a rehearsal.
+   */
+  readsApart?: string;
+  /** Focused work on each of the scene's segments, 0 to 1 (from 2026-10-12, `systems/workbook.ts`, `scenePiece`). */
+  work?: number[];
+  /** The problem being worked on, the tries and the discoveries kept (from 2026-10-12, `systems/workbook.ts`). */
+  book?: Workbook;
 }
 
 export type OrientationTask = 'register' | 'classmates' | 'faculty' | 'tour' | 'expectations';
@@ -360,8 +407,15 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   // year-two scene in their first year again).
   const year = Math.min(3, Math.floor(academicTerm(school, term) / 2) + 1);
   if (t.material !== 'none') {
-    const pool = scenesFor(t, course, cw.assignments, targetDifficulty(year, person.craft ? actingOf(person.craft) : 50));
-    const scene = pool[0];
+    const target = targetDifficulty(year, person.craft ? actingOf(person.craft) : 50);
+    const pool = scenesFor(t, course, cw.assignments, target);
+    // Drawn among the unworked scenes nearest the difficulty that suits, up to four (from 2026-10-12): until then the
+    // nearest was taken every time, and every life met the same scenes in the same order (the completeness critic of
+    // 2026-10-12; VARIETY-2026-10-12.json had the same coursework on three seeds).
+    const dist = (s: { difficulty: number }) => Math.abs(s.difficulty - target) + (s.difficulty > target ? 0.5 : 0);
+    const fresh = pool.filter((s) => !scenePast(cw.assignments, s.id).length);
+    const near = fresh.length ? fresh.filter((s) => dist(s) <= dist(fresh[0]!) + 0.5).slice(0, 4) : [];
+    const scene = near.length > 1 ? near[Math.floor(rng.next() * near.length)]! : pool[0];
     // No scene of the kind it asks: nothing to set.
     if (!scene) return undefined;
     a.sceneId = scene.id;
@@ -451,6 +505,11 @@ export function approachRefusal(sim: Simulation, person: Person, a: Assignment |
     if (weak.dim === 'partner') return 'That’s the work with your partner already.';
     if (trustOf(person.school!.classmates[a.partner]!) < WORK.trust.wary) return `${person.school!.classmates[a.partner]!.name.split(' ')[0]} would rather work alone, after last time.`;
   }
+  // Where the table work is the answers alone (`interpretationOf`), a drill or the partner's work on it moves nothing the
+  // showing reads: refused from 2026-10-12. Until then both could be chosen, and both moved a figure the showing didn't
+  // read. Put It First and A Smaller Piece still act on the answers, by weight and by scale.
+  const t = templateById(a.template)!;
+  if ((kind === 'drill' || kind === 'partner') && weak.dim === 'interpretation' && t.material !== 'none' && !t.activities.some((x) => x.dim === 'interpretation')) return 'Here the table work is your answers: change one at the table.';
   return undefined;
 }
 
@@ -474,9 +533,14 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (a.asks?.some((k) => k.status === 'open')) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} asked to rehearse: answer first.`;
   if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene another way: answer first.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
-  if (act.requires && a.prep[act.requires.dim] < act.requires.at) return act.requires.why;
+  // A step that builds on the table work reads it as the showing does (`interpretationOf`, from 2026-10-12): until then
+  // it read `prep.interpretation`, which nothing in Table Work moves, so Write It Up never opened from the answers. A
+  // template with no material reads that figure either way.
+  if (act.requires && (act.requires.dim === 'interpretation' ? interpretationOf(a) : a.prep[act.requires.dim]) < act.requires.at) return act.requires.why;
   // Work on its feet still rehearses in a way of playing chosen after the part was complete (from 2026-10-12: until then
   // it was refused here, and a choice made late could never be rehearsed in; a played run of the practice briefs found it).
+  // A step of the partner part here is a targeted drill on it (`activitiesOf`): the partner step itself is refused above
+  // (`needRefusal`), and a rehearsal kept with the partner rehearses the choice in on its own (`rehearsalOutcome`).
   const choiceToRehearse = (act.dim === 'rehearsal' || act.dim === 'partner') && sidesOf(a.playing).length > 0 && a.playing!.prep < PLAYING.complete;
   if (a.prep[act.dim] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
@@ -485,7 +549,9 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   if (onFeet && person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
   // An injury that stops training stops work on your feet too (from 2026-10-10: until then a sprain didn't).
   if (onFeet) { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
-  return startRefusal(sim, person, act.minutes, onFeet || (act.needs ?? []).includes('library'));
+  // Free for as long as the step takes (`minutesOf`, from 2026-10-12): until then Learn Lines was checked for the
+  // template's 60 minutes and took the scene's 45, 75 or 105, so a long scene's ran into what was next.
+  return startRefusal(sim, person, minutesOf(a, act), onFeet || (act.needs ?? []).includes('library'));
 }
 
 /**
@@ -527,8 +593,12 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
-  // Work on its feet rehearses the way it's to be played, where one is chosen (from 2026-10-10).
-  if (act.dim === 'rehearsal' || act.dim === 'partner') rehearseChoice(a.playing, act.gain * Math.min(1.1, Math.max(0.5, focus)));
+  // Work on its feet rehearses the way it's to be played, where one is chosen (from 2026-10-10). The partner part's step
+  // here is a targeted drill on it; a rehearsal kept with the partner does it in `rehearsalOutcome` (from 2026-10-12).
+  if (act.dim === 'rehearsal' || act.dim === 'partner') {
+    rehearseChoice(a.playing, act.gain * Math.min(1.1, Math.max(0.5, focus)));
+    rehearseWays(a.book, act.gain * Math.min(1.1, Math.max(0.5, focus)));
+  }
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {
     grewFrom(sim, person, `coursework:${act.id}`, (c) => grow(c, act.trains!, focus, WORK.trainingWeight));
     a.trained += 1;
@@ -588,21 +658,71 @@ export const CHOOSE_MINUTES = 10;
 // Showing
 // ---------------------------------------------------------------------------
 
-/** What a partner has done on their own by a day, by their drive and reliability. */
+/**
+ * What a partner has done on their own by a day, by their drive and reliability, and from 2026-10-12 by how much they
+ * trust you: a partner stood up puts less into the scene they share with you, one who trusts you more.
+ */
 function partnerOwn(person: Person, a: Assignment, onDay: string): number {
   if (a.partner === undefined) return 0;
   const mate = person.school!.classmates[a.partner]!;
   const weeks = Math.max(0, (Date.UTC(parse(onDay).year, parse(onDay).month - 1, parse(onDay).day) - Date.UTC(parse(a.setOn).year, parse(a.setOn).month - 1, parse(a.setOn).day)) / (7 * MS_DAY));
-  return Math.min(WORK.partnerOwnMost, WORK.partnerOwnPerWeek * weeks * (mate.drive ?? 1) * (mateRecord(mate).reliability ?? 0.85));
+  const effort = 0.8 + 0.4 * (trustOf(mate) / 100);
+  return Math.min(WORK.partnerOwnMost, WORK.partnerOwnPerWeek * weeks * (mate.drive ?? 1) * (mateRecord(mate).reliability ?? 0.85) * effort);
+}
+
+/** A partner's preparation of the scene: their own, and what rehearsing together has brought them up to. */
+export function partnerPrepOf(person: Person, a: Assignment, onDay: string): number {
+  return 1 - (1 - partnerOwn(person, a, onDay)) * (1 - ENSEMBLE.together * clamp01(a.prep.partner));
+}
+
+/**
+ * A scene's partner as the scene together reads them (`systems/ensemble.ts`), on paired work with a partner: their
+ * preparation, their timing (listening and focus), whether your readings agree, their reliability, and how much the
+ * scene is played off them.
+ */
+export function partnerReadOf(sim: Simulation, person: Person, a: Assignment, onDay: string): PartnerRead | undefined {
+  const t = templateById(a.template)!;
+  if (!t.paired || a.partner === undefined) return undefined;
+  const mate = person.school!.classmates[a.partner];
+  if (!mate) return undefined;
+  const p = classmatePerformer(sim, person, a.partner);
+  const timing = 0.5 + 0.5 * ((Math.min(100, p.ability('listening')) + Math.min(100, p.ability('focus'))) / 200);
+  const apart = Boolean(a.readsApart || a.tryBoth);
+  return { name: mate.name, prep: partnerPrepOf(person, a, onDay), timing, agree: apart ? ENSEMBLE.apart : 1, reliability: reliabilityOf(sim, person, a.partner), level: materialOf(a.sceneId)?.partner ?? 2 };
+}
+
+/**
+ * A scene as a piece in its tones, in order (from 2026-10-12, `systems/piece.ts`): performed work with a scene whose
+ * tones change, its rehearsal refined segment by segment, and its load. A scene of one tone is judged whole.
+ */
+export function scenePiece(a: Assignment): PieceSpec | undefined {
+  const task = TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!;
+  const material = materialOf(a.sceneId);
+  if (!material || UNPERFORMED.has(task.id) || material.tones.length < 2) return undefined;
+  return withBook({
+    segments: toneSegments(material.tones), work: a.work ?? [], part: 'rehearsal',
+    perTurn: PIECE.scene.perTurn, perBlend: PIECE.scene.perBlend, most: PIECE.scene.most, load: loadOf(material, 'scene'),
+  }, a.book);
+}
+
+/** What a piece of coursework would come to if shown now, with no draw: the forecast the workbook reads (`systems/workbook.ts`). */
+export function forecastWork(sim: Simulation, person: Person, a: Assignment, onDay: string): Evaluation {
+  const w = weightsOf(a);
+  const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
+  const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
+  const ctx = { ...workContext(a, parts, required), condition: conditionAt(sim, person, sim.now), key: `forecast:${a.id}`, expected: true };
+  const piece = scenePiece(a);
+  return piece ? judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece) : evaluate(sim, person, ctx);
 }
 
 /** Each part of the preparation as the showing reads it, 0 to 1, for the template's parts. */
-export function preparedParts(person: Person, a: Assignment, onDay: string): Partial<Record<PrepDim, number>> {
+export function preparedParts(_person: Person, a: Assignment, _onDay: string): Partial<Record<PrepDim, number>> {
   const t = templateById(a.template)!;
   const out: Partial<Record<PrepDim, number>> = {};
   for (const dim of Object.keys(t.dims) as PrepDim[]) {
     if (dim === 'interpretation') out[dim] = interpretationOf(a);
-    else if (dim === 'partner' && t.paired) out[dim] = WORK.partnerMix.together * a.prep.partner + WORK.partnerMix.own * partnerOwn(person, a, onDay);
+    // Your own partner part is what you've rehearsed together (from 2026-10-12): what the partner has done alone is
+    // theirs, read by the scene together (`partnerReadOf`).
     else out[dim] = a.prep[dim];
   }
   // A smaller piece of a part asked for (`approach`): six tenths of it reads as the whole of what was asked.
@@ -618,7 +738,12 @@ function craftScore(person: Person, t: Template): number {
   return clamp01(0.5 + (level - t.par) / WORK.showing.perPoint);
 }
 
-/** A part's weight in a showing: the template's, and more for the assignment's objective (normalized in `weightsOf`). */
+/**
+ * A part's weight in which note a showing gives (`noteCandidates`), and the parts it reads (a round's only, for work
+ * shown in rounds): the template's, and more for the assignment's objective, normalized. The judged result has read the
+ * task's dimensions since 2026-10-09 (`workContext`), not these weights; until 2026-10-12 they also summed a showing's
+ * preparation (`Showing.parts.prep`), which nothing but a test read.
+ */
 export function weightsOf(a: Assignment): Partial<Record<PrepDim, number>> {
   const t = templateById(a.template)!;
   // Work shown in rounds reads the round's parts only.
@@ -643,7 +768,9 @@ export function noteCandidates(person: Person, a: Assignment, parts: Partial<Rec
     if (short >= 0.05) out.push({ focus: { kind: 'dim', dim }, level: v, short });
   }
   for (const { q, options } of questionsFor(a)) {
-    if (a.answers[q.id] && !options.find((o) => o.id === a.answers[q.id])?.supported) out.push({ focus: { kind: 'choice', question: q.id }, short: 0.1 });
+    // At 0, as a choice the text cuts against is: a note on it resolved before can be given again (from 2026-10-12; until
+    // then it carried no level, and `mayGive` never gave a resolved one again however the choice was made later).
+    if (a.answers[q.id] && !options.find((o) => o.id === a.answers[q.id])?.supported) out.push({ focus: { kind: 'choice', question: q.id }, level: 0, short: 0.1 });
   }
   if (craft < 0.45) {
     const weakest = (Object.keys(t.reads) as Skill[]).sort((x, y) => person.craft![x] - person.craft![y])[0]!;
@@ -709,7 +836,20 @@ export function judgeWork(sim: Simulation, person: Person, a: Assignment, onDay:
   const w = weightsOf(a);
   const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
   const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
-  return evaluate(sim, person, { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key });
+  const ctx = { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key };
+  const piece = scenePiece(a);
+  return piece ? evaluatePiece(sim, person, ctx, piece) : evaluate(sim, person, ctx);
+}
+
+/** The scene together for a showing judged: what the partner brought to your result (`systems/ensemble.ts`). */
+export function togetherOf(sim: Simulation, person: Person, a: Assignment, onDay: string, judged: Evaluation): SharedResult | undefined {
+  const read = partnerReadOf(sim, person, a, onDay);
+  if (!read) return undefined;
+  const ctx = workContext(a, {}, {});
+  const piece = scenePiece(a);
+  const weights = piece ? pieceWeights(ctx.task, ctx.lean, piece) : leanedWeights(ctx.task, 'families' in ctx ? ctx.families : [], ctx.lean);
+  const norm = (id: 'listening' | 'adaptability') => Math.min(1, abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)));
+  return sharedOf(judged, read, sim.universe.meta.seed, judged.inputs.key, (norm('listening') + norm('adaptability')) / 2, weights);
 }
 
 /**
@@ -725,15 +865,29 @@ export function workContext(a: Assignment, parts: Record<string, number>, requir
   const prep = { ...parts };
   const req = { ...required };
   if (sidesOf(playing).length) { prep.approach = playing!.prep; req.approach = PLAYING.complete; }
+  // What the work asks to be put first (its objective, or "Put It First"), from 2026-10-12: each dimension that reads
+  // that part of the preparation weighs more, by `LEARNING.objectiveWeight`, normalized as every lean is. Until then the
+  // objective and Put It First changed which note was given and the "Weighs" line, and nothing in the result: the same
+  // work under three objectives came out at 40.3 each time, while four screens said the part weighed more.
+  const first = new Set<string>([...(a.objective ? [OBJECTIVE_DIM[a.objective]] : []), ...(a.approach?.kind === 'objective' ? [a.approach.dim] : [])]);
+  const putFirst = (lean: Partial<Record<Dimension, number>>): Partial<Record<Dimension, number>> => {
+    if (!first.size) return lean;
+    const out = { ...lean };
+    for (const [d, spec] of Object.entries(task.dims) as [Dimension, NonNullable<(typeof task.dims)[Dimension]>][]) if ((spec.prep ?? []).some((p) => first.has(p))) out[d] = (out[d] ?? 1) * LEARNING.objectiveWeight;
+    return out;
+  };
   if (material) {
     const read = materialContext(task, material, playing);
     const techniques = { ...t.reads } as Partial<Record<Skill, number>>;
     for (const [k, w] of Object.entries(material.techniques ?? {}) as [Skill, number][]) if (techniques[k] === undefined) techniques[k] = w;
-    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
+    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
   }
   const genres = a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : [];
   const read = materialContext(task, undefined, playing);
-  return { task, techniques: withDemands(t.reads, genres), prep, required: req, difficulty: difficultyOf(t), families: familiesOf(genres), ...(sidesOf(playing).length ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep } : {}) };
+  const families = familiesOf(genres);
+  // With nothing put first and no way of playing chosen, the genres lean it; with either, their lean is carried into one.
+  const leant = sidesOf(playing).length || first.size ? putFirst(sidesOf(playing).length ? Object.fromEntries(Object.entries(read.lean).map(([d, x]) => [d, (x ?? 1) * (familyLean(task, families)[d as Dimension] ?? 1)])) : familyLean(task, families)) : undefined;
+  return { task, techniques: withDemands(t.reads, genres), prep, required: req, difficulty: difficultyOf(t), families, ...(leant ? { lean: leant } : {}), ...(sidesOf(playing).length ? { inputs: read.inputs, extraPrep: read.prep } : {}) };
 }
 
 /**
@@ -745,7 +899,9 @@ export function playingPreview(sim: Simulation, person: Person, a: Assignment, o
   const parts = Object.fromEntries(Object.keys(w).map((d) => [d, 1])) as Record<string, number>;
   const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
   void onDay;
-  return evaluate(sim, person, { ...workContext(a, parts, required, { ...playing, chosenAt: sim.now, prep: 1 }), condition: { readiness: 100 }, key: `preview:${a.id}`, expected: true });
+  const ctx = { ...workContext(a, parts, required, { ...playing, chosenAt: sim.now, prep: 1 }), condition: { readiness: 100 }, key: `preview:${a.id}`, expected: true };
+  const piece = scenePiece(a);
+  return piece ? judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece) : evaluate(sim, person, ctx);
 }
 
 /** Why a way of playing can't be chosen for a piece now, or nothing. */
@@ -763,13 +919,12 @@ const bandFor = (a: Assignment, overall: number): Band => {
   return a.approach?.kind === 'smaller' && (b === 'strong' || b === 'exceptional') ? 'working' : b;
 };
 
-/** The showing reckoned once: its band and parts, what helped, and the note. */
+/** The showing reckoned once: its band and score, what helped, and the note (until 2026-10-12 its parts too, unread). */
 export function show(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant): Showing {
   const t = templateById(a.template)!;
   const w = weightsOf(a);
   // The parts this showing reads: all of the work's, or a round's.
   const parts = Object.fromEntries(Object.entries(preparedParts(person, a, onDay)).filter(([d]) => w[d as PrepDim] !== undefined)) as Partial<Record<PrepDim, number>>;
-  const prep = (Object.entries(parts) as [PrepDim, number][]).reduce((s, [dim, v]) => s + (w[dim] ?? 0) * v, 0);
   const craft = craftScore(person, t);
   const ready = clamp01((focusOf(person) - 0.3) / 0.9);
   const judged = judgeWork(sim, person, a, onDay, when, `show:${person.id}:${a.id}:${onDay}`);
@@ -784,18 +939,35 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // Notes from before whose part this work has put right: taken, and said (`resolveNote`).
   const taken: string[] = [];
   for (const n of notes) {
-    if (n.status !== 'open' || !n.key.startsWith('dim:')) continue;
-    const v = parts[n.key.slice(4) as PrepDim];
-    if (v !== undefined && v >= LEARNING.enough && resolveNote(notes, n.key, onDay, a.id, c.name)) taken.push(n.key);
+    if (n.status !== 'open') continue;
+    if (n.key.startsWith('dim:')) {
+      const v = parts[n.key.slice(4) as PrepDim];
+      if (v !== undefined && v >= LEARNING.enough && resolveNote(notes, n.key, onDay, a.id, c.name)) taken.push(n.key);
+    }
+    // A choice note is taken where this work answers the same question as the text supports (from 2026-10-12; until then
+    // a choice note stayed open for ever, however the choices were made after it).
+    if (n.key.startsWith('choice:')) {
+      const q = n.key.slice('choice:'.length);
+      const answered = questionsFor(a).find((x) => x.q.id === q);
+      if (answered && answered.options.find((o) => o.id === a.answers[q as Question['id']])?.supported && resolveNote(notes, n.key, onDay, a.id, c.name)) taken.push(n.key);
+    }
   }
-  for (const key of taken) strengths.push(`The note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()} is taken`);
+  for (const key of taken) strengths.push(key.startsWith('choice:') ? `The note on ${(QUESTIONS.find((q) => q.id === key.slice('choice:'.length))?.label ?? 'a choice').toLowerCase()} is taken` : `The note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()} is taken`);
   if (taken.length) a.taken = taken;
   // A smaller piece shown is no better than Working (`approach`).
   const band = bandFor(a, judged.overall);
   recordWork(sim, person, judged, { at: when, what: t.title, band });
   // The material met, the way it was played and how it went, on the record (`systems/experience.ts`, from 2026-10-10).
   noteMaterial(person, { material: materialOf(a.sceneId), at: when, overall: judged.overall, approaches: sidesOf(a.playing), shown: true });
-  const showing: Showing = { band, score: Math.round(score * 1000) / 1000, at: when, parts: { prep, craft, ready, ...(t.paired ? { partner: parts.partner ?? 0 } : {}) }, strengths };
+  const showing: Showing = { band, score: Math.round(score * 1000) / 1000, at: when, strengths };
+  // The scene together (from 2026-10-12): apart from your own result, which the band reads; it moves the bond with the
+  // partner by how it went together, and a slip of theirs you covered earns their trust.
+  const together = togetherOf(sim, person, a, onDay, judged);
+  if (together && a.partner !== undefined) {
+    showing.together = { overall: together.overall, contribution: together.contribution, partner: together.partner, ...(together.slip ? { slip: together.slip } : {}), words: sharedWords(judged.overall, together) };
+    afterTogether(sim, person, a.partner, together, t.title);
+    countTogether(person, together);
+  }
   // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
   const pick = noteCandidates(person, a, parts, craft, notes)[0];
   // The course's last step beyond, not given again running.
@@ -827,8 +999,20 @@ export function noteTaken(person: Person, a: Assignment, onDay: string): boolean
     return now >= before + r.dimRise || (now >= r.dimEnough && before < r.dimEnough) || a.prep.revision >= r.worked;
   }
   if (focus.kind === 'choice') return Boolean(questionsFor(a).find(({ q }) => q.id === focus.question)?.options.find((o) => o.id === a.answers[focus.question])?.supported);
+  // A note on a skill is taken where the skill grew since it was given (from 2026-10-12): the work for the next weeks it
+  // names. Until then two steps of revision at the desk took it, whatever the skill did.
+  if (focus.kind === 'skill') {
+    const given = noteRecord(notesOf(courseworkOf2(person)), noteKey(focus))?.level;
+    const now = (person.craft?.[focus.skill] ?? 0) / 100;
+    return given !== undefined ? now >= given + SKILL_NOTE_RISE - 1e-9 : a.prep.revision >= r.worked;
+  }
   return a.prep.revision >= r.worked;
 }
+
+/** How far a skill must have grown, of 100, for a note on it to be taken: two points (SLATE's). */
+export const SKILL_NOTE_RISE = 0.02;
+/** The coursework a person has, read without making one. */
+const courseworkOf2 = (person: Person): Coursework => ((person.school as { coursework?: Coursework } | undefined)?.coursework ?? { assignments: [], used: [], orientation: { done: {} } });
 
 /**
  * A course's meeting on a day, asked by the class-day reckoning: work due
@@ -1026,6 +1210,11 @@ export function askRefusal(sim: Simulation, person: Person, a: Assignment | unde
   if (a.rehearsals.some((r) => r.status === 'booked' && Math.abs(r.at - when) < WORK.rehearsal.minutes * 60_000)) return { refused: 'You’re already rehearsing then.' };
   const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + WORK.rehearsal.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
   if (clash) return { refused: `You have ${clash.label} then.` };
+  // The partner activity's own rule, as the step on your own keeps it (from 2026-10-12): a fight isn't drilled with a
+  // partner before the choreography is known, an intimacy scene before its boundaries are set. Until then asking to
+  // rehearse skipped it.
+  const act = templateById(a.template)!.activities.find((x) => x.dim === 'partner');
+  if (act?.requires && a.prep[act.requires.dim] < act.requires.at) return { refused: act.requires.why };
   const busy = mateBusy(person, a.partner, when, WORK.rehearsal.minutes);
   if (busy) return { declines: busy };
   if (trustOf(mate) < WORK.trust.wary) return { declines: `${first} would rather work on it alone, after last time.` };
@@ -1040,9 +1229,14 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   const m = mateRecord(mate);
   const first = mate.name.split(' ')[0];
   const mine = person.id === sim.universe.playerId;
-  // Ill (in hospital or laid up), it's excused, and they're told (from 2026-10-10: until then it cost trust and bond as
-  // standing them up, which `health.ts` says an admission never is).
-  if (inHospital(person, when) || laidUp(person, when)) {
+  // Ill (in hospital or laid up, or the day called in sick), it's excused, and they're told (from 2026-10-10: until then
+  // it cost trust and bond as standing them up, which `health.ts` says an admission never is). A day called in sick
+  // excuses it too from 2026-10-12, as the guide's School chapter says; until then only hospital and being laid up did.
+  // And a body that can't train can't drill a scene on its feet with a partner: an injury that stops training excuses
+  // it, where until then a sprained student drilled a fight at speed.
+  const partnerAct = templateById(a.template)!.activities.find((x) => x.dim === 'partner');
+  const onFeet = (partnerAct?.needs ?? []).some((n) => n === 'studio' || n === 'feet');
+  if (inHospital(person, when) || laidUp(person, when) || person.school?.sickDay === dayKey(when) || (onFeet && trainingRefusal(person, when))) {
     r.status = 'excused';
     remember(sim, mate, `You were ill and couldn’t rehearse ${sceneById(a.sceneId ?? '')?.play ?? templateById(a.template)!.title}`);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${mate.name.split(' ')[0]} Knows You’re Ill`, body: 'The rehearsal you booked is off, and they don’t hold it against you.', importance: 40, route: '/workspace/school' });
@@ -1074,15 +1268,29 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   const t = templateById(a.template)!;
   const act = t.activities.find((x) => x.dim === 'partner');
   const before = a.prep.partner;
-  a.prep.partner = clamp01(before + (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person))) * (1 - before));
+  const gain = (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person)));
+  a.prep.partner = clamp01(before + gain * (1 - before));
+  // The evening on its feet with them rehearses in the way it's to be played, where one is chosen, as a step on your
+  // feet does in `prepare` (from 2026-10-12). Until then only the steps done alone did: the partner step itself is
+  // always refused in `prepareRefusal` (`needRefusal`, 'partner'), so a scene rehearsed only with a partner was shown
+  // with its way of playing never rehearsed in.
+  rehearseChoice(a.playing, gain);
+  rehearseWays(a.book, gain);
   exerts(person, WORK.met.feet, WORK.rehearsal.minutes / 60);
   moveTrust(mate, WORK.trust.kept, { person, by: WORK.bond.kept });
   keptWith(mate);
   // The weakness worked on with the partner too, where that's the way chosen (`approach`), once.
-  if (a.approach?.kind === 'partner' && !(a as Assignment & { partnerWorked?: boolean }).partnerWorked) { a.prep[a.approach.dim] = clamp01(a.prep[a.approach.dim] + APPROACH.partner * (1 - a.prep[a.approach.dim])); (a as Assignment & { partnerWorked?: boolean }).partnerWorked = true; }
-  // Both readings tried, as agreed with them (`systems/classmates.ts`): the table work moves, once.
-  const tried = a as Assignment & { tryBoth?: boolean };
-  if (tried.tryBoth) { a.prep.interpretation = clamp01(a.prep.interpretation + 0.15 * (1 - a.prep.interpretation)); delete tried.tryBoth; }
+  if (a.approach?.kind === 'partner' && !a.partnerWorked) { a.prep[a.approach.dim] = clamp01(a.prep[a.approach.dim] + APPROACH.partner * (1 - a.prep[a.approach.dim])); a.partnerWorked = true; }
+  // Both readings tried, as agreed with them (`systems/classmates.ts`): the readings come together, once, and where the
+  // table work reads a figure of its own (`interpretationOf`: a course with a step at the table, or work with no scene),
+  // that figure moves. Where the table work is the answers alone, nothing reads `prep.interpretation`: until 2026-10-12
+  // it moved there all the same, and only the partner's after-rehearsal words (`peerNote`) read it. From then those
+  // words read the choices as the showing does (`interpretationOf`), so there what they say of your choices comes from
+  // your answers at the table, which trying both leaves as they are.
+  if (a.tryBoth) {
+    if (t.material === 'none' || t.activities.some((x) => x.dim === 'interpretation')) a.prep.interpretation = clamp01(a.prep.interpretation + CLASS.bothGain * (1 - a.prep.interpretation));
+    delete a.tryBoth; delete a.readsApart;
+  }
   remember(sim, mate, `Rehearsed ${what} together`);
   r.said = peerNote(a, first!);
 }
@@ -1092,13 +1300,20 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
  * held the scene back most, of those a partner feels (knowing the scene, the
  * lines, the choices, time on its feet), or that it's coming together. The
  * game's words, from your preparation as it stands; change the preparation
- * and what they say changes.
+ * and what they say changes. The choices are read as the showing reads them
+ * (`interpretationOf`): your answers at the table, and for verse the scansion
+ * too (from 2026-10-12). Until then they read `prep.interpretation`, which on a
+ * scene whose table work is the answers alone the showing never read, and
+ * which nothing moved there once the drill, the partner's way and Try Both
+ * stopped moving it on 2026-10-12: a partner on Scene Study and the like said
+ * your choices weren't clear however you'd made them.
  */
 export function peerNote(a: Assignment, first: string): string {
   const t = templateById(a.template)!;
   const felt = (['familiarity', 'memorization', 'interpretation', 'rehearsal'] as const).filter((d) => t.dims[d]);
-  const weakest = [...felt].sort((x, y) => a.prep[x] - a.prep[y])[0];
-  if (!weakest || a.prep[weakest] >= 0.7) return `${first} says it’s coming together.`;
+  const level = (d: (typeof felt)[number]): number => (d === 'interpretation' ? interpretationOf(a) : a.prep[d]);
+  const weakest = [...felt].sort((x, y) => level(x) - level(y))[0];
+  if (!weakest || level(weakest) >= 0.7) return `${first} says it’s coming together.`;
   return {
     familiarity: `${first} thinks you don’t know the scene well enough yet to play it.`,
     memorization: `${first} says you were on book most of the time, and they couldn’t catch your eye.`,
@@ -1119,6 +1334,9 @@ export function partnerAsks(sim: Simulation, person: Person, course: string, day
   if (!a) return;
   const mate = person.school!.classmates[a.partner!]!;
   if (trustOf(mate) < WORK.trust.wary) return;
+  // Nor before the partner work's own rule is met: a fight's choreography known, an intimacy scene's boundaries agreed (from 2026-10-12).
+  const partnerAct = templateById(a.template)!.activities.find((x) => x.dim === 'partner');
+  if (partnerAct?.requires && a.prep[partnerAct.requires.dim] < partnerAct.requires.at) return;
   if (a.asks?.some((k) => k.status === 'open') || a.rehearsals.some((r) => r.status === 'booked' && r.at > sim.now)) return;
   if (sim.rng('school.partner', person.id, `ask-${a.id}-${keyOf(day)}`).next() >= WORK.ask.chance) return;
   const due = at(parse(a.status === 'revising' ? a.revision!.dueOn : a.dueOn), 9);
@@ -1213,7 +1431,9 @@ export function registerCoursework(sim: Simulation): void {
     const was = a!.playing;
     a!.playing = choose(was, next, s.now);
     if (!sidesOf(a!.playing).length) delete a!.playing;
-    noteMaterial(person, { approaches: sidesOf(a!.playing) });
+    // Only a side newly chosen counts toward the habits (from 2026-10-12): until then a side kept while another axis
+    // changed was counted again with it, as `chooseBrief` says.
+    noteMaterial(person, { approaches: sidesOf(a!.playing).filter((x) => !sidesOf(was).includes(x)) });
     return { prep: a!.playing?.prep ?? 0, kept: (a!.playing?.prep ?? 0) === (was?.prep ?? 0) };
   });
 

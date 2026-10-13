@@ -24,7 +24,8 @@ import { FILM_GENRES } from '../src/engine/content/film-genres';
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
 import { evenCraft } from '../src/engine/systems/school';
 import { abilityFull, abilityOf, levelOf } from '../src/engine/systems/attributes';
-import { recommendations } from '../src/engine/systems/experience';
+import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
+import { identityOf } from '../src/engine/systems/artistry';
 import { exerciseFor } from '../src/engine/content/practice';
 import { matchedTier } from '../src/engine/systems/practice';
 import { breaches } from '../src/engine/core/invariants';
@@ -44,7 +45,7 @@ function setUp(sim: Simulation) {
   const p = sim.player;
   if (PROFILE === 'developing') {
     p.craft = Object.fromEntries(Object.entries(p.craft!).map(([k, v]) => [k, Math.max(v, 55)])) as typeof p.craft;
-    p.attrs = Object.fromEntries(Object.entries(p.attrs ?? {}).map(([k, v]) => [k, Math.max(v as number, 55)])) as typeof p.attrs;
+    p.attrs = Object.fromEntries(Object.entries(p.attrs ?? {}).map(([k, v]) => [k, Math.max(v as number, 55)])) as unknown as typeof p.attrs;
   } else if (PROFILE === 'specialist') {
     for (const k of ['emotion'] as const) p.craft![k] = 90;
     p.attrs = { ...(p.attrs ?? {}), composure: 90, imagination: 90, presence: 90, listening: 49, focus: 49, adaptability: 49, discipline: 49 } as typeof p.attrs;
@@ -76,7 +77,9 @@ function pickReading(b: Brief): string {
 
 function weakness() {
   const p = sim.player;
-  const r = recommendations((id) => levelOf(sim, p, id as never), (id) => (isAbility(id) ? abilityFull(sim, p, id as AbilityId) : MASTERED), p.work ?? [], (id) => exerciseFor(id as never), matchedTier).find((x) => !x.target.startsWith('prep:'));
+  // An ability or technique only, as the brief pane takes it (from 2026-10-12: until then only a preparation was passed
+  // over, so a day's condition or a fit could be the weakness a brief was suggested for, at 0% of the work).
+  const r = recommendations((id) => levelOf(sim, p, id as never), (id) => (isAbility(id) ? abilityFull(sim, p, id as AbilityId) : MASTERED), p.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(p, sim.now, sim.homeZone), identityOf(p).recurring).find((x) => !x.target.includes(':'));
   return r ? { target: r.target, label: r.label, level: levelOf(sim, p, r.target as never), full: isAbility(r.target) ? abilityFull(sim, p, r.target as AbilityId) : MASTERED } : undefined;
 }
 

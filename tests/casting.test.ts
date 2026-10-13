@@ -11,9 +11,12 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
 import { COURSES } from '@/engine/content/school';
-import { courseworkOf } from '@/engine/systems/coursework';
+import { TOGETHER_BOND, courseworkOf } from '@/engine/systems/coursework';
+import { EVALUATION } from '@/engine/content/tasks';
+
+const ESTIMATE_STRONG = EVALUATION.bands.strong;
 import { PREP_DIMS } from '@/engine/content/coursework';
-import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightEvaluation, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondMove, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightEvaluation, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 
@@ -224,8 +227,9 @@ describe('a night’s reading', () => {
     const nights = Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
     expect(nights).toBe(shows.length);
     expect(c.note).toContain(directorsNote(nightsMean(c.nights!)));
-    // And names what the play asked that was weakest in them.
-    expect(c.note).toMatch(/ Work on your [a-z -]+.$/);
+    // And names what held the run's nights back most, by the evaluation (from 2026-10-12: until then the play's weakest
+    // raw craft skill, named even where nothing held the nights back).
+    expect(c.note).toMatch(/ Work on your [a-z -]+: it held the nights back most\.$/);
     expect(sim.universe.notifications.some((n) => n.title.startsWith('The Director’s Note'))).toBe(true);
     play(sim, on(2027, 9, 15));
     expect(sim.player.school!.lastWork).toMatchObject({ size: c.size });
@@ -331,7 +335,10 @@ describe('friends and rivals', () => {
       const m = school.classmates.find((x) => x.name === mate.name)!;
       const tookLead = /^A Leading Part/.test(mate.part) && c.size !== 'lead';
       const lostLead = c.size === 'lead' && !/^A Leading Part/.test(mate.part);
-      expect(m.bond).toBe(BONDS.shared - (tookLead ? BONDS.leadTaken : 0) - (lostLead ? BONDS.leadTaken : 0));
+      // And a scene shown with them in class that came out Strong or better together (from 2026-10-12, `TOGETHER_BOND`).
+      const i = school.classmates.indexOf(m);
+      const together = (courseworkOf(sim, sim.player)?.assignments ?? []).filter((x) => x.partner === i && (x.shown?.together?.overall ?? 0) >= ESTIMATE_STRONG).length;
+      expect(m.bond).toBe(BONDS.shared - (tookLead ? BONDS.leadTaken : 0) - (lostLead ? BONDS.leadTaken : 0) + together * bondMove(sim.player, TOGETHER_BOND));
     }
     expect(bondWord(30)).toBe('Friend');
     expect(bondWord(60)).toBe('Close Friend');

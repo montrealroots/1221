@@ -12,12 +12,14 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { MS_HOUR, formatDate, formatTime } from '@/engine/core/time';
 import { Open, at } from '@/ui/looks';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, TRANSFERS } from '@/engine/content/bankopening';
 import { bankById } from '@/engine/content/banks';
+import { SECURITY } from '@/engine/content/security';
 import { bankAccountsOf, banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
 import { homeOf } from '@/engine/systems/earnings';
@@ -76,19 +78,37 @@ export function BankMoves() {
     if (rules?.openedWhenFunded) parts.push('The account counts as open only once money is in it.');
     if (rules?.fundWithinDays) parts.push(`Unfunded ${rules.fundWithinDays} days after opening, it closes.`);
     if (rules?.closesAtZeroAfterDays) parts.push(`At a zero balance for ${rules.closesAtZeroAfterDays} days, it may close.`);
+    // The card's line says what `cardArrival` and `openApproved` (`systems/bankmoves.ts`) do. Until 2026-10-12 it gave
+    // Bank of America's 6 business days "with a digital card in the app meanwhile", and nothing read the 6: a digital
+    // card works from the day the account opens, and nothing arrives after it (docs/UNBITTEN.md). And where a bank
+    // publishes no days for a new card it gave SLATE's 7, while the card came in the bank's days for a replacement
+    // (`SECURITY`): Citi's 5 and SMBC's 10, at 29 of the thirteen countries' 60 banks (tests/bank-moves-card-line.test.ts).
     const card = rules?.card;
-    parts.push(card ? `The debit card takes ${card.days} ${card.business ? 'business' : 'calendar'} days${card.digital ? ', with a digital card in the app meanwhile' : ''}.` : `The debit card takes ${ESTIMATE_CARD_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
-    parts.push(rules?.sameDayBefore !== undefined ? 'Money it sends to another bank arrives the same business day before 12:30, the next after.'
+    const replacement = chosen ? SECURITY[chosen.id]?.standardDays : undefined;
+    parts.push(card?.digital ? 'The debit card works from the day the account opens, as a digital card in the app.'
+      : card ? `The debit card takes ${card.days} ${card.business ? 'business' : 'calendar'} days.`
+        : replacement !== undefined ? `The debit card takes ${replacement} business days, as the bank’s replacement card does: SLATE’s estimate, as no figure for a new account’s card was found.`
+          : `The debit card takes ${ESTIMATE_CARD_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+    // In the order `arrivalOf` (`systems/bankmoves.ts`) runs: the bank’s cut-off, its days, the country’s instant
+    // scheme, the country’s cut-off, its days. Until 2026-10-12 the country’s cut-off was never read, so a Japanese
+    // bank said SLATE’s 3-day estimate while Zengin landed the money the same day, and the bank’s cut-off was written
+    // "12:30", Citi’s, whatever the number.
+    // A cut-off is an hour of the bank’s day, written on the 12-hour clock by `formatTime`, as the house writes a
+    // time the player reads: 15.5 is 3:30 PM, the clock that many hours into a day at UTC. For part of 2026-10-12 a
+    // second formatter here wrote both cut-offs on a 24-hour clock, "before 15:30" for Zengin.
+    const cutOff = (h: number) => formatTime(h * MS_HOUR, 'UTC');
+    parts.push(rules?.sameDayBefore !== undefined ? `Money it sends to another bank arrives the same business day before ${cutOff(rules.sameDayBefore)}, the next after.`
       : rules?.sendDays ? `Money it sends to another bank takes ${rules.sendDays} business days.`
         : scheme?.instant ? `Money between banks here arrives at once, by ${scheme.scheme}.`
-          : scheme?.days ? `Money between banks here takes ${scheme.days} business day${scheme.days === 1 ? '' : 's'}, by ${scheme.scheme}.`
-            : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+          : scheme?.sameDayBefore !== undefined ? `Money between banks here arrives the same business day before ${cutOff(scheme.sameDayBefore)}, the next after, by ${scheme.scheme}.`
+            : scheme?.days ? `Money between banks here takes ${scheme.days} business day${scheme.days === 1 ? '' : 's'}, by ${scheme.scheme}.`
+              : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
     return parts.join(' ');
   };
 
   return (
     <div className="col gap-4" style={{ marginBottom: 'var(--s5)' }}>
-      <Panel title="Your Banks" subtitle={currents.length > 1 ? `${currents.length} current accounts` : 'One current account'}>
+      <Panel title="Your Banks" subtitle={currents.length > 1 ? `${currents.length} current accounts` : 'One current account'} help="bank.other-banks">
         <div className="col gap-3">
           {currents.map((a) => {
             const links = linkedTo(sim, person, a.id);
@@ -136,15 +156,23 @@ export function BankMoves() {
               </div>
             );
           })}
-          <p className="xs dim" style={{ margin: 0 }}>
-            The primary account is where {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another primary moves nothing already set up.
-            {' '}Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says, and other payers in {DEPOSIT_LEAD.days}, SLATE’s estimate (employers say one to two pay cycles).
-          </p>
+          <div className="row-between gap-2" style={{ alignItems: 'start' }}>
+            <p className="xs dim" style={{ margin: 0 }}>
+              The primary account is where {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another primary moves nothing already set up.
+            </p>
+            <HowItWorks help="bank.set_primary" />
+          </div>
+          <div className="row-between gap-2" style={{ alignItems: 'start' }}>
+            <p className="xs dim" style={{ margin: 0 }}>
+              Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says, and other payers in {DEPOSIT_LEAD.days}, SLATE’s estimate (employers say one to two pay cycles).
+            </p>
+            <HowItWorks help="bank.redirect_deposits" />
+          </div>
         </div>
       </Panel>
 
       {(pay.standingOrders.length > 0 || cards.length > 0) && currents.length > 1 && (
-        <Panel title="What Pays From Where" subtitle="Each set up on its own account, until you move it.">
+        <Panel title="What Pays From Where" subtitle="Each set up on its own account, until you move it." help="bank.payments">
           <div className="col gap-2">
             {pay.standingOrders.map((o) => (
               <div key={o.id} className="field">
@@ -171,6 +199,7 @@ export function BankMoves() {
                     onClick={() => { if (run('card.set_autopay_from', { cardId: c.id, accountId: sources[c.id] }).ok) toast('Autopay pays from there from its next due date.', 'positive'); }}>
                     Pay From There
                   </Gated>
+                  <HowItWorks help="card.set_autopay_from" />
                 </div>
               </div>
             ))}
@@ -186,7 +215,7 @@ export function BankMoves() {
         </Panel>
       )}
 
-      <Panel title="Open An Account At Another Bank" subtitle={applications.length ? applications.map((a) => `${bankById(a.bankId)?.name} decides by ${formatDate(a.at, sim.zone)}`).join('; ') : undefined}>
+      <Panel title="Open An Account At Another Bank" subtitle={applications.length ? applications.map((a) => `${bankById(a.bankId)?.name} decides by ${formatDate(a.at, sim.zone)}`).join('; ') : undefined} help="bank.other-banks">
         {others.length === 0 ? <p className="small">You keep an account at every bank here SLATE knows.</p> : (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>

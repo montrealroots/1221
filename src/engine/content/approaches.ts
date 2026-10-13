@@ -66,12 +66,22 @@ export const PLAYING = { complete: 0.9, keptOnChange: 0.5, gainShare: 0.9 } as c
  * budget on 139 of them, whatever each was built on (docs/verification/BRIEF-BALANCE.md). Doubled, what a scene is built
  * on decides more of it: that actor is ahead on the briefs built on feeling and behind on those built on timing, a
  * partner or the body. Normalized as before, and every ability still reaches 100 at full.
+ *
+ * The body's and the voice's raised again on 2026-10-12 (physical 1.2 to 1.8 an ability a level and its lean 0.2 to
+ * 0.25; vocal 1.2 to 2 and 0.16 to 0.25), against a stated measure: on material built on a demand, at level 3, the
+ * ability it names should carry at least as much of the work as the most-read ability of the task's own profile does
+ * (emotional depth, about a sixth of a take). Measured before (tools/specialists.ts and the shares it reads), physical
+ * carried 13.8% of a brief built on physical work against emotional depth's 17%, and vocal 12% of one built on the
+ * voice against 17.8%, so a specialist in either came out about even with an even actor on their own material. The
+ * feeling actor's lead on most briefs stands: every take is built on feeling, and that's the material, not a bias.
+ * The sentence above, "that actor is ahead on the briefs built on feeling and behind on those built on timing, a
+ * partner or the body", was never what the catalog measured: ahead on 145 of 149 then.
  */
 export const FEATURE_EFFECT: Readonly<Record<Feature, { lean: Partial<Record<Dimension, number>>; inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }>> = {
   timing: { lean: { responsiveness: 0.2, execution: 0.16 }, inputs: { responsiveness: [{ ability: 'listening', weight: 1 }], execution: [{ ability: 'focus', weight: 1 }] } },
-  physical: { lean: { execution: 0.2 }, inputs: { execution: [{ ability: 'physical', weight: 1.2 }], consistency: [{ ability: 'stamina', weight: 0.8 }] } },
+  physical: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'physical', weight: 1.8 }], consistency: [{ ability: 'stamina', weight: 0.8 }] } },
   partner: { lean: { connection: 0.2, responsiveness: 0.1 }, inputs: { connection: [{ ability: 'listening', weight: 1 }] } },
-  vocal: { lean: { execution: 0.16 }, inputs: { execution: [{ ability: 'vocal', weight: 1.2 }], consistency: [{ ability: 'stamina', weight: 0.6 }] } },
+  vocal: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'vocal', weight: 2 }], consistency: [{ ability: 'stamina', weight: 0.6 }] } },
   improvisation: { lean: { responsiveness: 0.2 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 1.2 }] } },
 };
 

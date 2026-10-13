@@ -26,14 +26,34 @@ import { schoolEnded } from './school';
  * living there): lawful presence shown and checked through SAVE, ten business days or more; an F-1 student's I-20 and
  * proof of enrollment in the state's school; a Social Security number, or the SSA's letter that they're ineligible,
  * which SLATE doesn't issue since every student here is eligible through work-study; and a term to the end of their
- * lawful presence (Connecticut DMV, non-driver photo ID; CGS 14-36(c)).
+ * lawful presence (Connecticut DMV, non-driver photo ID; CGS 14-36(c)). Once school is over the lawful presence is a US
+ * permit in force, OPT, and the term runs to its end (from 2026-10-12: until then an F-1 holder was turned away once
+ * school had ended, OPT in force or not, and the card's term, had it been let through, ran to the program's end,
+ * already past). A graduate isn't a student, though: `ssnRefusal` takes an application for the number only through
+ * work-study at school, so a graduate on OPT who didn't apply for one there is refused the card for it, and told so,
+ * and one who did is told it's on its way until it comes (from 2026-10-12).
  */
 export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining; https://portal.ct.gov/DMV/Licenses/Licenses/Drivers-License--NonUS-Citizen--Requirements' } as const;
 
-/** When a non-citizen's lawful presence ends, for a US card's term; nothing for a citizen. */
-function presenceEnds(person: Person): Instant | undefined {
+/** Whether they're at school still, which an F-1 student's I-20 and proof of enrollment show. */
+const atSchool = (person: Person): boolean => person.school !== undefined && !schoolEnded(person.school.standing);
+
+/** The US permit they hold in force at a moment that runs latest, OPT; nothing without one. */
+function usPermitInForce(person: Person, at: Instant): PersonDocument | undefined {
+  const held = documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US' && inForce(d, at));
+  return held.reduce<PersonDocument | undefined>((best, d) => (!best || (d.expiresAt ?? Infinity) > (best.expiresAt ?? Infinity) ? d : best), undefined);
+}
+
+/**
+ * When a non-citizen's lawful presence ends, for a US card's term; nothing for a citizen. An F-1 student's at school is
+ * the program's end; anyone else's is their permit's (from 2026-10-12: until then it was the program's end for everyone,
+ * already past for a graduate on OPT).
+ */
+function presenceEnds(person: Person, at: Instant): Instant | undefined {
   if (citizenOf(person, 'US')) return undefined;
-  return programEnd(person) ?? f1Of(person)?.expiresAt;
+  const f1 = f1Of(person);
+  if (f1 && atSchool(person)) return programEnd(person) ?? f1.expiresAt;
+  return usPermitInForce(person, at)?.expiresAt ?? programEnd(person) ?? f1?.expiresAt;
 }
 
 const usd = (sim: Simulation, dollars: number): Money => { const c = Math.round(dollars * 100); const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
@@ -61,10 +81,24 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
   // Not a citizen, at a US state's counter: status, enrollment and a number first.
   if (here.jurisdiction.startsWith('us-') && !citizenOf(person, 'US')) {
     if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you stayed past your status.';
+    // An F-1 student at school shows enrollment; anyone else a US permit in force, OPT (from 2026-10-12: until then an
+    // F-1 holder out of school was refused here, OPT or not, and the permit was read only for somebody with no F-1).
     const f1 = f1Of(person);
-    if (f1 && (!person.school || schoolEnded(person.school.standing))) return 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.';
-    if (!f1 && !documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && inForce(d, at))) return 'The DMV asks for proof of lawful presence in the US, which you don’t hold.';
-    if (!hasSsn(person)) return 'The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one. You can, through work-study: apply for it on the Papers screen first.';
+    if (!(f1 && atSchool(person)) && !usPermitInForce(person, at)) {
+      return f1 ? 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.' : 'The DMV asks for proof of lawful presence in the US, which you don’t hold.';
+    }
+    // Only an F-1 student at school can apply for the number, through work-study (`ssnRefusal`), and SLATE issues no
+    // letter; one applied for there still comes once the program has ended. From 2026-10-12: until then everyone
+    // without a number was told to apply for it on Papers, which a graduate on OPT, let through above that day, can't,
+    // and one who had applied already needn't. Later that day a graduate whose number was on its way, applied for in
+    // the program's last weeks, was still told SLATE issues it only to a student at school, which Papers and the card
+    // that came contradicted, until the number applied for was read first.
+    if (!hasSsn(person)) {
+      const asked = 'The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.';
+      if (person.ssn?.status === 'applied') return `${asked} Yours is on its way.`;
+      if (!(f1 && atSchool(person))) return `${asked} SLATE issues the number only to an F-1 student at school, through work-study, and never the letter.`;
+      return `${asked} You can, through work-study: apply for it on the Papers screen first.`;
+    }
   }
   if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold one in force.';
   // One on its way, applied for or replacing a lost one (from 2026-10-06; until then a second was issued and charged for,
@@ -73,10 +107,11 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
   return undefined;
 }
 
-/** A Connecticut license made REAL ID before it renews, for the duplicate's fee. */
-// Making a Connecticut license REAL ID (`documents.real_id`) went in the connected world of 2026-10-09: REAL ID is
-// what the TSA and a federal building ask, and nothing in SLATE flies or goes into one since the scope reset. A
-// license that is REAL ID still says so on its record (`realId`).
+// Making a Connecticut license REAL ID before it renewed, for its $30 duplicate fee (`documents.real_id`), went in the
+// connected world of 2026-10-09: REAL ID is what the TSA and a federal building ask, and nothing in SLATE flies or goes
+// into one since the scope reset. A license that is REAL ID still says so on its record (`realId`). Until 2026-10-12
+// its refusal's doc comment (`realIdRefusal`) stayed here in the present tense, over nothing, and its fee stayed in
+// `REAL_ID`, read by nothing.
 
 /**
  * Why a lost license can't be replaced, or nothing (from 2026-10-09; `LICENSE_REPLACEMENT`, each issuer's page): it
@@ -159,7 +194,7 @@ export function registerIdentity(sim: Simulation): void {
     // Ireland's passport card runs five years or to the book's expiry; the Ontario, BC and INE cards' terms weren't read.
     const book = card.passportBook ? documentsOf(person).find((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, s.now)) : undefined;
     // A non-citizen's runs to the end of their lawful presence, and waits on SAVE (`NONCITIZEN_ID`, from 2026-10-10).
-    const limited = jurisdiction.startsWith('us-') ? presenceEnds(person) : undefined;
+    const limited = jurisdiction.startsWith('us-') ? presenceEnds(person, s.now) : undefined;
     const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
     if (limited !== undefined) {
       const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays);

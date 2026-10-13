@@ -30,7 +30,7 @@ export function ClassMoments() {
   if (!open.length && !past.length) return null;
   const answerOf = (kind: keyof typeof CHOICES, id?: string) => CHOICES[kind].find((c) => c.id === id)?.label;
   return (
-    <Panel title="Your Class" subtitle="What classmates bring you, and how you answered">
+    <Panel title="Your Class" subtitle="What classmates bring you, and how you answered" help="school.respond">
       <div className="col gap-3">
         {open.map((m) => {
           const mate = person.school!.classmates[m.mate]!;

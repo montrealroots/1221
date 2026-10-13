@@ -27,10 +27,11 @@ import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { inHospital } from './health';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
-import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './spending';
+import { buyTheDaysFood, fedOn, mealOf, spend, spendRefusal } from './spending';
 import { heatIndexC, weatherAt } from './weather';
-import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsToday } from './attributes';
+import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsSoFar, repeatsToday } from './attributes';
 import { DEVELOPMENT } from '../content/abilities';
+import { nextCommitmentItem } from '../world/calendar';
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };
@@ -44,8 +45,12 @@ export const TRAINING = { run: 1.1, indoors: 1 };
 /** Weather to run in: dry, and neither freezing nor sweltering, the heat read as it feels (`heatIndexC`). */
 export const FINE = { highC: 32, runLowC: 0 };
 const WET = ['Rain', 'Thunderstorm', 'Snow', 'Drizzle'];
-export function trainingAt(sim: Simulation, person: Person): { where: 'run' | 'indoors'; builds: number } {
-  const w = weatherAt(sim, person.currentLocationId, sim.now);
+/**
+ * Where a workout is, read at an instant: the command reads it as the hour ends, and the menu's preview reads it there
+ * too (from 2026-10-12: until then the preview read it as the menu opened, an hour before the workout did).
+ */
+export function trainingAt(sim: Simulation, person: Person, at: Instant = sim.now): { where: 'run' | 'indoors'; builds: number } {
+  const w = weatherAt(sim, person.currentLocationId, at);
   if (w && !WET.includes(w.condition) && heatIndexC(w.temperatureC, w.humidity) <= FINE.highC && w.temperatureC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
   return { where: 'indoors', builds: TRAINING.indoors };
 }
@@ -361,7 +366,7 @@ export function registerLife(sim: Simulation): void {
       // Hours that are a number, and a start within the day ahead (from 2026-10-10: until then a value that wasn't a
       // number passed the clamp, and a start any distance ahead was taken).
       if (!Number.isFinite(Number(p.hours))) throw new CommandError('Say how long to sleep.');
-      const hours = clamp(Number(p.hours), 0.5, 16);
+      const hours = clamp(Number(p.hours), SHORTEST_SLEEP, 16);
       const start = p.startAt ?? s.now;
       if (!Number.isFinite(start)) throw new CommandError('Say when to sleep.');
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
@@ -433,19 +438,27 @@ export function registerLife(sim: Simulation): void {
       if (refused) throw new CommandError(refused);
       markApplied(s.player, p.actionId);
 
-      // The hour is lived first, and charged as waking like any other, so
-      // what it does is on top of what the hour already cost.
-      const cost = costFor(s, action);
-      s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const person = s.player;
-      // A meal is bought as it's made (`systems/spending.ts`), and a delivered one at delivery's price.
-      // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
+      // A meal is paid for when it's ordered, the way one is bought (`systems/spending.ts`), a delivered one at
+      // delivery's price, and before its hour is lived (from 2026-10-12). The refusal above asked what `spend` asks
+      // (`spendRefusal`) at this same moment, so the payment goes through; one that didn't would leave them unfed and
+      // fail the command, but nothing known reaches that now. Until then the meal was paid for after its hour, so what
+      // changed in the hour itself could still refuse it: one whose hour crossed midnight met the day's groceries
+      // (`buyTheDaysFood`) first, and at 11:40 PM with a dollar more than the groceries and less than the groceries and
+      // the meal together, the menu offered the meal and the command said the payment didn't go through. Until earlier
+      // that day a meal at a bank whose debit card can't use the overdraft reached that failure too, and a meal paid by
+      // card with cash in hand got past the refusal and the failure both: owed in Bills Owed by debit card and, by
+      // credit card, failing the command on a purchase that didn't balance.
+      const cost = costFor(s, action);
       if (action === 'eat' && !spend(s, person, cost, 'A meal', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
+      // Then the hour is lived, and charged as waking like any other, so what it does is on top of what the hour
+      // already cost.
+      s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const before = { ...person.wellbeing };
       const where = action === 'exercise' ? trainingAt(s, person) : undefined;
       // A second workout today builds half the first (`FITNESS`), counted where practice counts its repeats, so a save and a load don't reset it.
-      const again = action === 'exercise' ? DEVELOPMENT.repeat ** repeatsToday(s, person, 'stamina<workout') : 1;
+      const again = action === 'exercise' ? DEVELOPMENT.repeat ** repeatsToday(s, person, WORKOUTS_TODAY) : 1;
       applyLookingAfter(person, action, s.now, where ? where.builds * again : 1);
       if (action === 'exercise') {
         recordDevelopment(s, person, 'stamina', person.wellbeing.fitness - before.fitness, where!.where === 'run' ? 'workout:run' : 'workout');
@@ -488,13 +501,21 @@ export function registerLife(sim: Simulation): void {
 // reset of 2026-10-09: each was the home's (its bathtub, its pool, its yard, its machines, its rooms).
 export type LookAfter = 'eat' | 'order' | 'wash' | 'exercise' | 'unwind';
 
-export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
-  eat: { label: 'Eat A Meal', minutes: 40, does: 'Feeds you, and lifts the mood by as much as you needed it' },
-  order: { label: 'Order In', minutes: 50, does: 'A meal delivered, at what delivery costs: feeds you without the cooking' },
-  wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
-  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are and more on a run in fine weather, and holds it for three days; a second the same day builds half. Eases stress; costs energy, food and a shower' },
-  unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
+/**
+ * Each one's label and time. Until 2026-10-12 each carried a `does` sentence too, which nothing read: the menu says
+ * why (`whyNow`) and the guide reads the label and the time. Work Out's said fitness held for three days, a figure
+ * `FITNESS.heldDays` owns.
+ */
+export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number }> = {
+  eat: { label: 'Eat A Meal', minutes: 40 },
+  order: { label: 'Order In', minutes: 50 },
+  wash: { label: 'Shower', minutes: 20 },
+  exercise: { label: 'Work Out', minutes: 60 },
+  unwind: { label: 'Unwind', minutes: 60 },
 };
+
+/** The day's count a workout is kept under (`repeatsToday`), where practice keeps its own. */
+const WORKOUTS_TODAY = 'stamina<workout';
 
 /** What a meal puts back, and what a workout costs and builds. */
 const MEAL = 50;
@@ -506,18 +527,10 @@ const CLEAN = 95;
 export const SPENT = 25;
 
 /**
- * Why the player can't do it now, in the world's words, or nothing if they can.
- *
- * The menu and the command both ask this, so the menu never offers what the
- * command refuses. Something that needs the player inside the window refuses
- * it outright: sleep may run over a commitment because a night is a choice
- * worth warning about, but twenty minutes in the shower that makes you miss a
- * call is only a mistake.
- */
-/**
  * The commitment the player is in the middle of at a moment: one they turned
- * up for, whose hours still run. A meal fits in one, as a break on set or
- * between classes; sleep, a shower, a workout and unwinding don't. Until
+ * up for, whose hours still run. A meal fits in one, as a break between
+ * classes; sleep, a shower, a workout and unwinding don't. A break on set was
+ * one too, until the career went on 2026-10-09. Until
  * 2026-09-27 a commitment took only the moment it began, and at ten in the
  * morning of a twelve-hour shoot the player could sleep for eight hours and
  * the day still counted as worked.
@@ -573,6 +586,19 @@ export function costFor(sim: Simulation, action: LookAfter): number {
   return 0;
 }
 
+/**
+ * Why the player can't do it now, in the world's words, or nothing if they can.
+ *
+ * The menu and the command both ask this, so the menu never offers what the
+ * command refuses. For a meal that holds from 2026-10-12, when the command
+ * came to pay for it as it's ordered: until then it paid after the hour, and a
+ * meal whose hour crossed midnight was offered and then refused, because the
+ * day's groceries, bought at midnight (`buyTheDaysFood`), spent its money
+ * first. Something that needs the player inside the window refuses
+ * it outright: sleep may run over a commitment because a night is a choice
+ * worth warning about, but twenty minutes in the shower that makes you miss a
+ * call is only a mistake.
+ */
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
   const person = sim.player;
@@ -582,7 +608,15 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
-  if ((action === 'eat' || action === 'order') && canPay(sim, person) < costFor(sim, action)) return 'You can’t afford it.';
+  // A meal is refused for what `spend` refuses it for, in its words (`spendRefusal`, from 2026-10-12). Until then it
+  // was refused for less than `canPay` with any overdraft counted, so at a bank whose debit card can't go into the
+  // overdraft the menu offered a meal that the command, after the hour, said hadn't gone through; and a locked debit
+  // card was offered a meal on money only it could reach. Until later that day cash in hand counted for somebody
+  // paying by card, which `spend` doesn't spend: the menu offered the meal, and the command owed it or failed.
+  if (action === 'eat' || action === 'order') {
+    const short = spendRefusal(sim, person, costFor(sim, action), 'food');
+    if (short) return short;
+  }
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
@@ -598,9 +632,11 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
 /**
  * What a workout builds: 0.6 fitness at readiness 75, less for training
  * tired, hungry or stretched, and up to 0.72 at a hundred. Readiness is read
- * through `focusOf` too, by the audition's booking roll and by the craft a
- * class, a lab or a day of work builds; this said until 2026-09-27 that a
- * workout was the one thing that read it.
+ * through `focusOf` and `focusAt` too, by the craft a class, a lab, a
+ * rehearsal or an hour of practice builds, and judged work reads it as its
+ * condition (`conditionAt`). The audition's booking roll and a day of work
+ * read it until the career went on 2026-10-09; this said until 2026-09-27
+ * that a workout was the one thing that read it.
  */
 export function workoutBuilds(person: Person): number {
   return WORKOUT_FITNESS * remap(readiness(person), 0, 100, 0.4, 1.2);
@@ -690,10 +726,16 @@ export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
   const w = person.wellbeing;
   const before = readiness(person);
   const order = Object.keys(LOOKING_AFTER) as LookAfter[];
+  // A workout as the command reads it: the weather as its hour ends, and that day's workouts before it (from
+  // 2026-10-12). Until then the preview read the weather as the menu opened and no repeat, so a third workout in a row
+  // showed +0.68 fitness and built +0.17.
+  const workoutEnds = sim.now + minutesFor(sim, 'exercise') * 60_000;
+  const training = { ...trainingAt(sim, person, workoutEnds), repeats: repeatsSoFar(sim, person, WORKOUTS_TODAY, workoutEnds) };
   const options = order.map((action): LookAfterOption => {
     // A copy, without the body's tally, which a meal ordered in adds to (`eatsOut`).
     const copy = { ...person, wellbeing: { ...w }, body: undefined } as Person;
-    applyLookingAfter(copy, action, sim.now, action === 'exercise' ? trainingAt(sim, person).builds : 1);
+    if (action === 'exercise') applyLookingAfter(copy, action, workoutEnds, training.builds * DEVELOPMENT.repeat ** training.repeats);
+    else applyLookingAfter(copy, action, sim.now, 1);
     const changes = (Object.keys(w) as (keyof Wellbeing)[])
       .filter((k) => typeof w[k] === 'number' && Math.round((copy.wellbeing[k] as number) * 10) !== Math.round((w[k] as number) * 10))
       .map((k) => ({ dial: k, from: w[k] as number, to: copy.wellbeing[k] as number }));
@@ -702,7 +744,7 @@ export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
     const urgent = (feeds && w.nourishment < HUNGRY) || (action === 'wash' && (w.hygiene ?? 80) < GRIMY) || (action === 'unwind' && w.stress > OVERWROUGHT);
     return {
       action, label: labelFor(sim, action), minutes: minutesFor(sim, action), cost: costFor(sim, action),
-      refused: lookAfterRefusal(sim, action), gain, urgent, why: whyNow(person, action, gain, urgent), changes,
+      refused: lookAfterRefusal(sim, action), gain, urgent, why: whyNow(person, action, gain, urgent, training), changes,
     };
   });
   const band = (o: LookAfterOption) => (o.refused ? 3 : o.urgent ? 0 : o.gain >= 0.5 ? 1 : 2);
@@ -713,7 +755,7 @@ export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
 }
 
 /** Why a thing stands where it does on the menu, in the dials' words. */
-function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean): string {
+function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean, training: { where: 'run' | 'indoors'; repeats: number }): string {
   const w = person.wellbeing;
   const r = (x: number) => Math.round(x);
   if (action === 'eat' || action === 'order') {
@@ -728,8 +770,11 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
     if (urgent) return `Stress at ${r(w.stress)}: every hour over ${OVERWROUGHT} costs condition.`;
     return gain >= 0.5 ? `Stress at ${r(w.stress)} and morale at ${r(w.morale)} are costing readiness.` : `Stress at ${r(w.stress)}: little to gain yet.`;
   }
-  // A workout's worth is mostly fitness, which readiness doesn't read the day it's built; it costs energy now.
-  return `Builds fitness, at ${r(w.fitness)} now, and eases stress; costs ${r(workoutCosts(person))} energy.`;
+  // A workout's worth is mostly fitness, which readiness doesn't read the day it's built; it costs energy now. Whether
+  // it'll be a run, and what a repeat the same day keeps, said from 2026-10-12: until then the line said neither.
+  const where = training.where === 'run' ? 'A run in fine weather' : 'Indoors, the weather being no good for a run';
+  const again = training.repeats > 0 ? ` It’s workout ${training.repeats + 1} today, so it builds ${Math.round(100 * DEVELOPMENT.repeat ** training.repeats)}% of a first.` : '';
+  return `${where}: builds fitness, at ${r(w.fitness)} now, and eases stress; costs ${r(workoutCosts(person))} energy.${again}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -867,7 +912,7 @@ export function yearsSince(birthInstant: number, at: number): number {
  * What living on autopilot tops out at. A player who actually manages sleep
  * and downtime should always be able to do better than these.
  */
-const COASTING_ENERGY_CEILING = 74;
+export const COASTING_ENERGY_CEILING = 74;
 const COASTING_STRESS_FLOOR = 14;
 /**
  * What an unattended day eats up to.
@@ -1261,16 +1306,16 @@ export function unattendedNight(person: Person): { sound: number; hours: number 
  */
 export function sleepStandsForTheNight(sim: Simulation, hours: number): boolean {
   const person = sim.player;
-  const wakes = sim.now + Math.round(clamp(hours, 0.5, 16) * MS_HOUR);
+  const wakes = sim.now + Math.round(clamp(hours, SHORTEST_SLEEP, 16) * MS_HOUR);
   const midnight = startOfLocalDay(sim, wakes);
   if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return false;
   if (person.nightEndsAt !== undefined && sim.now < person.nightEndsAt) return false;
   return wakes - midnight < unattendedNight(person).sound * MS_HOUR && hours < 6;
 }
 
-/** How many hours until the player must be somewhere. */
+/** How many hours until the player must be somewhere: none, standing at it (`nextCommitmentItem`). */
 export function hoursUntilNextCommitment(sim: Simulation): number | undefined {
-  const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
+  const next = nextCommitmentItem(sim);
   if (!next) return undefined;
   return (next.at - sim.now) / MS_HOUR;
 }
@@ -1306,7 +1351,13 @@ const A_NORMAL_DAY = 16;
 export const A_NORMAL_DAYS_DEBT = A_NORMAL_DAY * DEBT_PER_WAKING_HOUR;
 
 /** The longest night the Sleep dialog offers, and so the most a suggestion asks. */
-const LONGEST_NIGHT = 14;
+export const LONGEST_NIGHT = 14;
+/**
+ * The shortest sleep the command takes, a suggestion asks and the dialog offers (from 2026-10-12): until then the
+ * dialog's slider started at 1, so a suggestion of half an hour, with something two hours off, set it below its
+ * own floor, where it couldn't be shown or returned to.
+ */
+export const SHORTEST_SLEEP = 0.5;
 
 /**
  * A sensible default bedtime given tomorrow's first commitment.
@@ -1321,7 +1372,7 @@ const LONGEST_NIGHT = 14;
  * night wore down.
  */
 export function suggestedSleep(sim: Simulation): { hours: number; reason: string } {
-  const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
+  const next = nextCommitmentItem(sim);
   const person = sim.player;
   const owed = Math.max(0, person.wellbeing.sleepDebt - A_NORMAL_DAYS_DEBT);
   const night = nightParts(sim, person);
@@ -1353,9 +1404,12 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
     // least. Until 2026-09-28 it was never under three hours, which with a
     // call four hours off slept straight through it: an actor jet-lagged in
     // London, in bed at four for a seven o'clock call, was fired on the day.
+    // Standing at it, the reason says so (from 2026-10-12): it would have said it was in 0.0 hours.
     return {
-      hours: Math.max(0.5, Math.floor(available * 2) / 2),
-      reason: `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
+      hours: Math.max(SHORTEST_SLEEP, Math.floor(available * 2) / 2),
+      reason: next.at <= sim.now
+        ? `It’s time for "${next.label}", and you’re standing at it. Any sleep goes through it.`
+        : `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
     };
   }
   return { hours, reason: why };

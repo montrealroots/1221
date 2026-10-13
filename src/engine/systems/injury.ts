@@ -10,8 +10,10 @@
  * and, for the worst, time off work. While it mends a workout is out of the
  * question and it weighs on the mood; off work, a stage part's understudy
  * goes on and a screen part is recast, as a stay in hospital does. Hurt at
- * work, workers' compensation pays the care and two-thirds of the week's
- * wage for the time off, by the state's rules.
+ * work, workers' compensation pays the care and the state's share of the
+ * week's wage for the time off, by the state's rules: two-thirds in New York
+ * and California, 75% after tax in Connecticut. Until 2026-10-12 this said
+ * two-thirds, and so did the notice, of a Connecticut injury too.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -35,9 +37,16 @@ export interface Injury {
   until: Instant;
   /** Kept off work until, for the worst. */
   offWorkUntil?: Instant;
-  /** Hurt at work: the job's state and its week's wage, which workers' compensation reads. */
-  atWork?: { stateId: string; weeklyWage: Money; paidDays: number };
+  /**
+   * Hurt at work: the job's state and its week's wage, which workers' compensation reads, and from 2026-10-12 the
+   * employer where one pays a wage the compensation replaces (the Summer Cabaret's stipend, `systems/school.ts`).
+   */
+  atWork?: { stateId: string; weeklyWage: Money; paidDays: number; employer?: string };
 }
+
+/** The state's share of the wage in words, for a notice: "two-thirds of your week’s wage", or Connecticut's after tax. */
+const shareWords = (rules: CompRules): string =>
+  `${Math.abs(rules.share - 2 / 3) < 1e-9 ? 'two-thirds' : `${Math.round(rules.share * 100)}%`} of your week’s wage${rules.afterTax ? ' after tax' : ''}`;
 
 export type InjurySource = keyof typeof INJURY_MIX;
 
@@ -68,7 +77,7 @@ export const chanceOver = (perThousand: number, hours: number): number => 1 - Ma
  * injury it was, its care billed or paid by workers' compensation, and the
  * time it keeps them from things.
  */
-export function mayHurt(sim: Simulation, person: Person, source: InjurySource, chance: number, at: Instant, work?: { cityId: string; weeklyWage: Money }): Injury | undefined {
+export function mayHurt(sim: Simulation, person: Person, source: InjurySource, chance: number, at: Instant, work?: { cityId: string; weeklyWage: Money; employer?: string }): Injury | undefined {
   if (injuryOf(person, at)) return undefined;
   const rng = sim.rng('health.injury', person.id, `${source}-${at}`);
   if (rng.next() >= chance) return undefined;
@@ -79,7 +88,7 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   // A resilient body mends sooner (`illnessToll`).
   const days = Math.round((spec.days[0] + rng.next() * (spec.days[1] - spec.days[0])) * personalityOf(person, 'illnessToll'));
   const injury: Injury = { kind, at, until: at + days * MS_DAY, ...(spec.offWork ? { offWorkUntil: at + days * MS_DAY } : {}) };
-  if (work) injury.atWork = { stateId: CITIES.get(work.cityId)?.parentId ?? 'us-ny', weeklyWage: work.weeklyWage, paidDays: 0 };
+  if (work) injury.atWork = { stateId: CITIES.get(work.cityId)?.parentId ?? 'us-ny', weeklyWage: work.weeklyWage, paidDays: 0, ...(work.employer ? { employer: work.employer } : {}) };
   healthOf(person).injury = injury;
   const cur = saveCurrency(sim.universe);
   // The care: the visit it needs and its sessions of physical therapy, at what the plan leaves; at work, the employer's cover pays it.
@@ -90,9 +99,11 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   w.morale = clamp(w.morale - 4 * personalityOf(person, 'moraleSwing'), 0, 100);
   if (injury.offWorkUntil && injury.atWork) sim.schedule({ at: at + 7 * MS_DAY, kind: COMP_KIND, label: 'Workers’ Compensation', category: 'system', priority: 20, payload: { personId: person.id } });
   if (person.id === sim.universe.playerId) {
+    // The state's own share (from 2026-10-12): until then every notice said two-thirds, Connecticut's 75% after tax too.
+    const rules = injury.atWork ? WORKERS_COMP.states[injury.atWork.stateId] ?? WORKERS_COMP.states['us-ny']! : undefined;
     sim.notify({
       category: 'health', title: spec.label,
-      body: `${days} days to mend${spec.offWork ? ', and off work for them' : ''}. ${work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork ? ' and two-thirds of your week’s wage while you’re off.' : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''}`,
+      body: `${days} days to mend${spec.offWork ? ', and off work for them' : ''}. ${work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''}`,
       importance: 80, route: '/workspace/papers',
     });
   }

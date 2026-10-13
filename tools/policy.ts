@@ -13,7 +13,8 @@ import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '
 import { MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
-import { recommendations } from '../src/engine/systems/experience';
+import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
+import { identityOf } from '../src/engine/systems/artistry';
 import { matchedTier } from '../src/engine/systems/practice';
 import { abilityFull, levelOf } from '../src/engine/systems/attributes';
 import { MASTERED } from '../src/engine/content/abilities';
@@ -100,7 +101,7 @@ export function practiceHour(sim: Simulation): boolean {
   // What cost recent work and still has room (`recommendations`, from 2026-10-10; until then the input that cost the
   // last five pieces most, even once it had grown full), practiced at the tier that matches it, a steady hour.
   const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
-  const limit = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier).find((r) => r.exercise);
+  const limit = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring).find((r) => r.exercise);
   const target = limit?.target ?? ABILITY_DEFS.map((d) => d.id).filter((id) => exerciseFor(id)).sort((a, b) => abilityOf(sim, person, a) - abilityOf(sim, person, b))[0];
   const e = target ? exerciseFor(target as AbilityId) : undefined;
   if (e && !practiceRefusal(sim, person, e)) return sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok;

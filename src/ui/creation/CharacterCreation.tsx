@@ -193,7 +193,7 @@ export function CharacterCreation({
         {step === STEP['Dispositions & Traits'] && <PersonalityStep config={config} setConfig={setConfig} />}
         {step === STEP['Genres & Background'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
-        {step === STEP.Review && <ReviewStep config={config} />}
+        {step === STEP.Review && <ReviewStep config={config} setConfig={setConfig} />}
 
         {issues.length > 0 && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s5)' }}>
@@ -1038,7 +1038,7 @@ function monthOf(config: NewSaveConfig, cur: string) {
   return { at, costs, spending, food, out: food };
 }
 
-function ReviewStep({ config }: { config: NewSaveConfig }) {
+function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   const age = ageAtStart(config);
@@ -1141,6 +1141,22 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="In Your Own Words" value="—" />
         )}
       </div>
+
+      {/*
+        The guide, or not (from 2026-10-12): a player who knows SLATE isn't walked through seventeen chapters again.
+        Either way every chapter and the reference stay there to read.
+      */}
+      <fieldset className="card">
+        <legend className="eyebrow">The Guide</legend>
+        <label className="row gap-2 small" style={{ alignItems: 'flex-start', padding: 'var(--s1) 0' }}>
+          <input type="radio" name="guide" checked={config.tutorial !== false} onChange={() => setConfig((c) => ({ ...c, tutorial: true }))} />
+          <span><strong>Guide Me Through It.</strong> The game opens a part at a time, each with a short chapter saying what it does. Recommended for a first life.</span>
+        </label>
+        <label className="row gap-2 small" style={{ alignItems: 'flex-start', padding: 'var(--s1) 0' }}>
+          <input type="radio" name="guide" checked={config.tutorial === false} onChange={() => setConfig((c) => ({ ...c, tutorial: false }))} />
+          <span><strong>I Know SLATE.</strong> Everything is open from the start, and the clock starts paused. The chapters and How This Works are there whenever you want them.</span>
+        </label>
+      </fieldset>
 
       <div className="callout callout-accent">
         Once this save begins, the world starts running. Time passes and the calendar fills,

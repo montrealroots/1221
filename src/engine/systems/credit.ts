@@ -598,8 +598,11 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false,
   const from = byHand ? undefined : autopaySource(sim, person, card);
   if (!byHand && (!from || from.closedAt)) return 0;
   const inCurrent = Math.max(0, (from ?? sim.universe.accounts[person.primaryAccountId ?? ''])?.balance ?? 0);
-  const linked = byHand || (paymentsOf(person).linkSavings && (!from || from.id === person.primaryAccountId));
-  const reach = linked ? inTheBank(sim, person) : inCurrent;
+  // Linked savings is the easy-access savings at the bank of the account it's paid from, as every payment draws it
+  // (`drawFromBank`). From 2026-10-12: until then autopay from another account than the primary drew none, while a loan
+  // repaid from that account did, and How You Pay said the link covered both; a card's autopay bounced, savings full.
+  const linked = byHand || paymentsOf(person).linkSavings;
+  const reach = linked ? inTheBank(sim, person, from) : inCurrent;
   // By hand the holder may pay more than is owed, and the card holds the credit (C23).
   const paid = Math.max(0, Math.min(amount, reach, byHand ? amount : -card.balance));
   if (paid <= 0) return 0;
@@ -611,10 +614,12 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false,
     const state = stateOf(person, card);
     state.paidSinceStatement += paid;
     // Paid from another bank, the card's bank may hold back the credit it frees
-    // for its days while the payment clears; paid from its own, it doesn't.
+    // for its days while the payment clears; paid from its own, it doesn't. The bank is the drawn account's: autopay's
+    // own account, or the primary by hand. Until 2026-10-12 it was always the primary's, so autopay from the card's
+    // bank with the primary elsewhere was held, and autopay from elsewhere with the primary at the card's bank wasn't.
     const days = card.bankId ? PENDING[card.bankId]?.paymentHoldDays : undefined;
-    const from = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId]?.bankId : undefined;
-    if (days && from !== card.bankId) (state.paymentHolds ??= []).push({ amount: paid, until: sim.now + days * MS_DAY });
+    const drawnAt = (from ?? sim.universe.accounts[person.primaryAccountId ?? ''])?.bankId;
+    if (days && drawnAt !== card.bankId) (state.paymentHolds ??= []).push({ amount: paid, until: sim.now + days * MS_DAY });
     const terms = cardTerms(sim, card, person.credit.score);
     allocatePayment(sim, person, card, paid, minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0, state.statementPlanDue ?? 0), { cash: terms.cashApr, purchases: terms.apr });
   }
@@ -1046,8 +1051,9 @@ export function autopayAsk(sim: Simulation, person: Person, card: Account): { as
 function autopayReach(sim: Simulation, person: Person, card: Account): Money {
   const from = autopaySource(sim, person, card);
   if (!from || from.closedAt) return 0;
-  const linked = paymentsOf(person).linkSavings && from.id === person.primaryAccountId;
-  return linked ? inTheBank(sim, person) : Math.max(0, from.balance);
+  // The link reaches savings at the autopay account's own bank, as `payCard` draws it (from 2026-10-12: until then only
+  // where that account was the primary).
+  return paymentsOf(person).linkSavings ? inTheBank(sim, person, from) : Math.max(0, from.balance);
 }
 
 /**

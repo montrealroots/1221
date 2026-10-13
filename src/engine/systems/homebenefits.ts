@@ -1,6 +1,7 @@
 /**
- * SLATE — what a citizen living at home in Ireland or Mexico City can claim
- * out of work (from 2026-09-29), researched from Citizens Information, the
+ * SLATE — what a citizen living at home in Ireland can claim out of work, and
+ * what Mexico City's claim a save holds pays (from 2026-09-29; until
+ * 2026-10-12 this said both could be claimed), researched from Citizens Information, the
  * Department of Social Protection's guidance and the Mexico City Gazette,
  * and kept in `docs/research/world/research-safetynet-home.json`.
  *
@@ -17,22 +18,21 @@
  * **Mexico City, the Seguro de Desempleo's track for Mexicans come home.**
  * The month's UMA, MXN 3,566.22 in 2026, for up to three months, once in a
  * life, to a Mexican of 18 to 64 living in the city who came back from
- * abroad since the first of January of the year before. The ordinary track
- * asks six months of formal work in the city, which an actor's engagements
- * aren't; SLATE doesn't have it. Mexico has no federal unemployment
- * insurance.
+ * abroad since the first of January of the year before. It was filed for
+ * until the connected world of 2026-10-09, when the career, whose move home
+ * wrote `returnedHomeAt`, went; from then it takes no new claim (`desempleoRefusal`),
+ * and only a claim a save already holds is paid out (`DESEMPLEO_KIND`). Its
+ * ordinary track asks six months of formal work in the city, which SLATE has
+ * none of. Mexico has no federal unemployment insurance. (Until 2026-10-12
+ * this said the track was claimable.)
  *
  * **Dublin, the Housing Assistance Payment** (from 2026-09-29, Dublin City
- * Council's pages): the council pays the landlord the rent up to its limit,
- * a single adult's €660 a month for a place of their own and €500 for a room
- * shared, and up to 35% over it at its discretion, which SLATE takes; the
- * tenant pays the council a differential rent, 18% of their net weekly
- * income over €55, never less than €35.82 a week (the scheme from 6 April
- * 2026), and anything the rent is over the limit and the discretion. For
- * someone on the social housing list, with net income to €40,000 a year (the
- * council's table, dated 2023); SLATE takes an application as joining the
- * list, the list's wait not kept. Net income is last year's pay less its
- * tax, and the payments coming in now, pensions and Jobseeker's Allowance.
+ * Council's pages) paid a renter's landlord the rent up to the council's
+ * limit, against a differential rent from the tenant's net income, until the
+ * home and its rent went in the scope reset of 2026-10-09. Until 2026-10-12
+ * this header still set out its limits as rules in force, and
+ * `livesInDublinCity` and `netWeeklyEur` (the differential rent's net
+ * income), which only the payment read, were still exported; all three went.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -43,9 +43,8 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { payeeAccount } from './cash';
-import { earningsOf, homeOf } from './earnings';
+import { homeOf } from './earnings';
 import { citizenshipsOf } from './documents';
-import { computeAnnualTax } from '../content/tax';
 
 export const IRISH_JA = {
   weekly: 254_00,
@@ -72,26 +71,6 @@ const YEAR = 365.25 * MS_DAY;
 
 export interface JobseekerClaim { filedAt: Instant; waited: number; paid: Money; closedAt?: Instant }
 export interface DesempleoClaim { filedAt: Instant; payments: number }
-
-/** Someone's net income a week, in euro cents: last year's pay less its tax, and what comes in now, pensions and benefits. */
-export function netWeeklyEur(sim: Simulation, person: Person): Money {
-  const cur = saveCurrency(sim.universe);
-  const eur = (c: Money) => (cur === 'EUR' ? c : exchange(c, cur, 'EUR') ?? c);
-  const y = earningsOf(person).years[new Date(sim.now).getUTCFullYear() - 1];
-  const gross = y ? Object.values(y.bySource ?? {}).reduce((a, b) => a + b, 0) || y.acting + y.workStudy : 0;
-  const tax = gross > 0 ? computeAnnualTax(gross, homeOf(person), sim.now, { currency: cur }).total : 0;
-  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id).map((a) => a.id));
-  let coming = 0;
-  for (let i = sim.universe.transactions.length - 1; i >= 0; i -= 1) {
-    const t = sim.universe.transactions[i]!;
-    if (t.at < sim.now - 28 * MS_DAY) break;
-    if (t.category !== 'pension' && t.category !== 'benefit') continue;
-    for (const p of t.postings) if (mine.has(p.accountId) && p.amount > 0) coming += p.amount;
-  }
-  return Math.round(eur(gross - tax) / 52) + Math.round(eur(coming) / 4);
-}
-
-export const livesInDublinCity = (person: Person) => homeOf(person) === 'ie-lei-dublin';
 
 export const livesInIreland = (person: Person) => CITIES.get(homeOf(person))?.countryId === 'ie';
 export const livesInMexicoCity = (person: Person) => { const c = CITIES.get(homeOf(person)); return c?.countryId === 'mx' && (c.parentId === 'mx-09' || c.id.startsWith('mx-cmx')); };

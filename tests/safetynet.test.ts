@@ -108,6 +108,10 @@ describe('Connecticut', () => {
     // HUSKY D renews every six months from January 2027, where New York's wait until March.
     h.program = { ...h.program!, kind: 'medicaid', renewAt: at(2027, 1, 1, 0) };
     earningsOf(p).months['2026-12'] = 1_000_00;
+    // TEST SETUP: December's $1,000 paid as wages too. From 2026-10-12 its work test reads last month's pay and hours of
+    // work (`workedBetween`); until then it read the month's whole income, and this renewed on the income alone, which
+    // a benefit or interest would have passed as well (tests/defects-g8-4.test.ts).
+    sim.post({ at: at(2026, 12, 15), memo: 'Wages, 43 hours', category: 'salary', postings: [{ accountId: p.primaryAccountId!, amount: 1_000_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -1_000_00 }] });
     healthMonth(sim, p, at(2027, 1, 1, 1));
     expect(h.program.renewAt).toBe(at(2027, 7, 1, 0));
     // HUSKY D asks no copay at the pharmacy, where New York's Medicaid asks a dollar.

@@ -8,9 +8,10 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Modal } from '@/ui/components/primitives';
+import { Modal, WhyNot } from '@/ui/components/primitives';
 import {
   suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, lookAfterOptions, labelFor, type LookAfter,
+  LONGEST_NIGHT, SHORTEST_SLEEP,
 } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -19,9 +20,14 @@ import {
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
+import { PARTNER_KIND } from '@/engine/systems/coursework';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
+
+/** The foot of a top-bar menu, where its How This Works sits: the bar itself has no room for one. */
+const MENU_FOOT = { padding: 'var(--s2) var(--s3) var(--s1)', marginTop: 'var(--s1)', borderTop: '1px solid var(--line)' } as const;
 
 /** The dials, as the menu names them. */
 const DIAL_LABEL: Partial<Record<string, string>> = {
@@ -31,6 +37,7 @@ const DIAL_LABEL: Partial<Record<string, string>> = {
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
   const sleepBusy = useWorld((s) => { const busy = occupiedAt(s, s.now); return busy ? `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.` : undefined; });
+  const sleepGate = useFeature('ui.sleep');
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
@@ -79,6 +86,16 @@ export function TimeControls() {
           onChooseEvent={() => setSkipOpen(true)}
         />
       </div>
+      {/* Why Sleep is grayed out, in words on a row of its own at the foot of the bar (from 2026-10-12): until then it
+          was only Sleep's tooltip, which a phone never shows and a keyboard never reaches. The bar's other controls are
+          listed, never refused, so the line names Sleep rather than saying "Not now". Its row is the bar's own
+          (`.topbar-why`): first written as an item beside the controls, it squeezed the bar on a desktop or a tablet and
+          pushed Save & Exit off its edge. Not said while the guide still has Sleep locked, when it isn't grayed out. */}
+      {sleepBusy && sleepGate.open && (
+        <div className="topbar-why">
+          <WhyNot reasons={[[speed === 'paused' ? 'Play' : 'Pause', undefined], ['Sleep', sleepBusy], ['Look After Yourself', undefined], ['Advance', undefined]]} />
+        </div>
+      )}
 
       {due && (
         <DueNow
@@ -127,7 +144,8 @@ export function TimeControls() {
           <p className="small muted">
             Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) comes to{' '}
             {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} on the way. The clock stops at
-            each, and you choose whether you go.
+            each. A plan of your own you can skip; the school’s calls and classes you go to, or stand where you are and the
+            clock waits, and a rehearsal with a partner you go to or call off, which they’ll mind at short notice.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -164,6 +182,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       onClose={onClose}
       footer={
         <>
+          <HowItWorks help="body.sleep" />
           <button className="btn" onClick={onClose}>Not Yet</button>
           <Gated feature="life.sleep" className="btn btn-primary" onClick={sleep}>
             Sleep {hours} Hours
@@ -178,8 +197,10 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           <label htmlFor="sleep-hours" style={{ marginBottom: 0 }}>Hours</label>
           <span className="mono">{hours}</span>
         </div>
+        {/* The engine's own floor and ceiling (from 2026-10-12): the slider started at 1 until then, under a suggestion
+            that can be half an hour. */}
         <input
-          id="sleep-hours" type="range" min={1} max={14} step={0.5}
+          id="sleep-hours" type="range" min={SHORTEST_SLEEP} max={LONGEST_NIGHT} step={0.5}
           value={hours} onChange={(e) => setHours(Number(e.target.value))}
         />
       </div>
@@ -195,9 +216,11 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
         </div>
       </div>
 
+      {/* Standing at it, it's now (from 2026-10-12). Until then this line left it out, and counted from now it would
+          have said "in less than a minute". */}
       {untilNext !== undefined && (
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          Your next commitment is in {formatDuration(untilNext * MS_HOUR)}.
+          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDuration(untilNext * MS_HOUR)}.`}
         </div>
       )}
 
@@ -243,8 +266,16 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
 }) {
   const { sim } = useGame();
   const zone = sim.zone;
+  const { run, toast } = useGame();
   const mine = item.kind === PLAN_KIND;
+  const partner = item.kind === PARTNER_KIND;
   const runs = item.durationMinutes ?? 0;
+  // A rehearsal with a partner can be called off even now, late (from 2026-10-12): until then this said it wasn’t
+  // the player’s to walk away from, while Call It Off on the Coursework tab worked at this very moment.
+  const callOff = () => {
+    const r = run('school.cancel_rehearsal', { assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId });
+    if (r.ok) { toast('Called off, late: they’ll mind.', 'neutral'); onClose(); }
+  };
 
   return (
     <Modal
@@ -252,9 +283,13 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       onClose={onClose}
       footer={(
         <>
+          <HowItWorks help="day.calendar" />
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
           {mine && (
             <Gated feature="calendar.skip" className="btn" onClick={onStay}>Skip It</Gated>
+          )}
+          {partner && (
+            <Gated feature="school.cancel_rehearsal" className="btn" onClick={callOff}>Call It Off</Gated>
           )}
           <Gated feature="ui.go" className="btn btn-primary" onClick={onGo}>Go</Gated>
         </>
@@ -265,16 +300,24 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
         {`, and the clock goes on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
       </p>
-      {!mine && (
+      {!mine && !partner && (
         <p className="small muted">
-          This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.
+          The school’s, not yours to skip: go, or stand here and the clock waits. Whatever moves it next runs it, with you
+          there if you’re awake and in town.
+        </p>
+      )}
+      {partner && (
+        <p className="small muted">
+          Your partner is expecting you. Go, or call it off: this late it costs their trust, and they’ll remember it.{' '}
+          <HowItWorks help="coursework.partners" />
         </p>
       )}
     </Modal>
   );
 }
 
-function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: number) => void }) {
+/** Exported for `tests/whynot-time.test.ts`, which renders it: the bar opens it from Advance's Choose An Event. */
+export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: number) => void }) {
   const { sim } = useGame();
   const targets = useWorld((s) => skipTargets(s, 14));
   const [selected, setSelected] = useState<string | null>(targets[0]?.item.id ?? null);
@@ -320,10 +363,20 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
                 {entry.missed.length > 0 && (
                   <span className="chip chip-warning">{entry.missed.length} on the way</span>
                 )}
-                {entry.needsTravel && <span className="chip chip-negative">Travel</span>}
+                {/* Until 2026-10-12 it was a Travel chip, for travel that went with the scope reset of 2026-10-09. */}
+                {entry.elsewhere && <span className="chip chip-negative">Elsewhere</span>}
               </button>
             ))}
           </div>
+
+          {/* Skip grayed out with events on the list and none picked, said under the list (from 2026-10-12): the one
+              picked when this opened went by on a live clock, or nothing was ahead then. Until then nothing said why.
+              With nothing ahead at all, the line in the list's place says it. */}
+          {!target && (
+            <div style={{ marginTop: 'var(--s2)' }}>
+              <WhyNot reasons={[['Cancel', undefined], ['Skip', 'Pick an event from the list.']]} />
+            </div>
+          )}
 
           {target && (
             <div style={{ marginTop: 'var(--s4)' }}>
@@ -438,6 +491,10 @@ function AdvanceMenu({
               <span className="menu-item-detail">{item.detail}</span>
             </button>
           ))}
+          <div role="none" className="row gap-2 wrap" style={MENU_FOOT}>
+            <HowItWorks help="day.advance" />
+            <HowItWorks help="day.clock" label="How Play And Pause Work" />
+          </div>
         </div>
       )}
     </div>
@@ -471,7 +528,7 @@ function useDropdown() {
  *
  * Each item says how long it takes, what it costs, why it stands where it
  * does and what it would do to the dials, or, when the engine would refuse
- * it, why, and is greyed out. The order is the engine's (`lookAfterOptions`,
+ * it, why, and is grayed out. The order is the engine's (`lookAfterOptions`,
  * from 2026-10-09): what's costing the body every hour first, then by the
  * readiness it gives back. Until then the menu was a fixed list. Nothing on it
  * happens until it's chosen.
@@ -535,6 +592,9 @@ function LookAfterMenu() {
               </button>
             );
           })}
+          <div role="none" className="row gap-2 wrap" style={MENU_FOOT}>
+            <HowItWorks help="body.look-after" />
+          </div>
         </div>
       )}
     </div>

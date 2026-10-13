@@ -11,6 +11,7 @@
 import { useState } from 'react';
 import { Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '@/engine/content/approaches';
 import type { Axis, AxisValue, MaterialProfile } from '@/engine/content/material';
 import { misfitOf, sidesOf, transitionsOf, type Playing } from '@/engine/systems/material';
@@ -42,23 +43,33 @@ export function MaterialDemands({ material }: { material: MaterialProfile }) {
   );
 }
 
-export function PlayingChooser({ material, current, direction, preview, feature, onChoose }: {
+export function PlayingChooser({ material, current, direction, preview, feature, help, onChoose }: {
   material?: MaterialProfile;
   current?: Playing;
   direction?: Partial<Record<Axis, AxisValue>>;
   preview: (c: Choice) => Evaluation;
   feature: string;
+  /**
+   * The guide's entry for the choice (from 2026-10-12), by its id or a feature it covers: How This Works beside How
+   * You’ll Play It. The caller names it, so its own file holds the help for the control it gates.
+   */
+  help?: string;
   onChoose: (c: Choice) => void;
 }) {
   const [draft, setDraft] = useState<Choice>({ ...(current?.pace ? { pace: current.pace } : {}), ...(current?.scale ? { scale: current.scale } : {}), ...(current?.structure ? { structure: current.structure } : {}) });
   const same = (a: Choice, b: Choice) => a.pace === b.pace && a.scale === b.scale && a.structure === b.structure;
-  const open = preview({}).overall;
+  const whole = preview({});
+  const open = whole.overall;
+  // A piece judged in its movements, a brief's beats or a scene's parts reads stamina only as tiring late in it
+  // (`judgePiece`), so it isn't listed as what a side draws on there (from 2026-10-12: until then Driven listed Stamina
+  // for a part, which a night never read through the side). A scene judged whole still lists and reads it.
+  const movements = whole.piece !== undefined;
   const now = preview(draft);
   const changed = current ? !same(draft, current) : sidesOf({ ...draft, chosenAt: 0, prep: 0 }).length > 0;
   const asked = Object.entries(direction ?? {}) as [Axis, AxisValue][];
   return (
     <div className="col gap-2">
-      <div className="eyebrow">How You’ll Play It</div>
+      {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
       {asked.length > 0 && <p className="small" style={{ margin: 0 }}>The director has asked for it {asked.map(([, v]) => APPROACH_EFFECT[v].label.toLowerCase()).join(' and ')}: {asked.map(([, v]) => APPROACH_EFFECT[v].words).join(' ')}</p>}
       <div className="table-scroll">
         <table>
@@ -69,7 +80,7 @@ export function PlayingChooser({ material, current, direction, preview, feature,
               const why = misfitOf(axis, side, material, direction);
               const chosen = draft[axis] === side;
               const result = preview({ ...draft, [axis]: side }).overall;
-              const draws = [...new Set(Object.values(e.inputs).flat().map((x) => abilityDef(x!.ability).label))].join(', ');
+              const draws = [...new Set(Object.values(e.inputs).flat().filter((x) => !movements || x!.ability !== 'stamina').map((x) => abilityDef(x!.ability).label))].join(', ');
               return (
                 <tr key={side}>
                   <td className="nowrap">{i === 0 ? AXES[axis].label : ''}</td>
@@ -98,7 +109,7 @@ export function PlayingChooser({ material, current, direction, preview, feature,
       <div>
         <Gated feature={feature} className="btn btn-sm" disabled={!changed} onClick={() => onChoose(draft)}>{current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way'}</Gated>
       </div>
-      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves. The sizes are SLATE’s design.</Fine>
+      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
     </div>
   );
 }
