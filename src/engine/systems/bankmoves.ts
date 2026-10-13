@@ -95,7 +95,7 @@ export function openRefusal(sim: Simulation, person: Person, bankId: string, at:
   if (!bank) return 'That isn’t a bank where you live.';
   if (checkingAt(sim, person, bank.id)) return `You already keep a current account at ${bank.name}.`;
   if (applicationsOf(sim, person).some((a) => a.bankId === bank.id)) return `${bank.name} is still reviewing your application.`;
-  if (collectionsOf(sim, person)?.institution === bank.name) return `${bank.name} won’t open an account for somebody who owes it a charged-off debt.`;
+  if (collectionsOf(sim, person, bank.name)) return `${bank.name} won’t open an account for somebody who owes it a charged-off debt.`;
   if (declines(sim, person, bank)) return `${bank.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
   if (!photoIdOf(person, at)) return `${bank.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
   const rules = openingOf(bank);

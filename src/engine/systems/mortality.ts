@@ -130,7 +130,12 @@ export function decideStretch(sim: Simulation, person: Person, from: Instant, to
 export function ageOn(sim: Simulation, person: Person, at: Instant): number {
   const born = zonedParts(person.birthInstant, sim.homeZone);
   const then = zonedParts(at, sim.homeZone);
-  const had = then.month > born.month || (then.month === born.month && then.day >= born.day);
+  // Born on 29 February, the birthday is the 28th in a year without one, as the birthday itself is kept (`nextBirthday`):
+  // from 2026-10-13, until then the year was counted only from 1 March, and the birthday said the age they were (found by
+  // the review of that day).
+  const leap = (then.year % 4 === 0 && then.year % 100 !== 0) || then.year % 400 === 0;
+  const day = born.month === 2 && born.day === 29 && !leap ? 28 : born.day;
+  const had = then.month > born.month || (then.month === born.month && then.day >= day);
   return then.year - born.year - (had ? 0 : 1);
 }
 

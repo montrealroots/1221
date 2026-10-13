@@ -493,10 +493,13 @@ function SchoolLine() {
   // Left without the degree, not a year of study (from 2026-10-10: until then a dismissed student was "Year 2").
   const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
   const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
+  // The standing after where they are, except where that already says it: until 2026-10-13 a graduate's line read
+  // "Graduated, graduated, …" (found by the review of that day).
+  const standing = school.standing === 'graduated' ? '' : `, ${STANDING_LABEL[school.standing].toLowerCase()}`;
   return (
     <AffairLine
       title="School"
-      line={`${where}, ${STANDING_LABEL[school.standing].toLowerCase()}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
+      line={`${where}${standing}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
       alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}: the School screen says why.` : undefined}
       action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>{YALE_DRAMA.short}</Gated>}
       help="school.standing"

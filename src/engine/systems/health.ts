@@ -1052,6 +1052,18 @@ export const NAMED_TEETH_EYES: Readonly<Record<string, Partial<Record<'cleaning'
   'mx-cmx-mexicocity': { cleaning: { name: 'hi sonrisa', price: 1_199, currency: 'MXN' }, exam: { name: 'Ópticas Devlyn', price: 0, currency: 'MXN' } },
 };
 
+/**
+ * The year a dental plan's deductible and maximum are kept by: the calendar year for a monthly plan, and for Yale's, the
+ * plan year it's in, 1 October to 30 September, by the year it began (from 2026-10-13: until then by the calendar year, so
+ * a January filling paid a second deductible in the plan year whose October filling had paid it; found by the review of
+ * that day).
+ */
+export function dentalYearOf(plan: string, at: Instant): number {
+  const p = zonedParts(at, HOME);
+  const yearly = plan !== 'source' && (DENTAL_PLANS[plan as Exclude<keyof typeof DENTAL_PLANS, 'source'>]?.yearly ?? false);
+  return yearly && p.month < 10 ? p.year - 1 : p.year;
+}
+
 export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling' | 'exam' | 'glasses', at: Instant, into = 'USD'): Money {
   const named = care === 'cleaning' || care === 'exam' ? NAMED_TEETH_EYES[homeOf(person)]?.[care] : undefined;
   const price = named ? (named.currency === into ? Math.round(named.price * 100) : exchange(Math.round(named.price * 100), named.currency, into) ?? Math.round(named.price * 100)) : usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
@@ -1064,7 +1076,7 @@ export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling'
   // A dental plan of their own pays where the health plan pays nothing.
   if ((care === 'cleaning' || care === 'filling') && dental && active(dental, at) && !(plan && plan[care] > 0)) {
     const d = DENTAL_PLANS[dental.plan];
-    const year = zonedParts(at, HOME).year;
+    const year = dentalYearOf(dental.plan, at);
     if (care === 'cleaning') return Math.round(price * (1 - d.preventive));
     const toDeductible = Math.min(price, Math.max(0, usd(d.deductible, into) - (dental.deductible[year] ?? 0)));
     dental.deductible[year] = (dental.deductible[year] ?? 0) + toDeductible;
@@ -1141,15 +1153,20 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   // An emergency department keeps them its median time, missing what that time held (`edMinutes`, from 2026-10-01).
   if (event.care === 'emergency') h.inHospitalUntil = Math.max(h.inHospitalUntil ?? 0, at + Math.round(edMinutes(homeOf(person)) * 60_000));
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
-  // A flu that isn't seen costs nothing.
-  if (event.flu && event.care === 'visit') return undefined;
+  // A flu that isn't seen costs nothing, and is told all the same (from 2026-10-13: until then it returned before its notice,
+  // and the player was never told of the flu that cost them condition and energy and stopped their workouts; found by the
+  // review of that day).
+  if (event.flu && event.care === 'visit') {
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `${event.what}. It costs nothing.`, importance: 60, route: '/workspace/papers' });
+    return undefined;
+  }
   const amount = careQuote(sim, person, event.care, at);
   const year = zonedParts(at, HOME).year;
   if (event.care === 'glasses') h.lastGlasses = year;
   if (planOf(person, at) && (MEDICAL.includes(event.care) || event.care.startsWith('rx'))) h.spent[year] = (h.spent[year] ?? 0) + amount;
   // A prescription is paid at the counter, or not filled.
   if (event.care.startsWith('rx')) {
-    if (amount > 0 && !payFromCurrent(sim, person, amount, `Pharmacy: ${event.what.toLowerCase()}`, 'health')) return undefined;
+    if (amount > 0 && !payFromCurrent(sim, person, amount, `Pharmacy: ${inSentence(event.what)}`, 'health')) return undefined;
     h.seq = (h.seq ?? 0) + 1;
     const paid: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at, paid: true };
     h.bills.push(paid);
@@ -1186,7 +1203,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const screened = hospital && !planOf(person, at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
   const screening = screened ? (incomeRatio(person, at, cur) <= CHARITY.connecticut.discountTo ? 'screened' as const : 'refused' as const) : undefined;
   const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount: full, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screening ? { aid: screening } : {}), ...(denied ? { denied: { share: amount } } : {}) };
-  if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${event.what.toLowerCase()}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
+  if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${inSentence(event.what)}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
   h.bills = keptBills(h.bills);
   if (logged) logged.billId = bill.id;
@@ -1308,6 +1325,13 @@ export function careQuote(sim: Simulation, person: Person, care: Care, at: Insta
   return shareOf(person, care, at, saveCurrency(sim.universe));
 }
 
+/**
+ * What the care was, inside a sentence: a leading A, An or The made small and the rest as it is written, the clinic's and
+ * the hospital's names kept (from 2026-10-13: until then the whole of it was made small, "fair haven community health
+ * care"; found by the review of that day).
+ */
+export const inSentence = (what: string): string => (/^(A|An|The) /.test(what) ? what.charAt(0).toLowerCase() + what.slice(1) : what);
+
 export function registerHealth(sim: Simulation): void {
   sim.onSchedule(HEALTH_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
@@ -1366,7 +1390,7 @@ export function registerHealth(sim: Simulation): void {
     const debt = medicalDebtOf(s, person) ?? s.openAccount({ id: s.nextId('account'), kind: 'loan', category: 'medical', name: 'Owed For Medical Care', ownerId: person.id, institution: 'Your Providers', openedAt: s.now });
     s.post({ memo: `Medical bill unpaid: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: -bill.amount }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: bill.amount }] });
     h.debtSince ??= s.now;
-    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${bill.what.toLowerCase()} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${inSentence(bill.what)} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
   });
 
   sim.onCommand<{ billId: string }, { decidedAt: Instant }>('health.appeal', (p, { sim: s }) => {
@@ -1395,10 +1419,16 @@ export function registerHealth(sim: Simulation): void {
       if (debt && over > 0) {
         const off = Math.min(over, Math.max(0, -debt.balance));
         if (off > 0) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: off }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -off }] });
+        // What was paid toward the debt past what's owed now comes back, and a debt cleared settles its bills, as
+        // health.pay_bill does (from 2026-10-13: until then it was kept, and the bill read Owed As Debt on a debt of
+        // nothing; found by the review of that day).
+        const back = over - off;
+        if (back > 0) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: payeeAccount(s, person).id, amount: back }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -back }] });
+        if (debt.balance >= 0) { delete healthOf(person).debtSince; for (const b of healthOf(person).bills) if (b.inDebt) { b.paid = true; delete b.inDebt; } }
       }
       bill.amount = bill.denied.share;
     }
-    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${bill.what.toLowerCase()}.` : `The plan reversed its denial for ${bill.what.toLowerCase()}: you owe its share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${inSentence(bill.what)}.` : `The plan reversed its denial for ${inSentence(bill.what)}: you owe its share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
   });
 
   // England's prescription prepayment certificate: three months or twelve, every prescription free while it runs.
@@ -1554,6 +1584,9 @@ export function registerHealth(sim: Simulation): void {
     // From the account named, any open current or savings account of theirs (from 2026-10-10: the primary alone until then).
     const named = p.fromId ? s.universe.accounts[String(p.fromId)] : undefined;
     const current = named && named.ownerId === person.id && !named.closedAt && (named.kind === 'checking' || named.kind === 'savings') ? named : person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    // An account named that can't pay it is refused, not swapped for the primary one (from 2026-10-13: until then their own
+    // credit card named paid from the current account; found by the review of that day).
+    if (p.fromId && current !== named) throw new CommandError(`${named?.name ?? 'That account'} can’t pay a medical debt.`);
     if (!current || current.balance < amount) throw new CommandError(`${current?.name ?? 'That account'} can’t cover it.`);
     s.post({ memo: 'Paid toward medical debt', category: 'health', postings: [{ accountId: current.id, amount: -amount }, { accountId: debt.id, amount }] });
     // The debt cleared, every bill that had gone to it is settled.

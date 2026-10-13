@@ -88,11 +88,14 @@ describe('hours converted to grant aid', () => {
     expect(new Date(asked.at).getUTCMonth()).toBe(0);
     expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toMatch(/request is in/);
     sim = reload(sim);
+    tended(sim, asked.at - MS_HOUR);
+    const scholarshipBefore = earningsOf(sim.player).years[2027]?.scholarship ?? 0;
     tended(sim, asked.at + MS_HOUR);
     const grant = sim.universe.transactions.find((t) => /Grant-in-aid: \d+ work-study hours converted/.test(t.memo))!;
     expect(grant.postings.find((p) => p.accountId === sim.nominalAccount('income', 'Scholarship').id)!.amount).toBe(-Number(sat.payload.hours) * WORK_STUDY.hourly);
-    // On the year's return as a scholarship, which the US taxes.
-    expect(earningsOf(sim.player).years[2027]!.scholarship).toBeGreaterThanOrEqual(Number(sat.payload.hours) * WORK_STUDY.hourly);
+    // On the year's return as a scholarship, which the US taxes: exactly the grant, measured across the processing. Until
+    // 2026-10-13 this asked for at least the grant, which the spring's living scholarship of 4 January already met.
+    expect((earningsOf(sim.player).years[2027]?.scholarship ?? 0) - scholarshipBefore).toBe(Number(sat.payload.hours) * WORK_STUDY.hourly);
     expect(convertibleHours(sim.player, key)).toBe(0);
     expect(sim.universe.scheduled.some((i) => i.kind === CONVERT_KIND && i.status === 'pending')).toBe(false);
     // No aid, no conversion.

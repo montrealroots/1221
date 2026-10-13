@@ -384,7 +384,13 @@ describe('failing, repeating and disqualification', () => {
     expect(school.reviews?.[0]).toMatchObject({ term: 0, outcome: 'warning' });
     expect(school.standing).toBe('warning');
     expect(titled(sim, 'A Faculty Review: On Warning')[0]!.body).toMatch(/Bulletin disqualifies a student with 2 Failures in a term/);
-    // Reviewed again in a later term, it's a dismissal.
+    // Judged once (from 2026-10-13): reviewed again with no Failure since, nothing comes of it. Until then this said a
+    // second review on the same Failures was a dismissal, and a student kept on warning to repeat the year was dismissed
+    // at the next evaluation before the repeat could be had. A new Failure in a later term, on warning: dismissed.
+    expect(facultyReview(sim, sim.player, 1)).toBeUndefined();
+    expect(school.standing).toBe('warning');
+    // TEST SETUP: a spring course failed, as the next evaluation would settle one met at a third.
+    school.courses!['1:DRAM 103b'] = { term: 1, code: 'DRAM 103b', name: 'Acting I', meetings: 30, attended: 10, excused: 0, result: 'fail', why: 'TEST SETUP' };
     expect(facultyReview(sim, sim.player, 1)).toMatchObject({ outcome: 'dismissed' });
   });
 });

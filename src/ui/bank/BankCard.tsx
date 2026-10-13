@@ -14,12 +14,12 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Fine } from '@/ui/components/primitives';
+import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, type CardTerm } from '@/engine/systems/credit';
+import { cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
@@ -263,10 +263,11 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
                 {Array.from({ length: 28 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d}{ordinal(d)}</option>)}
               </select>
             </div>
-            <Gated feature="card.set_statement_day" className="btn btn-sm btn-ghost" disabled={!dayWanted || dayWanted === statementDayOf(person, card)} onClick={() => {
+            <Gated feature="card.set_statement_day" className="btn btn-sm btn-ghost" disabled={!dayWanted || dayWanted === statementDayOf(person, card) || Boolean(statementDayRefusal(person, card))} onClick={() => {
               const answer = run('card.set_statement_day', { day: dayWanted, accountId: card.id });
               if (answer.ok) { toast(`Statements come on the ${dayWanted}${ordinal(dayWanted)} now, and the due date moves with them.`, 'positive'); setDayWanted(0); }
             }}>Move It</Gated>
+            <WhyNot reasons={[['Move It', statementDayRefusal(person, card)]]} />
           </div>
           <div className="field-act">
             <div className="field">

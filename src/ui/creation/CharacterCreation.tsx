@@ -509,7 +509,7 @@ function IdentityStep({ config, set, setConfig }: {
         <div className="field">
           <label htmlFor="birth-day">Day</label>
           <input
-            id="birth-day" type="number" min={1} max={31}
+            id="birth-day" type="number" min={1} max={daysInMonth(config.birthYear, config.birthMonth)}
             value={config.birthDay}
             onChange={(e) => set('birthDay', Number(e.target.value))}
           />
@@ -1199,7 +1199,10 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-function validate(config: NewSaveConfig, step: StepIndex): string[] {
+/** The days in a month of a year, February's 29 in a leap year. */
+export const daysInMonth = (year: number, month: number): number => new Date(Date.UTC(year, month, 0)).getUTCDate();
+
+export function validate(config: NewSaveConfig, step: StepIndex): string[] {
   const issues: string[] = [];
   if (step === STEP.Identity) {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
@@ -1215,7 +1218,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     }
 
     if (age > 95) issues.push('That start date would make your character over 95.');
-    if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
+    // A day the month has (from 2026-10-13: until then any day to 31 passed, and 31 February became 3 March).
+    if (!Number.isInteger(config.birthDay) || config.birthDay < 1 || config.birthDay > daysInMonth(config.birthYear, config.birthMonth)) issues.push(`${MONTHS[config.birthMonth - 1]} ${config.birthYear} has no day ${config.birthDay}.`);
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
   }
   if (step === STEP['Starting Point']) {

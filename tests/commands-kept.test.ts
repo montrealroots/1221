@@ -67,7 +67,8 @@ describe('a partner, and making it right', () => {
       asked = sim.execute<{ accepted: boolean; rehearsalId?: string }>({ kind: 'school.ask_partner', payload: { assignmentId: a.id, at: instantFromZoned({ year: 2026, month: 9, day: 19, hour: h }, 'America/New_York') } });
     }
     expect(asked.ok, asked.error).toBe(true);
-    if (!asked.value!.accepted) return;
+    // Accepted, on this seed: until 2026-10-13 a refusal returned here and the test passed having checked nothing.
+    expect(asked.value!.accepted).toBe(true);
     const mate = sim.player.school!.classmates[a.partner!]!;
     const trust = trustOf(mate);
     expect(sim.execute({ kind: 'school.cancel_rehearsal', payload: { assignmentId: a.id, rehearsalId: 'nope' } }).error).toBe('There’s no such rehearsal booked.');
@@ -76,12 +77,16 @@ describe('a partner, and making it right', () => {
     expect(a.rehearsals.find((x) => x.id === asked.value!.rehearsalId)!.status).toBe('cancelled');
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.payload.rehearsalId === asked.value!.rehearsalId)).toBe(false);
     expect(trustOf(mate)).toBeLessThan(trust);
-    // Amends for a late call-off mend the bond, not the trust (`CLASS.amends.lateCancel`), and take twenty minutes.
+    // Amends for a late call-off give back what it took, the partner's trust, and no more, and take twenty minutes. Until
+    // 2026-10-13 they mended the bond, which a late call-off doesn't touch, and left the trust it took (and this test
+    // said so).
+    expect(trust - trustOf(mate)).toBe(4);
     const bond = mate.bond ?? 0;
     const t0 = sim.now;
     sim.must({ kind: 'school.make_amends', payload: { mate: a.partner } });
     expect(sim.now - t0).toBe(20 * 60_000);
-    expect(mate.bond ?? 0).toBeGreaterThan(bond);
+    expect(trustOf(mate)).toBe(trust);
+    expect(mate.bond ?? 0).toBe(bond);
     expect(sim.execute({ kind: 'school.make_amends', payload: { mate: a.partner } }).error).toBe('There’s nothing between you to make right.');
   });
 });

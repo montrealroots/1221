@@ -17,7 +17,7 @@ import {
   LEAVE_REASONS, accountOwed, affiliateQuote, aidReviewRefusal, cancelRepeatWarning, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, termsInWords, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
-import { termAccount, academicTerm, conversionRefusal, convertibleHours, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
+import { termAccount, academicTerm, conversionRefusal, convertibleHours, unassignedKnown, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
 import { inSaveMoney } from '@/engine/systems/banking';
 
 const STATUS: Record<Leave['status'], string> = {
@@ -283,7 +283,8 @@ export function WorkLimitsBlock() {
   const key = yearKeyOf(term);
   const cap = weekCap(sim.now);
   const hours = weekHours(sim, person, sim.now);
-  const convertible = convertibleHours(person, key, !termStart(term).fall);
+  // Counted as the request counts them: never-assigned hours from May, once the spring’s shifts are done (from 2026-10-13).
+  const convertible = convertibleHours(person, key, unassignedKnown(sim.now));
   const no = conversionRefusal(sim, person);
   return (
     <div className="col gap-2">

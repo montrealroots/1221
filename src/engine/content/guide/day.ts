@@ -332,7 +332,7 @@ export const DAY: readonly GuideEntry[] = [
       { to: 'start.find', kind: 'optional', why: 'Go There takes you to the screen a notice or a question is about.' },
     ],
     example: {
-      setup: 'February, with Your 2026 Tax Return waiting under File It and Dismiss, and two unread notices.',
+      setup: 'February, for a student from abroad, who files a US return every year: Your 2026 Tax Return waiting under File It and Dismiss, and two unread notices.',
       steps: ['Press Dismiss on Your 2026 Tax Return.', 'Press Mark 2 Read.'],
       result: 'The question and both notices leave the panel, and the count beside Home falls by three. The return is still due on its date, and Papers still files it.',
     },

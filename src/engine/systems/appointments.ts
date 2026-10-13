@@ -37,6 +37,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
+import { holidaysOn } from '../content/holidays';
 import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, ENGLAND_BANDS, IMSS_DAYS, US_DAYS, US_METRO_AVERAGE_DAYS } from '../content/appointments';
 import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
 import { clinicFor } from './clinics';
@@ -103,8 +104,11 @@ function slot(sim: Simulation, person: Person, days: number): Instant {
   const p = zonedParts(sim.now + days * MS_DAY, zone);
   let at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: CONSULT_HOUR, minute: 0 }, zone);
   if (at <= sim.now) at += MS_DAY;
-  // A practice's weekday: a Saturday or a Sunday goes to the Monday.
-  for (let i = 0; i < 3 && [0, 6].includes(zonedParts(at, zone).weekday); i += 1) at += MS_DAY;
+  // A practice's working day: a Saturday, a Sunday or a public holiday where they live goes to the next one (from
+  // 2026-10-13: until then only the weekend moved, and a New Haven visit could be booked on Thanksgiving Day; found by the
+  // review of that day).
+  const city = CITIES.require(homeCity(person));
+  for (let i = 0; i < 7 && ([0, 6].includes(zonedParts(at, zone).weekday) || holidaysOn(at, zone, city.countryId, city.parentId).some((h) => h.type === 'public')); i += 1) at += MS_DAY;
   return at;
 }
 

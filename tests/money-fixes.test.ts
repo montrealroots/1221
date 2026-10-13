@@ -24,17 +24,33 @@ function broke(sim: Simulation): void {
 }
 
 describe('a moved statement day', () => {
-  it('makes one longer cycle: moving it every day for a month cuts one statement, not thirty', () => {
+  // Until 2026-10-13 this moved it every day for a month and asked for at most one statement: none came, and that passed.
+  // The review of that day found a day moved each morning held the statement off for good, with its due date, interest
+  // and report. It moves once a statement cycle now.
+  it('moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one', () => {
     const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable' }, 'mf-day');
     sim.advanceTo(nextStatement(sim) + 1000);
+    const card = cardOf(sim, sim.player)!;
     const before = statements(sim);
-    const last = stateOf(sim.player, cardOf(sim, sim.player)!).statementAt!;
-    for (let d = 0; d < 30; d += 1) {
-      sim.must({ kind: 'card.set_statement_day', payload: { day: ((d + 3) % 28) + 1 } });
-      expect(nextStatement(sim) - last).toBeGreaterThanOrEqual(MIN_CYCLE_DAYS * MS_DAY);
+    const cuts = [stateOf(sim.player, card).statementAt!];
+    let moved = 0;
+    let refused = 0;
+    for (let d = 0; d < 60; d += 1) {
+      const r = sim.execute({ kind: 'card.set_statement_day', payload: { day: ((d + 3) % 28) + 1 } });
+      if (r.ok) moved += 1;
+      else { refused += 1; expect(r.error).toBe('You moved the statement day since the last statement: it can move again once the next one comes.'); }
+      expect(nextStatement(sim) - cuts.at(-1)!).toBeGreaterThanOrEqual(MIN_CYCLE_DAYS * MS_DAY);
       sim.advanceBy(MS_DAY);
+      const at = stateOf(sim.player, card).statementAt!;
+      if (at !== cuts.at(-1)) cuts.push(at);
     }
-    expect(statements(sim) - before).toBeLessThanOrEqual(1);
+    const came = statements(sim) - before;
+    expect(came).toBeGreaterThanOrEqual(1);
+    expect(cuts.length - 1).toBe(came);
+    for (let i = 1; i < cuts.length; i += 1) expect(cuts[i]! - cuts[i - 1]!).toBeGreaterThanOrEqual(MIN_CYCLE_DAYS * MS_DAY);
+    // One move after each statement, the first before any came, and the rest refused.
+    expect(moved).toBe(came + 1);
+    expect(refused).toBe(60 - moved);
   });
 });
 

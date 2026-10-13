@@ -144,7 +144,9 @@ export function bodyDay(person: Person, at: Instant): void {
   const eaten = body.habitKcal * personalityOf(person, 'appetite') * (body.short ? BODY.shortDay : 1) + body.intake;
   const gap = eaten - spentOn(body, ageOf(person, at));
   const perKg = BODY.kcalPerKgDay * (BODY.halfLifeDays / Math.LN2);
-  body.weightKg = clamp(Math.round((body.weightKg + gap / perKg) * 1000) / 1000, 30, 250);
+  // Held at a BMI of 10 for the body's height, under the starvation end's 12 for every height (from 2026-10-13: until then at
+  // 30 kg, which a body under about 158 cm reaches above BMI 12, and starved on without end; found by the review of that day).
+  body.weightKg = clamp(Math.round((body.weightKg + gap / perKg) * 1000) / 1000, 10 * (body.heightCm / 100) ** 2, 250);
   body.intake = 0;
   body.extra = 0;
   delete body.short;

@@ -220,6 +220,12 @@ export function registerCash(sim: Simulation): void {
     if (!to || to.ownerId !== person.id || to.closedAt || (to.kind !== 'checking' && to.kind !== 'savings') || to.category === 'term') throw new CommandError('Cash goes into your current account or savings.');
     const bank = to.bankId ? bankById(to.bankId) : undefined;
     if (p.at === 'post_office' && (!bank || CASH[bank.id]?.postOffice !== 'both')) throw new CommandError(`${bank?.name ?? 'Your bank'}’s customers can’t pay cash in at the Post Office.`);
+    // A dormant account takes nothing until it's reactivated, as Move Money into it is refused; and a machine needs the
+    // debit card, as one paying out does (from 2026-10-13: until then cash went into a dormant account and it stayed
+    // dormant, and an ATM took a deposit with the card locked; found by the review of that day).
+    if (to.dormant) throw new CommandError(`${to.name} is dormant; use Reactivate first.`);
+    const card = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId]?.plastic : undefined;
+    if (p.at === 'atm' && card && (card.locked || card.stopped)) throw new CommandError(card.stopped === 'new' ? 'Your debit card hasn’t arrived yet; the counter can still take it.' : card.stopped ? 'Your debit card is stopped; the counter can still take it.' : 'Your debit card is locked; the counter can still take it.');
     const where = p.at === 'atm' ? 'ATM' : p.at === 'post_office' ? 'Post Office' : 'Counter';
     s.post({ memo: `Cash in: ${where}`, category: 'cash', postings: [{ accountId: wallet.id, amount: -amount }, { accountId: to.id, amount }] });
     return { paid: amount };

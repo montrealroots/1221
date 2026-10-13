@@ -52,9 +52,22 @@ import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../
 import { moveRoundUps, setRoundUps } from './roundups';
 import { dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
-import { lendingOf } from './lending';
+import { checkingAt, lendingOf } from './lending';
 import { ensurePrimary, stateOf } from './credit';
+import { sendBetweenBanks } from './bankmoves';
 import { recordInterest } from './earnings';
+
+/**
+ * A country's unclaimed-money law, in the words a player is told. The US's research is New York's (the State
+ * Comptroller, no fee and no time limit, three years), and until 2026-10-13 a life in Connecticut was told it would go
+ * to New York's office and could be claimed back there (found by the review of that day). The words say any state's
+ * office now; the three years are still New York's, and Connecticut's own law wasn't read.
+ */
+export function unclaimedLaw(iso: string): (typeof UNCLAIMED)[string] | undefined {
+  const law = UNCLAIMED[iso];
+  if (!law || iso !== 'US') return law;
+  return { ...law, to: 'the state’s unclaimed-property office', claimBack: 'It can be claimed back from that office.' };
+}
 
 /** The months to its end a term deposit was opened for. */
 function termMonths(term: Account): number {
@@ -172,20 +185,25 @@ export const EARLY_RATE: Readonly<Record<string, { underMonths: number; share: n
 /** A term deposit broken now: the penalty from its interest, and from the deposit where that won't cover it. */
 function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money; penalty: Money } {
   const quote = breakQuote(s, term);
-  const into = currentOf(s, person)!;
+  // Into the current account at the term's own bank; with none there, sent to the primary one in the bank's days, as a
+  // savings account closed is (from 2026-10-13: until then into the primary account at once, whatever bank it was at;
+  // found by the review of that day).
+  const into = checkingAt(s, person, term.bankId) ?? currentOf(s, person)!;
+  const sameBank = into.bankId === term.bankId;
   const earned = Math.floor(term.accrued ?? 0);
   const kept = Math.max(0, earned - quote.penalty);
   const fromPrincipal = Math.max(0, quote.penalty - earned);
   const tax = interestTaxFor(s, term, kept);
   const paid = term.balance - fromPrincipal + kept - tax;
-  const postings = [
-    { accountId: into.id, amount: paid },
-    { accountId: term.id, amount: -term.balance },
-  ];
+  const postings = sameBank
+    ? [{ accountId: into.id, amount: paid }, { accountId: term.id, amount: -term.balance }]
+    : [{ accountId: term.id, amount: paid - term.balance }];
   if (kept > 0) postings.push({ accountId: s.nominalAccount('income', 'Interest').id, amount: -kept });
   if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
   if (fromPrincipal > 0) postings.push({ accountId: s.nominalAccount('expense', 'Early Withdrawal Penalty').id, amount: fromPrincipal });
-  s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings });
+  const moved = postings.filter((q) => q.amount !== 0);
+  if (moved.length >= 2) s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings: moved });
+  if (!sameBank && paid > 0) sendBetweenBanks(s, person, term, into, paid);
   term.accrued = 0;
   term.closedAt = s.now;
   delete term.breakAt;
@@ -348,7 +366,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
     }
     const iso = bankById(account.bankId)?.iso;
-    const law = iso ? UNCLAIMED[iso] : undefined;
+    const law = iso ? unclaimedLaw(iso) : undefined;
     // The years guard also narrows the type; without it NaN compares false the same.
     // The bank writes first: the balance goes to the state unless the holder gets in touch.
     const due = law?.years !== undefined ? law.years * 365.25 * MS_DAY : Infinity;

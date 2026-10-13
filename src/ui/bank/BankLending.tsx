@@ -23,15 +23,16 @@ import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { bankById, type Bank } from '@/engine/content/banks';
+import { bankById, banksIn, type Bank } from '@/engine/content/banks';
 import { countryOfIso } from '@/engine/content/bankdays';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { END_WORDS } from '@/engine/systems/accountlife';
+import { CHARGE_OFF_DAYS } from '@/engine/systems/credit';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import type { Account } from '@/engine/core/ledger';
 import {
-  CASS, ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
+  CASS, ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, collectionsSource, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
   FRANCE, CHEX, declines, nextBusinessDay,
 } from '@/engine/systems/lending';
 
@@ -70,10 +71,15 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
   const loanDue = useWorld((s) => s.universe.scheduled.find((one) => one.kind === LOAN_DUE_KIND && one.status === 'pending' && (!loan || one.refId === loan.id)));
   const switching = useWorld((s) => s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending'));
   // A bank owed a charged-off debt won't open an account.
-  const owedTo = useWorld((s) => collectionsOf(s, s.player)?.institution);
+  // Every bank owed one: until 2026-10-13 only the first debt's bank was left out, with two banks owed.
+  const owes = (name: string) => Boolean(collectionsOf(sim, sim.player, name));
+  // What the debt shown came from, and its bank, for the words (from 2026-10-13: until then a card charged off was
+  // described as an account overdrawn, and the French notice was read from the bank on screen, not the bank owed).
+  const source = useWorld((s) => (debt ? collectionsSource(s, debt) : undefined));
+  const owedBank = debt ? banksIn(bank.iso).find((b) => b.name === debt.institution) : undefined;
   // Nor one that turns a ChexSystems report away: until 2026-09-27 the list offered them, and the switch was refused.
   const chex = sim.player.chex && sim.now - sim.player.chex.at < CHEX.years * 365 * 86_400_000 ? sim.player.chex : undefined;
-  const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && b.name !== owedTo && !declines(sim, sim.player, b));
+  const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && !owes(b.name) && !declines(sim, sim.player, b));
   const rule = SWITCHING[isoOf(homeOf(sim.player)) ?? ''];
 
   const [limit, setLimit] = useState('');
@@ -253,12 +259,14 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
         <Panel title="In Collections" subtitle={<Open subject={at('account', debt.id)}>{`${money(-debt.balance)} owed`}</Open>} look={at('account', debt.id)} help="bank.pay_collections">
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {debt.institution} closed your account after it was overdrawn {bank.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. It’s on your record until it’s paid.
+              {source?.overdraft !== false ? <>{debt.institution} closed your account after it was overdrawn {owedBank?.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. </> : null}
+              {source?.card ? <>{debt.institution} closed your card after its payments were {CHARGE_OFF_DAYS} days behind, and charged off what was owed on it. </> : null}
+              It’s on your record until it’s paid.
             </p>
             <div className="field-act">
               <div className="field"><label htmlFor="collections-pay">{`Pay Toward It (${cur})`}</label><input id="collections-pay" type="text" inputMode="decimal" value={toCollections} onChange={(e) => setToCollections(e.target.value)} /></div>
               <Gated feature="bank.pay_collections" className="btn btn-sm" disabled={!toCollections}
-                onClick={() => { if (run('bank.pay_collections', { amount: cents(toCollections) }).ok) { toast('Paid.', 'positive'); setToCollections(''); } }}>
+                onClick={() => { if (run('bank.pay_collections', { amount: cents(toCollections), debtId: debt.id }).ok) { toast('Paid.', 'positive'); setToCollections(''); } }}>
                 Pay It
               </Gated>
             </div>

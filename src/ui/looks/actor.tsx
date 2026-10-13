@@ -28,6 +28,7 @@ import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
 import { Segments } from '@/ui/components/WorkThrough';
 import { BRIEF_BY_ID } from '@/engine/content/briefs';
+import { TEMPLATES } from '@/engine/content/coursework';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 
@@ -71,6 +72,11 @@ export function sourceWords(source: string): string {
   if (kind === 'brief') return `A practice brief: ${rest === 'interpretation' ? 'the breakdown' : rest === 'memorization' ? 'the lines' : rest ?? 'its preparation'}`;
   if (kind === 'workbook') return 'Working a problem through';
   if (kind === 'nerves') return 'The nerves of a performance';
+  // A production’s rehearsal call, a lab and its showing, and a coursework activity had none until 2026-10-13, and showed
+  // as "rehearsal", "lab" and "coursework" (found by the review of that day).
+  if (kind === 'rehearsal') return rest === 'summer' ? 'A rehearsal call: the Summer Cabaret' : rest ? `A rehearsal call: ${rest}` : 'A rehearsal call';
+  if (kind === 'lab') return rest === 'showing' ? 'A lab’s showing' : 'A lab';
+  if (kind === 'coursework') return `Coursework: ${TEMPLATES.flatMap((t) => t.activities).find((a) => a.id === rest)?.label ?? 'an activity'}`;
   return ({ 'practice-day': 'A day of practice kept', call: 'A call answered', night: 'A night on stage', 'partner-rehearsal': 'Rehearsing with a partner', 'learn-part': 'Learning the part', blocking: 'The blocking book', 'work-note': 'A director’s note worked', 'self-tape': 'A self-tape' } as Record<string, string>)[kind] ?? kind;
 }
 

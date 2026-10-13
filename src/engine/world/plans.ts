@@ -122,8 +122,11 @@ export function registerPlans(sim: Simulation): void {
     // Where they are is asked first, so the missed notice below still comes.
     // Asleep and here, it's missed quietly: a chosen night says for itself
     // what it slept through (`life.sleep`). The screen always stops at a plan,
-    // and a stop wakes them, so this is the clock run over it on autopilot.
-    const asleep = Boolean(player) && player!.awakeSince !== undefined && player!.awakeSince > item.at;
+    // and a stop wakes them, so this is the clock run over it on autopilot. In
+    // hospital it's missed the same way, as care is (`presentForCare`): until
+    // 2026-10-13 it was kept, and the hospital bed's sleep was refused for being
+    // at it (found by the review of that day).
+    const asleep = Boolean(player) && ((player!.awakeSince !== undefined && player!.awakeSince > item.at) || (player!.health?.inHospitalUntil ?? 0) > item.at);
     if (player && inPlace && asleep) {
       item.status = 'missed';
       return;

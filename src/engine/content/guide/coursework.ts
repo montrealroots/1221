@@ -717,7 +717,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'A Word After Class', value: `From a classmate at a bond of ${CLASS.encourage.bondFrom} or more, after an Unready showing in the last three days: morale up ${CLASS.encourage.morale}, with no answer to give`, estimate: true },
       { label: 'An Apology', value: `After a rehearsal they didn’t come to. ${CHOICES.apology[0]!.label}: bond up ${CLASS.apology.accept}. ${CHOICES.apology[1]!.label}: bond down ${-CLASS.apology.cool}`, estimate: true },
       { label: 'A Boundary', value: `After you’ve let them down ${times(CLASS.boundary.after)} without making it right: from then, ask them a day ahead. ${CHOICES.boundary[0]!.label}: trust up ${CLASS.boundary.respect}, lifting after ${word(CLASS.boundary.liftAfterKept.accepted)} rehearsals kept. ${CHOICES.boundary[1]!.label}: trust down ${-CLASS.boundary.argue.trust}, bond down ${-CLASS.boundary.argue.bond}, lifting after ${word(CLASS.boundary.liftAfterKept.pushedBack)}`, estimate: true },
-      { label: 'Make Amends', value: `For each rehearsal or evening you missed: trust up ${CLASS.amends.missed.trust}, bond up ${CLASS.amends.missed.bond}. For each one called off late: bond up ${CLASS.amends.lateCancel.bond}`, estimate: true },
+      { label: 'Make Amends', value: `For each rehearsal or evening you missed: trust up ${CLASS.amends.missed.trust}, bond up ${CLASS.amends.missed.bond}. For each one called off late: trust up ${CLASS.amends.lateCancel.trust}, what it took`, estimate: true },
       { label: 'What They Care About', value: `Drawn once, the more driven caring most for the work: ${andList(Object.values(PRIORITY_WORDS))}. The work and the room ask you to run lines; being seen and a life outside ask for help` },
     ],
     now: [
@@ -761,7 +761,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     example: {
       setup: `Your partner trusts you at ${WORK.trust.start}. You sleep through a rehearsal with them, then call the next one off the same afternoon.`,
       steps: [`In class, they set a boundary: they’ll only rehearse if asked a day ahead. Press ${CHOICES.boundary[0]!.label}.`, 'Press Make Amends beside them on Your Partners.'],
-      result: `Their trust falls to ${T_MISSED}, then ${T_LATE}; accepting the boundary brings it to ${T_ACCEPTED}, and making amends to ${T_AMENDED}, with the bond ${CLASS.amends.missed.bond + CLASS.amends.lateCancel.bond} closer for the two. The boundary stays until ${word(CLASS.boundary.liftAfterKept.accepted)} rehearsals are kept; until then, an ask less than a day ahead gets a no.`,
+      result: `Their trust falls to ${T_MISSED}, then ${T_LATE}; accepting the boundary brings it to ${T_ACCEPTED}, and making amends to ${T_AMENDED}, with the bond ${CLASS.amends.missed.bond + CLASS.amends.lateCancel.bond} closer. The boundary stays until ${word(CLASS.boundary.liftAfterKept.accepted)} rehearsals are kept; until then, an ask less than a day ahead gets a no.`,
     },
   },
   {

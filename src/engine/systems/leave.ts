@@ -564,6 +564,10 @@ export function facultyReview(sim: Simulation, person: Person, term: number): { 
   const school = person.school!;
   const out = disqualified(school);
   if (!out) return undefined;
+  // Failures the faculty has judged are judged once: a later review acts only on a new one (from 2026-10-13: until then
+  // a student kept on warning, the year to be repeated, was dismissed at the next evaluation on the same Failures, and
+  // the repeat they were told to ask for was refused on them; found by the review of that day).
+  if (!unjudgedFails(school)) return undefined;
   const already = school.standing === 'warning';
   const before = (school.reviews ?? []).length > 0;
   const room = enrolledTerms(school).length + 2 <= EXTENDED_STUDY.maxSemesters;
@@ -603,7 +607,7 @@ export function extraRefusal(sim: Simulation, person: Person): { why?: string; t
   // added nothing stood here for it, `+ (term - t - 1 > 0 ? 0 : 0)`, as `EXTRA_DECIDE_KIND` counts without it).
   const would = enrolledTerms(school).length + 1;
   if (would > EXTENDED_STUDY.maxSemesters) return { why: `It would make ${would} semesters, past the nine the Bulletin allows.` };
-  if (disqualified(school)) return { why: 'The faculty’s disqualification stands against it.' };
+  if (!keptThrough(school) && disqualified(school)) return { why: 'The faculty’s disqualification stands against it.' };
   return { term, courses };
 }
 
@@ -798,6 +802,15 @@ export function accountDue(sim: Simulation, person: Person, term: number): void 
  * third, five by the fourth, six by the fifth, or seven in all. SLATE's faculty act on it at the evaluation; the
  * Bulletin says a student "may be" disqualified.
  */
+/** Failures recorded in a term after the last faculty review's, which that review didn't judge; all of them before any review. */
+export function unjudgedFails(school: SchoolRecord): number {
+  const last = school.reviews?.at(-1);
+  return failsOf(school).filter((r) => !last || r.term > last.term).length;
+}
+
+/** Whether the faculty kept the student, on warning, through every Failure on the record: what a repeat or an extra term then can't be refused on. */
+const keptThrough = (school: SchoolRecord): boolean => school.reviews?.at(-1)?.outcome === 'warning' && unjudgedFails(school) === 0;
+
 export function disqualified(school: SchoolRecord): string | undefined {
   const fails = failsOf(school);
   if (!fails.length) return undefined;
@@ -1002,7 +1015,7 @@ export function registerLeave(sim: Simulation): void {
     const r = school?.extraRequest;
     if (!person || !school || !r || r.status !== 'pending' || schoolEnded(school.standing)) return;
     const would = enrolledTerms(school).length + 1;
-    const why = would > EXTENDED_STUDY.maxSemesters ? `It would make ${would} semesters, past the nine the Bulletin allows.` : disqualified(school);
+    const why = would > EXTENDED_STUDY.maxSemesters ? `It would make ${would} semesters, past the nine the Bulletin allows.` : keptThrough(school) ? undefined : disqualified(school);
     if (why) {
       r.status = 'refused';
       r.why = why;
@@ -1149,7 +1162,7 @@ export function registerLeave(sim: Simulation): void {
     if (!person || !school || !r || r.status !== 'pending' || schoolEnded(school.standing)) return;
     r.decidedAt = s.now;
     const would = enrolledTerms(school).length + 2;
-    const why = would > EXTENDED_STUDY.maxSemesters ? `It would make ${would} semesters, past the nine the Bulletin allows.` : disqualified(school);
+    const why = would > EXTENDED_STUDY.maxSemesters ? `It would make ${would} semesters, past the nine the Bulletin allows.` : keptThrough(school) ? undefined : disqualified(school);
     if (why) {
       r.status = 'refused';
       r.why = why;

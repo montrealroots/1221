@@ -1728,9 +1728,30 @@ export function conversionRefusal(sim: Simulation, person: Person): string | und
   if (school.leave?.status === 'on') return 'Not while on leave: a student on leave has no aid.';
   if (sim.universe.scheduled.some((i) => i.kind === CONVERT_KIND && i.status === 'pending' && i.payload.personId === person.id)) return 'Your request is in, for the next processing.';
   const term = Math.max(0, school.termsBegun - 1);
-  if (convertibleHours(person, yearKeyOf(term), !termStart(term).fall) <= 0) return 'No hours to convert: only assigned hours missed ill or hurt, or never assigned once the spring is under way, can be.';
+  if (convertibleHours(person, yearKeyOf(term), unassignedKnown(sim.now)) <= 0) {
+    if (!countsUnassigned(nextConversion(sim.now))) return 'No hours to convert at January’s processing: only assigned hours missed ill or hurt count then.';
+    return unassignedKnown(sim.now) ? 'No hours to convert: only assigned hours missed ill or hurt, or never assigned, can be.' : 'No hours to convert yet: hours missed ill or hurt count now, and hours never assigned from May, once the spring’s shifts are done.';
+  }
   return undefined;
 }
+
+/** The processing a request made at a moment is booked for: the next 15th of January or May, at noon. */
+export function nextConversion(now: Instant): Instant {
+  const p = zonedParts(now, zone());
+  const month = WORK_LIMITS.convertMonths.find((m) => m > p.month || (m === p.month && p.day < 15));
+  return at({ year: month ? p.year : p.year + 1, month: month ?? WORK_LIMITS.convertMonths[0], day: 15 }, 12);
+}
+
+/**
+ * Whether a processing counts hours never assigned: May's, when the spring's shifts are done. A request reads the rule of
+ * the processing it books (from 2026-10-13): until then a request in the spring counted the spring's Saturdays not yet
+ * booked as never assigned, was accepted, and was booked for January's processing, or the next January's, which counts
+ * only hours missed ill or hurt, and paid nothing, with nothing said (found by the review of that day).
+ */
+export const countsUnassigned = (processing: Instant): boolean => zonedParts(processing, zone()).month === 5;
+
+/** Whether the hours never assigned are known at a moment: in May, before its processing, the spring's shifts done. */
+export const unassignedKnown = (now: Instant): boolean => zonedParts(now, zone()).month === 5 && countsUnassigned(nextConversion(now));
 
 /** The Friday after hours were worked, at five, unless one's already booked. */
 function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
@@ -3054,8 +3075,10 @@ export function registerSchool(sim: Simulation): void {
       school.workStudy.owedHours += worked;
       // The work's own risk to the body, by the hour: the crew's in the shops, front of house a floor's (BLS; from
       // 2026-10-10). Hurt at it, it's work, and workers' compensation's (`mayHurt`). A chance, never a certainty.
-      const wage = Math.round(worked * hourlyIn(saveCurrency(s.universe)));
-      mayHurt(s, person, elective ? 'usher' : 'crew', chanceOver(elective ? INJURY.perThousandHours.usher : INJURY.perThousandHours.crew, worked), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage: wage });
+      // The week's wage: this shift and the week's worked before it (from 2026-10-13: until then this shift's alone, half
+      // a week of two shifts); work-study bears no FICA, a student's at their own school (found by the review of that day).
+      const wage = Math.round((weekHours(s, person, item.at, item.id, item.at) + worked) * hourlyIn(saveCurrency(s.universe)));
+      mayHurt(s, person, elective ? 'usher' : 'crew', chanceOver(elective ? INJURY.perThousandHours.usher : INJURY.perThousandHours.crew, worked), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage: wage, noFica: true });
       bookPayday(s, person, item.at);
       tire(person, ESTIMATE.energy.shift);
       return;
@@ -3077,11 +3100,9 @@ export function registerSchool(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const school = person.school!;
     const term = Math.max(0, school.termsBegun - 1);
-    const p = zonedParts(s.now, zone());
-    const month = WORK_LIMITS.convertMonths.find((m) => m > p.month || (m === p.month && p.day < 15));
-    const when = at({ year: month ? p.year : p.year + 1, month: month ?? WORK_LIMITS.convertMonths[0], day: 15 }, 12);
+    const when = nextConversion(s.now);
     s.schedule({ at: when, kind: CONVERT_KIND, label: 'Work-Study Hours Converted To Grant Aid', category: 'school', priority: 33, payload: { personId: person.id, year: yearKeyOf(term) } });
-    return { at: when, hours: convertibleHours(person, yearKeyOf(term), !termStart(term).fall) };
+    return { at: when, hours: convertibleHours(person, yearKeyOf(term), unassignedKnown(s.now)) };
   });
 
   sim.onSchedule(CONVERT_KIND, (item, s) => {
@@ -3089,8 +3110,12 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     if (!person || !school || !hasNeed(person)) return;
     const key = String(item.payload.year);
-    const hours = convertibleHours(person, key, zonedParts(item.at, zone()).month >= 5);
-    if (hours <= 0) return;
+    const hours = convertibleHours(person, key, countsUnassigned(item.at));
+    // Said, where the processing finds nothing (from 2026-10-13: until then it passed in silence).
+    if (hours <= 0) {
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'No Hours To Convert', body: 'The aid office processed your request and found no work-study hours to convert: none missed ill or hurt, and none never assigned.', importance: 50, route: '/workspace/school' });
+      return;
+    }
     const cur = saveCurrency(s.universe);
     const grant = Math.round(hours * hourlyIn(cur));
     const year = zonedParts(item.at, zone()).year;
@@ -3259,6 +3284,10 @@ export function registerSchool(sim: Simulation): void {
       const night = reckonNight(s, person, casting, item, true);
       grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at) * nightFactor(casting), 0.75));
       tire(person, ESTIMATE.energy.performance);
+      // A play of a kind they love is a better night, as a rehearsal of it is (from 2026-10-13: until then a School or
+      // Rep night, its run-through and a night on call read no genre, while the creation screen and the guide said a
+      // night of a play of its kind was a better day; found by the review of that day).
+      enjoyWork(person, { genres: genresOfPlay(casting.play) });
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `You played ${casting.role} through for the director today: ${night === 'off' ? 'an off' : `a ${night}`} night.`, importance: 60, route: '/workspace/school' });
       return;
     }
@@ -3273,6 +3302,7 @@ export function registerSchool(sim: Simulation): void {
         nerves(s, person, 'performance');
         grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at), 0.75));
         tire(person, ESTIMATE.energy.performance);
+        enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
         return;
       }
@@ -3297,6 +3327,7 @@ export function registerSchool(sim: Simulation): void {
         reckonNight(s, person, casting, item, item.payload.which === 'rep');
         grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at) * nightFactor(casting)));
         tire(person, ESTIMATE.energy.performance);
+        enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
@@ -3513,6 +3544,14 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at) || sick) {
       item.status = 'missed';
       if (stage && summer.shows?.[run]) callMissed(summer.shows[run]!, stage, Number(item.payload.of ?? 0));
+      // The closing night excused after nights were played: on the résumé all the same, and the run closed with its
+      // note and its looking back, as the Cabaret's is (from 2026-10-13: until then it was never closed, with no credit,
+      // note or reflection; found by the review of that day).
+      if (item.payload.call === 'performance' && item.payload.last === true && sick && (summer.played[run] ?? 0) > 0 && summer.shows?.[run]) {
+        const show = summer.shows[run]!;
+        (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
+        closeRun(s, person, show, item.at);
+      }
       // In hospital, laid up or called in sick, the company covers the night and keeps them.
       if (item.payload.call !== 'performance' || sick) return;
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops; and the night
@@ -3537,7 +3576,8 @@ export function registerSchool(sim: Simulation): void {
     // two-thirds, New York's share, and the full stipend was paid beside it.
     const cur = saveCurrency(s.universe);
     const weeklyWage = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
-    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage, employer: SUMMER_EMPLOYER });
+    // An F-1's stipend bears no FICA, and none is taken off its compensation (from 2026-10-13).
+    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage, employer: SUMMER_EMPLOYER, ...(nonresidentFor(person, zonedParts(item.at, zone()).year) ? { noFica: true } : {}) });
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       nerves(s, person, 'performance');

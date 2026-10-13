@@ -222,6 +222,10 @@ export function registerSecurity(sim: Simulation): void {
     const which = item.payload.which as Which;
     if (!account || account.closedAt || !account.plastic) return;
     const p = account.plastic;
+    // Only the card it's waiting for arrives: a second sent while one was on its way (a new number asked for after the
+    // card was reported) moved the date, and the first's arrival is stale (from 2026-10-13: until then both arrived,
+    // each a new card; found by the review of that day).
+    if (p.replacementAt === undefined || item.at !== p.replacementAt) return;
     // A new account's first card keeps the number it was opened with (from 2026-10-10).
     const first = p.stopped === 'new';
     if (!first) {
@@ -247,8 +251,16 @@ export function registerSecurity(sim: Simulation): void {
     if (!person || !one || !account || one.refunded !== undefined) return;
     const back = one.amount - (one.carried ?? 0);
     one.refunded = back;
-    if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
+    // An account closed since goes to the current account at its bank, or the primary one, and the notice says where
+    // (from 2026-10-13: until then the refund was posted to the closed account, a card's credit no one could ask back;
+    // found by the review of that day).
+    const open = (a: Account | undefined) => (a && !a.closedAt ? a : undefined);
+    const into = open(account)
+      ?? Object.values(s.universe.accounts).find((a) => a.ownerId === person.id && a.kind === 'checking' && !a.closedAt && a.bankId === account.bankId)
+      ?? open(person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined)
+      ?? account;
+    if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: into.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make${into.id !== account.id ? `, into your ${into.name}, since the ${account.name} is closed` : ''}.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {

@@ -26,7 +26,7 @@ import { SSN } from '@/engine/systems/taxid';
 import { agencyOf, financialStatement, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
 import { FederalLien, StateLienAndPenalty } from '@/ui/components/LienPanels';
 import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
-import { CONDITION_LABEL, DENIALS, PROGRAM_NAMES, type MedicalBill, benchmarkFor, coverLabel, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, fillsCharged, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
+import { CONDITION_LABEL, DENIALS, PROGRAM_NAMES, type MedicalBill, benchmarkFor, coverLabel, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, fillsCharged, longestFillOf, type Chronic, careQuote, dentalYearOf } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -665,7 +665,8 @@ function DentalPanel() {
   const offered = own?.plan ?? dentalPlanFor(person, sim.now);
   if (!offered) return null;
   const d = DENTAL_PLANS[offered];
-  const year = zonedParts(sim.now, sim.zone).year;
+  // The plan year its maximum is kept by, as the plan keeps it (`dentalYearOf`, from 2026-10-13).
+  const year = own ? dentalYearOf(own.plan, sim.now) : zonedParts(sim.now, sim.zone).year;
   return (
     <Panel
       title="A Dental Plan"

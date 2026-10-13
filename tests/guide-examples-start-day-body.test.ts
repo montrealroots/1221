@@ -295,8 +295,11 @@ function playAdvance() {
 
 function playNeeds() {
   const { setup } = example('day.needs');
-  const [month] = read(setup, /^(\w+), with/);
-  const sim = life();
+  const [month] = read(setup, /^(\w+), for a student from abroad/);
+  // A student from abroad, who files every year (Form 8843 at least): until 2026-10-13 any student with income had a
+  // return to file, and this example was played on a New York-born one; under the filing threshold and owing nothing,
+  // they have none now.
+  const sim = life(SEED, { homeRegionId: 'uk-eng-london' });
   const year = zonedParts(sim.now, sim.zone).year;
   // The first of the month after the first fall, at noon: in February, tax season opened that morning at nine.
   jump(sim, instantFromZoned({ year: year + 1, month: MONTHS.indexOf(month) + 1, day: 1, hour: 12, minute: 0, second: 0 }, sim.zone));
@@ -569,7 +572,8 @@ describe('the day and the clock', () => {
   it('day.needs: Dismiss and Mark 2 Read take the return’s question and both notices off, three off the count, and the return still files', () => {
     const p = playNeeds();
     const { setup, steps, result } = example('day.needs');
-    const [, title, answer, unread] = read(setup, /^(\w+), with (.+?) waiting under (.+?) and Dismiss, and (\w+) unread notices\.$/);
+    const [, title, answer, unread] = read(setup, /^(\w+), for a student from abroad, who files a US return every year: (.+?) waiting under (.+?) and Dismiss, and (\w+) unread notices\.$/);
+    expect(p.sim.player.citizenshipId).not.toBe('us');
     expect(formatDate(p.sim.now, p.sim.zone)).toContain(p.month);
     expect(p.decision).toBeDefined();
     expect(p.decision.title).toBe(title);

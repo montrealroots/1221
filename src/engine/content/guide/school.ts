@@ -540,7 +540,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       `A repeat refused, past ${EXTENDED_STUDY.maxSemesters} semesters or under a disqualification: after the last year, the degree is withheld.`,
       `An additional term granted: in it you take only the retakes, with the class then in that year. Passed in a fall, the degree comes at Yale’s December conferral on ${MONTHS[DEGREE_DATES.december[0] - 1]} ${DEGREE_DATES.december[1]}; in a spring, at Commencement.`,
       `After the last year’s evaluation with a course unpassed, you have ${EXTENDED_STUDY.requestDays} days to ask for either, or the degree is withheld. With neither open to you, it’s withheld at the evaluation.`,
-      'At an evaluation where the Bulletin’s count of Fails is reached, the faculty review it. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning, the year to be repeated.',
+      'At an evaluation where the Bulletin’s count of Fails is reached, with a Fail the faculty haven’t judged before, they review it. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning, the year to be repeated, and the Fails they kept you through don’t stand against the repeat or an additional term.',
       'An Incomplete still open at Commencement keeps you from the ceremony, and the degree comes once it’s made up in time.',
     ],
     interpret: [

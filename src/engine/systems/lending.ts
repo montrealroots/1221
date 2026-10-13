@@ -124,7 +124,7 @@ function noteSwitch(person: Person, r: NonNullable<NonNullable<Person['payments'
  * applied for online, so a branch's hour isn't asked.
  */
 export function switchApplicationRefusal(sim: Simulation, person: Person, to: Bank): string | undefined {
-  if (collectionsOf(sim, person)?.institution === to.name) return `${to.name} won’t open an account for somebody who owes it a charged-off debt.`;
+  if (collectionsOf(sim, person, to.name)) return `${to.name} won’t open an account for somebody who owes it a charged-off debt.`;
   if (declines(sim, person, to)) return `${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
   if (!photoIdOf(person, sim.now)) return `${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
   const rules = openingOf(to);
@@ -289,8 +289,18 @@ export function declines(sim: Simulation, person: Person, bank: Bank): boolean {
  * collections is a collection agency's (`systems/homes.ts`): until
  * 2026-09-28 this found either, and a bank's charge-off could post into it.
  */
-export function collectionsOf(sim: Simulation, person: Person): Account | undefined {
-  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS && a.name.endsWith(', In Collections'));
+export function collectionsOf(sim: Simulation, person: Person, owedTo?: string): Account | undefined {
+  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS && a.name.endsWith(', In Collections') && (owedTo === undefined || a.institution === owedTo));
+}
+
+/**
+ * Where a debt in collections came from, read from what was charged off into it: an account overdrawn too long
+ * (`closeForOverdraft`), a card six statements behind (`chargeOff` in `systems/credit.ts`), or both at one bank. From
+ * 2026-10-13: until then the panel called every debt an overdrawn account (found by the review of that day).
+ */
+export function collectionsSource(sim: Simulation, debt: Account): { overdraft: boolean; card: boolean } {
+  const into = sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === debt.id && p.amount < 0));
+  return { overdraft: into.some((t) => t.memo.startsWith('Charged off by ')), card: into.some((t) => t.memo.startsWith('Charged off: ')) };
 }
 
 export function lendingOf(bank: Bank | undefined): Lending {
@@ -913,7 +923,9 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     }
     return;
   }
-  const debt = collectionsOf(sim, person) ?? sim.openAccount({
+  // The debt owed to this bank, its own (from 2026-10-13: until then a second bank's charge-off went into whichever debt
+  // was open, named for the first bank, and the refusals that read who's owed read the wrong one).
+  const debt = collectionsOf(sim, person, bank.name) ?? sim.openAccount({
     id: sim.nextId('account'), kind: 'loan', category: COLLECTIONS, name: `Owed To ${bank.name}, In Collections`, ownerId: person.id,
     institution: bank.name, openedAt: sim.now,
   });
@@ -923,14 +935,15 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.currentLocationId, (saveCurrency(sim.universe) === 'MXN' ? owed : exchange(owed, saveCurrency(sim.universe), 'MXN') ?? owed) / 100);
     person.credit.late = [...person.credit.late, sim.now];
   }
-  const owedTo = collectionsOf(sim, person)?.institution;
   // A US bank reports it, and the next bank reads the report.
   if (bank.id.startsWith('us-')) person.chex = { at: sim.now, bank: bank.name };
   // Holding a current account at another bank, the charged-off one closes and that one carries on, primary if this
   // was (from 2026-10-10). With none elsewhere, SLATE re-banks them where they live, as it always has: a simplification,
   // since a closed customer opens their own account, kept so a life always has somewhere to be paid.
   const elsewhere = checkingsOf(sim, person).find((a) => a.bankId !== bank.id);
-  const others = banksFor(homeOf(person)).filter((b) => b.id !== bank.id && b.name !== owedTo);
+  // Every bank owed a charged-off debt is left out, as each refuses to open an account (from 2026-10-13: each bank's debt
+  // its own since then, the bank closing now alone was left out, and a broke life went back to one it owed).
+  const others = banksFor(homeOf(person)).filter((b) => b.id !== bank.id && !collectionsOf(sim, person, b.name));
   const willing = others.find((b) => !declines(sim, person, b));
   const to = elsewhere?.bankId ? bankById(elsewhere.bankId)! : willing ?? others[0] ?? bank;
   const secondChance = !elsewhere && willing === undefined && person.chex !== undefined;
@@ -1177,9 +1190,11 @@ export function registerLending(sim: Simulation): void {
     return { on: current.debitOverdraft };
   });
 
-  sim.onCommand<{ amount: Money }, { paid: Money; left: Money }>('bank.pay_collections', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; debtId?: string }, { paid: Money; left: Money }>('bank.pay_collections', (p, { sim: s }) => {
     const person = s.player;
-    const debt = collectionsOf(s, person);
+    // The debt the panel shows, where it names one (from 2026-10-13), else the first.
+    const named = p.debtId ? s.universe.accounts[p.debtId] : undefined;
+    const debt = named && named.ownerId === person.id && !named.closedAt && named.category === COLLECTIONS ? named : collectionsOf(s, person);
     if (!debt) throw new CommandError('You don’t owe anything in collections.');
     const current = currentOf(s, person);
     if (!current) throw new CommandError('You have no account to pay from.');
@@ -1360,7 +1375,7 @@ export function registerLending(sim: Simulation): void {
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     // Already keeping an account there, there's nothing to switch to (from 2026-10-10: until then a second one opened).
     if (checkingAt(s, person, to.id)) throw new CommandError(`You keep an account at ${to.name} already: make it primary, move what pays from the old one, and close it.`);
-    if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
+    if (collectionsOf(s, person, to.name)) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
     if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     // A new bank identifies a new customer (31 CFR 1020.220, and its like elsewhere), from 2026-10-09 (`photoIdOf`).

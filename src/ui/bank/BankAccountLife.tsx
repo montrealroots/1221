@@ -13,12 +13,12 @@ import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { ACCOUNT_LIFE, UNCLAIMED } from '@/engine/content/accountlife';
+import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { ROUND_UPS } from '@/engine/content/roundups';
 import { RoundUps } from '@/ui/bank/RoundUps';
 import { bankById } from '@/engine/content/banks';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { BREAK_NOTICE, breakQuote, END_WORDS, inCoolingOff, termEndOf } from '@/engine/systems/accountlife';
+import { BREAK_NOTICE, breakQuote, END_WORDS, inCoolingOff, termEndOf, unclaimedLaw } from '@/engine/systems/accountlife';
 import type { TermEnd } from '@/engine/content/accountlife';
 
 const END_BUTTON: Record<TermEnd, string> = {
@@ -40,7 +40,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
   const cancelable = accounts.filter((a) => (a.kind === 'savings' || a.kind === 'credit_card') && inCoolingOff(sim, a) && a.id !== person.primaryAccountId);
   const unclaimed = person.unclaimed ?? [];
   const bank = bankById(bankId);
-  const country = bank ? UNCLAIMED[bank.iso] : undefined;
+  const country = bank ? unclaimedLaw(bank.iso) : undefined;
   const DAY = 86_400_000;
   if (terms.length === 0 && !ROUND_UPS[bankId] && dormant.length === 0 && inactive.length === 0 && cancelable.length === 0 && unclaimed.length === 0 && !rules?.withdrawalFee) return null;
 

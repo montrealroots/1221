@@ -379,7 +379,9 @@ export function registerLife(sim: Simulation): void {
       // pause because the player is unconscious.
       // Until 2026-09-26 a shift said for itself that it was slept through,
       // and wasn't counted here; the job engine went, and shifts with it.
-      const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true);
+      // From the bedtime: what falls between the booking and the bedtime is kept awake (from 2026-10-13: until then the
+      // notice named it as slept through too; found by the review of that day).
+      const crossed = s.timeline.between(start, wakeAt).filter((i) => i.requiresPlayer === true);
 
       // The night is on record from the moment it is booked, as the wake it
       // ends at. So a midnight inside it, one it ends on, and one between the
@@ -395,6 +397,11 @@ export function registerLife(sim: Simulation): void {
       // booked, so a night booked at eight for one in the morning was slept at
       // the stress and the hour of eight.
       if (start > s.now) s.advanceTo(start);
+      // At the bedtime, at a commitment that began after the booking: refused, and the command's rollback puts the clock
+      // back (from 2026-10-13: until then it was taken, and the commitment counted as kept though it was slept through;
+      // found by the review of that day).
+      const busyThen = occupiedAt(s, s.now);
+      if (busyThen) throw new CommandError(`You’re at ${busyThen.label} until ${formatTime(busyThen.at + busyThen.durationMinutes! * 60_000, s.zone)}.`);
       const quality = sleepQuality(s, person);
       const before = { ...person.wellbeing };
 

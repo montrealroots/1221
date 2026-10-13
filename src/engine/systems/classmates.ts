@@ -89,11 +89,14 @@ export const CLASS = {
   boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: { accepted: 2, pushedBack: 4, before: 3 } },
   /**
    * Making it right gives back what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the
-   * bond 2 of the 3 it cost), a plan called off late (the bond's 1; it took no trust). Until 2026-10-08 every one gave
-   * trust 6 and bond 2 whatever it was, and the social journeys (`tools/social-lives.mjs`) found the student who called
-   * off late and apologized ending school closer to the class than the one who kept every plan.
+   * bond 2 of the 3 it cost), a rehearsal called off under a day ahead (the trust 4 it took, `WORK.trust.lateCancel` in
+   * `systems/coursework.ts`; it takes no bond). Until 2026-10-08 every one gave trust 6 and bond 2 whatever it was, and
+   * the social journeys (`tools/social-lives.mjs`) found the student who called off late and apologized ending school
+   * closer to the class than the one who kept every plan. Until 2026-10-13 a late call-off gave back the bond's 1 and no
+   * trust, what a plan called off late cost before plans went in the scope reset of 2026-10-09, while a rehearsal called
+   * off late took 4 trust and no bond (found by the review of 2026-10-13).
    */
-  amends: { minutes: 20, missed: { trust: 6, bond: 2 }, lateCancel: { trust: 0, bond: 1 } },
+  amends: { minutes: 20, missed: { trust: 6, bond: 2 }, lateCancel: { trust: 4, bond: 0 } },
   /**
    * Trying both readings at the next rehearsal kept moves the step's half of the table work this much of what's left,
    * where a course has a step at the table (`interpretationOf`). Until 2026-10-12 it also moved a figure on a scene

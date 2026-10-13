@@ -285,7 +285,9 @@ function sentenceFor(dial: Dial, now: number): string {
       const mends = Math.round(mendsTo(dial.person, now));
       const share = Math.round(100 * (0.8 + 0.2 * Math.min(1, w.condition / mendsTo(dial.person, now))));
       // What the dial decides, and the midnight pull toward the same mark.
-      const also = `${dial.person.school && n < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be your last.`;
+      // On the figure the school reads, not the one shown rounded (from 2026-10-13: until then 54.8, shown as 55, left the
+      // line out where the school would excuse the day; found by the review of that day).
+      const also = `${dial.person.school && dial.value < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be your last.`;
       return n >= mends ? `${n}, as sound as your fitness lets rest make you. Each midnight settles it back toward ${mends} if it’s over.${also}`
         : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of the energy it would, and each midnight settles it a little toward ${mends}.${also}`;
     }

@@ -90,6 +90,8 @@ export interface CardState {
   statementDay?: number;
   /** When the last statement came (from 2026-10-10), which a moved statement day can't bring the next one sooner than `MIN_CYCLE_DAYS` after. */
   statementAt?: Instant;
+  /** When the statement day was last moved (from 2026-10-13): once a statement cycle (`statementDayRefusal`). */
+  dayMovedAt?: Instant;
   /** The account its autopay pays from (from 2026-10-10, `autopaySource`): the one it was set up on, not whichever is primary. */
   autopayFrom?: string;
   /**
@@ -174,7 +176,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
@@ -289,6 +291,8 @@ const OVER_LIMIT_SHARE = 0.1;
 const SUSPEND_AFTER = 2;
 /** And before it charges the card off to collections: 180 days, the FFIEC's rule for open-end credit in the US, used everywhere. */
 const CHARGE_OFF_AFTER = 6;
+/** How far behind a card is when it's charged off, for words: its statements missed, a month each. */
+export const CHARGE_OFF_DAYS = CHARGE_OFF_AFTER * 30;
 /** How often the limit is reviewed, and the record that earns a raise. */
 const REVIEW_EVERY = 182 * 86_400_000;
 const RAISE_FROM = 700;
@@ -672,6 +676,17 @@ export function statementDayOf(person: Person | undefined, card?: Account): numb
  * statement each day: a month paid as agreed on the record each time, and the yearly fee twice in its month.
  */
 export const MIN_CYCLE_DAYS = 27;
+
+/**
+ * Why a card's statement day can't move now: once a statement cycle, SLATE's reading of an issuer's limit, which the
+ * banks' terms read don't give. From 2026-10-13: until then it moved as often as asked, and a statement moved a day on
+ * each morning never came, nor its due date, its interest or its report (found by the review of that day).
+ */
+export function statementDayRefusal(person: Person, card: Account): string | undefined {
+  const state = person.credit ? stateOf(person, card) : undefined;
+  if (state?.dayMovedAt !== undefined && state.dayMovedAt > (state.statementAt ?? card.openedAt)) return 'You moved the statement day since the last statement: it can move again once the next one comes.';
+  return undefined;
+}
 
 export function scheduleStatement(sim: Simulation, person: Person, after: Instant, card = cardOf(sim, person)): void {
   const zone = zoneOf(sim, person);

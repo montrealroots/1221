@@ -38,7 +38,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { bankAccountsOf, bankOf } from './banking';
@@ -156,8 +156,11 @@ export function registerCardLife(sim: Simulation): void {
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
     const day = Math.round(Number(p.day));
     if (!(day >= 1 && day <= 28)) throw new CommandError('Pick a day from the 1st to the 28th.');
+    const moved = statementDayRefusal(person, card);
+    if (moved) throw new CommandError(moved);
     const state = stateOf(person, card);
     state.statementDay = day;
+    state.dayMovedAt = s.now;
     const everyday = cardOf(s, person)?.id === card.id;
     for (const item of s.universe.scheduled) {
       if (item.kind === STATEMENT_KIND && item.status === 'pending' && item.payload.personId === person.id

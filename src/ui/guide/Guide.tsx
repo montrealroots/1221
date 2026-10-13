@@ -144,7 +144,9 @@ export function GuideStrip() {
 /** The top bar’s way back into the guide, for any chapter, any time. */
 export function GuideButton() {
   const guide = useGuide();
-  const left = useWorld((s) => CHAPTERS.length - readNow(s).length);
+  // None left on a guide finished, whatever came after it was read through (from 2026-10-13: until then it counted
+  // chapters added later, which a finished guide offers no way to take; found by the review of that day).
+  const left = useWorld((s) => (s.universe.tutorial?.finished ? 0 : CHAPTERS.length - readNow(s).length));
   return (
     <button type="button" className="btn btn-ghost btn-sm" onClick={() => guide.show()}>
       Guide{left > 0 ? ` (${left} Left)` : ''}

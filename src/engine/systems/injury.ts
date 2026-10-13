@@ -41,7 +41,7 @@ export interface Injury {
    * Hurt at work: the job's state and its week's wage, which workers' compensation reads, and from 2026-10-12 the
    * employer where one pays a wage the compensation replaces (the Summer Cabaret's stipend, `systems/school.ts`).
    */
-  atWork?: { stateId: string; weeklyWage: Money; paidDays: number; employer?: string };
+  atWork?: { stateId: string; weeklyWage: Money; paidDays: number; employer?: string; noFica?: boolean };
 }
 
 /** The state's share of the wage in words, for a notice: "two-thirds of your week’s wage", or Connecticut's after tax. */
@@ -77,7 +77,7 @@ export const chanceOver = (perThousand: number, hours: number): number => 1 - Ma
  * injury it was, its care billed or paid by workers' compensation, and the
  * time it keeps them from things.
  */
-export function mayHurt(sim: Simulation, person: Person, source: InjurySource, chance: number, at: Instant, work?: { cityId: string; weeklyWage: Money; employer?: string }): Injury | undefined {
+export function mayHurt(sim: Simulation, person: Person, source: InjurySource, chance: number, at: Instant, work?: { cityId: string; weeklyWage: Money; employer?: string; noFica?: boolean }): Injury | undefined {
   if (injuryOf(person, at)) return undefined;
   const rng = sim.rng('health.injury', person.id, `${source}-${at}`);
   if (rng.next() >= chance) return undefined;
@@ -88,7 +88,7 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   // A resilient body mends sooner (`illnessToll`).
   const days = Math.round((spec.days[0] + rng.next() * (spec.days[1] - spec.days[0])) * personalityOf(person, 'illnessToll'));
   const injury: Injury = { kind, at, until: at + days * MS_DAY, ...(spec.offWork ? { offWorkUntil: at + days * MS_DAY } : {}) };
-  if (work) injury.atWork = { stateId: CITIES.get(work.cityId)?.parentId ?? 'us-ny', weeklyWage: work.weeklyWage, paidDays: 0, ...(work.employer ? { employer: work.employer } : {}) };
+  if (work) injury.atWork = { stateId: CITIES.get(work.cityId)?.parentId ?? 'us-ny', weeklyWage: work.weeklyWage, paidDays: 0, ...(work.employer ? { employer: work.employer } : {}), ...(work.noFica ? { noFica: true } : {}) };
   healthOf(person).injury = injury;
   const cur = saveCurrency(sim.universe);
   // The care: the visit it needs and its sessions of physical therapy, at what the plan leaves; at work, the employer's cover pays it.
@@ -128,12 +128,15 @@ export function injuryDay(person: Person, at: Instant): void {
 }
 
 /** A week's benefit in the state's way: its share of the wage (after tax in Connecticut), between its floor and its ceiling. */
-export function compWeekly(sim: Simulation, rules: CompRules, weeklyWage: Money, at: Instant): Money {
+export function compWeekly(sim: Simulation, rules: CompRules, weeklyWage: Money, at: Instant, noFica = false): Money {
   const cur = saveCurrency(sim.universe);
   const inSave = (usd: Money) => exchange(usd, 'USD', cur) ?? usd;
   // After tax: the wage less a year of it's income and payroll tax, by the week (SLATE's reading of CGS 31-310's "after
   // taxes", worked on the tax table).
-  const base = rules.afterTax ? weeklyWage - Math.round(computeAnnualTax(weeklyWage * 52, 'us-ct-newhaven', at, { currency: cur }).total / 52) : weeklyWage;
+  // A wage that bore no FICA (a student's at their own school, an F-1's) has none taken off it (from 2026-10-13: until
+  // then a work-study week paid 75% of the wage less a year of payroll tax never withheld; found by the review of that day).
+  const tax = rules.afterTax ? computeAnnualTax(weeklyWage * 52, 'us-ct-newhaven', at, { currency: cur }) : undefined;
+  const base = tax ? weeklyWage - Math.round((tax.total - (noFica ? tax.payroll : 0)) / 52) : weeklyWage;
   const share = Math.round(base * rules.share);
   const floor = rules.minShareOfMax !== undefined ? Math.min(Math.round(inSave(rules.max) * rules.minShareOfMax), share) : inSave(rules.min);
   return clamp(share, floor, inSave(rules.max));
@@ -145,7 +148,7 @@ export function compWeek(sim: Simulation, person: Person, at: Instant): Money {
   const work = injury?.atWork;
   if (!injury || !work || !injury.offWorkUntil) return 0;
   const rules = WORKERS_COMP.states[work.stateId] ?? WORKERS_COMP.states['us-ny']!;
-  const weekly = compWeekly(sim, rules, work.weeklyWage, injury.at);
+  const weekly = compWeekly(sim, rules, work.weeklyWage, injury.at, work.noFica);
   const offDays = Math.round((injury.offWorkUntil - injury.at) / MS_DAY);
   const through = Math.min(offDays, Math.round((at - injury.at) / MS_DAY));
   const waiting = offDays > rules.retroAfterDays ? 0 : rules.waitingDays;

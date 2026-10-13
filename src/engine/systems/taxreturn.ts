@@ -1135,10 +1135,13 @@ export function registerTaxReturn(sim: Simulation): void {
     // given one on their pounds.
     if (!owesUsReturn(person, year)) return;
     const figures = figuresFor(person, year, cur);
-    // Nothing owed and nothing due back: no return to file. A nonresident student files Form 8843 every year, income or
-    // none (from 2026-10-10), so theirs is always ready.
+    // Nothing owed, nothing due back, and gross income under the filing threshold, the standard deduction of a single
+    // filer under 65: no return to file. A nonresident student files Form 8843 every year, income or none (from
+    // 2026-10-10), so theirs is always ready. Until 2026-10-13 any income at all made a return, so a played student with
+    // $1,670.59 of work-study and interest was asked to file one at $0, and told when it went unfiled that a refund
+    // waited for it (found by the review of that day).
     const nra = figures.form === '1040-NR';
-    if (!nra && figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;
+    if (!nra && figures.balance === 0 && figures.foreignRefund === 0 && figures.income < usd(US_STANDARD_DEDUCTION, cur)) return;
     const due = nra ? nonresidentDeadline(year, figures.workStudy + figures.acting > 0) : deadline(year);
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });
@@ -1166,7 +1169,15 @@ export function registerTaxReturn(sim: Simulation): void {
       if (ty && v > 0) s.schedule({ at: r.due + Math.round(ty.extensionMonths * 30.4375) * MS_DAY, kind: THREE_YEAR_KIND, label: `${stateName(state)}: Three Years`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
     }
     if (person.id !== s.universe.playerId) return;
-    s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
+    // Past 60 days the penalty is at least the lesser of the minimum and what's owed, as `latePenalty` charges it; and a
+    // return with nothing either way says so. Until 2026-10-13 the notice gave the minimum whatever was owed, and told a
+    // return at $0 that a refund waited for it (found by the review of that day).
+    const cur = saveCurrency(s.universe);
+    const balance = r.figures.balance;
+    const body = balance > 0
+      ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(Math.min(usd(RETURN.lateMinimum, cur), balance), cur)}.`
+      : balance < 0 ? 'A refund waits for the return; there’s no penalty on one.' : 'With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.';
+    s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body, importance: 80, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_SFR_KIND, (item, s) => {
