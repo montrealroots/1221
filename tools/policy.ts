@@ -11,7 +11,7 @@ import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/system
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
 import { MS_HOUR, zonedParts } from '../src/engine/core/time';
-import { WHICH, ownWorkRefusal } from '../src/engine/systems/production';
+import { WHICH, hasProcess, holderFor, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
 import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
 import { identityOf } from '../src/engine/systems/artistry';
@@ -56,9 +56,15 @@ export function evening(sim: Simulation) {
  */
 /**
  * What the policy leaves to the player (from 2026-10-11): with `ownWork` off, the part, the blocking and the director's
- * note are left undone, so a save written mid-rehearsal still has them to do (`tools/scenarios.ts rehearsal`).
+ * note are left undone, so a save written mid-rehearsal still has them to do (`tools/scenarios.ts rehearsal`). With
+ * `workNotes` off (from 2026-10-13) the part, the blocking and a note on either are done, and a note on the craft is left,
+ * so the lines and the blocking come to where a director turns to the craft and a craft note waits for the player
+ * (`tools/scenarios.ts direction`). Its first run left every note, a note on the blocking too, and the blocking never
+ * reached where a director turns to the craft: a blocking note worked is how a student sets it between calls.
  */
-export const POLICY = { ownWork: true };
+export const POLICY = { ownWork: true, workNotes: true };
+
+const lastNoteOf = (sim: Simulation, person: Simulation['player'], which: (typeof WHICH)[number]) => { const h = holderFor(sim, person, which); return hasProcess(h) ? h.process.notes.at(-1) : undefined; };
 
 export function freeHour(sim: Simulation): boolean {
   const person = sim.player;
@@ -73,6 +79,7 @@ export function freeHour(sim: Simulation): boolean {
   }
   for (const which of POLICY.ownWork ? WHICH : []) {
     for (const [kind, what] of [['school.work_note', 'note'], ['school.review_blocking', 'blocking'], ['school.learn_part', 'part']] as const) {
+      if (kind === 'school.work_note' && !POLICY.workNotes && !['lines', 'blocking'].includes(lastNoteOf(sim, person, which)?.focus.kind ?? '')) continue;
       if (!ownWorkRefusal(sim, person, which, what) && sim.execute({ kind, payload: { which } }).ok) return true;
     }
   }

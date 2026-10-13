@@ -15,20 +15,24 @@
  *   filed, each replaced (from the limitations pass of 2026-10-11).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
+ *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { loadSave, quickSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { breaches } from '../src/engine/core/invariants';
 import { healthOf } from '../src/engine/systems/health';
-import { at, termStart } from '../src/engine/systems/school';
+import { CALL_KIND, at, termStart } from '../src/engine/systems/school';
 import { recordWages } from '../src/engine/systems/earnings';
 import { owedAll, returnsOf } from '../src/engine/systems/taxreturn';
 import { owedToState } from '../src/engine/systems/statetax';
 import { SWITCH_KIND } from '../src/engine/systems/lending';
 import { POLICY, attentiveHour, life } from './policy';
+import { hasProcess, solutionsOf } from '../src/engine/systems/production';
+import { workPiece } from '../src/engine/systems/workpieces';
+import { ADJUSTMENTS } from '../src/engine/content/workbook';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const SCENARIO = arg('scenario', 'leave');
@@ -36,7 +40,7 @@ const SEED = arg('seed', 'sc-0');
 const NY = 'America/New_York';
 const on = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
 
-interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; ownWork?: false; daily(sim: Simulation, log: string[]): void; stopWhen?(sim: Simulation, log: string[]): boolean }
+interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; ownWork?: false; workNotes?: false; daily(sim: Simulation, log: string[]): void; stopWhen?(sim: Simulation, log: string[]): boolean }
 
 /** TEST SETUP: a 2026 W-2 of $40,000 with nothing withheld, then the bank emptied and the return filed on 15 February. */
 const owingOnFiling = (sim: Simulation, log: string[]) => {
@@ -156,6 +160,33 @@ const SCENARIOS: Record<string, Hook> = {
     years: 0.6, config: { homeRegionId: 'us-ny-newyork' }, ownWork: false,
     daily() {},
   },
+  // A student cast in the first spring's festival who learns the part and catches up the blocking between calls, as a
+  // player does, and leaves the director's notes to the player (from 2026-10-13, `POLICY.workNotes`): once the lines are
+  // off book and the blocking set, the director turns to the craft. The run stops at nine on the first Saturday or
+  // Sunday with a craft note given and not yet worked, two ways or more at it (one a change of how it's played, kept or
+  // put back), and a call still ahead, so the built
+  // app's director's-note journey has a whole free day and a call to play to (`tools/acceptance-ui.mjs`). No TEST SETUP:
+  // everything in it is the policy's play through the commands.
+  direction: {
+    years: 1, config: { homeRegionId: 'us-ny-newyork' }, workNotes: false,
+    daily() {},
+    stopWhen: (sim, log) => {
+      const casting = sim.player.school?.casting;
+      if (!casting || !hasProcess(casting)) return false;
+      const note = casting.process.notes.at(-1);
+      if (note && !log.some((l) => l.endsWith(`note ${casting.process.notes.length}`))) log.push(`${new Date(sim.now).toISOString().slice(0, 10)} ${note.focus.kind} note ${casting.process.notes.length}`);
+      if (!note || note.focus.kind !== 'craft' || note.worked || note.taken !== undefined) return false;
+      const sols = solutionsOf(workPiece(sim, sim.player, 'part:school'), note);
+      const ways = sols.length;
+      // One of the ways a change of how the part is played, which is kept or put back, so the journey can do either.
+      const choice = sols.some((o) => ADJUSTMENTS[o.adjustment].kind === 'choice');
+      const weekday = zonedParts(sim.now, NY).weekday;
+      const ahead = sim.universe.scheduled.some((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.which !== 'rep' && i.at > sim.now);
+      if (ways < 2 || !choice || !ahead || (weekday !== 6 && weekday !== 0)) return false;
+      log.push(`${new Date(sim.now).toISOString().slice(0, 10)} a craft note waits: "${note.text.slice(0, 80)}", ${ways} ways`);
+      return true;
+    },
+  },
   // A student a few weeks into the first term, saved on a free Saturday morning (from 2026-10-12), so the built app's
   // practice-brief journey has hours to spend: choose a genre, read its brief, prepare it, tape it, train, tape again.
   brief: {
@@ -210,7 +241,10 @@ const SCENARIOS: Record<string, Hook> = {
 const hook = SCENARIOS[SCENARIO];
 if (!hook) throw new Error(`No scenario ${SCENARIO}: ${Object.keys(SCENARIOS).join(', ')}`);
 if (hook.ownWork === false) POLICY.ownWork = false;
-let sim = hook.resident ? quickSave(hook.config as never, SEED) : life(SEED, { pronouns: 'they/them', ...hook.config } as never);
+if (hook.workNotes === false) POLICY.workNotes = false;
+// `--from <save>` goes on from a save an earlier run wrote (from 2026-10-13), so a long run can go in slices: `--years` is
+// then how much further. The scenario's hook runs as before; its log starts again with each slice.
+let sim = process.argv.includes('--from') ? loadSave(deserialise(readFileSync(arg('from', ''), 'utf8')) as never) : hook.resident ? quickSave(hook.config as never, SEED) : life(SEED, { pronouns: 'they/them', ...hook.config } as never);
 // `--years` stops it early, and `--save <file>` writes the save there, for the screens to open (from 2026-10-10).
 const end = sim.now + Number(arg('years', String(hook.years))) * 365 * MS_DAY;
 const log: string[] = [];

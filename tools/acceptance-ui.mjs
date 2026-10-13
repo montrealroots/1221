@@ -600,6 +600,147 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
   await overflow('school casting (rehearsal save)');
 }
 
+
+// The director's craft note, through the screens (from 2026-10-13, the owner's brief of that day, section 3). The save is
+// the `direction` scenario's (`tools/scenarios.ts`): a student cast in the first spring's festival who learns the part
+// and catches up the blocking between calls, the notes left to the player, cut at nine on the first weekend morning
+// with a craft note given and not worked, two ways or more at it (one a change of how the part is played) and a call
+// ahead. No TEST SETUP in it. Every step fails, never skips, when the note, its ways or a control isn't there: given a
+// directory of saves, a missing direction save is a failure too.
+if (DIR) {
+  const noteLine = () => page.getByText(/^The director’s last note,/).first();
+  const ways = () => page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+  const workNote = () => page.getByRole('button', { name: /^Work On The Note/ }).first();
+  const partBook = () => page.locator('[data-workbook^="part:"]').first();
+  const history = () => page.locator('details[data-notes]').first();
+  const nightNow = async () => Number(((await page.getByText(/^A Night Now$/).first().locator('xpath=..').innerText().catch(() => '')).match(/(\d+\.\d)/) ?? [])[1] ?? NaN);
+  const noteCount = async () => { const t = await page.getByText(/^Notes taken: \d+ of \d+\.$/).first().innerText().catch(() => ''); return Number((t.match(/of (\d+)/) ?? [])[1] ?? 0); };
+  let first = '';
+  let tried = '';
+  await step('[save: direction scenario] casting: a craft note from the director, its problem, its place and its figure, not yet worked', async () => {
+    must(existsSync(`${DIR}/direction.json`), 'no direction save: write it with tools/scenarios.ts --scenario direction');
+    await openSave('direction.json');
+    await rail('School'); await tab('Casting');
+    must(await noteLine().count(), 'no director’s note on the Casting tab');
+    first = (await noteLine().innerText()).replace(/\s+/g, ' ');
+    must(/Not Worked On Yet/.test(first), `the note isn’t waiting: ${first}`);
+    // A craft note: a note on the lines or the blocking offers no ways.
+    must(await ways().count(), 'no ways offered at the note: it isn’t a note on the craft');
+    must((await ways().locator('option').count()) >= 2, 'fewer than two ways at the note');
+    must(await page.locator('[data-segments]').count(), 'no Part By Part to read the note’s place against');
+    return first.slice(0, 200);
+  });
+  await step('[save: direction scenario] help: the note’s How This Works, a connected system followed and back, the note and its ways as they were', async () => {
+    const how = page.getByRole('button', { name: /^How This Works: The Director’s Notes$/ }).first();
+    must(await how.count(), 'no How This Works beside the note');
+    const way = await ways().inputValue();
+    await how.click(); await wait(600);
+    must((await entryTitle()) === 'The Director’s Notes', `opened "${await entryTitle()}"`);
+    const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
+    must(await connected.count(), 'no Connected Systems on the note’s entry');
+    await connected.locator('summary').click(); await wait(300);
+    const link = connected.locator('button.help-link').first();
+    const to = await link.innerText();
+    await link.click(); await wait(500);
+    must((await entryTitle()) === to, `followed "${to}", showing "${await entryTitle()}"`);
+    await helpDialog().getByRole('button', { name: /^Back$/ }).click(); await wait(400);
+    must((await entryTitle()) === 'The Director’s Notes', 'Back didn’t return to the note’s entry');
+    await page.keyboard.press('Escape'); await wait(500);
+    must(/Casting/.test(await page.getByRole('tab', { selected: true }).first().innerText()), 'the Casting tab wasn’t kept');
+    must((await noteLine().innerText()).replace(/\s+/g, ' ') === first, 'the note changed while help was open');
+    must((await ways().inputValue()) === way, 'the way chosen changed while help was open');
+    return `The Director’s Notes → ${to} → Back; the note and its way as they were`;
+  });
+  let rehearsedIn = NaN;
+  await step('[save: direction scenario] casting: the ways inspected, a change of how it’s played tried, its evidence said, and kept', async () => {
+    const options = await ways().locator('option').allInnerTexts();
+    // A change of how the part is played (its words say so), which is kept or put back.
+    let picked = -1;
+    for (let i = 0; i < options.length && picked < 0; i += 1) {
+      await ways().selectOption({ index: i }); await wait(200);
+      const words = await ways().locator('xpath=following-sibling::span[1]').innerText().catch(() => '');
+      if (/its own way|lets you rest/.test(words)) picked = i;
+    }
+    must(picked >= 0, `no way that changes how the part is played among ${options.join(', ')}`);
+    tried = options[picked];
+    const t0 = await clock();
+    must(!(await workNote().isDisabled()), `Work On The Note refused: ${await page.locator('.why-not').allInnerTexts()}`);
+    await workNote().click(); await wait(1200); await settleDialogs();
+    const said = await toast();
+    must(/Worked .+: \d+(\.\d)? to \d+(\.\d)?\. Keep it or put it back, below\./.test(said), `no evidence said, or nothing to keep: ${said}`);
+    must(/Worked On/.test(await noteLine().innerText()), 'the note isn’t marked worked on');
+    must(await page.getByText(/^Worked .+: [\d.]+ before, [\d.]+ after\.$/).count(), 'the note’s answer isn’t shown');
+    must((await partBook().locator('table[data-tries] tbody tr').count()) >= 1, 'the try isn’t in the record');
+    const keep = partBook().getByRole('button', { name: /^Keep It$/ }).first();
+    must(await keep.count(), 'no Keep It for the change tried');
+    await keep.click(); await wait(800);
+    must(/Kept: everything after reads it\./.test(await toast()), 'keeping it said nothing');
+    const found = (await partBook().innerText()).match(/(\d+)% rehearsed in/);
+    rehearsedIn = Number(found?.[1] ?? NaN);
+    return `"${tried}" of ${options.length}; ${t0} → ${await clock()}: ${said.slice(0, 120)}; kept${Number.isNaN(rehearsedIn) ? '' : `, ${rehearsedIn}% rehearsed in`}`;
+  });
+  await step('[save: direction scenario] casting: worked once, Work On The Note is refused, its reason said in words, and pressing it does nothing', async () => {
+    must(await workNote().isDisabled(), 'Work On The Note still offered after the note was worked');
+    const why = (await page.locator('.why-not').allInnerTexts()).join(' ');
+    must(/Work On The Note/.test(why) || /^Not now:/.test(why), `no reason said: ${why}`);
+    const before = `${await dateText()} ${await clock()}`;
+    await workNote().click({ force: true }).catch(() => {}); await wait(600);
+    must(`${await dateText()} ${await clock()}` === before, 'pressing the refused control moved the clock');
+    return why.slice(0, 160);
+  });
+  let night = NaN;
+  await step('[save: direction scenario] the next call: the change rehearsed in further, the note taken or still there, the night now, and the history', async () => {
+    night = await nightNow();
+    const notes = await noteCount();
+    const callGone = async () => (await noteCount()) > notes || !/Worked On$|Worked On\s*$/.test((await noteLine().innerText()).trim());
+    for (let i = 0; i < 5 && !(await callGone()); i += 1) { await advance('Tomorrow Morning'); await rail('School'); await tab('Casting'); }
+    must(await callGone(), 'no call came within five mornings');
+    // What came of the note: on its own line where it's still the last, or in the notes so far.
+    const last = (await noteLine().innerText()).replace(/\s+/g, ' ');
+    let outcome = /Taken|Not Taken/.test(last) && last.includes(first.split(': ').slice(1).join(': ').slice(0, 30)) ? last : '';
+    if (!outcome) {
+      must(await history().count(), 'the notes so far aren’t shown');
+      await history().locator('summary').click(); await wait(300);
+      const items = await history().locator('li').allInnerTexts();
+      outcome = items.find((x) => /Worked /.test(x) && /Taken|Not Taken/.test(x)) ?? '';
+    }
+    must(/at the next call/.test(outcome) && /· (Taken|Not Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
+    const after = Number(((await partBook().innerText()).match(/(\d+)% rehearsed in/) ?? [])[1] ?? NaN);
+    if (!Number.isNaN(rehearsedIn)) must(after > rehearsedIn, `the kept change wasn’t rehearsed in at the call: ${rehearsedIn}% → ${after}%`);
+    const nowNight = await nightNow();
+    must(!Number.isNaN(nowNight), 'no A Night Now');
+    const follow = /^The director’s last note,.*(Still:|Better since the last note\.)/.test(last) ? 'a follow-up on the same note' : 'a note on another thing';
+    return `${outcome.replace(/\s+/g, ' ').slice(0, 160)}; rehearsed in ${rehearsedIn}% → ${after}%; a night now ${night} → ${nowNight}; next: ${follow}`;
+  });
+  await step('[save: direction scenario] save and exit, Continue: the note’s outcome and the try kept', async () => {
+    const tries = await partBook().locator('table[data-tries] tbody tr').count();
+    const seen = (await history().innerText().catch(() => '')) + (await noteLine().innerText());
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('School'); await tab('Casting');
+    must((await partBook().locator('table[data-tries] tbody tr').count()) === tries, 'the tries weren’t kept');
+    const again = (await history().innerText().catch(() => '')) + (await noteLine().innerText());
+    must(again.replace(/\s+/g, ' ') === seen.replace(/\s+/g, ' '), 'the notes read differently after the reload');
+    return `${tries} tries kept, the notes as they were`;
+  });
+  await step('[save: direction scenario] left unanswered: at the next call the note is not taken, and comes again as still there or is shown so', async () => {
+    await openSave('direction.json');
+    await rail('School'); await tab('Casting');
+    must(/Not Worked On Yet/.test(await noteLine().innerText()), 'the note isn’t waiting');
+    const notes = await noteCount();
+    for (let i = 0; i < 5 && (await noteCount()) <= notes && /Not Worked On Yet/.test(await noteLine().innerText()); i += 1) { await advance('Tomorrow Morning'); await rail('School'); await tab('Casting'); }
+    const last = (await noteLine().innerText()).replace(/\s+/g, ' ');
+    let said = /Not Taken/.test(last) ? last : /Still:/.test(last) ? last : '';
+    if (!said && await history().count()) {
+      await history().locator('summary').click(); await wait(300);
+      said = (await history().locator('li').allInnerTexts()).find((x) => /Not Taken/.test(x)) ?? '';
+    }
+    must(said, `the note left alone isn’t said to be still there: ${last}`);
+    return said.replace(/\s+/g, ' ').slice(0, 200);
+  });
+  await overflow('school casting (direction save)');
+}
+
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
 if (DIR && existsSync(`${DIR}/withdraw.json`)) {
   await step('[save: withdraw scenario] school: the class left goes on, and says so', async () => {
