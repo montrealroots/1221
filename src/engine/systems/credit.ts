@@ -112,9 +112,11 @@ export interface CardState {
   suspended?: 'late' | 'hardship' | 'persistent';
   /** The holder closed the card: nothing new on it, and what's owed is paid down (C10). */
   closing?: Instant;
-  /** US: the holder opted in to transactions over the limit, and how many cycles in a row have been charged for it (C60). */
+  /**
+   * US: the holder opted in to transactions over the limit (C60). Until 2026-10-13 a count of the cycles in a row charged
+   * for it was kept beside it, for a fee no card here publishes; it went with the fee.
+   */
   overLimitOptIn?: boolean;
-  overLimitCycles?: number;
   /** The holder asked the bank never to raise the limit unasked (C79). */
   noAutoRaise?: boolean;
   /** A hardship plan: the interest frozen and a fixed payment (C75, C76). */
@@ -177,7 +179,7 @@ export interface CreditState extends CardState {
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
   'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
-  'overLimitOptIn', 'overLimitCycles', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
+  'overLimitOptIn', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost',
 ];
 
@@ -391,8 +393,6 @@ export interface CardTerms {
   lateFee: Money;
   /** What a bounced payment costs. */
   returnedPaymentFee: Money;
-  /** A US card's over-limit fee, for someone who opted in, where it charges one. */
-  overLimitFee?: Money;
   /** A cash advance's fee (a share, never under a minimum), its rate, and the most of the limit it may use. */
   cashFeeShare: number;
   cashFeeMin: Money;
@@ -505,7 +505,6 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     cashFeeMin,
     cashApr: Math.min(Math.max(product?.cashApr ?? apr, penaltyInForce && canada?.cashApr ? canada.cashApr : 0), law?.aprCap ?? Number.POSITIVE_INFINITY),
     ...(cashLimit !== undefined ? { cashLimit } : {}),
-    ...(product?.overLimitFee ? { overLimitFee: inSave(sim, product.overLimitFee, money) } : {}),
     ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
     ...(introUntil !== undefined ? { introApr: product!.introApr, introUntil } : {}),
     ...(apr < standardApr ? { standardApr: Math.min(standardApr, law?.aprCap ?? Number.POSITIVE_INFINITY) } : {}),
@@ -680,7 +679,10 @@ export const MIN_CYCLE_DAYS = 27;
 /**
  * Why a card's statement day can't move now: once a statement cycle, SLATE's reading of an issuer's limit, which the
  * banks' terms read don't give. From 2026-10-13: until then it moved as often as asked, and a statement moved a day on
- * each morning never came, nor its due date, its interest or its report (found by the review of that day).
+ * each morning never came, nor its due date, its interest or its report (found by the review of that day). Read that
+ * day: Chase lets a holder not in default change the due date as often as they like, and some issuers once in 90 days
+ * (NerdWallet, Quicken Loans; Doctor of Credit on statement dates), so once a cycle sits between them. A day moved
+ * later each cycle still stretches each cycle it's moved in, as an issuer's own first cycle on a new date does.
  */
 export function statementDayRefusal(person: Person, card: Account): string | undefined {
   const state = person.credit ? stateOf(person, card) : undefined;
@@ -764,13 +766,9 @@ export function registerCredit(sim: Simulation): void {
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: annualFee }, { accountId: card.id, amount: -annualFee }],
       });
     }
-    // Over the limit for somebody who opted in: the card's fee, once a cycle,
-    // three cycles in a row at most (Reg Z §1026.56(j)).
-    const overBy = Math.max(0, -card.balance) - (card.creditLimit ?? 0);
-    if (overBy > 0 && credit.overLimitOptIn && terms.overLimitFee && (credit.overLimitCycles ?? 0) < 3) {
-      credit.overLimitCycles = (credit.overLimitCycles ?? 0) + 1;
-      s.post({ memo: 'Over-limit fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: terms.overLimitFee }, { accountId: card.id, amount: -terms.overLimitFee }] });
-    } else if (overBy <= 0) credit.overLimitCycles = 0;
+    // Over the limit for somebody who opted in: no fee. Until 2026-10-13 a card's over-limit fee was charged here, once a
+    // cycle and three cycles in a row at most (Reg Z §1026.56(j)), but no card here publishes one, so only a test's card
+    // ever charged it; found by that day's evidence check, and taken out.
     persistentDebt(s, person, card, credit);
     credit.statementBalance = Math.max(0, -card.balance);
     credit.paidSinceStatement = 0;

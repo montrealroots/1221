@@ -512,8 +512,8 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Every Course, folded at the foot of Courses And The Degree, lists each attempt and how it ended.',
     ],
     needs: [
-      `A make-up session: an Incomplete inside its deadline, in New Haven, out of hospital, and ${MAKE_UP} free.`,
-      `A repeat: the spring’s evaluation past and the next year not yet begun (after the last year, within ${EXTENDED_STUDY.requestDays} days of it), a course failed that year, no leave under way, that year not repeated before, and ${EXTENDED_STUDY.maxSemesters} semesters enrolled at most with the repeat’s two, a leave’s terms not among them.`,
+      `A make-up session: an Incomplete whose deadline is ${MAKE_UP} or more away, in New Haven, out of hospital, and ${MAKE_UP} free.`,
+      `A repeat: the spring’s evaluation past and the next year not yet begun (after the last year, within ${EXTENDED_STUDY.requestDays} days of it), a course failed that year, no leave under way and no additional term asked for, that year not repeated before, and ${EXTENDED_STUDY.maxSemesters} semesters at most with the repeat’s two and the terms still to come, a leave’s terms not among them.`,
       `An additional term: after the last year’s evaluation and within its ${EXTENDED_STUDY.requestDays} days, a course unpassed, ${EXTENDED_STUDY.maxSemesters} semesters enrolled at most with it, and no disqualification standing.`,
     ],
     costs: [

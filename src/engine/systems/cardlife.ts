@@ -209,7 +209,6 @@ export function registerCardLife(sim: Simulation): void {
     if (bankById(card.bankId ?? '')?.iso !== 'US') throw new CommandError('Opting in to going over the limit is a US card’s choice.');
     const state = stateOf(person, card);
     state.overLimitOptIn = Boolean(p.on);
-    if (!p.on) state.overLimitCycles = 0;
     return { on: Boolean(p.on) };
   });
 

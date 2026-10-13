@@ -76,7 +76,11 @@ export interface City extends ReferenceRecord {
   // SLATE's estimates, and nothing owned a home, flew or chose a
   // neighborhood; they went on 2026-09-27, with the airports' table.
   jurisdictionCode: string;
-  /** Descriptive tags used by search and lifestyle systems. */
+  /**
+   * Descriptive tags used by search and lifestyle systems, and shown title-cased on Where You Are (`placeLine`), so
+   * spelled as the player reads: until 2026-10-13 two were British, "theatre" and "harbour", and a player in New York,
+   * Chicago or London read "Theatre" (found by that day's evidence pass).
+   */
   tags: string[];
   /**
    * A section of a larger city (Hollywood, Brooklyn), a national capital, or
@@ -191,12 +195,12 @@ const CALIBRATED_CITIES: readonly City[] = [
   city({ id: 'us-ca-santamonica', name: 'Santa Monica', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.02, lon: -118.49, col: 178, rent: 3300, pop: 93000, tags: ['beach', 'agencies', 'affluent'] }),
   city({ id: 'us-ca-sanfrancisco', name: 'San Francisco', region: 'us-ca', tz: 'America/Los_Angeles', lat: 37.77, lon: -122.42, col: 178, rent: 3200, pop: 810000, tags: ['tech', 'expensive', 'coastal'] }),
   city({ id: 'us-ca-sandiego', name: 'San Diego', region: 'us-ca', tz: 'America/Los_Angeles', lat: 32.72, lon: -117.16, col: 143, rent: 2500, pop: 1380000, tags: ['beach', 'military', 'relaxed'] }),
-  city({ id: 'us-ny-newyork', name: 'New York', aliases: ['NYC', 'Manhattan'], region: 'us-ny', tz: 'America/New_York', lat: 40.71, lon: -74.01, col: 168, rent: 3600, pop: 8300000, tags: ['theatre', 'television', 'finance', 'publishing'] }),
+  city({ id: 'us-ny-newyork', name: 'New York', aliases: ['NYC', 'Manhattan'], region: 'us-ny', tz: 'America/New_York', lat: 40.71, lon: -74.01, col: 168, rent: 3600, pop: 8300000, tags: ['theater', 'television', 'finance', 'publishing'] }),
   city({ id: 'us-ga-atlanta', name: 'Atlanta', region: 'us-ga', tz: 'America/New_York', lat: 33.75, lon: -84.39, col: 104, rent: 1750, pop: 500000, tags: ['production hub', 'incentives', 'affordable'] }),
   city({ id: 'us-tx-austin', name: 'Austin', region: 'us-tx', tz: 'America/Chicago', lat: 30.27, lon: -97.74, col: 112, rent: 1700, pop: 970000, tags: ['music', 'festival', 'tech'] }),
   city({ id: 'us-tx-dallas', name: 'Dallas', region: 'us-tx', tz: 'America/Chicago', lat: 32.78, lon: -96.80, col: 101, rent: 1500, pop: 1300000, tags: ['business', 'affordable'] }),
   city({ id: 'us-fl-miami', name: 'Miami', region: 'us-fl', tz: 'America/New_York', lat: 25.76, lon: -80.19, col: 128, rent: 2600, pop: 450000, tags: ['beach', 'international', 'nightlife'] }),
-  city({ id: 'us-il-chicago', name: 'Chicago', region: 'us-il', tz: 'America/Chicago', lat: 41.88, lon: -87.63, col: 108, rent: 1950, pop: 2700000, tags: ['theatre', 'improv', 'architecture'] }),
+  city({ id: 'us-il-chicago', name: 'Chicago', region: 'us-il', tz: 'America/Chicago', lat: 41.88, lon: -87.63, col: 108, rent: 1950, pop: 2700000, tags: ['theater', 'improv', 'architecture'] }),
   city({ id: 'us-nv-lasvegas', name: 'Las Vegas', region: 'us-nv', tz: 'America/Los_Angeles', lat: 36.17, lon: -115.14, col: 105, rent: 1550, pop: 660000, tags: ['no state income tax', 'entertainment', 'hospitality'] }),
   city({ id: 'us-wa-seattle', name: 'Seattle', region: 'us-wa', tz: 'America/Los_Angeles', lat: 47.61, lon: -122.33, col: 148, rent: 2250, pop: 750000, tags: ['tech', 'no state income tax', 'rain'] }),
   city({ id: 'us-or-portland', name: 'Portland', region: 'us-or', tz: 'America/Los_Angeles', lat: 45.51, lon: -122.68, col: 121, rent: 1700, pop: 640000, tags: ['no sales tax', 'creative', 'green'] }),
@@ -211,7 +215,7 @@ const CALIBRATED_CITIES: readonly City[] = [
   city({ id: 'ca-bc-vancouver', name: 'Vancouver', region: 'ca-02', tz: 'America/Vancouver', lat: 49.28, lon: -123.12, col: 137, rent: 2400, pop: 675000, tags: ['production hub', 'incentives', 'mountains'] }),
   city({ id: 'ca-on-toronto', name: 'Toronto', region: 'ca-08', tz: 'America/Toronto', lat: 43.65, lon: -79.38, col: 128, rent: 2200, pop: 2900000, tags: ['production hub', 'incentives', 'finance'] }),
   city({ id: 'ca-qc-montreal', name: 'Montreal', region: 'ca-10', tz: 'America/Toronto', lat: 45.50, lon: -73.57, col: 105, rent: 1500, pop: 1760000, tags: ['vfx', 'incentives', 'bilingual'] }),
-  city({ id: 'uk-eng-london', name: 'London', region: 'uk-eng', tz: 'Europe/London', lat: 51.51, lon: -0.13, col: 158, rent: 2700, pop: 8900000, tags: ['theatre', 'production hub', 'international'] }),
+  city({ id: 'uk-eng-london', name: 'London', region: 'uk-eng', tz: 'Europe/London', lat: 51.51, lon: -0.13, col: 158, rent: 2700, pop: 8900000, tags: ['theater', 'production hub', 'international'] }),
   city({ id: 'uk-eng-manchester', name: 'Manchester', region: 'uk-eng', tz: 'Europe/London', lat: 53.48, lon: -2.24, col: 108, rent: 1350, pop: 553000, tags: ['television', 'affordable', 'music'] }),
   city({ id: 'uk-sct-glasgow', name: 'Glasgow', region: 'uk-sct', tz: 'Europe/London', lat: 55.86, lon: -4.25, col: 98, rent: 1100, pop: 635000, tags: ['incentives', 'locations'] }),
   city({ id: 'ie-lei-dublin', name: 'Dublin', region: 'ie-l', tz: 'Europe/Dublin', lat: 53.35, lon: -6.26, col: 132, rent: 2100, pop: 590000, tags: ['incentives', 'production'] }),
@@ -221,7 +225,7 @@ const CALIBRATED_CITIES: readonly City[] = [
   city({ id: 'es-md-madrid', name: 'Madrid', region: 'es-29', tz: 'Europe/Madrid', lat: 40.42, lon: -3.70, col: 102, rent: 1300, pop: 3300000, tags: ['production hub', 'sunny'] }),
   city({ id: 'es-cat-barcelona', name: 'Barcelona', region: 'es-56', tz: 'Europe/Madrid', lat: 41.39, lon: 2.17, col: 108, rent: 1400, pop: 1620000, tags: ['locations', 'beach', 'design'] }),
   city({ id: 'it-laz-rome', name: 'Rome', region: 'it-07', tz: 'Europe/Rome', lat: 41.90, lon: 12.50, col: 104, rent: 1250, pop: 2800000, tags: ['historic studios', 'locations'] }),
-  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-02', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, pop: 5300000, tags: ['southern hemisphere', 'harbour', 'production hub'] }),
+  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-02', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, pop: 5300000, tags: ['southern hemisphere', 'harbor', 'production hub'] }),
   city({ id: 'au-vic-melbourne', name: 'Melbourne', region: 'au-07', tz: 'Australia/Melbourne', lat: -37.81, lon: 144.96, col: 128, rent: 1900, pop: 5000000, tags: ['southern hemisphere', 'arts', 'coffee'] }),
   city({ id: 'au-qld-goldcoast', name: 'Gold Coast', region: 'au-04', tz: 'Australia/Brisbane', lat: -28.02, lon: 153.40, col: 118, rent: 1700, pop: 640000, tags: ['studios', 'incentives', 'beach', 'no daylight saving'] }),
   city({ id: 'nz-wgn-wellington', name: 'Wellington', region: 'nz-g2', tz: 'Pacific/Auckland', lat: -41.29, lon: 174.78, col: 116, rent: 1650, pop: 215000, tags: ['vfx', 'southern hemisphere', 'incentives'] }),

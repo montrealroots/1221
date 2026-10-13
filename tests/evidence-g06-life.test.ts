@@ -45,10 +45,10 @@
  *   will; a meal needed lifts it 2, one on a fuller stomach by what it puts back; a sprain takes 4 and a point each
  *   midnight while it mends.
  *
- * A DEFECT this file shows, kept failing until the code is fixed: the Condition look decides its sick-day line on the
- * figure it shows, rounded (src/ui/looks/wellbeing.tsx 288), where the school reads the condition itself
- * (`sickRefusal`, school.ts 170). A student worn to 54.8 by five-hour nights is excused a sick day and the look, showing
- * 55, doesn't say so.
+ * A defect this file showed, failing when written, until the code was fixed on 2026-10-13: the Condition look decided
+ * its sick-day line on the figure it shows, rounded (src/ui/looks/wellbeing.tsx 288), where the school reads the
+ * condition itself (`sickRefusal`, school.ts 170). A student worn to 54.8 by five-hour nights was excused a sick day and
+ * the look, showing 55, didn’t say so.
  *
  * Left as it stands, and not a defect: the morning's floor of 82 for hygiene, which a body kept up through midnight
  * gets too, so a day without a shower costs nothing past that midnight; and model.ts 71-75, which still says hygiene
@@ -447,14 +447,15 @@ function shortNights(): { short: Simulation; full: Simulation } {
 }
 
 describe('condition', () => {
-  it('DEFECT: the Condition look withholds the sick-day line from a student the school would excuse, at 54.8 shown as 55', () => {
+  it('the Condition look gives the sick-day line to a student the school excuses, at a condition under 55 that rounds to 55', () => {
     const { short } = shortNights();
     const condition = short.player.wellbeing.condition;
     expect(condition).toBeLessThan(55);
     expect(condition).toBeGreaterThanOrEqual(54.5);
     // The school reads the condition itself (`sickRefusal`, school.ts 170): under 55, the sick day is excused.
     expect(reload(short).execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
-    // The look says what the dial decides; it reads the figure rounded to show it (wellbeing.tsx 288), and says nothing.
+    // The look says what the dial decides; until 2026-10-13 it read the figure rounded to show it (wellbeing.tsx 288),
+    // and said nothing; fixed that day.
     expect(dial(short, 'condition').says).toContain(' Under 55, a day off classes called in sick is excused. ');
   });
 

@@ -26,13 +26,14 @@
  * - `tutorial.read`: every chapter read through the guide's own I’ve Read It; a finished guide missing chapters, as one
  *   added later would be, stays open (`isOpen`, `nextChapter`, the guard); a guide read to its end before 2026-10-12
  *   is marked finished on opening, and one a chapter short is not; an unknown chapter and a life with no guide are
- *   refused in their words. DEFECT, kept failing: the top bar's Guide button counts chapters left on a finished guide,
- *   which the guide never lets be read.
+ *   refused in their words. The top bar’s Guide button counts no chapters left on a finished guide; until 2026-10-13 it
+ *   counted the ones added later, which the guide never lets be read, and its test failed when written; fixed that day.
  * - `health.appeal`: on the New Haven student, a marketplace claim denied (the student withdrawn and enrolled in
  *   October's open enrollment). Appeal It on Papers; a second appeal refused; overturned, the refund of what was paid
  *   over the plan's share, once, across a reload; upheld, the bill and the bank as they were; overturned after going
- *   to debt, the debt down to the share exactly; a denial 181 days old refused. DEFECT, kept failing: a debt paid
- *   down before an overturn keeps what was paid over the share, and the bill reads Owed As Debt.
+ *   to debt, the debt down to the share exactly; a denial 181 days old refused. A debt paid down past the share before
+ *   an overturn gets back what was paid over it, and the bill is settled; until 2026-10-13 that was kept, and the bill
+ *   read Owed As Debt, and its test failed when written; fixed that day.
  * - `health.apply_aid`: the student's $50 Yale New Haven emergency bill. With no income, Free Care: nothing paid when
  *   it falls due. At $60,000 a year, 67% off: $16.50 paid when it falls due, across a reload (a third of $50 to the
  *   cent; the review's todo said $17.00, which no rounding of $16.50 reaches). Applied for twice, and past due,
@@ -84,6 +85,8 @@ const h = vi.hoisted(() => ({
   /** While set, every effect a render asks for is kept, to be run as a page's commit runs it. */
   collecting: false,
   effects: [] as (() => unknown)[],
+  /** Each kept effect's dependencies, as the render gave them. */
+  deps: [] as (readonly unknown[] | undefined)[],
 }));
 
 vi.mock('react', async (orig) => {
@@ -95,7 +98,7 @@ vi.mock('react', async (orig) => {
     return [v === h.keep ? value : v, set];
   }) as typeof real.useState;
   const useEffect = ((effect: () => unknown, deps?: readonly unknown[]) => {
-    if (h.collecting) h.effects.push(effect);
+    if (h.collecting) { h.effects.push(effect); h.deps.push(deps); }
     return real.useEffect(effect as never, deps);
   }) as typeof real.useEffect;
   return { ...real, default: { ...real, useState, useEffect }, useState, useEffect };
@@ -516,6 +519,47 @@ describe('world.set_preferences', () => {
       return () => { for (const c of cleanups) c(); };
     }
 
+    /**
+     * The same provider as a page holds it after that: rendered again, as React renders it after a change, and each
+     * effect whose dependencies changed let go and run again, the rest left running (FIXTURE: React's commit, as above).
+     * Until 2026-10-13 Pause was followed by an unmount and a mount, which runs every effect again whatever its
+     * dependencies, so the tick's dependency on the speed, which is what stops a running page, wasn't what was tested
+     * (found by that day's check).
+     */
+    function held(sim: Simulation): { rerender: () => void; unmount: () => void } {
+      const collect = () => {
+        h.effects = [];
+        h.deps = [];
+        h.collecting = true;
+        try {
+          renderToStaticMarkup(createElement(GameProvider, { sim, adapter: { save: async () => undefined } as never, onExit: () => undefined, children: null }));
+        } finally {
+          h.collecting = false;
+        }
+        return { effects: [...h.effects], deps: [...h.deps] };
+      };
+      let last = collect();
+      expect(last.effects.length).toBeGreaterThan(0);
+      const cleanups = last.effects.map((run) => run());
+      return {
+        rerender: () => {
+          const next = collect();
+          expect(next.effects).toHaveLength(last.effects.length);
+          next.effects.forEach((run, i) => {
+            const was = last.deps[i];
+            const now = next.deps[i];
+            const changed = !was || !now || was.length !== now.length || now.some((d, j) => !Object.is(d, was[j]));
+            if (!changed) return;
+            const c = cleanups[i];
+            if (typeof c === 'function') c();
+            cleanups[i] = run();
+          });
+          last = next;
+        },
+        unmount: () => { for (const c of cleanups) if (typeof c === 'function') c(); },
+      };
+    }
+
     it('PLAYER JOURNEY: Pause on the top bar stops it, five seconds and nothing moves; Play runs it a second a second; a paused save opens paused', () => {
       vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval', 'setTimeout', 'clearTimeout', 'Date'] });
       const listens = { addEventListener: () => undefined, removeEventListener: () => undefined };
@@ -534,7 +578,7 @@ describe('world.set_preferences', () => {
       const start = sim.now;
 
       // Live, as a new life opens: the bar offers Pause, and the clock moves a second a second.
-      let unmount = mount(sim);
+      const running = held(sim);
       vi.advanceTimersByTime(5_000);
       expect(sim.now).toBe(start + 5_000);
       const live = drawn(sim, TimeControls);
@@ -542,29 +586,32 @@ describe('world.set_preferences', () => {
       live.press('Pause');
       expect(sim.universe.preferences.timeSpeed).toBe('paused');
 
-      // The provider re-read with the new speed: its old tick is let go and its effects run again.
-      unmount();
-      unmount = mount(sim);
+      // The running page rendered again with the new speed, not mounted again: its tick, whose speed changed, is let go.
+      running.rerender();
       vi.advanceTimersByTime(5_000);
       expect(sim.now).toBe(start + 5_000);
+      running.unmount();
 
       // Paused, saved and opened again: still paused, and the clock where it was.
       const again = reload(sim);
       expect(again.universe.preferences.timeSpeed).toBe('paused');
-      unmount();
-      unmount = mount(again);
+      const opened = mount(again);
       vi.advanceTimersByTime(5_000);
       expect(again.now).toBe(start + 5_000);
-      unmount();
+      opened();
 
+      // Play on a paused page, rendered again, not mounted again: the tick starts, a second a second.
+      const stopped = held(sim);
+      vi.advanceTimersByTime(5_000);
+      expect(sim.now).toBe(start + 5_000);
       const paused = drawn(sim, TimeControls);
       expect(paused.has('Pause')).toBe(false);
       paused.press('Play');
       expect(sim.universe.preferences.timeSpeed).toBe('live');
-      unmount = mount(sim);
+      stopped.rerender();
       vi.advanceTimersByTime(5_000);
       expect(sim.now).toBe(start + 10_000);
-      unmount();
+      stopped.unmount();
     });
   });
 });
@@ -624,12 +671,13 @@ describe('tutorial.read', () => {
     expect(drawn(again, GuideStrip).text).toContain('Your Bank');
   });
 
-  it('DEFECT: the top bar’s Guide button counts no chapters left on a finished guide, which takes none of them', () => {
+  it('the top bar’s Guide button counts no chapters left on a finished guide, which takes none of them', () => {
     const sim = readThrough('g02-guide-button');
     expect(drawn(sim, GuideButton).text).toBe('Guide');
     // TEST SETUP: two chapters added after it was read through, as above.
     sim.universe.tutorial!.read = sim.universe.tutorial!.read.filter((id) => id !== bank!.id && id !== life!.id);
-    // The guide opened at the one it would count: it offers no I’ve Read It, so nothing could bring the count down.
+    // The guide opened at the one it counted until 2026-10-13: it offers no I’ve Read It, so nothing could have brought
+    // that count down.
     const atBank = drawn(sim, () => createElement(GuideProvider, { children: null }), [bank!.id, h.keep, h.keep, h.keep]);
     expect(atBank.text).toContain('Your Bank');
     expect(atBank.has('I’ve Read It')).toBe(false);
@@ -772,7 +820,7 @@ describe('health.appeal', () => {
     expect(paperRow(sim, bill)).toContain('Denial Overturned');
   });
 
-  it('DEFECT: overturned after a debt was paid down past the share, what was paid over the share comes back, and the bill is settled', () => {
+  it('overturned after a debt was paid down past the share, what was paid over the share comes back, and the bill is settled', () => {
     const { sim, bill } = deniedClaim('g02-claim-1');
     const full = bill.amount;
     const share = bill.denied!.share;

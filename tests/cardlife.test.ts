@@ -3,7 +3,8 @@
  * `systems/credit.ts`): module 4 of `docs/BANKING-FUNCTIONS.md`.
  */
 import { afterEach, describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
+import { loadSave, migrate, quickSave } from '@/engine';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
@@ -204,12 +205,13 @@ describe('the limit', () => {
 });
 
 describe('going over the limit', () => {
-  it('is a US card’s choice, lets a tenth over for someone who opted in, and charges the card’s fee three cycles at most', () => {
+  it('is a US card’s choice, lets a tenth over for someone who opted in, and charges nothing for it at four statements over the limit', () => {
+    // Until 2026-10-13 this gave the bank a test card with a $25 over-limit fee and counted three fees in four
+    // statements. No card SLATE has publishes an over-limit fee, so the fee was taken out, and the card is Chase's own.
     const is = lifeIn('is-39-mosfellsbr', {}, 'cl-over-is');
     expect(is.execute({ kind: 'card.set_over_limit', payload: { on: true } }).ok).toBe(false);
     const sim = lifeIn('us-ny-newyork', { wealth: 'inherited', bankId: 'us-chase' }, 'cl-over');
     const c = card(sim)!;
-    withCard(c.bankId!, { name: 'Test', kind: 'revolving', apr: 0.2, overLimitFee: 25_00, source: 'test', asOf: '2026-09-26' });
     broke(sim);
     const before = canPay(sim, sim.player, false);
     run(sim, 'card.set_over_limit', { on: true });
@@ -219,7 +221,28 @@ describe('going over the limit', () => {
     sim.player.credit!.autopay = 'minimum';
     const fees = () => sim.universe.transactions.filter((t) => t.memo === 'Over-limit fee').length;
     for (let i = 0; i < 4; i += 1) { sim.advanceTo(nextStatement(sim) + 1000); give(sim, c.id, -10_00); }
-    expect(fees()).toBe(3);
+    expect(fees()).toBe(0);
+    expect(sim.universe.transactions.filter((t) => t.category === 'fees' && t.postings.some((p) => p.accountId === c.id) && /limit/i.test(t.memo))).toEqual([]);
+  });
+});
+
+describe('a save from before the over-limit fee went', () => {
+  it('opens without the count of fees charged in a row, on the everyday card and another, and keeps the opt-in', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'inherited', bankId: 'us-chase' }, 'cl-over-old');
+    run(sim, 'card.set_over_limit', { on: true });
+    // TEST SETUP: the count an earlier build kept, on the card's own state and on a second card's.
+    const old = JSON.parse(serialise(sim.universe)) as { people: Record<string, { credit: Record<string, unknown> & { cards?: Record<string, Record<string, unknown>> } }> };
+    const credit = old.people[sim.player.id]!.credit;
+    credit.overLimitCycles = 2;
+    credit.cards = { ...(credit.cards ?? {}), other: { overLimitCycles: 1, autopay: 'full' } };
+    // Opened as the app opens a slot: migrated, then loaded.
+    const universe = deserialise(JSON.stringify(old)) as never;
+    expect(migrate(universe).steps).toContain('Dropped the fields this build no longer reads from 1 person.');
+    const opened = loadSave(universe);
+    const after = opened.player.credit as unknown as Record<string, unknown> & { cards: Record<string, Record<string, unknown>> };
+    expect('overLimitCycles' in after).toBe(false);
+    expect('overLimitCycles' in after.cards.other!).toBe(false);
+    expect(after.overLimitOptIn).toBe(true);
   });
 });
 

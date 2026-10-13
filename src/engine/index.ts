@@ -646,6 +646,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       delete (well as Record<string, unknown>).travelFatigue;
       dropped = true;
     }
+    // A card's count of over-limit fees charged in a row went on 2026-10-13 with the fee, which no card here charges.
+    const credit = p.credit as { cards?: Record<string, Record<string, unknown>> } & Record<string, unknown> | undefined;
+    for (const state of credit ? [credit, ...Object.values(credit.cards ?? {})] : []) {
+      if ('overLimitCycles' in state) { delete state.overLimitCycles; dropped = true; }
+    }
     if (dropped) shed += 1;
   }
   // Older builds mirrored the title onto the save's own summary. It lives on

@@ -832,7 +832,7 @@ export const MONEY: readonly GuideEntry[] = [
       'Two due dates missed in a row: the card is suspended until a payment is on time. Five: a default notice. Six: it’s charged off to collections and closed, and 100 points come off your record.',
       'On a US card with a penalty rate, sixty days late brings 45 days’ notice and then that rate, until six payments in a row are on time; sixty days late also ends any introductory rate.',
       `A moved statement day: the next statement comes no sooner than ${MIN_CYCLE_DAYS} days after the last, and the day moves once a statement cycle, SLATE’s reading of the issuers’ limit: asked again before the next statement, Move It is refused.`,
-      'Going Over The Limit allowed on a US card: spending can run a tenth past the limit, and a card with an over-limit fee charges it at a statement that finds the card over, three statements in a row at most.',
+      'Going Over The Limit allowed on a US card: spending can run a tenth past the limit, SLATE’s estimate, with no fee for it: no card here publishes one.',
       'A credit balance left six months on a US card is sent back to your account.',
       'A card you closed with something owed closes at the first statement after it’s paid off.',
     ],

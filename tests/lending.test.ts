@@ -264,11 +264,16 @@ describe('a term deposit', () => {
     expect(into).toBe(1_000_000_00 + gross - Math.round(gross * 0.22));
   });
 
-  it('keeps ING’s €100,000 floor', () => {
+  it('keeps ING’s €100,000 floor: a cent short is refused in its words and opens nothing; €100,000 opens', () => {
+    // Until 2026-10-13 this asked only that €50,000 was refused, for any reason, and never what it said.
     const sim = lifeIn('de-be-berlin', { bankId: 'de-ing', wealth: 'wealthy' });
     set(sim, current(sim), 150_000_00);
-    expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 50_000_00 } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 99_999_99 } })).toMatchObject({ ok: false, error: 'It takes €100,000 or more.' });
+    expect(termsOf(sim, sim.player)).toEqual([]);
+    expect(current(sim).balance).toBe(150_000_00);
     expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 100_000_00 } }).ok).toBe(true);
+    expect(termsOf(sim, sim.player).map((t) => t.balance)).toEqual([100_000_00]);
+    expect(current(sim).balance).toBe(50_000_00);
   });
 });
 

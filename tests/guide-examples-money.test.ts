@@ -42,7 +42,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { addMonths, instantFromZoned, MS_DAY, zonedParts, type Instant } from '@/engine/core/time';
+import { addMonths, instantFromZoned, startOfDay, MS_DAY, zonedParts, type Instant } from '@/engine/core/time';
 import { serialise } from '@/engine/persistence/adapter';
 import { GUIDE_BY_ID } from '@/engine/content/guide';
 import { MONEY } from '@/engine/content/guide/money';
@@ -349,10 +349,13 @@ const PLAYS: Record<string, () => void> = {
     expect(Math.round((whole.balance * whole.fixedRate! * days) / 365)).toBe(breakQuote(kept, whole).penalty);
 
     // Left to its end: about the interest said, and then it renews for the same term at the bank's rate.
-    const end = whole.maturesAt!;
+    // It ends at the midnight that opens its maturity day (from 2026-10-13: until then at the one after that day, which
+    // it earned too).
+    const end = startOfDay(whole.maturesAt!, kept.homeZone);
     kept.advanceTo(end + 2 * MS_DAY);
     const reinvested = postings(kept, whole, /reinvested/, end);
     expect(reinvested).toHaveLength(1);
+    expect(reinvested[0]!.at).toBe(end);
     expect(Math.abs(reinvested[0]!.amount - sum(result, 'would have earned about ', ', and then'))).toBeLessThanOrEqual(Math.round((1_000_00 * whole.fixedRate!) / 365));
     expect(result).toContain(END_WORDS[termEndOf(whole)]);
     expect(whole.closedAt).toBeUndefined();

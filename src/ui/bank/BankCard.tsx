@@ -190,7 +190,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed is held until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while it clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);
   if (many) lines.push(everyday ? 'The everyday card: the day’s spending goes on it.' : 'Beside the everyday card: the day’s spending goes on that one, and nothing goes on this unless you make it the everyday card.');
   if (state.closing !== undefined) lines.push('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
-  if (state.overLimitOptIn) lines.push(`Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows${terms.overLimitFee ? `, for ${money(terms.overLimitFee)} a statement, three in a row at most` : ', and this card charges nothing for it'}.`);
+  if (state.overLimitOptIn) lines.push('Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows, and this card charges nothing for it.');
   if (terms.capped) {
     const caps = [terms.capped.apr !== undefined ? `the rate at ${pct(terms.capped.apr)}` : '', terms.capped.lateFee !== undefined ? `a late fee at ${money(terms.capped.lateFee)}` : ''].filter(Boolean).join(' and ');
     lines.push(`${terms.capped.law} caps ${caps}, and holds the card to it. Source: ${terms.capped.source}.`);

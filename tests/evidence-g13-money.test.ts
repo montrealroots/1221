@@ -36,7 +36,8 @@
  * - `statements`: the Statements screen, rendered, shows a card's kept cuts as its periods, a transition cycle's
  *   charge under one statement, the minimum and Reg Z's minimum-only warning worked by hand ($2,000: 7 years and a
  *   month, $3,507.30; $72.77 a month for three years, $2,619.72); a current account closed reads To Its Closing; and a
- *   card closed with its statements kept should too (it fails: the engine still calls its last period So Far).
+ *   card closed with its statements kept does too (it failed when written: until 2026-10-13 the engine called its last
+ *   period So Far; fixed that day).
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, from New Haven and an actor at Yale,
  * banking at Chase (Total Checking, Savings, the Freedom Unlimited at 0% until 20 October 2026 and 18.46% after, a
@@ -559,7 +560,9 @@ describe('card.statement', () => {
 });
 
 describe('credit score', () => {
-  it('asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and the score moves as a twin’s who never moved it', () => {
+  // Until 2026-10-13 the title said the score "moves as a twin's": the mover had 3 statements to the twin's 4, and the
+  // two scores are equal at day 125, when each has passed 3 due dates, not at every day (found by that day's check).
+  it('asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it', () => {
     const mover = student('g13-farm');
     const still = student('g13-farm');
     for (const sim of [mover, still]) {

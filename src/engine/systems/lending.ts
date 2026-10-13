@@ -1057,8 +1057,12 @@ export function registerLending(sim: Simulation): void {
         if (current && bank) refundInterestTax(s, person, current, bank);
       }
       for (const term of termsOf(s, person)) {
-        term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
-        if (term.maturesAt === undefined || s.now < term.maturesAt) continue;
+        // The day just ended earns, from the opening day's to the one before the maturity's, and the deposit ends at the
+        // midnight that opens its maturity day. Until 2026-10-13 it ended at the midnight after that day, and earned it
+        // too: 213 days for a term of 212, found by that day's evidence pass.
+        const maturity = term.maturesAt === undefined ? undefined : dateKey(term.maturesAt, s.homeZone);
+        if (maturity === undefined || dateKey(s.now - 1, s.homeZone) < maturity) term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
+        if (maturity === undefined || dateKey(s.now, s.homeZone) < maturity) continue;
         // Renewed, or moved into easy-access savings, where that's how it ends (B7).
         const ended = endTerm(s, person, term);
         if (ended === 'renews') {

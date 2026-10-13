@@ -45,7 +45,7 @@ const DISPOSITIONS: readonly [keyof Personality, string, string][] = [
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
-import { classesGrow, conditionAt, reachOf, STANDING_LABEL, yearOfStudy } from '@/engine/systems/school';
+import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
 import { studyRefusal } from '@/engine/systems/engagement';
 import { BRIEF } from '@/engine/systems/briefs';
@@ -458,10 +458,18 @@ function JourneyPanel() {
   const [limit, setLimit] = useState(10);
   const work = [...(person.work ?? [])].reverse();
   const terms = Object.entries(j.byTerm);
+  // A run closed, its last night played, is on stage already, before the next casting files its credit (from
+  // 2026-10-13: until then it read as running until that casting, months on; found by that day's evidence pass).
+  const filed = school?.credits ?? [];
+  const closed = school ? [school.casting, school.rep]
+    .filter((c): c is NonNullable<typeof c> => !!c && c.performed > 0 && (c as { closed?: number }).closed !== undefined)
+    .filter((c) => !filed.some((f) => f.production === c.production && f.role === c.role))
+    .map((c) => ({ production: c.production, role: c.role, year: termStart(c.term).date.year, yearAsKept: undefined })) : [];
+  const credits = [...filed, ...closed];
   return (
     <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}, ${STANDING_LABEL[school.standing].toLowerCase()}` : 'No school'} help="look.work">
       <div className="col gap-3">
-        {school && <p className="small" style={{ margin: 0 }}>{(school.credits ?? []).length ? `On stage: ${(school.credits ?? []).map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
+        {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
         {terms.length > 0 && (
           <LookRegion className="table-scroll">
             <table>

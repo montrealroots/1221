@@ -188,8 +188,18 @@ export function unnamedParts(leads: number, supporting: number, featured: number
   ];
 }
 
-/** A named play's genres, by its title, for what a night of it is to somebody who loves the kind (`lovedInWork`). */
+/** A scene's title for its play where the lists know it by another: Chekhov's one act, the quarrel over Oxen Meadows. */
+const PLAY_ALIASES: Readonly<Record<string, string>> = { 'the proposal': 'a marriage proposal' };
+
+/**
+ * A named play's genres, by its title, for what a night of it is to somebody who loves the kind (`lovedInWork`). Titles
+ * are compared without their case (from 2026-10-13: until then exactly, so a scene spelling "Riders to the Sea" with a
+ * small "to", "The Importance of Being Earnest", "The Playboy of the Western World" and "Measure for Measure" found no
+ * kinds, and studying their kind sped none of them; found by that day's evidence pass), and The Proposal is A Marriage
+ * Proposal.
+ */
 export function genresOfPlay(title: string | undefined): readonly string[] | undefined {
   if (!title) return undefined;
-  return [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title === title)?.kinds;
+  const t = PLAY_ALIASES[title.toLowerCase()] ?? title.toLowerCase();
+  return [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title.toLowerCase() === t)?.kinds;
 }

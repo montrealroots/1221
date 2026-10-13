@@ -166,6 +166,10 @@ function statusCheckAt(sim: Simulation, person: Person): Instant | undefined {
   const permission = Math.max(end, ...held);
   if (permission > sim.now) return permission;
   const ends = usStatusEnds(person);
+  // A program ending this very moment with grace ahead of it (a withdrawal) is looked at a minute on, inside the grace,
+  // where its notice is raised. Until 2026-10-13 the look went to the grace's end, where it found them out of status
+  // without a word; found by that day's evidence pass. A dismissal has no grace, and is out of status at once.
+  if (permission === sim.now && permission === end && ends !== undefined && ends > sim.now) return sim.now + 60_000;
   return ends === undefined ? undefined : Math.max(sim.now, ends);
 }
 

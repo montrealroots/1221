@@ -1173,14 +1173,19 @@ export function registerTaxReturn(sim: Simulation): void {
       if (ty && v > 0) s.schedule({ at: r.due + Math.round(ty.extensionMonths * 30.4375) * MS_DAY, kind: THREE_YEAR_KIND, label: `${stateName(state)}: Three Years`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
     }
     if (person.id !== s.universe.playerId) return;
-    // Past 60 days the penalty is at least the lesser of the minimum and what's owed, as `latePenalty` charges it; and a
-    // return with nothing either way says so. Until 2026-10-13 the notice gave the minimum whatever was owed, and told a
-    // return at $0 that a refund waited for it (found by the review of that day).
+    // The IRS's penalties on its own part, past 60 days at least the lesser of the minimum and that part, as
+    // `latePenaltyAll` charges them; each state owed its own; and a return with nothing either way says so. Until
+    // 2026-10-13 the notice gave the minimum whatever was owed, and told a return at $0 that a refund waited for it
+    // (found by the review of that day); and until later that day it took the minimum against the IRS's part and the
+    // states' together, where the IRS charges it on its own (found by that review's check).
     const cur = saveCurrency(s.universe);
-    const balance = r.figures.balance;
-    const body = balance > 0
-      ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(Math.min(usd(RETURN.lateMinimum, cur), balance), cur)}.`
-      : balance < 0 ? 'A refund waits for the return; there’s no penalty on one.' : 'With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.';
+    const to = owedToOf(person, r);
+    const states = Object.entries(to.states).filter(([, v]) => v > 0).map(([state]) => stateName(state));
+    const theirs = states.length === 0 ? '' : states.length === 1 ? `${states[0]} charges its own on what it’s owed.` : `${states.join(' and ')} each charge their own on what they’re owed.`;
+    const body = to.irs > 0
+      ? `Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${formatMoney(Math.min(usd(RETURN.lateMinimum, cur), to.irs), cur)}.${theirs ? ` ${theirs}` : ''}`
+      : theirs ? `${to.irs < 0 ? 'The IRS’s refund waits for the return, with no penalty on it.' : 'The IRS is owed nothing on it.'} ${theirs}`
+      : r.figures.balance < 0 ? 'A refund waits for the return; there’s no penalty on one.' : 'With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.';
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body, importance: 80, route: '/workspace/papers' });
   });
 

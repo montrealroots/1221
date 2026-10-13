@@ -34,9 +34,9 @@
  *   gone from Home; an undated row waved away after ninety days; deletions 180 days on, a dismissed row kept to its
  *   date; the timeline's 400 days; the tick armed once across a reload.
  *
- * Two of these fail, and are kept failing until the engine is put right, each titled ENGINE DEFECT: a plan come due
- * while the player is in hospital is kept (`registerPlans` never asks), so its hours refuse a sleep from the hospital
- * bed; and a birthday on 28 February for somebody born on the 29th says the age they were, since `ageOn` counts the
+ * Two of these failed when written, each on an engine defect, until it was fixed on 2026-10-13: a plan come due while
+ * the player was in hospital was kept (`registerPlans` never asked), so its hours refused a sleep from the hospital
+ * bed; and a birthday on 28 February for somebody born on the 29th said the age they were, since `ageOn` counted the
  * year from 1 March.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and an actress at Yale in
@@ -471,10 +471,11 @@ describe('life.birthday', () => {
     expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => n.at)).toEqual([EST(2027, 2, 28, 9)]);
   });
 
-  it('ENGINE DEFECT: born 29 February 2004, the birthday said on 28 February 2027 is her 23rd, the age she turns that day', () => {
+  it('born 29 February 2004, the birthday said on 28 February 2027 is her 23rd, the age she turns that day', () => {
     const sim = student('g04-leap', { birthYear: 2004, birthMonth: 2, birthDay: 29 });
     sim.advanceTo(EST(2027, 2, 28, 9, 1));
-    // The day the birthday falls on is the day the age turns: 2027 − 2004 = 23. `ageOn` counts it from 1 March.
+    // The day the birthday falls on is the day the age turns: 2027 − 2004 = 23. `ageOn` counted it from 1 March until
+    // 2026-10-13; fixed that day.
     expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => [n.title, n.body])).toEqual([['Happy Birthday: 23', 'You\'re 23 today.']]);
   });
 
@@ -505,7 +506,7 @@ const plan = (sim: Simulation, payload: Record<string, unknown>) => {
 };
 
 describe('life.commitment', () => {
-  it('ENGINE DEFECT: a plan come due while the player is in hospital is missed, and a sleep from the hospital bed isn’t refused for being at it', () => {
+  it('a plan come due while the player is in hospital is missed, and a sleep from the hospital bed isn’t refused for being at it', () => {
     const sim = student('g04-plan-hosp');
     const gym = plan(sim, { title: 'Gym', at: EDT(2026, 8, 24, 10, 30), durationMinutes: 180 });
     // TEST SETUP: in hospital from now to six in the evening, as a stay leaves the record.

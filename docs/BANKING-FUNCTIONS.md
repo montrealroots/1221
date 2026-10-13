@@ -411,7 +411,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C57 | Foreign transaction fee | Waits | Waits on travel. |
 | C58 | Late payment fee | Has it | The late fee never more than the minimum (US), at most four a year (UK). |
 | C59 | Returned payment fee | Has it | A card payment that bounces: the returned payment fee. |
-| C60 | Over-limit fee only with opt-in | Has it | Over-limit opt-in (US). |
+| C60 | Over-limit fee only with opt-in | Has it | Over-limit opt-in (US): a tenth past the limit, with no fee, since no card SLATE has publishes one. Until 2026-10-13 a fee was charged here for a card that had one; only a test’s card ever did, and the fee went. |
 | C61 | Returned convenience-check fee | Waits | Waits on checks. |
 | C62 | Plan fees | Has it | A plan’s monthly fee. |
 | C63 | US fee caps | Has it | The US fee caps. |

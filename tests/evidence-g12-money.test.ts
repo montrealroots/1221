@@ -48,12 +48,12 @@
  *   wallet is spent on food only for a cash payer or behind a stopped debit card, and a card payer is told so. The
  *   panel's quote, shown before Take It Out and graying it out when refused.
  *
- * Found by the review of 2026-10-13 and by this evidence pass of the same day, and failing here until the engine is
- * changed (each test asserts the right behavior): a hardship plan paid off before a statement never ends, since only a
- * due date ends one and a statement owing nothing schedules none, so the card stays suspended with nothing owed (this
- * pass); a holder on a plan is told the card's minimum, $48, as what the statement asks and what the late due date found
- * short, where the plan's $100 is what's due (this pass); and Make It The Everyday Card's command takes a card being
- * closed, which only the screen hides (the review).
+ * Found by the review of 2026-10-13 and by this evidence pass of the same day, failing here when written, and fixed in
+ * the engine that day (each test asserts the right behavior): until then a hardship plan paid off before a statement
+ * never ended, since only a due date ended one and a statement owing nothing schedules none, so the card stayed
+ * suspended with nothing owed (this pass); a holder on a plan was told the card’s minimum, $48, as what the statement
+ * asked and what the late due date found short, where the plan’s $100 is what’s due (this pass); and Make It The
+ * Everyday Card’s command took a card being closed, which only the screen hid (the review).
  *
  * Left open, as the content's or the engine's to settle: Wells Fargo's rushDays (1) and Capital One's (3), which nothing
  * reads while card.report refuses a rush with no fee (card.report's gap). And, outside what the rows claim once their
@@ -452,7 +452,8 @@ describe('card.request_hardship', () => {
   it('names the plan’s $100 as what the statement asks and what the due date found short, where only the card’s $48 minimum was paid', () => {
     const { sim, statement } = shortOfThePlan('g12-plan-said');
     const late = notes(sim, 'A Late Card Payment').at(-1)!;
-    // What it said, and what it should: the statement asked the plan's $100, and $48 is short of that, not of $48.
+    // The statement asks the plan’s $100, and $48 is short of that, not of $48 (until 2026-10-13 both said the card’s
+    // $48; fixed that day).
     expect(statement).toContain('$100.00');
     expect(statement).not.toContain('at least $48.00');
     expect(late.body).toContain('was $100.00 and only $48.00 went in');
@@ -781,7 +782,8 @@ describe('card.set_over_limit', () => {
 
     expect(must(sim, 'card.set_over_limit', { on: false })).toEqual({ on: false });
     expect(cardRoom(sim.player, card)).toBe(0);
-    expect(stateOf(sim.player, card).overLimitCycles).toBe(0);
+    // Until 2026-10-13 this asked that a count of over-limit fees in a row went to 0 here; it was never counted, with no
+    // fee on any card, so it only ever went from nothing to 0, and it went with the fee.
     must(sim, 'card.lock', { which: 'debit', locked: true });
     hungry(sim); // TEST SETUP
     expect(eat(sim).error).toBe('Your debit card is locked, and there isn’t enough on the credit card or in cash.');

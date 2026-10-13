@@ -21,7 +21,7 @@ import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { BankLending } from '@/ui/bank/BankLending';
+import { BankLending, TermDeposits } from '@/ui/bank/BankLending';
 import { BankMoves } from '@/ui/bank/BankMoves';
 import { BankCard } from '@/ui/bank/BankCard';
 import { BankCardOffers } from '@/ui/bank/BankCardOffers';
@@ -197,7 +197,8 @@ export function BankWorkspace() {
 
 
         <BankMoves />
-        <BankLending bank={bank} show={['term', 'switch']} />
+        <TermDeposits primaryBank={bank} />
+        <BankLending bank={bank} show={['switch']} />
         <div style={{ marginBottom: 'var(--s5)' }}>
           <BankAccountLife bankId={bank.id} />
         </div>
@@ -250,8 +251,9 @@ export function BankWorkspace() {
 type BankTab = 'accounts' | 'cards' | 'payments' | 'borrowing' | 'statements';
 
 /**
- * Borrowing at any bank held (from 2026-10-10): the lender chosen first, then that bank's own overdraft, loan and term
- * terms, on the current account there. Until then only the primary account's bank lent.
+ * Borrowing at any bank held (from 2026-10-10): the lender chosen first, then that bank's own overdraft and loan, on the
+ * current account there. Until then only the primary account's bank lent. Until 2026-10-13 this said its term deposits
+ * were here too; they are on Accounts, a panel for each bank (`TermDeposits`).
  */
 function BorrowingAt({ primaryBank }: { primaryBank: import('@/engine/content/banks').Bank }) {
   const currents = useWorld((s) => checkingsOf(s, s.player));

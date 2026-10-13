@@ -57,8 +57,8 @@ import { MS_DAY, MS_HOUR, MS_MINUTE, instantFromZoned } from '@/engine/core/time
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { earningsOf, recordWages, yearOf } from '@/engine/systems/earnings';
 import { careFor, healthOf } from '@/engine/systems/health';
-import { STATE_NONFILER_KIND, THREE_YEAR_KIND } from '@/engine/systems/statetax';
-import { TAX_NOTICE_KIND, TAX_PLAN_DEFAULT_KIND, TAX_SFR_KIND, owedOn, partsOn, returnsOf } from '@/engine/systems/taxreturn';
+import { STATE_NONFILER_KIND, THREE_YEAR_KIND, rulesOf, stateLateAt } from '@/engine/systems/statetax';
+import { TAX_NOTICE_KIND, TAX_PLAN_DEFAULT_KIND, TAX_SFR_KIND, latePenalty, latePenaltyAll, owedOn, partsOn, returnsOf } from '@/engine/systems/taxreturn';
 import { SSN_ARRIVES_KIND, hasSsn } from '@/engine/systems/taxid';
 import { documentsOf } from '@/engine/systems/documents';
 import { registered } from '@/engine/systems/school';
@@ -217,7 +217,7 @@ describe('tax.due', () => {
     expect(pending(sim, TAX_SFR_KIND)).toEqual([]);
     sim.advanceTo(on(2027, 4, 16));
     const late = titled(sim, 'Your 2026 Return Is Late');
-    expect(late.map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least $165.60.']]);
+    expect(late.map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $165.60.']]);
     // The IRS's substitute a year after the due date; no state is owed, so no state's letters.
     const sfr = pending(sim, TAX_SFR_KIND);
     expect(sfr.map((i) => [i.at, i.payload])).toEqual([[DUE_2026 + 365 * MS_DAY, { personId: sim.player.id, year: 2026, step: 'proposed' }]]);
@@ -236,7 +236,41 @@ describe('tax.due', () => {
     play(sim, on(2027, 4, 17));
     const r = returnsOf(sim.player)['2026']!;
     expect(r.figures.owedTo!.irs).toBeGreaterThan(525_00);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least $525.00.']);
+    // New York is owed too, and charges its own (from 2026-10-13: until then the notice didn't say so, and took the $525
+    // least against the IRS's part and New York's together).
+    expect(r.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $525.00. New York charges its own on what it’s owed.']);
+  });
+
+  it('gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $525, as latePenalty charges it; a New York quickSave life', () => {
+    const sim = elsewhere('g17-due-irs-part');
+    // TEST SETUP: a year's wages, as payroll records them, with $1,300 withheld, all of it the IRS's: the IRS is left
+    // owed its income tax and the payroll tax not withheld, less that, and New York all of its own.
+    recordWages(sim.player, on(2026, 5, 1, 9), NY, { gross: 17_000_00, withheld: 1_300_00 });
+    play(sim, on(2027, 4, 17));
+    const r = returnsOf(sim.player)['2026']!;
+    const irs = r.figures.owedTo!.irs;
+    // The IRS's part under $525 and the whole over it: the two readings give different leasts.
+    expect(irs).toBeGreaterThan(0);
+    expect(irs).toBeLessThan(525_00);
+    expect(r.figures.balance).toBeGreaterThan(525_00);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual([`Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${usd(Math.min(525_00, irs))}. New York charges its own on what it’s owed.`]);
+    // And what filing it late is charged reads the same part: the IRS's at 5 months and over 60 days is 22.5% of it plus
+    // a half point a month, or $525, or all of it, whichever is less; filed now, two days late, neither applies yet.
+    expect(latePenaltyAll(sim.player, r, on(2027, 4, 17))).toBe(latePenalty(irs, r.due, on(2027, 4, 17)) + stateLateAt(rulesOf('us-ny')!, r.figures.owedTo!.states['us-ny']!, r.due, on(2027, 4, 17), 'USD'));
+  });
+
+  it('tells a return the IRS owes a refund on, with New York owed, that the refund waits and New York charges its own; a New York quickSave life', () => {
+    const sim = elsewhere('g17-due-irs-refund');
+    // TEST SETUP: a year's wages with $3,000 withheld, all of it the IRS's, as a W-4 over-withholding leaves it.
+    recordWages(sim.player, on(2026, 5, 1, 9), NY, { gross: 17_000_00, withheld: 3_000_00 });
+    play(sim, on(2027, 4, 17));
+    const r = returnsOf(sim.player)['2026']!;
+    expect(r.figures.owedTo!.irs).toBeLessThan(0);
+    expect(r.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['The IRS’s refund waits for the return, with no penalty on it. New York charges its own on what it’s owed.']);
+    // The IRS sets no substitute on a refund; New York acts on its own part.
+    expect(pending(sim, TAX_SFR_KIND, 2026)).toEqual([]);
   });
 
   it('PLAYER JOURNEY: a return due a refund left unfiled is told the refund waits with no penalty, and a year and a day on the IRS has filed nothing and no state has written', () => {

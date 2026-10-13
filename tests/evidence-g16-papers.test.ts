@@ -11,9 +11,10 @@
  *   the bank can cover." with nothing charged; pressed blank it takes the rest, the two payments summing to the Still
  *   Owed the screen showed, cancels the IRS's pending notice, and the Pay button goes; a third payment and a year with
  *   no return are refused "That year is paid."; the payments are kept across a reload, and 200 days on no levy comes,
- *   where a twin that never paid is levied. DEFECT, kept failing: on 13 August, the day after the assessment, Still
- *   Owed charges a 17th month of paying late the law hasn't begun, since `payLateRateAt` counts a late return's months
- *   afresh from its filing, and the month the filing splits is charged twice until the due date's own month turns.
+ *   where a twin that never paid is levied. On 13 August, the day after the assessment, Still Owed charges no 17th
+ *   month of paying late the law hasn’t begun; until 2026-10-13 it did, since `payLateRateAt` counted a late return’s
+ *   months afresh from its filing, and the month the filing split was charged twice until the due date’s own month
+ *   turned. Its test failed when written; fixed that day.
  * - `documents.idcard_arrives`: a student born in New York holding a license and no passport reports it lost and
  *   Capital One turns her away for want of a photo ID; replaced by mail for New York's $17.50, it arrives 21 days on
  *   with `issuedAt` its day, says "Class D (Operator) driver license Arrived" once across a reload, reads In Force on
@@ -38,9 +39,10 @@
  *   paid" and On The EBT Card agree across a reload; and her case closes on the first look of the summer, with no month
  *   paid after. A graduate on unemployment is paid $306 less 30% of the month before's benefit and interest over $217,
  *   three times, and the fourth month is refused "SNAP Time Limit Reached"; a month with a week's pay in it takes a
- *   fifth of the pay off before the 30%, $22.50 on $375. DEFECT, kept failing: the month the clock reads is the one
- *   fifteen days before the payment, so a payment on the 27th reads its own month so far, not the month before, as
- *   the row and the code's own comments say. Ontario Works, in Toronto, is paid CAD 343 by the clock.
+ *   fifth of the pay off before the 30%, $22.50 on $375. The month the clock reads is the calendar month before the
+ *   payment, as the row and the code’s own comments say; until 2026-10-13 it was the one fifteen days before, so a
+ *   payment on the 27th read its own month so far, and its test failed when written; fixed that day. Ontario Works,
+ *   in Toronto, is paid CAD 343 by the clock.
  * - `benefits.week`: a graduate with a summer's stipend files a Connecticut claim on Papers for $93 a week; Sunday's
  *   week is posted to her account and her year's income; a week in hospital posts nothing; a week with $75 of pay posts
  *   $93 less two-thirds of it, $43; across a reload the claim pays to its $2,418 and ends in its words with nothing left
@@ -50,8 +52,9 @@
  *   claimant to school, so the week's own student check (`studentUnavailable` on the clock) is a guard no play
  *   reaches: the filing's refusal already settles it.
  * - `tax.season`: the student born in New York, played with no setup, earned $1,670.59 in 2026 and is asked for no
- *   return on 1 February 2027 and given no late notice in April. DEFECT, kept failing: Papers' No Returns Yet still says
- *   any income makes a return. An F-1 student is asked for her 1040-NR, Tax Return Due is on the calendar at its
+ *   return on 1 February 2027 and given no late notice in April, and Papers’ No Returns Yet names the standard
+ *   deduction; until 2026-10-13 it still said any income made a return, and its test failed when written; fixed that
+ *   day. An F-1 student is asked for her 1040-NR, Tax Return Due is on the calendar at its
  *   minute, Tax Season is armed for the next February once across a reload; one with no US income files Form 8843 by
  *   15 June; a life in London that earned nothing in the US is asked for none.
  *
@@ -395,7 +398,7 @@ describe('tax.pay', () => {
     expect(memos(unpaid, /^IRS levy, 2026 return$/).length).toBeGreaterThan(0);
   }, 60_000);
 
-  it('DEFECT: the day after the assessment, Still Owed charges no month of paying late not yet begun: sixteen months from the due date to 13 August 2028, not a seventeenth counted afresh from the assessment', () => {
+  it('the day after the assessment, Still Owed charges no month of paying late not yet begun: sixteen months from the due date to 13 August 2028, not a seventeenth counted afresh from the assessment', () => {
     const { sim, tax, penalty, interest } = assessed(DAY_AFTER);
     // 485.5 days from 15 April 2027: the 16th month, of 30.4375 days or of the calendar, runs to 15 August, so the
     // penalty is still the 8% assessed with it (IRC 6651(a)(2), each month "or fraction thereof" from the due date).
@@ -600,8 +603,13 @@ describe('documents.us_status', () => {
     sim.advanceTo(t0);
     expect(run(sim, 'school.withdraw', { confirm: true }).ok).toBe(true);
     expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.');
-    // Moved by the withdrawal to its fifteen days' grace, 16 February 2027 at 11 AM in New Haven.
+    // Looked at a minute on, inside the grace, where she's told her status is ending; then at its end, fifteen days on,
+    // 16 February 2027 at 11 AM in New Haven. Until 2026-10-13 the withdrawal moved the look straight to the grace's end,
+    // and this test held that, where she was found out of status without a word.
     const ends = Date.UTC(2027, 1, 16, 16);
+    expect(pendingOf(sim, 'documents.us_status').map((i) => i.at)).toEqual([t0 + 60_000]);
+    sim.advanceTo(t0 + 2 * 60_000);
+    expect(Object.values(sim.universe.decisions).filter((d) => d.title === 'Your US Status Is Ending').map((d) => [d.dueAt, d.actions.length])).toEqual([[ends, 0]]);
     expect(pendingOf(sim, 'documents.us_status').map((i) => i.at)).toEqual([ends]);
     const work = drawn(sim, WorkPane).text;
     expect(work).toContain('Your Program Ends February 1, 2027');
@@ -806,7 +814,7 @@ describe('benefits.assistance_month', () => {
     expect(snapFy2027(feb.ui + feb.interest + feb.wages) - snapFy2027(feb.ui + feb.interest, feb.wages)).toBe(-22_50);
   }, 60_000);
 
-  it('DEFECT: reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far', () => {
+  it('reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far', () => {
     const sim = claimant('g16-snapdef');
     sim.advanceTo(Date.UTC(2028, 0, 20, 17));
     sim.must({ kind: 'benefits.assistance', payload: {} });
@@ -965,7 +973,7 @@ describe('tax.season', () => {
     expect(pendingOf(sim, TAX_SFR_KIND)).toEqual([]);
   }, 60_000);
 
-  it('DEFECT: Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready', () => {
+  it('Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready', () => {
     const sim = student('g16-season');
     sim.advanceTo(Date.UTC(2027, 1, 1, 15));
     expect(returnsOf(sim.player)['2026']).toBeUndefined();
@@ -1003,6 +1011,17 @@ describe('tax.season', () => {
     expect(r.due).toBe(Date.UTC(2027, 5, 16, 3, 59));
     expect(openDecisions(sim).filter((d) => d.title === 'Your 2026 Tax Return').map((d) => d.detail)).toEqual(['Form 8843, which every F-1 student files; no income to report. Nothing owed or due back on $0.00 of income. File by June 15, 2027.']);
     expect(pendingOf(sim, TAX_DUE_KIND).map((i) => i.at)).toEqual([Date.UTC(2027, 5, 16, 3, 59)]);
+  }, 60_000);
+
+  it('tax.due: the Form 8843 alone left unfiled past 15 June 2027 is told there’s no penalty and it’s still hers to file, not that a refund waits', () => {
+    // The notice's branch for a return at $0, added 2026-10-13 and asserted by no test until later that day.
+    const sim = student('g16-8843-late', 'uk-eng-london');
+    graduate(sim, Date.UTC(2029, 4, 21, 13)); // TEST SETUP: no work-study, so no US income
+    sim.advanceTo(Date.UTC(2027, 5, 17, 12));
+    const r = returnsOf(sim.player)['2026']!;
+    expect([r.figures.balance, r.filedAt]).toEqual([0, undefined]);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => [n.at, n.body])).toEqual([[Date.UTC(2027, 5, 16, 3, 59), 'With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.']]);
+    expect(pendingOf(sim, TAX_SFR_KIND)).toEqual([]);
   }, 60_000);
 
   it('a life in London that earned nothing in the US, a place a New Haven life never lives, is asked for no US return, and the season is armed again', () => {

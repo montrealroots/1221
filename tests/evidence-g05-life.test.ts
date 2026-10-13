@@ -10,8 +10,9 @@
  *   uninsured price the denial notice states. Paid, then overturned: $138.98 back to the payee account, the bill $45,
  *   Papers' Settled and Denial Overturned. Upheld: nothing back, the bill as it was, Denial Upheld. Gone to debt, then
  *   overturned: the debt down to the $45 share, nothing to the bank. Partly paid off, then overturned: what was paid
- *   over the share back, and the bill settled, which the engine doesn't do (a defect; see below). And the notices held
- *   to name the clinic as it's written, which they don't (a defect too).
+ *   over the share back, and the bill settled, which the engine didn’t do until 2026-10-13 (a defect, fixed that day;
+ *   see below). And the notices held to name the clinic as it’s written, which they didn’t until then (a defect too,
+ *   fixed the same day).
  * - `health.appointment`: a visit booked by the health week and kept while a broken bone keeps the student off work and
  *   out of class; a visit booked again after Call It Off, missed in hospital by a stay the week drew, shown on Papers as
  *   not yet seen, and kept when booked again, across a reload. What a kept visit renews and reviews is read by nothing in
@@ -33,18 +34,20 @@
  *   `catching` changing the week's own draw by the published 2.5 and 1.8. The notices are read from the save, not
  *   rendered.
  * - `injury.comp`: a broken bone at an elective front-of-house shift paid a week at a time for every one of its 42 days,
- *   into the payee account, across a reload; its rate, 75% of the $92 week less a FICA never withheld from it (a defect);
- *   and a second shift in the week left out of the wage it records (a defect). Only an elective shift's fall can pay it:
- *   the Saturday crew's mix (a knock, a cut, a back strain, a pulled muscle, a sprain) keeps nobody off work.
+ *   into the payee account, across a reload; its rate, 75% of the $92 week with no FICA taken off, as none was withheld
+ *   from it; and a second shift in the week counted in the wage it records. Until 2026-10-13 the rate took off a FICA
+ *   never withheld, and the wage was the one shift’s (two defects, fixed that day). Only an elective shift's fall can
+ *   pay it: the Saturday crew's mix (a knock, a cut, a back strain, a pulled muscle, a sprain) keeps nobody off work.
  *
- * Defects these tests show, each kept failing until the engine is fixed:
- * - An appeal overturned on a bill partly paid off as debt keeps what was paid over the share (`APPEAL_KIND`, health.ts
- *   1394-1398), and the bill reads Owed As Debt with nothing owed.
- * - Four notices lowercase the whole of what the care was, so a clinic's or a hospital's name reads "fair haven
- *   community health care" (health.ts 1189, 1369, 1401).
- * - Work-study's injury at work records that one shift's pay as the week's wage (school.ts 3057-3058).
- * - Connecticut's after-tax rate takes a year of payroll tax off the wage (`compWeekly`, injury.ts 136) though a
- *   student's work-study pay bears none (school.ts 3114-3116), so its compensation is $63.72 a week where it's $69.00.
+ * Defects these tests showed, each failing when written, until the engine was fixed on 2026-10-13:
+ * - An appeal overturned on a bill partly paid off as debt kept what was paid over the share (`APPEAL_KIND`, then
+ *   health.ts 1394-1398), and the bill read Owed As Debt with nothing owed.
+ * - Four notices lowercased the whole of what the care was, so a clinic’s or a hospital’s name read “fair haven
+ *   community health care” (then health.ts 1189, 1369, 1401).
+ * - Work-study’s injury at work recorded that one shift’s pay as the week’s wage (then school.ts 3057-3058).
+ * - Connecticut’s after-tax rate took a year of payroll tax off the wage (`compWeekly`, injury.ts 136) though a
+ *   student’s work-study pay bears none (then school.ts 3114-3116), so its compensation was $63.72 a week where it’s
+ *   $69.00.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and a first-year at Yale
  * in New Haven from Monday 24 August 2026, every personality axis at the middle as the creation screen can set them, so
@@ -361,7 +364,7 @@ describe('health.appeal_decided', () => {
     expect(billRow(sim, 'Visit', bill.at)).toContain('$45.00 Owed As Debt Denial Overturned');
   });
 
-  it('DEFECT: partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled', () => {
+  it('partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled', () => {
     const { sim, bill, force, decidedAt } = deniedOnTheMarketplace();
     sim.advanceTo(bill.dueAt - MS_DAY);
     broke(sim); // TEST SETUP
@@ -383,7 +386,7 @@ describe('health.appeal_decided', () => {
     expect(bill.inDebt).toBeFalsy();
   });
 
-  it('DEFECT: the denial’s and the decision’s notices name the clinic as it’s written', () => {
+  it('the denial’s and the decision’s notices name the clinic as it’s written', () => {
     const { sim, force, decidedAt } = deniedOnTheMarketplace();
     force('health.appeal', null, [0.99]); // TEST SETUP: the decision's draw forced to overturn
     sim.advanceTo(decidedAt + MS_HOUR);
@@ -560,7 +563,7 @@ describe('health.bill', () => {
     expect(titled(back, 'A Medical Bill Went Unpaid')).toHaveLength(1);
   });
 
-  it('DEFECT: A Medical Bill Went Unpaid names the hospital as it’s written', () => {
+  it('A Medical Bill Went Unpaid names the hospital as it’s written', () => {
     const { sim, bill } = stayBilled();
     sim.advanceTo(bill.dueAt - MS_DAY);
     broke(sim); // TEST SETUP
@@ -994,7 +997,8 @@ describe('injury.comp', () => {
     const paid = comp(sim);
     expect(paid.map((t) => t.at)).toEqual([1, 2, 3, 4, 5, 6].map((w) => shift.at + w * 7 * MS_DAY));
     // A week's rate is 75% of the $92 after tax: no more than 75% of all of it, $69.00, and no less than 75% of it less the
-    // most a $92 week could bear here, FICA's 7.65% and no income tax, $63.72. Which of the two is the defect below.
+    // most a $92 week could bear here, FICA's 7.65% and no income tax, $63.72. The test below holds it to the first;
+    // until 2026-10-13 it was the second, a defect fixed that day.
     const week = into(paid[0]!, payeeAccount(sim, sim.player).id);
     expect(week).toBeGreaterThanOrEqual(Math.round(0.75 * (92_00 - Math.round(92_00 * 0.0765))));
     expect(week).toBeLessThanOrEqual(Math.round(0.75 * 92_00));
@@ -1007,14 +1011,14 @@ describe('injury.comp', () => {
     expect(comp(again)).toHaveLength(6);
   });
 
-  it('DEFECT: the week’s rate is 75% of the $92 paid with nothing deducted from it, $69.00, not less a FICA that was never withheld', () => {
+  it('the week’s rate is 75% of the $92 paid with nothing deducted from it, $69.00, not less a FICA that was never withheld', () => {
     const { sim } = hurtAtAnElectiveShift();
     // CGS 31-307: 75% of the average weekly earnings after the deductions for tax and FICA made from the wages. None was
     // made from this $92, as the Friday's posting shows.
     expect(comp(sim).map((t) => into(t, payeeAccount(sim, sim.player).id))).toEqual(Array(6).fill(Math.round(0.75 * 92_00)));
   });
 
-  it('DEFECT: hurt at the second of two elective shifts in a week, the wage it records is the week’s $184, not the shift’s $92', () => {
+  it('hurt at the second of two elective shifts in a week, the wage it records is the week’s $184, not the shift’s $92', () => {
     const sim = student(SEED.depressedDec);
     const force = forcing(sim);
     sim.advanceTo(at(2026, 8, 31, 12));

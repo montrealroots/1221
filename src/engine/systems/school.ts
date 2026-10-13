@@ -70,6 +70,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import type { ScheduledItem } from '../core/scheduler';
 import { rngFor } from '../core/rng';
 import { personalityOf } from './personality';
 import { CommandError } from '../core/simulation';
@@ -492,6 +493,16 @@ export const TERM_KIND = 'school.term';
 export const WEEK_KIND = 'school.week';
 export const CLASSES_KIND = 'school.classes';
 export const SHIFT_KIND = 'school.shift';
+
+/**
+ * A School item called off, an elective evening's hours given back as an evening not worked gives them (from 2026-10-13:
+ * until then a leave, or leaving the School, called one off with its four hours still counted as asked for; found by
+ * that day's evidence pass).
+ */
+export function callOff(sim: Simulation, person: Person, item: ScheduledItem): void {
+  if (item.kind === SHIFT_KIND && item.payload.elective === true && person.school) person.school.workStudy.electiveHours -= Number(item.payload.hours ?? 0);
+  sim.timeline.cancel(item.id, sim.now);
+}
 export const PAYDAY_KIND = 'school.payday';
 export const CALL_KIND = 'school.call';
 export const EVALUATION_KIND = 'school.evaluation';
@@ -1787,7 +1798,7 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
     if (to === 'dismissed' || to === 'withdrawn') leaveClassBehind(sim, person);
     for (const item of sim.universe.scheduled) {
       if (item.kind === FORMER_KIND || (item.kind === COMPANY_KIND && item.payload.classOf !== undefined)) continue;
-      if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
+      if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) callOff(sim, person, item);
     }
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
@@ -2940,7 +2951,10 @@ export function registerSchool(sim: Simulation): void {
     }
     // An additional term has its retakes and its evaluation, nothing of a year's (`school.extra`, from 2026-10-10).
     if (school.extra?.term === term) {
-      planWeek(s, person, s.now);
+      // Planned here only where the weekly planning isn't still running, which plans the term's weeks with it (from
+      // 2026-10-13: until then a second weekly planning was put beside the first, and every class day was held twice;
+      // found by that day's evidence pass).
+      if (!s.universe.scheduled.some((i) => i.status === 'pending' && i.kind === WEEK_KIND && i.payload.personId === person.id)) planWeek(s, person, s.now);
       schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(term)} Evaluation`, minutes: 0, payload: { term }, requiresPlayer: false });
       return;
     }
@@ -3544,19 +3558,22 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at) || sick) {
       item.status = 'missed';
       if (stage && summer.shows?.[run]) callMissed(summer.shows[run]!, stage, Number(item.payload.of ?? 0));
-      // The closing night excused after nights were played: on the résumé all the same, and the run closed with its
-      // note and its looking back, as the Cabaret's is (from 2026-10-13: until then it was never closed, with no credit,
-      // note or reflection; found by the review of that day).
-      if (item.payload.call === 'performance' && item.payload.last === true && sick && (summer.played[run] ?? 0) > 0 && summer.shows?.[run]) {
+      // A missed performance not excused is in the record the next casting reads, delivered at nothing (from
+      // 2026-10-10).
+      const unexcused = item.payload.call === 'performance' && !sick;
+      if (unexcused && summer.shows?.[run]) noteRun(school!, summer.shows[run]!, false, item.at, 'missed');
+      // The closing night missed after nights were played, excused or not: on the résumé all the same, and the run
+      // closed with its note and its looking back, as the Cabaret's is. Until 2026-10-13 it was never closed, with no
+      // credit, note or reflection, found by the review of that day; and until later that day an unexcused one still
+      // wasn't, found by its evidence pass.
+      if (item.payload.call === 'performance' && item.payload.last === true && (summer.played[run] ?? 0) > 0 && summer.shows?.[run]) {
         const show = summer.shows[run]!;
         (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
         closeRun(s, person, show, item.at);
       }
       // In hospital, laid up or called in sick, the company covers the night and keeps them.
-      if (item.payload.call !== 'performance' || sick) return;
-      // A missed performance and the company lets them go: the calls ahead are off, the stipend stops; and the night
-      // is in the record the next casting reads, delivered at nothing (from 2026-10-10).
-      if (summer.shows?.[run]) noteRun(school!, summer.shows[run]!, false, item.at, 'missed');
+      if (!unexcused) return;
+      // A missed performance and the company lets them go: the calls ahead are off and the stipend stops.
       summer.out = true;
       // This week's stipend is kept, for the days of it worked; until
       // 2026-09-27 it went with the rest, and the notice said they were paid.

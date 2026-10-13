@@ -5,9 +5,9 @@
  * control sends, and the clock, and each consequence is read where the row says it's read, against figures worked out
  * from the rule's own published numbers (AMN's 23.5 days, Yale Health's $10 generic, Walmart's $4, Yale Delta Dental's
  * $312.72, $50 and 80%, Access Health CT's $706 and $45, Farmacias Similares' MX$60) or from a twin that didn't act,
- * never from the helper the engine computes them with. Two gaps are left open, each needing an engine change: New
- * Haven lists one doctor's practice, so choosing one decides nothing for the student; and a booking moves off a
- * weekend but not off a public holiday.
+ * never from the helper the engine computes them with. Two gaps were left open, each needing an engine change: New
+ * Haven lists one doctor’s practice, so choosing one decides nothing for the student, which is open still; and until
+ * 2026-10-13 a booking moved off a weekend but not off a public holiday, which was fixed that day.
  *
  * - `health.book`: refused in each of its three sentences (nothing owed, an appointment already, no wait published);
  *   a visit the week booked, called off and booked again on Papers, 24 days on and moved off a Sunday, owedVisit
@@ -20,8 +20,9 @@
  * - `health.choose_pharmacy`: on the student, the first fill of a drawn high blood pressure at Walmart's $4 under
  *   Yale's $10 copay, against a twin at $10, and again after a reload; CVS's $12.50 left at the copay.
  * - `health.dental`: Buy Dental pressed, the year's $312.72 in one posting, its end, its two refusals; a filling the week
- *   brought at the $50 deductible and 80%, and at the $1,000 maximum; refused when the bank can't cover the year. And
- *   a DEFECT: a January filling is charged a second deductible inside the plan year that began on 1 October.
+ *   brought at the $50 deductible and 80%, and at the $1,000 maximum; refused when the bank can't cover the year. A
+ *   January filling is charged no second deductible inside the plan year that began on 1 October; until 2026-10-13 it
+ *   was, and its test failed when written; fixed that day.
  * - `health.enroll`: at school refused through the command; withdrawn, Enroll pressed into HUSKY D, refused "You're
  *   enrolled from …" and "You're enrolled." through the command, care then priced at HUSKY D's; with September's wages
  *   over every program's limit, the marketplace, and its $706 premium charged by the clock on the 1st, once a month
@@ -31,7 +32,8 @@
  *   supply read by the health week: a twin out of medicine loses 3 morale, the one holding a supply doesn't.
  * - `health.pay_bill`: Pay It Off pressed, the bill Settled on Papers and gone from Home's worries; a year and a month
  *   on the clock, a twin who didn't pay is reported once, across a reload, and the one who paid never is; paid from a
- *   named savings account. And a DEFECT: an account named that can't pay is silently swapped for the current account.
+ *   named savings account. An account named that can’t pay is refused; until 2026-10-13 it was silently swapped for the
+ *   current account, and its test failed when written; fixed that day.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York, a first-year at Yale in
  * New Haven from Monday 24 August 2026; `homeRegionId` is given because a new life must name where it was born. The
@@ -491,7 +493,7 @@ describe('health.dental', () => {
     expect(sim.universe.transactions.length).toBe(before);
   });
 
-  it('DEFECT: a January filling is in the plan year that began on 1 October, so its $50 deductible, paid in October, isn’t charged again', () => {
+  it('a January filling is in the plan year that began on 1 October, so its $50 deductible, paid in October, isn’t charged again', () => {
     const play = (buy: boolean) => {
       const sim = student('g03-d-1332');
       if (buy) sim.must({ kind: 'health.dental', payload: { on: true } });
@@ -736,7 +738,7 @@ describe('health.pay_bill', () => {
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 1, fromId: savings(sim).id } })).toMatchObject({ ok: false, error: 'You owe nothing for care.' });
   });
 
-  it('DEFECT: an account named that can’t pay a medical debt, their own credit card, is refused, not silently swapped for the current account', () => {
+  it('an account named that can’t pay a medical debt, their own credit card, is refused, not silently swapped for the current account', () => {
     const { sim } = inDebt('g03-debt-card');
     // TEST SETUP: $2,000 in the current account, so the swap would go through.
     posted(sim, current(sim).id, 2_000_00 - current(sim).balance);

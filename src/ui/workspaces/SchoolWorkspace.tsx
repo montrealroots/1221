@@ -433,6 +433,8 @@ function CastingPane() {
                 {casting.note ? ` The director’s note: ${casting.note}` : ' How much of yourself you bring to its nights is read by the chair when casting you next.'}
               </p>
             )}
+            {/* A run that went on without them has no nights, and its note was until 2026-10-13 only a notification's; found by the evidence pass of that day. */}
+            {!casting.nights && casting.note && <p className="small" style={{ margin: 0 }}>The director’s note: {casting.note}</p>}
             <RehearsalProcess casting={casting} which={casting === school.rep ? 'rep' : 'school'} />
             {/* The Rep's company is the Rep's own past the class's few asked into it with you, each in a featured part (from 2026-10-12, when the Rep's casting first listed them). */}
             {casting.cast && casting.cast.length > 0 && (

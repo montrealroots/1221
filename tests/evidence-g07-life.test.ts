@@ -19,11 +19,12 @@
  * - seasons/flu: a health week on Monday 2 November 2026 draws an unseen flu by the clock: five days of it, 25
  *   condition, the judged work that week meeting it ill, Work Out refused in its words, a sick day taken, Profile's
  *   For Work held back. The same kind of draw on 7 September brings none: New Haven's flu weeks are its cold ones.
- *   TWO DEFECTS, kept failing: the unseen flu is never told, and Profile says the flu holds back only the voice.
+ *   Two defects, failing when written until they were fixed on 2026-10-13: the unseen flu was never told, and Profile
+ *   said the flu held back only the voice.
  * - holidays: a debit payment the day before Thanksgiving posts on the Monday after it; the Calendar shows the day;
  *   England's repeat prescription waits out Good Friday and Easter Monday (LIFE FIXTURE, London); a doctor's visit
- *   whose wait ends on a Saturday goes to the Monday. ONE DEFECT, kept failing: a visit whose wait ends on
- *   Thanksgiving is booked for Thanksgiving Day.
+ *   whose wait ends on a Saturday goes to the Monday. One defect, failing when written until it was fixed on
+ *   2026-10-13: a visit whose wait ended on Thanksgiving was booked for Thanksgiving Day.
  * - injuries: a workout that pulls a muscle adds 6 stress and takes 4 morale against the same workout unhurt, and each
  *   midnight 1 more; the next workout is refused in its words, across a reload, until it mends. An everyday injury
  *   drawn at midnight bills its care, due in 30 days, and is paid then (LIFE FIXTURE, uninsured). A work-study shift's
@@ -35,8 +36,8 @@
  *   on, a month past NICE's year, is booked at a New Haven practice and kept.
  * - body: five broke days leave a student lighter than her fed twin by 5 × habit × 36/76 ÷ 12,585 kcal a kilogram;
  *   two days ordered in leave one heavier by 2 × 134 ÷ 12,585; a 170 cm body starved past BMI 12 by the clock ends
- *   its life; the person look prints the body. ONE DEFECT, kept failing: a 150 cm body is held at 30 kg, gains
- *   overnight from 27.3, and never reaches the end.
+ *   its life; the person look prints the body. One defect, failing when written until it was fixed on 2026-10-13: a
+ *   150 cm body was held at 30 kg, gained overnight from 27.3, and never reached the end.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York, an actor at Yale in New
  * Haven from Monday 24 August 2026 at 7:30 AM, every personality axis at the middle and no traits, as the creation
@@ -531,7 +532,7 @@ describe('seasons/flu', () => {
     expect(sim.player.wellbeing.condition).toBeCloseTo(condition, 6);
   });
 
-  it('DEFECT: an unseen flu is told, “You Have The Flu”, with nothing to pay', () => {
+  it('an unseen flu is told, “You Have The Flu”, with nothing to pay', () => {
     const sim = student(FLU_SEED);
     sim.advanceTo(FLU_WEEK + 1000);
     expect(healthOf(sim.player).fluUntil).toBe(Date.UTC(2026, 10, 7, 14));
@@ -540,7 +541,7 @@ describe('seasons/flu', () => {
     expect(told[0]!.body).toContain('It costs nothing.');
   });
 
-  it('DEFECT: Profile’s For Work note says the flu holds back the body’s work as well as the voice', () => {
+  it('Profile’s For Work reads Held Back in the flu, and its note says the flu holds back the body', () => {
     const sim = student(FLU_SEED);
     sim.advanceTo(Date.UTC(2026, 10, 3, 12));
     Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 90, morale: 70, hygiene: 90 }); // TEST SETUP
@@ -587,7 +588,7 @@ describe('holidays', () => {
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2026, 10, 30, 15));
   });
 
-  it('DEFECT: a doctor’s visit booked from Monday 2 November, 24 days on, isn’t put on Thanksgiving Day: it’s Friday 27 November', () => {
+  it('a doctor’s visit booked from Monday 2 November, 24 days on, isn’t put on Thanksgiving Day: it’s Friday 27 November', () => {
     const sim = student('g07-hol');
     sim.advanceTo(Date.UTC(2026, 10, 2, 13)); // 8:00 AM EST
     for (const a of [...(healthOf(sim.player).appointments ?? [])]) sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
@@ -899,7 +900,7 @@ describe('body', () => {
     expect(sim.universe.meta.endedAt).toBeDefined();
   });
 
-  it('DEFECT: a 150 cm body starving isn’t held at 30 kg: from 27.3 kg (BMI 12.1) it gains nothing overnight, and its life ends under BMI 12 as a 170 cm body’s does', () => {
+  it('a 150 cm body starving isn’t held at 30 kg: from 27.3 kg (BMI 12.1) it stays under 27.4 kg overnight, and its starved end is set within thirty days, as a 170 cm body’s is', () => {
     const sim = student('g07-starve-150', { heightCm: 150, weightKg: 50 });
     sim.player.body!.weightKg = 27.3; // TEST SETUP
     broke(sim); // TEST SETUP

@@ -224,7 +224,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
       )}
 
       {show.includes('term') && (
-      <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'} help="bank.term">
+      <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${account ? `${bank.name}, ` : ''}${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'} help="bank.term">
         {!lending.term && <p className="small">{bank.name} publishes no term deposit rate SLATE found.</p>}
         {lending.term && (
           <div className="col gap-3">
@@ -243,7 +243,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
               </LookRegion>
             )}
             <div className="field-act">
-              <div className="field"><label htmlFor="term-amount">{`Term Deposit Amount (${cur})`}</label><input id="term-amount" type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
+              <div className="field"><label htmlFor={`term-amount${account ? `-${bank.id}` : ''}`}>{`Term Deposit Amount (${cur})`}</label><input id={`term-amount${account ? `-${bank.id}` : ''}`} type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
               <Gated feature="bank.open_term" className="btn btn-sm" disabled={!deposit}
                 onClick={() => { if (run('bank.open_term', { amount: cents(deposit), bankId: bank.id }).ok) { toast('Put away.', 'positive'); setDeposit(''); } }}>
                 Put It Away
@@ -414,5 +414,23 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
       </Panel>
       )}
     </div>
+  );
+}
+
+/**
+ * Term deposits at each bank kept with a current account, the primary's first, each funded from the current account
+ * there as `bank.open_term` funds it. Until 2026-10-13 only the primary's bank's panel was drawn, so the command's bank,
+ * taken since 2026-10-10, was never another bank's from any screen; found by that day's evidence check.
+ */
+export function TermDeposits({ primaryBank }: { primaryBank: Bank }) {
+  const currents = useWorld((s) => checkingsOf(s, s.player));
+  const others = [...new Set(currents.map((a) => a.bankId))]
+    .map((id) => (id && id !== primaryBank.id ? bankById(id) : undefined))
+    .filter((b): b is Bank => !!b && lendingOf(b).term !== undefined);
+  return (
+    <>
+      <BankLending bank={primaryBank} show={['term']} />
+      {others.map((b) => <BankLending key={b.id} bank={b} account={currents.find((a) => a.bankId === b.id)} show={['term']} />)}
+    </>
   );
 }

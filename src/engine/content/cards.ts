@@ -35,8 +35,6 @@ export interface CardProduct {
   graceDays?: number;
   /** What a bounced payment costs. */
   returnedPaymentFee?: Money;
-  /** A US card's over-limit fee, charged only to someone who opted in. */
-  overLimitFee?: Money;
   /** The US penalty rate, after a payment 60 days late. */
   penaltyApr?: number;
   /** A cash advance: its fee (a share, never under a minimum), its rate, and its limit (a share of the credit limit, or an amount). */

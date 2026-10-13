@@ -41,7 +41,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { COURSES, EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, YALE_DRAMA } from '../content/school';
 import {
-  CLASSES_KIND, COMPANY_KIND, ESTIMATE, bindCeiling, ceilingBefore, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, keyOf, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
+  CLASSES_KIND, COMPANY_KIND, ESTIMATE, callOff, bindCeiling, ceilingBefore, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, keyOf, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
   schoolEnded, setStanding, termAccount, termBegins, termLabel, termStart, yearOfTerm, zone, type SchoolRecord,
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
@@ -303,7 +303,7 @@ export function closeLeave(school: SchoolRecord, status: 'withdrawn' | 'dismisse
 }
 
 const cancelPending = (sim: Simulation, person: Person, keep = kept()) => {
-  for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === person.id && !keep.has(i.kind)) sim.timeline.cancel(i.id, sim.now);
+  for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === person.id && !keep.has(i.kind)) callOff(sim, person, i);
 };
 
 /** The insurance term a calendar term falls in begins: 1 August for a fall, 1 February for a spring. */
@@ -570,7 +570,7 @@ export function facultyReview(sim: Simulation, person: Person, term: number): { 
   if (!unjudgedFails(school)) return undefined;
   const already = school.standing === 'warning';
   const before = (school.reviews ?? []).length > 0;
-  const room = enrolledTerms(school).length + 2 <= EXTENDED_STUDY.maxSemesters;
+  const room = withRepeat(school, academicTerm(school, term)) <= EXTENDED_STUDY.maxSemesters;
   const outcome = already || before || !room ? 'dismissed' : 'warning';
   const why = outcome === 'dismissed'
     ? `${out} The faculty reviewed it and disqualified you: ${already ? 'you were already on academic warning' : before ? 'they had reviewed a disqualification before' : 'there’s no room left to repeat the year within nine semesters'}.`
@@ -827,6 +827,13 @@ export function disqualified(school: SchoolRecord): string | undefined {
   if (fails.length >= EXTENDED_STUDY.disqualify.total) return `${fails.length} Failures in all: the Bulletin disqualifies at ${EXTENDED_STUDY.disqualify.total}.`;
   return undefined;
 }
+/**
+ * The semesters the degree would take with the year an academic term ends (or is in) repeated: those enrolled, the
+ * year's two again, and the program's terms after this one. Until 2026-10-13 the terms after it weren't counted, so a
+ * second year's repeat that made ten was granted; found by that day's evidence pass.
+ */
+const withRepeat = (school: SchoolRecord, academic: number): number => enrolledTerms(school).length + 2 + Math.max(0, YALE_DRAMA.terms - 1 - academic);
+
 const ordinal = (n: number) => ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'][n - 1] ?? `${n}th`;
 
 /** The year just finished, its two calendar terms, and its courses not passed; or why a repeat can't be asked for. */
@@ -834,6 +841,10 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
   const school = person.school;
   if (!school || schoolEnded(school.standing)) return 'You’re not at school.';
   if (school.repeat?.status === 'pending') return `Your request is with the chair and the dean, decided by ${formatDate(school.repeat.decideAt, sim.zone)}.`;
+  // Not beside an additional term, as an additional term isn't beside a repeat (from 2026-10-13: until then both could
+  // be granted for one course; found by that day's evidence pass).
+  if (school.extraRequest?.status === 'pending') return `Your request for an additional term is with the chair and the dean, decided by ${formatDate(school.extraRequest.decideAt, sim.zone)}.`;
+  if (school.extra) return `Your additional term is ${termLabel(school.extra.term)}.`;
   if (school.leave && ['pending', 'granted', 'on'].includes(school.leave.status)) return 'Not with a leave under way.';
   const t = termNow(school);
   const academic = academicTerm(school, t);
@@ -844,7 +855,7 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
   if (!repeatCourses(school, t).length) return 'Every course this year was passed: there’s nothing to repeat it for.';
   // SLATE's faculty grant a year once (from 2026-10-10: until then one repeat in all, whatever the year).
   if ((school.repeatedYears ?? []).includes(yearOfTerm(academic))) return `SLATE’s faculty don’t approve year ${yearOfTerm(academic)} a second time.`;
-  const would = enrolledTerms(school).length + 2;
+  const would = withRepeat(school, academic);
   if (would > EXTENDED_STUDY.maxSemesters) return `Repeating would make ${would} semesters, past the nine the Bulletin allows for the degree.`;
   return undefined;
 }
@@ -1161,7 +1172,8 @@ export function registerLeave(sim: Simulation): void {
     const r = school?.repeat;
     if (!person || !school || !r || r.status !== 'pending' || schoolEnded(school.standing)) return;
     r.decidedAt = s.now;
-    const would = enrolledTerms(school).length + 2;
+    // Counted from the repeated year's spring, as when it was asked for.
+    const would = withRepeat(school, 2 * r.year - 1);
     const why = would > EXTENDED_STUDY.maxSemesters ? `It would make ${would} semesters, past the nine the Bulletin allows.` : keptThrough(school) ? undefined : disqualified(school);
     if (why) {
       r.status = 'refused';

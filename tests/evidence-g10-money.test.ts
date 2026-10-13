@@ -104,7 +104,7 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
-const { BankLending } = await import('@/ui/bank/BankLending');
+const { BankLending, TermDeposits } = await import('@/ui/bank/BankLending');
 const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
 
 // ---------------------------------------------------------------------------
@@ -537,6 +537,66 @@ describe('bank.open_term', () => {
     const again = reload(sim);
     again.advanceTo(at(2026, 9, 7));
     expect(again.universe.accounts[term!.id]!.accrued).toBeCloseTo(11 * (1_000_00 * 0.0425) / 365, 6);
+  });
+
+  it('draws Citi’s CD panel beside Chase’s with Chase still primary, and Put It Away on it funds the CD from the Citi account, Chase untouched', () => {
+    // Until 2026-10-13 only the primary's bank's panel was drawn, so the test above made Citi primary first, where
+    // funding from the term's own bank and funding from the primary are the same account.
+    const { sim, chase, citi } = withCiti('g10-term-beside');
+    expect(sim.player.primaryAccountId).toBe(chase.id);
+    const chaseBank = bankById('us-chase')!;
+    const both = draw(sim, createElement(TermDeposits, { primaryBank: chaseBank }));
+    // The primary's first, then Citi's, named for its bank.
+    expect(both.text).toContain('7 months at 3.5%');
+    expect(both.text).toContain('Citi, 12 months at 4.25%');
+    expect(both.text.indexOf('7 months at 3.5%')).toBeLessThan(both.text.indexOf('Citi, 12 months at 4.25%'));
+    expect(both.buttons.filter((b) => b.text === 'Put It Away')).toHaveLength(2);
+    // $1,000 typed on Citi's panel: Chase's panel's states as they start, however many it and what it draws take, then
+    // Citi's.
+    h.sim = sim;
+    h.states = Array<unknown>(100).fill(K);
+    renderToStaticMarkup(createElement(BankLending, { bank: chaseBank, show: ['term'] }));
+    const chaseStates = 100 - h.states.length;
+    h.states = [];
+    expect(chaseStates).toBeGreaterThanOrEqual(9);
+    const typed = draw(sim, createElement(TermDeposits, { primaryBank: chaseBank }), [...Array<unknown>(chaseStates).fill(K), ...lendingStates({ deposit: '1000' })]);
+    const [onChase, onCiti] = typed.buttons.filter((b) => b.text === 'Put It Away');
+    expect(onChase!.disabled).toBe(true);
+    expect(onCiti!.disabled).toBe(false);
+    const c0 = citi.balance;
+    const p0 = chase.balance;
+    onCiti!.onClick!();
+    expect(h.toasts).toEqual(['Put away.']);
+    expect(termsOf(sim, sim.player)).toEqual([expect.objectContaining({ name: 'CD', bankId: 'us-citi', balance: 1_000_00, fixedRate: 0.0425 })]);
+    expect(citi.balance - c0).toBe(-1_000_00);
+    expect(chase.balance).toBe(p0);
+    expect(sim.player.primaryAccountId).toBe(chase.id);
+  });
+
+  it('lets MUFG’s overdraft run to 90% of a ¥1,000,000 time deposit and no further: a meal that would pass ¥900,000 overdrawn is refused, one that reaches it is bought', () => {
+    const tokyo = (seed: string) => {
+      const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, bankId: 'jp-mufg', wealth: 'wealthy' }, seed);
+      sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
+      sim.must({ kind: 'bank.open_term', payload: { amount: 1_000_000_00 } });
+      return { sim, checking: primary(sim) };
+    };
+    // The meal's price, read where there's room to spare. TEST SETUP: the account overdrawn ¥500,000.
+    const roomy = tokyo('g10-mufg-90');
+    setBalance(roomy.sim, roomy.checking, -500_000_00);
+    roomy.sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    const price = -posted(roomy.sim, roomy.checking, 'A meal')[0]!.amount;
+    expect(price).toBeGreaterThan(0);
+    // TEST SETUP, on the same seed: overdrawn so the meal takes it to ¥900,000, 90% of ¥1,000,000, to the yen; then a
+    // yen past it.
+    const to = tokyo('g10-mufg-90');
+    setBalance(to.sim, to.checking, -(900_000_00 - price));
+    to.sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    expect(to.checking.balance).toBe(-900_000_00);
+    const past = tokyo('g10-mufg-90');
+    setBalance(past.sim, past.checking, -(900_000_00 - price + 1_00));
+    expect(refused(past.sim, 'life.look_after', { action: 'eat' })).toBe('You can’t afford it.');
+    expect(past.checking.balance).toBe(-(900_000_00 - price + 1_00));
+    expect(posted(past.sim, past.checking, 'A meal')).toEqual([]);
   });
 
   it('lends against it at MUFG, 90% of time deposits at their 0.50% and 0.50% more, so the clock’s groceries go into the overdraft; without one they aren’t bought (a Tokyo life: no New Haven bank lends this way)', () => {

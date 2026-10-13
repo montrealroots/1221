@@ -35,7 +35,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatDate, MS_DAY, type Instant } from '../core/time';
+import { formatDate, formatTime, MS_DAY, type Instant } from '../core/time';
 import { YALE_DRAMA } from '../content/school';
 import { startRefusal } from './life';
 import type { SchoolRecord } from './school';
@@ -171,6 +171,10 @@ export function makeUpRefusal(sim: Simulation, person: Person, key: string): str
   const r = person.school ? coursesOf(person.school)[key] : undefined;
   if (!r || r.result !== 'incomplete') return 'There’s no Incomplete in that course to make up.';
   if (r.dueBy !== undefined && sim.now > r.dueBy) return 'Its month has run out.';
+  // A session its month can't hold (from 2026-10-13: until then one begun an hour before the deadline was taken, the
+  // deadline made the course a Permanent Incomplete inside it, and the session then passed it; found by that day's
+  // evidence pass).
+  if (r.dueBy !== undefined && sim.now + COURSE_RULES.makeUpMinutes * 60_000 > r.dueBy) return `Its month runs out at ${formatTime(r.dueBy, sim.zone)}: there isn’t the time for a session before it.`;
   if (person.currentLocationId !== YALE_DRAMA.cityId) return 'Its teachers are in New Haven.';
   return startRefusal(sim, person, COURSE_RULES.makeUpMinutes, true);
 }

@@ -10,12 +10,14 @@
  *   2 September and paid off from the Personal Loan panel 20 days on, in a 30-day month: refused first in the bank's
  *   words while the account can't cover it, then $3,000 and 20 days' interest, $16.83, from Citi Access Checking, the
  *   next payment called off, and Citi lending again where it had said a loan was held; with nothing borrowed, refused
- *   in its own words. Taken on 24 August instead, a 31-day month, 20 days on charges 19 days' interest (a defect).
+ *   in its own words. Taken on 24 August instead, a 31-day month, 20 days on charges 20 days’ interest; until
+ *   2026-10-13 it charged 19 (a defect, fixed that day).
  * - `bank.set_alerts`: twin lives at Chase given the same stranger's $855.06 on the debit card, one with A Payment Over
  *   typed as 100 and Save Alerts pressed on the Alerts form: told at once, it carries Regulation E's $500 reported
  *   four business days on, and the twin, learning of it from the statement, $50; refunded $355.06 and $805.06. The
  *   school's $1,882.00 and the dental plan's $312.72 told at the day's end, a $300 transfer and $10 of groceries not,
- *   once across a reload, and nothing once the line is turned off; the words lowercase the plans' names (a defect).
+ *   once across a reload, and nothing once the line is turned off; the words name the plans as they’re called, which
+ *   until 2026-10-13 they lowercased (a defect, fixed that day).
  *   Statement Ready pressed On and Off on the form, a statement with a payment due told whatever it is, and Short For A
  *   Payment pressed Off (what it silences is tests/account-alerts.test.ts's, through the command).
  * - `bank.set_payments`: a Citi loan repaid from Chase with Citi made primary, the wages sent to Citi and the Chase
@@ -40,11 +42,12 @@
  *   Spending is on it, on the card once unlocked, and refused when the bank is empty; both locks kept across a reload,
  *   the ATM refused and the counter paying; and a debit card reported lost refused a lock, locked once the new one comes.
  *
- * Defects these tests show, each kept failing until the engine is fixed:
- * - `bank.repay_loan` counts the interest to date as 30 days less the days to the next payment (lending.ts, the command),
- *   so 20 days into a 31-day month it charges 19 days' interest, and 20 days into February it would charge 22.
- * - `A Large Payment` lowercases the whole of what was paid (statements.ts, the day's rollover), so Yale's plans read
- *   "yale delta dental basic" and "yale health plan".
+ * Defects these tests showed, each failing when written, until the engine was fixed on 2026-10-13:
+ * - `bank.repay_loan` counted the interest to date as 30 days less the days to the next payment (lending.ts, the
+ *   command), so 20 days into a 31-day month it charged 19 days’ interest, and 20 days into February it would have
+ *   charged 22.
+ * - `A Large Payment` lowercased the whole of what was paid (statements.ts, the day’s rollover), so Yale’s plans read
+ *   “yale delta dental basic” and “yale health plan”.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York (the birthplace a player
  * picks, which `newLifeConfig` leaves empty) and an actor at Yale in New Haven from Monday 24 August 2026 at 7:30 AM,
@@ -312,7 +315,7 @@ describe('bank.repay_loan', () => {
     expect(account(sim, loanId).balance).toBe(0);
   });
 
-  it('charges 20 days’ interest 20 days into a loan taken on 24 August, a 31-day month, where it charges 19 (a defect)', () => {
+  it('charges 20 days’ interest 20 days into a loan taken on 24 August, a 31-day month', () => {
     const sim = student('g11-loan-31', 'us-citi');
     wages(sim, primary(sim).id, 4_000_00); // TEST SETUP
     const { loanId } = ok<{ loanId: string }>(sim, 'bank.borrow', { amount: 3_000_00, months: 12 });
@@ -320,7 +323,8 @@ describe('bank.repay_loan', () => {
     expect(due.at - sim.now).toBe(31 * MS_DAY);
     sim.advanceTo(sim.now + 20 * MS_DAY);
     const { paid } = ok<{ paid: number }>(sim, 'bank.repay_loan', { loanId });
-    // 3,000 × 0.1024 × 20 / 365 = $16.83. The command counts 30 days less the 11 to the payment, 19, and asks $15.99.
+    // 3,000 × 0.1024 × 20 / 365 = $16.83. Until 2026-10-13 the command counted 30 days less the 11 to the payment, 19,
+    // and asked $15.99; fixed that day.
     expect(paid).toBe(3_016_83);
   });
 });
@@ -416,7 +420,7 @@ describe('bank.set_alerts', () => {
     expect(told(off, 'A Large Payment')).toEqual([]);
   });
 
-  it('names Yale’s plans as they’re called in A Large Payment, where it lowercases the whole of what was paid (a defect)', () => {
+  it('names Yale’s plans as they’re called in A Large Payment', () => {
     const sim = student('g11-large-words', 'us-chase');
     ok(sim, 'bank.set_alerts', { largePayment: 100_00 });
     ok(sim, 'health.dental', { on: true });
@@ -669,7 +673,7 @@ describe('bank.set_round_ups', () => {
 // ---------------------------------------------------------------------------
 
 describe('bank.take_term_interest', () => {
-  it('takes a Chase CD’s $174.52 from the panel 30 days before its end: refused with nothing earned, the penalty falling from $172.60 to nothing, and the renewal reinvesting only what the 31 days after earned', () => {
+  it('takes a Chase CD’s $174.52 from the panel 30 days before its end: refused with nothing earned, the penalty falling from $172.60 to nothing, and the renewal reinvesting only what the 30 days after earned', () => {
     let sim = student('g11-cd', 'us-chase');
     const checking = primary(sim).id;
     const { accountId, maturesAt } = ok<{ accountId: string; maturesAt: number }>(sim, 'bank.open_term', { amount: 10_000_00 });
@@ -701,13 +705,16 @@ describe('bank.take_term_interest', () => {
     expect(panel()).toContain('Broken now it comes out whole.');
     expect(take()).toMatchObject({ says: 'Take The Interest So Far ($0.00)', disabled: true });
 
-    // The renewal reinvests what was left, 0.0548¢, and what the 31 day-ends after earned (22 February's to 24
-    // March's): 31 × 10,000 × 0.035 / 365 = $29.7260, $29.7266 with what was left, $29.72; not the term's 213
-    // day-ends, $204.24, which a renewal that worked the interest out again from the rate and the days would pay.
+    // The renewal, at the midnight that opens 24 March, reinvests what was left, 0.0548¢, and what the 30 day-ends
+    // after earned (22 February's to 23 March's): 30 × 10,000 × 0.035 / 365 = $28.7671, $28.7676 with what was left,
+    // $28.76; not the term's 212 day-ends, $203.28, which a renewal that worked the interest out again from the rate
+    // and the days would pay. Until 2026-10-13 this was $29.72: the deposit ended at the midnight after its maturity
+    // day and earned that day too, 213 day-ends for a 212-day term, which this test held as the engine had it.
     sim.advanceTo(maturesAt + MS_DAY);
     const reinvested = posted(sim, 'Interest: CD, reinvested');
-    expect(reinvested.map((t) => on(t, accountId))).toEqual([29_72]);
-    expect(account(sim, accountId).balance).toBe(10_029_72);
+    expect(reinvested.map((t) => on(t, accountId))).toEqual([28_76]);
+    expect(reinvested[0]!.at).toBe(at(2027, 3, 24, 0));
+    expect(account(sim, accountId).balance).toBe(10_028_76);
   });
 
   it('takes AIB’s term interest less Ireland’s 33% DIRT: a quick-save life in Dublin, since a New Haven bank takes no tax off interest', () => {
