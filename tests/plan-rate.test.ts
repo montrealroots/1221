@@ -1,7 +1,7 @@
 /**
  * The IRS's failure-to-pay rate, and a payment plan's months of it, as properties (from 2026-10-12; `payLateRateAt` in
  * `systems/taxreturn.ts`). IRC 6651(a)(2) charges half a percent for each month or part of one from the due date, or
- * from filing on a return filed late, to 25% in all; 6651(h) charges a quarter percent instead for each of those months
+ * from filing on a return filed late (counted, since 2026-10-13, on the due date’s months), to 25% in all; 6651(h) charges a quarter percent instead for each of those months
  * that begins after a payment plan is entered into and while it's in force, on a return filed on time.
  *
  * Until later on 2026-10-12 the engine counted a plan's months from the plan's start and took them off the months
@@ -70,8 +70,11 @@ const atFiling = (r: TaxReturn): number => (r.filedAt !== undefined && r.filedAt
  */
 const monthByMonth = (r: TaxReturn, at: number): number => {
   if (r.filedAt === undefined) return 0;
-  const from = Math.max(r.filedAt, r.due);
-  const rate = begunBy(from, at).reduce((sum, start) => {
+  // The months from the due date, the law's grid, less those a late return's filing was charged for. Until 2026-10-13
+  // this counted a late return's months afresh from its filing, as the engine did, and the month the filing split was
+  // charged twice: once with the filing, and again here (found by the review of that day).
+  const charged = r.filedAt > r.due ? begunBy(r.due, r.filedAt).length : 0;
+  const rate = begunBy(r.due, at).slice(charged).reduce((sum, start) => {
     const under = r.reducedFrom !== undefined && start >= r.reducedFrom && (r.reducedTo === undefined || start < r.reducedTo);
     return sum + (under ? PLAN.reducedRate : RETURN.payLateMonthly);
   }, 0);
@@ -102,7 +105,8 @@ describe('plan-rate: the failure-to-pay rate, month by month', () => {
       const step = rng(seed * 104_729);
       for (let i = 0; i < 40; i += 1) {
         const at = r.due + (step() * 130 - 10) * MONTH;
-        const months = r.filedAt === undefined ? 0 : begunBy(Math.max(r.filedAt, r.due), at).length;
+        // The due date's months begun by now, less those charged with a late filing (until 2026-10-13: counted from filing).
+        const months = r.filedAt === undefined ? 0 : Math.max(0, begunBy(r.due, at).length - (r.filedAt > r.due ? begunBy(r.due, r.filedAt).length : 0));
         expect(payLateRateAt(r, at), `seed ${seed}, ${months} months`).toBeCloseTo(Math.min(RETURN.lateCap - atFiling(r), RETURN.payLateMonthly * months), 12);
       }
     }

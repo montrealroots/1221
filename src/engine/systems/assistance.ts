@@ -108,9 +108,18 @@ const toSave = (sim: Simulation, cents: Money, currency: string): Money => { con
 const liquid = (sim: Simulation, person: Person) => Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash')).reduce((x, a) => x + Math.max(0, a.balance), 0);
 const monthKey = (at: Instant) => { const p = zonedParts(at, 'UTC'); return `${p.year}-${String(p.month).padStart(2, '0')}`; };
 
+/**
+ * The calendar month before a moment's own (from 2026-10-13: until then the month fifteen days back, so a payment on
+ * the 16th or later read its own month so far; found by the review of that day).
+ */
+const monthBefore = (at: Instant): { year: number; month: number } => {
+  const now = zonedParts(at, 'UTC');
+  return now.month === 1 ? { year: now.year - 1, month: 12 } : { year: now.year, month: now.month - 1 };
+};
+
 /** A month's earnings, gross, in the save's money: the calendar month before a moment. */
 function lastMonthEarned(person: Person, at: Instant): Money {
-  const p = zonedParts(at - 15 * MS_DAY, 'UTC');
+  const p = monthBefore(at);
   return earningsOf(person).months[`${p.year}-${String(p.month).padStart(2, '0')}`] ?? 0;
 }
 
@@ -120,7 +129,7 @@ function lastMonthEarned(person: Person, at: Instant): Money {
  * as it was, all of it earned.
  */
 export function snapIncome(person: Person, at: Instant): { gross: Money; earned: Money; workStudy: Money } {
-  const p = zonedParts(at - 15 * MS_DAY, 'UTC');
+  const p = monthBefore(at);
   const key = `${p.year}-${String(p.month).padStart(2, '0')}`;
   const k = earningsOf(person).kinds?.[key];
   if (!k) { const all = earningsOf(person).months[key] ?? 0; return { gross: all, earned: all, workStudy: 0 }; }

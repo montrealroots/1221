@@ -380,7 +380,7 @@ await step('help: a half-typed amount kept across How This Works', async () => {
   return 'kept: 12.34';
 });
 if (!PHONE) {
-  await step('help: reading it holds the live clock: a minute open, the same minute; closed, it moves', async () => {
+  await step('help: reading it holds the live clock: a minute open, the same minute; closed, it moves; Pause stops it a minute', async () => {
     const play = page.getByRole('group', { name: 'Time Controls' }).getByRole('button', { name: /^Play$/ }).first();
     if (!(await play.count())) skip('no Play control');
     await play.click(); await wait(500);
@@ -393,9 +393,17 @@ if (!PHONE) {
     must(open0 === open1, `the clock ran while the help was open: ${open0} → ${open1}`);
     await wait(65_000);
     const after = await clock();
-    await page.getByRole('group', { name: 'Time Controls' }).getByRole('button', { name: /^Pause$/ }).first().click().catch(() => {}); await wait(300);
     must(after !== open1, `the clock didn’t run again after: ${open1} → ${after}`);
-    return `open: ${open0} → ${open1}; closed: → ${after}`;
+    // Pause pressed on the running page stops it, the page not opened again (from 2026-10-13: the review found the unit
+    // test of it remounted the provider, which restarts every effect, and so didn't show the press itself stops it).
+    const pause = page.getByRole('group', { name: 'Time Controls' }).getByRole('button', { name: /^Pause$/ }).first();
+    must(await pause.count(), 'no Pause on the running page');
+    await pause.click(); await wait(300);
+    const paused0 = await clock();
+    await wait(65_000);
+    const paused1 = await clock();
+    must(paused0 === paused1, `the clock ran on after Pause: ${paused0} → ${paused1}`);
+    return `open: ${open0} → ${open1}; closed: → ${after}; paused: ${paused0}, a minute on ${paused1}`;
   });
 }
 

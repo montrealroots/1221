@@ -1311,7 +1311,11 @@ export function registerLending(sim: Simulation): void {
     if (!loan) throw new CommandError('You don’t have a loan to pay off.');
     // What's owed, with the month's interest so far.
     const since = s.universe.scheduled.find((one) => one.kind === LOAN_DUE_KIND && one.status === 'pending' && one.refId === loan.id);
-    const days = since ? Math.max(0, 30 - Math.ceil((since.at - s.now) / MS_DAY)) : 0;
+    // The days since the last payment date, a month before the next, or since the loan opened where that's later (from
+    // 2026-10-13: until then 30 less the days to the next, so 20 days into a 31-day month were charged 19, and into
+    // February 22; found by the review of that day).
+    const from = since ? Math.max(addMonths(since.at, -1, s.homeZone), loan.openedAt) : s.now;
+    const days = Math.max(0, Math.floor((s.now - from) / MS_DAY));
     const interest = Math.round(-loan.balance * (loan.apr ?? 0) * days / 365);
     const owed = -loan.balance + interest;
     const bank = payFromBank(s, person, owed, repaymentAccount(s, person, loan));

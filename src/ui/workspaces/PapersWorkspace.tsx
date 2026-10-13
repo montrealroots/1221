@@ -419,7 +419,7 @@ function ReturnsPane() {
         <Panel title="No Returns Yet" help="taxes.return">
           <LookRegion>
             <p className="small" style={{ margin: 0 }}>
-              Each February, a year with any income, or anything owed or due back, has its return ready. {thisYear}’s is due <Open subject={at('day', dateKey(deadline(thisYear), sim.homeZone))}>{formatDate(deadline(thisYear), sim.zone)}</Open>{nonresident ? <>; with no wages on it, a 1040-NR is due <Open subject={at('day', dateKey(nonresidentDeadline(thisYear, false), sim.homeZone))}>{formatDate(nonresidentDeadline(thisYear, false), sim.zone)}</Open></> : null}.
+              Each February, a year with anything owed or due back, or with income over the standard deduction, has its return ready, and a student on an F-1 has one every year. {thisYear}’s is due <Open subject={at('day', dateKey(deadline(thisYear), sim.homeZone))}>{formatDate(deadline(thisYear), sim.zone)}</Open>{nonresident ? <>; with no wages on it, a 1040-NR is due <Open subject={at('day', dateKey(nonresidentDeadline(thisYear, false), sim.homeZone))}>{formatDate(nonresidentDeadline(thisYear, false), sim.zone)}</Open></> : null}.
             </p>
           </LookRegion>
         </Panel>

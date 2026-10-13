@@ -155,8 +155,10 @@ function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]
   const last = cuts[cuts.length - 1]!;
   const out: Period[] = [];
   if (!account.closedAt || account.closedAt > last) {
-    const to = next ?? last + 31 * MS_DAY;
-    out.push({ from: last, to, label: `${labelOf(to)}, So Far` });
+    // A card closed since its last cut ends there, as a closed account's last period does (from 2026-10-13: until then it
+    // ran on past the closing, read "So Far"; found by the review of that day).
+    const to = account.closedAt ?? next ?? last + 31 * MS_DAY;
+    out.push({ from: last, to, label: `${labelOf(to)}, ${account.closedAt ? 'To Its Closing' : 'So Far'}` });
   }
   for (let i = cuts.length - 1; i >= 1; i -= 1) out.push({ from: cuts[i - 1]!, to: cuts[i]!, label: labelOf(cuts[i]!) });
   // Before the first kept cut: a month back at a time, on its day.
@@ -414,6 +416,13 @@ export function statementReady(sim: Simulation, person: Person, account: Account
   sim.notify({ category: 'bank', title: `Statement Ready: ${account.name}`, body: words, importance: due ? 50 : 20, route: '/workspace/bank' });
 }
 
+/**
+ * What was paid, inside a sentence: its first letter made small, but not where it opens with a name of two capitalized
+ * words (from 2026-10-13: until then all of it was made small, "yale delta dental basic, the year"; found by the review of
+ * that day).
+ */
+const inSentence = (memo: string): string => (/^\S+ [A-Z]/.test(memo) ? memo : memo.charAt(0).toLowerCase() + memo.slice(1));
+
 export function registerStatements(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.alerts', (_event, { sim: s }) => {
     const person = s.player;
@@ -433,7 +442,7 @@ export function registerStatements(sim: Simulation): void {
           if (!watched.has(p.accountId) || p.amount >= 0 || -p.amount < alerts.largePayment) continue;
           // A stranger's charge is told of where it's taken (`somebodyElse`, systems/security.ts); until 2026-10-10 the alert said it twice.
           if (txn.category === 'transfer' || txn.category === 'card-fraud' || txn.category === 'account-fraud') continue;
-          s.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${txn.memo.toLowerCase()}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
+          s.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${inSentence(txn.memo)}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
         }
       }
     }

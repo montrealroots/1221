@@ -159,15 +159,19 @@ export function payLateRateAt(r: TaxReturn, at: Instant): number {
   // being in the penalty assessed with it (`latePenalty`). Until the integration pass of 2026-10-10 an early return's ran
   // from filing.
   const filed = Math.max(r.filedAt ?? at, r.due);
-  const months = monthsBetween(filed, at);
+  // The months from the due date, less those the penalty assessed with a late return already charged to its filing
+  // (from 2026-10-13: until then they were counted afresh from the filing, so the month it split was charged twice, 8.5%
+  // where 6651(a)(2) gives 8% at 485 days; found by the review of that day).
+  const after = (t: Instant) => Math.max(0, monthsBetween(r.due, t) - monthsBetween(r.due, filed));
+  const months = after(at);
   // For each plan, the months begun before it was entered into, and those begun by now and before it ended: the second
   // less the first began under it. A plan ended earlier keeps its months (`reducedBefore`, from later on 2026-10-12:
   // until then a second plan reset the first's start, and its months went back to the full rate, an overcharge of a
   // quarter percent of the tax for each).
   const spans = [...(r.reducedBefore ?? []), ...(r.reducedFrom !== undefined ? [{ from: r.reducedFrom, to: r.reducedTo }] : [])];
   const under = Math.min(months, spans.reduce((sum, span) => {
-    const before = monthsBetween(filed, span.from);
-    const ended = span.to === undefined ? months : Math.min(months, monthsBetween(filed, span.to));
+    const before = after(span.from);
+    const ended = span.to === undefined ? months : Math.min(months, after(span.to));
     return sum + Math.max(0, ended - before);
   }, 0));
   return Math.min(RETURN.lateCap - payLateBeforeFiling(r), RETURN.payLateMonthly * (months - under) + PLAN.reducedRate * under);

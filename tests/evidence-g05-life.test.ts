@@ -829,6 +829,30 @@ describe('health.therapy_session', () => {
     };
     expect(drop(kept) - drop(lifted)).toBeCloseTo(3, 9);
   });
+
+  // The check of 2026-10-13 found the lift's end of keeping up unshown: at Yale, the month's care for depression costs
+  // nothing either way. Uninsured, it's charged on the 1st, and a course that lifts it ends that charge.
+  it('PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t', () => {
+    const twin = (lifts: boolean) => {
+      const sim = student(SEED.depressedDec);
+      expect(healthOf(sim.player).chronic!.depression).toEqual({ treated: true });
+      withdraw(sim);
+      const force = forcing(sim);
+      sim.advanceTo(at(2026, 8, 31, 12));
+      sim.must({ kind: 'health.therapy', payload: { therapist: ADNA } });
+      force('health.therapy', null, [lifts ? 0 : 0.999]); // TEST SETUP: the course's end, drawn at its last session
+      sim.advanceTo(at(2026, 11, 1, 2));
+      return sim;
+    };
+    const lifted = twin(true);
+    const kept = twin(false);
+    expect([lifted.player.therapy, kept.player.therapy]).toEqual([undefined, undefined]);
+    expect(healthOf(lifted.player).chronic!.depression).toBeUndefined();
+    const november = (sim: Simulation) => memos(sim, 'Care for depression').filter((t) => t.at === at(2026, 11, 1, 0, 30));
+    expect(november(kept)).toHaveLength(1);
+    expect(into(november(kept)[0]!, checking(kept))).toBeLessThan(0);
+    expect(november(lifted)).toEqual([]);
+  });
 });
 
 // ---------------------------------------------------------------------------

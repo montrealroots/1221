@@ -789,8 +789,13 @@ export function registerCredit(sim: Simulation): void {
     (credit.issued ??= []).push({ at: s.now, minimum: credit.statementBalance > 0 ? minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0) : 0, terms });
     if (credit.issued.length > 60) credit.issued.splice(0, credit.issued.length - 60);
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays, card);
-    // Nothing owed: the month is reported now, paid as agreed.
-    else reportMonth(s, person, ON_TIME);
+    // Nothing owed: the month is reported now, paid as agreed, and a hardship plan paid off ends, as a due date met would
+    // end it (from 2026-10-13: until then only a due date ended one, and a plan paid off before its statement left the
+    // card suspended with nothing owed for good; found by the review of that day).
+    else {
+      reportMonth(s, person, ON_TIME);
+      if (credit.hardship && card.balance >= 0) { delete credit.hardship; if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended; }
+    }
     // A card the holder closed is finished once nothing is owed on it.
     if (credit.closing !== undefined && card.balance >= 0) {
       card.closedAt = s.now;
@@ -799,7 +804,8 @@ export function registerCredit(sim: Simulation): void {
       return;
     }
     statementReady(s, person, card, credit.statementBalance > 0
-      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0), saveCurrency(s.universe))}.`
+      // At least what the due date will judge: on a hardship plan its payment, not the card's minimum (from 2026-10-13).
+      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(autopayAsk(s, person, card).due, saveCurrency(s.universe))}.`
       : 'The card owes nothing this month.', credit.statementBalance > 0);
     scheduleStatement(s, person, item.at, card);
   });
@@ -813,7 +819,7 @@ export function registerCredit(sim: Simulation): void {
     const currency = saveCurrency(s.universe);
     const terms = cardTerms(s, card, record.score);
     const statement = credit.statementBalance;
-    const { asked, due, minimum } = autopayAsk(s, person, card);
+    const { asked, due } = autopayAsk(s, person, card);
     // Autopay asks the bank for the whole amount; a current account that
     // can't cover it sends it back, and the card charges for that (C59).
     if (asked > 0) {
@@ -875,7 +881,7 @@ export function registerCredit(sim: Simulation): void {
       s.notify({
         category: 'bank',
         title: 'A Late Card Payment',
-        body: `The minimum was ${formatMoney(minimum, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and ${reported ? 'it’s on your record' : 'it goes on your record if it’s still short at the next due date, thirty days past due'}.`,
+        body: `${credit.hardship ? 'The plan’s payment' : 'The minimum'} was ${formatMoney(due, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and ${reported ? 'it’s on your record' : 'it goes on your record if it’s still short at the next due date, thirty days past due'}.`,
         importance: 80,
       });
       if (credit.penalty) credit.penalty.onTime = 0;
@@ -997,6 +1003,8 @@ export function registerCredit(sim: Simulation): void {
     const person = s.player;
     const card = cardFor(s, person, p.accountId);
     if (!card || !person.credit || !p.accountId) throw new CommandError('You don’t hold that card.');
+    // A card being closed takes nothing new (from 2026-10-13: until then only the screen hid it).
+    if (stateOf(person, card).closing !== undefined) throw new CommandError('That card is being closed, and takes nothing new.');
     makeEveryday(person, card);
     return { everyday: card.id };
   });
