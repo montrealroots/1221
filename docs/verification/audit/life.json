@@ -6,38 +6,59 @@
       "entry": "TimeControls.tsx:157 Sleep dialog",
       "reads": "occupiedAt (done requiresPlayer items), stress/sleepQuality knob/hour (nightParts), sleepDebt, condition, morale, fitness, age",
       "changes": "lastSleptAt, awakeSince, wokeWithDebt; applySleep: energy, sleepDebt, stress, condition, morale, nourishment; clock advanced",
-      "downstream": "health.ts:present (appointments missed while asleep), plans.ts PLAN_KIND handler (asleep->missed), life.ts:sleepAlone (no second night), readiness->school.ts:focusOf",
+      "downstream": "health.ts:present (an appointment missed while asleep), the PLAN_KIND handler (asleep->missed), the ‘You Slept Through N Commitments’ notice; life.ts:sleepAlone (no second night); readiness->school.ts:focusOf",
       "persistent": "wellbeing dials, clock",
       "explanation": "TimeControls.tsx SleepDialog (suggestedSleep, sleepStandsForTheNight); 'You Slept Through N Commitments' notice",
-      "tests": "simulation.test.ts 'sleeps a chosen night once, whether it crosses midnight...'; wellbeing-bites.test.ts 'three months of five-hour nights take the mood down'; personality.test.ts 'sleeping the hours the game suggests...'",
-      "status": "verified",
-      "issue": "No inHospital check; hours not validated as finite (clamp passes NaN, life.ts:360); startAt has no upper bound (life.ts:361) though sleepAlone's comment admits a far-future booked night suppresses every night alone until it"
+      "tests": "simulation.test.ts ‘sleeps a chosen night once, whether it crosses midnight...’; wellbeing-bites.test.ts ‘three months of five-hour nights take the mood down’; personality.test.ts ‘sleeping the hours the game suggests...’; tests/life-fixes.test.ts ‘asks for a number of hours, and a start within the day ahead’",
+      "status": "partial",
+      "issue": "No inHospital check; hours not validated as finite (clamp passes NaN, life.ts:360); startAt has no upper bound (life.ts:361) though sleepAlone's comment admits a far-future booked night suppresses every night alone until it",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: hours not validated as finite (the clamp passed NaN), and a start with no upper bound. Verified, while no cited test slept through a commitment.",
+        "now": "From 2026-10-10 a night asks a number of hours and a start within the day ahead (tests/life-fixes.test.ts). Through the command, a night moves the clock by its hours, restores energy and pays down the debt, and is slept once whatever midnight it crosses (simulation.test.ts). No test sleeps through a commitment with life.sleep and checks what reads it: present() or the PLAN_KIND handler marking it missed, or the notice. The therapy session slept through (life-fixes.test.ts) sets awakeSince by hand, and plans.test.ts misses a plan through advanceTo. No inHospital check."
+      },
+      "read": true
     },
     {
       "id": "life.look_after:eat",
       "kind": "command",
       "entry": "TimeControls.tsx:490 Look After menu",
-      "reads": "nourishment (FULL 90), canPay, mealOf (spending knob)",
-      "changes": "money (spend 'A meal'), nourishment +<=50, morale (moraleSwing x mealMood)",
+      "reads": "nourishment (FULL 90), spendRefusal (spending.ts: what spend would pay with nothing owed, cash in hand only where spend spends it; from 2026-10-12, until then canPay), mealOf (spending knob)",
+      "changes": "money (spend 'A meal', paid as it’s ordered, before its 40 minutes, from 2026-10-12), nourishment +<=50, morale (moraleSwing x mealMood)",
       "downstream": "readinessParts nourishment -> school.ts:focusOf; applyElapsedWellbeing hungry hours -> condition/morale",
       "persistent": "ledger txn, dials",
-      "explanation": "lookAfterOptions why/changes in TimeControls.tsx; LOOKING_AFTER.eat.does",
-      "tests": "looking-after.test.ts 'a meal feeds, and leaves readiness above...', 'a meal you needed lifts the mood more'; traits-connected.test.ts 'lifts a spender's mood more'",
-      "status": "verified",
-      "issue": "Eat adds no kcal to body (only order does); day's groceries are charged at midnight regardless of meals bought that day"
+      "explanation": "lookAfterOptions why/changes in TimeControls.tsx; a refused meal in spendRefusal’s words (LOOKING_AFTER.eat.does, which nothing read, went on 2026-10-12)",
+      "tests": "looking-after.test.ts ‘a meal feeds, and leaves readiness above...’ (through the command, against a twin who skipped it); traits-connected.test.ts ‘lifts a spender’s mood more’; tests/defects-g4-1.test.ts ‘grays a meal a locked debit card can’t pay for, and offers it once cash in hand covers it’ (the meal paid from cash in hand, through the command); tests/defects-r1-1.test.ts ‘is what the menu says and what the command does, for a meal, for every way of paying, in New York and Paris’; tests/defects-r3a-1.test.ts ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (a meal whose hour crosses midnight, paid as it’s ordered, through the command); looking-after.test.ts ‘a meal you needed lifts the mood more...’ (checking less: applyLookingAfter called directly); personality.test.ts ‘makes hunger cost the self-critical more mood than the self-assured’ (checking less: applyElapsedWellbeing called on dials set by hand)",
+      "status": "partial",
+      "issue": "Eat adds no kcal to body (only order does); day's groceries are charged at midnight regardless of meals bought that day",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: readiness, and applyElapsedWellbeing’s hungry hours on condition and morale; verified on tests that read readiness and the mood a meal lifts.",
+        "now": "Through the command, a meal feeds and leaves readiness above the same afternoon without one (looking-after.test.ts:37-45), lifts a spender’s mood more than a frugal person’s (traits-connected.test.ts), and is paid from cash in hand where a locked debit card can’t pay (defects-g4-1.test.ts). From 2026-10-12 the menu and the command refuse it in the words of spendRefusal, spend’s own precondition, for every way of paying (defects-r1-1.test.ts), and it’s paid as it’s ordered, before its hour, so one whose hour crosses midnight is bought ahead of the day’s groceries rather than offered and then refused (defects-r3a-1.test.ts); until then the row read canPay, which counted cash in hand for every payer. The hunger toll a meal spares, applyElapsedWellbeing’s hungry hours on condition and morale, isn’t checked after one: it’s tested on applyElapsedWellbeing called on dials set by hand (personality.test.ts), and the half-year test that eats among four actions a day (wellbeing-bites.test.ts) can’t tell a meal’s part. That a meal you needed lifts the mood more is tested on applyLookingAfter called directly (looking-after.test.ts:47-59)."
+      }
     },
     {
       "id": "life.look_after:order",
       "kind": "command",
       "entry": "TimeControls.tsx:490",
-      "reads": "nourishment, canPay, meal x DELIVERY.times",
-      "changes": "money, nourishment, morale, body.intake (eatsOut)",
+      "reads": "nourishment, spendRefusal (from 2026-10-12, until then canPay), meal x DELIVERY.times",
+      "changes": "money (spend 'A meal delivered', paid as it’s ordered, before its 50 minutes, from 2026-10-12), nourishment, morale, body.intake (eatsOut)",
       "downstream": "body.ts:bodyDay weight -> mortality.ts:chanceOfEndingYear (bmiHazard), health.ts:onsetMonth (bmi)",
       "persistent": "weightKg, ledger",
       "explanation": "Look After menu; wellbeing.tsx body line",
-      "tests": "body.test.ts 'gains on meals eaten out, and spends by an hour's MET value'",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/defects-r3a-1.test.ts ‘is offered and bought at 11:40 PM...’ (ordered in through the command for each way of paying, as well as eaten: paid as it’s ordered, from the way the day is paid, and nourishment rises); checking less: tests/body.test.ts ‘gains on meals eaten out, and spends by an hour’s MET value’ (eatsOut and bodyDay called directly); tests/defects-g4-1.test.ts ‘grays a meal the overdraft can’t pay at a bank without the opt-in, and refuses it in the same words’ (the order’s menu line refused)",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on body.test.ts ‘gains on meals eaten out...’, which calls eatsOut and bodyDay directly and never orders.",
+        "now": "Until 2026-10-12 no test ordered a meal through the command, and this said so. From then a delivered meal ordered at 11:40 PM is offered, bought through the command and paid as it’s ordered, at delivery’s price, by debit card, credit card or cash, and feeds (defects-r3a-1.test.ts). The weight a meal eaten out adds, the row’s Downstream, is still tested only on eatsOut and bodyDay called directly (body.test.ts), and the order’s refusal when it can’t be afforded on the menu’s line (defects-g4-1.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "life.look_after:wash",
@@ -48,35 +69,56 @@
       "downstream": "readiness hygiene factor; applyElapsedWellbeing grimy hours -> morale",
       "persistent": "dials",
       "explanation": "Look After menu",
-      "tests": "looking-after.test.ts 'a shower cleans all the way, and takes off stress by how much it had to'",
-      "status": "verified",
-      "issue": ""
+      "tests": "checking less: looking-after.test.ts ‘a shower cleans all the way, and takes off stress by how much it had to’ (applyLookingAfter called directly); wellbeing-bites.test.ts ‘half a year of looking after yourself ends fitter...’ issues it among four actions a day and can’t tell its part",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on looking-after.test.ts ‘a shower cleans all the way...’, which calls applyLookingAfter directly and never issues the command.",
+        "now": "No test washes through the command and checks what it changes or what reads it: the shower’s hygiene and stress are tested on applyLookingAfter called directly, and the half-year test that issues it among four actions a day reads them together, so a wash that did nothing would pass. Readiness’s hygiene factor and the grimy hours’ toll on the mood are unchecked for a wash."
+      }
     },
     {
       "id": "life.look_after:exercise",
       "kind": "command",
       "entry": "TimeControls.tsx:490",
-      "reads": "energy (SPENT 25), trainingRefusal (injury), weatherAt via trainingAt, readiness, fitness, repeatsToday, age ceiling",
+      "reads": "in hospital, the flu (from 2026-10-10), energy (SPENT 25), trainingRefusal (injury), weatherAt via trainingAt, readiness, fitness, repeatsToday, age ceiling",
       "changes": "fitness, energy, nourishment, hygiene, stress, morale, development.workout.at, body.extra, possible injury + bill",
       "downstream": "life.ts:settleTheBody (held 3 days), mendsTo -> condition; attributes.ts stamina -> tasks consistency; injury.ts:trainingRefusal; health bill",
       "persistent": "fitness, workout.at, injury, ledger",
-      "explanation": "LOOKING_AFTER.exercise.does; wellbeing.tsx fitness dial; profile fitnessHeldUntil",
-      "tests": "fitness.test.ts (all), looking-after.test.ts 'a workout builds fitness by how ready you are...', heatindex.test.ts 'keeps a run in on a humid afternoon', injury.test.ts 'keeps a hurt body from training'",
-      "status": "verified",
-      "issue": "Allowed while inHospital and while down with flu (lookAfterRefusal life.ts:557 checks neither); practice/engagement refuse 'Not from a hospital bed'"
+      "explanation": "the Look After menu’s Fitness arrow (lookAfterOptions); wellbeing.tsx fitness dial; profile fitnessHeldUntil (LOOKING_AFTER.exercise.does, which nothing read, went on 2026-10-12)",
+      "tests": "fitness.test.ts (through the command and the clock: held three days, a second the same day at half, the age’s ceiling, an action sent twice); looking-after.test.ts ‘eight weeks of workouts on ...-hour nights build fitness, and with it condition and readiness’; tests/defects-g4-1.test.ts ‘is what each of three workouts in a row builds...’; checking less: looking-after.test.ts ‘a workout builds fitness by how ready you are...’ (applyLookingAfter), heatindex.test.ts ‘keeps a run in on a humid afternoon’ (trainingAt), injury.test.ts ‘keeps a hurt body from training’ (mayHurt called and the injury set by hand), tests/life-fixes.test.ts ‘is refused from a hospital bed, and a workout with the flu’ (lookAfterRefusal)",
+      "status": "partial",
+      "issue": "Allowed while inHospital and while down with flu (lookAfterRefusal life.ts:557 checks neither); practice/engagement refuse 'Not from a hospital bed'",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: ‘Allowed while inHospital and while down with flu (lookAfterRefusal checks neither)’. Verified, with a workout’s injury and its bill in Changes and Downstream, and no test of either.",
+        "now": "Refused from a hospital bed and with the flu since 2026-10-10 (tests/life-fixes.test.ts, on lookAfterRefusal called directly). Through the command and the clock, a workout builds fitness and holds it three days, a second the same day builds half, and the condition and readiness that read fitness rise with it (fitness.test.ts, looking-after.test.ts). No workout through the command is checked for the injury it may bring (mayHurt), its bill, or trainingRefusal reading it: injury.test.ts calls mayHurt directly and sets the injury by hand, and the workouts in looking-after.test.ts and wellbeing-bites.test.ts skip a day when hurt rather than check one. Stamina read by a task’s consistency isn’t checked for a workout either."
+      },
+      "read": true
     },
     {
       "id": "life.look_after:unwind",
       "kind": "command",
       "entry": "TimeControls.tsx:490",
-      "reads": "occupiedAt, stressRecovery, moraleSwing",
+      "reads": "in hospital (from 2026-10-10), occupiedAt, stressRecovery, moraleSwing",
       "changes": "stress -10*k, morale +3*k",
       "downstream": "readiness, sleepQuality (stressLoss), flu catching (health.ts:catching)",
       "persistent": "dials",
       "explanation": "Look After menu",
       "tests": "looking-after.test.ts 'an hour unwinding takes off far more stress than an hour going by', 'how much unwinding helps is the person's'",
-      "status": "verified",
-      "issue": "Allowed in hospital"
+      "status": "partial",
+      "issue": "Allowed in hospital",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: ‘Allowed in hospital’. Downstream readiness, sleepQuality and catching the flu, verified on a test that checks the stress and the mood.",
+        "now": "Every Look After has been refused from a hospital bed since 2026-10-10 (lookAfterRefusal), which tests/life-fixes.test.ts holds for a wash and a workout. Through the command, an hour unwinding takes off more stress than an hour going by and lifts the mood (looking-after.test.ts); the person’s share is tested on applyLookingAfter called directly. Nothing that reads the stress it takes off is checked for an hour unwound: readiness, the night’s sleep quality, or catching the flu."
+      },
+      "read": true
     },
     {
       "id": "calendar.schedule",
@@ -84,12 +126,19 @@
       "entry": "CalendarWorkspace.tsx:269",
       "reads": "checkPlan (title, time, length, location)",
       "changes": "timeline item life.commitment requiresPlayer",
-      "downstream": "Simulation halts at requiresPlayer; life.ts:lookAfterRefusal clash; life.ts:occupiedAt blocks sleep/look_after during a kept plan; suggestedSleep",
+      "downstream": "Simulation halts at requiresPlayer; life.ts:lookAfterRefusal clash; life.ts:occupiedAt blocks sleep and Look After during a kept plan",
       "persistent": "scheduled item",
-      "explanation": "CalendarWorkspace; checkConflicts flag",
+      "explanation": "CalendarWorkspace; checkConflicts flag; the Sleep dialog’s suggestion (suggestedSleep), tested on an item put on the timeline by hand (simulation.test.ts), not a plan the command made",
       "tests": "plans.test.ts 'puts it on the calendar...', 'is simply done when you were there', looking-after.test.ts 'does not refuse a plan that starts after it is done'",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: suggestedSleep among what reads a plan. Then verified, with occupiedAt blocking sleep and Look After during a kept plan in its Downstream, which no test reaches.",
+        "now": "suggestedSleep is the Sleep dialog’s suggestion, which decides nothing, so it’s under Explained; it’s tested on an item put on the timeline by hand. Through the command, the clock stops at a plan and it’s done when kept (plans.test.ts), and Look After clashes with it while it’s still to come (looking-after.test.ts). occupiedAt, which refuses sleep and every Look After but a meal while a kept plan’s hours run, is reached by no test: none asks for sleep or Look After inside a plan kept, and none expects its ‘You’re at … until’."
+      }
     },
     {
       "id": "calendar.cancel",
@@ -101,8 +150,15 @@
       "persistent": "status canceled",
       "explanation": "CalendarWorkspace",
       "tests": "plans.test.ts 'takes a plan of your own off the calendar', 'refuses twice'; holidays.test.ts 'treats a plan you called off as off the calendar'",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: ‘no longer halts clock or clashes look_after’, verified on tests that check its status and the upcoming list.",
+        "now": "Through the command, a plan is off the calendar and its status is the engine’s `cancelled`; a second call-off and the world’s own items are refused (plans.test.ts, journey-life.test.ts). No test checks what reads it: the clock running past a plan called off, or Look After no longer clashing with it. holidays.test.ts reads a day built by hand."
+      }
     },
     {
       "id": "calendar.skip",
@@ -110,14 +166,20 @@
       "entry": "TimeControls.tsx:99",
       "reads": "item pending and at<=now",
       "changes": "status missed, resolvedAt, notice",
-      "downstream": "life.ts:occupiedAt (missed plan no longer blocks sleep/wash)",
+      "downstream": "life.ts:lookAfterRefusal’s clash with a plan still due (timeline.between), which passes over a missed one",
       "persistent": "status missed",
       "explanation": "'You Didn't Go To ...' notice",
       "tests": "tests/coverage-gaps-life.test.ts",
       "status": "verified",
-      "issue": "Only consumer is occupiedAt; no test shows a skipped plan freeing the window for sleep/look_after",
+      "issue": "",
       "previous": "partial",
-      "settled": "Tested: Look After refused while a plan is due, allowed once skipped; a second skip refused; across a reload."
+      "settled": "Tested: Look After refused while a plan is due, allowed once skipped; a second skip refused; across a reload.",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: occupiedAt, a missed plan no longer blocking sleep or a wash. Note: ‘Only consumer is occupiedAt; no test shows a skipped plan freeing the window for sleep/look_after’.",
+        "now": "occupiedAt reads only a plan that’s done, so it never read a missed one. What a skip frees is Look After’s clash with a plan still due (lookAfterRefusal, through timeline.between), which passes over a missed one. Through the command, a plan due is skipped and missed, Look After, refused while it was due, is allowed and a wash done, and a second skip is refused, across a reload (coverage-gaps-life.test.ts:26-40)."
+      }
     },
     {
       "id": "world.dismiss_decision",
@@ -125,12 +187,19 @@
       "entry": "Home.tsx:267",
       "reads": "decision",
       "changes": "dismissedAt",
-      "downstream": "world.ts:openDecisions, prune; raisers read dismissal",
+      "downstream": "world.ts:openDecisions (off the Home’s list); world.ts prune, a season after; take_decision_action refuses a dismissed row",
       "persistent": "decision",
       "explanation": "Home Decision Center",
-      "tests": "smoke.test.ts 'stops asking once the row is waved away'",
-      "status": "verified",
-      "issue": ""
+      "tests": "smoke.test.ts ‘stops asking once the row is waved away’ (through the command: off the open list, and still off eight days on); tests/life-fixes.test.ts ‘acted on once, or dismissed, isn’t acted on again’ (the refusal, dismissedAt set by hand)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: ‘raisers read dismissal’. Then, until the fourth review of 2026-10-12, verified, while its Note said two of its three readers weren’t checked through the command.",
+        "now": "No raiser reads a dismissal. requireDecision skips a dismissed row while deduplicating and raises a fresh one (simulation.ts), so the same spec raised again is open again (measured 2026-10-12: one row open, dismissed to none, raised again to one); asking stops only because each raiser raises once. Through the command, a row is dismissed and leaves the open list, and is still off it eight days on (smoke.test.ts:170-179). Two of its three readers aren’t checked through it: prune forgetting a dismissed row a season on (smoke.test.ts’s prune test runs on a dated row the clock resolved, not a dismissed one), and take_decision_action’s refusal, tested on dismissedAt set by hand (life-fixes.test.ts:120-121).",
+        "status": "verified"
+      }
     },
     {
       "id": "world.mark_read",
@@ -143,7 +212,8 @@
       "explanation": "Home",
       "tests": "commands-kept.test.ts 'marks one notification read, or all of them'",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "world.set_preferences",
@@ -151,12 +221,19 @@
       "entry": "TimeControls.tsx:55",
       "reads": "timeSpeed",
       "changes": "preferences.timeSpeed",
-      "downstream": "core/realclock live clock",
+      "downstream": "the page’s live clock: SPEED_MULTIPLIER’s rate for paused or live (src/app/game-context.tsx), stepped by core/realclock",
       "persistent": "preferences",
       "explanation": "TimeControls speed buttons",
       "tests": "plans.test.ts 'keeps the live clock to the wall clock...'; tutorial.test.ts",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on plans.test.ts, which checks the preference set and reads game-context.tsx as text.",
+        "now": "Through the command the speed is set, paused or live, and anything else is refused (‘The clock runs paused or live.’, defects-g6-1.test.ts:20-28); paused, it stops nothing the guide holds (plans.test.ts, tutorial.test.ts). A save’s fast or faster loads as live (src/engine/index.ts). What reads it is the page’s live clock, SPEED_MULTIPLIER’s rate in src/app/game-context.tsx, which plans.test.ts reads as source text, and the stepper in realclock.test.ts is fed a rate, not the preference. No test runs the live clock on the preference."
+      }
     },
     {
       "id": "world.take_decision_action",
@@ -164,27 +241,40 @@
       "entry": "Home.tsx:254",
       "reads": "decision.actions",
       "changes": "runs nested command; resolvedAt",
-      "downstream": "the nested command (tax.file, bank.reactivate, documents.apply_opt)",
+      "downstream": "the nested command (tax.file, bank.reactivate, documents.apply_opt); resolvedAt -> world.ts:openDecisions (off the Home’s list), world.ts prune a season after, and its own refusal of a row acted on",
       "persistent": "decision resolved",
       "explanation": "Home",
-      "tests": "smoke.test.ts 'does the thing when the button on it is pressed', 'keeps the row open when the command behind the button refuses'",
-      "status": "verified",
+      "tests": "smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tests/life-fixes.test.ts ‘acted on once, or dismissed, isn’t acted on again’, ‘runs its command past the same guards as the command given directly’",
+      "status": "partial",
       "issue": "No check of resolvedAt/dismissedAt (world.ts:48); nested execute skips commandGuards (simulation.ts:509) so tutorial locks on the inner command are bypassed",
       "auditStatus": "partial",
-      "settled": "Fixed: resolved and dismissed decisions refused, and the guide’s guards asked (tests/life-fixes.test.ts)."
+      "settled": "Fixed: resolved and dismissed decisions refused, and the guide’s guards asked (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Tested By left out the repair’s test its note names. Then verified, its Note calling resolvedAt set by hand for the refusal a precondition set as setup, though resolvedAt is this command’s own change.",
+        "now": "Fixed: resolved and dismissed decisions refused, and the guide’s guards asked (tests/life-fixes.test.ts). Through the command, the button runs its command and resolves the row, which leaves the open list, and a command that refuses keeps the row open (smoke.test.ts:158-168, 195-210); its command is held by the guards the command given directly is (life-fixes.test.ts:124-130). The refusal of a row acted on is tested on resolvedAt set by hand (life-fixes.test.ts:117-118), this command’s own change, which checks less, and of one dismissed on dismissedAt set by hand (life-fixes.test.ts:120-121), the dismissal’s change and a precondition here. No test acts on a row and then acts on it again, and none runs the clock past a row acted on and checks prune forgetting it. The decisions in both files are raised by calling requireDecision, as setup."
+      },
+      "read": true
     },
     {
       "id": "tutorial.read",
       "kind": "command",
-      "entry": "guide UI",
+      "entry": "the guide (the top bar’s Guide button); from 2026-10-12 How This Works on every panel opens the guide’s reference, which marks no chapter read",
       "reads": "tutorial.read order",
-      "changes": "tutorial.read[]",
-      "downstream": "world/tutorial.ts guardCommands (isOpen)",
+      "changes": "tutorial.read[]; tutorial.finished once every chapter is read (from 2026-10-12)",
+      "downstream": "world/tutorial.ts guardCommands (isOpen), open for good once the guide is finished, whatever chapters are added after (from 2026-10-12)",
       "persistent": "tutorial state",
       "explanation": "Guide / Gated buttons (lockedBecause)",
-      "tests": "tutorial.test.ts (READ_KIND order and guard tests)",
+      "tests": "tests/tutorial.test.ts ‘reads the chapters in order and no other way’, ‘refuses a command until its chapter is read, and names the chapter’; tests/trace-commands.test.ts ‘reads the next chapter only, in order, opening what it names; once every chapter is read, the guide is finished’; tests/guide.test.ts ‘runs no command and moves no clock...’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Entry ‘guide UI’; downstream the guard alone. The guide had no finish, so a chapter added to the game would have reopened it on every finished save.",
+        "now": "From 2026-10-12 the guide is finished once every chapter is read (tests/trace-commands.test.ts), and a finished guide stays open whatever is added. The reference How This Works opens runs no command and moves no clock (tests/guide.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "health.appeal",
@@ -195,11 +285,17 @@
       "downstream": "APPEAL_KIND handler (refund/amount)",
       "persistent": "bill",
       "explanation": "Papers bills table",
-      "tests": "claims.test.ts 'appealed within 180 days, is decided 60 days on'",
+      "tests": "claims.test.ts ‘appealed within 180 days, is decided 60 days on’; tests/life-fixes.test.ts ‘denied, gone to debt, and overturned on appeal, comes off the debt and isn’t refunded’ (both on New York lives no new one lives, a marketplace plan put in by hand: only a marketplace claim is denied, which a New Haven life reaches only after the school, by health.enroll)",
       "status": "verified",
       "issue": "See finding: overturn refunds cash for a bill that went to medical debt; test never checks refund or debt",
       "auditStatus": "partial",
-      "settled": "Fixed: an overturned bill gone to debt comes off the debt, not refunded (tests/life-fixes.test.ts)."
+      "settled": "Fixed: an overturned bill gone to debt comes off the debt, not refunded (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed: an overturned bill gone to debt comes off the debt, not refunded (tests/life-fixes.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "health.apply_aid",
@@ -211,8 +307,15 @@
       "persistent": "bill",
       "explanation": "Papers; AID_WORD",
       "tests": "safetynet.test.ts 'takes it off an insured Connecticut patient's hospital bill...'",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: the bill’s handler pays the reduced amount; verified on a test that checks the amount.",
+        "now": "Through the command, Connecticut’s hospital aid takes a bill put in by hand down to its share, once, and not a New York hospital’s (safetynet.test.ts, on a New Haven life that isn’t the student’s). No test checks the bill paid at the reduced amount on its due date, or one screened off."
+      }
     },
     {
       "id": "health.book",
@@ -223,9 +326,16 @@
       "downstream": "appointments.ts handler -> careFor bill, renewPrescriptions, reviewed, mayRefer",
       "persistent": "appointment",
       "explanation": "Papers",
-      "tests": "referrals.test.ts 'comes of a visit kept, and a missed one is booked again'",
-      "status": "verified",
-      "issue": "slot() skips weekends only, not public holidays (appointments.ts:83)"
+      "tests": "referrals.test.ts ‘comes of a visit kept, and a missed one is booked again’ (through the command only the rebooking’s date; the visits kept are booked by calling book(); on a New York life no new one lives); journey-life.test.ts (books conditionally and checks nothing of the visit)",
+      "status": "partial",
+      "issue": "slot() skips weekends only, not public holidays (appointments.ts:83)",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on referrals.test.ts ‘comes of a visit kept...’, whose visits are booked by calling the engine’s book() function.",
+        "now": "Through the command, a visit owed after a specialist’s was called off is booked about a month away (referrals.test.ts). Every visit that test keeps was booked by calling book(), so the bill, the renewed prescriptions, the review and the referral a kept visit gives are read only on appointments the command didn’t make. journey-life.test.ts books only if it can and checks nothing of the visit."
+      }
     },
     {
       "id": "health.cancel_appointment",
@@ -236,9 +346,10 @@
       "downstream": "health.book; health.week skips new visit while owed",
       "persistent": "owedVisit",
       "explanation": "Papers",
-      "tests": "referrals.test.ts; journey-life.test.ts (conditional on book ok)",
+      "tests": "referrals.test.ts ‘comes of a visit kept, and a missed one is booked again’ (called off, the visit owed, which health.book reads; on a New York life, whose published wait the rebooking takes); tests/defects-g23-1.test.ts ‘called off and never booked again, swallows every later visit and review, and the body and the medicine don’t notice’ (the week’s visits and the review skipped while it’s owed, through the clock, on a New Haven life that isn’t the student’s); journey-life.test.ts",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "health.choose_clinic",
@@ -249,9 +360,16 @@
       "downstream": "clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn",
       "persistent": "clinicId",
       "explanation": "Papers select",
-      "tests": "clinics.test.ts 'their own doctor, chosen in the town they live in, sees them'",
-      "status": "verified",
-      "issue": ""
+      "tests": "clinics.test.ts ‘their own doctor, chosen in the town they live in, sees them’ (clinicFor reads the choice; on a London life no new one lives); tests/defects-g8-4.test.ts ‘shows the empty choice only while nothing is chosen...’ (chosen in New Haven and shown on the rendered Papers screen); checking less: clinics.test.ts ‘names the place on the bill’, ‘is the provider’s own self-pay price...’ (the town’s first practice, never one chosen)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: clinicFor, and through it shareOf’s self-pay price, careFor’s name for the place on the bill and bookIn; verified on a test that reads clinicFor alone.",
+        "now": "Through the command, a practice where you live is chosen and clinicFor reads it (clinics.test.ts:28-35, on a London life no new one lives), and in New Haven it’s chosen and shown on the rendered Papers screen (defects-g8-4.test.ts). What the choice decides through clinicFor isn’t checked after it: the bill’s name for the place and the self-pay price are tested on the town’s first practice, never one chosen (clinics.test.ts:37-41, 45-53), and no appointment is booked after a choice, so the practice bookIn gives one isn’t either."
+      }
     },
     {
       "id": "health.choose_pharmacy",
@@ -262,9 +380,10 @@
       "downstream": "health.ts:rxShareOf generic cash price",
       "persistent": "pharmacy",
       "explanation": "Papers select",
-      "tests": "carevisits.test.ts 'fills an uninsured generic at its own cash price'",
+      "tests": "carevisits.test.ts ‘fills an uninsured generic at its own cash price’ (rxShareOf reads the chain; on a New York life with its cover taken off by hand)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "health.dental",
@@ -275,9 +394,16 @@
       "downstream": "teethAndEyesShareOf; healthMonth premium/end",
       "persistent": "dental plan, ledger",
       "explanation": "Papers",
-      "tests": "costs.test.ts; journey-life.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "costs.test.ts ‘leaves $50 an emergency, $200 an admission...’ (Yale’s plan through the command, on the New Haven student); tests/defects-g8-4.test.ts ‘PLAYER JOURNEY: bought on the first day, 24 August...’, ‘bought in October or in July...’, ‘a paid year isn’t ended by the degree...’ (healthMonth called by hand, the degree put in); FIXTURE, plans no New Haven life can buy: costs.test.ts ‘in New York: cleanings in full...’, ‘in California, only beside...’, tests/defects-g8-4.test.ts ‘a monthly plan still ends with the health cover it’s bought beside’; journey-life.test.ts",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream teethAndEyesShareOf and healthMonth’s premium and end; verified on costs.test.ts and journey-life.test.ts. Until the fourth review of 2026-10-12 the Note cited only New York’s plan, on a life that isn’t a student’s, and left out the student’s own plan, Yale’s, which the command drives and teethAndEyesShareOf reads.",
+        "now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:209-220), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:150-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:228-231). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:237-239, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price."
+      }
     },
     {
       "id": "health.drop",
@@ -288,9 +414,10 @@
       "downstream": "coverOn -> shareOf, healthMonth lostAt/uncovered",
       "persistent": "cover",
       "explanation": "Papers",
-      "tests": "commands-kept.test.ts 'drops a plan of one's own at the month's end'",
+      "tests": "commands-kept.test.ts ‘drops a plan of one’s own at the month’s end’ (coverOn through the month’s end; on a New York life no new one lives, its marketplace plan put in by hand); tests/defects-g8-5.test.ts ‘PLAYER JOURNEY: dropped in January, nothing covers February, and the marketplace waits for open enrollment’ (a New Haven life, its marketplace plan put in: through the clock, no cover in February, and healthMonth opens no special enrollment, lostAt unset)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "health.enroll",
@@ -301,9 +428,16 @@
       "downstream": "coverOn/planOf -> every share; healthMonth premium",
       "persistent": "cover",
       "explanation": "Papers",
-      "tests": "safetynet.test.ts, medicaluis.test.ts",
-      "status": "verified",
-      "issue": "mayEnroll checks active() at now, so a not-yet-started enrolment can be enrolled again the same month (low)"
+      "tests": "safetynet.test.ts, medicaluis.test.ts; tests/defects-g8-5.test.ts:132-153 ‘PLAYER JOURNEY: withdrawn after the fifteenth day of classes, enrolling starts cover the day Yale Health ends...’, ‘PLAYER JOURNEY: withdrawn on 20 September...’ (the New Haven student, withdrawn, enrolled through the command)",
+      "status": "partial",
+      "issue": "mayEnroll checks active() at now, so a not-yet-started enrollment can be enrolled again the same month (low)",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: ‘a not-yet-started enrollment can be enrolled again the same month’. Downstream coverOn and healthMonth’s premium, verified on safetynet.test.ts and medicaluis.test.ts.",
+        "now": "Refused since 2026-10-10: ‘You’re enrolled from’ the month it starts (mayEnroll); no test checks that refusal. Through the command, the New Haven student withdrawn from the School enrolls with cover from the day Yale Health ends, or from the month after where it ends mid-month, never beside it (coverOn read on both sides, defects-g8-5.test.ts:132-153); a low month enrolls Covered Connecticut, whose plan leaves a stay at nothing (safetynet.test.ts, on a New Haven life that isn’t the student’s), and Medi-Cal enrolls a new applicant at restricted scope (medicaluis.test.ts). No test enrolls in a plan through the command and checks the premium healthMonth charges for it; its renewal is tested on a program put in by hand."
+      },
+      "read": true
     },
     {
       "id": "health.extra_supply",
@@ -315,8 +449,15 @@
       "persistent": "supplyUntil",
       "explanation": "Papers conditions panel",
       "tests": "commands-kept.test.ts 'fills a longer supply...'; medicine.test.ts",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream keptUp, the weekly untreated tolls and asthma emergencies; verified on commands-kept.test.ts.",
+        "now": "Through the command, a longer supply is filled for a condition put in by hand, up to the place’s longest, and refused with none (commands-kept.test.ts, on a New York life); the charge is checked only where the fill isn’t free (if it paid), so it can pass with nothing charged. No test checks what reads the supply: keptUp sparing the week’s untreated toll while it lasts, or an asthma emergency."
+      }
     },
     {
       "id": "health.pay_bill",
@@ -328,11 +469,18 @@
       "persistent": "ledger",
       "explanation": "Papers",
       "tests": "tests/coverage-gaps-life.test.ts",
-      "status": "verified",
+      "status": "partial",
       "issue": "Downstream (report stopped, worry lifted) not tested; UI only offers full payoff",
       "auditStatus": "partial",
       "settled": "Tested: the debt is a money trouble until paid; paid, not one, and not reported a year on; a report made before stays.",
-      "previous": "partial"
+      "previous": "partial",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: the day’s money trouble, healthMonth’s report a year on, and the bills settled; verified when the open items were revisited, on coverage-gaps-life.test.ts.",
+        "now": "Through the command, a medical debt paid off is no longer a money trouble, across a reload, debtSince is cleared, and another payment is refused (coverage-gaps-life.test.ts:56-68); paid after a report, the report stays (coverage-gaps-life.test.ts:78-81). Its report a year on, what the payment spares, is checked only by putting debtSince back a year and calling healthMonth in the clock’s place (coverage-gaps-life.test.ts:64, :74-75; defects-g8-6.test.ts:283-284), which checks less, as the idle check called with the idle time typed in does for account upkeep. No test plays a year through the clock with a debt paid or unpaid."
+      }
     },
     {
       "id": "health.prepay",
@@ -358,11 +506,18 @@
       "downstream": "health.therapy_session -> payment, depression lifted",
       "persistent": "chronic.depression",
       "explanation": "Papers therapy panel",
-      "tests": "therapy.test.ts (3 tests)",
-      "status": "verified",
+      "tests": "therapy.test.ts (3 tests); tests/life-fixes.test.ts ‘slept through is missed and held next week, not paid’",
+      "status": "partial",
       "issue": "Sessions count when asleep/in hospital; maintenance therapy also charged by keepUp during a course",
       "auditStatus": "partial",
-      "settled": "Fixed: sessions at 17:00 on a weekday, missed asleep or in hospital; no double charge in a course (tests/therapy.test.ts, tests/life-fixes.test.ts)."
+      "settled": "Fixed: sessions at 17:00 on a weekday, missed asleep or in hospital; no double charge in a course (tests/therapy.test.ts, tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Tested By left out the repair’s test its note names. Downstream: the session’s payment and the depression lifted.",
+        "now": "Fixed: sessions at 17:00 on a weekday, missed asleep or in hospital; no double charge in a course (tests/therapy.test.ts, tests/life-fixes.test.ts). Through the command and the clock, a course is paid session by session in New York, free at Yale Mental Health & Counseling for the student Yale Health covers, and free on the NHS (therapy.test.ts). Whether a course lifts the depression is tested on therapyLifts called directly; no course run through the clock is checked for what it lifts."
+      },
+      "read": true
     },
     {
       "id": "health.treat",
@@ -373,11 +528,18 @@
       "downstream": "keepUp charges, fillMedicine, keptUp -> morale/condition/energy tolls, emergencies",
       "persistent": "chronic",
       "explanation": "ConditionsPanel",
-      "tests": "carried.test.ts 'cost their care each month...; left alone, depression weighs on morale'",
-      "status": "verified",
+      "tests": "carried.test.ts ‘cost their care each month...; left alone, depression weighs on morale’ (switched off through the command, the week’s toll through the clock; checking less: keepUp and fillMedicine called on a treatment set by hand); carried.test.ts ‘let asthma left alone double the emergencies’ (checking less: illnessWeek called with the treatment toggled by hand); tests/life-fixes.test.ts ‘pays the month’s care then’ (all on New York lives)",
+      "status": "partial",
       "issue": "Toggling clears lapsed for free; on:true does not charge",
       "auditStatus": "partial",
-      "settled": "Fixed: switched on, pays the month’s care or lapses (tests/life-fixes.test.ts)."
+      "settled": "Fixed: switched on, pays the month’s care or lapses (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Tested By left out the repair’s test its note names. Then verified, with keepUp’s charges, fillMedicine, keptUp’s tolls and the emergencies in its Downstream, while through the command only the charge switched on and the morale toll switched off were checked.",
+        "now": "Fixed: switched on, pays the month’s care or lapses. Through the command, on New York lives, switched on it pays the month’s care then, and again when switched off and on (life-fixes.test.ts:81-94), and switched off, depression weighs on morale a week on through the clock against a twin without it (carried.test.ts:319-327). The rest of what reads it is checked on functions called on a treatment set by hand: keepUp and fillMedicine for the month’s care and its lapse unpaid (carried.test.ts:302-317), and illnessWeek, with the treatment toggled by hand, for asthma’s emergencies (carried.test.ts:332-342). No test checks the medicine filled, the condition’s or the energy’s toll, an emergency, or a switch-on the bank can’t pay lapsing, after health.treat."
+      },
+      "read": true
     },
     {
       "id": "life.birthday",
@@ -427,9 +589,14 @@
       "downstream": "Simulation.advanceTo stops; ui/shell/LifeEnded",
       "persistent": "meta",
       "explanation": "LifeEnded screen",
-      "tests": "mortality.test.ts 'ends, stops the clock for good...'; body.test.ts 'ends a life starved below...'",
+      "tests": "mortality.test.ts ‘ends, stops the clock for good...’; body.test.ts ‘ends a life starved below...’; tests/life-fixes.test.ts ‘stands through a redraw of the year’s chance’",
       "status": "verified",
-      "issue": "Starvation END can be canceled the same midnight by redrawIfChanged (birthdays.ts:72) and re-armed next day"
+      "issue": "Starvation END can be canceled the same midnight by redrawIfChanged (birthdays.ts:72) and re-armed next day",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘Starvation END can be canceled the same midnight by redrawIfChanged and re-armed next day’.",
+        "now": "A starved body’s end has stood through a redraw since 2026-10-10 (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "world.tick",
@@ -453,24 +620,34 @@
       "downstream": "ledger, Papers",
       "persistent": "ledger",
       "explanation": "'Appeal Won/Upheld' notice",
-      "tests": "claims.test.ts (outcome only)",
+      "tests": "claims.test.ts (outcome only); tests/life-fixes.test.ts ‘denied, gone to debt, and overturned on appeal, comes off the debt and isn’t refunded’",
       "status": "verified",
       "issue": "High: refund on unpaid (debt) bill",
       "auditStatus": "partial",
-      "settled": "Fixed with health.appeal (tests/life-fixes.test.ts)."
+      "settled": "Fixed with health.appeal (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed with health.appeal (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "health.appointment",
       "kind": "scheduled",
       "entry": "book()",
-      "reads": "present()",
+      "reads": "presentForCare (from 2026-10-10)",
       "changes": "visit billed or missed + owedVisit",
       "downstream": "renewPrescriptions -> fillMedicine; reviewed; mayRefer",
       "persistent": "bills, prescribedAt",
       "explanation": "Papers appointments, notices",
-      "tests": "referrals.test.ts; medicine.test.ts 'in British Columbia ... waits for a doctor to renew it'",
+      "tests": "referrals.test.ts; medicine.test.ts 'in British Columbia ... waits for a doctor to renew it'; tests/defects-g23-1.test.ts ‘kept, takes nothing from the body, and in Connecticut renews nothing a fill reads’, ‘called off and never booked again, swallows every later visit and review...’",
       "status": "verified",
-      "issue": "Missed while laid up by injury (present includes laidUp) — someone with a fracture can't see a doctor"
+      "issue": "Missed while laid up by injury (present includes laidUp) — someone with a fracture can't see a doctor",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Reads present(). Note: ‘Missed while laid up by injury: someone with a fracture can’t see a doctor’.",
+        "now": "Since 2026-10-10 an appointment for their own care asks only that they’re awake and out of hospital (presentForCare): an injury that keeps them off work doesn’t keep them from their doctor. Until 2026-10-12 it asked that they be in town too, and this said so. No test checks a visit kept while laid up. A visit kept takes nothing from the body, and in Connecticut the prescriptions it renews are read by nothing; a missed one owes a visit, as one called off does, and while one is owed the health week drops every doctor’s visit it draws and books no review (docs/UNBITTEN.md, measured in tests/defects-g23-1.test.ts)."
+      }
     },
     {
       "id": "health.bill",
@@ -481,11 +658,16 @@
       "downstream": "medicalDebtOf -> healthMonth report, Trouble worry, pay_bill",
       "persistent": "ledger",
       "explanation": "Papers bills table",
-      "tests": "safetynet.test.ts / injury.test.ts 'bills its care away from work'",
+      "tests": "injury.test.ts ‘bills its care away from work’; tests/life-fixes.test.ts ‘is owed as debt and not settled, until the debt is paid’",
       "status": "verified",
       "issue": "paid=true set before payment (health.ts:1172): unpaid bills show 'Settled' in Papers and feed the appeal refund bug",
       "auditStatus": "partial",
-      "settled": "Fixed: paid only when the payment goes; otherwise inDebt, shown \"Owed As Debt\" (tests/life-fixes.test.ts)."
+      "settled": "Fixed: paid only when the payment goes; otherwise inDebt, shown \"Owed As Debt\" (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed: paid only when the payment goes; otherwise inDebt, shown “Owed As Debt” (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "health.month",
@@ -509,11 +691,16 @@
       "downstream": "health.week depression toll stops; keepUp stops",
       "persistent": "chronic",
       "explanation": "notice 'The Depression Has Lifted'",
-      "tests": "therapy.test.ts",
+      "tests": "therapy.test.ts; tests/life-fixes.test.ts ‘slept through is missed and held next week, not paid’",
       "status": "verified",
       "issue": "No present() check; debt goes to arrears 'Bills Owed' not medical debt",
       "auditStatus": "partial",
-      "settled": "Fixed: presence checked; unpaid goes to a medical bill (tests/life-fixes.test.ts)."
+      "settled": "Fixed: presence checked; unpaid goes to a medical bill (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed: presence checked; unpaid goes to a medical bill (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "health.week",
@@ -537,11 +724,16 @@
       "downstream": "ledger",
       "persistent": "ledger",
       "explanation": "injury notice text",
-      "tests": "injury.test.ts calls compWeek directly",
+      "tests": "injury.test.ts calls compWeek directly; tests/life-fixes.test.ts ‘schedules workers’ compensation and pays it while off’",
       "status": "verified",
       "issue": "No caller passes `work` to mayHurt (life.ts:452, school.ts:2076, decided.ts:434), so atWork and COMP_KIND never arise in play",
       "auditStatus": "unresolved",
-      "settled": "Fixed: the Summer Cabaret’s calls roll stage injury at work; compensation scheduled and paid (tests/life-fixes.test.ts)."
+      "settled": "Fixed: the Summer Cabaret’s calls roll stage injury at work; compensation scheduled and paid (tests/life-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed: the Summer Cabaret’s calls roll stage injury at work; compensation scheduled and paid (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "energy",
@@ -679,12 +871,17 @@
       "entry": "health.week",
       "reads": "climate normals, catching",
       "changes": "fluUntil, tolls",
-      "downstream": "school.call_in_sick, school focus 'ill'",
+      "downstream": "school.call_in_sick, school focus ‘ill’, lookAfterRefusal (no workout, from 2026-10-10)",
       "persistent": "",
       "explanation": "notice 'You Have The Flu'",
-      "tests": "seasons.test.ts; carried.test.ts",
+      "tests": "seasons.test.ts; carried.test.ts; tests/life-fixes.test.ts ‘is refused from a hospital bed, and a workout with the flu’",
       "status": "verified",
-      "issue": "Flu does not block a workout"
+      "issue": "Flu does not block a workout",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘Flu does not block a workout’.",
+        "now": "A workout has been refused with the flu since 2026-10-10 (tests/life-fixes.test.ts)."
+      }
     },
     {
       "id": "holidays",
@@ -710,7 +907,12 @@
       "explanation": "wellbeing.tsx injury look",
       "tests": "injury.test.ts; condition-reach.test.ts",
       "status": "verified",
-      "issue": "INJURY.weighs comment declares 'what a fitter body is spared of the risk' with no field/reader; UI says it takes condition, code never does"
+      "issue": "INJURY.weighs comment declares 'what a fitter body is spared of the risk' with no field/reader; UI says it takes condition, code never does",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: INJURY.weighs declares what a fitter body is spared of the risk, with no field or reader; the UI says an injury takes condition, which the code never does.",
+        "now": "Both corrected on 2026-10-10: INJURY.weighs says what it weighs on the mood and the stress, and the condition dial’s look says an injury weighs on the mood and the stress and holds back the work it limits."
+      }
     },
     {
       "id": "chronic",
@@ -835,12 +1037,18 @@
       "entry": "",
       "reads": "",
       "changes": "",
-      "downstream": "spending.ts:69,73",
+      "downstream": "spending.ts foodOf, mealOf",
       "persistent": "",
       "explanation": "CharacterCreation.tsx:1018",
-      "tests": "personality.test.ts 'makes a frugal person spend less'",
-      "status": "verified",
-      "issue": ""
+      "tests": "personality.test.ts ‘makes a frugal person spend less on the same day’s food than a spender’ checks the knob’s value; no test checks foodOf or mealOf reading it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on ‘makes a frugal person spend less...’, which checks personalityOf’s value, not the day’s food or a meal’s cost.",
+        "now": "The readers are one multiplication each in foodOf and mealOf, and no test checks that a frugal life’s day costs less."
+      }
     },
     {
       "id": "knob:illnessToll",
@@ -848,12 +1056,19 @@
       "entry": "",
       "reads": "",
       "changes": "",
-      "downstream": "health.ts:1014, injury.ts:79",
+      "downstream": "health.ts:1081 (careFor, an illness’s toll), injury.ts:80 (an injury’s mend time)",
       "persistent": "",
       "explanation": "",
-      "tests": "arrears.test.ts:99 (resilient ratio)",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/arrears.test.ts ‘takes less out of a resilient body in illness’ (careFor called directly); no test checks the injury’s mend time",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream health.ts:1014, injury.ts:79; verified on arrears.test.ts:99, which holds an illness’s toll and not an injury’s mend time.",
+        "now": "A resilient body loses illnessToll’s share of an illness’s toll (arrears.test.ts, careFor called directly). No test checks the injury’s mend time it scales (injury.ts:80)."
+      },
+      "read": true
     },
     {
       "id": "knob:appetite",
@@ -893,8 +1108,14 @@
       "persistent": "",
       "explanation": "",
       "tests": "traits-connected.test.ts (sharpens early riser; moves each part; warms detached; friends in cast); arrears.test.ts (receipts)",
-      "status": "verified",
-      "issue": "Outside this area; readers confirmed"
+      "status": "partial",
+      "issue": "Outside this area; readers confirmed",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: ‘readers confirmed’, for all ten, receipts among them.",
+        "now": "Nine readers confirmed. The receipts reader multiplies job costs nothing in play records, which arrears.test.ts ‘deducts every receipt...’ injects by hand: as trait-receipts, unresolved."
+      }
     }
   ],
   "findings": [

@@ -1,4 +1,76 @@
-# Read First: Attributes, Genres And Their Integration, 2026-10-12
+# Read First: The Connected Journey, 2026-10-12
+
+The owner's brief was "SLATE: Complete The Tutorial, Acting Depth, Balance, And Connected Player Journey", from `main`
+at `0dbe5960`.
+
+- **The evidence**, requirement by requirement: `docs/verification/CONNECTED-JOURNEY-PASS-2026-10-12.md`.
+- **The plan it followed:** `docs/verification/CONNECTED-JOURNEY-MAP-2026-10-12.md`.
+- **The model:** `docs/ENGINE-MODEL.md` §9.
+
+**State:**
+
+- **Branch:** `claude/connected-journey`, pushed. Not merged: merging is the owner's, on "Merge it."
+- **Not deployed.**
+- **Saves:** schema 94 is unchanged. The ruleset is `evaluation-3 (2026-10-12)`; a result kept under an older one says
+  so rather than replaying.
+  - Every new field is optional and written on first use: workbooks, a brief's reader, plan spans on a return
+    (`reducedBefore`), and the journey's life-long limits.
+  - A save from before gets on opening its limits counted from the work it kept, its guide marked finished if it was
+    read to the end, and a body if it had none.
+- **The gate:** `npm run gate` exited 0 on the final tree (258 test files, 2,706 tests, sixteen checks), read from a
+  file. It runs in about 8 minutes on a quiet machine with `VITEST_MAX_FORKS=3`.
+- **The built app:** 44 of 46 journeys pass at both 1440 and 390, with 0 failed and 2 skipped honestly, 0 errors and
+  0 overflows.
+- **Untouched:**
+  - the stash (`stash@{0}`);
+  - the three worktrees;
+  - the untracked files at the root.
+- **Kept out:**
+  - no removed system restored;
+  - no parental leave;
+  - the 16 deferred items still deferred.
+
+## What the pass did
+
+1. **The guide's reference** (`src/engine/content/guide/`): 68 entries, one press away from every feature (How This
+   Works), with search, contents by goal, typed Connected Systems, a breadcrumb trail, Show Me Where and stable links.
+   - It runs nothing and holds the clock.
+   - Every worked example is played as a test on a throwaway save (`tests/guide-examples-*.test.ts`).
+2. **A piece judged in its segments** (`systems/piece.ts`): beats, tones and movements, with stamina as a drain, slips
+   and recovery, and continuity shown.
+3. **The scene together, kept apart from your own** (`systems/ensemble.ts`): a mastered player's own result is 100
+   whatever the partner does.
+4. **Rehearsal with memory** (`systems/workbook.ts`; `work.identify`, `work.try`, `work.settle`): problems, ways,
+   evidence, kept or put back. A kept way is rehearsed in by later work on the feet.
+5. **Direction that can be answered** (`systems/production.ts`): craft notes with ways, an addressed record, and later
+   notes answering it.
+6. **The actor the work so far shows** (`systems/artistry.ts`): it informs suggestions, recommendations and craft notes,
+   and changes no result.
+7. **Two briefs for every genre:** 298 briefs with 648 readings, with sizes, stakes and how the reader plays.
+8. **The specialist question settled** against a stated criterion, with the remaining trade-off explained, not hidden.
+9. **A defect pass in three rounds plus a prose pass** (§17 of the report): every fix reproduced, tested and
+   mutation-checked.
+10. **The registries held to one standard:** every player command is in a capability row, by check.
+
+## For the next session
+
+- **Look first, as rule 2 says:** `git status -sb`, `git log --oneline -5`, `git stash list`, `git worktree list`.
+- **Running the gate on a loaded machine:** with workflows running, the suite can pass ten minutes. Run it on a quiet
+  machine, or run `npx vitest run --shard=N/3` in three batches, and the checks after.
+- **Building for the UI journeys:**
+  - port 4173 is held by an old preview server, so serve the build on 4181 (`npx vite preview --port 4181`) and set
+    `SLATE_BASE=http://localhost:4181`;
+  - the scenario saves the journeys used are made by `tools/scenarios.ts` with `--years` as the report's §16 gives.
+- **Old processes** from earlier sessions (a dev server on 4190, previews on 4173, 4174, 4176 and 4198, and a
+  `tools/lives.ts` run from 2026-10-09) were holding about 2.5 GB. Stopping them is the owner's call.
+- **Open, and the owner's:**
+  - which banks belong in `ROUND_UP_AMOUNT`;
+  - 134 verified rows of `GAMEPLAY-COVERAGE.md` not yet read against the standard by eye;
+  - the specialist trade-off on scenes, which stands as design.
+
+---
+
+# Earlier: Attributes, Genres And Their Integration, 2026-10-12
 
 The owner's brief was "Bring SLATE’s Attributes, Genres, And Their Integration To The Highest Demonstrable Standard",
 from `main` at `e53eaa89`. The evidence, requirement by requirement, is

@@ -66,7 +66,7 @@
       "entry": "Identity: Place Of Birth (CharacterCreation.tsx:519-527)",
       "reads": "config.homeRegionId",
       "changes": "Person.homeRegionId; citizenshipId (bootstrap.ts:276,337-338)",
-      "downstream": "systems/body.ts:70 bodyOf (birth country's adult averages); systems/documents.ts:475; content/bankdays.ts:22; creation BodyFields units (CharacterCreation.tsx:255)",
+      "downstream": "systems/body.ts drawnBody (birth country's adult averages), at creation from 2026-10-12; systems/documents.ts:475; content/bankdays.ts:22; creation BodyFields units (CharacterCreation.tsx:255)",
       "explanation": "Decides citizenship and the drawn body.",
       "tests": "tests/body.test.ts 'is drawn from the birth country's adults...'; tests/citizenship.test.ts",
       "status": "verified",
@@ -115,12 +115,17 @@
       "reads": "personality.emotionalStability",
       "changes": "Person.personality (cleanPersonality, bootstrap.ts:344)",
       "downstream": "systems/personality.ts:72-77 axisModifier stressGain/stressRecovery; ALSO systems/attributes.ts:126-129 starting Composure ability (25+0.35*stability), read by evaluation consistency (content/tasks.ts:80,105,151,161)",
-      "explanation": "Stress effect as stated; the ability effect is not stated and contradicts 'None of them makes you better or worse at anything' (CharacterCreation.tsx:618-619).",
-      "tests": "tests/personality.test.ts 'lets the three dispositions the page names move what it says they move'",
+      "explanation": "Stress effect as stated; the composure it starts is said too, in creation and on the Profile (until 2026-10-10 creation said none of the dispositions made you better or worse at anything).",
+      "tests": "tests/personality.test.ts ‘lets the three dispositions the page names move what it says they move’; tests/attributes.test.ts ‘gives the faculty’s first choice a presence of 55 to 80, and a composure by their stability’",
       "status": "verified",
       "issue": "UI text contradicts engine (composure ability).",
       "auditStatus": "partial",
-      "settled": "Creation and the Profile say it sets where composure starts."
+      "settled": "Creation and the Profile say it sets where composure starts.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Explained: the ability effect isn’t stated and contradicts ‘None of them makes you better or worse at anything’; tested for the knobs only.",
+        "now": "Creation and the Profile say it sets where composure starts, and tests/attributes.test.ts holds the start."
+      }
     },
     {
       "id": "c-disp-conscientiousness",
@@ -129,12 +134,18 @@
       "reads": "personality.conscientiousness",
       "changes": "Person.personality",
       "downstream": "systems/personality.ts:74-78 sleepQuality/energyRecovery; ALSO systems/attributes.ts:110,117 starting Discipline ability (30+0.5*c) -> practice lift attributes.ts:263 and consistency in every task (content/tasks.ts:80-151)",
-      "explanation": "Nights effect as stated; Discipline ability effect unstated and contradicts 'None of them makes you better or worse at anything'.",
-      "tests": "tests/personality.test.ts 'lets the three dispositions the page names...'",
-      "status": "verified",
+      "explanation": "Nights effect as stated; the discipline it starts is said too, in creation and on the Profile (until 2026-10-10 creation said none of the dispositions made you better or worse at anything).",
+      "tests": "tests/personality.test.ts ‘lets the three dispositions the page names...’ (the sleep knob); no test checks the discipline it starts",
+      "status": "partial",
       "issue": "UI text contradicts engine (discipline ability).",
       "auditStatus": "partial",
-      "settled": "Creation and the Profile say it sets sleep’s restoring and where discipline starts."
+      "settled": "Creation and the Profile say it sets sleep’s restoring and where discipline starts.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on ‘lets the three dispositions the page names...’, which checks the sleep knob, with the starting discipline in Downstream untested. Explained: the ability effect contradicts the page.",
+        "now": "Creation and the Profile say it sets sleep’s restoring and where discipline starts. No test checks discipline’s start, 30 and half the conscientiousness (attributes.ts)."
+      }
     },
     {
       "id": "c-disp-ambition",
@@ -155,12 +166,17 @@
       "reads": "personality.riskTolerance",
       "changes": "Person.personality",
       "downstream": "systems/credit.ts:1127 openCredit: >65 starts autopay on 'minimum' (called index.ts:218)",
-      "explanation": "Matches UI claim; nothing tests the >65 branch.",
-      "tests": "none exercises CARRIES_A_BALANCE (tests/personality.test.ts only asserts it moves no knob)",
+      "explanation": "Matches the UI claim.",
+      "tests": "tests/ui-fixes.test.ts ‘over 65 starts the card’s autopay on the minimum; at 65, in full’",
       "status": "verified",
       "issue": "Untested reader.",
       "auditStatus": "partial",
-      "settled": "Tested: over 65 autopay starts on the minimum, at 65 in full (tests/ui-fixes.test.ts)."
+      "settled": "Tested: over 65 autopay starts on the minimum, at 65 in full (tests/ui-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘none exercises CARRIES_A_BALANCE’; explained ‘nothing tests the >65 branch’, beside a note naming its test.",
+        "now": "Tested: over 65 autopay starts on the minimum, at 65 in full (tests/ui-fixes.test.ts)."
+      }
     },
     {
       "id": "c-disp-extraversion",
@@ -172,7 +188,12 @@
       "explanation": "Matches UI ('how a house watching you sits with you').",
       "tests": "tests/arrears.test.ts 'takes the room by extraversion, the road by openness and a rehearsal by agreeableness'",
       "status": "verified",
-      "issue": "systems/personality.ts:13-14 header still says 'The other three are read by nothing yet'."
+      "issue": "systems/personality.ts:13-14 header still says 'The other three are read by nothing yet'.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘systems/personality.ts:13-14 header still says The other three are read by nothing yet’.",
+        "now": "The header was corrected on 2026-10-10: it says what reads the three, and that it said until then they were read by nothing."
+      }
     },
     {
       "id": "c-disp-openness",
@@ -241,12 +262,17 @@
       "reads": "config.heightCm/weightKg",
       "changes": "Person.body via settle() only when both given and 120-230 cm / 35-250 kg (bootstrap.ts:372-374); else drawn lazily from birthplace (systems/body.ts:68-70, life.ts:868)",
       "downstream": "systems/body.ts:128-137 bodyDay (appetite knob), BMI-linked conditions and mortality",
-      "explanation": "Works; out-of-range or half-filled input silently discarded.",
-      "tests": "tests/body.test.ts (settle directly); tests/creation.test.ts 'asks your height and weight' (source check only). No test passes heightCm through createUniverse.",
+      "explanation": "Works; out-of-range or half-filled input is said at once, where until 2026-10-10 it was discarded in silence.",
+      "tests": "tests/ui-fixes.test.ts ‘are taken both given and in range, and not otherwise’ (through createSave); tests/body.test.ts (settle directly)",
       "status": "verified",
       "issue": "Silent discard; config path untested.",
       "auditStatus": "partial",
-      "settled": "Fixed: out of range or one of two given is said at once; BODY_GIVEN in one place (tests/ui-fixes.test.ts)."
+      "settled": "Fixed: out of range or one of two given is said at once; BODY_GIVEN in one place (tests/ui-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘No test passes heightCm through createUniverse’; explained ‘silently discarded’, beside a note naming the repair’s test.",
+        "now": "Fixed: out of range or one of two given is said at once; BODY_GIVEN in one place (tests/ui-fixes.test.ts, which passes a height and weight through createSave)."
+      }
     },
     {
       "id": "c-whereLive",
@@ -280,9 +306,14 @@
       "changes": "index.ts:163-213 accounts/savings/card/opening balance; openCredit score (index.ts:218)",
       "downstream": "Bank, net worth, credit",
       "explanation": "Shown figures (wealthIn) equal opened accounts.",
-      "tests": "tests/creation.test.ts 'opens the accounts the money answer promises, and balances them'; tests/school.test.ts:172",
+      "tests": "tests/creation.test.ts ‘opens the accounts the money answer promises, and balances them’; tests/school.test.ts ‘comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: tests/school.test.ts:172, a line that had moved off the test it meant.",
+        "now": "Named, not numbered: the test had moved."
+      }
     },
     {
       "id": "c-family",
@@ -292,9 +323,14 @@
       "changes": "Person.family (bootstrap.ts:339)",
       "downstream": "systems/school.ts:801 hasNeed -> no living-cost aid; UI callout findsNeed (CharacterCreation.tsx:961-967)",
       "explanation": "Callout matches engine.",
-      "tests": "tests/school.test.ts:172 (newLifeConfig)",
+      "tests": "tests/school.test.ts ‘comes from a wealthy family, with its money in the bank...’ (newLifeConfig), ‘takes a wealthy family’s student’s health plan from the bank at nine on the first day of term, and pays in no scholarship’ (hasNeed)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: tests/school.test.ts:172 (newLifeConfig), a line that had moved, beside a test that sets the family and doesn’t read hasNeed.",
+        "now": "hasNeed is held by ‘takes a wealthy family’s student’s health plan from the bank..., and pays in no scholarship’."
+      }
     },
     {
       "id": "c-bank",
@@ -323,14 +359,19 @@
     {
       "id": "c-tutorial",
       "kind": "creation",
-      "entry": "Begin (SlateApp.tsx:48 tutorial:true)",
-      "reads": "config.tutorial",
-      "changes": "universe.tutorial, clock paused (bootstrap.ts:309-312)",
-      "downstream": "world/tutorial.ts:91-95 command guard; useFeature gating",
+      "entry": "Begin, or I Know SLATE (from 2026-10-12), at creation (SlateApp.tsx)",
+      "reads": "config.tutorial (false for I Know SLATE)",
+      "changes": "universe.tutorial for a guided life, none for an unguided one; the clock paused either way (from 2026-10-12)",
+      "downstream": "world/tutorial.ts command guard, open for an unguided life and a finished guide; useFeature gating",
       "explanation": "",
-      "tests": "tests/tutorial.test.ts",
+      "tests": "tests/tutorial.test.ts ‘refuses a command until its chapter is read, and names the chapter’, ‘leaves a life without the guide wholly open’; tests/life-fixes.test.ts ‘runs its command past the same guards as the command given directly’",
       "status": "verified",
-      "issue": "Guard covers top-level commands only (see finding on decision buttons)."
+      "issue": "Guard covers top-level commands only (see finding on decision buttons).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Entry ‘Begin (tutorial: true)’. Note: ‘Guard covers top-level commands only (see finding on decision buttons)’.",
+        "now": "A decision’s command has been asked past the same guards since 2026-10-10 (tests/life-fixes.test.ts). From 2026-10-12 creation offers I Know SLATE, a life with everything open from the start; both begin paused."
+      }
     },
     {
       "id": "trait-stressGain",
@@ -412,9 +453,15 @@
       "changes": "day's food cost, meal cost",
       "downstream": "spending.ts:68-74 foodOf/mealOf (spending.ts:298, life.ts:552-553); Review 'Going Out A Month' (CharacterCreation.tsx:1018)",
       "explanation": "",
-      "tests": "tests/personality.test.ts 'makes a frugal person spend less on the same day's food than a spender'",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/personality.test.ts ‘makes a frugal person spend less on the same day’s food than a spender’ checks the knob’s value; no test checks foodOf or mealOf reading it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on ‘makes a frugal person spend less...’, which checks personalityOf’s value, not the day’s food or a meal’s cost.",
+        "now": "As knob:spending: no test checks that a frugal life’s day costs less."
+      }
     },
     {
       "id": "trait-mealMood",
@@ -434,11 +481,18 @@
       "entry": "illnessToll (Resilient)",
       "reads": "personalityOf",
       "changes": "illness/injury severity and mend time",
-      "downstream": "health.ts:1014; injury.ts:79",
+      "downstream": "health.ts:1081; injury.ts:80",
       "explanation": "",
-      "tests": "tests/personality.test.ts 'reads every knob a trait can declare'",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/arrears.test.ts ‘takes less out of a resilient body in illness’ (careFor called directly); no test checks the injury’s mend time",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: personality.test.ts ‘reads every knob a trait can declare’, which checks the declared knobs are the knob list and reads none of them.",
+        "now": "The illness reader is held by tests/arrears.test.ts: a resilient life’s illness takes illnessToll’s share (careFor called directly). No test checks the injury’s mend time it scales (injury.ts:80). Until a review of 2026-10-12 this row named the illness reader at health.ts:1014; it’s at health.ts:1081.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "trait-receipts",
@@ -486,9 +540,16 @@
       "changes": "weight",
       "downstream": "BMI risks",
       "explanation": "",
-      "tests": "tests/personality.test.ts 'reads every knob a trait can declare'",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/coverage-gaps-life.test.ts ‘moves the weight between matched twins, the hungrier heavier, a day at a time’ (bodyDay, the weight); the BMI’s risks on a body given by hand, not one the appetite moved: tests/body.test.ts ‘raises the chance of the end by the Global BMI Mortality Collaboration’s bands’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: personality.test.ts ‘reads every knob a trait can declare’, which checks the declared knobs are the knob list and reads none of them.",
+        "now": "The weight it moves is held by tests/coverage-gaps-life.test.ts, between matched twins (bodyDay). What reads the weight, the BMI’s risks, is tested on bodies given by hand (body.test.ts), not on twins the appetite set apart.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "trait-morning-evening",
@@ -517,200 +578,310 @@
     {
       "id": "p-identity",
       "kind": "profile",
-      "entry": "ProfileWorkspace IdentityPanel (ProfileWorkspace.tsx:109-147)",
+      "entry": "ProfileWorkspace IdentityPanel (ProfileWorkspace.tsx:123-165)",
       "reads": "person names, pronouns, performerTitle, birthInstant, homeRegionId, citizenshipId, school, currentLocationId, background, raceEthnicity",
       "changes": "none",
       "downstream": "",
       "explanation": "All values read from Person directly.",
-      "tests": "none renders ProfileWorkspace",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/defects-g3-1.test.ts renders the whole Profile and reads none of this panel (it reads the traits and Study It); tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none renders ProfileWorkspace’.",
+        "now": "Traced by reading the panel’s code, which reads Person directly. The Profile is rendered by tests/defects-g3-1.test.ts, which reads nothing of this panel."
+      },
+      "read": true
     },
     {
       "id": "p-identity-buttons",
       "kind": "profile",
-      "entry": "Money / Papers buttons (ProfileWorkspace.tsx:139-140)",
+      "entry": "Money / Papers buttons (ProfileWorkspace.tsx:157-158)",
       "reads": "inTheBank(sim, person); coverOn(person, now)",
       "changes": "navigate to /workspace/bank, /workspace/papers (both routes exist, game-context.tsx:421-425)",
       "downstream": "",
       "explanation": "",
-      "tests": "none",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/defects-g3-1.test.ts renders the whole Profile and reads none of this panel (it reads the traits and Study It); tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’.",
+        "now": "Traced by reading the panel’s code; both routes exist. No test presses the buttons."
+      },
+      "read": true
     },
     {
       "id": "p-traits-line",
       "kind": "profile",
-      "entry": "'Chosen at the start.' traits (ProfileWorkspace.tsx:137)",
+      "entry": "‘Chosen at the start.’ traits (ProfileWorkspace.tsx:153)",
       "reads": "person.personalityTraits",
       "changes": "none",
       "downstream": "",
-      "explanation": "Plain names, no Open into the trait look; dispositions not shown anywhere after creation. Creation says 'each opens from your own page' (CharacterCreation.tsx:657) - true only on the person look (looks/wellbeing.tsx:117-120).",
-      "tests": "none",
+      "explanation": "Each trait opens its look, and the dispositions are shown with what each does. Until 2026-10-10 the names were plain and the dispositions shown nowhere after creation.",
+      "tests": "tests/defects-g3-1.test.ts ‘open, as the guide says each trait does, once How You Are is read, and not before’ (the Profile rendered: a plain name until the chapter is read, a way into its look after); no test reads the dispositions line beside it",
       "status": "verified",
       "issue": "No drill-down from the Profile.",
       "auditStatus": "partial",
-      "settled": "Each trait opens its look; the dispositions are shown with what each does."
+      "settled": "Each trait opens its look; the dispositions are shown with what each does.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Verified with Tested by ‘none’. Explained: plain names, no way into the trait look, the dispositions shown nowhere after creation.",
+        "now": "Each trait opens its look, and the dispositions are shown with what each does (since 2026-10-10). The traits are read on the rendered Profile (defects-g3-1.test.ts), as names until How You Are is read and ways in after; no test reads the dispositions line. Until a review of 2026-10-12 this row said no test rendered it, and was partial."
+      },
+      "read": true
     },
     {
       "id": "p-abilities",
       "kind": "profile",
-      "entry": "Attributes And Craft table + Practice buttons (ProfileWorkspace.tsx:178-221)",
+      "entry": "Attributes And Craft table + Practice buttons (ProfileWorkspace.tsx:193-221, 277-320)",
       "reads": "abilityOf, abilityFull, reachOf, todayFor(conditionAt), readersOf, developmentOf; practiceRefusal, lookAfterRefusal",
       "changes": "practice.exercise (Gated, disabled with refusal)",
       "downstream": "systems/practice.ts",
       "explanation": "Engine figures; controls disabled with reason when refused.",
-      "tests": "none renders it; tests/attributes-complete.test.ts covers the engine",
-      "status": "verified",
-      "issue": ""
+      "tests": "tools/acceptance-ui.mjs, its practice step, on the built app, outside the gate: an exercise opened from the panel, its focus set (not its tier), an hour practiced, and the hour explained in the row; tests/attributes-complete.test.ts covers the engine; no test in the gate renders the panel",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘none renders it; tests/attributes-complete.test.ts covers the engine’. Verified on the UI journey alone, which runs outside the gate.",
+        "now": "No test in the gate renders the panel. The UI journey on the built app, outside the gate, opens an exercise from it, sets its focus (its step’s title names the tier too, which it doesn’t set), practices an hour and finds the hour explained in the row (tools/acceptance-ui.mjs); nothing reads the panel’s figures. tests/attributes-complete.test.ts checks the engine’s figures, not the panel.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "p-techniques",
       "kind": "profile",
-      "entry": "Techniques table (ProfileWorkspace.tsx:223-246)",
+      "entry": "Techniques table (ProfileWorkspace.tsx:321-346)",
       "reads": "person.craft[t], reachOf, MASTERED",
       "changes": "practice.exercise",
       "downstream": "",
       "explanation": "'Seventeen' matches TECHNIQUES (abilities.ts:148-151); 'Twelve abilities' matches AbilityId.",
-      "tests": "none",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/defects-g3-1.test.ts renders the whole Profile and reads none of this panel (it reads the traits and Study It); tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’.",
+        "now": "Traced by reading the panel’s code; its counts match TECHNIQUES and the abilities. The Profile is rendered by tests/defects-g3-1.test.ts, which reads nothing of this panel."
+      },
+      "read": true
     },
     {
       "id": "p-genres",
       "kind": "profile",
-      "entry": "Genres panel, filters, Study It / Tape A Scene (ProfileWorkspace.tsx:263-313)",
-      "reads": "person.genres, engagement.byGenre, genreTags, studyRefusal, selfTapeRefusal",
-      "changes": "genre.study, practice.self_tape",
+      "entry": "Genres panel: its search and filters, Study It, and Open Its Brief, which opens the brief’s pane, where Tape It (60 Min) tapes (GenresPanel, ProfileWorkspace.tsx:367-431; BriefPane.tsx:231)",
+      "reads": "person.genres, engagement.byGenre, genreTags, studyRefusal; tapeRefusal, in the brief’s pane",
+      "changes": "genre.study; practice.self_tape, from the brief’s pane",
       "downstream": "systems/engagement.ts",
-      "explanation": "Values are engine's. nextGenre sentence mislabels its fallback.",
-      "tests": "tests/engagement.test.ts (engine)",
+      "explanation": "Values are the engine’s; the genre to study says whether a part asks for it or it’s loved (since 2026-10-10).",
+      "tests": "tools/acceptance-ui.mjs ‘[save: brief scenario] profile: a genre’s brief opened, the scene and what it asks shown before any time is spent’ and the brief’s steps after it (a genre found by its search, Open Its Brief, Tape It, the result read), on the built app, outside the gate; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (Study It pressed on the rendered Profile); tests/ui-fixes.test.ts ‘says whether a part asks for it or it’s loved’ (nextGenre, a function, for a loved genre only); tests/defects-r8-1.test.ts ‘open once the chapter that opens a genre is read, and not before’ (the You love: paragraph rendered from the Profile); tests/engagement.test.ts (engine)",
       "status": "verified",
       "issue": "nextGenre (ProfileWorkspace.tsx:62-68) falls back to a loved genre, but line 279 always says 'is the kind your next work asks for'.",
       "auditStatus": "partial",
-      "settled": "Fixed: says whether a part asks for it or it’s loved (tests/ui-fixes.test.ts)."
+      "settled": "Fixed: says whether a part asks for it or it’s loved (tests/ui-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Explained: ‘nextGenre sentence mislabels its fallback’; Tested by the engine’s tests alone, beside a note naming the repair’s test.",
+        "now": "Fixed: says whether a part asks for it or it’s loved (tests/ui-fixes.test.ts, through nextGenre, for a loved genre only). Study It is pressed on the rendered Profile (defects-g3-1.test.ts), and a brief opened and taped from the panel on the built app (tools/acceptance-ui.mjs, outside the gate). Until a review of 2026-10-12 this row’s entry named Study It / Tape A Scene and its reads selfTapeRefusal: a scene is taped by Tape It (60 Min) in the pane Open Its Brief opens, refused by tapeRefusal, and selfTapeRefusal was deleted on 2026-10-12. In the gate only Study It is pressed and read on the rendered Profile: the panel’s search and its filters, Open Its Brief and Tape It in the pane it opens are played only by tools/acceptance-ui.mjs, outside the gate, and the genre to study’s words are tested on nextGenre, a function, not on the panel. Until later on 2026-10-12 this Note didn’t say so. Since then the paragraph that holds them, You love:, is rendered from the Profile, and its loved genres are checked to open once the guide’s chapter that opens a genre is read, and not before (defects-r8-1.test.ts); the sentence’s own words aren’t checked there."
+      },
+      "read": true
     },
     {
       "id": "p-condition",
       "kind": "profile",
-      "entry": "Current Condition (ProfileWorkspace.tsx:315-333)",
+      "entry": "Current Condition (ProfileWorkspace.tsx:424-442)",
       "reads": "conditionAt, readiness, wellbeing",
       "changes": "none",
       "downstream": "",
       "explanation": "",
-      "tests": "none",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/defects-g3-1.test.ts renders the whole Profile and reads none of this panel (it reads the traits and Study It); tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’.",
+        "now": "Traced by reading the panel’s code. The Profile is rendered by tests/defects-g3-1.test.ts, which reads nothing of this panel."
+      },
+      "read": true
     },
     {
       "id": "p-journey-history",
       "kind": "profile",
-      "entry": "School Journey, Development History (ProfileWorkspace.tsx:335-409)",
+      "entry": "School Journey, Development History (ProfileWorkspace.tsx:444-518)",
       "reads": "journeyOf, person.work, school.credits, developmentOf",
       "changes": "navigate /workspace/school",
       "downstream": "",
       "explanation": "",
-      "tests": "none",
-      "status": "verified",
-      "issue": ""
+      "tests": "tools/acceptance-ui.mjs ‘profile: the development history shows the hour’ finds the panel’s heading only, on the built app, outside the gate; tests/defects-g3-1.test.ts renders the Profile and reads none of it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’.",
+        "now": "The UI journey finds the Development History heading and reads nothing in it; no test renders the School Journey. Beside them from 2026-10-12 is Your Work So Far (artistry), traced in TRACE.md, which no test checks."
+      },
+      "read": true
     },
     {
       "id": "h-head",
       "kind": "home",
-      "entry": "Home page head: date, title, name, city, zone, season, weather (Home.tsx:105-135)",
+      "entry": "Home page head: date, title, name, city, zone, season, weather (Home.tsx:106-136)",
       "reads": "sim.now, player.performerTitle, displayName, city, weatherAt",
       "changes": "none",
       "downstream": "Opens day/person/place/season/weather looks - all registered",
       "explanation": "",
-      "tests": "tests/looks.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/looks.test.ts ‘names a kind that something has declared’ (Home.tsx’s source, for the looks it opens) and ‘reaches every declared kind from a seed’; no test renders the head",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/looks.test.ts, which crawls the looks and doesn’t render Home.",
+        "now": "The looks it opens are declared and crawled (looks.test.ts reads Home.tsx’s source for them). No test renders the head, so what it prints is traced by reading its code."
+      },
+      "read": true
     },
     {
       "id": "h-calendar",
       "kind": "home",
-      "entry": "Calendar panel (Home.tsx:144-202)",
+      "entry": "Calendar panel (Home.tsx:145-207)",
       "reads": "nextCommitment, upcoming",
       "changes": "navigate calendar",
       "downstream": "",
       "explanation": "",
-      "tests": "tests/looks.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/plans.test.ts ‘puts it on the calendar, where everything else can see it’ and tests/defects-g4-2.test.ts ‘is the next commitment on Home, as the list under it says’ (nextCommitment, upcoming); tests/navigation.test.ts ‘gives the calendar a section of Home rather than a tile pointing at one’ (Home.tsx’s source); no test renders the panel",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by looks.test.ts, which crawls the looks and doesn’t read nextCommitment or upcoming.",
+        "now": "nextCommitment and upcoming, which it shows, are held by tests/plans.test.ts and defects-g4-2.test.ts, and navigation.test.ts finds the section in Home.tsx’s source. No test renders the panel. Until a review of 2026-10-12 it was verified on those engine tests while the Home rows beside it were partial for want of a render.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "h-needs",
       "kind": "home",
-      "entry": "What Needs You: decisions, Mark Read, Dismiss, Go There, All Clear (Home.tsx:205-308)",
+      "entry": "What Needs You: decisions, Mark Read, Dismiss, Go There, All Clear (Home.tsx:210-314)",
       "reads": "openDecisions, unreadNotifications, troubles(), entriesBetween conflicts",
       "changes": "world.take_decision_action, world.dismiss_decision, world.mark_read",
       "downstream": "world.ts:33-97",
       "explanation": "All Clear reads troubles() + calendar clashes.",
-      "tests": "tests/smoke.test.ts 'does the thing when the button on it is pressed', 'keeps the row open when the command behind the button refuses'; tests/commands-kept.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tools/acceptance-ui.mjs ‘home: what needs you, and a decision taken from its card’ takes one on the built app when one is waiting, outside the gate, and checks nothing of it; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tests/commands-kept.test.ts (the commands its buttons send, each with its own row); no test renders the panel or All Clear",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on the commands its buttons send (smoke.test.ts, commands-kept.test.ts), with no test reading the panel.",
+        "now": "The commands its buttons send are driven and checked (smoke.test.ts, commands-kept.test.ts) and have rows of their own. No test reads the panel: the UI journey takes a decision from it on the built app when one is waiting and checks nothing of the result, and nothing renders its rows or All Clear, which reads troubles() and the calendar’s clashes."
+      },
+      "read": true
     },
     {
       "id": "h-how",
       "kind": "home",
-      "entry": "How You Are: Energy, Stress, Readiness meters (Home.tsx:311-330)",
+      "entry": "How You Are: Energy, Stress, Readiness meters (Home.tsx:317-336)",
       "reads": "player.wellbeing, readiness()",
       "changes": "none",
       "downstream": "dial/readiness looks",
       "explanation": "",
-      "tests": "tests/looks.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/looks.test.ts (the dial and readiness looks it opens, crawled; ‘ranks the dials by what each takes off readiness, and multiplies to it’); no test renders the panel",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/looks.test.ts, which crawls the looks and doesn’t render Home.",
+        "now": "The dial and readiness looks it opens are crawled, and readiness’s parts tested (looks.test.ts). No test renders the panel."
+      },
+      "read": true
     },
     {
       "id": "h-where-weather",
       "kind": "home",
-      "entry": "Where You Are, Weather (Home.tsx:332-430)",
+      "entry": "Where You Are, Weather (Home.tsx:338-436)",
       "reads": "placeProfile, weatherAt, forecastFor",
       "changes": "none",
       "downstream": "",
       "explanation": "",
-      "tests": "tests/looks.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/looks.test.ts (the place, region, country and weather looks they open, declared and crawled); no test renders the panels",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/looks.test.ts, which crawls the looks and doesn’t render Home.",
+        "now": "The looks they open are declared and crawled (looks.test.ts). No test renders the panels or reads the forecast they show."
+      },
+      "read": true
     },
     {
       "id": "h-money",
       "kind": "home",
-      "entry": "Your Affairs: Money line (Home.tsx:439-446)",
+      "entry": "Your Affairs: Money line (Home.tsx:445-453)",
       "reads": "ledger.accountsOf, primaryAccountId, netWorth",
       "changes": "navigate bank",
       "downstream": "",
       "explanation": "",
-      "tests": "none renders Home",
-      "status": "verified",
-      "issue": ""
+      "tests": "none renders it: Home’s source is read by tests/cards.test.ts ‘run the card from the bank’s screen, and keep Home to a line of money (from 2026-10-10)’ and tests/defects-g12-1.test.ts, for what the Money line holds; no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none renders Home’.",
+        "now": "Traced by reading the line’s code. No test renders Home; cards.test.ts and defects-g12-1.test.ts read its source for what the Money line holds."
+      },
+      "read": true
     },
     {
       "id": "h-school",
       "kind": "home",
-      "entry": "Your Affairs: School line (Home.tsx:477-500)",
+      "entry": "Your Affairs: School line (Home.tsx:480-505)",
       "reads": "person.school, scheduled school items, nextClasses, rankIn",
       "changes": "navigate school",
       "downstream": "",
       "explanation": "",
-      "tests": "none",
-      "status": "verified",
-      "issue": ""
+      "tests": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’.",
+        "now": "Traced by reading the line’s code. No test renders Home."
+      },
+      "read": true
     },
     {
       "id": "h-papers",
       "kind": "home",
-      "entry": "Your Affairs: Papers line (Home.tsx:506-529)",
+      "entry": "Your Affairs: Papers line (Home.tsx:511-540)",
       "reads": "coverOn, person.returns, latePenalty, unemployment.claim",
       "changes": "navigate papers",
       "downstream": "",
-      "explanation": "Tax owed summed from stored r.owed (last accrual), not owedOn(r, now) as PapersWorkspace.tsx:153 does; text 'growing half a percent a month' omits the 7%/yr interest (taxreturn.ts:69-100; PapersWorkspace.tsx:182 states both).",
-      "tests": "none",
-      "status": "verified",
+      "explanation": "Tax owed is owedOn’s, its interest and penalty to today, as the Papers screen’s. Until 2026-10-10 it summed the figure stored at the last accrual and its words left the interest out.",
+      "tests": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
+      "status": "partial",
       "issue": "Understated / stale figure vs Papers.",
       "auditStatus": "partial",
-      "settled": "Fixed: reads owedOn, interest and penalty included."
+      "settled": "Fixed: reads owedOn, interest and penalty included.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified with Tested by ‘none’. Explained: tax owed summed from the stored figure, the interest left out.",
+        "now": "Fixed: reads owedOn, interest and penalty included (since 2026-10-10). No test renders Home."
+      },
+      "read": true
     },
     {
       "id": "l-person",
@@ -731,12 +902,17 @@
       "reads": "wellbeing.stress",
       "changes": "none",
       "downstream": "",
-      "explanation": "Says stress is added by 'a night on a sofa', which went 2026-10-09 (life.ts:753-754).",
+      "explanation": "Said stress was added by ‘a night on a sofa’, which went 2026-10-09, until the text was corrected on 2026-10-10.",
       "tests": "tests/looks.test.ts",
       "status": "verified",
       "issue": "Text contradicts engine.",
       "auditStatus": "partial",
-      "settled": "Text corrected."
+      "settled": "Text corrected.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Explained: ‘Says stress is added by a night on a sofa’.",
+        "now": "Text corrected."
+      }
     },
     {
       "id": "l-trait",
@@ -762,7 +938,12 @@
       "explanation": "Labels history entries from before the removal: legitimate.",
       "tests": "tests/migration-94.test.ts",
       "status": "verified",
-      "issue": "Header actor.tsx:3 still lists 'an interest' among what it opens."
+      "issue": "Header actor.tsx:3 still lists 'an interest' among what it opens.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘Header actor.tsx:3 still lists an interest among what it opens’.",
+        "now": "The header says an interest was one too, until the interests went on 2026-10-10."
+      }
     },
     {
       "id": "n-decision-tax",
@@ -791,16 +972,21 @@
     {
       "id": "n-decision-us-status",
       "kind": "notification",
-      "entry": "Decision 'Your US Status Is Ending' -> Apply For OPT (permission.ts:201-207)",
+      "entry": "Decision ‘Your US Status Is Ending’ -> Apply For OPT, or Apply For OPT, Premium Processing (permission.ts)",
       "reads": "",
-      "changes": "documents.apply_opt with premium:true (permission.ts:150-163): pays fee + premiumFee, OPT permit pending",
+      "changes": "documents.apply_opt, standard or with premium as chosen: pays the fee, OPT permit pending; the decision answered once OPT is applied for, from Papers too",
       "downstream": "OPT approval (permission.ts:165-183)",
-      "explanation": "Effect is real but silently premium; not closed if OPT applied from Papers; no test.",
-      "tests": "none",
+      "explanation": "Offers standard first and premium by name, and closes once OPT is applied for (since 2026-10-10). Until then it was silently premium, and stayed open after OPT was applied for from Papers.",
+      "tests": "tests/papers-fixes.test.ts ‘offers OPT standard first and premium by name, and is answered once OPT is applied for’",
       "status": "verified",
       "issue": "Hidden premium fee; no test.",
       "auditStatus": "partial",
-      "settled": "As documents.apply_opt (tests/papers-fixes.test.ts)."
+      "settled": "As documents.apply_opt (tests/papers-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘none’; explained ‘silently premium; not closed if OPT applied from Papers; no test’, beside a note naming the repair’s test.",
+        "now": "As documents.apply_opt (tests/papers-fixes.test.ts)."
+      }
     },
     {
       "id": "n-notify",
@@ -857,12 +1043,19 @@
       "reads": "",
       "changes": "",
       "downstream": "",
-      "explanation": "docs/capabilities.json:759 & docs/CAPABILITIES.md:28 'enjoyment's loved interests'; docs/capabilities.json:1264 'the reading interest's enjoyment (READ_CRAFTS...)' (READ_CRAFTS no longer exists); src/ui/looks/actor.tsx:3; src/engine/systems/life.ts:532 'An hour of practice, an interest or study'.",
-      "tests": "",
-      "status": "verified",
+      "explanation": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense.",
+      "tests": "none: read on 2026-10-12, not tested",
+      "status": "partial",
       "issue": "Misleading current claims.",
       "auditStatus": "partial",
-      "settled": "capabilities.json, CAPABILITIES.md and the comments corrected."
+      "settled": "capabilities.json, CAPABILITIES.md and the comments corrected.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Explained: the present-tense claims, as if still there. Verified with no test.",
+        "now": "capabilities.json, CAPABILITIES.md and the comments corrected; read again on 2026-10-12, none of the claims is there now. No test or tool holds it: tools/claims.mjs, which failed the gate on a present-tense claim on the old line, isn’t on this one, so review does.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "i-genres-dispositions-intact",

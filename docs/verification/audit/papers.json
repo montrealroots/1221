@@ -4,15 +4,22 @@
     {
       "id": "documents.apply_idcard",
       "kind": "command",
-      "entry": "Papers > Passport tab > IdPanel 'Get Non-Driver Identification Card' (ui/papers/Documents.tsx:154)",
-      "reads": "idCardHere/licensingOf(currentLocationId), ID_CARDS['us-ct'], licence/idcard held (identity.ts:37-50)",
-      "changes": "pays the fee (payFromBank); pushes an idcard document that is valid at once (identity.ts:122-135)",
-      "downstream": "lending.ts bank.switch via documents.ts:photoIdOf (lending.ts:1092); idCardRefusal blocks a second one (identity.ts:45,48)",
+      "entry": "Papers > Passport tab > IdPanel 'Get Non-Driver Identification Card' (ui/papers/Documents.tsx:172)",
+      "reads": "idCardRefusal (identity.ts:73-108): idCardHere/licensingOf(currentLocationId), ID_CARDS['us-ct'], license/idcard held; for somebody not a citizen at a US state’s counter, lawful presence (an F-1 at school, or a US permit in force, OPT, from 2026-10-12) and a Social Security number, or one on its way",
+      "changes": "pays the fee (payFromBank); pushes an idcard document: valid at once for a citizen, and for somebody not a citizen a Limited Term card that waits on SAVE’s ten business days and runs to the end of their lawful presence (from 2026-10-10; identity.ts:186-207)",
+      "downstream": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one",
       "persistent": "person.documents",
       "explanation": "toast with fee and expiry; DocumentList row; document look",
-      "tests": "tests/commands-kept.test.ts 'issues an ID card where SLATE issues one, charges its fee, and refuses a second'; the photo-ID gate is tested with a passport ('lets a new bank take somebody only with a photo ID in force')",
-      "status": "verified",
-      "issue": "A CT-born holder of a CT licence is refused ('It serves as your ID'), which is correct."
+      "tests": "tests/commands-kept.test.ts ‘issues an ID card where SLATE issues one, charges its fee, and refuses a second’, and the photo-ID gate it’s for, ‘lets a new bank take somebody only with a photo ID in force, which a passport gives’ (bank.open_current, with a passport); tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts ‘sends her to Papers while Papers would take her, then says the card is on its way, then lets her through’, ‘doesn’t send her to Papers, which turns her away, and the counter refuses her with the same words’; tests/defects-r3d-1.test.ts ‘says it’s on its way, as Papers does, from the last weeks at school through graduation to the card’; no test has a bank take the ID card",
+      "status": "partial",
+      "issue": "A CT-born holder of a CT license is refused ('It serves as your ID'), which is correct.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: bank.switch via photoIdOf (lending.ts:1092).",
+        "now": "photoIdOf is read by an account at a new bank and by bank.switch; a US switch has had no service to run since 2026-10-10, so the gate is reached through bank.open_current. The gate is tested with a passport (commands-kept.test.ts); no test has a new bank take the ID card itself, which is what the card is for. A CT-born holder of a CT license is refused (‘It serves as your ID’), which is correct. The Social Security line of the refusal is said three ways from 2026-10-12: a student at school is sent to Papers for the number, one whose number is on its way, a graduate’s too, is told so, and anyone else is told SLATE issues it only to an F-1 student at school (defects-r7-1.test.ts, defects-r3d-1.test.ts); until then everyone without one was sent to Papers, which turns a graduate away.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "documents.apply_opt",
@@ -23,11 +30,18 @@
       "downstream": "usStatusEnds holds status while it is pending (permission.ts:310); on approval OPT_WEEK and US_STATUS (permission.ts:376-377)",
       "persistent": "permit document, idleDays",
       "explanation": "WorkPane copy 'Twelve months to work in your field' (Documents.tsx:194); the 'OPT Approved' notice (permission.ts:378)",
-      "tests": "tests/permission.test.ts 'is decided in thirty business days with premium processing...', 'ends after more than ninety days in all without work'",
-      "status": "verified",
-      "issue": "There is no work to do on it, so the OPT is always cancelled after about 91 days, with no grace and the player put out of status. See finding 1.",
+      "tests": "tests/permission.test.ts ‘is decided in thirty business days with premium processing...’, ‘ends after more than ninety days in all without work’ (a graduate’s F-1 put in by hand); tests/papers-fixes.test.ts ‘offers OPT standard first and premium by name, and is answered once OPT is applied for’; checking less: tests/permission.test.ts ‘holds while OPT runs and 60 days after it...’ (usStatusEnds, the permit set pending by hand)",
+      "status": "partial",
+      "issue": "There is no work to do on it, so the OPT is always canceled after about 91 days, with no grace and the player put out of status. See finding 1.",
       "auditStatus": "partial",
-      "settled": "The panel says OPT ends after its 90 days without work here; the status decision offers standard first and premium by name, and is answered by applying (tests/papers-fixes.test.ts)."
+      "settled": "The panel says OPT ends after its 90 days without work here; the status decision offers standard first and premium by name, and is answered by applying (tests/papers-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names. Verified on permission.test.ts and papers-fixes.test.ts, where usStatusEnds holding status while the application is pending is checked on a permit set pending by hand.",
+        "now": "The panel says OPT ends after its 90 days without work here; the status decision offers standard first and premium by name, and is answered by applying (tests/papers-fixes.test.ts). The New Haven student reaches it as an international student at the program’s end (optRefusal: an F-1, a degree completed, the window from 90 days before the end to 60 after); every test applies on a graduate’s F-1 put in a life in New York by hand. Through the command and the clock, it’s decided in its business days and runs from the program’s end, its days without work are counted to its end, and the status goes with it, with no grace (permission.test.ts). The status held while it’s pending is tested only on usStatusEnds with the permit set pending by hand.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "documents.apply_passport",
@@ -35,12 +49,18 @@
       "entry": "Passport tab 'Apply For One'/'Renew It'(+Faster) (Documents.tsx:107-109)",
       "reads": "PASSPORTS[iso], age, a pending one (documents.ts:397-404)",
       "changes": "fee; a pending passport; DECIDED_KIND (documents.ts:300-317)",
-      "downstream": "documents.decided issuePassport cancels the old one (documents.ts:407-417); photoIdOf -> bank.switch (lending.ts:1092)",
+      "downstream": "documents.decided issuePassport cancels the old one; photoIdOf, read by an account at a new bank (bank.open_current) and by bank.switch",
       "persistent": "documents",
       "explanation": "toast, notice '<name> Issued' (documents.ts:496), DocumentList",
       "tests": "tests/documents.test.ts 'is applied for at the office’s fee and issued in its days...'; tests/commands-kept.test.ts 'lets a new bank take somebody only with a photo ID in force, which a passport gives'",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: photoIdOf -> bank.switch (lending.ts:1092).",
+        "now": "photoIdOf is read by an account at a new bank and by bank.switch; the passport test goes through bank.open_current, since a US switch has had no service to run since 2026-10-10."
+      },
+      "read": true
     },
     {
       "id": "documents.naturalize",
@@ -66,11 +86,12 @@
       "downstream": "licenseReplaceFee",
       "persistent": "doc.policeReport",
       "explanation": "toast 'A police report filed.'",
-      "tests": "tests/coverage-gaps-papers.test.ts",
+      "tests": "tests/coverage-gaps-papers.test.ts ‘is replaced by mail, free when stolen with the police’s report...’ (the New Yorker at Yale: filed through the command, and the license replaced free; unfiled, $17.50); tests/commands-kept.test.ts ‘files a police report for a document reported lost, once, where the police take one online’",
       "status": "verified",
       "issue": "Decorative in play: nothing in New Haven reads the report.",
       "previous": "unresolved",
-      "settled": "Read by New York’s free replacement of a stolen license (MV-78B), which the default New Yorker at Yale reaches by mail. For other documents it’s filed and changes nothing, which the research found true of every other replacement."
+      "settled": "Read by New York’s free replacement of a stolen license (MV-78B), which the default New Yorker at Yale reaches by mail. For other documents it’s filed and changes nothing, which the research found true of every other replacement.",
+      "read": true
     },
     {
       "id": "documents.renew_residence",
@@ -91,30 +112,44 @@
     {
       "id": "documents.replace_idcard",
       "kind": "command",
-      "entry": "DocumentList 'Replace It' on a lost ID card (Documents.tsx:68)",
-      "reads": "idReplaceRefusal: lost, a rule exists, issued where they live (identity.ts:80-87)",
-      "changes": "fee; the lost card cancelled; a pending copy; ID_CARD_KIND (identity.ts:98-112)",
-      "downstream": "documents.idcard_arrives sets it valid -> photoIdOf -> bank.switch",
+      "entry": "DocumentList 'Replace It' on a lost ID card (Documents.tsx:86)",
+      "reads": "idReplaceRefusal: lost, a rule exists, issued where they live (identity.ts:141-148)",
+      "changes": "fee; the lost card canceled; a pending copy; ID_CARD_KIND (identity.ts:159-174)",
+      "downstream": "documents.idcard_arrives sets it valid -> photoIdOf, read by an account at a new bank (bank.open_current)",
       "persistent": "documents",
       "explanation": "toast with the arrival date",
-      "tests": "tests/idreplace.test.ts 'is replaced in New York for $8 and comes in three weeks'",
-      "status": "verified",
-      "issue": "Cancelling the lost card stops a second replacement."
+      "tests": "tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’ (the card put in by hand); no test has a bank take the replacement",
+      "status": "partial",
+      "issue": "Cancelling the lost card stops a second replacement.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: documents.idcard_arrives sets it valid -> photoIdOf -> bank.switch. Verified on idreplace.test.ts, which checks the replacement valid and nothing that reads it.",
+        "now": "Reported lost, charged, and valid in three weeks, through the commands and the clock, on a New York card put in a life in New York by hand (idreplace.test.ts); the New Haven student reaches it with a Connecticut card, replaced there. photoIdOf, read by an account at a new bank (bank.open_current) takes it, and no test has a bank take a replaced card. A US switch, which read it too, has had no service to run since 2026-10-10."
+      },
+      "read": true
     },
     {
       "id": "documents.replace_license",
       "kind": "command",
-      "entry": "DocumentList 'Replace It' on a lost licence (Documents.tsx:67)",
-      "reads": "licenseReplaceRefusal: issuer must equal licensingOf(currentLocationId) (identity.ts:61-68)",
-      "changes": "fee; the old one cancelled; a pending copy; ID_CARD_KIND (identity.ts:137-152)",
-      "downstream": "photoIdOf -> bank.switch; idCardRefusal (identity.ts:44)",
+      "entry": "DocumentList 'Replace It' on a lost license (Documents.tsx:85)",
+      "reads": "licenseReplaceRefusal: lost, a rule exists, and the issuer is licensingOf(currentLocationId) or sends one by mail out of state (from 2026-10-10; identity.ts:122-129)",
+      "changes": "fee; the old one canceled; a pending copy, its term and REAL ID kept; ID_CARD_KIND (identity.ts:209-224)",
+      "downstream": "photoIdOf, read by an account at a new bank (bank.open_current); idCardRefusal (identity.ts:80)",
       "persistent": "documents",
       "explanation": "toast",
-      "tests": "tests/coverage-gaps-papers.test.ts",
-      "status": "verified",
-      "issue": "Licences are issued only by the birth state (documents.ts:475-484), so only a CT-born player can replace one. Its only use now is as photo ID, because driving went.",
+      "tests": "tests/coverage-gaps-papers.test.ts ‘is replaced by mail, free when stolen with the police’s report, and not where its issuer sends none out of state’ (the New Yorker at Yale, through the commands), ‘from California is refused, said why...’; tests/commands-kept.test.ts ‘replaces a lost license where it was issued, at the issuer’s fee, free in New York stolen with the police’s report’; no test has a bank take the replaced license, or idCardRefusal read it",
+      "status": "partial",
+      "issue": "Licenses are issued only by the birth state (documents.ts:475-484), so only a CT-born player can replace one. Its only use now is as photo ID, because driving went.",
       "previous": "partial",
-      "settled": "New York replaces by mail from New Haven (MV-44), free when stolen with the police’s MV-78B; California and Connecticut say why not."
+      "settled": "New York replaces by mail from New Haven (MV-44), free when stolen with the police’s MV-78B; California and Connecticut say why not.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: photoIdOf -> bank.switch; idCardRefusal. Verified on tests/coverage-gaps-papers.test.ts, which checks the new license valid and nothing that reads it.",
+        "now": "New York replaces by mail from New Haven (MV-44), free when stolen with the police’s MV-78B, and Connecticut at its fee, through the commands and the clock (coverage-gaps-papers.test.ts, on the New Yorker at Yale; commands-kept.test.ts); California says why not. What reads a replaced license isn’t tested: photoIdOf, read by an account at a new bank (bank.open_current), and idCardRefusal, which refuses an ID card to somebody holding one. A US switch, which read it too, has had no service to run since 2026-10-10."
+      },
+      "read": true
     },
     {
       "id": "documents.report_lost",
@@ -122,14 +157,21 @@
       "entry": "DocumentList 'Report Lost'/'Report Stolen' on any valid document, permits and visas included (Documents.tsx:64, WorkPane DocumentList kinds permit,visa)",
       "reads": "doc status valid",
       "changes": "status lost; stolen; a lost passport cancels what was issued on it (documents.ts:319-327)",
-      "downstream": "photoIdOf/bank.switch, replace_*, police_report; for a lost permit, OPT_WEEK stops (permission.ts:418)",
+      "downstream": "photoIdOf, read by an account at a new bank (bank.open_current); replace_idcard, replace_license, police_report",
       "persistent": "documents",
       "explanation": "toast",
-      "tests": "tests/idreplace.test.ts; tests/commands-kept.test.ts; tests/documents.test.ts",
-      "status": "verified",
+      "tests": "tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; tests/coverage-gaps-papers.test.ts ‘is replaced by mail, free when stolen with the police’s report...’; tests/commands-kept.test.ts ‘files a police report for a document reported lost, once...’, ‘replaces a lost license where it was issued...’; tests/papers-fixes.test.ts ‘isn’t reported lost; a passport is’; tests/documents.test.ts; no test checks a document reported lost refused as photo ID",
+      "status": "partial",
       "issue": "Permits and residence can be 'lost', which changes legal status. See finding 2.",
       "auditStatus": "partial",
-      "settled": "Fixed: only passports, licenses, IDPs and ID cards (LOSABLE) (tests/papers-fixes.test.ts)."
+      "settled": "Fixed: only passports, licenses, IDPs and ID cards (LOSABLE) (tests/papers-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names. Downstream: photoIdOf/bank.switch, replace_*, police_report; for a lost permit, OPT_WEEK stops (permission.ts:418).",
+        "now": "Since 2026-10-10 only a card or a book a person carries can be reported lost (LOSABLE): a visa, a permit or an authorization is a status that holds, which papers-fixes.test.ts checks through the command; until then a lost OPT stopped counting its days without work. What reads a report is tested through the commands: a replacement asked for (idreplace.test.ts, commands-kept.test.ts), and the police’s report and the free license it brings (coverage-gaps-papers.test.ts, commands-kept.test.ts). No test checks that a document reported lost is no longer taken as photo ID by a new bank (photoIdOf, bank.open_current): the bank tests cancel the documents by hand.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "documents.residence",
@@ -151,7 +193,7 @@
       "kind": "command",
       "entry": "ResidencePanel 'Settle' (Documents.tsx:236)",
       "reads": "settleRefusal: years since the first residence ever held (residence.ts:141-154)",
-      "changes": "fee; temporary cancelled; Residente Permanente granted",
+      "changes": "fee; temporary canceled; Residente Permanente granted",
       "downstream": "naturalize MX only; GB settlement is unreachable",
       "persistent": "documents",
       "explanation": "toast 'Settled'",
@@ -170,12 +212,19 @@
       "downstream": "benefits.assistance_month posts SNAP to an EBT account, which spending.ts:buyTheDaysFood draws on first (spending.ts:300-305)",
       "persistent": "person.assistance, EBT account",
       "explanation": "Panel stats; 'SNAP Paid' notice",
-      "tests": "tests/coverage-gaps-papers.test.ts",
-      "status": "verified",
+      "tests": "tests/assistance.test.ts ‘puts a New Yorker’s SNAP on an EBT card the groceries draw on first, and pays three months in three years without 80 hours’ work’ (a life in New York, its balances emptied by hand; buyTheDaysFood called directly); checking less: tests/coverage-gaps-papers.test.ts ‘in the summer, without 20 hours of work a week, is refused...’ and ‘counts work-study as nothing and interest as unearned’ (snapStudentRefusal and snapIncome, functions); no test has the New Haven student apply",
+      "status": "partial",
       "issue": "SNAP works for a US citizen in CT. Ontario Works and BC can't be reached. The ABAWD hours are hard-coded to 0 (assistance.ts:373) even though work-study hours exist. All income is passed as earned (assistance.ts:382). No student rule.",
       "auditStatus": "partial",
       "settled": "SNAP’s student rule (7 CFR 273.5) and income by kind (273.9) for the reachable program; Ontario Works and BC stay unreachable (no Canadian life).",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-papers.test.ts, which never applies: it calls snapStudentRefusal and snapIncome, functions.",
+        "now": "Applied for through the command only by a New Yorker who isn’t a student, every balance emptied by hand: SNAP onto the EBT card by the clock, the day’s groceries drawn from it first (buyTheDaysFood called directly), and three months in three years (assistance.test.ts). SNAP’s student rule and income by kind, which the New Haven student’s application turns on, are tested as functions (coverage-gaps-papers.test.ts). No test has the New Haven student apply."
+      },
+      "read": true
     },
     {
       "id": "benefits.claim",
@@ -186,12 +235,19 @@
       "downstream": "benefits.week pays and recordBenefit -> tax return income (taxreturn.ts:323)",
       "persistent": "unemployment record, ledger, earnings",
       "explanation": "Claim panel, 'Your Waiting Week', 'Your Unemployment Claim Ended'",
-      "tests": "tests/coverage-gaps-papers.test.ts",
-      "status": "verified",
+      "tests": "tests/coverage-gaps-papers.test.ts ‘is refused a full-time student, and filed once they’ve left school’ (the wages typed in and the standing set by hand: accepted); tests/safetynet.test.ts ‘pays unemployment on 40 times the benefit, the two best quarters over 26...’ (a life in New Haven that isn’t a student, the wages typed in: filed through the command, its first week paid), ‘is claimed where they live when the wages’ state isn’t kept...’ (New York: the waiting week, two weeks paid, the year’s income); the return’s reading on a benefit recorded by hand: tests/safetynet.test.ts ‘leaves unemployment out of California’s tax, and counts it in New York’s’; no test earns the base period or leaves school through a command before claiming",
+      "status": "partial",
       "issue": "It can be reached from Summer Cabaret wages. But every week is paid in full while work-study and Cabaret pay go on, and there's no availability or student check. The UK, Ireland and Mexico City branches can't be reached. See finding 4.",
       "auditStatus": "partial",
       "settled": "Connecticut’s full-time student rule (CGS 31-235(b)) refuses the claim while enrolled; filed after leaving school; weeks read their wages (workedBetween).",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-papers.test.ts alone, which types in $4,000 of wages for each of five quarters and sets the standing to graduated by hand, and checks only that the claim is accepted, while its Downstream is benefits.week’s pay and recordBenefit into the return.",
+        "now": "Reachable at its edge: a Summer Cabaret stipend’s weeks are Connecticut wages (recordWages, systems/school.ts), enough for 40 times the weekly benefit, and a claim pays once the student has left school (studentUnavailable, from 2026-10-10). Every test types the base period in by hand. On the student, the claim is refused while enrolled and accepted with the standing set to graduated by hand (coverage-gaps-papers.test.ts). On a life in New Haven that isn’t a student, it’s filed through the command and its first week paid by the clock (safetynet.test.ts); in New York, its waiting week goes unpaid, two weeks are paid, and the year’s unemployment income holds them (safetynet.test.ts). No test earns the base period by a summer’s stipend or leaves school through a command before claiming, and the return reads the benefit only where it’s recorded by hand."
+      },
+      "read": true
     },
     {
       "id": "benefits.ei_register",
@@ -284,22 +340,29 @@
       "downstream": "tax.refund pays; tax.notice collection and levy; tax.substitute skipped once filed (taxreturn.ts:545)",
       "persistent": "person.returns, ledger",
       "explanation": "Return table line by line; toasts",
-      "tests": "tests/safetynet.test.ts 'is ready in February, filed for a refund 21 days on, or a balance from the bank, or owed'; tests/retirement.test.ts 'is left to them if they file in the months the IRS gives'",
+      "tests": "tests/safetynet.test.ts 'is ready in February, filed for a refund 21 days on, or a balance from the bank, or owed'; tests/retirement.test.ts 'is left to them if they file in the months the IRS gives' (New York lives no new one lives, the year’s wages recorded by hand: a New Haven life files the IRS’s and Connecticut’s)",
       "status": "verified",
-      "issue": "It can be reached: interest, scholarship, work-study and Cabaret income all produce a return."
+      "issue": "It can be reached: interest, scholarship, work-study and Cabaret income all produce a return.",
+      "read": true
     },
     {
       "id": "tax.pay",
       "kind": "command",
-      "entry": "Returns tab 'Pay What’s Owed' (PapersWorkspace.tsx:144)",
+      "entry": "Tax Returns tab ‘Pay’ (PapersWorkspace.tsx)",
       "reads": "owedOn (taxreturn.ts:92-101)",
       "changes": "pays; deletes owed; cancels pending notices (taxreturn.ts:633-643)",
       "downstream": "stops tax.notice levies",
       "persistent": "returns",
       "explanation": "'Still Owed' row",
-      "tests": "tests/safetynet.test.ts (refused when the bank is short); tests/journey-money.test.ts",
+      "tests": "tests/tax-lifecycle.test.ts ‘applies each part to the tax, then the penalty, then the interest...’, which pays the year off and checks no notice of it is still pending; tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days...’; tests/safetynet.test.ts (refused when the bank is short); tests/journey-money.test.ts",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Entry ‘Pay What’s Owed’, a label the screen doesn’t have; verified on tests that pay and refuse, with no test of the levies it stops.",
+        "now": "The button says Pay. Paying goes to the tax, then the penalty, then the interest, and paid off, no notice of the year is left pending, so no levy follows (tax-lifecycle.test.ts); paid in full, it releases a federal lien (liens-and-arrangements.test.ts). Until a review of 2026-10-12 this row said no test checked the notices called off, and was partial: that test’s last payment checks it, and the IRS’s collection keeps a notice on the calendar until then, at every step while anything is owed."
+      },
+      "read": true
     },
     {
       "id": "citizenship.decided",
@@ -321,33 +384,46 @@
       "kind": "scheduled",
       "entry": "apply_passport (and legacy visas and authorizations)",
       "reads": "pending documents past readyAt, waitsOnVisit (documents.ts:289-298)",
-      "changes": "issue(): valid, expiry, the old passport cancelled",
-      "downstream": "photoIdOf -> bank.switch",
+      "changes": "issue(): valid, expiry, the old passport canceled",
+      "downstream": "photoIdOf, read by an account at a new bank (bank.open_current)",
       "persistent": "documents",
       "explanation": "notice '<name> Issued'",
-      "tests": "tests/documents.test.ts 'a passport ...'",
+      "tests": "tests/documents.test.ts ‘is applied for at the office’s fee and issued in its days, expedited faster for more; the new one cancels the old...’; tests/commands-kept.test.ts ‘lets a new bank take somebody only with a photo ID in force, which a passport gives’ (issued by the clock, then the account opened)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: photoIdOf -> bank.switch, on tests/documents.test.ts alone.",
+        "now": "A passport issued on its day cancels the old one and what was issued on it (documents.test.ts), and is taken as photo ID by a new bank, which refused the account without it (commands-kept.test.ts). A US switch, which read it too, has had no service to run since 2026-10-10."
+      },
+      "read": true
     },
     {
       "id": "documents.idcard_arrives",
       "kind": "scheduled",
-      "entry": "replace_idcard, replace_license",
+      "entry": "replace_idcard, replace_license, and apply_idcard for somebody not a citizen at a US state’s counter (from 2026-10-10)",
       "reads": "the pending document",
-      "changes": "valid, issuedAt (identity.ts:113-120)",
-      "downstream": "photoIdOf",
+      "changes": "valid, issuedAt (identity.ts:175-184)",
+      "downstream": "photoIdOf, read by an account at a new bank (bank.open_current)",
       "persistent": "documents",
-      "explanation": "DocumentList status (no notice)",
-      "tests": "tests/idreplace.test.ts",
-      "status": "verified",
-      "issue": "Fires no notice when the card arrives."
+      "explanation": "DocumentList status; the ‘<name> Arrived’ notice (from 2026-10-10)",
+      "tests": "tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; no test has a bank take the card",
+      "status": "partial",
+      "issue": "Fires no notice when the card arrives.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Explained by the DocumentList status (no notice). Note: ‘Fires no notice when the card arrives’. Verified on idreplace.test.ts, which checks the card valid on its day and nothing that reads it.",
+        "now": "As documents.replace_idcard: valid on its day (idreplace.test.ts), and no test has a bank take it. A US switch, which read it too, has had no service to run since 2026-10-10.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "documents.opt_week",
       "kind": "scheduled",
       "entry": "OPT approval",
       "reads": "OPT inForce",
-      "changes": "idleDays += 7 every week; over 90 it is cancelled with endedAt (permission.ts:415-429)",
+      "changes": "idleDays += 7 every week; over 90 it is canceled with endedAt (permission.ts:415-429)",
       "downstream": "scheduleUsStatus -> out of status -> marketplace (health.ts:308,425)",
       "persistent": "permit",
       "explanation": "notice 'OPT Ended'",
@@ -374,14 +450,19 @@
       "id": "documents.us_status",
       "kind": "scheduled",
       "entry": "load (index.ts:262,275), OPT events, missed visits",
-      "reads": "F-1, permits, studying (permission.ts:306-336,384-413)",
-      "changes": "the 'Your US Status Is Ending' decision; usOutOfStatus; F-1 cancelled",
+      "reads": "F-1, permits, studying, and a dismissal, withdrawal or degree withheld, which ends the program that day (programEnd, from 2026-10-10)",
+      "changes": "the 'Your US Status Is Ending' decision; usOutOfStatus; F-1 canceled",
       "downstream": "health.ts lawfullyPresent -> mayEnroll refuses (health.ts:308), a marketplace plan ends (health.ts:425); authorizationFor (documents.ts:251)",
       "persistent": "person.usOutOfStatus",
       "explanation": "WorkPane 'Your US Status'; notice 'Out Of Status'",
-      "tests": "tests/permission.test.ts 'ends after more than ninety days...' (usOutOfStatus set); tests/commands-kept.test.ts 'sells marketplace cover only to somebody lawfully present...'",
+      "tests": "tests/permission.test.ts ‘ends after more than ninety days...’ (usOutOfStatus set); tests/commands-kept.test.ts ‘sells marketplace cover only to somebody lawfully present...’; tests/papers-fixes.test.ts ‘keeps their status fifteen days from the dismissal, not to the degree’s end’ (its grace is STATUS_GRACE_DAYS.dismissed, which is 0)",
       "status": "verified",
-      "issue": "A dismissal doesn't reschedule it (finding 7)."
+      "issue": "A dismissal doesn't reschedule it (finding 7).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘A dismissal doesn’t reschedule it (finding 7)’.",
+        "now": "Since 2026-10-10 a dismissal ends the program that day, and the status runs from it, where until then it ran to the degree’s end and sixty days past it (tests/papers-fixes.test.ts)."
+      }
     },
     {
       "id": "documents.visit",
@@ -407,12 +488,19 @@
       "downstream": "buyTheDaysFood draws on the EBT",
       "persistent": "assistance, ledger",
       "explanation": "'SNAP Paid', 'SNAP Time Limit Reached'",
-      "tests": "tests/coverage-gaps-papers.test.ts",
-      "status": "verified",
+      "tests": "tests/assistance.test.ts ‘puts a New Yorker’s SNAP on an EBT card the groceries draw on first...’ (a life in New York, its balances emptied by hand)",
+      "status": "partial",
       "issue": "The provincial branch can't be reached. The ABAWD hours are always 0.",
       "auditStatus": "partial",
       "settled": "As benefits.assistance.",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-papers.test.ts, which runs no month.",
+        "now": "As benefits.assistance: paid by the clock onto the EBT card for a New Yorker who isn’t a student, three months in three years and then the time limit’s notice (assistance.test.ts); the student’s rule it reads is tested as a function."
+      },
+      "read": true
     },
     {
       "id": "benefits.week",
@@ -423,12 +511,19 @@
       "downstream": "tax return income",
       "persistent": "claim.paid, earnings",
       "explanation": "claim panel",
-      "tests": "tests/coverage-gaps-papers.test.ts",
-      "status": "verified",
+      "tests": "tests/safetynet.test.ts ‘pays unemployment on 40 times the benefit...’ (the first week paid), ‘is claimed where they live when the wages’ state isn’t kept...’ (the waiting week, two weeks paid, the year’s income); no test has a week pay nothing while enrolled",
+      "status": "partial",
       "issue": "Pays in full despite the work-study and Cabaret pay the game still makes.",
       "auditStatus": "partial",
       "settled": "As benefits.claim: a week while enrolled pays nothing.",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-papers.test.ts, where no claim pays a week.",
+        "now": "Paid by the clock on a claim filed through the command, the base period typed in (safetynet.test.ts): Connecticut’s first week, with no waiting week, and New York’s unpaid waiting week, then two weeks paid into the year’s unemployment income. No test has a week while enrolled pay nothing (studentUnavailable, read each week), and the return reads the income only where it’s recorded by hand."
+      },
+      "read": true
     },
     {
       "id": "benefits.desempleo_month",
@@ -550,12 +645,210 @@
       "tests": "tests/safetynet.test.ts 'is ready in February, filed for a refund 21 days on...'",
       "status": "verified",
       "issue": ""
+    },
+    {
+      "id": "tax.pay_state",
+      "kind": "command",
+      "entry": "Tax Returns: a state’s Pay (PapersWorkspace.tsx:107)",
+      "reads": "owedToState; no more than is owed; the bank",
+      "changes": "pays the state in its own order (Connecticut’s: penalty, interest, then tax); stateDue parts (statetax.ts:911)",
+      "downstream": "the state’s notices and levy, which stop once it’s paid (STATE_NOTICE_KIND); a state lien paid",
+      "persistent": "returns[].stateDue, ledger",
+      "explanation": "The return’s state rows",
+      "tests": "tests/state-tax.test.ts ‘Connecticut: 10% once past the due date, 1% a month simple on the tax, a payment to the penalty first’ (a New Haven life that isn’t the student’s), ‘charges the same across the due date whether the save is reopened or not, and refuses paying a state more than it’s owed’ (New York); tests/liens-and-arrangements.test.ts ‘Connecticut: filed with its notice of intent to levy; paid; released only on request, and once’ (the return put on by hand)",
+      "status": "verified",
+      "issue": "Through the command, Connecticut’s balance is paid penalty first on a New Haven life, a state is refused more than it’s owed, and a lien paid off is marked paid. The year’s wages or its return are put in by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.amend",
+      "kind": "command",
+      "entry": "Tax Returns: Amend (PapersWorkspace.tsx:246)",
+      "reads": "the year’s record changed since filing; within three years of filing (two of paying)",
+      "changes": "amended[] with each authority’s part; TAX_AMEND_KIND in ten weeks (taxreturn.ts:1352)",
+      "downstream": "the amendment’s processing: more tax owed with interest from the due date, less refunded with the IRS’s interest; newLiability, a plan defaulted or joined",
+      "persistent": "returns[].amended",
+      "explanation": "‘Your Amended <year> Return Is Processed’",
+      "tests": "tests/tax-lifecycle.test.ts ‘applies each part to the tax, then the penalty, then the interest...’, ‘an amended return showing less tax takes it off what’s owed first...’, ‘runs out three years after filing’ (New York lives); tests/state-tax.test.ts ‘California: 5% and half a percent a month...’ (Los Angeles); tests/finance-paths.test.ts ‘an amended return’s tax joins a plan where it adds two payments or less...’",
+      "status": "verified",
+      "issue": "Through the command and the clock, on New York and California lives no new one lives, an amendment is processed in ten weeks, each authority’s part owed or refunded, and joins or defaults a plan. The record’s change is a corrected W-2 set by hand. No test amends a Connecticut part, the only state a student files.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.apply_plan",
+      "kind": "command",
+      "entry": "Tax Returns: the IRS’s payment plan (PapersWorkspace.tsx:313)",
+      "reads": "planRefusal: tax owed on a filed year; short (180 days, to $100,000) or monthly (to $50,000, at least what’s owed over 72 months); the fee by how it’s paid and the income",
+      "changes": "taxPlan pending, decided after its days (taxreturn.ts:1178)",
+      "downstream": "TAX_PLAN_KIND payments and TAX_PLAN_DEFAULT_KIND; nextNotice holding collection off a plan in force; the late-payment penalty at a quarter point a month",
+      "persistent": "person.taxPlan",
+      "explanation": "The plan panel; Notice CP523",
+      "tests": "tests/finance-paths.test.ts ‘PLAYER JOURNEY: a monthly plan approved online, the penalty halved...’, ‘ends after CP523’s thirty days uncaught, and collection resumes’, ‘a short-term plan has no fee and is paid in full by its 180 days’ (New York lives, wages recorded by hand); tests/state-tax.test.ts ‘PLAYER JOURNEY: an IRS plan covers federal tax only...’ (a New Haven life)",
+      "status": "verified",
+      "issue": "Through the command and the clock, a monthly plan is approved, collection stops and the penalty’s rate halves, its payments are taken, a missed one is caught up or ends it and collection resumes; a short plan has no fee and is paid by its days; on a New Haven life it covers the IRS’s balance alone.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.revise_plan",
+      "kind": "command",
+      "entry": "Tax Returns: the plan’s Revise (PapersWorkspace.tsx:298)",
+      "reads": "a monthly plan in force or in default; the IRS’s $6",
+      "changes": "monthly; fee; status active (taxreturn.ts:1258)",
+      "downstream": "the plan’s payments at the new amount; its default lifted",
+      "persistent": "person.taxPlan",
+      "explanation": "The plan panel",
+      "tests": "tests/finance-paths.test.ts ‘an amended return’s tax joins a plan where it adds two payments or less; past that, CP523 until it’s revised for its fee’ (a New York life)",
+      "status": "partial",
+      "issue": "Through the command, a plan defaulted by an amendment’s tax is revised for its fee and is active again. No test plays a payment at the revised amount.",
+      "traced": "2026-10-12",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Traced and read by the third review of 2026-10-12, and verified on a test that checks the revision’s fee and the plan active again, while its Note said no test plays a payment at the revised amount.",
+        "now": "Through the command, a plan an amendment’s tax put in default is revised for the IRS’s fee and is active again (finance-paths.test.ts:195-197, a New York life); its other call, in defects-g8-8.test.ts, checks a refusal. No test plays a payment at the revised amount, or runs the clock past the default’s date to show the revision kept the plan from ending, the two readers the row names."
+      }
+    },
+    {
+      "id": "tax.catch_up_plan",
+      "kind": "command",
+      "entry": "Tax Returns: the plan’s Catch Up (PapersWorkspace.tsx:292)",
+      "reads": "a plan behind; the bank",
+      "changes": "pays what’s missed; status active (taxreturn.ts:1242)",
+      "downstream": "TAX_PLAN_DEFAULT_KIND not ending it",
+      "persistent": "person.taxPlan, ledger",
+      "explanation": "Notice CP523",
+      "tests": "tests/finance-paths.test.ts ‘PLAYER JOURNEY: a monthly plan approved online, the penalty halved, collection stopped, payments taken, one missed and caught up’ (a New York life)",
+      "status": "partial",
+      "issue": "Through the command, a missed payment is caught up and the plan is active again; its twin left behind ends and collection resumes.",
+      "traced": "2026-10-12",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Traced and read by the third review of 2026-10-12, and verified on the catch-up and its twin left behind.",
+        "now": "Through the command, a missed payment is caught up, the plan is active again, and the ledger balances (finance-paths.test.ts:159-167, a New York life); its twin left behind ends after CP523’s thirty days and collection resumes (finance-paths.test.ts:170-181). The caught-up plan isn’t played past the date the default would have ended it, so what reads the catch-up (TAX_PLAN_DEFAULT_KIND, its notice canceled) isn’t checked: the twin shows what happens without it, not that the plan is spared."
+      }
+    },
+    {
+      "id": "tax.apply_state_plan",
+      "kind": "command",
+      "entry": "Tax Returns: a state’s plan (PapersWorkspace.tsx:176)",
+      "reads": "statePlanRefusal by the state’s own rules (months, ceiling, down payment, returns filed)",
+      "changes": "statePlans[state] pending, decided after its days (statetax.ts:927)",
+      "downstream": "STATE_PLAN_KIND payments and STATE_PLAN_END_KIND; stateNextNotice holding collection off; a state lien dropped under a plan, or filed for a long one",
+      "persistent": "person.statePlans",
+      "explanation": "The state’s rows",
+      "tests": "tests/state-tax.test.ts ‘New York: half a percent a month and 9.5% a year from the due date; a missed plan payment...’, ‘California: 5% and half a percent a month; a plan’s $34 added...’; tests/liens-and-arrangements.test.ts ‘California: a plan set up after the notice of intent, and no lien is filed’, ‘Hawaii: a plan over twelve months files a lien...’, ‘New Mexico: twelve months with no lien...’, ‘Pennsylvania’s extended plan once approved...’, ‘Louisiana: 20% down offered, never required...’, ‘the District: its 10% down taken with the request...’",
+      "status": "verified",
+      "issue": "Through the command and the clock, a state’s plan is decided, paid, missed and caught up or ended, a lien dropped or filed by its rules, on New York, California, New Mexico, Pennsylvania, Louisiana, District and Hawaii lives, none a life a new one lives. No test asks for Connecticut’s plan, the only one a student’s life files; its fee, decision time and missed-payment rule weren’t found and are SLATE’s.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.catch_up_state_plan",
+      "kind": "command",
+      "entry": "Tax Returns: a state plan’s Catch Up (PapersWorkspace.tsx:163)",
+      "reads": "a state plan missed; the bank",
+      "changes": "pays what’s missed; status active (statetax.ts:1092)",
+      "downstream": "STATE_PLAN_END_KIND not ending it",
+      "persistent": "person.statePlans",
+      "explanation": "The state’s rows",
+      "tests": "tests/state-tax.test.ts ‘New York: half a percent a month and 9.5% a year from the due date; a missed plan payment made up by the next due date, then ended’ (a New York life)",
+      "status": "partial",
+      "issue": "Through the command, New York’s missed payment is made up and the plan is active, and left behind after, it ends and the state’s notices resume, on a New York life no new one lives. No test catches up Connecticut’s.",
+      "traced": "2026-10-12",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Traced and read by the third review of 2026-10-12, and verified on the catch-up and the plan’s end after it.",
+        "now": "Through the command, New York’s missed payment is made up and the plan is active (state-tax.test.ts:126-130, a New York life no new one lives). The test then empties the bank and plays two months, and the plan ends on the next payment missed (state-tax.test.ts:131-135), as it would have had the catch-up failed, so it can’t tell one that worked from one that didn’t: what reads the catch-up (STATE_PLAN_END_KIND, canceled by it) isn’t checked. No test catches up Connecticut’s, the plan a student’s life files for."
+      }
+    },
+    {
+      "id": "tax.lien_release",
+      "kind": "command",
+      "entry": "The lien panel’s Ask For Its Release (LienPanels.tsx:68)",
+      "reads": "lienReleaseRefusal: paid in full; a state that releases only on request (Connecticut’s), its release fee where it has one",
+      "changes": "release asked; STATE_LIEN_KIND step (statetax.ts:1012)",
+      "downstream": "the lien released after the state’s days, recorded where it was filed",
+      "persistent": "returns[].stateDue[].lien",
+      "explanation": "The lien panel and its history",
+      "tests": "tests/liens-and-arrangements.test.ts ‘Connecticut: filed with its notice of intent to levy; paid; released only on request, and once’, ‘Hawaii: a plan over twelve months files a lien with its $25 fee; paid off, its release asks the $25 release fee’ (the return put on by hand, on a New Haven life that isn’t the student’s, and a Honolulu one)",
+      "status": "verified",
+      "issue": "Through the command and the clock, Connecticut’s lien, filed by the calendar and paid, is released only on request, once, after its days; Hawaii’s asks its $25. The return owing is put on by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.lien_dispute",
+      "kind": "command",
+      "entry": "The lien panel’s Filed In Error (LienPanels.tsx:69)",
+      "reads": "lienDisputeRefusal: a lien filed on an assessment the taxpayer’s own return showed was nothing",
+      "changes": "the dispute asked; decided after the state’s days (statetax.ts:1031)",
+      "downstream": "the lien withdrawn; its fee off what’s owed or back to the bank",
+      "persistent": "returns[].stateDue[].lien",
+      "explanation": "The lien panel",
+      "tests": "tests/liens-and-arrangements.test.ts ‘one filed on an assessment their own return shows was nothing: withdrawn on request as in error, its fee back...’ (California’s lien, its assessment, the lien and the return each set by calling the engine’s functions)",
+      "status": "unresolved",
+      "issue": "Reached only by a fixture: California’s lien on a non-filer’s assessment, set by calling the engine’s functions, is withdrawn through the command with its $10 back, and one that secured tax owed is refused. A student files only in Connecticut, and no test withdraws Connecticut’s lien as filed in error. Owner recommendation: keep it for the place a life might file, or test Connecticut’s.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.federal_lien_withdraw",
+      "kind": "command",
+      "entry": "The IRS lien panel’s Withdraw (LienPanels.tsx:105)",
+      "reads": "federalLienWithdrawRefusal: released after payment with the last three years’ returns filed, or filed in error",
+      "changes": "Form 12277; FEDERAL_LIEN_KIND step (taxreturn.ts:284)",
+      "downstream": "the notice withdrawn in thirty days, or released in fourteen when filed in error",
+      "persistent": "returns[].federalLien",
+      "explanation": "The lien panel",
+      "tests": "tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277’ (a New York life given $150,000 of wages by hand)",
+      "status": "unresolved",
+      "issue": "Reached only by a fixture: the IRS files its notice only where $10,000 or more is unpaid at the final notice (FEDERAL_LIEN.threshold), past anything work-study and a stipend leave owing; tested on a New Yorker given $150,000 of wages by hand, refused before its release and withdrawn after. No test has one filed in error released. Owner recommendation, as the other liens past a student’s reach.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "tax.request_waiver",
+      "kind": "command",
+      "entry": "The lien panel’s Ask For A Waiver (LienPanels.tsx:82)",
+      "reads": "waiverRefusal: Oregon’s three-year penalty, before full payment or within a year after",
+      "changes": "the penalty waived at 70%, 50% or 25% by when the taxpayer’s own return came (statetax.ts:995)",
+      "downstream": "what’s owed to the state, less the penalty waived",
+      "persistent": "returns[].stateDue[]",
+      "explanation": "The lien panel",
+      "tests": "tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own: 100% of each year’s tax, held to it; its waiver by the schedule once their own is filed’ (the assessments and the penalty set by calling the engine’s functions)",
+      "status": "unresolved",
+      "issue": "Reached only by a fixture: Oregon’s penalty, set by calling the engine’s functions, is waived through the command at 25% after an assessment; 70% and 50% aren’t tested. Every life files in Connecticut. Owner recommendation, as the other liens past a student’s reach.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "documents.apply_ssn",
+      "kind": "command",
+      "entry": "Papers, Documents: Apply At The Social Security Office (Documents.tsx:251)",
+      "reads": "ssnRefusal: an F-1, at school and registered (work-study open), a passport in force, in New Haven, an hour free; a US citizen holds one",
+      "changes": "an hour at the office; the card three weeks on (taxid.ts:61)",
+      "downstream": "hasSsn: the bank’s channel (bankmoves.ts), the ID card (identity.ts), a lender’s terms (lending.ts), the 1040-NR’s W-7 and its seven weeks more, the IRS plan applied for online or by mail (taxreturn.ts)",
+      "persistent": "the number’s status",
+      "explanation": "The Documents panel",
+      "tests": "tests/papers-complete.test.ts ‘starts at a bank that opens for an F-1, is refused by Capital One, opens at Wells Fargo in a branch, and applies for the number once registered’, ‘a US citizen holds a number already, and opens online, no branch hour’; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days...’; tests/defects-g24-1.test.ts; tests/defects-r3d-1.test.ts ‘says it’s on its way, as Papers does, from the last weeks at school through graduation to the card’ (applied for in the program’s last weeks, the number comes after graduation, and the ID card is refused until it comes and issued after)",
+      "status": "partial",
+      "issue": "Through the command: refused before registering and a second time, the card three weeks on and there across a reload, a citizen refused; the ID card refused until it comes and issued after. Not checked: a bank’s branch hour once one comes, a lender refusing for want of one, the W-7’s seven weeks more, and the plan by mail.",
+      "traced": "2026-10-12",
+      "read": true
     }
   ],
   "findings": [
     {
       "severity": "high",
-      "what": "OPT is a paid action whose stated benefit can't be had, and it always ends in a violation. With no work in the game, OPT_WEEK adds 7 idle days every week, so the OPT is cancelled with no grace at about day 91 and the graduate goes out of status, which ends their marketplace cover. The status-ending decision pushes premium processing ($2,250). In this world premium only shortens the pending period, which is the one thing that holds status open.",
+      "what": "OPT is a paid action whose stated benefit can’t be had, and it always ends in a violation. With no work in the game, OPT_WEEK adds 7 idle days every week, so the OPT is canceled with no grace at about day 91 and the graduate goes out of status, which ends their marketplace cover. The status-ending decision pushes premium processing ($2,250). In this world premium only shortens the pending period, which is the one thing that holds status open.",
       "where": "src/engine/systems/permission.ts:338-339, 346-359, 378, 402, 415-429; src/ui/papers/Documents.tsx:194-197; health.ts:425",
       "evidence": "tests/permission.test.ts 'ends after more than ninety days in all without work' pins the cancellation and usOutOfStatus. recordWages is called only from school.ts, so no job exists after graduation.",
       "suggestedFix": "Either retire OPT with the career (as the O-1 was), or reword the copy and drop premium:true from the decision's action. At minimum, stop advertising 'twelve months to work'."
@@ -565,7 +858,7 @@
       "what": "report_lost accepts permits, visas and residence documents. A lost OPT stops OPT_WEEK (inForce false, returns without rescheduling), so the 90-day violation never fires and status runs to the OPT's expiry, about 12 months instead of about 3. A 'lost' Residente Temporal frees routeRefusal for a fresh grant.",
       "where": "documents.ts:319-327; permission.ts:418, 320-329; Documents.tsx:64 (button shown on WorkPane permits and visas)",
       "evidence": "OPT_WEEK guard `!inForce(doc, item.at - MS_HOUR)` returns without rescheduling. The status check scheduled at OPT expiry then finds no permit and puts them out of status only then.",
-      "suggestedFix": "Limit report_lost to physical cards (passport, licence, idcard, idp), or keep a lost permit counting for status and idle days."
+      "suggestedFix": "Limit report_lost to physical cards (passport, license, idcard, idp), or keep a lost permit counting for status and idle days."
     },
     {
       "severity": "medium",
@@ -590,7 +883,7 @@
     },
     {
       "severity": "low",
-      "what": "A police report is decorative in play. Its only reader is NY's free stolen-licence replacement, which needs a NY licence and living in NY. The New Haven entry added on 2026-10-09 enables a report nothing reads.",
+      "what": "A police report is decorative in play. Its only reader is NY's free stolen-license replacement, which needs a NY license and living in NY. The New Haven entry added on 2026-10-09 enables a report nothing reads.",
       "where": "documents.ts:354-376 (us-ct-newhaven at 363); identity.ts:66,72",
       "evidence": "policeReport is read only in licenseReplaceFee.",
       "suggestedFix": "Give it a CT consumer or say it decides nothing."
@@ -606,12 +899,12 @@
       "severity": "low",
       "what": "Settlement and naturalization count years from the first residence ever granted, not continuous residence. renew_residence accepts a card that has already expired, because it checks status 'valid' rather than inForce.",
       "where": "residence.ts:141-152, 186-193; citizenship.ts:201-212",
-      "evidence": "`first` is reduced over every document with a route, cancelled or lapsed ones included.",
+      "evidence": "`first` is reduced over every document with a route, canceled or lapsed ones included.",
       "suggestedFix": "Require continuous inForce residence, and refuse renewal after expiresAt."
     },
     {
       "severity": "low",
-      "what": "Driving and TSA rules are kept but read only by a document look's sentence: mayDrive, licenseOf, MOPED_ON_CAR, IDP and LICENSE_LANGUAGE, plus tsaAccepts and realId. The look says an ID card is 'what an American airport’s checkpoint will read' while nothing flies. The documents.ts header still says a licence 'lets its holder drive'. mayDrive's 'earn one on the Papers screen' points at a tab that's gone.",
+      "what": "Driving and TSA rules are kept but read only by a document look's sentence: mayDrive, licenseOf, MOPED_ON_CAR, IDP and LICENSE_LANGUAGE, plus tsaAccepts and realId. The look says an ID card is 'what an American airport’s checkpoint will read' while nothing flies. The documents.ts header still says a license 'lets its holder drive'. mayDrive's 'earn one on the Papers screen' points at a tab that's gone.",
       "where": "documents.ts:16-18, 522-601; identity.ts:26-28; ui/looks/papers.tsx:116-129",
       "evidence": "Only ui/looks/papers.tsx calls mayDrive and tsaAccepts.",
       "suggestedFix": "Under THE ONE RULE, cut them or reword the look and the header in the past tense."

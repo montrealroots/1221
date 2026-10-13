@@ -3,69 +3,102 @@
     {
       "id": "school.prepare",
       "kind": "command",
-      "entry": "CourseworkPane prepare button; coursework.ts:1048",
+      "entry": "CourseworkPane prepare button; coursework.ts registerCoursework",
       "reads": "prepareRefusal (feedback seen, asks/moments open, needs, energy, occupied); a.prep, focusAt, genreSpeed, personality knob",
-      "changes": "a.prep[dim] (share of what is left), steps, practicedOn; grow(act.trains) up to 3; ordinary(PREP_ABILITY)",
-      "downstream": "coursework.ts:show/judgeWork reads prep at due meeting -> band -> meetingWeight growth weight; noteCandidates",
+      "changes": "a.prep[dim] (share of what is left), steps, practicedOn; grow(act.trains) up to 3, recorded under its source (grewFrom); ordinary(PREP_ABILITY); a way of playing rehearsed in (rehearseChoice)",
+      "downstream": "judgeWork reads the preparation at the due meeting (from 2026-10-12 a scene of more than one tone is judged in its tones, scenePiece) -> its band (see showing/night bands); noteCandidates; the workbook’s forecast (forecastWork)",
       "persistent": "assignment in school.coursework; craft/attrs",
       "explanation": "CourseworkPane.tsx",
-      "tests": "approaches.test.ts \"a drill is a step of the work...\"; traits-connected.test.ts \"moves each part further for the trait...\"",
-      "status": "verified",
-      "issue": "grow(act.trains) at coursework.ts:487 not recorded on development history"
+      "tests": "tests/mastery-integration.test.ts ‘comes out at 100 on every dimension, the top band, in the record and the journey’ (prepared through the command to complete, then shown); tests/approaches.test.ts ‘a drill is a step of the work...’; tests/traits-connected.test.ts ‘moves each part further for the trait...’; checking less: tests/mastery-contract.test.ts ‘preparation short on one part lowers exactly the dimensions that read it’ (judge(), the preparation given); tests/feedback.test.ts ‘is new, then the same again, then better but short, then taken...’ (the notes, the preparation set by hand); tests/coursework-objective.test.ts ‘changes the result: the same preparation, better under the objective its strength is in’ (the preparation held fixed); no test varies the preparation through the command and checks the showing",
+      "status": "partial",
+      "issue": "grow(act.trains) at coursework.ts:487 not recorded on development history",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Verified on approaches.test.ts and traits-connected.test.ts, which check that a step moves the preparation, not that the showing reads it. Note: grow(act.trains) wasn’t recorded on the development history.",
+        "now": "The growth a step trains has been recorded under its source since 2026-10-10 (grewFrom). Prepared through the command to complete, a piece is shown at 100 with that preparation in its record (mastery-integration.test.ts). No test varies the preparation through the command and checks the showing: a part short lowers exactly the dimensions that read it on judge(), with the preparation given (mastery-contract.test.ts), the notes read it set by hand (feedback.test.ts), and coursework-objective.test.ts, which this row named for the showing’s reading until a review of 2026-10-12, holds it fixed and varies the objective. What a band does to the meeting’s growth is the bands row’s gap.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "school.approach",
       "kind": "command",
-      "entry": "CourseworkPane; coursework.ts:1056",
+      "entry": "CourseworkPane; coursework.ts registerCoursework",
       "reads": "persistentFor (open notes given>=persistent on a dim the work prepares), trust for partner kind",
       "changes": "a.approach; a.objective for objective kind",
-      "downstream": "activitiesOf (drill), weightsOf (objective), preparedParts/bandFor (smaller), rehearsalOutcome (partner)",
+      "downstream": "activitiesOf (drill); the showing’s lean (workContext, from 2026-10-12) and weightsOf, the note’s order (objective); preparedParts/bandFor (smaller); rehearsalOutcome (partner)",
       "persistent": "assignment",
       "explanation": "CourseworkPane.tsx",
-      "tests": "approaches.test.ts (all five its)",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/approaches.test.ts ‘a drill is a step of the work...’ (drill), ‘put first, the part weighs more; a smaller piece reads whole at six tenths...’ (weightsOf, smaller); tests/coursework-objective.test.ts ‘weighs a part put first by the approach the same way’ (the judged result); no test checks the partner way’s rehearsal",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on approaches.test.ts (all five its), with weightsOf the objective way’s consumer. That test checks weightsOf rises; its partner test checks the way is chosen, not the rehearsal that works on it.",
+        "now": "Until 2026-10-12 Put It First moved weightsOf, which ordered the notes and Showing.parts.prep, and nothing in the judged result; Showing.parts, read by nothing in the game, went that day. Since then workContext leans the showing toward the part put first by LEARNING.objectiveWeight (tests/coursework-objective.test.ts). The partner way’s work at the next rehearsal kept (rehearsalOutcome, partnerWorked) has no test."
+      }
     },
     {
       "id": "school.choose",
       "kind": "command",
-      "entry": "CourseworkPane table work; coursework.ts:1069",
+      "entry": "CourseworkPane table work; coursework.ts registerCoursework",
       "reads": "familiarity>=0.3, occupied, question/options",
       "changes": "a.answers[q]; 10 min",
-      "downstream": "interpretationOf/answersScore -> judgeWork prep; noteCandidates choice note; classMoment disagreement",
+      "downstream": "interpretationOf/answersScore -> judgeWork prep; noteCandidates choice note, given again after it was resolved where the text is cut against again (from 2026-10-12); a choice note taken where the work answers its question as the text supports (show, from 2026-10-12); classMoment disagreement",
       "persistent": "assignment.answers",
       "explanation": "CourseworkPane.tsx (why supported/cut)",
-      "tests": "feedback.test.ts \"reads the table work less where it’s last time’s\"; journey-school-year.test.ts",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/feedback.test.ts ‘reads the table work less where it’s last time’s...’; tests/coursework-defects.test.ts ‘can be given again after it was resolved, where the choice is made against the text again’; tests/journey-school-year.test.ts",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: noteCandidates choice note, on feedback.test.ts and journey-school-year.test.ts, neither of which checks a choice note. Verified, while no test made a choice through the command and checked what reads it.",
+        "now": "Until 2026-10-12 a choice note, once resolved, never came back, and one open stayed open for ever. Since then it’s given again where the choice is made against the text again, and taken where the work answers its question as the text supports. No test makes a choice through the command and checks what reads it: feedback.test.ts sets the answers by hand and calls interpretationOf, coursework-defects.test.ts sets one and calls noteCandidates, and journey-school-year.test.ts issues it and checks neither."
+      },
+      "read": true
     },
     {
       "id": "school.read_feedback",
       "kind": "command",
-      "entry": "CourseworkPane; coursework.ts:1086",
+      "entry": "CourseworkPane; coursework.ts registerCoursework",
       "reads": "a.feedback",
       "changes": "feedback.seen=true",
-      "downstream": "prepareRefusal gate (coursework.ts:435)",
+      "downstream": "prepareRefusal gate",
       "persistent": "assignment.feedback",
       "explanation": "CourseworkPane.tsx",
-      "tests": "journey-school-year/three-students call it; no test asserts the prepare gate",
+      "tests": "tests/classmate-moments.test.ts ‘is read before the next step of the work, and read once’; journey-school-year and three-students call it",
       "status": "verified",
-      "issue": "gate behaviour untested",
+      "issue": "gate behavior untested",
       "auditStatus": "partial",
-      "settled": "Tested: the next step is refused until read, and read once (tests/classmate-moments.test.ts)."
+      "settled": "Tested: the next step is refused until read, and read once (tests/classmate-moments.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘journey-school-year/three-students call it; no test asserts the prepare gate’, beside a note naming its test.",
+        "now": "Tested: the next step is refused until read, and read once (tests/classmate-moments.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "school.ask_partner",
       "kind": "command",
-      "entry": "CourseworkPane; coursework.ts:1094",
-      "reads": "askRefusal: met, ahead hours, due, clashes, mateBusy, trust<wary, boundaryRefusal",
+      "entry": "CourseworkPane; coursework.ts registerCoursework",
+      "reads": "askRefusal: met, ahead hours, due, clashes, mateBusy, trust<wary, boundaryRefusal, and from 2026-10-12 the partner work’s own requirement (a fight’s choreography known, an intimacy scene’s boundaries set)",
       "changes": "books PARTNER_KIND or logs decline",
       "downstream": "school.partner_rehearsal -> rehearsalOutcome",
       "persistent": "a.rehearsals; mate.log",
       "explanation": "CourseworkPane.tsx",
-      "tests": "partners.test.ts; commands-kept.test.ts \"calls off a rehearsal late...\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/partners.test.ts; tests/commands-kept.test.ts ‘calls off a rehearsal late...’; tests/coursework-defects.test.ts ‘isn’t booked before an intimacy scene’s boundaries are agreed, and is once they are’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Reads: askRefusal, and nothing of the partner work’s own requirements. Downstream: school.partner_rehearsal -> rehearsalOutcome, verified on tests that check the booking.",
+        "now": "Until 2026-10-12 a partner rehearsal skipped the activity’s own requirements. Since then it isn’t booked before they’re met (tests/coursework-defects.test.ts, on askRefusal). Through the command a rehearsal is booked or declined (partners.test.ts, commands-kept.test.ts). No test runs the rehearsal it books, kept, and checks what it adds: the preparation, the trust and the bond (see school.partner_rehearsal)."
+      },
+      "read": true
     },
     {
       "id": "school.answer_partner",
@@ -77,21 +110,35 @@
       "persistent": "a.asks",
       "explanation": "CourseworkPane.tsx",
       "tests": "partners.test.ts \"in class, for an evening they’re free... yes books it once\"; \"no costs nothing\"",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: school.partner_rehearsal, verified on partners.test.ts, which checks the booking and, kept or not, only what the partner said.",
+        "now": "Through the command, yes books the rehearsal once, through a save, and no costs nothing and books nothing; left unanswered it lapses at a little trust (partners.test.ts). The rehearsal booked is run by the clock, and the test checks only its words, and only if it happened to be kept (if kept, r.said; else none). No test checks the preparation, trust or bond a kept rehearsal adds; the partner part is set by hand in ensemble.test.ts."
+      }
     },
     {
       "id": "school.cancel_rehearsal",
       "kind": "command",
       "entry": "CourseworkPane; coursework.ts:1136",
       "reads": "booked rehearsal; time to it",
-      "changes": "status cancelled; late: trust -4, noteIncident lateCancel",
+      "changes": "status `cancelled`; late: trust -4, noteIncident lateCancel",
       "downstream": "classMoment boundary (unrepaired incidents); make_amends; askRefusal trust",
       "persistent": "mate trust/incidents",
       "explanation": "CourseworkPane.tsx",
       "tests": "commands-kept.test.ts \"calls off a rehearsal late, which costs the partner’s trust...\"",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: the boundary moment, make_amends and askRefusal’s trust; verified on commands-kept.test.ts.",
+        "now": "Through the command, a late call-off cancels the booking, costs trust and leaves something make_amends repairs (commands-kept.test.ts; it returns early if the partner turns the booking down, which on its seed they don’t, measured 2026-10-12). No test checks askRefusal reading the trust lost, or the boundary moment reading the incident."
+      }
     },
     {
       "id": "school.make_amends",
@@ -102,51 +149,79 @@
       "downstream": "boundary moment eligibility; askRefusal trust; bond->castCompany/castListRead",
       "persistent": "classmate record",
       "explanation": "CourseworkPane.tsx",
-      "tests": "commands-kept.test.ts \"...and amends repair it\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/commands-kept.test.ts ‘calls off a rehearsal late, which costs the partner’s trust and leaves something to make right, and amends repair it’ (the bond and the time; it returns early if the partner declines, and on its seed they accept); no test checks the boundary moment, askRefusal or the cast reading what amends repair",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on commands-kept.test.ts ‘...and amends repair it’, which checks the bond rises and the twenty minutes, and nothing that reads them.",
+        "now": "Through the command, amends for a late call-off raise the bond, take twenty minutes, and are refused with nothing left to make right (commands-kept.test.ts). The test returns early if the partner turns the rehearsal down; on its seed they accept (measured on 2026-10-12), so it isn’t vacuous. Nothing that reads what amends repair is checked: the boundary moment’s eligibility, askRefusal’s trust, or the bond in castCompany and castListRead."
+      },
+      "read": true
     },
     {
       "id": "school.respond",
       "kind": "command",
-      "entry": "ClassMoments.tsx; classmates.ts:312",
+      "entry": "ClassMoments.tsx; classmates.ts:370",
       "reads": "respondRefusal; moment kind/choice",
-      "changes": "trust/bond moves; answers (theirs); tryBoth; STUDY_KIND booked; boundary set",
-      "downstream": "classMoment’s candidates (stoppedAsking, owesYouLines), keptWith (boundaryLiftsAfter)",
-      "persistent": "moments, classmate record",
-      "explanation": "The partner line: Ask A Day Ahead (Lifts After N More Kept), Has Stopped Asking You To Run Lines, Owes You Lines; the invitation’s text",
+      "changes": "trust/bond moves; answers (theirs, which clears readsApart); readsApart (hold, from 2026-10-12); tryBoth (both); STUDY_KIND booked; boundary set",
+      "downstream": "classMoment’s candidates (stoppedAsking, owesYouLines), keptWith (boundaryLiftsAfter); interpretationOf, which reads the answer Try Theirs sets; partnerReadOf, which reads readsApart or tryBoth as the scene together’s agreement (ENSEMBLE.apart); a rehearsal kept after Try Both, which clears both (coursework.ts)",
+      "persistent": "moments, classmate record; the assignment’s answers, readsApart and tryBoth",
+      "explanation": "The partner line: Ask A Day Ahead (Lifts After N More Kept), Has Stopped Asking You To Run Lines, Owes You Lines; the invitation’s text; the classmate’s page: Held Apart",
       "tests": "tests/coverage-gaps-classmates.test.ts",
-      "status": "verified",
-      "issue": "no behaviour test of the choices; moment.choice on classmate (classmates.ts:323) read by nothing",
+      "status": "partial",
+      "issue": "no behavior test of the choices; moment.choice on classmate (classmates.ts:323) read by nothing",
       "auditStatus": "partial",
       "settled": "The answer is read later: two invitations declined stop that classmate asking for 45 days; helping with lines brings an invitation back within 60; an accepted boundary lifts after two kept rehearsals, a pushed-back one after four. Shown on the partner line.",
-      "previous": "partial"
+      "previous": "partial",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on coverage-gaps-classmates.test.ts: ‘an accepted boundary lifts after two kept rehearsals, a pushed-back one after four’.",
+        "now": "Through the command, on moments brought by hand, two invitations declined stop that classmate asking and helping with lines brings an invitation back, read by the day’s draw called directly (coverage-gaps-classmates.test.ts). A boundary’s lifting is checked by calling keptWith by hand in place of rehearsals kept through the clock, so what reads an answered boundary isn’t checked through the engine. A different reading is answered through the command in journey-school-year.test.ts, which checks nothing the answer sets; readsApart is set by hand where the scene together reads it (ensemble.test.ts), and both are set by hand where a rehearsal kept clears them (defects-g8-10.test.ts); no test reads tryBoth through the scene together."
+      }
     },
     {
       "id": "school.orientation",
       "kind": "command",
-      "entry": "CourseworkPane catch-up; coursework.ts:1037",
+      "entry": "CourseworkPane catch-up; coursework.ts registerCoursework",
       "reads": "orientationRefusal",
       "changes": "orientation.done[task]; met; expectations calls setWork",
-      "downstream": "needRefusal studio/library; copyAt (plays.read); askRefusal met",
+      "downstream": "registered(), the register session, which classes read; needRefusal studio/library; copyAt (plays.read); askRefusal met",
       "persistent": "coursework.orientation",
       "explanation": "CourseworkPane.tsx",
-      "tests": "commands-kept.test.ts \"catches up a session missed by hand...\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/commands-kept.test.ts ‘catches up a session missed by hand...’; tests/papers-complete.test.ts ‘unregistered, classes don’t count them and a shift can’t be worked; catching it up late counts them from then’ (the register session caught up, and classes counted); tests/playreading.test.ts ‘needs the library known, takes its time...’ (copyAt reads the tour, attended through the clock)",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Tested by the catch-up test, which checks the session is done, not what reads it. Verified, with copyAt held by playreading.test.ts.",
+        "now": "Through the command, a session missed is caught up once its time has come, and done (commands-kept.test.ts), and the register session caught up late counts the classes from then (papers-complete.test.ts). copyAt, the library known to plays.read, is checked on a tour attended through the clock (playreading.test.ts), not one caught up by the command; needRefusal (the studio and the library) and askRefusal (classmates met) reading a session caught up aren’t checked. The first work set, which the expectations session sets (setWork, coursework.ts), isn’t checked after the command either: every test with work in hand calls setWork as setup (approaches.test.ts, commands-kept.test.ts, feedback.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "school.learn_part",
       "kind": "command",
-      "entry": "RehearsalProcess.tsx; production.ts:283",
+      "entry": "RehearsalProcess.tsx; production.ts registerProduction",
       "reads": "ownWorkRefusal; genreSpeed; focusAt",
       "changes": "process.lines; memory ability (3x, recorded)",
-      "downstream": "nightEvaluation prep (prepOf), nightFactor growth, delivery -> castScore",
+      "downstream": "nightEvaluation prep (prepOf; from 2026-10-12 the night is judged in its movements, playPiece), nightFactor growth, delivery -> castScore",
       "persistent": "casting.process",
       "explanation": "RehearsalProcess.tsx",
-      "tests": "journey-school-production.test.ts \"rehearses, misses and catches up...\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/journey-school-production.test.ts ‘rehearses, misses and catches up...’; tests/direction.test.ts; tests/piece.test.ts ‘is 100 in every segment of every scene and every play at full...’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: nightEvaluation prep, a night judged whole. Verified on journey-school-production.test.ts, which issues it only where the lines are short and checks nothing of it.",
+        "now": "From 2026-10-12 a night is judged in its movements, each one’s blocking refined by work on it (playPiece); tests/piece.test.ts holds every play at full, on a preparation given. The command is issued where the lines are under 0.97 (journey-school-production.test.ts, direction.test.ts) and its result isn’t checked: the night factor rising over the run mixes it with the calls and the notes. No test learns the part and checks the lines it adds, the memory it grows, or the night’s preparation read from it."
+      },
+      "read": true
     },
     {
       "id": "school.review_blocking",
@@ -157,22 +232,35 @@
       "downstream": "noteKind, prepOf/nightFactor",
       "persistent": "casting.process",
       "explanation": "RehearsalProcess.tsx",
-      "tests": "journey-school-production.test.ts (blockingMissed 1->0)",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/journey-school-production.test.ts ‘rehearses, misses and catches up, works the notes, and plays the nights on it’ (blockingMissed 1 to 0, after a reload); no test checks noteKind, prepOf or nightFactor reading it",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on journey-school-production.test.ts (blockingMissed 1->0), which checks the change and nothing that reads it.",
+        "now": "Through the command after a reload, a missed blocking rehearsal is reviewed and blockingMissed goes from 1 to 0 (journey-school-production.test.ts); direction.test.ts sends it where one was missed and checks nothing of it. No test checks what reads it: noteKind, or the night’s preparation and growth (prepOf, nightFactor)."
+      },
+      "read": true
     },
     {
       "id": "school.work_note",
       "kind": "command",
-      "entry": "RehearsalProcess.tsx; production.ts:313",
-      "reads": "last note open",
-      "changes": "note.worked; adaptability; lines/blocking",
-      "downstream": "callAnswered marks taken -> weight 1.1; notesShare -> prep notes; reflect",
+      "entry": "RehearsalProcess.tsx; production.ts registerProduction",
+      "reads": "the last note open; for a craft note, the ways its problem admits (solutionsOf, from 2026-10-12)",
+      "changes": "note.worked; adaptability; lines/blocking; a craft note worked one of its ways: a workbook adjustment tried on the part, its evidence before and after kept on the note, the way counted as direction worked (from 2026-10-12)",
+      "downstream": "callAnswered: a craft note taken where the work answered it (its problem gone from the part’s forecast, or a way kept that didn’t make it worse), any other as before -> weight PROCESS.noteTaken; the next note on it says what was tried; reflect; the journey’s direction tally",
       "persistent": "casting.process.notes",
       "explanation": "RehearsalProcess.tsx",
-      "tests": "journey-school-production.test.ts (all notes taken, factor>1)",
+      "tests": "tests/journey-school-production.test.ts ‘rehearses, misses and catches up...’ (all notes taken, factor over 1); tests/direction.test.ts ‘names what the part’s forecast shows, where, with several ways at it...’, ‘left alone, is answered less often than worked...’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "A note past the lines and the blocking named the play’s weakest raw craft skill, and was taken by working it once.",
+        "now": "From 2026-10-12 that note is a craft note from the part’s own forecast (objective, listening, pacing, behavior, transitions, relationship), worked one of several ways, and taken at the next call only where the work answered it (tests/direction.test.ts). The run’s looking back stopped saying ‘you played at N% of what every call kept makes’, a figure that from 2026-10-09 reached only a night’s growth."
+      },
+      "read": true
     },
     {
       "id": "school.call_in_sick",
@@ -183,22 +271,36 @@
       "downstream": "CLASSES_KIND excused tally; CALL_KIND/LAB_KIND excused",
       "persistent": "school.sickDay",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"...calling in sick excuses it only when unwell\"; condition-reach.test.ts \"is excused with an injury that limits the work\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "school.test.ts ‘count a student out of New Haven as absent...; calling in sick excuses it only when unwell’ (the day’s classes excused, through the clock); condition-reach.test.ts ‘is excused with an injury that limits the work, and not with a cut’; tests/defects-g8-1.test.ts ‘excuses the Saturday’s two shows: neither is played or held against the record, and the closing still credits the run’, ‘excuses the performance: not played, and the company keeps the student’; tests/work-limits.test.ts ‘PLAYER JOURNEY: assigned hours missed ill, asked to be converted...’ (a shift excused); checking less: school.test.ts sets sickDay by hand for a production’s call and a lab",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: the classes excused, and a call or a lab excused; verified on two tests that check the classes and the refusals.",
+        "now": "Through the command, the day’s classes are excused (school.test.ts), a Cabaret’s and a Summer Cabaret’s shows are excused and kept off the record (defects-g8-1.test.ts), and an assigned shift’s hours are excused (work-limits.test.ts). A production’s call and a lab excused are tested with the sick day set by hand (school.test.ts), not called in through the command. No test runs the term’s evaluation, which reads the classes tally (evaluate, school.ts), after a sick day called in."
+      }
     },
     {
       "id": "school.take_shift",
       "kind": "command",
       "entry": "SchoolWorkspace.tsx; school.ts:2337",
-      "reads": "shiftRefusal (elective hours), free evening",
+      "reads": "shiftRefusal: at school, and not on a leave (from 2026-10-12); a free evening",
       "changes": "electiveHours+4; SHIFT_KIND",
       "downstream": "SHIFT_KIND -> owedHours -> PAYDAY wages, recordWages (tax)",
       "persistent": "workStudy",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"takes elective evenings of four hours on request, up to fifty hours a year\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/school.test.ts ‘takes elective evenings of four hours on request, past fifty hours a year, the Bulletin’s fifty being part of a minimum’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Reads shiftRefusal (elective hours); tested by ‘takes elective evenings of four hours on request, up to fifty hours a year’, a test that isn’t there by that name. Then verified, with the payday’s wages and recordWages for the return in its Downstream, on a test that stops at the hours owed.",
+        "now": "The fifty elective hours stopped being a cap on 2026-10-10, as the Bulletin’s fifty are part of a minimum of 200, and the test was renamed with it. From 2026-10-12 no shift is booked on a leave. Through the command and the clock, an elective evening is booked at seven and, worked, adds its four hours to what’s owed, and isn’t counted in the term’s tally of shifts (school.test.ts:489-508, the elective hours set by hand past the fifty and back). No test plays the payday after an elective evening, and none reads what a payday played through the clock records for the return: the payday is checked through the clock only on an assigned Saturday’s hours, and only its transaction (school.test.ts:455-465), and every test that reads work-study wages on a return calls recordWages by hand (coverage-gaps-papers.test.ts, defects-g8-8.test.ts). Until later on 2026-10-12 this was verified on that Saturday’s payday, as the hours are one count.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "school.buy_ppe",
@@ -211,38 +313,53 @@
       "explanation": "SchoolWorkspace.tsx",
       "tests": "school-everyday.test.ts (both its)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "school.cabaret",
       "kind": "command",
       "entry": "SchoolWorkspace.tsx; school.ts:2130",
       "reads": "cabaretRefusal (standing, week, double-cast)",
-      "changes": "school.cabaret (companyPart), CABARET_KIND calls",
+      "changes": "school.cabaret (companyPart, from 2026-10-12 read by castFit), CABARET_KIND calls; a closing show missed after others were played credited and the run closed (from 2026-10-12)",
       "downstream": "evaluate (term standing), readRuns (the next casting’s delivery)",
       "persistent": "cabaret, credits, work",
       "explanation": "Term feedback names the run; Why This Cast lists it with its nights, delivery and weight",
-      "tests": "tests/coverage-gaps-runs.test.ts, tests/school-fixes.test.ts",
-      "status": "verified",
+      "tests": "tests/school.test.ts ‘puts a student in a show this term, three weeks off and clear of recesses, and grows them for it’, ‘turns away a student on academic warning, and finds a week clear of the term’s casting calls’ (through the command); tests/defects-g8-1.test.ts ‘excuses the Saturday’s two shows...’ (through the command: the run record’s missed nights); its readers on runs built by hand: tests/coverage-gaps-runs.test.ts ‘reads a long strong run, then a short weak Cabaret without erasing it, each run once’ (readRuns), tests/school-fixes.test.ts ‘is read with the term’s work on stage’ (evaluate); no test plays a Cabaret through the command and checks the next casting or the term reading it",
+      "status": "partial",
       "issue": "its nights and delivery reach neither the term evaluation nor the next casting (school.ts:1557,1772)",
       "auditStatus": "partial",
       "settled": "Its nights are in the run record: read by the term evaluation and, once, by the next casting.",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "companyPart ranked the student’s raw craft against the play’s reads. Verified on tests/coverage-gaps-runs.test.ts and tests/school-fixes.test.ts, neither of which issues the command: each builds the run by hand.",
+        "now": "Its nights are in the run record: read by the term evaluation and, once, by the next casting. From 2026-10-12 its part is read by castFit, the evaluation’s expected night, as the chair casts; until then it was a second casting model blind to the abilities and the material. Through the command, a show is booked clear of recesses and casting calls, its nights grow the craft and go on the résumé (school.test.ts), and a night called in sick is kept out of the record’s missed nights (defects-g8-1.test.ts). What reads its nights is tested only on runs built by hand: the next casting (readRuns, coverage-gaps-runs.test.ts) and the term evaluation (school-fixes.test.ts). No test plays a Cabaret through the command and checks either reading it, or the part it gives.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "school.summer_cabaret",
       "kind": "command",
       "entry": "SchoolWorkspace.tsx; school.ts:2191",
       "reads": "summerRefusal",
-      "changes": "school.summer shows, SUMMER_KIND, STIPEND_KIND",
+      "changes": "school.summer shows (parts by companyPart, read by castFit from 2026-10-12), SUMMER_KIND, STIPEND_KIND",
       "downstream": "readRuns (the next casting)",
       "persistent": "summer, credits, wages",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/coverage-gaps-runs.test.ts",
-      "status": "verified",
+      "tests": "tests/school.test.ts ‘forms in the spring of the first and second years, for a student in good standing, by the end of April’, ‘lets a student go who misses a performance, and stops the stipend after the days of the week worked’ (through the command); tests/defects-g8-1.test.ts ‘excuses the performance: not played, and the company keeps the student’; its reader on a summer built by hand: tests/coverage-gaps-runs.test.ts ‘reads a Summer show at casting, and the faculty’s evaluation doesn’t’; no test plays a summer through the command and checks the next casting reading it",
+      "status": "partial",
       "issue": "show nights/delivery not read by standing or casting",
       "previous": "partial",
-      "settled": "Summer nights are in the run record and inform the next casting, at half a School production’s weight; the summer is outside the term the faculty evaluate, so standing doesn’t read them, which Why This Cast says."
+      "settled": "Summer nights are in the run record and inform the next casting, at half a School production’s weight; the summer is outside the term the faculty evaluate, so standing doesn’t read them, which Why This Cast says.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "companyPart ranked the student’s raw craft against each play’s reads. Verified on tests/coverage-gaps-runs.test.ts, which never issues the command: it builds the summer and its run by hand.",
+        "now": "Summer nights are in the run record and inform the next casting, at half a School production’s weight; the summer is outside the term the faculty evaluate, so standing doesn’t read them, which Why This Cast says. Its parts are read by castFit from 2026-10-12, as school.cabaret’s; no test checks the part given. Through the command, the company is joined in the spring for a student with a year to come, and refused later or out of good standing (school.test.ts); a missed show lets the student go and stops the stipend, and a night in hospital doesn’t (school.test.ts); a night called in sick is excused (defects-g8-1.test.ts). The next casting’s reading of its nights is tested only on a summer built by hand (coverage-gaps-runs.test.ts).",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "plays.read",
@@ -254,8 +371,15 @@
       "persistent": "person.plays",
       "explanation": "SchoolWorkspace.tsx:651-673",
       "tests": "playreading.test.ts \"needs the library known... works the text craft\"; \"read again knows the last read\"",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: craft -> evaluation/castFit; noticed -> next read. Verified on playreading.test.ts, which checks craft.script rising and the notes.",
+        "now": "Through the command, a read needs the library known, takes its time, grows the text craft and leaves a note, and a read again knows the last (playreading.test.ts). No test checks a judged piece or castFit reading what a read grew, the gap practice.exercise was moved to partial for."
+      }
     },
     {
       "id": "plays.research",
@@ -267,8 +391,15 @@
       "persistent": "person.plays",
       "explanation": "SchoolWorkspace.tsx",
       "tests": "playreading.test.ts \"researched once, after a read...\"",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: craft; researchRefusal. Verified on playreading.test.ts, which checks craft.script rising and the refusal.",
+        "now": "Through the command, research after a read grows the text craft once and says the first production and edition, and a second is refused (playreading.test.ts). As plays.read, no test checks a judged piece or castFit reading what it grew."
+      }
     },
     {
       "id": "practice.exercise",
@@ -279,48 +410,74 @@
       "downstream": "abilities/techniques read by evaluation.judge, castFit; discipline lifts develop",
       "persistent": "development ledger, craft/attrs",
       "explanation": "ProfileWorkspace.tsx",
-      "tests": "development.test.ts \"has an exercise for every ability... grows what it names and is recorded\"; \"gives half again...\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/development.test.ts ‘has an exercise for every ability practiced alone and every technique, and each grows what it names and is recorded’, ‘gives half again for the same exercise the same day...’, ‘keeps the day’s count through a save and a load...’; checking less: tests/material.test.ts ‘counts a matched tier in full, one off less, two off half...’ (tierFactor, a function); no test practices through the command and checks a judged piece or castFit reading what grew",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on development.test.ts, which checks the growth and the record, and not evaluation.judge or castFit reading what grew.",
+        "now": "Through the command, every exercise grows what it trains and is recorded, the same exercise again the same day gives under three fifths of the hour before, a fifth hour is refused, discipline grows once for the day, and a reload gives no fresh hours (development.test.ts), all at the matched tier and the steady focus. Not checked: a judged piece or castFit reading what an hour grew; what discipline lifts; and a tier or a focus, tested only on tierFactor and practiceHour (material.test.ts), since no test passes either to the command."
+      },
+      "read": true
     },
     {
       "id": "practice.self_tape",
       "kind": "command",
-      "entry": "ProfileWorkspace.tsx; engagement.ts:150",
-      "reads": "selfTapeRefusal; genre familiarity as prep",
-      "changes": "evaluation recorded (work/journey); screen ordinary; genre practice",
-      "downstream": "journey totals; genre practice->genreSpeed",
+      "entry": "Tape It (60 Min) in a brief’s pane (BriefPane.tsx:231), opened from the Profile’s Genres panel by Open Its Brief; registered by briefs.ts (from 2026-10-12)",
+      "reads": "tapeRefusal (briefs.ts); the brief’s record: its reading, preparation and way of playing, its reader; knowing the genre (genreKnown)",
+      "changes": "a take judged in its beats (evaluatePiece), kept on the work record and the brief’s takes; screen or voiceover practiced, and the techniques the scene stages; genre practice (half for a take the same again); the material met; the reader’s trust and bond; a callback earned on a Strong take as it came out with its reader",
+      "downstream": "journey totals; genre practice->genreSpeed; the callback the next take answers; the brief’s takes (a take the same again, the suggestions); a reader classmate’s trust and bond",
       "persistent": "work, journey, engagement",
       "explanation": "ProfileWorkspace.tsx",
-      "tests": "engagement.test.ts \"is studied and taped by a command...\"; attributes-complete \"gives a self-tape 100...\"",
-      "status": "verified",
-      "issue": "the tape result itself feeds only the journey"
+      "tests": "tests/engagement.test.ts ‘is studied and taped by a command...’; tests/attributes-complete.test.ts ‘gives a self-tape 100 in any genre...’; tests/briefs.test.ts ‘earns a callback with a Strong take...’, ‘earns one callback a round...’, ‘a take that’s the same again is worth half as practice on another day too...’; tests/ensemble.test.ts ‘keeps a callback open when a take is played against its note, and answered, ends it’",
+      "status": "partial",
+      "issue": "the tape result itself feeds only the journey",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Entry engagement.ts; reads genre familiarity as its preparation. Note: ‘the tape result itself feeds only the journey’. Verified, with a reader classmate’s trust and bond among what reads a take.",
+        "now": "Until 2026-10-12 a self-tape taped no scene: the camera’s task, the genre’s demands and its familiarity, and its result fed only the journey. Since then every self-tape is of a practice brief, prepared and chosen first and judged in its beats; a Strong take earns a callback the next take answers (briefs.test.ts, ensemble.test.ts), and a take the same again is worth half as practice (briefs.test.ts). It’s taped from the brief’s pane, Tape It (60 Min), and refused by tapeRefusal; selfTapeRefusal, which this row read until a review of 2026-10-12, was deleted that day. No test checks a reader classmate’s trust or bond after a take (ensemble.test.ts sets the trust by hand), and genreSpeed, read after a study and a take together in engagement.test.ts, isn’t checked for what a take alone adds; what genreSpeed speeds is genre.study’s gap."
+      },
+      "read": true
     },
     {
       "id": "genre.study",
       "kind": "command",
-      "entry": "ProfileWorkspace.tsx; engagement.ts:143",
+      "entry": "Study It on the Profile’s Genres panel (ProfileWorkspace.tsx:407) and Study The Genre in a brief’s pane (BriefPane.tsx:187); engagement.ts:126",
       "reads": "studyRefusal; repeatsToday",
-      "changes": "familiarity (halved same day), energy",
-      "downstream": "genreSpeed (prepare, learn_part); self-tape prep",
+      "changes": "familiarity (half again the same day), energy",
+      "downstream": "genreSpeed: a scene for class from a play of the kind (coursework.ts:576) and a part’s lines (production.ts:478); a take of a brief’s knowing the genre (genreKnown, briefs.ts:284, from 2026-10-12)",
       "persistent": "engagement.byGenre",
       "explanation": "ProfileWorkspace.tsx; looks/actor.tsx",
-      "tests": "engagement.test.ts \"shares one session’s practice... speeds by the best and caps nothing\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/engagement.test.ts ‘lives an action sent twice once, and refuses an hour that would run into a commitment’, ‘is studied and taped by a command: familiarity, practice and a self-tape judged in its families, every one’ (the familiarity it gives); tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (pressed on the rendered Profile); its readers with the familiarity set by hand: tests/defects-g29-1.test.ts ‘reads the better of familiarity and practice, and the brief’s own techniques’, tests/defects-g30-1.test.ts ‘says what it speeds, a scene or a part from a play of its kind, and that a brief’s steps read the material met before’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on engagement.test.ts ‘shares one session’s practice... speeds by the best and caps nothing’, which never issues genre.study. Downstream ‘self-tape prep’.",
+        "now": "The command is tested for the familiarity it gives (engagement.test.ts) and pressed on the rendered Profile (defects-g3-1.test.ts). What reads the familiarity is tested only with it set by hand: a take’s knowing the genre (defects-g29-1.test.ts) and genreSpeed (defects-g30-1.test.ts). No test has a study speed a scene’s preparation or a part’s lines, or checks that a second study the same day gives half. Until 2026-10-12 a self-tape read the familiarity alone as its knowing the genre; a take reads the better of it and the practice (genreKnown)."
+      },
+      "read": true
     },
     {
       "id": "school.term",
       "kind": "scheduled",
       "entry": "enroll / previous term",
       "reads": "term, need, account",
-      "changes": "termsBegun, fresh tally, workStudy reset, scholarship/health plan, labs, cast(), evaluation scheduled",
+      "changes": "termsBegun, fresh tally, workStudy reset, scholarship/health plan, labs, cast() (a production’s rehearsal calls numbered and staged on the calls it keeps beside a Rep assignment, from 2026-10-12), evaluation scheduled",
       "downstream": "cast -> calls; evaluation; tally",
       "persistent": "school record, ledger",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"pays a student in need...\"; \"runs six terms\"",
+      "tests": "tests/school.test.ts ‘pays a student in need...’, ‘runs six terms’; tests/production-staging.test.ts ‘numbers every rehearsal call it keeps, one to the last, with its technical and its dress’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "cast() -> calls, verified, while a production beside a Rep assignment had its calls numbered before the overlap filter dropped some.",
+        "now": "Until 2026-10-12 a call numbered 4 of 20 could be a student’s second of eight, and the technical and the dress could be dropped, so complete preparation couldn’t be reached (measured on seed ‘of-a’). Since then each production’s calls are numbered on the calls it keeps (tests/production-staging.test.ts)."
+      }
     },
     {
       "id": "school.week",
@@ -379,28 +536,40 @@
       "kind": "scheduled",
       "entry": "cast() calls",
       "reads": "offSick/sickDay, present, process, casting",
-      "changes": "tally calls/answered; process (callAnswered/callMissed); rehearse/playNight growth; reckonNight (nights, work, delivered, morale, presence, listening, genres); breach; castable",
-      "downstream": "evaluate (attendance, work nights, breaches); cast() lastWork.delivery; casting pool",
+      "changes": "tally calls/answered; process (callAnswered/callMissed; a craft note at a work-through from 2026-10-12); reckonNight (nights, work, delivered, morale, from 2026-10-12 the night together’s where there’s a company, presence, listening, genres), then rehearse/playNight growth; breach; castable; the run closed at its last night, played or missed (closeRun, from 2026-10-12)",
+      "downstream": "evaluate (attendance, work nights, breaches); cast() lastWork.delivery; casting pool; the run’s milestone and the director’s note from what held its nights back (closeRun)",
       "persistent": "casting, tally, work, journey",
       "explanation": "SchoolWorkspace.tsx, RehearsalProcess.tsx",
-      "tests": "school.test.ts \"takes an actor out of the pool after missed rehearsal calls...\"; casting.test.ts \"count a run gone mostly off against the term\"",
-      "status": "verified",
-      "issue": "night judged after playNight grew craft (school.ts:2086-2088)"
+      "tests": "tests/school.test.ts ‘takes an actor out of the pool after missed rehearsal calls...’; tests/casting.test.ts ‘count a run gone mostly off against the term’, ‘keeps each night of a run, gives the director’s note at the last, and the chair reads the run next term’",
+      "status": "partial",
+      "issue": "night judged after playNight grew craft (school.ts:2086-2088)",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘night judged after playNight grew craft’. The director’s run note named the play’s weakest raw craft skill.",
+        "now": "A night has been judged as the craft stood coming in, then grown by it, since 2026-10-10. From 2026-10-12 it’s judged in its movements, the director’s note names what held the run’s nights back most (casting.test.ts), a run closes when its last night passes, played or missed, and with classmates cast the mood it leaves is the night together’s. No test checks that mood, or a run closed by a missed last night.",
+        "status": "verified"
+      },
+      "read": "what the first review named in it"
     },
     {
       "id": "school.evaluation",
       "kind": "scheduled",
       "entry": "term start schedule",
-      "reads": "tally, termGrowth, run nights (casting/rep term==term, >=3), breaches",
+      "reads": "tally, termGrowth (from 2026-10-12 a student at the reach isn’t judged behind for growing nothing), run nights (casting/rep term==term, >=3), the term’s coursework bands, breaches",
       "changes": "history TermReview, standing, castable, commencement",
       "downstream": "castable->cast; standing->cabaret/summer/rep eligibility, dismissal; history UI",
       "persistent": "school.history",
       "explanation": "SchoolWorkspace.tsx:161-165",
-      "tests": "school.test.ts \"steps standing down for short attendance...\"; \"counts a student who grew under half...\"",
+      "tests": "tests/school.test.ts ‘steps standing down for short attendance...’, ‘counts a student who grew under half...’; tests/school-fixes.test.ts ‘half or more of it unready, of three or more shown, falls short...’, ‘is judged at the next, and once’; tests/term-growth.test.ts ‘doesn’t judge a student at the ceiling behind for growing nothing’",
       "status": "verified",
       "issue": "coursework showings never read; Carlotta nights (May) fall after the April evaluation",
       "auditStatus": "partial",
-      "settled": "Fixed: coursework read (half or more unready of three or more falls short) and a run after the evaluation judged at the next (tests/school-fixes.test.ts)."
+      "settled": "Fixed: coursework read (half or more unready of three or more falls short) and a run after the evaluation judged at the next (tests/school-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Reads termGrowth, whose room was floored at 0.01, so a student at every skill’s ceiling who grew nothing was judged behind the class; no test read termGrowth, and Tested By left out the repair’s test.",
+        "now": "From 2026-10-12 a student at the reach has met the growth the term asks (ROOM_LEAST), which tests/term-growth.test.ts holds. The coursework and late-run repairs of 2026-10-10 are tested in tests/school-fixes.test.ts."
+      }
     },
     {
       "id": "school.commencement",
@@ -441,11 +610,16 @@
       "downstream": "evaluate attendance; craft",
       "persistent": "tally, craft",
       "explanation": "calendar",
-      "tests": "school.test.ts \"calls a first-year to Drama 50, grows them there, and counts a missed afternoon\"",
+      "tests": "tests/school.test.ts ‘calls a first-year to Drama 50, grows them there, and counts a missed afternoon’; tests/school-fixes.test.ts ‘is judged as a night, and kept in the record’",
       "status": "verified",
       "issue": "third-year solo showing never judged (no evaluation/band); growth unrecorded on history",
       "auditStatus": "partial",
-      "settled": "Fixed: the solo showing is judged, recorded and told; growth recorded (tests/school-fixes.test.ts)."
+      "settled": "Fixed: the solo showing is judged, recorded and told; growth recorded (tests/school-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By named school.test.ts alone, beside a note naming the repair’s test.",
+        "now": "Fixed: the solo showing is judged, recorded and told; growth recorded (tests/school-fixes.test.ts ‘is judged as a night, and kept in the record’)."
+      }
     },
     {
       "id": "school.cabaret (kind)",
@@ -456,12 +630,19 @@
       "downstream": "work/journey; reflect->ledger; credits->Papers",
       "persistent": "cabaret",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/coverage-gaps-runs.test.ts",
-      "status": "verified",
+      "tests": "tests/school.test.ts ‘puts a student in a show this term...’ (the calls played by the clock: the craft grown, the credit with its nights); tests/coverage-gaps-runs.test.ts ‘is kept in the record of runs, and survives a reload’ (one call booked by hand); no test checks the journey or Papers reading a night played",
+      "status": "partial",
       "issue": "see school.cabaret",
       "auditStatus": "partial",
       "settled": "As school.cabaret.",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-runs.test.ts, whose one night through the scheduler is booked by hand on a Cabaret set by hand.",
+        "now": "Played through the command and the clock, its calls grow the craft and its closing puts the run on the résumé with its nights and the director’s note (school.test.ts); a night is kept in the run record and survives a reload (coverage-gaps-runs.test.ts, the call booked by hand). What reads the run record is tested only on runs built by hand (see school.cabaret), and no test checks the journey or Papers reading a night played."
+      },
+      "read": true
     },
     {
       "id": "school.summer",
@@ -472,11 +653,18 @@
       "downstream": "stipend cancel; credits",
       "persistent": "summer",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/coverage-gaps-runs.test.ts",
-      "status": "verified",
+      "tests": "tests/school.test.ts ‘lets a student go who misses a performance, and stops the stipend...’, ‘keeps a student in the company who misses a performance in hospital’; tests/defects-g8-1.test.ts ‘excuses the performance: not played, and the company keeps the student’; no test checks the credit a summer’s run gives",
+      "status": "partial",
       "issue": "nights not read by standing/casting",
       "previous": "partial",
-      "settled": "As school.summer_cabaret; a missed show is a night delivered at nothing."
+      "settled": "As school.summer_cabaret; a missed show is a night delivered at nothing.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-runs.test.ts, which builds the summer by hand and plays no show.",
+        "now": "Played through the command and the clock: a missed show lets the student go, calls off what’s ahead and pays the week’s stipend for the days worked, and a night in hospital keeps them in the company (school.test.ts); a night called in sick is excused (defects-g8-1.test.ts). No test checks the credit a run’s last show gives, and a missed show read as a night delivered at nothing is tested only on runs built by hand (coverage-gaps-runs.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "school.stipend",
@@ -487,9 +675,16 @@
       "downstream": "tax",
       "persistent": "ledger",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts \"...stops the stipend after the days of the week worked\"",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/school.test.ts ‘lets a student go who misses a performance, and stops the stipend after the days of the week worked’ (the wage posted at the share worked); on wages recorded by hand: tests/state-tax.test.ts ‘splits a Connecticut year: the IRS’s part and Connecticut’s...’, tests/coverage-gaps-papers.test.ts ‘aren’t earned by work-study, FICA-exempt while enrolled; a Summer Cabaret stipend earns them’; no test pays a stipend by the clock and checks the return",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on school.test.ts ‘...stops the stipend after the days of the week worked’, which checks the wage posted and not the tax its Downstream names.",
+        "now": "The week’s wage is paid by the clock, and a missed show’s week at the share worked (school.test.ts). What the tax makes of it is tested only on wages recorded by hand: the withholding and the return split between the IRS and Connecticut (state-tax.test.ts), and the Social Security credits it earns (coverage-gaps-papers.test.ts)."
+      },
+      "read": true
     },
     {
       "id": "school.recess",
@@ -536,14 +731,21 @@
       "id": "school.partner_rehearsal",
       "kind": "scheduled",
       "entry": "book()",
-      "reads": "here, reliability draw",
-      "changes": "kept/missed; prep.partner; listening; trust/bond; incidents; approach/tryBoth; said",
-      "downstream": "preparedParts partner -> showing; trust/bond; boundary",
+      "reads": "here, reliability draw; ill, laid up, a day called in sick, or, on its feet, an injury that stops training excuses it (the day called in sick and the injury from 2026-10-12)",
+      "changes": "kept/missed/excused; your own partner part (prep.partner); listening; trust/bond; incidents; approach; tryBoth and readsApart cleared, the readings brought together (readsApart from 2026-10-12), and prep.interpretation moved only where the table work reads it, a course with a step at the table or work with no scene (interpretationOf); said (peerNote, the choices read through interpretationOf from 2026-10-12)",
+      "downstream": "preparedParts: your partner part, which the showing reads as yours; the scene together (partnerReadOf, from 2026-10-12), where the partner’s preparation rises with rehearsals together; trust/bond; boundary (keptWith)",
       "persistent": "assignment, mate",
       "explanation": "CourseworkPane.tsx (said)",
-      "tests": "partners.test.ts \"names what held the scene back...\"; approaches.test.ts partner",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/ensemble.test.ts ‘comes out at exactly 100 for the player, whatever the partner has done’, ‘reads readings held apart until both are tried, and the partner’s own preparation rising with rehearsals together’ (a.prep.partner set by hand, 0 then 1: no rehearsal is run); tests/coursework-defects.test.ts ‘excuses a rehearsal on a day called in sick, trust unchanged’ (booked on an evening the partner is free, accepted, and the same evening not called in sick not excused); tests/defects-g8-10.test.ts ‘rehearses the chosen way of playing in...’ (kept by the clock, the partner’s reliability set to 1: your partner part rises); tests/defects-r2-1.test.ts ‘reads the answers at the table where the table work is the answers alone’, ‘move no figure, and leave the partner’s words to the answers’ (kept by the clock, reliability set to 1: what the partner says of the choices); tests/coverage-gaps-classmates.test.ts ‘accepted lifts after two rehearsals kept...’ (keptWith called directly); tests/partners.test.ts ‘names what held the scene back...’ (peerNote, the answers at the table set by hand, and the raw prep.interpretation shown moving nothing)",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream: preparedParts partner -> showing, on partners.test.ts ‘names what held the scene back...’ (a partner’s words) and approaches.test.ts’s partner test (a way chosen), neither of which reads the showing.",
+        "now": "Until 2026-10-12 the partner’s own time-based preparation was blended into your partner part, which held a mastered student at 94.3 to 98.0 on paired scenes. Since then your partner part is what you’ve rehearsed together, and the partner’s own work is read by the scene together, apart from your result (tests/ensemble.test.ts). Until 2026-10-12 no test ran a kept rehearsal and checked what it adds, and this said so. Since then rehearsals kept by the clock, the partner’s reliability set to 1, raise your partner part and rehearse the chosen way of playing in (defects-g8-10.test.ts), and what the partner says after one reads the answers at the table where the table work is the answers alone (defects-r2-1.test.ts). No test checks the trust and bond a kept rehearsal adds, or a showing after one: ensemble.test.ts sets the partner part by hand, and coverage-gaps-classmates.test.ts counts a kept rehearsal toward a boundary by calling keptWith. coursework-defects.test.ts books an evening the partner is free, asserts they accept, and checks that a day called in sick excuses the rehearsal and the same evening not called in sick doesn’t; until 2026-10-12 it returned early if the partner turned the booking down, and this said another seed could leave it checking nothing.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "school.study_session",
@@ -554,11 +756,17 @@
       "downstream": "showing prep; boundary",
       "persistent": "assignment, mate",
       "explanation": "ClassMoments.tsx",
-      "tests": "journey-school-year (careful answers yes) only",
-      "status": "verified",
+      "tests": "tests/classmate-moments.test.ts ‘said yes to, goes on the calendar, is answered once, and kept builds trust’; journey-school-year (careful answers yes); no test checks the lines it adds or a missed one’s incident",
+      "status": "partial",
       "issue": "no direct test of effect",
       "auditStatus": "partial",
-      "settled": "Tested: kept, it builds trust (tests/classmate-moments.test.ts)."
+      "settled": "Tested: kept, it builds trust (tests/classmate-moments.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on ‘kept builds trust’, which checks trust, while Downstream names the showing’s preparation and the boundary.",
+        "now": "Tested: kept, it builds trust (tests/classmate-moments.test.ts). No test checks the memorization it adds to the weakest open work, or the incident a missed one leaves, which a boundary reads."
+      }
     },
     {
       "id": "school.moment",
@@ -569,11 +777,16 @@
       "downstream": "trust",
       "persistent": "moments",
       "explanation": "ClassMoments.tsx",
-      "tests": "none direct",
+      "tests": "tests/classmate-moments.test.ts ‘left unanswered, lapses, and costs a little trust’",
       "status": "verified",
       "issue": "untested",
       "auditStatus": "partial",
-      "settled": "Tested: an unanswered invitation lapses at its cost (tests/classmate-moments.test.ts)."
+      "settled": "Tested: an unanswered invitation lapses at its cost (tests/classmate-moments.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘none direct’, beside a note naming its test.",
+        "now": "Tested: an unanswered invitation lapses at its cost (tests/classmate-moments.test.ts)."
+      }
     },
     {
       "id": "abilities+techniques",
@@ -584,9 +797,14 @@
       "downstream": "evaluation.judge (all tasks), castFit, reachOf",
       "persistent": "person.craft/attrs/fitness",
       "explanation": "ProfileWorkspace.tsx, looks/actor.tsx",
-      "tests": "evaluation.test.ts \"counts voice and movement once...\"; development.test.ts",
+      "tests": "tests/evaluation.test.ts ‘counts voice and movement once...’; tests/development.test.ts; tests/school-fixes.test.ts ‘is kept in the development history under its source’",
       "status": "verified",
-      "issue": "no double count found; not every growth recorded (see findings)"
+      "issue": "no double count found; not every growth recorded (see findings)",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘not every growth recorded (see findings)’.",
+        "now": "No double count found. Every growth has been recorded under its source since 2026-10-10 (grewFrom: rehearsals, nights, labs, coursework training, nerves), which tests/school-fixes.test.ts holds for a call."
+      }
     },
     {
       "id": "development ledger",
@@ -597,24 +815,35 @@
       "downstream": "repeatsToday anti-farm; practicedToday; Profile history",
       "persistent": "person.development",
       "explanation": "ProfileWorkspace.tsx:394; looks/actor.tsx:111",
-      "tests": "development.test.ts; classes-grow.test.ts",
+      "tests": "tests/development.test.ts; tests/classes-grow.test.ts; tests/school-fixes.test.ts ‘is kept in the development history under its source’",
       "status": "verified",
       "issue": "playNight/rehearse/labs/prepare-trains/nerves bypass it; \"Nothing has moved it\" can be false",
       "auditStatus": "partial",
-      "settled": "Fixed: grewFrom records rehearsals, nights, labs, coursework training and nerves (tests/school-fixes.test.ts)."
+      "settled": "Fixed: grewFrom records rehearsals, nights, labs, coursework training and nerves (tests/school-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Fixed: grewFrom records rehearsals, nights, labs, coursework training and nerves (tests/school-fixes.test.ts)."
+      }
     },
     {
       "id": "work records + journey",
       "kind": "state",
-      "entry": "recordWork (showings, reshows, nights, runthrough, self-tape)",
+      "entry": "recordWork (showings, reshows, nights, runthrough, a taped brief)",
       "reads": "evaluation result",
       "changes": "person.work (160), journey totals/byTerm/milestones",
-      "downstream": "run milestone reads person.work; Profile",
+      "downstream": "the run’s milestone; the director’s run note, from what held the run’s nights back (closeRun, from 2026-10-12); recommendations, what to work on (Profile, the brief pane); artistry, the Profile’s Your Work So Far and the brief suggestions (from 2026-10-12); the work’s look",
       "persistent": "person.work, person.journey",
       "explanation": "ProfileWorkspace.tsx",
-      "tests": "attributes-complete.test.ts \"counts every piece for good...\"; evaluation.test.ts \"keeps a result with the ruleset...\"",
-      "status": "verified",
-      "issue": "display/history only: no outcome reads it"
+      "tests": "tests/attributes-complete.test.ts ‘counts every piece for good...’; tests/evaluation.test.ts ‘keeps a result with the ruleset...’; tests/casting.test.ts ‘keeps each night of a run, gives the director’s note at the last...’; tests/material.test.ts ‘recommends what cost recent work, and stops once it’s been addressed’; artistry (identityOf): tests/defects-g8-15.test.ts ‘isn’t named from one choice re-pressed and taped, and is from five choices, with what was shown as evidence’ (its habits), tests/defects-g8-11.test.ts ‘names the note’s subject as the class does, not the ledger’s key’ (a note that keeps coming back), tests/defects-g8-14.test.ts ‘reads the calls of the whole program, so a first fall’s labs are still counted in the spring’ (its reliability)",
+      "status": "partial",
+      "issue": "display/history only: no outcome reads it",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Note: ‘display/history only: no outcome reads it’; downstream the run milestone and the Profile.",
+        "now": "No result reads it. Its words do: the director’s run note (from 2026-10-12, casting.test.ts), the recommendations (material.test.ts), and from 2026-10-12 artistry (identityOf), whose habits, note that keeps coming back and reliability are checked (defects-g8-15.test.ts, defects-g8-11.test.ts, defects-g8-14.test.ts). This said no test checked artistry until those tests came, later on 2026-10-12."
+      }
     },
     {
       "id": "genre familiarity/practice",
@@ -635,12 +864,17 @@
       "entry": "content/demands.ts withDemands",
       "reads": "play kinds",
       "changes": "techniques read",
-      "downstream": "castFit, nightEvaluation (castingReads), judgeWork, tapeReads",
+      "downstream": "a taped brief’s reads (its kinds, tapeReadsOf in briefs.ts); castingReads and judgeWork only for a play or scene with no material profile (from 2026-10-10 a profiled play reads its own techniques and its material’s). Until 2026-10-12 this named tapeReads too, which only tests read since the briefs took the self-tape that day",
       "persistent": "content",
       "explanation": "castRead reads shown",
-      "tests": "attributes-complete.test.ts \"puts every technique a play’s kinds demand into its casting and its nights\"; engagement.test.ts demand counts once",
+      "tests": "tests/engagement.test.ts ‘is studied and taped by a command...’ (a take reads its genres’ demands), ‘makes every applied demand a requirement of the work...’; tests/attributes-complete.test.ts ‘reads each play’s own techniques and its material’s, and no technique a genre tag alone would have added’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Downstream castFit and nightEvaluation through a play’s kinds; tested by attributes-complete ‘puts every technique a play’s kinds demand into its casting and its nights’, a test that’s gone.",
+        "now": "From 2026-10-10 a play’s casting and nights read its own techniques and its material’s, and a genre tag’s demand only where there’s no material profile; the test was replaced by ‘reads each play’s own techniques and its material’s...’. A taped brief reads its genres’ demands (engagement.test.ts)."
+      }
     },
     {
       "id": "classmates abilities/craft",
@@ -648,14 +882,19 @@
       "entry": "admittedClass, mateAbilities",
       "reads": "drive, attendance",
       "changes": "craft via classes/company; abilities via growMateAbility; composure via classmateRun",
-      "downstream": "classmatePerformer->castFit; companyPart; termGrowth class median; teachersNotes; castAtRep; rankIn",
+      "downstream": "classmatePerformer->castFit; companyPart (castFit from 2026-10-12); a partner’s timing in the scene together (listening and focus, from 2026-10-12); termGrowth class median; teachersNotes; castAtRep; rankIn",
       "persistent": "classmates",
       "explanation": "SchoolWorkspace.tsx (castRead, rank)",
-      "tests": "casting.test.ts \"...the driven grow more in the same classes\"; attributes-complete \"gives the player and a classmate ... the same fit\"",
+      "tests": "tests/casting.test.ts ‘...the driven grow more in the same classes’; tests/attributes-complete.test.ts ‘gives the player and a classmate with the same abilities and craft the same fit, for any play’; tests/classmate-moments.test.ts ‘grows as a session grows the player’s, less the nearer the reach, and never past 100’; tests/ensemble.test.ts ‘falls as the partner’s preparation, timing or agreement falls...’",
       "status": "verified",
       "issue": "developed and read; no test that growMateAbility moves abilities in class",
       "auditStatus": "partial",
-      "settled": "Tested: growMateAbility, diminishing and capped (tests/classmate-moments.test.ts)."
+      "settled": "Tested: growMateAbility, diminishing and capped (tests/classmate-moments.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "companyPart ranked a classmate’s raw craft; Tested By left out the repair’s test.",
+        "now": "Tested: growMateAbility, diminishing and capped (tests/classmate-moments.test.ts). From 2026-10-12 companyPart reads classmatePerformer through castFit, and a partner’s listening and focus are their timing in the scene together."
+      }
     },
     {
       "id": "classmate trust/bonds",
@@ -679,40 +918,57 @@
       "downstream": "castScore through LastWork.delivery",
       "persistent": "school.casting/castRead",
       "explanation": "Why This Cast: the runs read, nights, delivery, weight",
-      "tests": "tests/coverage-gaps-runs.test.ts",
-      "status": "verified",
+      "tests": "tests/casting.test.ts ‘keeps each night of a run, gives the director’s note at the last, and the chair reads the run next term’ (the run played by the clock, read into lastWork); checking less: tests/attributes-complete.test.ts ‘weighs delivery a fifth, and no longer the last run’s nights or a heeded note...’ (castScore, a function); tests/coverage-gaps-runs.test.ts (readRuns and castScore on runs built by hand); no test plays a run and checks the next casting moving with its delivery",
+      "status": "partial",
       "issue": "no double count (delivery is prep x condition); lastWork.nights/heeded unread; only school.casting feeds lastWork",
       "auditStatus": "partial",
       "settled": "The chair reads every run since the last casting, once, weighted by nights (cap 8) and kind (Cabaret and Summer half), the record before at half its weight, capped at 12; quality stays out.",
-      "previous": "partial"
+      "previous": "partial",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on tests/coverage-gaps-runs.test.ts, which builds the runs by hand and calls readRuns and castScore, functions.",
+        "now": "A run played by the clock is read at the next casting into lastWork, its delivery a share (casting.test.ts). castScore’s reading of the delivery is tested as a function, the last work given (casting.test.ts, attributes-complete.test.ts), and readRuns’ weights on runs built by hand (coverage-gaps-runs.test.ts). No test plays a run and checks the next casting’s choice moving with what it delivered."
+      },
+      "read": true
     },
     {
       "id": "standing/term evaluation",
       "kind": "state",
       "entry": "evaluate()",
-      "reads": "attendance, growth pace, run nights, breaches",
+      "reads": "attendance, growth pace (at the reach, not behind, from 2026-10-12), run nights, coursework bands, breaches",
       "changes": "standing, castable, history",
       "downstream": "cabaret/summer/rep eligibility, dismissal, commencement",
       "persistent": "school",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "school.test.ts standing its; casting.test.ts run off",
+      "tests": "tests/school.test.ts standing its; tests/casting.test.ts run off; tests/school-fixes.test.ts; tests/term-growth.test.ts",
       "status": "verified",
       "issue": "coursework quality absent; Carlotta excluded",
       "auditStatus": "partial",
-      "settled": "As school.evaluation."
+      "settled": "As school.evaluation.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Reads growth pace, with a student at the ceiling who grew nothing judged behind.",
+        "now": "As school.evaluation."
+      }
     },
     {
       "id": "notes and feedback",
       "kind": "state",
       "entry": "show()/reflect()/callAnswered",
       "reads": "notes ledger",
-      "changes": "recordNote/resolveNote; feedback; director notes",
-      "downstream": "noteCandidates, persistentFor->approach, objectiveFor, mayGive",
+      "changes": "recordNote/resolveNote; feedback; director notes (from 2026-10-12 a craft note, with its problem, its measure and how it was answered)",
+      "downstream": "noteCandidates, persistentFor->approach, objectiveFor -> the showing’s lean (from 2026-10-12) and the note’s order, mayGive; a skill note taken by the skill growing and a choice note given again after it was resolved (from 2026-10-12)",
       "persistent": "coursework.notes, process.notes",
       "explanation": "CourseworkPane.tsx, RehearsalProcess.tsx",
-      "tests": "feedback.test.ts; learning.test.ts; approaches.test.ts",
+      "tests": "tests/feedback.test.ts; tests/learning.test.ts ‘sets the objective a recurring note names...’; tests/approaches.test.ts; tests/coursework-objective.test.ts; tests/coursework-defects.test.ts ‘is taken by the skill growing, not by revision at the desk’, ‘can be given again after it was resolved...’; tests/direction.test.ts",
       "status": "verified",
-      "issue": "director run note noteSkill/heeded is a dead chain"
+      "issue": "director run note noteSkill/heeded is a dead chain",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "objectiveFor’s objective as verified on feedback.test.ts, whose ‘weighs its part more, so the same preparation shows differently under another objective’ checks Showing.parts.prep and not the result. Note: ‘director run note noteSkill/heeded is a dead chain’.",
+        "now": "Until 2026-10-12 the objective changed which note was given and parts.prep, and nothing in the judged result; since then the showing leans toward it (tests/coursework-objective.test.ts), and feedback.test.ts compares the judged result under the same key, not Showing.parts, which went that day with nothing reading it (tests/defects-r2-1.test.ts). A skill note was taken by two steps of revision at the desk until then, and is taken by the skill growing now. The noteSkill/heeded chain went on 2026-10-10."
+      }
     },
     {
       "id": "preparation dims",
@@ -720,12 +976,17 @@
       "entry": "prepare/choose/rehearsals/study",
       "reads": "a.prep",
       "changes": "prep",
-      "downstream": "judgeWork prep; noteCandidates; peerNote",
+      "downstream": "judgeWork prep (from 2026-10-12 a scene’s rehearsal refined segment by segment, a.work); noteCandidates; peerNote, which reads knowing the scene, the lines and time on its feet from a.prep, and from 2026-10-12 the choices as the showing does (interpretationOf: the answers at the table, and verse’s scansion), until then prep.interpretation; the workbook’s forecast",
       "persistent": "assignment",
       "explanation": "CourseworkPane.tsx",
-      "tests": "traits-connected.test.ts; partners.test.ts",
+      "tests": "tests/coursework-objective.test.ts ‘changes the result...’ (judgeWork reads it); tests/piece.test.ts ‘asks more of the segment a turn leads into, and work on a segment lifts it and the whole’; tests/traits-connected.test.ts; tests/partners.test.ts",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Verified on traits-connected.test.ts and partners.test.ts, which check a step’s size and a partner’s words, not judgeWork.",
+        "now": "judgeWork reads the preparation (tests/coursework-objective.test.ts); from 2026-10-12 a scene’s rehearsal is refined segment by segment too (tests/piece.test.ts). The partner’s words after a rehearsal (peerNote) read the choices through interpretationOf from 2026-10-12, so on a scene whose table work is the answers alone they follow the answers, and the raw prep.interpretation moves nothing there (tests/partners.test.ts, tests/defects-r2-1.test.ts)."
+      }
     },
     {
       "id": "showing/night bands",
@@ -733,14 +994,20 @@
       "entry": "bandOfQuality",
       "reads": "overall",
       "changes": "band",
-      "downstream": "coursework: meetingWeight growth weight + encouragement moment; night: morale/presence, nightsMean->term work, directorsNote",
+      "downstream": "coursework: meetingWeight growth weight (WORK.weight) + encouragement moment + the term’s standing; night: morale (with a company, from 2026-10-12, the night together’s band)/presence, nightsMean->term work, directorsNote",
       "persistent": "assignment.shown, casting.nights",
       "explanation": "CourseworkPane.tsx, SchoolWorkspace.tsx:322",
-      "tests": "casting.test.ts \"goes better rested...\"; \"lifts the presence...\"",
-      "status": "verified",
+      "tests": "tests/casting.test.ts ‘goes better rested...’, ‘lifts the presence...’, ‘count a run gone mostly off against the term’; tests/school-fixes.test.ts ‘half or more of it unready, of three or more shown, falls short...’; no test checks the coursework band’s growth weight or the encouragement moment",
+      "status": "partial",
       "issue": "coursework band never reaches standing; Showing.score/parts and revision.band unread",
       "auditStatus": "partial",
-      "settled": "Coursework bands reach standing; a revision’s band stands for its piece; a showing’s score is shown; nights judged before their growth."
+      "settled": "Coursework bands reach standing; a revision’s band stands for its piece; a showing’s score is shown; nights judged before their growth.",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on casting.test.ts’s night tests, with the coursework band’s readers (the meeting’s growth weight, the encouragement moment) in Downstream and untested.",
+        "now": "Coursework bands reach standing (tests/school-fixes.test.ts); a revision’s band stands for its piece; a showing’s score is shown; nights judged before their growth. What a band does to the meeting’s growth (WORK.weight) and the encouragement moment have no test. From 2026-10-12 a night with classmates cast leaves the mood of the night together."
+      }
     },
     {
       "id": "credits",
@@ -767,6 +1034,231 @@
       "tests": "school.test.ts shift its",
       "status": "verified",
       "issue": ""
+    },
+    {
+      "id": "school.request_leave",
+      "kind": "command",
+      "entry": "School, Standing And Craft: A Leave Of Absence, Ask (StudyPlanPanels.tsx:134)",
+      "reads": "leaveRefusal: one at a time, its kind and reason (a physician’s recommendation for a medical one, a term completed and no professional commitment for a personal one, no F-1 personal leave), its length from the course sequence (leaveLengths)",
+      "changes": "school.leave pending; LEAVE_DECIDE_KIND in five working days (leave.ts:898)",
+      "downstream": "the decision: granted, startLeave withdraws the term’s courses (degreeShortfall), sets offset (academicTerm), ends classes, castings and a Cabaret show, returns aid on the rebate schedule (accountOwed), ends Yale Health or keeps a medical leave’s Affiliate cover (coverOn), extends a medical leave’s I-20 (f1Of); LEAVE_NOTICE_KIND dismisses without notice",
+      "persistent": "school.leave, school.leaves",
+      "explanation": "The leave panel; ‘Your Leave Is Granted’ or ‘Refused’",
+      "tests": "tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’, ‘PLAYER JOURNEY: asked on the third day of spring classes...’, ‘granted for the next term after the fall’s evaluation...’, ‘is refused for a professional commitment, and refused to an F-1 student with why...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’; tests/school-paths.test.ts ‘is worked out from the course sequence...’ (the New Haven student, born in New York; the flu or an injury put in by hand where a medical leave asks one)",
+      "status": "verified",
+      "issue": "Through the command and the clock, a medical leave is decided, withdraws the term’s courses to be taken again, sets the program back, ends classes and keeps Yale Health as Affiliate cover, and extends an F-1’s I-20 (a London-born student); a personal one begun in the spring returns the term’s aid on the rebate schedule and lets the cover lapse; no notice by its date dismisses the student. The illness a medical leave asks for is put in by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.cancel_leave",
+      "kind": "command",
+      "entry": "The leave panel’s Call It Off (StudyPlanPanels.tsx:100)",
+      "reads": "a leave pending or granted, not begun; confirm",
+      "changes": "cancels LEAVE_DECIDE_KIND; leave canceled into leaves (leave.ts:1047)",
+      "downstream": "no decision comes; offset and enrolledTerms as they were",
+      "persistent": "school.leaves",
+      "explanation": "The confirmation’s warning",
+      "tests": "tests/leave.test.ts ‘can be called off while it waits, and the decision never comes’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command, asked and called off with confirmation: the decision never comes, the leave is on the record as canceled, and the program goes on at its terms (offset 0, both terms enrolled) through the clock.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.appeal_leave",
+      "kind": "command",
+      "entry": "The leave panel’s Appeal To The Dean, on a leave the dean imposed (StudyPlanPanels.tsx:77)",
+      "reads": "a mandatory leave, not appealed, by its appealBy",
+      "changes": "mandatory.appeal; APPEAL_KIND after the dean’s working days (leave.ts:963)",
+      "downstream": "the appeal’s decision: rescindable (cleared, and half the term left) restores the term’s courses and classes (rescind); else upheld",
+      "persistent": "school.leave.mandatory.appeal",
+      "explanation": "‘Your Leave Is Overturned’ or ‘Your Appeal Is Turned Down’",
+      "tests": "tests/school-paths.test.ts ‘PLAYER JOURNEY: assessed on function, recommended, imposed by the dean, appealed and overturned...’, ‘an appeal from a student cleared with less than half the term left leaves the leave standing’, ‘an appeal turned down leaves the leave standing; too late, it’s refused’ (the New Haven student, born in New York; the hospital stays that bring the assessment put in by hand)",
+      "status": "verified",
+      "issue": "Through the command and the clock, an appeal from a student cleared early in the term rescinds the leave, restores the term’s courses and classes count again; cleared too late, or not cleared, it’s upheld; a second appeal is refused. The crisis that brings Yale Health’s assessment is put in by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.return_notice",
+      "kind": "command",
+      "entry": "The leave panel’s Give Notice Of Return (StudyPlanPanels.tsx:81)",
+      "reads": "a leave on, no notice given, by noticeBy; a medical leave’s clearance (clearedToReturn)",
+      "changes": "leave.noticeAt (leave.ts:1093)",
+      "downstream": "LEAVE_NOTICE_KIND dismisses only without it; the return term begins the program again (TERM_KIND, mustRegister)",
+      "persistent": "school.leave",
+      "explanation": "The leave panel; ‘Two Weeks To Give Notice’",
+      "tests": "tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’, ‘PLAYER JOURNEY: asked on the third day of spring classes...’ (no notice, dismissed); tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’; tests/school-paths.test.ts ‘keeps the first class whole and played forward...’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command and the clock, notice is refused without a physician’s clearance after a medical leave, given once, and the student is back at the return term with the courses left; without it the leave ends in dismissal.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.reregister",
+      "kind": "command",
+      "entry": "School, Standing And Craft: Register (StudyPlanPanels.tsx:110)",
+      "reads": "mustRegister; a financial hold (accountOwed)",
+      "changes": "deletes mustRegister; registeredAt (leave.ts:1124)",
+      "downstream": "registered(), which classes and shifts read",
+      "persistent": "school.registeredAt",
+      "explanation": "The Register line; the hold’s refusal",
+      "tests": "tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’ (the fall back’s courses attended once registered) (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command, a student back from a leave registers once, and the fall back’s courses are attended through the clock. No test refuses it for a hold.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.buy_affiliate",
+      "kind": "command",
+      "entry": "The leave panel’s Buy It (StudyPlanPanels.tsx:87)",
+      "reads": "a leave on, no Affiliate cover, by affiliateBy; affiliateQuote; the bank",
+      "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1104)",
+      "downstream": "coverOn back to the day student cover ended; care had in the lapse billed again as Yale Health’s",
+      "persistent": "school.leave.affiliate, ledger",
+      "explanation": "The quote in the confirmation; ‘Care Credited’",
+      "tests": "tests/leave.test.ts ‘PLAYER JOURNEY: asked on the third day of spring classes...’; tests/defects-g8-2.test.ts ‘shows and charges the leave’s own three terms, the same figure’ (the New Haven student, born in New York; money put in by hand)",
+      "status": "verified",
+      "issue": "Through the command, Affiliate cover is bought for both terms less the fee paid, Yale Health covers back to the lapse, and a bill had in it is brought down.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.withdraw",
+      "kind": "command",
+      "entry": "School, Standing And Craft: Withdraw (SchoolWorkspace.tsx:607)",
+      "reads": "confirm; the fifteenth day of classes (early)",
+      "changes": "standing withdrawn; the place given up; a leave ended with it; an early withdrawal cancels Yale Health to the insurance term’s start (school.ts:3570)",
+      "downstream": "TERM_KIND called off; coverOn; care in a canceled term billed again; the F-1 grace and OPT (permission.ts)",
+      "persistent": "school.standing, withdrewEarly",
+      "explanation": "The confirmation; ‘Care Billed Again’",
+      "tests": "tests/leave.test.ts ‘ends the leave with the place’, ‘cancels Yale Health back to the insurance term’s start...’; tests/student-experience.test.ts ‘PLAYER JOURNEY: a withdrawal by the fifteenth day of classes cancels Yale Health back to the term...’, ‘a withdrawal later in the term keeps Yale Health thirty days, with nothing refunded’; tests/defects-g8-4.test.ts ‘PLAYER JOURNEY: in a fall it goes back to 1 August...’; tests/journey-class-left-behind.test.ts (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command, withdrawal ends the place and a leave with it, calls off the next term, and by the fifteenth day of classes cancels Yale Health back to the term’s start, bills the care had in it again and refunds the premium; later, cover runs thirty days.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.make_up",
+      "kind": "command",
+      "entry": "A course’s Make Up A Session (SchoolWorkspace.tsx:566)",
+      "reads": "makeUpRefusal: an Incomplete in its month, in New Haven, two hours free",
+      "changes": "a session made up (courserecord.ts:178); the course passed on the last",
+      "downstream": "degreeShortfall; conferIfReady, a degree waiting on it conferred",
+      "persistent": "school.courses",
+      "explanation": "The course’s line; ‘Incomplete: …’",
+      "tests": "tests/student-experience.test.ts ‘PLAYER JOURNEY: ill for five weeks of classes in the first fall, an Incomplete in a course, made up in its sessions, and passed’, ‘an Incomplete at Commencement keeps them from it, and the degree comes when it’s made up...’ (the New Haven student, born in New York; the hospital stay and, in the second, the last term’s record put in by hand)",
+      "status": "verified",
+      "issue": "Through the command, an Incomplete left by an illness is made up session by session and passed, and one open at Commencement confers the held degree once made up.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.extend_incomplete",
+      "kind": "command",
+      "entry": "A course’s Ask For A Month More (SchoolWorkspace.tsx:567)",
+      "reads": "extendRefusal: an Incomplete, extended once",
+      "changes": "dueBy a month on (courserecord.ts:196)",
+      "downstream": "the month’s end, which makes an Incomplete Permanent past dueBy",
+      "persistent": "school.courses",
+      "explanation": "The course’s line",
+      "tests": "tests/student-experience.test.ts ‘is extended once by a month, and not again’ (the Incomplete settled by hand)",
+      "status": "verified",
+      "issue": "Through the command, the month runs a month more, a second asking is refused, and past the old date the course is still Incomplete through the clock.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.request_repeat",
+      "kind": "command",
+      "entry": "Finishing The Degree: Ask (StudyPlanPanels.tsx:188)",
+      "reads": "repeatRefusal: a course failed at the year’s end, or a last year’s within thirty days; not past nine semesters; not a year repeated before",
+      "changes": "school.repeat pending; REPEAT_DECIDE_KIND (leave.ts:1134)",
+      "downstream": "granted: offset and classOf (academicTerm, the curriculum), the attempts kept and the degree reading the best (degreeShortfall), the next term put on the calendar for a last year’s; the I-20 extended",
+      "persistent": "school.repeat, repeats, repeatedYears",
+      "explanation": "‘You’ll Repeat The Year’ (SLATE’s faculty model)",
+      "tests": "tests/leave.test.ts ‘PLAYER JOURNEY: a first year failed is repeated on request...’, ‘PLAYER JOURNEY: a last year failed waits thirty days for a repeat...’; tests/papers-transitions.test.ts (the New Haven student, born in New York; the course failed set by hand)",
+      "status": "verified",
+      "issue": "Through the command and the clock, a year failed is repeated: the program set back two terms, the year’s courses meeting again, the first attempts kept; a last year’s is put back on the calendar and billed past six. The degree reading the best attempt is checked on attempts set by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.cancel_repeat",
+      "kind": "command",
+      "entry": "Finishing The Degree: Call Off The Request, then Call It Off (StudyPlanPanels.tsx:209)",
+      "reads": "a repeat pending; confirm, with cancelRepeatWarning",
+      "changes": "cancels REPEAT_DECIDE_KIND; repeat canceled (leave.ts:1136)",
+      "downstream": "no decision; a last year’s REPEAT_DUE_KIND withholds the degree if nothing else is asked by its date",
+      "persistent": "school.repeat",
+      "explanation": "The warning on the press",
+      "tests": "tests/defects-g8-2.test.ts ‘asks first, with what calling it off leaves, and calls it off only on Call It Off’ (pressed on the rendered panel)",
+      "status": "partial",
+      "issue": "Pressed on the rendered panel, through the engine: refused without confirmation with its warning, and canceled. No test checks what follows: that the chair’s decision doesn’t come, and the degree withheld at the date when nothing else is asked.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.request_extra_term",
+      "kind": "command",
+      "entry": "Finishing The Degree: Ask For An Additional Term (StudyPlanPanels.tsx:199)",
+      "reads": "extraRefusal: after the last year’s evaluation, what it left unpassed, in its thirty days",
+      "changes": "school.extraRequest; EXTRA_DECIDE_KIND (leave.ts:988)",
+      "downstream": "granted: school.extra, the term on the calendar, coursesFor meeting only the courses retaken, the I-20 extended; refused past nine semesters",
+      "persistent": "school.extraRequest, school.extra",
+      "explanation": "‘An Additional Term Granted’ or ‘Refused’",
+      "tests": "tests/school-paths.test.ts ‘retakes a first-year fall course in a fall after the third year...’; tests/defects-g8-3.test.ts ‘in an additional term, shows only the courses retaken...’; tests/defects-g10-1.test.ts ‘an additional term retakes its course, which meets next...’ (the New Haven student, born in New York; the sixth term’s record set by hand)",
+      "status": "verified",
+      "issue": "Through the command and the clock, an additional term is granted for the course unpassed, only it meets, it’s billed past six and confers in December. The sixth term’s evaluation and the retake’s pass are set by hand.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.pay_balance",
+      "kind": "command",
+      "entry": "Terms And Award: Owed On Your Yale Account, Pay From Your Bank (StudyPlanPanels.tsx:250)",
+      "reads": "accountOwed; the bank; no more than is owed",
+      "changes": "pays the Yale account (payBalance, leave.ts:1187)",
+      "downstream": "the hold lifted once paid (registration, the diploma); conferIfReady, a degree held for it conferred",
+      "persistent": "ledger, school.hold",
+      "explanation": "‘The Financial Hold Is Lifted’; ‘Your MFA Is Conferred’",
+      "tests": "tests/leave.test.ts ‘PLAYER JOURNEY: a last year failed waits thirty days for a repeat, then bills the seventh term...’, ‘PLAYER JOURNEY: graduation after a repeated year...’; tests/school-paths.test.ts ‘retakes a first-year fall course in a fall after the third year...’ (the New Haven student, born in New York; money put in by hand)",
+      "status": "verified",
+      "issue": "Through the command, a term billed past six is paid in parts, the hold lifting on the last, and a diploma held for the account is conferred once it’s paid. A balance comes only from a term past the sixth.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.request_aid_review",
+      "kind": "command",
+      "entry": "Terms And Award: Ask For An Aid Review (StudyPlanPanels.tsx:267)",
+      "reads": "aidReviewRefusal: once, at school, a seventh term coming",
+      "changes": "school.aidReview pending; AID_DECIDE_KIND (leave.ts:1023)",
+      "downstream": "the term’s billing past six, which reads a decided review: no tuition where a medical leave made the extra terms, living aid where need was found",
+      "persistent": "school.aidReview",
+      "explanation": "‘The Aid Office’s Review’ (SLATE’s model)",
+      "tests": "tests/school-paths.test.ts ‘a medical leave behind it earns the aid office’s exception to tuition’, ‘retakes a first-year fall course...’; tests/defects-g8-2.test.ts ‘shows a term the aid office waived as the six were...’ (the engine bills nothing for it), ‘PLAYER JOURNEY: is refused to a student back from a leave and within the six...’ (the New Haven student, born in New York; the leave and the terms begun set by hand)",
+      "status": "verified",
+      "issue": "Through the command and the clock, the aid office excepts tuition where a medical leave made the extra terms, and the term then begun bills nothing for it; without one, it bills tuition. Asked twice, refused.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "school.request_conversion",
+      "kind": "command",
+      "entry": "School, Shifts And Pay: Ask For Conversion To Grant Aid (StudyPlanPanels.tsx:295)",
+      "reads": "conversionRefusal: need-based aid, not on leave, convertible hours (assigned hours excused or never assigned), one request at a time",
+      "changes": "a conversion request to the next January or May processing (school.ts:3011)",
+      "downstream": "the grant paid at the work-study rate, recorded as the year’s scholarship, which the return reads",
+      "persistent": "school.workStudy conversions, ledger, earnings",
+      "explanation": "The Shifts And Pay line",
+      "tests": "tests/work-limits.test.ts ‘PLAYER JOURNEY: assigned hours missed ill, asked to be converted, paid in January as a taxable scholarship; refused to a student with no aid’",
+      "status": "verified",
+      "issue": "Through the command and the clock, an assigned shift called in sick is converted, paid in January at the work-study rate as a scholarship and on the year’s earnings record the return reads; refused to a student with no aid and a second time.",
+      "traced": "2026-10-12",
+      "read": true
     }
   ],
   "findings": [
@@ -842,14 +1334,14 @@
     },
     {
       "severity": "low",
-      "what": "Test name contradicts behaviour: casting.test.ts \"balances opportunity ... and good nights for it\" asserts nights no longer count.",
+      "what": "Test name contradicts behavior: casting.test.ts \"balances opportunity ... and good nights for it\" asserts nights no longer count.",
       "where": "tests/casting.test.ts:66-71",
       "evidence": "expect(castScore(...nights:2)).toBe(60)",
       "suggestedFix": "Rename the test"
     },
     {
       "severity": "low",
-      "what": "Untested behaviour: school.respond choices (trust/bond/answers/tryBoth/boundary), school.read_feedback's gate on prepare, school.moment lapse, study_session effect, classmates' ability growth in class (growMateAbility).",
+      "what": "Untested behavior: school.respond choices (trust/bond/answers/tryBoth/boundary), school.read_feedback's gate on prepare, school.moment lapse, study_session effect, classmates' ability growth in class (growMateAbility).",
       "where": "classmates.ts:312-431; coursework.ts:435; school.ts:677-683",
       "evidence": "only journey tests call them, without asserting effects",
       "suggestedFix": "Add mutation-sensitive tests for each effect"

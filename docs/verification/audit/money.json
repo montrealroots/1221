@@ -9,22 +9,30 @@
       "downstream": "payments.ts:82 STANDING_ORDER handler posts current->savings monthly; savings balance then read by spending.ts:drawFromBank/savingsDebit",
       "persistent": "order in save, ledger transfers",
       "explanation": "BankPayments list + 'A Standing Order Didn't Go' notice",
-      "tests": "payments.test.ts:90 'moves the amount into savings on its day each month, skips a month it can't, and stops when canceled'",
+      "tests": "payments.test.ts:90 'moves the amount into savings on its day each month, skips a month it can't, and stops when canceled' (an Icelandic life)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "bank.arrange_overdraft",
       "kind": "command",
       "entry": "BankLending.tsx:159,173",
-      "reads": "overdraftOffer (score, wagesLastMonth, bank terms) lending.ts:345",
-      "changes": "current.overdraftLimit/Rate/PerUse/Since; set-up or facility fee (lending.ts:964-999)",
-      "downstream": "lending.ts:overdraftRoom/overdraftHeadroom -> spending.ts:drawFromBank/canPay; lending_day interest lending.ts:787; leftOverdrawn lending.ts:698; monthly/yearly fee lending.ts:827,839",
+      "reads": "overdraftOffer (score, wagesLastMonth, bank terms) lending.ts:420",
+      "changes": "current.overdraftLimit/Rate/PerUse/Since; set-up or facility fee (lending.ts:1191-1230)",
+      "downstream": "lending.ts:overdraftRoom/overdraftHeadroom (362, 380) -> spending.ts:drawFromBank/canPay; lending_day interest (lending.ts:975-1008); leftOverdrawn (lending.ts:865); monthly/yearly fee (lending.ts:1010, 1023)",
       "persistent": "account fields + fee postings",
       "explanation": "BankLending arranged-overdraft panel with min/max/rate",
-      "tests": "lending.test.ts:104,115,136,143; bank-fees.test.ts:406; arrears.test.ts:222",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/journey-money.test.ts ‘moves the money by what each command says, and keeps the ledger and the save’s laws’ (the New Haven student’s request refused: no American bank arranges one); on lives in Britain, Ireland, Canada, Germany and France: tests/lending.test.ts ‘is refused without wages paid in, and arranged up to a month of them’, ‘charges interest past Barclays’ free £15, on the first of the month’ (the balance set by hand once arranged), ‘charges TD’s $5 a month and an Irish bank’s yearly fee on arranging’; tests/bank-fees.test.ts ‘charges it past an arranged limit, and not inside it’, ‘charges PTSB’s set-up fee when the overdraft is arranged, and its yearly fee a year on’; tests/bank-lifecycle.test.ts ‘is arranged on the account named, and what’s arranged elsewhere comes off what wages allow’; checking less: tests/lending.test.ts ‘prices by the record where the bank does: Lloyds, 19.9% to 49.9%’ (rateForRecord, a function) and tests/arrears.test.ts ‘in Canada: overdraft protection by the use instead of the month, once a day at TD, where the bank sells it so’ (the limit set by hand); no test checks leftOverdrawn reading the arranged limit",
+      "status": "unresolved",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on lending.test.ts:104,115,136,143, bank-fees.test.ts:406 and arrears.test.ts:222, of which lending.test.ts:136 calls rateForRecord, a function, and arrears.test.ts:222 sets the limit by hand. Its line references in Reads, Changes and Downstream were from before lending.ts moved.",
+        "now": "Reached only by a fixture: none of the five American banks arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item, and Citi and Capital One have no overdraft terms; LENDING, content/banks-lending.ts), and the New Haven student’s request is refused with why (journey-money.test.ts). Arranged through the command on lives in Britain, Ireland, Canada, Germany and France, the overdraft is checked as room to spend (lending.test.ts), as spending into it free of the unarranged fee (bank-fees.test.ts), for its interest and its monthly, set-up and facility fees, and arranged at a second bank (bank-lifecycle.test.ts). There, no test checks leftOverdrawn reading the arranged limit, which decides when the bank closes the account. Until a second review of 2026-10-12 this row called it partial, as if a New Haven life reached it. Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back."
+      },
+      "read": true
     },
     {
       "id": "bank.borrow",
@@ -35,9 +43,15 @@
       "downstream": "lending.ts:897 LOAN_DUE draws payment via drawFromBank, marks record on short; loanOf blocks second loan/overrun loan",
       "persistent": "loan account + postings",
       "explanation": "quote with APR/payment or refusal reason shown before button",
-      "tests": "lending.test.ts:166 'is priced by the record, paid down monthly, and closed when it's paid', :194, :210",
+      "tests": "lending.test.ts ‘is priced by the record, paid down monthly, and closed when it’s paid’, ‘refuses without wages, past 35% of them, to a poor record...’, ‘puts a missed payment on the record’ (on New York lives no new one lives, at Citi and Wells Fargo, New Haven’s banks; wages recorded by hand)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:166, :194, :210, and didn’t say its lives were New York’s.",
+        "now": "Named, not numbered. Through the command and the clock, a loan is priced by the record, paid down monthly and closed, refused without wages, and a missed payment marks the record."
+      }
     },
     {
       "id": "bank.break_term",
@@ -48,9 +62,10 @@
       "downstream": "current balance -> spending/affordability; account_life rollover accountlife.ts:219 closes on notice",
       "persistent": "term closed, postings (Early Withdrawal Penalty expense)",
       "explanation": "quote/penalty words in BankAccountLife; notice 'Your X Closed'",
-      "tests": "accountlife.test.ts:112-154; arrears.test.ts:293",
+      "tests": "accountlife.test.ts:112-154; arrears.test.ts:293 (Toronto, Dublin and Paris lives, and Citi’s and Chase’s on New York ones, New Haven’s banks; NatWest’s notice on a London life)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "bank.cancel_new",
@@ -61,11 +76,18 @@
       "downstream": "current balance; card closing -> cardRoom 0",
       "persistent": "account closed",
       "explanation": "Cancel It button + country rules source",
-      "tests": "accountlife.test.ts:454",
-      "status": "verified",
+      "tests": "tests/accountlife.test.ts ‘cancels a new savings account whole in Canada’s fourteen days, not after, and never a British fixed deposit’; tests/money-fixes.test.ts ‘takes its standing orders with it’ (in Toronto)",
+      "status": "unresolved",
       "issue": "Unlike close_savings (banking.ts:433-441) it does not call off standing orders or scheduled payments into the closed savings; measured: order kept (1 left after 95 days) and fails monthly with 'is closed', scheduled payment dropped silently",
       "auditStatus": "partial",
-      "settled": "Fixed: standing orders and scheduled payments go with it (tests/money-fixes.test.ts)."
+      "settled": "Fixed: standing orders and scheduled payments go with it (tests/money-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names. Verified on accountlife.test.ts:454, a Canadian bank’s savings account.",
+        "now": "Fixed: standing orders and scheduled payments go with it (tests/money-fixes.test.ts). Reached only by a fixture: the US has no cooling-off period (no coolingOffDays for it in content/accountlife.ts, which inCoolingOff reads), so nothing a New Haven life opens can be canceled new, and both tests are in Toronto. Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "bank.cancel_scheduled",
@@ -74,11 +96,17 @@
       "reads": "pending bank.scheduled_payment of player",
       "changes": "timeline.cancel (payments.ts:165)",
       "downstream": "payments.ts:98 handler never runs; balances untouched",
-      "persistent": "scheduled item cancelled",
+      "persistent": "scheduled item, its status `cancelled`",
       "explanation": "list of payments ahead",
-      "tests": "payments.test.ts:122 'pays on the day set, and not once canceled'",
+      "tests": "payments.test.ts ‘pays on the day set, and not once canceled’ (an Icelandic life)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: payments.test.ts:122, a line that had moved off the test it meant.",
+        "now": "Named, not numbered: the test had moved."
+      },
+      "read": true
     },
     {
       "id": "bank.cancel_standing_order",
@@ -89,9 +117,10 @@
       "downstream": "no further STANDING_ORDER postings; armPayments won't re-arm",
       "persistent": "settings",
       "explanation": "order list",
-      "tests": "payments.test.ts:90",
+      "tests": "payments.test.ts:90 (an Icelandic life)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "bank.claim_unclaimed",
@@ -102,9 +131,10 @@
       "downstream": "current balance -> spending/card autopay",
       "persistent": "ledger",
       "explanation": "Unclaimed panel + escheat notice",
-      "tests": "accountlife.test.ts:403 'goes to the state after the country's years, and comes back when claimed'",
+      "tests": "accountlife.test.ts:403 'goes to the state after the country's years, and comes back when claimed' (Chase on a New York life, a New Haven bank, the years the country’s; the idle times typed in)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "bank.close_savings",
@@ -112,7 +142,7 @@
       "entry": "BankWorkspace.tsx:127",
       "reads": "savings, notice, Germany allowance",
       "changes": "closeSavings banking.ts:421 pays interest/fees, moves balance, closes, calls off orders/payments; or schedules bank.savings_notice",
-      "downstream": "spending.ts:savingsRoom no longer reaches it; standing orders cancelled; round-ups find no savings (accountlife.ts:209)",
+      "downstream": "spending.ts:savingsRoom no longer reaches it; standing orders canceled; round-ups find no savings (accountlife.ts:209)",
       "persistent": "closed account",
       "explanation": "toast with notice date",
       "tests": "banking.test.ts:268; accountlife.test.ts:261,279",
@@ -125,38 +155,52 @@
       "entry": "BankLending.tsx:110 (only per_item opt_in banks)",
       "reads": "bank overdraft terms",
       "changes": "current.debitOverdraft (lending.ts:939)",
-      "downstream": "lending.ts:265 purchaseMayOverdraw -> spending.ts:230 spend (food may overdraw) -> chargeForItem fees",
+      "downstream": "purchaseMayOverdraw (lending.ts) -> spend and spendRefusal, a food purchase may overdraw (spending.ts) -> chargeForItem fees",
       "persistent": "account flag (reset on switch, new account)",
       "explanation": "Reg E opt-in text in BankLending",
-      "tests": "lending.test.ts:56 'won't pay a debit card purchase into an overdraft unless the person opted in'",
-      "status": "verified",
-      "issue": ""
+      "tests": "lending.test.ts:56 'won't pay a debit card purchase into an overdraft unless the person opted in' (Chase and Bank of America on New York lives, New Haven’s banks; the purchases made by calling spend)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: purchaseMayOverdraw, spend’s food purchase overdrawing, and chargeForItem’s fees; verified on lending.test.ts:56, which reads the balance.",
+        "now": "Through the command at Chase on a New York life, a bank a New Haven life can hold, a debit card purchase made through spend goes below zero opted in and doesn’t opted out, while a bill does either way (lending.test.ts:56-71). The fee the bank then charges for it (chargeForItem, its grace and its per-item fee) isn’t checked after an opted-in purchase: the test reads the balance alone, the moment it’s spent, and chargeForItem is tested by calling it (arrears.test.ts)."
+      }
     },
     {
       "id": "bank.new_number",
       "kind": "command",
       "entry": "BankSecurity.tsx:105 (only newNumberOnFraud banks)",
       "reads": "SECURITY[bank].newNumberOnFraud",
-      "changes": "current.number/last4; debit plastic stopped + replacement scheduled (security.ts:248-257)",
+      "changes": "current.number/last4; debit plastic stopped + replacement scheduled (bank.new_number, security.ts:305-316)",
       "downstream": "attemptOnNumber (the day’s attempt), card.dispute (liabilityFor via number)",
       "persistent": "account number",
       "explanation": "The Security screen’s exposure line; the declined notice",
       "tests": "tests/coverage-gaps-number.test.ts",
-      "status": "verified",
+      "status": "partial",
       "issue": "Only a cost: no compromise state exists, the fraud draw (security.ts:285) is independent of the number, so a new number changes no later risk",
       "previous": "partial",
-      "settled": "The account number is a credential: exposed by debit fraud at a renumbering bank; attempts on it go through while it’s the number in use (Reg E $0 within 60 days), declined once moved; card fraud is apart."
+      "settled": "The account number is a credential: exposed by debit fraud at a renumbering bank; attempts on it go through while it’s the number in use (Reg E $0 within 60 days), declined once moved; card fraud is apart.",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on coverage-gaps-number.test.ts, through the command at Bank of America.",
+        "now": "Through the command, the New Haven student at Bank of America moves to a new number, and the old one’s attempts are declined (coverage-gaps-number.test.ts). The attempt that reads the number, attemptOnNumber, is called by the test with the day’s draw given, in place of the clock’s (an attempt comes about once in four and a half years), after an exposure made by calling somebodyElse; no attempt on a moved number comes by the clock."
+      }
     },
     {
       "id": "bank.open_savings",
       "kind": "command",
-      "entry": "BankWorkspace.tsx:143",
-      "reads": "existing savings, bankOf",
-      "changes": "opens savings at 0 (banking.ts:582)",
-      "downstream": "bank.day interest banking.ts:486; month_end fee/interest; transfer/standing order targets; round-ups",
+      "entry": "BankWorkspace.tsx:157, an Open panel for each bank kept with a current account and no savings there, the command run with that bank (from 2026-10-12; until then one panel, shown only with no savings at any bank, and run with no bank)",
+      "reads": "the bank asked for, or the primary’s (bankOf); a current account kept there (checkingAt), and no savings already there; one savings account at each bank since 2026-10-10",
+      "changes": "opens savings at 0 (bank.open_savings, banking.ts:615)",
+      "downstream": "bank.day interest banking.ts:508; month_end fee/interest; transfer/standing order targets; round-ups",
       "persistent": "account",
       "explanation": "accounts list",
-      "tests": "banking.test.ts:268",
+      "tests": "banking.test.ts:268; tests/defects-g14-1.test.ts ‘offers the primary bank’s savings while savings is held at another bank, and opens it at the primary bank’, ‘offers a second bank’s savings beside the primary bank’s, and opens it at that bank’ (the Open buttons pressed on the rendered screen)",
       "status": "verified",
       "issue": ""
     },
@@ -169,9 +213,15 @@
       "downstream": "lending_day accrual/maturity lending.ts:860-893; secured overdraft room lending.ts:304; break/end commands",
       "persistent": "term account",
       "explanation": "term panel with rate/maturity",
-      "tests": "lending.test.ts:237,265; accountlife.test.ts:44-168",
+      "tests": "lending.test.ts ‘is locked away, kept from spending, and paid out with its interest less the tax’ (Iceland), ‘keeps ING’s €100,000 floor’ (Germany), ‘lends MUFG’s way: against time deposits...’ (the secured overdraft, Tokyo); accountlife.test.ts:44-108,112-168 (Chase and Citi on New York lives, and Tokyo, Sydney, Berlin, Toronto, Dublin, Paris): every one a life no new one lives; Chase and Citi are among New Haven’s banks, MUFG isn’t",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:237,265, lines that had moved off the tests they meant. Tested By didn’t say its lives were New York’s and abroad.",
+        "now": "Named, not numbered: the tests had moved. Through the command and the clock, a term deposit’s interest and its end, renewed, paid out or into savings, are checked at Chase and Citi on New York lives, which bank as a New Haven life can; the secured overdraft is MUFG’s, on a Tokyo life, which no New Haven life reaches."
+      },
+      "read": true
     },
     {
       "id": "bank.pay_collections",
@@ -183,8 +233,15 @@
       "persistent": "ledger",
       "explanation": "collections panel",
       "tests": "arrears.test.ts:130 (paid lowers decline odds)",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: card.apply’s collections check, ChexSystems’ decline odds, reportWithoutCard and the day’s money trouble; verified on arrears.test.ts:130.",
+        "now": "Through the command, a collection paid lowers the share of banks that turn the ChexSystems report away (arrears.test.ts, on a New York life, the charge-off made by calling closeForOverdraft and the odds read by calling declines with the report set by hand). No test checks card.apply’s collections check, the report without a card, or the day’s money trouble reading a collection paid."
+      }
     },
     {
       "id": "bank.reactivate",
@@ -196,8 +253,15 @@
       "persistent": "account flags",
       "explanation": "dormant notice + button",
       "tests": "accountlife.test.ts:374,420",
-      "status": "verified",
-      "issue": ""
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on accountlife.test.ts:374,420.",
+        "now": "Through the command, a TD Canada savings account gone dormant wakes and a transfer from it goes through, and Chase’s escheat notice’s action keeps an account from the state (accountlife.test.ts). Both reach the dormant and the warned states, and read what the command changed, by calling idleAccounts with idle times typed in, in place of an account left untouched through the clock; the dormant refusal is TD Canada’s, on a Toronto life, and Chase’s notice is on a New York one. Chase’s thirty months and Capital One’s twenty-four, New Haven’s, are untested."
+      }
     },
     {
       "id": "bank.repay_loan",
@@ -208,9 +272,15 @@
       "downstream": "loanOf undefined -> new borrow/overrun loan allowed; no more LOAN_DUE",
       "persistent": "ledger",
       "explanation": "loan panel",
-      "tests": "lending.test.ts:225 'is paid off early, and nothing more falls due'",
+      "tests": "lending.test.ts ‘is paid off early, and nothing more falls due’ (Citi on a New York life, a New Haven bank)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:225, a line that had moved off the test it meant.",
+        "now": "Named, not numbered: the test had moved."
+      },
+      "read": true
     },
     {
       "id": "bank.schedule_payment",
@@ -218,38 +288,58 @@
       "entry": "BankPayments.tsx:137",
       "reads": "own checking/savings",
       "changes": "schedules bank.scheduled_payment (payments.ts:151)",
-      "downstream": "payments.ts:98 posts on the day with savingsDebit fee/allowance",
+      "downstream": "the scheduled payment’s handler posts it on the day (payments.ts)",
       "persistent": "scheduled item",
       "explanation": "payments-ahead list",
-      "tests": "payments.test.ts:122",
+      "tests": "payments.test.ts ‘pays on the day set, and not once canceled’ (an Icelandic life)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: payments.test.ts:122, a line that had moved off the test it meant. Until the fourth review’s settlement of 2026-10-12, Downstream: ‘posts on the day with savingsDebit fee/allowance’.",
+        "now": "Named, not numbered: the test had moved. Through the command and the clock, a payment from the current account is made on its day, and one called off isn’t (payments.test.ts, an Icelandic life). Paid from savings, the handler charges savingsDebit’s fee and holds it to the allowance; that’s checked only on a payment put on the calendar by hand (accountlife.test.ts:256-258), so it’s left out of this row’s Downstream, as allocatePayment is out of card.plan’s."
+      },
+      "read": true
     },
     {
       "id": "bank.set_alerts",
       "kind": "command",
       "entry": "BankStatements.tsx:211,212",
       "reads": "person.alerts",
-      "changes": "lowBalance/largePayment/statements (statements.ts:392)",
-      "downstream": "largePayment -> security.ts:315-317 learnedAt=now -> liabilityFor tier at dispute security.ts:269 (holder carries less); statements -> statementReady statements.ts:358; lowBalance -> notice statements.ts:370",
+      "changes": "lowBalance/largePayment/statements (bank.set_alerts, statements.ts:443)",
+      "downstream": "largePayment -> learnedAt=now where the alert caught it (security.ts:376, 407) -> liabilityFor’s tier at dispute (security.ts:174, from the use’s own clocks; holder carries less); statements -> statementReady statements.ts:412; lowBalance -> the Low Balance notice, accountAlerts obligations.ts:71",
       "persistent": "settings",
       "explanation": "alerts form",
-      "tests": "statements.test.ts:174,192,208; security.test.ts:148 ('$50 reported at once, $500 later')",
-      "status": "verified",
-      "issue": ""
+      "tests": "statements.test.ts:174,192,208; security.test.ts ‘leaves a US holder $50 of a debit card’s use reported at once, $500 later, and refunds the rest’",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Tested by: security.test.ts:148 (‘$50 reported at once, $500 later’), words the test’s name doesn’t have. Verified, with largePayment’s reader (learnedAt, liabilityFor’s tier) on that test.",
+        "now": "Through the command, the low-balance line tells once a day under it and again only after it’s back over, and a statement ready is told and stopped when turned off (statements.test.ts, on Icelandic lives). The large-payment alert’s reader, learnedAt and the liability tier it sets, is tested in security.test.ts with the alerts set by hand (sim.player.alerts), not through the command."
+      },
+      "read": true
     },
     {
       "id": "bank.set_payments",
       "kind": "command",
-      "entry": "BankPayments.tsx:78 (+ everyday selector)",
-      "reads": "savings existence",
-      "changes": "payments.everyday / linkSavings (payments.ts:115)",
-      "downstream": "spending.ts:233 cash first, :260 credit first, :122/:142 linked savings; credit.ts:582,991 autopay reach; lending.ts:537 loan payments",
+      "entry": "BankPayments.tsx:85 Savings Covers The Current Account, shown while the link covers something or is On (+ The Day’s Spending selector, :65)",
+      "reads": "linkCovers (payments.ts): easy-access savings at the bank of each current account a payment comes from, the primary for the day’s spending, the account a card’s autopay is set on, and each loan’s repayment account (from 2026-10-12; until then savings at any bank, and later that day the primary account’s bank alone, linkableSavings, which went)",
+      "changes": "payments.everyday / linkSavings (bank.set_payments, payments.ts:247)",
+      "downstream": "spend: cash first, credit first, and linked savings behind the current account (drawFromBank, spending.ts), every payment drawing on easy-access savings at the bank of the account it comes from; payCard and autopayReach, the card’s autopay reaching linked savings at its autopay account’s bank (inTheBank, credit.ts); a loan’s payment from its repayment account, and savings linked at that account’s bank (lending.ts)",
       "persistent": "settings",
-      "explanation": "BankPayments text",
-      "tests": "payments.test.ts:51,78; cash.test.ts:134",
-      "status": "verified",
-      "issue": ""
+      "explanation": "How You Pay: coverText names each paying account, what it pays and the savings that covers it (BankPayments.tsx)",
+      "tests": "payments.test.ts:51-67, 78-86; cash.test.ts:134-149 (Icelandic lives; the purchases made through spend); accountlife.test.ts:210-224, 237-259 (linked through the command at RBC and Deutsche Bank, on Toronto and Berlin lives); tests/defects-r3b-1.test.ts ‘offers the link, says what it covers, turns it On, and On pays the loan from Chase savings’, ‘is paid from Chase savings when the Chase current account can’t...’ (a card’s autopay through the clock), ‘covers nothing once the loan is repaid from Citi, and says so’; tests/defects-r6-1.test.ts ‘isn’t offered Off, where pressing it would be refused, and comes back with savings at the primary bank’",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: spend’s cash first, credit first and linked savings, the card’s autopay reach, and a loan’s payments; verified on payments.test.ts and cash.test.ts.",
+        "now": "Through the command, the day’s shopping made through spend goes on the credit card, or comes out of the wallet first, as chosen (payments.test.ts:78-86, cash.test.ts:134-149), and savings linked pay what the current account can’t, and only where linked (payments.test.ts:51-67), on Icelandic lives; linked at RBC and Deutsche Bank, a bill paid from savings is charged its withdrawal fee and held to Germany’s allowance (accountlife.test.ts:210-224, 237-259). From 2026-10-12 the link draws, for every payment, on easy-access savings at the bank of the current account the payment comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, and a loan’s repayment account for the loan; a change of primary leaves a card’s autopay and a loan’s repayment where they were. How You Pay lists each paying account and what it pays, and turning the link On is refused only where none has such savings. With Chase savings, a Citi loan repaid from Chase and Citi made primary, the link is offered, turned On, and pays the loan off from Chase savings (bank.repay_loan), and a card’s autopay left on Chase is paid from Chase savings through the clock where until then it bounced (defects-r3b-1.test.ts). Until then this row read ‘savings existence’, and said the card’s autopay reaching linked savings wasn’t checked. What isn’t: a loan’s monthly payment drawn from them by the clock (lending.test.ts sets the link by hand and doesn’t check which account paid; defects-r3b-1.test.ts pays the loan off by the command). The fourth review didn’t name this row; it was read while settling the rows it did."
+      }
     },
     {
       "id": "bank.set_round_ups",
@@ -260,9 +350,15 @@
       "downstream": "spending.ts:286 accrues pending; accountlife.ts:206 moves current->savings at rollover (skipped if short)",
       "persistent": "settings + transfers",
       "explanation": "round-ups line",
-      "tests": "accountlife.test.ts:354 'rounds Bank of America's debit purchases up into savings at the day's end, and not Chase's'",
+      "tests": "accountlife.test.ts:354 ‘rounds Bank of America’s debit purchases up into savings at the day’s end, and not Chase’s’ (on a New York life no new one lives, at Bank of America, which a New Haven life can bank at; the purchase made by calling spend)",
       "status": "verified",
-      "issue": "minor: round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short (spending.ts:286)"
+      "issue": "minor: round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short (spending.ts:286)",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘round-up taken on amount-creditFirst, which includes any part the credit card covered when the bank was short’. Tested By didn’t say its life was New York’s.",
+        "now": "Since 2026-10-10 the round-up is on what the debit card paid, not the part the credit card took. No test checks the short case."
+      },
+      "read": true
     },
     {
       "id": "bank.set_term_end",
@@ -273,22 +369,30 @@
       "downstream": "termEndOf -> endTerm accountlife.ts:426 called by lending.ts:864 (renew / savings / paid out)",
       "persistent": "account field",
       "explanation": "END_WORDS + maturity notice",
-      "tests": "accountlife.test.ts:78,100",
+      "tests": "accountlife.test.ts:78,100 (Chase on a New York life, a New Haven bank; Deutsche Bank on a Berlin one)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "bank.switch",
       "kind": "command",
       "entry": "BankLending.tsx:323",
       "reads": "banksFor, chex, collections, photo ID, overdraft, SWITCHING",
-      "changes": "completeSwitch lending.ts:542 now, or schedules bank.switch_complete",
+      "changes": "schedules bank.switch_complete on the service’s working days where the country has a switching service; refused with the steps to take where it hasn’t (from 2026-10-10)",
       "downstream": "new current/savings receive balances; standing orders/scheduled payments re-pointed; overdraft limit dropped; fees/interest by new bank's product",
       "persistent": "accounts",
       "explanation": "switch panel, refusal reasons",
-      "tests": "lending.test.ts:274,285; payments.test.ts:107; arrears.test.ts:159",
-      "status": "verified",
-      "issue": ""
+      "tests": "lending.test.ts ‘runs Iceland’s switching service in its twelve business days, and moves every balance whole’, ‘runs no switch where there’s no service, and says what to do instead’; payments.test.ts ‘moves with the accounts when a switching service moves the bank’; arrears.test.ts:159",
+      "status": "unresolved",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:274,285, lines that had moved off the tests they meant. Verified, while every test that runs a switch runs it in Iceland or Britain.",
+        "now": "Named, not numbered. Since 2026-10-10 a switch runs only where the country has a switching service, on its working days; elsewhere it’s refused with the steps to take, where until then it opened, moved and closed everything the same day. The US has none, and every life banks in New Haven, so the New Haven student meets only the refusal (lending.test.ts ‘runs no switch where there’s no service...’, through the command). The switch itself is reached only by a fixture, Iceland’s and Britain’s services (lending.test.ts, payments.test.ts). Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "bank.take_overrun_loan",
@@ -299,9 +403,16 @@
       "downstream": "current back toward limit -> leftOverdrawn resets negativeSince; LOAN_DUE payments",
       "persistent": "loan",
       "explanation": "offer notice + panel",
-      "tests": "commands-kept.test.ts:235",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/commands-kept.test.ts ‘offers a loan for an overrun three months past the overdraft, and taking it clears the overrun into a loan’ (a life banking in Paris)",
+      "status": "unresolved",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on commands-kept.test.ts:235, a French bank’s.",
+        "now": "Only a French bank offers a loan for an overrun (frenchOverrun, systems/lending.ts), and every life banks in New Haven with one of five American banks: the test is a life banking in Paris, the overrun posted by hand. Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back."
+      },
+      "read": true
     },
     {
       "id": "bank.take_term_interest",
@@ -312,22 +423,36 @@
       "downstream": "break penalty capped by remaining accrued (accountlife.ts:80); maturity pays less",
       "persistent": "ledger",
       "explanation": "button",
-      "tests": "accountlife.test.ts:168",
-      "status": "verified",
-      "issue": ""
+      "tests": "accountlife.test.ts:168 (Chase on New York lives, a New Haven bank; BNP Paribas’s refusal on a Paris one); accountlife.test.ts:164-165 (the break penalty’s cap, read after the interest is taken)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: the break penalty capped by what’s accrued, and the maturity paying out less; verified on accountlife.test.ts:168.",
+        "now": "Through the command at Chase, the interest earned is paid into the current account and onto the year’s return, and what’s accrued falls to nothing (accountlife.test.ts:168-179); taken in a CD’s second week, it leaves the break penalty its cap reads at nothing (accountlife.test.ts:164-165). No test plays a maturity after interest is taken, so the maturity paying out less, the other reader the row names, isn’t checked."
+      }
     },
     {
       "id": "bank.transfer",
       "kind": "command",
-      "entry": "BankWorkspace.tsx:178",
+      "entry": "BankWorkspace.tsx:192",
       "reads": "balances, dormant, savingsDebit, Germany allowance",
-      "changes": "posting + withdrawal fee (banking.ts:555)",
-      "downstream": "withdrawalsThisMonth counts it (accountlife.ts:115); bonusEarned no_withdrawals (banking.ts:317); fee waivers via lowest/average",
+      "changes": "posting + withdrawal fee (banking.ts:604)",
+      "downstream": "withdrawalsThisMonth counts it (accountlife.ts:116); bonusEarned’s no_withdrawals (banking.ts:326); fee waivers via lowest/average",
       "persistent": "ledger",
-      "explanation": "free withdrawals/allowance left shown (BankWorkspace.tsx:171)",
-      "tests": "banking.test.ts:256; accountlife.test.ts:188,237",
-      "status": "verified",
-      "issue": ""
+      "explanation": "free withdrawals/allowance left shown (BankWorkspace.tsx:185-189)",
+      "tests": "tests/banking.test.ts ‘moves between one’s own accounts, and no further than there is’; tests/accountlife.test.ts ‘charges RBC’s fee for each withdrawal past its free one a month’ (withdrawalsThisMonth counts a transfer), ‘goes dormant after TD’s twelve months, is blocked, and wakes when reactivated’, ‘lets no more than Germany’s €2,000 a month out without notice, whichever way it goes’ (the allowance, through payments, not a transfer); no test checks the no-withdrawals bonus or a fee waiver’s balance after a transfer",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on banking.test.ts:256 and accountlife.test.ts:188,237; the last, Germany’s allowance, makes no transfer, and none checks the bonus or the waivers its Downstream names.",
+        "now": "A transfer moves the money and no further than there is (banking.test.ts), counts among the month’s withdrawals, past RBC’s free one charged the fee (accountlife.test.ts), and is refused from a dormant account. No test checks the no-withdrawals bonus a transfer costs, or the lowest or average balance a fee waiver reads."
+      },
+      "read": true
     },
     {
       "id": "card.apply",
@@ -338,9 +463,14 @@
       "downstream": "cardlife.ts:70 opens card; score feeds later approvals/pricing",
       "persistent": "record + card",
       "explanation": "approve/decline notices with reason",
-      "tests": "cardlife.test.ts:98,133; several-cards.test.ts:33; cardoffers.test.ts:94,124",
+      "tests": "cardlife.test.ts:98,133; several-cards.test.ts:33; cardoffers.test.ts ‘moves a Chase card’s balance onto Citi’s card after switching...’, ‘isn’t made where the new limit won’t take it with its fee, before the bank looks’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: cardoffers.test.ts:94,124, lines that had moved off the tests they meant.",
+        "now": "Named, not numbered: the tests had moved."
+      }
     },
     {
       "id": "card.close",
@@ -360,65 +490,92 @@
       "kind": "command",
       "entry": "BankSecurity.tsx:98 (only learned, within law's window)",
       "reads": "person.fraud, FRAUD_LAW",
-      "changes": "reportedAt, carried = liabilityFor; schedules bank.fraud_refund; card replaced (security.ts:260)",
-      "downstream": "security.ts:190 refund posting",
+      "changes": "reportedAt, carried = liabilityFor (security.ts:174, from the use’s own clocks, FraudClocks); schedules bank.fraud_refund; card replaced (card.dispute, security.ts:318)",
+      "downstream": "security.ts:250 refund posting",
       "persistent": "fraud record + ledger",
       "explanation": "refusal reason shown in place of button",
-      "tests": "security.test.ts:148,180",
+      "tests": "security.test.ts:148,186 (Chase on a New York life, the law’s fraud rate set for the test; Barclays on a London one); tests/defects-g17-1.test.ts ‘leaves $500, not all of it, of a charge an alert caught a month before the statement, reported 45 days after it’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true
     },
     {
       "id": "card.lock",
       "kind": "command",
       "entry": "BankSecurity.tsx:67",
       "reads": "plastic",
-      "changes": "plastic.locked (security.ts:216)",
-      "downstream": "cardRoom 0 (credit.ts:541); spend debit-locked path spending.ts:247; cash.ts:115 ATM refused; fraudOn cardWorks (security.ts:288)",
+      "changes": "plastic.locked (card.lock, security.ts:273)",
+      "downstream": "cardRoom 0 (credit.ts); spend’s locked-debit-card path, which spendRefusal reads too (spending.ts); the ATM refused (withdrawalQuote, cash.ts); fraudOn’s cardWorks (security.ts:111)",
       "persistent": "plastic",
       "explanation": "Lock/Unlock label",
-      "tests": "security.test.ts:26",
-      "status": "verified",
-      "issue": ""
+      "tests": "security.test.ts:26 (on a New York life no new one lives, at Chase, a New Haven bank; cardRoom read after the command, the purchase made by calling spend, the machine refused through cash.withdraw)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on security.test.ts:26, with the fraud draw’s cardWorks among what reads a lock, and no word that its life was New York’s.",
+        "now": "Through the command, a locked credit card has no room, a locked debit card’s purchase goes on the credit card, and the cash machine refuses it while the counter doesn’t (security.test.ts). The fraud draw, which spares a card that doesn’t work (cardWorks), isn’t checked for a locked one."
+      }
     },
     {
       "id": "card.money_transfer",
       "kind": "command",
-      "entry": "BankCardOffers.tsx:82",
+      "entry": "BankCardOffers.tsx:88 (Move It)",
       "reads": "terms.moneyTransferFee, cardRoom",
-      "changes": "card->current posting + fee; transfers[] bucket (cardoffers.ts:213)",
-      "downstream": "credit.ts:900 transfer accrual; statementOffers interest; allocatePayment buckets cash.ts:143",
+      "changes": "card->current posting + fee; transfers[] bucket (card.money_transfer, cardoffers.ts:241)",
+      "downstream": "the transfer’s daily accrual at transferRate (credit.ts); statementOffers interest; allocatePayment buckets (cash.ts)",
       "persistent": "state + ledger",
       "explanation": "fee shown on button",
-      "tests": "cardoffers.test.ts:142",
-      "status": "verified",
-      "issue": ""
+      "tests": "cardoffers.test.ts ‘pays NatWest’s card into the current account for 3%, at its transfer rate from the day it’s made’ (a life banking in London)",
+      "status": "unresolved",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: cardoffers.test.ts:142, a line that had moved off the test it meant. Verified on NatWest’s card.",
+        "now": "Named, not numbered: the test had moved. None of the five American cards offers a money transfer (none has a moneyTransferFee in content/cards.ts), and every life banks in New Haven: the test is a NatWest card in London. Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "card.plan",
       "kind": "command",
-      "entry": "BankCardOffers.tsx:106",
-      "reads": "planRoom, INTEREST_PLANS/planFeeShare",
-      "changes": "credit.plans[] (cardoffers.ts:233)",
-      "downstream": "statementOffers cardoffers.ts:138 fee/interest/month; minimumDue planDue credit.ts:574; excluded from purchase interest credit.ts:903",
+      "entry": "BankCardOffers.tsx:114 (Make The Plan)",
+      "reads": "planRoom, INTEREST_PLANS/planFeeShare, planFreeIfMadeNow (PLAN_FREE_IN_INTRO, Chase’s introductory purchase rate in force, from 2026-10-12)",
+      "changes": "credit.plans[] (card.plan, cardoffers.ts:261), its fee set for the plan’s life as it’s made: nothing on one made on Chase’s card in its introduction, which until 2026-10-12 paid its 1.72% from its first statement",
+      "downstream": "statementOffers (cardoffers.ts:166) charges the fee, interest and month each plan carries; minimumDue’s planDue (credit.ts); excluded from purchase interest by planLeftOf (credit.ts)",
       "persistent": "state",
       "explanation": "plan form",
-      "tests": "cardoffers.test.ts:170,199,221",
+      "tests": "cardoffers.test.ts ‘pays a Chase purchase off in equal months for 1.72% a month...’ (a New York life no new one lives, at Chase, a New Haven bank; the card aged past its introductory rate by hand), ‘pays a Bank of Ireland purchase off in equal months at 6.7%...’ (Dublin); tests/defects-r4-1.test.ts ‘is charged no fee at any of its statements, after the introduction as before it’, ‘keeps its fee of nothing when a payment sixty days late ends the introduction after it was made’, ‘pays its 1.72% from its first statement, ended on its date or by a payment sixty days late’ (a plan made through the command in Chase’s introduction and after it); checking less: cardoffers.test.ts ‘goes to the dearest balance first and a plan last...’ (allocatePayment called with the plan set by hand)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: cardoffers.test.ts:170,199,221, lines that had moved off the tests they meant. Tested By cited ‘goes to the dearest balance first and a plan last...’ as if it drove the command, and didn’t say its life was New York’s.",
+        "now": "Named, not numbered: the tests had moved. Through the command and the clock, a plan’s fee and month go on the statement, its balance draws no purchase interest, and the plan’s month is in the minimum (cardoffers.test.ts). From 2026-10-12 the fee is set as the plan is made and kept until it’s paid, as Chase’s terms say: one made in Chase’s introduction is charged nothing at any statement, after the introduction and after a payment sixty days late ends it, and one made after pays its 1.72% from the first (defects-r4-1.test.ts). allocatePayment reads a plan too, paying it last, and is left out of this row’s Downstream: it’s tested only by calling it with the plan set by hand, and no test pays a card with a plan made by the command and checks where the payment went. docs/capabilities.json’s card-offers leaves it out the same way."
+      },
+      "read": true
     },
     {
       "id": "card.redeem_rewards",
       "kind": "command",
-      "entry": "BankCardOffers.tsx:74",
+      "entry": "BankCardOffers.tsx:80 (Redeem Onto The Card)",
       "reads": "credit.rewards",
-      "changes": "posts rewards credit to card (cardoffers.ts:260)",
-      "downstream": "card balance -> cardRoom, statement balance, interest bearing",
+      "changes": "posts rewards credit to card (card.redeem_rewards, cardoffers.ts:289)",
+      "downstream": "the card’s balance, what’s owed on it",
       "persistent": "ledger",
       "explanation": "rewards line",
-      "tests": "cardoffers.test.ts:262",
+      "tests": "cardoffers.test.ts ‘pays Chase’s 1.5% on purchases at the statement, not on cash, and redeems onto the card’ (on a New York life no new one lives, at Chase, a New Haven bank)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: cardoffers.test.ts:262, a line that had moved off the test it meant. Downstream: card balance -> cardRoom, statement balance, interest bearing.",
+        "now": "Named, not numbered: the test had moved. Redeemed through the command, the rewards come off what’s owed on the card and a second redemption is refused; that the card’s balance is what its readers read is the ledger’s, not this row’s."
+      },
+      "read": true
     },
     {
       "id": "card.refund_credit",
@@ -438,26 +595,38 @@
       "kind": "command",
       "entry": "BankSecurity.tsx:76,81",
       "reads": "SECURITY fees/days",
-      "changes": "plastic.stopped, replacement scheduled, fee (security.ts:226)",
+      "changes": "plastic.stopped, replacement scheduled, fee (security.ts:283)",
       "downstream": "cardRoom 0 / debit path; card.replaced restores",
       "persistent": "plastic + fee",
       "explanation": "fee/days text",
-      "tests": "security.test.ts:52,69,84",
-      "status": "verified",
-      "issue": ""
+      "tests": "security.test.ts:52,69,84 (BBVA México on a Mexico City life and Santander UK on a London one, where no New Haven life banks; Chase’s rush on a New York life)",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: cardRoom at 0, the debit path, and the replacement restoring the card; verified on security.test.ts:52, 69 and 84.",
+        "now": "Through the command, a debit card reported lost at BBVA México is stopped, its fee taken, and replaced through the clock with a new number (security.test.ts:52-67), and a credit card reported at Santander UK has no room until the new one comes through the clock (security.test.ts:84-92), banks no New Haven life holds; at Chase, which it can hold, only the rush’s fee and days are checked (security.test.ts:69-80). No test makes a purchase on a stopped debit card, so the debit path that reads the stop (spend sending the day’s shopping to the credit card or cash) is checked only for a lock (card.lock)."
+      }
     },
     {
       "id": "card.request_hardship",
       "kind": "command",
       "entry": "BankCard.tsx:238 (any owed>0)",
-      "reads": "owed",
+      "reads": "owed; what the checking and savings hold (refused where they could clear the card today, from 2026-10-10)",
       "changes": "hardship {payment=owed/48}, suspended='hardship' (cardlife.ts:211)",
       "downstream": "credit.ts:891 skips all accrual; :764 due = plan payment (counts on-time, +score); cardRoom 0",
       "persistent": "state",
       "explanation": "'On a plan ... no interest' line",
-      "tests": "cardlife.test.ts:227",
+      "tests": "cardlife.test.ts:227; tests/money-fixes.test.ts ‘is refused to a holder whose bank could clear the card today’",
       "status": "verified",
-      "issue": "granted unconditionally, no record mark: a free 0% 48-month plan on demand (see findings)"
+      "issue": "granted unconditionally, no record mark: a free 0% 48-month plan on demand (see findings)",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘granted unconditionally, no record mark: a free 0% 48-month plan on demand’.",
+        "now": "Refused since 2026-10-10 to a holder whose bank could clear the card today (tests/money-fixes.test.ts). A plan still leaves no mark on the record."
+      }
     },
     {
       "id": "card.request_limit",
@@ -520,11 +689,16 @@
       "downstream": "credit.ts:670 statement -> due, interest, reportMonth; annual fee month test :709",
       "persistent": "state",
       "explanation": "toast 'due date moves with them'",
-      "tests": "cardlife.test.ts:169 (only checks next date)",
+      "tests": "cardlife.test.ts:169 (the next date); tests/money-fixes.test.ts ‘makes one longer cycle: moving it every day for a month cuts one statement, not thirty’",
       "status": "verified",
       "issue": "No frequency limit: moving the day forward can fire a statement every day. Measured: 20 statements in 20 days, score 640->700 (reportMonth ON_TIME per zero-balance statement). Two statements in a month also double the annual-fee month check and leave two card.due items",
       "auditStatus": "partial",
-      "settled": "Fixed: the next statement comes no sooner than 27 days after the last (tests/money-fixes.test.ts)."
+      "settled": "Fixed: the next statement comes no sooner than 27 days after the last (tests/money-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: ‘cardlife.test.ts:169 (only checks next date)’, beside a note naming the repair’s test.",
+        "now": "Fixed: the next statement comes no sooner than 27 days after the last (tests/money-fixes.test.ts)."
+      }
     },
     {
       "id": "cash.deposit",
@@ -535,35 +709,55 @@
       "downstream": "account balance -> spending/fees/interest",
       "persistent": "ledger",
       "explanation": "cash panel",
-      "tests": "cash.test.ts:68,134",
+      "tests": "cash.test.ts:68,134 (the Post Office on London lives, the counter on an Icelandic one); journey-money.test.ts:58 (a New Haven life’s deposit at Wells Fargo’s machine, through the command, checked only for being taken)",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By: ‘no New Haven bank’s deposit is tested’.",
+        "now": "A New Haven life’s deposit is driven through the command, at Wells Fargo’s machine on a life made as creation makes one, and checked only for being taken (journey-money.test.ts:58). The deposits this row is verified on are at the Post Office on London lives and at the counter on an Icelandic one (cash.test.ts:68, 134)."
+      }
     },
     {
       "id": "cash.withdraw",
       "kind": "command",
       "entry": "BankCash.tsx:70 (disabled on quote.refused)",
-      "reads": "withdrawalQuote cash.ts:96 (fees, daily limit, lock, dormant, cash limit)",
-      "changes": "account/card -> wallet + fees; cashOwed (cash.ts:182)",
-      "downstream": "wallet used first by spend (spending.ts:233) and canPay (:167); card cashOwed -> cash interest credit.ts:898 and payment allocation",
+      "reads": "withdrawalQuote cash.ts:103 (fees, daily limit, lock, dormant, cash limit)",
+      "changes": "account/card -> wallet + fees; cashOwed (cash.ts:203)",
+      "downstream": "the wallet, which spend spends only on food: first for somebody paying the day in cash, and behind a locked or stopped debit card for anybody, and spendRefusal counts only there (spending.ts; until 2026-10-12 canPay counted it for every payer and every payment); card cashOwed -> cash interest (credit.ts), and allocatePayment, which pays a card’s cash balance first",
       "persistent": "ledger + state",
       "explanation": "quote shown before button",
-      "tests": "cash.test.ts:26-101",
-      "status": "verified",
-      "issue": ""
+      "tests": "cash.test.ts:26-77,81-101",
+      "status": "partial",
+      "issue": "",
+      "read": true,
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Downstream: ‘card cashOwed -> cash interest credit.ts:898 and payment allocation’, verified on cash.test.ts:26-77,81-101.",
+        "now": "Through the command, cash comes out at each bank’s fee and limits, and a cash advance costs the card’s fee and draws its rate to the statement (cash.test.ts, on New York, Toronto, Iceland and London lives, the advance on a card product put in for the test). allocatePayment, which pays a card’s cash balance first, is tested only by calling it with cashOwed set by hand (cash.test.ts, cardoffers.test.ts); no test pays a card after a cash advance and checks the allocation. The wallet used first is checked by calling spend. Until 2026-10-12 this row’s Downstream said canPay counted the wallet too, which it did for every payer, though spend spent it only on food for a cash payer or behind a locked debit card; since then canPay counts no cash, and spendRefusal counts it only where spend spends it (defects-r1-1.test.ts, through the menu and the command)."
+      }
     },
     {
       "id": "finance.pay_card",
       "kind": "command",
-      "entry": "BankCard.tsx:225 (disabled when nothing payable)",
+      "entry": "BankCard.tsx:233 (disabled when nothing payable)",
       "reads": "owed, inTheBank",
-      "changes": "payCard credit.ts:578 posts; paidSinceStatement; holds; allocatePayment",
-      "downstream": "card.due credit.ts:769 asks less / late check; carrying/grace credit.ts:784; cardRoom",
+      "changes": "payCard credit.ts:594 posts; paidSinceStatement; holds; allocatePayment",
+      "downstream": "card.due (credit.ts:789) asks the statement less what was paid since (autopayAsk, credit.ts:1038) and checks it late or not; carrying/grace (credit.ts:818); cardRoom (credit.ts:551)",
       "persistent": "ledger + state",
       "explanation": "button shows amount",
-      "tests": "interest.test.ts:43,81; cash.test.ts:114; cardlife.test.ts:116",
-      "status": "verified",
-      "issue": ""
+      "tests": "tests/cardlife.test.ts ‘holds back the credit a payment from another bank frees for the card bank’s days, and not one from its own’ (paid through the command: the hold on cardRoom); tests/interest.test.ts ‘is held when more is paid than owed, sent back on asking, and sent back after six months in the US’ (paid through the command: a credit balance) and ‘the grace period’ (the grace and the carrying, paid by autopay, not through the command); tests/defects-g19-1.test.ts ‘still reads the primary account for a payment made by hand’; tests/cash.test.ts ‘goes to the cash balance first, but a US card’s minimum to the purchases first’ (allocatePayment called directly); no test pays through the command and then checks the due date asking less",
+      "status": "partial",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "status": "verified",
+        "said": "Verified on interest.test.ts:43,81, which pay by autopay, cash.test.ts:114, which calls allocatePayment directly, and cardlife.test.ts:116.",
+        "now": "A payment through the command is tested for what it does to the card’s room, a hold where it came from another bank (cardlife.test.ts), and for a credit balance (interest.test.ts). The due date’s reading of it isn’t: the grace and the carrying are tested through autopay, which pays through the same payCard but on the due date, and no test pays through the command before a due date and checks that it asks less or charges no late fee."
+      },
+      "read": true
     },
     {
       "id": "finance.set_autopay",
@@ -583,7 +777,7 @@
       "kind": "scheduled",
       "entry": "card.dispute",
       "reads": "fraud record",
-      "changes": "posts amount-carried back (security.ts:190)",
+      "changes": "posts amount-carried back (security.ts:250)",
       "downstream": "account balance",
       "persistent": "ledger",
       "explanation": "'Refunded' notice",
@@ -600,9 +794,14 @@
       "downstream": "score -> later offers; closes loan at 0",
       "persistent": "ledger + record",
       "explanation": "'A Missed Loan Payment'",
-      "tests": "lending.test.ts:166,210",
+      "tests": "lending.test.ts ‘is priced by the record, paid down monthly, and closed when it’s paid’, ‘puts a missed payment on the record’",
       "status": "verified",
-      "issue": ""
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:166,210, lines that had moved off the tests they meant.",
+        "now": "Named, not numbered: the tests had moved."
+      }
     },
     {
       "id": "bank.month_end",
@@ -613,7 +812,7 @@
       "downstream": "balances -> spending; marks -> score",
       "persistent": "ledger",
       "explanation": "statementReady; fee waiver text",
-      "tests": "banking.test.ts:106-243; statements.test.ts:85-110; bank-fees.test.ts",
+      "tests": "banking.test.ts:106-196,200-243; statements.test.ts:85-110; bank-fees.test.ts",
       "status": "verified",
       "issue": ""
     },
@@ -623,7 +822,7 @@
       "entry": "bank.close_savings (Germany) / switch",
       "reads": "account",
       "changes": "closeSavings (banking.ts:609)",
-      "downstream": "orders cancelled; balance in current",
+      "downstream": "orders canceled; balance in current",
       "persistent": "ledger",
       "explanation": "'X Closed' notice",
       "tests": "accountlife.test.ts:261",
@@ -639,11 +838,16 @@
       "downstream": "balances",
       "persistent": "ledger",
       "explanation": "'A Scheduled Payment Didn't Go'",
-      "tests": "payments.test.ts:122",
+      "tests": "payments.test.ts ‘pays on the day set, and not once canceled’",
       "status": "verified",
       "issue": "returns silently when either account is closed (payments.ts:104): no notice, unlike the standing order's 'is closed'",
       "auditStatus": "partial",
-      "settled": "Fixed: a payment to or from a closed account is told."
+      "settled": "Fixed: a payment to or from a closed account is told.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: payments.test.ts:122, a line that had moved off the test it meant.",
+        "now": "Fixed: a payment to or from a closed account is told. Named, not numbered: the test had moved."
+      }
     },
     {
       "id": "bank.standing_order",
@@ -654,9 +858,14 @@
       "downstream": "savings balance",
       "persistent": "ledger",
       "explanation": "failure notice with reason",
-      "tests": "payments.test.ts:90; accountlife.test.ts:279",
+      "tests": "payments.test.ts:90; accountlife.test.ts:279; tests/money-fixes.test.ts ‘takes its standing orders with it’",
       "status": "verified",
-      "issue": "keeps rescheduling forever for an order into an account closed by cancel_new/escheat"
+      "issue": "keeps rescheduling forever for an order into an account closed by cancel_new/escheat",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Note: ‘keeps rescheduling forever for an order into an account closed by cancel_new/escheat’.",
+        "now": "Since 2026-10-10 an account canceled in its cooling-off or handed to the state takes its standing orders with it (dropPaymentsFor), which tests/money-fixes.test.ts holds for a cancel."
+      }
     },
     {
       "id": "bank.switch_complete",
@@ -667,9 +876,16 @@
       "downstream": "new accounts carry everything",
       "persistent": "accounts",
       "explanation": "'Switched To X'",
-      "tests": "lending.test.ts:285; payments.test.ts:107",
-      "status": "verified",
-      "issue": ""
+      "tests": "lending.test.ts ‘runs Iceland’s switching service in its twelve business days, and moves every balance whole’; payments.test.ts ‘moves with the accounts when a switching service moves the bank’",
+      "status": "unresolved",
+      "issue": "",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: lending.test.ts:285, a line that had moved off the test it meant. Verified on Iceland’s and Britain’s switching services.",
+        "now": "As bank.switch: it runs only after a switch a service runs, which no New Haven life reaches; tested in Iceland and Britain. Unresolved, as health.prepay is: kept as written until the owner says otherwise, since reaching it needs a life lived outside the school, which the owner’s brief of 2026-10-09 held back.",
+        "status": "verified"
+      },
+      "read": true
     },
     {
       "id": "card.arrives",
@@ -693,18 +909,24 @@
       "downstream": "interest accrual credit.ts:881; cardRoom; score -> applications/loans",
       "persistent": "ledger + record",
       "explanation": "bounce/late/suspend/penalty notices",
-      "tests": "cardlife.test.ts:242-339; interest.test.ts:62-216",
+      "tests": "tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes); interest.test.ts:62-98,102-121,125-132,136-162,166-183,187-212,216; tests/money-fixes.test.ts ‘late, is charged the late fee, and no returned payment’s fee beside it’",
       "status": "verified",
       "issue": "US card short on autopay is charged both a returned-payment fee (credit.ts:774) and a late fee (credit.ts:805) for one missed payment; two due items can exist after a statement-day move",
       "auditStatus": "partial",
-      "settled": "Fixed: a US bounce that leaves the minimum short is charged the late fee alone (tests/money-fixes.test.ts)."
+      "settled": "Fixed: a US bounce that leaves the minimum short is charged the late fee alone (tests/money-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names, and cited cardlife.test.ts:242-339, whose first line closes a describe.",
+        "now": "Fixed: a US bounce that leaves the minimum short is charged the late fee alone (tests/money-fixes.test.ts). The cardlife.test.ts lines are named by their describes."
+      },
+      "read": "what the first review named in it"
     },
     {
       "id": "card.replaced",
       "kind": "scheduled",
       "entry": "card.report / dispute / new_number / fraud stop",
       "reads": "plastic",
-      "changes": "new last4, clears stopped/locked (security.ts:171)",
+      "changes": "new last4, clears stopped/locked (security.ts:220)",
       "downstream": "cardRoom / debit spending work again",
       "persistent": "plastic",
       "explanation": "'Your New Card Arrived'",
@@ -721,22 +943,27 @@
       "downstream": "card.due; score",
       "persistent": "ledger + record",
       "explanation": "statementReady with minimum",
-      "tests": "cards.test.ts:212; cardlife.test.ts:195,207,357,381; interest.test.ts",
+      "tests": "cards.test.ts:212; cardlife.test.ts ‘isn’t raised unasked once the holder says never’, ‘is a US card’s choice, lets a tenth over...’, ‘writes at eighteen months of paying more in interest and fees than off the card...’, ‘hold a US card’s first-year yearly fee to a quarter of its limit’; interest.test.ts",
       "status": "verified",
       "issue": "each zero-balance statement reports a month on time (credit.ts:738) and the yearly fee keys on calendar month only (:709); both assume one statement a month, which set_statement_day breaks",
       "auditStatus": "partial",
-      "settled": "Fixed: one statement a cycle by construction, and the yearly fee once in its month."
+      "settled": "Fixed: one statement a cycle by construction, and the yearly fee once in its month.",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested by: cardlife.test.ts:357,381, lines that had moved off the tests they meant.",
+        "now": "Fixed: one statement a cycle by construction, and the yearly fee once in its month. The tests are named, not numbered: they had moved."
+      }
     },
     {
       "id": "daily food spending",
       "kind": "system",
-      "entry": "rollover -> buyTheDaysFood spending.ts:296",
+      "entry": "rollover -> buyTheDaysFood spending.ts:384",
       "reads": "payments.everyday, wallet, card lock, cardRoom, overdraft, linkSavings, EBT",
-      "changes": "food postings via spend spending.ts:226; holds; item/purchase fees; round-ups; fedOn",
-      "downstream": "fedOn read by meals; fee waivers (purchasesSince banking.ts:264); rewards (cardoffers.ts:155); French ceiling (lending.ts:191); settleArrears spending.ts:330",
+      "changes": "food postings via spend spending.ts:307, nothing spent where spendRefusal refuses it; holds; item/purchase fees; round-ups; fedOn",
+      "downstream": "fedOn read by meals; fee waivers (purchasesSince banking.ts:273); rewards (the statement’s scan, cardoffers.ts:183-188); French ceiling (cardCeilingRoom lending.ts:231); settleArrears spending.ts:423",
       "persistent": "ledger",
-      "explanation": "'No Money For Food Today'",
-      "tests": "payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22",
+      "explanation": "'No Money For Food Today', with spendRefusal’s reason where it’s more than the money running out: cash in hand a card payer’s day doesn’t spend, a locked or stopped debit card, or the French debit card’s ceiling (from 2026-10-12; until then it said only that there was nothing left to pay with)",
+      "tests": "payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22; tests/defects-r1-1.test.ts ‘say why: the cash a card payer’s day doesn’t spend, a locked debit card, or nothing left at all’",
       "status": "verified",
       "issue": ""
     },
@@ -762,11 +989,16 @@
       "downstream": "card.apply approval/limit (cardlife.ts:126,133), priced APR (credit.ts:425), loanOffer/overdraftOffer (lending.ts:352,366), request_limit/auto raise",
       "persistent": "record",
       "explanation": "scoreWord/number on screens",
-      "tests": "several-cards.test.ts:117,135; cardlife.test.ts:46,98",
+      "tests": "several-cards.test.ts:117,135; cardlife.test.ts:46,98; tests/money-fixes.test.ts ‘makes one longer cycle...’",
       "status": "verified",
       "issue": "farmable through set_statement_day (measured +60 in 20 days)",
       "auditStatus": "partial",
-      "settled": "Farming closed with card.set_statement_day (tests/money-fixes.test.ts)."
+      "settled": "Farming closed with card.set_statement_day (tests/money-fixes.test.ts).",
+      "corrected": {
+        "on": "2026-10-12",
+        "said": "Tested By left out the repair’s test its note names.",
+        "now": "Farming closed with card.set_statement_day (tests/money-fixes.test.ts)."
+      }
     },
     {
       "id": "statements",
@@ -782,6 +1014,141 @@
       "issue": "periodsOf cuts every past card period on the current statement day (statements.ts:99), so after a move past statements are re-cut on the new day",
       "previous": "partial",
       "settled": "Each cut kept (CardState.cuts); past periods built from them; a legacy card’s are marked Rebuilt."
+    },
+    {
+      "id": "bank.open_current",
+      "kind": "command",
+      "entry": "Bank, Your Banks: Open An Account (BankMoves.tsx:62)",
+      "reads": "openRefusal: a bank where you live, none kept or waited on, no charged-off debt or ChexSystems report it turns away, a photo ID in force, Capital One and Citi only for citizens and permanent residents, without a number a branch hour",
+      "changes": "a current account, at once or after the bank’s review; its opening deposit sent in the sending bank’s days; its debit card (bankmoves.ts:316)",
+      "downstream": "a second current account: set_primary, redirect_deposits, the transfers, linkedTo; a review that turns the application down sends the deposit back",
+      "persistent": "accounts",
+      "explanation": "The Your Banks panel",
+      "tests": "tests/bank-moves.test.ts ‘opens Capital One at nothing, sends money from Chase in its days, and the card follows’, ‘reviews a Bank of America application for two business days...’, ‘sends a deposit back where it came from when the bank turns the application down’, ‘closes an unfunded Capital One account after its 60 days...’; tests/papers-complete.test.ts ‘starts at a bank that opens for an F-1...’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command and the clock, Capital One opens at nothing and its funding arrives in its days, Bank of America reviews for two business days and sends a refused deposit back, a second at the same bank is refused, an F-1 is refused by Capital One and opens at Wells Fargo in a branch.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.set_primary",
+      "kind": "command",
+      "entry": "Your Banks: Make Primary (BankMoves.tsx:117)",
+      "reads": "an open current account of yours",
+      "changes": "primaryAccountId; no instruction already set moves (bankmoves.ts:408)",
+      "downstream": "the debit card’s purchases, cash from a machine and bills paid by hand; card.apply’s other-bank check; payeeAccount and standing orders left where they were",
+      "persistent": "person.primaryAccountId",
+      "explanation": "What it moves and what it doesn’t, on the press",
+      "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders, then closes Chase, with nothing lost’, ‘pays a need-based scholarship into the account wages go to, not the one just made primary’; tests/defects-g19-1.test.ts ‘still reads the primary account for a payment made by hand’; tests/cardoffers.test.ts ‘moves a Chase card’s balance onto Citi’s card after switching...’ (the New Haven student, born in New York, and a New York life)",
+      "status": "verified",
+      "issue": "Through the command, the primary moves what it says and nothing set before: wages and the scholarship stay with the account they’re paid into, a payment by hand comes from the primary, and a card from another bank reads the new primary’s.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.redirect_deposits",
+      "kind": "command",
+      "entry": "Your Banks: Have Pay Go Here (BankMoves.tsx:122)",
+      "reads": "an open current account; DEPOSIT_LEAD",
+      "changes": "depositTo from fourteen days on (bankmoves.ts:422)",
+      "downstream": "payeeAccount and depositAccount, where wages and a scholarship are paid",
+      "persistent": "person.payments.depositTo",
+      "explanation": "The date it starts",
+      "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders...’; tests/cross-journeys.test.ts ‘opens and funds Capital One, has Yale pay there after its pay cycle...’; tests/papers-complete.test.ts ‘moves to the new account after one weekly pay cycle, other payers after the fourteen days’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command and the clock, pay goes on to the old account until the lead has run and to the new one after, and Yale’s pay follows after its cycle.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.set_order_source",
+      "kind": "command",
+      "entry": "Your Banks: a standing order’s Pay From (BankMoves.tsx:172)",
+      "reads": "a standing order; an open current account",
+      "changes": "the order’s fromId (bankmoves.ts:430)",
+      "downstream": "the STANDING_ORDER handler paying from it; linkedTo refusing a close while an order pays from an account",
+      "persistent": "person.payments.standingOrders",
+      "explanation": "The order’s line",
+      "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders, then closes Chase, with nothing lost’",
+      "status": "partial",
+      "issue": "Through the command, the order’s source moves and closing the old account is no longer refused for it (linkedTo). No test plays the order’s day after the move and checks it paid from the new account.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "card.set_autopay_from",
+      "kind": "command",
+      "entry": "Your Banks: a card’s Autopay From (BankMoves.tsx:186)",
+      "reads": "a card; an open current account not closing",
+      "changes": "the card’s autopayFrom (bankmoves.ts:442)",
+      "downstream": "autopaySource, which the due date pays from; a payment hold where the account is another bank’s; the upcoming-payment alert; linkedTo",
+      "persistent": "credit state",
+      "explanation": "The card’s line",
+      "tests": "tests/defects-g19-1.test.ts ‘holds nothing when autopay pays the Chase card from a Chase account, though the primary is at Capital One’, ‘holds the Chase days when autopay pays the Chase card from Capital One...’; tests/account-alerts.test.ts ‘warns once that Capital One is short for the card...’; tests/bank-lifecycle.test.ts ‘a closing account takes no new standing order or autopay’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command and the clock, autopay pays from the account named, held for the card bank’s days where it’s another bank’s and not where it’s its own, and the alert warns of that account’s shortfall; a closing account is refused.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.set_loan_repayment",
+      "kind": "command",
+      "entry": "Bank, Borrowing: Repay From (BankLending.tsx:291)",
+      "reads": "an open loan; an open current account not closing",
+      "changes": "loan.repayFromId (lending.ts:1256)",
+      "downstream": "LOAN_DUE drawing the month’s payment from it; linkedTo refusing a close while a loan repays from an account",
+      "persistent": "loan account",
+      "explanation": "The loan panel",
+      "tests": "none issues it; tests/bank-lifecycle.test.ts ‘borrows at Citi while Chase is primary...’ refuses closing an account a loan repays from, set by the borrowing",
+      "status": "partial",
+      "issue": "No test issues it: moving a loan’s repayments to another account is code with nothing that checks it. Closing an account a loan repays from is refused (bank-lifecycle.test.ts), on the account the borrowing set.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.close_current",
+      "kind": "command",
+      "entry": "Your Banks: Close (BankMoves.tsx:136)",
+      "reads": "closeRefusal and linkedTo: not the only or the primary, not overdrawn, no money on its way, nothing paid from or into it, no savings beside it, no card payment pending",
+      "changes": "closedAt; what it holds sent to the account named (bankmoves.ts:457)",
+      "downstream": "the remainder arriving in the transfer’s days; the account’s history kept; a closed account’s statements ending",
+      "persistent": "accounts, ledger",
+      "explanation": "Each refusal’s reason",
+      "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders, then closes Chase, with nothing lost’, ‘can’t send money it doesn’t have, can’t close an account with money on its way...’; tests/banking-complete.test.ts ‘is refused at Chase until they post...’; tests/cross-journeys.test.ts ‘opens and funds Capital One...’; tests/papers-complete.test.ts ‘a closed account’s statements end at its closing...’ (the New Haven student, born in New York)",
+      "status": "verified",
+      "issue": "Through the command and the clock, closing is refused for each thing still on the account, then closes it with nothing lost, the remainder arriving in its days and the history kept; a pending card payment holds it until it posts.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.cancel_switch",
+      "kind": "command",
+      "entry": "Bank, a switch under way: Call It Off (BankLending.tsx:374)",
+      "reads": "a switch pending; the service’s right to call it off, until seven working days before its date (Britain’s); confirm",
+      "changes": "SWITCH_KIND and its review canceled; noted (lending.ts:1337)",
+      "downstream": "nothing moves: accounts and payments stay where they were",
+      "persistent": "switch history",
+      "explanation": "The confirmation",
+      "tests": "tests/bank-lifecycle.test.ts ‘can be called off until seven working days before its date, then not; called off, nothing moves’; tests/finance-paths.test.ts ‘PLAYER JOURNEY: past its window, the balance transfer alone is stopped...’ (British lives)",
+      "status": "unresolved",
+      "issue": "Reached only by a fixture: the US has no switching service, so a New Haven life is refused a switch (bank.switch) and never has one to call off. On a British life, called off before its window nothing moves, and past its window it’s refused. As bank.switch, the owner decides.",
+      "traced": "2026-10-12",
+      "read": true
+    },
+    {
+      "id": "bank.stop_balance_transfer",
+      "kind": "command",
+      "entry": "Bank, a switch under way: Keep The Balance (BankLending.tsx:371)",
+      "reads": "a switch pending with the step; until close of business the working day before; confirm",
+      "changes": "the switch’s keepBalance (lending.ts:1149)",
+      "downstream": "completeSwitch moving the payments and leaving the old account open with its money",
+      "persistent": "the switch item",
+      "explanation": "The confirmation",
+      "tests": "tests/finance-paths.test.ts ‘PLAYER JOURNEY: past its window, the balance transfer alone is stopped: payments move and the old account keeps its money, open’ (a British life)",
+      "status": "unresolved",
+      "issue": "Reached only by a fixture: on a British life, the balance transfer alone is stopped and the switch moves the payments, the old account kept open with its money. No New Haven life has a switch. As bank.switch, the owner decides.",
+      "traced": "2026-10-12",
+      "read": true
     }
   ],
   "findings": [

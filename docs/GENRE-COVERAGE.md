@@ -8,7 +8,7 @@ holds it to them and plays every genre's brief through `brief.choose` and `pract
 Every genre has the same working mechanics, and every one is reachable from the first day:
 
 - **Its brief** (from 2026-10-12, `content/briefs/`): an original scene written for SLATE, set out as an actor breaks a
-  scene down, with two or more readings it supports. 149 of 149 genres have one written for them, 149 briefs in
+  scene down, with two or more readings it supports. 149 of 149 genres have one written for them, 298 briefs in
   all; until that day 98 genres had no material of their own, only a self-tape of no scene. It's prepared
   (`brief.prepare`), read and played one way (`brief.choose`), taped (`practice.self_tape`), judged as a taped brief
   and kept with its purpose; a Strong take earns one callback.

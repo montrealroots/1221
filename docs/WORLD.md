@@ -149,8 +149,8 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
 
 #### Stage 1c: proving who one is at an American airport, and the state ID card (done 2026-09-30)
 Researched in `docs/research/world/research-documents-safetynet.json` and `research-home-effects.json` (`systems/identity.ts`, `content/identity.ts`).
-- **REAL ID:** since 7 May 2025 the TSA's checkpoint takes a REAL ID license or ID card, or a passport from anywhere. A domestic airline flight with neither costs TSA ConfirmID's $45, good for ten days of travel. Only airline flights pass the checkpoint: one's own plane, a charter or a rented one don't.
-- A license or ID card issued, exchanged or renewed by an American state from now is REAL ID, at the same fee in New York, Connecticut and California. Connecticut upgrades one early for its $30 duplicate fee; New York's and California's early upgrade price wasn't read, so theirs come at the renewal.
+- **REAL ID:** since 7 May 2025 the TSA's checkpoint takes a REAL ID license or ID card, or a passport from anywhere. Until the scope reset of 2026-10-09 a domestic airline flight with neither cost TSA ConfirmID's $45, good for ten days of travel, and only airline flights passed the checkpoint: one's own plane, a charter or a rented one didn't. The checkpoint (`atTheCheckpoint`) went with the flights that day, and the TSA's rule (`tsaAccepts`), read after that by an ID card's page alone, on 2026-10-10. The TSA's date and ConfirmID's figures stayed in `REAL_ID`, read by nothing, until 2026-10-12.
+- Until 2026-10-09 a license or ID card issued, exchanged or renewed by an American state was REAL ID, at the same fee in New York, Connecticut and California, and Connecticut upgraded one early for its $30 duplicate fee (`documents.real_id`); New York's and California's early upgrade price wasn't read, so theirs came at the renewal. The upgrade went later on 2026-10-09, and its $30 stayed in `REAL_ID`, read by nothing, until 2026-10-12. Now SLATE issues, exchanges and renews no license (a lost one is replaced with its REAL ID kept), an American state's ID card is the one document it issues as REAL ID, and the one REAL ID figure a save reads is a starting license's share (`realIdShare`). REAL ID is said on the document's page and read by nothing else.
 - A starting license is REAL ID at its state's published share of holders:
   - California's 58% (May 2025) and Connecticut's about 73%.
   - New York's "more than half", taken at half, its floor.
@@ -162,15 +162,15 @@ Researched in `docs/research/world/research-documents-safetynet.json` and `resea
   - Mexico: a passport, a driver's license or the INE.
   - Britain: a passport or a photo driving license.
   - Ireland to Britain or back: a passport or an Irish passport card, Aer Lingus's rule since 25 February 2026.
-  Without one, the traveler isn't boarded and the fare is gone.
+  Without one, the traveler wasn’t boarded and the fare was gone. The check went with the flights in the scope reset of 2026-10-09, and until 2026-10-12 this said it in the present tense.
 - **The cards:**
   - Ontario's Photo Card and BC's BCID, CA$35 each (the BCID's from search summaries).
   - Mexico's INE, free to a Mexican of 18.
   - Ireland's passport card, €35, for five years or to the passport book's expiry, to a holder of an Irish passport.
-  - The Ontario, BC and INE cards' terms weren't read, and they don't expire in SLATE. Tests: tests/boardingid.test.ts (4); 9 mutations, all killed.
+  - The Ontario, BC and INE cards' terms weren't read, and they don't expire in SLATE. Tests, as they stood on 2026-09-30: tests/boardingid.test.ts (4); 9 mutations, all killed. That file went with the check. The cards stayed, and what reads one now is a new bank, which asks for a photo ID in force (`photoIdOf`).
 - Residence documents abroad were built later the same day (stages 1d and 1e). Ireland's IRP card stays unbuilt, since no route reaches it.
 
-Evidence: tests/identity.test.ts (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
+Evidence, as it stood on 2026-09-30: tests/identity.test.ts (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it. That file went in the scope reset of 2026-10-09 with the checkpoint, the exchange and the upgrade it tested; until 2026-10-12 this line cited it as if it were still there. What's left is tested elsewhere: the ID card's issue, its wait and its refusals in `tests/papers-transitions.test.ts`, `tests/defects-g24-1.test.ts` and `tests/defects-r7-1.test.ts`, and a starting license's REAL ID share, with nothing else of `REAL_ID` kept, in `tests/defects-g26-1.test.ts`.
 
 #### Stage 1d: the right to live in another country (done 2026-09-30)
 

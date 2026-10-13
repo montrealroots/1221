@@ -1,7 +1,7 @@
 # The Attribute And Genre Engine: Its Model, Invariants And Balance
 
-Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`. Every formula below is the code's, with the file it
-lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
+Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset is `evaluation-3`, and §9
+says what changed. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
 which. The research gives directions and orderings much more often than sizes. Where a size is SLATE's, the balance
 section says how much the conclusions depend on it.
 
@@ -385,12 +385,13 @@ The pool is finite, and nothing here claims otherwise. Variety comes from the re
 
 `content/briefs/`, `systems/briefs.ts`, `ui/components/BriefPane.tsx`. Until this pass a self-tape in a genre had no
 material: the camera's task, the genre's applied demands and its familiarity. 98 of the 149 genres reached the player
-only that way. Every self-tape is now of a brief, an original scene written for SLATE, one for each genre.
+only that way. Every self-tape is now of a brief, an original scene written for SLATE: one for each genre when this
+section was written, two from the connected-journey pass (§9).
 
 ### What a brief is
 
 - **Its setup:** circumstances, relationship, who you play and who the reader plays off camera, objective, obstacle,
-  and two to four beats. This is the breakdown the acting texts set out: Stanislavski's given circumstances and tasks,
+  and two to four beats (up to six for a long brief, from §9). This is the breakdown the acting texts set out: Stanislavski's given circumstances and tasks,
   and Hagen's questions (`docs/research/attributes/research-self-tape-briefs.json`). Every number is SLATE's.
 - **Its material profile:** the five features, language, medium (`camera`, or `voice` at a microphone for the five
   voice genres), beats, and the techniques its scene stages. A genre adds no demand of its own: a brief listed under a
@@ -409,11 +410,13 @@ only that way. Every self-tape is now of a brief, an original scene written for 
 - **Preparation** has four parts:
   - the breakdown, complete at 0.8;
   - the lines, complete at 0.8;
-  - rehearsal, complete at `0.5 + 0.08·transitions + 0.04·blends`, at most 0.85;
+  - rehearsal, complete at `0.5 + 0.08·transitions + 0.04·blends`, at most 0.85, until §9 judged a brief beat by beat:
+    each beat now asks 0.5, and 0.15 more where a change of tone leads into it, 0.08 where it holds two, up to 0.85;
   - knowing the genre, the better of familiarity and practice, complete at 0.3.
 
   A way of playing it adds its own rehearsal, complete at 0.9.
-- **The steps:** Break It Down takes 30 minutes, Learn The Lines 30 or 50, Rehearse It On Your Feet 45. Each moves
+- **The steps:** Break It Down takes 30 minutes, Learn The Lines 30, 50 or 70 (a long brief, from §9), Rehearse It On
+  Your Feet 45. Each moves
   its part by `gain · focus · trait · featureSpeed · (1 − part)`, at gains of 0.6, 0.6 and 0.5, halved again the same
   day.
 - **Pitch:** a brief is pitched at a student (−0.2); a callback adds 0.3.
@@ -525,9 +528,247 @@ Each has a test now.
 
 ### Limits
 
-- **The content is finite:** 149 briefs, one written for each genre, with 302 readings.
+- **The content is finite:** 149 briefs, one written for each genre, with 302 readings, when this section was written.
+  From §9, 298 briefs, two for each genre, with 648 readings.
 - **On camera, a taped brief favors feeling.** The body and voice specialists are rewarded by the School's movement,
   voice and clown work, not by taping.
 - **Sizes are SLATE's design.** That covers the pitch, the steps, the completes, the reading strength and the callback's
   lift. The research supports the shape of a breakdown and that a scene has more than one valid reading (Hagen). It
   also supports that an adjustment given before a take is expected to be taken (Merlin). It supports no size.
+
+---
+
+## 9. The Connected Journey (2026-10-12)
+
+Ruleset `evaluation-3 (2026-10-12)`. A replay of a piece judged under an older ruleset says so and doesn't re-derive it
+(`replay`, `systems/evaluation.ts`). The owner's brief of 2026-10-12 asked for the whole piece to be judged, a partner
+kept apart from the player's own work, rehearsal with memory, direction that can be answered, an identity read from
+history, and the specialist question settled against a stated measure. Each is below with the file it lives in. Every
+size is **SLATE's**, and the shapes are the rehearsal room's: a scene worked in units, a run that tires, an
+adjustment tried and kept or thrown out. None of it is a measured rate.
+
+### A piece judged in its segments
+
+`content/piece.ts`, `systems/piece.ts`, `judgePiece()`. A piece is cut into segments:
+
+- a brief's beats;
+- a scene for class, its tones in order;
+- a night, the play's tones in order, two at least. A new play with no profile (a festival's, a cabaret's) is its two
+  halves with no tones said: nothing is assumed of a text the game doesn't have.
+
+Each segment goes through the one evaluation every piece of work goes through (§1), with four things of its own:
+
+| Quantity | Formula | Source |
+|---|---|---|
+| Tones | each tone multiplies its dimensions' lean (`TONE_LEAN`: comic ×1.15 responsiveness and ×1.1 execution, grave ×1.15 belief and ×1.05 consistency, lyric, grotesque), normalized | SLATE's |
+| Its rehearsal | `1 − (1 − piece)·(1 − workₛ)`, where `workₛ` is the focused work on that segment | SLATE's |
+| What it asks | the piece's complete, plus `perTurn` where a change of tone leads into it and `perBlend` where it holds two at once: a brief 0.15 and 0.08, up to 0.85; a scene 0.05 and 0, up to 0.95 | SLATE's |
+| Stamina | `f = 1 − 0.3·load·position·(1 − stamina/full)`, position 0 at the first segment and 1 at the last, applied to what tiring reaches; stamina is removed from every segment's inputs | SLATE's |
+| A slip | a segment 3 points or more under what it was expected to come to carries into the next a factor `1 − 0.5·(slip/100)·(1 − recover)`, `recover` the mean of composure and adaptability, each of full | SLATE's |
+
+**Load**, how hard the piece is on stamina, 0 to 1 (`loadOf`): a brief 0.1 short, 0.2 medium, 0.3 long; a scene 0.15;
+each plus a sixth for each level of the body's and the voice's work it stages. A night is 0.4 plus a tenth a level.
+
+**The whole** is the segments' overalls, weighted by their length. **Continuity** is `100 − (max − min)` across the
+segments of the mean of belief and interpretation. It's shown and never added: it's what the segments already are.
+
+**Nothing is counted twice.** Stamina is read once, as the drain; until this ruleset it was a share of consistency.
+Recovery reads composure and adaptability, which also sit in the dimensions, but only where a slip has happened, and
+there's no slip at mastery: no draw, so nothing under expected. A tone leans weights and adds none
+(`tests/connected-properties.test.ts`).
+
+### A partner, and the scene together
+
+`systems/ensemble.ts`, `sharedOf()`. Until this ruleset a scene's partner part was six tenths the rehearsals together
+and four tenths what the partner prepared alone, read as the player's own preparation. A partner's own preparation
+tops out at 0.85, so a student with everything mastered came out at 94 to 98 on a paired scene, never 100, with a note
+nothing they could do would answer. Now there are two results.
+
+- **Your own** is your work, judged as every piece is. Its partner part is your rehearsals together. At mastery it's
+  100, whoever the partner is.
+- **The scene together** blends each dimension a partner shares: `(1 − s)·own + s·100·contribution`, with
+  `s = share·level/3` (connection 0.5, responsiveness 0.5, belief 0.15, consistency 0.1, by the material's partner
+  level). A partner's contribution is `(0.4 + 0.6·prep)·timing·agree`:
+  - prep is their own preparation and what you've rehearsed together;
+  - timing, 0.5 to 1, is their listening and focus;
+  - agree is 0.9 while a table-work reading is held apart and not yet tried both ways, else 1.
+- **A partner's slip** is drawn from their reliability: it happens when the draw falls under `(1 − reliability)·0.6`,
+  in one segment of the scene, and takes from what they bring 60% of it over the number of segments, less the share the
+  player's listening and adaptability cover.
+
+A coursework band and a night's band read your own result, since a teacher and a director judge the actor. The bond
+with a partner moves with the scene together. A brief taped with a classmate reading (`brief.reader`) reads the same
+way; a recording reads at 0.6, answering on cue and never slipping, but never listening. A callback is earned by the
+take with its reader, and answered only when played the way it asked.
+
+### A problem worked through
+
+`content/workbook.ts`, `systems/workbook.ts`, the commands `work.identify`, `work.try` and `work.settle` on a brief, a
+scene for class or a part. A problem is found in the work's own forecast, the expected result with no draw:
+
+- the weakest segment;
+- a turn not yet worked;
+- stamina failing late;
+- an ability holding a segment back;
+- what you want, not yet named;
+- a part of the preparation;
+- a partner short of the take on your own.
+
+Each kind admits its own adjustments, and each adjustment is a different change:
+
+| Adjustment | What it changes | Size |
+|---|---|---|
+| Work It Slowly | that segment's own rehearsal | 0.5 of what's left |
+| Run Into It From The One Before | both segments' own work | 0.25 before, 0.4 after |
+| Play This Part Another Way | that segment's way of playing, rehearsed in | 0.6 of what's left |
+| Find Places To Breathe | the piece's load on stamina | ×0.7 |
+| Name What You Want In Each Part | the part the reading stands on | 0.3 of what's left |
+| Run It With Your Partner | their preparation | 0.4 of what's left |
+
+Trying one spends its time and shows the evidence: the problem's own figure in the forecast before and after. A change
+of how something is played is kept or put back, and one put back isn't offered for that problem again. Work done is
+kept. A kept change is a discovery, which every later forecast, rehearsal and performance of the piece reads, and
+every later rehearsal on the feet rehearses a kept way in further, as it does the whole piece's way of playing
+(`rehearseWays`, `systems/piece.ts`). Until late in the pass a kept way was rehearsed in only by trying it again, so
+a mastered actor who kept one came to every later call short of 100: 91.9, 4.3 points of it a way 60% rehearsed in.
+There is no random setback anywhere in it: the forecast has no draw.
+
+### Direction that can be answered
+
+`systems/production.ts`. Past the lines and the blocking, a director's note names the worst problem the part's own
+forecast shows that has a way to work it: what you want, listening, pacing, behavior, transitions or the relationship,
+with its place in the play and its figure. Each offers the workbook's ways at it (`solutionsOf`). Worked one way, the
+note keeps the way and its own evidence. At the next call it's taken only where the work answered it: worked a way
+that didn't make it worse and wasn't put back, or its problem gone from the forecast. A note left alone is said again
+as still there, and a later note on the same thing answers what came of the last.
+
+### The actor the work so far shows
+
+`systems/artistry.ts`, `identityOf()`. Read, never stored, from what's kept already: the last 40 pieces for strengths
+(a dimension 4 points or more over the actor's own mean, across at least 6 pieces); the journey's tallies for life for
+recurring weaknesses, direction and collaboration; the experience record for familiar and unfamiliar material; and
+habits, a side chosen 70% of the time across at least 5 choices. Each line names its evidence. It adds nothing to any
+result. It informs the brief suggestions (an unfamiliar material, a way not usually played, a weakness that recurs for
+life) and the Player Profile.
+
+### The specialist question
+
+`tools/specialists.ts`, `docs/verification/connected-journey/SPECIALISTS.md`. Every specialist was compared with an
+even actor of the same budget (abilities summing 600, techniques seventeen at 50), fully prepared, on a sufficient day,
+with no draw, a brief in its best reading. The difference was split between the whole's two terms.
+
+**The stated criterion:** on material built on a demand at level 3, the ability it names should carry at least as much
+of the work as the most-read ability of the task's own profile, emotional depth, about a sixth of a take. A technique a
+scene stages should carry at least as much as the medium's own.
+
+**Measured before:**
+
+- physical carried 13.8% of a brief built on physical work, and vocal 12% of one built on the voice, against emotional
+  depth's 17%;
+- a staged technique weighed one of the medium's own.
+
+**Corrected:**
+
+- physical's effect went from 1.2 to 1.8 an ability a level, and its lean from 0.2 to 0.25 (`FEATURE_EFFECT`,
+  `content/approaches.ts`);
+- vocal's went from 1.2 to 2, and its lean from 0.16 to 0.25;
+- the camera's connection reads presence at 2 (`tape`, `tapeOnFeet`, `content/tasks.ts`);
+- a staged technique weighs twice the medium's own (`BRIEF.staged`).
+
+No genre bonus was added, and no specialist was made to win.
+
+**What stands, and why.** The feeling specialist leads on most work because every scene is built on feeling: that's
+the material. Stamina is read once, as the drain, so its specialist is behind wherever a piece is short. Casting is
+blind to stamina by the fairness rule (`castingPerformer`).
+
+### What the measurements showed, on the final rules
+
+Every figure below was measured on the rules as they stood at the end of the pass, with 298 briefs, two for each
+genre. Each tool's own header says how it measures.
+
+**The specialist question** (`tools/specialists.ts`). Each specialist has 85 on one ability, and the other eleven are
+lowered to keep the budget. The figures are against the even actor, each piece in its best reading.
+
+| Specialty | Briefs Built On It | Scenes Built On It | Nights Built On It | Casting, Plays Built On It |
+|---|---|---|---|---|
+| Physical | ahead on 58 of 83, +0.63 | 3 of 8, −0.05 | 6 of 14, +0.24 | 13 of 14, +0.5 |
+| Vocal | 62 of 73, +1.08 | 12 of 14, +0.24 | 10 of 10, +0.5 | 10 of 10, +0.77 |
+| Partner | 93 of 106, +1.43 | 46 of 46, +3.58 | 17 of 17, +2.19 | 17 of 17, +3.35 |
+| Feeling | 274 of 274, +3.37 | 43 of 43, +1.44 | 23 of 23, +1.01 | 23 of 23, +1.28 |
+| Stamina | 3 of 42, −0.28 | 0 of 4, −2.5 | 0 of 8, −0.84 | 0 of 8, −2.84 |
+| Presence | 0 of 263, −1.63 | 0 of 56, −1.91 | 0 of 30, −1.09 | 0 of 30, −0.92 |
+
+How each result splits between the whole's two terms says why:
+
+- A specialist gains in the weighted mean on its own material: +1.29 for physical on briefs, +0.75 on scenes.
+- It loses about 0.8 in the weakest-dimension term on every piece, because the eleven abilities it lowered are its
+  weakest.
+- On a scene built on physical work the two come out even. That is a trade-off the budget makes, not an under-reward:
+  concentrating costs elsewhere, and the 0.25 weight on the weakest term is how SLATE says an actor is held back by
+  what they can't do. No bonus was added to change it.
+- Stamina is read once, as the drain, and only late in a piece, so its specialist is behind wherever a piece is short.
+  Casting reads stamina as full by the fairness rule.
+- Presence is one input of connection among several, and on camera it carries twice what a scene gives it. Even so,
+  85 on presence doesn't repay the eleven abilities lowered for it.
+
+**Readings** (`tools/brief-balance.ts`, `docs/verification/BRIEF-BALANCE.md`).
+
+- An even actor's best and worst readings are 0.14 to 0.17 points apart on average, at most 1.2. An even actor has no
+  strength for a reading to play to. Readings move weight between dimensions, and add none.
+- A specialist's are 0.94 to 1.56 apart on average, over a point apart on 124 to 189 of the 298 briefs.
+- Two specialists' best readings differ on 108 to 251 of the 298 briefs.
+- A real student's abilities are drawn, never even, so a reading is a real choice for them.
+
+**Two briefs a genre** (`tests/briefs-situations.test.ts`). Four actors meet a genre's two briefs differently: the
+difference between the two briefs' results spreads across the four by 0.5 to 14.4 points, median 4.2. In 65 of the 149
+genres the actors disagree about which of the two suits them better.
+
+**A weakness trained** (the developing actor, +20 on one input, n = 298):
+
+- the input that costs a brief most adds 2.63 (1.7 to 4.5);
+- a read input chosen at random adds 1.17;
+- an input the brief doesn't read adds exactly 0 on all 298.
+
+Until this pass's last run the tool counted stamina unread on some briefs, and +20 on it moved one of them by 0.3: every
+piece now reads stamina, as its drain.
+
+**Tags.** A brief's genres reordered and repeated: 0 of 298 takes moved.
+
+**Freshness, played** (`tools/freshness.ts`, `docs/verification/connected-journey/FRESHNESS.md`). Two held-out seeds,
+nine months of school, four students each:
+
+- **The beginner, the developing student and the body specialist** taped 72 to 83 briefs, each one new, and were set
+  18 scenes, none twice. A coursework note came back only after its part slipped. No director's note came back after
+  it was answered. 214 to 225 briefs were left never offered. The best reading leaned the same way on 29% to 42% of
+  the briefs taped.
+- **The mastered student** made 66 to 76 takes on 30 to 35 briefs. The repeats are the one callback each brief earns
+  (29 to 34), never two in a row.
+
+**Properties** (`tests/connected-properties.test.ts`, `tests/piece.test.ts`, `tests/ensemble.test.ts`):
+
+- a piece is bounded, and never falls as its work, its rehearsal or stamina rises, or as its load falls;
+- a tone leans and adds no weight;
+- stamina is read once;
+- there's no draw at mastery, and a segment's draw stays inside the evaluation's variation below it;
+- the scene together is bounded, and never falls as a partner's preparation rises.
+
+**The mastery contract** holds on briefs, with a recording or a classmate reading (`tests/briefs.test.ts`,
+`tests/ensemble.test.ts`); on scenes for class with any partner (`tests/ensemble.test.ts`); on nights
+(`tests/connected-properties.test.ts`); with a workbook discovery kept (`tests/workbook.test.ts`); and on a part
+with every director's note worked and its change kept (`tests/direction-mastery.test.ts`).
+
+**Counted for life.** Until round three of this pass's defect work, a piece held back by one input in several
+dimensions counted once per dimension (`countWork`). A verifier measured n = 15 against 12 pieces on a played save.
+Each piece counts once now (`limitsOnce`), and the backfill a save gets on opening counts the same way
+(`tests/journey-limits.test.ts`).
+
+### Limits
+
+- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 56 scenes for class; 30 plays with
+  profiles.
+- **Every size in this section is SLATE's estimate.** That covers the drain, the slip and its recovery, the tones' leans,
+  a partner's shares and slip, the workbook's gains, the direction note's rule for addressed, and the identity's
+  thresholds. The shapes are from the rehearsal room and the acting texts the research files cite. No size is measured
+  from the world.
+- **A specialist in one ability is behind wherever its material doesn't call for it,** and about even on scenes built
+  on it, by the weakest-dimension term. That's said here and in each piece's limits, never hidden by a bonus.

@@ -77,11 +77,17 @@ to what's kept or by retiring it with the reason, and never quietly:
   with them; the tests that used them use a marketplace plan, the Essential
   Plan and Medicaid.
 - **A week worked while claiming.** Was dead in part until 2026-10-10: each
-  claim read nought for the days worked. A Summer Cabaret stipend can qualify a
-  Connecticut claim, so the claim is reachable after all, and from that day a
-  week's unemployment and a month's SNAP read the work-study and Cabaret wages
-  paid in them (`workedBetween`). There's still no rule for a full-time
-  student's availability.
+  claim read nought for the days worked. From that day a week’s unemployment
+  and a month’s SNAP read the work-study and Cabaret wages paid in them
+  (`workedBetween`). A Summer Cabaret stipend can qualify a Connecticut claim,
+  and this called the claim reachable without saying when. This also said
+  there was still no rule for a full-time student’s availability, and from
+  2026-10-10 there is: Connecticut takes a student enrolled at the school,
+  summer included, as not available for work (CGS 31-235(b),
+  `studentUnavailable`), so a claim is refused and a week pays nothing while
+  they’re enrolled. The claim is reachable once they’ve left school, with the
+  degree or without it (`schoolEnded`), on a summer’s stipend in its base
+  period.
 - **The talent routes to residence.** Retired: the Global Talent visa's and
   the green card's applications and fees went, and Mexico's shorter wait for
   artistic work. A save holding either keeps it and what it opens.
@@ -122,25 +128,42 @@ perfectly") settled the rest the same day:
   for a visa or a travel authorization went, each a fee for a document nothing
   read; what a country asks stays on Papers as information. Booking the visit
   an application waited on went with them; one already booked is kept.
-- **REAL ID.** Retired: making a license REAL ID was for flights.
+- **REAL ID.** Retired: making a license REAL ID was for flights. Its $30 fee,
+  and the TSA's date and ConfirmID's figures the checkpoint read, stayed in
+  `REAL_ID`, read by nothing, until 2026-10-12, when they went
+  (`tests/defects-g26-1.test.ts`); a starting license's REAL ID share is all
+  it keeps.
 - **A police report, read only by its own look.** Connected: New Haven takes
   one online, and New York replaces a stolen license free with it
   (`documents.replace_license`, which also gave `LICENSE_REPLACEMENT` its
   reader).
 - **A passport, a license and an ID card read by nothing.** Connected: a new
-  bank asks for one in force (`photoIdOf`, `bank.switch`).
+  bank asks for one in force (`photoIdOf`). This named `bank.switch` as the
+  step that asks. A New Haven life could switch until 2026-10-10; since then a
+  switch is refused where no switching service runs one, as in the US, and
+  the reader such a life reaches is an account opened at a new bank
+  (`bank.open_current`, `openRefusal`).
 - **US status and OPT read by nothing.** Connected: the marketplace, the
   Essential Plan and Covered Connecticut ask lawful presence
   (`lawfullyPresent`), so falling out of status, which OPT holds off, ends a
   plan. OPT still ends after its 90 days without work, as the rule has it,
   since nothing after the degree employs anybody.
 
-What stays out of a student's reach is in the coverage matrix's limits, each
-true to its country's rule: the foreign banks' rights, the pensions, and the
-benefits (a student's work-study wages are kept out of unemployment's base
-period, as FUTA has it). Reaching any needs income after the degree or a life
-outside the school, which the owner's brief held back; they stay as written
-until the owner says otherwise.
+What stays out of a student’s reach is in the limits of the Partial rows in
+`docs/capabilities.json` and in the unresolved rows of
+`docs/GAMEPLAY-COVERAGE.md`, each true to its country’s rule: the foreign
+banks’ rights, the pensions, and the benefits but two (a student’s work-study
+wages are kept out of unemployment’s base period, as FUTA has it). This sent
+the reader to the coverage matrix’s limits until 2026-10-12, and
+`docs/COVERAGE-MATRIX.md` has none. Reaching any needs income after the degree
+or a life outside the school, which the owner’s brief held back; they stay as
+written until the owner says otherwise. This put every benefit out of reach,
+which two never were. SNAP is open to a US citizen in New Haven, and from
+2026-10-10 to a student only in term, on the work-study every student works,
+or in the summer with 20 hours’ work a week (7 CFR 273.5,
+`snapStudentRefusal`). A Connecticut claim is reachable on one summer’s
+Cabaret stipend once the student has left school (see “A week worked while
+claiming” above).
 
 ---
 
@@ -155,19 +178,84 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   trait keeps, and nothing in the game is a cost of the work since the career went. Chaotic's and Keeps Accounts'
   receipts lean on nothing.
 - **The Mexican residence chain** (residence, renewal, settlement, naturalization). Reachable, and read by nothing
-  outside itself, since no life can move to Mexico. Settlement counts years from the first grant, not continuous
-  residence.
+  outside itself, since no life can move to Mexico; from 2026-10-10 the offer says so before it’s paid for. It’s
+  reached on savings, which a student’s start decides: measured on 2026-10-12 in New Haven, a wealthy start’s MXN 9.1
+  million and an inherited one’s 51.7 million meet Mexico’s MXN 1,344,373 on the first day, and a comfortable one’s
+  1.2 million doesn’t (`mexicanSolvency`, `routeRefusal`). Settlement counted years from the first grant, not
+  continuous residence. Settled on 2026-10-10: settlement and naturalization count residence held without a break,
+  and a lapse restarts the count (`continuousSince`).
 - **A police report in New Haven.** Read only by New York's free replacement of a stolen license.
-- **IMSS contributions, EI premiums, pensions taxed.** `contribute`, `eiOnCheck` and `recordPension` have no
-  caller, and the pensions they'd feed are unreachable.
-- **`bank.new_number`.** It costs a new card and protects against nothing SLATE models: the fraud draw doesn't read
-  the number.
-- **A past card statement** is cut on today's statement day, so a statement from before a move is shown on the new
-  day.
-- **A classmate's moment answered** keeps its choice on the classmate, read by nothing beyond the memory line.
-- **The chair's casting** reads the last School production's delivery, not a Cabaret's or a Summer run's, though the
-  faculty now read the Cabaret's nights.
-- **SNAP's income** is passed as all earned, interest and benefits with it.
+- **IMSS contributions, EI premiums, pensions taxed.** `contribute` and `eiOnCheck` have no caller, and the pensions
+  they’d feed are unreachable. This said `recordPension` had none either, which was so until 2026-10-10: from that
+  day each of the five pensions an older save can already be drawing (Social Security, Britain’s, Ireland’s, the
+  IMSS’s and the Bienestar) records its payments as the year’s income for the return (`recordPension`). A new life
+  reaches none of them.
+- **`bank.new_number`.** It cost a new card and protected against nothing SLATE modeled: the fraud draw didn’t read
+  the number. Settled on 2026-10-10: at a bank that moves a compromised account to a new number
+  (`newNumberOnFraud`), a debit card used by somebody else leaves the account’s number exposed for a year, and an
+  attempt on it goes through as an unauthorized debit while it’s the number in use and is declined once the account
+  has moved (`EXPOSURE`, `attemptOnNumber`). A card’s own fraud is the separate draw it was.
+- **A past card statement** was cut on today’s statement day, so a statement from before a move was shown on the
+  new day. Settled on 2026-10-10: each cut is kept on the card, the last sixty (`CardState.cuts`), and a past
+  statement runs between two of them (`periodsOf`); one from before the cuts were kept is rebuilt and marked so.
+- **A classmate’s moment answered** kept its choice on the classmate, read by nothing beyond the memory line and the
+  list of moments that showed it (from 2026-10-07, `ClassMoments`), until 2026-10-10. Since then the copy kept on the
+  classmate is read where it changes what comes next, each shown on the partner’s line: two invitations to run lines
+  in a row turned down or let lapse stop that classmate asking for 45 days (`stoppedAsking`), and a classmate helped
+  with their lines may ask in turn within 60, whatever they care most about (`owesYouLines`). A boundary’s answer is
+  read from the boundary it sets on the classmate, not the copy: accepted, it lifts after two rehearsals kept, pushed
+  back on after four (`boundaryLiftsAfter`). Until 2026-10-12 this said three answers were read from the copy, and
+  named none of a disagreement’s, which are read on the shared work: Try Theirs changes the table-work answer the
+  showing reads (`interpretationOf`); Keep Your Reading holds the readings apart (`readsApart`, from 2026-10-12); and
+  Try Both Next Rehearsal holds them apart until the next rehearsal kept brings them together (`tryBoth`). While
+  they’re apart the scene together reads nine tenths of the partner’s agreement (`ENSEMBLE.apart`), which lowers it
+  and can keep it under Strong, where it adds to the bond (`afterTogether`); its words and the classmate’s page say
+  so (Held Apart). At once, Try Theirs and Try Both raise trust and the bond, and Keep Your Reading against the text
+  costs a little trust (`CLASS`). No test checks what a disagreement’s answer does. `tests/journey-school-year.test.ts`
+  answers them through `school.respond`, Try Both on its careful weeks and Keep Your Reading on the rest, and checks
+  nothing they set; `tests/ensemble.test.ts` holds a reading apart by hand.
+- **The chair’s casting** read the last School production’s delivery, not a Cabaret’s or a Summer run’s, though the
+  faculty read the Cabaret’s nights. Settled on 2026-10-10: the chair reads every run since the last casting once
+  (`readRuns`), a School or Yale Rep run at full weight and a Cabaret’s or a Summer Cabaret’s at half
+  (`ESTIMATE.casting.record`), and keeps which it read (`LastWork.from`). From 2026-10-12 the Cabaret and the Summer
+  Cabaret cast their own shows by the fit the chair reads (`castFit` in `companyPart`), where until then they ranked
+  the raw craft against the play; they don’t read the delivery the chair weighs beside it.
+- **SNAP’s income** was passed as all earned, interest and benefits with it. Settled on 2026-10-10: a month’s income
+  is kept by kind, wages apart from interest, benefits and pensions, with work-study left out, and the earned
+  deduction is taken on the wages only (7 CFR 273.9, `snapIncome`). A month from before the kinds were kept is read
+  as it was, all of it earned.
+
+---
+
+## The reviews of 2026-10-12
+
+Three reviews that day held `docs/capabilities.json` and `docs/GAMEPLAY-COVERAGE.md` to one standard of what’s
+verified, and a fourth held the two to each other on the commands both name. This said two until the fourth; the third
+had come before it was written. Most of what they found was a test checking less than its row
+claimed, and that belongs in the registries’ limits, not here: the code behind each of those readers was read for
+this page, and it’s there. A delivered meal is paid through `spend` and a workout rolls `mayHurt`
+(`src/engine/systems/life.ts`); a rehearsal the clock keeps moves the preparation, trust and bond and counts toward a
+boundary (`rehearsalOutcome`, `keptWith`); a strong take with a classmate reading brings them closer, and a slip of
+theirs covered raises their trust (`afterTogether`); each week of unemployment paid is recorded for the return
+(`recordBenefit`); a card’s payment is allocated (`allocatePayment`, from `src/engine/systems/credit.ts`); the net
+worth adds every account, a term deposit among them; and `present` reads sleep as absence. The fourth’s were read
+the same way: the clock’s halt and `occupiedAt` pass over a plan called off; orientation sets each fall course’s
+first work (`setWork`); a day called in sick excuses a class, a shift, a call and a partner’s rehearsal (`sickDay`),
+and the term’s evaluation leaves the classes excused out of attendance (`evaluate`); the fraud draw passes over a
+locked card (`cardWorks`); a debt in collections turns a card application down, and while it’s unpaid a US bank that
+reads a ChexSystems report is likelier to refuse an account (`declines`); and a tax plan’s payment reads its monthly
+amount (`TAX_PLAN_KIND`). One reader was believed in and isn’t there:
+
+- **A decision waved away.** `src/engine/world/world.ts` keeps a closed row whose date is still to come “because a
+  raiser can read a dismissal off it to know it was told to stop asking”, and the registries counted the same reader
+  when the reviews read them. No raiser reads one. `requireDecision` passes over a dismissed row as it looks for the
+  same one, and opens a fresh row beside it. Besides that, `dismissedAt` is read only by the open list, the attention
+  look, the world tick’s expiry and prune, a save brought forward, and the two commands on a row, which refuse a
+  dismissed one. Measured on 2026-10-12 with a probe outside the
+  gate: one row open, dismissed to none, and the same row raised again is open again. Asking stops because each of
+  the three callers raises a row once: a year’s return at tax season, a US status ending when the permission that held
+  it runs out, and a bank’s notice before an idle balance goes to the state (`escheatWarned`). Either
+  `requireDecision` reads a dismissal of the same row until its date, or the reason given for keeping the row goes.
 
 ---
 
@@ -184,8 +272,11 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   tags, and what 41 of them belong to instead (a subgenre, a role, particular
   material), are shown on the genre's page as not applied, and the ten held at
   medium or high with no technique say why (`docs/GENRE-COVERAGE.md`). Classmates were here as having no
-  abilities until the same day: they have the player's (`MateAbilities`), and
-  the chair reads everyone's fit by the evaluation (`castFit`).
+  abilities until the same day: they have the player’s but for stamina and
+  discipline (`MateAbilities`), and the chair reads everyone’s fit by the evaluation
+  (`castFit`). This said they had all of the player’s, which was never so:
+  neither of those two is simulated for the class, and casting reads both as
+  full for everyone, the player too (`castingPerformer`).
 - **Stamina is lost without training, and nothing else is (2026-10-09).** It is
   the body's fitness, which detrains as research says it does (Mujika & Padilla,
   2000): 0.18 a day toward 35 without a workout. This said that sleep and a
@@ -206,6 +297,64 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   player's own words, a portrait and a middle name, each of which the screen
   says decides nothing. Recorded here on 2026-10-02 after the dead-word audit
   of that day found them.
+
+- **A doctor’s visit and a condition’s review (2026-10-12).** In Connecticut
+  they change nothing in the body or the medicine. A kept visit takes nothing
+  from the body (`careFor` gives 'visit' no toll) and costs its share, which on
+  Yale Health is nothing; it may end in a referral (`mayRefer`), a specialist’s
+  visit that changes no more. It renews every prescription
+  (`renewPrescriptions`), and only British Columbia’s runs out
+  (`RX.validYears`), so in Connecticut the renewal is read by nothing. A review
+  (`reviewed`) moves only `reviewedAt`, which schedules the next review. And an
+  owed visit swallows the rest: while one is owed (`owedVisit`), the health week
+  drops every doctor’s visit it draws and books no review, and only booking again
+  (`health.book`) clears it. An appointment called off on Papers owes one, and
+  so does one missed asleep or in hospital (`presentForCare`), so either, never
+  booked again, ends the doctor for good, at no cost. Measured in
+  `tests/defects-g23-1.test.ts`: over forty health weeks the same student with
+  high blood pressure kept the overdue review and a visit with nothing owed,
+  and none with one called off, and both ended with the same body and the
+  medicine still filled. Wiring it wants a researched consequence, not a chosen
+  one. Connecticut’s rule for a prescription of a medicine that isn’t
+  controlled, Conn. Gen. Stat. §20-614 (ch. 400j), was seen only through a
+  search summary (`docs/research/world/research-alterations-refills.json`,
+  `us-ct-controlled-refills`), which found no expiry and lists the question
+  under `notFound`; it does say such a prescription states its number of
+  refills. So there are two candidates: an expiry, if the statute, read, sets
+  one, which goes in `RX.validYears['us-ct']`, where `fillMedicine` fills no
+  prescription past it (`rxValidUntil`), so the medicine runs out when a visit
+  is skipped; and the refill count, which nothing in
+  SLATE keeps yet. Either bites only where a condition’s medicine running out is
+  read (`keptUp`): asthma’s and type 1 diabetes’s emergencies, depression’s
+  morale, diabetes’s condition and arthritis’s energy. High blood pressure left
+  untreated costs nothing, so the case measured would change nothing even then.
+  If the statute sets neither, the visit stays here until another consequence
+  is read. No code changes until then.
+
+- **Bank of America’s card days (2026-10-12).** `OPENING` in
+  `src/engine/content/bankopening.ts` keeps the bank’s “You will receive your
+  debit card in 4-6 business days”, at the longer end, 6, beside the digital
+  card in its app “to use while you’re waiting”. Nothing reads the 6.
+  `cardArrival` (`src/engine/systems/bankmoves.ts`) works out a day from them
+  and `openApproved` drops it for a digital card: the card works from the day
+  the account opens, and nothing arrives after it. At 60 the account and the
+  screen are the same (`tests/bank-moves-card-line.test.ts`). Found by the
+  money examples’ verifier. Until 2026-10-12 the Bank screen said the card
+  “takes 6 business days, with a digital card in the app meanwhile”
+  (`src/ui/bank/BankMoves.tsx`), as the guide’s Another Bank had until earlier
+  that day; both say now that it works from the day the account opens. Kept on
+  purpose, as the bank’s own figure: it says “not all customers or accounts are
+  eligible” for the digital card (`docs/research/world/research-banking.json`),
+  and SLATE gives one to every account. A customer without one would wait the 6
+  for the plastic, and until it came the machine would refuse them and the
+  day’s groceries would go on the credit card or in cash, as they do at Chase while it’s the account the day is paid
+  from.
+  Who is eligible isn’t published, so nothing models it, and that is what would
+  read the 6. The other banks’ days are read: Chase’s, Wells Fargo’s and Capital
+  One’s for a new card, and where a bank publishes none for one, its days for a
+  replacement (`SECURITY`). Until 2026-10-12 the screen gave SLATE’s 7 for those,
+  while the card came in the bank’s own: Citi’s 5 and SMBC’s 10, at 29 of the
+  thirteen countries’ 60 banks.
 
 - **Rent is published in twenty places, and estimated everywhere else.** (Nineteen until New Haven's was added, `c5616e1f`, 2026-09-26; this said nineteen until 2026-10-01.)
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
@@ -360,15 +509,22 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   years held at 2026–27's costs. What's still open:
   - Yale Rep's seasons after 2026–27 aren't announced: their productions
     are SLATE's estimate by the slots its seasons keep, unnamed.
-  - The fifteen classmates are a name and a craft each: they grow, set the
-    evaluation's median and the player's place, and since 2026-09-27 show
-    beside the player, an agency taking its best two of the class (SLATE's
-    estimate). This said they weren't cast against the player and came to
-    nothing after school; since 2026-09-28 they work, are in the room for
-    the player's auditions and make the trades (`systems/rivals.ts`), and a
-    part one takes from the other sets them apart as a lead taken at school
-    does. Since that day each has a presence of their own, drawn as the
-    player's is, where every one had been read at an ordinary 50.
+  - The fifteen classmates were a name and a craft each until 2026-09-28,
+    and this said they still were. They grow, set the evaluation’s median
+    and the player’s place, and are cast beside and against the player (this
+    said once that they weren’t), a lead one takes from the other setting
+    them apart (`BONDS`). Since 2026-09-28 each has a presence of their own,
+    drawn as the player’s is, where every one had been read at an ordinary
+    50; since 2026-10-07 each is a partner in class work, with a reliability
+    and a trust (`systems/coursework.ts`); since 2026-10-10 each keeps the
+    player’s abilities but for stamina and discipline (`MateAbilities`); and
+    from 2026-10-12 a partner’s preparation, timing, agreement and
+    reliability make the scene together (`systems/ensemble.ts`), and a
+    classmate opens into a look of their own (`look.classmate`). What
+    followed school went with the career on 2026-10-09: the showcase, where
+    an agency took the class’s best two (from 2026-09-27), and their work,
+    their place in the room at the player’s auditions and the trades (from
+    2026-09-28, `systems/rivals.ts`).
   - A student in need's living-expense scholarship, but for its books, is
     income the year's return taxes since 2026-09-27, and the returns begin
     at enrollment. Until then the tax engine collected nothing on it.
@@ -494,22 +650,27 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   often. Cards last four years where the bank doesn't say, and a
   replacement takes seven business days, SLATE's estimates.
 - **Some of a card's offers aren't modeled.** Since 2026-09-27 a card's
-  bonus is paid on groceries and recurring bills, the two things a card
-  buys in SLATE, for the seven cards whose bonus names either (Bank of
-  America's, RBC's, TD's, Scotiabank's, BMO's, CIBC's, Santander
-  Mexico's), read by hand from the bank's words; a bonus on something a
-  card doesn't buy here (dining, drugstores, fuel, travel) would pay the
-  base rate anyway. Since 2026-09-28 Santander Mexico's 4% on telecoms is
-  paid on the phone and internet's share of the bills, INEGI's 4.8 of 19.5
-  of what isn't energy. Since that day a Korean card's discount on the
-  phone bill is paid as its terms tie it to last month's spending: KB's My
-  WE:SH 10% to ₩5,000 after a ₩400,000 month, Shinhan's 처음 10% in points
-  to 5,000, 10,000 or 20,000 after ₩300,000, ₩500,000 or ₩1,000,000, on
-  Korea's phone and internet share of the bills (the National Data Office's
-  2025 survey). Their other categories (restaurants, convenience stores,
-  streaming) are things SLATE's card doesn't buy. A
+  bonus is paid on groceries, for the seven cards whose bonus names them
+  (Bank of America's, RBC's, TD's, Scotiabank's, BMO's, CIBC's, Santander
+  Mexico's), read by hand from the bank's words; a bonus on something a card
+  doesn't buy here (dining, drugstores, fuel, travel) would pay the base rate
+  anyway. Until the scope reset of 2026-10-09 it was paid on the recurring
+  bills too, and from 2026-09-28 Santander Mexico's 4% on telecoms on the
+  phone and internet's share of the bills, INEGI's 4.8 of 19.5 of what isn't
+  energy, and a Korean card's discount on the phone bill as its terms tie it
+  to last month's spending (KB's My WE:SH 10% to ₩5,000 after a ₩400,000
+  month, Shinhan's 처음 10% in points to 5,000, 10,000 or 20,000 after
+  ₩300,000, ₩500,000 or ₩1,000,000, on Korea's phone and internet share of
+  the bills, from the National Data Office's 2025 survey). Nothing has paid
+  a bill since, and those went with the bills (`BONUSES`, and "A card's bonus
+  on the bills" above). The Korean cards' other categories (restaurants,
+  convenience stores, streaming) are things SLATE's card doesn't buy. A
   plan's fee is the most the bank says it charges, not the offer it would
-  make on the day; since 2026-09-28 plans charged as interest or a fee by
+  make on the day. It's set when the plan is made and kept until the plan's
+  paid, as Chase's terms say, and a plan made on Chase's card while its
+  introductory purchase rate is in force costs nothing for its life
+  (`PLAN_FREE_IN_INTRO`, from 2026-10-12; until then it paid its 1.72% from
+  its first statement). Since 2026-09-28 plans charged as interest or a fee by
   their length are offered at the banks' own terms (`content/plans.ts`):
   Bank of Ireland's, Scotiabank's, CaixaBank's and BBVA's, Santander
   Spain's rate not being on its page. A money transfer is charged the card's balance transfer rate,
@@ -542,50 +703,90 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
-- **The attributes’ scales are SLATE’s estimates.** Presence,
-  composure, reputation and recognition (`systems/attributes.ts`, since
-  2026-09-27) each change an outcome, and every figure in them is SLATE’s:
-  the trades publish no scale for an actor’s presence, nerves, standing or
-  name value. Presence is drawn once and grows only slowly; how much it moves
-  an audition (six points of a part’s bar at the extremes, half on tape) and
-  a showing (a fifth of it) is an estimate. Nerves are read before auditions,
-  performances, the showcase and days on set, not before classes, rehearsals
-  or the booth. Since 2026-09-28 recognition comes when the work is seen,
-  by its audience (`FILM_ROAD`): television when it airs, a network or a
-  streaming service by its size, a hit twice; a film at its premiere or its
-  release. How much each audience is worth is SLATE's estimate, and a show's
-  ratings aren't modeled, only its outlet and whether it's a hit. The
-  overscale recognition earns is a single multiple of scale, not a
-  negotiated quote. Of other people's attributes only the classmates'
-  presence is kept, drawn as the player's is, since 2026-09-28; until then
-  they were read at an ordinary 50. The ways to build them on purpose (an improv course, a casting
-  director workshop, a publicist, a festival premiere) are priced at SLATE’s
-  estimate of what the trade quotes, and what each adds is SLATE’s. An
-  independent film gets into Tribeca one time in five, and half the rest
-  play the Brooklyn Film Festival; the others go straight to streaming, all
-  SLATE's estimate. Until 2026-09-28 every film premiered at Tribeca.
-- **The 21 skills' weights are SLATE's estimates.** The skills themselves are
-  the conservatories' and the business's (`content/school.ts`, since
-  2026-09-27), and each is read by an outcome. What isn't published: how much
-  each part reads each skill (`READS`, `GENRE_READS`), the fifth an
-  audition reads its own, which skills each Yale course trains, read from its
-  title and description, and the scale. Voice-over has no course at Yale, and
-  grows only in the booth. A genre is read, and since 2026-09-28 a part's own
-  demands as a breakdown names them (a song, a fight, a dance, an accent, an
-  intimate scene; `PART_DEMANDS`), read at the audition and grown on the
-  job; how often a breakdown asks each is SLATE's estimate. Nobody's skills
-  but the player's and the classmates' are kept.
-- **How far an actor grows is fitted, and partly SLATE's estimate.** Since
-  2026-09-28 each skill grows toward where it began and 26 points more
-  (`CEILING` in `systems/school.ts`), the headroom fitted so that experience
-  correlates .49 with skill in the first three years and .15 past twelve, as
-  McDaniel, Schmidt and Hunter found across 16,058 workers (1988); it agrees
-  with practice explaining about a fifth of performance in the performing
-  arts (Macnamara, Hambrick and Oswald, 2014). SLATE's estimates: the 0-100
-  scale itself and a session's rate, which no study measures in points; the
-  population the fit is drawn over (SLATE's own admits, a lognormal spread of
-  work); and a save from before, whose skills keep their levels and grow to
-  the average admit's ceiling, 74, at most.
+- **The attributes’ scales are SLATE’s estimates.** Presence and composure
+  (`systems/attributes.ts`, since 2026-09-27) each change an outcome, and
+  every figure in them is SLATE’s: the trades publish no scale for an
+  actor’s presence or nerves. This said reputation and recognition changed
+  an outcome too, and they did until 2026-10-09, when the scope reset took
+  the career that read them and schema 91 dropped both from every save
+  (`GONE_AT_91` in `src/engine/index.ts`). What it said of them went with
+  them: recognition earned when the work was seen, by its audience
+  (`FILM_ROAD`, from 2026-09-28), and the overscale it earned; the improv
+  course, the casting director workshop, the publicist and the festival
+  premiere that built them on purpose; and an independent film’s odds at
+  Tribeca and the Brooklyn Film Festival.
+  - Presence is drawn once, 55 to 80, and grows slowly: a little by each
+    performance’s nerves, more on a remarkable night, and from 2026-10-10 by
+    practice in front of people (A Showing For Classmates,
+    `content/practice.ts`). Until 2026-10-09 it moved an audition (six
+    points of a part’s bar at the extremes, half on tape) and a showing (a
+    fifth of it). Since then it’s an input to the evaluation’s connection
+    (`content/tasks.ts`) in a scene shown, an improvisation, a clown turn,
+    audition pieces shown in class, a night on stage and, from 2026-10-12, a
+    taped brief, at weights that are SLATE’s.
+  - Composure starts at 25 to 60 by emotional stability and grows by each
+    performance’s nerves and, from 2026-10-10, by Graded Exposure. It’s read
+    in the consistency of a scene, a song, a self-tape, a taped brief,
+    audition pieces shown in class and a night, and from 2026-10-12, with
+    adaptability, in how much of a slip a piece recovers before its next
+    segment (`judgePiece`).
+  - Nerves (`nerves`) add stress by how little composure there is, then grow
+    composure and presence a little. They’re read before a performance only
+    (`ATTRIBUTES.eventWeight`): a School, Yale Rep, Cabaret or Summer Cabaret
+    night, an understudy’s night sent on among them, an understudies’
+    run-through, and the solo showing of You Are The Creator. They aren’t
+    read before classes, rehearsals, a coursework showing or a taped brief.
+    This said they were read before auditions, the showcase and days on set
+    too, which went with the career on 2026-10-09. Until that day nerves also
+    took up to 0.18 off a night’s focus; what composure does to the work has
+    been the evaluation’s since.
+  - Of other people’s attributes, the classmates’ are kept and nobody
+    else’s. This said only their presence was, drawn as the player’s is
+    since 2026-09-28 (until then they were read at an ordinary 50). From
+    2026-10-10 each also keeps composure, listening, imagination, focus and
+    adaptability (`MateAbilities`), composure by an emotional stability drawn
+    for them and the rest from their craft; stamina and discipline aren’t
+    simulated for the class, and are read as full.
+- **The 21 skills’ weights are SLATE’s estimates.** The skills themselves are
+  the conservatories’ and the business’s (`content/school.ts`, since
+  2026-09-27), and each is read by an outcome; since 2026-10-09 four of them
+  are abilities and seventeen are techniques (`content/abilities.ts`). What
+  isn’t published: how much a play reads each technique (its `reads` in
+  `content/plays.ts`, and its material’s, `playReads`), how much each kind of
+  work reads each ability (`content/tasks.ts`), which skills each Yale course
+  trains, read from its title and description, and the scale. Until
+  2026-10-09 a part read them by `READS` and `GENRE_READS`, and an audition
+  read a fifth of its own; both went with the career that day. Voice-over
+  has no course at Yale. This said it grew only in the booth, which went
+  with the career too; since then it grows by the Copy Reading exercise
+  (`content/practice.ts`), and from 2026-10-12 a practice brief taped alone
+  at a microphone reads it and grows it (`BRIEF.base`, `tapeBrief`). A
+  part’s own demands as a breakdown named them (a song, a fight, a dance, an
+  accent, an intimate scene; `PART_DEMANDS`) were read at the audition and
+  grown on the job from 2026-09-28 until the career went. Since 2026-10-10 a
+  genre’s applied demands are techniques its work reads
+  (`content/demands.ts`), and from 2026-10-12 what a brief’s scene stages, a
+  song sung or a fight played, weighs in its take and grows with it
+  (`tapeReadsOf`). Nobody’s skills but the player’s and the classmates’ are
+  kept.
+- **How far an actor grows is fitted, and partly SLATE’s estimate.** Since
+  2026-09-28 ordinary work grows each skill toward where it began and 26
+  points more (`CEILING` in `systems/school.ts`), the headroom fitted so that
+  experience correlates .49 with skill in the first three years and .15 past
+  twelve, as McDaniel, Schmidt and Hunter found across 16,058 workers (1988);
+  it agrees with practice explaining about a fifth of performance in the
+  performing arts (Macnamara, Hambrick and Oswald, 2014). This said each skill
+  grew only that far, which stopped being so on 2026-10-09: since then a
+  class, a step of preparation or a call levels off there, and deliberate
+  practice (`practice.exercise`) goes on past it to 100, more slowly the
+  higher it goes (`abilityGain`; `DEVELOPMENT.deliberate` and `floor` in
+  `content/abilities.ts`). SLATE’s estimates: the 0-100 scale itself and a
+  session’s rate, which no study measures in points; deliberate practice’s
+  rate past the ceiling, which takes an ability from 55 to 100 in about 380
+  hours at full focus (`tests/development.test.ts`); the population the fit
+  is drawn over (SLATE’s own admits, a lognormal spread of work); and a save
+  from before, whose skills keep their levels and grow by ordinary work to
+  the average admit’s ceiling, 74, at most.
 - **Parts past sixty are partly SLATE's estimate.** Since 2026-09-28 a part
   drawn for an actor sixty or older is kept at the share of parts written for
   that age (`AGE_ON_SCREEN`): film 0.48 and television 0.42 of a younger
@@ -613,7 +814,7 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   before an audition is worth (`RESEARCH`), an agent's pitch's odds
   (`INDUSTRY.pitch`), a manager's and a casting office's introduction's
   weight (`APPROACH.introduction`), and a project's reception, which is the
-  save's own and labelled so. The companies' facts are the research's; these
+  save's own and labeled so. The companies' facts are the research's; these
   numbers are SLATE's.
 - **The weather decides the bills' energy and the flu's weeks, and more.**
   This said "and nothing else" until 2026-10-01. Since 2026-09-28 it also
@@ -656,12 +857,12 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
     transaction's references, an option's booking, the school's id and a
     fraud's transaction went.
   - Content researched for features not built went on 2026-09-27: the
-    airports (`nearestAirport`), the neighbourhoods, a city's home price,
+    airports (`nearestAirport`), the neighborhoods, a city's home price,
     vehicle fees, and cashier's check and money order fees. The features
     were built later with new content: the airports (`content/airports.ts`,
     2026-09-29), a city's home price (`content/homevalues-us.ts`,
     2026-09-28) and vehicle fees (`content/vehiclefees.ts`, 2026-09-29). The
-    neighbourhoods and those fees are still absent. A bank's
+    neighborhoods and those fees are still absent. A bank's
     payment hold on freed credit is read since that day, and its
     posting-order words, the maturity, dormancy, replacement, credit-card
     and refund wording, and the countries' claim-back words are shown.
@@ -825,7 +1026,7 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   kept: British residuals; Equity's membership, whose bands weren't read from
   Equity itself; a British actor's Self Assessment as self-employed, since
   pay is withheld as PAYE would be, on the year's tax at the right bands; the
-  2026 cinema and theatre rates, not yet published, which stand at 2025's.
+  2026 cinema and theater rates, not yet published, which stand at 2025's.
 - **Social Security is partly SLATE's estimate.** Since 2026-09-29 US wages
   earn Social Security, claimed from 62 to 70 at SSA's 2026 formula
   (`systems/socialsecurity.ts`). Held at the last published: the wage index
@@ -979,7 +1180,11 @@ What was kept and only told back, made to count: an agency remembers how a
 client left (`takesBack`); a showcase's buzz brings managers for half a year
 (`BUZZ`); credits in a city count with its casting (`localEdge`); a loan's
 term clears it at its last payment; a grave breach keeps a term short; a
-director's note taken reads at the next casting (`LastWork.heeded`); the final
+director’s note taken read at the next casting (`LastWork.heeded`) until
+2026-10-10, when the chair stopped reading it, since a note heeded only read
+the craft again; a note taken still weighs in its call’s growth and the night’s
+preparation (`PROCESS`), and from 2026-10-12 a note on the craft counts as
+taken only where the next call finds it answered (`addressed`); the final
 year's leads and reviewed stage work read at the showcase (`thesisSeen`); the
 cast list read lifts or stings (`castListRead`); a studio rents for less than a
 one-bedroom; where a job has them staying is what they live with there
@@ -990,14 +1195,28 @@ log.
 
 ## Unreachable: correct, and nothing can get there
 
-Nothing, since 2026-09-29. Northern Ireland's license path was here, its
-steps and fees set down (`content/licensepaths.ts`, `gb-nir`) with no town in
-Northern Ireland to take it from; Belfast was added that day (`80e77789`),
-and `licensingOf` reaches it. This page kept it here until 2026-10-01.
+This said “Nothing, since 2026-09-29” until 2026-10-12, though it stopped being
+so at the scope reset of 2026-10-09. A new life has begun as a New Haven student
+since that day (`atSchool`), and what only a life elsewhere or after the
+degree reaches is out of its reach: the foreign banks’ rights, the pensions
+and all but two of the benefits (“What stays out of a student’s reach”, under
+the reset above), and what `docs/GAMEPLAY-COVERAGE.md` calls Unresolved. Each
+stays as written until the owner says otherwise.
 
-Until 2026-09-29 nothing else was here, since 2026-09-27. What a bank reads from
-wages is reached again by acting pay, and the Decision Center by offers of
-representation, management and work and by each year's return.
+Northern Ireland's license path was here, its steps and fees set down
+(`content/licensepaths.ts`, `gb-nir`) with no town in Northern Ireland to take
+it from; Belfast was added on 2026-09-29 (`80e77789`), and `licensingOf`
+reached it. This page kept it here until 2026-10-01. No new life has lived
+in Belfast since the reset, so it’s out of reach again with the rest.
+
+Until 2026-09-29 nothing else was here, since 2026-09-27. This said what a
+bank reads from wages was reached again by acting pay, and the Decision Center
+by offers of representation, management and work and by each year’s return.
+The pay and the offers went with the career on 2026-10-09. Since then a bank’s
+wages are the work-study’s pay and the Summer Cabaret’s stipend, each posted as
+salary (`directDeposits`), and the Decision Center is reached by a year’s
+return, a US status ending and a bank’s notice before an idle balance goes to
+the state, the three callers of `requireDecision`.
 
 ## Settled on 2026-09-27, by deletion
 
