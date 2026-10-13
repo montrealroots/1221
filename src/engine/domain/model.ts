@@ -69,9 +69,13 @@ export interface Wellbeing {
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
   /**
-   * 0-100, where 100 is clean and rested-looking. Falls through the day, and
-   * twice as fast on set or on stage (`setGrime`); a shower puts it back.
-   * Rooms notice.
+   * 0-100, where 100 is clean and rested-looking. Falls 1.6 an hour awake,
+   * on stage or off, and 20 a workout, each by the person’s `hygieneDrift`; a
+   * shower puts it back to 100, and each midnight lifts it to 82 at least.
+   * Under 50, each hour wears on the mood, and readiness reads it by a few
+   * points (`readinessParts`). Until 2026-10-13 this said it fell twice as
+   * fast on set or on stage (`setGrime`) and that rooms noticed; nothing in
+   * src did either.
    */
   hygiene: number;
 }

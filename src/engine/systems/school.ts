@@ -86,13 +86,13 @@ import {
 import { readiness } from './life';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
-import { expenseFor, payFromCurrent, spend } from './spending';
+import { expenseFor, owe, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
 import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { YALE_COST_GROWTH } from '../content/school';
 import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
-import { computeAnnualTax } from '../content/tax';
+import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
@@ -101,7 +101,6 @@ import { evaluatePiece, judgePiece, loadOf, pieceWeights, toneSegments, withBook
 import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
-import { withDemands } from '../content/demands';
 import { materialContext, materialOf, sidesOf, type Playing } from './material';
 import { noteMaterial } from './experience';
 import { PLAYING } from '../content/approaches';
@@ -113,7 +112,7 @@ import { payeeAccount } from './cash';
 import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
-import { momentInClass } from './classmates';
+import { MOMENT_KIND, momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
 import { considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
@@ -520,6 +519,8 @@ export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
 /** The Summer Cabaret as an employer: its stipend's wages, and an injury at its work (`Injury.atWork.employer`). */
 const SUMMER_EMPLOYER = 'yale-summer-cabaret';
+/** The stipend’s line in the ledger, paid each Friday for the seven days before it (`STIPEND_KIND`, `workDoneIn`). */
+const STIPEND_MEMO = 'Yale Summer Cabaret stipend, the week';
 export const RECESS_KIND = 'school.recess';
 export const LAB_KIND = 'school.lab';
 export const CONVERT_KIND = 'school.convert';
@@ -1709,6 +1710,38 @@ export function weekHours(sim: Simulation, person: Person, when: Instant, except
     .reduce((n, i) => n + Number(i.payload.hours ?? 0), 0);
 }
 
+/**
+ * The School’s work done between two moments, by when it was done, paid yet or not (from 2026-10-13), for a week an
+ * unemployment claim certifies (`systems/unemployment.ts`): each work-study shift worked in it, its hours worked (the
+ * shift’s `worked`; one worked before that day kept none, and is read as its hours booked) at the hourly rate; and the
+ * Summer Cabaret’s stipend, paid each Friday for the seven days before it, by the share of those days in the window, a
+ * company week taken as forty hours (SLATE’s estimate, as `workedBetween` takes it). A claim week counts what was earned
+ * in it: Connecticut’s weekly claim asks “If you worked last week, Sunday through Saturday you must report any earnings
+ * even if you do not get paid until later” (portal.ct.gov/dol, “What questions are asked when I file a weekly claim?”,
+ * read 2026-10-13), and California’s EDD asks the same of the week the work was done.
+ */
+export function workDoneIn(sim: Simulation, person: Person, from: Instant, to: Instant): { pay: Money; hours: number } {
+  const hourly = hourlyIn(saveCurrency(sim.universe));
+  let pay = 0;
+  let hours = 0;
+  for (const i of sim.universe.scheduled) {
+    if (i.kind !== SHIFT_KIND || i.status !== 'done' || i.payload.personId !== person.id || i.at < from || i.at >= to) continue;
+    const worked = Number(i.payload.worked ?? i.payload.hours ?? 0);
+    hours += worked;
+    pay += worked * hourly;
+  }
+  const week = 7 * MS_DAY;
+  for (const t of sim.universe.transactions) {
+    if (t.memo !== STIPEND_MEMO || t.at <= from || t.at - week >= to) continue;
+    if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
+    const gross = t.postings.filter((p) => sim.universe.accounts[p.accountId]?.kind === 'income').reduce((s, p) => s - p.amount, 0);
+    const share = (Math.min(to, t.at) - Math.max(from, t.at - week)) / week;
+    pay += gross * share;
+    hours += 40 * share;
+  }
+  return { pay: Math.round(pay), hours };
+}
+
 /** Yale's cap on a week's hours, across all its jobs: 19 in an academic term's classes, 40 in recess and summer. */
 export function weekCap(when: Instant): number {
   const p = zonedParts(when, zone());
@@ -1796,8 +1829,23 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
     // The class they were in goes on without them (`leaveClassBehind`, from 2026-10-11), after a dismissal or a
     // withdrawal; its runs under way and every class's next term are its, not the student's, and stay on the calendar.
     if (to === 'dismissed' || to === 'withdrawn') leaveClassBehind(sim, person);
+    // The Summer Cabaret’s week under way is paid on its Friday for the days of it worked, as a company that lets them go
+    // pays it: Connecticut has wages paid in full by the next regular payday to one who leaves (CGS 31-71c(a) and (b),
+    // https://www.cga.ct.gov/current/pub/chap_558.htm, read 2026-10-13). From 2026-10-13: until then it was called off
+    // with the rest, and the days worked since the last Friday went unpaid while the notice said work done is still paid
+    // (found by that day’s third round of defects).
+    const stipend = sim.universe.scheduled.filter((one) => one.status === 'pending' && one.kind === STIPEND_KIND && one.payload.personId === person.id).sort((a, b) => a.at - b.at)[0];
+    const worked = stipend ? 1 - (stipend.at - sim.now) / (7 * MS_DAY) : 0;
+    const begun = sim.universe.scheduled.some((one) => one.kind === SUMMER_KIND && one.payload.personId === person.id && one.at <= sim.now && one.status !== 'pending' && one.status !== 'cancelled');
+    const kept = stipend && begun && worked > 0 ? stipend : undefined;
+    if (kept) kept.payload.share = Math.min(typeof kept.payload.share === 'number' ? kept.payload.share : 1, worked);
     for (const item of sim.universe.scheduled) {
-      if (item.kind === FORMER_KIND || (item.kind === COMPANY_KIND && item.payload.classOf !== undefined)) continue;
+      if (item === kept) continue;
+      // A classmate’s moment keeps its own lapse, at its hour, as one does at the School (`MOMENT_KIND`, from 2026-10-13:
+      // until then it was called off with the rest, and stayed open with its answers live for good; found by that day’s
+      // evidence pass). Lapsed with the coursework instead (`endCoursework`), a disagreement answered before its hour
+      // would be told the moment passed, where what’s so is that its work is finished.
+      if (item.kind === FORMER_KIND || item.kind === MOMENT_KIND || (item.kind === COMPANY_KIND && item.payload.classOf !== undefined)) continue;
       if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) callOff(sim, person, item);
     }
     // What was worked is still paid.
@@ -2076,16 +2124,22 @@ export function castingReads(c: { play?: string; kind?: Casting['kind'] }): Part
   const play = c.play ? [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title === c.play) : undefined;
   // With what its kinds of play asked (`withDemands`) from 2026-10-10 until the material profiles later that day: a
   // farce's physical comedy was read into The Importance of Being Earnest, whose comedy is verbal. A play with a
-  // profile reads its own techniques and what its material asks (`playReads`); its kinds only where it has none.
+  // profile reads its own techniques and what its material asks (`playReads`), and every play named here has one. This
+  // said its kinds were read where it had none until 2026-10-13, when that read, which added nothing, went.
   if (play) return playReads(play);
   // The Rep's company without a named play asks a professional stage's; the rest are new work.
   return c.kind === 'role' || c.kind === 'understudy' ? COMPANY_READ : NEW_PLAYS_READ;
 }
 
-/** What a play asks of the craft: its own reads and its material's techniques, or, with no profile, its kinds' demands. */
+/**
+ * What a play asks of the craft: its own reads and its material’s techniques, or, with no profile, its reads alone. Every
+ * named play has a profile (tests/evidence-g23-school.test.ts); the one with none is a new piece (`playOf`), which names no
+ * title and no kinds. Until 2026-10-13 that took its kinds’ demands too (`withDemands`), and with no kinds there were
+ * none to take: it added nothing (found by that day’s second round).
+ */
 export function playReads(play: { title?: string; reads: Partial<Craft>; kinds?: readonly string[] }): Partial<Craft> {
   const m = materialOf(play.title);
-  if (!m) return withDemands(play.reads, play.kinds ?? []);
+  if (!m) return { ...play.reads };
   const out = { ...play.reads } as Partial<Craft>;
   for (const [k, w] of Object.entries(m.techniques ?? {}) as [Skill, number][]) if (out[k] === undefined) out[k] = w;
   return out;
@@ -2115,18 +2169,16 @@ export function rehearse(craft: Craft, focus: number): void {
 }
 
 /**
- * A part in a student company, the Cabaret's or the Summer Cabaret's, which
- * the company casts among itself: a lead for a student in the class's top
- * four on what the play asks, a supporting part otherwise, the one written
- * for them where the play names it. SLATE's estimate of how a company that
- * isn't the chair's casts.
- */
-/**
- * A part in the company's own shows, the Cabaret's and the Summer Cabaret's: the leads to the four the play reads best.
- * From 2026-10-12 each is read as the chair reads a student for a play (`castFit`): the evaluation's expected night
+ * A part in the company’s own shows, the Cabaret’s and the Summer Cabaret’s, which the company casts among itself
+ * (SLATE’s estimate of how a company that isn’t the chair’s casts): the leads written for their title to the four the
+ * play reads best, and to the rest the supporting parts. Where the play writes none of that size for them, the part it
+ * does write for them, whatever its size, so a play whose only part for a woman is a lead gives it to an actress outside
+ * the four (SLATE’s estimate, the owner’s to settle). A new piece names no parts, and its part is the size alone.
+ * From 2026-10-12 each is read as the chair reads a student for a play (`castFit`): the evaluation’s expected night
  * from the abilities a night asks and the techniques and material the play reads. Until then it was the raw craft
- * against the play's reads alone, a second casting model blind to the abilities and the material (the completeness
- * critic of 2026-10-12).
+ * against the play’s reads alone, a second casting model blind to the abilities and the material (the completeness
+ * critic of 2026-10-12). Until 2026-10-13 a second comment above this one said a student outside the four was given a
+ * supporting part, which a play with no supporting part for their title never did.
  */
 export function companyPart(sim: Simulation, person: Person, reads: Partial<Craft>, parts?: readonly Part[], play?: string): { role: string; size: PartSize } {
   const school = person.school!;
@@ -2934,18 +2986,23 @@ export function registerSchool(sim: Simulation): void {
       // Form 1042-S's withholding is the IRS's.
       if (withheld) { yearOf(person, year).withheld += withheld; addWithheld(yearOf(person, year), withheld); }
     }
+    let planPaid = true;
     if (unsupported) {
       billUnsupportedTerm(s, person, term, need);
     } else if (!need) {
-      // No need found: the health plan is billed to the Yale account and paid from the bank.
-      payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');
+      // No need found: the health plan is billed to the Yale account and paid from the bank. Where the bank can’t pay it
+      // (its money moved to savings not linked to checking, say), it’s owed, as a bill the bank can’t pay is (`owe`), and
+      // paid back the first day there’s money (`settleArrears`, `systems/spending.ts`). Until 2026-10-13 it was dropped:
+      // nothing posted, nothing owed, and the notice said it was paid (found by that day’s evidence pass).
+      planPaid = payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');
+      if (!planPaid) owe(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');
     }
     if (person.id === s.universe.playerId && !unsupported) {
       s.notify({
         category: 'school', title: `${termLabel(term)} Begins`,
         body: need
           ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, and ${formatMoney(account.refund, cur)} is in your ${current?.name ?? 'account'}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
-          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, was paid from your bank, and living costs are yours.`,
+          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.'}`,
         importance: 55, route: '/workspace/school',
       });
     }
@@ -3087,6 +3144,8 @@ export function registerSchool(sim: Simulation): void {
       if (!elective) school.tally.worked += 1;
       const worked = Math.min(hours, room);
       school.workStudy.owedHours += worked;
+      // Kept on the shift, for the week of a claim it was worked in (`workDoneIn`, from 2026-10-13).
+      item.payload.worked = worked;
       // The work's own risk to the body, by the hour: the crew's in the shops, front of house a floor's (BLS; from
       // 2026-10-10). Hurt at it, it's work, and workers' compensation's (`mayHurt`). A chance, never a certainty.
       // The week's wage: this shift and the week's worked before it (from 2026-10-13: until then this shift's alone, half
@@ -3473,7 +3532,9 @@ export function registerSchool(sim: Simulation): void {
     // A show joined before 2026-09-28 has no part yet: the company's, now.
     if (!cab.role) Object.assign(cab, { production: cabaretSeason(cab.term), ...companyPart(sim, person, NEW_PLAYS_READ) });
     const run = cab as typeof cab & Run;
-    // A Cabaret piece is new work, taken by openness (from 2026-10-09, `WorkDay.novel`).
+    // A Cabaret piece’s rehearsals are new work, taken by openness (from 2026-10-09, `WorkDay.novel`); until 2026-10-13
+    // its performances were too, where a festival’s weren’t and the Profile and creation say rehearsing (found by that
+    // day’s evidence pass).
     if (item.payload.call === 'performance') {
       cab.performed += 1;
       // The week's process behind it (`nightFactor`, 1 for a show joined before 2026-10-08 or one every evening was kept).
@@ -3482,7 +3543,6 @@ export function registerSchool(sim: Simulation): void {
       reckonNight(sim, person, run, item, false);
       grewFrom(sim, person, 'night:cabaret', (c) => playNight(c, castingReads(run), focusAt(sim, person, item.at) * nightFactor(cab)));
       tire(person, ESTIMATE.energy.performance);
-      enjoyWork(person, { novel: true });
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
       const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run), 'cabaret') : 1;
@@ -3588,9 +3648,10 @@ export function registerSchool(sim: Simulation): void {
     const show = summer.shows[run]!;
     // A call's risk to the body, as the School's calls carry it (from 2026-10-10; until then the Summer Cabaret's calls
     // carried none). The company pays a stipend, so this is paid work: hurt badly enough to be kept off it, workers'
-    // compensation pays Connecticut's share of the week's stipend, 75% after tax (`compWeek`), the one place in the game
-    // a wage and a stage meet, and the stipend for the days it pays stops (`STIPEND_KIND`). Until 2026-10-12 this said
-    // two-thirds, New York's share, and the full stipend was paid beside it.
+    // compensation pays Connecticut’s share of the week’s stipend, 75% of the whole $375, the state’s least for a week
+    // that small (`compWeekly`), the one place in the game a wage and a stage meet, and the stipend for the days it pays
+    // stops (`STIPEND_KIND`). Until 2026-10-12 this said two-thirds, New York’s share, and the full stipend was paid
+    // beside it; until 2026-10-13 it said 75% after tax, which the least has paid more than since that day’s fix of it.
     const cur = saveCurrency(s.universe);
     const weeklyWage = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
     // An F-1's stipend bears no FICA, and none is taken off its compensation (from 2026-10-13).
@@ -3687,15 +3748,31 @@ export function registerSchool(sim: Simulation): void {
     // return asked for the payroll tax as a balance due.
     const year = zonedParts(item.at, zone()).year;
     const before = yearOf(person, year).acting;
-    const taxOf = (x: number) => computeAnnualTax(x, YALE_DRAMA.cityId, item.at, { currency: cur });
+    // A nonresident alien can’t take the standard deduction the withholding tables give, so the employer adds it to the
+    // wages before them (IRS Notice 1392, Rev. January 2020: “Because nonresident aliens may not claim the standard
+    // deduction, employers are instructed to withhold an additional amount”; Pub 15-T, Withholding Adjustment for
+    // Nonresident Alien Employees, Table 2, a 2020-or-later Form W-4: $14,600 a year in its 2024 edition, $15,000 in
+    // 2025’s, $16,100 in 2026’s, and 2027’s not yet published). India’s students, whom it spares, aren’t among SLATE’s
+    // birthplaces. Each year’s figure takes back the deduction in that year’s own tables, and the tables here are SLATE’s
+    // tax table, which holds 2024’s brackets and deduction for every year (`INCOME_TAX_RULES`): so what’s added is the
+    // deduction the table takes at the payday (`federalStandardDeduction`), 2025’s and 2026’s figures coming in with
+    // their brackets, not onto 2024’s. The wages are then withheld on from the first dollar, as the 1040-NR the same
+    // save files taxes them (`figuresFor`). It moves the federal line alone: the table carries no Connecticut layer, and
+    // the payroll tax it would move is taken back out below. Until 2026-10-13 an F-1 student’s stipend was withheld on a
+    // resident’s standard deduction, and the first $375 of a year withheld nothing federal (found by that day’s
+    // evidence pass).
+    const nra = nonresidentFor(person, year);
+    const deduction = federalStandardDeduction(YALE_DRAMA.cityId, item.at);
+    const added = nra ? (cur === 'USD' ? deduction : exchange(deduction, 'USD', cur) ?? deduction) : 0;
+    const taxOf = (x: number) => computeAnnualTax(x + added, YALE_DRAMA.cityId, item.at, { currency: cur });
     // A nonresident alien on an F-1 pays no FICA at all (IRC 3121(b)(19), from 2026-10-10: until then it was withheld).
-    const fica = nonresidentFor(person, year) ? taxOf(before + pay).payroll - taxOf(before).payroll : 0;
+    const fica = nra ? taxOf(before + pay).payroll - taxOf(before).payroll : 0;
     // Connecticut's tax withheld too, by its own schedule (`connecticutTax`; SLATE's tax table carries none for it), kept
     // as Connecticut's (from the integration pass of 2026-10-10). Until then the week's paycheck withheld the IRS's and
     // payroll tax only, and the return found all of Connecticut's owed.
     const ct = connecticutTax(before + pay, cur) - connecticutTax(before, cur);
     const withheld = taxOf(before + pay).total - taxOf(before).total - fica + ct;
-    s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
+    s.post({ memo: STIPEND_MEMO, category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
     recordWages(person, item.at, zone(), { gross: pay, withheld, withheldBy: { [stateOf(YALE_DRAMA.cityId)]: ct }, employer: SUMMER_EMPLOYER });
   });
 
@@ -3719,7 +3796,9 @@ export function registerSchool(sim: Simulation): void {
     // The term's Hospitalization premium back, where it was paid from the bank and the cover is canceled.
     const cur = saveCurrency(s.universe);
     const memo = `Yale Health plan, ${termWords(term)}`;
-    const paid = early && s.universe.transactions.some((t) => t.memo === memo && t.postings.some((q) => s.universe.accounts[q.accountId]?.ownerId === person.id));
+    // Paid or owed (`owe`’s memo, from 2026-10-13, when a plan the bank couldn’t pay began to be owed): one owed comes
+    // back to the bank too, which then pays back what’s owed.
+    const paid = early && s.universe.transactions.some((t) => (t.memo === memo || t.memo === `${memo}, unpaid`) && t.postings.some((q) => s.universe.accounts[q.accountId]?.ownerId === person.id));
     const refund = paid ? termAccount(cur, false, term).healthPlan : 0;
     if (refund > 0) s.post({ memo: `Refund: ${memo}, withdrawn`, category: 'school', postings: [{ accountId: payeeAccount(s, person).id, amount: refund }, { accountId: s.nominalAccount('expense', expenseFor('school')).id, amount: -refund }] });
     // Canceled back to the insurance term's start, care had since is billed as uninsured care is (`repriceCare`, from

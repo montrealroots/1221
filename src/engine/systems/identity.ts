@@ -10,7 +10,8 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { CITIES } from '../content/geography';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { ID_CARDS } from '../content/identity';
@@ -32,6 +33,12 @@ import { schoolEnded } from './school';
  * already past). A graduate isn't a student, though: `ssnRefusal` takes an application for the number only through
  * work-study at school, so a graduate on OPT who didn't apply for one there is refused the card for it, and told so,
  * and one who did is told it's on its way until it comes (from 2026-10-12).
+ *
+ * SAVE’s days are federal workdays: USCIS gives its own response time in them (“Approximately 5 federal workdays”,
+ * SAVE Verification Response Time, uscis.gov, read on 2026-10-13), and the DMV’s ten business days are SAVE’s
+ * (`businessDaysOn` with `federal`, as OPT’s premium processing counts them). Until 2026-10-13 they were counted Monday
+ * to Friday, and a card applied for on the evening of 29 September 2026 came on 13 October, Columbus Day counted, not
+ * on the 14th (left by that day’s second round).
  */
 export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining; https://portal.ct.gov/DMV/Licenses/Licenses/Drivers-License--NonUS-Citizen--Requirements' } as const;
 
@@ -118,14 +125,34 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
  * must be reported lost, and is replaced by its issuer for somebody living there, as an ID card is, or by mail from
  * elsewhere where the issuer sends one out of state (`byMail`, from 2026-10-10: until then a New Yorker studying in
  * New Haven couldn't replace their license at all). It's an identity document here; nothing in SLATE is driven.
+ *
+ * A replacement keeps the license’s expiration date (New York’s Replace A License page: “your expiration date and ID
+ * number will not change”, read on 2026-10-13), so one past its date, or past it before the new card would come, isn’t
+ * replaced: it’s renewed, as New York says of its ID card (“You cannot replace your ID if it expired.”), SLATE’s reading
+ * for a license, and nothing in SLATE renews one since the cars went on 2026-10-09. Until 2026-10-13 a license reported
+ * lost while in force and replaced after it ran out, or so near it that the card came after, was charged for and came
+ * with its past date, said to be “in force from today” (left by that day’s second round).
  */
-export function licenseReplaceRefusal(person: Person, documentId: string): string | undefined {
+export function licenseReplaceRefusal(person: Person, documentId: string, at: Instant): string | undefined {
   const doc = documentsOf(person).find((d) => d.id === documentId);
   if (!doc || doc.kind !== 'license') return 'That isn’t a license of yours.';
   if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
-  if (!LICENSE_REPLACEMENT[doc.issuer]) return 'SLATE doesn’t have what its issuer charges to replace it.';
-  if (licensingOf(person.currentLocationId) !== doc.issuer && !LICENSE_REPLACEMENT[doc.issuer]!.byMail) return 'Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.';
+  const rule = LICENSE_REPLACEMENT[doc.issuer];
+  if (!rule) return 'SLATE doesn’t have what its issuer charges to replace it.';
+  if (licensingOf(person.currentLocationId) !== doc.issuer && !rule.byMail) return 'Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.';
+  const past = pastItsDate(person, doc, at, rule.days);
+  if (past) return `${past}, and a replacement keeps its date: a license past it is renewed, and SLATE renews none since the cars went.`;
   return undefined;
+}
+
+/**
+ * Where a card has run out, or runs out before a replacement taking so many days would come, those words; or nothing.
+ * A replacement keeps the card’s date, so one coming after it would come run out.
+ */
+function pastItsDate(person: Person, doc: PersonDocument, at: Instant, days: number): string | undefined {
+  if (doc.expiresAt === undefined || doc.expiresAt > at + days * MS_DAY) return undefined;
+  const on = formatDate(doc.expiresAt, CITIES.get(person.currentLocationId)?.timeZone ?? 'UTC');
+  return doc.expiresAt <= at ? `It ran out on ${on}` : `It runs out on ${on}, before a new card would come`;
 }
 
 /** A license's replacement fee: the issuer's, nothing in New York for one stolen with the police's report filed (MV-78B). */
@@ -137,13 +164,23 @@ export function licenseReplaceFee(sim: Simulation, doc: PersonDocument): Money {
 
 export const ID_CARD_KIND = 'documents.idcard_arrives';
 
-/** Why a lost ID card can't be replaced, or nothing: it must be reported lost, and replaced by its issuer for someone living there. */
-export function idReplaceRefusal(person: Person, documentId: string): string | undefined {
+/**
+ * Why a lost ID card can't be replaced, or nothing: it must be reported lost, and replaced by its issuer for someone
+ * living there. A replacement keeps the card’s date, so one past it, or past it before the new card would come, isn’t
+ * replaced (New York’s Replace A Non-Driver ID page: “You cannot replace your ID if it expired.”, read on 2026-10-13;
+ * SLATE’s reading for every issuer). Until 2026-10-13 a card reported lost while in force and replaced after it ran out
+ * was charged for and came with its past date, said to be “in force from today”, as a license did (found with the
+ * license that day).
+ */
+export function idReplaceRefusal(person: Person, documentId: string, at: Instant): string | undefined {
   const doc = documentsOf(person).find((d) => d.id === documentId);
   if (!doc || doc.kind !== 'idcard') return 'That isn’t an ID card of yours.';
   if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
-  if (!ID_CARD_REPLACEMENT[doc.issuer]) return 'SLATE doesn’t have what its issuer charges to replace it.';
+  const rule = ID_CARD_REPLACEMENT[doc.issuer];
+  if (!rule) return 'SLATE doesn’t have what its issuer charges to replace it.';
   if (idCardHere(person)?.jurisdiction !== doc.issuer) return 'It’s replaced where it was issued, for someone living there.';
+  const past = pastItsDate(person, doc, at, rule.days);
+  if (past) return `${past}, and a replacement keeps its date, so it isn’t replaced.`;
   return undefined;
 }
 
@@ -158,7 +195,7 @@ export function idReplaceFee(sim: Simulation, person: Person, issuer: string): M
 export function registerIdentity(sim: Simulation): void {
   sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_idcard', (p, { sim: s }) => {
     const person = s.player;
-    const no = idReplaceRefusal(person, String(p?.documentId));
+    const no = idReplaceRefusal(person, String(p?.documentId), s.now);
     if (no) throw new CommandError(no);
     const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
     const rule = ID_CARD_REPLACEMENT[lost.issuer]!;
@@ -197,7 +234,7 @@ export function registerIdentity(sim: Simulation): void {
     const limited = jurisdiction.startsWith('us-') ? presenceEnds(person, s.now) : undefined;
     const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
     if (limited !== undefined) {
-      const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays);
+      const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true);
       documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: `${card.name}, Limited Term`, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), realId: true } as PersonDocument);
       s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
       return { expiresAt, fee };
@@ -208,7 +245,7 @@ export function registerIdentity(sim: Simulation): void {
 
   sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_license', (p, { sim: s }) => {
     const person = s.player;
-    const no = licenseReplaceRefusal(person, String(p?.documentId));
+    const no = licenseReplaceRefusal(person, String(p?.documentId), s.now);
     if (no) throw new CommandError(no);
     const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
     const rule = LICENSE_REPLACEMENT[lost.issuer]!;

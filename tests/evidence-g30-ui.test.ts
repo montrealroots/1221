@@ -53,8 +53,8 @@
  * onset, each a draw at its time, and no deterministic outcome of a played life shows a hazard of 1.07 against 1.0; so
  * the band is read on the body the clock moved, as the review's todo asked, rather than seen in an end.
  *
- * LEFT OPEN: Review's comment at CharacterCreation.tsx:1023 still names an engine sum, `costsAt`, that doesn't exist
- * (`monthOf` reads `foodAt`); this file can't change it.
+ * LEFT OPEN, AND CLOSED LATER: Review's comment at CharacterCreation.tsx:1023 named an engine sum, `costsAt`, that
+ * doesn't exist (`monthOf` reads `foodAt`); this file couldn't change it, and the second round of 2026-10-13 corrected it.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York (the birthplace a player
  * picks on Identity, which `newLifeConfig` leaves empty) and an actor at Yale in New Haven, starting Monday 24 August

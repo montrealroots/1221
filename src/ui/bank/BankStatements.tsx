@@ -115,6 +115,15 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
   const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays) : undefined;
   // A balance carried into it: paid in full, what built up since still comes on the next, as trailing interest.
   const carried = sim.player.credit !== undefined && stateOf(sim.player, account).carrying === true && st.previous > 0;
+  // On a hardship plan the due date judges the plan’s payment, never more than the statement, and not the card’s
+  // minimum (`autopayAsk`), so a statement whose due date comes while the plan stands asks for that. Until 2026-10-13
+  // this line gave the card’s minimum, which the statement kept, and a holder who paid it on a $100 plan was charged the
+  // late fee; found by the guide’s audit of that day. From later that day the statement keeps the plan’s payment, and
+  // says it’s the plan’s (`CardState.issued`), so a plan since ended still reads as it asked. One kept before then holds
+  // the card’s minimum, and is read against the plan standing now, as this line read every statement until then.
+  const plan = sim.player.credit !== undefined ? stateOf(sim.player, account).hardship : undefined;
+  const onPlan = st.plan ?? (plan !== undefined && due !== undefined && due >= plan.since);
+  const least = onPlan && st.plan === undefined && plan ? Math.min(st.newBalance, plan.payment) : st.minimum;
   const look = at('account', account.id);
   return (
     <LookRegion className="col gap-3">
@@ -131,10 +140,18 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <p className="small" style={{ margin: 0 }}>
           {st.terms.kind === 'charge'
             ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your current account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
-            : `The least to pay is ${money(st.minimum)}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new draws interest, though what built up since this statement comes on the next one' : 'none of it draws interest'}.`}
+            : `The least to pay is ${money(least!)}${onPlan ? ', the plan’s payment' : ''}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new draws interest, though what built up since this statement comes on the next one' : 'none of it draws interest'}.`}
         </p>
       )}
-      {closed && st.minimumOnly && st.terms.kind !== 'charge' && (
+      {/* On a plan nothing draws interest and nothing new goes on the card, so paying the plan’s payment clears it in so many
+          months at no more than it owes (from 2026-10-13: until then this said what paying the card’s minimum would take,
+          at the card’s rate, which a plan doesn’t charge; found by that day’s guide audit). */}
+      {closed && onPlan && least !== undefined && least > 0 && st.newBalance > 0 && st.terms.kind !== 'charge' && (
+        <div className="callout small">
+          {`On the plan nothing draws interest and nothing new goes on the card: ${money(least)} a month clears the ${money(st.newBalance)} in ${yearsAndMonths(Math.ceil(st.newBalance / least))}, ${money(st.newBalance)} in all, so long as none is missed.`}
+        </div>
+      )}
+      {closed && !onPlan && st.minimumOnly && st.terms.kind !== 'charge' && (
         <div className="callout small">
           {st.minimumOnly === 'never'
             ? 'Paying only the minimum, and spending nothing more, would never pay this off: the minimum doesn’t cover the interest.'

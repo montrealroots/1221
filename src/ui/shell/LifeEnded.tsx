@@ -15,6 +15,7 @@ import { netWorth } from '@/engine/systems/finance';
 import { CITIES } from '@/engine/content/geography';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { homeOf } from '@/engine/systems/earnings';
+import { plural } from '@/engine/core/text';
 
 export function LifeEnded() {
   const { sim, exitToMenu } = useGame();
@@ -24,11 +25,14 @@ export function LifeEnded() {
   const age = sim.universe.meta.endedAge;
   const town = CITIES.get(homeOf(player))?.name ?? 'where they lived';
   const worth = netWorth(sim, player.id);
-  // What the work paid, from the record the returns read (`systems/earnings.ts`): acting's wages, residuals
-  // among them, and work-study's, before tax and commission. Until 2026-09-27 it summed what the bank
-  // was paid under a "tips" category that no longer existed, per diem and stipends among the wages.
+  // What the work paid, from the record the returns read (`systems/earnings.ts`): acting's wages, since the career went
+  // on 2026-10-09 the Summer Cabaret's stipend alone, and work-study's, before tax and commission. Until 2026-10-13
+  // this said residuals were among them; nothing has recorded one since the career went. Until 2026-09-27 it summed
+  // what the bank was paid under a "tips" category that no longer existed, per diem and stipends among the wages.
   const earned = Object.values(player.earnings?.years ?? {}).reduce((sum, y) => sum + y.acting + y.workStudy, 0);
   const years = Math.max(0, (endedAt - sim.universe.meta.createdAt) / (365.2425 * 86_400_000));
+  // Under a year, counted in months, one of them a Month (from 2026-10-13: until then "1 Months").
+  const months = Math.round(years * 12);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
 
   return (
@@ -43,7 +47,7 @@ export function LifeEnded() {
         <div className="grid grid-3" style={{ margin: 'var(--s5) 0', textAlign: 'left' }}>
           <div className="stat">
             <span className="stat-label">Years In The World</span>
-            <span className="stat-value">{years < 1 ? `${Math.round(years * 12)} Months` : `${years.toFixed(1)} Years`}</span>
+            <span className="stat-value">{years < 1 ? plural(months, 'Month') : `${years.toFixed(1)} Years`}</span>
             <span className="stat-note">From the first morning to the last, in the world’s time</span>
           </div>
           <div className="stat">

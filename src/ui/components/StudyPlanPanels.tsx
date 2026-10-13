@@ -14,7 +14,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, instantFromZoned } from '@/engine/core/time';
 import { EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
 import {
-  LEAVE_REASONS, accountOwed, affiliateQuote, aidReviewRefusal, cancelRepeatWarning, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, termsInWords, yaleAccount,
+  LEAVE_REASONS, accountOwed, affiliateQuote, aidReviewRefusal, cancelRepeatWarning, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, termsInWords, withRepeat, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
 import { termAccount, academicTerm, conversionRefusal, convertibleHours, unassignedKnown, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
@@ -173,7 +173,16 @@ export function RepeatPanel() {
   const ex = school.extraRequest;
   const show = r || ex || school.extra || school.repeatBy !== undefined || failed.length > 0;
   if (!show) return null;
-  const past = enrolledTerms(school).length + 2 - EXTENDED_STUDY.supportedTerms;
+  // The degree’s terms with the year again, as the decision counts them: those enrolled, the year’s two, and the
+  // program’s terms still to come (`withRepeat`). Until 2026-10-13 this counted the year’s two alone, so a first or
+  // second year’s repeat, which takes the degree to eight terms, said nothing of the two billed past six; found by that
+  // day’s guide audit. The tuition is each billed term’s own, the degree’s last terms; until then it was the next term’s,
+  // which for a first year’s repeat is two years of Yale’s growth before the terms billed.
+  const enrolled = enrolledTerms(school).length;
+  const total = withRepeat(school, academicTerm(school, t));
+  const past = total - EXTENDED_STUDY.supportedTerms;
+  const cur = saveCurrency(sim.universe);
+  const billed = Array.from({ length: Math.max(0, past) }, (_, k) => termAccount(cur, false, t + total - enrolled - k).tuition).reduce((a, b) => a + b, 0);
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Finishing The Degree</div><HowItWorks help="school.repeat" /></div>
@@ -181,7 +190,7 @@ export function RepeatPanel() {
       {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the degree is withheld.</p>}
       {!no && (
         <div className="col gap-2">
-          {asking === 'request' && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms: ${past} of the year’s would be billed to your Yale account, about ${formatMoney(past * termAccount(saveCurrency(sim.universe), false, t + 1).tuition, saveCurrency(sim.universe))} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
+          {asking === 'request' && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms, and with the year again the degree takes ${total}: ${past} would be billed to your Yale account, about ${formatMoney(billed, cur)} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
           <div className="row gap-2">
             {asking !== 'request'
               ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('request')}>Ask To Repeat The Year…</button>

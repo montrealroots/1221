@@ -458,7 +458,9 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Practice', value: `A take in it, or a night of a play of its kind, adds ${pct(ENGAGEMENT.genre.practice)} of what’s left, shared among the work’s genres; a take that’s the same again adds half`, estimate: true },
       { label: 'Knowing The Genre', value: `The better of familiarity and practice, in the brief’s best-known genre: complete at ${pct(BRIEF.complete.genre)} for a take, and read by its interpretation` },
       { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} at 100: a scene for class from a play of the kind, and a part’s lines in one. A brief’s own steps read the material met before instead` },
-      { label: 'What It Asks For', value: `${APPLIED} genres ask a technique of an actor, where the research established it: their brief stages it, and their work reads it` },
+      // A take of its brief reads it; a play’s night or a class scene reads its own material’s (until 2026-10-13 this said
+      // “their work reads it”, which a farce’s night, reading no clown, didn’t).
+      { label: 'What It Asks For', value: `${APPLIED} genres ask a technique of an actor, where the research established it: their brief stages it, and a take of it reads it; a night of a play of the kind, or a class scene from one, reads its own material’s techniques instead` },
     ],
     now: [
       'The time passes, energy goes down, and the genre’s familiarity rises.',

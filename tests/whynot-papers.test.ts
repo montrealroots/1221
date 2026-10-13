@@ -84,24 +84,32 @@ describe('PLAYER JOURNEY: Your Doctor and Your Pharmacy, shut by the guide, say 
   };
 
   it('says the guide’s reason as words while its chapter is unread, and nothing once it’s read', () => {
-    const sim = lifeIn('us-ny-newyork', 'whynot-papers-guide', true);
-    const why = lockedBecause(sim, 'health.choose_clinic');
-    expect(why).toMatch(/^Read “Cover, Benefits And Returns” in the guide first\./);
-    expect(lockedBecause(sim, 'health.choose_pharmacy')).toBe(why);
-    const locked = shown(sim);
-    expect(locked.html).toMatch(/<select id="own-doctor"[^>]* disabled=""/);
-    expect(locked.html).toMatch(/<select id="own-pharmacy"[^>]* disabled=""/);
-    expect(locked.words).toContain(`Not now: ${why}`);
-    expect(count(locked.words, `Not now: ${why}`)).toBe(1);
-    expect(count(locked.html, `title="${attr(why!)}"`)).toBeGreaterThanOrEqual(2);
+    // Your Doctor is drawn only where a town keeps two practices or more (from 2026-10-13). New York keeps one, One
+    // Medical, and until then this read both boxes on a New York life; Your Doctor’s is read on a London life now, and
+    // Your Pharmacy, America’s, on New York’s.
+    for (const [city, box, feature] of [['us-ny-newyork', 'own-pharmacy', 'health.choose_pharmacy'], ['uk-eng-london', 'own-doctor', 'health.choose_clinic']] as const) {
+      const sim = lifeIn(city, city === 'us-ny-newyork' ? 'whynot-papers-guide' : 'whynot-papers-guide-london', true);
+      const why = lockedBecause(sim, feature);
+      expect(why).toMatch(/^Read “Cover, Benefits And Returns” in the guide first\./);
+      expect(lockedBecause(sim, 'health.choose_clinic')).toBe(lockedBecause(sim, 'health.choose_pharmacy'));
+      const locked = shown(sim);
+      expect(locked.html).toMatch(new RegExp(`<select id="${box}"[^>]* disabled=""`));
+      expect(locked.html).not.toMatch(new RegExp(`<select id="${box === 'own-doctor' ? 'own-pharmacy' : 'own-doctor'}"`));
+      expect(locked.words).toContain(`Not now: ${why}`);
+      // Said once under the box; in London once more under Prepay Three Months and Prepay A Year, England’s, shut by the
+      // same chapter.
+      expect(count(locked.words, `Not now: ${why}`)).toBe(city === 'uk-eng-london' ? 2 : 1);
+      expect(count(locked.html, `title="${attr(why!)}"`)).toBeGreaterThanOrEqual(2);
 
-    readUntil(sim, 'health.choose_clinic');
-    const open = shown(sim);
-    expect(open.html).not.toMatch(/<select id="own-doctor"[^>]* disabled=""/);
-    expect(open.words).not.toContain(why!);
-    // The lock's own words, not the whole of `why`, whose closing sentence names the next chapter and changes as chapters
-    // are read (the verifier of 2026-10-12 found the line above could never fail).
-    expect(open.words).not.toContain('Cover, Benefits And Returns” in the guide first');
+      readUntil(sim, feature);
+      const open = shown(sim);
+      expect(open.html).toMatch(new RegExp(`<select id="${box}"`));
+      expect(open.html).not.toMatch(new RegExp(`<select id="${box}"[^>]* disabled=""`));
+      expect(open.words).not.toContain(why!);
+      // The lock's own words, not the whole of `why`, whose closing sentence names the next chapter and changes as
+      // chapters are read (the verifier of 2026-10-12 found the line above could never fail).
+      expect(open.words).not.toContain('Cover, Benefits And Returns” in the guide first');
+    }
   });
 
   it('Book An Appointment and Call It Off, shut by the guide, each say it under their own row too', () => {

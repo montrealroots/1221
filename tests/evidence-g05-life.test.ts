@@ -990,8 +990,10 @@ const comp = (sim: Simulation) => memos(sim, 'Workers’ compensation');
 describe('injury.comp', () => {
   it('PLAYER JOURNEY: a broken bone at an elective shift is paid a week at a time for all 42 days off, into the payee account, once across a reload', () => {
     const { sim, shift } = hurtAtAnElectiveShift();
-    expect(titled(sim, 'A Broken Bone')[0]!.body).toBe('42 days to mend, and off work for them. It happened at work, so workers’ compensation pays the care and 75% of your week’s wage after tax while you’re off.');
-    // Its care is the employer's: no bill.
+    // Paid 75% of the whole week’s $92, Connecticut’s least for a week that small. Until 2026-10-13 the notice said “75% of
+    // your week’s wage after tax”, which it wasn’t, and this test held that.
+    expect(titled(sim, 'A Broken Bone')[0]!.body).toBe('42 days to mend, and off work for them. It happened at work, so workers’ compensation pays the care and 75% of your week’s wage while you’re off.');
+    // Its care is the employer’s: no bill.
     expect(healthOf(sim.player).bills.filter((b) => b.what.startsWith('A Broken Bone'))).toEqual([]);
     // Off more than Connecticut's six days, no waiting days: every one of the 42, a full week's rate each week.
     const paid = comp(sim);

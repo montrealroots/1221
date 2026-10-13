@@ -26,7 +26,7 @@ import type { Simulation } from '../core/simulation';
 import { usWorkAuthorized } from './permission';
 import { inHospital } from './health';
 import { laidUp } from './injury';
-import { schoolEnded } from './school';
+import { schoolEnded, workDoneIn } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -34,7 +34,7 @@ import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Inst
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState, CONNECTICUT_UI } from '../content/safetynet';
-import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit, workedBetween } from './earnings';
+import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
 import { payeeAccount } from './cash';
 import { rateOn } from '../content/rates';
 import { claimCredit, livesInBritain } from './universalcredit';
@@ -222,9 +222,13 @@ export function registerUnemployment(sim: Simulation): void {
     // Able and available: in the country, not a student, allowed to work, and not in hospital or laid up on the day
     // the week is certified (the last two from 2026-10-10).
     const available = CITIES.get(person.currentLocationId)?.countryId === 'us' && !studentUnavailable(person, claim.state) && usWorkAuthorized(person, s.now) && !inHospital(person, s.now) && !laidUp(person, s.now);
-    // The week's hours and pay worked: the career's days until the career went on 2026-10-09, and from 2026-10-10 the
-    // school's work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none.
-    const worked = workedBetween(s, person, item.at - 7 * MS_DAY, item.at);
+    // The week’s hours and pay worked: the career’s days until the career went on 2026-10-09; from 2026-10-10 the
+    // school’s work-study and Summer Cabaret wages paid in it (`workedBetween`), which until then were taken as none; and
+    // from 2026-10-13 the work done in it, paid then or later (`workDoneIn`), as a claimant reports it. Until then a
+    // shift worked before the claim and paid in its first week took that week as worked: a student who withdrew on
+    // Wednesday 6 October 2027, her Saturday’s $138 paid a minute later, was paid $1 for the week to Sunday the 10th,
+    // where nothing was worked in it and it pays $93 (found by that day’s evidence pass).
+    const worked = workDoneIn(s, person, item.at - 7 * MS_DAY, item.at);
     const due = available ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
     const zone = CITIES.require(homeOf(person)).timeZone;
     const again = () => s.schedule({ at: nextSunday(item.at, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });

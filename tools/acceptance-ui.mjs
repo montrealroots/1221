@@ -2,7 +2,8 @@
  * SLATE — the player-facing acceptance run (acceptance pass, 2026-10-11): the built app driven through its visible
  * controls, the way a player would, at a width, each step recorded as passed or failed with what the screen said.
  * Nothing is called on the engine directly; a save written by \`tools/scenarios.ts --save\` is opened for the journeys a
- * new life can't reach in a session (a tax balance owed, a later term), and that's said in the step's name.
+ * new life can't reach in a session (a tax balance owed, a decision waiting, a later term), and that's said in the
+ * step's name.
  *
  *   npm run build && npx vite preview --port 4173
  *   node tools/acceptance-ui.mjs OUT WIDTH [SAVEDIR]
@@ -14,6 +15,17 @@
  * /, a half-typed form kept across it, and the live clock held while it's read; Work It Through on a scene, a problem
  * named, a way tried and kept; a brief taped with a classmate reading; a director's note on the craft worked one of its
  * ways; and the On The Way stop, where a commitment interrupts an advance.
+ *
+ * From 2026-10-13 it also opens the help from the top bar’s Advance and Look After Yourself menus and closes it both
+ * ways, checks the screen and tab Show Me Where lands on and the trail Back To Help returns to, and loads a screen’s
+ * address on its own, as a reload or a link does (the guide audit of that day). From later that day it reads the hour
+ * practiced in Development History, and takes a decision from its card on a save that has one, where until then both
+ * steps passed on finding a heading or no card (that day’s evidence pass). And from the third round of that day, these
+ * check what their steps' names say, where until then each passed whatever happened: a step of preparation moves
+ * the clock and its part’s figure, a way of playing and a table work answer are taken in the engine’s words,
+ * Connecticut’s plan is asked for in its own panel, the IRS plan in force says what it covers and the IRS plan is asked
+ * for from its own (on the lien save, which owes it with no plan), and the leave save’s first class’s productions and
+ * evaluated terms are read.
  *
  * It writes OUT/report.json (every step, every page or console error, every screen past the right edge) and a
  * screenshot of each failed step.
@@ -82,6 +94,10 @@ async function rail(name) {
   await b.click(); await wait(900);
 }
 async function tab(name) { const t = page.getByRole('tab', { name: new RegExp(`^${name}$`) }).first(); must(await t.count(), `no tab ${name}`); await t.click(); await wait(700); }
+/** The IRS Payment Plan panel on Papers' Tax Returns, by its heading. */
+const irsPanel = () => page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^IRS Payment Plan$/ }) }).first();
+/** A figure in a panel, by its label: the label, the value and the note under it. */
+const statIn = async (panel, label) => (await panel.locator('.stat').filter({ has: page.locator('.stat-label', { hasText: new RegExp(`^${label}$`) }) }).first().innerText().catch(() => '')).replace(/\s+/g, ' ').trim();
 /** Each dialog met on the way, by its title and what was pressed. */
 const dialogsMet = [];
 /** A dialog left open by an advance: go ahead where it's the advance's own confirm, else close it. */
@@ -169,16 +185,21 @@ await step('guide: a new player’s controls are locked until its chapters are r
   return `${locked} locked at the start; ${read} chapters read; none locked now`;
 });
 
-await step('home: what needs you, and a decision taken from its card', async () => {
-  const cards = page.locator('.decision');
-  const n = await cards.count();
-  if (!n) return 'no decision waiting';
-  const before = n;
-  const action = cards.first().locator('.btn-primary').first();
-  if (!(await action.count())) return `${n} cards, none with an action`;
-  const label = await action.innerText();
-  await action.click(); await wait(1200); await settleDialogs();
-  return `${before} → ${await page.locator('.decision').count()} cards after "${label}"; ${await toast()}`;
+/**
+ * What Needs You on the first day (from 2026-10-13): a new life has no decision waiting, since the three a life raises
+ * (a return on 1 February, a bank's notice before it hands an account to the state, a US status ending) come months or
+ * years in; so this holds the panel's own words for none, and a decision is taken from its card on a save that has one
+ * (`[save: decision scenario]`, below). Until then this step was "home: what needs you, and a decision taken from its
+ * card": it passed with no card at all, asserted nothing after a press, and every recorded run said "no decision
+ * waiting" (found by that day's evidence pass).
+ */
+await step('home: what needs you on the first day: no decision waiting, in the panel’s own words', async () => {
+  const n = await page.locator('.decision').count();
+  must(n === 0, `${n} decision cards on the first day`);
+  const panel = page.locator('section.card', { has: page.getByRole('heading', { name: 'What Needs You', exact: true }) }).first();
+  must(await panel.count(), 'no What Needs You on Home');
+  must(await panel.getByText('No decision is waiting on you.', { exact: true }).count(), `What Needs You says “${(await panel.innerText()).replace(/\s+/g, ' ').slice(0, 160)}”`);
+  return 'No decision is waiting on you.';
 });
 await step('advance: One Hour moves the clock an hour', async () => {
   const before = await clock();
@@ -236,25 +257,55 @@ await step('coursework: a step of preparation done from its button, the clock mo
     must(!(await b.isDisabled()), `still grayed in the evening: ${await page.locator('.why-not').first().innerText().catch(() => '')}`);
   }
   const label = (await b.innerText()).split('\n')[0];
+  // The work’s card, by its title, and each part’s figure on it (from 2026-10-13: until then the step returned the clock
+  // and the toast and checked neither, so it passed whatever the press did).
+  const title = await b.locator('xpath=ancestor::section[contains(@class,"card")][1]').locator('h2').first().innerText();
+  const card = page.locator('section.card').filter({ has: page.locator('h2', { hasText: title }) }).first();
+  const parts = async () => Object.fromEntries(await card.locator('.stat').evaluateAll((els) => els.map((e) => [e.querySelector('.stat-label')?.textContent ?? '', parseFloat(e.querySelector('.stat-value')?.textContent ?? '')])));
+  const was = await parts();
   const before = await clock();
   await b.click(); await wait(1500); await settleDialogs();
   const said = await toast();
-  return `${why ? `grayed first (${why}); ` : ''}"${label}": ${before} → ${await clock()}; ${said}`;
+  const moved = said.match(new RegExp(`${label}: \\d+ minutes, (.+?) up \\d+%\\.`));
+  must(moved, `no word of “${label}” done: ${said || 'no toast'}`);
+  const after = await clock();
+  must(after !== before, `the clock didn’t move from ${before}`);
+  const part = moved[1];
+  const now = await parts();
+  must(Number.isFinite(was[part]) && now[part] > was[part], `“${label}” left ${part} at ${was[part]}% (now ${now[part]}%)`);
+  return `${why ? `grayed first (${why}); ` : ''}“${label}”: ${before} → ${after}; ${part} ${was[part]}% → ${now[part]}%; ${said}`;
 });
 await step('coursework: a way of playing it chosen and rehearsed in', async () => {
   const choose = page.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).first();
   if (!(await choose.count())) skip('no scene with a playing chooser open');
   const radios = choose.locator('xpath=ancestor::*[self::section or contains(@class,"panel") or contains(@class,"col")][1]').getByRole('radio');
-  if (await radios.count()) await radios.nth(1).check().catch(() => {});
+  // A way not already the one held, so the choice is a change the button takes.
+  const n = await radios.count();
+  for (let i = 0; i < n; i += 1) if (!(await radios.nth(i).isChecked())) { await radios.nth(i).check(); break; }
+  await wait(300);
+  must(!(await choose.isDisabled()), `“${await choose.innerText()}” still grayed after a way was picked`);
   await choose.click(); await wait(1000);
-  return await toast();
+  // Said, as the engine took it (from 2026-10-13: until then the step returned the toast and checked nothing).
+  const said = await toast();
+  must(/Chosen: rehearsed in to \d+%\./.test(said), `no choice taken: ${said || 'no toast'}`);
+  return said;
 });
 await step('coursework: table work answered from its select', async () => {
-  const sel = page.locator('[id^="school-pane-coursework"] select').first();
+  // Table Work’s own select, under its heading: the first select on the tab can be a rehearsal’s day or hour.
+  const sel = page.locator('[id^="school-pane-coursework"] .eyebrow', { hasText: /^Table Work$/ }).first().locator('xpath=ancestor::div[contains(@class,"col")][1]').locator('select').first();
   if (!(await sel.count())) skip('no table work open');
-  const opts = await sel.locator('option').allInnerTexts();
-  await sel.selectOption({ index: Math.min(1, opts.length - 1) }); await wait(800);
-  return `${opts.length} options; ${await toast()}`;
+  must(!(await sel.isDisabled()), 'the table work select is grayed');
+  const current = await sel.inputValue();
+  const values = await sel.locator('option').evaluateAll((os) => os.map((o) => o.value));
+  const chosen = values.find((v) => v && v !== current);
+  if (chosen === undefined) skip('no other answer to give');
+  await sel.selectOption(chosen); await wait(800);
+  // The answer taken, and kept by the select (from 2026-10-13: until then the step returned the toast and checked
+  // nothing, and passed with no toast, a refusal’s, or the select gone back).
+  const said = await toast();
+  must(/Decided at the table\./.test(said), `no answer taken: ${said || 'no toast'}`);
+  must((await sel.inputValue()) === chosen, `the select went back to “${await sel.inputValue()}”`);
+  return `${values.length} options, “${chosen}” taken; ${said}`;
 });
 /**
  * Work It Through on a piece (from 2026-10-12): each problem the forecast names in turn, until one has a way that can be
@@ -345,39 +396,90 @@ await step('help: the keyboard: ? opens the contents, / goes to the search, a wo
   await page.keyboard.press('Escape'); await wait(400);
   return `${n} entries for "partner"`;
 });
-await step('help: Show Me Where goes to the entry’s screen, Back To Help returns to the trail', async () => {
+/**
+ * Show Me Where, to A Card’s Offers, which “transfer” finds: Your Bank’s Cards tab, gone to from its Accounts tab so the
+ * tab is seen to move. Stated here, as this script can’t read the guide; `tests/help-mechanics.test.ts` holds the
+ * entry to it. Until 2026-10-13 this compared the address before and after, which differed whether Show Me Where went
+ * anywhere or not (closing the help takes the entry out of it), checked no screen or tab, and checked the trail Back To
+ * Help returned to only by the entry’s title (found by the guide audit of that day).
+ */
+await step('help: Show Me Where goes to the entry’s screen and tab, Back To Help returns to the same trail', async () => {
+  await rail('Money'); await tab('Accounts');
   await page.keyboard.press('/'); await wait(500);
   await page.locator('#help-q').fill('transfer'); await page.keyboard.press('Enter'); await wait(400);
-  const hit = helpDialog().locator('ul.help-results button.help-link').first();
-  must(await hit.count(), 'searching "transfer" found nothing');
+  const hit = helpDialog().locator('ul.help-results button.help-link', { hasText: /^A Card’s Offers$/ }).first();
+  must(await hit.count(), 'searching “transfer” didn’t find A Card’s Offers');
   await hit.click(); await wait(400);
   const title = await entryTitle();
-  // The screen is in the address's hash (`#/workspace/...`), so the address is compared whole: first written against
-  // its path, which is "/" on every screen.
-  const from = page.url();
+  must(title === 'A Card’s Offers', `opened “${title}”`);
+  const trailText = async () => (await helpDialog().getByRole('navigation', { name: 'Help Trail' }).innerText()).replace(/\s+/g, ' ').trim();
+  const trail = await trailText();
   await helpDialog().getByRole('button', { name: /^Show Me Where$/ }).click(); await wait(1000);
-  const to = page.url();
-  must(to !== from, `Show Me Where stayed on ${from}`);
+  must(!(await helpDialog().isVisible().catch(() => false)), 'Show Me Where left the help open');
+  const to = new URL(page.url()).hash;
+  must(to.split('?')[0] === '#/workspace/bank', `Show Me Where went to ${to}`);
+  const selected = await page.getByRole('tab', { selected: true }).first().innerText();
+  must(/^Cards/.test(selected), `Show Me Where turned to the tab “${selected}”`);
   const back = page.getByRole('button', { name: /^Back To Help$/ }).first();
   must(await back.count(), 'no Back To Help');
   await back.click(); await wait(600);
-  must((await entryTitle()) === title, `Back To Help opened "${await entryTitle()}"`);
+  must((await entryTitle()) === title, `Back To Help opened “${await entryTitle()}”`);
+  const again = await trailText();
+  must(again === trail, `Back To Help’s trail is “${again}”, not “${trail}”`);
   await page.keyboard.press('Escape'); await wait(400);
-  return `"${title}": ${from} → ${to}, and back to the entry`;
+  return `“${title}”: Accounts → ${to}, ${selected}; back to ${again}`;
 });
-await step('help: a half-typed amount kept across How This Works', async () => {
+// Closed with Escape and, from 2026-10-13, with the help’s own Close as well.
+await step('help: a half-typed amount kept across How This Works, closed with Escape and with Close', async () => {
   await rail('Money');
   const amount = page.locator('input[inputmode="decimal"], input[type="number"]').first();
   if (!(await amount.count())) skip('no amount field on the Money screen');
   await amount.fill('12.34'); await wait(200);
   const how = page.locator('button[aria-label^="How This Works:"]').first();
   must(await how.count(), 'no How This Works on the Money screen');
-  await how.click(); await wait(600);
-  await page.keyboard.press('Escape'); await wait(400);
-  const kept = await amount.inputValue();
-  must(kept === '12.34', `the amount came back as "${kept}"`);
+  for (const close of ['Escape', 'Close']) {
+    await how.click(); await wait(600);
+    if (close === 'Close') await helpDialog().locator('.modal-foot').getByRole('button', { name: /^Close$/ }).click();
+    else await page.keyboard.press('Escape');
+    await wait(400);
+    must(!(await helpDialog().isVisible().catch(() => false)), `${close} didn’t close the help`);
+    const kept = await amount.inputValue();
+    must(kept === '12.34', `closed with ${close}, the amount came back as “${kept}”`);
+  }
   await amount.fill(''); await wait(100);
-  return 'kept: 12.34';
+  return 'kept: 12.34, closed with Escape and with Close';
+});
+/**
+ * How This Works in a top-bar menu (from 2026-10-13): the help opens over the menu, and closed with its Close or with
+ * Escape leaves the menu open and gives the focus back to the How This Works it was opened from. Until then either one
+ * shut the menu under it, the button with it, and the focus fell to the page (found by the guide audit of that day).
+ */
+await step('help: opened from the Advance and Look After Yourself menus, closed with Close and with Escape: the menu still open, the focus on its How This Works', async () => {
+  const seen = [];
+  for (const [menu, name, how] of [
+    [/^Advance/, 'Advance Time', 'How This Works: Moving Time On'],
+    [/^Look After Yourself/, 'Look After Yourself', 'How This Works: Looking After Yourself'],
+  ]) {
+    for (const close of ['Close', 'Escape']) {
+      await page.getByRole('button', { name: menu }).first().click(); await wait(300);
+      const list = page.getByRole('menu', { name });
+      must(await list.isVisible().catch(() => false), `the ${name} menu didn’t open`);
+      await list.getByRole('button', { name: how }).click(); await wait(500);
+      must(await helpDialog().isVisible().catch(() => false), `${how} opened nothing`);
+      if (close === 'Close') await helpDialog().locator('.modal-foot').getByRole('button', { name: /^Close$/ }).click();
+      else await page.keyboard.press('Escape');
+      await wait(400);
+      must(!(await helpDialog().isVisible().catch(() => false)), `${close} didn’t close the help`);
+      must(await list.isVisible().catch(() => false), `the help’s ${close} closed the ${name} menu`);
+      const focused = await page.evaluate(() => document.activeElement?.getAttribute('aria-label') || document.activeElement?.tagName || '');
+      must(focused === how, `after the help’s ${close} the focus is on “${focused}”`);
+      // With the help gone, Escape is the menu’s again.
+      await page.keyboard.press('Escape'); await wait(300);
+      must(!(await list.isVisible().catch(() => false)), `Escape didn’t close the ${name} menu once the help was closed`);
+      seen.push(`${name}: ${close}`);
+    }
+  }
+  return seen.join('; ');
 });
 if (!PHONE) {
   await step('help: reading it holds the live clock: a minute open, the same minute; closed, it moves; Pause stops it a minute', async () => {
@@ -425,11 +527,13 @@ await step('casting: the rehearsal controls, where a part has calls', async () =
 });
 await overflow('school casting');
 
-// Practice from the Player Profile.
+// Practice from the Player Profile. The exercise practiced, by its name, for the history after it.
+let practiced = '';
 await step('practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained', async () => {
   await rail('Player Profile');
   const open = page.locator('button:visible', { hasText: /…$/ }).first();
   must(await open.count(), 'no exercise to open');
+  const name = (await open.innerText()).replace(/…$/, '').trim();
   await open.click(); await wait(500);
   const focus = page.getByLabel('Focus').first();
   if (await focus.count()) await focus.selectOption('precision');
@@ -442,12 +546,25 @@ await step('practice: an exercise opened, its tier and focus set, an hour practi
   // The hour explained in its row, beside the button: the engine's own feedback.
   const row = await go.locator('xpath=..').innerText();
   must(/Pitched|easily|struggled|rose|full/.test(row), `no explanation in the row: ${row.slice(0, 200)}`);
+  practiced = name;
   return `${before} → ${await clock()}: ${said} | ${row.replace(/\s+/g, ' ').slice(0, 220)}`;
 });
+/**
+ * The hour just practiced, read in Development History (from 2026-10-13): among its newest changes, one in the
+ * exercise's name, with its day, the ability and the change to three places. Until then this step found the panel's
+ * heading, which is drawn with no history at all, and said "shown" (found by that day's evidence pass).
+ */
 await step('profile: the development history shows the hour', async () => {
-  const hist = page.getByText('Development History').first();
-  must(await hist.count(), 'no Development History');
-  return 'shown';
+  must(practiced, 'no hour was practiced in the step before, so the history has nothing to show of it');
+  const panel = page.locator('section.card', { has: page.getByRole('heading', { name: 'Development History', exact: true }) }).first();
+  must(await panel.count(), 'no Development History');
+  const items = (await panel.locator('li').allInnerTexts()).map((t) => t.replace(/\s+/g, ' ').trim());
+  must(items.length, `Development History has no change after the hour: ${(await panel.innerText()).replace(/\s+/g, ' ').slice(0, 160)}`);
+  const newest = items.slice(0, 6);
+  const hour = newest.find((t) => t.endsWith(`, ${practiced}`));
+  must(hour, `no change from ${practiced} among the newest: ${newest.join(' | ').slice(0, 260)}`);
+  must(/^[A-Z][a-z]+ \d{1,2}, \d{4}: .+ \+\d+\.\d{3}, /.test(hour), `the change reads “${hour}”`);
+  return hour;
 });
 await overflow('profile');
 
@@ -479,6 +596,50 @@ await step('save and exit, then Continue: the same day and hour', async () => {
   const after = `${await dateText()} ${await clock()}`;
   must(before === after, `${before} → ${after}`);
   return after;
+});
+/**
+ * A screen’s address loaded on its own, as a reload or a link loads it, and Continue pressed: the screen it names, at
+ * the tab it names, and a guide entry it names open over that screen (from 2026-10-13: until then the help wrote Home
+ * over the address before the game had read it, so either opened Home; found by the guide audit of that day). The
+ * tab kept for a screen is the session’s, so a reload opens School at Standing And Craft unless the address says
+ * otherwise.
+ */
+await step('address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School', async () => {
+  const load = async (address) => {
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.goto(new URL(address, BASE).href); await page.reload({ waitUntil: 'networkidle' }); await wait(2000);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    return new URL(page.url()).hash;
+  };
+  const at = await load('#/workspace/school?tab=coursework');
+  must(at === '#/workspace/school', `the address opened ${at}`);
+  const selected = await page.getByRole('tab', { selected: true }).first().innerText({ timeout: 3000 }).catch(() => '');
+  must(/^Coursework/.test(selected), `the address opened ${at} at “${selected || 'no tab'}”`);
+  must(!(await helpDialog().isVisible().catch(() => false)), 'the help opened with no entry in the address');
+  const over = await load('#/workspace/school?help=school.repeat');
+  must(over === '#/workspace/school?help=school.repeat', `with the entry open the address is ${over}`);
+  must((await entryTitle()) === 'Repeating, Extra Terms And Incompletes', `the address opened “${await entryTitle()}”`);
+  await page.keyboard.press('Escape'); await wait(400);
+  const closed = new URL(page.url()).hash;
+  must(closed === '#/workspace/school', `closed, the address is ${closed}`);
+  must(await page.getByRole('tab', { name: /^Standing And Craft/ }).count(), 'the screen under the entry isn’t School');
+  return `${at} at ${selected}; ${over}, then ${closed}`;
+});
+
+// Skip To Content, reached from the keyboard as its reader reaches it: the screen kept and its address, the focus on the
+// content. Until 2026-10-13 the link changed the address to #main, which the game read as Home (found by the help audit).
+await step('address: Skip To Content, from the keyboard, moves the focus to the content and leaves School where it is', async () => {
+  const before = new URL(page.url()).hash;
+  must(before.startsWith('#/workspace/school'), `School isn’t open: ${before}`);
+  await page.evaluate(() => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); window.scrollTo(0, 0); });
+  await page.locator('a.skip-link').focus();
+  await page.keyboard.press('Enter'); await wait(800);
+  const after = new URL(page.url()).hash;
+  must(after === before, `the address moved from ${before} to ${after}`);
+  const focused = await page.evaluate(() => document.activeElement?.id ?? '');
+  must(focused === 'main', `the focus went to “${focused || 'nothing'}”, not the content`);
+  must(await page.getByRole('tab', { name: /^Standing And Craft/ }).count(), 'the screen isn’t School');
+  return `${after}, the focus on #${focused}`;
 });
 
 await step('interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is', async () => {
@@ -515,7 +676,10 @@ if (DIR && existsSync(`${DIR}/tax.json`)) {
     const paid = await toast();
     must(/Paid Connecticut DRS/.test(paid), paid);
     // The plan asked for, and said: until the remaining-gaps pass of 2026-10-11 the step passed with the button absent.
-    const ask = page.getByRole('button', { name: /^Ask For The Plan$/ }).first();
+    // Connecticut’s own, in its panel: until 2026-10-13 it was the first Ask For The Plan on the tab, whoever’s it was.
+    const ct = page.locator('section.card').filter({ has: page.locator('#state-plan-us-ct') }).first();
+    must(await ct.count(), 'no Connecticut plan panel to ask in');
+    const ask = ct.getByRole('button', { name: /^Ask For The Plan$/ }).first();
     must(await ask.count() && !(await ask.isDisabled()), 'Ask For The Plan not available');
     await ask.click(); await wait(1200);
     const asked = await toast();
@@ -523,18 +687,42 @@ if (DIR && existsSync(`${DIR}/tax.json`)) {
     return `${paid} / ${asked}`;
   });
   await overflow('papers tax (save)');
-  await step('[save: tax-plan scenario] papers: the IRS plan says it covers federal tax only', async () => {
-    must(await page.getByText(/federal tax only, a state’s being the state’s/).count() || await page.getByText('IRS Payment Plan').count(), 'no IRS plan panel');
-    return 'shown';
+  // The save’s IRS plan is in force, asked for by the scenario, so its panel shows the plan and not the application, and
+  // the sentence that says it covers federal tax only goes with the application: the lien save’s step below reads it,
+  // and asks for the plan. Until 2026-10-13 this step was named for that sentence and passed on the panel’s heading.
+  await step('[save: tax-plan scenario] papers: the IRS plan in force, its own panel saying what it covers, each month and the next payment', async () => {
+    const irs = irsPanel();
+    must(await irs.count(), 'no IRS Payment Plan panel');
+    must(await irs.getByText(/^In force$/).count(), `the IRS plan isn’t in force: ${(await irs.innerText()).slice(0, 160)}`);
+    const covers = await statIn(irs, 'Covers');
+    const month = await statIn(irs, 'Each Month');
+    const next = await statIn(irs, 'Next Payment');
+    must(/\$[\d,]+\.\d\d/.test(covers), `Covers: ${covers || 'not shown'}`);
+    must(/\$[\d,]+\.\d\d/.test(month), `Each Month: ${month || 'not shown'}`);
+    must(/[A-Z][a-z]+ \d{1,2}, \d{4}/.test(next), `Next Payment: ${next || 'not shown'}`);
+    return `${covers} / ${month} / ${next}`;
   });
 }
 if (DIR && existsSync(`${DIR}/leave.json`)) {
   await step('[save: leave scenario] school: Your Classes, the first class’s productions, the evaluations', async () => {
     await openSave('leave.json');
     await rail('School'); await tab('Standing And Craft');
-    must(await page.getByText('Your Classes').count(), 'no Your Classes');
-    const ev = await page.getByText('Evaluations').count();
-    return `Your Classes shown; Evaluations panel ${ev ? 'shown' : 'absent'}`;
+    // Each part of the step’s name looked at (from 2026-10-13): until then it found Your Classes, said whether an
+    // Evaluations panel was there and passed either way, and never opened the first class’s productions.
+    must(await page.getByText('Your Classes', { exact: true }).count(), 'no Your Classes');
+    must(await page.getByText(/^Your first class, the class of \d{4}, a year ahead of you since you rejoined on /).count(), 'Your Classes doesn’t name the first class');
+    const played = page.locator('details').filter({ has: page.locator('summary', { hasText: /^What The Class Of \d{4} Played Without You$/ }) }).first();
+    must(await played.count(), 'no productions of the first class');
+    await played.locator('summary').click(); await wait(300);
+    const productions = await played.locator('li').allInnerTexts();
+    must(productions.length > 0 && productions.every((p) => /, [A-Z][a-z]+ \d{1,2}, \d{4}: \d+ of them/.test(p)), `the first class’s productions: ${productions.join(' | ').slice(0, 200) || 'none'}`);
+    // Back from a leave, a term has been evaluated: the panel lists it, each row with its standing.
+    const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Evaluations$/ }) }).first();
+    must(await evaluations.count(), 'no Evaluations panel');
+    const rows = await evaluations.locator('tbody tr').allInnerTexts();
+    must(rows.length > 0, `no term evaluated on a save back from a leave: ${(await evaluations.innerText()).slice(0, 160)}`);
+    must(rows.every((r) => /Good Standing|Academic Concern|Academic Warning/.test(r)), `a row with no standing: ${rows.join(' | ').slice(0, 200)}`);
+    return `the first class’s ${productions.length} productions; ${rows.length} terms evaluated: ${rows.map((r) => r.split('\t').slice(0, 2).join(' ')).join('; ').slice(0, 200)}`;
   });
   await overflow('school standing (save)');
   await step('[save: leave scenario] casting: the rehearsal controls work, or say why not', async () => {
@@ -608,6 +796,35 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
   await overflow('school casting (rehearsal save)');
 }
 
+// A decision taken from its card on Home (from 2026-10-13), which a new life's first day can't show. The save is the
+// `nonfiler` scenario's cut in February (`npx vite-node tools/scenarios.ts -- --scenario nonfiler --seed sc-0 --years
+// 0.47 --save decision.json`, which stops on 12 February 2027): its TEST SETUP W-2 makes a 2026 return, raised on 1
+// February as Your 2026 Tax Return with File It, and nothing has filed it. The step fails, never skips, when the card,
+// its button or what it did isn't there: given a directory of saves, a missing decision save is a failure too.
+if (DIR) {
+  await step('[save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed', async () => {
+    must(existsSync(`${DIR}/decision.json`), 'no decision save: write it with tools/scenarios.ts --scenario nonfiler --years 0.47');
+    await openSave('decision.json');
+    await rail('Home');
+    const cards = page.locator('.decision');
+    const before = await cards.count();
+    const card = () => cards.filter({ hasText: 'Your 2026 Tax Return' });
+    must(await card().count(), `no Your 2026 Tax Return among ${before} decision cards`);
+    const file = card().first().getByRole('button', { name: /^File It$/ });
+    must(await file.count(), 'the return’s card has no File It');
+    await file.click(); await wait(1200); await settleDialogs();
+    const after = await cards.count();
+    must(after === before - 1 && !(await card().count()), `${before} → ${after} cards after File It, the return’s ${await card().count() ? 'still there' : 'gone'}: ${await toast()}`);
+    // What it did, where the return is kept: Papers says it's filed, and the day, where it said when it was due.
+    await rail('Papers'); await tab('Tax Returns');
+    const head = page.locator('section.card', { has: page.getByRole('heading', { name: '2026 Return', exact: true }) }).locator('.panel-head p').first();
+    must(await head.count(), 'no 2026 Return on Tax Returns');
+    const said = (await head.innerText()).trim();
+    must(/^Filed [A-Z][a-z]+ \d{1,2}, \d{4}$/.test(said), `the 2026 return reads “${said}”`);
+    return `${before} → ${after} cards; the 2026 Return: ${said}`;
+  });
+  await overflow('home and papers (decision save)');
+}
 
 // The director's craft note, through the screens (from 2026-10-13, the owner's brief of that day, section 3). The save is
 // the `direction` scenario's (`tools/scenarios.ts`): a student cast in the first spring's festival who learns the part
@@ -1020,6 +1237,24 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     must(/· Released\. .*Released [A-Z][a-z]+ \d{1,2}, \d{4}/s.test(said), `lien: ${said.slice(0, 200)}`);
     must(!(await page.getByRole('button', { name: /^Ask For Its Release$/ }).count()) || await page.getByRole('button', { name: /^Ask For Its Release$/ }).first().isDisabled(), 'release still offered');
     return said.slice(0, 200);
+  });
+  // The IRS’s own plan, from its own panel (from 2026-10-13): the lien save owes the IRS too and asked for no plan, so
+  // its panel says what the plan covers and offers it. Until then no step asked for the IRS plan: the tax-plan save’s
+  // pressed Connecticut’s Ask For The Plan, and its IRS step passed on the panel’s heading.
+  await step('[save: lien scenario] papers: the IRS plan says it covers federal tax only, a state’s being the state’s, and is applied for from its own panel', async () => {
+    await rail('Papers'); await tab('Tax Returns');
+    const irs = irsPanel();
+    must(await irs.count(), 'no IRS Payment Plan panel');
+    must(await irs.getByText(/federal tax only, a state’s being the state’s, with a plan of its own/).count(), 'the IRS plan panel doesn’t say it covers federal tax only');
+    const apply = irs.getByRole('button', { name: /^Apply$/ }).first();
+    must(await apply.count(), 'no Apply in the IRS plan panel');
+    must(!(await apply.isDisabled()), `Apply grayed: ${(await irs.innerText()).slice(-200)}`);
+    await apply.click(); await wait(900);
+    const said = await toast();
+    must(/Applied: answered by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(said), `applied: ${said || 'no toast'}`);
+    must(!(await irs.getByRole('button', { name: /^Apply$/ }).count()), 'Apply still offered once applied');
+    must(await irs.getByText(/^(With the IRS|In force)$/).count(), `the IRS plan isn’t with the IRS or in force: ${(await irs.innerText()).slice(0, 160)}`);
+    return said;
   });
   await overflow('papers tax (lien save)');
 }

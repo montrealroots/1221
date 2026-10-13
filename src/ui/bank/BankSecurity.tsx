@@ -78,7 +78,10 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                       const answer = run<{ arrivesAt: number; fee: number }>('card.report', { which, why, accountId: account.id });
                       if (answer.ok) toast(`Stopped. The new card arrives ${formatDate(answer.value!.arrivesAt, sim.zone)}${answer.value!.fee ? `, for ${money(answer.value!.fee)}` : ''}.`, 'positive');
                     }}>Report It</Gated>
-                    {own?.rushFee !== undefined && (
+                    {/* Where the bank lists a rush fee or rush days, as `card.report` takes it (from 2026-10-13: until
+                        then a rush fee alone, and Wells Fargo’s and Capital One’s days drew no button). Wells Fargo’s,
+                        a fee it doesn’t publish, draws none again from later that day (`rushUnpublished`). */}
+                    {(own?.rushFee !== undefined || own?.rushDays !== undefined) && (
                       <Gated feature="card.report" className="btn btn-sm btn-ghost" onClick={() => run('card.report', { which, why, rush: true, accountId: account.id })}>Report It, Rush The New One</Gated>
                     )}
                   </>
@@ -87,7 +90,10 @@ export function BankSecurity({ bankId }: { bankId: string }) {
               <Fine>
                 {fee === undefined && own?.replaceWords ? `The bank’s terms: ${own.replaceWords} SLATE charges none. ` : ''}
                 {fee === undefined && !own?.replaceWords ? 'The bank lists no fee for a new card, so SLATE charges none.' : fee === undefined ? '' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, ownCurrency))}${own?.freeFor?.length ? `, and nothing when it’s ${own.freeFor.map((w) => w).join(' or ')}` : ''}.`}
-                {own?.rushFee !== undefined ? ` Sent in a rush, ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.` : ''}
+                {own?.rushFee !== undefined ? ` Sent in a rush, ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.`
+                  : own?.rushDays !== undefined ? ` Sent in a rush, in ${own.rushDays} business ${own.rushDays === 1 ? 'day' : 'days'}; the bank lists no fee for it, so SLATE charges none.`
+                  // A rush the bank charges for and doesn’t price (from 2026-10-13): said, and not offered.
+                  : own?.rushUnpublished ? ` ${own.rushUnpublished} With no fee published, SLATE sends none in a rush.` : ''}
                 {(which === 'credit' ? own?.cardYearsCredit ?? own?.cardYears : own?.cardYears) === undefined ? ` Cards last ${ESTIMATE_YEARS} years here, SLATE’s estimate; the bank doesn’t say.` : ''}
               </Fine>
             </div>

@@ -1199,7 +1199,7 @@ describe('migrations and validation', () => {
     Object.assign(player.health as object, { sag: { from: 0, until: 1 }, cobraOffer: { plan: 'sag', lostAt: 0, until: 1 }, lastUnion: 'sag' });
     Object.assign(player.attrs as object, { reputation: 12, recognition: 3 });
     Object.assign(player as object, { returnedHomeAt: 0, mobility: 'wheelchair', parkingPermit: { cityId: 'us-ny-newyork', at: 0 } });
-    const year = Object.values(player.earnings?.years ?? {})[0] ?? ((player.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {}, ukYears: {} }).years[2026] = { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never);
+    const year = Object.values(player.earnings?.years ?? {})[0] ?? ((player.earnings ??= { years: {}, quarters: {}, months: {}, ukYears: {} }).years[2026] = { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never);
     Object.assign(year as object, { homeInterest: 100_00, rentalRent: 50_00, farmRent: 1_00 });
     const presence = player.attrs!.presence;
 

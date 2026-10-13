@@ -253,9 +253,10 @@ export function completeFor(holder: Holder | undefined): { lines: number; blocki
 }
 
 /**
- * The process as a night's preparation (`content/tasks.ts` `performance`): the lines, the blocking, less a missed
- * blocking call not caught up, and the share of notes taken. None for a casting from before the process, whose
- * preparation the evaluation doesn't read.
+ * The process as a night’s preparation (`content/tasks.ts` `performance`): the lines; the blocking, to which a missed
+ * blocking call added nothing (Catch Up The Blocking adds its share of what’s left, `school.review_blocking`); and the
+ * share of notes taken. None for a casting from before the process, whose preparation the evaluation doesn’t read.
+ * Until 2026-10-13 this said a missed blocking call not caught up was taken off the blocking, which nothing here did.
  */
 export function prepOf(holder: Holder | undefined): { lines: number; blocking: number; notes: number } | undefined {
   if (!hasProcess(holder)) return undefined;

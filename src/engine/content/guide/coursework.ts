@@ -57,6 +57,11 @@
  * half point of the whole a limit has to cost to be one, classes at nine, a partner's day (classes until three, a
  * Saturday shift, calls from three, a Cabaret show from six, `mateBusy`), and the tenth a way of playing has to lean a
  * dimension by for that dimension to read its rehearsal (`materialContext`).
+ *
+ * Later on 2026-10-13 “The studios are in New Haven.”, “The Haas Arts Library is in New Haven.”, “They’re in New
+ * Haven.” and “… is in New Haven.” went from the engine, reached by no play, since every student is in New Haven and
+ * nothing moves one; until then the entries listed them, and said a studio, the library, Help Now and Make Amends
+ * needed New Haven.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -242,7 +247,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     needs: [
       'Work set and open. A course sets its next piece at a meeting when none of its own is open and the term still holds the meeting it would be due at.',
       `What a step builds on: ${LEARN.label} needs the scene read to ${pct(LEARN.requires!.at)}, and ${ALONE.label} the lines learned to ${pct(ALONE.requires!.at)}.`,
-      `A step in a studio or on your feet: energy of ${SPENT} or more and no injury that stops training. A studio or the library also needs New Haven and orientation’s tour behind you.`,
+      `A step in a studio or on your feet: energy of ${SPENT} or more and no injury that stops training. A studio or the library also needs orientation’s tour behind you.`,
       'New feedback on the piece read, and anything your partner has asked about it answered.',
       `Free for the step’s length: at nothing else, and due at nothing before it would end. ${LEARN.label} is checked for the scene’s own length, ${SCENE_SIZE_MINUTES.short}, ${SCENE_SIZE_MINUTES.medium} or ${SCENE_SIZE_MINUTES.long} minutes, the time it takes.`,
     ],
@@ -286,7 +291,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       '“There’s nothing more to gain from it now.” and “Done today already: it takes days, not one long session.”',
       `“You’re too tired to work on your feet. Sleep first.” and an injury’s “Not with …; it has … days yet to mend.”: a step in a studio or on your feet${ALONE_ON_FEET ? `, ${ALONE.label} among them` : ''}.`,
       '“Not from a hospital bed.”: a step in a studio, on your feet or at the library.',
-      '“The studios are in New Haven.” and “You don’t know the building yet: the tour shows you the studios.”, and the same for the library.',
+      '“You don’t know the building yet: the tour shows you the studios.”, and the same for the library.',
       'At something else, or due somewhere before it would end: it names what, and when.',
       LOCKED,
     ],
@@ -703,8 +708,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     needs: [
       'In class that day, with no other moment from the class waiting on your answer.',
-      `For ${CHOICES.help[0]!.label}: New Haven, and ${CLASS.help.minutes} minutes free now. For ${CHOICES.study[0]!.label}: the evening still ahead and clear.`,
-      `For Make Amends: something between you to put right, New Haven, and ${CLASS.amends.minutes} minutes free.`,
+      `For ${CHOICES.help[0]!.label}: ${CLASS.help.minutes} minutes free now. For ${CHOICES.study[0]!.label}: the evening still ahead and clear.`,
+      `For Make Amends: something between you to put right, and ${CLASS.amends.minutes} minutes free.`,
     ],
     costs: [
       { label: 'Time', value: `${CHOICES.help[0]!.label}: ${CLASS.help.minutes} minutes then and there. Running lines: ${CLASS.study.minutes} minutes at ${clock(CLASS.study.hour)} on the evening agreed. Make Amends: ${CLASS.amends.minutes} minutes. Any other answer takes no time`, estimate: true },
@@ -739,9 +744,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
       '“It’s too late to answer: the moment passed.”',
       '“You’ve answered it.”',
       '“That work is finished.”: another reading of a piece already shown.',
-      '“They’re in New Haven.”',
       '“That evening has passed.” and “You have … then: say no instead.”',
-      '“There’s nothing between you to make right.” and “… is in New Haven.”',
+      '“There’s nothing between you to make right.”',
       LOCKED,
     ],
     mistakes: [

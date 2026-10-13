@@ -12,8 +12,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { FILM_GENRES } from '@/engine/content/film-genres';
 import { ENGAGEMENT } from '@/engine/content/engagement';
 import { GENRE_DEFS } from '@/engine/content/genres';
-import { DEMAND_TECHNIQUE, GENRE_DEMANDS, demandReads, genreTags, withDemands } from '@/engine/content/demands';
-import { engagementOf, genreSpeed, practiceGenres, tapeReads } from '@/engine/systems/engagement';
+import { DEMAND_TECHNIQUE, GENRE_DEMANDS, genreTags } from '@/engine/content/demands';
+import { engagementOf, genreSpeed, practiceGenres } from '@/engine/systems/engagement';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { briefsOf } from '@/engine/content/briefs';
 import { tapeReadsOf, taskOf } from '@/engine/systems/briefs';
@@ -74,15 +74,14 @@ describe('every genre', () => {
     for (const g of FILM_GENRES) {
       for (const tag of genreTags(g.id)) {
         const skill = DEMAND_TECHNIQUE[tag];
-        expect((tapeReads(g.id) as Record<string, number>)[skill], `${g.id} ${tag}`).toBeDefined();
-        // And the genre's brief stages it (from 2026-10-12).
+        // The genre’s brief stages it (from 2026-10-12). Until 2026-10-13 the genre tape of before then, `tapeReads`,
+        // was held to read it too; it went that day, read by nothing in the game.
         expect((tapeReadsOf(briefsOf(g.id)[0]!) as Record<string, number>)[skill], `${g.id} brief ${tag}`).toBeDefined();
       }
     }
-    // A tag two genres share is asked for once, and a technique the work already reads keeps its own weight.
-    const both = FILM_GENRES.map((g) => g.id).filter((id) => genreTags(id).includes('comic')).slice(0, 2);
-    expect(Object.keys(demandReads(both)).filter((k) => k === 'comedy')).toHaveLength(1);
-    expect(withDemands({ comedy: 3 }, both).comedy).toBe(3);
+    // Until 2026-10-13 this held that `demandReads` asked a tag two genres share once and that `withDemands` left a
+    // technique the work already read at its own weight. Both went that day, read by tests alone (no work in the game
+    // added a genre’s demands to its reads by then), and the two lines with them.
     // And what it does: a tape in a genre that asks for singing reads singing, and more of it reads better.
     const singing = FILM_GENRES.map((g) => g.id).find((id) => genreTags(id).includes('song'))!;
     const taped = (level: number, seed: string) => {
@@ -118,7 +117,7 @@ describe('every genre', () => {
       expect(work.inputs.families).toEqual([]);
       expect(work.inputs.lean).toBeDefined();
       expect(Object.keys(work.inputs.techniques).sort()).toEqual(Object.keys(tapeReadsOf(b)).sort());
-      for (const k of Object.keys(demandReads([g.id]))) expect(work.inputs.techniques, `${g.id} ${k}`).toHaveProperty(k);
+      for (const k of genreTags(g.id).map((t) => DEMAND_TECHNIQUE[t])) expect(work.inputs.techniques, `${g.id} ${k}`).toHaveProperty(k);
       expect(GENRE_DEFS[g.id]).toBeDefined();
       expect(genreSpeed(sim.player, [g.id])).toBeGreaterThan(1);
     }

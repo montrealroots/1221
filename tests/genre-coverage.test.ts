@@ -14,9 +14,8 @@ import { FILM_GENRES } from '@/engine/content/film-genres';
 import { DEMAND_TECHNIQUE, applied, genreTags } from '@/engine/content/demands';
 import { GENRE_DEMANDS } from '@/engine/content/genre-demands';
 import { NO_TECHNIQUE, genreCoverage } from '@/engine/content/genre-coverage';
-import { SELF_TAPE, genreState, tapeReads } from '@/engine/systems/engagement';
+import { genreState } from '@/engine/systems/engagement';
 import { judge, type Performer } from '@/engine/systems/evaluation';
-import { TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
 import { briefsOf } from '@/engine/content/briefs';
 import { BRIEF, briefContext, tapeReadsOf } from '@/engine/systems/briefs';
@@ -60,7 +59,8 @@ describe('every genre, played', () => {
       for (const s of genreTags(g.id).map((t) => DEMAND_TECHNIQUE[t])) expect(read, `${g.id} ${s}`).toHaveProperty(s);
       const own = Object.keys(read).filter((k) => !(k in BRIEF.base[b.medium]));
       if (!applied(g.id) && own.length) expect(b.why.techniques, g.id).toBeTruthy();
-      if (b.medium === 'camera') expect(Object.keys(SELF_TAPE.reads).every((k) => k in read)).toBe(true);
+      // The camera’s own, screen and scene (`SELF_TAPE.reads` until 2026-10-13, when it went, read by nothing in the game).
+      if (b.medium === 'camera') expect(['screen', 'scene'].every((k) => k in read)).toBe(true);
     }
   });
 });
@@ -70,10 +70,8 @@ describe('the guarantee in every genre', () => {
     const sim = free('cover-full');
     const full: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
     for (const g of FILM_GENRES) {
-      const e = judge(sim.universe.meta.seed ?? 'seed', full, { task: TASK_PROFILES.camera!, techniques: tapeReads(g.id), prep: { genre: 1 }, required: { genre: SELF_TAPE.genreComplete }, difficulty: SELF_TAPE.difficulty, condition: { readiness: 90 }, key: `full:${g.id}` });
-      expect(e.overall, g.id).toBe(100);
-      expect(e.mastery, g.id).toBe(true);
-      // And its brief, as a tape is now judged (from 2026-10-12), every reading.
+      // Its brief, as a tape is judged from 2026-10-12, every reading. Until 2026-10-13 this judged the genre tape of
+      // before then first (`tapeReads`, the camera’s task, the genre’s demands), which no take in the game was any more.
       const b = briefsOf(g.id)[0]!;
       for (const r of b.readings) {
         const t = judge(sim.universe.meta.seed ?? 'seed', full, { ...briefContext(sim.player, b, { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] }, { reading: r.id, prep: { genre: 1 } }), condition: { readiness: 90 }, key: `full:${b.id}` });

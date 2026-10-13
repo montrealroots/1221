@@ -65,14 +65,14 @@ describe('Connecticut', () => {
     expect(weekBenefit(ct, 5, 450_00)).toBe(0);
     // Filed from New Haven, the first week is paid.
     const sim = pro('ct-claim', 'us-ct-newhaven');
-    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(sim.player).quarters[q] = { wages: 8_000_00, sag: 0 };
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(sim.player).quarters[q] = { wages: 8_000_00 };
     sim.must({ kind: 'benefits.claim', payload: {} });
     expect(unemploymentOf(sim.player).claim).toMatchObject({ state: 'ct', waited: true, weekly: 307_00 });
     play(sim, sim.now + 8 * MS_DAY);
     expect(unemploymentOf(sim.player).claim!.paid).toBe(307_00);
     // A New Haven actor whose base period was paid for New York work claims in New York, as an interstate claim is.
     const commuter = pro('ct-ny-claim', 'us-ct-newhaven');
-    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(commuter.player).quarters[q] = { wages: 8_000_00, sag: 0, byState: { 'us-ny': 8_000_00 } };
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(commuter.player).quarters[q] = { wages: 8_000_00, byState: { 'us-ny': 8_000_00 } };
     expect(claimStateFor(commuter.player, commuter.now)).toBe('ny');
     // Wages recorded keep the state they were earned in.
     const paid = pro('ct-ny-wages', 'us-ct-newhaven');
@@ -160,7 +160,7 @@ describe('unemployment', () => {
     const sim = pro('claim');
     const person = sim.player;
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
-    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(person).quarters[q] = { wages: 10_000_00, sag: 0 };
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(person).quarters[q] = { wages: 10_000_00 };
     expect(basePeriodFor(person, 'ny', sim.now).quarters).toEqual(['2024-4', '2025-1', '2025-2', '2025-3']);
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
     expect(unemploymentOf(person).claim!.weekly).toBe(384_00);
@@ -192,7 +192,8 @@ describe('the tax return', () => {
   it('works out the year: income tax where they lived, payroll on the acting wages, less what was withheld', () => {
     const sim = pro('figures');
     const person = sim.player;
-    recordWages(person, at(2026, 5, 1), NY, { gross: 40_000_00, withheld: 6_000_00, sag: true, employer: 'a' });
+    // The wages were marked SAG-AFTRA’s here until 2026-10-13, when the mark went from `recordWages`: nothing read it.
+    recordWages(person, at(2026, 5, 1), NY, { gross: 40_000_00, withheld: 6_000_00, employer: 'a' });
     recordWages(person, at(2026, 6, 1), NY, { gross: 3_000_00, workStudy: true });
     const f = figuresFor(person, 2026);
     const all = computeAnnualTax(43_000_00, 'us-ny-newyork', at(2026, 12, 31, 12));
@@ -297,7 +298,7 @@ describe('the tax return', () => {
     expect(figuresFor(rich.player, 2026).mandate).toBe(2 * CALIFORNIA_MANDATE.bronzeMonth);
   });
 
-  it('adds the late penalties to a balance filed late, and at least $525 past 60 days', () => {
+  it('adds the late penalties to a balance filed late, and at least $535 past 60 days', () => {
     const due = deadline(2026);
     expect(latePenalty(10_000_00, due, due - 1)).toBe(0);
     expect(latePenalty(10_000_00, due, due + 10 * MS_DAY)).toBe(Math.round(10_000_00 * 0.05));

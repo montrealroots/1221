@@ -20,7 +20,6 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
-import { YALE_DRAMA } from '../content/school';
 import { citizenOf } from './documents';
 import { f1Of } from './permission';
 import { passportOf } from './documents';
@@ -53,7 +52,9 @@ export function ssnRefusal(sim: Simulation, person: Person): string | undefined 
   if (!school || schoolEnded(school.standing)) return 'On an F-1, the number needs on-campus work, which ends with the program.';
   if (!registered(school, courseworkOf(sim, person))) return 'On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.';
   if (!passportOf(person, sim.now)) return 'The office asks for your passport, in force.';
-  if (person.currentLocationId !== YALE_DRAMA.cityId) return 'The Social Security office is in New Haven, at 150 Court Street.';
+  // “The Social Security office is in New Haven, at 150 Court Street.” went on 2026-10-13, reached by no play: only a
+  // student registered at the School gets this far, a life is enrolled only where it begins in New Haven (`populateWorld`,
+  // `engine/index.ts`), and nothing has moved a person since the scope reset of 2026-10-09.
   return startRefusal(sim, person, SSN.visitMinutes, true);
 }
 

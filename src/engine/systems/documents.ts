@@ -332,7 +332,9 @@ export function registerDocuments(sim: Simulation): void {
 
   sim.onCommand<{ documentId: string; stolen?: boolean }, { lost: boolean }>('documents.report_lost', (p, { sim: s }) => {
     const doc = documentsOf(s.player).find((d) => d.id === p.documentId);
-    if (!doc || doc.status !== 'valid') throw new CommandError('That isn’t a document you hold.');
+    // In force, as the screen offers it (from 2026-10-13: until then a document run out was taken too, and a license
+    // so reported was replaced with the same past date; found by the second round of that day).
+    if (!doc || !inForce(doc, s.now)) throw new CommandError('That isn’t a document you hold.');
     if (!LOSABLE.has(doc.kind)) throw new CommandError('A status isn’t lost with its paper: it holds.');
     doc.status = 'lost';
     if (p.stolen) doc.stolen = true;

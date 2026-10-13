@@ -70,6 +70,7 @@ import {
 import { coverOn, healthOf } from '@/engine/systems/health';
 import { journeyOf } from '@/engine/systems/evaluation';
 import { courseworkOf } from '@/engine/systems/coursework';
+import { momentsOf } from '@/engine/systems/classmates';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { COURSES } from '@/engine/content/school';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
@@ -768,11 +769,17 @@ describe('school.evaluation', () => {
     expect(school.standing).toBe('dismissed');
     expect(school.endedAt).toBe(at(2026, 12, 11, 17));
     expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/^The warning wasn’t met\. You were at \d+% of what was asked of you/);
-    // Nothing of the School's left for them on the calendar but the class going on without them.
+    // Nothing of the School's left for them on the calendar but the class going on without them, and the moment a
+    // classmate brought in that day's class, which lapses at its hour as one does at the School. Until 2026-10-13 this
+    // held the class alone: the moment was called off with the rest and stayed open for good (tests/evidence2-b07.test.ts,
+    // school.respond).
     const left = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === sim.player.id);
-    expect(left.map((i) => i.kind)).toEqual(['school.former_class']);
+    expect(left.map((i) => i.kind)).toEqual(['school.moment', 'school.former_class']);
+    const moment = momentsOf(courseworkOf(sim, sim.player)!).find((m) => m.id === left[0]!.payload.momentId)!;
+    expect(moment).toMatchObject({ status: 'open', until: left[0]!.at });
     // The spring doesn't begin for them; Yale Health holds thirty days, to 10 January 2027 at five.
     tended(sim, at(2027, 1, 11, 12));
+    expect(moment.status).toBe('lapsed');
     expect(school.termsBegun).toBe(1);
     expect(coverOn(sim.player, at(2027, 1, 10, 16))).toBe('yale');
     expect(coverOn(sim.player, at(2027, 1, 10, 18))).not.toBe('yale');

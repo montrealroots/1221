@@ -30,16 +30,30 @@ describe('the rates', () => {
     expect(provincialMonth('bc-assistance', 1_200_00, 1_000_00, 1)).toBe(660_00);
   });
 
-  it('pays SNAP’s maximum less 30% of net income, the fiscal year’s figures, and nothing once that takes it all', () => {
+  it('pays SNAP’s maximum less 30% of net income, the fiscal year’s figures; once that takes it all, nothing where eligibility isn’t judged, and SNAP’s least to a household of one under its state’s gross limit', () => {
     const fy26 = Date.UTC(2026, 8, 15);
     const fy27 = Date.UTC(2026, 9, 15);
     expect(snapMonth(0, 0, fy26)).toBe(298_00);
     expect(snapMonth(0, 0, fy27)).toBe(306_00);
-    // $1,000 earned: net $1,000 − $200 − $217 = $583; $306 − $174.90.
-    expect(snapMonth(1_000_00, 1_000_00, fy27)).toBe(306_00 - 174_90);
+    // $1,000 earned: net $1,000 − $200 − $217 = $583; its 30%, $174.90, rounded up to the dollar (7 CFR
+    // 273.10(e)(2)(ii)(A)): $306 − $175. Until 2026-10-13 it was paid to the cent, and this held $306 − $174.90.
+    expect(snapMonth(1_000_00, 1_000_00, fy27)).toBe(306_00 - 175_00);
+    // A 30% that comes to whole dollars stays there: net $100.00 takes $30 off, and $100.01 takes $31.
+    expect(snapMonth(317_00, 0, fy27)).toBe(276_00);
+    expect(snapMonth(317_01, 0, fy27)).toBe(275_00);
     expect(snapMonth(2_000_00, 2_000_00, fy27)).toBe(0);
-    // Under California's $2,610 gross limit but past the $1,330 net one.
+    // With no state given nothing is known of eligibility, and the formula alone is worked: nothing. Until 2026-10-13 this
+    // line was read as a Californian’s, “under California’s $2,610 gross limit but past the $1,330 net one”, and nothing
+    // was right for her too, as SLATE paid no least.
     expect(snapMonth(2_500_00, 2_500_00, fy27)).toBe(0);
+    // In California, under its 200% gross limit ($2,610 in fiscal 2026, $2,660 in 2027) though past the net one
+    // ($1,305, $1,330), a household of one is eligible by broad-based categorical eligibility, which waives the net
+    // limit, and is paid SNAP’s least: $24, then $25 (7 U.S.C. 2017(a); USDA’s cost-of-living adjustments). Not in its
+    // initial month, and not in New York, whose 150% ($1,995 in 2027) it’s over.
+    expect(snapMonth(2_500_00, 2_500_00, fy26, 0, 'us-ca')).toBe(24_00);
+    expect(snapMonth(2_500_00, 2_500_00, fy27, 0, 'us-ca')).toBe(25_00);
+    expect(snapMonth(2_500_00, 2_500_00, fy27, 0, 'us-ca', true)).toBe(0);
+    expect(snapMonth(2_500_00, 2_500_00, fy27, 0, 'us-ny')).toBe(0);
   });
 });
 

@@ -46,6 +46,7 @@ import {
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
 import { courseworkOf, lapseTerm } from './coursework';
+import { MOMENT_KIND } from './classmates';
 import { businessDaysOn, f1Of, scheduleUsStatus } from './permission';
 import { addYears } from './documents';
 import { healthOf, inHospital, repriceCare } from './health';
@@ -153,8 +154,10 @@ export const REPEAT_DUE_KIND = 'school.repeat_due';
 export const ACCOUNT_DUE_KIND = 'school.account_due';
 
 /** What a leave or a hold leaves on the calendar when everything else of the school's is called off. */
-// Read when called: school.ts imports this module, so its constants aren't there while this one loads.
-const kept = () => new Set([LEAVE_DECIDE_KIND, LEAVE_NOTICE_KIND, ACCOUNT_DUE_KIND, INCOMPLETE_DUE_KIND, PAYDAY_KIND, REPEAT_DECIDE_KIND, REPEAT_DUE_KIND, APPEAL_KIND, EXTRA_DECIDE_KIND, AID_DECIDE_KIND]);
+// Read when called: school.ts imports this module, so its constants aren't there while this one loads. A classmate’s
+// moment keeps its lapse, at its hour (`MOMENT_KIND`, from 2026-10-13: until then a leave called it off, and the moment
+// stayed open for good, which stopped every moment after it, `classMoment`; found by that day’s evidence pass).
+const kept = () => new Set([LEAVE_DECIDE_KIND, LEAVE_NOTICE_KIND, ACCOUNT_DUE_KIND, INCOMPLETE_DUE_KIND, PAYDAY_KIND, REPEAT_DECIDE_KIND, REPEAT_DUE_KIND, APPEAL_KIND, EXTRA_DECIDE_KIND, AID_DECIDE_KIND, MOMENT_KIND]);
 
 const termNow = (school: SchoolRecord) => Math.max(0, school.termsBegun - 1);
 const evaluated = (school: SchoolRecord, term: number) => school.history.some((h) => h.term === term);
@@ -830,9 +833,11 @@ export function disqualified(school: SchoolRecord): string | undefined {
 /**
  * The semesters the degree would take with the year an academic term ends (or is in) repeated: those enrolled, the
  * year's two again, and the program's terms after this one. Until 2026-10-13 the terms after it weren't counted, so a
- * second year's repeat that made ten was granted; found by that day's evidence pass.
+ * second year's repeat that made ten was granted; found by that day's evidence pass. Until later that day the grant’s
+ * notice and Ask To Repeat The Year… counted without them too, the year’s two alone, and so said nothing of the terms a
+ * first or second year’s repeat bills past six; found by that day’s guide audit, and both count by this now.
  */
-const withRepeat = (school: SchoolRecord, academic: number): number => enrolledTerms(school).length + 2 + Math.max(0, YALE_DRAMA.terms - 1 - academic);
+export const withRepeat = (school: SchoolRecord, academic: number): number => enrolledTerms(school).length + 2 + Math.max(0, YALE_DRAMA.terms - 1 - academic);
 
 const ordinal = (n: number) => ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'][n - 1] ?? `${n}th`;
 
@@ -1196,8 +1201,9 @@ export function registerLeave(sim: Simulation): void {
       for (const i of s.universe.scheduled) if (i.status === 'pending' && i.kind === REPEAT_DUE_KIND && i.payload.personId === person.id) s.timeline.cancel(i.id, s.now);
       s.schedule({ at: Math.max(at(termStart(t + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termBegins(t + 1), category: 'school', priority: 30, payload: { personId: person.id, term: t + 1 } });
     }
-    const past = enrolledTerms(school).length + 2 - EXTENDED_STUDY.supportedTerms;
-    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, so ${past === 1 ? 'one term' : `${past} terms`} of it will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.`, 85);
+    // The terms past six by the count the decision read, the program’s terms still to come among them (`withRepeat`).
+    const past = would - EXTENDED_STUDY.supportedTerms;
+    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, and with the year again the degree takes ${would}: ${past === 1 ? 'one term' : `${past} terms`} will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.`, 85);
   });
 
   sim.onSchedule(REPEAT_DUE_KIND, (item, s) => {
@@ -1206,7 +1212,11 @@ export function registerLeave(sim: Simulation): void {
     if (!person || !school || schoolEnded(school.standing) || school.repeatBy === undefined) return;
     if (school.repeat?.status === 'pending' || school.extraRequest?.status === 'pending' || school.extra) return;
     delete school.repeatBy;
-    setStanding(s, person, 'withheld', 'You didn’t ask to repeat the year in its thirty days, and the degree needs every course passed.');
+    // In words for whatever was open: a repeat, an additional term or both (`offerRepeat`). Until 2026-10-13 it said they
+    // hadn’t asked to repeat the year, to a student who had repeated one already and was offered an additional term
+    // alone (found by that day’s evidence pass). What was open isn’t worked out again here: at the deadline
+    // `repeatRefusal` refuses for the deadline, not for what was offered.
+    setStanding(s, person, 'withheld', 'The thirty days to finish the degree ended with nothing asked for, and it needs every course passed.');
   });
 
   sim.onCommand<{ amount?: Money }, { owed: Money; held: boolean }>('school.pay_balance', (p, { sim: s }) => {

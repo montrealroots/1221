@@ -12,8 +12,9 @@
  *   each takes its own minutes (120, 180, 120, 120, 150); the courses' session sets the first work of every first-year
  *   fall course, as the clock's session does for a twin who was there; the class met, a partner can be asked where
  *   until then "You haven’t met …" refused it; the tour opens the studios to a step on its feet and the library to Read
- *   It. Refused away from New Haven, with no time free before a class, once orientation is behind a life begun after it,
- *   and done already after a reload, each in its words with no time spent. Catch Up pressed on the Coursework tab.
+ *   It. Refused with no time free before a class, once orientation is behind a life begun after it, and done already
+ *   after a reload, each in its words with no time spent. Catch Up pressed on the Coursework tab. It was refused away
+ *   from New Haven too until 2026-10-13, when that refusal, which no play reaches, went.
  * - `school.learn_part`: four hours on the part after the read-through, memory grown and recorded on the first three only
  *   (`PROCESS.own.trainsAtMost`), the cap kept across a reload; the first night's preparation reads the lines learned,
  *   above a twin who only came to the calls and holds what twelve calls make (1 − 0.88¹²), and the twin's night factor
@@ -194,14 +195,12 @@ describe('school.orientation', () => {
     const sim = student('g19-orientation');
     // The road not taken: a twin in New Haven for the week, its sessions attended through the clock.
     const there = twinOf(sim);
-    // TEST SETUP: in New York over orientation's week, so its five sessions are missed.
+    // TEST SETUP: in New York over orientation’s week, so its five sessions are missed.
     awayIn(sim, 'us-ny-newyork');
     tended(sim, on(2026, 8, 29, 9));
     expect(sessions(sim).map((i) => i.status)).toEqual(['missed', 'missed', 'missed', 'missed', 'missed']);
-    // Away, refused in its words, with no time spent and nothing done.
-    const t0 = sim.now;
-    expect(sim.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('Orientation is in New Haven.');
-    expect(sim.now).toBe(t0);
+    // Away, Catch Up was refused in its words, “Orientation is in New Haven.”, and this test held it, until the refusal
+    // went on 2026-10-13: no play reaches it, every student being in New Haven with nothing to move them.
     expect(cw(sim).orientation.done).toEqual({});
     // TEST SETUP: back in New Haven on the Saturday before classes.
     awayIn(sim, 'us-ct-newhaven');
@@ -298,16 +297,13 @@ describe('school.orientation', () => {
     expect(read.ok, read.error).toBe(true);
   }, 60_000);
 
-  it('PLAYER JOURNEY: Catch Up on the Coursework tab: grayed away from New Haven with the reason in words; pressed there, the class met, its toast, and the row done', () => {
+  // Until 2026-10-13 this also drew Catch Up grayed away from New Haven, “Orientation is in New Haven.” on each of the
+  // five, which went that day: no play reaches it, every student being in New Haven with nothing to move them.
+  it('PLAYER JOURNEY: Catch Up on the Coursework tab, the week missed: pressed in New Haven, the class met, its toast, and the row done', () => {
     const sim = student('g19-orientation-screen');
+    // TEST SETUP: in New York over orientation’s week, so its five sessions are missed.
     awayIn(sim, 'us-ny-newyork');
     tended(sim, on(2026, 8, 29, 9));
-    const away = drawn(sim, 'coursework');
-    const grayed = away.buttons.filter((b) => b.text === 'Catch Up');
-    expect(grayed).toHaveLength(5);
-    expect(grayed.every((b) => b.disabled === true && b.title === 'Orientation is in New Haven.')).toBe(true);
-    expect(away.shown.split('Orientation is in New Haven.').length - 1).toBe(5);
-
     awayIn(sim, 'us-ct-newhaven');
     const here = drawn(sim, 'coursework');
     const offered = here.buttons.filter((b) => b.text === 'Catch Up');

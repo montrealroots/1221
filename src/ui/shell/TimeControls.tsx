@@ -8,7 +8,7 @@
 import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Modal, WhyNot } from '@/ui/components/primitives';
+import { Modal, WhyNot, dialogOpen } from '@/ui/components/primitives';
 import {
   suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, lookAfterOptions, labelFor, type LookAfter,
   LONGEST_NIGHT, SHORTEST_SLEEP,
@@ -66,11 +66,14 @@ export function TimeControls() {
   return (
     <>
       <div className="row gap-1 topbar-time" role="group" aria-label="Time Controls">
+        {/* Play or Pause names what a press does, and has no pressed state. Until 2026-10-13 it was also a toggle,
+            `aria-pressed` on while paused, so a screen reader said “Play, pressed” with the clock stopped and “Pause, not
+            pressed” with it running: a toggle’s name stays the same while its state changes (WAI-ARIA Authoring
+            Practices, Button pattern), and this one’s changes. */}
         <Gated
           feature="ui.play"
           className="btn btn-ghost btn-sm"
           onClick={() => setSpeed(speed === 'paused' ? 'live' : 'paused')}
-          aria-pressed={speed === 'paused'}
           title={speed === 'paused' ? 'Resume Time' : 'Pause Time'}
         >
           {speed === 'paused' ? 'Play' : 'Pause'}
@@ -501,7 +504,13 @@ function AdvanceMenu({
   );
 }
 
-/** A menu that closes on a click outside it or on Escape. */
+/**
+ * A menu that closes on a click outside it or on Escape, but not while a dialog is open over it: the press or the
+ * Escape is the dialog’s, and the menu is left as it was under it, with the control that opened the dialog, which
+ * gets focus back when the dialog closes. Until 2026-10-13 it closed on either, so How This Works in the menu opened
+ * the help and the help’s own Close, or Escape, shut the menu under it and lost the focus (found by the guide audit
+ * of that day).
+ */
 function useDropdown() {
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLDivElement | null>(null);
@@ -509,9 +518,13 @@ function useDropdown() {
   useEffect(() => {
     if (!open) return;
     const away = (event: MouseEvent) => {
+      if (dialogOpen()) return;
       if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
     };
-    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    const escape = (event: KeyboardEvent) => {
+      if (dialogOpen()) return;
+      if (event.key === 'Escape') setOpen(false);
+    };
     document.addEventListener('mousedown', away);
     document.addEventListener('keydown', escape);
     return () => {

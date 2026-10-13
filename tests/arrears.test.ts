@@ -61,7 +61,8 @@ describe('a day of work, enjoyed', () => {
     for (const dial of ['energy', 'sleepDebt', 'condition', 'fitness', 'nourishment', 'hygiene'] as const) expect(loves.wellbeing[dial]).toBe(plain.wellbeing[dial]);
   });
 
-  it('takes the room by extraversion, the road by openness and a rehearsal by agreeableness', () => {
+  // Until 2026-10-13 this took the road by openness too (`WorkDay.away`), which no day in the game set: it went that day.
+  it('takes the room by extraversion, new work by openness and a rehearsal by agreeableness', () => {
     const shy = body({ personality: { ...body().personality, extraversion: 5 } });
     const bold = body({ personality: { ...body().personality, extraversion: 95 } });
     const even = body();
@@ -70,10 +71,10 @@ describe('a day of work, enjoyed', () => {
     expect(shy.wellbeing.stress).toBeCloseTo(50 + DISPOSED.room * 0.9, 10);
     expect(bold.wellbeing.stress).toBeCloseTo(50 - DISPOSED.room * 0.9, 10);
     expect(even.wellbeing.stress).toBe(50);
+    // New work, from 2026-10-09, as the road was, with a blunt company that a day not of rehearsal doesn’t read.
     const open = body({ personality: { ...body().personality, openness: 95, agreeableness: 5 } });
-    enjoyWork(open, { away: true });
+    enjoyWork(open, { novel: true });
     expect(open.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);
-    // New work, from 2026-10-09, as the road.
     const fresh = body({ personality: { ...body().personality, openness: 95, agreeableness: 50 } });
     enjoyWork(fresh, { novel: true });
     expect(fresh.wellbeing.morale).toBeCloseTo(50 + DISPOSED.away * 0.9, 10);

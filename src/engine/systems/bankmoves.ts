@@ -103,10 +103,12 @@ export function openRefusal(sim: Simulation, person: Person, bankId: string, at:
   // US persons only: a citizen, or a green-card holder (`usPerson`); Capital One's disclosure says so, and Citi's
   // branch route for a nonresident isn't published.
   if (rules?.usPersonsOnly && !usPerson(person, at)) return `${bank.name} opens this account for US citizens and permanent residents; on an F-1 you’re neither.`;
-  // Without a Social Security number, a bank that opens for international students does it in a branch: in town, out
-  // of hospital, and an hour there (SLATE's estimate).
+  // Without a Social Security number, a bank that opens for international students does it in a branch: out of
+  // hospital, and an hour there (SLATE’s estimate). Until 2026-10-13 it also asked to be in town, “in a branch where you
+  // live”, which travel could leave until it went in the scope reset of 2026-10-09; since then nothing moves a person
+  // from where they live (`homeOf` is where they are), so nothing reached it, and it went; found by that day’s second
+  // round of evidence.
   if (channelFor(person, bank) === 'branch') {
-    if (person.currentLocationId !== homeOf(person)) return `Without a Social Security number, ${bank.name} opens your account in a branch where you live.`;
     const busy = startRefusal(sim, person, BRANCH_MINUTES, true);
     if (busy) return busy;
   }
@@ -435,7 +437,8 @@ export function registerBankMoves(sim: Simulation): void {
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('A standing order pays from an open current account of yours.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
-    if (account.id === order.toId) throw new CommandError('It pays into that account.');
+    // Until 2026-10-13 a current account the order paid into was refused here. A standing order goes only into savings
+    // (`bank.add_standing_order`), and only a current account pays one, so nothing reached it, and it went.
     order.fromId = account.id;
     return { fromId: account.id };
   });

@@ -158,7 +158,9 @@ export const CALIFORNIA_MANDATE = { flat: 950_00, share: 0.025, bronzeMonth: 420
  * Emancipation Day, 16 April, observed on the nearest weekday. A refund comes
  * within 21 days of filing. Late, 5% of the unpaid tax a month or part of
  * one, up to 25%, less the 0.5% a month for paying late in the same months;
- * over 60 days late, at least $525 (returns due in 2026) or all the tax due.
+ * over 60 days late, at least $535 (returns required to be filed in 2027, Rev. Proc. 2025-32, held after) or all the
+ * tax due. Until 2026-10-13 it was 2026's $525 (Rev. Proc. 2024-40), where the first return a life files is due in
+ * 2027; found by that day's check.
  * The qualified performing artist deduction takes the job's expenses off
  * income at $16,000 or less, with two employers paying $200 or more and
  * expenses over a tenth of it; other employee expenses aren't deductible,
@@ -169,7 +171,7 @@ export const RETURN = {
   lateMonthly: 0.05,
   payLateMonthly: 0.005,
   lateCap: 0.25,
-  lateMinimum: 525_00,
+  lateMinimum: 535_00,
   lateMinimumAfterDays: 60,
   performingArtistIncome: 16_000_00,
   performingArtistEmployers: 2,

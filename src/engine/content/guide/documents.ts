@@ -24,6 +24,10 @@
  * end, which outlasts the OPT its days without work cancel, and the status with it, by months, and nothing cancels the
  * card then (`presenceEnds`, `systems/permission.ts`); and that a license began as REAL ID at its state's published
  * share, where a state with none published draws at the mean of those that are (`realIdShare`).
+ *
+ * On 2026-10-13 “The Social Security office is in New Haven, at 150 Court Street.” went from the engine (`ssnRefusal`),
+ * reached by no play, since every student is in New Haven and nothing moves one; until then the entry listed it, and
+ * said the number needed you in New Haven.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -123,7 +127,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     costs: [
       { label: 'Time', value: 'None: applying, reporting and replacing move no clock' },
       { label: 'A US Passport', value: `${dollars(US.fee)}, ready in up to ${US.days} days, good for ${US.validityYears} years; ${dollars(US.fee + US_FASTER.extra)} for ${US_FASTER.days} days. A renewal costs the first-time fee too`, estimate: US.daysEstimated },
-      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, SLATE’s term for the state’s “up to seven”; for anyone not a citizen, after ${NONCITIZEN_ID.saveBusinessDays} business days for the DMV’s SAVE check, to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
+      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, SLATE’s term for the state’s “up to seven”; for anyone not a citizen, after ${NONCITIZEN_ID.saveBusinessDays} federal workdays for the DMV’s SAVE check, weekends and federal holidays not among them, to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
       { label: 'Replacing An ID Card', value: `Connecticut ${dollars(CT_ID_AGAIN.fee)} in ${CT_ID_AGAIN.days} days; New York ${dollars(NY_ID_AGAIN.fee)} in ${NY_ID_AGAIN.days}; California ${dollars(CA_ID_AGAIN.fee)} in ${CA_ID_AGAIN.days}` },
       { label: 'Replacing A License', value: `Connecticut ${dollars(CT_LICENSE.fee)} in ${CT_LICENSE.days} days; New York ${dollars(NY_LICENSE.fee)} in ${NY_LICENSE.days}, free when it was stolen and the police have your report; California ${dollars(CA_LICENSE.fee)} in ${CA_LICENSE.days}` },
       { label: 'A Police Report', value: 'Free, and filed at once' },
@@ -159,8 +163,9 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'Get, not a US citizen at a US state’s counter: “The DMV checks lawful presence through SAVE, and you stayed past your status.”; out of school on an F-1 with no OPT in force, “On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.”; or, with no Social Security number, “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”, then where you stand: at school, “You can, through work-study: apply for it on the Papers screen first.”; applied for, “Yours is on its way.”; out of school with none applied for, “SLATE issues the number only to an F-1 student at school, through work-study, and never the letter.”, so the card is out of reach.',
       'Report Lost… and Report Stolen… show only on a passport, a license, an international driving permit or an ID card in force. A visa, a permit or a travel authorization is a status the government holds, and losing its paper doesn’t end it.',
       'File A Police Report: “Lost property is reported at a station here.” or “A theft is reported at a station here.”, where the police take that kind of report only in person.',
-      'Replace It, for an ID card: “It’s replaced where it was issued, for someone living there.”',
+      'Replace It, for an ID card: “It’s replaced where it was issued, for someone living there.”, or, run out or running out before a new card would come, “It ran out on …” or “It runs out on …, before a new card would come”, then “, and a replacement keeps its date, so it isn’t replaced.”',
       `Replace It, for a license from elsewhere: “Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.”${NY_MAILS}`,
+      'Replace It, for a license run out or running out before a new card would come: “It ran out on …” or “It runs out on …, before a new card would come”, then that a replacement keeps its date, and a license past its date is renewed, which SLATE has done for none since the cars went.',
       'Either way, where SLATE lacks the issuer’s fee: “SLATE doesn’t have what its issuer charges to replace it.”',
       'Any fee: “… is more than the bank can cover.”',
     ],
@@ -195,13 +200,13 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     short: `For a student on an F-1, Permission To Work holds two applications of your own. A Social Security number, applied for in person at New Haven’s office, gets an IRS plan decided at once, opens some banks’ accounts online and Connecticut’s ID card, and spares a 1040-NR its ITIN wait. OPT, after the degree, keeps your US status past its ${STARTING.graceDays} days of grace; SLATE has no work after the degree, so it ends after ${OPT.unemploymentDays} days without work.`,
     steps: [
       'Open Papers and its Permission To Work tab. The Permission To Work panel shows Your Program Ends and Your US Status.',
-      `Registered at school, in New Haven, with your passport in force, press Apply At The Social Security Office under Social Security Number. It takes ${SSN_VISIT} there.`,
+      `Registered at school, with your passport in force, press Apply At The Social Security Office under Social Security Number. It takes ${SSN_VISIT} there.`,
       `From ${OPT.windowBeforeDays} days before the program ends to ${OPT.windowAfterDays} after, press Apply For OPT under OPT, or Apply With Premium Processing for a decision in ${OPT.premiumBusinessDays} business days.`,
       'When your status is ending and OPT can still be applied for, What Needs You asks too, with Apply For OPT and Apply For OPT, Premium Processing.',
     ],
     needs: [
       'A student on an F-1.',
-      `For the number: registered for the program, since the School’s work-study is the on-campus work it needs; a passport in force; in New Haven and out of hospital, with ${SSN_VISIT} free.`,
+      `For the number: registered for the program, since the School’s work-study is the on-campus work it needs; a passport in force; out of hospital, with ${SSN_VISIT} free.`,
       'For OPT: the degree completed or on its way, inside its window, and no OPT applied for before.',
       'OPT’s fee in your accounts.',
     ],
@@ -209,7 +214,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       { label: 'Time', value: `${SSN.visitMinutes} minutes at the Social Security office, which the clock moves through; OPT moves no clock`, estimate: true },
       { label: 'A Social Security Number', value: 'Free' },
       { label: 'OPT', value: `${dollars(OPT.fee)} filed online; premium processing ${dollars(OPT.premiumFee)} more` },
-      { label: 'How Long', value: `The card in ${SSN.days} days; OPT decided in ${OPT.standardDays} days, or ${OPT.premiumBusinessDays} business days with premium processing`, estimate: true },
+      { label: 'How Long', value: `The card in ${SSN.days} days; OPT decided in ${OPT.standardDays} days, or ${OPT.premiumBusinessDays} business days with premium processing, a weekend or a federal holiday not among them`, estimate: true },
     ],
     reads: [
       { label: 'Your Program’s End', value: 'May 31 of your class’s last year, or the day you left school without the degree' },
@@ -230,14 +235,14 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'Stay past it and you’re out of status: the F-1 is void, a marketplace plan ends with the month, Covered Connecticut and the DMV’s ID card are closed to you, and so is the Visa Waiver Program, for good.',
     ],
     interpret: [
-      'Your US Status reads Held while you study or an application is decided, Ends with its date once school is over and nothing is being decided (on OPT, the date counts its grace after), or Out Of Status.',
+      'Your US Status reads Held while you study or an application is decided, Ends with its date once school is over and nothing is being decided (on OPT, the day its days without work run out, with no grace after), or Out Of Status.',
       'An approved OPT reads In Force with its dates, and Canceled once its days without work ran out.',
       'SLATE keeps no Social Security number itself, only whether you hold one, so no number is shown.',
     ],
     unavailable: [
       'The number’s button shows only while you have no number and none on its way; a US citizen’s panel reads Held, as a US citizen.',
       '“On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.”, or once school is over, “On an F-1, the number needs on-campus work, which ends with the program.”',
-      '“The office asks for your passport, in force.”, “The Social Security office is in New Haven, at 150 Court Street.”, or another commitment in that hour.',
+      '“The office asks for your passport, in force.”, or another commitment in that hour.',
       `OPT: “It opens” on a date ${OPT.windowBeforeDays} days before the program ends, or “It closed” ${OPT.windowAfterDays} days after.`,
       '“OPT follows a degree completed, and you left without it.”',
       '“You’ve applied for OPT already.”, once, even after it ends; and for a US citizen, “OPT is for a student on an F-1; you’re a citizen.”',

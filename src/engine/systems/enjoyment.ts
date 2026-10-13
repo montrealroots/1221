@@ -44,15 +44,15 @@ export function genresRead(): Set<string> {
 }
 
 /**
- * A day's work as enjoyment sees it: the play's kinds, whether it's new work, away from home, or a rehearsal. Until
- * 2026-10-10 it carried a medium, a role and a set of crafts too, read only against the interests.
+ * A day's work as enjoyment sees it: the play's kinds, whether it's new work, or a rehearsal. Until 2026-10-10 it
+ * carried a medium, a role and a set of crafts too, read only against the interests; until 2026-10-13 it declared a day
+ * away from home too, which openness took as it takes new work and which no call set.
  */
 export interface WorkDay {
   /** A play's kinds of story (`genresOfPlay`). */
   genres?: readonly string[];
   /** New work: a festival's new play or a Cabaret piece, taken by openness. */
   novel?: boolean;
-  away?: boolean;
   rehearsal?: boolean;
 }
 
@@ -67,8 +67,9 @@ export const LOVED_WORK = { mood: 1.5, relief: 1.5 } as const;
 
 /**
  * How somebody's disposition takes the work, SLATE's estimate: a house or a class watching is up to 4 points of
- * stress more for the most introverted and 4 less for the most extraverted; new work or a day away up to 2 of morale
- * either way by openness; a day of rehearsal up to 2 either way by agreeableness. Fifty is neither.
+ * stress more for the most introverted and 4 less for the most extraverted; new work up to 2 of morale either way by
+ * openness (`away`, named for the day away it took too until 2026-10-13, which no call set); a day of rehearsal up to
+ * 2 either way by agreeableness. Fifty is neither.
  */
 export const DISPOSED = { room: 4, away: 2, rehearsal: 2 } as const;
 
@@ -79,7 +80,7 @@ export function enjoyWork(person: Person, day: WorkDay): void {
   const w = person.wellbeing;
   const loved = lovedInWork(person, day).length;
   let mood = loved * LOVED_WORK.mood;
-  if (day.away || day.novel) mood += DISPOSED.away * lean(person.personality?.openness);
+  if (day.novel) mood += DISPOSED.away * lean(person.personality?.openness);
   if (day.rehearsal) mood += DISPOSED.rehearsal * lean(person.personality?.agreeableness);
   w.morale = clamp(w.morale + mood, 0, 100);
   w.stress = clamp(w.stress - loved * LOVED_WORK.relief, 0, 100);

@@ -33,7 +33,7 @@ import { formatMoney, saveCurrency } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
-import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, instantFromZoned, normalDate, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { bankById } from '../content/banks';
 import { cardTerms, minimumDue, stateOf, statementDayOf, type CardTerms } from './credit';
 import { closesQuarterly } from './banking';
@@ -71,7 +71,10 @@ export function activity(sim: Simulation, account: Account, from: Instant, to: I
     if (txn.at < from) break;
     const delta = txn.postings.reduce((s, p) => (p.accountId === account.id ? s + p.amount : s), 0);
     if (delta === 0 && !txn.postings.some((p) => p.accountId === account.id)) continue;
-    if (txn.at >= to) { atEnd -= delta; continue; }
+    // A closed account’s last period takes in what posted at the closing itself: the interest and fees settled and what
+    // it held sent on, so it ends at nothing (from 2026-10-13: until then they fell after its end, and its last statement
+    // closed at the balance before them; found by that day’s second round of evidence).
+    if (txn.at > to || (txn.at === to && account.closedAt !== to)) { atEnd -= delta; continue; }
     inside.push({ txn, delta });
   }
   inside.reverse();
@@ -84,6 +87,14 @@ export function activity(sim: Simulation, account: Account, from: Instant, to: I
   return { opening: opening * k, closing: atEnd * k, lines };
 }
 
+
+/**
+ * A period’s edge: a day of a month at an hour, the month run over (December’s next, January’s last) put through
+ * `normalDate` first. From 2026-10-13: until then the 13th or the 0th month went to `instantFromZoned` as it was, which
+ * returns such a reading a minute late, so December’s account period ended at 00:01 on 1 January, a minute into
+ * January’s, and a card’s rebuilt period across a new year began at 9:01 (found by that day’s third round of defects).
+ */
+const edge = (year: number, month: number, day: number, hour: number, zone: TimeZone): Instant => instantFromZoned({ ...normalDate(year, month, day), hour }, zone);
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -117,11 +128,11 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
     const step = quarterly ? 3 : 1;
     const startMonth = endMonth - step + 1;
     const to = card
-      ? instantFromZoned({ year: y, month: endMonth, day: sday, hour: 9 }, zone)
-      : instantFromZoned({ year: y, month: endMonth + 1, day: 1, hour: 0 }, zone);
+      ? edge(y, endMonth, sday, 9, zone)
+      : edge(y, endMonth + 1, 1, 0, zone);
     const from = card
-      ? instantFromZoned({ year: y, month: endMonth - 1, day: sday, hour: 9 }, zone)
-      : instantFromZoned({ year: y, month: startMonth, day: 1, hour: 0 }, zone);
+      ? edge(y, endMonth - 1, sday, 9, zone)
+      : edge(y, startMonth, 1, 0, zone);
     const endParts = zonedParts(to - 1, zone);
     const fromParts = zonedParts(from, zone);
     const label = card
@@ -129,9 +140,11 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
       : quarterly
         ? `${MONTHS[fromParts.month - 1]} To ${MONTHS[endParts.month - 1]} ${endParts.year}`
         : `${MONTHS[fromParts.month - 1]} ${fromParts.year}`;
+    // A closing at a period’s very end ends that period, and a period that would begin at it has nothing in it and isn’t
+    // drawn (from 2026-10-13, when the closing’s own postings joined the last period: the two would both have shown them).
+    const closing = account.closedAt !== undefined && to >= account.closedAt;
     // A card's past statement drawn here has no cut kept (a save from before 2026-10-10): rebuilt, and said so.
-    const closing = account.closedAt !== undefined && to > account.closedAt;
-    out.push({ from, to: closing ? account.closedAt! : to, label: closing ? `${label}, To Its Closing` : to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
+    if (!closing || from < account.closedAt!) out.push({ from, to: closing ? account.closedAt! : to, label: closing ? `${label}, To Its Closing` : to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
     if (from <= account.openedAt || (fromParts.year < start.year - 1)) break;
     m -= step;
     while (m < 1) { m += 12; y -= 1; }
@@ -142,7 +155,13 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
 /**
  * A card's periods from its kept cuts (from 2026-10-10): the open one from the last cut to the next statement on the
  * calendar, each past one between two cuts, so a moved statement day moves only what comes after it. Before the first
- * cut kept, a save from before then: monthly on that first cut's day, back to the card's opening, each marked rebuilt.
+ * cut kept, a save from before then, or a card held from before the life began: monthly on that first cut’s day, back to
+ * the card’s opening, each marked rebuilt. The first cut’s own period isn’t: it’s that statement, kept with its figures
+ * (`issued`), from the statement day a month before it or the card’s opening. Until 2026-10-13 it was marked rebuilt too,
+ * so every life’s first card statement read “(Rebuilt)”, with the note that it came from before statements were kept
+ * (found by that day’s third round of defects). Its start is drawn, not kept: where the day was moved before that first
+ * cut, it’s the moved day a month back, and a first statement the move put more than a month after the card’s opening
+ * is drawn as two, the older one rebuilt.
  */
 function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]): Period[] {
   const zone = sim.zone;
@@ -165,8 +184,9 @@ function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]
   const first = zonedParts(cuts[0]!, zone);
   let to = cuts[0]!;
   for (let n = 1; n < 600 && to > account.openedAt; n += 1) {
-    const from = Math.max(account.openedAt, instantFromZoned({ year: first.year, month: first.month - n, day: first.day, hour: 9 }, zone));
-    out.push({ from, to, label: `${labelOf(to)} (Rebuilt)`, rebuilt: true });
+    const from = Math.max(account.openedAt, edge(first.year, first.month - n, first.day, 9, zone));
+    const rebuilt = n > 1;
+    out.push({ from, to, label: rebuilt ? `${labelOf(to)} (Rebuilt)` : labelOf(to), ...(rebuilt ? { rebuilt: true } : {}) });
     to = from;
   }
   return out;
@@ -233,6 +253,11 @@ export interface CardStatement {
   lines: StatementLine[];
   /** For the latest closed statement: the least to pay, and when. */
   minimum?: Money;
+  /**
+   * Whether that least is a hardship plan’s payment (`CardState.issued`, from 2026-10-13); absent on a statement kept
+   * before then, which kept the card’s own minimum whatever it asked.
+   */
+  plan?: boolean;
   /** What paying only the minimum each month would take, and cost in all; and the payment that clears it in three years. */
   minimumOnly?: { months: number; total: Money; threeYears: Money; threeYearsTotal: Money } | 'never';
   /** Britain: next month's interest on the new balance, if it's carried. */
@@ -273,6 +298,7 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
   if (period.to <= sim.now && out.newBalance > 0) {
     // The card's own plan months, not the everyday card's: until 2026-09-28 they were one card.
     out.minimum = kept?.minimum ?? minimumDue(sim, out.newBalance, terms, interest, owner?.credit ? stateOf(owner, card).statementPlanDue ?? 0 : 0);
+    if (kept?.plan !== undefined) out.plan = kept.plan;
     out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms, kept?.at);
     const bank = card.bankId ? bankById(card.bankId) : undefined;
     if (bank?.iso === 'GB' && terms.kind === 'revolving') out.nextInterest = Math.round(out.newBalance * terms.apr / 12);

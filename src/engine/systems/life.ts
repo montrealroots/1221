@@ -371,8 +371,8 @@ export function registerLife(sim: Simulation): void {
       if (!Number.isFinite(start)) throw new CommandError('Say when to sleep.');
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
       if (start > s.now + MS_DAY) throw new CommandError('A night can be planned a day ahead at most.');
-      const busy = occupiedAt(s, start);
-      if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+      // A bedtime at a commitment is refused at the bedtime, below. Until 2026-10-13 it was asked here first too, of the
+      // same moment in the same words; its mutation survived the evidence pass, since the second asking settles it.
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not

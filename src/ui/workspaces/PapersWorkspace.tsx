@@ -877,6 +877,10 @@ function YourDoctor() {
   const american = person.currentLocationId.startsWith('us-');
   const practices = clinicsIn(person.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
   if (practices.length === 0) return null;
+  // Your Doctor is a choice only where the town keeps two practices or more (from 2026-10-13: until then New Haven's
+  // one, Fair Haven, was offered beside The Town's First Practice, the same place, and choosing it changed no booking,
+  // bill or price; found by the second round of that day). With one, the line below names it.
+  const choosing = practices.length > 1;
   // The empty choice is shown only while nothing here is chosen, as what's had then (from 2026-10-12: until then it
   // was offered after a choice too, and picking it did nothing, since the engine refuses an empty one).
   const ownPractice = practices.find((c) => c.id === person.health?.clinicId);
@@ -889,15 +893,17 @@ function YourDoctor() {
   return (
     <Panel title="Your Doctor" subtitle="Where a doctor’s visit, urgent care and an emergency are had where you live" help="papers.doctor">
       <div className="col gap-3">
-        <div className="col gap-1">
+        {(choosing || american) && <div className="col gap-1">
           <div className="field-row field-row-tight">
-            <div className="field">
-              <label htmlFor="own-doctor">Your Doctor</label>
-              <select id="own-doctor" value={ownPractice?.id ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast('Your doctor, chosen.', 'positive'); }}>
-                {!ownPractice && <option value="">The Town’s First Practice</option>}
-                {practices.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
-            </div>
+            {choosing && (
+              <div className="field">
+                <label htmlFor="own-doctor">Your Doctor</label>
+                <select id="own-doctor" value={ownPractice?.id ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast('Your doctor, chosen.', 'positive'); }}>
+                  {!ownPractice && <option value="">The Town’s First Practice</option>}
+                  {practices.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </div>
+            )}
             {american && (
               <div className="field">
                 <label htmlFor="own-pharmacy">Your Pharmacy</label>
@@ -909,8 +915,8 @@ function YourDoctor() {
               </div>
             )}
           </div>
-          <WhyNot reasons={[['Your Doctor', choose.reason], ...(american ? [['Your Pharmacy', pharmacy.reason] as const] : [])]} />
-        </div>
+          <WhyNot reasons={[...(choosing ? [['Your Doctor', choose.reason] as const] : []), ...(american ? [['Your Pharmacy', pharmacy.reason] as const] : [])]} />
+        </div>}
         <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
         <div className="small">{`What it would cost you here now: a doctor’s visit ${formatMoney(careQuote(sim, person, 'visit'), cur)}, urgent care ${formatMoney(careQuote(sim, person, 'urgent'), cur)}, an emergency ${formatMoney(careQuote(sim, person, 'emergency'), cur)}`}</div>
         {(person.health?.appointments ?? []).map((ap) => (

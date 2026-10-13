@@ -1,7 +1,8 @@
 /**
  * The maximum-mastery contract, every combination the game has (from 2026-10-10): a night of every play with its
  * kinds' demands (`castingReads`), a showing of every coursework template with every scene's play's demands
- * (`withDemands`, as `judgeWork` reads them), each at every difficulty, comes out at 100 on every dimension when
+ * (as `withDemands` added them, each once at a weight of one; it went on 2026-10-13, read by tests alone, and is made
+ * here so the reads stay as they were: from 2026-10-10 `judgeWork` read a scene’s material in their place), each at every difficulty, comes out at 100 on every dimension when
  * everything is met. Then, for every task profile: preparation short on one part lowers exactly the dimensions that
  * read it; each condition lowers exactly the dimensions that name it (a concussion every one); and once it passes, the
  * maximum is back. These are calculation fixtures; `tests/mastery-integration.test.ts` takes the same contract through
@@ -13,10 +14,11 @@ import { castingReads } from '@/engine/systems/school';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '@/engine/content/tasks';
 import { TEMPLATES, SCENES } from '@/engine/content/coursework';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
-import { withDemands } from '@/engine/content/demands';
+import { DEMAND_TECHNIQUE, genreTags } from '@/engine/content/demands';
 import { familiesOf } from '@/engine/content/genres';
 import { MASTERED } from '@/engine/content/abilities';
 
+const withDemands = (r: Record<string, number>, genres: readonly string[]) => ({ ...Object.fromEntries(genres.flatMap(genreTags).map((t) => [DEMAND_TECHNIQUE[t], 1])), ...r });
 const FULL: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
 const WELL: Condition = { readiness: 90 };
 const PLAYS = [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS];

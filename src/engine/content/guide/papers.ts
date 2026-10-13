@@ -33,6 +33,16 @@
  * was as it was; drawn, Tax Returns writes the empty records its readers make where none is kept (`returnsOf`,
  * `earningsOf`), which every reader takes for none, so the save's bytes changed and nothing in the world did. It says
  * the second now.
+ *
+ * Read again on 2026-10-13, after that day’s review. The doctor’s example said every booking was moved to the Monday when
+ * its wait ended on a weekend, and the entry put the visit on a weekday; from that day `slot` moves a Saturday, a Sunday
+ * or a public holiday where you live to the next working day, so a wait ending on Thanksgiving is booked for the Friday,
+ * and the entry says so where it gives the weekday. Yale’s dental plan gave its deductible and maximum “a year”, where
+ * from that day they’re kept by its plan year (`dentalYearOf`), and a plan bought in August or September has two of
+ * each. An appeal won said only that what was paid over the share came back or came off the debt, where from that day a
+ * debt it clears gives back what was paid past it and settles every bill that went to it. And the overview said the Tax
+ * Returns tab held a return each February, where from that day a year with nothing owed or due back and income under
+ * the standard deduction has none, unless it’s a student’s on an F-1 (`registerTaxReturn` in `systems/taxreturn.ts`).
  */
 
 import { formatMoney } from '../../core/money';
@@ -176,7 +186,9 @@ export const PAPERS: readonly GuideEntry[] = [
     now: ['Opening the screen and its tabs changes nothing in the world. Each button on it does what its own entry says.'],
     later: [],
     interpret: [
-      'The Papers line on Home shows what needs doing as an alert: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed with its interest and a late penalty growing each month.',
+      // Until 2026-10-13 this said tax owed grew each month whenever it was owed; Home’s alert says so only once a
+      // return’s due date has passed, from which interest and the late-payment penalty run (`growing`, ui/screens/Home.tsx).
+      'The Papers line on Home shows what needs doing as an alert: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.',
       'Cover on the line names what covers you this month: Yale Health, HUSKY D, Covered Connecticut or Marketplace Plan, or none. A program shows by its own name, as Your Cover shows it.',
     ],
     unavailable: [`Until “${CHAPTER}” is read, Papers is off the menu, and Home’s Papers line is a panel marked Locked: its Read About It opens the guide at that chapter.`],
@@ -188,7 +200,7 @@ export const PAPERS: readonly GuideEntry[] = [
     connections: [
       { to: 'start.guide', kind: 'prerequisite', why: `“${CHAPTER}” in the guide opens Papers and every button on it.` },
       { to: 'papers.health-cover', kind: 'optional', why: 'The Health Cover tab holds your cover, your doctor, your conditions and your medical bills.' },
-      { to: 'taxes.return', kind: 'optional', why: 'The Tax Returns tab holds each year’s return, ready each February.' },
+      { to: 'taxes.return', kind: 'optional', why: 'The Tax Returns tab holds each year’s return, ready each February for a year with anything owed or due back, or income of the standard deduction or more, and every year for a student on an F-1.' },
       { to: 'day.needs', kind: 'optional', why: 'Notices about your cover, a bill, an appointment, a claim or a document carry Go There, which opens Papers.' },
     ],
     example: {
@@ -228,7 +240,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'The Marketplace Premium', value: `The benchmark silver plan, ${BENCH_WORDS}, taken in full on the first of each month`, estimate: true },
       { label: 'Access Health CT Standard Silver', value: `${usd(SILVER.visit)} a visit, ${usd(SILVER.urgent)} urgent care, ${usd(SILVER.emergency)} the emergency room, a stay ${usd(SILVER.stayCopay ?? 0)} after a ${usd(SILVER.deductible)} deductible, ${usd(SILVER.outOfPocket)} a year at most` },
       { label: 'Uninsured', value: `The commercial price times ${MARKUP}: a visit ${usd(CARE.price.visit * MARKUP)} at ${MEDICAL_CPI.base.visit[0]}’s prices and an emergency ${usd(CARE.price.emergency * MARKUP)} at ${MEDICAL_CPI.base.emergency[0]}’s, each grown since by its price index. An emergency or a stay at a Connecticut hospital has its charity taken off as it’s billed: free to ${pct(CT_CHARITY.freeTo)} of the poverty line, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}`, estimate: true },
-      { label: 'Yale Delta Dental Basic', value: `${usd(YALE_DENTAL.premium)} for Yale’s plan year, paid at once and covering from that day: bought in August or September, to 30 September a year on; bought from October to July, to the next 30 September. Cleanings in full, and ${pct(YALE_DENTAL.basic)} of a filling paid by the plan after a ${usd(YALE_DENTAL.deductible)} deductible, to ${usd(YALE_DENTAL.max)} a year` },
+      { label: 'Yale Delta Dental Basic', value: `${usd(YALE_DENTAL.premium)} for Yale’s plan year, paid at once and covering from that day: bought in August or September, to 30 September a year on; bought from October to July, to the next 30 September. Cleanings in full, and ${pct(YALE_DENTAL.basic)} of a filling paid by the plan after a ${usd(YALE_DENTAL.deductible)} deductible, to ${usd(YALE_DENTAL.max)}, both kept by Yale’s plan year, 1 October to 30 September: bought in August or September, the weeks before 1 October are the plan year then ending, with a deductible and a maximum of their own` },
       { label: 'Time', value: 'None: enrolling, appealing, applying and paying move no clock' },
     ],
     reads: [
@@ -250,11 +262,14 @@ export const PAPERS: readonly GuideEntry[] = [
     later: [
       `On the first of each month the marketplace premium is taken from ${FROM_CURRENT}. If it can’t be paid, the plan ends that day, and a plan left unpaid opens no special enrollment.`,
       `A program comes up for renewal: in Connecticut every ${RENEW_CT[0]![1]} months, and from ${fullDay(RENEW_CT[RENEW_CT.length - 1]![0])} every ${RENEW_CT[RENEW_CT.length - 1]![1]}. It’s checked on last month’s income again and, for HUSKY D from ${fullDay(PUBLIC_COVER.workFrom)}, on ${PUBLIC_COVER.workHours} hours’ work or ${usd(PUBLIC_COVER.workEarnings)} of pay from work that month; fail either and it ends, with a notice.`,
+      // Until 2026-10-13 Covered Connecticut ran to its renewal out of status, and this said it ended there with a notice
+      // naming the status; from that day it ends with the month, as a marketplace plan does (`healthMonth`).
+      'Stay past your US status and, at the next month’s start, a marketplace plan ends with the notice “Your Marketplace Plan Has Ended”, and Covered Connecticut with “Your Public Cover Has Ended”, or “Your Public Cover Won’t Begin” where you enrolled ahead.',
       `A bill still open on its due date, ${MEDICAL_DEBT.dueDays} days on, is taken from ${FROM_CURRENT}, if between them they can cover all of it. If not, it’s medical debt, owed to Your Providers, with the notice “A Medical Bill Went Unpaid”.`,
       `A medical debt of ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days after its first bill went unpaid, is reported to your credit record once, at the next month’s start, since you live in Connecticut. The notice is “A Medical Debt Is On Your Record”.`,
-      `An appeal is decided ${DENIALS.decideDays} days on. Overturned, you owe only the plan’s share, and anything paid over it comes back or comes off the debt; upheld, the bill stands.`,
+      `An appeal is decided ${DENIALS.decideDays} days on. Overturned, you owe only the plan’s share: what you paid over it comes back into the account your payments go to, what went to debt over it comes off the debt, and what you’d paid toward that debt past what’s left of it comes back too; a debt it clears settles every bill that went to it. Upheld, the bill stands.`,
       `Each Monday may bring care at an adult’s rates: about ${CARE.perYear.visit} doctor’s visits a year, ${CARE.perYear.emergency} emergency visits, a stay in hospital one year in ${Math.round(1 / CARE.perYear.stay)} (${CARE.stayDays} days), and the flu about one year in ${Math.round(1 / CARE.flu)}, likelier when you’re short of sleep or stressed.`,
-      `On the first of a month that finds you without cover, a notice says “Your Health Cover Ended”, beginning “You’re uncovered from …”. Where Yale Health ended, or a program at its renewal, your ${SPECIAL} days to enroll run from that day: after the degree, if you didn’t enroll ahead, that’s 1 August; after a withdrawal it can be weeks after the cover itself ended. A plan you dropped or left unpaid opens no such days, and the notice says the way back is open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut.`,
+      `On the first of a month that finds you without cover, a notice says “Your Health Cover Ended”, beginning “You’re uncovered from …”. Where Yale Health ended, or a program at its renewal, your ${SPECIAL} days to enroll run from that day: after the degree, if you didn’t enroll ahead, that’s 1 August; after a withdrawal it can be weeks after the cover itself ended. A plan you dropped or left unpaid opens no such days, and the notice says the way back is open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut. Out of status, it says neither the marketplace nor Covered Connecticut will take you.`,
       'Yale Delta Dental Basic runs to its 30 September whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.',
     ],
     interpret: [
@@ -315,24 +330,28 @@ export const PAPERS: readonly GuideEntry[] = [
     questions: ['How do I see a doctor?', 'How long is the wait for a doctor?', 'Why did I miss my appointment?', 'How do I book again after missing the doctor?', 'Which pharmacy is cheapest?', 'What does a referral do?'],
     where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Doctor' },
     available: `From the guide’s chapter “${CHAPTER}”. Your Pharmacy is America’s; Fill A Longer Supply shows while you keep a condition up.`,
-    short: `A doctor’s visit comes when a week brings one, about ${CARE.perYear.visit} a year, and SLATE books it for you at your doctor’s practice for the wait published where you live: ${WAIT} days in New Haven, at ${clock(CONSULT_HOUR)} on a weekday. Keep it and you’re seen and billed at what your plan leaves; miss it and you aren’t, and Book An Appointment books again. Your Pharmacy sets the cash price a generic is filled at, Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
+    short: `A doctor’s visit comes when a week brings one, about ${CARE.perYear.visit} a year, and SLATE books it for you at your doctor’s practice for the wait published where you live: ${WAIT} days in New Haven, at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday there. Keep it and you’re seen and billed at what your plan leaves; miss it and you aren’t, and Book An Appointment books again. Your Pharmacy sets the cash price a generic is filled at, Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
     steps: [
       'Open Papers, Health Cover. Your Doctor names where a doctor’s visit, urgent care and an emergency are had where you live, and what each would cost you now.',
-      'The Your Doctor box picks the practice a visit is booked at. The Town’s First Practice is where it goes until you pick.',
+      // Your Doctor's box shows only where the town keeps two practices or more (from 2026-10-13: until then New Haven's
+      // one was offered beside The Town's First Practice, the same place, and this step told a New Haven life to pick).
+      PRACTICES.length === 1
+        ? `In New Haven there’s no Your Doctor box: SLATE keeps one practice, ${PRACTICE}, and the line names it. Where a town keeps more, the box picks the practice a visit is booked at, and The Town’s First Practice is where it goes until you pick.`
+        : 'The Your Doctor box picks the practice a visit is booked at. The Town’s First Practice is where it goes until you pick.',
       'The Your Pharmacy box, in America, picks the chain whose cash price fills a generic.',
       'A booked appointment shows below with its date. When the clock reaches it, it stops and asks; be awake and out of hospital at the hour.',
       'Call It Off cancels an appointment. The visit stays owed, and Book An Appointment books it again.',
       `Fill A Longer Supply, ${LONGEST} Days, under Your Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.`,
     ],
     needs: [
-      `Your Doctor: a practice in the town you live in. In New Haven SLATE keeps ${PRACTICES.length === 1 ? `one, ${PRACTICE}` : PRACTICES.join(', ')}.`,
+      `Your Doctor: a practice in the town you live in, which keeps two or more. In New Haven SLATE keeps ${PRACTICES.length === 1 ? `one, ${PRACTICE}, so there’s none to pick` : PRACTICES.join(', ')}.`,
       'Book An Appointment: a visit owed, missed or called off, and no appointment booked.',
       'Your Pharmacy: living in America.',
       'Fill A Longer Supply: a condition you keep up, its row showing Let It Go, and the bank able to pay every condition’s fill.',
     ],
     costs: [
       { label: 'A Visit', value: `Your plan’s copay: $0 on Yale Health, HUSKY D and Covered Connecticut, ${usd(SILVER.visit)} on Access Health CT’s silver plan; uninsured, the commercial price times ${MARKUP}` },
-      { label: 'Time On The Calendar', value: `${CONSULT_MINUTES} minutes, at ${clock(CONSULT_HOUR)} local time on a weekday`, estimate: true },
+      { label: 'Time On The Calendar', value: `${CONSULT_MINUTES} minutes, at ${clock(CONSULT_HOUR)} local time on a weekday that isn’t a public holiday where you live`, estimate: true },
       { label: 'A Generic, Uninsured', value: `${CHAINS}; at any pharmacy, the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown by the drug price index`, estimate: true },
       { label: 'A Longer Supply', value: `Up to ${LONGEST} days at once in America, at ${FILLS} fills’ share, paid then`, estimate: true },
     ],
@@ -350,15 +369,18 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     later: [
       `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days; on Yale Health, HUSKY D or Covered Connecticut that’s $0, and no bill is made. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
-      'At the hour, missed: “Missed The Doctor” comes as a notice, the visit goes unbilled, and it stays owed until you book.',
+      'At the hour, missed: “Missed The Doctor” comes as a notice, the visit goes unbilled, and it stays owed until you book, or until a Monday brings another visit, which books the one owed.',
       `Each Monday, a condition’s medicine with ${FILL.refillDays} days or fewer left is refilled for ${FILL.us} days: a generic at your pharmacy’s price, a brand at the median.`,
-      'While a visit is owed or an appointment is booked, a new doctor’s visit drawn on a Monday is dropped, never billed, and no condition review is booked.',
+      // From 2026-10-13: until then a visit owed dropped every visit a Monday drew, as an appointment booked does.
+      'While an appointment is booked, a new doctor’s visit drawn on a Monday is dropped, never billed, and no condition review is booked. While a visit is owed, no condition review is booked, and the next visit a Monday draws books the one owed, one appointment for both.',
     ],
     interpret: [
       '“What it would cost you here now” is your share under today’s cover, for a visit, urgent care and an emergency.',
+      // From 2026-10-13 (`shareOf`): until then the NHS paid a visit at Bupa's pay-as-you-go GP, picked as one's doctor.
+      'Elsewhere, a practice picked that publishes its own price, as Bupa’s pay-as-you-go GP in London does, bills a visit at that price: a public system pays its own practices, not a private GP. A life in New Haven never meets one.',
       'A visit kept changes no dial by itself. It renews prescriptions, records a review and may bring a referral; in America a prescription doesn’t run out, so the visit is mostly its bill.',
       PRACTICES.length === 1
-        ? `In New Haven, ${PRACTICE} is the only practice SLATE keeps, so picking it books the same place as The Town’s First Practice.`
+        ? `In New Haven, ${PRACTICE} is the only practice SLATE keeps, so every visit is booked there, with nothing to pick.`
         : `In New Haven SLATE keeps ${PRACTICES.length} practices, and The Town’s First Practice is ${PRACTICE}.`,
     ],
     unavailable: [
@@ -373,12 +395,12 @@ export const PAPERS: readonly GuideEntry[] = [
     mistakes: [
       'Looking to go back to The Town’s First Practice or Any Pharmacy, At The Median: each shows only until you pick, so a choice can be changed to another practice or chain, never undone.',
       `Sleeping through ${clock(CONSULT_HOUR)} on the day: the appointment is missed. Book An Appointment books again, for the full wait.`,
-      'Calling an appointment off and leaving it: the visit stays owed, and no other is booked for you until you book it.',
+      'Calling an appointment off and leaving it: the visit stays owed, and no condition review is booked, until you book it or a Monday brings another visit.',
       `Filling a longer supply to save: it charges ${FILLS} fills’ share at once, the same as ${FILLS} ordinary fills. What it buys is medicine paid ahead, which lasts through a month the bank runs too low for Monday’s refill.`,
     ],
     related: ['papers.health-cover', 'papers.conditions', 'day.calendar', 'day.needs'],
     connections: [
-      { to: 'day.calendar', kind: 'scheduled', why: `A booked appointment is a commitment on the calendar, ${CONSULT_MINUTES} minutes at ${clock(CONSULT_HOUR)} on a weekday, and the clock stops at it.` },
+      { to: 'day.calendar', kind: 'scheduled', why: `A booked appointment is a commitment on the calendar, ${CONSULT_MINUTES} minutes at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday, and the clock stops at it.` },
       { to: 'papers.health-cover', kind: 'immediate', why: `A visit kept is billed at once at what your cover leaves you, and its bill joins Care And Its Bills, due in ${MEDICAL_DEBT.dueDays} days.` },
       { to: 'papers.conditions', kind: 'evaluation', why: 'Your Pharmacy’s cash price is read for every generic fill of a condition’s medicine.' },
       { to: 'day.needs', kind: 'scheduled', why: 'Booking sends “A Doctor’s Appointment” to What Needs You, a missed one “Missed The Doctor”, and a referral “A Referral”.' },
@@ -390,7 +412,7 @@ export const PAPERS: readonly GuideEntry[] = [
         `On the day you sleep past ${clock(CONSULT_HOUR)}, and “Missed The Doctor” follows.`,
         'Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.',
       ],
-      result: `It’s booked again for ${WAIT} days on, moved to the Monday when that’s a weekend, as every booking is. Kept, it costs $0 on Yale Health, renews your prescriptions, and about one time in ${Math.round(1 / US_REFERRAL)} ends in a referral to a specialist ${REFERRAL_DAYS.us} days later.`,
+      result: `It’s booked again for ${WAIT} days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is. Kept, it costs $0 on Yale Health, renews your prescriptions, and about one time in ${Math.round(1 / US_REFERRAL)} ends in a referral to a specialist ${REFERRAL_DAYS.us} days later.`,
     },
   },
   {
@@ -499,8 +521,10 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'The Base Period', value: 'The first four of the last five completed quarters, or, where those fall short, the last four' },
       { label: 'Connecticut’s Week', value: `The two highest quarters’ average over 26, down to the dollar, at least ${CT_FLOOR_WORDS} and at most ${usd(CONNECTICUT_UI.maximum)}; ${CONNECTICUT_UI.weeks} weeks’ worth at most, or a year from filing` },
       { label: 'A Week With Work', value: `The benefit less ${PARTIAL} of the week’s pay, rounded up to the dollar: nothing once the pay reaches one and a half times the benefit` },
-      { label: 'SNAP’s Month', value: `Up to ${usd(SNAP_FULL)} from ${fullDay(SNAP_NOW.from)}, less ${pct(SNAP.share)} of net income: last month’s wages and unearned income, less ${pct(SNAP.earnedDeduction)} of the wages and a ${usd(SNAP_NOW.standard * 100)} deduction. Work-study pay isn’t counted.` },
-      { label: 'SNAP’s Time Limit', value: `Out of school, aged ${SNAP.abawd.from} to ${SNAP.abawd.to}, with under ${SNAP.abawd.hours} hours’ work in the last 30 days: ${SNAP.abawd.months} months in ${SNAP.abawd.window}. A student at school is exempt, through the summer recess too`, estimate: false },
+      // Until 2026-10-13 the 30% wasn’t rounded, and the month was paid to the cent (`snapMonth`, systems/assistance.ts);
+      // and a graduate drawing unemployment met the time limit, which exempts a claimant (7 CFR 273.7(b)(1)(v)).
+      { label: 'SNAP’s Month', value: `Up to ${usd(SNAP_FULL)} from ${fullDay(SNAP_NOW.from)}, less ${pct(SNAP.share)} of net income rounded up to the dollar: last month’s wages and unearned income, less ${pct(SNAP.earnedDeduction)} of the wages and a ${usd(SNAP_NOW.standard * 100)} deduction. Work-study pay isn’t counted. Under the state’s gross limit, never less than ${usd(SNAP_NOW.least * 100)} after the first month.` },
+      { label: 'SNAP’s Time Limit', value: `Out of school, aged ${SNAP.abawd.from} to ${SNAP.abawd.to}, with under ${SNAP.abawd.hours} hours’ work in the last 30 days: ${SNAP.abawd.months} months in ${SNAP.abawd.window}. A student at school is exempt, through the summer recess too, and so is anyone with an unemployment claim open`, estimate: false },
     ],
     now: [
       'File A Claim: the claim opens, the toast gives its weekly amount, and the first week is certified the coming Sunday.',
@@ -509,9 +533,11 @@ export const PAPERS: readonly GuideEntry[] = [
     later: [
       `Each Sunday at 8 in the evening the week is certified. In the US, out of school, allowed to work and not in hospital or laid up, you’re paid the benefit less ${PARTIAL} of the week’s pay, into the account your payments go to.`,
       'The claim closes when it has paid its most, or a year after filing, with the notice “Your Unemployment Claim Ended”.',
-      'SNAP’s month is worked out a week after applying, then every 30 days, and what’s due goes onto the EBT card with the notice “SNAP Paid”. A month whose income leaves nothing due pays nothing and says nothing.',
+      // Until 2026-10-13 this said a month whose income left nothing due paid nothing. `snapMonth` (`systems/assistance.ts`)
+      // pays an eligible household of one SNAP’s least from that day, except in its first month.
+      `SNAP’s month is worked out a week after applying, then every 30 days, and what’s due goes onto the EBT card with the notice “SNAP Paid”. Under the state’s gross limit every month but the first pays at least SNAP’s least, ${usd(SNAP_NOW.least * 100)} from ${fullDay(SNAP_NOW.from)}; the first, or a month over the limit, whose income leaves nothing due pays nothing and says nothing.`,
       'A student in the summer recess without the hours has the case closed, with a notice; apply again once that changes.',
-      'Out of school and past the time limit, SNAP pays nothing, and says so each month, until you work the hours. While you’re at school the time limit doesn’t apply.',
+      'Out of school and past the time limit, SNAP pays nothing, and says so each month, until you work the hours. While you’re at school, or while an unemployment claim is open, the time limit doesn’t apply.',
     ],
     interpret: [
       'A Week is the claim’s benefit, Paid what it has paid, and At Most where it stops, with the date it ends.',

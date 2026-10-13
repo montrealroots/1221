@@ -158,8 +158,9 @@ defineLook<PlaceProfile>('place', {
     return [...new Set(ids.filter((id): id is string => !!id))];
   },
   look: (place, { sim }) => {
-    const here = standingIn(sim);
-    const isHere = here?.id === place.city.id;
+    // Where the player stands is where they live (`homeCityOf`, since the scope of 2026-10-09 moved nobody), so a city
+    // is theirs or another. Until 2026-10-13 the look told standing here from living here too, and had words for each
+    // apart, “Where You Are”, “Home, … back”, “You’re … from home” and “you’re not in it today”, that no life reached.
     const isHome = place.homeCity?.id === place.city.id;
     const region = REGIONS.get(place.city.parentId);
     const climate = CLIMATE_NAMES[climateTypeFor(place.city)].toLowerCase();
@@ -207,19 +208,16 @@ defineLook<PlaceProfile>('place', {
       ways.push({
         to: at('place', place.homeCity.id),
         label: spokenName(place.homeCity.name),
-        // "back" only if you are standing here. Read from a third city, the
-        // distance on file is this city’s distance from home, not yours.
-        detail: isHere
-          ? `Home, ${place.distanceFromHome} back, where it’s ${formatTime(sim.now, place.homeCity.timeZone)}`
-          : `Where you actually live, and it’s ${formatTime(sim.now, place.homeCity.timeZone)} there`,
+        // Until 2026-10-13 a city the player stood in away from home said “Home, … back” here: none is.
+        detail: `Where you actually live, and it’s ${formatTime(sim.now, place.homeCity.timeZone)} there`,
       });
     }
 
     return {
       name: spokenName(place.city.name),
-      kind: isHome ? 'Where You Live' : isHere ? 'Where You Are' : 'A City On The Map',
+      kind: isHome ? 'Where You Live' : 'A City On The Map',
       parent: region ? at('region', region.id) : at('country', place.countryId),
-      summary: summaryOfPlace(place, isHere, isHome),
+      summary: summaryOfPlace(place, isHome),
       body: (
         <>
           <p className="small muted">
@@ -242,15 +240,13 @@ defineLook<PlaceProfile>('place', {
                 ? ` No income tax comes out of a wage here, at any level.`
                 : ` Income tax comes in ${said(taking.length, 'layer')} here: ${spokenList(taking.map((l) => l.label))}${takesNone.length > 0 ? `, and ${spokenList(takesNone)} ${takesNone.length === 1 ? 'adds' : 'add'} nothing on top` : ''}.`}
           </p>
+          {/* Another city’s distance from the player’s. Until 2026-10-13 one they stood in said “You’re … from home in”:
+              none is. */}
           {place.away && place.homeCity && (
             <p className="small muted">
-              {isHere
-                ? <>You’re {place.distanceFromHome} from home in{' '}
-                  <Open subject={at('place', place.homeCity.id)}>{spokenName(place.homeCity.name)}</Open>,{' '}
-                  {clockAgainstHome(place.hoursFromHome)}.</>
-                : <>It’s {place.distanceFromHome} from home in{' '}
-                  <Open subject={at('place', place.homeCity.id)}>{spokenName(place.homeCity.name)}</Open>, and{' '}
-                  {clockAgainstHome(place.hoursFromHome)}.</>}
+              It’s {place.distanceFromHome} from home in{' '}
+              <Open subject={at('place', place.homeCity.id)}>{spokenName(place.homeCity.name)}</Open>, and{' '}
+              {clockAgainstHome(place.hoursFromHome)}.
             </p>
           )}
           <div className="grid grid-3">
@@ -296,16 +292,14 @@ defineLook<PlaceProfile>('place', {
   },
 });
 
-/** One sentence about standing here, or about not standing here. */
-function summaryOfPlace(place: PlaceProfile, isHere: boolean, isHome: boolean): string {
-  if (isHome && isHere) {
-    return `You’re home, it’s ${place.localTime} on the clock you keep, and ${formatPeople(place.cityPopulation)} people are keeping it with you.`;
-  }
-  if (isHere && place.homeCity) {
-    return `You’re here and not home — ${place.distanceFromHome} from ${spokenName(place.homeCity.name)}, ${clockAgainstHome(place.hoursFromHome)}, and it’s ${place.localTime} where you’re standing.`;
-  }
+/**
+ * One sentence about standing here, or about not standing here. Home is where the player stands (`homeCityOf`); until
+ * 2026-10-13 this had a sentence for standing away from home, “You’re here and not home”, and one for home while away,
+ * “you’re not in it today”, which no life reached.
+ */
+function summaryOfPlace(place: PlaceProfile, isHome: boolean): string {
   if (isHome) {
-    return `Home, ${place.localTime} there right now, and you’re not in it today.`;
+    return `You’re home, it’s ${place.localTime} on the clock you keep, and ${formatPeople(place.cityPopulation)} people are keeping it with you.`;
   }
   if (!place.homeCity || !place.distanceFromHome) {
     return `It’s ${place.localTime} there, and you’re not in it.`;
@@ -563,7 +557,7 @@ defineLook<TheMoney>('currency', {
         <>
           <p className="small muted">
             {money.info.code === 'USD'
-              ? 'SLATE’s exchange rates are quoted against the dollar, so it is where every conversion starts.'
+              ? 'SLATE’s exchange rates are quoted against the dollar, so it’s where every conversion starts.'
               : hundred
                 ? `A hundred dollars is ${hundred} on the ground ${money.home ? 'here' : 'there'}.`
                 : 'SLATE has no rate on file for it, so nothing is converted into it, and a save started here keeps its money in euros.'}

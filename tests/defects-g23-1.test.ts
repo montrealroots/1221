@@ -12,15 +12,18 @@
  * What was measured: a kept visit takes nothing from the body (`careFor` gives
  * 'visit' no toll); in Connecticut it renews nothing a fill reads, since
  * `RX.validYears` holds only British Columbia; and a review moves only
- * `reviewedAt`, which schedules the next review. While a visit is owed, the
- * health week drops every visit it draws and books no review, so one
- * appointment called off and never booked again ends the doctor for good, and
- * nothing in the body or the medicine notices.
+ * `reviewedAt`, which schedules the next review. While a visit was owed, the
+ * health week dropped every visit it drew and booked no review, so one
+ * appointment called off and never booked again ended the doctor for good, and
+ * nothing in the body or the medicine noticed.
  *
  * When any of these fails because a consequence was wired (Connecticut's
  * validity rule in `RX.validYears['us-ct']`, say), the ledger entry is settled:
  * turn the test round to assert the consequence, and move the entry to a
- * settled section in the same change.
+ * settled section in the same change. The second was turned round on
+ * 2026-10-13, when the health week began booking the visit owed with the next
+ * one it draws (found by the second round of that day,
+ * tests/evidence2-b02.test.ts): it asserts that now.
  */
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
@@ -91,7 +94,9 @@ describe('a doctor’s visit, kept or not (measured 2026-10-12, for docs/UNBITTE
     expect(appointmentsOf(bc.player).length || b.owedVisit).toBeTruthy();
   });
 
-  it('called off and never booked again, swallows every later visit and review, and the body and the medicine don’t notice', () => {
+  it('called off and never booked again, is booked by the next visit a Monday draws, and the review follows it; the medicine and the body are as the control’s', () => {
+    // Turned round on 2026-10-13. Until then it held the swallowing: over the same forty weeks the student with a visit
+    // called off kept no visit and no review, nothing was booked, `reviewedAt` never moved, and the visit stayed owed.
     // The control: the same student, nothing owed. The overdue review is booked and kept.
     const control = overdue('g23-owed-4');
     healthWeeks(control, WEEKS);
@@ -102,24 +107,30 @@ describe('a doctor’s visit, kept or not (measured 2026-10-12, for docs/UNBITTE
 
     // The case: one appointment booked and called off (Papers' Call It Off), and never booked again.
     const sim = overdue('g23-owed-4');
-    const reviewedAt = healthOf(sim.player).chronic!.hypertension!.reviewedAt;
+    const reviewedAt = healthOf(sim.player).chronic!.hypertension!.reviewedAt!;
     const a = book(sim, sim.player, VISIT)!;
     expect(a).toBeDefined();
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
     const weeks = healthWeeks(sim, WEEKS);
 
-    // Visits were drawn in those weeks (the draw is keyed on the week, so drawing again shows it), and every one was dropped.
+    // Visits were drawn in those weeks (the draw is keyed on the week, so drawing again shows it); the first, Monday
+    // 16 February 2026, booked the visit owed for New Haven's 24 days, Thursday 12 March at ten, and it was kept and billed.
     const drawn = weeks.filter((at) => illnessWeek(sim, sim.player, at).some((e) => e.care === 'visit' && !e.flu));
-    expect(drawn.length).toBeGreaterThan(0);
-    expect(visitsLogged(sim)).toEqual([]);
-    expect(healthOf(sim.player).bills.filter((bill) => bill.what.startsWith(VISIT) || bill.what.startsWith(reviewWhat('hypertension')))).toEqual([]);
-    expect(sim.universe.scheduled.some((x) => x.kind === APPOINTMENT_KIND && x.status === 'pending')).toBe(false);
-    // The review, a month overdue at the start, is never booked; the owed visit is still the one called off.
-    expect(healthOf(sim.player).chronic!.hypertension!.reviewedAt).toBe(reviewedAt);
-    expect(healthOf(sim.player).owedVisit).toBe(VISIT);
+    expect(drawn[0]).toBe(Date.UTC(2026, 1, 16, 14));
+    const visits = visitsLogged(sim);
+    expect(visits[0]).toMatchObject({ at: Date.UTC(2026, 2, 12, 14), what: `${VISIT}, Fair Haven Community Health Care` });
+    expect(healthOf(sim.player).bills.filter((bill) => bill.what.startsWith(VISIT)).length).toBeGreaterThan(0);
+    expect(healthOf(sim.player).owedVisit).toBeUndefined();
+    // With nothing owed, the review, a month overdue at the start, was booked on the Monday after, 16 March, for 9 April,
+    // and kept: `reviewedAt` moved to it.
+    expect(visits[1]).toMatchObject({ at: Date.UTC(2026, 3, 9, 14), what: `${reviewWhat('hypertension')}, Fair Haven Community Health Care` });
+    expect(reviewedAt).toBeLessThan(visits[0]!.at);
+    expect(healthOf(sim.player).chronic!.hypertension!.reviewedAt).toBe(Date.UTC(2026, 3, 9, 14));
+    expect(sim.universe.scheduled.filter((x) => x.kind === APPOINTMENT_KIND).map((x) => x.status)).toEqual(['cancelled', ...visits.map(() => 'done')]);
 
-    // At no cost: at the same instant, the medicine is still filled, and the body is where the control's is.
+    // A visit still takes nothing from the body, and in Connecticut the medicine is filled either way: at the same
+    // instant, it's still kept up, and the body is where the control's is.
     const end = Math.max(sim.now, control.now) + MS_DAY;
     sim.advanceTo(end);
     control.advanceTo(end);

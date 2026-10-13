@@ -28,7 +28,8 @@
  *
  * **SNAP**, in New York, California and Connecticut, for a single adult: the
  * USDA's maximum allotment ($298 a month in fiscal 2026, $306 from 1 October
- * 2026) less 30% of net income, which is gross income less 20% of earnings
+ * 2026) less 30% of net income, rounded up to the dollar (paid to the cent until
+ * 2026-10-13), which is gross income less 20% of earnings
  * and the standard deduction ($209, then $217), and from later on 2026-09-30
  * the excess shelter deduction (`research-sweep5.json`): rent, and the state's
  * standard utility allowance where they pay the bills, above half of what's
@@ -39,17 +40,22 @@
  * the rest of New York's $877 (Nassau's and Suffolk's $988 not kept, SLATE not
  * holding a town's county), California's $663 and Connecticut's $976. With
  * it, New York's gross limit binds, 150% of the federal poverty line (the
- * net limit, $1,305, then $1,330). California's and Connecticut's 200% are
- * kept and never do, nor does the net limit: 30% of net income takes a single
- * adult's benefit first. Until then the shelter deduction wasn't kept, and
+ * net limit, $1,305, then $1,330). California’s and Connecticut’s 200% are
+ * kept, and until 2026-10-13 never did, 30% of net income taking a single
+ * adult’s benefit first; from then a household under the gross limit is paid
+ * at least SNAP’s least after its first month, $24 and then $25 (`snapMonth`),
+ * so theirs bind too. The net limit never does: each state’s broad-based
+ * categorical eligibility waives it. Until later on 2026-09-30 the shelter
+ * deduction wasn’t kept, and
  * SLATE's benefit was the lower one a household with low rent gets. Paid onto an EBT card that buys groceries only, which a day's
  * food draws on first. An able-bodied adult of 18 to 64 without 80 hours of
  * work a month is paid three months in three years (7 U.S.C. 2015(o), as the
  * 2025 law widened it), unless exempt from work registration, as a student
  * enrolled at least half-time is (7 U.S.C. 2015(o)(3)(D), (d)(2); 7 CFR
- * 273.24(c), 273.7(b)(1)(viii)). Until 2026-10-12 that exemption wasn't kept,
- * and a student in term was counted. A citizen's; a non-citizen's eligibility
- * isn't kept.
+ * 273.24(c), 273.7(b)(1)(viii)), and somebody drawing unemployment
+ * (273.7(b)(1)(v)). Until 2026-10-12 the student’s exemption wasn’t kept, and a
+ * student in term was counted; until 2026-10-13 the claimant’s wasn’t. A
+ * citizen's; a non-citizen's eligibility isn't kept.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -71,8 +77,8 @@ export const ONTARIO_WORKS = { basic: 343, shelterMax: 390, assets: 10_000, exem
 export const BC_ASSISTANCE = { support: 560, shelterMax: 500, assets: 5_000, exempt: 600, exemptAfterMonths: 1, workSearchDays: 21 } as const;
 export const SNAP = {
   fy: [
-    { from: '2025-10-01', max: 298, standard: 209, shelterCap: 744, poverty: 1_305 },
-    { from: '2026-10-01', max: 306, standard: 217, shelterCap: 769, poverty: 1_330 },
+    { from: '2025-10-01', max: 298, standard: 209, shelterCap: 744, poverty: 1_305, least: 24 },
+    { from: '2026-10-01', max: 306, standard: 217, shelterCap: 769, poverty: 1_330, least: 25 },
   ],
   /** The state's gross limit, of the poverty line, and its heating and cooling utility allowance a month, fiscal 2026. */
   grossLimit: { 'us-ny': 1.5, 'us-ca': 2, 'us-ct': 2 } as Readonly<Record<string, number>>,
@@ -106,20 +112,26 @@ export function schemeFor(person: Person): AssistanceScheme | undefined {
 const inLocal = (sim: Simulation, cents: Money, currency: string): Money => { const cur = saveCurrency(sim.universe); return cur === currency ? cents : exchange(cents, cur, currency) ?? cents; };
 const toSave = (sim: Simulation, cents: Money, currency: string): Money => { const cur = saveCurrency(sim.universe); return cur === currency ? cents : exchange(cents, currency, cur) ?? cents; };
 const liquid = (sim: Simulation, person: Person) => Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash')).reduce((x, a) => x + Math.max(0, a.balance), 0);
-const monthKey = (at: Instant) => { const p = zonedParts(at, 'UTC'); return `${p.year}-${String(p.month).padStart(2, '0')}`; };
+/**
+ * The months SNAP reads and counts are kept in the zone the earnings record keys its months in, the save’s home
+ * (`recordWages`, `recordBenefit` and `recordInterest` are given it). Until 2026-10-13 they were taken in UTC, so a
+ * payment on a New Haven evening at the month’s end, already the next month in UTC, read its own month so far; found by
+ * that day’s second round of evidence.
+ */
+const monthKey = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return `${p.year}-${String(p.month).padStart(2, '0')}`; };
 
 /**
  * The calendar month before a moment's own (from 2026-10-13: until then the month fifteen days back, so a payment on
  * the 16th or later read its own month so far; found by the review of that day).
  */
-const monthBefore = (at: Instant): { year: number; month: number } => {
-  const now = zonedParts(at, 'UTC');
+const monthBefore = (at: Instant, zone: string): { year: number; month: number } => {
+  const now = zonedParts(at, zone);
   return now.month === 1 ? { year: now.year - 1, month: 12 } : { year: now.year, month: now.month - 1 };
 };
 
 /** A month's earnings, gross, in the save's money: the calendar month before a moment. */
-function lastMonthEarned(person: Person, at: Instant): Money {
-  const p = monthBefore(at);
+function lastMonthEarned(person: Person, at: Instant, zone: string): Money {
+  const p = monthBefore(at, zone);
   return earningsOf(person).months[`${p.year}-${String(p.month).padStart(2, '0')}`] ?? 0;
 }
 
@@ -128,8 +140,8 @@ function lastMonthEarned(person: Person, at: Instant): Money {
  * (interest, benefits, pensions), work-study left out (273.9(c)(3)). A month from before the kinds were kept is read
  * as it was, all of it earned.
  */
-export function snapIncome(person: Person, at: Instant): { gross: Money; earned: Money; workStudy: Money } {
-  const p = monthBefore(at);
+export function snapIncome(person: Person, at: Instant, zone: string): { gross: Money; earned: Money; workStudy: Money } {
+  const p = monthBefore(at, zone);
   const key = `${p.year}-${String(p.month).padStart(2, '0')}`;
   const k = earningsOf(person).kinds?.[key];
   if (!k) { const all = earningsOf(person).months[key] ?? 0; return { gross: all, earned: all, workStudy: 0 }; }
@@ -187,17 +199,33 @@ export function snapYearOn(at: Instant): (typeof SNAP.fy)[number] {
 }
 
 /**
- * A month's SNAP, in dollar cents: the maximum less 30% of net income, net of
+ * A month’s SNAP, in dollar cents: the maximum less 30% of net income, net of
  * the excess shelter deduction where shelter costs are given; or none over the
- * state's gross limit.
+ * state’s gross limit. Under it, a household of one is eligible (each state
+ * SLATE keeps sets that limit by broad-based categorical eligibility, which
+ * waives the net limit) and is paid at least SNAP’s least, 8% of the thrifty
+ * food plan for one, except in its initial month (7 U.S.C. 2017(a); 7 CFR
+ * 273.10(e)(2)(ii)(C)): $24 in fiscal 2026 and $25 in 2027 (USDA’s cost-of-living
+ * adjustments, the second of 21 August 2026). The initial month’s rule that
+ * nothing under $10 is issued isn’t kept. With no state given, as for the
+ * guide’s maximum, nothing is known of eligibility, and the formula alone is
+ * worked. Until 2026-10-13 no least was paid, and an eligible month whose
+ * income took the formula to nothing paid nothing; found by that day’s second
+ * round of evidence.
  */
-export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant, shelterUsd = 0, state?: string): Money {
+export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant, shelterUsd = 0, state?: string, initial = false): Money {
   const fy = snapYearOn(at);
   if (state && grossUsd > Math.round(fy.poverty * (SNAP.grossLimit[state] ?? 1) * 100)) return 0;
   const before = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction) - fy.standard * 100);
   const shelter = Math.min(fy.shelterCap * 100, Math.max(0, shelterUsd - Math.round(before / 2)));
-  // Net income is never below nothing, and the benefit never above the maximum.
-  return Math.max(0, fy.max * 100 - Math.round(Math.max(0, before - shelter) * SNAP.share));
+  // Net income is never below nothing, and the benefit never above the maximum. Its 30% is rounded up to the dollar
+  // (7 CFR 273.10(e)(2)(ii)(A), read on 2026-10-13 at law.cornell.edu: the other way it allows, rounding the allotment
+  // down, comes to the same whole dollars), worked in hundredths of a cent so no float error crosses a dollar. The
+  // income’s own rounding to the dollar, which 273.10(e)(1)(ii) leaves to the state, isn’t kept: it’s read to the cent.
+  // Until 2026-10-13 the benefit was paid to the cent, $258.45 where the rule gives $258 (found by that day’s third round).
+  const thirty = Math.ceil(Math.round(Math.max(0, before - shelter) * SNAP.share * 100) / 10_000) * 100;
+  const formula = Math.max(0, fy.max * 100 - thirty);
+  return state && !initial ? Math.max(fy.least * 100, formula) : formula;
 }
 
 /**
@@ -232,27 +260,33 @@ export function registerAssistance(sim: Simulation): void {
     // Moved away, the claim ends: each is the province's or the state's.
     if (schemeFor(person) !== claim.scheme) { claim.closedAt = s.now; return; }
     const mine = person.id === s.universe.playerId;
-    const earned = lastMonthEarned(person, item.at);
+    const earned = lastMonthEarned(person, item.at, s.homeZone);
     let due = 0;
     if (claim.scheme === 'snap') {
       const age = (item.at - person.birthInstant) / YEAR;
       // The month's hours worked: the career's days until the career went in the scope reset of 2026-10-09, and from
       // 2026-10-10 the school's work-study and Summer Cabaret hours (`workedBetween`), which until then counted as none.
       const hours = workedBetween(s, person, item.at - 30 * MS_DAY, item.at).hours;
-      const key = monthKey(item.at);
-      const within = (claim.counted ?? []).filter((m) => m > monthKey(item.at - SNAP.abawd.window * 30.44 * MS_DAY));
+      const key = monthKey(item.at, s.homeZone);
+      const within = (claim.counted ?? []).filter((m) => m > monthKey(item.at - SNAP.abawd.window * 30.44 * MS_DAY, s.homeZone));
       // A student enrolled at least half-time is exempt from work registration, and so from the time limit, through
       // vacations and recess too (7 CFR 273.7(b)(1)(viii), 273.24(c)): from 2026-10-12; until then a student in term was
       // counted, and three months of SNAP stopped it.
       const enrolled = person.school !== undefined && !schoolEnded(person.school.standing);
-      const limited = !enrolled && age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
+      // So is somebody receiving unemployment compensation, or applied for it and meeting its work search (7 CFR
+      // 273.7(b)(1)(v), read on 2026-10-13 at law.cornell.edu; 7 U.S.C. 2015(d)(2)(A)): a claim open in its benefit
+      // year. From 2026-10-13: until then a graduate drawing a Connecticut claim was counted, and cut off with “SNAP
+      // Time Limit Reached” in her fourth month (found by that day’s third round).
+      const ui = person.unemployment?.claim;
+      const onUi = ui !== undefined && ui.endsAt > item.at;
+      const limited = !enrolled && !onUi && age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
       if (limited && within.length >= SNAP.abawd.months) {
         if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'Three months in three years without 80 hours of work a month: SNAP pays no more until you work them.', importance: 60, route: '/workspace/papers' });
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }
       // Earned and unearned apart, work-study out (`snapIncome`); a student without an exemption is paid nothing that month.
-      const income = snapIncome(person, item.at);
+      const income = snapIncome(person, item.at, s.homeZone);
       const student = snapStudentRefusal(s, person, item.at);
       // A student without an exemption isn't eligible: the case closes, told once, and can be applied for again once that
       // changes (from 2026-10-10: until then it stayed open and said so every month).
@@ -261,7 +295,9 @@ export function registerAssistance(sim: Simulation): void {
         if (mine) s.notify({ category: 'benefits', title: 'Your SNAP Case Closed', body: `${student} Apply again once that changes.`, importance: 55, route: '/workspace/papers' });
         return;
       }
-      due = toSave(s, snapMonth(inLocal(s, income.gross, 'USD'), inLocal(s, income.earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId), 'USD');
+      // The claim’s first payment, a week after applying, is its initial month’s, when SNAP’s least isn’t paid.
+      const initial = item.at - claim.since < 30 * MS_DAY;
+      due = toSave(s, snapMonth(inLocal(s, income.gross, 'USD'), inLocal(s, income.earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.currentLocationId)?.parentId, initial), 'USD');
       if (due > 0) {
         if (limited) claim.counted = [...within, key];
         const ebt = claim.ebtAccountId ? s.universe.accounts[claim.ebtAccountId] : undefined;

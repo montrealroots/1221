@@ -163,6 +163,9 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
   const read = useWorld((s) => chaptersRead(s));
   const next = useWorld((s) => nextChapter(s));
   const isGuided = useWorld((s) => guided(s));
+  // A guide finished leaves a chapter added after it open and unread for good: there’s no I’ve Read It for it, and what
+  // it names is open already. Until 2026-10-13 it was listed as Later, over What Reading It Opens.
+  const finished = useWorld((s) => Boolean(s.universe.tutorial?.finished));
   // An empty start is the next chapter; any chapter asked for opens, to read.
   const [at, setAt] = useState(() => CHAPTER_BY_ID[start]?.id ?? next?.id ?? CHAPTERS[0]!.id);
   // The chapter asked for, when it had to wait for another.
@@ -209,20 +212,19 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
       <div className="guide">
         <nav className="guide-toc" aria-label="Chapters">
           {CHAPTERS.map((c, i) => {
-            const done = read.includes(c.id);
-            const upNext = next?.id === c.id;
+            const status = read.includes(c.id) ? 'Read' : next?.id === c.id ? 'Next' : finished ? 'Open' : 'Later';
             return (
               <button
                 key={c.id}
                 type="button"
                 className="guide-toc-item"
                 aria-current={c.id === at ? 'step' : undefined}
-                aria-label={`${i + 1}. ${c.title}, ${done ? 'Read' : upNext ? 'Next' : 'Later'}`}
+                aria-label={`${i + 1}. ${c.title}, ${status}`}
                 onClick={() => goTo(c.id)}
               >
                 <span className="guide-toc-num mono">{i + 1}</span>
                 <span className="grow truncate">{c.title}</span>
-                <span className="xs dim">{done ? 'Read' : upNext ? 'Next' : 'Later'}</span>
+                <span className="xs dim">{status}</span>
               </button>
             );
           })}
@@ -259,7 +261,7 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
               <p className="small muted" style={{ marginTop: 0 }}>{chapter.lead}</p>
               {chapter.body.map((paragraph) => <p key={paragraph} className="small">{paragraph}</p>)}
               <div className="guide-opens-box">
-                <div className="eyebrow">{read.includes(chapter.id) ? 'What It Opened' : 'What Reading It Opens'}</div>
+                <div className="eyebrow">{read.includes(chapter.id) ? 'What It Opened' : finished ? 'What It Covers, Already Open' : 'What Reading It Opens'}</div>
                 <ul className="small guide-opens">
                   {chapter.names.map((name) => <li key={name}>{name}</li>)}
                 </ul>

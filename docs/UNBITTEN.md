@@ -79,7 +79,9 @@ to what's kept or by retiring it with the reason, and never quietly:
 - **A week worked while claiming.** Was dead in part until 2026-10-10: each
   claim read nought for the days worked. From that day a week’s unemployment
   and a month’s SNAP read the work-study and Cabaret wages paid in them
-  (`workedBetween`). A Summer Cabaret stipend can qualify a Connecticut claim,
+  (`workedBetween`). From 2026-10-13 a week’s unemployment reads the work done
+  in it, paid then or later (`workDoneIn`), as a claimant reports it; a month’s
+  SNAP reads the wages paid in it still. A Summer Cabaret stipend can qualify a Connecticut claim,
   and this called the claim reachable without saying when. This also said
   there was still no rule for a full-time student’s availability, and from
   2026-10-10 there is: Connecticut takes a student enrolled at the school,
@@ -107,10 +109,11 @@ What the same day found and settled besides:
   room and the road. Connected: extraversion reads a house watching at every
   performance's nerves (`takeTheHouse`); openness, new work (a festival's new
   play, a Cabaret piece).
-- **Thirty-seven interests and most genres read nothing.** Connected where a
-  student's life has the thing: the plays are filed by kind (`genresOfPlay`),
-  coursework by the craft it's done in (`Template.crafts`), a play read by
-  Reading, and Reading and Politics joined an evening unwinding. The rest were
+- **Thirty-seven interests read nothing until they went on 2026-10-10, and
+  most genres still read nothing.** Connected where a student's life has the
+  thing: the plays are filed by kind (`genresOfPlay`), and until 2026-10-10
+  coursework was filed by the craft it was done in (`Template.crafts`), a play
+  read by Reading, and Reading and Politics joined an evening unwinding. The rest were
   marked · at creation as said back only (`interestsRead`). On 2026-10-10 the
   owner removed the interests, with the crafts' readers; the genres no play is
   of are still marked · (`genresRead`).
@@ -244,18 +247,20 @@ first work (`setWork`); a day called in sick excuses a class, a shift, a call an
 and the term’s evaluation leaves the classes excused out of attendance (`evaluate`); the fraud draw passes over a
 locked card (`cardWorks`); a debt in collections turns a card application down, and while it’s unpaid a US bank that
 reads a ChexSystems report is likelier to refuse an account (`declines`); and a tax plan’s payment reads its monthly
-amount (`TAX_PLAN_KIND`). One reader was believed in and isn’t there:
+amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the belief went on 2026-10-13:
 
-- **A decision waved away.** `src/engine/world/world.ts` keeps a closed row whose date is still to come “because a
-  raiser can read a dismissal off it to know it was told to stop asking”, and the registries counted the same reader
-  when the reviews read them. No raiser reads one. `requireDecision` passes over a dismissed row as it looks for the
-  same one, and opens a fresh row beside it. Besides that, `dismissedAt` is read only by the open list, the attention
-  look, the world tick’s expiry and prune, a save brought forward, and the two commands on a row, which refuse a
-  dismissed one. Measured on 2026-10-12 with a probe outside the
-  gate: one row open, dismissed to none, and the same row raised again is open again. Asking stops because each of
-  the three callers raises a row once: a year’s return at tax season, a US status ending when the permission that held
-  it runs out, and a bank’s notice before an idle balance goes to the state (`escheatWarned`). Either
-  `requireDecision` reads a dismissal of the same row until its date, or the reason given for keeping the row goes.
+- **A decision waved away (settled 2026-10-13).** `src/engine/world/world.ts` kept a closed row whose date was still
+  to come “because a raiser can read a dismissal off it to know it was told to stop asking”, and the registries counted
+  the same reader when the reviews read them. No raiser read one: `requireDecision` passes over a dismissed row as it
+  looks for the same one, and opens a fresh row beside it. Measured on 2026-10-12 with a probe outside the gate: one
+  row open, dismissed to none, and the same row raised again was open again. Asking stops because each of the three
+  callers raises a row once: a year’s return at tax season, a US status ending when the permission that held it runs
+  out, and a bank’s notice before an idle balance goes to the state (`escheatWarned`). This entry asked that either
+  `requireDecision` read a dismissal of the same row until its date, or the reason given for keeping the row go. The
+  reason went: the prune’s comment says now that the row is kept until its date as the guide says, that no raiser
+  reads a dismissal off it, and that no played life reaches the keeping, since each raiser dates its row within the
+  180 days a closed row is kept (a return’s within four and a half months, an idle account’s 90 days, a US status’s
+  grace); tests/evidence-g02-life.test.ts reaches it with a row of its own.
 
 ---
 
@@ -305,17 +310,17 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and isn’t there:
   visit that changes no more. It renews every prescription
   (`renewPrescriptions`), and only British Columbia’s runs out
   (`RX.validYears`), so in Connecticut the renewal is read by nothing. A review
-  (`reviewed`) moves only `reviewedAt`, which schedules the next review. And an
-  owed visit swallows the rest: while one is owed (`owedVisit`), the health week
-  drops every doctor’s visit it draws and books no review, and only booking again
-  (`health.book`) clears it. An appointment called off on Papers owes one, and
-  so does one missed asleep or in hospital (`presentForCare`), so either, never
-  booked again, ends the doctor for good, at no cost. Measured in
-  `tests/defects-g23-1.test.ts`: over forty health weeks the same student with
-  high blood pressure kept the overdue review and a visit with nothing owed,
-  and none with one called off, and both ended with the same body and the
-  medicine still filled. Wiring it wants a researched consequence, not a chosen
-  one. Connecticut’s rule for a prescription of a medicine that isn’t
+  (`reviewed`) moves only `reviewedAt`, which schedules the next review. An owed
+  visit swallowed the rest until 2026-10-13: while one was owed (`owedVisit`),
+  the health week dropped every doctor’s visit it drew and booked no review, and
+  only booking again (`health.book`) cleared it, so an appointment called off on
+  Papers, or one missed asleep or in hospital (`presentForCare`), never booked
+  again, ended the doctor for good, at no cost. That half is settled: the health
+  week books the visit owed with the next one it draws, and the review follows
+  it (`tests/defects-g23-1.test.ts`, turned round that day: the student with one
+  called off is seen on 12 March 2026 and reviewed on 9 April, and ends with the
+  control’s body and the medicine still filled). Wiring the rest wants a
+  researched consequence, not a chosen one. Connecticut’s rule for a prescription of a medicine that isn’t
   controlled, Conn. Gen. Stat. §20-614 (ch. 400j), was seen only through a
   search summary (`docs/research/world/research-alterations-refills.json`,
   `us-ct-controlled-refills`), which found no expiry and lists the question

@@ -542,8 +542,16 @@ export function chargeForItem(sim: Simulation, person: Person, item?: Money): vo
   if (terms.kind === 'per_item') {
     if (current.balance >= -(terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0)) return;
     if (terms.nextDay) {
-      // Held until the end of the next business day, at most the day's cap.
-      const day = dateKey(sim.now, sim.homeZone);
+      // Held until the end of the next business day, at most the day's cap. An item on a weekend or a bank holiday is
+      // the next business day’s, as the bank posts it in that day’s nightly processing (Chase’s Deposit Account
+      // Agreement, effective 6/14/2026: transactions are posted “when we transition from one business day to the next”;
+      // Wells Fargo’s, effective 2026-07-28: “We process transactions each business day (not Saturdays, Sundays, or
+      // federal holidays)”), so it has until the end of the business day after that. Until 2026-10-13 it was its
+      // calendar day’s, a business day short: Thanksgiving’s groceries were charged at the end of the Friday where Chase
+      // waits for the end of the Monday (found by that day’s third round of defects).
+      const kept = daysOfAccount(current, person);
+      let day = dateKey(sim.now, sim.homeZone);
+      if (!businessDay(kept.countryId, day, kept.regionId)) day = nextBusinessDay(day, kept.countryId, kept.regionId);
       const list = current.pendingItems ?? [];
       const today = list.find((one) => one.day === day);
       if (today) today.count = Math.min(today.count + 1, terms.maxPerDay ?? Number.POSITIVE_INFINITY);
@@ -575,9 +583,14 @@ export function chargeForItem(sim: Simulation, person: Person, item?: Money): vo
 /**
  * The fee for a payment the bank returned unpaid, where it charges one:
  * no more than once every so many business days, and none on a small one.
+ * The bank and account are those the payment was drawn on (`from`), the
+ * primary where none is named. Until 2026-10-13 they were always the
+ * primary’s, so a loan repaid from another bank’s account had the primary
+ * bank’s fee, or none, taken from the primary (found by that day’s third
+ * round of defects).
  */
-export function chargeReturned(sim: Simulation, person: Person, short: Money): void {
-  const current = currentOf(sim, person);
+export function chargeReturned(sim: Simulation, person: Person, short: Money, from?: Account): void {
+  const current = from ?? currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const rule = bank?.returned;
   if (!current || !bank || !rule || short <= 0) return;
@@ -758,7 +771,9 @@ function openBeside(sim: Simulation, person: Person, to: Bank, old: Account, sec
   if (person.primaryAccountId === old.id) person.primaryAccountId = fresh.id;
   const pay = person.payments;
   if (pay?.depositTo === old.id) pay.depositTo = fresh.id;
-  for (const order of pay?.standingOrders ?? []) { if (order.fromId === old.id) order.fromId = fresh.id; if (order.toId === old.id) order.toId = fresh.id; }
+  // A standing order pays from a current account and into savings (`bank.add_standing_order`), so only where it pays
+  // from moves. Until 2026-10-13 one paying into the old current account was moved too, which no order could be.
+  for (const order of pay?.standingOrders ?? []) if (order.fromId === old.id) order.fromId = fresh.id;
   if (person.credit) for (const st of [person.credit, ...Object.values(person.credit.cards ?? {})]) if (st.autopayFrom === old.id) st.autopayFrom = fresh.id;
   for (const loan of Object.values(sim.universe.accounts)) if (loan.kind === 'loan' && loan.repayFromId === old.id) loan.repayFromId = fresh.id;
   for (const one of sim.universe.scheduled) {
@@ -828,7 +843,7 @@ function refundInterestTax(sim: Simulation, person: Person, current: Account, ba
 /**
  * Fees held for the next business day: charged for each day whose next
  * business day has ended with the account still past the grace, and let go
- * for one brought back.
+ * for one brought back, or one whose own business day ended within it.
  */
 function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms: Extract<Overdraft, { kind: 'per_item' }>): void {
   const list = current.pendingItems;
@@ -838,6 +853,14 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
   const keep: { day: string; count: number }[] = [];
   const kept = daysOfAccount(current, sim.universe.people[current.ownerId ?? '']);
   for (const one of list) {
+    // Let go at the end of its own business day, the midnight after it, where the account ends that day within the grace:
+    // Chase charges no fee “if your account is overdrawn by $50 or less at the end of the business day” (chase.com,
+    // Overdraft Services, read 2026-10-13), and Wells Fargo none “if both your ending daily account balance and available
+    // balance are overdrawn by $10 or less after we have processed all of your transactions” (wellsfargo.com, Overdraft
+    // Services, read 2026-10-13). From 2026-10-13: until then only the end of the next business day was read, so a day
+    // ended within the grace and a next day ended past it was charged that first day’s items too (found by that day’s
+    // third round of defects).
+    if (dayAfter(one.day) === today && current.balance >= -grace) continue;
     if (!nextBusinessDayOver(one.day, today, kept)) { keep.push(one); continue; }
     if (current.balance >= -grace) continue;
     const month = today.slice(0, 7);
@@ -859,6 +882,12 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
 function nextBusinessDayOver(day: string, today: string, kept: { countryId: string; regionId?: string }): boolean {
   return nextBusinessDay(day, kept.countryId, kept.regionId) < today;
 }
+
+/** The calendar day after a day, as its date key. */
+const dayAfter = (day: string): string => {
+  const [y, m, d] = day.split('-').map(Number) as [number, number, number];
+  return new Date(Date.UTC(y, m - 1, d + 1)).toISOString().slice(0, 10);
+};
 
 /** The business day after a day, as its date key: a weekday the bank's country keeps no holiday on (`content/bankdays.ts`). */
 export function nextBusinessDay(day: string, countryId: string, regionId?: string): string {
@@ -1057,12 +1086,12 @@ export function registerLending(sim: Simulation): void {
         if (current && bank) refundInterestTax(s, person, current, bank);
       }
       for (const term of termsOf(s, person)) {
-        // The day just ended earns, from the opening day's to the one before the maturity's, and the deposit ends at the
-        // midnight that opens its maturity day. Until 2026-10-13 it ended at the midnight after that day, and earned it
-        // too: 213 days for a term of 212, found by that day's evidence pass.
-        const maturity = term.maturesAt === undefined ? undefined : dateKey(term.maturesAt, s.homeZone);
-        if (maturity === undefined || dateKey(s.now - 1, s.homeZone) < maturity) term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
-        if (maturity === undefined || dateKey(s.now, s.homeZone) < maturity) continue;
+        // The day just ended earns, and the deposit ends at the midnight that opens its maturity day, so the last day it
+        // earns is the one before. Until 2026-10-13 it ended at the midnight after that day, and earned it too: 213 days for
+        // a term of 212, found by that day's evidence pass. A guard on the day earned, added with the fix, went the same
+        // day: its mutation survived, since the day just ended is never the maturity day's.
+        term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
+        if (term.maturesAt === undefined || dateKey(s.now, s.homeZone) < dateKey(term.maturesAt, s.homeZone)) continue;
         // Renewed, or moved into easy-access savings, where that's how it ends (B7).
         const ended = endTerm(s, person, term);
         if (ended === 'renews') {
@@ -1116,10 +1145,11 @@ export function registerLending(sim: Simulation): void {
     const due = last ? -loan.balance : Math.min(loan.loanPayment ?? 0, -loan.balance);
     // From the current account at the lending bank where they keep one (from 2026-10-10: until then whichever was primary).
     // From the repayment account agreed (`repaymentAccount`, from 2026-10-10), which a change of primary doesn't move.
-    const bank = payFromBank(s, person, due, repaymentAccount(s, person, loan));
+    const from = repaymentAccount(s, person, loan);
+    const bank = payFromBank(s, person, due, from);
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
-    if (bank.short > 0) chargeReturned(s, person, bank.short);
+    if (bank.short > 0) chargeReturned(s, person, bank.short, from);
     if (bank.short > 0 && person.credit) {
       // A missed payment goes on the record, as a late card payment does.
       person.credit.late = [...person.credit.late.filter((when) => s.now - when < 365 * MS_DAY), s.now];

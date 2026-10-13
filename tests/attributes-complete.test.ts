@@ -16,20 +16,26 @@ import { abilityFull, develop, levelOf } from '@/engine/systems/attributes';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES } from '@/engine/content/abilities';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { EXERCISES } from '@/engine/content/practice';
-import { DEMAND_TECHNIQUE, demandTags, genreTags, withDemands } from '@/engine/content/demands';
+import { DEMAND_TECHNIQUE, genreTags } from '@/engine/content/demands';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '@/engine/content/plays';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { MATERIAL_BY_ID } from '@/engine/content/material';
 import { judgeWork, type Assignment } from '@/engine/systems/coursework';
 import { FILM_GENRES } from '@/engine/content/film-genres';
-import { genreState, SELF_TAPE } from '@/engine/systems/engagement';
+import { genreState } from '@/engine/systems/engagement';
 import { briefsOf } from '@/engine/content/briefs';
-import { recordOf } from '@/engine/systems/briefs';
+import { BRIEF, recordOf } from '@/engine/systems/briefs';
 
 const life = (seed: string, title: 'she/her' | 'he/him' = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: title });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const on = (y: number, m: number, d: number) => instantFromZoned({ year: y, month: m, day: d, hour: 10 }, 'America/New_York');
 const reads = { scene: 2, character: 1 };
+/**
+ * Reads with a set of genres’ demanded techniques added once each at a weight of one, where they don’t already read them:
+ * what `withDemands` did until it went on 2026-10-13, read by tests alone, made here so the reads these tests cast with
+ * stay as they were.
+ */
+const withDemands = <T extends Record<string, number>>(r: T, genres: readonly string[]): T => ({ ...Object.fromEntries(genres.flatMap(genreTags).map((t) => [DEMAND_TECHNIQUE[t], 1])), ...r });
 
 /** The player made the classmate's equal: the same craft, the same abilities, and full stamina and discipline. */
 function asClassmate(sim: Simulation, i: number) {
@@ -92,7 +98,11 @@ describe('casting, read the same for everyone', () => {
     expect(read).toBeDefined();
     const me = read.rows.find((r) => r.you)!;
     expect(me.fit).toBeGreaterThan(0);
-    // The biggest part written for either went to a higher read than any smaller part's.
+    // Parts go by the read (`partsFor`): the best read first, each takes the first part still open that’s written for
+    // their title or for either, and with none left, the company. On this term’s cast, the lowest lead’s read is no
+    // lower than the lowest featured place’s. Until 2026-10-13 this said the biggest part written for either went to a
+    // higher read than any smaller part’s, which isn’t the rule: a part written for one title can wait past higher reads
+    // of the other for one of its own, and go lower than a smaller part does.
     const leads = read.rows.filter((r) => r.size === 'lead').map((r) => r.score);
     const featured = read.rows.filter((r) => r.size === 'featured').map((r) => r.score);
     if (leads.length && featured.length) expect(Math.min(...leads)).toBeGreaterThanOrEqual(Math.min(...featured));
@@ -198,7 +208,9 @@ describe('the guarantee, with a genre’s demands in the work', () => {
     p.attrs = { presence: 100, composure: 100, listening: 100, imagination: 100, focus: 100, adaptability: 100, discipline: 100 };
     p.wellbeing.fitness = abilityFull(sim, p, 'stamina');
     for (const id of FILM_GENRES.map((g) => g.id).filter((g) => genreTags(g).length).slice(0, 12)) {
-      genreState(p, id).familiarity = SELF_TAPE.genreComplete * 100;
+      // Known to what a take counts complete (until 2026-10-13 to the genre tape’s 60, `SELF_TAPE.genreComplete`, which no
+      // take read once tapes were of briefs; past the brief’s 30, it came to the same).
+      genreState(p, id).familiarity = BRIEF.complete.genre * 100;
       // A taped brief (from 2026-10-12): its reading chosen and its preparation complete, as the guarantee asks.
       const b = briefsOf(id)[0]!;
       sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[0]!.id } });
@@ -217,7 +229,7 @@ describe('what a play’s material asks of its work (from 2026-10-10)', () => {
     // Until the material profiles, every play tagged a farce read physical comedy: The Importance of Being Earnest,
     // whose comedy is verbal, among them. Its kinds still say farce; its material doesn't ask clowning.
     const earnest = castingReads({ play: 'The Importance Of Being Earnest' });
-    expect(demandTags(['farce']).map((t) => DEMAND_TECHNIQUE[t])).toContain('clown');
+    expect(genreTags('farce').map((t) => DEMAND_TECHNIQUE[t])).toContain('clown');
     expect(earnest.clown).toBeUndefined();
     for (const p of plays) {
       const m = MATERIAL_BY_ID[p.title];

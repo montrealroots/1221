@@ -13,8 +13,9 @@
  *   from 10 January to 9 February once and goes from its line; the week's reminder comes on 2 February and not on 3
  *   January, the Permanent Incomplete at the new date and not the old, once each through a save, while the course's
  *   three fellow Incompletes, not extended, lapse on the old one; a twin not extended lapses on 10 January. Refused in
- *   its words a second time, for a course passed or never taken, and once Permanent. "Its month has run out." is
- *   reached by no play: the deadline's own item makes the course Permanent at the instant the month runs out.
+ *   its words a second time, for a course passed or never taken, and once Permanent. "Its month has run out." was
+ *   reached by no play, the deadline’s own item making the course Permanent at the instant the month runs out, and went
+ *   on 2026-10-13.
  * - `school.request_repeat`: Ask, drawn on Finishing The Degree and pressed after a first spring failed by sleeping
  *   through a course, decided by the clock through a save: two terms back, the class of 2030, the first year's courses
  *   met again against program term 0, the first attempt kept, the retake passed and the degree reading the pass. A
@@ -23,7 +24,8 @@
  *   words: before the year's end, with a leave asked for, once the next year has begun, with every course passed, a
  *   year a second time, and past nine semesters with eight enrolled. Two defects until 2026-10-13, both fixed that day:
  *   a second year’s repeat that took the degree to ten semesters was granted, and a repeat asked for while an additional
- *   term was asked for was granted with it.
+ *   term was asked for was granted with it. A third until later that day, found by the guide audit: the asking and the
+ *   grant’s notice counted the year’s two alone, and said nothing of the two terms a first year’s repeat bills past six.
  * - `school.cancel_repeat`: Call Off The Request…, then Call It Off on the drawn panel: the chair's decision never
  *   comes, and the degree is withheld at the thirty days' end; refused when nothing is asked; a twin left alone is
  *   granted, with the next term on the calendar and the I-20 a year longer; one called off and asked again is decided.
@@ -476,6 +478,11 @@ describe('school.request_repeat', () => {
     // TEST SETUP: Ask To Repeat The Year… pressed, as the screen's choice would be.
     const asking = drawn(sim, RepeatPanel, ['request']);
     expect(asking.text).toContain('Asking puts it to the chair and the dean, decided in five working days. Granted, you take year 1’s courses again from Fall Term 2027, and what you did the first time stays on your record; the degree reads the pass.');
+    // The first year again takes the degree to eight terms, two enrolled, two again and four to come; the seventh and
+    // eighth, Fall Term 2029 and Spring Term 2030, are billed past six at 2029–30’s tuition, 2026–27’s $40,750.00 grown
+    // 3.22% a year three times, half a year’s each: $22,407.28 twice. Until 2026-10-13 the year’s two alone were
+    // counted, six terms, and nothing was said of billing; found by the guide audit of that day.
+    expect(asking.text).toContain('the degree reads the pass. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 would be billed to your Yale account, about $44,814.56 in tuition alone.');
     const ask = drew('school.request_repeat');
     expect(ask.map((a) => a.label)).toEqual(['Ask']);
     ask[0]!.onClick!();
@@ -492,7 +499,8 @@ describe('school.request_repeat', () => {
     tend(sim, at(2027, 4, 30, 19));
     expect(school().repeat).toMatchObject({ status: 'granted', decidedAt: at(2027, 4, 30, 18) });
     expect(school()).toMatchObject({ offset: 2, classOf: 2030, repeats: 1, repeatedYears: [1] });
-    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.']);
+    // The same eight terms, two of them billed (until 2026-10-13 the notice counted six and said nothing of it).
+    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account. This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.']);
     // Not a last year's: the next term was on the calendar already, and nothing is added to it.
     expect(pendingOf(sim, TERM_KIND).map((i) => i.payload.term)).toEqual([2]);
     sim = reload(sim);
@@ -667,7 +675,8 @@ describe('school.cancel_repeat', () => {
     expect(school().endedAt).toBe(at(2029, 5, 27, 17));
     const notices = titled(sim, 'The Degree Isn’t Recommended');
     expect(notices).toHaveLength(1);
-    expect(notices[0]!.body).toMatch(/didn’t ask to repeat the year in its thirty days/);
+    // Until 2026-10-13 it said “You didn’t ask to repeat the year in its thirty days”, whatever was open, and this held it.
+    expect(notices[0]!.body).toBe('The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.');
     const after = drawn(sim, RepeatPanel);
     expect(after.text).toContain('Year 3, asked April 27, 2029: called off, for Movement Invention III.');
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
@@ -686,7 +695,7 @@ describe('school.cancel_repeat', () => {
     expect(pendingOf(sim, TERM_KIND).map((i) => [i.payload.term, i.at])).toEqual([[6, at(2029, 8, 27, 9)]]);
     expect(pendingOf(sim, REPEAT_DUE_KIND)).toHaveLength(0);
     expect(new Date(f1Of(sim.player)!.expiresAt!).toISOString()).toBe('2030-07-30T12:00:00.000Z');
-    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/The tuition scholarship supports six terms, so 2 terms of it will be billed to your Yale account\. Your I-20 is extended a year\./);
+    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account\. Your I-20 is extended a year\./);
     tend(sim, at(2029, 5, 27, 18));
     expect(school.standing).toBe('good');
     expect(titled(sim, 'The Degree Isn’t Recommended')).toHaveLength(0);

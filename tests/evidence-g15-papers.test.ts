@@ -39,7 +39,7 @@
  *   withdrawal in the fall, and a claim on 3 January 2028: Connecticut's $93 a week ((1,500 + 3,375) / 2 / 26, to the
  *   dollar, CGS 31-231a), 26 weeks to $2,418, paid on the first Sunday with no waiting week, once a week across a save and
  *   a load; the 2028 return counts it (its twin, the same save not claiming, owes less federal tax on $2,418 less
- *   income); a week certified in hospital or laid up pays nothing, and a week with $60 of pay $53; a British student
+ *   income); a week certified in hospital or laid up pays nothing, and a week with three hours worked, $69, $47; a British student
  *   out of status is refused in FUTA's words, with a base period that would pay. A week with work stays a fixture's:
  *   there's no work after school to earn it since the career went.
  * Each row's screen is drawn as the player has it.
@@ -57,7 +57,7 @@
  * be played here; good standing set before joining the Summer Cabaret, which a passive spring doesn't keep; a bank
  * emptied by postings to a test account; a lost New York ID card on the record of a student in New Haven, which no life
  * there can come to hold; a license's expiry moved to yesterday; $20,000 of 2028 wages given both twins so the year has
- * a return; a stay in hospital, a concussion and $60 of pay on the record before a week is certified; and on the
+ * a return; a stay in hospital, a concussion and three hours worked on the calendar before a week is certified; and on the
  * screen, the Report Lost… press, which a static render can't make, given as DocumentList's confirming state.
  */
 import { describe, expect, it, vi } from 'vitest';
@@ -69,7 +69,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { documentsOf, type PersonDocument } from '@/engine/systems/documents';
-import { setStanding } from '@/engine/systems/school';
+import { SHIFT_KIND, setStanding } from '@/engine/systems/school';
 import { healthOf } from '@/engine/systems/health';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
 import { unemploymentOf } from '@/engine/systems/unemployment';
@@ -841,7 +841,7 @@ describe('benefits.claim', () => {
     expect(mine.federal).toBeGreaterThan(theirs.federal);
   }, 60_000);
 
-  it('pays nothing for a week certified in hospital, nor for one laid up, the next week whole, and a week with $60 of pay $93 less two-thirds of it, $53', () => {
+  it('pays nothing for a week certified in hospital, nor for one laid up, the next week whole, and a week with three hours worked, $69, $93 less two-thirds of it, $47', () => {
     const sim = leftAfterTheSummer('g15-claim');
     sim.must({ kind: 'benefits.claim', payload: {} });
     tended(sim, SUNDAY[0]! + MS_HOUR);
@@ -856,14 +856,17 @@ describe('benefits.claim', () => {
     expect(benefitPaid(sim)).toHaveLength(1);
     tended(sim, SUNDAY[3]! + MS_HOUR);
     expect(benefitPaid(sim)).toEqual([[SUNDAY[0], 93_00], [SUNDAY[3], 93_00]]);
-    // TEST SETUP: $60 of pay in the fifth week, as the School's payroll posts a wage; there's no work after school to
-    // earn it since the career went. Connecticut takes two-thirds of the week's pay off the benefit (CGS 31-229, as
-    // CONNECTICUT_UI keeps it): $93 − $40 = $53.
-    sim.post({ memo: 'Work-study wages, 3 hours: TEST SETUP', category: 'salary', postings: [{ accountId: checking(sim).id, amount: 60_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -60_00 }] });
+    // TEST SETUP: three hours worked on Wednesday evening of the fifth week, $23 an hour, kept on the calendar as the
+    // School keeps a shift worked; there’s no work after school to earn it since the career went. Connecticut takes
+    // two-thirds of the week’s earnings off the benefit (CGS 31-229, as CONNECTICUT_UI keeps it): $93 − $46 = $47. Until
+    // 2026-10-13 this posted $60 of pay to the ledger, which the week read as its earnings, and it paid $53; a week
+    // reads the work done in it now (`workDoneIn`), and a payment is no work.
+    const shift = sim.schedule({ at: Date.UTC(2028, 1, 3, 0), kind: SHIFT_KIND, label: 'Elective Shift: Front Of House, Yale Rep', category: 'school', payload: { personId: sim.player.id, hours: 3, elective: true, worked: 3 } });
+    Object.assign(shift, { status: 'done', resolvedAt: shift.at });
     const fifth = Date.UTC(2028, 1, 7, 1);
     tended(sim, fifth + MS_HOUR);
-    expect(benefitPaid(sim)).toEqual([[SUNDAY[0], 93_00], [SUNDAY[3], 93_00], [fifth, 53_00]]);
-    expect(unemploymentOf(sim.player).claim).toMatchObject({ paid: 239_00, weekly: 93_00 });
+    expect(benefitPaid(sim)).toEqual([[SUNDAY[0], 93_00], [SUNDAY[3], 93_00], [fifth, 47_00]]);
+    expect(unemploymentOf(sim.player).claim).toMatchObject({ paid: 233_00, weekly: 93_00 });
   }, 60_000);
 
   it('refuses a British student out of status in FUTA’s words, with a base period that would pay, and Unemployment says so with no button', () => {

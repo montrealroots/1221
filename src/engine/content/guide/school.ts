@@ -39,6 +39,21 @@
  * the meetings a course needs were held against the guide's own sum where the engine's verdicts now hold them. The review
  * also had the Incomplete example's sessions to press said in words, "twice", where they were "2 times", and its week laid
  * up played, where the flu alone had been.
+ *
+ * The guide’s audit of 2026-10-13 read the entries against that day’s fixes. Until then they left out a make-up session
+ * refused when its month runs out before the session would end (`makeUpRefusal`), a repeat and an additional term each
+ * refused beside the other (`repeatRefusal`, `extraRefusal`), and two of the three ways a conversion is refused for no
+ * hours (`conversionRefusal`); they said a repeat’s semesters were those enrolled, where they count the year’s two again
+ * and the program’s terms still to come (`withRepeat`), and that hours never assigned counted from the spring, where they
+ * count only in May before its processing (`unassignedKnown`); Elective Hours Asked For still counted, as they read, an
+ * evening a leave or leaving the School called off, which `callOff` takes out; and the injury row said nothing of the
+ * workers’ compensation a shift’s injury brings, whose figures are read from Connecticut’s rule now.
+ *
+ * Later on 2026-10-13 a make-up session and a month more were refused a student who has left the School, in its words
+ * (`makeUpRefusal`, `extendRefusal`), and “Its month has run out.” and “Its teachers are in New Haven.”, which no play
+ * reached, went: until then the entry listed both and said a session needed New Haven, where every student is.
+ * “Orientation is in New Haven.” went the same day (`orientationRefusal`), reached by no play either; until then the
+ * orientation entry listed it, and said Catch Up needed New Haven.
  */
 
 import { COURSES, EXTENDED_STUDY, LABS, LEAVE_RULES, MANDATORY_LEAVE, ORIENTATION_2026, REQUIRED_PPE, SKILLS, TERM_STARTS_2026_27, WORK_LIMITS, WORK_STUDY, YALE_DRAMA, type SchoolDate } from '../school';
@@ -50,6 +65,7 @@ import {
 import { COURSE_RULES } from '../../systems/courserecord';
 import { ORIENTATION } from '../../systems/coursework';
 import { STATUS_GRACE_DAYS } from '../../systems/permission';
+import { WORKERS_COMP } from '../injury';
 import type { GuideEntry } from './types';
 
 const CHAPTER = CHAPTER_BY_ID['school']!.title;
@@ -80,6 +96,22 @@ const plusDays = (d: SchoolDate, days: number): SchoolDate => {
 };
 const dated = (d: SchoolDate, year = true): string => `${MONTHS[d.month - 1]} ${d.day}${year ? `, ${d.year}` : ''}`;
 const season = (term: number): string => `the ${termStart(term).fall ? 'fall' : 'spring'} of ${termStart(term).date.year}`;
+/** Workers’ compensation where a work-study shift is worked (`mayHurt`: New Haven is in Connecticut), as the productions entries read it. */
+const CT_COMP = WORKERS_COMP.states['us-ct']!;
+/**
+ * Connecticut’s minimum, a fifth of its maximum, and the week under which it’s the share of the whole wage (CGS
+ * 31-307(a); `compWeekly`). Until 2026-10-13 the entry said every week was paid after income tax, which it was until
+ * that day’s fix of the minimum; a week of term’s 19 hours is under it.
+ */
+const CT_MINIMUM = Math.round(CT_COMP.max * (CT_COMP.minShareOfMax ?? 0));
+const CT_MINIMUM_UNDER = Math.round(CT_MINIMUM / CT_COMP.share);
+/**
+ * The most a week of shifts pays: they’re booked only in a term’s class period (`isShiftDay`, `school.take_shift`), where
+ * Yale’s cap is 19 hours, so $437 at $23, under the $473.60 below which Connecticut pays its share of the whole wage.
+ * Until 2026-10-13 the entry went on to say a bigger week was paid after income tax, which no week of shifts reached
+ * (found by that day’s third round of defects).
+ */
+const CT_WEEK_MOST = WORK_LIMITS.weekHours * WORK_STUDY.hourly;
 
 /** Every day of a term's class period, its first class day to its last. */
 function classSpan(term: number): SchoolDate[] {
@@ -336,7 +368,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     needs: [
       'A first-year who arrived before the sessions.',
-      'For Catch Up: in New Haven, out of hospital, free now, and clear of anything you’re expected at before the session’s length would end.',
+      'For Catch Up: out of hospital, free now, and clear of anything you’re expected at before the session’s length would end.',
     ],
     costs: [
       { label: 'Time', value: `Each session’s length: ${ORIENTATION.map((o) => `${o.label}, ${o.minutes} minutes`).join('; ')}. Catch Up moves the clock on by the same`, estimate: true },
@@ -368,7 +400,6 @@ export const SCHOOL: readonly GuideEntry[] = [
       '“Orientation is behind you.”: the life began after the first week.',
       '“Done on …”',
       '“Its session is still ahead on the calendar.”',
-      '“Orientation is in New Haven.”',
       '“Not from a hospital bed.”',
       'At something else, or due somewhere before it would end: it names what, and when.',
     ],
@@ -512,9 +543,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Every Course, folded at the foot of Courses And The Degree, lists each attempt and how it ended.',
     ],
     needs: [
-      `A make-up session: an Incomplete whose deadline is ${MAKE_UP} or more away, in New Haven, out of hospital, and ${MAKE_UP} free.`,
+      `A make-up session: an Incomplete whose deadline is ${MAKE_UP} or more away, still at the School, out of hospital, and ${MAKE_UP} free.`,
       `A repeat: the spring’s evaluation past and the next year not yet begun (after the last year, within ${EXTENDED_STUDY.requestDays} days of it), a course failed that year, no leave under way and no additional term asked for, that year not repeated before, and ${EXTENDED_STUDY.maxSemesters} semesters at most with the repeat’s two and the terms still to come, a leave’s terms not among them.`,
-      `An additional term: after the last year’s evaluation and within its ${EXTENDED_STUDY.requestDays} days, a course unpassed, ${EXTENDED_STUDY.maxSemesters} semesters enrolled at most with it, and no disqualification standing.`,
+      `An additional term: after the last year’s evaluation and within its ${EXTENDED_STUDY.requestDays} days, a course unpassed, no repeat being decided, ${EXTENDED_STUDY.maxSemesters} semesters enrolled at most with it, and no disqualification standing.`,
     ],
     costs: [
       { label: 'A Make-Up Session', value: `${COURSE_RULES.makeUpMinutes} minutes, the clock moved on; each makes up a week of the course’s meetings`, estimate: true },
@@ -550,13 +581,14 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Finishing The Degree says where a request stands: with the chair and the dean, granted, refused and why, or called off.',
     ],
     unavailable: [
-      '“There’s no Incomplete in that course to make up.”, “Its month has run out.” or “Its teachers are in New Haven.”',
-      '“It’s been extended once already.”: Ask For A Month More then stops showing.',
+      '“There’s no Incomplete in that course to make up.”, “You’re not at school.” or “Its month runs out at …: there isn’t the time for a session before it.”',
+      '“You’re not at school.” or “It’s been extended once already.”: Ask For A Month More then stops showing.',
       '“A year is repeated from its end, after the spring’s evaluation.”',
       '“Every course this year was passed: there’s nothing to repeat it for.”',
       '“SLATE’s faculty don’t approve year N a second time.”',
+      '“Your request for an additional term is with the chair and the dean, decided by …” or “Your additional term is …”: a repeat isn’t asked for beside one; and for an additional term, “Your request to repeat the year is being decided.”',
       '“Not with a leave under way.”',
-      '“Repeating would make N semesters, past the nine the Bulletin allows for the degree.”, and for an additional term “It would make N semesters, past the nine the Bulletin allows.”: semesters enrolled, a leave’s terms left out.',
+      '“Repeating would make N semesters, past the nine the Bulletin allows for the degree.”: the semesters enrolled, the year’s two again and the program’s terms still to come after it; and for an additional term “It would make N semesters, past the nine the Bulletin allows.”: the semesters enrolled and the term itself. A leave’s terms are left out of both.',
       '“The next year has begun.” or “Its thirty days have run out.”',
       '“An additional term comes after your last year’s evaluation, for what it left unpassed.”',
       '“The faculty’s disqualification stands against it.”',
@@ -616,7 +648,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       { label: 'The Balance', value: 'The sum of the account’s postings: what was charged, less what was paid or credited' },
       { label: 'Need', value: 'Yale’s assessment of your family’s means; a family that rules need out leaves no living aid and no hours to convert' },
       { label: 'The Aid Office', value: `An exception to ${SIX} terms of tuition support only where you’ve had a medical leave; living aid, which meets the term’s Yale Health fee, kept only where need was found`, estimate: true },
-      { label: 'Hours To Convert', value: `Assigned hours excused ill or hurt this year, and from the spring the hours never assigned (paid at May’s processing, not January’s), to ${WORK_LIMITS.convertibleHours} less any converted` },
+      { label: 'Hours To Convert', value: `Assigned hours excused ill or hurt this year; and the hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; to ${WORK_LIMITS.convertibleHours} less any converted` },
     ],
     now: [
       'A payment moves from your bank onto the account at once; paid in full, a hold lifts, and a degree waiting on it is conferred.',
@@ -648,7 +680,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       '“Conversion to grant aid is for students on financial aid, and no need was found for you.”',
       '“Not while on leave: a student on leave has no aid.”',
       '“Your request is in, for the next processing.”',
-      '“No hours to convert: …”',
+      '“No hours to convert: …”; before May, “No hours to convert yet: …”; and from May 15 to January 14, when the next processing is January’s, “No hours to convert at January’s processing: …”.',
     ],
     mistakes: [
       `Leaving a term’s bill, or a scholarship a leave returned, past its ${EXTENDED_STUDY.dueDays} days: the hold stops registration at the next term and the diploma at the end. Pay before it’s due.`,
@@ -706,7 +738,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       { label: 'The Week’s Hours', value: `Work-study shifts booked and worked, Monday to Sunday, against Yale’s cap: ${WORK_LIMITS.weekHours} hours from a term’s first class day to its last, and ${WORK_LIMITS.recessWeekHours} outside them. The Monday-to-Sunday week is SLATE’s` },
       { label: 'Where You Are', value: 'In New Haven, awake and out of hospital when it begins' },
       { label: 'A Sick Day', value: 'Called in, or in hospital or laid up: the shift is excused' },
-      { label: 'The Risk Of Injury', value: 'Each hour carries its work’s risk at BLS’s rates, the crew’s higher than front of house' },
+      { label: 'The Risk Of Injury', value: `Each hour carries its work’s risk at BLS’s rates, the crew’s higher than front of house. Hurt at a shift, workers’ compensation pays the care and, kept off work, Connecticut’s ${pct(CT_COMP.share)} of the week’s work-study wages to that shift: ${CT_WEEK_MOST < CT_MINIMUM_UNDER ? `of the whole of it, as the state pays a week under ${usd(CT_MINIMUM_UNDER)}: shifts are worked only in a term’s class period, ${WORK_LIMITS.weekHours} hours a week at most, ${usd(CT_WEEK_MOST)}` : `of the whole of a week under ${usd(CT_MINIMUM_UNDER)}, the state’s minimum there, and of a bigger week after income tax, never under ${usd(CT_MINIMUM)}, with no payroll tax taken off, since work-study bears none`}; nothing for the first ${word(CT_COMP.waitingDays)} days unless you’re off more than ${word(CT_COMP.retroAfterDays)}` },
     ],
     now: [
       'Booked: the evening goes on your calendar, and Elective Hours Asked For rises by four.',
@@ -718,11 +750,11 @@ export const SCHOOL: readonly GuideEntry[] = [
       'An elective evening missed is unpaid and frees its hours, and doesn’t count against you.',
       'A shift that would pass the week’s cap is worked to the cap, or called off if the week is full, and not held against you.',
       'Excused ill, an assigned shift’s hours can be converted to grant aid if you’re on aid.',
-      'Leaving the School, on a leave or for good, hours already worked are still paid.',
+      'Leaving the School, on a leave or for good, hours already worked are still paid, and an elective evening still ahead is called off, its hours freed as a missed one’s are.',
     ],
     interpret: [
       `Assigned Hours Booked climbs as each Saturday is booked; the class weeks of 2026–27 hold ${YEAR_SATURDAYS} Saturdays.`,
-      `Elective Hours Asked For counts the hours of evenings booked and not missed, from each fall. The Bulletin’s minimum is ${WORK_STUDY.electiveHours}; the screen shows the count, and no rule reads whether you reach it.`,
+      `Elective Hours Asked For counts the hours of evenings booked, and neither missed nor called off by a leave or by leaving the School, from each fall. The Bulletin’s minimum is ${WORK_STUDY.electiveHours}; the screen shows the count, and no rule reads whether you reach it.`,
       'Owed On Friday is the hours worked since the last payday, at the rate.',
       'This Week’s Hours shows the week’s work-study shifts, booked and worked, against the cap. Its note says all Yale jobs together; work-study is the only one it counts.',
     ],

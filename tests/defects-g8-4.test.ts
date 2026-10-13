@@ -244,18 +244,28 @@ describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
   it('shows the empty choice only while nothing is chosen, and the chain’s price in the save’s money', () => {
     const sim = newHaven('g84-doctor');
     let { html } = drawn(sim, PapersWorkspace, healthTab);
-    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The Town’s First Practice' });
+    // New Haven keeps one practice, so it has no Your Doctor box (from 2026-10-13); until then this test chose the
+    // practice here, beside The Town’s First Practice, the same place. The doctor’s half is London’s, below.
+    expect(optionsOf(html, 'own-doctor')).toEqual([]);
     expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Median' });
     expect(optionsOf(html, 'own-pharmacy').map((o) => o.words)).toContain('Walmart Pharmacy, A Generic $4.00 Uninsured');
-    const practice = clinicsIn(sim.player.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind)).at(-1)!;
-    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: practice.id } });
     sim.must({ kind: 'health.choose_pharmacy', payload: { chain: US_PHARMACIES[0]!.id } });
     ({ html } = drawn(sim, PapersWorkspace, healthTab));
-    expect(optionsOf(html, 'own-doctor').map((o) => o.value)).not.toContain('');
     expect(optionsOf(html, 'own-pharmacy').map((o) => o.value)).not.toContain('');
-    expect(optionsOf(html, 'own-doctor').length).toBeGreaterThan(0);
+    expect(optionsOf(html, 'own-pharmacy').length).toBeGreaterThan(0);
+
+    // A town of three practices, London: the empty choice shows until one is picked.
+    const london = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable' }, 'g84-doctor-london');
+    const practices = clinicsIn(london.player.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
+    expect(practices.length).toBe(3);
+    ({ html } = drawn(london, PapersWorkspace, healthTab));
+    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The Town’s First Practice' });
+    london.must({ kind: 'health.choose_clinic', payload: { clinicId: practices.at(-1)!.id } });
+    ({ html } = drawn(london, PapersWorkspace, healthTab));
+    expect(optionsOf(html, 'own-doctor').map((o) => o.value)).not.toContain('');
+    expect(optionsOf(html, 'own-doctor').map((o) => o.value)).toEqual(practices.map((c) => c.id));
     // The empty choice was refused by the engine anyway: there was nothing it could do once a choice was made.
-    expect(sim.execute({ kind: 'health.choose_clinic', payload: { clinicId: '' } }).ok).toBe(false);
+    expect(london.execute({ kind: 'health.choose_clinic', payload: { clinicId: '' } }).ok).toBe(false);
     expect(sim.execute({ kind: 'health.choose_pharmacy', payload: { chain: '' } }).ok).toBe(false);
   });
 });

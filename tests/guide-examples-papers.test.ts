@@ -28,7 +28,8 @@
  * - papers.health-cover: the degree, the cover's end on 1 August, Enroll into HUSKY D from 1 September, care priced on
  *   either side of it, and enrolling ahead from 2 June;
  * - papers.doctor: a Monday's visit booked the days on the step says, slept through, booked again, kept at $0, a
- *   referral's wait, and the referral's share on the engine's decider;
+ *   referral's wait, and the referral's share on the engine's decider; and, for its “as every booking is”, a booking
+ *   from 2 November 2026 whose wait ends on Thanksgiving, put on the Friday;
  * - papers.conditions: a life drawn with depression, Yale's course of eight sessions at $0, how it ends, and the share
  *   that lifts on the engine's decider;
  * - papers.benefits: a claim filed on a summer's stipend, its toast, and the first Sunday's payment with no waiting week;
@@ -69,9 +70,16 @@
  * `payLateRateAt` charged nothing at first, and the example said otherwise; the renewal of prescriptions was left out
  * as having nothing to renew, where the reason was that nothing reads it; and the isolation test replayed any example
  * that had failed and failed with its error, before it read the live save.
+ *
+ * Corrected on 2026-10-13, after that day’s review made a booking skip a public holiday where you live as well as a
+ * weekend (`slot` in `systems/appointments.ts`). Until then no holiday was loaded here, so the holiday half of `slot`
+ * read nothing when the doctor’s example was played, `bookedAfter` skipped a weekend alone, and the example’s “moved to
+ * the Monday when that’s a weekend, as every booking is” passed, false in the app, which loads them. America’s holidays
+ * are loaded as the app loads them, and a booking whose wait ends on Thanksgiving is played.
  */
 
 import { describe, expect, it, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave } from '@/engine';
@@ -89,6 +97,7 @@ import { STATE_TAX } from '@/engine/content/statetax';
 import { ID_CARDS } from '@/engine/content/identity';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { exchange } from '@/engine/content/currency';
+import { addCountryHolidays, holidaysOn } from '@/engine/content/holidays';
 import { PROGRAM_NAMES, careQuote, coverLabel, coverOn, healthOf, keptUp, mayEnroll, rxShareOf, uninsuredPrice, yaleUntil } from '@/engine/systems/health';
 import { appointmentsOf, mayRefer } from '@/engine/systems/appointments';
 import { THERAPISTS, THERAPY, SESSION_HOUR, sessionPrice, therapyLifts } from '@/engine/systems/therapy';
@@ -137,8 +146,13 @@ function papersDrawn(sim: Simulation, tab?: string): { html: string; text: strin
   return { html, text: html.replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ') };
 }
 
+// America's holidays, as the app loads them when a save opens (`loadPlacesFor` in `src/engine/index.ts`): a booking
+// skips a public one, and a bank keeps them off its business days (from 2026-10-13: until then none was loaded here, so
+// the doctor's booking was never played past one).
+addCountryHolidays('us', readFileSync('public/holidays/us.tsv', 'utf8'));
+
 const NY = 'America/New_York';
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTHS =['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, NY);
 /** A figure in dollars as the guide writes it: whole dollars unless there are cents. */
 const usd = (cents: number) => formatMoney(cents, 'USD', { cents: cents % 100 !== 0 });
@@ -159,10 +173,15 @@ const day = (t: number) => formatDate(t, NY);
 /** The calendar days between two moments in New Haven. */
 const dayKey = (t: number) => { const p = zonedParts(t, NY); return Date.UTC(p.year, p.month - 1, p.day); };
 const daysBetween = (a: number, b: number) => Math.round((dayKey(b) - dayKey(a)) / MS_DAY);
-/** The days on a booking lands: the wait, moved to the Monday where it ends on a weekend (`slot` in `systems/appointments.ts`). */
+/**
+ * The days on a booking lands: the wait, moved to the next working day where it ends on a Saturday, a Sunday or a
+ * public holiday in New Haven (`slot` in `systems/appointments.ts`). Until 2026-10-13 it moved a weekend alone, as the
+ * engine did, and no holiday was loaded here for either to read.
+ */
 function bookedAfter(from: number, wait: number): number {
   let d = wait;
-  while ([0, 6].includes(new Date(dayKey(from) + d * MS_DAY).getUTCDay())) d += 1;
+  const off = (t: Date) => [0, 6].includes(t.getUTCDay()) || holidaysOn(at(t.getUTCFullYear(), t.getUTCMonth() + 1, t.getUTCDate(), 10), NY, 'us', 'us-ct').some((h) => h.type === 'public');
+  while (off(new Date(dayKey(from) + d * MS_DAY))) d += 1;
   return d;
 }
 const titled = (sim: Simulation, title: string, from = 0) => sim.universe.notifications.filter((n) => n.title === title && n.at >= from);
@@ -384,9 +403,9 @@ PLAYS['papers.doctor'] = () => {
   expect(ex.steps[1]).toContain('“Missed The Doctor” follows');
   const owed = healthOf(sim.player).owedVisit!;
   expect(ex.steps[2]).toContain(`beside “${owed}: not yet seen”`);
-  // Book An Appointment: the wait again, moved to the Monday where it ends on a weekend.
+  // Book An Appointment: the wait again, moved to the next working day where it ends on a weekend or a public holiday.
   const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
-  const wait = Number(grab(ex.result, /^It’s booked again for (\d+) days on, moved to the Monday when that’s a weekend, as every booking is\./));
+  const wait = Number(grab(ex.result, /^It’s booked again for (\d+) days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is\./));
   expect(daysBetween(sim.now, again.at)).toBe(bookedAfter(sim.now, wait));
   // Kept: Yale Health leaves nothing to pay, and no bill is made.
   tended(sim, again.at + 2 * MS_HOUR);
@@ -406,6 +425,29 @@ PLAYS['papers.doctor'] = () => {
   const n = Number(oneIn);
   expect(drawnWithin((k, odds) => mayRefer(sim, sim.player, visit(k), odds) !== undefined, 1 / (n + 0.5), 1 / (n - 0.5))).toEqual([]);
 };
+
+/**
+ * The doctor’s “as every booking is”, on a booking whose wait ends on a public holiday: Book An Appointment on Monday 2
+ * November 2026, whose wait ends on Thursday 26 November, Thanksgiving Day. By the rule the example gives it goes to the
+ * next working day, Friday 27 November, 25 days on, at 10:00 AM (from 2026-10-13: until then the example said a weekend
+ * alone was moved, and no booking here reached a holiday).
+ */
+function bookedPastAHoliday(): void {
+  const ex = example('papers.doctor');
+  const wait = Number(grab(ex.result, /^It’s booked again for (\d+) days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is\./));
+  const sim = student('guide-papers-doctor-holiday');
+  tended(sim, at(2026, 11, 2, 8));
+  // From that Monday the example’s wait ends on Thanksgiving, a public holiday in Connecticut.
+  expect(daysBetween(sim.now, at(2026, 11, 26))).toBe(wait);
+  expect(holidaysOn(at(2026, 11, 26, 10), NY, 'us', 'us-ct').map((h) => [h.name, h.type])).toContainEqual(['Thanksgiving Day', 'public']);
+  // TEST SETUP: a visit owed and none booked, as a missed one leaves it.
+  for (const a of [...appointmentsOf(sim.player)]) sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
+  healthOf(sim.player).owedVisit ??= 'A doctor’s visit';
+  const booked = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
+  expect(booked.at).toBe(at(2026, 11, 27, 10));
+  expect(daysBetween(sim.now, booked.at)).toBe(25);
+  expect(bookedAfter(sim.now, wait)).toBe(25);
+}
 
 PLAYS['papers.conditions'] = () => {
   const ex = example('papers.conditions');
@@ -847,6 +889,7 @@ describe('the guide’s worked examples for Papers, played on throwaway saves', 
   it('papers.overview: the chapter read opens Papers, and reading Your Cover changes nothing', () => play('papers.overview'));
   it('papers.health-cover: a spring graduate’s cover ends on 1 August, and HUSKY D begins 1 September', () => play('papers.health-cover'));
   it('papers.doctor: a visit slept through is booked again, kept at $0, and a referral waits its days', () => play('papers.doctor'));
+  it('papers.doctor: as every booking is, a wait ending on Thanksgiving is booked for the Friday, 25 days on', bookedPastAHoliday);
   it('papers.conditions: Yale’s course of eight costs nothing, and ends lifted or done', () => play('papers.conditions'));
   it('papers.benefits: a claim on a summer’s stipend pays its week each Sunday, with no waiting week', () => play('papers.benefits'));
   it('papers.pensions: two summers earn the credits the example says, and the claim waits for 62', () => play('papers.pensions'));

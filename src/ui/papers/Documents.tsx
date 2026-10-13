@@ -28,7 +28,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { dateKey, formatDate } from '@/engine/core/time';
+import { MS_DAY, dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
@@ -82,8 +82,8 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                     )
                   )}
                   {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('A police report filed.', 'positive'); }}>File A Police Report</Gated></>; })()}
-                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replaced${a.value!.fee ? `, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated></>; })()}
-                  {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'Its time to come isn’t published: the license’s, there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated></>; })()}
+                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id, sim.now); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replaced${a.value!.fee ? `, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated></>; })()}
+                  {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id, sim.now); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'Its time to come isn’t published: the license’s, there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated></>; })()}
                 </td>
               </tr>
             );
@@ -188,9 +188,16 @@ export function WorkPane() {
   const money = (c: number) => formatMoney(c, cur);
   const usd = (n: number) => money(inSaveMoney(sim, Math.round(n * 100), 'USD'));
   const end = programEnd(person);
-  const status = usStatusEnds(person);
-  const optNo = optRefusal(sim, person);
   const opt = WORK_RULES.opt;
+  // An OPT in force ends on its 91st day without work, the thirteenth week `OPT_WEEK_KIND` counts past its 90, and the
+  // status with it: there’s no work after the degree, so no played OPT reaches its twelve months and the sixty days
+  // after them, which `usStatusEnds` gives it. Until 2026-10-13 Your US Status showed that date, fourteen months on,
+  // while the OPT panel below said the status ended with the 90 days (found by that day’s third round).
+  const optHeld = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
+  const idleEnds = optHeld?.issuedAt !== undefined ? optHeld.issuedAt + (Math.floor(opt.unemploymentDays / 7) + 1) * 7 * MS_DAY : undefined;
+  const statusEnds = usStatusEnds(person);
+  const status = statusEnds !== undefined && idleEnds !== undefined ? Math.min(statusEnds, idleEnds) : statusEnds;
+  const optNo = optRefusal(sim, person);
   const apply = (kind: string, payload: Record<string, unknown>, what: string) => {
     const a = run<{ readyAt: number; fee: number }>(kind, payload);
     if (a.ok) toast(`${what}, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
@@ -201,7 +208,7 @@ export function WorkPane() {
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'OPT is filed from 90 days before to 60 after' : 'For a student on an F-1'} />
-            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? 'Since ' + formatDate(person.usOutOfStatus, sim.zone) + '; the Visa Waiver Program is closed to you' : status !== undefined ? 'With its grace after permission ends; stay past it and you’re out of status' : end ? 'While you study, or while an application is decided' : 'For a student on an F-1'} />
+            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? 'Since ' + formatDate(person.usOutOfStatus, sim.zone) + '; the Visa Waiver Program is closed to you' : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out, with no grace after; stay past it and you’re out of status` : 'With its grace after permission ends; stay past it and you’re out of status') : end ? 'While you study, or while an application is decided' : 'For a student on an F-1'} />
           </div>
           <DocumentList kinds={['permit', 'visa']} />
         </div>

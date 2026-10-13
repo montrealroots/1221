@@ -688,7 +688,8 @@ describe('injuries', () => {
     expect(bills).toHaveLength(1);
     // Urgent care and two sessions of therapy at an uninsured patient's price, $331.17 and $183.98 each (CARE.price's
     // $180 and $100, × 1.75 uninsured, grown to 2026).
-    expect(bills[0]).toMatchObject({ what: 'A Sprained Ankle: its care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
+    // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
+    expect(bills[0]).toMatchObject({ what: 'A sprained ankle: its care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
     expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Its care comes to $699.13, due in 30 days.');
     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
     clearCalendar(sim); // TEST SETUP
@@ -697,15 +698,15 @@ describe('injuries', () => {
     const again = reload(sim);
     setBalance(again, again.player.primaryAccountId!, 2_000_00); // TEST SETUP: enough in checking when it falls due
     again.advanceTo(Date.UTC(2026, 1, 5, 5) - 1000);
-    expect(healthOf(again.player).bills.find((b) => b.what === 'A Sprained Ankle: its care')!.paid).toBeUndefined();
+    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle: its care')!.paid).toBeUndefined();
     again.advanceTo(Date.UTC(2026, 1, 5, 5) + 1000);
-    expect(healthOf(again.player).bills.find((b) => b.what === 'A Sprained Ankle: its care')!.paid).toBe(true);
-    const paid = again.universe.transactions.filter((t) => t.memo === 'Medical bill: A Sprained Ankle: its care');
+    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle: its care')!.paid).toBe(true);
+    const paid = again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle: its care');
     expect(paid).toHaveLength(1);
     expect(paid[0]!.at).toBe(Date.UTC(2026, 1, 5, 5));
     expect(paid[0]!.postings.find((x) => x.accountId === again.player.primaryAccountId)!.amount).toBe(-699_13);
     again.advanceTo(Date.UTC(2026, 1, 20));
-    expect(again.universe.transactions.filter((t) => t.memo === 'Medical bill: A Sprained Ankle: its care')).toHaveLength(1);
+    expect(again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle: its care')).toHaveLength(1);
   });
 
   it('PLAYER JOURNEY: a work-study crew shift that pulls a muscle is work: workers’ compensation pays the care, nothing is billed, and training is refused', () => {

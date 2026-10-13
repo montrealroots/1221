@@ -78,8 +78,8 @@ export interface City extends ReferenceRecord {
   jurisdictionCode: string;
   /**
    * Descriptive tags used by search and lifestyle systems, and shown title-cased on Where You Are (`placeLine`), so
-   * spelled as the player reads: until 2026-10-13 two were British, "theatre" and "harbour", and a player in New York,
-   * Chicago or London read "Theatre" (found by that day's evidence pass).
+   * spelled as the player reads: until 2026-10-13 two, theater and harbor, were spelled the British way, and a player
+   * in New York, Chicago or London read it so (found by that day's evidence pass).
    */
   tags: string[];
   /**

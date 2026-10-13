@@ -54,7 +54,7 @@ import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course,
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, chiefLimit, countTogether, evaluate, leanedWeights, performerOf, recordWork, type Evaluation } from './evaluation';
-import { evaluatePiece, familyLean, judgePiece, loadOf, pieceWeights, rehearseWays, toneSegments, withBook, type PieceSpec, type Workbook } from './piece';
+import { evaluatePiece, judgePiece, loadOf, pieceWeights, rehearseWays, toneSegments, withBook, type PieceSpec, type Workbook } from './piece';
 import { ENSEMBLE, sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
 import { PIECE } from '../content/piece';
 import { UNPERFORMED } from './material';
@@ -63,8 +63,6 @@ import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '../con
 import type { AbilityId } from '../content/abilities';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
-import { familiesOf } from '../content/genres';
-import { withDemands } from '../content/demands';
 import { SPENT, startRefusal } from './life';
 import { exerts } from './body';
 import { personalityOf } from './personality';
@@ -471,10 +469,12 @@ export function minutesOf(a: Assignment, act: Activity): number {
 /** Why a need isn't met now, or nothing. */
 function needRefusal(sim: Simulation, person: Person, need: Need): string | undefined {
   const cw = courseworkOf(sim, person)!;
-  const here = person.currentLocationId === YALE_DRAMA.cityId;
+  // “The studios are in New Haven.” and “The Haas Arts Library is in New Haven.” went on 2026-10-13, reached by no play:
+  // a life is enrolled only where it begins in New Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a
+  // person since the scope reset of 2026-10-09.
   switch (need) {
-    case 'studio': if (!here) return 'The studios are in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the building yet: the tour shows you the studios.';
-    case 'library': if (!here) return 'The Haas Arts Library is in New Haven.'; return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the library yet: the tour shows you it.';
+    case 'studio': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the building yet: the tour shows you the studios.';
+    case 'library': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know the library yet: the tour shows you it.';
     // On its feet: the energy, below (`SPENT`). Clothes to move in were the wardrobe's to have until 2026-10-09.
     case 'feet': return undefined;
     case 'partner': return 'Work with your partner is a rehearsal you agree with them: ask them on the assignment.';
@@ -830,7 +830,8 @@ export const difficultyOf = (t: Template): number => Math.max(-0.5, Math.min(1, 
  * A piece of coursework judged (`systems/evaluation.ts`), from 2026-10-09: the template's task profile
  * (`TEMPLATE_TASK`), the techniques it reads, its parts of preparation against `EVALUATION.complete.coursework`
  * (a round's parts only, for work shown in rounds), its par as difficulty, the day's condition at the meeting, and
- * its scene's play's kinds leaning what counts and adding what they demand (`withDemands`), where the game has the play.
+ * its scene's material (`workContext`). Until 2026-10-13 this said its scene's play's kinds leaned what counted and
+ * added what they demanded (`withDemands`); from 2026-10-10 a scene’s material read in their place.
  */
 export function judgeWork(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant, key: string): Evaluation {
   const w = weightsOf(a);
@@ -847,7 +848,8 @@ export function togetherOf(sim: Simulation, person: Person, a: Assignment, onDay
   if (!read) return undefined;
   const ctx = workContext(a, {}, {});
   const piece = scenePiece(a);
-  const weights = piece ? pieceWeights(ctx.task, ctx.lean, piece) : leanedWeights(ctx.task, 'families' in ctx ? ctx.families : [], ctx.lean);
+  // No genre families lean coursework (`workContext`, from 2026-10-13: until then work with no scene carried an empty list).
+  const weights = piece ? pieceWeights(ctx.task, ctx.lean, piece) : leanedWeights(ctx.task, [], ctx.lean);
   const norm = (id: 'listening' | 'adaptability') => Math.min(1, abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)));
   return sharedOf(judged, read, sim.universe.meta.seed, judged.inputs.key, (norm('listening') + norm('adaptability')) / 2, weights);
 }
@@ -855,8 +857,9 @@ export function togetherOf(sim: Simulation, person: Person, a: Assignment, onDay
 /**
  * What a piece of coursework asks, but the day (from 2026-10-10): its task, its techniques, its preparation, its
  * difficulty, and its material's and its playing's reads (`materialContext`). A scene with a profile reads it and no
- * genre-wide demand; one without (no scene in the game has none, but a template with material none) reads its play's
- * genres as before.
+ * genre-wide demand, and every scene in the game has one (tests/evidence-g23-school.test.ts). Work without one, a
+ * template that sets no scene (`material: 'none'`), reads the template’s own techniques. Until 2026-10-13 that work
+ * added what its scene’s play’s kinds demanded (`withDemands`), and with no scene there was no play: it added nothing.
  */
 export function workContext(a: Assignment, parts: Record<string, number>, required: Record<string, number>, playing: Playing | undefined = a.playing) {
   const t = templateById(a.template)!;
@@ -882,12 +885,15 @@ export function workContext(a: Assignment, parts: Record<string, number>, requir
     for (const [k, w] of Object.entries(material.techniques ?? {}) as [Skill, number][]) if (techniques[k] === undefined) techniques[k] = w;
     return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
   }
-  const genres = a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) ?? [] : [];
+  // Work with no scene has no play and no genre to lean it: a way of playing chosen leans it, and what’s put first, as a
+  // scene’s material does. Until 2026-10-13 its scene’s play’s genres were looked up here, and their families’ lean
+  // carried into either, but work with a scene never comes here, every scene having a profile, and the lookup came back
+  // empty each time, its lean even (found by that day’s second round).
   const read = materialContext(task, undefined, playing);
-  const families = familiesOf(genres);
-  // With nothing put first and no way of playing chosen, the genres lean it; with either, their lean is carried into one.
-  const leant = sidesOf(playing).length || first.size ? putFirst(sidesOf(playing).length ? Object.fromEntries(Object.entries(read.lean).map(([d, x]) => [d, (x ?? 1) * (familyLean(task, families)[d as Dimension] ?? 1)])) : familyLean(task, families)) : undefined;
-  return { task, techniques: withDemands(t.reads, genres), prep, required: req, difficulty: difficultyOf(t), families, ...(leant ? { lean: leant } : {}), ...(sidesOf(playing).length ? { inputs: read.inputs, extraPrep: read.prep } : {}) };
+  const played = sidesOf(playing).length > 0;
+  const even = Object.fromEntries(Object.keys(task.dims).map((d) => [d, 1])) as Partial<Record<Dimension, number>>;
+  const leant = played || first.size ? putFirst(played ? read.lean : even) : undefined;
+  return { task, techniques: { ...t.reads }, prep, required: req, difficulty: difficultyOf(t), ...(leant ? { lean: leant } : {}), ...(played ? { inputs: read.inputs, extraPrep: read.prep } : {}) };
 }
 
 /**
@@ -1187,7 +1193,8 @@ export function orientationRefusal(sim: Simulation, person: Person, task: Orient
   const done = cw.orientation.done[task];
   if (done) return `Done on ${formatDate(done, zone())}.`;
   if (sim.now < at({ year: ORIENTATION_2026.begins.year, month: 8, day: o.day }, o.hour)) return 'Its session is still ahead on the calendar.';
-  if (person.currentLocationId !== YALE_DRAMA.cityId) return 'Orientation is in New Haven.';
+  // “Orientation is in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only where it begins in New
+  // Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope reset of 2026-10-09.
   return startRefusal(sim, person, o.minutes, true);
 }
 

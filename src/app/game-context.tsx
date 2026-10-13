@@ -263,6 +263,10 @@ export function GameProvider({
   useEffect(() => {
     const onPop = (event: PopStateEvent) => {
       const state = event.state as { route?: string; label?: string } | null;
+      // A fragment that names no screen (a link to a place on the page, as Skip To Content's to #main) leaves the screen
+      // where it is. Until 2026-10-13 it was read as Home, and following that link took the player there; found by that
+      // day's help audit.
+      if (!state?.route && !window.location.hash.startsWith('#/')) return;
       const fromHash = window.location.hash.startsWith('#/') ? window.location.hash.slice(1).split('?')[0]! : '/home';
       moved(state?.route ?? fromHash, state?.label);
     };

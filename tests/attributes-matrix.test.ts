@@ -1,8 +1,9 @@
 /**
  * The connected attributes' matrix (`docs/ATTRIBUTES-MATRIX.md`) is the
  * tables' own output (`attributesMatrix`), and every item in it is wired:
- * every interest and genre has its definition, every ability its saved
- * place and reader. Rewrite it with `npx vite-node tools/attributes-matrix.ts`.
+ * every genre has its definition (and every interest had one, until the
+ * interests went on 2026-10-10), every ability its saved place and reader.
+ * Rewrite it with `npx vite-node tools/attributes-matrix.ts`.
  */
 
 import { describe, expect, it } from 'vitest';

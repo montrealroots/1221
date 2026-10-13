@@ -30,6 +30,23 @@ describe('a bill the person pays', () => {
   });
 });
 
+/**
+ * What the IRS’s 7% compounded daily grows a balance by between two moments (IRC 6622), worked here: each day a 365th of
+ * the rate, or a 366th in a leap year, as the IRS’s factor tables for one are (Rev. Proc. 95-17), the year turning at
+ * midnight in New York, 05:00 UTC on 1 January. Until the third round of 2026-10-13 these tests counted every year over
+ * 365, as SLATE did until then.
+ */
+function irsGrown(from: number, to: number): number {
+  let growth = 1;
+  for (let at = from; at < to;) {
+    const year = new Date(at - 5 * 3_600_000).getUTCFullYear();
+    const next = Math.min(to, Date.UTC(year + 1, 0, 1, 5));
+    growth *= (1 + 0.07 / (year % 4 === 0 ? 366 : 365)) ** ((next - at) / MS_DAY);
+    at = next;
+  }
+  return growth;
+}
+
 describe('a balance left owing', () => {
   /** A 2026 return filed with nothing in the bank to pay it. */
   function owing(seed: string): { sim: Simulation; zero: () => void } {
@@ -53,10 +70,10 @@ describe('a balance left owing', () => {
     // pass of 2026-10-10: until then both ran from filing, two and a half months early).
     expect(owedOn(r, r.due - MS_DAY)).toBe(owed);
     const year = owedOn(r, r.due + 365 * MS_DAY);
-    expect(year).toBe(Math.round(owed * (1 + 0.07 / 365) ** 365 + 0.06 * owed));
+    expect(year).toBe(Math.round(owed * irsGrown(r.due, r.due + 365 * MS_DAY) + 0.06 * owed));
     // Past four years, the penalty has stopped at a quarter; the interest hasn't.
     const later = owedOn(r, r.due + 5 * 365 * MS_DAY);
-    expect(later).toBe(Math.round(owed * (1 + 0.07 / 365) ** (5 * 365) + 0.25 * owed));
+    expect(later).toBe(Math.round(owed * irsGrown(r.due, r.due + 5 * 365 * MS_DAY) + 0.25 * owed));
   });
 
   it('is collected: four notices five weeks apart, the final one’s 30 days, then a levy on the bank accounts', () => {

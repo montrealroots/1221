@@ -8,8 +8,16 @@
  *   Scotiabank say theirs do.
  * - **Report it lost, stolen or damaged** (A143, C85, A115, C66): stopped at
  *   once, and a new card with a new number follows in the bank's days, for
- *   its fee where it lists one, faster for its rush fee where it has one. A
- *   bank that lists no fee is taken to charge none, and the screen says so.
+ *   its fee where it lists one, faster where the bank lists a rush fee or
+ *   rush days. A bank that lists no fee is taken to charge none, and the
+ *   screen says so. Until 2026-10-13 a rush came only where the bank listed a
+ *   rush fee, so Wells Fargo’s day and Capital One’s three, listed with no
+ *   fee, were refused; found by that day’s second round of evidence. Capital
+ *   One’s is sent free: its page names none, and its 360 Checking fee schedule,
+ *   which lists cashier’s checks, wires and checkbooks, has no fee for a card
+ *   (capitalone.com, read 2026-10-13). Wells Fargo’s was sent free too, until
+ *   later that day: its rush is a credit card’s, for a fee it doesn’t publish,
+ *   and none is sent (`rushUnpublished`).
  * - **The bills on a replaced card** (A85): where the bank passes the new
  *   number on, they go on; where it doesn't, or doesn't say, they're
  *   declined until the holder gives it to them.
@@ -285,7 +293,8 @@ export function registerSecurity(sim: Simulation): void {
   sim.onCommand<{ which: Which; locked: boolean; accountId?: string }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
     const account = cardAccount(s, s.player, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
-    if (account.bankId && SECURITY[account.bankId]?.lockInApp === false) throw new CommandError(`${account.institution ?? 'The bank'} locks a card only by phone.`);
+    // Until 2026-10-13 a bank whose terms locked a card only by phone was refused here; no researched bank is one, and the
+    // refusal and the field it read went that day (`BankSecurity`, `content/security.ts`).
     const plastic = plasticOf(s, account, p.which);
     if (plastic.stopped) throw new CommandError('That card is stopped; a new one is on its way.');
     plastic.locked = Boolean(p.locked);
@@ -301,7 +310,10 @@ export function registerSecurity(sim: Simulation): void {
     if (plastic.stopped) throw new CommandError('That card is stopped already; a new one is on its way.');
     const rules = account.bankId ? SECURITY[account.bankId] : undefined;
     const bank = account.bankId ? bankById(account.bankId) : undefined;
-    if (p.rush && rules?.rushFee === undefined) throw new CommandError(`${account.institution ?? 'The bank'} has no rush replacement SLATE knows of.`);
+    // A rush where the bank lists its fee or its days; one that lists days and no fee is taken to charge none for it, as
+    // one that lists no replacement fee is. One the bank charges for without publishing what isn’t sent (`rushUnpublished`).
+    if (p.rush && rules?.rushUnpublished) throw new CommandError(`${account.institution ?? 'The bank'} doesn’t publish what it charges for a rush, so SLATE can’t send one.`);
+    if (p.rush && rules?.rushFee === undefined && rules?.rushDays === undefined) throw new CommandError(`${account.institution ?? 'The bank'} has no rush replacement SLATE knows of.`);
     // The bank's fee, where it lists one, unless it replaces a card free for this reason.
     const listed = p.which === 'debit' ? rules?.replaceFeeDebit : rules?.replaceFeeCredit;
     const free = rules?.freeFor?.includes(p.why) ?? false;
@@ -355,7 +367,13 @@ export function registerSecurity(sim: Simulation): void {
 export function fraudOn(sim: Simulation, person: Person, at: Instant): { which: Which; account: Account; amount: Money; stopped: boolean } | undefined {
   const rng = sim.rng('bank.fraud', person.id, dateKey(at, sim.zone));
   const credit = cardOf(sim, person);
-  const which: Which | undefined = credit && cardWorks(credit) && rng.next() < 0.5 ? 'credit' : cardWorks(currentOf(sim, person)) ? 'debit' : undefined;
+  // The country’s rate is a cardholder’s, not a card’s (`FraudLaw.fraudRate`): it falls on the cards that work, half
+  // each when both do. Until 2026-10-13 the credit card was drawn on half the days and the debit card on the rest, so
+  // with the debit card locked half the days met nothing, though with the credit card locked every day fell on the
+  // debit card (found by that day’s third round of defects).
+  const creditWorks = Boolean(credit && cardWorks(credit));
+  const debitWorks = cardWorks(currentOf(sim, person));
+  const which: Which | undefined = creditWorks && (!debitWorks || rng.next() < 0.5) ? 'credit' : debitWorks ? 'debit' : undefined;
   if (!which) return undefined;
   const account = cardAccount(sim, person, which)!;
   const bank = account.bankId ? bankById(account.bankId) : undefined;

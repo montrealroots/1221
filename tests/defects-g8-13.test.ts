@@ -166,7 +166,9 @@ describe('PLAYER JOURNEY: the Summer Cabaret of 2027, laid up by an injury on it
     expect(injury.offWorkUntil).toBeGreaterThan(injury.at);
     const notice = sim.universe.notifications.find((n) => n.category === 'health' && n.title === INJURY_KIND[injury.kind].label && n.body.includes('It happened at work'))!;
     expect(notice).toBeDefined();
-    expect(notice.body).toContain('workers’ compensation pays the care and 75% of your week’s wage after tax while you’re off.');
+    // The $375 week is paid 75% of the whole, Connecticut’s least for it. Until 2026-10-13 the notice said “75% of your
+    // week’s wage after tax”, which it wasn’t, and this test held that.
+    expect(notice.body).toContain('workers’ compensation pays the care and 75% of your week’s wage while you’re off.');
     expect(notice.body).not.toContain('two-thirds');
 
     // The Fridays whose week the time off touches, played to the one after it ends.

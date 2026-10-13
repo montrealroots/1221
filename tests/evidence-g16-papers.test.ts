@@ -24,7 +24,8 @@
  * - `documents.permission`: Apply For OPT on Papers is refused before its window in its words, applied on 5 March 2029
  *   for $470 and decided 90 days on: valid twelve calendar months from the decision, "OPT Approved" naming both dates,
  *   the status's look moved to its expiry and held past the degree's sixty days, then ended by its ninety days without
- *   work. With premium processing it is decided in thirty business days and runs twelve months from the program's end.
+ *   work, the day Papers gives for the status’s end (from 2026-10-13: until then it gave the expiry’s sixty days on,
+ *   which no played OPT reaches). With premium processing it is decided in thirty business days and runs twelve months from the program's end.
  *   Refused in its words for a second application, a citizen, a student who withdrew, a life never on an F-1, and once
  *   its window has closed.
  * - `documents.us_status`: a withdrawal on 1 February 2027 keeps fifteen days' status, armed by the School's own
@@ -38,14 +39,15 @@
  *   with her work-study left out; the midnight clock buys her groceries on the EBT card; "SNAP Paid", Papers' "N months
  *   paid" and On The EBT Card agree across a reload; and her case closes on the first look of the summer, with no month
  *   paid after. A graduate on unemployment is paid $306 less 30% of the month before's benefit and interest over $217,
- *   three times, and the fourth month is refused "SNAP Time Limit Reached"; a month with a week's pay in it takes a
- *   fifth of the pay off before the 30%, $22.50 on $375. The month the clock reads is the calendar month before the
- *   payment, as the row and the code’s own comments say; until 2026-10-13 it was the one fifteen days before, so a
- *   payment on the 27th read its own month so far, and its test failed when written; fixed that day. Ontario Works,
- *   in Toronto, is paid CAD 343 by the clock.
+ *   rounded up to the dollar, four times and more, her claim exempting her from the time limit; a month with a week’s
+ *   pay in it takes a fifth of the pay off before the 30%, $23 on $375. Until 2026-10-13 SNAP was paid to the cent and a
+ *   claimant was held to the time limit, the fourth month refused, and this file held both. The month the clock reads
+ *   is the calendar month before the payment, as the row and the code’s own comments say; until 2026-10-13 it was the
+ *   one fifteen days before, so a payment on the 27th read its own month so far, and its test failed when written;
+ *   fixed that day. Ontario Works, in Toronto, is paid CAD 343 by the clock.
  * - `benefits.week`: a graduate with a summer's stipend files a Connecticut claim on Papers for $93 a week; Sunday's
- *   week is posted to her account and her year's income; a week in hospital posts nothing; a week with $75 of pay posts
- *   $93 less two-thirds of it, $43; across a reload the claim pays to its $2,418 and ends in its words with nothing left
+ *   week is posted to her account and her year's income; a week in hospital posts nothing; a week with four hours worked,
+ *   $92, posts $93 less two-thirds of it, $31 (until 2026-10-13 a ledger's $75 of pay, $43); across a reload the claim pays to its $2,418 and ends in its words with nothing left
  *   on the calendar, and Papers shows A Week, Paid and the past claim. An F-1 graduate on OPT is paid while it is in
  *   force and nothing once it has ended, her claim ends a year from filing, and her 2029 1040-NR reports exactly what
  *   the clock paid. A student still enrolled is refused a Connecticut claim at filing, and nothing in SLATE returns a
@@ -86,6 +88,7 @@ import { documentsOf, photoIdOf } from '@/engine/systems/documents';
 import { f1Of } from '@/engine/systems/permission';
 import { TAX_DUE_KIND, TAX_NOTICE_KIND, TAX_SEASON_KIND, TAX_SFR_KIND, returnsOf } from '@/engine/systems/taxreturn';
 import { BENEFIT_WEEK_KIND, unemploymentOf } from '@/engine/systems/unemployment';
+import { SHIFT_KIND } from '@/engine/systems/school';
 import { openDecisions } from '@/engine/world/world';
 
 const h = vi.hoisted(() => ({
@@ -208,10 +211,12 @@ function ledgerMonth(sim: Simulation, month: string): { ui: number; interest: nu
 }
 /**
  * A month's SNAP for a single adult in Connecticut in FY2027 (USDA, from 1 October 2026): the maximum allotment, $306,
- * less 30% of net income, which is gross income less 20% of earnings and the $217 standard deduction. No shelter cost is
- * counted since the home went. Worked here, not by `snapMonth`.
+ * less 30% of net income rounded up to the dollar (7 CFR 273.10(e)(2)(ii)(A)), net income being gross income less 20% of
+ * earnings and the $217 standard deduction. No shelter cost is counted since the home went. Worked here, not by
+ * `snapMonth`: 30% of a sum of cents is three thousandths of it in dollars. Until 2026-10-13 this took the 30% to the
+ * cent, as the engine paid it.
  */
-const snapFy2027 = (unearned: number, earned = 0) => 306_00 - Math.round(0.3 * Math.max(0, unearned + earned - Math.round(0.2 * earned) - 217_00));
+const snapFy2027 = (unearned: number, earned = 0) => 306_00 - Math.ceil(3 * Math.max(0, unearned + earned - Math.round(0.2 * earned) - 217_00) / 1000) * 100;
 
 /** What the player reads: the markup with every title attribute taken out, then every tag, its entities read. */
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
@@ -297,10 +302,13 @@ describe('tax.pay', () => {
     expect(r.filedAt).toBe(Date.UTC(2028, 7, 13, 3, 59));
     // As the IRS assesses it, worked here: the tax; filing more than 60 days late, at least the lesser of the minimum and
     // the whole tax, which on $165-odd is the tax (IRC 6651(a), last sentence); paying late, 0.5% for each month or part
-    // of one, 16 from April 2027 to August 2028 (6651(a)(2)); interest at 7% a year compounded daily on the tax for the
-    // 485 days (6621, 6622).
+    // of one, 16 from April 2027 to August 2028 (6651(a)(2)); interest at 7% a year compounded daily for the 485 days
+    // (6621, 6622) on the tax and on the filing share, the tax again here, which 6601(e)(2)(B) runs from the due date too.
+    // Until later on 2026-10-13 this held the interest on the tax alone, as SLATE charged it until then. The 485 days are
+    // 260 of 2027 after 15 April and 225 of leap-year 2028, whose days the IRS counts at a 366th of the rate (Rev. Proc. 95-17’s 366-day
+    // tables): until the third round of that day this held all of them over 365, $32.28 where the IRS’s count is $32.24.
     const penalty = tax + Math.round(tax * 0.005 * 16);
-    const interest = Math.round(tax * ((1 + 0.07 / 365) ** 485 - 1));
+    const interest = Math.round((tax + tax) * ((1 + 0.07 / 365) ** 260 * (1 + 0.07 / 366) ** 225 - 1));
     expect(r.parts).toEqual({ tax, penalty, interest });
     // Its collection has begun: the first reminder, CP501, five weeks on.
     expect(pendingOf(sim, TAX_NOTICE_KIND).filter((i) => i.payload.year === 2026).map((i) => i.at)).toEqual([Date.UTC(2028, 8, 17, 3, 59)]);
@@ -487,16 +495,17 @@ describe('documents.idcard_arrives', () => {
     expect(applied).toMatchObject({ ok: true, value: { fee: 28_00, expiresAt: Date.UTC(2029, 4, 31, 12) } });
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect([card.name, card.status]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending']);
-    // SAVE's ten business days from Tuesday 29 September, 9 PM in New Haven: 30 September to 13 October, two weekends
-    // between, so fourteen days to the hour.
-    expect(card.readyAt).toBe(asked + 14 * MS_DAY);
+    // SAVE’s ten federal workdays from Tuesday 29 September, 9 PM in New Haven: 30 September to 14 October, two weekends
+    // and Columbus Day, Monday 12 October, between, so fifteen days to the hour. Until 2026-10-13 SAVE’s days were counted
+    // Monday to Friday, Columbus Day among them, and this held fourteen.
+    expect(card.readyAt).toBe(asked + 15 * MS_DAY);
     expect(run(sim, 'documents.apply_idcard')).toMatchObject({ ok: false, error: 'One is on its way.' });
     sim.advanceTo(card.readyAt! - MS_HOUR);
     expect(card.status).toBe('pending');
     sim.advanceTo(card.readyAt! + MS_HOUR);
     expect(card.status).toBe('valid');
-    expect(card.issuedAt).toBe(asked + 14 * MS_DAY);
-    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([asked + 14 * MS_DAY]);
+    expect(card.issuedAt).toBe(asked + 15 * MS_DAY);
+    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([asked + 15 * MS_DAY]);
     const opened = run(sim, 'bank.open_current', wells);
     expect(opened.ok).toBe(true);
     expect(sim.universe.accounts[(opened.value as { accountId: string }).accountId]!.bankId).toBe('us-wells-fargo');
@@ -544,9 +553,11 @@ describe('documents.permission', () => {
     expect(opt.expiresAt).toBe(Date.UTC(2030, 5, 3, 15));
     expect(titled(later, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030, with no more than 90 days between jobs in all.']);
     expect(pendingOf(later, 'documents.opt_week').map((i) => i.at)).toEqual([Date.UTC(2029, 5, 10, 15)]);
-    // The status's look moves to the OPT's expiry, and the status runs sixty days past it.
+    // The status’s look moves to the OPT’s expiry. Papers gives the end its days without work make: thirteen weeks
+    // counted, 91 days, on 2 September 2029, with no grace after. Until 2026-10-13 it gave the expiry’s sixty days on,
+    // 2 August 2030, which no played OPT reaches, and this test held that date.
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
-    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends August 2, 2030');
+    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out, with no grace after; stay past it and you’re out of status');
 
     // Past the degree's own sixty days, 30 July 2029, she's still in status, her F-1 standing.
     later.advanceTo(Date.UTC(2029, 7, 1, 16));
@@ -774,25 +785,26 @@ describe('benefits.assistance_month', () => {
     return sim;
   }
 
-  it('a graduate on unemployment: each month pays $306 less 30% of the month before’s benefit and interest over $217, counted against the time limit; the fourth is refused “SNAP Time Limit Reached”', () => {
+  // Until 2026-10-13 this test held a claimant to the time limit: three months counted, and the fourth refused “SNAP
+  // Time Limit Reached” on 8 May 2028. Somebody receiving unemployment is exempt from work registration (7 CFR
+  // 273.7(b)(1)(v)), and so from the time limit (273.24(c)).
+  it('a graduate on unemployment: each month pays $306 less 30% of the month before’s benefit and interest over $217, rounded up to the dollar; on a claim she’s exempt from the time limit, so no month is counted and the fourth is paid too', () => {
     const sim = claimant('g16-abawd');
     sim.advanceTo(Date.UTC(2028, 1, 1, 17));
     expect(run(sim, 'benefits.assistance')).toMatchObject({ ok: true, value: { scheme: 'snap', firstPaymentAt: Date.UTC(2028, 1, 8, 17) } });
-    sim.advanceTo(Date.UTC(2028, 3, 8, 18));
+    sim.advanceTo(Date.UTC(2028, 4, 8, 18));
     const paid = memos(sim, /^SNAP, the month/).map((t) => [t.at, own(sim, t)[0]!.amount]);
-    const expected = (['2028-01', '2028-02', '2028-03'] as const).map((m) => {
+    const expected = (['2028-01', '2028-02', '2028-03', '2028-04'] as const).map((m) => {
       const income = ledgerMonth(sim, m);
-      // Four Sundays of $93 in each of January, February and March 2028.
-      expect(income.ui).toBe(4 * 93_00);
+      // Four Sundays of $93 in each of January, February and March 2028, and five in April.
+      expect(income.ui).toBe((m === '2028-04' ? 5 : 4) * 93_00);
       return snapFy2027(income.ui + income.interest);
     });
-    expect(paid).toEqual([[Date.UTC(2028, 1, 8, 17), expected[0]], [Date.UTC(2028, 2, 9, 17), expected[1]], [Date.UTC(2028, 3, 8, 17), expected[2]]]);
-    // A graduate isn't enrolled, so each month without 80 hours' work is counted: three in three years.
-    expect(sim.player.assistance).toMatchObject({ months: 3, counted: ['2028-02', '2028-03', '2028-04'] });
-    sim.advanceTo(Date.UTC(2028, 4, 8, 18));
-    expect(memos(sim, /^SNAP, the month/)).toHaveLength(3);
-    expect(titled(sim, 'SNAP Time Limit Reached').map((n) => [n.at, n.body])).toEqual([[Date.UTC(2028, 4, 8, 17), 'Three months in three years without 80 hours of work a month: SNAP pays no more until you work them.']]);
-    expect(sim.player.assistance!.months).toBe(3);
+    expect(paid).toEqual([[Date.UTC(2028, 1, 8, 17), expected[0]], [Date.UTC(2028, 2, 9, 17), expected[1]], [Date.UTC(2028, 3, 8, 17), expected[2]], [Date.UTC(2028, 4, 8, 17), expected[3]]]);
+    expect(paid.every(([, amount]) => amount! % 100 === 0)).toBe(true);
+    expect(sim.player.assistance!.months).toBe(4);
+    expect(sim.player.assistance!.counted ?? []).toEqual([]);
+    expect(titled(sim, 'SNAP Time Limit Reached')).toEqual([]);
   }, 60_000);
 
   it('a month with a week’s pay in it takes a fifth of the pay off before the 30%: the graduate’s March payment, on February’s benefit, interest and $375 of wages', () => {
@@ -810,8 +822,9 @@ describe('benefits.assistance_month', () => {
     expect(feb.ui).toBe(3 * 93_00);
     const paid = memos(sim, /^SNAP, the month/).map((t) => [t.at, own(sim, t)[0]!.amount]);
     expect(paid[1]).toEqual([Date.UTC(2028, 2, 9, 17), snapFy2027(feb.ui + feb.interest, feb.wages)]);
-    // Read as unearned, without the fifth off, it would be $22.50 less.
-    expect(snapFy2027(feb.ui + feb.interest + feb.wages) - snapFy2027(feb.ui + feb.interest, feb.wages)).toBe(-22_50);
+    // Read as unearned, without the fifth off, it would be $23 less: 30% of the $75 more, $22.50, and the 30% rounded up
+    // to the dollar each way. Until 2026-10-13, when it was paid to the cent, this held $22.50.
+    expect(snapFy2027(feb.ui + feb.interest + feb.wages) - snapFy2027(feb.ui + feb.interest, feb.wages)).toBe(-23_00);
   }, 60_000);
 
   it('reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far', () => {
@@ -846,7 +859,7 @@ describe('benefits.assistance_month', () => {
 // ---------------------------------------------------------------------------
 
 describe('benefits.week', () => {
-  it('PLAYER JOURNEY: File A Claim on Papers for $93 a week; Sunday’s week posted to her account and year; nothing for a week in hospital; $43 for a week with $75 of pay; across a reload paid to its $2,418 and ended in its words, with Papers showing each', () => {
+  it('PLAYER JOURNEY: File A Claim on Papers for $93 a week; Sunday’s week posted to her account and year; nothing for a week in hospital; $31 for a week with four hours worked, $92; across a reload paid to its $2,418 and ended in its words, with Papers showing each', () => {
     const sim = student('g16-ui');
     sim.advanceTo(Date.UTC(2027, 4, 24, 16));
     graduate(sim, sim.now); // TEST SETUP
@@ -879,18 +892,22 @@ describe('benefits.week', () => {
     expect(claim.paid).toBe(93_00);
     expect(pendingOf(sim, BENEFIT_WEEK_KIND).map((i) => i.at)).toEqual([Date.UTC(2028, 0, 24, 1)]);
 
-    // TEST SETUP: a day's pay, $75 for four hours, posted on Wednesday as a paycheck posts it. Connecticut pays the
-    // benefit less two-thirds of the week's pay, to the dollar: $93 − $50 = $43.
-    sim.post({ memo: 'Wages, 4 hours', category: 'salary', postings: [{ accountId: current(sim).id, amount: 75_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -75_00 }] });
+    // TEST SETUP: four hours worked on Wednesday evening at front of house, $23 an hour, kept on the calendar as the
+    // School keeps a shift worked (a graduate has no work, so no play puts one here). Connecticut pays the benefit less
+    // two-thirds of the week’s earnings, to the dollar: $93 − $62 (two-thirds of $92, up) = $31. Until 2026-10-13 this
+    // posted $75 of pay to the ledger, which the week read as its earnings, and it paid $43; a week reads the work done
+    // in it now (`workDoneIn`), and a payment is no work.
+    const shift = sim.schedule({ at: Date.UTC(2028, 0, 20, 0), kind: SHIFT_KIND, label: 'Elective Shift: Front Of House, Yale Rep', category: 'school', payload: { personId: sim.player.id, hours: 4, elective: true, worked: 4 } });
+    Object.assign(shift, { status: 'done', resolvedAt: shift.at });
     sim.advanceTo(Date.UTC(2028, 0, 24, 2));
-    expect(memos(sim, /^Unemployment insurance/).map((t) => own(sim, t)[0]!.amount)).toEqual([93_00, 43_00]);
-    expect(claim.paid).toBe(136_00);
+    expect(memos(sim, /^Unemployment insurance/).map((t) => own(sim, t)[0]!.amount)).toEqual([93_00, 31_00]);
+    expect(claim.paid).toBe(124_00);
 
-    // Across a reload, to the end: 24 more full weeks and $50 left, on Sunday 16 July.
+    // Across a reload, to the end: 24 more full weeks and $62 left, on Sunday 16 July.
     const later = reload(sim);
     later.advanceTo(Date.UTC(2028, 6, 17, 1));
     const all = memos(later, /^Unemployment insurance/).map((t) => own(later, t)[0]!.amount);
-    expect(all).toEqual([93_00, 43_00, ...Array<number>(24).fill(93_00), 50_00]);
+    expect(all).toEqual([93_00, 31_00, ...Array<number>(24).fill(93_00), 62_00]);
     expect(all.reduce((s, x) => s + x, 0)).toBe(2_418_00);
     expect(unemploymentOf(later.player).claim).toBeUndefined();
     expect(unemploymentOf(later.player).past).toMatchObject([{ paid: 2_418_00, closedAt: Date.UTC(2028, 6, 17, 0) }]);

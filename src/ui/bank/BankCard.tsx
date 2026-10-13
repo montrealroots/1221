@@ -19,7 +19,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
+import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
@@ -160,31 +160,40 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const firstYearFee = bankIso === 'US' && sim.now - card.openedAt < 365 * 86_400_000 ? Math.min(terms.annualFee, Math.round(limit * 0.25)) : undefined;
   lines.push(firstYearFee !== undefined && firstYearFee < terms.annualFee ? `${money(firstYearFee)} this first year, on the statement in ${opened}: the law holds a first year’s fees to a quarter of the limit. ${money(terms.annualFee)} a year after.` : terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
   lines.push(`A statement on the ${statementDayOf(person, card)}${ordinal(statementDayOf(person, card))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
+  // On a hardship plan a statement asks the plan’s payment in the minimum’s place (`autopayAsk`), and the plan’s line
+  // below says so with this statement’s; the card’s own rule is what it asks once the plan ends. Until 2026-10-13 these
+  // lines gave the card’s minimum on this statement on a plan too, and the late fee’s said “short of the minimum”, where
+  // the due date judges the plan’s payment; found by that day’s guide audit.
+  const plan = state.hardship;
+  const thisOne = state.statementBalance > 0 && !plan;
   if (!charge) {
-    if (terms.course) lines.push(`The least a statement asks is the revolving course's: ${terms.course.shareByScore ? 'a share of it by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what's owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${state.statementBalance > 0 ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
-    else lines.push(`The least a statement asks is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}${state.statementBalance > 0 ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
+    if (terms.course) lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is the revolving course's: ${terms.course.shareByScore ? 'a share of it by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what's owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
+    else lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
   }
   // As the engine takes it, by country: until 2026-09-27 every card read as America's rule of the day before.
-  const short = charge ? 'the statement' : 'the minimum';
+  const asks = plan ? 'the plan’s payment' : 'the minimum';
+  const short = plan || !charge ? asks : 'the statement';
   if (bankIso === 'US') {
-    const asked = state.statementBalance > 0 ? minimumDue(sim, state.statementBalance, terms, state.statementInterest, state.statementPlanDue) : undefined;
+    const asked = state.statementBalance > 0 ? autopayAsk(sim, person, card).due : undefined;
     // As the due date charges it (`systems/credit.ts`): the bank's fee, its lower first fee where it has one, each held to
     // the safe harbor, and never over the minimum. Until 2026-10-10 this said the bank's flat fee, which the harbor cut.
     const tier = card.bankId ? FIRST_LATE_FEE[card.bankId] : undefined;
     const first = Math.min(tier ? Math.min(terms.lateFee, inSaveMoney(sim, tier.first, 'USD')) : terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.first, 'USD'));
     const again = Math.min(terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.repeat, 'USD'));
     const capped = (fee: number) => money(asked !== undefined ? Math.min(fee, asked) : fee);
-    lines.push(`A payment short of ${short} costs ${capped(first)} the first time and ${capped(again)} again within ${tier?.withinPeriods ?? US_SAFE_HARBOR.withinPeriods} billing periods, never more than the minimum. An autopay that bounces and leaves it short is charged that and no returned payment’s fee beside it. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
+    lines.push(`A payment short of ${short} costs ${capped(first)} the first time and ${capped(again)} again within ${tier?.withinPeriods ?? US_SAFE_HARBOR.withinPeriods} billing periods, never more than ${asks}. An autopay that bounces and leaves it short is charged that and no returned payment’s fee beside it. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
   } else {
     const rule = terms.lateRule;
-    const costs = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? 'the minimum' : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? ', never more than the minimum' : ''}` : money(terms.lateFee);
+    const costs = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? asks : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? `, never more than ${asks}` : ''}` : money(terms.lateFee);
     lines.push(`A payment short of ${short} costs ${costs}, goes on your record, and cuts the limit.${bankIso === 'GB' ? ` ${bankName} takes what was missed from your other accounts with it.` : ''}`);
   }
   if (bankIso === 'GB' && state.persistentNoticeAt !== undefined && !state.hardship) {
     lines.push(`Persistent debt: over eighteen months more went to interest and fees than to the card (the bank wrote on ${formatDate(state.persistentNoticeAt, sim.zone)}). At thirty-six the bank freezes the interest, sets ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
   }
   if (state.suspended === 'late') lines.push(`Suspended: ${state.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it's charged off to collections.`);
-  if (state.hardship) lines.push(`${state.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(state.hardship.since, sim.zone)}: no interest, and ${money(state.hardship.payment)} a month until it’s cleared. The card can’t be used until then.`);
+  // Until 2026-10-13 this said the card couldn’t be used until it was cleared. A plan ends, and its suspension with it,
+  // only at the first statement or due date after it’s paid off (`systems/credit.ts`), as the guide says.
+  if (plan) lines.push(`${state.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(plan.since, sim.zone)}: no interest, and each statement asks the plan’s ${money(plan.payment)} in the minimum’s place${state.statementBalance > 0 ? `: ${money(Math.min(state.statementBalance, plan.payment))} on this one` : ''}. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.`);
   // Credit a payment from another bank freed, held while it clears (`PENDING.paymentHoldDays`).
   const holds = state.paymentHolds ?? [];
   if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed is held until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while it clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);

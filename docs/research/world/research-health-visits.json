@@ -582,9 +582,10 @@
       "providerId": "uk-ldn-bupa-gp",
       "service": "Bupa private GP, pay-as-you-go",
       "currency": "GBP",
+      "amount": 79,
       "faceToFace": {"15min": 79, "30min": 140, "45min": 200, "60min": 250},
       "remote": {"15min": 59, "30min": 99, "45min": 140},
-      "notes": "Tests and follow-ups extra.",
+      "notes": "Tests and follow-ups extra. amount, added 2026-10-13, is the 15-minute face-to-face base price, the visit SLATE books: the search summary of that day quoted it from Bupa's own page, which turned the reading away (HTTP 403), and goingprivateuk.co.uk/bupa-private-gp-uk (June 2026) gave the same GBP 79, 140, 200 and 250, with evenings, weekends and bank holidays costing more. Until then the entry had no amount, so tools/build-clinics.mjs priced no Bupa visit.",
       "source": "https://www.bupa.co.uk/health/payg/gp-services",
       "verification": "search-summary"
     },

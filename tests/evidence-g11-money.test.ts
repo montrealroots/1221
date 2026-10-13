@@ -31,7 +31,9 @@
  *   at the next business day's start, and the panel saying what SLATE leaves out of Wells Fargo's words.
  * - `bank.take_term_interest`: a Chase CD of $10,000 at 3.5%: refused with nothing earned, the panel's button disabled;
  *   182 days in, $174.52 taken from the panel, the break penalty falling from $172.60 (180 days' interest) to nothing,
- *   and the renewal reinvesting only the 31 days after, $29.72; and AIB's taken less Ireland's 33% DIRT.
+ *   and the renewal at the midnight that opens its maturity day reinvesting only the 30 days after, $28.76 (until a fix
+ *   of 2026-10-13 it ended a day later and earned that day too, 31 days and $29.72, which this file first held); and
+ *   AIB's taken less Ireland's 33% DIRT.
  * - `card.close`: twin lives holding Chase's card and Citi's, Citi owing half its $5,000: Chase's closed at once from the
  *   panel, owing nothing, and Citi's due date moving the record a point down where the twin's moves 1.5 up; a closing
  *   card owing $400 refused a second close, kept from the day's groceries, paid in full from the panel and closed at

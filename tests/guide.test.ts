@@ -151,6 +151,9 @@ describe('the registry', () => {
   });
 });
 
+// These read the source and the engine’s readers. The dialog itself, drawn and pressed through How This Works, its
+// links, Back, a search, Show Me Where and Close, with the live clock’s hold, is `tests/help-mechanics.test.ts` (from
+// 2026-10-13: until then nothing in the gate drew it, and a write by another route than these calls passed here).
 describe('reading help', () => {
   it('runs no command and moves no clock: the reference’s own code calls neither', () => {
     for (const file of ['ui/guide/Help.tsx', 'ui/guide/HowItWorks.tsx', 'ui/guide/help-context.ts']) {

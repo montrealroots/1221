@@ -61,12 +61,22 @@ import { recordInterest } from './earnings';
  * A country's unclaimed-money law, in the words a player is told. The US's research is New York's (the State
  * Comptroller, no fee and no time limit, three years), and until 2026-10-13 a life in Connecticut was told it would go
  * to New York's office and could be claimed back there (found by the review of that day). The words say any state's
- * office now; the three years are still New York's, and Connecticut's own law wasn't read.
+ * office now. Connecticut’s own law was read later that day (Conn. Gen. Stat. §3-57a(a)(1): a demand or savings deposit
+ * is presumed abandoned unless the owner has, within three years, moved money in or out or written to the bank about it;
+ * §3-70a(a): claimed back from the Treasurer “at any time thereafter”; cga.ct.gov, chapter 32), and gives the same
+ * three years; the source shown is Connecticut’s statute, and says the three years are taken for every state. Until then
+ * it was New York’s research, a law firm’s note on its Comptroller, shown to a Connecticut life (found by that day’s
+ * third round of defects); that research is still where the three years came from, and no screen shows it.
  */
 export function unclaimedLaw(iso: string): (typeof UNCLAIMED)[string] | undefined {
   const law = UNCLAIMED[iso];
   if (!law || iso !== 'US') return law;
-  return { ...law, to: 'the state’s unclaimed-property office', claimBack: 'It can be claimed back from that office.' };
+  return {
+    ...law,
+    to: 'the state’s unclaimed-property office',
+    claimBack: 'It can be claimed back from that office.',
+    source: 'each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13), and SLATE takes the three years for every state',
+  };
 }
 
 /** The months to its end a term deposit was opened for. */
@@ -187,7 +197,9 @@ function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money;
   const quote = breakQuote(s, term);
   // Into the current account at the term's own bank; with none there, sent to the primary one in the bank's days, as a
   // savings account closed is (from 2026-10-13: until then into the primary account at once, whatever bank it was at;
-  // found by the review of that day).
+  // found by the review of that day). Every life holds a primary account from its creation, and the primary can’t be
+  // closed, so there’s always one: until 2026-10-13 `bank.break_term` refused a life without a current account, and the
+  // notice close waited for one, which no life could be; found by that day’s second round of evidence.
   const into = checkingAt(s, person, term.bankId) ?? currentOf(s, person)!;
   const sameBank = into.bankId === term.bankId;
   const earned = Math.floor(term.accrued ?? 0);
@@ -221,9 +233,11 @@ export function registerAccountLife(sim: Simulation): void {
         if (account.ownerId !== person.id || account.closedAt || !account.bankId) continue;
         const rules = ACCOUNT_LIFE[account.bankId];
         // An early close on notice, once the notice has run.
-        if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now && currentOf(s, person)) {
+        if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now) {
           const done = breakTerm(s, person, account);
-          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, less ${formatMoney(done.penalty, saveCurrency(s.universe))} for closing early.`, importance: 50, route: '/workspace/bank' });
+          // What’s paid is after the charge (`breakTerm`): until 2026-10-13 this said “£10,000.00 … less £39.41”, where
+          // £10,000.00 was what arrived, the £39.41 already kept back (found by that day’s third round of defects).
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, after ${formatMoney(done.penalty, saveCurrency(s.universe))} taken for closing early.`, importance: 50, route: '/workspace/bank' });
           continue;
         }
         // A term deposit's end: the bank writes a month before, or in time
@@ -255,7 +269,6 @@ export function registerAccountLife(sim: Simulation): void {
     if (!term || term.ownerId !== person.id || term.closedAt || term.category !== 'term') throw new CommandError('That isn’t one of your term deposits.');
     const quote = breakQuote(s, term);
     if (quote.refused) throw new CommandError(quote.refused);
-    if (!currentOf(s, person)) throw new CommandError('You need a current account for the money.');
     // A bank that needs notice closes it when the notice has run, at the penalty then.
     const notice = BREAK_NOTICE[term.bankId ?? ''];
     if (notice) {

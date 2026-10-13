@@ -25,7 +25,6 @@ import type { Person } from '../domain/model';
 import { formatTime } from '../core/time';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
-import { withDemands } from '../content/demands';
 import { GENRE_BY_ID } from '../content/film-genres';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
 import { alreadyApplied, markApplied, repeatsToday } from './attributes';
@@ -105,20 +104,18 @@ export function genreSpeed(person: Person, genres: readonly string[] | undefined
   return 1 + ENGAGEMENT.genreSpeed * best / 100;
 }
 
-/** What a self-tape in a genre read until 2026-10-12: the camera's own techniques, and the genre's demands (`withDemands`). */
-export const tapeReads = (genre: string) => withDemands({ ...SELF_TAPE.reads }, [genre]);
-
-/** A self-tape's techniques, as the self-tape coursework reads them, its difficulty by that work's par (55), and its hour. */
-export const SELF_TAPE = { reads: { screen: 2, scene: 1 }, difficulty: 0.125, genreComplete: 0.6, minutes: 60 } as const;
+/** A self-tape’s hour: a take of a brief (`systems/briefs.ts`). */
+export const SELF_TAPE = { minutes: 60 } as const;
 
 /**
  * A self-tape in a genre was taped here until 2026-10-12, of no scene: the camera's task, the genre's demands and its
  * familiarity. Every self-tape is of a practice brief now, prepared and chosen first (`systems/briefs.ts`, which
  * registers `practice.self_tape`), and its take reads the brief's techniques (`tapeReadsOf`). This said `SELF_TAPE`
- * and `tapeReads` were kept for what a genre asks of the camera; the game reads `SELF_TAPE.minutes` alone (from
- * 2026-10-12), a take's hour, and only tests read `tapeReads` and `SELF_TAPE`'s reads, difficulty and genreComplete:
- * engagement, genre-coverage and attributes-complete. `selfTapeRefusal` was deleted that day, read by nothing once
- * `tapeRefusal` refused a take in its place.
+ * and `tapeReads` were kept for what a genre asks of the camera; the game read `SELF_TAPE.minutes` alone from
+ * 2026-10-12, a take's hour, and only tests read `tapeReads` (what that tape read: the camera’s own techniques and
+ * the genre’s demands, `withDemands`) and `SELF_TAPE`’s reads, difficulty and genreComplete. Those went on 2026-10-13,
+ * read by nothing in the game. `selfTapeRefusal` was deleted on 2026-10-12, read by nothing once `tapeRefusal` refused
+ * a take in its place.
  */
 
 export function registerEngagement(sim: Simulation): void {

@@ -118,7 +118,8 @@ function runWorldTick(sim: Simulation): void {
  *
  * A dated one ends on its date: whoever raised it chose where it ends by
  * dating it, so the season rule below never touches it. An undated one that
- * nobody has answered in a season stops nagging.
+ * nobody has answered in a season stops nagging, though since the scope reset
+ * of 2026-10-09 no raiser has left a row undated.
  */
 function expireDecisions(sim: Simulation): void {
   for (const decision of Object.values(sim.universe.decisions)) {
@@ -127,7 +128,11 @@ function expireDecisions(sim: Simulation): void {
       if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;
       continue;
     }
-    // Anything undated and untouched for a season stops nagging.
+    // Anything undated and untouched for a season stops nagging. No raiser reaches this: every one dates its row (a
+    // year’s return, a US status’s end, an idle account’s handover to the state), so only a row a test raises by hand
+    // meets it (tests/evidence-g34-ui.test.ts). It stays while the decision look describes it (`QUIET_AFTER_DAYS`,
+    // ui/looks/attention.tsx), to go with those words; the guide’s sentence for it went on 2026-10-13 (found by that
+    // day’s third round).
     if (sim.now - decision.createdAt > 90 * MS_DAY) decision.dismissedAt = sim.now;
   }
 }
@@ -140,8 +145,11 @@ function prune(sim: Simulation): void {
   for (const [id, decision] of Object.entries(sim.universe.decisions)) {
     const closedAt = decision.resolvedAt ?? decision.dismissedAt;
     if (closedAt === undefined) continue;
-    // A closed row about a date that has not arrived yet is kept, because a
-    // raiser can read a dismissal off it to know it was told to stop asking.
+    // A closed row about a date that has not arrived yet is kept until the date has passed, as the guide says
+    // (`guide/day.ts`). Until 2026-10-13 this said a raiser could read a dismissal off it to know it was told to stop
+    // asking; none does: `requireDecision` passes over a dismissed row and raises a fresh one. And every raiser dates
+    // its row within 180 days of raising it (a year’s return, a US status’s end, an idle account’s handover to the
+    // state), so no played life reaches this; a row a test raises does (tests/evidence-g02-life.test.ts).
     if (decision.dueAt !== undefined && decision.dueAt > sim.now) continue;
     if (sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {
       delete sim.universe.decisions[id];

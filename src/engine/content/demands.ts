@@ -10,20 +10,30 @@
  * the research reached medium or high confidence (`applied`): 41 of the 149
  * genres, 52 tags, after the review of 2026-10-10, which lowered every entry
  * that rested on one film, one director, one role or one subgenre (64 genres
- * and 82 tags before it). Where a work is of a
- * genre (a play's kinds, a coursework scene's play, a self-tape's genre), its
- * demanded techniques join what the work reads (`withDemands`):
+ * and 82 tags before it).
  *
- * - once each, however many of its genres ask for the same one, so two kinds
- *   of comedy don't ask for comedy twice;
- * - at `DEMAND_WEIGHT`, a technique of the work's own, and never on top of one
- *   the work already reads, which keeps its own weight;
- * - read by the evaluation as every technique is, so mastered (90) it asks
- *   nothing more: the guarantee holds, and the requirement is a technique the
- *   player can see and practice (`practice.exercise`) before the work begins.
+ * Where they act: every brief listed under a genre stages its applied demands,
+ * or its medium reads them (`tests/briefs-content.test.ts`), so a self-tape in
+ * the genre reads each once, at the weight the brief or its medium gives it
+ * (`tapeReadsOf`), and the evaluation reads it as every technique is: mastered
+ * (90) it asks nothing more, and the requirement is a technique the player can
+ * see and practice (`practice.exercise`) before the take.
  *
- * The weight is SLATE's design choice; no source puts a number on how much a
- * genre's demands count against the rest of the craft.
+ * Until 2026-10-13 this said that where a work was of a genre (a play’s kinds,
+ * a coursework scene’s play, a self-tape’s genre), its demanded techniques
+ * joined what the work read (`withDemands`): once each, at `DEMAND_WEIGHT`, and
+ * never on top of one the work already read. For a play and a class scene that
+ * held from 2026-10-10 until the material profiles later that day: from then a
+ * play or a scene with a profile read its own material’s techniques in their
+ * place (`playReads`, `workContext`), and every play and every scene has one
+ * (tests/evidence-g23-school.test.ts). For a self-tape it held until
+ * 2026-10-12, when a take became a brief’s. The calls left in a take’s reads
+ * and a class scene’s added nothing, and went on 2026-10-13. Until later that day this said
+ * `withDemands` was called still by `playReads` for a play with no profile; that
+ * call had gone too, so `withDemands`, `demandReads`, `demandTags` and
+ * `DEMAND_WEIGHT` (a weight of one, SLATE’s design choice) were read by tests
+ * alone, and went (found by that day’s third round of defects). A genre’s
+ * demands act through the briefs that stage them, above.
  */
 
 import type { Skill } from './school';
@@ -59,9 +69,6 @@ export interface GenreDemand {
   basis?: 'definition';
 }
 
-/** A demanded technique's weight beside the work's own: SLATE's design choice. */
-export const DEMAND_WEIGHT = 1;
-
 /**
  * Whether a genre's researched tags are applied as requirements: only where the research reached medium or high
  * confidence. A low entry's tags rest on one film or one star, and are shown as not applied rather than presented as a
@@ -71,22 +78,5 @@ export const applied = (genre: string): boolean => { const d = GENRE_DEMANDS[gen
 
 /** The tags a genre demands, applied ones only. */
 export const genreTags = (genre: string): DemandTag[] => (applied(genre) ? (GENRE_DEMANDS[genre]?.tags ?? []).map((t) => t.tag) : []);
-
-/** The tags a set of genres demands, once each. */
-export function demandTags(genres: readonly string[]): DemandTag[] {
-  return [...new Set(genres.flatMap(genreTags))];
-}
-
-/** The techniques a set of genres demands, once each, by weight. */
-export function demandReads(genres: readonly string[]): Partial<Record<Skill, number>> {
-  return Object.fromEntries(demandTags(genres).map((t) => [DEMAND_TECHNIQUE[t], DEMAND_WEIGHT]));
-}
-
-/** A work's reads with its genres' demands added: a technique the work already reads keeps its own weight. */
-export function withDemands<T extends Partial<Record<Skill, number>>>(reads: T, genres: readonly string[]): T {
-  const out: Partial<Record<Skill, number>> = { ...reads };
-  for (const [skill, w] of Object.entries(demandReads(genres)) as [Skill, number][]) if (out[skill] === undefined) out[skill] = w;
-  return out as T;
-}
 
 export { GENRE_DEMANDS };

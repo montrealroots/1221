@@ -16,7 +16,8 @@
  * lines, a note on the blocking while it's under 70%, the Rep's calls at three and on call at five, the run-through's
  * dark Monday, the School's curtains at eight, the summer stipend paid on Fridays at five, a summer show's rehearsals
  * from Tuesday to Saturday, a focus of 1 for the learning example as readiness 80 (`focusOf`) before five in the
- * evening (`hourFit`), and the 30% of a part learned before a craft note can be worked (`partWork`).
+ * evening (`hourFit`), the 30% of a part learned before a craft note can be worked (`partWork`), and the half a point
+ * a night an ability or technique must cost a run before the closing note names it (`closeRun`).
  *
  * The prose pass later on 2026-10-12 read the entries against the day's fixes. Until then they said a missed lab only
  * counted toward the casting pool's missed calls, where it takes you out at the count as a rehearsal does; that
@@ -28,6 +29,15 @@
  * workers' compensation; that a summer show rehearsed every Tuesday to Saturday afternoon, another show's matinee
  * included; and that a student on a leave could join the Cabaret or the summer company. A craft note on the weakness
  * your work keeps coming back to says so from the same day (`noteText`), and the notes entry says that too.
+ *
+ * The guide’s audit of 2026-10-13 read them against that day’s fixes. Until then the nights entry said the closing
+ * note named the play’s skill weakest in you, which it stopped doing on 2026-10-12, and that every run was kept among
+ * the milestones, where one with no night played isn’t; the Cabaret entry gave only the closing night played as a
+ * credit; and the notes entry gave what was tried only for a note taken, where `noteText` says it after “Still:” too.
+ *
+ * Later that day “A copy is at the Haas Arts Library, in New Haven.” went from the engine (`copyAt`), reached by no
+ * play, since every student is in New Haven and nothing moves one; until then the plays-to-read entry listed it, and
+ * said a read needed New Haven.
  */
 
 import { formatMoney } from '../../core/money';
@@ -188,6 +198,12 @@ const STIPEND_FRIDAYS = (() => { let n = 0; for (let t = SUMMER_FROM; t <= utc(S
 const APPLY_BY = `${MONTHS[SUMMER_CABARET.applyBy[0] - 1]} ${SUMMER_CABARET.applyBy[1]}`;
 /** Workers' compensation where the Summer Cabaret plays (`compWeek`: New Haven is in Connecticut). */
 const CT_COMP = WORKERS_COMP.states['us-ct']!;
+/**
+ * The week under which Connecticut pays its share of the whole wage: its minimum, a fifth of its maximum, held to that
+ * share of the wage before tax (CGS 31-307(a); `compWeekly`). Until 2026-10-13 the entry said the stipend was paid at
+ * 75% after tax, which it was until that day’s fix of the minimum.
+ */
+const CT_MINIMUM_UNDER = Math.round((CT_COMP.max * (CT_COMP.minShareOfMax ?? 0)) / CT_COMP.share);
 const CABARET_WEEKS = word(Math.round(YALE_CABARET.leadDays / 7));
 
 // --- a play to read ---------------------------------------------------------------------------------------------------
@@ -408,7 +424,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     later: [
       'At the next call the note is settled, Taken or Not Taken, its figure then kept beside it, and a change still waiting is kept and played at it.',
       'Once another note comes, the settled one moves under The Director’s Notes So Far, below the last note: each earlier note with what came of it, and the way it was worked with its figure before, after and at the next call.',
-      'At the next work-through, where the same note comes again: “Better since the last note.” if it was taken, with what you tried and its figures, and “Still:” if it wasn’t.',
+      'At the next work-through, where the same note comes again: “Better since the last note.” if it was taken, and “Still:” if it wasn’t; either way, where you worked it a way, the way you tried with its figure then and now.',
       'When the run closes, the notes still open go into the coursework’s ledger: what you want as the choices, listening and a relationship as the work with your partner, lines as the lines, a skill as that skill, the rest as rehearsal on its feet. A note on the director’s request stays with the part.',
       'Looking Back, at the closing, counts the notes taken and those answered in the work.',
     ],
@@ -580,7 +596,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'The night’s delivery, its preparation and the day’s condition, goes into the run record the next casting reads.',
     ],
     later: [
-      'At the closing the run is kept among your milestones, and the director’s note comes: how the nights went on average, and the skill the play asks that’s weakest in you, to work on.',
+      'At the closing the director’s note comes: how the nights went on average and, where an ability or technique cost the nights half a point or more each on average, the one that cost them most, to work on. A run with a night played is kept among your milestones; a School or Rep run whose every night went on without you isn’t, and its note, “The run went on without you: …”, shows on the production’s panel as well as in the notices.',
       'Looking Back, once, counts the calls answered, the notes given and taken, the dress, and the nights with the company; what’s still open goes with you into class.',
       `At the term’s evaluation, a run with ${ESTIMATE.workNights} or more nights is read: mostly off falls short of the program’s standards, and strong work is noted.`,
       'The next casting reads your delivery across the runs since the last one.',
@@ -661,10 +677,10 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     later: [
       'Each evening and show is answered as a call is: lines, blocking and notes as for any part, and each show a night.',
-      'The closing night played puts the show among your credits.',
+      'The closing night played puts the show among your credits, and so does a closing night missed, excused or not, once a night of the show has been played; either way the run closes, with the director’s note and Looking Back.',
       'The summer stipend is paid each Friday at five, tax withheld, and counted as wages on the year’s return.',
       'Put on academic warning, on a leave or out of the School during a Cabaret show, the calls still to come are called off and not held against you; what you played stays.',
-      `Hurt on a Summer Cabaret stage, workers’ compensation pays the care; kept off it, Connecticut’s ${pct(CT_COMP.share)} of the stipend after tax as well, nothing for the first ${word(CT_COMP.waitingDays)} days unless you’re off more than ${word(CT_COMP.retroAfterDays)}. For the days it keeps you off, the stipend stops, the compensation paid in its place. Laid up by anything else, the company covers the nights and the stipend goes on.`,
+      `Hurt on a Summer Cabaret stage, workers’ compensation pays the care; kept off it, ${pct(CT_COMP.share)} of the whole stipend as well, Connecticut’s minimum for a week under ${usd(CT_MINIMUM_UNDER)} and more than its ${pct(CT_COMP.share)} after tax; nothing for the first ${word(CT_COMP.waitingDays)} days unless you’re off more than ${word(CT_COMP.retroAfterDays)}. For the days it keeps you off, the stipend stops, the compensation paid in its place. Laid up by anything else, the company covers the nights and the stipend goes on.`,
     ],
     interpret: [
       `Performed counts the Cabaret shows played of ${YALE_CABARET.shows.length}, with the calls still ahead beside it.`,
@@ -729,7 +745,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Once a play is read, press Research It.',
     ],
     needs: [
-      'At school and in New Haven, with orientation’s tour done or orientation behind you.',
+      'At school, with orientation’s tour done or orientation behind you.',
       'Free for the read’s time.',
       'For Research It: read first, and not researched yet.',
     ],
@@ -756,7 +772,6 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Your Latest Notes shows the five most recent, one for each play.',
     ],
     unavailable: [
-      '“A copy is at the Haas Arts Library, in New Haven.”',
       '“The library isn’t known to you yet: the tour shows you it.”',
       '“A copy is borrowed from the Haas Arts Library, which lends to students.”: after school.',
       '“Read it first: research needs questions.”',

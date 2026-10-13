@@ -18,9 +18,10 @@ import type { Simulation } from '../core/simulation';
 import { leftWithout, schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, MS_HOUR, formatDate, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, dateKey, formatDate, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
+import { usBankHoliday } from '../content/usholidays';
 import { WORK_RULES } from '../content/workrules';
 import { payFromBank } from './spending';
 import { citizenOf } from './documents';
@@ -38,15 +39,44 @@ function inSave(sim: Simulation, amount: number, currency: string): Money {
   return currency === into ? cents : exchange(cents, currency, into) ?? cents;
 }
 
-/** A number of business days on from a moment, Monday to Friday. */
-export function businessDaysOn(at: Instant, days: number): Instant {
+/**
+ * A number of business days on from a moment, Monday to Friday, and with `federal` not a federal holiday either: the
+ * days the Federal Government is open, as USCIS counts premium processing's ("does not include weekends, federally
+ * observed holidays, or days on which Federal Government offices are closed", 8 CFR 106.4, read on 2026-10-13 at
+ * law.cornell.edu). From 2026-10-13: until then every count was Monday to Friday, and an OPT premium filing of Friday
+ * 1 June 2029 was decided on Friday 13 July, Juneteenth and the Fourth counted, not Tuesday 17 July (found by the
+ * second round of that day). Yale’s working days (`systems/leave.ts`) count Monday to Friday; SAVE’s
+ * (`systems/identity.ts`) are federal workdays from later that day (until then this said they still counted Monday to
+ * Friday).
+ *
+ * Each day is the day it is in `zone`, New Haven’s Eastern time, where every caller’s count is made (from 2026-10-13:
+ * until then it was the day in UTC, so a count begun in a New Haven evening, past midnight in UTC, took a Sunday for a
+ * Monday and a Friday for a Saturday, and a holiday for the day after it; found by that day’s loose ends).
+ */
+export function businessDaysOn(at: Instant, days: number, federal = false, zone: TimeZone = 'America/New_York'): Instant {
   let t = at;
   for (let left = days; left > 0;) {
     t += MS_DAY;
-    const d = new Date(t).getUTCDay();
-    if (d !== 0 && d !== 6) left -= 1;
+    const d = zonedParts(t, zone).weekday;
+    if (d !== 0 && d !== 6 && !(federal && federalHoliday(dateKey(t, zone)))) left -= 1;
   }
   return t;
+}
+
+/** The fixed-date federal holidays, 'MM-DD', which a federal office observing one on a Saturday keeps on the Friday. */
+const FIXED_FEDERAL = ['01-01', '06-19', '07-04', '11-11', '12-25'];
+
+/**
+ * Whether a date, 'YYYY-MM-DD', is a federal holiday as the Federal Government observes it (5 U.S.C. 6103): the Federal
+ * Reserve's eleven (`usBankHoliday`), which are the same days and move a Sunday's to the Monday, and a fixed-date one
+ * on a Saturday kept on the Friday before (6103(b)), which the Federal Reserve doesn't keep.
+ */
+function federalHoliday(date: string): boolean {
+  if (usBankHoliday(date)) return true;
+  const day = new Date(`${date}T12:00:00Z`);
+  if (day.getUTCDay() !== 5) return false;
+  const saturday = new Date(day.getTime() + MS_DAY).toISOString().slice(5, 10);
+  return FIXED_FEDERAL.includes(saturday);
 }
 
 /** Their F-1, if they hold or held one. */
@@ -196,7 +226,7 @@ export function registerPermission(sim: Simulation): void {
     const r = WORK_RULES.opt;
     const fee = inSave(s, r.fee + (premium ? r.premiumFee : 0), r.currency);
     payOrRefuse(s, person, fee, `${r.form}, OPT${premium ? ', premium processing' : ''}`);
-    const readyAt = premium ? businessDaysOn(s.now, r.premiumBusinessDays) : s.now + r.standardDays * MS_DAY;
+    const readyAt = premium ? businessDaysOn(s.now, r.premiumBusinessDays, true) : s.now + r.standardDays * MS_DAY;
     const id = s.nextId('document');
     documentsOf(person).push({ id, kind: 'permit', issuer: 'US', name: 'Employment Authorization, OPT', number: numberFor('IOE', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US' });
     s.schedule({ at: readyAt, kind: PERMISSION_KIND, label: 'OPT Decided', category: 'system', priority: 20, payload: { personId: person.id, documentId: id } });

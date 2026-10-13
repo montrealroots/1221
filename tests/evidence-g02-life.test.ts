@@ -15,7 +15,7 @@
  *   is still unfiled and unpaid, comes late in April, and the IRS is set to file it; the row is kept 180 days and
  *   forgotten after. A dated row is kept until its date has passed; an undated one is not; and a raiser asking again
  *   after a dismissal raises a fresh row, which is what `requireDecision` does (so `world.ts`'s note that a raiser
- *   reads a dismissal off a kept row is not true).
+ *   reads a dismissal off a kept row was not true; it was corrected on 2026-10-13, and says so in the past tense).
  * - `world.take_decision_action`: File It pressed on Home files the return (`filedAt`) and pays its tax, 10% of the
  *   income on a 1040-NR; refused a second time with nothing filed or paid again, across a reload too, and nothing
  *   late in April; an undated row whose button calls off a plan is closed by the press itself and forgotten 180 days
@@ -87,6 +87,11 @@ const h = vi.hoisted(() => ({
   effects: [] as (() => unknown)[],
   /** Each kept effect's dependencies, as the render gave them. */
   deps: [] as (readonly unknown[] | undefined)[],
+  /**
+   * While set, each useCallback and useMemo gives back what it gave the render before, by its order, where its
+   * dependencies are the same, as React keeps them across a page's renders (FIXTURE: a server render keeps nothing).
+   */
+  memo: undefined as undefined | { at: number; kept: { deps: readonly unknown[]; value: unknown }[] },
 }));
 
 vi.mock('react', async (orig) => {
@@ -101,7 +106,20 @@ vi.mock('react', async (orig) => {
     if (h.collecting) { h.effects.push(effect); h.deps.push(deps); }
     return real.useEffect(effect as never, deps);
   }) as typeof real.useEffect;
-  return { ...real, default: { ...real, useState, useEffect }, useState, useEffect };
+  const same = (a: readonly unknown[], b: readonly unknown[]) => a.length === b.length && a.every((d, i) => Object.is(d, b[i]));
+  const kept = <T,>(deps: readonly unknown[], make: () => T): T => {
+    const m = h.memo!;
+    const i = m.at;
+    m.at += 1;
+    const was = m.kept[i];
+    if (was && same(was.deps, deps)) return was.value as T;
+    const value = make();
+    m.kept[i] = { deps, value };
+    return value;
+  };
+  const useCallback = ((fn: unknown, deps: readonly unknown[]) => (h.memo ? kept(deps, () => fn) : real.useCallback(fn as never, deps))) as typeof real.useCallback;
+  const useMemo = ((make: () => unknown, deps: readonly unknown[]) => (h.memo ? kept(deps, make) : real.useMemo(make, deps))) as typeof real.useMemo;
+  return { ...real, default: { ...real, useState, useEffect, useCallback, useMemo }, useState, useEffect, useCallback, useMemo };
 });
 
 /** Every button the screens draw, with its words, whether it's grayed out, and its own onClick. */
@@ -527,14 +545,22 @@ describe('world.set_preferences', () => {
      * (found by that day's check).
      */
     function held(sim: Simulation): { rerender: () => void; unmount: () => void } {
+      // The page's own props, the same object each render, and its callbacks and memos kept across them, so an effect
+      // runs again only where a dependency really changed (until a check of 2026-10-13 each render made them anew, and
+      // every effect ran again as on a mount).
+      const props = { sim, adapter: { save: async () => undefined } as never, onExit: () => undefined, children: null };
+      const memo = { at: 0, kept: [] as { deps: readonly unknown[]; value: unknown }[] };
       const collect = () => {
         h.effects = [];
         h.deps = [];
         h.collecting = true;
+        memo.at = 0;
+        h.memo = memo;
         try {
-          renderToStaticMarkup(createElement(GameProvider, { sim, adapter: { save: async () => undefined } as never, onExit: () => undefined, children: null }));
+          renderToStaticMarkup(createElement(GameProvider, props));
         } finally {
           h.collecting = false;
+          h.memo = undefined;
         }
         return { effects: [...h.effects], deps: [...h.deps] };
       };
@@ -682,6 +708,43 @@ describe('tutorial.read', () => {
     expect(atBank.text).toContain('Your Bank');
     expect(atBank.has('I’ve Read It')).toBe(false);
     expect(drawn(sim, GuideButton).text).toBe('Guide');
+  });
+
+  // From 2026-10-13, as the Guide button was that day: until then the guide’s own list called such a chapter Later,
+  // over What Reading It Opens, and the help’s contents counted it unread (“15 of 17 read: each opens a part of the
+  // game.”), though on a finished guide it opens nothing and can’t be marked read (found by the guide audit of that
+  // day). Each check failed when written.
+  it('on a finished guide missing chapters, the guide’s list calls them Open, over what they cover, and the help’s contents counts none unread', async () => {
+    const { HelpProvider } = await import('@/ui/guide/Help');
+    const page = globalThis as Record<string, unknown>;
+    const had = page.window;
+    // FIXTURE: the page’s address, which the help reads for an entry to open; this one names none.
+    page.window = { location: { hash: '#/home' } };
+    try {
+      const sim = readThrough('g02-guide-list');
+      // TEST SETUP: two chapters added after it was read through, as above.
+      sim.universe.tutorial!.read = sim.universe.tutorial!.read.filter((id) => id !== bank!.id && id !== life!.id);
+      const guide = () => drawn(sim, () => createElement(GuideProvider, { children: null }), [bank!.id, h.keep, h.keep, h.keep]);
+      // FIXTURE: the help open at its contents.
+      const contents = () => drawn(sim, () => createElement(HelpProvider, { children: null }), [[{ kind: 'contents' }], h.keep, h.keep]);
+      const atBank = guide();
+      expect(atBank.html).toContain('aria-label="16. Your Bank, Open"');
+      expect(atBank.html).toContain('aria-label="17. A Whole Life, Open"');
+      expect(atBank.html).not.toMatch(/, Later"/);
+      expect(atBank.text).toContain('What It Covers, Already Open');
+      expect(atBank.text).not.toContain('What Reading It Opens');
+      expect(contents().text).toContain('The Guide’s Chapters. Every part of the game is open on this life; the chapters are there to read in any order.');
+      // Change the input: not finished, the same save is a guide with two chapters to go, the next of them Your Bank.
+      delete sim.universe.tutorial!.finished; // TEST SETUP
+      const going = guide();
+      expect(going.html).toContain('aria-label="16. Your Bank, Next"');
+      expect(going.html).toContain('aria-label="17. A Whole Life, Later"');
+      expect(going.text).toContain('What Reading It Opens');
+      expect(going.has('I’ve Read It')).toBe(true);
+      expect(contents().text).toContain('The Guide’s Chapters. 15 of 17 read: each opens a part of the game.');
+    } finally {
+      if (had === undefined) delete page.window; else page.window = had;
+    }
   });
 
   it('marks a guide read to its end before 2026-10-12 finished on opening, and leaves one a chapter short as it was', () => {

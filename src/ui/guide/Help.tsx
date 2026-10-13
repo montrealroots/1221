@@ -3,13 +3,17 @@
  *
  * The chapters are the onboarding (`Guide.tsx`). This is the rest: an entry for every feature, opened from How This
  * Works beside it, from ? (the contents, by what the player is trying to do) or / (search) anywhere, or from an
- * address (`#/workspace/school?help=school.partners`), so an entry can be linked to. Inside, every entry links to the
- * entries it's connected to, a trail of breadcrumbs goes back along the way it came, and Back goes back one.
+ * address (`#/workspace/school?help=coursework.partners`), so an entry can be linked to. Until 2026-10-13 that example
+ * named `school.partners`, which is no entry and covers no feature, so its link opened nothing. Inside, every entry
+ * links to the entries it's connected to, a trail of breadcrumbs goes back along the way it came, and Back goes back one.
  *
  * What it doesn't do is as much the point. It runs no command and writes nothing to the save. The live clock holds
  * while it's open (`hold`), so reading moves no time. It opens over the screen, which stays mounted with its tab and
- * whatever was typed in it, and closing it gives focus back to the control that opened it. Show Me Where is the one
- * thing in it that moves the player: it goes to the entry's screen and tab, and Back To Help returns to the trail.
+ * whatever was typed in it, and closing it gives focus back to the control that opened it. Until 2026-10-13 that wasn’t
+ * so for the top bar’s Advance and Look After Yourself menus: the first press in the help, or Escape, closed the menu
+ * under it, and the How This Works it was opened from went with it, so focus fell to the page (`useDropdown`,
+ * `ui/shell/TimeControls.tsx`). Show Me Where is the one thing in it that moves the player: it goes to the entry's
+ * screen and tab, and Back To Help returns to the trail. `tests/help-mechanics.test.ts` presses each of them.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -43,20 +47,32 @@ function helpInAddress(): string | undefined {
   return id && entryFor(id) ? entryFor(id)!.id : undefined;
 }
 
-function writeAddress(route: string, entry?: string): void {
-  try { window.history.replaceState(window.history.state, '', `#${route}${entry ? `?help=${encodeURIComponent(entry)}` : ''}`); } catch { /* no address to keep */ }
+/**
+ * The address with its help entry set, or taken out: the screen and anything else in it are kept as they are.
+ *
+ * Until 2026-10-13 it wrote the screen the provider held instead, which on a page’s first commit is still Home: React
+ * runs a child’s effects before its parent’s, so this one ran before `GameProvider` had read the address, and a reload
+ * or a link to `#/workspace/school` was rewritten to `#/home` and opened Home, with any entry it named open over it
+ * (found by the guide audit of that day). The address is the screen’s own by the time the trail changes after that:
+ * `navigate` pushes it before this runs, so Show Me Where and Back To Help write the screen they arrive at.
+ */
+function writeAddress(entry?: string): void {
+  const [path, query] = (window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/home').split('?') as [string, string | undefined];
+  const params = new URLSearchParams(query ?? '');
+  if (entry) params.set('help', entry);
+  else params.delete('help');
+  const rest = params.toString();
+  try { window.history.replaceState(window.history.state, '', `#${path}${rest ? `?${rest}` : ''}`); } catch { /* no address to keep */ }
 }
 
 export function HelpProvider({ children }: { children: ReactNode }) {
-  const { route, hold, navigate } = useGame();
+  const { hold, navigate } = useGame();
   const [trail, setTrail] = useState<Page[] | null>(() => {
     const id = helpInAddress();
     return id ? [{ kind: 'contents' }, { kind: 'entry', id }] : null;
   });
   // The trail left by Show Me Where, for Back To Help.
   const [left, setLeft] = useState<Page[] | null>(null);
-  const routeRef = useRef(route);
-  routeRef.current = route;
 
   const open = useCallback<HelpApi['open']>((id) => {
     const entry = id ? entryFor(id) : undefined;
@@ -79,7 +95,7 @@ export function HelpProvider({ children }: { children: ReactNode }) {
   useEffect(() => { hold('help', showing); return () => hold('help', false); }, [hold, showing]);
   // The address names the entry on top, so it can be copied or reloaded; closed, it's the screen's own again.
   const top = trail?.[trail.length - 1];
-  useEffect(() => { writeAddress(routeRef.current, top?.kind === 'entry' ? top.id : undefined); }, [top]);
+  useEffect(() => { writeAddress(top?.kind === 'entry' ? top.id : undefined); }, [top]);
 
   // ? for the contents, / to search, anywhere but a text box, and not behind another dialog.
   useEffect(() => {
@@ -177,7 +193,10 @@ function HelpDialog({ trail, setTrail, onClose, onWhere }: {
 
 function Contents({ onOpen }: { onOpen: (id: string) => void }) {
   const guide = useGuide();
-  const isGuided = useWorld((s) => guided(s));
+  // A guide finished is counted as no guide, whatever chapters came after it (from 2026-10-13, as the top bar’s Guide
+  // button was that day): until then it read “15 of 17 read: each opens a part of the game.” on a guide finished
+  // before two chapters were added, though they open nothing there and the guide offers no way to mark them read.
+  const isGuided = useWorld((s) => guided(s) && !s.universe.tutorial?.finished);
   const read = useWorld((s) => chaptersRead(s).filter((id) => CHAPTERS.some((c) => c.id === id)).length);
   return (
     <div className="col gap-4">

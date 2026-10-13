@@ -886,8 +886,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // - the five new abilities, for anybody with a craft and drawn attributes, from what's already true of them
   //   (`derivedAbilities`: the mean of their kin in the craft, and discipline from conscientiousness);
   // - genre practice from the save's own record: each night a credit says was played, in its play's kinds, one
-  //   night's practice shared among them; familiarity, sessions and interests begin at nothing, which is what the save
-  //   records of them;
+  //   night's practice shared among them; familiarity and sessions begin at nothing, which is what the save records of
+  //   them (the interests did too, until migration 94 dropped them on 2026-10-10);
   // - the development history and the work history begin empty: the showings and nights judged before keep their
   //   bands as they were judged (`Showing`, `Run.nights`), under the rules of their time, and aren't judged again.
   {

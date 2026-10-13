@@ -72,7 +72,10 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
             </div>
             <HowItWorks help="school.work_note" />
           </div>
-          {last.answer?.solution && <div className="xs">Worked {(ADJUSTMENTS[last.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? last.answer.solution).toLowerCase()}: {last.answer.before} before, {last.answer.after} after{last.answer.now !== undefined ? `; ${last.answer.now} at the next call` : ''}.</div>}
+          {/* The way by its own label, as the notes so far name it (from 2026-10-13: until then a movement played to a
+              side read “Worked play this part another way” here, after the list below had been given the label; found by
+              that day’s guide audit). */}
+          {last.answer?.solution && <div className="xs">Worked {(last.answer.label ?? ADJUSTMENTS[last.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? last.answer.solution).toLowerCase()}: {last.answer.before} before, {last.answer.after} after{last.answer.now !== undefined ? `; ${last.answer.now} at the next call` : ''}.</div>}
           {/* Shown again once a way is put back (`reworkable`, from 2026-10-12): until then it stayed hidden, and Work On
               The Note worked whatever place was last chosen in the shorter list of the ways left. */}
           {ways.length > 0 && (!last.worked || (p !== undefined && reworkable(p))) && (

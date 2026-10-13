@@ -8,7 +8,10 @@
  * The axes lean a knob from the middle of the slider, so 50 is no lean at all
  * and the ends are the most a disposition can do. Three of the seven lean a
  * knob, and each leans only what it would in a person: emotional stability
- * how stress arrives and clears, ambition how much running on empty costs,
+ * how stress arrives and clears, ambition how fast every stress arrives
+ * (`stressGain`: on empty, nerves before an event, a turn, a hurt, a rival’s lead,
+ * money’s worry; all but the day an injury weighs while it mends. Until
+ * 2026-10-13 this said only what running on empty cost),
  * conscientiousness how orderly the nights are. Risk tolerance leans no knob;
  * the card reads it directly (`systems/credit.ts`). The other three are read
  * where a person meets the work (`systems/enjoyment.ts`): extraversion how a

@@ -120,6 +120,10 @@ const ICELAND_NOTE = 'Tekjuskattur and average útsvar together. The personal cr
   + 'deduction worth the same at the first band. Calibrated approximation. Not tax advice.';
 
 export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
+  // The federal brackets and standard deduction are 2024's (10% to $11,600, $14,600 deducted), held for every year
+  // since: 2025's and 2026's (Rev. Proc. 2024-40 and 2025-32, $16,100 deducted for 2026) aren't in. Recorded as a
+  // limitation on 2026-10-13, when the filing threshold that reads this deduction was checked; correcting it re-figures
+  // every US return, which that pass left alone.
   {
     jurisdictionCode: 'US',
     label: 'United States Federal Income Tax',

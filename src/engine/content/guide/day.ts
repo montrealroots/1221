@@ -6,7 +6,7 @@
  * a run asks of the weather (`FINE`, `TRAINING`), the flu's timing (`systems/seasons.ts`) and New Haven's thunder
  * (`content/thunder.ts`). The ones written as words are kept where nothing can import them, unexported or in a
  * screen: the Advance menu's hours and Skip To Event's fourteen (`ui/shell/TimeControls.tsx`), Home's six rows, the
- * decisions' 90 and 180 days and the world's look every 2 days (`world/world.ts`), the 500 notices kept
+ * decisions' 180 days and the world's look every 2 days (`world/world.ts`), the 500 notices kept
  * (`core/simulation.ts`), the hour a jump may move with the player still there (`LONGEST_STEP_WITH_THE_PLAYER`), the
  * stress a night alone leaves at least (`COASTING_STRESS_FLOOR`, 14) and the urgency stripe's 65 and 85
  * (`ui/screens/Home.tsx`).
@@ -22,6 +22,18 @@
  * hour made it a workout indoors unforeseen; the menu's line has read it as the hour ends since that day too
  * (`lookAfterOptions`, `systems/life.ts`), and the entry says so. And Your Own Plans said a meal could still be had at
  * a commitment, where `lookAfterRefusal` lets Eat A Meal alone through and Order In waits with the rest.
+ *
+ * Read again on 2026-10-13, after that day’s review made a plan due in hospital missed, as the doctor, therapy and the
+ * School already read a stay (`world/plans.ts`). Until then The Calendar said being awake and in its town was all a
+ * commitment asked, and Go put you there whatever else held. A hospital bed keeps you from every commitment but Yale
+ * Health’s assessment, which counts it as there (`systems/leave.ts`), and an injury that lays you up from all but the
+ * doctor, therapy, orientation and a plan of your own (`present` in `systems/school.ts` and `systems/health.ts`, and a
+ * classmate’s own check in `systems/coursework.ts` and `systems/classmates.ts`). Your Own Plans named the ways a plan
+ * is missed but the hospital’s, which sends no notice even after Go.
+ *
+ * Read again later on 2026-10-13: What Needs You said a question with no date went quiet 90 days after it was raised.
+ * The world’s rule for it is still there (`expireDecisions`), but no raiser reaches it, since every one dates its row
+ * (a year’s return, a US status’s end, an idle account’s handover to the state), so the sentence went.
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
@@ -75,7 +87,7 @@ export const DAY: readonly GuideEntry[] = [
     needs: [
       `The panel, Go, Skip It and the entries open with ${chapter('calendar')}.`,
       `Only a plan you made offers Skip It. A rehearsal with a classmate offers Call It Off, which opens with ${chapter('school')}. Anything else the world booked has Go and Stand Here alone.`,
-      'To be counted there, you have to be awake and in the commitment’s town when it runs. No move in the game takes you out of your town, and a plan names the town you made it in.',
+      'To be counted there, you have to be awake, out of hospital and in the commitment’s town when it runs; only Yale Health’s assessment counts a hospital bed as there. An injury that lays you up keeps you from all the others but the doctor, therapy, orientation and a plan of your own. No move in the game takes you out of your town, and a plan names the town you made it in.',
     ],
     costs: [
       { label: 'Time', value: 'Reading the panel and opening entries moves no clock. Go spends the commitment’s own length, the figure its dialog gives.' },
@@ -83,14 +95,14 @@ export const DAY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'What Wants You', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, and your own plans' },
-      { label: 'Whether You’re There', value: 'When it runs, the commitment reads whether you’re awake and in the town it names; asleep, you missed it' },
+      { label: 'Whether You’re There', value: 'When it runs, the commitment reads whether you’re awake, out of hospital and in the town it names. In hospital, you were at nothing but Yale Health’s assessment; out of it and asleep, you weren’t there' },
       { label: 'Where The Clock Was Headed', value: 'Go carries on the move the stop broke off, so a jump to the morning still ends in the morning' },
     ],
     now: [
-      'Go: the commitment runs at once with you there, and the clock moves through its hours, on to where it was headed if that’s later.',
+      'Go: the commitment runs at once, with you there unless a hospital bed or an injury keeps you from it, and the clock moves through its hours, on to where it was headed if that’s later.',
       'Skip It: your plan is marked missed, a notice says you didn’t go, and the clock carries on to where it was headed.',
       'Call It Off, on a rehearsal with a classmate: it’s called off at short notice, which costs their trust and stays with them, and the clock stays paused where it stopped.',
-      'Stand Here: the dialog closes and the clock stays paused at the commitment, which the Calendar panel keeps at its top, reading now. Whatever moves the clock next runs it, with you there if you’re awake and in its town.',
+      'Stand Here: the dialog closes and the clock stays paused at the commitment, which the Calendar panel keeps at its top, reading now. Whatever moves the clock next runs it, with you there if you’re awake and in its town and neither a hospital bed nor an injury keeps you from it.',
       'Any stop pauses the clock, so Play has to be pressed again after it.',
     ],
     later: [
@@ -301,7 +313,6 @@ export const DAY: readonly GuideEntry[] = [
     ],
     later: [
       'A question with a date closes on its date, answered or not, at the world’s next look, which comes every 2 days.',
-      'A question with no date goes quiet 90 days after it was raised.',
       'The save forgets a closed question 180 days after it closed, or on its date if that’s later, and keeps your last 500 notices.',
       'The same thing raised again after you dismissed it comes back as a new question.',
       'A notice said again word for word while the last is still unread takes the new time, and isn’t added twice.',
@@ -376,6 +387,7 @@ export const DAY: readonly GuideEntry[] = [
     later: [
       'When the clock reaches it, the clock stops and asks: Go spends its length, and Skip It marks it missed, with a notice.',
       'Inside a Sleep you chose, it comes while you’re asleep and is missed, and the morning’s notice names it.',
+      'In hospital when it comes, it’s missed even if you press Go, and no notice says so.',
       'Before it begins it holds the time: an hour of practice, or anything in Look After Yourself, that would run into it is refused, with what’s coming and when.',
       'While you’re at it, Sleep and everything in Look After Yourself but Eat A Meal wait until it ends.',
     ],

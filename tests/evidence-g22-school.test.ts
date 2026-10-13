@@ -39,7 +39,8 @@
  * - `school.stipend`: the first Friday's stipend (4 June 2027), paid by the clock, withholds FICA's 7.65% of $375
  *   ($28.69) and nothing else for a student with no other wages; $40,000 of wages earlier in the year make it $129.38,
  *   the IRS's 12% and 7.65% ($73.69) and Connecticut's $55.69 (its exemption cut to $4,000 at $40,375, 2% and 4.5%, its
- *   10% credit); an F-1 student's has no FICA; and the next February's return reads what the clock paid and withheld:
+ *   10% credit); an F-1 student's has no FICA and the IRS’s 10% from the first dollar, $37.50 (until 2026-10-13 nothing,
+ *   worked on a resident’s standard deduction); and the next February's return reads what the clock paid and withheld:
  *   the 1040-NR at 10% of income with no payroll tax, the resident's 1040 with the year's wages and every week's
  *   withholding.
  * - `school.orientation (kind)`: Meeting Your Class missed in New York leaves no classmate met, a partner refused in
@@ -621,15 +622,18 @@ describe('school.stipend', () => {
     expect(figures.payroll).toBe(Math.round(0.0765 * 44_875_00));
   }, 60_000);
 
-  it('PLAYER JOURNEY: an F-1 student’s stipend bears no FICA, nothing withheld where a resident’s withholds $28.69, and the 1040-NR reads the summer’s wages at 10% with no payroll tax', () => {
+  it('PLAYER JOURNEY: an F-1 student’s stipend bears no FICA, the IRS’s 10% of $375 ($37.50) withheld where a resident’s withholds FICA’s $28.69, and the 1040-NR reads the summer’s wages at 10% with no payroll tax', () => {
     const { sim, first } = toFirstFriday('g22-stipend', 'uk-eng-london');
     sim.advanceTo(first.at + 60_000);
     const { wages, withheld } = accounts(sim);
     const [tx] = stipends(sim);
-    expect(tx!.postings.find((x) => x.accountId === withheld)).toBeUndefined();
+    // Withheld as the 1040-NR taxes it, from the first dollar: the standard deduction added back to the wages, as Pub
+    // 15-T has an employer do for a nonresident alien. Until 2026-10-13 this held nothing withheld, the stipend worked on
+    // a resident’s standard deduction (tests/evidence2-b08.test.ts, school.stipend).
+    expect(tx!.postings.find((x) => x.accountId === withheld)!.amount).toBe(37_50);
     expect(tx!.postings.find((x) => x.accountId === wages)!.amount).toBe(-375_00);
-    expect(tx!.postings.filter((x) => x.accountId !== wages).map((x) => x.amount)).toEqual([375_00]);
-    expect(yearOf(sim.player, 2027)).toMatchObject({ acting: 375_00, withheld: 0 });
+    expect(tx!.postings.filter((x) => x.accountId !== wages && x.accountId !== withheld).map((x) => x.amount)).toEqual([337_50]);
+    expect(yearOf(sim.player, 2027)).toMatchObject({ acting: 375_00, withheld: 37_50 });
 
     play(sim, at(2028, 2, 1, 10));
     expect(stipends(sim)).toHaveLength(13);
@@ -637,7 +641,7 @@ describe('school.stipend', () => {
     expect(figures.form).toBe('1040-NR');
     expect(figures.acting).toBe(13 * 375_00);
     expect(figures.payroll).toBe(0);
-    expect(figures.withheld).toBe(0);
+    expect(figures.withheld).toBe(13 * 37_50);
     // No standard deduction on a 1040-NR: the wages and work-study taxed from the first dollar, at 10%.
     expect(figures.income).toBe(figures.acting + figures.workStudy);
     expect(figures.federal).toBe(Math.round(0.1 * figures.income));

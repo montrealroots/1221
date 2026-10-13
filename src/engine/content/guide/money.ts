@@ -390,15 +390,18 @@ export const MONEY: readonly GuideEntry[] = [
     where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, The Accounts Tab, The Term Deposit Panel' },
     available: `From the guide’s chapter “${chapter('bank.open_term')}”.`,
     short: `A term deposit locks money away at a fixed rate for the bank’s term: Chase’s ${CHASE_TERM.called} is ${CD_MONTHS} months at ${pct(CHASE_TERM.rate)}. Its interest builds each day. At the end it does what the bank does unless you chose another way the bank allows: renewed for the same term at the bank’s rate on the day, moved into the bank’s easy-access savings, or paid into your current account. Breaking one early, where the bank allows it, costs the bank’s penalty, shown before you press.`,
+    // Until 2026-10-13 the first step named “your bank’s” one panel, and the needs said the panel told you when a bank had
+    // no rate. From that day `TermDeposits` (`ui/bank/BankLending.tsx`) draws one for each other bank kept with a current
+    // account that has a rate, and none for one without; found by the guide’s audit of that day.
     steps: [
-      `On Accounts, find your bank’s term deposit panel (${CHASE_TERM.called} at Chase), type the Term Deposit Amount and press Put It Away. It comes from your current account at that bank.`,
+      `On Accounts, find the term deposit panel of the bank to put it away at (${CHASE_TERM.called} at Chase): one for your primary account’s bank, and one for each other bank where you keep a current account and the bank has a rate on record, its name beside the term. Type the Term Deposit Amount and press Put It Away. It comes from your current account at that bank.`,
       'Under Your Accounts Over Time, read what it does on its end date and what breaking it now would cost.',
       'To change the end, press Renew It At The End, Move It To Savings At The End or Pay It Out At The End, as your bank allows.',
       `To end it now, press Break It Early; at NatWest, Give ${BREAK_NOTICE['gb-natwest']} Days’ Notice. Where the bank pays interest during the term, Take The Interest So Far moves what it has earned to your current account.`,
     ],
     needs: [
       'A current account at the bank holding the amount, and any minimum the bank sets.',
-      'A bank with a term deposit rate on record; the panel says when there’s none.',
+      'A bank with a term deposit rate on record: your primary account’s bank’s panel says when there’s none, and another bank without one shows no panel.',
     ],
     costs: [
       { label: 'Time', value: 'None' },
@@ -415,7 +418,10 @@ export const MONEY: readonly GuideEntry[] = [
     now: [
       'Put It Away: a new account named for the bank’s product, with its own number, holding the amount from your current account there. Move Money, cash and payments can’t reach it.',
       'An end you choose is kept, and the panel says what it will do.',
-      'Break It Early: it closes now, and the deposit with its interest, less the penalty and any tax, goes into your primary current account. A penalty larger than the interest comes out of the deposit.',
+      // Until 2026-10-13 this said a deposit broken early went into your primary current account. `breakTerm`
+      // (`systems/accountlife.ts`) pays it into the current account at the deposit’s own bank from that day, and sends it
+      // to the primary one in the bank’s days only where there’s none; found by the guide’s audit of that day.
+      'Break It Early: it closes now, and the deposit with its interest, less the penalty and any tax, goes into your current account at the same bank, or with none there, to your primary current account in the bank’s days. A penalty larger than the interest comes out of the deposit.',
       'Take The Interest So Far: what it has earned, less any tax, goes into your primary current account, and the deposit keeps earning to its end.',
     ],
     later: [
@@ -436,7 +442,9 @@ export const MONEY: readonly GuideEntry[] = [
       '“… doesn’t let a term deposit end that way.” and “… needs … days’ notice before the end to change it.”',
       '“… doesn’t let a term deposit be broken before its end.” and “It closes on …, on the notice given.”',
       '“… pays a term deposit’s interest at its end.” and “It hasn’t earned anything to take yet.”',
-      '“You need a current account for the money.”',
+      // Until 2026-10-13 this list ended with “You need a current account for the money.”, Break It Early’s refusal for a
+      // life without one. Every life holds a primary account it can’t close, so nothing reached it, and it went from
+      // `bank.break_term` (`systems/accountlife.ts`) that day.
     ],
     mistakes: [
       'Putting away money you’ll need before the end: read the quote under Your Accounts Over Time first, and leave enough in the current account for the term.',
@@ -497,7 +505,9 @@ export const MONEY: readonly GuideEntry[] = [
       'Save Alerts: the lines are kept, and checked from the day’s end on.',
     ],
     later: [
-      'Idle: on the first of each month the bank looks again. A dormant account refuses Move Money, into it or out of it, and a dormant primary account refuses cash taken out, until it’s reactivated; at Bank of America and Capital One it stops earning interest.',
+      // Cash paid in is among what a dormant account refuses from 2026-10-13, when `cash.deposit` (`systems/cash.ts`)
+      // began refusing it; until then cash went in and the account stayed dormant, and this line, rightly, left it out.
+      'Idle: on the first of each month the bank looks again. A dormant account refuses Move Money, into it or out of it, and cash paid into it, and a dormant primary account refuses cash taken out, until it’s reactivated; at Bank of America and Capital One it stops earning interest.',
       `Unclaimed: on the first of a month within the ${ESCHEAT_NOTICE_DAYS} days before the country’s years run out, the bank writes and What Needs You asks. Left past them, on the first of the month the balance goes to the state and the account closes, with the standing orders into it. Your primary account is never handed over.`,
       'Alerts arrive in What Needs You at the day’s end.',
     ],
@@ -583,6 +593,9 @@ export const MONEY: readonly GuideEntry[] = [
     interpret: [
       '“Counted, not yet moved” is waiting for the bank’s day; at Wells Fargo and Lloyds, what’s “to move at the next business day’s start” has been counted already.',
       '“Last moved: … into savings” is the last transfer. “Not moved: …, because …” says why one didn’t happen.',
+      // The panel’s count of whole purchases (`ui/bank/RoundUps.tsx`, `wholePurchase`), said here from 2026-10-13: until
+      // then the panel showed it and this list didn’t say what it was.
+      '“… purchases since the last transfer were already a multiple of …, so rounded up to nothing.” counts the purchases that moved nothing because they were already whole; it starts again at each transfer that moves money, and when round-ups stop.',
       '“Not counting: …” under Round-Ups: On names a choice still to make, as a save from before 2026-10-13 can have.',
     ],
     unavailable: [
@@ -675,7 +688,9 @@ export const MONEY: readonly GuideEntry[] = [
       '“Say how much each month.” and “Pick a day of the month, 1 to 31.”',
       '“There’s no standing order by that name.” and “There’s no payment waiting by that name.”',
       '“A scheduled payment goes between two of your own accounts.”, “… is a term deposit, locked until its end: a payment set for a date goes between your current and easy-access savings accounts.”, “Say how much.” and “Pick a day ahead.”',
-      '“A standing order pays from an open current account of yours.” and “It pays into that account.”',
+      // Until 2026-10-13 this quoted “It pays into that account.” beside it too, `bank.set_order_source`’s refusal of the
+      // account an order paid into; an order goes only into savings, so nothing reached it, and it went that day.
+      '“A standing order pays from an open current account of yours.”',
       '“Wages are paid into an open current or savings account of yours.” and “… is closing.”',
     ],
     mistakes: [
@@ -715,8 +730,10 @@ export const MONEY: readonly GuideEntry[] = [
       'Type Take Out, choose From (Your Bank’s ATM, Another Bank’s ATM, The Counter, The Post Office where offered, or A Cash Advance On The Card), read the line under it, and press Take It Out.',
       'With cash in hand, type Pay In, choose Into and At, and press Pay It In.',
     ],
+    // Until 2026-10-13 the needs spoke of a machine only for paying out, and the paying-in refusals left out a dormant
+    // account and the debit card at an ATM, which `cash.deposit` (`systems/cash.ts`) refuses from that day.
     needs: [
-      'A current account. A machine needs its debit card here and unlocked; the counter pays out without it.',
+      'A current account. A machine needs your debit card here and unlocked, to take cash out or pay it in; the counter does either without it.',
       'The amount and its fees in the primary account, inside the bank’s daily limit for machines.',
       'For a cash advance: room on the everyday card for it and its fee, inside any cash limit the card sets.',
     ],
@@ -757,7 +774,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“… lets … out of machines in a day, and … has come out today.”',
       '“… holds …”: less than the amount and its fees.',
       'On the card: “The card has … free, and this takes … with its fee.” or “The card lets … out as cash, and … is out already.”',
-      'Paying in: “You have … in cash.”, “Cash goes into your current account or savings.” or “… customers can’t pay cash in at the Post Office.”',
+      'Paying in: “You have … in cash.”, “Cash goes into your current account or savings.”, “… customers can’t pay cash in at the Post Office.” or “… is dormant; use Reactivate first.”; at an ATM, “Your debit card is locked; the counter can still take it.”, “Your debit card is stopped; the counter can still take it.” or “Your debit card hasn’t arrived yet; the counter can still take it.”',
     ],
     mistakes: [
       `Taking cash at another bank’s machine in the US: at Chase that’s ${fee(CHASE_CASH.other)} and about ${usd(OWNER)} more, ${usd((CHASE_CASH.other ?? 0) + OWNER)} for one withdrawal, where Chase’s own machine is ${fee(CHASE_CASH.own)}.`,
@@ -823,12 +840,16 @@ export const MONEY: readonly GuideEntry[] = [
       'Make It The Everyday Card: the day’s spending goes on it from now.',
       'Close The Card: nothing new goes on it, and with nothing owed it closes at once.',
       'Send The Credit To My Account: a credit balance moves to your primary account.',
-      'Ask For Help With Payments: the interest stops, a payment that clears it in 48 months is set, and the card can’t be used until it’s paid.',
+      // Until 2026-10-13 this said the card could be used again once it was paid. A plan ends, and its suspension with
+      // it, only at a statement that finds nothing owed or a due date met with nothing owed (`systems/credit.ts`); and
+      // the late fee’s line below said “the minimum” where on a plan the due date judges the plan’s payment
+      // (`autopayAsk`). Both found by the guide’s audit of that day.
+      'Ask For Help With Payments: the interest stops, a payment that clears it in 48 months is set, which each statement asks for in place of the minimum, and the card can’t be used until the first statement or due date after it’s paid off, when the plan ends.',
     ],
     later: [
       'On its statement day at 9 AM: interest charged where the last statement wasn’t paid in full, any yearly fee in the month the card opened, and the statement written. With nothing owed, the month is reported paid as agreed.',
       'On the due date at noon, autopay asks the account it’s set on for its amount, with easy-access savings at that account’s bank where savings is linked. Short of all of it there, it comes back unpaid, and unless the minimum was paid by hand, the payment is late; a returned payment fee is charged, except on a US card when the late fee covers the same miss.',
-      'Less than the minimum paid: the late fee. Outside the US it goes on your record at once and the limit is cut to 70%, never under what’s owed; in the US, at the next due date still short, thirty days past due.',
+      'Less than the minimum paid (on a hardship plan, the plan’s payment, which each statement asks for in the minimum’s place): the late fee. Outside the US it goes on your record at once and the limit is cut to 70%, never under what’s owed; in the US, at the next due date still short, thirty days past due.',
       'Two due dates missed in a row: the card is suspended until a payment is on time. Five: a default notice. Six: it’s charged off to collections and closed, and 100 points come off your record.',
       'On a US card with a penalty rate, sixty days late brings 45 days’ notice and then that rate, until six payments in a row are on time; sixty days late also ends any introductory rate.',
       `A moved statement day: the next statement comes no sooner than ${MIN_CYCLE_DAYS} days after the last, and the day moves once a statement cycle, SLATE’s reading of the issuers’ limit: asked again before the next statement, Move It is refused.`,
@@ -839,7 +860,9 @@ export const MONEY: readonly GuideEntry[] = [
     interpret: [
       'Left To Spend is the limit less what’s owed and any payment held while it clears, with a tenth more on a US card allowed to go over the limit. While the card is locked, stopped, suspended or closing, there’s none.',
       '“A record today would get …” is what the bank would price a new card at for your record now; your card keeps the rate it opened at.',
-      'A statement on the Statements tab gives the least to pay and, paying only the minimum and spending nothing more, how long it takes and what it costs in all, beside what clears it in three years.',
+      // Until 2026-10-13 a hardship plan’s statement said what paying the card’s minimum would take, at a rate the plan
+      // doesn’t charge; from that day it says what the plan’s payment takes (`ui/bank/BankStatements.tsx`).
+      'A statement on the Statements tab gives the least to pay and, paying only the minimum and spending nothing more, how long it takes and what it costs in all, beside what clears it in three years. On a hardship plan the least is the plan’s payment, and the statement says how long that takes to clear it, with no interest.',
       'Terms marked as SLATE’s estimate are a typical US card’s, used where the bank’s weren’t found.',
       'The record’s own figure shows only when a life is made: a number in the US and Canada, a word elsewhere. In play you read it in what the banks do: approvals, limits, and the rate after “A record today would get”.',
     ],
@@ -970,13 +993,17 @@ export const MONEY: readonly GuideEntry[] = [
     steps: [
       'On the Cards tab, find Your Cards: each card ending in its last four, and the day it expires.',
       'Press Lock It to stop new spending on a card, and Unlock It to undo it.',
-      'Choose Why (Damaged, Lost or Stolen) and press Report It, or Report It, Rush The New One where the bank rushes one for a fee.',
+      // Until 2026-10-13 this said a bank rushed one for a fee; Capital One lists rush days and no fee, and `card.report`
+      // (`systems/security.ts`) rushes Capital One’s for nothing from that day. Wells Fargo’s was rushed for nothing too until later
+      // that day: it charges for a rush and doesn’t say what, and none is sent (`rushUnpublished`).
+      'Choose Why (Damaged, Lost or Stolen) and press Report It, or Report It, Rush The New One where the bank rushes one, for its fee where it lists one.',
       'A payment you didn’t make shows as its amount, the card and the date, asking “not yours?”: press Report It As Not Mine.',
       'Where your bank offers it, press Move My Account To A New Number.',
     ],
     needs: [
       'A card: a current account’s debit card, or a credit card.',
-      'Locking needs a bank that locks in its app; one that locks only by phone refuses.',
+      // Until 2026-10-13 this said locking needed a bank that locked in its app, and the unavailable list below quoted the
+      // refusal of one that locked only by phone. No researched bank is one; the refusal went from `card.lock` that day.
       `Report It As Not Mine needs the payment found, by an alert or the statement, and in the US reported within ${US_LAW.claimDays} days of the statement it was on.`,
       'A new number needs a primary account at a bank that moves accounts: Bank of America, Citi and Capital One do, and Chase and Wells Fargo don’t.',
     ],
@@ -987,7 +1014,9 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Reported As Not Yours', value: 'The card it was used on is replaced free' },
     ],
     reads: [
-      { label: 'How Often', value: `In the US, ${pct(US_LAW.fraudRate ?? 0)} a year, the share of people whose existing credit card was misused (BJS, 2021), drawn a day at a time on the everyday credit card or the primary account’s debit card` },
+      // Until 2026-10-13 a locked debit card took its half of the days with it; the rate is a person’s, and falls on the
+      // card that works (`fraudOn`).
+      { label: 'How Often', value: `In the US, ${pct(US_LAW.fraudRate ?? 0)} a year, the share of people whose existing credit card was misused (BJS, 2021), drawn a day at a time on the everyday credit card or the primary account’s debit card, half each, or all on one when the other is locked or stopped` },
       { label: 'How Much', value: `From a quarter to seven quarters of the country’s average case, ${usd(US_LAW.avgLoss ?? 0)} in the US`, estimate: true },
       { label: 'Stopped By The Bank', value: 'The share its country’s banks stop; in the US, none is on record, so every charge goes through' },
       { label: 'What You Carry On A Debit Card', value: `In the US, at most ${usd(DEBIT_PROMPT.max ?? 0)} reported within ${clockOf(DEBIT_PROMPT, 'of')}, and ${usd(DEBIT_LATER.max ?? 0)} within ${clockOf(DEBIT_LATER, 'of')}. Past the ${US_LAW.claimDays} days from the statement it can’t be reported, and all of it is yours` },
@@ -1017,9 +1046,8 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     unavailable: [
       '“You have no current account.” or “You don’t have a card.”',
-      '“… locks a card only by phone.”',
       '“That card is stopped; a new one is on its way.” and “That card is stopped already; a new one is on its way.”',
-      '“… has no rush replacement SLATE knows of.”',
+      '“… has no rush replacement SLATE knows of.” and “… doesn’t publish what it charges for a rush, so SLATE can’t send one.”',
       '“… doesn’t say it moves an account to a new number; closing it and opening another does.”',
       '“You’ve reported it already.” and “The law gives … days from the statement to report it, and they’ve passed.”',
     ],
@@ -1199,7 +1227,10 @@ export const MONEY: readonly GuideEntry[] = [
       'A bank you owe a charged-off debt won’t open an account for you, and one that turned you away on a ChexSystems report says until when the report stands.',
       '“… asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.”',
       '“… opens an account on your own from ….” and “… opens this account for US citizens and permanent residents; on an F-1 you’re neither.”',
-      '“Without a Social Security number, … opens your account in a branch where you live.” In a branch, “Not from a hospital bed.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
+      // Until 2026-10-13 this began with “Without a Social Security number, … opens your account in a branch where you
+      // live.”, a refusal for a life away from home; nothing has moved a life from where it lives since travel went in the
+      // scope reset of 2026-10-09, and it went from `openRefusal` (`systems/bankmoves.ts`) that day.
+      'Without a Social Security number, in a branch: “Not from a hospital bed.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
       '“… asks for an opening deposit of …, sent from another of your accounts.” and “That account is at … already.”',
       'Closing: “It’s your only current account.”, “It’s your primary account. Make another primary first.”, “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, or “Card payments are still pending on it.”',
       'Switching, in the US: “There’s no switching service here: …” Elsewhere: “A switch is already under way.”, “Clear the overdraft before switching; the new bank won’t take it on.” or “A partial switch is a Current Account Switch Service step, in Britain only.”',

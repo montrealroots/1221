@@ -38,7 +38,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { bankAccountsOf, bankOf } from './banking';
@@ -226,6 +226,15 @@ export function registerCardLife(sim: Simulation): void {
     if (heldInBanks(s, person) >= owed) throw new CommandError('You could pay it off today: a hardship plan is for when you can’t.');
     credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: s.now };
     credit.suspended = 'hardship';
+    // A statement whose due date is still to come is judged by the plan’s payment there (`autopayAsk`), so its record asks
+    // that from now (from 2026-10-13: until then it kept the card’s own minimum, and the Statements tab showed a least
+    // the due date didn’t judge; found by that day’s guide audit).
+    const last = credit.issued?.at(-1);
+    const dueAhead = s.universe.scheduled.some((i) => i.kind === DUE_KIND && i.status === 'pending' && i.payload.personId === person.id && cardFor(s, person, i.payload.accountId)?.id === card.id);
+    if (last && last.at === credit.statementAt && last.minimum > 0 && dueAhead) {
+      last.minimum = Math.min(credit.statementBalance, credit.hardship.payment);
+      last.plan = true;
+    }
     return { payment: credit.hardship.payment };
   });
 }

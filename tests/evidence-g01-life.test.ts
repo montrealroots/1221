@@ -548,12 +548,16 @@ describe('life.look_after:wash', () => {
   });
 });
 
-/** The labels a run's or a gym's injuries go by, and their days to mend (Ekstrand et al. 2012, Costa et al. 2012, AAFP 2025, AAOS). */
-const HURT: Record<string, { label: string; days: [number, number] }> = {
-  strain: { label: 'A Pulled Muscle', days: [17, 22] },
-  back: { label: 'A Back Strain', days: [28, 42] },
-  sprain: { label: 'A Sprained Ankle', days: [5, 10] },
-  fracture: { label: 'A Broken Bone', days: [42, 84] },
+/**
+ * The labels a run's or a gym's injuries go by, their bills’ names, and their days to mend (Ekstrand et al. 2012, Costa
+ * et al. 2012, AAFP 2025, AAOS). A bill is named in sentence case, as every other bill is, from 2026-10-13: until then it
+ * took the label’s capitals, “A Sprained Ankle: its care”.
+ */
+const HURT: Record<string, { label: string; bill: string; days: [number, number] }> = {
+  strain: { label: 'A Pulled Muscle', bill: 'A pulled muscle: its care', days: [17, 22] },
+  back: { label: 'A Back Strain', bill: 'A back strain: its care', days: [28, 42] },
+  sprain: { label: 'A Sprained Ankle', bill: 'A sprained ankle: its care', days: [5, 10] },
+  fracture: { label: 'A Broken Bone', bill: 'A broken bone: its care', days: [42, 84] },
 };
 /**
  * The first minute from now a workout started would end on a hurting roll. A search of the injury stream ahead, which
@@ -625,13 +629,13 @@ describe('life.look_after:exercise', () => {
     const bills = healthOf(sim.player).bills;
     expect(bills).toHaveLength(1);
     const bill = bills[0]!;
-    expect(bill.what).toBe(`${hurt.label}: its care`);
+    expect(bill.what).toBe(hurt.bill);
     expect(bill.at).toBe(sim.now);
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     expect(notices(sim, hurt.label)[0]!.body).toContain(`Its care comes to ${dollars}, due in 30 days.`);
-    expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.label}: its care` && i.at === bill.dueAt)).toHaveLength(1);
+    expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);
     expect(healthOf(reload(sim).player).bills).toHaveLength(1);

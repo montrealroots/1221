@@ -29,7 +29,7 @@ describe('a license from home, lost in New Haven (JOURNEY: a New Yorker at Yale)
     const license = documentsOf(sim.player).find((d) => d.kind === 'license')!;
     expect(license.issuer).toBe('us-ny');
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id, stolen: true } });
-    expect(licenseReplaceRefusal(sim.player, license.id)).toBeUndefined();
+    expect(licenseReplaceRefusal(sim.player, license.id, sim.now)).toBeUndefined();
     sim.must({ kind: 'documents.police_report', payload: { documentId: license.id } });
     const free = sim.must<{ fee: number; readyAt: number }>({ kind: 'documents.replace_license', payload: { documentId: license.id } });
     expect(free.fee).toBe(0);
@@ -47,7 +47,7 @@ describe('a license from home, lost in New Haven (JOURNEY: a New Yorker at Yale)
     const license = documentsOf(sim.player).find((d) => d.kind === 'license');
     if (!license) return;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
-    expect(licenseReplaceRefusal(sim.player, license.id)).toBe('Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.');
+    expect(licenseReplaceRefusal(sim.player, license.id, sim.now)).toBe('Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.');
   });
 });
 
@@ -56,7 +56,7 @@ describe('unemployment in Connecticut (FIXTURE: base-period wages, as a Summer C
     const sim = student('pp-ui');
     // TEST SETUP: four quarters of covered wages.
     const q = earningsOf(sim.player).quarters;
-    for (const k of ['2026-1', '2026-2', '2025-4', '2025-3', '2025-2']) q[k] = { wages: 4_000_00, sag: 0, byState: { 'us-ct': 4_000_00 } };
+    for (const k of ['2026-1', '2026-2', '2025-4', '2025-3', '2025-2']) q[k] = { wages: 4_000_00, byState: { 'us-ct': 4_000_00 } };
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toMatch(/full-time student as not available for work/);
     expect(studentUnavailable(sim.player, 'ct')).toBeDefined();
     sim.player.school!.standing = 'graduated';
@@ -78,10 +78,10 @@ describe('SNAP for a student', () => {
   it('counts work-study as nothing and interest as unearned (FIXTURE: a month’s pay of each kind)', () => {
     const sim = student('pp-snap-income');
     const at = sim.now;
-    const before = snapIncome(sim.player, at + 20 * MS_DAY);
+    const before = snapIncome(sim.player, at + 20 * MS_DAY, sim.zone);
     recordWages(sim.player, at, sim.zone, { gross: 300_00, workStudy: true });
     recordWages(sim.player, at, sim.zone, { gross: 500_00 });
-    const after = snapIncome(sim.player, at + 20 * MS_DAY);
+    const after = snapIncome(sim.player, at + 20 * MS_DAY, sim.zone);
     // The month's wages add to earned and gross; work-study is kept apart and adds to neither.
     expect(after.earned - before.earned).toBe(500_00);
     expect(after.gross - before.gross).toBe(500_00);

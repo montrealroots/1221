@@ -523,8 +523,22 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     h.lostAt = at;
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Marketplace Plan Has Ended', body: 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.', importance: 80, route: '/workspace/papers' });
   }
-  // A program's renewal: its income test, and from 2027 Medicaid's work.
   const prog = h.program;
+  // And so do the Essential Plan and Covered Connecticut, which are the lawfully present’s as the marketplace is
+  // (`programFor`); one enrolled in ahead never begins. Federal Medicaid has admitted no F-1 since 1 October 2026
+  // (`medicaidStatus`), one held from before is read at its renewal, and California’s state-funded Medi-Cal is for
+  // somebody without satisfactory status, so neither is ended here. From
+  // 2026-10-13: until then the status was read only at enrollment and at renewal, and a student who withdrew, enrolled in
+  // her fifteen days’ grace and stayed past them was covered by Covered Connecticut from 1 April to its renewal on
+  // 1 October (found by that day’s third round).
+  if (!lawfullyPresent(person) && prog?.kind === 'essential' && (prog.until === undefined || prog.until > at)) {
+    const begun = prog.from <= at;
+    prog.until = at;
+    const plan = PROGRAM_NAMES[prog.state].essential;
+    const Plan = `${plan.charAt(0).toUpperCase()}${plan.slice(1)}`;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Public Cover Has Ended' : 'Your Public Cover Won’t Begin', body: `${Plan} is for a citizen or a noncitizen lawfully present, and you stayed past your status.`, importance: 80, route: '/workspace/papers' });
+  }
+  // A program's renewal: its income test, and from 2027 Medicaid's work.
   if (prog && active(prog, at)) {
     if (BENEFIT_STATE[home] !== prog.state) prog.until = at;
     else if (at >= prog.renewAt) {
@@ -537,7 +551,16 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
         prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
       } else {
         prog.until = at;
-        if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
+        // Its status isn’t why: out of status, the Essential Plan or Covered Connecticut has ended with the month before
+        // any renewal finds it (above). Until 2026-10-13 one ran to its renewal, and there a student out of status was
+        // told first that her income, the bank’s interest alone, was over what it allows, and later that day that she
+        // had stayed past her status; that sentence went when no renewal could reach her (found by that day’s second
+        // and third rounds).
+        // A federal Medicaid held from before 1 October 2026 by somebody it no longer admits ends here for that, and says
+        // so (from 2026-10-13: until then an F-1 student enrolled before that day was told at renewal that last month’s
+        // income was over what it allows, whatever it was; found by that day’s third round of defects).
+        const admitted = prog.kind !== 'medicaid' || prog.scope !== undefined || medicaidStatus(person, at);
+        if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !admitted ? `From October 1, 2026, ${PROGRAM_NAMES[prog.state].medicaid} is for a US citizen, or somebody with a green card for five years, and renewing it reads that.` : !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
       }
     }
   }
@@ -580,7 +603,12 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const state = BENEFIT_STATE[home];
     const back = !state ? 'open enrollment' : `open enrollment, or a month’s income that qualifies you for ${PROGRAM_NAMES[state].medicaid}${state === 'ca' ? '' : ` or ${PROGRAM_NAMES[state].essential}`},`;
     const penalty = inCalifornia(home) ? ', and every month uncovered in California costs its penalty on your return' : '';
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(at, HOME)}. ${chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back` : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`}${penalty}.`, importance: 80, route: '/workspace/papers' });
+    // Out of status there’s no way back to name: the marketplace and the state’s plan for the lawfully present refuse
+    // you (`mayEnroll`). Until 2026-10-13 the notice offered the marketplace’s 60 days to somebody it refused.
+    const way = chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back`
+      : !lawfullyPresent(person) && state ? `Out of status, neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
+        : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(at, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
   }
   h.covered = cover !== undefined;
   // A medical debt a year past due, $500 or more, goes on the record, outside the states that bar it. The notice reads
@@ -729,11 +757,19 @@ export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?
   return paid;
 }
 
-/** A prescription run out: the doctor's visit to renew it booked, once, and said. */
+/**
+ * A prescription run out: the doctor’s visit to renew it booked, once, and said. An appointment already booked renews
+ * it when kept. A visit owed, missed or called off, is booked now, one appointment for both, as the health week books
+ * one for an illness; any visit kept renews every prescription (`renewPrescriptions`). Until 2026-10-13 a visit owed
+ * stopped it here, unbooked and unsaid, so in British Columbia, where a prescription runs out, one appointment called
+ * off or missed and left ran the medicine out for good with nothing said of the prescription (found by that day’s
+ * second round). Every place whose prescriptions run out publishes a doctor’s wait (`RX.validYears`, British Columbia
+ * alone), so the booking is made.
+ */
 function renewalDue(sim: Simulation, person: Person, condition: Condition): void {
   const h = healthOf(person);
-  if (appointmentsOf(person).length || h.owedVisit) return;
-  if (!book(sim, person, RX.renewal)) h.owedVisit = RX.renewal;
+  if (appointmentsOf(person).length) return;
+  if (book(sim, person, h.owedVisit ?? RX.renewal)) delete h.owedVisit;
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Prescription Ran Out', body: `The prescription for your ${CONDITION_LABEL[condition].toLowerCase()} medicine is past its date. It’s filled again once a doctor renews it.`, importance: 60, route: '/workspace/papers' });
 }
 
@@ -762,6 +798,12 @@ export function incomeRatio(person: Person, at: Instant, into = 'USD'): number {
  */
 export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money {
   const nhs = publicCareShareOf(person, care, at, into);
+  // A doctor’s visit at a private practice, one that publishes its own self-pay price (`systems/clinics.ts`), is paid at
+  // that price: the public system pays its own doctors, not a private GP. From 2026-10-13: until then the NHS paid a
+  // London visit at Bupa’s pay-as-you-go GP, chosen as one’s doctor, to nothing, as at the NHS practice, and the choice
+  // moved only the name on the notice (found by the second round of that day).
+  const privateVisit = nhs !== undefined && care === 'visit' ? selfPayAt(clinicFor(person, 'visit'), into) : undefined;
+  if (privateVisit !== undefined) return privateVisit;
   if (nhs !== undefined) return nhs;
   if (care === 'rx-generic' || care === 'rx-brand') return rxShareOf(person, care === 'rx-brand', at, into);
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
@@ -1345,10 +1387,15 @@ export function registerHealth(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
     for (const event of illnessWeek(s, person, item.at)) {
-      // The player's doctor's visit is booked for the place's wait, where one is published (`systems/appointments.ts`); one already booked or owed covers it.
+      // The player's doctor's visit is booked for the place's wait, where one is published (`systems/appointments.ts`); one
+      // already booked covers it. One owed, missed or called off, is booked now, one appointment for both. Until
+      // 2026-10-13 a visit owed covered it too, and was never booked by anything but Book An Appointment, so one
+      // appointment called off or missed, and left, ended the doctor and every review for good, at no cost (found by
+      // the second round of that day; tests/defects-g23-1.test.ts measured it on 2026-10-12).
       if (person.id === s.universe.playerId && event.care === 'visit' && !event.flu) {
-        if (appointmentsOf(person).length || healthOf(person).owedVisit) continue;
-        if (book(s, person, event.what)) continue;
+        if (appointmentsOf(person).length) continue;
+        const owed = healthOf(person).owedVisit;
+        if (book(s, person, owed ?? event.what)) { delete healthOf(person).owedVisit; continue; }
       }
       careFor(s, person, event, item.at);
     }

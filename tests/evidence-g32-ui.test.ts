@@ -21,7 +21,8 @@
  *   the sky, each opening its look; the part of day at every boundary as the clock reaches it; the name a player goes
  *   by; and a January in New Haven.
  * - `h-calendar`: a plan two days out as the next commitment, a second under it, both called off; a call in Los Angeles
- *   on its own clock with "you’re not in Los Angeles", and the notice when it's missed; Open Calendar pressed; the
+ *   on its own clock with "you’re not in Los Angeles", and the notice when it's missed, on the call’s clock too (until
+ *   2026-10-13 on the home clock with no zone); Open Calendar pressed; the
  *   section and its button locked until their chapters; a plan across a reload.
  * - `h-needs`: a student from abroad's 2026 return on 1 February 2027, with its notices, Go There, Dismiss and Mark N
  *   Read pressed to All Clear; File It refused in the guide's words and then filing; the return left unfiled, Overdue at
@@ -565,7 +566,9 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(calendar(sim)).toContain('Call With The Agent August 27, 2026 at 4:30 AM PDT · you’re not in Los Angeles');
     sim.advanceTo(at(2026, 8, 27, 8));
     expect(sim.timeline.get(call.id!)?.status).toBe('missed');
-    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It wanted you in Los Angeles at 7:30 AM, and you were in New Haven.']);
+    // The notice gives the call’s own clock, as Home did. Until 2026-10-13 it gave the home clock with no zone, “at 7:30
+    // AM”, and this held it (found by that day’s third round).
+    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It wanted you in Los Angeles at 4:30 AM PDT, and you were in New Haven.']);
     plan(sim, { title: 'Lunch With Theo', at: at(2026, 8, 28, 13), durationMinutes: 60 });
     const shown = calendar(sim);
     expect(shown).toContain('Lunch With Theo August 28, 2026 at 1:00 PM');
@@ -992,7 +995,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const w = weatherAt(sim, 'uk-eng-london')!;
     const shown = where(text);
     // Tags where SLATE keeps them, in place of the kind and the size New Haven reads; "Theater" as the player reads it
-    // (until 2026-10-13 the tag was "theatre", and this read "Theatre").
+    // (until 2026-10-13 the tag was spelled the British way, and this read it so).
     expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
     // London at 51.51° N, 0.13° W, its January clock on UTC.
     const [, rise, set] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) /)!;

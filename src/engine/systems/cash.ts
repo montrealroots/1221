@@ -224,7 +224,12 @@ export function registerCash(sim: Simulation): void {
     // debit card, as one paying out does (from 2026-10-13: until then cash went into a dormant account and it stayed
     // dormant, and an ATM took a deposit with the card locked; found by the review of that day).
     if (to.dormant) throw new CommandError(`${to.name} is dormant; use Reactivate first.`);
-    const card = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId]?.plastic : undefined;
+    // The card is the one the bank taking the money issued: the current account’s own, or for savings the current
+    // account’s beside it at that bank; the primary’s only where none is open there. Until later on 2026-10-13 it was
+    // the primary’s wherever the money went, so Citi’s machine took cash with Citi’s card locked and refused it for
+    // Chase’s (found by that day’s third round of defects).
+    const atBank = to.kind === 'checking' ? to : Object.values(s.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'checking' && a.bankId === to.bankId);
+    const card = (atBank ?? (person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined))?.plastic;
     if (p.at === 'atm' && card && (card.locked || card.stopped)) throw new CommandError(card.stopped === 'new' ? 'Your debit card hasn’t arrived yet; the counter can still take it.' : card.stopped ? 'Your debit card is stopped; the counter can still take it.' : 'Your debit card is locked; the counter can still take it.');
     const where = p.at === 'atm' ? 'ATM' : p.at === 'post_office' ? 'Post Office' : 'Counter';
     s.post({ memo: `Cash in: ${where}`, category: 'cash', postings: [{ accountId: wallet.id, amount: -amount }, { accountId: to.id, amount }] });

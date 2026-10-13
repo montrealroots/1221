@@ -31,7 +31,9 @@ export const START: readonly GuideEntry[] = [
     now: ['The world stays as it was: Home and its words show it, they don’t move it.'],
     later: ['As the clock moves the time, the season and the daylight move with it.'],
     interpret: [
-      'The line under the town says whether you’re home or away, and how far from home time.',
+      // Until 2026-10-13 this said the line told home from away, and how far from home time: nothing has put a player
+      // away from home since the scope of 2026-10-09, and Home’s away line went that day (`homeCityOf`).
+      'The line under the town says Home, and what kind of place it is: the town you’re in is the one you live in.',
       'A word that isn’t underlined yet opens once its chapter of the guide has been read.',
     ],
     unavailable: ['A word stays plain text until the guide’s chapter that opens it has been read.'],

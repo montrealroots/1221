@@ -10,14 +10,17 @@
  * - `tax.due`: the review found the late notice told a domestic student's $0 return that a refund waited, and told an
  *   F-1 student owing $165.60 the least was $525.00; both were fixed on 2026-10-13 (the filing threshold, and the lesser
  *   of $525 and what's owed). Held here: the New York-born student has no return and nothing late; the F-1 student's
- *   notice gives $165.60, a $90,000 return's gives $525.00; a return due a refund is told it waits, and nothing of the
+ *   notice gives $165.60, a $90,000 return's gives $535.00 (2027's least, Rev. Proc. 2025-32; $525.00, 2026's, until
+ *   later on 2026-10-13); a return due a refund is told it waits, and nothing of the
  *   IRS's or a state's follows a year and a day on; an Oregon return gets the IRS's substitute, Oregon's demand and its
  *   three-year check on the calendar at the due date, and a twin filed in time none; once, across a reload.
- * - `tax.substitute`: the F-1 student's 1040-NR left unfiled, played: CP2566 a year after the due date for $353.15, the
- *   $165.60 with twelve months' penalty and a year's interest; assessed 120 days on in its parts ($165.60, $178.85,
- *   $16.14), collected from the 35th day; Papers says the IRS filed it. The premium tax credit only their own return
- *   claims left out of the IRS's figures (`sfrFigures`), run through the clock. A save from before, holding the unfiled
- *   return with no substitute on the calendar, has it put there on opening, at the year or a day on, never twice.
+ * - `tax.substitute`: the F-1 student’s 1040-NR left unfiled, played: CP2566 a year after the due date for $365.13, the
+ *   $165.60 with twelve months’ penalty and a year’s interest on the tax and the filing share; assessed 120 days on in its
+ *   parts ($165.60, $178.85, $32.24; $353.15 and $16.14 until later on 2026-10-13, interest on the tax alone; $365.15
+ *   and $32.28 until the third round of that day, a leap year’s days counted over 365),
+ *   collected from the 35th day; Papers says the IRS filed it. The premium tax credit only their own return claims left
+ *   out of the IRS's figures (`sfrFigures`), run through the clock. A save from before, holding the unfiled return with
+ *   no substitute on the calendar, has it put there on opening, at the year or a day on, never twice.
  * - `tax.notice`: the four notices on the 35th, 70th, 105th and 140th days after filing, the levy on the 170th; a levy
  *   that finds $500 takes $500, to the tax, says what's still owed and comes again 91 days on; one that finds nothing
  *   posts nothing and says $0.00 was taken. That last was the review's open question: the IRS's notice of levy (Form
@@ -129,8 +132,13 @@ const pending = (sim: Simulation, kind: string, year?: number) => sim.universe.s
 const memos = (sim: Simulation, memo: string) => sim.universe.transactions.filter((t) => t.memo === memo);
 /** Dollars and cents, as the screens write them: worked out here, not by the engine's formatter. */
 const usd = (cents: number): string => `$${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-/** The IRS's interest, 7% a year compounded daily (IRC 6621, 6622; the fourth quarter of 2026's rate), on an amount for days. */
-const interestOn = (amount: number, days: number): number => amount * ((1 + 0.07 / 365) ** days - 1);
+/**
+ * The IRS’s interest, 7% a year compounded daily (IRC 6621, 6622; the fourth quarter of 2026’s rate), on an amount for
+ * days of an ordinary year and days of a leap year, a 366th of the rate a day in a leap year as the IRS’s 366-day factor
+ * tables give it (Rev. Proc. 95-17; Rev. Rul. 2024-11’s factor for a day at 0.5%, 0.000013661). Until the third round
+ * of 2026-10-13 every day here was a 365th, as SLATE counted them until then.
+ */
+const interestOn = (amount: number, days: number, leapDays = 0): number => amount * ((1 + 0.07 / 365) ** days * (1 + 0.07 / 366) ** leapDays - 1);
 /** Six hours a step, the stops a player would answer passed by. */
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 
@@ -229,20 +237,20 @@ describe('tax.due', () => {
     expect(pending(again, TAX_SFR_KIND).map((i) => i.at)).toEqual([DUE_2026 + 365 * MS_DAY]);
   });
 
-  it('a $90,000 return left unfiled is told the $525 least, the lesser of $525 and what it owes (IRC 6651(a)) being $525 there; a New York quickSave life, since no student owes that much', () => {
+  it('a $90,000 return left unfiled is told the $535 least, the lesser of $535 and what it owes (IRC 6651(a), Rev. Proc. 2025-32 for a return due in 2027) being $535 there; a New York quickSave life, since no student owes that much', () => {
     const sim = elsewhere('g17-due-525');
     // TEST SETUP: a year's wages, as payroll records them, with nothing withheld.
     recordWages(sim.player, on(2026, 5, 1, 9), NY, { gross: 90_000_00 });
     play(sim, on(2027, 4, 17));
     const r = returnsOf(sim.player)['2026']!;
-    expect(r.figures.owedTo!.irs).toBeGreaterThan(525_00);
+    expect(r.figures.owedTo!.irs).toBeGreaterThan(535_00);
     // New York is owed too, and charges its own (from 2026-10-13: until then the notice didn't say so, and took the $525
     // least against the IRS's part and New York's together).
     expect(r.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $525.00. New York charges its own on what it’s owed.']);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $535.00. New York charges its own on what it’s owed.']);
   });
 
-  it('gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $525, as latePenalty charges it; a New York quickSave life', () => {
+  it('gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $535, as latePenalty charges it; a New York quickSave life', () => {
     const sim = elsewhere('g17-due-irs-part');
     // TEST SETUP: a year's wages, as payroll records them, with $1,300 withheld, all of it the IRS's: the IRS is left
     // owed its income tax and the payroll tax not withheld, less that, and New York all of its own.
@@ -250,13 +258,13 @@ describe('tax.due', () => {
     play(sim, on(2027, 4, 17));
     const r = returnsOf(sim.player)['2026']!;
     const irs = r.figures.owedTo!.irs;
-    // The IRS's part under $525 and the whole over it: the two readings give different leasts.
+    // The IRS's part under $535 and the whole over it: the two readings give different leasts.
     expect(irs).toBeGreaterThan(0);
-    expect(irs).toBeLessThan(525_00);
-    expect(r.figures.balance).toBeGreaterThan(525_00);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual([`Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${usd(Math.min(525_00, irs))}. New York charges its own on what it’s owed.`]);
+    expect(irs).toBeLessThan(535_00);
+    expect(r.figures.balance).toBeGreaterThan(535_00);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual([`Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${usd(Math.min(535_00, irs))}. New York charges its own on what it’s owed.`]);
     // And what filing it late is charged reads the same part: the IRS's at 5 months and over 60 days is 22.5% of it plus
-    // a half point a month, or $525, or all of it, whichever is less; filed now, two days late, neither applies yet.
+    // a half point a month, or $535, or all of it, whichever is less; filed now, two days late, neither applies yet.
     expect(latePenaltyAll(sim.player, r, on(2027, 4, 17))).toBe(latePenalty(irs, r.due, on(2027, 4, 17)) + stateLateAt(rulesOf('us-ny')!, r.figures.owedTo!.states['us-ny']!, r.due, on(2027, 4, 17), 'USD'));
   });
 
@@ -333,7 +341,7 @@ describe('tax.due', () => {
 // ---------------------------------------------------------------------------
 
 describe('tax.substitute', () => {
-  it('PLAYER JOURNEY: the F-1 student’s 1040-NR left unfiled: CP2566 a year after the due date for $353.15, assessed 120 days on in its parts, $360.59, and collected from the 35th day; Papers says the IRS filed it', () => {
+  it('PLAYER JOURNEY: the F-1 student’s 1040-NR left unfiled: CP2566 a year after the due date for $365.13, assessed 120 days on in its parts, $376.69, and collected from the 35th day; Papers says the IRS filed it', () => {
     const sim = f1February('g17-sfr-f1');
     const r = () => returnsOf(sim.player)['2026']!;
     const proposedAt = DUE_2026 + 365 * MS_DAY;
@@ -341,12 +349,15 @@ describe('tax.substitute', () => {
     expect(titled(sim, 'The IRS Figured Your 2026 Return')).toEqual([]);
     sim.advanceTo(proposedAt + MS_MINUTE);
     // A year late: twelve months begun (365 ÷ 30.4375 = 11.99). Paying late, 0.5% a month: 6% of $165.60 = $9.936.
-    // Filing late, 4.5% a month to five: 22.5% = $37.26; past 60 days at least the lesser of $525 and the tax, $165.60.
-    // So $9.936 + $165.60 = $175.536, $175.54. A year's interest: $165.60 × ((1 + 0.07/365)^365 − 1) = $12.006, $12.01.
-    expect(Math.round(0.005 * 12 * 165_60 + Math.max(0.045 * 5 * 165_60, Math.min(525_00, 165_60)))).toBe(175_54);
-    expect(Math.round(interestOn(165_60, 365))).toBe(12_01);
+    // Filing late, 4.5% a month to five: 22.5% = $37.26; past 60 days at least the lesser of $535 and the tax, $165.60.
+    // So $9.936 + $165.60 = $175.536, $175.54. A year’s interest on the tax and on the filing share, which IRC
+    // 6601(e)(2)(B) runs from the due date too: 260 days of 2027 after 15 April and 105 of leap-year 2028, $331.20 ×
+    // ((1 + 0.07/365)^260 × (1 + 0.07/366)^105 − 1) = $23.993, $23.99. Until later on 2026-10-13 this held the interest on the tax alone,
+    // $12.01, and CP2566 at $353.15; and until the third round of that day all 365 days over 365, $24.01 and $365.15.
+    expect(Math.round(0.005 * 12 * 165_60 + Math.max(0.045 * 5 * 165_60, Math.min(535_00, 165_60)))).toBe(175_54);
+    expect(Math.round(interestOn(165_60 + 165_60, 260, 105))).toBe(23_99);
     const proposal = titled(sim, 'The IRS Figured Your 2026 Return');
-    expect(proposal.map((n) => [n.at, n.body])).toEqual([[proposedAt, 'Notice CP2566: with no return from you, the IRS worked out $353.15 from what your employers and banks reported, with the penalty for filing late and the interest. File your own within 120 days to replace it.']]);
+    expect(proposal.map((n) => [n.at, n.body])).toEqual([[proposedAt, 'Notice CP2566: with no return from you, the IRS worked out $365.13 from what your employers and banks reported, with the penalty for filing late and the interest. File your own within 120 days to replace it.']]);
     // A 1040-NR claims no credit the IRS would leave out.
     expect(r().substituteFigures!.balance).toBe(165_60);
     expect(r().filedAt).toBeUndefined();
@@ -357,17 +368,20 @@ describe('tax.substitute', () => {
     again.advanceTo(assessedAt + MS_MINUTE);
     const a = returnsOf(again.player)['2026']!;
     // 485 days late: sixteen months begun (15.93). Paying late, 8% of $165.60 = $13.248; filing late, $165.60 again:
-    // $178.848, $178.85. Interest: $165.60 × ((1 + 0.07/365)^485 − 1) = $16.14.
-    expect(Math.round(interestOn(165_60, 485))).toBe(16_14);
+    // $178.848, $178.85. Interest on the tax and the filing share, 260 days of 2027 and 225 of 2028: $331.20 ×
+    // ((1 + 0.07/365)^260 × (1 + 0.07/366)^225 − 1) = $32.24 ($16.14 on the tax alone until later on 2026-10-13, and
+    // $360.59 owed; $32.28 and $376.73, all 485 days over 365, until the third round of that day).
+    expect(Math.round(interestOn(165_60 + 165_60, 260, 225))).toBe(32_24);
     expect(a.substitute).toBe(true);
     expect(a.filedAt).toBe(assessedAt);
     expect(a.penalty).toBe(178_85);
-    expect(a.parts).toEqual({ tax: 165_60, penalty: 178_85, interest: 16_14 });
-    expect(a.owed).toBe(360_59);
+    expect(a.parts).toEqual({ tax: 165_60, penalty: 178_85, interest: 32_24 });
+    expect(a.owed).toBe(376_69);
     expect(a.collection).toBe(0);
-    expect(titled(again, 'The IRS Assessed Your 2026 Return').map((n) => [n.at, n.body])).toEqual([[assessedAt, '$360.59 is owed as the IRS figured it, and its collection begins.']]);
+    expect(titled(again, 'The IRS Assessed Your 2026 Return').map((n) => [n.at, n.body])).toEqual([[assessedAt, '$376.69 is owed as the IRS figured it, and its collection begins.']]);
     expect(titled(again, 'The IRS Figured Your 2026 Return')).toHaveLength(1);
-    // Collection from its 35th day (`tax.notice`): CP501 for the $360.59 with 35 days more of interest on all of it, and
+    // Collection from its 35th day (`tax.notice`): CP501 for the $376.69 with 35 days more of interest on all of it, the
+    // paying-late share’s from the assessment too, as it’s unpaid past 21 days (IRC 6601(e)(2)(A)), at 2028’s 366th; and
     // two more months begun of paying late, 1% of the tax, the late return's 8% already charged with it.
     expect(pending(again, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([assessedAt + 35 * MS_DAY]);
     const papers = drawn(again, PapersWorkspace);
@@ -377,7 +391,7 @@ describe('tax.substitute', () => {
     // One File It: the 2027 return's, unfiled too by August 2028; the 2026 return offers only its replacement.
     expect(papers.buttons.filter((b) => b.text === 'File It')).toHaveLength(1);
     again.advanceTo(assessedAt + 35 * MS_DAY + MS_MINUTE);
-    const cp501 = Math.round(360_59 + 0.01 * 165_60 + interestOn(360_59, 35));
+    const cp501 = Math.round(376_69 + 0.01 * 165_60 + interestOn(376_69, 0, 35));
     expect(titled(again, 'A Reminder From The IRS').map((n) => [n.at, n.body])).toEqual([[assessedAt + 35 * MS_DAY, `Notice CP501: ${usd(cp501)} on your 2026 return; you still owe it, with the interest and penalty since.`]]);
   });
 
@@ -395,9 +409,10 @@ describe('tax.substitute', () => {
     const irs = r.figures.owedTo!.irs;
     expect(irs).toBeGreaterThan(0);
     // The IRS's figures: its part with the credit it leaves out, a year late. Twelve months: 6% paying late and 22.5%
-    // filing late, past the $525 least here; and a year's interest.
+    // filing late, past the $535 least here; and a year’s interest on its part and on the filing share (on its part
+    // alone until later on 2026-10-13), 260 days of 2027 after 15 April and 105 of leap-year 2028.
     const federal = irs + credit;
-    const total = federal + Math.round(0.005 * 12 * federal + 0.045 * 5 * federal) + Math.round(interestOn(federal, 365));
+    const total = federal + Math.round(0.005 * 12 * federal + 0.045 * 5 * federal) + Math.round(interestOn(federal + Math.round(0.045 * 5 * federal), 260, 105));
     play(sim, DUE_2026 + 365 * MS_DAY + MS_MINUTE);
     expect(titled(sim, 'The IRS Figured Your 2026 Return').map((n) => n.body)).toEqual([`Notice CP2566: with no return from you, the IRS worked out ${usd(total)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within 120 days to replace it.`]);
     expect(r.substituteFigures!.credit).toBe(0);

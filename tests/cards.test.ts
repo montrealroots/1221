@@ -180,7 +180,11 @@ describe('the minimum, the late fee and the due date', () => {
     const at = toStatement(sim);
     const due = sim.timeline.pending().find((i) => i.kind === DUE_KIND)!.at;
     const s = zonedParts(at, sim.zone);
-    expect(due).toBe(instantFromZoned({ year: s.year, month: s.month, day: s.day + 25, hour: 12 }, sim.zone));
+    // At noon on the real date 25 days on: until the third round of 2026-10-13 this asked `instantFromZoned` for the 45th
+    // of the month as the engine did, which came back a minute late, at 12:01 (defect 48 of that round).
+    const on = new Date(Date.UTC(s.year, s.month - 1, s.day + 25));
+    expect(due).toBe(instantFromZoned({ year: on.getUTCFullYear(), month: on.getUTCMonth() + 1, day: on.getUTCDate(), hour: 12 }, sim.zone));
+    expect(zonedParts(due, sim.zone)).toMatchObject({ hour: 12, minute: 0 });
     const plain = life('card-grace-plain');
     withCard(cardIn(plain).bankId!, { ...base });
     toStatement(plain);

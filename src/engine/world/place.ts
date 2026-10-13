@@ -94,10 +94,14 @@ export interface PlaceProfile {
 }
 
 /**
- * The city the player lives in: their home's, and where they are when they
- * have none. Until 2026-09-27 it was always where they were, from a build in
- * which nothing moved the player; jobs on location, sublets and relocation
- * all move them now, and the place look's away lines never showed.
+ * The city the player lives in, which is where they are: since the scope of
+ * 2026-10-09 nothing moves a player, and the city they were born in
+ * (`homeRegionId`) is read only where the one they stand in isn't in the
+ * atlas. Until 2026-09-27 it was always where they were, from a build in which
+ * nothing moved the player; from then until 2026-10-09 jobs on location,
+ * sublets and relocation moved them, and their home's city came first. So
+ * "away" is said only of another city, on its place look: Home's away line
+ * and its hours from home went on 2026-10-13, reached by no life.
  */
 export function homeCityOf(sim: Simulation): City | undefined {
   const player = sim.player;

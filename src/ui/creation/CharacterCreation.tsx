@@ -627,7 +627,7 @@ function PersonalityStep({ config, setConfig }: {
               How you lean, not what you can do. Each of them does something: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
               the nights go, Ambition adds to how quickly every stress arrives, work’s and money’s alike,
-              and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
+              and Risk Tolerance over 65 starts your card’s autopay on the minimum, so a balance is carried.
               Extraversion sets how a house watching you sits with you, Openness how rehearsing new
               work does, a festival’s new play or a Cabaret piece, and Agreeableness how a rehearsal
               does. Two set where an ability starts: Conscientiousness your discipline, and Emotional
@@ -661,6 +661,9 @@ function PersonalityStep({ config, setConfig }: {
         <div className="panel-head">
           <div>
             <h2>Traits</h2>
+            {/* Until 2026-10-13 this said Keeps Accounts changed how much of the work’s costs could be
+                deducted, and stopped there, where no played life has a cost of the work (`recordJobCost`
+                has no caller) and the trait’s own look said it decided nothing now. */}
             <p className="muted small">
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
@@ -670,7 +673,8 @@ function PersonalityStep({ config, setConfig }: {
               Each description and cost is written for a whole life, and the game charges only the
               part of it that touches those. Frugal, Spender and Generous change what your food costs
               and how much a meal lifts you, and Keeps Accounts how much of what your work costs you
-              can deduct. Once you’re playing, each opens from your own page into what it moves.
+              can deduct, which decides nothing for a student, who pays no cost of the work. Once
+              you’re playing, each opens from your own page into what it moves.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -1020,10 +1024,13 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
 /**
  * What a month here costs, before the save exists: Review's Going Out A Month.
  *
- * Every figure is the engine's own sum (`costsAt`), read for the town and
- * the start date, so the line and the first month of play can't disagree.
- * Starting Point showed it as a card, Month By Month, with the food a day and
- * a meal, until the owner took it off that screen on 2026-10-10.
+ * Every figure is the engine's own price of a day's food (`foodAt`) for the
+ * town and the start date, at the money traits' knob (`spending`), as the
+ * clock buys it at the start of each day (`foodOf`), for 365/12 days, so the
+ * line and the first month of play can't disagree. Until 2026-10-13 this
+ * named a sum, `costsAt`, that didn't exist. Starting Point showed it as a
+ * card, Month By Month, with the food a day and a meal, until the owner took
+ * it off that screen on 2026-10-10.
  *
  * It was what a month paid too, until 2026-09-26: the day job, its employer's
  * rate, the tax withheld and the tips. The job engine went, and nothing comes

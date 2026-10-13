@@ -100,12 +100,19 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(graceDays(sim.player)).toBe(15);
     expect(usStatusEnds(sim.player)).toBe(school.endedAt! + 15 * MS_DAY);
     expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
-    // Nothing of the student's own is left on the calendar. The class they left keeps its term's end, to be followed
-    // on without them (`leaveClassBehind`, from 2026-10-11).
-    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === sim.player.id && i.kind !== 'school.payday' && i.kind !== 'school.former_class' && i.payload.classOf === undefined)).toBe(false);
+    // Nothing of the student's own is left on the calendar but a classmate’s moment brought in that day’s class, which
+    // lapses at its hour as one does at the School. Until 2026-10-13 this held nothing at all: the moment was called off
+    // with the rest and stayed open for good (tests/evidence2-b07.test.ts, school.respond). The class they left keeps
+    // its term's end, to be followed on without them (`leaveClassBehind`, from 2026-10-11).
+    const own = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind.startsWith('school.') && i.payload.personId === sim.player.id && i.kind !== 'school.payday' && i.kind !== 'school.former_class' && i.payload.classOf === undefined);
+    expect(own.map((i) => i.kind)).toEqual(['school.moment']);
+    const moment = momentsOf(courseworkOf(sim, sim.player)!).find((m) => m.id === own[0]!.payload.momentId)!;
+    expect(moment).toMatchObject({ status: 'open', until: own[0]!.at });
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === 'school.former_class' && i.payload.personId === sim.player.id)).toBe(true);
     expect(courseworkOf(sim, sim.player)!.assignments.some((a) => a.status === 'open')).toBe(false);
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(false);
+    tended(sim, own[0]!.at + MS_HOUR);
+    expect(momentsOf(courseworkOf(sim, sim.player)!).find((m) => m.id === moment.id)!.status).toBe('lapsed');
   });
 
   it('a withdrawal later in the term keeps Yale Health thirty days, with nothing refunded', () => {

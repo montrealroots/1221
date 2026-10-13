@@ -1,10 +1,11 @@
 /**
  * SLATE — what a person earned, the one ledger the tax return, unemployment
- * insurance and the unions' health plans read (`systems/taxreturn.ts`,
+ * insurance and public cover’s income tests read (`systems/taxreturn.ts`,
  * `systems/unemployment.ts`, `systems/health.ts`). Every paycheck and
- * benefit that reaches their bank is written here as it's paid: by calendar
- * year, for the return, and by quarter, for a claim's base period and a
- * health plan's.
+ * benefit that reaches their bank is written here as it’s paid: by calendar
+ * year, for the return, and by quarter, for a claim’s base period. The
+ * quarters were a union health plan’s too until the plans went with the
+ * career on 2026-10-09; this said they still were until 2026-10-13.
  */
 
 import type { Person } from '../domain/model';
@@ -15,10 +16,15 @@ import { CITIES } from '../content/geography';
 import { DENVER_OPT } from '../content/tax';
 
 export interface YearEarnings {
-  /** Wages from acting work, residuals among them. */
+  /**
+   * Wages from acting work: since the career went on 2026-10-09, the Summer Cabaret's stipend. Residuals were among them
+   * until then; this said they still were until 2026-10-13, when nothing had recorded one since.
+   */
   acting: Money;
-  /** Of the acting wages, under SAG-AFTRA, for its dues and its health plan. */
-  sag: Money;
+  // Of the acting wages, SAG-AFTRA’s (`sag`), and those by production for its pension’s per-project ceiling
+  // (`sagByProject`), were kept here, and in each quarter, until 2026-10-13: recordWages took them from a `sag` and a
+  // `residual` that no caller had set since the career went on 2026-10-09, so they stayed at nothing, and nothing read
+  // them. A save that kept them carries them, read by nothing.
   workStudy: Money;
   unemployment: Money;
   /** A scholarship's taxable part: what paid for living, not tuition or books. */
@@ -32,8 +38,6 @@ export interface YearEarnings {
   // What a home put on the year (its mortgage interest and taxes, a let home's rent and costs, a sale's gain) and a
   // lodger's rent were kept here from 2026-09-28 and 2026-09-30, until the homes and the lodgers went in the scope
   // reset of 2026-10-09, and a farm's rent with the land the same day. A save that kept them sheds them (`migrate`, 91).
-  /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
-  sagByProject?: Record<string, Money>;
   withheld: Money;
   /**
    * Of it, what went to each authority (from the integration pass of 2026-10-10): `us` the IRS's (income tax and FICA),
@@ -73,10 +77,11 @@ export interface YearEarnings {
 
 export interface EarningsRecord {
   years: Record<string, YearEarnings>;
-  /** Wages by quarter, `YYYY-Q`, and of them SAG-AFTRA's. */
-  quarters: Record<string, { wages: Money; sag: Money; byState?: Record<string, Money> }>;
-  /** Weeks with Equity work, by the Monday they began, `YYYY-MM-DD`. */
-  equityWeeks: string[];
+  /** Wages by quarter, `YYYY-Q`, and by the state they were earned in (of them SAG-AFTRA’s until 2026-10-13). */
+  quarters: Record<string, { wages: Money; byState?: Record<string, Money> }>;
+  // `equityWeeks`, the weeks with Equity work, went on 2026-10-13: nothing had written a week to it since the union’s
+  // work went with the career in the scope reset of 2026-10-09, and nothing read it. A save from before keeps an empty
+  // list under the name, which nothing reads.
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
   months: Record<string, Money>;
   /**
@@ -96,7 +101,7 @@ export interface EarningsRecord {
 }
 
 export function earningsOf(person: Person): EarningsRecord {
-  person.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {}, ukYears: {} };
+  person.earnings ??= { years: {}, quarters: {}, months: {}, ukYears: {} };
   person.earnings.months ??= {};
   person.earnings.ukYears ??= {};
   return person.earnings;
@@ -104,7 +109,7 @@ export function earningsOf(person: Person): EarningsRecord {
 
 export function yearOf(person: Person, year: number | string): YearEarnings {
   const record = earningsOf(person);
-  record.years[year] ??= { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
+  record.years[year] ??= { acting: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
   const y = record.years[year]!;
   y.byResidence ??= {};
   y.elsewhere ??= {};
@@ -124,7 +129,7 @@ export const quarterKey = (year: number, month: number) => `${year}-${Math.floor
 
 /** Wages paid: to the year and the quarter they're paid in. */
 export function recordWages(person: Person, at: Instant, zone: string, pay: {
-  gross: Money; withheld?: Money; commission?: Money; dues?: Money; sag?: boolean; residual?: boolean; employer?: string; workStudy?: boolean;
+  gross: Money; withheld?: Money; commission?: Money; dues?: Money; employer?: string; workStudy?: boolean;
   /** Of what was withheld, each authority's; the rest is the IRS's. */
   withheldBy?: Record<string, Money>;
   /** The town the work was done in, where it isn't where they live. */
@@ -162,10 +167,6 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   addKind(person, month, pay.workStudy ? 'workStudy' : 'wages', pay.gross);
   if (pay.workStudy) y.workStudy += pay.gross;
   else y.acting += pay.gross;
-  if (pay.sag) {
-    y.sag += pay.gross;
-    if (pay.employer && !pay.residual) (y.sagByProject ??= {})[pay.employer] = (y.sagByProject[pay.employer] ?? 0) + pay.gross;
-  }
   y.withheld += pay.withheld ?? 0;
   if (pay.withheld) addWithheld(y, pay.withheld, pay.withheldBy);
   // Work done in Denver: its occupational privilege tax, once a month its earnings reach $500 there, the employer's to
@@ -182,9 +183,8 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   y.residence = home;
   // A student's work-study wages aren't covered by unemployment insurance.
   if (pay.workStudy) return;
-  const q = (earningsOf(person).quarters[quarterKey(p.year, p.month)] ??= { wages: 0, sag: 0 });
+  const q = (earningsOf(person).quarters[quarterKey(p.year, p.month)] ??= { wages: 0 });
   q.wages += pay.gross;
-  if (pay.sag) q.sag += pay.gross;
   // Where in the country they were earned, which state a claim goes to.
   (q.byState ??= {})[worked] = (q.byState[worked] ?? 0) + pay.gross;
 }
@@ -192,7 +192,9 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
 /**
  * The wages paid a person between two moments, gross, and the hours they were for, read from the ledger (from
  * 2026-10-10): the school's work-study, its hours in the memo, and the Summer Cabaret's stipend, a company week taken
- * as forty hours (SLATE's estimate). A week's unemployment and a month's SNAP read them; until then both took every
+ * as forty hours (SLATE’s estimate). A month’s SNAP and Medicaid’s work requirement read them (`systems/assistance.ts`,
+ * `systems/health.ts`). A week’s unemployment read them too until 2026-10-13, when it took the work done in
+ * the week instead (`workDoneIn`, `systems/school.ts`), as a claimant reports it. Until 2026-10-10 the reads took every
  * week as workless once the career went, though the school still paid these.
  */
 export function workedBetween(sim: Simulation, person: Person, from: Instant, to: Instant): { pay: Money; hours: number } {

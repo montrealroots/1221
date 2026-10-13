@@ -58,7 +58,12 @@ describe('PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT', () => 
     expect(applied.expiresAt).toBeGreaterThan(sim.now + 200 * MS_DAY);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect(card.name).toMatch(/Limited Term/);
-    tended(sim, sim.now + 15 * MS_DAY);
+    // SAVE’s ten days are federal workdays from 2026-10-13: applied on the evening of Thursday 12 November, they are 13,
+    // 16 to 20, 23 to 25 and 27 November, Thanksgiving passed, and the card comes on the evening of Friday the 27th,
+    // fifteen days on. Until later that day this held seventeen: the days were counted as UTC has them, a day after New
+    // Haven’s in the evening, so Sunday the 29th counted as a Monday (found by that day’s loose ends).
+    expect(card.readyAt! - sim.now).toBe(15 * MS_DAY);
+    tended(sim, card.readyAt! + MS_HOUR);
     expect(card.status).toBe('valid');
     expect(inForce(card, sim.now)).toBe(true);
   }, 120_000);

@@ -12,8 +12,10 @@
  * goes on and a screen part is recast, as a stay in hospital does. Hurt at
  * work, workers' compensation pays the care and the state's share of the
  * week's wage for the time off, by the state's rules: two-thirds in New York
- * and California, 75% after tax in Connecticut. Until 2026-10-12 this said
- * two-thirds, and so did the notice, of a Connecticut injury too.
+ * and California, 75% after tax in Connecticut, never under its least, which
+ * at any wage the School pays is 75% of the whole (`compWeekly`). Until
+ * 2026-10-12 this said two-thirds, and so did the notice, of a Connecticut
+ * injury too; until 2026-10-13 the notice said “after tax” of every one.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -44,9 +46,15 @@ export interface Injury {
   atWork?: { stateId: string; weeklyWage: Money; paidDays: number; employer?: string; noFica?: boolean };
 }
 
-/** The state's share of the wage in words, for a notice: "two-thirds of your week’s wage", or Connecticut's after tax. */
-const shareWords = (rules: CompRules): string =>
-  `${Math.abs(rules.share - 2 / 3) < 1e-9 ? 'two-thirds' : `${Math.round(rules.share * 100)}%`} of your week’s wage${rules.afterTax ? ' after tax' : ''}`;
+/**
+ * The state’s share of the wage in words, for a notice: “two-thirds of your week’s wage”, or Connecticut’s 75%, “after
+ * tax” only where the week paid is its share of the wage after tax (`compWeekly`). Connecticut’s least is never more
+ * than 75% of the whole wage (CGS 31-307(a)), and a week under $473.60 is paid that: the Summer Cabaret’s $375 and any
+ * week of work-study, whose 19 hours come to $437. Until 2026-10-13 the notice said “after tax” of every Connecticut
+ * week, where each of those was paid 75% of the whole.
+ */
+const shareWords = (rules: CompRules, weekly: Money, wage: Money): string =>
+  `${Math.abs(rules.share - 2 / 3) < 1e-9 ? 'two-thirds' : `${Math.round(rules.share * 100)}%`} of your week’s wage${rules.afterTax && weekly < Math.round(wage * rules.share) ? ' after tax' : ''}`;
 
 export type InjurySource = keyof typeof INJURY_MIX;
 
@@ -93,7 +101,10 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   const cur = saveCurrency(sim.universe);
   // The care: the visit it needs and its sessions of physical therapy, at what the plan leaves; at work, the employer's cover pays it.
   const care = shareOf(person, spec.care, at, cur) + spec.therapy * shareOf(person, 'visit', at, cur);
-  if (!work && care > 0) billCare(sim, person, `${spec.label}: its care`, care, at);
+  // The bill named in sentence case, as every other bill is (“A doctor’s visit”), so a sentence that names it reads “a
+  // sprained ankle: its care”. Until 2026-10-13 it took the notice’s title as it was, and “A Medical Bill Went Unpaid”
+  // read “for a Sprained Ankle: its care”; found by the second round of that day’s evidence.
+  if (!work && care > 0) billCare(sim, person, `${spec.label.charAt(0)}${spec.label.slice(1).toLowerCase()}: its care`, care, at);
   const w = person.wellbeing;
   w.stress = clamp(w.stress + 6 * personalityOf(person, 'stressGain'), 0, 100);
   w.morale = clamp(w.morale - 4 * personalityOf(person, 'moraleSwing'), 0, 100);
@@ -101,9 +112,10 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   if (person.id === sim.universe.playerId) {
     // The state's own share (from 2026-10-12): until then every notice said two-thirds, Connecticut's 75% after tax too.
     const rules = injury.atWork ? WORKERS_COMP.states[injury.atWork.stateId] ?? WORKERS_COMP.states['us-ny']! : undefined;
+    const weekly = rules && work ? compWeekly(sim, rules, work.weeklyWage, at, work.noFica) : 0;
     sim.notify({
       category: 'health', title: spec.label,
-      body: `${days} days to mend${spec.offWork ? ', and off work for them' : ''}. ${work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''}`,
+      body: `${days} days to mend${spec.offWork ? ', and off work for them' : ''}. ${work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''}`,
       importance: 80, route: '/workspace/papers',
     });
   }
@@ -138,7 +150,11 @@ export function compWeekly(sim: Simulation, rules: CompRules, weeklyWage: Money,
   const tax = rules.afterTax ? computeAnnualTax(weeklyWage * 52, 'us-ct-newhaven', at, { currency: cur }) : undefined;
   const base = tax ? weeklyWage - Math.round((tax.total - (noFica ? tax.payroll : 0)) / 52) : weeklyWage;
   const share = Math.round(base * rules.share);
-  const floor = rules.minShareOfMax !== undefined ? Math.min(Math.round(inSave(rules.max) * rules.minShareOfMax), share) : inSave(rules.min);
+  // Connecticut’s floor, a fifth of the maximum, is held to 75% of the average weekly wage “as determined under section
+  // 31-310”, the wage before deductions (CGS 31-307(a), read at https://www.cga.ct.gov/current/pub/chap_568.htm on
+  // 2026-10-13). Until that day it was held to 75% of the wage after tax, so the Summer Cabaret’s $375 week paid a
+  // resident $252.67 and an F-1 student $274.19, where the statute’s minimum is $281.25 to both.
+  const floor = rules.minShareOfMax !== undefined ? Math.min(Math.round(inSave(rules.max) * rules.minShareOfMax), Math.round(weeklyWage * rules.share)) : inSave(rules.min);
   return clamp(share, floor, inSave(rules.max));
 }
 

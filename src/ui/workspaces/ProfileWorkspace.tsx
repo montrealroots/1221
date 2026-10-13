@@ -31,18 +31,37 @@ import { ETHNICITIES } from '@/engine/content/ethnicity';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import type { Personality } from '@/engine/domain/model';
 import { theCountry } from '@/engine/systems/documents';
+import { CARRIES_A_BALANCE } from '@/engine/systems/credit';
 
-/** Each disposition, as creation names it, and what it does in play. */
-const DISPOSITIONS: readonly [keyof Personality, string, string][] = [
+// Where `openCredit` starts a card’s autopay on the minimum, over `CARRIES_A_BALANCE`, is read from `systems/credit.ts`
+// itself from 2026-10-13: until then it was kept here as a 65 of its own, since credit.ts didn’t export it.
+
+/**
+ * What Risk Tolerance did in this life, decided on the figure as `openCredit` decides it (from 2026-10-13). Until then
+ * the line printed the rule beside every figure, “over 65, the card’s autopay starts on the minimum”, so a life at 65
+ * read “over 65” while its autopay started on the whole statement. Every disposition is a whole number
+ * (`cleanPersonality`, at creation and on every load), so the figure shown is the one decided on. Every life with a
+ * Profile began at the drama school, from a wealthy family, with a card (`newLifeConfig`, since 2026-09-26), and none of
+ * them a charge card, which is paid in full whatever this is: its bank is in New Haven, and no American bank’s card is
+ * one (`content/cards.ts`).
+ */
+function riskWords(person: Person): string {
+  return person.personality.riskTolerance > CARRIES_A_BALANCE
+    ? `over ${CARRIES_A_BALANCE}, so the card’s autopay started on the minimum`
+    : `${CARRIES_A_BALANCE} or under, so the card’s autopay started on the whole statement`;
+}
+
+/** Each disposition, as creation names it, and what it does in play; Risk Tolerance’s, what it did in this life. */
+const DISPOSITIONS: readonly [keyof Personality, string, string | ((person: Person) => string)][] = [
   ['emotionalStability', 'Emotional Stability', 'how fast stress comes and clears, and where composure starts'],
   ['conscientiousness', 'Conscientiousness', 'how well a night’s sleep restores you, and where discipline starts'],
   ['ambition', 'Ambition', 'how fast every stress comes'],
-  ['riskTolerance', 'Risk Tolerance', 'over 65, the card’s autopay starts on the minimum'],
+  ['riskTolerance', 'Risk Tolerance', riskWords],
   ['extraversion', 'Extraversion', 'how a house watching sits with you'],
   ['openness', 'Openness', 'how rehearsing new work does'],
   ['agreeableness', 'Agreeableness', 'how a rehearsal does'],
 ];
-import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
+import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
@@ -81,11 +100,19 @@ export function nextGenre(person: Person): { id: string; why: 'part' | 'loved' }
   return fromLoved ? { id: fromLoved, why: 'loved' } : undefined;
 }
 
-/** What today's condition does to the dimensions an ability is read in: each named cause and the dimensions it reaches. */
+/**
+ * What today’s condition does to the dimensions an ability is read in: each named cause and the dimensions it reaches,
+ * task by task, as the evaluation applies a condition (`judge`, each task’s dimension by its own conditions). Until
+ * 2026-10-13 a cause named any dimension the ability is read in anywhere that some task’s same dimension listed it for,
+ * so Emotional Depth read tired in connection, which only partnered work reads it in and lists no condition for, and
+ * after a sprain Vocal Expression in consistency (read only in voice work, which an injury doesn’t reach) and Discipline
+ * in execution (read only in written work, which only fatigue does).
+ */
 export function todayFor(sim: Simulation, person: Person, id: AbilityId): string[] {
   const c = conditionAt(sim, person, sim.now);
-  const dims = new Set(readersOf(id).flatMap((r) => r.dims));
-  const reached = (cause: 'fatigue' | 'illness' | 'injury') => Object.values(TASK_PROFILES).flatMap((t) => (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][]).filter(([d, s]) => dims.has(d) && (s.conditions ?? []).includes(cause)).map(([d]) => d));
+  const readers = readersOf(id);
+  const dims = new Set(readers.flatMap((r) => r.dims));
+  const reached = (cause: 'fatigue' | 'illness' | 'injury') => readers.flatMap((r) => r.dims.filter((d) => (TASK_PROFILES[r.task]?.dims[d]?.conditions ?? []).includes(cause)));
   const out: string[] = [];
   const say = (what: string, cause: 'fatigue' | 'illness' | 'injury') => { const d = [...new Set(reached(cause))]; if (d.length) out.push(`${what}: ${d.map((x) => DIMENSION_LABEL[x].toLowerCase()).join(', ')}`); };
   if (c.readiness < EVALUATION.sufficientReadiness) say(`Readiness ${Math.round(c.readiness)}, under ${EVALUATION.sufficientReadiness}`, 'fatigue');
@@ -153,7 +180,7 @@ function IdentityPanel() {
               until then the panel had no region and Open drew them as plain names, so none of them opened). */}
           {person.personalityTraits.length > 0 && <LookRegion><p className="small" style={{ margin: 0 }}><strong>Chosen at the start.</strong> {person.personalityTraits.map((t, i) => <span key={t}>{i ? ', ' : ''}<Open subject={at('trait', t)}>{PERSONALITY_TRAIT_BY_ID[t]?.name ?? t}</Open></span>)}.</p></LookRegion>}
           {/* The dispositions set at creation, and what each does (from 2026-10-10: until then the Profile didn't show them). */}
-          <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {does}</span>)}.</p>
+          <p className="small" style={{ margin: 0 }}><strong>Dispositions.</strong> {DISPOSITIONS.map(([k, label, does], i) => <span key={k}>{i ? '; ' : ''}{label} {Math.round(person.personality[k])}, {typeof does === 'string' ? does : does(person)}</span>)}.</p>
           <div className="row gap-2 wrap">
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{money}</button>
             <button type="button" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>{cover ? 'Papers, Covered' : 'Papers, No Health Cover'}</button>
@@ -444,7 +471,9 @@ function ConditionPanel() {
           <Stat label="For Work" value={sufficient && !c.ill && !c.injured && !c.concussed ? 'Sufficient' : 'Held Back'} tone={sufficient && !c.ill && !c.injured && !c.concussed ? undefined : 'warning'} note={!sufficient ? `Under ${EVALUATION.sufficientReadiness}: fatigue holds back the work that reads it` : c.concussed ? 'A concussion holds back all of it' : c.ill ? 'The flu holds back the voice and the body' : c.injured ? 'An injury holds back the body' : 'Nothing today holds the work back'} />
           <Stat label="Energy, Stress" value={`${Math.round(w.energy)}, ${Math.round(w.stress)}`} note={`Sleep owed ${Math.round(w.sleepDebt)} hours`} />
         </div>
-        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s execution, consistency and responsiveness and leaves its interpretation be. An injury holds back what it limits: a sprain, a strain or a break the body’s work, a concussion all of it, and a cut or a knock none. None of it lowers an ability: it’s today’s, and passes with rest.</Fine>
+        {/* Until 2026-10-13 this named execution, consistency and responsiveness alone, where `TASK_PROFILES` gives fatigue
+            to believability and connection too, and Today on the same screen named them (found by that day’s evidence pass). */}
+        <Fine>Tired, an actor’s attention and memory go before their reasoning does (Lim &amp; Dinges, 2010), so fatigue reaches the work’s believability, connection, execution, consistency and responsiveness, and leaves only its interpretation be. An injury holds back what it limits: a sprain, a strain or a break the body’s work, a concussion all of it, and a cut or a knock none. None of it lowers an ability: it’s today’s, and passes with rest.</Fine>
       </div>
     </Panel>
   );

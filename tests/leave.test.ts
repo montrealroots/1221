@@ -369,7 +369,8 @@ describe('failing, repeating and disqualification', () => {
     evaluate(sim, sim.player, 5);
     tended(sim, school.repeatBy! + MS_HOUR);
     expect(school.standing).toBe('withheld');
-    expect(titled(sim, 'The Degree Isn’t Recommended')[0]!.body).toMatch(/didn’t ask to repeat/);
+    // Until 2026-10-13 it said “You didn’t ask to repeat the year”, whatever was open, and this held it.
+    expect(titled(sim, 'The Degree Isn’t Recommended')[0]!.body).toMatch(/^The thirty days to finish the degree ended with nothing asked for/);
   });
 
   it('the faculty review a disqualification: the first time on warning, judged once, not stepped past', () => {

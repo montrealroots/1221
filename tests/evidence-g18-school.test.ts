@@ -36,8 +36,9 @@
  *   asked. The tab's Call It Off, with notice and without.
  * - `school.make_amends`: the trust a late call-off took given back exactly, no bond; a rehearsal slept through, trust
  *   6 and the bond 2; twenty minutes; the boundary the next class would bring not brought; the partner who declined an
- *   evening agreeing to it; refused with nothing to make right, in class, and (TEST SETUP) away from New Haven. The
- *   tab's Make Amends. The out-of-town refusal reads a state no play reaches: nothing moves a life after it begins.
+ *   evening agreeing to it; refused with nothing to make right, and in class. The tab’s Make Amends. It was refused
+ *   (TEST SETUP) away from New Haven too, a state no play reaches since nothing moves a life after it begins, until that
+ *   refusal went on 2026-10-13, with help’s “They’re in New Haven.”.
  * - `school.respond`: a different reading kept (trust 1 lost where the text is on their side, the scene together read
  *   apart), taken (the answer theirs, the showing's table work a question's fifth higher, trust 2 and bond 1), or both
  *   tried (trust 3 and bond 1, read apart until the next rehearsal kept clears it); help given in 45 minutes for trust 4
@@ -888,15 +889,14 @@ describe('school.make_amends', () => {
     expect(ask(sim, id, at(9, 2, 19))).toMatchObject({ accepted: true });
   });
 
-  it('is refused in class, for no such classmate, and (TEST SETUP) away from New Haven', () => {
+  // Until 2026-10-13 this also moved her to New York by hand to reach “Hannah is in New Haven.”, which went that day:
+  // nothing in the game moves a life after it begins.
+  it('is refused in class, and for no such classmate', () => {
     const { sim, id } = letDownTwice();
     sim.advanceTo(at(8, 31, 10));
     const mate = work(sim, id).partner;
     expect(no(sim, 'school.make_amends', { mate })).toBe('You’re at Classes until 3:00 PM.');
     expect(no(sim, 'school.make_amends', { mate: 99 })).toBe('There’s no such classmate.');
-    sim.advanceTo(at(8, 31, 15, 30));
-    sim.player.currentLocationId = 'us-ny-newyork'; // TEST SETUP: nothing in the game moves a life after it begins.
-    expect(no(sim, 'school.make_amends', { mate })).toBe('Hannah is in New Haven.');
   });
 
   it('draws Make Amends on the Coursework tab under what wants making right, grayed in class, and pressed makes it right', () => {
@@ -976,7 +976,9 @@ describe('school.respond', () => {
     expect(shownRecords(theirs, work(theirs, id))[0]!.inputs.prep.interpretation).toBeCloseTo(0.2, 12);
   });
 
-  it('help given takes 45 minutes and moves trust 4 and the bond 3, refused in class and (TEST SETUP) away from New Haven; said no, nothing moves', () => {
+  // Until 2026-10-13 this also moved her to New York by hand to reach “They’re in New Haven.”, which went that day:
+  // nothing in the game moves a life after it begins.
+  it('help given takes 45 minutes and moves trust 4 and the bond 3, refused in class; said no, nothing moves', () => {
     const base = life('g18-probe');
     base.advanceTo(at(9, 3, 10));
     const m = openMoments(base).find((x) => x.kind === 'help')!;
@@ -985,9 +987,6 @@ describe('school.respond', () => {
     expect(mate().name).toBe('Imani Nguyen');
     expect(no(base, 'school.respond', { momentId: m.id, choice: 'help' })).toBe('You’re at Classes until 3:00 PM.');
     base.advanceTo(at(9, 3, 15, 30));
-    const away = reload(base);
-    away.player.currentLocationId = 'us-ny-newyork'; // TEST SETUP: nothing in the game moves a life after it begins.
-    expect(no(away, 'school.respond', { momentId: m.id, choice: 'help' })).toBe('They’re in New Haven.');
     const helped = reload(base);
     const declined = reload(base);
     const trust0 = trustOf(mate());

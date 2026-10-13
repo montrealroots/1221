@@ -350,11 +350,13 @@ export function Home() {
                   {' · '}
                   <Open subject={at('country', place.city.countryId)}>{place.countryName}</Open>
                 </div>
+                {/* Until 2026-10-13 this line said the distance and the hours from home when away, and Local Time’s note
+                    the hours from home; nothing has put a player away from home since the home went in the scope of
+                    2026-10-09, as the city Home profiles is the one `homeCityOf` gives (found by that day’s evidence
+                    pass). The place look still says them for another city. */}
                 <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
                   <Open subject={at('place', place.city.id)}>
-                    {place.away && place.homeCity
-                      ? `${place.distanceFromHome} from home in ${place.homeCity.name}${place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home time` : ''}.`
-                      : 'Home.'}
+                    Home.
                     {placeLine(place) && ` ${placeLine(place)}.`}
                   </Open>
                 </div>
@@ -362,7 +364,7 @@ export function Home() {
                 <Stat
                   label="Local Time"
                   value={place.localTime}
-                  note={`${place.zoneAbbreviation}${place.away && place.hoursFromHome ? ` · ${place.hoursFromHome > 0 ? '+' : ''}${place.hoursFromHome}h from home` : ''}`}
+                  note={place.zoneAbbreviation}
                   look={at('day', today)}
                 />
                 <Stat
@@ -525,11 +527,17 @@ function PapersLine({ cur }: { cur: string }) {
   // 2026-10-11: until then it was in both).
   const toPay = open ? unassessedBalance(person, open) : 0;
   const claim = person.unemployment?.claim;
+  // Growing once something owed is past its return's due date, from which the IRS's interest and late-payment penalty
+  // run (IRC 6601(a), 6651(a)(2)), and a state's too (`accrueState`, from the return's due date). Until 2026-10-13 the
+  // alert said so from the day a return was filed early and left unpaid, when nothing grows (found by that day's
+  // evidence pass).
+  const growing = Object.values(person.returns ?? {}).some((r) => sim.now > r.due
+    && ((r.owed ?? 0) > 0 || Object.values(r.stateDue ?? {}).some((d) => (d.owed ?? 0) > 0)));
   // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line.
   const alerts = [
     !cover ? 'You have no health cover.' : '',
     open ? `The ${open.year} return is due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${toPay > 0 ? `, ${formatMoney(toPay + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
-    owedTax > 0 ? `${formatMoney(owedTax, cur, { cents: false })} of tax owed, with its interest and a late penalty growing each month.` : '',
+    owedTax > 0 ? `${formatMoney(owedTax, cur, { cents: false })} of tax owed${growing ? ', with its interest and a late penalty growing each month' : ''}.` : '',
   ].filter(Boolean);
   return (
     <AffairLine

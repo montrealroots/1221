@@ -187,8 +187,11 @@ defineLook<TheGenre>('genre', {
             <>
               <p className="small"><strong>What it asks of an actor.</strong> {demand.claim}</p>
               <p className="small"><strong>{applied(id) && demand.tags.length ? 'Applied as requirements.' : 'Not applied.'}</strong>{' '}
+                {/* A self-tape’s, which every brief in the genre stages (tests/briefs-content.test.ts). Until 2026-10-13 this
+                    said “Work in it reads”, and a night of a play of the kind or a class scene from one reads its own
+                    material’s techniques instead (`playReads`, `workContext`): a farce’s night read no clown. */}
                 {applied(id) && demand.tags.length
-                  ? <>Work in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}{demand.basis === 'definition' ? ' The genre is defined by it: that’s SLATE’s reading, not a source’s statement.' : ''}</>
+                  ? <>A self-tape in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}{demand.basis === 'definition' ? ' The genre is defined by it: that’s SLATE’s reading, not a source’s statement.' : ''} A night of a play of its kind, or a class scene from one, reads its own material’s techniques instead.</>
                   : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so work in it asks nothing past what the work itself reads.`
                   : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what the work itself reads.'}
               </p>

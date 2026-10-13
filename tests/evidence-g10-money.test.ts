@@ -364,7 +364,9 @@ describe('bank.break_term', () => {
     // NatWest: "a charge equal to the lower of interest earned or 90 days' interest; you never get back less than your
     // deposit." After 35 days the interest earned is the lower, so the £10,000 comes back, no more and no less.
     expect(posted(sim, current, 'Fixed-Term Savings broken early')).toEqual([{ at: term.closedAt!, amount: 10_000_00 }]);
-    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^On the notice given: £10,000\.00 to your current account, less £\d+\.\d\d for closing early\.$/);
+    // The £10,000 is what arrived, the charge already taken: until the third round of 2026-10-13 the notice said “less”
+    // it, which read as less than £10,000 to come (defect 57 of that round).
+    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^On the notice given: £10,000\.00 to your current account, after £\d+\.\d\d taken for closing early\.$/);
   });
 });
 
@@ -400,6 +402,10 @@ describe('bank.claim_unclaimed', () => {
     const screen = accountLife(again, 'us-chase');
     expect(screen.text).toContain(`${whole} went to the state’s unclaimed-property office after years untouched. It can be claimed back from that office.`);
     expect(screen.text).not.toMatch(/New York|Comptroller|yes, from/);
+    // The rules shown are Connecticut’s, by its statute, which gives the three years taken: until the third round of
+    // 2026-10-13 they were New York’s research, a law firm’s note on its Comptroller (defect 58 of that round).
+    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13), and SLATE takes the three years for every state.');
+    expect(screen.text).not.toContain('cullenllp');
     const b0 = bank.balance;
     screen.button('Claim It Back').onClick!();
     expect(bank.balance - b0).toBe(held);
@@ -599,7 +605,8 @@ describe('bank.open_term', () => {
     expect(posted(past.sim, past.checking, 'A meal')).toEqual([]);
   });
 
-  it('lends against it at MUFG, 90% of time deposits at their 0.50% and 0.50% more, so the clock’s groceries go into the overdraft; without one they aren’t bought (a Tokyo life: no New Haven bank lends this way)', () => {
+  // Its title named the 90% until 2026-10-13, which its bound didn't test; the test before this one does.
+  it('lends against it at MUFG at the deposit’s 0.50% and 0.50% more, so the clock’s groceries go into the overdraft; without one they aren’t bought (a Tokyo life: no New Haven bank lends this way)', () => {
     const play = (withTerm: boolean) => {
       const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, bankId: 'jp-mufg', wealth: 'wealthy' }, 'g10-mufg');
       sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
@@ -643,7 +650,10 @@ describe('bank.pay_collections', () => {
     const chase = primary(sim);
     const savings = savingsOf(sim);
     // TEST SETUP: savings emptied, and the current account $1,500 overdrawn. A smaller overdraft doesn't last: at −$300
-    // the $138 of work-study each Friday had it back above zero on 13 October, inside the sixty days.
+    // the $138 of work-study each Friday had it back above zero on 13 October, inside the sixty days. Done after the
+    // term's Yale Health plan is paid at nine that first morning: until 2026-10-13 a plan the bank couldn't cover was
+    // dropped, and since then it's owed and taken from the next money, which here would be the wages this test counts.
+    sim.advanceTo(at(2026, 8, 24, 9, 1));
     setBalance(sim, savings, 0);
     setBalance(sim, chase, -1_500_00);
     expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('You don’t owe anything in collections.');

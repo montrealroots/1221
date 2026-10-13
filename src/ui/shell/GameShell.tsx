@@ -65,7 +65,9 @@ export function GameShell() {
     <GuideProvider>
     <HelpProvider>
     <div className="shell">
-      <a className="skip-link" href="#main">Skip To Content</a>
+      {/* To the content without a history entry or an address that names no screen (from 2026-10-13: until then the link
+          changed the address to #main, which the game read as Home). */}
+      <a className="skip-link" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip To Content</a>
 
       <header className="topbar">
         <button

@@ -52,7 +52,7 @@
  * and nothing moves it after creation, so it never refuses; `bank.set_order_source`'s "It pays into that account."
  * can't be reached, since a standing order goes only into savings (`bank.add_standing_order`) and pays only from a
  * current account; and a standing order paying into a current account, which `linkedTo` would name for Close It, can't
- * be set up, for the same reason.
+ * be set up, for the same reason. All three went from the engine later on 2026-10-13, with the guide’s words for them.
  */
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type ReactNode } from 'react';

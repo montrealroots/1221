@@ -12,17 +12,20 @@
  *   You at once; a second press is refused with "It’s dismissed already." and the day of the first is kept, across a
  *   save and a load; through its due date nothing asks again; it's kept for 180 days from the dismissal and gone at the
  *   first world tick after, when the command says "No such decision.". An undated row left alone is dismissed by the
- *   world at the first tick past 90 days, never resolved, and deleted at the first tick past 180 more; a dismissed row
+ *   world at the first tick past 90 days, never resolved, and deleted at the first tick past 180 more, a rule no play
+ *   reaches, since every raiser dates its row: the row is raised by hand, and the test says so; a dismissed row
  *   dated 300 days on outlives the 180 until its date; and Home lists what's open overdue first, then by urgency, then
  *   by the soonest date, with nothing answered or waved away among it (the two tests of tests/simulation.test.ts that
  *   held the order and the absence looped over no rows at all).
  * - i-ui-text: creation's five steps, Genres & Background's controls and Review, the Profile, the person's look and the
- *   look registry, every guide entry and every chapter of the tutorial, rendered or read as the player has them: no
- *   interests anywhere, and every "interest" left is money's. tests/creation.test.ts held creation by matching one
+ *   look registry, every guide entry and every chapter of the tutorial, rendered or read as the player has them on a
+ *   new life, made since the interests went on 2026-10-10: none named anywhere, and every “interest” left is money’s. A
+ *   save from before then shows one line more, “An interest, from before they were removed”, for a record an hour of
+ *   one wrote, which tests/evidence2-b13.test.ts holds. tests/creation.test.ts held creation by matching one
  *   heading's exact markup in the source.
  * - i-stale-claims: READ_CRAFTS is named nowhere but the audit trail that records its correction; the two capability
- *   documents pair no interest with love or enjoyment; and in the five files whose prose the removal corrected, every
- *   sentence naming the interests is in the past. What this can't do the review asked for too: fail a new present-tense
+ *   documents pair no interest with love or enjoyment; and in the five files whose prose the removal of 2026-10-10
+ *   corrected, every sentence naming the interests is in the past. What this can't do the review asked for too: fail a new present-tense
  *   claim anywhere (no regex measured on 2026-10-13 could tell one, and this line has no claims tool), and correct the
  *   leftovers in tests/attributes-matrix.test.ts, tests/looks.test.ts and src/engine/index.ts, which are other files.
  * - i-genres-dispositions-intact: a save written under schema 93 by a life made with a disposition on every axis away
@@ -258,7 +261,10 @@ describe('n-dismiss-expire', () => {
     expect(dismiss(sim, 'decision_999999').error).toBe('No such decision.');
   }, 60_000);
 
-  it('dismisses an undated row left alone once it is more than 90 days old, at the next world tick, never resolving it; keeps it 180 days from then, across a save and a load, and lets it go at the tick after', () => {
+  // A rule no play reaches: every raiser dates its row (a year’s return, a US status’s end, an idle account’s handover),
+  // so only this row, raised by hand, meets it. It’s kept while the decision look describes it (`QUIET_AFTER_DAYS`,
+  // ui/looks/attention.tsx); the guide’s sentence for it went on 2026-10-13 (found by that day’s third round).
+  it('RULE NO PLAY REACHES: dismisses an undated row left alone once it is more than 90 days old, at the next world tick, never resolving it; keeps it 180 days from then, across a save and a load, and lets it go at the tick after', () => {
     const sim0 = student('g34-undated');
     const t0 = sim0.now;
     // Monday 24 August 2026, 7:30 AM, the life's first morning.
@@ -572,7 +578,7 @@ describe('i-genres-dispositions-intact', () => {
     expect(game.player.attrs!.discipline).toBe(40);
     expect(game.player.attrs!.composure).toBe(35.5);
     const page = drawn(game, ProfileWorkspace).text;
-    expect(page).toContain('Emotional Stability 30, how fast stress comes and clears, and where composure starts; Conscientiousness 20, how well a night’s sleep restores you, and where discipline starts; Ambition 70, how fast every stress comes; Risk Tolerance 90, over 65, the card’s autopay starts on the minimum; Extraversion 90, how a house watching sits with you; Openness 80, how rehearsing new work does; Agreeableness 10, how a rehearsal does.');
+    expect(page).toContain('Emotional Stability 30, how fast stress comes and clears, and where composure starts; Conscientiousness 20, how well a night’s sleep restores you, and where discipline starts; Ambition 70, how fast every stress comes; Risk Tolerance 90, over 65, so the card’s autopay started on the minimum; Extraversion 90, how a house watching sits with you; Openness 80, how rehearsing new work does; Agreeableness 10, how a rehearsal does.');
     expect(page).toContain('You love: Comedy.');
     expect(page).toContain('Discipline 40.0 ');
     expect(page).toContain('Composure 35.5 ');

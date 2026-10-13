@@ -84,8 +84,9 @@ export function orderSource(sim: Simulation, person: Person, order: { fromId?: s
 
 /**
  * Everything an account was the instruction for, said so the player can move it before closing it (`closeRefusal`):
- * incoming payments, a change of them on its way, standing orders paying from or into it, card autopay from it, and
- * one-off payments set for a date.
+ * incoming payments, a change of them on its way, standing orders paying from it, card autopay from it, and one-off
+ * payments set for a date. Until 2026-10-13 standing orders paying into it were named too; it’s read only for current
+ * accounts, and an order goes only into savings (`bank.add_standing_order`), so none ever was.
  */
 export function linkedTo(sim: Simulation, person: Person, accountId: string): string[] {
   const out: string[] = [];
@@ -95,7 +96,6 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   if (pay.depositChange?.to === accountId) out.push('Your wages and other payments are being moved to it');
   for (const o of pay.standingOrders) {
     if (orderSource(sim, person, o)?.id === accountId) out.push(`A standing order pays from it on the ${o.day}`);
-    else if (o.toId === accountId) out.push(`A standing order pays into it on the ${o.day}`);
   }
   for (const [, state] of Object.entries(person.credit?.cards ?? {})) if (state.autopayFrom === accountId) out.push('A card’s autopay pays from it');
   if (person.credit?.autopayFrom === accountId) out.push('Your everyday card’s autopay pays from it');

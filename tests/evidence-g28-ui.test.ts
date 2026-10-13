@@ -20,9 +20,10 @@
  *   7.2 between the two ends, the same across a save and a load.
  * - c-disp-openness: the Cabaret's read-through, 6 PM Friday 11 September, and the Carlotta Festival's, 3 PM Tuesday
  *   13 April 2027, each lift an open student (95) 1.8 more than one at 50 and a conventional one (5) 1.8 less, stress
- *   alike; the festival's curtain, which the page's "rehearsing new work" leaves out, reads no openness. The review's
- *   other two findings stay open: `WorkDay.away` is read and never set, and the Cabaret's curtain reads openness where
- *   the page says rehearsing.
+ *   alike; the festival's curtain, which the page's "rehearsing new work" leaves out, reads no openness. Of the review's
+ *   other two findings, `WorkDay.away` was read and never set until it went on 2026-10-13, and the Cabaret's curtain
+ *   read openness where the page says rehearsing until 2026-10-13, when it stopped (tests/evidence2-b10.test.ts,
+ *   c-disp-openness).
  * - c-disp-agreeableness: Drama 50's first meeting, 3 PM Tuesday 8 September, takes 1.8 off a blunt student's morale
  *   (5), gives an accommodating one (95) 1.8 and one at 50 nothing, across a save and a load; the Cabaret's read-through
  *   the same 3.6 apart.
@@ -274,11 +275,17 @@ describe('c-disp-riskTolerance', () => {
   const statements = (sim: Simulation) => sim.universe.notifications.filter((n) => n.title === 'Statement Ready: Chase Freedom Unlimited').map((n) => [n.at, n.body]);
 
   it('PLAYER JOURNEY: Risk Tolerance slid to 66 starts the card’s autopay on the minimum and slid to 65 in full, nothing edited after Begin; the page, the Review, the Profile and the card say so', () => {
-    for (const [risk, autopay, button] of [[66, 'minimum', 'Autopay: The Minimum'], [65, 'full', 'Autopay: The Whole Statement']] as const) {
+    // The Profile says what the figure did: until 2026-10-13 it said the rule, “over 65, the card’s autopay starts on
+    // the minimum”, at 65 as at 66, and this held that same line for both.
+    for (const [risk, autopay, button, said] of [
+      [66, 'minimum', 'Autopay: The Minimum', 'over 65, so the card’s autopay started on the minimum'],
+      [65, 'full', 'Autopay: The Whole Statement', '65 or under, so the card’s autopay started on the whole statement'],
+    ] as const) {
       const { sim, page } = slidTo(`g28-risk-page-${risk}`, 'riskTolerance', risk);
-      expect(page).toContain('Risk Tolerance over 65 starts your card\'s autopay on the minimum, so a balance is carried.');
+      // With a curly apostrophe from 2026-10-13, as the page’s other words have it; until then this held the straight one.
+      expect(page).toContain('Risk Tolerance over 65 starts your card’s autopay on the minimum, so a balance is carried.');
       expect(sim.player.credit!.autopay, String(risk)).toBe(autopay);
-      expect(profile(sim)).toContain(`Risk Tolerance ${risk}, over 65, the card’s autopay starts on the minimum;`);
+      expect(profile(sim)).toContain(`Risk Tolerance ${risk}, ${said};`);
       const shown = bankCard(sim);
       expect(shown).toContain('Chase Freedom Unlimited');
       expect(shown).toContain(button);

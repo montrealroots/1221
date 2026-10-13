@@ -2,10 +2,11 @@
  * SLATE — the guide's reference: tax returns, payments and liens (from 2026-10-12; `content/guide/types.ts`).
  *
  * Every figure is the rule's own, imported: `RETURN` (`content/safetynet.ts`), the IRS's collection, plan, substitute,
- * amendment and lien (`systems/taxreturn.ts`), the ITIN's weeks (`systems/taxid.ts`), and Connecticut's and Oregon's
- * rules (`content/statetax.ts`). The worked examples are figured by the rules too: the late penalty by `latePenalty`
- * itself, the least monthly payment by `leastMonthly`, the deadline by `deadline`. Connecticut is the state written
- * about because every life in SLATE studies, works and files from New Haven.
+ * amendment and lien (`systems/taxreturn.ts`), the ITIN's weeks (`systems/taxid.ts`), Connecticut's and Oregon's
+ * rules (`content/statetax.ts`), and the federal standard deduction (`content/tax.ts`). The worked examples are figured
+ * by the rules too: the late penalty by `latePenalty` itself, the least monthly payment by `leastMonthly`, the deadline
+ * by `deadline`. Connecticut is the state written about because every life in SLATE studies, works and files from New
+ * Haven.
  *
  * Six figures here are written as text because their rules don't export them, and are said so where they stand: the
  * worry a day of owing costs (`systems/spending.ts`, 4 stress and 2 morale), the five months the late-filing share runs
@@ -38,14 +39,23 @@
  * says what that charges each year, the month already begun on the earlier one staying at the full rate, and the Costs,
  * Reads, Interpret and Now lines, which said the plan's rate ran while a plan stood, say it's each month that begins
  * under the plan.
+ *
+ * Corrected on 2026-10-13 by the guide’s audit of that day, after that day’s fixes to the return. Until then it said a
+ * return was made each February 1 for a year with any income, where from that day a year with nothing owed or due back
+ * and income under the standard deduction gets none (`registerTaxReturn`), and the short, the available line, the needs
+ * and the reason File It is missing say so; it said the late-payment penalty counted from filing on a return filed late,
+ * the count that charged the month filing fell in twice, where `payLateRateAt` counts from the due date less the months
+ * charged with filing; and it said the filing share’s floor gave way to the whole balance where that was less, the
+ * IRS’s part and a state’s together, where `latePenaltyAll` takes it against the IRS’s part alone.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { RETURN } from '../safetynet';
 import { STATE_TAX } from '../statetax';
+import { INCOME_TAX_RULES } from '../tax';
 import { formatMoney } from '../../core/money';
 import { MS_DAY, formatDate } from '../../core/time';
-import { AMEND, COLLECTION, FEDERAL_LIEN, PLAN, SUBSTITUTE, deadline, latePenalty, leastMonthly } from '../../systems/taxreturn';
+import { AMEND, COLLECTION, DEMAND_DAYS, FEDERAL_LIEN, PLAN, SUBSTITUTE, deadline, irsGrowth, latePenalty, leastMonthly } from '../../systems/taxreturn';
 import { SSN } from '../../systems/taxid';
 import type { GuideEntry } from './types';
 
@@ -60,6 +70,8 @@ const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const day = (at: number): string => formatDate(at, NEW_HAVEN);
 
 const CHAPTER = CHAPTER_FOR['tax.file']!.title;
+/** A single filer’s federal standard deduction, the income under which a year with nothing either way has no return (`registerTaxReturn`). */
+const US_DEDUCTION = INCOME_TAX_RULES.find((r) => r.jurisdictionCode === 'US')!.standardDeduction;
 const CT = STATE_TAX['us-ct'];
 const CT_LIEN = CT.lien!;
 const CT_FLOOR = CT.nonFiler.adds?.find((a) => a.minPenalty !== undefined)?.minPenalty ?? 0;
@@ -94,7 +106,10 @@ const LATE_MONTHS = Math.ceil(LATE_DAYS / 30.4375);
 const LATE_PAY_PART = Math.round(Math.min(RETURN.lateCap, RETURN.payLateMonthly * LATE_MONTHS) * OWED);
 const LATE_FILE_PART = LATE_PENALTY - LATE_PAY_PART;
 const LATE_FLOOR = LATE_DAYS > RETURN.lateMinimumAfterDays ? Math.min(RETURN.lateMinimum, OWED) : 0;
-const LATE_INTEREST = Math.round(OWED * ((1 + COLLECTION.interest / 365) ** LATE_DAYS - 1));
+// Interest from the due date on the balance and on the filing share, as `lateInterest` charges it (IRC 6601(e)(2)(B)):
+// until 2026-10-13 on the balance alone, as the engine charged it until then. Counted as the IRS counts a year’s days
+// (`irsGrowth`): until later that day over 365 whatever the year, which 2027’s 85 days don’t change.
+const LATE_INTEREST = Math.round((OWED + LATE_FILE_PART) * (irsGrowth(DUE, LATE_AT) - 1));
 
 // Paying: a part to the IRS, and a part to Connecticut in Connecticut's order, both inside the first month past the due
 // date, so each has charged one month.
@@ -130,8 +145,8 @@ export const TAXES: readonly GuideEntry[] = [
     synonyms: ['tax return', 'file a return', 'tax refund', 'tax deadline', 'Form 1040', 'Form 1040-NR', 'Form 8843', 'late filing penalty', 'amended return', 'Form 1040-X', 'substitute for return', 'Notice CP2566'],
     questions: ['When is my tax return due?', 'What happens if I file late?', 'When does my refund come?', 'Why does the IRS say it filed my return?', 'How do I amend a return?'],
     where: on('returns', 'Papers, Tax Returns, Each Year’s Return Panel'),
-    available: `From the guide’s chapter “${CHAPTER}”. A year’s return is ready on February 1 of the year after.`,
-    short: `Each February 1 the year before gets a return on Papers, worked out line by line from what you earned, what was withheld and where you lived. File It settles it: each authority’s balance is taken from your bank at once where the bank can cover it, and a refund comes ${REFUND_WORDS}. Filed by its deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs no more than the tax. Filed late with a balance, the IRS adds penalties and interest, and a return that owes and is never filed is filed by the IRS without you.`,
+    available: `From the guide’s chapter “${CHAPTER}”. A year’s return is ready on February 1 of the year after, where there’s one to file.`,
+    short: `Each February 1 the year before gets a return on Papers where it owes or is owed anything, or its income reached the standard deduction (every year, on an F-1), worked out line by line from what you earned, what was withheld and where you lived. File It settles it: each authority’s balance is taken from your bank at once where the bank can cover it, and a refund comes ${REFUND_WORDS}. Filed by its deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs no more than the tax. Filed late with a balance, the IRS adds penalties and interest, and a return that owes and is never filed is filed by the IRS without you.`,
     steps: [
       'Open Papers and its Tax Returns tab. Each year has a panel headed with the year, saying Due with its date, or Filed once it’s in.',
       'Read its lines: wages, interest and any scholarship for living costs, the tax on them, what was withheld, and at the foot You Owe or Comes Back To You.',
@@ -139,15 +154,17 @@ export const TAXES: readonly GuideEntry[] = [
       'To correct a year you filed, press Amend The Return…, then File The Amendment; Not Now leaves it.',
     ],
     needs: [
-      'A return for the year. One is made each February 1 for a year that left any income or any balance either way; a student on an F-1 has one every year they’re here, for Form 8843.',
+      `A return for the year. One is made each February 1 for a year that left anything owed or due back, Canada’s refund among it, or income of ${usd(US_DEDUCTION)}, a single filer’s standard deduction, or more; a student on an F-1 has one every year they’re here, for Form 8843.`,
       'To pay a balance at filing, enough in your current account and savings for each authority’s part: the IRS’s and each state’s are taken apart, each whole or not at all.',
       `To amend: a return you filed yourself, within ${AMEND.years} years of filing or ${AMEND.paidYears} of your last payment on it, with no amendment already being processed.`,
     ],
     costs: [
       { label: 'Time', value: 'None: filing and amending move no clock' },
       { label: 'A Balance', value: 'Taken from your current account when you file, then from savings at the same bank, each authority’s part all or none' },
-      { label: 'Filing Late With A Balance', value: `${pct(RETURN.lateMonthly)} of the IRS’s part for each month or part of one through the fifth, ${pct(RETURN.payLateMonthly)} of it for paying late and the rest for filing late; after that ${pct(RETURN.payLateMonthly)} a month for paying late alone, until that share reaches ${pct(RETURN.lateCap)}; past ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(RETURN.lateMinimum)}, or the whole balance where that’s less`, estimate: false },
-      { label: 'Interest', value: `${pct(COLLECTION.interest)} a year, compounded daily, from the due date` },
+      { label: 'Filing Late With A Balance', value: `${pct(RETURN.lateMonthly)} of the IRS’s part for each month or part of one through the fifth, ${pct(RETURN.payLateMonthly)} of it for paying late and the rest for filing late; after that ${pct(RETURN.payLateMonthly)} a month for paying late alone, until that share reaches ${pct(RETURN.lateCap)}; past ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(RETURN.lateMinimum)}, or the IRS’s whole part where that’s less`, estimate: false },
+      // Until 2026-10-13 this said interest ran from the due date on what was owed alone; the filing share of the penalty
+      // draws it from then too (`lateInterest`, `systems/taxreturn.ts`).
+      { label: 'Interest', value: `${pct(COLLECTION.interest)} a year, compounded daily, from the due date, on the IRS’s part and on the filing-late share of the penalty` },
       { label: 'An Amendment', value: 'No fee' },
       { label: 'An Amendment’s Wait', value: `${AMEND.weeks} weeks before the IRS processes it, where it says eight to twelve`, estimate: true },
     ],
@@ -181,14 +198,14 @@ export const TAXES: readonly GuideEntry[] = [
       'Late Penalties is what filing late added on the day you filed. What the IRS charges after that grows under Penalties in Owed To The IRS.',
     ],
     unavailable: [
-      'A year with no income and no balance has no return, and so no File It.',
+      `A year with nothing owed or due back and income under the standard deduction, ${usd(US_DEDUCTION)}, has no return, and so no File It; a student on an F-1 always has one.`,
       'File It shows only on a year not yet filed, or one the IRS filed, where it reads File Your Own In Its Place. A year you’ve filed is changed by amending it.',
       'Amend The Return… is grayed out with its reason beside it: “An amended return for the year is with the IRS.”, or the date the time to amend it ran out. A year the IRS filed shows no Amend The Return…: file your own in its place first.',
       'File The Amendment: “Your return as filed matches what’s on record: there’s nothing to amend.” The year hasn’t changed since you filed.',
       `Until the guide’s chapter “${CHAPTER}” is read, File It shows as Locked.`,
     ],
     mistakes: [
-      `Waiting past the deadline because the bank is short. Past ${RETURN.lateMinimumAfterDays} days late the filing share is at least ${usd(RETURN.lateMinimum)}, or the balance itself where that’s less. File on time anyway: what goes unpaid then grows only by the late-payment share and the interest.`,
+      `Waiting past the deadline because the bank is short. Past ${RETURN.lateMinimumAfterDays} days late the IRS’s filing share is at least ${usd(RETURN.lateMinimum)}, or its part itself where that’s less, and a state charges its own. File on time anyway: what goes unpaid then grows only by the late-payment share and the interest.`,
       'Looking for the question in What Needs You after the deadline: it lapses on the day, and File It stays on the Papers panel for as long as the year is unfiled.',
       'Leaving the IRS’s own return in place: it leaves out the foreign tax credit and the premium tax credit. File Your Own In Its Place replaces it even after it’s assessed.',
     ],
@@ -230,8 +247,12 @@ export const TAXES: readonly GuideEntry[] = [
     costs: [
       { label: 'Time', value: 'None' },
       { label: 'Money', value: 'What you choose to pay, up to what’s owed now' },
-      { label: 'The IRS’s Interest', value: `${pct(COLLECTION.interest)} a year, compounded daily on the tax, the penalties and the interest, from the due date` },
-      { label: 'The IRS’s Late-Payment Penalty', value: `${pct(RETURN.payLateMonthly)} of the tax unpaid for each month or part since the due date (since filing, on a return filed late), to ${pct(RETURN.lateCap)} in all, the share a late return was charged with filing counting toward it; ${pct(PLAN.reducedRate)} for each month that begins while a payment plan stands, on a return filed on time` },
+      // Until 2026-10-13 this said all of it drew interest from the due date. A late return’s paying-late share draws none
+      // until it’s filed or assessed (`lateInterest`, `systems/taxreturn.ts`), as the engine charged it then too. Later
+      // that day it said that share drew it from filing; it draws it only once unpaid 21 days after the filing or
+      // the assessment, then from that day (IRC 6601(e)(2)(A), `demanded`).
+      { label: 'The IRS’s Interest', value: `${pct(COLLECTION.interest)} a year, compounded daily (a 366th of it a day in a leap year) on the tax, the penalties and the interest: from the due date on the tax and a late return’s filing-late share; on that return’s paying-late share only once it’s unpaid ${DEMAND_DAYS} days after the filing or the IRS’s assessment, and then from that day; and on each month’s penalty after, from when it’s added` },
+      { label: 'The IRS’s Late-Payment Penalty', value: `${pct(RETURN.payLateMonthly)} of the tax unpaid for each month or part since the due date, to ${pct(RETURN.lateCap)} in all; on a return filed late, the months to its filing, the month it fell in among them, are charged with filing, count toward the ${pct(RETURN.lateCap)}, and aren’t charged again; ${pct(PLAN.reducedRate)} for each month that begins while a payment plan stands, on a return filed on time` },
       { label: 'Connecticut’s Penalty', value: `${pct(CT.payLate.once)} of the tax unpaid past the due date, once` },
       { label: 'Connecticut’s Interest', value: `${pct(CT.interest.yearly / 12)} a month or part, on the tax alone` },
     ],

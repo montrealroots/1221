@@ -11,9 +11,9 @@
  *   morning's groceries go on the credit card and checking isn't touched, the machine refuses in the stopped card's
  *   words and the counter pays, and with the credit card locked too the meal is refused in `spendRefusal`'s. A second
  *   report is refused and sends nothing twice; the stopped card and its one replacement hold through a save and a
- *   load, and it arrives once. A rush is Chase's $15 out of checking and two business days; a Wells Fargo card, whose
- *   terms list rush days and no rush fee, is refused the rush and comes in Wells Fargo's five business days, Labor Day
- *   not one of them. Your Cards, rendered, offers both reports with the fee line, and Report It pressed stops the card.
+ *   load, and it arrives once. A rush is Chase's $15 out of checking and two business days; a Wells Fargo card is
+ *   refused the rush, its fee unpublished (from the third round of 2026-10-13: for a while that day it was rushed free,
+ *   its research’s day read as a rush with no fee), and comes in Wells Fargo’s five business days, Labor Day not one. Your Cards, rendered, offers both reports with the fee line, and Report It pressed stops the card.
  * - card.request_hardship: on the life's own Chase card, refused a card owing nothing and a holder whose bank could
  *   clear it; then $4,800 over forty-eight months, $100, and the card takes nothing: the meal goes to checking, and
  *   behind a locked debit card it isn't bought. Autopay set to the minimum asks the plan's $100 at the due date, not
@@ -56,7 +56,9 @@
  * Everyday Card’s command took a card being closed, which only the screen hid (the review).
  *
  * Left open, as the content's or the engine's to settle: Wells Fargo's rushDays (1) and Capital One's (3), which nothing
- * reads while card.report refuses a rush with no fee (card.report's gap). And, outside what the rows claim once their
+ * reads while card.report refuses a rush with no fee (card.report's gap). Settled later on 2026-10-13: Capital One’s
+ * days are read, and its rush sent free; Wells Fargo’s went from the data in that day’s third round, its rush being a
+ * credit card’s for a fee it doesn’t publish, refused in words that say so. And, outside what the rows claim once their
  * words are corrected: the statement's over-limit fee, which only a test-made product reaches, and `cashLimitShare`,
  * which no card product in any country has, so no limit sets a cash limit.
  *
@@ -316,7 +318,7 @@ describe('card.report', () => {
     expect(must(again, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toEqual({ fee: 0 });
   });
 
-  it('rushes Chase’s for $15 out of checking in two business days, and refuses the rush on a Wells Fargo card, whose terms list rush days and no fee, sending it in five business days for nothing', () => {
+  it('rushes Chase’s for $15 out of checking in two business days, and refuses a Wells Fargo card’s rush, whose fee Wells Fargo doesn’t publish, where unrushed it takes five', () => {
     const sim = settled('g12-report-rush');
     const account = checking(sim);
     // A Wells Fargo current account opened beside it, its first card to come by the clock.
@@ -335,8 +337,16 @@ describe('card.report', () => {
     expect(opened.cardAt).toBeLessThan(sim.now);
     const wf = sim.universe.accounts[opened.accountId]!;
     expect(wf.plastic!.stopped).toBeUndefined();
-    expect(run(sim, 'card.report', { which: 'debit', why: 'lost', rush: true, accountId: wf.id }).error).toBe('Wells Fargo has no rush replacement SLATE knows of.');
-    expect(wf.plastic!.stopped).toBeUndefined();
+    // Until 2026-10-13 this held the rush refused, “Wells Fargo has no rush replacement SLATE knows of.”, though its
+    // terms list a day’s rush: `card.report` read a rush fee alone. Later that day it held it rushed on a twin, in that
+    // one business day, Friday 4 September, for nothing; until the third round of that day, which read Wells Fargo’s rush
+    // as its own page gives it: a credit card’s, “in as little as 24 hours (additional fees may apply)”, its card
+    // agreement naming a Rush Plastic Fee with no amount. Refused on a twin now, in words that say so, and nothing stopped.
+    const twin = reload(sim);
+    const twinWf = twin.universe.accounts[wf.id]!;
+    expect(twin.execute({ kind: 'card.report', payload: { which: 'debit', why: 'lost', rush: true, accountId: wf.id } }).error).toBe('Wells Fargo doesn’t publish what it charges for a rush, so SLATE can’t send one.');
+    expect(twinWf.plastic!.stopped).toBeUndefined();
+    expect(twinWf.balance).toBe(wf.balance);
     const plain = must<{ arrivesAt: number; fee: number }>(sim, 'card.report', { which: 'debit', why: 'lost', accountId: wf.id });
     // Wells Fargo lists no fee; its five business days from Thursday 3 September skip the weekend and Labor Day,
     // Monday 7: Friday 4, then Tuesday 8 to Friday 11.
@@ -430,7 +440,9 @@ describe('card.request_hardship', () => {
     const sim = onAPlan(seed);
     sim.advanceTo(edt(9, 20, 9, 1));
     const statement = notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body;
-    expect(must(sim, 'finance.pay_card', { amount: 'minimum' })).toEqual({ paid: 48_00 });
+    // The card’s $48 typed in. Until 2026-10-13 paying “the minimum” paid it, the card’s own on a plan; from that day it
+    // pays the plan’s payment (`tests/hardship-plan-minimum.test.ts`), so the card’s is paid as an amount here.
+    expect(must(sim, 'finance.pay_card', { amount: 48_00 })).toEqual({ paid: 48_00 });
     sim.advanceTo(edt(10, 11, 11, 59));
     setBalance(sim, checking(sim), 0); // TEST SETUP: nothing in checking for autopay's rest, a minute before it asks
     sim.advanceTo(edt(10, 11, 12, 1));
@@ -540,7 +552,9 @@ describe('card.request_hardship', () => {
     drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' })).press('Ask For Help With Payments');
     expect(stateOf(sim.player, card).hardship?.payment).toBe(100_00);
     const on = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(on.text).toContain('On a plan since August 24, 2026: no interest, and $100 a month until it’s cleared. The card can’t be used until then.');
+    // Until 2026-10-13 this held “… and $100 a month until it’s cleared. The card can’t be used until then.”; a plan ends,
+    // and the card works again, only at the first statement or due date after it’s paid off.
+    expect(on.text).toContain('On a plan since August 24, 2026: no interest, and each statement asks the plan’s $100 in the minimum’s place. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.');
     expect(on.text).toContain('Left To Spend $0 Of a $65,217 limit');
     expect(on.count('Ask For Help With Payments')).toBe(0);
   });

@@ -37,7 +37,10 @@ describe('OPT', () => {
     const sim = graduate('opt-premium', 20);
     const a = sim.execute<{ readyAt: number; fee: number }>({ kind: 'documents.apply_opt', payload: { premium: true } });
     expect(a.value!.fee).toBe(2_250_00);
-    expect(a.value!.readyAt).toBe(businessDaysOn(sim.now, 30));
+    // Thirty days the Federal Government is open: no weekend and no federal holiday (8 CFR 106.4). Until 2026-10-13 this
+    // held the weekday-only count, which here counted Martin Luther King Jr. Day and Washington's Birthday, two days early.
+    expect(a.value!.readyAt).toBe(businessDaysOn(sim.now, 30, true));
+    expect(a.value!.readyAt - businessDaysOn(sim.now, 30)).toBe(2 * MS_DAY);
     expect(Math.round((a.value!.readyAt - sim.now) / MS_DAY)).toBeGreaterThanOrEqual(40);
     // Approved before the degree ends, it runs from the end, not the approval.
     const early = graduate('opt-early', 80);

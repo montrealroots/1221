@@ -100,6 +100,33 @@ export const COLLECTION = {
 } as const;
 
 /**
+ * What a balance grows by between two moments at the IRS’s rate compounded daily (IRC 6622(a)), each year’s days at its
+ * own count: a 366th of the rate a day in a leap year, as the IRS’s factors for one are (Rev. Proc. 95-17’s 366-day
+ * tables, to which Rev. Rul. 2024-11 points 2024’s third quarter; its factor for a day at 0.5% is 0.000013661, a 366th),
+ * and a 365th in any other. The year turns in New York, where SLATE keeps the IRS’s dates. Until 2026-10-13 every year
+ * was counted over 365, so the F-1 student’s 2026 1040-NR, assessed in leap-year 2028, carried $32.28 of interest
+ * where the IRS’s count gives $32.24; found by that day’s third round of defects.
+ */
+export function irsGrowth(from: Instant, to: Instant): number {
+  let growth = 1;
+  for (let at = from; at < to;) {
+    const year = zonedParts(at, HOME).year;
+    const next = Math.min(to, instantFromZoned({ year: year + 1, month: 1, day: 1 }, HOME));
+    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    growth *= (1 + COLLECTION.interest / (leap ? 366 : 365)) ** ((next - at) / MS_DAY);
+    at = next;
+  }
+  return growth;
+}
+
+/**
+ * The calendar days a penalty for paying late may go unpaid after the IRS’s notice and demand for it before interest
+ * runs on it, from that notice (IRC 6601(e)(2)(A), from 2026-10-13). The statute gives 10 business days where the
+ * demand is for $100,000 or more; no balance SLATE has played comes near it, and SLATE takes the 21 for every amount.
+ */
+export const DEMAND_DAYS = 21;
+
+/**
  * What's owed on a return, in its three parts (from 2026-10-10): the unpaid tax, the penalties, and the interest. Until
  * then one sum was kept, and a payment could only be the whole of it. A save from before holds the sum: its tax is the
  * balance the penalty was a share of (`base`), and the rest is taken as interest.
@@ -114,10 +141,11 @@ export function partsOf(r: TaxReturn): OwedParts {
 }
 
 /**
- * The parts at a moment: interest at the IRS's rate, compounded daily, on all that's owed since it was last brought up to
- * date; the failure-to-pay penalty, 0.5% a month or part since filing to 25% less what a late return was charged of it
- * with filing (`payLateRateAt`), on the tax still unpaid, so a part payment lowers what the next months charge
- * (IRC 6651(a)(2)).
+ * The parts at a moment: interest at the IRS’s rate, compounded daily (`irsGrowth`), on all that’s owed since it was last
+ * brought up to date, but for the paying-late share demanded at an assessment or a late filing (`demanded`), which draws
+ * none until it’s `DEMAND_DAYS` unpaid and then draws it from the demand; the failure-to-pay penalty, 0.5% a month or
+ * part since the due date to 25%, the months a late return was charged with filing not charged again (`payLateRateAt`),
+ * on the tax still unpaid, so a part payment lowers what the next months charge (IRC 6651(a)(2)).
  */
 export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
   const p = partsOf(r);
@@ -125,8 +153,11 @@ export function partsOn(r: TaxReturn, at: Instant, exact = false): OwedParts {
   // From the due date at the earliest (IRC 6601(a)): a return filed in February with a balance owes no interest on it
   // until 15 April. Until the integration pass of 2026-10-10 it ran from filing.
   const from = Math.max(r.accruedAt ?? r.filedAt ?? at, r.due);
-  const days = Math.max(0, (at - from) / MS_DAY);
-  const interest = p.interest + (p.tax + p.penalty + p.interest) * ((1 + COLLECTION.interest / 365) ** days - 1);
+  // The demanded share, the last of the penalty to be paid (SLATE’s reading: the statute doesn’t say which of two
+  // penalties a payment meets first). Until 2026-10-13 it drew interest from the moment it was assessed, with the rest.
+  const held = r.demanded ? Math.min(r.demanded.share, p.penalty) : 0;
+  const lapsed = r.demanded !== undefined && at - r.demanded.at > DEMAND_DAYS * MS_DAY;
+  const interest = p.interest + (p.tax + p.penalty - held + p.interest) * (irsGrowth(from, at) - 1) + (lapsed ? held * (irsGrowth(r.demanded!.at, at) - 1) : 0);
   const rate = payLateRateAt(r, at);
   const penalty = p.penalty + Math.max(0, rate - (r.payLateRate ?? 0)) * p.tax;
   if (exact) return { tax: p.tax, penalty, interest };
@@ -139,12 +170,13 @@ const monthsBetween = (a: Instant, b: Instant) => Math.ceil(Math.max(0, b - a) /
 
 /**
  * The failure-to-pay penalty's rate charged by a moment, month by month: each month or part of one begun since the due
- * date, or since filing on a return filed late, at half a percent (IRC 6651(a)(2)); or at a quarter percent where the
- * month began while a payment plan stood, on a return filed on time (6651(h), from 2026-10-10: `reducedFrom`,
- * `reducedTo`); to a quarter in all, less the share a late return was charged with filing (`payLateBeforeFiling`). So it
- * never falls as time passes. The law's month is under the plan where it begins after the day the plan is entered into;
- * SLATE keeps moments, not days, and takes a month that begins at the very moment the plan does as begun under it, as a
- * plan entered into on the due date stands for the first month, which begins the day after.
+ * date, less those a return filed late was charged with filing, at half a percent (IRC 6651(a)(2)); or at a quarter
+ * percent where the month began while a payment plan stood, on a return filed on time (6651(h), from 2026-10-10:
+ * `reducedFrom`, `reducedTo`); to a quarter in all, less the share a late return was charged with filing
+ * (`payLateBeforeFiling`). So it never falls as time passes. The law's month is under the plan where it begins after
+ * the day the plan is entered into; SLATE keeps moments, not days, and takes a month that begins at the very moment the
+ * plan does as begun under it, as a plan entered into on the due date stands for the first month, which begins the day
+ * after.
  *
  * Until 2026-10-12 the months after filing had a quarter of their own, so a return filed nine months late and never
  * paid had been charged 29.5% of its tax for paying late five years after filing. Until later on 2026-10-12 a plan's
@@ -155,8 +187,7 @@ const monthsBetween = (a: Instant, b: Instant) => Math.ceil(Math.max(0, b - a) /
  * past due, then 0.25%, 0%, 0.5%, 0.25% (tests/plan-rate.test.ts).
  */
 export function payLateRateAt(r: TaxReturn, at: Instant): number {
-  // From the due date at the earliest (IRC 6651(a)(2)); from filing for a return filed late, its months before filing
-  // being in the penalty assessed with it (`latePenalty`). Until the integration pass of 2026-10-10 an early return's ran
+  // From the due date at the earliest (IRC 6651(a)(2)). Until the integration pass of 2026-10-10 an early return’s ran
   // from filing.
   const filed = Math.max(r.filedAt ?? at, r.due);
   // The months from the due date, less those the penalty assessed with a late return already charged to its filing
@@ -203,15 +234,30 @@ function accrue(r: TaxReturn, at: Instant): void {
   r.payLateRate = Math.max(r.payLateRate ?? 0, payLateRateAt(r, at));
   r.owed = r.parts.tax + r.parts.penalty + r.parts.interest;
   r.accruedAt = at;
+  // Past its days unpaid, the demanded share’s interest from the demand is in the balance now, and it runs with the rest.
+  if (r.demanded && at - r.demanded.at > DEMAND_DAYS * MS_DAY) delete r.demanded;
 }
 
-/** A balance owed set down: its parts, brought up to date from now. */
+/** A balance owed set down: its parts, brought up to date from now; the demanded share no more than the penalty left. */
 function setOwed(r: TaxReturn, parts: OwedParts, at: Instant): void {
   r.parts = parts;
   r.owed = parts.tax + parts.penalty + parts.interest;
   r.base = parts.tax;
   r.accruedAt = at;
+  if (r.demanded) r.demanded.share = Math.min(r.demanded.share, parts.penalty);
   if (r.owed <= 0) { delete r.owed; delete r.parts; }
+  if (!r.owed || (r.demanded?.share ?? 1) <= 0) delete r.demanded;
+}
+
+/**
+ * The paying-late share of a penalty assessed with a notice and demand, kept to draw interest only once unpaid past
+ * `DEMAND_DAYS` (from 2026-10-13): the IRS’s assessment of its substitute, or a late return filed with a balance the bank
+ * couldn’t pay, which SLATE takes as the IRS’s notice and demand for it, sending no CP14 of its own.
+ */
+function demand(r: TaxReturn, share: number, at: Instant): void {
+  const kept = Math.round(share);
+  if (kept > 0 && r.owed) r.demanded = { share: kept, at };
+  else delete r.demanded;
 }
 
 /**
@@ -360,6 +406,14 @@ export interface TaxReturn {
   base?: Money;
   payLateRate?: number;
   accruedAt?: Instant;
+  /**
+   * The paying-late share of the penalty demanded at an assessment or a late filing, and when (`demand`, from
+   * 2026-10-13): no interest on it until it’s `DEMAND_DAYS` unpaid, then from the demand (IRC 6601(e)(2)(A)). The months
+   * of that penalty added after it draw interest from the moment they join the balance, a notice or a payment, without
+   * the statute’s 21 days. Until 2026-10-13 the share demanded drew interest from the moment it was assessed, a cent or
+   * so on the F-1 student’s 1040-NR paid four days after the IRS assessed it.
+   */
+  demanded?: { share: Money; at: Instant };
   /** How far the IRS's collection has gone: its notices sent, and a levy made. */
   collection?: number;
   /** Filed by the IRS, never by them (`SUBSTITUTE`). */
@@ -1019,15 +1073,41 @@ export function owedToFrom(person: Person, year: number, f: ReturnFigures, into 
 /** A filed return's split: its own, or worked out from its lines. */
 export const owedToOf = (person: Person, r: TaxReturn): NonNullable<ReturnFigures['owedTo']> => r.figures.owedTo ?? owedToFrom(person, r.year, r.figures);
 
-/** The late penalties on a balance filed at a moment: 4.5% a month or part for filing and 0.5% for paying, each to 25%, and the minimum past 60 days. */
-export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into = 'USD'): Money {
-  if (balance <= 0 || filedAt <= due) return 0;
+/**
+ * The late penalties on a balance filed at a moment, in their two shares (kept apart from 2026-10-13, when interest began
+ * to run on the filing share): paying late’s 0.5% a month or part to 25% (IRC §6651(a)(2)), and filing late’s 5% a month
+ * or part to five months less the paying-late half-point it runs beside, 4.5% a month to 22.5% (§6651(a)(1), (c)(1)), and
+ * past 60 days at least the year’s least or the balance where that’s less. Interest runs on the filing share from the due
+ * date, as on the tax (§6601(e)(2)(B)); on the paying share only from notice and demand (§6601(e)(2)(A)).
+ */
+export function lateShares(balance: Money, due: Instant, filedAt: Instant, into = 'USD'): { payLate: number; fileLate: number } {
+  if (balance <= 0 || filedAt <= due) return { payLate: 0, fileLate: 0 };
   const months = Math.ceil((filedAt - due) / (30.4375 * MS_DAY));
-  // Paying late runs to a quarter of the balance; filing late is 5% a month to five months, less the paying-late half-point it runs beside, so 22.5% (IRC §6651(a), (c)).
   const payLate = Math.min(RETURN.lateCap, RETURN.payLateMonthly * months) * balance;
   let fileLate = Math.min(5, months) * (RETURN.lateMonthly - RETURN.payLateMonthly) * balance;
   if (filedAt - due > RETURN.lateMinimumAfterDays * MS_DAY) fileLate = Math.max(fileLate, Math.min(usd(RETURN.lateMinimum, into), balance));
+  return { payLate, fileLate };
+}
+
+/** The late penalties on a balance filed at a moment: its two shares (`lateShares`) together. */
+export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into = 'USD'): Money {
+  const { payLate, fileLate } = lateShares(balance, due, filedAt, into);
   return Math.round(payLate + fileLate);
+}
+
+/**
+ * The interest on a balance filed late, from its due date to a moment, at the IRS’s rate compounded daily: on the tax,
+ * and on the filing share of the penalty, which IRC §6601(e)(2)(B) runs from the return’s due date as well (from
+ * 2026-10-13: until then on the tax alone, so the F-1 student’s 2026 1040-NR, assessed by the IRS in August 2028, was
+ * charged $16.14 where the statute gives $32.28, and $32.24 counted as the IRS counts a leap year, `irsGrowth`; found by
+ * that day’s second round of evidence). The paying-late share draws none until the balance is assessed, and from then
+ * only once it’s unpaid 21 days after the notice and demand, from the notice (§6601(e)(2)(A), `demanded`): until later
+ * on 2026-10-13 `partsOn` ran interest on it at once, a cent or so on that return.
+ */
+function lateInterest(balance: Money, due: Instant, at: Instant, into = 'USD'): Money {
+  if (balance <= 0) return 0;
+  const on = balance + Math.round(lateShares(balance, due, at, into).fileLate);
+  return Math.round(on * (irsGrowth(due, at) - 1));
 }
 
 /**
@@ -1194,7 +1274,6 @@ export function registerTaxReturn(sim: Simulation): void {
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r || r.filedAt !== undefined) return;
     const cur = saveCurrency(s.universe);
-    const late = Math.max(0, (s.now - r.due) / MS_DAY);
     // The IRS's figures claim no credit a return of their own would: the foreign tax credit (Form 1116) and the premium tax
     // credit (Form 8962), from 2026-10-10. Until then the substitute was their own return's figures to the cent, and
     // replacing it changed nothing.
@@ -1203,7 +1282,7 @@ export function registerTaxReturn(sim: Simulation): void {
     // The IRS's own part of it: a state's tax isn't the IRS's to assess (from the integration pass of 2026-10-10).
     const federalPart = Math.max(0, owedToOf(person, r).irs + (sfr.balance - r.figures.balance));
     const penalty = latePenalty(federalPart, r.due, s.now, cur);
-    const interest = Math.round(federalPart * ((1 + COLLECTION.interest / 365) ** late - 1));
+    const interest = lateInterest(federalPart, r.due, s.now, cur);
     const total = federalPart + penalty + interest;
     if (item.payload.step === 'proposed') {
       if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: with no return from you, the IRS worked out ${formatMoney(total, cur)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
@@ -1215,6 +1294,8 @@ export function registerTaxReturn(sim: Simulation): void {
     r.penalty = penalty;
     r.substitute = true;
     setOwed(r, { tax: federalPart, penalty, interest }, s.now);
+    // The assessment is the notice and demand for its penalty: the paying-late share draws interest only past its days.
+    demand(r, lateShares(federalPart, r.due, s.now, cur).payLate, s.now);
     r.collection = 0;
     // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
     if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
@@ -1435,13 +1516,14 @@ export function registerTaxReturn(sim: Simulation): void {
       s.schedule({ at: r.refundAt, kind: TAX_REFUND_KIND, label: `Tax Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
       return { balance: r.figures.balance, penalty: 0, paid: statesPaid, irs, states: split.states, refundAt: r.refundAt };
     }
-    // Interest runs from the due date on a balance filed late.
-    const late = Math.max(0, (s.now - r.due) / MS_DAY);
-    const interest = irs > 0 ? Math.round(irs * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
+    // Interest runs from the due date on a balance filed late, and on its filing share of the penalty (`lateInterest`).
+    const interest = lateInterest(irs, r.due, s.now, cur);
     const total = Math.max(0, irs) + r.penalty + interest;
     const paid = total <= 0 || payFromBank(s, person, total, `Federal income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
     if (!paid) {
       setOwed(r, { tax: irs, penalty: r.penalty, interest }, s.now);
+      // A late return’s penalty is assessed as filed: the paying-late share draws interest only past its days.
+      demand(r, lateShares(irs, r.due, s.now, cur).payLate, s.now);
       // Under a payment plan, another year's balance joins it or puts it in default (`newLiability`, from 2026-10-10).
       if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) underPlan(r, s.now); newLiability(s, person, total); }
       else { r.collection = 0; nextNotice(s, person, r); }
@@ -1511,8 +1593,7 @@ export function registerTaxReturn(sim: Simulation): void {
     if (federal === 0) { if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `The federal tax didn’t change; each state’s is on Papers.`, importance: 70, route: '/workspace/papers' }); return; }
     a.change = federal;
     if (a.change > 0) {
-      const days = Math.max(0, (s.now - r.due) / MS_DAY);
-      const interest = Math.round(a.change * ((1 + COLLECTION.interest / 365) ** days - 1));
+      const interest = Math.round(a.change * (irsGrowth(r.due, s.now) - 1));
       accrue(r, s.now);
       const p = partsOf(r);
       const had = !!r.owed;
@@ -1527,7 +1608,7 @@ export function registerTaxReturn(sim: Simulation): void {
     let back = -a.change;
     const offset = Math.min(back, r.owed ? owedOn(r, s.now) : 0);
     if (offset > 0) { applyPayment(s, person, r, offset, 'refund offset'); back -= offset; }
-    const interest = back > 0 ? Math.round(back * ((1 + COLLECTION.interest / 365) ** (Math.max(0, s.now - Math.max(r.due, r.filedAt ?? r.due)) / MS_DAY) - 1)) : 0;
+    const interest = back > 0 ? Math.round(back * (irsGrowth(Math.max(r.due, r.filedAt ?? r.due), s.now) - 1)) : 0;
     a.refund = back;
     a.interest = interest;
     if (back + interest > 0) s.post({ memo: `Tax refund, amended ${r.year} return${interest ? ', with interest' : ''}`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: back + interest }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }, ...(interest ? [{ accountId: s.nominalAccount('income', 'Interest').id, amount: -interest }] : [])] });
@@ -1581,6 +1662,8 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): Filed {
   const p = partsOf(r);
   const ratio = was > 0 ? Math.max(0, ownIrs) / was : 1;
   const tax = Math.max(0, ownIrs - paidTax);
+  // The demanded share falls with the penalty it’s part of (from 2026-10-13, `demanded`).
+  if (r.demanded) r.demanded.share = Math.round(r.demanded.share * ratio);
   setOwed(r, { tax, penalty: Math.round(p.penalty * ratio), interest: Math.round(p.interest * ratio) }, sim.now);
   r.penalty = Math.round((r.penalty ?? 0) * ratio);
   const over = paidTax - Math.max(0, ownIrs);

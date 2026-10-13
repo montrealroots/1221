@@ -25,13 +25,16 @@
  *   its screen; in a guided life each opens that screen as Locked until its chapter is read.
  * - `p-traits-line`: the seven dispositions as made, with what each does, and two of those words checked on the same
  *   screen against their rules (composure starts at 25 + 0.35 a point of stability, discipline at 30 + 0.5 a point of
- *   conscientiousness); a changed disposition changes the line; and Risk Tolerance's "over 65, the card's autopay starts
- *   on the minimum" is what creation does at 70 and not at 65.
+ *   conscientiousness); a changed disposition changes the line; and Risk Tolerance’s words are what creation did: “over
+ *   65, so the card’s autopay started on the minimum” at 70, and “65 or under, so the card’s autopay started on the
+ *   whole statement” at 65 and 50. Until 2026-10-13 the line said the rule at every figure, “over 65, the card’s
+ *   autopay starts on the minimum”, and this held it at 65.
  * - `p-abilities`: Circles Of Attention opened from Focus's row and an hour pressed: the hour spent, Focus up by the
  *   toast's gain, Now and Last Change and the subtitle's hours said again, discipline's day kept, across a reload;
  *   the Tier select pressed to Foundation and to Advanced, giving 0.75 and 0.8 of the matched hour (`TIER`) and the
- *   Advanced hour costing 3 more energy; Today said under fatigue at 7 PM for every dimension an ability shapes but
- *   interpretation, which the Current Condition panel says fatigue leaves be, with the night owl's and the early
+ *   Advanced hour costing 3 more energy; Today said under fatigue at 7 PM for each dimension in which some task reads
+ *   the ability and lists fatigue (until 2026-10-13, every dimension it shapes but interpretation, which named
+ *   Emotional Depth’s connection, read only in partnered work, where it lists none), with the night owl’s and the early
  *   riser's readiness at the hour's fit, and nothing said at 8 AM; and Stamina's row: a workout refused in its words
  *   during orientation, falling 0.18 a day, and held three days after a run.
  * - `p-techniques`: the seventeen rows' Now, Classes Reach (each skill as admitted and 26 points more, as the guide
@@ -468,7 +471,7 @@ describe('p-traits-line', () => {
     fresh();
     const sim = life('g31-dispositions', { personality, personalityTraits: ['early_riser', 'even_tempered'] });
     const html = profile(sim);
-    expect(dispositions(html)).toBe('Emotional Stability 72, how fast stress comes and clears, and where composure starts; Conscientiousness 40, how well a night’s sleep restores you, and where discipline starts; Ambition 60, how fast every stress comes; Risk Tolerance 70, over 65, the card’s autopay starts on the minimum; Extraversion 55, how a house watching sits with you; Openness 30, how rehearsing new work does; Agreeableness 80, how a rehearsal does.');
+    expect(dispositions(html)).toBe('Emotional Stability 72, how fast stress comes and clears, and where composure starts; Conscientiousness 40, how well a night’s sleep restores you, and where discipline starts; Ambition 60, how fast every stress comes; Risk Tolerance 70, over 65, so the card’s autopay started on the minimum; Extraversion 55, how a house watching sits with you; Openness 30, how rehearsing new work does; Agreeableness 80, how a rehearsal does.');
     // Where composure starts: 25 and 0.35 a point of stability, 50.2 at 72. Where discipline starts: 30 and half a
     // point of conscientiousness, 50.0 at 40. Each as the Attributes table shows it.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('50.2');
@@ -483,12 +486,15 @@ describe('p-traits-line', () => {
     expect(risky.player.credit!.autopay).toBe('minimum');
     const at65 = life('g31-risk-65', { personality: { ...personality, riskTolerance: 65 } });
     expect(at65.player.credit!.autopay).toBe('full');
-    expect(dispositions(profile(at65))).toContain('Risk Tolerance 65, over 65, the card’s autopay starts on the minimum;');
+    // What the figure did, not the rule: until 2026-10-13 the line said “over 65, the card’s autopay starts on the
+    // minimum” at 65 and at 50 alike, and this held it so.
+    expect(dispositions(profile(risky))).toContain('Risk Tolerance 70, over 65, so the card’s autopay started on the minimum;');
+    expect(dispositions(profile(at65))).toContain('Risk Tolerance 65, 65 or under, so the card’s autopay started on the whole statement;');
     const steadier = life('g31-stability-40', { personality: { ...personality, riskTolerance: 50, emotionalStability: 40, conscientiousness: 70 } });
     const html = profile(steadier);
     expect(dispositions(html)).toContain('Emotional Stability 40, how fast stress comes');
     expect(dispositions(html)).toContain('Conscientiousness 70, how well a night’s sleep');
-    expect(dispositions(html)).toContain('Risk Tolerance 50, over 65');
+    expect(dispositions(html)).toContain('Risk Tolerance 50, 65 or under, so the card’s autopay started on the whole statement;');
     // 25 + 0.35 × 40 = 39.0; 30 + 0.5 × 70 = 65.0.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('39.0');
     expect(rowOf(abilities(html), 'Discipline')[1]).toBe('65.0');
@@ -502,11 +508,27 @@ describe('p-traits-line', () => {
 // ---------------------------------------------------------------------------
 
 /**
- * What fatigue leaves be, as the Current Condition panel says: a work's interpretation, "the choices made", which no
- * task's interpretation lists a condition for. Every other dimension it reaches somewhere (`TASK_PROFILES`: execution
- * and consistency, and believability, connection and responsiveness with every condition).
+ * What fatigue reaches of each ability, task by task, as the evaluation applies it (`TASK_PROFILES`, each task’s
+ * dimension by its own conditions), worked out here from the tasks: the dimensions in which some task reads the
+ * ability and lists fatigue for that dimension. Interpretation, “the choices made”, lists it in no task, so Imagination,
+ * read in it alone, has nothing. Emotional Depth’s connection is read only in partnered work, which lists no condition
+ * for it. Until 2026-10-13 this was every dimension the ability shapes but interpretation, which held the Profile’s
+ * over-report: Emotional Depth tired in connection.
  */
-const UNTIRED = 'interpretation';
+const TIRED: Readonly<Record<string, readonly string[]>> = {
+  'Emotional Depth': ['believability'],
+  Presence: ['connection'],
+  'Listening And Responsiveness': ['connection', 'responsiveness'],
+  Imagination: [],
+  Focus: ['execution', 'consistency'],
+  Memory: ['execution'],
+  Adaptability: ['responsiveness'],
+  Composure: ['consistency'],
+  'Vocal Expression': ['execution', 'consistency'],
+  'Physical Expression': ['execution'],
+  Discipline: ['consistency', 'execution'],
+  Stamina: ['consistency'],
+};
 
 describe('p-abilities', () => {
   it('PLAYER JOURNEY: Circles Of Attention opened from Focus’s row and an hour pressed: the hour spent, Focus up by the gain, Now, Last Change and today’s hours said again, across a reload', () => {
@@ -596,9 +618,9 @@ describe('p-abilities', () => {
     expect(r).toBeLessThan(60);
     const said = [Math.round(r * FLAT), Math.round(r), Math.round(r * SHARP)];
     today.forEach(({ rows }, i) => {
+      expect(rows.map((row) => row[0]).sort()).toEqual(Object.keys(TIRED).sort());
       for (const row of rows) {
-        const shapes = row[5]!.toLowerCase().split(', ');
-        const reached = shapes.filter((d) => d !== UNTIRED && d !== '—');
+        const reached = TIRED[row[0]!]!;
         if (!reached.length) { expect(row[4], row[0]).toBe('Nothing holds it back'); continue; }
         const m = /^Readiness (\d+), under 60: (.+)$/.exec(row[4]!);
         expect(m, `${row[0]}: ${row[4]}`).not.toBeNull();

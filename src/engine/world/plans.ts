@@ -19,7 +19,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
-import { formatTime, MS_DAY, type Instant } from '../core/time';
+import { formatTime, MS_DAY, zoneAbbreviation, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
 export const PLAN_KIND = 'life.commitment';
@@ -136,10 +136,15 @@ export function registerPlans(sim: Simulation): void {
     item.status = 'missed';
     const there = CITIES.get(wanted)?.name ?? 'somewhere else';
     const here = CITIES.get(player.currentLocationId)?.name ?? 'where you are';
+    // On the place’s own clock, with its zone, where that isn’t home’s, as Home’s Calendar gives it. Until 2026-10-13
+    // the notice gave the home clock with no zone, so a call Home showed at 4:30 AM PDT was missed “at 7:30 AM” (found
+    // by that day’s third round). Only the command reaches a plan elsewhere: the plan form sends no place.
+    const tz = CITIES.get(wanted)?.timeZone;
+    const when = tz && tz !== s.homeZone ? `${formatTime(item.at, tz)} ${zoneAbbreviation(item.at, tz)}` : formatTime(item.at, s.homeZone);
     s.notify({
       category: 'personal',
       title: `You Missed ${item.label}`,
-      body: `It wanted you in ${there} at ${formatTime(item.at, s.homeZone)}, and you were in ${here}.`,
+      body: `It wanted you in ${there} at ${when}, and you were in ${here}.`,
       importance: 60,
     });
   });

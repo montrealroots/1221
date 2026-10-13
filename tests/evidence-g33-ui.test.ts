@@ -42,8 +42,9 @@
  *   offering Apply For OPT then Apply For OPT, Premium Processing; pressed, the standard one pays $470 and leaves an OPT
  *   permit pending ninety days, which holds her status past its end and is approved by the clock for twelve months,
  *   once across a reload; applied for from Papers, the decision is answered at that moment; premium pays $2,250 and is
- *   decided in thirty business days, on Thursday 13 May. And a defect: a withdrawn F-1, whose grace of fifteen days
- *   begins at once, is never raised the decision at all (below, failing until `statusCheckAt` is fixed).
+ *   decided in thirty business days, on Thursday 13 May. And a withdrawn F-1, whose grace of fifteen days begins at
+ *   once, is raised the decision in it, due the sixteenth with nothing to apply for. Until `statusCheckAt` was fixed on
+ *   2026-10-13 she was never raised it at all, and the test below, titled a defect, failed.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, an actor at Yale in New Haven from Monday
  * 24 August 2026 at 7:30 AM, born in New York (the birthplace a player picks on Identity, which `newLifeConfig` leaves
@@ -393,23 +394,27 @@ describe('h-papers', () => {
     for (const a of [primary(sim), own(sim, 'savings')]) setBalance(sim, a, 0);
     const filed = sim.must<{ paid: boolean; irs: number }>({ kind: 'tax.file', payload: { year: 2026 } });
     expect(filed).toMatchObject({ paid: false, irs: 165_60 });
-    const owedAlert = (s: Simulation) => /Papers Cover: Yale Health\. (\$[\d,]+) of tax owed, with its interest and a late penalty growing each month\. Papers How This Works/.exec(drawn(s).affairs)?.[1];
-    expect(owedAlert(sim)).toBe('$166');
+    // The alert whole: what's owed, and whether it says it's growing. Until 2026-10-13 this read only the amount, under
+    // words that said it was growing from the day of filing, before the due date, when nothing grows; they're said only
+    // past the due date since (tests/evidence2-b12.test.ts, h-papers).
+    const owedAlert = (s: Simulation) => /Papers Cover: Yale Health\. (\$[\d,]+ of tax owed[^.]*)\. Papers How This Works/.exec(drawn(s).affairs)?.[1];
+    expect(owedAlert(sim)).toBe('$166 of tax owed');
     expect(drawn(sim).affairs).not.toContain('The 2026 return is due');
     // Interest and the late-payment penalty run from the due date (IRC 6601(a), 6651(a)(2)): the day before, still $165.60.
     sim.advanceTo(DUE - MS_DAY);
     expect(troubles(sim, sim.player).find((t) => t.kind === 'tax')?.amount).toBe(165_60);
-    expect(owedAlert(sim)).toBe('$166');
+    expect(owedAlert(sim)).toBe('$166 of tax owed');
     // Sixty days past: 0.5% a month or part for two months, $1.66, and 7% a year compounded daily on $165.60, $1.92:
     // $169.17.
     sim.advanceTo(DUE + 60 * MS_DAY);
     const live = 165_60 * (1 + 2 * 0.005) + 165_60 * ((1 + 0.07 / 365) ** 60 - 1);
     expect(dollars(live)).toBe('$169');
-    expect(owedAlert(sim)).toBe('$169');
+    const growing = '$169 of tax owed, with its interest and a late penalty growing each month';
+    expect(owedAlert(sim)).toBe(growing);
     expect(dollars(troubles(sim, sim.player).find((t) => t.kind === 'tax')!.amount)).toBe('$169');
     // The balance as stored, last brought up to date by the IRS's third letter, a month after the due date.
     expect(dollars(sim.player.returns!['2026']!.owed!)).toBe('$168');
-    expect(owedAlert(reload(sim))).toBe('$169');
+    expect(owedAlert(reload(sim))).toBe(growing);
   });
 
   it('PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.” and “You have no health cover.”', () => {
@@ -812,7 +817,8 @@ describe('n-decision-us-status', () => {
     expect(f1Of(sim.player)!.status).toBe('cancelled');
   });
 
-  it('DEFECT: an F-1 who withdraws is raised “Your US Status Is Ending” in her fifteen days’ grace, due the sixteenth, with nothing to apply for', () => {
+  // Titled “DEFECT:” until 2026-10-13, when `statusCheckAt` began looking a minute into the grace and this passed.
+  it('PLAYER JOURNEY: an F-1 who withdraws is raised “Your US Status Is Ending” in her fifteen days’ grace, due the sixteenth, with nothing to apply for', () => {
     const sim = londoner('g33-probe-withdraw');
     sim.advanceTo(at(2026, 9, 1, 12));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });

@@ -97,7 +97,9 @@ export const INJURY = {
  * Labor Code §4652). Connecticut from 2026-10-10, where the school's work is
  * done (research-student-status.json): 75% of the average week's wage after
  * taxes (CGS 31-307), to $1,776 for an injury from 1 October 2026, at least a
- * fifth of that but never more than 75% of the wage; nothing unless out more
+ * fifth of that but never more than 75% of the wage before deductions (CGS
+ * 31-310’s; until 2026-10-13 SLATE held it to 75% of the wage after tax,
+ * `compWeekly`); nothing unless out more
  * than three days, from the fourth, or from the first if out seven or more
  * (CGS 31-295). Until then a Summer Cabaret injury in New Haven was paid on
  * New York's rules, its floor above the stipend. A student employee isn't

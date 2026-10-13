@@ -146,10 +146,6 @@ describe('reading one at school', () => {
     expect(sim.must<{ note: string }>({ kind: 'plays.research', payload: { playId: 'fleabag' } }).note).toBe('First staged in 2013 at Edinburgh Festival Fringe (then Soho Theatre, London). First published 2013, by Nick Hern Books. Its performing rights aren’t released.');
   });
 
-  it('away from New Haven, there’s no copy to be had', () => {
-    const sim = life('pl-away');
-    tended(sim, at(9, 5, 18));
-    sim.player.currentLocationId = 'us-ny-newyork';
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('A copy is at the Haas Arts Library, in New Haven.');
-  });
+  // Until 2026-10-13 a test here moved her to New York by hand to reach “A copy is at the Haas Arts Library, in New
+  // Haven.”, which went that day: nothing in the game moves a life after it begins.
 });

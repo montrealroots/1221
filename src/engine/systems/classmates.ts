@@ -35,9 +35,13 @@
  * - a boundary, after you've let them down twice without making it right:
  *   from then they'll rehearse only if asked a day ahead. Accept it and they
  *   trust you a little more; push back and you're further apart.
- * Making it right is yours to start (\`school.make_amends\`): twenty minutes,
- * in New Haven, for what's happened since you last did; it gives back the
- * trust and bond each thing unrepaired took (`CLASS.amends`). It lifts no
+ * Making it right is yours to start (\`school.make_amends\`): twenty minutes
+ * (asked in New Haven until 2026-10-13, where every student is), for what’s
+ * happened since you last did; it gives back trust
+ * and bond for each thing unrepaired (`CLASS.amends`): what a late call-off
+ * took, nearly what an evening running lines missed took, and half the trust
+ * of a rehearsal missed. Until 2026-10-13 this said it gave back what each
+ * thing took (found by that day’s evidence pass). It lifts no
  * boundary: one lifts only by rehearsals kept since it was set
  * (`boundaryLiftsAfter`: two where it was accepted, four where it was pushed
  * back on, three for one set before 2026-10-10). Until 2026-10-12 this said
@@ -88,9 +92,14 @@ export const CLASS = {
    */
   boundary: { after: 2, noticeHours: 24, respect: 2, argue: { trust: -3, bond: -4 }, liftAfterKept: { accepted: 2, pushedBack: 4, before: 3 } },
   /**
-   * Making it right gives back what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the
-   * bond 2 of the 3 it cost), a rehearsal called off under a day ahead (the trust 4 it took, `WORK.trust.lateCancel` in
-   * `systems/coursework.ts`; it takes no bond). Until 2026-10-08 every one gave trust 6 and bond 2 whatever it was, and
+   * Making it right gives back trust 6 and the bond 2 for each thing missed, and for a rehearsal called off under a day
+   * ahead the trust 4 it took (`WORK.trust.lateCancel` in `systems/coursework.ts`; it takes no bond). For an evening
+   * running lines missed that is the trust it took and 2 of the bond’s 3 (`CLASS.study.missed`); a partner rehearsal or
+   * a showing missed takes trust 12 and the bond 5 (`WORK.trust.missed`, `WORK.bond.missed`), and half the trust and 2
+   * of the bond’s 5 come back. An incident keeps only that something was missed, not which (`noteIncident`), so the two
+   * can’t be given back apart. Until 2026-10-13 this said amends gave back what each thing took and no more, with a
+   * rehearsal missed given the study evening’s figures (found by that day’s evidence pass).
+   * Until 2026-10-08 every one gave trust 6 and bond 2 whatever it was, and
    * the social journeys (`tools/social-lives.mjs`) found the student who called off late and apologized ending school
    * closer to the class than the one who kept every plan. Until 2026-10-13 a late call-off gave back the bond's 1 and no
    * trust, what a plan called off late cost before plans went in the scope reset of 2026-10-09, while a rehearsal called
@@ -345,7 +354,8 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
   const a = m.assignmentId ? courseworkOf(sim, person)?.assignments.find((x) => x.id === m.assignmentId) : undefined;
   if (m.kind === 'disagreement' && (!a || (a.status !== 'open' && a.status !== 'revising'))) return 'That work is finished.';
   if (m.kind === 'help' && choice === 'help') {
-    if (person.currentLocationId !== YALE_DRAMA.cityId) return 'They’re in New Haven.';
+    // “They’re in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only where it begins in New
+    // Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope reset of 2026-10-09.
     const busy = startRefusal(sim, person, CLASS.help.minutes, true);
     if (busy) return busy;
   }
@@ -363,9 +373,10 @@ export function amendsRefusal(sim: Simulation, person: Person, i: number): strin
   const mate = person.school?.classmates[i];
   if (!mate) return 'There’s no such classmate.';
   if (!unrepaired(mate).length) return 'There’s nothing between you to make right.';
-  // In New Haven. After the degree they were in the town the person they are lived in (from 2026-10-08), until the
-  // people they are went in the scope reset of 2026-10-09 (`systems/people.ts`).
-  if (person.currentLocationId !== YALE_DRAMA.cityId) return `${first(mate)} is in ${CITIES.require(YALE_DRAMA.cityId).name}.`;
+  // In New Haven until 2026-10-13. After the degree they were in the town the person they are lived in (from
+  // 2026-10-08), until the people they are went in the scope reset of 2026-10-09 (`systems/people.ts`). “… is in New
+  // Haven.” went on 2026-10-13, reached by no play: a life is enrolled only where it begins in New Haven (`populateWorld`,
+  // `engine/index.ts`), and nothing has moved a person since that reset.
   return startRefusal(sim, person, CLASS.amends.minutes, true);
 }
 

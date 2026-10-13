@@ -13,10 +13,12 @@
  *   a visit the week booked, called off and booked again on Papers, 24 days on and moved off a Sunday, owedVisit
  *   cleared and a second press refused, kept on the clock once across two reloads at Yale Health's $0. Its
  *   `renewPrescriptions` is unread in New Haven (`RX.validYears` holds British Columbia alone), so it's followed in
- *   Vancouver, where a renewal booked again is the next fill, and one left owed runs the medicine out.
+ *   Vancouver, where a renewal booked again is the next fill, and one left owed is booked again by the next week’s fill
+ *   (until 2026-10-13 it ran the medicine out for good, and this file held that).
  * - `health.choose_clinic`: its three refusals through the command. New Haven lists one doctor's practice, the one had
  *   with nothing chosen, so the choice is followed where it decides something: in London the practice chosen is where
- *   the week's visit is booked and had, and in Mexico City an uninsured visit is billed at its own published price.
+ *   the week's visit is booked and had, and billed at Bupa's £79 (from 2026-10-13: until then the NHS paid it, to
+ *   nothing), and in Mexico City an uninsured visit is billed at its own published price.
  * - `health.choose_pharmacy`: on the student, the first fill of a drawn high blood pressure at Walmart's $4 under
  *   Yale's $10 copay, against a twin at $10, and again after a reload; CVS's $12.50 left at the copay.
  * - `health.dental`: Buy Dental pressed, the year's $312.72 in one posting, its end, its two refusals; a filling the week
@@ -267,7 +269,11 @@ describe('health.book', () => {
     expect(titled(sim, 'A Doctor’s Appointment')).toEqual([]);
   });
 
-  it('LIFE FIXTURE (Vancouver, where a prescription runs out after two years): a renewal called off and booked again is kept and the medicine filled again; a twin who left it owed runs out', () => {
+  // Until 2026-10-13 the twin who left the renewal owed ran out of medicine for good, the week’s fill passing over a
+  // prescription past its date while a visit was owed (`renewalDue`), and this test held that. From that day the fill
+  // books the visit owed, one appointment for both, as the health week books one for an illness (found by the second
+  // round of that day; fixed by the third).
+  it('LIFE FIXTURE (Vancouver, where a prescription runs out after two years): a renewal called off and booked again is kept and the medicine filled again; a twin who left it owed has it booked again by the next week’s fill, kept, and filled again too', () => {
     const play = (book: boolean) => {
       let sim = lifeIn('ca-bc-vancouver', 'g03-van-1');
       expect(Object.keys(healthOf(sim.player).chronic ?? {})).toEqual(['depression']);
@@ -292,16 +298,29 @@ describe('health.book', () => {
         // Kept, it renewed the prescription; the health week with a week of supply left filled the medicine again.
         expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('A prescription to renew'))).toHaveLength(1);
         expect(healthOf(sim.player).chronic!.depression!.prescribedAt).toBe(when);
-      } else tended(sim, at(2026, 2, 24, 12, 0, 'America/Vancouver'));
+      } else {
+        // Left owed: Monday 2 February’s fill finds the prescription past its date and books the visit owed, and says so
+        // again, the same words brought up to then.
+        tended(sim, at(2026, 2, 2, 12, 0, 'America/Vancouver'));
+        const again = appointmentsOf(sim.player);
+        expect(again.map((a) => a.what)).toEqual(['A prescription to renew']);
+        expect(healthOf(sim.player).owedVisit).toBeUndefined();
+        expect(titled(sim, 'A Prescription Ran Out').map((n) => n.at)).toEqual([at(2026, 2, 2)]);
+        const when = again[0]!.at;
+        tended(sim, at(2026, 2, 24, 12, 0, 'America/Vancouver'));
+        expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('A prescription to renew'))).toHaveLength(1);
+        expect(healthOf(sim.player).chronic!.depression!.prescribedAt).toBe(when);
+      }
       return { sim, supplied };
     };
     const renewed = play(true);
     const left = play(false);
-    expect(renewed.sim.player.health!.chronic!.depression!.supplyUntil!).toBeGreaterThan(at(2026, 2, 24, 12, 0, 'America/Vancouver'));
-    expect(left.sim.player.health!.chronic!.depression!.supplyUntil).toBe(left.supplied);
-    expect(left.sim.player.health!.owedVisit).toBe('A prescription to renew');
-    expect(shown(left.sim).text).toContain('Depression: Out Of Medicine');
-    expect(shown(renewed.sim).text).toMatch(/Depression: Kept Up · Medicine until /);
+    for (const { sim, supplied } of [renewed, left]) {
+      expect(sim.player.health!.chronic!.depression!.supplyUntil!).toBeGreaterThan(at(2026, 2, 24, 12, 0, 'America/Vancouver'));
+      expect(sim.player.health!.chronic!.depression!.supplyUntil!).toBeGreaterThan(supplied);
+      expect(sim.player.health!.owedVisit).toBeUndefined();
+      expect(shown(sim).text).toMatch(/Depression: Kept Up · Medicine until /);
+    }
   });
 });
 
@@ -355,7 +374,9 @@ describe('health.choose_clinic', () => {
     expect(didnt.label).toBe('The Doctor, Soho Square General Practice');
     expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the wait where you live.']);
     expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the wait where you live.']);
-    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Nothing to pay.']);
+    // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
+    // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
+    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due in 30 days.']);
     expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. Nothing to pay.']);
   });
 

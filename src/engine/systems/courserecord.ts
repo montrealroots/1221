@@ -36,7 +36,6 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatDate, formatTime, MS_DAY, type Instant } from '../core/time';
-import { YALE_DRAMA } from '../content/school';
 import { startRefusal } from './life';
 import type { SchoolRecord } from './school';
 
@@ -134,11 +133,17 @@ function scheduleDue(sim: Simulation, person: Person, r: CourseRecord): void {
 }
 
 /** Why an Incomplete can't be extended now, or nothing: once, before its month runs out. */
-export function extendRefusal(sim: Simulation, person: Person, key: string): string | undefined {
+export function extendRefusal(_sim: Simulation, person: Person, key: string): string | undefined {
   const r = person.school ? coursesOf(person.school)[key] : undefined;
   if (!r || r.result !== 'incomplete') return 'There’s no Incomplete in that course.';
+  // The School’s words for a student who has left it, as a repeat, an additional term, a conversion and a day called in
+  // sick have them (from 2026-10-13: until then a student who had withdrawn was given a month more, and the deadline the
+  // School’s end had called off went back on their calendar; found by that day’s evidence pass). `endedAt` is set exactly
+  // when the School ends (`setStanding`), which it was already doing when the course record came in.
+  if (person.school!.endedAt !== undefined) return 'You’re not at school.';
   if (r.extended) return 'It’s been extended once already.';
-  if (r.dueBy !== undefined && sim.now > r.dueBy) return 'Its month has run out.';
+  // “Its month has run out.” went on 2026-10-13: at school the deadline makes the course a Permanent Incomplete at its
+  // hour, a leave keeps the deadline (`kept`, `systems/leave.ts`), and only the School’s end calls it off, refused above.
   return undefined;
 }
 
@@ -170,12 +175,15 @@ export const failsOf = (school: SchoolRecord): CourseRecord[] => Object.values(s
 export function makeUpRefusal(sim: Simulation, person: Person, key: string): string | undefined {
   const r = person.school ? coursesOf(person.school)[key] : undefined;
   if (!r || r.result !== 'incomplete') return 'There’s no Incomplete in that course to make up.';
-  if (r.dueBy !== undefined && sim.now > r.dueBy) return 'Its month has run out.';
+  // As `extendRefusal` (from 2026-10-13: until then a student who had withdrawn was let make one up, and the course was
+  // passed for them; found by that day’s evidence pass). “Its month has run out.” went with it, reached as little here.
+  if (person.school!.endedAt !== undefined) return 'You’re not at school.';
   // A session its month can't hold (from 2026-10-13: until then one begun an hour before the deadline was taken, the
   // deadline made the course a Permanent Incomplete inside it, and the session then passed it; found by that day's
   // evidence pass).
   if (r.dueBy !== undefined && sim.now + COURSE_RULES.makeUpMinutes * 60_000 > r.dueBy) return `Its month runs out at ${formatTime(r.dueBy, sim.zone)}: there isn’t the time for a session before it.`;
-  if (person.currentLocationId !== YALE_DRAMA.cityId) return 'Its teachers are in New Haven.';
+  // “Its teachers are in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only where it begins in
+  // New Haven (`populateWorld`, `engine/index.ts`), and nothing moves one after it begins.
   return startRefusal(sim, person, COURSE_RULES.makeUpMinutes, true);
 }
 
@@ -221,7 +229,12 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     }
     r.result = 'permanent';
     r.why = 'an Incomplete not made up in its month';
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it: at the year’s end you can ask to repeat the year, on the Standing tab.`, importance: 85, route: '/workspace/school' });
+    // A degree waiting on it is withheld with it (`onPermanent`), which ends the School and every request with it, so the
+    // year’s end is offered only where none waits; read before `onPermanent` takes the wait away (from 2026-10-13: until
+    // then a student whose degree it withheld was told to ask to repeat the year, which nothing then let them ask; found
+    // by that day’s evidence pass).
+    const ask = person.school!.awaitingDegree ? '.' : ': at the year’s end you can ask to repeat the year, on the Standing tab.';
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it${ask}`, importance: 85, route: '/workspace/school' });
     onPermanent(s, person, r);
   });
 }

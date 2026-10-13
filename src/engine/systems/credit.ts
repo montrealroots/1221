@@ -49,7 +49,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addMonths, formatDate, instantFromZoned, normalDate, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { drawFromBank, inTheBank } from './spending';
 import { statementReady } from './statements';
@@ -102,8 +102,11 @@ export interface CardState {
   /**
    * What each statement said when it was cut (from 2026-10-10): its minimum and its terms, the last sixty. Until then a
    * past statement was redrawn from today's terms, score and intro months, so a cleared intro rate rewrote old ones.
+   * On a hardship plan its minimum is the plan’s payment, the least the due date judges (`autopayAsk`), and `plan` says
+   * so; a plan begun before a statement’s due date sets it in that statement’s place too (`card.request_hardship`).
+   * Until 2026-10-13 a plan’s statement kept the card’s own minimum; `plan` is absent on one kept before then.
    */
-  issued?: { at: Instant; minimum: Money; terms: CardTerms }[];
+  issued?: { at: Instant; minimum: Money; terms: CardTerms; plan?: boolean }[];
   /** When the yearly fee was last charged (from 2026-10-10), so a month with two statements charges it once. */
   feeAt?: Instant;
   /** Due dates in a row with less than the minimum paid. */
@@ -701,12 +704,17 @@ export function scheduleStatement(sim: Simulation, person: Person, after: Instan
 
 /**
  * The payment due, at noon: so many days after the statement where the bank
- * says, else the 15th of the month after it.
+ * says, else the 15th of the month after it. The day past the month’s end is
+ * put on its real date first (`normalDate`): until 2026-10-13 it went to
+ * `instantFromZoned` as the 41st, which takes such a reading a minute late, so
+ * every due date that crossed a month (Chase’s 21 days from the 20th) came at
+ * 12:01 PM, and a payment made in the minute after noon counted on time; found
+ * by that day’s third round of defects.
  */
 export function dueAt(zone: string, statementAt: Instant, graceDays?: number): Instant {
   const p = zonedParts(statementAt, zone);
   return graceDays !== undefined
-    ? instantFromZoned({ year: p.year, month: p.month, day: p.day + graceDays, hour: 12 }, zone)
+    ? instantFromZoned({ ...normalDate(p.year, p.month, p.day + graceDays), hour: 12 }, zone)
     : instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 15, hour: 12 }, zone);
 }
 
@@ -783,15 +791,25 @@ export function registerCredit(sim: Simulation): void {
         }
       }
     }
-    // What this statement says, kept as it said it.
-    (credit.issued ??= []).push({ at: s.now, minimum: credit.statementBalance > 0 ? minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0) : 0, terms });
+    // What this statement says, kept as it said it: on a hardship plan, the plan’s payment (`autopayAsk`), as the due date
+    // judges it (from 2026-10-13: until then the card’s own minimum, about $48 on a plan whose due date judged $101; found
+    // by that day’s guide audit).
+    (credit.issued ??= []).push({ at: s.now, minimum: credit.statementBalance > 0 ? autopayAsk(s, person, card).due : 0, terms, plan: credit.hardship !== undefined });
     if (credit.issued.length > 60) credit.issued.splice(0, credit.issued.length - 60);
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays, card);
     // Nothing owed: the month is reported now, paid as agreed, and a hardship plan paid off ends, as a due date met would
     // end it (from 2026-10-13: until then only a due date ended one, and a plan paid off before its statement left the
-    // card suspended with nothing owed for good; found by the review of that day).
+    // card suspended with nothing owed for good; found by the review of that day). The payments missed are behind it
+    // too, and a suspension for them lifts, as a due date met puts them back to none: until later on 2026-10-13 only a
+    // due date did, so a card paid off two payments behind stayed two behind for good, Home said so over $0 owed, and
+    // the money worry was felt every day (found by that day’s third round of defects).
     else {
       reportMonth(s, person, ON_TIME);
+      credit.missed = 0;
+      if (credit.suspended === 'late') {
+        delete credit.suspended;
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `It’s paid off, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
+      }
       if (credit.hardship && card.balance >= 0) { delete credit.hardship; if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended; }
     }
     // A card the holder closed is finished once nothing is owed on it.
@@ -976,8 +994,11 @@ export function registerCredit(sim: Simulation): void {
     const owed = Math.max(0, -card.balance);
     if (owed === 0 && typeof p.amount !== 'number') throw new CommandError('You don’t owe anything on it.');
     const state = stateOf(person, card);
+    // The minimum is what the due date judges: on a hardship plan, the plan’s payment, never more than the statement (from
+    // 2026-10-13: until then the card’s own, about $48 on a $101 plan, which left the plan’s payment short at its due date;
+    // found by that day’s guide audit).
     const want = p.amount === 'full' ? owed
-      : p.amount === 'minimum' ? minimumDue(s, state.statementBalance ?? owed, cardTerms(s, card, person.credit.score), state.statementInterest ?? 0, state.statementPlanDue ?? 0)
+      : p.amount === 'minimum' ? state.hardship ? Math.min(state.statementBalance ?? owed, state.hardship.payment) : minimumDue(s, state.statementBalance ?? owed, cardTerms(s, card, person.credit.score), state.statementInterest ?? 0, state.statementPlanDue ?? 0)
         : Math.round(Number(p.amount));
     if (!(want > 0)) throw new CommandError('Pay something, or nothing.');
     const paid = payCard(s, person, want, true, card);
@@ -1205,8 +1226,9 @@ function reportMonth(sim: Simulation, person: Person, paid: number): void {
  * it: their autopay starts on the minimum. Risk tolerance is, in the first
  * place, willingness to carry financial risk; the slider was read by nothing
  * until the card, and the player can change the autopay whenever they like.
+ * Exported from 2026-10-13, for the Profile’s line on what it did; until then the Profile kept a 65 of its own.
  */
-const CARRIES_A_BALANCE = 65;
+export const CARRIES_A_BALANCE = 65;
 
 /** Opens their record at a score, with the first statement on the calendar. */
 export function openCredit(sim: Simulation, person: Person, score: number): void {

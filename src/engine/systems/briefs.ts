@@ -30,9 +30,10 @@
  * What isn't counted twice: a brief's several genres share one session of practice (`practiceGenres`); knowing the
  * genre, studied or worked in, is a part of preparation the take reads, so it doesn't also speed the preparation (the
  * material's features met before do, `prepSpeed`; until 2026-10-12 this said the genre's practice did too, the better of
- * the two, which `prepSpeed` never read); a genre's applied demands
- * join the techniques once, and the brief already stages them (`tests/briefs-content.test.ts`); the same take again
- * the same day keeps half its practice; an action id is lived once.
+ * the two, which `prepSpeed` never read); a genre’s applied demands are techniques the brief stages or its medium
+ * reads, once each (`tests/briefs-content.test.ts`), where until 2026-10-13 they were added again at a take
+ * (`withDemands`), which found each already there and added nothing; the same take again the same day keeps half its
+ * practice; an action id is lived once.
  *
  * Every number here is SLATE's: the research supports the shape (circumstances, objective, obstacle, beats;
  * research-self-tape-briefs.json), not a size.
@@ -47,7 +48,6 @@ import type { AbilityId } from '../content/abilities';
 import { MASTERED } from '../content/abilities';
 import { APPROACH_EFFECT, AXES, PLAYING } from '../content/approaches';
 import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief, type Reading } from '../content/briefs';
-import { withDemands } from '../content/demands';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
 import { GENRE_BY_ID } from '../content/film-genres';
@@ -221,15 +221,17 @@ export function briefMaterial(b: Brief): MaterialProfile {
 }
 
 /**
- * The techniques a take reads: the medium's own, the brief's, and its genres' applied demands, once each. What the
- * scene itself stages (a song sung, a fight) weighs `BRIEF.staged` times its level against the medium's base (from
- * 2026-10-12): until then a musical's singing was 1.6% of its take and a fight's combat 3.7%, under the camera's own
- * technique on the same brief, read by every take (tools/specialists.ts).
+ * The techniques a take reads: the medium's own and the brief's, once each. What the scene itself stages (a song sung,
+ * a fight) weighs `BRIEF.staged` times its level against the medium's base (from 2026-10-12): until then a musical's
+ * singing was 1.6% of its take and a fight's combat 3.7%, under the camera's own technique on the same brief, read by
+ * every take (tools/specialists.ts). Its genres’ applied demands are among them: every brief stages them, or its medium
+ * reads them (`tests/briefs-content.test.ts`). Until 2026-10-13 they were added here too (`withDemands`), only where
+ * the take didn’t read them already, so they added nothing to any brief’s take (tests/evidence-g23-school.test.ts).
  */
 export function tapeReadsOf(b: Brief): Partial<Record<Skill, number>> {
   const out: Partial<Record<Skill, number>> = { ...BRIEF.base[b.medium] };
   for (const [k, w] of Object.entries(b.techniques ?? {}) as [Skill, number][]) out[k] = Math.max(out[k] ?? 0, w * BRIEF.staged);
-  return withDemands(out, b.kinds);
+  return out;
 }
 
 /** The changes between beats and the beats held two ways, as the material counts them. */
