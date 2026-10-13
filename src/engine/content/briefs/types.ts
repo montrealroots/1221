@@ -69,8 +69,19 @@ export interface Brief {
   kinds: readonly string[];
   /** On camera, to a reader off camera; or a voice recorded alone at a microphone. */
   medium: 'camera' | 'voice';
-  /** How much there is to learn. */
-  size: 'short' | 'medium';
+  /** How much there is to learn: a long one (from 2026-10-12) is a longer scene, slower to learn and harder on stamina. */
+  size: 'short' | 'medium' | 'long';
+  /**
+   * How much rides on it for your character, 0 little to 3 everything (from 2026-10-12). A take's difficulty reads it
+   * (`BRIEF.stakes`): the more that rides on it, the more it asks of the same craft. Unset, 1.
+   */
+  stakes?: 0 | 1 | 2 | 3;
+  /**
+   * How the reader plays the other part (from 2026-10-12): steady, pressing (pushing at you), withholding (giving you
+   * little to play off) or unpredictable (never the same twice). It leans the take toward what playing against that asks
+   * (`READER_PLAYS`, `systems/briefs.ts`). Unset, steady. A voice brief has no reader.
+   */
+  readerPlays?: 'steady' | 'pressing' | 'withholding' | 'unpredictable';
   /** The scene in one sentence. */
   logline: string;
   /** Where and when, and what has just happened: the given circumstances. */
@@ -85,7 +96,7 @@ export interface Brief {
   objective: string;
   /** What's in the way. */
   obstacle: string;
-  /** Two to four beats, in order. */
+  /** Two to six beats, in order: four at most for a short or medium one, six for a long one. */
   beats: readonly Beat[];
   language: 'everyday' | 'heightened' | 'verse';
   timing: Level;

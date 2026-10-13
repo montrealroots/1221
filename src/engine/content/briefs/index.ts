@@ -9,10 +9,17 @@ import { BRIEFS_C } from './briefs-c';
 import { BRIEFS_D } from './briefs-d';
 import { BRIEFS_E } from './briefs-e';
 import { BRIEFS_F } from './briefs-f';
+import { SECOND_A } from './second-a';
+import { SECOND_B } from './second-b';
+import { SECOND_C } from './second-c';
+import { SECOND_D } from './second-d';
+import { SECOND_E } from './second-e';
+import { SECOND_F } from './second-f';
 
 export type { Beat, Brief, Draw, Reading } from './types';
 
-export const BRIEFS: readonly Brief[] = [...BRIEFS_A, ...BRIEFS_B, ...BRIEFS_C, ...BRIEFS_D, ...BRIEFS_E, ...BRIEFS_F];
+// Each genre's second situation follows its first in a genre's list (`briefsOf`), from 2026-10-12.
+export const BRIEFS: readonly Brief[] = [...BRIEFS_A, ...BRIEFS_B, ...BRIEFS_C, ...BRIEFS_D, ...BRIEFS_E, ...BRIEFS_F, ...SECOND_A, ...SECOND_B, ...SECOND_C, ...SECOND_D, ...SECOND_E, ...SECOND_F];
 
 export const BRIEF_BY_ID: Readonly<Record<string, Brief>> = Object.fromEntries(BRIEFS.map((b) => [b.id, b]));
 

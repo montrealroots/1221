@@ -29,7 +29,9 @@ describe('each practice brief', () => {
 
   for (const b of BRIEFS) {
     it(`${b.id}: is a whole, honest brief`, () => {
-      expect(b.id.startsWith(`brief-${b.kinds[0]}`), 'its id names the genre it was written for').toBe(true);
+      // Exactly the genre it was written for, and an ordinal after a second (from 2026-10-12: until then 'brief-action_comedy'
+      // would have passed for 'action').
+      expect(new RegExp(`^brief-${b.kinds[0]}(-[2-9])?$`).test(b.id), 'its id names the genre it was written for').toBe(true);
       expect(b.title[0], 'Title Case').toBe(b.title[0]!.toUpperCase());
       expect(b.kinds.length).toBeGreaterThanOrEqual(1);
       expect(b.kinds.length).toBeLessThanOrEqual(3);
@@ -38,7 +40,9 @@ describe('each practice brief', () => {
       for (const k of ['logline', 'circumstances', 'relationship', 'you', 'reader', 'objective', 'obstacle'] as const) expect(b[k].length, k).toBeGreaterThanOrEqual(20);
       expect(JSON.stringify(b)).not.toMatch(/excerpt|adapted from|based on the (film|play)/i);
       expect(b.beats.length).toBeGreaterThanOrEqual(2);
-      expect(b.beats.length).toBeLessThanOrEqual(4);
+      expect(b.beats.length).toBeLessThanOrEqual(b.size === 'long' ? 6 : 4);
+      if (b.stakes !== undefined) expect([0, 1, 2, 3]).toContain(b.stakes);
+      if (b.readerPlays !== undefined) { expect(['steady', 'pressing', 'withholding', 'unpredictable']).toContain(b.readerPlays); expect(b.medium).toBe('camera'); }
       for (const beat of b.beats) {
         expect(beat.what.length).toBeGreaterThanOrEqual(10);
         expect(beat.tones.length).toBeGreaterThanOrEqual(1);
@@ -81,7 +85,9 @@ describe('each practice brief', () => {
         for (const d of r.draws) { expect(DIMS).toContain(d.dim); expect(ABILITIES).toContain(d.ability); expect(d.weight).toBeGreaterThanOrEqual(0.3); expect(d.weight).toBeLessThanOrEqual(1); }
       }
       // Meaningfully different: two readings lean some dimension at least 0.1 apart.
-      const differ = b.readings.some((r, i) => b.readings.some((s, j) => j > i && DIMS.some((d) => Math.abs((r.lean as Record<string, number>)[d] ?? 1) - ((s.lean as Record<string, number>)[d] ?? 1) >= 0.1 || Math.abs(((s.lean as Record<string, number>)[d] ?? 1) - ((r.lean as Record<string, number>)[d] ?? 1)) >= 0.1)));
+      // (From 2026-10-12 one comparison, parenthesized as meant: until then its first clause took the absolute value of one
+      // lean and subtracted the other, and passed only because its second clause was right.)
+      const differ = b.readings.some((r, i) => b.readings.some((s, j) => j > i && DIMS.some((d) => Math.abs(((r.lean as Record<string, number>)[d] ?? 1) - ((s.lean as Record<string, number>)[d] ?? 1)) >= 0.1)));
       expect(differ, 'two readings lean the work differently').toBe(true);
     });
   }
@@ -96,4 +102,43 @@ describe('the genres', () => {
   it('a genre with applied demands is never listed on a brief that doesn’t stage them', () => {
     for (const b of BRIEFS) for (const g of b.kinds) if (applied(g)) for (const t of genreTags(g)) expect([...BASE[b.medium], ...Object.keys(b.techniques ?? {})], `${b.id} under ${g}`).toContain(DEMAND_TECHNIQUE[t]);
   });
+});
+
+/**
+ * Two situations for every genre (from 2026-10-12; the owner's brief of that day, section 7): a genre's second brief is
+ * a different situation, not the first renamed. Its relationship, objective, obstacle and circumstances share few
+ * words with the first's, and it differs on at least two of the axes the owner named: medium, the material's features,
+ * the tones in order, the beats' number, the length, the stakes, how the reader plays the other part, and what the
+ * scene stages.
+ */
+describe('two situations for every genre', () => {
+  const words = (s: string) => new Set(s.toLowerCase().match(/[a-z’']{5,}/g) ?? []);
+  const overlap = (a: string, b: string) => { const x = words(a), y = words(b); return [...x].filter((w) => y.has(w)).length / Math.max(1, Math.min(x.size, y.size)); };
+  const axes = (a: Brief, b: Brief) => [
+    a.medium !== b.medium,
+    (['timing', 'physical', 'partner', 'vocal', 'improvisation'] as const).filter((f) => a[f] !== b[f]).length >= 2,
+    a.beats.map((x) => x.tones.join('+')).join('>') !== b.beats.map((x) => x.tones.join('+')).join('>'),
+    a.beats.length !== b.beats.length,
+    a.size !== b.size,
+    (a.stakes ?? 1) !== (b.stakes ?? 1),
+    (a.readerPlays ?? 'steady') !== (b.readerPlays ?? 'steady'),
+    JSON.stringify(a.techniques ?? {}) !== JSON.stringify(b.techniques ?? {}),
+  ].filter(Boolean).length;
+
+  it('has at least two briefs written for each genre', () => {
+    const short = Object.keys(GENRE_DEFS).filter((g) => BRIEFS.filter((b) => b.kinds[0] === g).length < 2);
+    expect(short).toEqual([]);
+  });
+
+  for (const g of Object.keys(GENRE_DEFS)) {
+    it(`${g}: its briefs are different situations`, () => {
+      const list = BRIEFS.filter((b) => b.kinds[0] === g);
+      for (let i = 0; i < list.length; i += 1) for (let j = i + 1; j < list.length; j += 1) {
+        const [a, b] = [list[i]!, list[j]!];
+        expect(a.title, 'a title of its own').not.toBe(b.title);
+        for (const k of ['relationship', 'objective', 'obstacle', 'circumstances'] as const) expect(overlap(a[k], b[k]), `${a.id} and ${b.id}: ${k}`).toBeLessThan(0.5);
+        expect(axes(a, b), `${a.id} and ${b.id}: the axes they differ on`).toBeGreaterThanOrEqual(2);
+      }
+    });
+  }
 });
