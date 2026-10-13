@@ -76,7 +76,10 @@ describe('the director’s notes so far', () => {
     // A craft note worked a way: the way, its figure before and after, and at the next call.
     const worked = notes.slice(0, -1).find((n) => n.answer?.solution && n.answer.now !== undefined);
     expect(worked, 'an earlier craft note worked a way').toBeDefined();
-    const label = ADJUSTMENTS[worked!.answer!.solution as keyof typeof ADJUSTMENTS].label.toLowerCase();
+    // The way's own label, kept on the answer from 2026-10-13: a movement played to a side names the side.
+    expect(worked!.answer!.label, 'the way worked is kept by its label').toBeTruthy();
+    expect(ADJUSTMENTS[worked!.answer!.solution as keyof typeof ADJUSTMENTS]).toBeDefined();
+    const label = worked!.answer!.label!.toLowerCase();
     expect(text).toContain(`· Worked ${label}: ${worked!.answer!.before} before, ${worked!.answer!.after} after, ${worked!.answer!.now} at the next call`);
   }, 120_000);
 

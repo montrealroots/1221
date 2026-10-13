@@ -459,6 +459,33 @@ describe('the ledger, a reload and a long skip', () => {
   });
 });
 
+describe('a purchase already a whole unit', () => {
+  // Found by the built-app journey of 2026-10-13: a New Haven student's groceries are $10.00 and a meal $5.00, so a week
+  // at Citi counted nothing, and the panel said nothing either.
+  it('counts nothing, says how many since the last transfer, and starts again after one', () => {
+    const sim = lifeAt('us-citi', 'ru-whole');
+    on(sim, { every: 'day', minimum: 50 });
+    expect([counts(sim, 10_00), counts(sim, 5_00)]).toEqual([0, 0]);
+    expect(counts(sim, 5_25)).toBe(75);
+    expect(sim.player.roundUps!.whole).toBe(2);
+    h.sim = sim;
+    const text = () => renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'us-citi' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    expect(text()).toContain('2 purchases since the last transfer were already a multiple of $1.00, so rounded up to nothing.');
+    sim.advanceTo(after(sim, 6));
+    expect(moves(sim)[0]!.amount).toBeGreaterThanOrEqual(75);
+    // The night's groceries, whole dollars too, count toward the next transfer's.
+    expect(sim.player.roundUps!.whole).toBeLessThanOrEqual(1);
+    expect(text()).not.toContain('2 purchases since the last transfer');
+  });
+
+  it('isn’t counted where a whole unit moves one, at BBVA México', () => {
+    const sim = lifeAt('mx-bbva', 'ru-whole-mx', 20_000);
+    on(sim, { unit: 10 });
+    expect(counts(sim, 100_00)).toBe(10_00);
+    expect(sim.player.roundUps!.whole ?? 0).toBe(0);
+  });
+});
+
 describe('the panel', () => {
   it('shows the bank’s feature, its choices, what’s waiting, the last transfer and why one didn’t, and what the bank leaves open, with its source', () => {
     const sim = lifeAt('gb-natwest', 'ru-panel');

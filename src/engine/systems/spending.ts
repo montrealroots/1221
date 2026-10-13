@@ -38,7 +38,7 @@ import { cardCeilingRoom, chargeForItem, chargeForPurchase, chargeReturned, over
 import { paymentsOf } from './payments';
 import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { savingsDebit } from './accountlife';
-import { countRoundUp, roundUpFor, roundUpsOn, roundsUpCard } from './roundups';
+import { countRoundUp, roundUpFor, roundUpsOn, roundsUpCard, wholePurchase } from './roundups';
 import { hold } from './pending';
 import { latePenaltyAll, owedEverywhere, unassessedBalance } from './taxreturn';
 
@@ -313,8 +313,8 @@ export function canSpend(sim: Simulation, person: Person, amount: Money, categor
  */
 function countRoundUps(sim: Simulation, person: Person, onDebit: Money, onCard: Money, card: Account | undefined): void {
   if (!roundUpsOn(sim, person)) return;
-  if (onDebit > 0) countRoundUp(sim, person, roundUpFor(sim, person, onDebit));
-  if (onCard > 0 && roundsUpCard(sim, person, card)) countRoundUp(sim, person, roundUpFor(sim, person, onCard));
+  if (onDebit > 0) countRoundUp(sim, person, roundUpFor(sim, person, onDebit), wholePurchase(sim, person, onDebit));
+  if (onCard > 0 && roundsUpCard(sim, person, card)) countRoundUp(sim, person, roundUpFor(sim, person, onCard), wholePurchase(sim, person, onCard));
 }
 
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {

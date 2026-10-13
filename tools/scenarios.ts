@@ -13,6 +13,11 @@
  *   limitations pass of 2026-10-11).
  * - `nonfiler`: TEST SETUP a 2026 W-2; the return never filed until the IRS and Connecticut have each assessed it, then
  *   filed, each replaced (from the limitations pass of 2026-10-11).
+ * - `direction`: the first spring's festival, a craft note waiting and workable (from 2026-10-13). On seed sc-1, run as
+ *   three slices (`--years 0.15`, then `--from` it `--years 0.2`, then `--years 0.45`), it stops on 2027-04-24 with
+ *   "Still: I don’t know what you want in the second half." and seven ways; sc-0's craft notes all fell under a back
+ *   strain, and it never stopped.
+ * - `roundups`: a New Haven student at Citi, a few days in, round-ups not yet set up (from 2026-10-13).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
@@ -30,8 +35,9 @@ import { owedAll, returnsOf } from '../src/engine/systems/taxreturn';
 import { owedToState } from '../src/engine/systems/statetax';
 import { SWITCH_KIND } from '../src/engine/systems/lending';
 import { POLICY, attentiveHour, life } from './policy';
-import { hasProcess, solutionsOf } from '../src/engine/systems/production';
+import { hasProcess, ownWorkRefusal, solutionsOf } from '../src/engine/systems/production';
 import { workPiece } from '../src/engine/systems/workpieces';
+import { wayRefusal } from '../src/engine/systems/workbook';
 import { ADJUSTMENTS } from '../src/engine/content/workbook';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
@@ -160,13 +166,21 @@ const SCENARIOS: Record<string, Hook> = {
     years: 0.6, config: { homeRegionId: 'us-ny-newyork' }, ownWork: false,
     daily() {},
   },
+  // A New Haven student who banks at Citi, a few days into the first fall, round-ups not yet set up: the built app's
+  // round-ups journey (from 2026-10-13, `tools/acceptance-ui.mjs`) makes Citi's choices, reads the guide beside them,
+  // turns them on and plays a week. No TEST SETUP.
+  roundups: {
+    years: 0.012, config: { homeRegionId: 'us-ct-newhaven', bankId: 'us-citi' },
+    daily() {},
+  },
   // A student cast in the first spring's festival who learns the part and catches up the blocking between calls, as a
   // player does, and leaves the director's notes to the player (from 2026-10-13, `POLICY.workNotes`): once the lines are
-  // off book and the blocking set, the director turns to the craft. The run stops at nine on the first Saturday or
-  // Sunday with a craft note given and not yet worked, two ways or more at it (one a change of how it's played, kept or
-  // put back), and a call still ahead, so the built
-  // app's director's-note journey has a whole free day and a call to play to (`tools/acceptance-ui.mjs`). No TEST SETUP:
-  // everything in it is the policy's play through the commands.
+  // off book and the blocking set, the director turns to the craft. The run stops at the first morning with a craft note
+  // given and not yet worked, two ways or more at it, one a change of how it's played (kept or put back) that can be
+  // worked then, and a call still ahead, so the built app's director's-note journey has a note to work and a call to
+  // play to (`tools/acceptance-ui.mjs`). No TEST SETUP: everything in it is the policy's play through the commands. Its
+  // first runs waited for a weekend morning, and on seed sc-0 every one of the festival's craft notes fell while a
+  // back strain was mending, which refuses work on the feet: the way that can be worked then is what's asked now.
   direction: {
     years: 1, config: { homeRegionId: 'us-ny-newyork' }, workNotes: false,
     daily() {},
@@ -180,9 +194,11 @@ const SCENARIOS: Record<string, Hook> = {
       const ways = sols.length;
       // One of the ways a change of how the part is played, which is kept or put back, so the journey can do either.
       const choice = sols.some((o) => ADJUSTMENTS[o.adjustment].kind === 'choice');
-      const weekday = zonedParts(sim.now, NY).weekday;
       const ahead = sim.universe.scheduled.some((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.which !== 'rep' && i.at > sim.now);
-      if (ways < 2 || !choice || !ahead || (weekday !== 6 && weekday !== 0)) return false;
+      // And the way can be worked now: its first run stopped where a back strain refused it, and the journey couldn't play.
+      const piece = workPiece(sim, sim.player, 'part:school');
+      const workable = !ownWorkRefusal(sim, sim.player, 'school', 'note') && Boolean(piece) && sols.some((o) => ADJUSTMENTS[o.adjustment].kind === 'choice' && !wayRefusal(sim, sim.player, piece!, o.adjustment));
+      if (ways < 2 || !choice || !ahead || !workable) return false;
       log.push(`${new Date(sim.now).toISOString().slice(0, 10)} a craft note waits: "${note.text.slice(0, 80)}", ${ways} ways`);
       return true;
     },

@@ -407,6 +407,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     later: [
       'At the next call the note is settled, Taken or Not Taken, its figure then kept beside it, and a change still waiting is kept and played at it.',
+      'Once another note comes, the settled one moves under The Director’s Notes So Far, below the last note: each earlier note with what came of it, and the way it was worked with its figure before, after and at the next call.',
       'At the next work-through, where the same note comes again: “Better since the last note.” if it was taken, with what you tried and its figures, and “Still:” if it wasn’t.',
       'When the run closes, the notes still open go into the coursework’s ledger: what you want as the choices, listening and a relationship as the work with your partner, lines as the lines, a skill as that skill, the rest as rehearsal on its feet. A note on the director’s request stays with the part.',
       'Looking Back, at the closing, counts the notes taken and those answered in the work.',

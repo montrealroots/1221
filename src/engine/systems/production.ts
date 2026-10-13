@@ -109,7 +109,7 @@ export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skil
 export interface DirectorNote {
   at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean;
   /** How it was answered (from 2026-10-12): the way tried and its own evidence, before and after it, and the note's figure at the next call. */
-  answer?: { solution?: string; before: number; after: number; now?: number };
+  answer?: { solution?: string; label?: string; before: number; after: number; now?: number };
 }
 
 export interface Process {
@@ -335,7 +335,7 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   const history = f.kind === 'craft' && recurring && f.problem === `limit:${recurring.target}` ? ` It’s your ${recurring.label.toLowerCase()} again: it’s held back ${recurring.pieces} of your pieces before this.` : '';
   if (!before) return `${words}${history}`;
   // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12).
-  const tried = before.answer?.solution ? ` You tried ${(ADJUSTMENTS[before.answer.solution as AdjustmentId]?.label ?? before.answer.solution).toLowerCase()}: ${before.answer.before} then, ${before.answer.after} now.` : '';
+  const tried = before.answer?.solution ? ` You tried ${(before.answer.label ?? ADJUSTMENTS[before.answer.solution as AdjustmentId]?.label ?? before.answer.solution).toLowerCase()}: ${before.answer.before} then, ${before.answer.after} now.` : '';
   return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${continued(words)}${tried}${history}`;
 }
 
@@ -584,7 +584,9 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
       book.problem = { id: f.problem, kind: (f.problem.startsWith('limit:') ? 'limit' : f.problem === 'stamina' ? 'stamina' : f.problem === 'partner' ? 'partner' : f.problem.split(':')[0]) as Problem['kind'], ...(f.segment !== undefined ? { segment: f.segment } : {}), label: noteWords(f), why: note.text, measure: f.measure, at: s.now };
       const t = tryAdjustment(s, person, piece, way.adjustment, way.option);
       note.worked = true;
-      note.answer = { solution: way.adjustment, before: t.before, after: t.after };
+      // The way's own label, a movement played to a side ("Play The Second Half Measured") rather than the kind of way
+      // (from 2026-10-13: until then the notes so far and a note said again named only "play this part another way").
+      note.answer = { solution: way.adjustment, label: way.label, before: t.before, after: t.after };
       countDirection(person, { worked: way.adjustment });
       ordinary(s, person, 'adaptability', focus, PROCESS.own.trainingWeight, 'work-note');
       return { worked: true, before: t.before, after: t.after, pending: t.verdict === 'pending' };

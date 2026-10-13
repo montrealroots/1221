@@ -40,6 +40,8 @@ export function RoundUps({ bankId }: { bankId: string }) {
   const why = here ? roundUpRefusal(sim, person, choice) : `Round-ups at ${name} run from a ${name} current account made your primary one.`;
   const way = wayOf(rule, choice);
   const changed = on && !same(choice, pick(r));
+  const wayNow = wayOf(rule, r);
+  const unitNow = wayNow?.kind === 'change' ? (wayNow.units.length === 1 ? wayNow.units[0]! : r?.unit ?? 1) : 1;
   const set = (k: keyof RoundUpChoice) => (e: { target: { value: string } }) => setChoice((c) => ({ ...c, [k]: e.target.value === '' ? undefined : k === 'every' ? (e.target.value as RoundUpEvery) : Number(e.target.value) }));
   const select = (label: string, k: keyof RoundUpChoice, options: readonly (readonly [string | number, string])[]) => (
     <label className="xs col" style={{ gap: 2 }}>
@@ -93,6 +95,11 @@ export function RoundUps({ bankId }: { bankId: string }) {
       {mine && ((r?.pending ?? 0) > 0 || (r?.due ?? 0) > 0) && (
         <p className="xs" style={{ margin: 0 }} data-roundups-waiting="">
           Counted, not yet moved: {formatMoney(r!.pending, cur)}{(r?.due ?? 0) > 0 ? `, and ${formatMoney(r!.due!, cur)} to move at the next business day’s start` : ''}.
+        </p>
+      )}
+      {mine && (r?.whole ?? 0) > 0 && (
+        <p className="xs dim" style={{ margin: 0 }} data-roundups-whole="">
+          {r!.whole === 1 ? 'One purchase' : `${r!.whole} purchases`} since the last transfer {r!.whole === 1 ? 'was' : 'were'} already a multiple of {money(unitNow)}, so rounded up to nothing.
         </p>
       )}
       {mine && r?.last && (

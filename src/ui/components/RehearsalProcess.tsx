@@ -99,7 +99,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
               <li key={n.at} style={{ marginBottom: 'var(--s1)' }}>
                 {formatDate(n.at, zone())}: {n.text}{' '}
                 <span className="dim">{n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken'}</span>
-                {n.answer?.solution && <span className="dim">{` · Worked ${(ADJUSTMENTS[n.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? n.answer.solution).toLowerCase()}: ${n.answer.before} before, ${n.answer.after} after${n.answer.now !== undefined ? `, ${n.answer.now} at the next call` : ''}`}</span>}
+                {n.answer?.solution && <span className="dim">{` · Worked ${(n.answer.label ?? ADJUSTMENTS[n.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? n.answer.solution).toLowerCase()}: ${n.answer.before} before, ${n.answer.after} after${n.answer.now !== undefined ? `, ${n.answer.now} at the next call` : ''}`}</span>}
               </li>
             ))}
           </ol>

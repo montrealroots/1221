@@ -130,6 +130,18 @@ export function roundUpFor(sim: Simulation, person: Person, amount: Money): Mone
   return 0;
 }
 
+/**
+ * Whether a purchase rounds up to nothing because it's already a whole unit (from 2026-10-13): the round-ups journey
+ * found a New Haven student's every purchase whole dollars, the day's groceries $10 and a meal $5, and the panel silent
+ * through a week of nothing moved. It says how many now.
+ */
+export function wholePurchase(sim: Simulation, person: Person, amount: Money): boolean {
+  const at = roundUpRuleAt(sim, person);
+  const way = at ? wayOf(at.rule, person.roundUps) : undefined;
+  if (!at || way?.kind !== 'change' || way.fullOnWhole) return false;
+  return roundUpOf(amount, whole(sim, at.bankId, way.units.length === 1 ? way.units[0]! : person.roundUps?.unit ?? 0)) === 0;
+}
+
 /** Whether the bank's own credit card's purchases count too, and this is its card. */
 export function roundsUpCard(sim: Simulation, person: Person, card: Account | undefined): boolean {
   const at = roundUpRuleAt(sim, person);
@@ -145,8 +157,9 @@ const dateKey = (at: Instant, zone: string) => {
  * A purchase's round-up counted: toward what's waiting, and toward the day it was made, so a purchase at a day's first
  * moment (the groceries bought at midnight, before the day's round-ups move) waits for its own day's transfer.
  */
-export function countRoundUp(sim: Simulation, person: Person, amount: Money): void {
+export function countRoundUp(sim: Simulation, person: Person, amount: Money, whole = false): void {
   const r = person.roundUps;
+  if (r && whole) r.whole = (r.whole ?? 0) + 1;
   if (!r || amount <= 0) return;
   const key = dateKey(sim.now, sim.homeZone).key;
   if (r.todayKey !== key) { r.today = 0; r.todayKey = key; }
@@ -169,6 +182,7 @@ function dropRoundUps(person: Person, at: Instant, why: string): void {
   r.pending = 0;
   r.due = 0;
   r.today = 0;
+  r.whole = 0;
 }
 
 /**
@@ -275,6 +289,7 @@ export function moveRoundUps(s: Simulation, person: Person): void {
 function move(s: Simulation, person: Person, current: Account, savings: Account, amount: Money): void {
   s.post({ memo: 'Round-ups', category: 'transfer', postings: [{ accountId: current.id, amount: -amount }, { accountId: savings.id, amount }] });
   person.roundUps!.last = { at: s.now, moved: amount };
+  person.roundUps!.whole = 0;
 }
 
 /** `bank.set_round_ups`: on with the choices the bank leaves to the customer, or off, dropping what was counted. */

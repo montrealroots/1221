@@ -187,7 +187,8 @@ export interface Person {
    * from 2026-10-13 the bank they were set up at, the choices the bank leaves to the customer, what's counted to move at
    * the next business day's start (`due`), what of it was counted on the day `todayKey` names (`today`: the night's groceries
    * wait for their own day's transfer), the day they were turned on (`since`), days in a row Citi's minimum wasn't met
-   * (`below`), what KakaoBank's sweeps have put into the 저금통 (`held`), and what came of the last transfer.
+   * (`below`), what KakaoBank's sweeps have put into the 저금통 (`held`), the purchases since the last transfer that were whole units and
+   * rounded up to nothing (`whole`), and what came of the last transfer.
    */
   roundUps?: RoundUpChoice & {
     on: boolean;
@@ -199,6 +200,7 @@ export interface Person {
     since?: Instant;
     below?: number;
     held?: Money;
+    whole?: number;
     last?: { at: Instant; moved?: Money; notMoved?: Money; why?: string };
   };
   /** Money gone to the state or its scheme after years untouched, which can be claimed back. */

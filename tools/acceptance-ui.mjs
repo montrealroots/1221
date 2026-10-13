@@ -654,13 +654,11 @@ if (DIR) {
   let rehearsedIn = NaN;
   await step('[save: direction scenario] casting: the ways inspected, a change of how it’s played tried, its evidence said, and kept', async () => {
     const options = await ways().locator('option').allInnerTexts();
-    // A change of how the part is played (its words say so), which is kept or put back.
-    let picked = -1;
-    for (let i = 0; i < options.length && picked < 0; i += 1) {
-      await ways().selectOption({ index: i }); await wait(200);
-      const words = await ways().locator('xpath=following-sibling::span[1]').innerText().catch(() => '');
-      if (/its own way|lets you rest/.test(words)) picked = i;
-    }
+    // A change of how the part is played, which is kept or put back: a segment played another way ("Play The …") or
+    // places found to breathe. Until a run of 2026-10-13 this read the way's words beside the list, which for a way
+    // played to a side are the side's own, and found none.
+    const picked = options.findIndex((o) => /^Play |^Find Places To Breathe/.test(o));
+    if (picked >= 0) { await ways().selectOption({ index: picked }); await wait(200); }
     must(picked >= 0, `no way that changes how the part is played among ${options.join(', ')}`);
     tried = options[picked];
     const t0 = await clock();
@@ -680,9 +678,11 @@ if (DIR) {
     return `"${tried}" of ${options.length}; ${t0} → ${await clock()}: ${said.slice(0, 120)}; kept${Number.isNaN(rehearsedIn) ? '' : `, ${rehearsedIn}% rehearsed in`}`;
   });
   await step('[save: direction scenario] casting: worked once, Work On The Note is refused, its reason said in words, and pressing it does nothing', async () => {
+    // Only once it was worked here: a refusal for another reason (an injury) doesn't show the note can't be worked twice.
+    must(tried, 'the note wasn’t worked in the step before, so its refusal shows nothing');
     must(await workNote().isDisabled(), 'Work On The Note still offered after the note was worked');
     const why = (await page.locator('.why-not').allInnerTexts()).join(' ');
-    must(/Work On The Note/.test(why) || /^Not now:/.test(why), `no reason said: ${why}`);
+    must(/Work On The Note: (?!Not with)/.test(why) || /^Not now: (?!Not with)/.test(why), `no reason said, or one for something else: ${why}`);
     const before = `${await dateText()} ${await clock()}`;
     await workNote().click({ force: true }).catch(() => {}); await wait(600);
     must(`${await dateText()} ${await clock()}` === before, 'pressing the refused control moved the clock');
@@ -714,12 +714,13 @@ if (DIR) {
   });
   await step('[save: direction scenario] save and exit, Continue: the note’s outcome and the try kept', async () => {
     const tries = await partBook().locator('table[data-tries] tbody tr').count();
-    const seen = (await history().innerText().catch(() => '')) + (await noteLine().innerText());
+    // Their text whether the list is open or closed: it was opened above, and a page opened again shows it closed.
+    const seen = (await history().textContent().catch(() => '')) + (await noteLine().textContent());
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Casting');
     must((await partBook().locator('table[data-tries] tbody tr').count()) === tries, 'the tries weren’t kept');
-    const again = (await history().innerText().catch(() => '')) + (await noteLine().innerText());
+    const again = (await history().textContent().catch(() => '')) + (await noteLine().textContent());
     must(again.replace(/\s+/g, ' ') === seen.replace(/\s+/g, ' '), 'the notes read differently after the reload');
     return `${tries} tries kept, the notes as they were`;
   });
@@ -739,6 +740,89 @@ if (DIR) {
     return said.replace(/\s+/g, ' ').slice(0, 200);
   });
   await overflow('school casting (direction save)');
+}
+
+
+// Round-ups through the screens (from 2026-10-13, the owner's brief of that day, sections 4 and 5). The save is the
+// `roundups` scenario's (`tools/scenarios.ts`): a New Haven student at Citi, round-ups not set up. Citi leaves how often
+// and a minimum balance to the customer and states no default, so Round-Ups is refused, with why, until both are made;
+// the guide's entry opened from the panel, searched, a connected entry followed and come back from, leaves the choices
+// as they were and the clock where it was; turned on, a week moves the tally into savings, and a reload keeps it all.
+// Every step fails, never skips, when the save, the panel or a control isn't there.
+if (DIR) {
+  const panel = () => page.locator('[data-roundups="us-citi"]').first();
+  const often = () => panel().getByRole('combobox', { name: 'How Often' }).first();
+  const minimum = () => panel().getByRole('spinbutton', { name: 'Minimum Balance' }).first();
+  const toggle = () => panel().getByRole('button', { name: /^Round-Ups: (On|Off)/ }).first();
+  await step('[save: roundups scenario] bank: Citi’s Spend & Save, its words, its choices, refused with why until they’re made', async () => {
+    must(existsSync(`${DIR}/roundups.json`), 'no roundups save: write it with tools/scenarios.ts --scenario roundups');
+    await openSave('roundups.json');
+    await rail('Money'); await tab('Accounts');
+    must(await panel().count(), 'no round-ups on Citi’s Accounts');
+    const words = (await panel().innerText()).replace(/\s+/g, ' ');
+    must(/Round-Ups, Spend & Save\./.test(words) && /at most \$15 a transfer/.test(words), `not Citi’s words: ${words.slice(0, 200)}`);
+    must(await often().count() && await minimum().count(), 'no How Often or Minimum Balance');
+    must(await toggle().isDisabled(), 'Round-Ups: Off offered before the choices are made');
+    must(/Turn On: Choose how often it moves: daily, weekly\./.test(words) || /Not now: Choose how often it moves: daily, weekly\./.test(words), `no reason said: ${words.slice(0, 400)}`);
+    await often().selectOption({ label: 'Weekly' }); await wait(200);
+    must(await toggle().isDisabled(), 'turned on with no minimum balance');
+    await minimum().fill('49'); await wait(200);
+    must(/at least \$50\.00/.test(await panel().innerText()), 'a minimum under $50 isn’t refused with why');
+    await minimum().fill('75'); await wait(200);
+    must(!(await toggle().isDisabled()), `still refused with the choices made: ${(await panel().innerText()).replace(/\s+/g, ' ').slice(0, 300)}`);
+    return words.slice(0, 160);
+  });
+  await step('[save: roundups scenario] help: the panel’s How This Works, searched, a connected entry and back; the choices and the clock as they were', async () => {
+    const t0 = `${await dateText()} ${await clock()}`;
+    await panel().getByRole('button', { name: /^How This Works: Round-Ups$/ }).first().click(); await wait(700);
+    must((await entryTitle()) === 'Round-Ups', `opened "${await entryTitle()}"`);
+    const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
+    must(await connected.count(), 'no Connected Systems on Round-Ups');
+    await connected.locator('summary').click(); await wait(300);
+    const link = connected.locator('button.help-link').first();
+    const to = await link.innerText();
+    await link.click(); await wait(500);
+    must((await entryTitle()) === to, `followed "${to}", showing "${await entryTitle()}"`);
+    await helpDialog().getByRole('button', { name: /^Back$/ }).click(); await wait(400);
+    must((await entryTitle()) === 'Round-Ups', 'Back didn’t return to Round-Ups');
+    await page.locator('#help-q').fill('keep the change'); await page.keyboard.press('Enter'); await wait(400);
+    const hits = await helpDialog().locator('ul.help-results button.help-link').allInnerTexts();
+    must(hits.some((h) => /^Round-Ups/.test(h)), `searching "keep the change" found ${hits.join(', ') || 'nothing'}`);
+    await page.keyboard.press('Escape'); await wait(500);
+    must((await often().inputValue()) === 'week' && (await minimum().inputValue()) === '75', 'the choices changed while the guide was open');
+    must(`${await dateText()} ${await clock()}` === t0, 'the clock moved while reading');
+    return `Round-Ups → ${to} → Back; "keep the change" finds it; Weekly and $75 kept; ${t0}`;
+  });
+  // A week on, the panel says what came of it: a transfer of up to $15, or, where every purchase was whole dollars (a
+  // New Haven student's groceries are $10.00 and a meal $5.00), that they rounded up to nothing. Its first run of
+  // 2026-10-13 found the second, and the panel saying neither; it says it now.
+  await step('[save: roundups scenario] bank: turned on, a week played: what came of it said, a transfer of up to $15 or purchases that rounded up to nothing', async () => {
+    await toggle().click(); await wait(800);
+    must(/^Round-Ups: On/.test(await toggle().innerText()), 'it didn’t turn on');
+    for (let i = 0; i < 8; i += 1) { await advance('Tomorrow Morning'); await rail('Money'); await tab('Accounts'); }
+    const last = (await panel().locator('[data-roundups-last]').innerText().catch(() => '')).replace(/\s+/g, ' ');
+    const whole = (await panel().locator('[data-roundups-whole]').innerText().catch(() => '')).replace(/\s+/g, ' ');
+    if (last) {
+      const moved = Number((last.match(/^Last moved: \$(\d+\.\d\d) into savings/) ?? [])[1] ?? NaN);
+      must(moved > 0 && moved <= 15, `not a transfer of up to $15: ${last}`);
+      return last;
+    }
+    const n = Number((whole.match(/^(\d+) purchases since the last transfer were already a multiple of \$1\.00, so rounded up to nothing\.$/) ?? [])[1] ?? NaN);
+    must(n >= 7, `a week, and neither a transfer nor whole purchases said: ${whole || '(nothing)'}`);
+    return whole;
+  });
+  await step('[save: roundups scenario] save and exit, Continue: still on, its choices and its last transfer kept', async () => {
+    const before = (await panel().innerText()).replace(/\s+/g, ' ');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('Money'); await tab('Accounts');
+    must(/^Round-Ups: On/.test(await toggle().innerText()), 'off after the reload');
+    must((await often().inputValue()) === 'week' && (await minimum().inputValue()) === '75', 'the choices weren’t kept');
+    const after = (await panel().innerText()).replace(/\s+/g, ' ');
+    must(after === before, `the panel reads differently after the reload: ${after.slice(0, 200)}`);
+    return 'kept';
+  });
+  await overflow('bank accounts (round-ups save)');
 }
 
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
