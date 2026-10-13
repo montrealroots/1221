@@ -9,8 +9,9 @@ at `0dbe5960`.
 
 **State:**
 
-- **Branch:** `claude/connected-journey`, pushed. Not merged: merging is the owner's, on "Merge it."
-- **Not deployed.**
+- **Branch:** `claude/connected-journey`, pushed.
+- **Merged:** at the owner's "Merge it.", `main` was fast-forwarded from `0dbe5960` to this pass.
+- **Not deployed:** deployment is the owner's, after the gate.
 - **Saves:** schema 94 is unchanged. The ruleset is `evaluation-3 (2026-10-12)`; a result kept under an older one says
   so rather than replaying.
   - Every new field is optional and written on first use: workbooks, a brief's reader, plan spans on a return

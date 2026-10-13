@@ -6,7 +6,8 @@ requirement by requirement: what was built, where it lives, what holds it, what 
 broken and fixed, and what's still short. It claims no score.
 
 - **Branch:** `claude/connected-journey`, from `0dbe5960`.
-- **Not merged and not deployed.** Both are the owner's.
+- **Merged** to `main` at the owner's "Merge it.", by fast-forward from `0dbe5960`. **Not deployed:** that's the owner's,
+  after the gate.
 - **Saves:** schema 94 is unchanged. Every new field is optional and written on first use.
   - A save from before gets on opening what this pass reads: its life-long limits counted from the work it kept, its
     guide marked finished where it was read to the end, and a body where it had none.
