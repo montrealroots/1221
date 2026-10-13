@@ -65,7 +65,7 @@ import { drawMateAbilities } from './systems/school';
 import { bindCeiling, ceilingBefore, focusAt, ordinary, redateCredits, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
 import { registerClassmates } from './systems/classmates';
-import { registerProduction } from './systems/production';
+import { WHICH, hasProcess, holderFor, registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
 import { registerBriefs } from './systems/briefs';
@@ -301,6 +301,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A save made before 2026-10-12 and opened on its first day has its body on opening, as a new life does from its first
   // moment (`drawnBody`, `systems/body.ts`): until then such a life had none until its first midnight.
   if (universe.people[universe.playerId] && !sim.player.body) bodyOf(sim, sim.player);
+  // A note said again before 2026-10-13 began "Still: i …" where its words began with the word I (`noteText`): put right
+  // on opening, in every production the player is in.
+  if (universe.people[universe.playerId]) for (const which of WHICH) { const h = holderFor(sim, sim.player, which); if (hasProcess(h)) for (const n of h.process.notes) n.text = n.text.replace(/^Still: i(?=[\s’'])/, 'Still: I'); }
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.

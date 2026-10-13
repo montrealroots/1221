@@ -5,11 +5,12 @@
  * skill at every work-through, taken or not.
  */
 import { describe, expect, it } from 'vitest';
-import { createSave } from '@/engine';
+import { createSave, loadSave } from '@/engine';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { practiceHour } from '@/engine/systems/practice';
-import { noteFor, noteText, type Process } from '@/engine/systems/production';
+import { noteFor, noteText, processOf, type Process } from '@/engine/systems/production';
 import { EXERCISE_BY_ID } from '@/engine/content/practice';
 import { evenCraft } from '@/engine/systems/school';
 
@@ -73,5 +74,29 @@ describe('a director’s notes, from the notes before', () => {
     expect(noteFor(sim.player, process([notTaken]), reads, 9, 10)).toEqual(first);
     expect(noteText(first, notTaken)).toMatch(/^Still: find more classical/);
     expect(noteText(first, taken)).toMatch(/^Better since the last note\./);
+  });
+
+  // Found on the director's-note journey's save (2026-10-13): "Still: i don’t know what you want in the second half."
+  it('keeps the word I a capital when a note comes again as still, and makes any other first word small', () => {
+    const objective = { kind: 'craft', note: 'objective', problem: 'quality:believability', where: 'The Second Half', measure: 60 } as const;
+    const relationship = { ...objective, note: 'relationship' } as const;
+    const direction = { kind: 'direction', axis: 'pace', side: 'driven' } as const;
+    const again = (f: Parameters<typeof noteText>[0]) => noteText(f, { at: 0, text: noteText(f), focus: f, taken: false });
+    expect(noteText(objective)).toMatch(/^I don’t know what you want in the second half\./);
+    expect(again(objective)).toBe('Still: I don’t know what you want in the second half. Find it, and play it.');
+    expect(noteText(direction)).toMatch(/^I want it /);
+    expect(again(direction)).toMatch(/^Still: I want it /);
+    expect(again(relationship)).toBe('Still: who are they to you in the second half? Decide, and let it show.');
+  });
+
+  it('puts right on opening a note a save from before kept as "Still: i …", and leaves the rest as they were', () => {
+    const sim = life('var-still-load');
+    sim.advanceTo(instantFromZoned({ year: 2027, month: 1, day: 4, hour: 9 }, 'America/New_York'));
+    // TEST SETUP: the notes as a save from before 2026-10-13 kept them, in the festival the student is cast in.
+    const notes = processOf(sim.player.school!.casting!).notes;
+    const old = ['Still: i don’t know what you want in the second half. Find it, and play it.', 'Still: who are they to you in the second half? Decide, and let it show.', 'I want it driven: it pushes on.'];
+    for (const text of old) notes.push({ at: sim.now, text, focus: { kind: 'lines' } });
+    const opened = loadSave(deserialise(serialise(sim.universe)) as never);
+    expect(processOf(opened.player.school!.casting!).notes.map((n) => n.text)).toEqual(['Still: I don’t know what you want in the second half. Find it, and play it.', old[1], old[2]]);
   });
 });

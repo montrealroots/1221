@@ -88,6 +88,23 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         </div>
       )}
       {p && p.notes.length > 1 && <div className="xs dim">{`Notes taken: ${p.notes.filter((n) => n.taken).length} of ${p.notes.filter((n) => n.taken !== undefined).length}.`}</div>}
+      {/* The notes before the last, each with what came of it (from 2026-10-13): until then a note's outcome went from
+          the screen when the next call gave another, and a player couldn't see whether the note they worked was taken,
+          only a count. History, read from the process: it changes nothing. */}
+      {p && p.notes.length > 1 && (
+        <details className="xs" data-notes="">
+          <summary>The Director’s Notes So Far</summary>
+          <ol style={{ margin: 'var(--s1) 0 0', paddingLeft: 'var(--s4)' }}>
+            {p.notes.slice(0, -1).reverse().map((n) => (
+              <li key={n.at} style={{ marginBottom: 'var(--s1)' }}>
+                {formatDate(n.at, zone())}: {n.text}{' '}
+                <span className="dim">{n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken'}</span>
+                {n.answer?.solution && <span className="dim">{` · Worked ${(ADJUSTMENTS[n.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? n.answer.solution).toLowerCase()}: ${n.answer.before} before, ${n.answer.after} after${n.answer.now !== undefined ? `, ${n.answer.now} at the next call` : ''}`}</span>}
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="school.learn_part" className="btn btn-sm btn-ghost" disabled={Boolean(part)} title={part ?? 'An hour on the lines'} onClick={() => { const r = run<{ lines: number }>('school.learn_part', { which }); if (r.ok) toast(`An hour on the part: lines at ${pct(r.value!.lines)}.`, 'positive'); }}>Learn The Part</Gated>
         <Gated feature="school.review_blocking" className="btn btn-sm btn-ghost" disabled={Boolean(blocking)} title={blocking ?? 'An hour with the stage manager’s book'} onClick={() => { const r = run<{ blocking: number }>('school.review_blocking', { which }); if (r.ok) toast(`Caught up from the book: blocking at ${pct(r.value!.blocking)}.`, 'positive'); }}>Catch Up The Blocking</Gated>

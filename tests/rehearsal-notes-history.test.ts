@@ -1,0 +1,88 @@
+/**
+ * The director's notes so far, on the rehearsal process (from 2026-10-13, `ui/components/RehearsalProcess.tsx`). Until
+ * then a note's outcome went from the screen when the next call gave another note, and a player couldn't see whether
+ * the note they had worked was taken: only a count, "Notes taken: N of M". Each earlier note is listed now with its
+ * outcome, and the way it was worked with its figure before, after and at the next call.
+ *
+ * PLAYER JOURNEY: the first spring's festival played through its calls, as tests/direction.test.ts plays it, every note
+ * worked the first way offered and each change kept. TEST SETUP: the day kept rested (`tended`), so the calls are what's
+ * measured. The screen is rendered as the player has it.
+ */
+import { describe, expect, it, vi } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createSave } from '@/engine';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { CALL_KIND } from '@/engine/systems/school';
+import { hasProcess } from '@/engine/systems/production';
+import { ADJUSTMENTS } from '@/engine/content/workbook';
+
+const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
+
+// Without the original: it imports the looks, which import it back, and would get the original's hooks.
+vi.mock('@/app/game-context', () => {
+  const noop = () => undefined;
+  const game = () => new Proxy({
+    get sim() { return h.sim; },
+    version: 0,
+    run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }),
+    toast: noop,
+  } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });
+  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
+});
+
+const { RehearsalProcess } = await import('@/ui/components/RehearsalProcess');
+
+const zone = 'America/New_York';
+const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
+
+/** The process as a player sees it: its words, with every tooltip taken out before the tags. */
+function shown(sim: Simulation): string {
+  h.sim = sim;
+  const casting = sim.player.school!.casting!;
+  const html = renderToStaticMarkup(createElement(RehearsalProcess, { casting, which: 'school' } as never)).replace(/<!-- -->/g, '');
+  return html.replace(/\stitle="[^"]*"/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+}
+
+describe('the director’s notes so far', () => {
+  it('PLAYER JOURNEY: lists each earlier note with what came of it, and the way it was worked with its figures', () => {
+    const sim = createSave(1, 'notes-history', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.advanceTo(at(2027, 1, 4) + 60_000);
+    const proc = () => { const c = sim.player.school!.casting!; return hasProcess(c) ? c.process : undefined; };
+    const calls = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.payload.which !== 'rep' && i.payload.call === 'rehearsal').sort((a, b) => a.at - b.at);
+    for (let k = 0; k < calls.length - 1; k += 1) {
+      tended(sim, calls[k]!.at + 6 * MS_HOUR + 30 * 60_000);
+      if ((proc()?.lines ?? 1) < 0.97) sim.execute({ kind: 'school.learn_part', payload: {} });
+      if ((proc()?.blockingMissed ?? 0) > 0) sim.execute({ kind: 'school.review_blocking', payload: {} });
+      const last = proc()?.notes.at(-1);
+      if (last && last.taken === undefined && !last.worked) {
+        const r = sim.execute<{ pending?: boolean }>({ kind: 'school.work_note', payload: {} });
+        if (r.ok && r.value?.pending) sim.execute({ kind: 'work.settle', payload: { piece: 'part:school', keep: true } });
+      }
+    }
+    const notes = proc()!.notes;
+    expect(notes.length).toBeGreaterThan(2);
+    const text = shown(sim);
+    expect(text).toContain('The Director’s Notes So Far');
+    // Every note but the last, with its outcome as the process has it.
+    for (const n of notes.slice(0, -1)) {
+      expect(text, n.text).toContain(n.text);
+      const word = n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken';
+      expect(text).toContain(`${n.text} ${word}`);
+    }
+    // A craft note worked a way: the way, its figure before and after, and at the next call.
+    const worked = notes.slice(0, -1).find((n) => n.answer?.solution && n.answer.now !== undefined);
+    expect(worked, 'an earlier craft note worked a way').toBeDefined();
+    const label = ADJUSTMENTS[worked!.answer!.solution as keyof typeof ADJUSTMENTS].label.toLowerCase();
+    expect(text).toContain(`· Worked ${label}: ${worked!.answer!.before} before, ${worked!.answer!.after} after, ${worked!.answer!.now} at the next call`);
+  }, 120_000);
+
+  it('isn’t shown with one note or none: nothing earlier to list', () => {
+    const sim = createSave(1, 'notes-history-none', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.advanceTo(at(2027, 1, 4) + 60_000);
+    expect(shown(sim)).not.toContain('The Director’s Notes So Far');
+  });
+});

@@ -336,8 +336,15 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   if (!before) return `${words}${history}`;
   // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12).
   const tried = before.answer?.solution ? ` You tried ${(ADJUSTMENTS[before.answer.solution as AdjustmentId]?.label ?? before.answer.solution).toLowerCase()}: ${before.answer.before} then, ${before.answer.after} now.` : '';
-  return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${words.charAt(0).toLowerCase()}${words.slice(1)}${tried}${history}`;
+  return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${continued(words)}${tried}${history}`;
 }
+
+/**
+ * A note's words carried on after "Still:", their first letter small, but never the word "I" (from 2026-10-13: until then
+ * a note on what the actor wants came again as "Still: i don’t know what you want…", and a direction as "Still: i want
+ * it…", found on the director's-note journey's save).
+ */
+const continued = (words: string): string => (/^I[\s’']/.test(words) ? words : `${words.charAt(0).toLowerCase()}${words.slice(1)}`);
 
 function noteWords(f: NoteFocus): string {
   if (f.kind === 'lines') return 'Be off book: the lines aren’t there yet, and the scene can’t start until they are.';
